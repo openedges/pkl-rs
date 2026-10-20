@@ -4,7 +4,89 @@ M2 is **in progress**. Stage 1 added expressions, strings, recursive methods,
 closures, primitive type checks, and source diagnostics. Stage 2 adds selected
 class, inheritance, generic alias, default-value, and modifier semantics to the
 shared engine. Stage 3 adds pipelines, resumable constraints, and optional power
-assertions. These checkpoints do not complete the language milestone.
+assertions. Stage 4 adds ordered collections and resumable generators. These
+checkpoints do not complete the language milestone.
+
+## Stage 4 checkpoint
+
+The [stage 4 summary](stage4-final-summary.json) records **415 selected
+comparisons: 413 raw-byte matches, one remainder-zero mismatch, and one cycle
+oracle failure**. All 20 metamorphic relations pass. The 121 new selections
+extend the unchanged 294-case baseline; 29 cases now use explicit power-assertion
+profiles. The [language archive](language-stage4-final-evidence.tar.gz) contains
+the recorded release build, 480 source snapshots, exact inputs and commands,
+oracle identity, outcome sidecars, and complete output channels. Source and
+artifact identities remained stable during acquisition.
+
+The shared runtime now constructs ordered properties, entries, and elements for
+`Dynamic`, `Listing`, and `Mapping`, with indexing, amendments, `for`, `when`,
+spread, and strict `List` construction. Lazy bodies retain generator variables
+and the eventual receiver. Source iteration first shallow-forces members in the
+pinned child-first order, then visits inherited positions. Static and generated
+object bodies preserve their distinct ordering and collision behavior.
+Primitive keys distinguish integers, floating-point values, and signed zeros,
+while canonicalizing NaNs. Tagged cache namespaces prevent literal NUL
+characters in quoted properties from colliding with internal entry names.
+
+The [validation record](validation-stage4-final.json) and
+[raw checks](validation-stage4-final-evidence.tar.gz) retain reference pin
+verification, formatting, workspace Clippy, **163 Rust tests, 171 Python tests**,
+Wasm runtime compilation, and inventory freshness. One existing probe remains
+intentionally ignored by ordinary unit tests and executes through its
+differential adapter. Collection lifecycle tests exercise unpublished builders,
+temporary iterables, captured closures, nested Host reentry, active and suspended
+GC roots, retry, cancellation, close, timeouts, and late callback rejection.
+The [identifier archive](identifier-stage4-evidence.tar.gz) repeats the pinned
+Java verification of all four unchanged identifier tables.
+
+The [platform archive](platforms-stage4-final-evidence.tar.gz) records **23
+scenarios in each of actual Node and Chromium**, including collection values,
+amendments, generator closures, bounds errors, and complete power-assertion
+graphs. All 6,078 primitive results agree across Rust targets; each target matches
+Java on 6,076. The two known regex failures remain recorded. The
+[M1 regressions](regressions-stage4-final-evidence.tar.gz) retain 15 frontend
+matches, six runtime value matches, two full runtime diagnostic matches, one
+cycle diagnostic mismatch, two matching lifecycle protocols, and four failed
+full lifecycle diagnostic comparisons. No new speed or memory parity
+measurement was made.
+
+The [exploration archive](exploration-stage4-evidence.tar.gz) preserves 7,942
+files, including the initial mismatches and their corrections, pinned Java
+studies, actual fixture-URI captures, platform expectations, and source
+snapshots. Preliminary candidate replays remain explicitly unbound to a
+recorded build. The independent review's first captures lack full process
+identity metadata; that limitation is retained, and its promoted regressions
+were reacquired through the formal runner. Reviews corrected spread captures,
+source forcing order, typed/module classification, local duplicate definitions,
+constructor name resolution, inherited entry bodies, and diagnostic frames.
+
+The [gate captures](gates-stage4-final-evidence.tar.gz) retain integrity and
+development success, with strict selected and full compatibility failure.
+The inventory has 474 requirement records and 1,415 accounting rows: 415
+executable selections and the unchanged 960 unimplemented and 40 unmapped
+upstream/historical obligations. These overlapping rows are not distinct feature
+counts. The full gate still reports 1,950 failure reasons.
+
+Generic collection wrappers, member predicates, object keys and structural
+equality, complete custom-default behavior, typed constructor generators, and
+the remaining collection builtins are unfinished. Function/structural types,
+`Reference`, metadata, complete diagnostics, and the full language corpus also
+remain M2 requirements. No new development exceptions were added.
+
+All six jobs of the [implementation CI run](https://github.com/luuvish/pkl-rs/actions/runs/39403541822)
+passed for commit `4512488`. The
+[independent verification record](ci-stage4-summary.json) and
+[complete CI evidence package](ci-stage4-evidence.tar.gz) retain both original
+artifact ZIPs and their verified GitHub SHA-256 digests. Verification matched
+675 snapshot copies, covering 520 distinct files, to that exact commit.
+Remote language results also contain 413 matches, one remainder mismatch, and
+one cycle oracle failure. All 20 relations, four identifier tables, and 23
+scenarios per JS target verify. The original regex, runtime cycle, and lifecycle
+diagnostic failures remain visible in the M1 artifact.
+An [offline replay of the sealed package](ci-stage4-offline-evidence.tar.gz)
+passed without changing its contents and reproduced the verified outcomes and
+verifier hashes. Its raw process output is retained separately to avoid changing
+the package being verified.
 
 ## Stage 3 checkpoint
 
