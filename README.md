@@ -2,7 +2,7 @@
 
 This project reimplements [Pkl](https://pkl-lang.org/) 0.32.0 in Rust. It aims to share one engine across native Rust, WebAssembly, and Node.js N-API, with automated compatibility checks against the Java implementation.
 
-The project has established its **M0 compatibility tooling and initial Java baselines**. Pkl parsing and evaluation, the CLI, REPL, server, and Wasm and N-API products are not implemented yet. Passing the current builds and tooling tests does not establish Rust Pkl compatibility or achievement of the performance targets. The [M0 report](reports/m0/README.md) records known failures, measurement limitations, and verified remote CI results.
+The project has established its **M0 compatibility tooling and initial Java baselines** and is conducting **M1 architecture experiments**. A bounded parser/resolver, lazy bytecode VM, tracing heap, numeric/regex probes, and resumable Host now run through native Rust, Node N-API, and browser Wasm. These are prototypes; the complete language, CLI, REPL, server, and product APIs remain unimplemented. The [M0 report](reports/m0/README.md) and [M1 experiments](reports/m1/README.md) distinguish verified results, known differences, and performance limitations.
 
 ## Goals
 
@@ -56,7 +56,7 @@ cargo test --workspace --locked
 cargo check -p pkl-runtime --target wasm32-unknown-unknown --locked
 ```
 
-`cargo xtask verify` checks the reference source pins. The [Java oracle](docs/oracle.md) provides pinned Pkl 0.32.0 execution and exact replay checks. The [comparison tool](docs/compatibility-tooling.md) captures raw output and generated files and rejects missing or failing cases. See [TESTING.md](TESTING.md) for Python tooling commands and their scope. Rust evaluation is not implemented yet.
+`cargo xtask verify` checks the reference source pins. The [Java oracle](docs/oracle.md) provides pinned Pkl 0.32.0 execution and exact replay checks. The [comparison tool](docs/compatibility-tooling.md) captures raw output and generated files and rejects missing or failing cases. See [TESTING.md](TESTING.md) for tooling commands and [the platform experiment](docs/m1-platforms.md) for actual Node/browser execution.
 
 ## Current structure
 
@@ -65,11 +65,14 @@ cargo check -p pkl-runtime --target wasm32-unknown-unknown --locked
 .github/workflows/     Workspace checks and Java tooling replay
 benchmarks/            Initial Java workloads and sampling contract
 compatibility/         Source, corpus, smoke, and regression manifests
-crates/pkl-runtime/    Minimal Rust library for the shared engine
+crates/pkl-runtime/    Bounded M1 frontend, VM, heap, primitives, and Host
+crates/pkl-wasm/       Experimental browser bindings to the shared engine
+crates/pkl-napi/       Experimental Node bindings to the shared engine
 docs/                  Architecture and verification tool contracts
 external/pkl/          Pkl 0.32.0 reference submodule
 external/pkl-pantry/   Pantry reference submodule
 reports/m0/            Baseline summaries and checksummed raw evidence
+reports/m1/            Architecture experiment decisions and raw evidence
 tests/fixtures/        Owned smoke inputs and selected historical regressions
 tools/                 Python verification and Java measurement helpers
 xtask/                 Repository verification tool

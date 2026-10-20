@@ -1,0 +1,73 @@
+{
+  "schema": 1,
+  "scope": "primitive operations; not full Pkl evaluation",
+  "total": 6078,
+  "passed": 6076,
+  "mismatched": 2,
+  "sources": {
+    "Cargo.lock": "17114bdbbe6146393c569475c128bdfc618863bbaab8f4bada41860bf8eab96b",
+    "Cargo.toml": "f1ef2c20d58d3dad9d755a5c26939784216a54aeec4ab95da5c9a375b269e9de",
+    "rust-toolchain.toml": "04ab0c8ee214f246c7c53bdfba7ba80a93dad65da5b8455edf17c5ec226d5b20",
+    "crates/pkl-runtime/Cargo.toml": "e6a605602038dac45d16ac8f45e749e91dc9f57f2ad3b32d4b6b4e86dd476f55",
+    "crates/pkl-runtime/examples/semantics_probe.rs": "98347f237e0817cad13616c1cc75aae30ceca10c46d295692edd46a0261563c6",
+    "crates/pkl-runtime/src/numeric.rs": "6d318ab81dee53600bdd3ef5a78daa87419346456ead54912e47312eacf7ec07",
+    "crates/pkl-runtime/src/regex.rs": "7d105b0df534f51dfd8a8649681b4b309d14b7a4f212c2b93efb2acc668aaa89",
+    "tools/java/M1SemanticsProbe.java": "b24d9539f568d51ac940319b0385b541e398a711b309214c425a29bd812d6afa",
+    "tools/m1_semantics.py": "6a9914d9f1101613ab758a2fd77f91251a615eecb4f786248d31317a696f1927",
+    "tests/fixtures/m1/semantics/references/fdlibm-s_cbrt.c": "7ce1c7299e60b9b998393312b140fa8738d13f11d89b88dd47d5c2df81eadfbb",
+    "tests/fixtures/m1/semantics/references/fdlibm-k_cos.c": "841086c75288f3f9fef03bae2a9dc24e99c3cdb2035e170c69452013a7b5befc",
+    "tests/fixtures/m1/semantics/references/fdlibm-k_sin.c": "75d391f3c124806ce14893cd038ae5dd10663e40430ffa174d5fddcb33012167",
+    "tests/fixtures/m1/semantics/references/libm-0.2.16-LICENSE.txt": "3823dda7cf046602f4b4e77ec8e227863dc4736037cc85bb33d9f19febe16bb7",
+    "tests/fixtures/m1/semantics/references/libm-0.2.16-rem_pio2.rs": "5a040ab09dc356bca6d57712327151ed43003e2bac156553e3eb87d1cdefd2d1",
+    "tests/fixtures/m1/semantics/references/libm-0.2.16-rem_pio2_large.rs": "986b5b9ad2c8fba828aee47bf198eab97fab243359ab03eb09783d98ca5847b5"
+  },
+  "candidate": {
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/debug/examples/semantics_probe",
+    "sha256": "bdeea92abb09c7308b58124923b971c7e98f87fb28d5f9076f82322c95e771f7"
+  },
+  "fixture_sha256": "7fcb5f4d4492bb9f074742d38ae7182522a9f10d228de788ab1ee59ce9292dbd",
+  "status": "known-mismatches",
+  "native_evidence_directory": "target/m1/semantics/run09",
+  "full_report_sha256": "eaf5a922a18eecf03653121fd747966466433586f171f238a292111fef05d683",
+  "known_mismatches": [
+    {
+      "id": "regex-unicode-15-vs-16",
+      "family": "regex",
+      "operation": "find",
+      "status": "mismatch",
+      "java_sha256": "dd07e407a26848c0d37e1fb61a7fd42c43e29e91f4394e50917e35d85cb0eced",
+      "rust_sha256": "377a6091614d419693847a0ee8aac133c59f18d2dba26db9a3776be252806cf5",
+      "java_hex": "6d617463683a312c332c66303931626338320a656e640a",
+      "rust_hex": "6d617463683a302c332c65316232383966303931626338320a656e640a",
+      "input": "find\t5c707b4c7d2b\te1b289f091bc82"
+    },
+    {
+      "id": "regex-zero-width-supplementary",
+      "family": "regex",
+      "operation": "find",
+      "status": "mismatch",
+      "java_sha256": "d853e545c6e19f2158f3c59c8a542fe16dc1d7466e253aee7056625639e5e8a7",
+      "rust_sha256": "61b22f7a8af0277c95872406adcdbc7b287016c2e72bb3e5d4f891a4c2f5fc9d",
+      "java_hex": "6d617463683a302c302c0a6d617463683a312c312c0a6d617463683a322c322c0a656e640a",
+      "rust_hex": "6d617463683a302c302c0a6d617463683a322c322c0a656e640a",
+      "input": "find\t\tf09f9880"
+    }
+  ],
+  "protocol": "Complete primitive bytes via strict hex transport; not complete Pkl diagnostics",
+  "architecture_decisions": {
+    "numbers": "Shared checked i64, Java decimal formatting, fdlibm operation order in Rust; sampled numeric probes all match, full numeric inventory unverified",
+    "regex": "Shared Rust Java dialect with pinned JDK21 Unicode tables and UTF16 matcher positions. Current scalar backend rejected as complete implementation; 7 bounded UTF16 cursor probes support the selected text model."
+  },
+  "unverified": [
+    "Complete Java Pattern/Pkl expression/error compatibility",
+    "All StrictMath functions and all binary64 inputs",
+    "Native/Wasm/Node parity is recorded by separate platform evidence",
+    "Complete numeric workload costs, RSS, and product performance targets are not established"
+  ],
+  "invalidated_runs": {
+    "run03": "Stale rlib after concurrent parser compilation failure; original captures retained, excluded from source-attributed conclusions"
+  },
+  "numeric_cost_evidence": "reports/m1/semantics-cost.json",
+  "evidence_archive": "reports/m1/semantics-evidence.tar.gz",
+  "evidence_archive_sha256": "364740cf9bba7a81d7043c8832644678c699eb62ab35f17723c7b82f628f8ace"
+}

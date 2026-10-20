@@ -1,0 +1,110 @@
+{
+  "schema": 1,
+  "scope": "same-final-binary generic dispatch control; compare with specialized-run Rust, not a new Java pair",
+  "executable": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m1/runtime/specialized-20261020-01/binaries/runtime_bench",
+  "executable_sha256": "f170a728d089c2440a375e5797c42804bb6b9477dfa344e27604a0d4a29e2e3e",
+  "reference_report": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m1/runtime/specialized-20261020-01/report.json",
+  "dispatch_variant": "generic",
+  "instruction_count": 258,
+  "forks": [
+    {
+      "raw": {
+        "command": [
+          "/Users/cody.ij.hwang/Projects/pkl-rs/target/m1/runtime/specialized-20261020-01/binaries/runtime_bench",
+          "10",
+          "9",
+          "generic"
+        ],
+        "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs",
+        "status": "executed",
+        "exit_code": 0,
+        "elapsed_ns": 12523207458,
+        "peak_rss_bytes": 1998848,
+        "user_cpu_seconds": 12.485666,
+        "system_cpu_seconds": 0.026234999999999998,
+        "stdout": {
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m1/runtime/generic-control-20261020-01/fork-0/stdout.bin",
+          "sha256": "6429f0461708df102e629cafd0c7a8962344f38a5c49f7cd3c08e79ecb16b5d5",
+          "bytes": 11346
+        },
+        "stderr": {
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m1/runtime/generic-control-20261020-01/fork-0/stderr.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        }
+      },
+      "operation_ns": {
+        "count": 9,
+        "min": 1874.0436425241,
+        "median": 1876.4128856964867,
+        "p90": 1904.779365938026,
+        "p95": 1904.779365938026,
+        "max": 1904.779365938026,
+        "mean": 1879.9300140905916,
+        "sample_stdev": 9.804967865589083,
+        "uncertainty": "Empirical sample distribution only; no significance or target-ratio claim"
+      },
+      "peak_rss_bytes": 1998848,
+      "warmup_converged": true,
+      "recent_relative_spread": 0.009591802527615684,
+      "warmup_windows": 100,
+      "warmup_measured_ns": 10000095585
+    },
+    {
+      "raw": {
+        "command": [
+          "/Users/cody.ij.hwang/Projects/pkl-rs/target/m1/runtime/specialized-20261020-01/binaries/runtime_bench",
+          "10",
+          "9",
+          "generic"
+        ],
+        "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs",
+        "status": "executed",
+        "exit_code": 0,
+        "elapsed_ns": 12513299666,
+        "peak_rss_bytes": 1998848,
+        "user_cpu_seconds": 12.481351,
+        "system_cpu_seconds": 0.025796,
+        "stdout": {
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m1/runtime/generic-control-20261020-01/fork-1/stdout.bin",
+          "sha256": "9fe19a8eb505dc51d4ee6f1bfad656e7909f0226cb8386fbdf308ee3df794353",
+          "bytes": 11348
+        },
+        "stderr": {
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m1/runtime/generic-control-20261020-01/fork-1/stderr.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        }
+      },
+      "operation_ns": {
+        "count": 9,
+        "min": 1872.9366127014332,
+        "median": 1876.5599033199974,
+        "p90": 1885.2712149434042,
+        "p95": 1885.2712149434042,
+        "max": 1885.2712149434042,
+        "mean": 1876.7538804665214,
+        "sample_stdev": 3.7533803031737976,
+        "uncertainty": "Empirical sample distribution only; no significance or target-ratio claim"
+      },
+      "peak_rss_bytes": 1998848,
+      "warmup_converged": true,
+      "recent_relative_spread": 0.06360059984080685,
+      "warmup_windows": 100,
+      "warmup_measured_ns": 10000093406
+    }
+  ],
+  "oracle_environment": {
+    "PATH": "/bin:/usr/bin",
+    "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs/.cache/oracle/home",
+    "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs/.cache/oracle/tmp",
+    "TMP": "/Users/cody.ij.hwang/Projects/pkl-rs/.cache/oracle/tmp",
+    "TEMP": "/Users/cody.ij.hwang/Projects/pkl-rs/.cache/oracle/tmp",
+    "LC_ALL": "C",
+    "LANG": "C",
+    "TZ": "UTC",
+    "TERM": "dumb",
+    "NO_COLOR": "1",
+    "COLUMNS": "80"
+  }
+}

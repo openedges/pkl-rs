@@ -1,0 +1,156 @@
+#!/usr/bin/env python3
+"""Build and execute shared M1 probes in native Rust, Node, and Chromium.
+
+Strict comparison exits 1 for any oracle mismatch. --verify-contract checks the
+experiment and its exact known-gap inventory, never declaring compatibility.
+"""
+import argparse
+import hashlib
+import json
+import os
+from pathlib import Path
+import platform
+import shutil
+import subprocess
+import sys
+
+from m1_semantics import decode_capture, generate_cases
+
+ROOT = Path(__file__).resolve().parents[1]
+KNOWN_GAPS = {'regex-unicode-15-vs-16', 'regex-zero-width-supplementary'}
+REQUIRED_SCENARIOS = {
+    'shared-parser-resolver-vm', 'utf8-utf16-string-boundary',
+    'lossless-i64-bigint-range', 'owned-byte-array-boundary',
+    'async-same-stack-resume-reentry-duplicate', 'cross-session-completion-rejected',
+    'async-resource-bytes', 'host-error-bytes', 'cancel-close-late-callback',
+    'real-timer-waiting-timeout', 'cooperative-loop-cancel', 'invalid-clock-budget-boundary',
+}
+
+
+def check_scenarios(execution):
+    for target in ['nodeChecks', 'browserChecks']:
+        names = execution.get(target, [])
+        if len(names) != len(REQUIRED_SCENARIOS) or set(names) != REQUIRED_SCENARIOS:
+            raise ValueError(f'{target}: missing, duplicate, or unexpected platform scenarios')
+    if execution.get('browserErrors') != []:
+        raise ValueError('browser error inventory missing or nonempty')
+
+
+def sha(path):
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def compare(cases, captures):
+    if not cases or len({case['id'] for case in cases}) != len(cases):
+        raise ValueError('empty or duplicate case inventory')
+    if set(captures) != {'java', 'rust', 'node', 'browser'}:
+        raise ValueError('all four execution targets are required')
+    decoded = {name: decode_capture(data, len(cases)) for name, data in captures.items()}
+    rows = []
+    for index, case in enumerate(cases):
+        values = {name: data[index] for name, data in decoded.items()}
+        matches = {name: value == values['java'] for name, value in values.items() if name != 'java'}
+        rows.append({'id': case['id'], 'oracle_matches': matches,
+                     'shared_engine_match': values['rust'] == values['node'] == values['browser'],
+                     'sha256': {name: hashlib.sha256(value).hexdigest() for name, value in values.items()},
+                     **({'mismatched_bytes_hex': {name: value.hex() for name, value in values.items()}} if not all(matches.values()) else {})})
+    return rows
+
+
+def contract_matches(rows):
+    if not rows or not all(row['shared_engine_match'] for row in rows):
+        return False
+    return all({row['id'] for row in rows if not row['oracle_matches'][target]} == KNOWN_GAPS
+               for target in ['rust', 'node', 'browser'])
+
+
+def run(output, bindgen, verify_contract):
+    output.mkdir(parents=True, exist_ok=False)
+    paths = {ROOT / name for name in ['Cargo.toml', 'Cargo.lock', 'rust-toolchain.toml',
+             'tools/m1_platforms.py', 'tools/m1_semantics.py', 'tools/java/M1SemanticsProbe.java',
+             'tests/fixtures/m1/semantics/cases.json', 'crates/pkl-runtime/Cargo.toml',
+             'crates/pkl-runtime/examples/semantics_probe.rs']}
+    for folder in ['crates/pkl-runtime/src', 'crates/pkl-wasm', 'crates/pkl-napi', 'tools/platform']:
+        paths.update(path for path in (ROOT/folder).rglob('*') if path.is_file()
+                     and 'node_modules' not in path.parts and path.suffix in {'.rs', '.toml', '.mjs', '.json'})
+    source_hashes = {}
+    for path in sorted(paths):
+        relative = path.relative_to(ROOT)
+        destination = output / 'sources' / relative
+        destination.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copyfile(path, destination)
+        source_hashes[str(relative)] = sha(destination)
+    (output/'sources.json').write_text(json.dumps(source_hashes, indent=2)+'\n')
+    commands = []
+
+    def execute(name, command, allowed=(0,), timeout=600):
+        result = subprocess.run(command, cwd=ROOT, capture_output=True, timeout=timeout)
+        (output/f'{name}.stdout.bin').write_bytes(result.stdout)
+        (output/f'{name}.stderr.bin').write_bytes(result.stderr)
+        commands.append({'name': name, 'command': [str(x) for x in command], 'exit_code': result.returncode})
+        (output/'commands.json').write_text(json.dumps(commands, indent=2)+'\n')
+        if result.returncode not in allowed:
+            raise ValueError(f'{name} failed with {result.returncode}; raw logs: {output}')
+        return result
+
+    version = execute('bindgen-version', [str(bindgen), '--version']).stdout
+    if version != b'wasm-bindgen 0.2.108\n':
+        raise ValueError('wasm-bindgen CLI must be exactly 0.2.108')
+    execute('rust-version', ['rustc', '-Vv'])
+    execute('native-build', ['cargo', 'build', '-p', 'pkl-runtime', '--example', 'semantics_probe', '--locked'])
+    execute('napi-build', ['cargo', 'build', '-p', 'pkl-napi', '--release', '--locked'])
+    execute('wasm-build', ['cargo', 'build', '-p', 'pkl-wasm', '--target', 'wasm32-unknown-unknown', '--release', '--locked'])
+    wasm_dir = output/'wasm'
+    execute('wasm-bindgen', [str(bindgen), '--target', 'web', '--out-dir', str(wasm_dir), str(ROOT/'target/wasm32-unknown-unknown/release/pkl_wasm.wasm')])
+    libraries = {'Darwin': 'libpkl_napi.dylib', 'Linux': 'libpkl_napi.so', 'Windows': 'pkl_napi.dll'}
+    addon = output/'pkl_napi.node'
+    shutil.copyfile(ROOT/'target/release'/libraries[platform.system()], addon)
+    native = ROOT/'target/debug/examples'/('semantics_probe.exe' if os.name == 'nt' else 'semantics_probe')
+    copied_native = output/native.name
+    shutil.copy2(native, copied_native)
+    native = copied_native
+    execute('oracle-native', [sys.executable, 'tools/m1_semantics.py', '--candidate', str(native), '--output', str(output/'oracle-native')], allowed=(0, 1))
+    execute('platforms', ['node', 'tools/platform/run.mjs', str(output/'execution'), str(wasm_dir), str(addon), str(ROOT/'tests/fixtures/m1/semantics/cases.json')])
+    cases = generate_cases()['cases']
+    captures = {'java': (output/'oracle-native/java.stdout.bin').read_bytes(),
+                'rust': (output/'oracle-native/rust.stdout.bin').read_bytes(),
+                'node': (output/'execution/node.stdout.bin').read_bytes(),
+                'browser': (output/'execution/browser.stdout.bin').read_bytes()}
+    rows = compare(cases, captures)
+    execution = json.loads((output/'execution/execution.json').read_text())
+    check_scenarios(execution)
+    stable = all(sha(ROOT/path) == digest for path, digest in source_hashes.items())
+    mismatch = any(not all(row['oracle_matches'].values()) for row in rows)
+    report = {'schema': 1, 'scope': 'M1 architecture experiment, not product API or full Pkl compatibility',
+              'platform': platform.platform(), 'source_stability': stable,
+              'source_hashes': source_hashes,
+              'artifacts': {str(path.relative_to(output)): sha(path) for path in [addon, native, *wasm_dir.glob('*')] if path.is_file()},
+              'wasm_bindgen_sha256': sha(bindgen),
+              'total': len(rows), 'oracle_passed': {name: sum(row['oracle_matches'][name] for row in rows) for name in ['rust', 'node', 'browser']},
+              'shared_engine_passed': sum(row['shared_engine_match'] for row in rows),
+              'compatibility_status': 'fail' if mismatch else 'pass',
+              'known_gaps': sorted(KNOWN_GAPS),
+              'experiment_contract_status': 'pass' if stable and contract_matches(rows) else 'fail',
+              'execution': execution, 'comparisons': rows}
+    (output/'report.json').write_text(json.dumps(report, indent=2)+'\n')
+    print(json.dumps({key: report[key] for key in ['total', 'oracle_passed', 'shared_engine_passed', 'compatibility_status', 'experiment_contract_status']}))
+    if not stable:
+        raise ValueError('source changed during acquisition; evidence inconclusive')
+    return int(not contract_matches(rows)) if verify_contract else int(mismatch)
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--output', type=Path, required=True)
+    parser.add_argument('--wasm-bindgen', type=Path, default=ROOT/'.cache/m1-tools/bin/wasm-bindgen')
+    parser.add_argument('--verify-contract', action='store_true')
+    args = parser.parse_args()
+    return run(args.output.resolve(), args.wasm_bindgen.resolve(), args.verify_contract)
+
+
+if __name__ == '__main__':
+    try:
+        sys.exit(main())
+    except (ValueError, OSError, subprocess.SubprocessError) as error:
+        print(f'M1 platforms: {error}', file=sys.stderr)
+        sys.exit(2)

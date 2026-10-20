@@ -1,12 +1,24 @@
 # CI and local reproduction
 
-[The workflow](../.github/workflows/ci.yml) has two independent scopes. The workspace
+[The workflow](../.github/workflows/ci.yml) has three independent scopes. The workspace
 matrix checks reference pins, formatting, lint, workspace tests, and Wasm compilation
 on Linux, macOS, and Windows. The Linux compatibility job checks inventories and all
 tooling regressions and the benchmark contract, installs the exact reference JDK, fetches the checksummed Java
 oracle, records seven smoke cases, compares an independent Java replay, and records
 three selected historical regression cases. Java replay verifies the comparison tool;
-the workflow does not execute a Rust Pkl evaluator.
+that M0 job does not execute a Rust Pkl evaluator.
+
+The separate M1 experiment job executes bounded Java/Rust frontend and runtime
+comparisons, actual Java Host lifecycle observations, and the shared primitive
+corpus through native Rust, a Node addon, and real Chromium Wasm. It pins Node,
+Playwright and wasm-bindgen, builds artifacts, and uploads captures, artifacts,
+source snapshots and failures. Its architecture contract requires complete
+execution and cross-target consistency while preserving the exact known regex
+backend mismatches as failed compatibility cases. Three complete runtime
+diagnostic byte mismatches are also recorded explicitly. A green M1 job means
+the experiments and known-gap accounting reproduced, not full conformance.
+Host-sensitive VM performance measurements remain local, separately recorded
+experiments on a quiet host.
 
 The Java job pins Python 3.12, Temurin `21.0.12.1+1`, and action revisions. Oracle
 verification also checks the actual JDK vendor/build and Pkl artifact identity. A

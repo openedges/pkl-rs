@@ -4,7 +4,7 @@
 
 ## 현재 상태
 
-Git 저장소, Rust workspace, 참조 submodule, 개발 문서와 초기 구성 검증 도구가 준비되어 있습니다. 현재 workspace에는 최소 `pkl-runtime`과 `xtask`가 있으며 Pkl parser, evaluator, 제품 API는 아직 구현되지 않았습니다.
+Git 저장소, Rust workspace, 참조 submodule, 개발 문서와 초기 구성 검증 도구가 준비되어 있습니다. M1에서 제한된 parser·resolver·lazy VM·heap·Host와 실제 Node·브라우저 호출 경로를 구현했습니다. 전체 Pkl 언어·표준 라이브러리·CLI·REPL·server·제품 API는 아직 구현되지 않았습니다.
 
 M0의 참조 소스·Java oracle 고정, 기능·코퍼스 목록, 원시 차등 실행 도구, Pantry 조사, 초기 Java 성능 측정과 CI 구성을 완료했습니다. 최종 코드 커밋 `2164ffa`의 원격 CI 작업 4개가 모두 성공했고, 내려받은 원시 증거와 Java 재비교 결과도 검증했습니다. [CI 확인 기록](reports/m0/ci-summary.json)을 참조하세요. 초기 Rust 빌드와 테스트, Java 재실행 결과는 Rust 언어 호환성이나 성능 목표 달성의 증거가 아닙니다.
 
@@ -18,7 +18,7 @@ M0의 참조 소스·Java oracle 고정, 기능·코퍼스 목록, 원시 차등
 | --- | --- | --- | --- |
 | 초기 구성 | 구축됨 | 없음 | Git·Rust workspace·참조 submodule·개발 문서와 초기 구성 검증 |
 | M0 기준선 | 완료: 로컬 기준선·원격 CI 검증 확인 | 초기 구성 | oracle·목록·원시 비교 도구·Java 초기 측정과 전체 처리 상태 확보; 판정 보류와 미구현 범위 보존 |
-| M1 구조 검증 | 계획됨 | M0의 oracle·실행 계약·초기 기준선 | parser·SourceMap·resolver·진단과 regex·숫자·heap·VM 실험; 주요 의미론 위험과 공통 엔진·성능 전략 검증 |
+| M1 구조 검증 | 진행 중 | M0의 oracle·실행 계약·초기 기준선 | parser·SourceMap·resolver·진단과 regex·숫자·heap·VM 실험; 주요 의미론 위험과 공통 엔진·성능 전략 검증 |
 | M2 언어 런타임 | 계획됨 | M1의 이름 해석·값·heap·진단 설계 결정 | 객체·lazy 평가·상속·closure·타입·Reference 구현; 언어 코퍼스의 결과·오류 바이트 일치 |
 | M3 표준 라이브러리·출력 | 계획됨 | M2의 해당 언어 기능 | 전체 builtin·renderer·reflection·Pkl Binary 구현; 공개 멤버 누락 0, 출력·오류 일치 |
 | M4 외부 기능 | 계획됨 | M1 Host 계약과 M2·M3의 해당 기능 | module/resource Host·HTTP·프로젝트·패키지·external reader 구현; 실제 I/O·패키지 코퍼스 통과 |
@@ -89,6 +89,23 @@ Pantry는 고정 commit만으로 호환성이 확인되지 않습니다. 개발 
 ## M1 — 핵심 구조와 호환 위험 검증
 
 **목적:** 런타임 전체에 영향을 주는 선택을 작은 구현과 Java 비교로 검증합니다. 아래 실험은 Native와 초기 Wasm 실행을 함께 고려합니다.
+
+### 실행 항목과 마감 기준
+
+M1은 아래 항목별 구현·비교 증거·설계 결정이 갖춰진 뒤 완료로 표시합니다. 초기 prototype의 지원 문법과 probe 범위를 명시하고, 미지원 기능을 성공 처리하지 않습니다. 필수 실험의 실행·증거 수집이 실패하거나 플랫폼별 결과가 다르면 해당 항목을 미완료로 유지합니다. 비교에서 발견한 불일치는 후보의 부적합 판단 근거로 보존하며 호환성 통과로 바꾸지 않습니다. 후보를 기각한 경우 공통 대안의 계약과 근거를 함께 기록해야 구조 검증을 마칠 수 있습니다.
+
+| 항목 | 현재 상태 | 마감에 필요한 증거 |
+| --- | --- | --- |
+| M1-01 SourceMap·parser | 완료 | [프런트엔드 증거](reports/m1/frontend.json): 제한된 Java/Rust 비교 15/15, UTF-8·UTF-16·code point와 EOF underline 구분. 전체 문법은 M2입니다. |
+| M1-02 이름 해석·진단 | 완료 | lexical binding·receiver·owner·this·super의 정적 계약과 Java 값·첫 parser 오류 비교. [계약](docs/m1-frontend.md)에 전체 진단 renderer 미구현을 명시했습니다. |
+| M1-03 숫자·정규식 | 완료 | [6,078개 비교](reports/m1/semantics.json)와 Native·Node·Wasm 공통 결과 확보. 숫자 표본은 모두 일치, regex 후보는 Unicode·UTF-16 차이 2개로 기각하고 별도 cursor 증거를 갖춘 공통 대안을 선택했습니다. 숫자 비용 96개 결과 사전 일치·6개 프로세스 수렴 확인: 현재 formatter 약 6.1배 느림을 후속 성능 gate로 남깁니다. |
+| M1-04 lazy 값·heap | 완료 | [런타임 계약](docs/m1-runtime.md): forcing·memoization·실패·상속, 중단 frame의 GC root와 순환 회수·세대 handle 검증. 전체 언어 오류 바이트 불일치는 그대로 보존합니다. |
+| M1-05 VM·캐시 | 완료 | [일반 VM](reports/m1/runtime-performance.json)은 Java API 대비 약 1.27배 느림. [정수 특수화](reports/m1/runtime-specialized.json)는 약 0.46배, 일반 Rust 대비 약 2.75배 개선. M2의 제한된 기반으로 특수화 bytecode를 선택하며, Java target 컴파일 실패와 전체 성능 gate는 미해결입니다. |
+| M1-06 Host·수명주기 | 완료 | [Java 관찰 5개](reports/m1/host-java.json), Rust Host 회귀 7개와 실제 JS callback·timer 검증. Java 콜백 재진입 성공을 확인했으므로 제품 계약은 중첩 평가 context를 요구합니다. 현재 단일 continuation의 Busy 제한은 호환성 차이로 기록했습니다. |
+| M1-07 브라우저·Node | 완료 | [실제 플랫폼 결과](reports/m1/platforms.json): Native·Node·Chromium의 6,078개 primitive 바이트 모두 동일, Node·브라우저 각각 필수 시나리오 12개 통과. Java 비교는 각 6,076개 일치·동일한 정규식 실패 2개입니다. |
+| M1-08 통합·기록 | 진행 중 | core 커밋 `ce99720` 푸시, 로컬 Rust·실제 플랫폼 검증 완료. 전체 도구 검사·최종 원격 CI와 증거 archive 정리를 진행합니다. |
+
+구문·이름 해석과 VM·heap은 각각 `gpt-6.1-sol / high`, 숫자·정규식 실험은 `gpt-6-astra / high` 에이전트가 담당합니다. 주 에이전트는 Host·플랫폼 연결·통합 검증을 담당하며 공유 인터페이스와 Cargo 설정을 관리합니다. 기능 검증은 병행하고 성능 측정은 호스트를 비운 상태에서 순차 실행합니다.
 
 | 실험 | 확인할 내용 | 설계 결정에 필요한 증거 |
 | --- | --- | --- |

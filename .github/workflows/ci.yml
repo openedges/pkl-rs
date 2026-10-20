@@ -91,6 +91,59 @@ jobs:
           include-hidden-files: true
           retention-days: 14
 
+  m1-experiments:
+    name: M1 architecture experiments (known gaps recorded)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    steps:
+      - name: Preserve reference fixture line endings
+        run: git config --global core.autocrlf false
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          submodules: recursive
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-java@b843ebf9b913146b38da2eaa7aeddf76074ae1ad # v6
+        with:
+          distribution: temurin
+          java-version: '21.0.12.1+1'
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: '26.10.0'
+      - name: Install pinned browser tools
+        run: |
+          cargo install wasm-bindgen-cli --version 0.2.108 --locked --root .cache/m1-tools
+          npm ci --prefix tools/platform --ignore-scripts
+          npm exec --prefix tools/platform -- playwright install --with-deps chromium
+      - name: Bootstrap pinned Java oracle
+        run: python3 tools/oracle.py fetch
+      - name: Check M1 inventories and evidence tools
+        run: |
+          python3 tools/m1_frontend.py --check-contract
+          python3 tools/m1_semantics.py --check
+          python3 -m unittest discover -s tools/tests -p 'test_m1_*.py' -v
+      - name: Compare bounded frontend values and parser diagnostics
+        run: python3 tools/m1_frontend.py --output target/m1/ci-frontend
+      - name: Record runtime values and known diagnostic byte differences
+        run: python3 tools/m1_runtime.py --output target/m1/ci-runtime
+      - name: Verify actual Java Host lifecycle observations
+        run: python3 tools/m1_host.py --output target/m1/ci-host-java
+      - name: Run native, Node and actual browser architecture contract
+        run: python3 tools/m1_platforms.py --verify-contract --output target/m1/ci-platforms
+      - name: Confirm reference checkouts remain clean
+        if: ${{ always() }}
+        run: cargo xtask verify
+      - name: Retain M1 source snapshots, artifacts, captures and failures
+        if: ${{ always() }}
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: m1-experiment-evidence
+          path: target/m1/ci-*
+          if-no-files-found: error
+          include-hidden-files: true
+          retention-days: 14
+
   workspace:
     name: Workspace (${{ matrix.os }})
     strategy:

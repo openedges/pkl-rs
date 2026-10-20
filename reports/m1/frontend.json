@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "scope": "M1 bounded parser property/expression UTF16 spans, ParserError.message bytes/first error, scalar positions, and five VM result values; not CLI error formatting or full language compatibility",
+  "selected_run": "target/m1/frontend-final-5",
+  "required_cases": 15,
+  "passed_cases": 15,
+  "source_stability": true,
+  "rust_artifact": {
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/debug/deps/frontend-516400a5605af175",
+    "sha256": "c79d00203455afe37fe18af957bc5183b5a5082444a7aae78b7483d0ad433f93"
+  },
+  "checks": {
+    "frontend_rust_regressions": {
+      "passed": 10,
+      "ignored_protocol_probe": 1
+    },
+    "python_evidence_integrity_regressions": {
+      "passed": 7
+    }
+  },
+  "evidence_archive": "reports/m1/frontend-evidence.tar.gz",
+  "preserved_attempts": [
+    {
+      "directory": "target/m1/frontend",
+      "outcome": "11/12 exact matches; reserved keyword hidden was incorrectly accepted by Rust; fixture and parser corrected"
+    },
+    {
+      "directory": "target/m1/frontend-rerun-1",
+      "outcome": "build failure from transient parser signature edit; corrected"
+    },
+    {
+      "directory": "target/m1/frontend-rerun-2",
+      "outcome": "12/12 matches before expanded EOF/hostile-input cases"
+    },
+    {
+      "directory": "target/m1/frontend-rerun-3",
+      "outcome": "15/15 matches before provenance hardening; hostile nesting regression separately found former128 recursion limit unsafe"
+    },
+    {
+      "directory": "target/m1/frontend-final-1",
+      "outcome": "build blocked by unfinished concurrent Wasm crate"
+    },
+    {
+      "directory": "target/m1/frontend-final-2",
+      "outcome": "15/15 raw matches, inconclusive source provenance because concurrent sources changed"
+    },
+    {
+      "directory": "target/m1/frontend-final-3",
+      "outcome": "15/15 raw matches, inconclusive source provenance because concurrent sources changed"
+    },
+    {
+      "directory": "target/m1/frontend-final-4",
+      "outcome": "15/15 raw matches; overbroad source watch included unrelated runtime benchmark example and detected its edit"
+    },
+    {
+      "directory": "target/m1/frontend-final-5",
+      "outcome": "15/15 exact matches with stable relevant target sources and preserved snapshots"
+    }
+  ],
+  "known_limits": [
+    "bounded ASCII-identifier grammar; expression recursion32 and node/expression budget512",
+    "complete CLI/runtime diagnostics and stack rendering unimplemented; parser probe compares complete ParserError.message bytes and UTF16 span only",
+    "contextual new outside member RHS explicitly unsupported; former overacceptance has negative regression",
+    "implicit base classes/properties, full0.32 const/ambiguous locality/invisible scopes and type inference unimplemented",
+    "UTF16 isolated surrogates outside Rust valid UTF8 source input space; dense SourceMap memory cost unmeasured",
+    "selected cases are not fullM1/full-language compatibility or performance evidence"
+  ]
+}

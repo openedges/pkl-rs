@@ -1,0 +1,517 @@
+{
+  "schema": 1,
+  "scope": "selected numeric primitive loops, not Pkl evaluation or product performance",
+  "status": "complete-primitive-observation",
+  "contract": {
+    "forks": 3,
+    "repetitions": 2048,
+    "warmups": 12,
+    "measurements": 12,
+    "convergence_window": 4,
+    "maximum_window_drift": 0.1,
+    "maximum_relative_mad": 0.1,
+    "minimum_warmup_seconds": 5,
+    "maximum_warmup_seconds": 20
+  },
+  "candidate": {
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/release/examples/semantics_bench",
+    "sha256": "4f0ff5aee97d323342429c1a07ea001fe069cef824ad4d0513b045523519331b"
+  },
+  "sources": {
+    "crates/pkl-runtime/src/numeric.rs": "6d318ab81dee53600bdd3ef5a78daa87419346456ead54912e47312eacf7ec07",
+    "crates/pkl-runtime/examples/semantics_bench.rs": "4fbd6f5642674657332a90a9e12080de8e9ad15918ac8e09dc92fe4826b1504c",
+    "tools/java/M1SemanticsBench.java": "8c469fb229dd7dd8ba26d6334090c2f7e189a13a45fb64894065576b655575dd",
+    "tools/m1_semantics_bench.py": "08cc9b7d0deabcad2a256b60661c8da3fe34dea65cd5af7ab9a082432abdb777",
+    "Cargo.lock": "17114bdbbe6146393c569475c128bdfc618863bbaab8f4bada41860bf8eab96b",
+    "rust-toolchain.toml": "04ab0c8ee214f246c7c53bdfba7ba80a93dad65da5b8455edf17c5ec226d5b20"
+  },
+  "input_count": 24,
+  "inputs_sha256": "d83fcd13d3b3e4c7c57fb7b58d9bf2810763e1437304be089cab24da8bc780ed",
+  "operations_per_sample": 49152,
+  "correctness": "complete raw stdout/stderr/exit comparison passed before timing",
+  "summaries": {
+    "format": {
+      "rust": [
+        {
+          "median_ns": 15480833.0,
+          "first_window_median_ns": 15473854.0,
+          "last_window_median_ns": 15480833.0,
+          "relative_window_drift": 0.0004510188605889651,
+          "relative_mad": 0.0013699521207935,
+          "status": "stable"
+        },
+        {
+          "median_ns": 15324624.5,
+          "first_window_median_ns": 15321333.0,
+          "last_window_median_ns": 15344916.5,
+          "relative_window_drift": 0.0015392590187811987,
+          "relative_mad": 0.00089042964804782,
+          "status": "stable"
+        },
+        {
+          "median_ns": 15409020.5,
+          "first_window_median_ns": 15364750.0,
+          "last_window_median_ns": 15421729.0,
+          "relative_window_drift": 0.0037084235018467596,
+          "relative_mad": 0.0015683345998533781,
+          "status": "stable"
+        }
+      ],
+      "java": [
+        {
+          "median_ns": 2530208.5,
+          "first_window_median_ns": 2514125.0,
+          "last_window_median_ns": 2546688.0,
+          "relative_window_drift": 0.012952021080892955,
+          "relative_mad": 0.006331691637270209,
+          "status": "stable"
+        },
+        {
+          "median_ns": 2476603.5,
+          "first_window_median_ns": 2517208.0,
+          "last_window_median_ns": 2421937.0,
+          "relative_window_drift": 0.037847885434973985,
+          "relative_mad": 0.0059724941840710475,
+          "status": "stable"
+        },
+        {
+          "median_ns": 2524687.5,
+          "first_window_median_ns": 2560625.0,
+          "last_window_median_ns": 2510375.0,
+          "relative_window_drift": 0.019624115206248474,
+          "relative_mad": 0.010826488426785493,
+          "status": "stable"
+        }
+      ],
+      "observed_rust_java_ratio": 6.103337739819285,
+      "rust_ns_per_operation": 313.49732462565106,
+      "java_ns_per_operation": 51.364898681640625,
+      "status": "stable-primitive-observation"
+    },
+    "cbrt": {
+      "rust": [
+        {
+          "median_ns": 323875.0,
+          "first_window_median_ns": 323750.0,
+          "last_window_median_ns": 324021.0,
+          "relative_window_drift": 0.000837065637065637,
+          "relative_mad": 0.000643766885372443,
+          "status": "stable"
+        },
+        {
+          "median_ns": 320292.0,
+          "first_window_median_ns": 320479.0,
+          "last_window_median_ns": 320125.5,
+          "relative_window_drift": 0.001103036392400126,
+          "relative_mad": 0.0008461029310753937,
+          "status": "stable"
+        },
+        {
+          "median_ns": 319917.0,
+          "first_window_median_ns": 319937.5,
+          "last_window_median_ns": 319896.0,
+          "relative_window_drift": 0.0001297128345379957,
+          "relative_mad": 0.00026100519822328915,
+          "status": "stable"
+        }
+      ],
+      "java": [
+        {
+          "median_ns": 419250.0,
+          "first_window_median_ns": 419562.5,
+          "last_window_median_ns": 419312.5,
+          "relative_window_drift": 0.0005958587814687919,
+          "relative_mad": 0.0002981514609421586,
+          "status": "stable"
+        },
+        {
+          "median_ns": 400896.0,
+          "first_window_median_ns": 402104.5,
+          "last_window_median_ns": 401813.0,
+          "relative_window_drift": 0.0007249359308339001,
+          "relative_mad": 0.00093540469348659,
+          "status": "stable"
+        },
+        {
+          "median_ns": 419146.0,
+          "first_window_median_ns": 420312.5,
+          "last_window_median_ns": 420562.5,
+          "relative_window_drift": 0.0005947955390334573,
+          "relative_mad": 0.0008958692197945346,
+          "status": "stable"
+        }
+      ],
+      "observed_rust_java_ratio": 0.7641537793513478,
+      "rust_ns_per_operation": 6.516357421875,
+      "java_ns_per_operation": 8.527547200520834,
+      "status": "stable-primitive-observation"
+    },
+    "sin": {
+      "rust": [
+        {
+          "median_ns": 1571812.5,
+          "first_window_median_ns": 1570646.0,
+          "last_window_median_ns": 1579979.5,
+          "relative_window_drift": 0.005942459344753687,
+          "relative_mad": 0.0012192930136387132,
+          "status": "stable"
+        },
+        {
+          "median_ns": 1568666.5,
+          "first_window_median_ns": 1569417.0,
+          "last_window_median_ns": 1568979.0,
+          "relative_window_drift": 0.0002790845262922474,
+          "relative_mad": 0.0006371653885641084,
+          "status": "stable"
+        },
+        {
+          "median_ns": 1568209.0,
+          "first_window_median_ns": 1570395.5,
+          "last_window_median_ns": 1567166.5,
+          "relative_window_drift": 0.002056169926620396,
+          "relative_mad": 0.0006775244881262638,
+          "status": "stable"
+        }
+      ],
+      "java": [
+        {
+          "median_ns": 2366249.5,
+          "first_window_median_ns": 2366062.0,
+          "last_window_median_ns": 2371208.0,
+          "relative_window_drift": 0.002174921874405658,
+          "relative_mad": 0.008258216219380079,
+          "status": "stable"
+        },
+        {
+          "median_ns": 2314687.5,
+          "first_window_median_ns": 2321187.5,
+          "last_window_median_ns": 2316646.0,
+          "relative_window_drift": 0.001956541640862705,
+          "relative_mad": 0.007983583097070339,
+          "status": "stable"
+        },
+        {
+          "median_ns": 2296166.5,
+          "first_window_median_ns": 2328146.0,
+          "last_window_median_ns": 2316479.5,
+          "relative_window_drift": 0.005011068893445686,
+          "relative_mad": 0.002132249555944658,
+          "status": "stable"
+        }
+      ],
+      "observed_rust_java_ratio": 0.6777012015660862,
+      "rust_ns_per_operation": 31.914601643880207,
+      "java_ns_per_operation": 47.092437744140625,
+      "status": "stable-primitive-observation"
+    },
+    "checked_add": {
+      "rust": [
+        {
+          "median_ns": 35896.0,
+          "first_window_median_ns": 36083.5,
+          "last_window_median_ns": 35604.5,
+          "relative_window_drift": 0.013274765474524367,
+          "relative_mad": 0.011017940717628705,
+          "status": "stable"
+        },
+        {
+          "median_ns": 35812.0,
+          "first_window_median_ns": 35916.5,
+          "last_window_median_ns": 35604.0,
+          "relative_window_drift": 0.008700736430331464,
+          "relative_mad": 0.00987099296325254,
+          "status": "stable"
+        },
+        {
+          "median_ns": 35709.0,
+          "first_window_median_ns": 35854.5,
+          "last_window_median_ns": 35583.5,
+          "relative_window_drift": 0.007558326012076587,
+          "relative_mad": 0.00875129519168837,
+          "status": "stable"
+        }
+      ],
+      "java": [
+        {
+          "median_ns": 124750.0,
+          "first_window_median_ns": 124666.5,
+          "last_window_median_ns": 124729.0,
+          "relative_window_drift": 0.0005013375686331132,
+          "relative_mad": 0.0008376753507014028,
+          "status": "stable"
+        },
+        {
+          "median_ns": 124812.0,
+          "first_window_median_ns": 124687.5,
+          "last_window_median_ns": 124854.0,
+          "relative_window_drift": 0.0013353383458646617,
+          "relative_mad": 0.0006730122103643881,
+          "status": "stable"
+        },
+        {
+          "median_ns": 125166.5,
+          "first_window_median_ns": 125145.5,
+          "last_window_median_ns": 125187.5,
+          "relative_window_drift": 0.00033560935071576687,
+          "relative_mad": 0.0003315583642588073,
+          "status": "stable"
+        }
+      ],
+      "observed_rust_java_ratio": 0.2869275390186841,
+      "rust_ns_per_operation": 0.7285970052083334,
+      "java_ns_per_operation": 2.539306640625,
+      "status": "stable-primitive-observation"
+    }
+  },
+  "warmup": {
+    "java": [
+      {
+        "status": "stable",
+        "elapsed_ns": 5005105375,
+        "rounds": 871,
+        "last_windows": {
+          "format": {
+            "median_ns": 2530333.0,
+            "first_window_median_ns": 2579417.0,
+            "last_window_median_ns": 2522999.5,
+            "relative_window_drift": 0.02187219049886079,
+            "relative_mad": 0.008637005485048806,
+            "status": "stable"
+          },
+          "cbrt": {
+            "median_ns": 419708.0,
+            "first_window_median_ns": 419812.5,
+            "last_window_median_ns": 420937.5,
+            "relative_window_drift": 0.0026797677534613666,
+            "relative_mad": 0.0006945304830977728,
+            "status": "stable"
+          },
+          "sin": {
+            "median_ns": 2355187.5,
+            "first_window_median_ns": 2351250.0,
+            "last_window_median_ns": 2381562.5,
+            "relative_window_drift": 0.012892078681552366,
+            "relative_mad": 0.002361807711700236,
+            "status": "stable"
+          },
+          "checked_add": {
+            "median_ns": 125354.0,
+            "first_window_median_ns": 125437.5,
+            "last_window_median_ns": 125250.0,
+            "relative_window_drift": 0.0014947683109118087,
+            "relative_mad": 0.0016593008599645803,
+            "status": "stable"
+          }
+        }
+      },
+      {
+        "status": "stable",
+        "elapsed_ns": 5005791042,
+        "rounds": 887,
+        "last_windows": {
+          "format": {
+            "median_ns": 2475771.5,
+            "first_window_median_ns": 2480875.5,
+            "last_window_median_ns": 2444687.5,
+            "relative_window_drift": 0.014586785995508441,
+            "relative_mad": 0.006142933626952245,
+            "status": "stable"
+          },
+          "cbrt": {
+            "median_ns": 403500.0,
+            "first_window_median_ns": 402270.5,
+            "last_window_median_ns": 402208.5,
+            "relative_window_drift": 0.000154125147133583,
+            "relative_mad": 0.006350681536555143,
+            "status": "stable"
+          },
+          "sin": {
+            "median_ns": 2299000.5,
+            "first_window_median_ns": 2298896.0,
+            "last_window_median_ns": 2302292.0,
+            "relative_window_drift": 0.001477230809919196,
+            "relative_mad": 0.002174640675371754,
+            "status": "stable"
+          },
+          "checked_add": {
+            "median_ns": 125416.5,
+            "first_window_median_ns": 125562.5,
+            "last_window_median_ns": 125312.0,
+            "relative_window_drift": 0.0019950223992035838,
+            "relative_mad": 0.0008332236986361444,
+            "status": "stable"
+          }
+        }
+      },
+      {
+        "status": "stable",
+        "elapsed_ns": 5005910375,
+        "rounds": 864,
+        "last_windows": {
+          "format": {
+            "median_ns": 2548728.5,
+            "first_window_median_ns": 2540353.5,
+            "last_window_median_ns": 2574812.0,
+            "relative_window_drift": 0.013564450774272162,
+            "relative_mad": 0.019511493672236962,
+            "status": "stable"
+          },
+          "cbrt": {
+            "median_ns": 419604.0,
+            "first_window_median_ns": 419312.5,
+            "last_window_median_ns": 420562.5,
+            "relative_window_drift": 0.002981070204203309,
+            "relative_mad": 0.001489499623454495,
+            "status": "stable"
+          },
+          "sin": {
+            "median_ns": 2306791.5,
+            "first_window_median_ns": 2296854.5,
+            "last_window_median_ns": 2305500.0,
+            "relative_window_drift": 0.0037640608057671917,
+            "relative_mad": 0.005815870224942306,
+            "status": "stable"
+          },
+          "checked_add": {
+            "median_ns": 125812.5,
+            "first_window_median_ns": 125750.0,
+            "last_window_median_ns": 125771.0,
+            "relative_window_drift": 0.00016699801192842942,
+            "relative_mad": 0.0018161947342275212,
+            "status": "stable"
+          }
+        }
+      }
+    ],
+    "rust": [
+      {
+        "status": "stable",
+        "elapsed_ns": 5004449666,
+        "rounds": 284,
+        "last_windows": {
+          "format": {
+            "median_ns": 15471813.0,
+            "first_window_median_ns": 15444521.0,
+            "last_window_median_ns": 15480749.5,
+            "relative_window_drift": 0.0023457185884884356,
+            "relative_mad": 0.0014004176498255247,
+            "status": "stable"
+          },
+          "cbrt": {
+            "median_ns": 319937.5,
+            "first_window_median_ns": 322042.0,
+            "last_window_median_ns": 319750.0,
+            "relative_window_drift": 0.007117084107041939,
+            "relative_mad": 0.00273647196718109,
+            "status": "stable"
+          },
+          "sin": {
+            "median_ns": 1571291.5,
+            "first_window_median_ns": 1571291.5,
+            "last_window_median_ns": 1571000.0,
+            "relative_window_drift": 0.0001855161820706088,
+            "relative_mad": 0.0005304553610835417,
+            "status": "stable"
+          },
+          "checked_add": {
+            "median_ns": 35812.5,
+            "first_window_median_ns": 35833.0,
+            "last_window_median_ns": 35791.5,
+            "relative_window_drift": 0.0011581503083749616,
+            "relative_mad": 0.0017452006980802793,
+            "status": "stable"
+          }
+        }
+      },
+      {
+        "status": "stable",
+        "elapsed_ns": 5013022583,
+        "rounds": 289,
+        "last_windows": {
+          "format": {
+            "median_ns": 15319645.5,
+            "first_window_median_ns": 15352479.0,
+            "last_window_median_ns": 15440833.5,
+            "relative_window_drift": 0.005755064051870711,
+            "relative_mad": 0.0016440980961341435,
+            "status": "stable"
+          },
+          "cbrt": {
+            "median_ns": 321645.5,
+            "first_window_median_ns": 321166.5,
+            "last_window_median_ns": 320521.0,
+            "relative_window_drift": 0.002009860928832864,
+            "relative_mad": 0.006734121882631655,
+            "status": "stable"
+          },
+          "sin": {
+            "median_ns": 1570667.0,
+            "first_window_median_ns": 1569041.5,
+            "last_window_median_ns": 1570041.0,
+            "relative_window_drift": 0.0006370131064092313,
+            "relative_mad": 0.002029710944458628,
+            "status": "stable"
+          },
+          "checked_add": {
+            "median_ns": 36125.0,
+            "first_window_median_ns": 36145.5,
+            "last_window_median_ns": 36083.5,
+            "relative_window_drift": 0.0017152895934487004,
+            "relative_mad": 0.004622837370242215,
+            "status": "stable"
+          }
+        }
+      },
+      {
+        "status": "stable",
+        "elapsed_ns": 5004725500,
+        "rounds": 288,
+        "last_windows": {
+          "format": {
+            "median_ns": 15473667.0,
+            "first_window_median_ns": 15481646.0,
+            "last_window_median_ns": 15324646.0,
+            "relative_window_drift": 0.01014104055860727,
+            "relative_mad": 0.001626408271549336,
+            "status": "stable"
+          },
+          "cbrt": {
+            "median_ns": 320750.0,
+            "first_window_median_ns": 322041.5,
+            "last_window_median_ns": 319417.0,
+            "relative_window_drift": 0.00814957078513173,
+            "relative_mad": 0.0042213561964146535,
+            "status": "stable"
+          },
+          "sin": {
+            "median_ns": 1567500.5,
+            "first_window_median_ns": 1569583.5,
+            "last_window_median_ns": 1566958.0,
+            "relative_window_drift": 0.0016727367483157156,
+            "relative_mad": 0.00034609239359094303,
+            "status": "stable"
+          },
+          "checked_add": {
+            "median_ns": 36021.0,
+            "first_window_median_ns": 36000.0,
+            "last_window_median_ns": 36021.0,
+            "relative_window_drift": 0.0005833333333333334,
+            "relative_mad": 0.0005829932539352044,
+            "status": "stable"
+          }
+        }
+      }
+    ]
+  },
+  "limitations": [
+    "No Pkl evaluator, renderer, diagnostic, FFI, startup, or RSS costs",
+    "String formatting includes identical ASCII checksum loops; integer workload includes overflow outcomes",
+    "Java JIT warmup assessed only by measured window drift/MAD, not compilation-log proof",
+    "No product performance-target verdict follows from these primitive observations"
+  ],
+  "evidence_directory": "target/m1/semantics-cost/run01",
+  "full_report_sha256": "88c7e5badbd28fde1a55ed4047baf02f3068d6f2c703a19e42c83354d6b048cb",
+  "evidence_archive": "reports/m1/semantics-cost-evidence.tar.gz",
+  "evidence_archive_sha256": "cd6dd2b7a34ada28966064c20f10af384d678beedbc703ed087d09ff81af460d",
+  "decision": "Reject the current decimal formatter as meeting the numeric primitive cost target: its observed cost is 6.103 times the pinned optimizing Java formatter on this selected mix. Keep the portable semantic contract; optimize decimal conversion/layout in M2/M3 and rerun correctness before measuring."
+}

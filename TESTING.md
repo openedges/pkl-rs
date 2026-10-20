@@ -1,6 +1,6 @@
 # Validation Contract
 
-The goals are behavioral and byte compatibility with the Java implementation of Pkl 0.32.0, with execution time and memory usage at least as good as Java for every required workload. Source verification, inventories, a pinned Java oracle, and raw comparison tooling are available. The Rust evaluator and Java/Rust product performance comparisons are not available yet.
+The goals are behavioral and byte compatibility with the Java implementation of Pkl 0.32.0, with execution time and memory usage at least as good as Java for every required workload. Source verification, inventories, a pinned Java oracle, and raw comparison tooling are available. M1 adds bounded Rust/Java architecture comparisons and actual browser/Node execution; complete language and product performance gates remain open.
 
 ## Current Checks
 
@@ -74,6 +74,31 @@ The runner requires a new `target/m0/pantry` evidence directory. It runs package
 Run all verification-tool regressions with `python3 -m unittest discover -s tools/tests -v`. The [M0 report](reports/m0/README.md) links recorded outcomes and raw evidence. The [CI contract](docs/ci.md) distinguishes the required tooling smoke run from optional full-corpus acquisition and performance measurements.
 
 ## Compatibility Comparisons
+
+M1 experiments have narrower, explicit contracts:
+
+```sh
+python3 tools/m1_frontend.py --check-contract
+python3 tools/m1_semantics.py --check
+python3 tools/m1_frontend.py --output target/m1/frontend-new
+python3 tools/m1_runtime.py --output target/m1/runtime-new
+python3 tools/m1_host.py --output target/m1/host-new
+python3 tools/m1_platforms.py --output target/m1/platforms-new
+```
+
+See [frontend](docs/m1-frontend.md), [runtime](docs/m1-runtime.md),
+[semantics](docs/m1-semantics.md), [Host](docs/m1-host.md), and
+[platform](docs/m1-platforms.md) contracts. Primitive comparisons are not full
+Pkl renderer/error comparisons. The runtime retains three full diagnostic byte
+mismatches; the platform command returns nonzero for its two known Java regex
+backend differences. CI uses the separately named architecture contract mode,
+which still reports failed compatibility cases and requires the exact gap
+inventory. A green experiment job cannot establish release conformance.
+
+Run `python3 tools/m1_runtime.py --benchmark --output target/m1/performance-new`
+on a quiet host with the separately pinned optimizing Java profile. Preserve
+negative results, convergence data, compilation traces, and the different API
+boundaries; do not interpret a prototype ratio as a product performance claim.
 
 Run the pinned Java 0.32.0 oracle and Rust with identical inputs and environments. Compare:
 

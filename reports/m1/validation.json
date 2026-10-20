@@ -1,0 +1,128 @@
+{
+  "platform": "macOS-27.0-arm64-arm-64bit-Mach-O",
+  "commands": [
+    {
+      "command": [
+        "cargo",
+        "xtask",
+        "verify"
+      ],
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "cargo",
+        "fmt",
+        "--all",
+        "--",
+        "--check"
+      ],
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "cargo",
+        "clippy",
+        "--workspace",
+        "--all-targets",
+        "--locked",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "cargo",
+        "test",
+        "--workspace",
+        "--locked"
+      ],
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "cargo",
+        "check",
+        "-p",
+        "pkl-runtime",
+        "--target",
+        "wasm32-unknown-unknown",
+        "--locked"
+      ],
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools/tests",
+        "-v"
+      ],
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "python3",
+        "tools/inventory.py",
+        "--check"
+      ],
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "python3",
+        "tools/discover.py",
+        "--check"
+      ],
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "python3",
+        "tools/smoke_manifest.py",
+        "--check"
+      ],
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "python3",
+        "tools/regression_manifest.py",
+        "--check"
+      ],
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "python3",
+        "tools/benchmark.py",
+        "--check-contract"
+      ],
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "python3",
+        "tools/m1_frontend.py",
+        "--check-contract"
+      ],
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "python3",
+        "tools/m1_semantics.py",
+        "--check"
+      ],
+      "exit_code": 0
+    }
+  ],
+  "report_sha256": "f4ae5a9c13052da0325ebca4ba5d2cb73851eaafccefdec97d38f2a316b2ccf1",
+  "evidence_archive": "reports/m1/validation-evidence.tar.gz",
+  "python_regression_count": 114
+}

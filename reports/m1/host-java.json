@@ -1,0 +1,91 @@
+{
+  "schema_version": 1,
+  "scope": "Java-only evaluator ResourceReader, caching, same-thread reentry, timeout and close observations; not Rust byte/API equivalence or async protocol parity",
+  "selected_run": "target/m1/host-java-run-2",
+  "observed_suites": 5,
+  "source_stability": true,
+  "rust_comparisons": 0,
+  "checks": {
+    "python_host_observation_regressions": 7
+  },
+  "evidence_archive": "reports/m1/host-java-evidence.tar.gz",
+  "observations": {
+    "repeat": {
+      "warmup": "ok",
+      "first": "ok",
+      "repeat": "ok",
+      "second-module": "ok",
+      "reader-calls": "1",
+      "fresh": "ok",
+      "reader-calls-after-fresh": "2",
+      "close-once": "ok",
+      "close-twice": "ok",
+      "after-final-close": "org.graalvm.polyglot.PolyglotException"
+    },
+    "delayed": {
+      "warmup": "ok",
+      "pending-before-release": "true",
+      "evaluation": "ok",
+      "repeat": "ok",
+      "reader-calls": "1",
+      "reader-interrupted": "0",
+      "close-once": "ok",
+      "close-twice": "ok",
+      "after-final-close": "org.graalvm.polyglot.PolyglotException"
+    },
+    "reentry": {
+      "warmup": "ok",
+      "reentrant": "ok",
+      "outer": "ok",
+      "reader-calls": "1",
+      "close-once": "ok",
+      "close-twice": "ok",
+      "after-final-close": "org.graalvm.polyglot.PolyglotException"
+    },
+    "timeout": {
+      "warmup": "ok",
+      "pending-before-release": "true",
+      "evaluation": "org.pkl.core.PklException",
+      "pending-after-timeout-window": "false",
+      "after-timeout": "java.util.concurrent.RejectedExecutionException",
+      "reader-calls": "1",
+      "reader-interrupted": "1",
+      "close-once": "ok",
+      "close-twice": "ok",
+      "after-final-close": "java.util.concurrent.RejectedExecutionException"
+    },
+    "close": {
+      "warmup": "ok",
+      "pending-before-release": "true",
+      "close": "ok",
+      "evaluation": "org.pkl.core.PklException",
+      "close-pending-before-release": "false",
+      "after-close": "org.graalvm.polyglot.PolyglotException",
+      "reader-calls": "1",
+      "reader-interrupted": "1",
+      "close-once": "ok",
+      "close-twice": "ok",
+      "after-final-close": "org.graalvm.polyglot.PolyglotException"
+    }
+  },
+  "known_differences": [
+    "Java permits same-thread callback reentry; current Rust HostSession refuses starts while active",
+    "after ordinary Java close: PolyglotException Context execution was cancelled; after timeout: RejectedExecutionException with process-specific identities",
+    "close/timeout interrupt the actual gated Java callback; Rust adapter cancellation of arbitrary platform I/O remains unverified",
+    "Rust structured Host errors are not Java public API or formatted diagnostic parity"
+  ],
+  "preserved_attempts": [
+    {
+      "directory": "target/m1/host-java-initial",
+      "status": "failed before callback entry: unsupported synthetic module URI; original helper source identity incompletely recorded"
+    },
+    {
+      "directory": "target/m1/host-java-run-1",
+      "status": "four observation suites accepted; timeout suite exposed incorrect validator wording/posttimeout exception assumptions"
+    },
+    {
+      "directory": "target/m1/host-java-run-2",
+      "status": "five observation suites accepted with exact source snapshots/provenance"
+    }
+  ]
+}

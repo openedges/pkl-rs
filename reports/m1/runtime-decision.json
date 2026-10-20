@@ -1,0 +1,96 @@
+{
+  "schema": 1,
+  "decision": "adopt scalar-specialized bytecode for the bounded M2 baseline with generic fallback",
+  "rejected_hypothesis": "generic boxed dispatch already meets the measured warm-API time target",
+  "evidence": [
+    {
+      "candidate": "generic",
+      "report": "reports/m1/runtime-performance.json",
+      "decision": "reject this dispatch candidate as sufficient for the measured workload; investigate specialization",
+      "raw_value_matches": 5,
+      "diagnostic_mismatches": 2,
+      "forks": [
+        {
+          "rust_median_ns": 1771.0416902805327,
+          "java_median_ns": 1394.751126955435,
+          "time_ratio": 1.2697904708967631,
+          "rss_ratio": 0.0048797764747550276,
+          "rust_peak_rss_bytes": 2031616,
+          "java_peak_rss_bytes": 416333824,
+          "warmup_converged": true,
+          "java_completed_target_compilations": 0
+        },
+        {
+          "rust_median_ns": 1769.774559149376,
+          "java_median_ns": 1392.8694995709973,
+          "time_ratio": 1.270596103722901,
+          "rss_ratio": 0.0044695626477541375,
+          "rust_peak_rss_bytes": 1982464,
+          "java_peak_rss_bytes": 443547648,
+          "warmup_converged": true,
+          "java_completed_target_compilations": 0
+        }
+      ]
+    },
+    {
+      "candidate": "specialized",
+      "report": "reports/m1/runtime-specialized.json",
+      "decision": "adopt scalar-specialized bytecode as the bounded M2 baseline with generic fallback; revisit fully optimized JVM and object workloads before broader performance conclusions",
+      "raw_value_matches": 6,
+      "diagnostic_mismatches": 3,
+      "forks": [
+        {
+          "rust_median_ns": 643.967021191647,
+          "java_median_ns": 1408.3860592984017,
+          "time_ratio": 0.4572375712895398,
+          "rss_ratio": 0.0044444444444444444,
+          "rust_peak_rss_bytes": 1949696,
+          "java_peak_rss_bytes": 438681600,
+          "warmup_converged": true,
+          "java_completed_target_compilations": 0
+        },
+        {
+          "rust_median_ns": 643.9623205279454,
+          "java_median_ns": 1392.509886816835,
+          "time_ratio": 0.4624472160840389,
+          "rss_ratio": 0.004454593097252377,
+          "rust_peak_rss_bytes": 1949696,
+          "java_peak_rss_bytes": 437682176,
+          "warmup_converged": true,
+          "java_completed_target_compilations": 0
+        }
+      ]
+    }
+  ],
+  "scope_limits": [
+    "128 checked integer additions with changing seeds, native embedding boundary only",
+    "Java parses run(seed) per request; Rust reuses compiled Program",
+    "No completed Java target compilation: fully optimized comparison unresolved",
+    "RSS includes entire child process warmup and initialization, not only arithmetic",
+    "No release performance conclusion; broader object, cold, product and long-session workloads remain required"
+  ],
+  "correctness": "Six final successful cases match complete raw Java/Rust stdout, stderr and exit outcomes; three errors preserve full diagnostic byte mismatches. No mismatched diagnostic counts as a compatibility pass.",
+  "next_validation": [
+    "resolve pinned Graal/Pkl FrameWithoutBoxing compilation bailout without silently changing oracle conditions",
+    "large lazy object graph and repeated real evaluator sessions",
+    "Java-compatible runtime diagnostic byte formatting and recovery semantics"
+  ],
+  "same_binary_control": {
+    "report": "reports/m1/runtime-control.json",
+    "executable_sha256": "f170a728d089c2440a375e5797c42804bb6b9477dfa344e27604a0d4a29e2e3e",
+    "generic_median_ns": [
+      1876.4128856964867,
+      1876.5599033199974
+    ],
+    "fused_median_ns": [
+      643.967021191647,
+      643.9623205279454
+    ],
+    "generic_over_fused_ratio": [
+      2.9138338205956966,
+      2.914083391993371
+    ],
+    "all_warmups_converged": true,
+    "scope": "same final Rust binary; no new paired Java measurements"
+  }
+}

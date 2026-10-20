@@ -1,6 +1,6 @@
 # Architecture
 
-The goal is to reimplement Pkl 0.32.0 in Rust, using one shared engine for Native, Wasm, and N-API. This document describes the intended design. The current workspace contains only a minimal `pkl-runtime` library and `xtask`; the components and features below are planned work.
+The goal is to reimplement Pkl 0.32.0 in Rust, using one shared engine for Native, Wasm, and N-API. M1 now implements bounded frontend, VM, heap, primitive and Host experiments in `pkl-runtime`, with working `pkl-wasm` and `pkl-napi` probes. The complete language, standard library, renderers and product interfaces below remain planned work. See the [M1 evidence](../reports/m1/README.md) for measured limits and decisions.
 
 ## Processing Flow
 
@@ -53,3 +53,33 @@ The public scope includes the evaluator, CLI, REPL, server protocol, project and
 Give compiled results and evaluation state separate reuse lifecycles. Cache keys must account for source code, configuration, and dependencies that affect results. Verify that caching does not change errors or output.
 
 The Java oracle is a development and validation tool. Product evaluation must not fall back to Java. Evaluate architectural decisions using minimal reproductions, byte comparisons, and execution time and memory measurements that include warmup. Detailed acceptance criteria are defined in [TESTING.md](../TESTING.md).
+
+## M1 contract decisions
+
+- Source offsets are UTF-8 bytes, with explicit conversion to Java UTF-16 and
+  code point positions. Synthetic diagnostic underline widths are separate
+  from source spans. Resolution records lexical depth, owner and receiver
+  choices before execution; product diagnostic rendering remains unfinished.
+- Immutable compiled programs and evaluator-owned traced heaps have separate
+  lifetimes. Lazy states retain success and failure, active/suspended frames
+  contribute roots, and generation-tagged handles reject stale objects.
+- Numeric compatibility uses shared checked integer operations, Java decimal
+  formatting rules and audited fdlibm operations where generic libm differs.
+  Float equality evidence uses the declared primitive protocol; it is not a
+  complete renderer or all-IEEE-input proof.
+- The current regex candidate is rejected as a complete backend. The product
+  requires versioned Java Unicode tables and a UTF-16 cursor, including
+  zero-width progress inside supplementary pairs. The bounded cursor proof
+  grounds this model; the general matcher replacement remains implementation
+  work and the candidate's known mismatches remain failed cases.
+- Host operations suspend and resume the same continuation, with evaluator
+  identity, exactly-once request delivery, cooperative deadlines and terminal
+  cleanup. Java callback reentry requires nested evaluation contexts sharing
+  evaluator caches; the single active HostSession prototype does not yet
+  implement that public behavior. See [the Host contract](m1-host.md).
+- The generic bytecode prototype's measured slowdown rejects unconditional
+  adoption on performance grounds. Checked scalar-specialized bytecode is
+  selected as the bounded M2 baseline after a separate measured improvement,
+  with the generic path retained for fallback and equivalence regressions.
+  The Java target compilation bailout and broader workloads remain open gates.
+  No M1 microbenchmark establishes the complete release performance target.

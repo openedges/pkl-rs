@@ -1,0 +1,757 @@
+{
+  "schema": 1,
+  "timestamp_utc": "2026-10-20T04:40:15.840704+00:00",
+  "scope": "bounded M1 runtime architectural experiment; incomplete language/performance gates",
+  "oracle": {
+    "schema": 1,
+    "profile": "reference",
+    "version": "0.32.0",
+    "lock_sha256": "7b77395ff5b64f7a220db74975e4c3858a36b19c5c0f5bca92681e3b1bc6504b",
+    "source": {
+      "path": "external/pkl",
+      "url": "https://github.com/apple/pkl.git",
+      "revision": "e51fb2f91774265666f94980ec630db794a4db2d",
+      "metadata_sha256": {
+        "gradle.properties": "1d76fc163cba8cabc502948a7dbc05cf7b7afc4a5e8efe35b3a746a89829be13",
+        "gradle/libs.versions.toml": "f2c818bfff6f30a096bcca18256ea9aae967a21707babae8c2b34a77a225b046",
+        "build-logic/src/main/kotlin/BuildInfo.kt": "a082b8aa717d9fb6f15fee6f4c74c62089b5cae1d1666d55cbb0d70318920ba6",
+        "pkl-tools/pkl-tools.gradle.kts": "c32aca46fa3fb845b205ecdf5b75d037e0b1f4ac6b6cd8cb9d1359667a06aa80",
+        "LICENSE.txt": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+        "NOTICE.txt": "d03b8db1a0d36ba65550ba30a51c7897f4b48b0eae7582d3f0576ea41e23d48e",
+        "THIRD-PARTY-NOTICES.txt": "8ac4f6b18b00227f8dbc5222c6259f6cb5084ad0053ebcebf83d5147cea31aaf"
+      }
+    },
+    "artifact": "/Users/cody.ij.hwang/Projects/pkl-rs/.cache/oracle/pkl-tools-0.32.0.jar",
+    "artifact_sha256": "c3b6f6215a08b31453b0fb0edd8c9da0aee31233f65abb8ab07f9c945151e059",
+    "artifact_url": "https://repo.maven.apache.org/maven2/org/pkl-lang/pkl-tools/0.32.0/pkl-tools-0.32.0.jar",
+    "release": {
+      "version": "0.32.0",
+      "commitId": "e51fb2f",
+      "stdlibModules": "pkl:analyze,pkl:base,pkl:Benchmark,pkl:Command,pkl:DocPackageInfo,pkl:DocsiteInfo,pkl:EvaluatorSettings,pkl:json,pkl:jsonnet,pkl:math,pkl:pklbinary,pkl:platform,pkl:Project,pkl:protobuf,pkl:ref,pkl:reflect,pkl:release,pkl:semver,pkl:settings,pkl:shell,pkl:test,pkl:xml,pkl:yaml"
+    },
+    "java": "/usr/bin/java",
+    "jdk": {
+      "executable": "/usr/bin/java",
+      "executable_sha256": "51ec0764f7225b40d5b286b01401aa6b3990d0d171b446d7dc81ca7542b45552",
+      "runtime_modules_sha256": "40fcf7a32bada7e299e3513939a4472d27f8f61eb81cdd1675ea00648de7e7cf",
+      "release_sha256": "ab66b8afeea98b25f1869fbe7c0dde368d448e7cc0f7bab0359b322ade134fe1",
+      "properties": {
+        "java.vendor": "Eclipse Adoptium",
+        "java.version": "21.0.12.1",
+        "java.runtime.version": "21.0.12.1+1-LTS",
+        "java.vm.name": "OpenJDK 64-Bit Server VM",
+        "java.vm.version": "21.0.12.1+1-LTS",
+        "java.home": "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home",
+        "os.name": "Mac OS X",
+        "os.arch": "aarch64",
+        "os.version": "27.0"
+      },
+      "version_stdout_hex": "",
+      "version_stderr_hex": "50726f70657274792073657474696e67733a0a2020202066696c652e656e636f64696e67203d205554462d380a2020202066696c652e736570617261746f72203d202f0a202020206674702e6e6f6e50726f7879486f737473203d206c6f63616c7c2a2e6c6f63616c7c3136392e3235342f31367c2a2e3136392e3235342f31360a20202020687474702e6e6f6e50726f7879486f737473203d206c6f63616c7c2a2e6c6f63616c7c3136392e3235342f31367c2a2e3136392e3235342f31360a202020206a6176612e636c6173732e70617468203d200a202020206a6176612e636c6173732e76657273696f6e203d2036352e300a202020206a6176612e686f6d65203d202f4c6962726172792f4a6176612f4a6176615669727475616c4d616368696e65732f74656d7572696e2d32312e6a646b2f436f6e74656e74732f486f6d650a202020206a6176612e696f2e746d70646972203d202f7661722f666f6c646572732f5f712f733936397a686b783671643870333276326e6438377967683030303067702f542f0a202020206a6176612e6c6962726172792e70617468203d202f55736572732f636f64792e696a2e6877616e672f50726f6a656374732f706b6c2d72732f2e63616368652f6f7261636c652f686f6d652f4c6962726172792f4a6176612f457874656e73696f6e730a20202020202020202f4c6962726172792f4a6176612f457874656e73696f6e730a20202020202020202f4e6574776f726b2f4c6962726172792f4a6176612f457874656e73696f6e730a20202020202020202f53797374656d2f4c6962726172792f4a6176612f457874656e73696f6e730a20202020202020202f7573722f6c69622f6a6176610a20202020202020202e0a202020206a6176612e72756e74696d652e6e616d65203d204f70656e4a444b2052756e74696d6520456e7669726f6e6d656e740a202020206a6176612e72756e74696d652e76657273696f6e203d2032312e302e31322e312b312d4c54530a202020206a6176612e73706563696669636174696f6e2e6e616d65203d204a61766120506c6174666f726d204150492053706563696669636174696f6e0a202020206a6176612e73706563696669636174696f6e2e76656e646f72203d204f7261636c6520436f72706f726174696f6e0a202020206a6176612e73706563696669636174696f6e2e76657273696f6e203d2032310a202020206a6176612e76656e646f72203d2045636c697073652041646f707469756d0a202020206a6176612e76656e646f722e75726c203d2068747470733a2f2f61646f707469756d2e6e65742f0a202020206a6176612e76656e646f722e75726c2e627567203d2068747470733a2f2f6769746875622e636f6d2f61646f707469756d2f61646f707469756d2d737570706f72742f6973737565730a202020206a6176612e76656e646f722e76657273696f6e203d2054656d7572696e2d32312e302e31322e312b310a202020206a6176612e76657273696f6e203d2032312e302e31322e310a202020206a6176612e76657273696f6e2e64617465203d20323032362d30382d31380a202020206a6176612e766d2e636f6d707265737365644f6f70734d6f6465203d204e6f6e2d7a65726f206469736a6f696e7420626173650a202020206a6176612e766d2e696e666f203d206d69786564206d6f64652c2073686172696e670a202020206a6176612e766d2e6e616d65203d204f70656e4a444b2036342d4269742053657276657220564d0a202020206a6176612e766d2e73706563696669636174696f6e2e6e616d65203d204a617661205669727475616c204d616368696e652053706563696669636174696f6e0a202020206a6176612e766d2e73706563696669636174696f6e2e76656e646f72203d204f7261636c6520436f72706f726174696f6e0a202020206a6176612e766d2e73706563696669636174696f6e2e76657273696f6e203d2032310a202020206a6176612e766d2e76656e646f72203d2045636c697073652041646f707469756d0a202020206a6176612e766d2e76657273696f6e203d2032312e302e31322e312b312d4c54530a202020206a646b2e6465627567203d2072656c656173650a202020206c696e652e736570617261746f72203d205c6e200a202020206e61746976652e656e636f64696e67203d2055532d41534349490a202020206f732e61726368203d20616172636836340a202020206f732e6e616d65203d204d6163204f5320580a202020206f732e76657273696f6e203d2032372e300a20202020706174682e736570617261746f72203d203a0a20202020736f636b734e6f6e50726f7879486f737473203d206c6f63616c7c2a2e6c6f63616c7c3136392e3235342f31367c2a2e3136392e3235342f31360a202020207374646572722e656e636f64696e67203d2055532d41534349490a202020207374646f75742e656e636f64696e67203d2055532d41534349490a2020202073756e2e617263682e646174612e6d6f64656c203d2036340a2020202073756e2e626f6f742e6c6962726172792e70617468203d202f4c6962726172792f4a6176612f4a6176615669727475616c4d616368696e65732f74656d7572696e2d32312e6a646b2f436f6e74656e74732f486f6d652f6c69620a2020202073756e2e6370752e656e6469616e203d206c6974746c650a2020202073756e2e696f2e756e69636f64652e656e636f64696e67203d20556e69636f64654269670a2020202073756e2e6a6176612e6c61756e63686572203d2053554e5f5354414e444152440a2020202073756e2e6a6e752e656e636f64696e67203d205554462d380a2020202073756e2e6d616e6167656d656e742e636f6d70696c6572203d20486f7453706f742036342d4269742054696572656420436f6d70696c6572730a20202020757365722e636f756e747279203d204b520a20202020757365722e646972203d202f55736572732f636f64792e696a2e6877616e672f50726f6a656374732f706b6c2d72730a20202020757365722e686f6d65203d202f55736572732f636f64792e696a2e6877616e670a20202020757365722e6c616e6775616765203d206b6f0a20202020757365722e6e616d65203d20636f64792e696a2e6877616e670a0a6f70656e6a646b2076657273696f6e202232312e302e31322e312220323032362d30382d3138204c54530a4f70656e4a444b2052756e74696d6520456e7669726f6e6d656e742054656d7572696e2d32312e302e31322e312b3120286275696c642032312e302e31322e312b312d4c5453290a4f70656e4a444b2036342d4269742053657276657220564d2054656d7572696e2d32312e302e31322e312b3120286275696c642032312e302e31322e312b312d4c54532c206d69786564206d6f64652c2073686172696e67290a"
+    },
+    "command": [
+      "/usr/bin/java",
+      "-Xms64m",
+      "-Xmx512m",
+      "-Dfile.encoding=UTF-8",
+      "-Dstdout.encoding=UTF-8",
+      "-Dstderr.encoding=UTF-8",
+      "-Duser.language=en",
+      "-Duser.country=US",
+      "-Duser.timezone=UTC",
+      "-Djava.awt.headless=true",
+      "-Duser.name=oracle",
+      "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs/.cache/oracle/home",
+      "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs/.cache/oracle/tmp",
+      "-cp",
+      "/Users/cody.ij.hwang/Projects/pkl-rs/.cache/oracle/pkl-tools-0.32.0.jar",
+      "org.pkl.cli.Main"
+    ],
+    "environment": {
+      "PATH": "/bin:/usr/bin",
+      "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs/.cache/oracle/home",
+      "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs/.cache/oracle/tmp",
+      "TMP": "/Users/cody.ij.hwang/Projects/pkl-rs/.cache/oracle/tmp",
+      "TEMP": "/Users/cody.ij.hwang/Projects/pkl-rs/.cache/oracle/tmp",
+      "LC_ALL": "C",
+      "LANG": "C",
+      "TZ": "UTC",
+      "TERM": "dumb",
+      "NO_COLOR": "1",
+      "COLUMNS": "80"
+    },
+    "platform": "macOS-27.0-arm64-arm-64bit-Mach-O",
+    "version_stdout_hex": "506b6c20302e33322e3020286d61634f532032372e302c204a6176612032312e302e31322e31290a",
+    "version_stderr_hex": ""
+  },
+  "machine": {
+    "platform": "macOS-27.0-arm64-arm-64bit-Mach-O",
+    "system": "Darwin",
+    "machine": "arm64",
+    "python": "3.14.8 (main, Sep 30 2026, 17:55:09) [Clang 21.0.0 (clang-2100.3.34.2)]",
+    "processor": "arm",
+    "cpu_count": 8,
+    "load_average": [
+      13.7421875,
+      4.5703125,
+      2.69970703125
+    ],
+    "hardware_raw": "Apple M1\n8589934592\n",
+    "power_state": {
+      "exit_code": 0,
+      "stdout": "Now drawing from 'AC Power'\n",
+      "stderr": ""
+    },
+    "thermal_state": {
+      "exit_code": 0,
+      "stdout": "Note: No thermal warning level has been recorded\nNote: No performance warning level has been recorded\nNote: No CPU power status has been recorded\n",
+      "stderr": ""
+    }
+  },
+  "identities": [
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/tools/java/M1RuntimeProbe.java",
+      "sha256": "0544f993fabc2acc34333c3210977a0205099db9a7e2b0ccc3021a5d693d59c0",
+      "bytes": 3980
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/tools/m1_runtime.py",
+      "sha256": "ed76581dea8906bce83aca19bdfff0b9e124f4a620cfa52ea4da0c076bab5b2c",
+      "bytes": 10384
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/Cargo.lock",
+      "sha256": "7eadca8df2e823e0e5692e45a946aeb9849ca562b6597cf4fcf86e3ca638fb6c",
+      "bytes": 1543
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/rust-toolchain.toml",
+      "sha256": "04ab0c8ee214f246c7c53bdfba7ba80a93dad65da5b8455edf17c5ec226d5b20",
+      "bytes": 123
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/crates/pkl-runtime/src/diagnostic.rs",
+      "sha256": "5bd18e3960bff48d714d3a2da6d9408fb54768398c62cb5b931be0ac6626de11",
+      "bytes": 1181
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/crates/pkl-runtime/src/heap.rs",
+      "sha256": "79cfd7f19ce14f556a33f52eeda130fab8873652ecadcdacc674592945828044",
+      "bytes": 5381
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/crates/pkl-runtime/src/lib.rs",
+      "sha256": "75979698ea3618a9ca0c56ffaad9aaee094b551cc075c37a985d234bcd53f255",
+      "bytes": 387
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/crates/pkl-runtime/src/numeric.rs",
+      "sha256": "2dbbcc04614da37bc8f762d3e0df0009df823ba21f1860cdf950712e1a1f52e5",
+      "bytes": 7623
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/crates/pkl-runtime/src/parser.rs",
+      "sha256": "a62dcb36953050008a118b8e7b0ffd08cac02467b97d10d6ef8fa5081e6253d5",
+      "bytes": 17446
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/crates/pkl-runtime/src/regex.rs",
+      "sha256": "cd35152e683d913f6d46f281ef117de7cc09d3dae1d9417752d013b5bf8356c9",
+      "bytes": 8216
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/crates/pkl-runtime/src/resolver.rs",
+      "sha256": "376adb3c66dddc36c3865777d643f4935752eec41708176016871cdec1842a55",
+      "bytes": 6932
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/crates/pkl-runtime/src/source.rs",
+      "sha256": "fb7672927f31952b2c1a951e8efcb2b61f3f48f03468e19eb297d4892355bcd1",
+      "bytes": 2961
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/crates/pkl-runtime/src/syntax.rs",
+      "sha256": "928c423ae4b1bd8e451dbaa094e462a0a4f476d41f29a9fc8dfc9ae916be4eb7",
+      "bytes": 988
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/crates/pkl-runtime/src/value.rs",
+      "sha256": "0a61e5fcb2c7130dcb8988fce764dd0d895ef72f99a6c200829369cf8b221ce4",
+      "bytes": 1726
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/crates/pkl-runtime/src/vm.rs",
+      "sha256": "1698c5140db9287b68050aee39a6c5b4b8b0c194b4eb0e68ab75c236d44cba83",
+      "bytes": 26336
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/tests/fixtures/m1/runtime/amendment.pkl",
+      "sha256": "6e1f39b357f5bede16bb5e7efddba5fe0a2cd85241aab2435710eee193fdb080",
+      "bytes": 182
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/tests/fixtures/m1/runtime/arithmetic-workload.pkl",
+      "sha256": "c3fe0ee99ea2e04c60b35ce9467c21e5ff1cc3b2577360c65bed02e7c93437b8",
+      "bytes": 696
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/tests/fixtures/m1/runtime/captured-receiver.pkl",
+      "sha256": "015e8a88e4930074d4d3e28912eb56b2b2994d4a8277f76b9834161b387edb58",
+      "bytes": 105
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/tests/fixtures/m1/runtime/first-error.pkl",
+      "sha256": "d3fb2d4ff215a9a89b1b5e8fa18b4fb9ec905e11038b29c5deae9e174668d7c1",
+      "bytes": 68
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/tests/fixtures/m1/runtime/forcing-cycle.pkl",
+      "sha256": "a42b6bfed7c5e694a411f6f5c09b08e799d6921d6bbeeb09ad2a5d3dc7692c9d",
+      "bytes": 40
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/tests/fixtures/m1/runtime/lazy-unused.pkl",
+      "sha256": "a44dd39a7010a3062e3a3d6077e47a0cf1473feb272daa463f109f3b8d138153",
+      "bytes": 40
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/tests/fixtures/m1/runtime/lexical-let.pkl",
+      "sha256": "70694d965f0fac2ed13ef6305806dd038ea53c223b0c7b57f1eee22726299397",
+      "bytes": 110
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/tests/fixtures/m1/runtime/object-cycle.pkl",
+      "sha256": "dd976aad8b552476d220a8e75ee310f2827fe68d948e5ae1f9e273879a1cb817",
+      "bytes": 74
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/release/examples/runtime_probe",
+      "sha256": "352fd1a8041393062d996465cc37fd3a438fea0d62ab758127a923f906e7d6cf",
+      "bytes": 569152
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/release/examples/runtime_bench",
+      "sha256": "008c7b61493cca74f84f8ed46a11a7a3a13af22d5190f3114fd8aa9a10675a05",
+      "bytes": 528848
+    }
+  ],
+  "cases": [
+    {
+      "id": "amendment",
+      "input": "/Users/cody.ij.hwang/Projects/pkl-rs/tests/fixtures/m1/runtime/amendment.pkl",
+      "input_sha256": "6e1f39b357f5bede16bb5e7efddba5fe0a2cd85241aab2435710eee193fdb080",
+      "java": {
+        "command": [
+          "/usr/bin/java",
+          "-Xms64m",
+          "-Xmx512m",
+          "-Dfile.encoding=UTF-8",
+          "-Dstdout.encoding=UTF-8",
+          "-Dstderr.encoding=UTF-8",
+          "-Duser.language=en",
+          "-Duser.country=US",
+          "-Duser.timezone=UTC",
+          "-Djava.awt.headless=true",
+          "-Duser.name=oracle",
+          "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs/.cache/oracle/home",
+          "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs/.cache/oracle/tmp",
+          "-cp",
+          "/Users/cody.ij.hwang/Projects/pkl-rs/target/m1/runtime/functional-20261020-02/classes:/Users/cody.ij.hwang/Projects/pkl-rs/.cache/oracle/pkl-tools-0.32.0.jar",
+          "M1RuntimeProbe",
+          "compare",
+          "/Users/cody.ij.hwang/Projects/pkl-rs/tests/fixtures/m1/runtime/amendment.pkl",
+          "result"
+        ],
+        "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs",
+        "status": "executed",
+        "exit_code": 0,
+        "elapsed_ns": 1139177667,
+        "peak_rss_bytes": 156532736,
+        "user_cpu_seconds": 1.669596,
+        "system_cpu_seconds": 0.125569,
+        "stdout": {
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m1/runtime/functional-20261020-02/amendment/java/stdout.bin",
+          "sha256": "2858dcd1057d3eae7f7d5f782167e24b61153c01551450a628cee722509f6529",
+          "bytes": 2
+        },
+        "stderr": {
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m1/runtime/functional-20261020-02/amendment/java/stderr.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        }
+      },
+      "rust": {
+        "command": [
+          "/Users/cody.ij.hwang/Projects/pkl-rs/target/release/examples/runtime_probe",
+          "/Users/cody.ij.hwang/Projects/pkl-rs/tests/fixtures/m1/runtime/amendment.pkl",
+          "result"
+        ],
+        "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs",
+        "status": "executed",
+        "exit_code": 0,
+        "elapsed_ns": 257376250,
+        "peak_rss_bytes": 1982464,
+        "user_cpu_seconds": 0.001045,
+        "system_cpu_seconds": 0.00261,
+        "stdout": {
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m1/runtime/functional-20261020-02/amendment/rust/stdout.bin",
+          "sha256": "2858dcd1057d3eae7f7d5f782167e24b61153c01551450a628cee722509f6529",
+          "bytes": 2
+        },
+        "stderr": {
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m1/runtime/functional-20261020-02/amendment/rust/stderr.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        }
+      },
+      "raw_equal": true,
+      "status": "bounded-value-bytes-match"
+    },
+    {
+      "id": "captured-receiver",
+      "input": "/Users/cody.ij.hwang/Projects/pkl-rs/tests/fixtures/m1/runtime/captured-receiver.pkl",
+      "input_sha256": "015e8a88e4930074d4d3e28912eb56b2b2994d4a8277f76b9834161b387edb58",
+      "java": {
+        "command": [
+          "/usr/bin/java",
+          "-Xms64m",
+          "-Xmx512m",
+          "-Dfile.encoding=UTF-8",
+          "-Dstdout.encoding=UTF-8",
+          "-Dstderr.encoding=UTF-8",
+          "-Duser.language=en",
+          "-Duser.country=US",
+          "-Duser.timezone=UTC",
+          "-Djava.awt.headless=true",
+          "-Duser.name=oracle",
+          "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs/.cache/oracle/home",
+          "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs/.cache/oracle/tmp",
+          "-cp",
+          "/Users/cody.ij.hwang/Projects/pkl-rs/target/m1/runtime/functional-20261020-02/classes:/Users/cody.ij.hwang/Projects/pkl-rs/.cache/oracle/pkl-tools-0.32.0.jar",
+          "M1RuntimeProbe",
+          "compare",
+          "/Users/cody.ij.hwang/Projects/pkl-rs/tests/fixtures/m1/runtime/captured-receiver.pkl",
+          "result"
+        ],
+        "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs",
+        "status": "executed",
+        "exit_code": 0,
+        "elapsed_ns": 653483750,
+        "peak_rss_bytes": 160448512,
+        "user_cpu_seconds": 1.381759,
+        "system_cpu_seconds": 0.089963,
+        "stdout": {
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m1/runtime/functional-20261020-02/captured-receiver/java/stdout.bin",
+          "sha256": "d4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35",
+          "bytes": 1
+        },
+        "stderr": {
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m1/runtime/functional-20261020-02/captured-receiver/java/stderr.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        }
+      },
+      "rust": {
+        "command": [
+          "/Users/cody.ij.hwang/Projects/pkl-rs/target/release/examples/runtime_probe",
+          "/Users/cody.ij.hwang/Projects/pkl-rs/tests/fixtures/m1/runtime/captured-receiver.pkl",
+          "result"
+        ],
+        "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs",
+        "status": "executed",
+        "exit_code": 0,
+        "elapsed_ns": 5920041,
+        "peak_rss_bytes": 1982464,
+        "user_cpu_seconds": 0.00107,
+        "system_cpu_seconds": 0.001982,
+        "stdout": {
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m1/runtime/functional-20261020-02/captured-receiver/rust/stdout.bin",
+          "sha256": "d4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35",
+          "bytes": 1
+        },
+        "stderr": {
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m1/runtime/functional-20261020-02/captured-receiver/rust/stderr.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        }
+      },
+      "raw_equal": true,
+      "status": "bounded-value-bytes-match"
+    },
+    {
+      "id": "lexical-let",
+      "input": "/Users/cody.ij.hwang/Projects/pkl-rs/tests/fixtures/m1/runtime/lexical-let.pkl",
+      "input_sha256": "70694d965f0fac2ed13ef6305806dd038ea53c223b0c7b57f1eee22726299397",
+      "java": {
+        "command": [
+          "/usr/bin/java",
+          "-Xms64m",
+          "-Xmx512m",
+          "-Dfile.encoding=UTF-8",
+          "-Dstdout.encoding=UTF-8",
+          "-Dstderr.encoding=UTF-8",
+          "-Duser.language=en",
+          "-Duser.country=US",
+          "-Duser.timezone=UTC",
+          "-Djava.awt.headless=true",
+          "-Duser.name=oracle",
+          "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs/.cache/oracle/home",
+          "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs/.cache/oracle/tmp",
+          "-cp",
+          "/Users/cody.ij.hwang/Projects/pkl-rs/target/m1/runtime/functional-20261020-02/classes:/Users/cody.ij.hwang/Projects/pkl-rs/.cache/oracle/pkl-tools-0.32.0.jar",
+          "M1RuntimeProbe",
+          "compare",
+          "/Users/cody.ij.hwang/Projects/pkl-rs/tests/fixtures/m1/runtime/lexical-let.pkl",
+          "result"
+        ],
+        "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs",
+        "status": "executed",
+        "exit_code": 0,
+        "elapsed_ns": 682183875,
+        "peak_rss_bytes": 144752640,
+        "user_cpu_seconds": 1.408492,
+        "system_cpu_seconds": 0.093848,
+        "stdout": {
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m1/runtime/functional-20261020-02/lexical-let/java/stdout.bin",
+          "sha256": "e629fa6598d732768f7c726b4b621285f9c3b85303900aa912017db7617d8bdb",
+          "bytes": 2
+        },
+        "stderr": {
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m1/runtime/functional-20261020-02/lexical-let/java/stderr.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        }
+      },
+      "rust": {
+        "command": [
+          "/Users/cody.ij.hwang/Projects/pkl-rs/target/release/examples/runtime_probe",
+          "/Users/cody.ij.hwang/Projects/pkl-rs/tests/fixtures/m1/runtime/lexical-let.pkl",
+          "result"
+        ],
+        "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs",
+        "status": "executed",
+        "exit_code": 0,
+        "elapsed_ns": 9903583,
+        "peak_rss_bytes": 1982464,
+        "user_cpu_seconds": 0.0019039999999999999,
+        "system_cpu_seconds": 0.003994999999999999,
+        "stdout": {
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m1/runtime/functional-20261020-02/lexical-let/rust/stdout.bin",
+          "sha256": "e629fa6598d732768f7c726b4b621285f9c3b85303900aa912017db7617d8bdb",
+          "bytes": 2
+        },
+        "stderr": {
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m1/runtime/functional-20261020-02/lexical-let/rust/stderr.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        }
+      },
+      "raw_equal": true,
+      "status": "bounded-value-bytes-match"
+    },
+    {
+      "id": "object-cycle",
+      "input": "/Users/cody.ij.hwang/Projects/pkl-rs/tests/fixtures/m1/runtime/object-cycle.pkl",
+      "input_sha256": "dd976aad8b552476d220a8e75ee310f2827fe68d948e5ae1f9e273879a1cb817",
+      "java": {
+        "command": [
+          "/usr/bin/java",
+          "-Xms64m",
+          "-Xmx512m",
+          "-Dfile.encoding=UTF-8",
+          "-Dstdout.encoding=UTF-8",
+          "-Dstderr.encoding=UTF-8",
+          "-Duser.language=en",
+          "-Duser.country=US",
+          "-Duser.timezone=UTC",
+          "-Djava.awt.headless=true",
+          "-Duser.name=oracle",
+          "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs/.cache/oracle/home",
+          "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs/.cache/oracle/tmp",
+          "-cp",
+          "/Users/cody.ij.hwang/Projects/pkl-rs/target/m1/runtime/functional-20261020-02/classes:/Users/cody.ij.hwang/Projects/pkl-rs/.cache/oracle/pkl-tools-0.32.0.jar",
+          "M1RuntimeProbe",
+          "compare",
+          "/Users/cody.ij.hwang/Projects/pkl-rs/tests/fixtures/m1/runtime/object-cycle.pkl",
+          "result"
+        ],
+        "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs",
+        "status": "executed",
+        "exit_code": 0,
+        "elapsed_ns": 636496000,
+        "peak_rss_bytes": 156090368,
+        "user_cpu_seconds": 1.377575,
+        "system_cpu_seconds": 0.095077,
+        "stdout": {
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m1/runtime/functional-20261020-02/object-cycle/java/stdout.bin",
+          "sha256": "73475cb40a568e8da8a045ced110137e159f890ac4da883b6b17dc651b3a8049",
+          "bytes": 2
+        },
+        "stderr": {
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m1/runtime/functional-20261020-02/object-cycle/java/stderr.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        }
+      },
+      "rust": {
+        "command": [
+          "/Users/cody.ij.hwang/Projects/pkl-rs/target/release/examples/runtime_probe",
+          "/Users/cody.ij.hwang/Projects/pkl-rs/tests/fixtures/m1/runtime/object-cycle.pkl",
+          "result"
+        ],
+        "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs",
+        "status": "executed",
+        "exit_code": 0,
+        "elapsed_ns": 5341500,
+        "peak_rss_bytes": 1966080,
+        "user_cpu_seconds": 0.001006,
+        "system_cpu_seconds": 0.0016309999999999999,
+        "stdout": {
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m1/runtime/functional-20261020-02/object-cycle/rust/stdout.bin",
+          "sha256": "73475cb40a568e8da8a045ced110137e159f890ac4da883b6b17dc651b3a8049",
+          "bytes": 2
+        },
+        "stderr": {
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m1/runtime/functional-20261020-02/object-cycle/rust/stderr.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        }
+      },
+      "raw_equal": true,
+      "status": "bounded-value-bytes-match"
+    },
+    {
+      "id": "lazy-unused",
+      "input": "/Users/cody.ij.hwang/Projects/pkl-rs/tests/fixtures/m1/runtime/lazy-unused.pkl",
+      "input_sha256": "a44dd39a7010a3062e3a3d6077e47a0cf1473feb272daa463f109f3b8d138153",
+      "java": {
+        "command": [
+          "/usr/bin/java",
+          "-Xms64m",
+          "-Xmx512m",
+          "-Dfile.encoding=UTF-8",
+          "-Dstdout.encoding=UTF-8",
+          "-Dstderr.encoding=UTF-8",
+          "-Duser.language=en",
+          "-Duser.country=US",
+          "-Duser.timezone=UTC",
+          "-Djava.awt.headless=true",
+          "-Duser.name=oracle",
+          "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs/.cache/oracle/home",
+          "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs/.cache/oracle/tmp",
+          "-cp",
+          "/Users/cody.ij.hwang/Projects/pkl-rs/target/m1/runtime/functional-20261020-02/classes:/Users/cody.ij.hwang/Projects/pkl-rs/.cache/oracle/pkl-tools-0.32.0.jar",
+          "M1RuntimeProbe",
+          "compare",
+          "/Users/cody.ij.hwang/Projects/pkl-rs/tests/fixtures/m1/runtime/lazy-unused.pkl",
+          "result"
+        ],
+        "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs",
+        "status": "executed",
+        "exit_code": 0,
+        "elapsed_ns": 578678083,
+        "peak_rss_bytes": 158466048,
+        "user_cpu_seconds": 1.292415,
+        "system_cpu_seconds": 0.08204,
+        "stdout": {
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m1/runtime/functional-20261020-02/lazy-unused/java/stdout.bin",
+          "sha256": "73475cb40a568e8da8a045ced110137e159f890ac4da883b6b17dc651b3a8049",
+          "bytes": 2
+        },
+        "stderr": {
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m1/runtime/functional-20261020-02/lazy-unused/java/stderr.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        }
+      },
+      "rust": {
+        "command": [
+          "/Users/cody.ij.hwang/Projects/pkl-rs/target/release/examples/runtime_probe",
+          "/Users/cody.ij.hwang/Projects/pkl-rs/tests/fixtures/m1/runtime/lazy-unused.pkl",
+          "result"
+        ],
+        "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs",
+        "status": "executed",
+        "exit_code": 0,
+        "elapsed_ns": 5470667,
+        "peak_rss_bytes": 1949696,
+        "user_cpu_seconds": 0.001031,
+        "system_cpu_seconds": 0.001774,
+        "stdout": {
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m1/runtime/functional-20261020-02/lazy-unused/rust/stdout.bin",
+          "sha256": "73475cb40a568e8da8a045ced110137e159f890ac4da883b6b17dc651b3a8049",
+          "bytes": 2
+        },
+        "stderr": {
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m1/runtime/functional-20261020-02/lazy-unused/rust/stderr.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        }
+      },
+      "raw_equal": true,
+      "status": "bounded-value-bytes-match"
+    },
+    {
+      "id": "first-error",
+      "input": "/Users/cody.ij.hwang/Projects/pkl-rs/tests/fixtures/m1/runtime/first-error.pkl",
+      "input_sha256": "d3fb2d4ff215a9a89b1b5e8fa18b4fb9ec905e11038b29c5deae9e174668d7c1",
+      "java": {
+        "command": [
+          "/usr/bin/java",
+          "-Xms64m",
+          "-Xmx512m",
+          "-Dfile.encoding=UTF-8",
+          "-Dstdout.encoding=UTF-8",
+          "-Dstderr.encoding=UTF-8",
+          "-Duser.language=en",
+          "-Duser.country=US",
+          "-Duser.timezone=UTC",
+          "-Djava.awt.headless=true",
+          "-Duser.name=oracle",
+          "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs/.cache/oracle/home",
+          "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs/.cache/oracle/tmp",
+          "-cp",
+          "/Users/cody.ij.hwang/Projects/pkl-rs/target/m1/runtime/functional-20261020-02/classes:/Users/cody.ij.hwang/Projects/pkl-rs/.cache/oracle/pkl-tools-0.32.0.jar",
+          "M1RuntimeProbe",
+          "compare",
+          "/Users/cody.ij.hwang/Projects/pkl-rs/tests/fixtures/m1/runtime/first-error.pkl",
+          "result"
+        ],
+        "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs",
+        "status": "executed",
+        "exit_code": 1,
+        "elapsed_ns": 609524875,
+        "peak_rss_bytes": 160792576,
+        "user_cpu_seconds": 1.375184,
+        "system_cpu_seconds": 0.082744,
+        "stdout": {
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m1/runtime/functional-20261020-02/first-error/java/stdout.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        },
+        "stderr": {
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m1/runtime/functional-20261020-02/first-error/java/stderr.bin",
+          "sha256": "ecf99296a3d846b5dcd8513319829bfd6b5ff5a37ef822f53401838490c55fbe",
+          "bytes": 418
+        }
+      },
+      "rust": {
+        "command": [
+          "/Users/cody.ij.hwang/Projects/pkl-rs/target/release/examples/runtime_probe",
+          "/Users/cody.ij.hwang/Projects/pkl-rs/tests/fixtures/m1/runtime/first-error.pkl",
+          "result"
+        ],
+        "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs",
+        "status": "executed",
+        "exit_code": 1,
+        "elapsed_ns": 5648084,
+        "peak_rss_bytes": 1933312,
+        "user_cpu_seconds": 0.001015,
+        "system_cpu_seconds": 0.001857,
+        "stdout": {
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m1/runtime/functional-20261020-02/first-error/rust/stdout.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        },
+        "stderr": {
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m1/runtime/functional-20261020-02/first-error/rust/stderr.bin",
+          "sha256": "87b11c68cd0109bbfcd61d09f90996aed9c55fa336de784e6c7bcdc11a2f9cbb",
+          "bytes": 27
+        }
+      },
+      "raw_equal": false,
+      "status": "diagnostic-byte-mismatch"
+    },
+    {
+      "id": "forcing-cycle",
+      "input": "/Users/cody.ij.hwang/Projects/pkl-rs/tests/fixtures/m1/runtime/forcing-cycle.pkl",
+      "input_sha256": "a42b6bfed7c5e694a411f6f5c09b08e799d6921d6bbeeb09ad2a5d3dc7692c9d",
+      "java": {
+        "command": [
+          "/usr/bin/java",
+          "-Xms64m",
+          "-Xmx512m",
+          "-Dfile.encoding=UTF-8",
+          "-Dstdout.encoding=UTF-8",
+          "-Dstderr.encoding=UTF-8",
+          "-Duser.language=en",
+          "-Duser.country=US",
+          "-Duser.timezone=UTC",
+          "-Djava.awt.headless=true",
+          "-Duser.name=oracle",
+          "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs/.cache/oracle/home",
+          "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs/.cache/oracle/tmp",
+          "-cp",
+          "/Users/cody.ij.hwang/Projects/pkl-rs/target/m1/runtime/functional-20261020-02/classes:/Users/cody.ij.hwang/Projects/pkl-rs/.cache/oracle/pkl-tools-0.32.0.jar",
+          "M1RuntimeProbe",
+          "compare",
+          "/Users/cody.ij.hwang/Projects/pkl-rs/tests/fixtures/m1/runtime/forcing-cycle.pkl",
+          "result"
+        ],
+        "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs",
+        "status": "executed",
+        "exit_code": 1,
+        "elapsed_ns": 660353084,
+        "peak_rss_bytes": 151912448,
+        "user_cpu_seconds": 1.405622,
+        "system_cpu_seconds": 0.091995,
+        "stdout": {
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m1/runtime/functional-20261020-02/forcing-cycle/java/stdout.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        },
+        "stderr": {
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m1/runtime/functional-20261020-02/forcing-cycle/java/stderr.bin",
+          "sha256": "1ad8e789085622db387f8010d84575e7e6df3f82c07fd1a5851dcc72fa552cda",
+          "bytes": 88665
+        }
+      },
+      "rust": {
+        "command": [
+          "/Users/cody.ij.hwang/Projects/pkl-rs/target/release/examples/runtime_probe",
+          "/Users/cody.ij.hwang/Projects/pkl-rs/tests/fixtures/m1/runtime/forcing-cycle.pkl",
+          "result"
+        ],
+        "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs",
+        "status": "executed",
+        "exit_code": 1,
+        "elapsed_ns": 9565209,
+        "peak_rss_bytes": 1933312,
+        "user_cpu_seconds": 0.001419,
+        "system_cpu_seconds": 0.0032419999999999997,
+        "stdout": {
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m1/runtime/functional-20261020-02/forcing-cycle/rust/stdout.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        },
+        "stderr": {
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m1/runtime/functional-20261020-02/forcing-cycle/rust/stderr.bin",
+          "sha256": "b01306de6c3e58e489d3f0c53d85d5f875cc8101cc1e95169bdd64709cd14eb8",
+          "bytes": 22
+        }
+      },
+      "raw_equal": false,
+      "status": "diagnostic-byte-mismatch"
+    }
+  ],
+  "measurements": [],
+  "compatibility_complete": false,
+  "known_gaps": [
+    "Java diagnostic bytes and logical call stacks",
+    "super missing-member empty Dynamic behavior",
+    "failure-cache retry semantics beyond the terminal experiment evaluation",
+    "full required workloads, cold startup, product boundaries and long sessions"
+  ],
+  "candidate_decision": "retain bytecode as bounded candidate; full strategy decision remains open",
+  "measurement_contract": {
+    "workload": "128 checked integer additions, seed cycles through 0..255",
+    "correctness": "all 256 inputs validated before timing; every returned decimal byte string checked outside timing",
+    "rust_boundary": "reused immutable Program; start fresh evaluation state + poll + decimal conversion",
+    "java_boundary": "persistent optimizing evaluator; evaluateExpressionString parses run(seed) on every call + decimal conversion",
+    "rss_boundary": "whole independent process including initialization, preflight, warmup and samples",
+    "compiled_code": "Rust Program compiled once; Java function warmup and compilation trace preserved",
+    "instruction_count": 258,
+    "forks": 0,
+    "samples": 0
+  }
+}
