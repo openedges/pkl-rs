@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "scope": "Java development-tree package/API tests and generated-ZIP module evaluation; no Rust compatibility comparison",
+  "manifest_sha256": "1e50bf91fa41f96be82c2c05eb81334ce10b501605e974dba3b798f07d9840cc",
+  "oracle_lock_sha256": "7b77395ff5b64f7a220db74975e4c3858a36b19c5c0f5bca92681e3b1bc6504b",
+  "summary": {
+    "assertion_count": null,
+    "attempted_project_packages": 29,
+    "compatibility_passes": 0,
+    "configured_generator_commands": 2,
+    "configured_generator_failure": 0,
+    "configured_generator_success": 2,
+    "distinct_assertion_count": null,
+    "generated_packages": 29,
+    "invalid_observation_processes": 0,
+    "observed_error_categories": {
+      "abstract-template": 4,
+      "default-configuration-violates-constraint": 13,
+      "requires-cli-expression": 1,
+      "requires-multiple-file-output": 4,
+      "requires-user-configuration": 45
+    },
+    "package_failure": 0,
+    "package_success": 29,
+    "packaged_module_commands": 206,
+    "packaged_module_error_observed": 64,
+    "packaged_module_success": 142,
+    "packaged_multi_file_commands": 4,
+    "packaged_multi_file_error_observed": 3,
+    "packaged_multi_file_success": 1,
+    "reported_assertion_invocations_including_dependency_repeats": 1875,
+    "reported_test_invocations_including_dependency_repeats": 585,
+    "required_project_packages": 29,
+    "successful_reporter_summaries": 48,
+    "tar_shell_success": true
+  },
+  "manifest_review": {
+    "current_manifest_sha256": "0e95da22f965dede398f1a1f136703ba913d588aa51c1fb871cd97a11c84a0dd",
+    "pantry_resource_set_sha256": "ce8902c934fb21aea92bdfad78edb3194863f90b30c73585e84b8c6363518ab0",
+    "pantry_resource_set_unchanged": true,
+    "reason": "Discovery correction preserved raw trailing slash in upstream Pkl symlink hashes and added inventory metadata. The complete Pantry source/resource census remains byte-identical to the recorded input snapshot.",
+    "recorded_manifest_sha256": "1e50bf91fa41f96be82c2c05eb81334ce10b501605e974dba3b798f07d9840cc"
+  },
+  "evidence_archive": "pantry-evidence.tar.gz"
+}

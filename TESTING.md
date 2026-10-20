@@ -56,6 +56,16 @@ Use a new evidence directory for each run. Candidate comparison requires a compl
 
 Reviewable evidence archives under `reports/m0/` retain raw outputs and a per-file checksum inventory. Verify an archive with `python3 tools/evidence.py verify <archive.tar.gz>`. Copied source workspaces can be excluded explicitly; the archive records its exclusions and retains the pinned source manifest.
 
+Pantry has a separate [development and packaged-module contract](docs/corpus.md):
+
+```sh
+python3 -m unittest discover -s tools/tests -p 'test_pantry.py'
+python3 tools/pantry.py --workers 4
+python3 tools/evidence.py verify reports/m0/pantry-evidence.tar.gz
+```
+
+The runner requires a new `target/m0/pantry` evidence directory. It runs package/API tests, evaluates generated ZIP modules, checks configured generators and the tar pipeline, and records dependency payload hashes. Abstract or user-configured module errors remain provisional observations. Reported test/assertion invocation totals can repeat dependency suites; they are not distinct coverage counts. Unfixed live GitHub discovery inputs remain outside the hermetic baseline.
+
 ## Compatibility Comparisons
 
 Run the pinned Java 0.32.0 oracle and Rust with identical inputs and environments. Compare:
