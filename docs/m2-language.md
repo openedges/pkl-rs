@@ -20,7 +20,7 @@ presented as distinct feature or test counts. Semantic mappings require review.
 python3 tools/m2_manifest.py --check
 python3 tools/m2_identifier_tables.py --output target/m2/identifiers-new
 python3 -m unittest discover -s tools/tests -p 'test_m2_*.py' -v
-python3 tools/m2_language.py --output target/m2/language-new
+python3 tools/m2_language.py --output target/m2/language-new --record-only
 python3 tools/m2_language.py --verify-report target/m2/language-new
 python3 tools/m2_language.py --verify-development target/m2/language-new
 python3 tools/m2_language.py --verify-subset target/m2/language-new

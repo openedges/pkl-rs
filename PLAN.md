@@ -154,9 +154,11 @@ M1의 공통 VM을 확장합니다. VM·heap·호출 의미론은 `gpt-6-astra /
 
 다음 구현은 `|>` 연산자, custom `this`와 같은 VM 안의 타입 검사 continuation, nullable·union·함수형 제약·오류 재실행 순서로 진행합니다. 제약의 실행 오류를 타입 불일치로 숨기지 않고 Host 중단·재진입·GC를 함께 검증합니다. 이후 객체 본문을 순서 있는 멤버 모델로 확장하여 element·entry·generator·spread를 연결합니다. 이 순서는 기존 M2 범위와 종료 조건을 줄이지 않습니다.
 
+타입 제약의 실행 상태·alias 선언 환경·GC 설계는 [아키텍처](docs/architecture.md)의 미구현 설계 절에 기록했습니다. 동일 alias를 타입 인자로 중첩할 때 오류 span이 가장 안쪽 타입 선언을 유지하는지, 클래스 초기화 실패 후 재시도 및 부분 초기화가 일치하는지도 추가 확인 항목입니다.
+
 ### 원래 범위와 종료 조건
 
-첫 구현 단계와 클래스·타입 별칭을 확장한 두 번째 단계의 [검증 기록](reports/m2/README.md)을 확보했습니다. 최신 선택 사례 191개 중 189개는 Java와 원시 바이트가 일치하며, 순환 참조 오류와 정수 `% 0`의 Java 버그 출력은 실패로 유지합니다. Rust 검사 111개와 Python 검사 164개, Node·브라우저 각 18개 시나리오가 통과했습니다. 첫 단계의 원격 CI 6개 작업과 내려받은 증거도 검증했습니다. 전체 목록의 클래스·타입 나머지 규칙, generator·Reference 및 미연결 코퍼스가 남아 있으므로 **M2는 진행 중**입니다. 개발 gate 성공과 엄격한 전체 gate 실패를 구분합니다.
+첫 구현 단계와 클래스·타입 별칭을 확장한 두 번째 단계의 [검증 기록](reports/m2/README.md)을 확보했습니다. 최신 선택 사례 191개 중 189개는 Java와 원시 바이트가 일치하며, 순환 참조 오류와 정수 `% 0`의 Java 버그 출력은 실패로 유지합니다. Rust 검사 111개와 Python 검사 164개, Node·브라우저 각 18개 시나리오가 통과했습니다. `fb5a348`과 `281ef6c`를 커밋·푸시했고, 각 원격 CI 6개 작업이 통과했습니다. [두 번째 단계 CI 증거](reports/m2/ci-stage2-summary.json)에서 내려받은 원시 비교 결과와 커밋 소스 246개, 식별자 표 재생성도 검증했습니다. 전체 목록의 클래스·타입 나머지 규칙, generator·Reference 및 미연결 코퍼스가 남아 있으므로 **M2는 진행 중**입니다. 개발 gate 성공과 엄격한 전체 gate 실패를 구분합니다.
 
 - 전체 문법, 이름 해석, IR·compiler, lazy evaluation, 객체·amendment·상속, closure, generator를 구현합니다.
 - 타입·제약·generic·union, `Reference<Domain, Type>`, reflection에 필요한 런타임 메타데이터를 구현합니다. 다중 행 문자열의 continuation 등 0.32 기능을 목록에 연결합니다.

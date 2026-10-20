@@ -1,0 +1,116 @@
+{
+  "schema_version": 1,
+  "repository": "luuvish/pkl-rs",
+  "commit": "281ef6ccdf050a0a23b90eea8006590fc53752c9",
+  "run_id": 39386841661,
+  "run_url": "https://github.com/luuvish/pkl-rs/actions/runs/39386841661",
+  "run_conclusion": "success",
+  "jobs": [
+    {
+      "name": "M1 architecture experiments (known gaps recorded)",
+      "id": 118508605373,
+      "conclusion": "success"
+    },
+    {
+      "name": "Compatibility tooling and Java replay",
+      "id": 118508605689,
+      "conclusion": "success"
+    },
+    {
+      "name": "Workspace (macos-latest)",
+      "id": 118508605723,
+      "conclusion": "success"
+    },
+    {
+      "name": "Workspace (ubuntu-latest)",
+      "id": 118508605742,
+      "conclusion": "success"
+    },
+    {
+      "name": "M2 language development (full gate incomplete)",
+      "id": 118508605788,
+      "conclusion": "success"
+    },
+    {
+      "name": "Workspace (windows-latest)",
+      "id": 118508605869,
+      "conclusion": "success"
+    }
+  ],
+  "github_artifact": {
+    "id": 12248241203,
+    "name": "m1-experiment-evidence",
+    "sha256": "3177d792eb6fefd656d5ab125d8af750139e73b8180ef9c80fced17543b4330d",
+    "github_digest": "sha256:3177d792eb6fefd656d5ab125d8af750139e73b8180ef9c80fced17543b4330d",
+    "zip_bytes": 14490928,
+    "uncompressed_bytes": 50641192,
+    "zip_members": 583,
+    "digest_verified": true
+  },
+  "workflow_logs": {
+    "zip_sha256": "ae50a672a5fc87086a7667e2ad722eb5215e65135457e5a854f06e48d03be68a",
+    "members": 102
+  },
+  "verified_outcomes": {
+    "committed_snapshot_copies_checked": 167,
+    "unique_committed_source_files": 82,
+    "retained_graal_evidence": {
+      "verified_diagnostic_cases": 9,
+      "performance_evidence": false
+    },
+    "lifecycle": {
+      "exact_protocol_comparisons": 2,
+      "full_diagnostic_byte_mismatches": 4,
+      "java_negative_observation": {
+        "status": "observed-upstream-failure",
+        "error_class": "org.pkl.core.PklBugException",
+        "cause": "java.util.ConcurrentModificationException",
+        "rust_comparison": false,
+        "compatibility_pass": false
+      },
+      "source_stability_before_execution": true,
+      "source_stability_after_execution": true
+    },
+    "frontend": {
+      "exact_comparisons": 15,
+      "source_stability": true
+    },
+    "java_host": {
+      "observation_suites": 5,
+      "rust_byte_comparisons": 0,
+      "source_stability": true
+    },
+    "runtime": {
+      "exact_value_cases": [
+        "amendment",
+        "captured-receiver",
+        "lexical-let",
+        "object-cycle",
+        "lazy-unused",
+        "mixed-numeric"
+      ],
+      "exact_whole_diagnostic_cases": [
+        "first-error",
+        "overflow-first"
+      ],
+      "known_diagnostic_byte_mismatches": [
+        "forcing-cycle"
+      ]
+    },
+    "platform": {
+      "total": 6078,
+      "all_shared_engine_matches": 6078,
+      "java_matches_each_target": 6076,
+      "known_gaps": [
+        "regex-unicode-15-vs-16",
+        "regex-zero-width-supplementary"
+      ],
+      "scenarios_each_target": 18,
+      "compatibility_status": "fail",
+      "experiment_contract_status": "pass"
+    }
+  },
+  "scope": "Independent remote M1 raw evidence verification for the exact M2 stage2 commit; known regex/cycle/lifecycle diagnostic failures retained. No complete language/API/performance claim.",
+  "independent_complete_recheck": true,
+  "verifier_sha256": "9a53eeb35a843c0765f07afd57809418c8690eb69e7b4046c4d4add233198942"
+}

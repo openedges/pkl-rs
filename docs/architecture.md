@@ -114,3 +114,33 @@ conversion for error columns and underlines.
 Selected differential checks establish only the behavior they execute. See
 [the M2 contract](m2-language.md) and [raw results](../reports/m2/README.md)
 for the remaining language and diagnostic obligations.
+
+### Constraint evaluation design (not implemented)
+
+Constraints will execute as continuations in the existing VM. The current
+synchronous `TypeCheck::accepts` can classify primitive leaves, but cannot
+execute a predicate, wait on a Host, or recover a union alternative. Predicate
+blocks and function-valued predicates must use ordinary VM call frames with
+an explicit return destination for the pending type check. A lazy member may
+publish its cached value only after every inherited and local check succeeds.
+
+Recoverable type mismatch must be separate from evaluation failure. A false
+constraint can select the next union alternative or produce `false` for `is`;
+an invalid predicate result, thrown error, or Host failure must propagate.
+The pinned union implementation first tries alternatives with assertion
+tracking suppressed, then may execute them again to construct a failure.
+A failing constraint can execute again under value tracking. Those repetitions,
+their side effects, and diagnostic values are observable compatibility behavior.
+
+The resolver must distinguish a constraint's scalar-capable custom `this` from
+ordinary object receivers. Closures capture that context, while nested objects
+keep their own `this`. Alias bodies require their declaration environment;
+actual generic arguments retain their use-site environment. Immutable programs
+must contain environment lookup plans rather than evaluator-owned heap handles.
+
+Active and suspended type-check continuations must retain their input and
+checked values, predicate closures, bound environments, mismatch values, and
+assertion observations as GC roots. Host suspension, nested evaluation, cancel,
+close, failure retry, and logical diagnostics must use the same lifecycle as
+ordinary VM frames. Nullable wrapper order and union failure selection require
+fresh Java comparisons before this design can count as implemented behavior.

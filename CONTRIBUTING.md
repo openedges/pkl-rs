@@ -1,6 +1,6 @@
 # Contributing
 
-See [README.md](README.md) for the development environment and default checks, and [TESTING.md](TESTING.md) for compatibility criteria. Baseline verification tools are available; the shared Rust evaluator remains unimplemented.
+See [README.md](README.md) for the development environment and default checks, and [TESTING.md](TESTING.md) for compatibility criteria. Baseline verification tools and a bounded shared Rust engine are available. M2 language implementation is in progress; complete language, product API, and performance compatibility remain unverified.
 
 ## Workflow
 

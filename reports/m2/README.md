@@ -51,6 +51,19 @@ Declarations and historical rows overlap; these are not distinct feature
 counts. The 1,950 full-gate reasons may include multiple reasons for one
 requirement.
 
+All six jobs of the [stage 2 CI run](https://github.com/luuvish/pkl-rs/actions/runs/39386841661)
+passed for implementation commit `281ef6c`. The
+[downloaded M2 verification record](ci-stage2-summary.json) and
+[complete artifact archive](ci-stage2-evidence.tar.gz) verify the GitHub ZIP
+digest, all 1,790 language evidence files, 246 source snapshots against the
+exact commit, raw comparison outcomes, metamorphic relations, and generated
+identifier bytes. Remote results retain the same two failed language cases.
+The separate [M1 artifact verification](ci-stage2-m1-summary.json) and
+[raw archive](ci-stage2-m1-evidence.tar.gz) independently recheck 167 committed
+snapshot copies, all primitive comparisons, 18 scenarios per JS target, and
+frontend/runtime/lifecycle outcomes. Known regex, cycle, and lifecycle diagnostic
+differences remain failures in those records.
+
 ## Preserved corrections and oracle limitations
 
 The [first stage 2 acquisition](language-stage2-initial-evidence.tar.gz) recorded
