@@ -170,7 +170,8 @@ even when a quoted property contains the same bytes as an internal entry name;
 a reserved string prefix alone cannot provide this distinction. Primitive
 entry keys follow the pinned boxed-key rules: integer and floating-point keys
 are distinct, floating-point signed zeros are distinct, and NaNs compare equal.
-Object and function keys require further structural equality and forcing work.
+Object keys use the resumable structural comparison described below; function
+and class keys retain identity comparisons.
 
 `Dynamic`, `Listing`, and `Mapping` share ordered member metadata with the
 prototype chain. Strict `List` construction supplies another iterable value.
@@ -191,8 +192,8 @@ evaluator lifecycle.
 Diagnostic rendering walks ordered metadata and completed caches without
 forcing values. Subscript observations use the authored bracket position in
 power assertions. These mechanisms serve native, Node, and Wasm through the
-shared runtime; they do not complete structural equality or all typed-object
-generator rules.
+shared runtime. Complete map semantics and typed-object generator rules remain
+open; the structural comparison section below describes the verified key scope.
 
 ### Generic collection checks
 

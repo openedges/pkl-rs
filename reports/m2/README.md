@@ -6,8 +6,105 @@ class, inheritance, generic alias, default-value, and modifier semantics to the
 shared engine. Stage 3 adds pipelines, resumable constraints, and optional power
 assertions. Stage 4 adds ordered collections and resumable generators. Stage 5
 adds generic collection checks and lazy wrappers. Stage 6 adds member predicates
-and their scope, cache, and lifecycle behavior. These checkpoints do not complete
-the language milestone.
+and their scope, cache, and lifecycle behavior. Stage 7 adds structural equality,
+nonprimitive keys, and related diagnostics. These checkpoints do not complete the
+language milestone.
+
+## Stage 7 checkpoint
+
+The [stage 7 summary](stage7-final-summary.json) records **874 selected
+comparisons: 872 raw-byte matches, one remainder-zero mismatch, and one cycle
+oracle failure**. All 26 metamorphic relations pass. The 201 additions preserve
+the original 673 definitions and input bytes; 44 cases use explicit power
+assertions. The [language archive](language-stage7-final-evidence.tar.gz) retains
+the recorded release build, 950 source snapshots, exact fixture URIs,
+oracle identity, outcome sidecars, and complete output channels. Source and
+artifact identities remained stable throughout acquisition.
+
+Structural comparisons distinguish scalar numeric coercion from boxed nested
+values, including NaN and signed zero. Identity, object kind, class identity,
+and Listing length checks preserve their forcing shortcuts. Dynamic, Mapping,
+and Typed comparisons deep-force in the pinned order; strict List comparisons
+stop at the first unequal element. The resumable key path covers construction,
+lookup, duplicates, inherited overrides, amendments, and Mapping length. Small
+declaration maps keep keys lazy until comparison requires them; adding a fifth
+distinct member prepares hashes in declaration order.
+
+Constant scalar and nested List keys receive early duplicate checks only when
+all keys in a specialized body are constant. Generators, dynamic keys, and
+shadowed constructors retain runtime behavior. Signed integer expressions keep
+separate numeric-token spans. Function diagnostics retain arity. Source-line
+rendering follows the pinned highlighter's interpolation whitespace behavior,
+with lexical-error rollback and authored caret coordinates. Its explicit
+traversal stack avoids recursive Rust calls on deeply nested malformed lines.
+
+The [validation record](validation-stage7-final.json) and
+[raw checks](validation-stage7-final-evidence.tar.gz) retain reference pin
+verification, formatting, workspace Clippy, **210 Rust tests, 171 Python tests**,
+Wasm compilation, and inventory freshness. One existing differential probe
+remains intentionally ignored by ordinary unit tests. Nineteen new Rust tests
+cover frontend scopes and token spans, deferred duplicates, temporary operands
+and keys, Host suspension and reentry, GC, failure retry, cancellation, close,
+timeouts, and renderer traversal, including a 20,000-level malformed input.
+The [identifier archive](identifier-stage7-evidence.tar.gz) verifies all four
+unchanged tables against pinned Java.
+
+The [platform archive](platforms-stage7-final-evidence.tar.gz) records **32
+scenarios in each of actual Node and Chromium**. New scenarios cover structural
+values, keys, complete errors, and power assertions. All 6,078 primitive results
+agree across Rust targets; each target matches Java on 6,076, retaining two regex
+failures. The [M1 regressions](regressions-stage7-final-evidence.tar.gz) retain
+15 frontend matches, six runtime value matches, two complete runtime diagnostic
+matches, one cycle diagnostic mismatch, two matching lifecycle protocols, and
+four failed full lifecycle diagnostics. The archive also retains the replay of
+unchanged inputs against prior Java captures; the language archive separately
+contains the fresh Java acquisition. No new speed or memory parity measurement
+was made.
+
+The [exploration archive](exploration-stage7-evidence.tar.gz) preserves 14,196
+payload files and 1,502 raw Java captures: 281 exploratory captures and 1,221 repeated
+actual-fixture URI captures. The exploratory captures reconcile to 253 curated
+observations, 19 superseded inputs, and nine repeated review captures. Curated
+observations comprise 201 selected additions, five held main inputs, nine held
+renderer inputs, 28 redundant unselected inputs, and ten platform inputs.
+All provisional Rust replays remain explicitly unbound to a recorded build.
+The final provisional replay matches all 201 additions and nine curated renderer
+probes; full selected evidence comes from the separate recorded-build archive.
+Two renderer character predicates were exhaustively checked against pinned Java
+for all 65,536 UTF-16 units, with raw output and probe sources retained.
+
+Three held cyclic structural hash/equality inputs produce pinned Java
+`PklBugException` outcomes; two held Dynamic hidden-modifier inputs are invalid
+upstream. The superseded renderer `@` probe retains an unrelated parser
+diagnostic difference. Corrected inputs and earlier failures are preserved
+separately. Manual captures with missing process metadata remain unclassified.
+None of these observations becomes a passing selection or a development
+exception.
+
+Complete Java hash-bucket collision order, cached-member map transitions,
+typed properties named `default`, cyclic structural keys, full custom defaults,
+function/class-valued amendments, remaining typed generators and function/
+structural types, `Reference`, metadata, format-time wrapper checks, complete
+diagnostics, and the full language corpus remain open.
+
+The [gate captures](gates-stage7-final-evidence.tar.gz) retain integrity and
+development success with strict selected and full compatibility failure.
+The inventory has 474 requirement records and 1,874 overlapping accounting rows:
+874 executable selections, 960 unimplemented rows, and 40 unmapped rows. These
+are not distinct feature counts or a completion percentage. The full gate still
+reports 1,950 failure reasons. **M2 remains in progress.**
+
+All six jobs of the [implementation CI run](https://github.com/luuvish/pkl-rs/actions/runs/39427102753)
+passed for commit `90f7df4`. The
+[independent verification](ci-stage7-summary.json) and
+[CI package](ci-stage7-evidence.tar.gz) retain both original artifact ZIPs and
+verify their GitHub SHA-256 digests. Verification matched 1,165 snapshot copies
+covering 990 distinct source paths to the exact implementation commit.
+Remote language results retain 872 matches and the same two known failures,
+all 26 relations, all four identifier tables, and 32 scenarios per JS target.
+Two offline checks passed; the final [sealed replay](ci-stage7-offline-evidence.tar.gz)
+verified unchanged package contents and reproduced comparison outcomes and
+verifier identities. M1's existing failures remain visible.
 
 ## Stage 6 checkpoint
 
