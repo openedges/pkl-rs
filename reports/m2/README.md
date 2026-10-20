@@ -4,8 +4,89 @@ M2 is **in progress**. Stage 1 added expressions, strings, recursive methods,
 closures, primitive type checks, and source diagnostics. Stage 2 adds selected
 class, inheritance, generic alias, default-value, and modifier semantics to the
 shared engine. Stage 3 adds pipelines, resumable constraints, and optional power
-assertions. Stage 4 adds ordered collections and resumable generators. These
-checkpoints do not complete the language milestone.
+assertions. Stage 4 adds ordered collections and resumable generators. Stage 5
+adds generic collection checks and lazy wrappers. These checkpoints do not
+complete the language milestone.
+
+## Stage 5 checkpoint
+
+The [stage 5 summary](stage5-final-summary.json) records **560 selected
+comparisons: 558 raw-byte matches, one remainder-zero mismatch, and one cycle
+oracle failure**. All 20 metamorphic relations pass. The 145 additions preserve
+the original 415 definitions and input bytes; 37 cases use explicit power
+assertions. The [language archive](language-stage5-final-evidence.tar.gz) retains
+the recorded release build, 627 source snapshots, actual fixture URIs,
+oracle identity, outcome sidecars, and full output channels. Source and artifact
+identities stayed stable throughout acquisition.
+
+The shared runtime now checks `Listing<T>`, `Mapping<K,V>`, and `List<T>`.
+Listing values remain lazy; Mapping keys are checked eagerly; strict List
+members retain nested wrappers returned by their checks. Selected type tests,
+unions, aliases, defaults, inferred constructors, inherited casts, and cache
+reuse follow pinned Java evaluation order. Function parameters retain the
+checked value. Constraint reuse follows compiled node identity, keeping separate
+generic alias instantiations distinct. Union errors preserve use-site labels
+and expanded check locations independently.
+
+The [validation record](validation-stage5-final.json) and
+[raw checks](validation-stage5-final-evidence.tar.gz) retain reference pin
+verification, formatting, workspace Clippy, **172 Rust tests, 171 Python tests**,
+Wasm compilation, and manifest freshness. One existing differential probe remains
+intentionally ignored by ordinary unit tests. Nine new Rust frontend/lifecycle
+tests exercise temporary receivers, nested checked results, parameter bindings,
+cached failure retry, Host suspension, nested evaluation, GC, cancellation,
+close, and timeouts. A constraint's eager checking mode remains active through
+Host reentry and ends when its parent check completes. The
+[identifier archive](identifier-stage5-evidence.tar.gz) verifies all four
+unchanged tables against pinned Java.
+
+The [platform archive](platforms-stage5-final-evidence.tar.gz) records **26
+scenarios in each of actual Node and Chromium**. New scenarios include lazy
+collection values, strict List wrapping, eager key errors, and full power
+assertions. All 6,078 primitive results agree across Rust targets; each target
+matches Java on 6,076, retaining two regex failures. The
+[M1 regressions](regressions-stage5-final-evidence.tar.gz) retain 15 frontend
+matches, six runtime value matches, two complete runtime diagnostic matches,
+one cycle diagnostic mismatch, two matching lifecycle protocols, and four
+failed full lifecycle diagnostics. No new speed or memory parity measurement
+was made.
+
+The [exploration archive](exploration-stage5-evidence.tar.gz) preserves 5,028
+files: Java studies, initial mismatches, provisional candidate replays, actual
+fixture-URI captures for all 145 additions, and platform expectations. Preliminary
+replays remain explicitly unbound to a recorded build. Some first independent
+captures lack complete process metadata; formal captures reacquire every
+promoted case with complete identities and outcomes. The final full acquisition
+is the source-bound validation of the committed implementation.
+
+Unselected observations remain visible. Java can steal a parent's cache and
+execute a wrapper cast while formatting a diagnostic; the Rust formatter does
+not yet perform these checks. Some such Java failures escape diagnostic
+rendering entirely. A deferred Java cast referencing method-local slots can
+also fail inside the JVM. Those observations, and the remaining unsupported
+outer/String property probes, are preserved without new development exceptions.
+Full custom default functions, member predicates, object keys and structural
+equality, typed constructor generators, structural/function types, `Reference`,
+metadata, complete diagnostics, and the full language corpus remain open.
+
+The [gate captures](gates-stage5-final-evidence.tar.gz) retain integrity and
+development success alongside strict selected and full compatibility failure.
+The inventory has 474 requirement records and 1,560 overlapping accounting rows:
+560 executable selections, 960 unimplemented rows, and 40 unmapped rows. These
+are not distinct feature counts or a completion percentage. The full gate still
+reports 1,950 failure reasons. **M2 remains in progress.**
+
+All six jobs of the [implementation CI run](https://github.com/luuvish/pkl-rs/actions/runs/39411357487)
+passed for commit `3a70e03`. The
+[independent verification](ci-stage5-summary.json) and
+[CI package](ci-stage5-evidence.tar.gz) preserve both original artifact ZIPs and
+verify their GitHub SHA-256 digests. Verification matched 824 snapshot
+copies covering 667 distinct files to the exact implementation
+commit. Remote language results retain 558 matches and the same two known
+failures, all 20 relations, all four identifier tables, and 26 scenarios per
+JS target. An [offline replay](ci-stage5-offline-evidence.tar.gz) verifies the
+sealed package without changing its contents; M1's existing failures remain
+visible.
 
 ## Stage 4 checkpoint
 
