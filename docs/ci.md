@@ -37,8 +37,17 @@ and native JDK binary hashes belong to the original host. Generate a fresh Java 
 in the candidate's controlled environment for a formal comparison. Do not normalize
 historical output to make a different host appear identical.
 
-The local M0 checks passed on the recorded macOS host. At publication, SSH pushes were
-available but this environment's GitHub CLI was not authenticated for the private
-repository, so remote Actions results could not be inspected. Workflow configuration
-and local results must not be reported as a successful remote run. See the
-[M0 evidence report](../reports/m0/README.md) for this validation boundary.
+The local M0 checks passed on the recorded macOS host. After authenticated access became
+available, [run 39364517355](https://github.com/luuvish/pkl-rs/actions/runs/39364517355)
+was verified for the final M0 code commit `2164ffa`. All four jobs succeeded: the three
+workspace platforms and Linux Java tooling. All required steps ran successfully; only
+the manual full-corpus step was intentionally skipped on this push event.
+
+The downloaded artifact ZIP matches GitHub's SHA-256 digest. Its three reports and raw
+captures passed completeness/integrity checks, and all seven Java replay cases were
+compared again directly from the downloaded bytes. Exact JDK properties match the
+reference lock. The [CI summary](../reports/m0/ci-summary.json) and
+[retained evidence](../reports/m0/ci-evidence.tar.gz) preserve run/step metadata, logs,
+the original artifact ZIP, and extracted raw captures beyond GitHub's retention period.
+This verifies workspace and Java tooling behavior; the full corpus, Pantry investigation,
+performance acquisition, and Rust evaluation are outside this CI run's scope.

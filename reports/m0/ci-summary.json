@@ -1,0 +1,108 @@
+{
+  "schema_version": 1,
+  "verified_at": "2026-10-20T04:21:57.339196+00:00",
+  "repository": "luuvish/pkl-rs",
+  "run": {
+    "databaseId": 39364517355,
+    "headSha": "2164ffa4b053d0aafdafd28b7edbbe5ad98e10e0",
+    "status": "completed",
+    "conclusion": "success",
+    "event": "push",
+    "createdAt": "2026-10-20T03:29:00Z",
+    "startedAt": "2026-10-20T03:29:00Z",
+    "updatedAt": "2026-10-20T03:31:06Z",
+    "url": "https://github.com/luuvish/pkl-rs/actions/runs/39364517355",
+    "attempt": 1
+  },
+  "jobs": [
+    {
+      "name": "Compatibility tooling and Java replay",
+      "conclusion": "success",
+      "url": "https://github.com/luuvish/pkl-rs/actions/runs/39364517355/job/118438202724"
+    },
+    {
+      "name": "Workspace (windows-latest)",
+      "conclusion": "success",
+      "url": "https://github.com/luuvish/pkl-rs/actions/runs/39364517355/job/118438202853"
+    },
+    {
+      "name": "Workspace (ubuntu-latest)",
+      "conclusion": "success",
+      "url": "https://github.com/luuvish/pkl-rs/actions/runs/39364517355/job/118438203035"
+    },
+    {
+      "name": "Workspace (macos-latest)",
+      "conclusion": "success",
+      "url": "https://github.com/luuvish/pkl-rs/actions/runs/39364517355/job/118438203104"
+    }
+  ],
+  "intentional_skips": [
+    {
+      "job": "Compatibility tooling and Java replay",
+      "step": "Record all discovered command cases",
+      "reason": "Manual full-corpus dispatch only; this is a push run"
+    }
+  ],
+  "checks": {
+    "python_tool_regressions": 79,
+    "workspace_platforms": [
+      "Linux",
+      "macOS",
+      "Windows"
+    ],
+    "workspace_scope": "Reference pins, formatting, clippy, workspace tests, Wasm compilation",
+    "reports": {
+      "ci-baseline": {
+        "mode": "oracle-recording",
+        "counts": {
+          "recorded": 7
+        },
+        "manifest_sha256": "846bab7c24673e463cef7d9dc0ecb4da84c2f3b30028aac5ebde107ffb7858cc",
+        "raw_capture_integrity": "verified"
+      },
+      "ci-replay": {
+        "mode": "candidate-comparison",
+        "counts": {
+          "passed": 7
+        },
+        "manifest_sha256": "846bab7c24673e463cef7d9dc0ecb4da84c2f3b30028aac5ebde107ffb7858cc",
+        "raw_capture_integrity": "verified"
+      },
+      "ci-regressions": {
+        "mode": "oracle-recording",
+        "counts": {
+          "recorded": 3
+        },
+        "manifest_sha256": "09c064f65730d30f72bf87a45c88d47ecc0844e57966a999dc8e759f083af3da",
+        "raw_capture_integrity": "verified"
+      }
+    },
+    "downloaded_smoke_raw_replay_matches": 7,
+    "oracle_smoke_success_and_error": true
+  },
+  "oracle": {
+    "version": "0.32.0",
+    "artifact_sha256": "c3b6f6215a08b31453b0fb0edd8c9da0aee31233f65abb8ab07f9c945151e059",
+    "lock_sha256": "7b77395ff5b64f7a220db74975e4c3858a36b19c5c0f5bca92681e3b1bc6504b",
+    "jdk_properties": {
+      "java.vendor": "Eclipse Adoptium",
+      "java.version": "21.0.12.1",
+      "java.runtime.version": "21.0.12.1+1-LTS",
+      "java.vm.name": "OpenJDK 64-Bit Server VM",
+      "java.vm.version": "21.0.12.1+1-LTS",
+      "java.home": "/opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/21.0.12-101.0.LTS/x64",
+      "os.name": "Linux",
+      "os.arch": "amd64",
+      "os.version": "6.17.0-1022-azure"
+    }
+  },
+  "artifact": {
+    "id": 12238756729,
+    "name": "m0-java-evidence",
+    "size_in_bytes": 773736,
+    "digest": "sha256:dd8f6385a44b5836f0977c9d2741faed1db4935b53cff6d7085c4e4a680d735b",
+    "download_digest_verified": true
+  },
+  "evidence_archive": "ci-evidence.tar.gz",
+  "scope": "M0 workspace and Java tooling verification. Full corpus, Pantry integration, performance measurement, and Rust language evaluation were not run by this CI job."
+}

@@ -2,7 +2,7 @@
 
 This project reimplements [Pkl](https://pkl-lang.org/) 0.32.0 in Rust. It aims to share one engine across native Rust, WebAssembly, and Node.js N-API, with automated compatibility checks against the Java implementation.
 
-The project has established its **M0 compatibility tooling and initial Java baselines**. Pkl parsing and evaluation, the CLI, REPL, server, and Wasm and N-API products are not implemented yet. Passing the current builds and tooling tests does not establish Rust Pkl compatibility or achievement of the performance targets. The [M0 report](reports/m0/README.md) records known failures, measurement limitations, and unverified remote CI status.
+The project has established its **M0 compatibility tooling and initial Java baselines**. Pkl parsing and evaluation, the CLI, REPL, server, and Wasm and N-API products are not implemented yet. Passing the current builds and tooling tests does not establish Rust Pkl compatibility or achievement of the performance targets. The [M0 report](reports/m0/README.md) records known failures, measurement limitations, and verified remote CI results.
 
 ## Goals
 

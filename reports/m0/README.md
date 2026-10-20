@@ -69,9 +69,18 @@ empty/partial corpora, corrupted bytes, wrong source/runtime identities, timeout
 incorrect memory units, insufficient warmup, and false convergence.
 
 The [CI workflow](../../.github/workflows/ci.yml) integrates the workspace matrix and
-Java tooling replay. Remote Actions results are unverified because this environment's
-GitHub CLI lacks authentication for the private repository. SSH push success does not
-prove CI success. See [the CI contract](../../docs/ci.md).
+Java tooling replay. [Run 39364517355](https://github.com/luuvish/pkl-rs/actions/runs/39364517355)
+for code commit `2164ffa` completed successfully. All four jobs and every required step
+passed: Linux/macOS/Windows workspace checks, 79 Python tool regressions, seven Java
+smoke recordings, seven exact Java replay matches, and three selected regression
+recordings with strict checks. The manual full-corpus step was intentionally skipped.
+
+The downloaded artifact's ZIP digest matches GitHub's SHA-256. Stored report completeness,
+raw capture hashes, and all seven Java replay byte comparisons were independently
+rechecked after download. Exact Linux JDK properties match the reference lock.
+[The summary](ci-summary.json) and [raw CI evidence](ci-evidence.tar.gz) retain metadata,
+logs, the original artifact ZIP, and extracted captures. See [the CI contract](../../docs/ci.md)
+for scope. Full-corpus failures and performance limitations elsewhere in this report remain.
 
 ## Inspecting artifacts
 
