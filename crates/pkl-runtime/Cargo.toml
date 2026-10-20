@@ -1,0 +1,11 @@
+[package]
+name = "pkl-runtime"
+description = "Shared Rust runtime for the Pkl 0.32.0 compatibility project"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+publish.workspace = true
+
+[lints]
+workspace = true

@@ -1,0 +1,9 @@
+* text=auto eol=lf
+
+# Compatibility inputs and expected outputs must retain their original bytes.
+tests/fixtures/** -text
+tests/golden/** -text
+*.bin binary
+*.wasm binary
+*.png binary
+*.zip binary
