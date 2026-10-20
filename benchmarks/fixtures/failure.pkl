@@ -1,0 +1,2 @@
+function run(seed: Int): String = throw("benchmark intentional failure")
+output { text = run(0) }

@@ -1,0 +1,2 @@
+function run(seed: Int): String = (42 + seed).toString() + "\n"
+output { text = run(0) }

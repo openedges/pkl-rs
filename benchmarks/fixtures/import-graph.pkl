@@ -1,0 +1,4 @@
+import "graph/left.pkl"
+import "graph/right.pkl"
+function run(seed: Int): String = (left.run(seed) + right.run(seed)).toString() + "\n"
+output { text = run(0) }

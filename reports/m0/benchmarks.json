@@ -1,0 +1,760 @@
+{
+  "schema": 1,
+  "scope": "Initial Java native subset; no Rust results or performance target verdict",
+  "status": "initial-java-native-subset-recorded; full performance scope incomplete",
+  "timestamp_utc": "2026-10-20T03:24:18.700366+00:00",
+  "baseline": {
+    "version": "0.32.0",
+    "artifact_sha256": "c3b6f6215a08b31453b0fb0edd8c9da0aee31233f65abb8ab07f9c945151e059",
+    "oracle_lock_sha256": "7b77395ff5b64f7a220db74975e4c3858a36b19c5c0f5bca92681e3b1bc6504b",
+    "profile": "performance",
+    "jdk_properties": {
+      "java.vendor": "GraalVM Community",
+      "java.version": "25.0.1",
+      "java.runtime.version": "25.0.1+8-jvmci-b01",
+      "java.vm.name": "OpenJDK 64-Bit Server VM",
+      "java.vm.version": "25.0.1+8-jvmci-b01",
+      "java.home": "/Users/cody.ij.hwang/Projects/pkl-rs/.cache/oracle/graalvm-community-openjdk-25.0.1+8.1/Contents/Home",
+      "os.name": "Mac OS X",
+      "os.arch": "aarch64",
+      "os.version": "27.0"
+    },
+    "jvm_options": [
+      "-Xms64m",
+      "-Xmx512m",
+      "-Dfile.encoding=UTF-8",
+      "-Dstdout.encoding=UTF-8",
+      "-Dstderr.encoding=UTF-8",
+      "-Duser.language=en",
+      "-Duser.country=US",
+      "-Duser.timezone=UTC",
+      "-Djava.awt.headless=true",
+      "-Duser.name=oracle",
+      "--enable-native-access=ALL-UNNAMED",
+      "--sun-misc-unsafe-memory-access=allow",
+      "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs/.cache/oracle/home",
+      "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs/.cache/oracle/tmp"
+    ]
+  },
+  "machine_start": {
+    "platform": "macOS-27.0-arm64-arm-64bit-Mach-O",
+    "system": "Darwin",
+    "machine": "arm64",
+    "python": "3.14.8 (main, Sep 30 2026, 17:55:09) [Clang 21.0.0 (clang-2100.3.34.2)]",
+    "processor": "arm",
+    "cpu_count": 8,
+    "load_average": [
+      6.26904296875,
+      7.74658203125,
+      12.2900390625
+    ],
+    "hardware_raw": "Apple M1\n8589934592\n",
+    "power_state": {
+      "exit_code": 0,
+      "stdout": "Now drawing from 'AC Power'\n",
+      "stderr": ""
+    },
+    "thermal_state": {
+      "exit_code": 0,
+      "stdout": "Note: No thermal warning level has been recorded\nNote: No performance warning level has been recorded\nNote: No CPU power status has been recorded\n",
+      "stderr": ""
+    }
+  },
+  "machine_end": {
+    "platform": "macOS-27.0-arm64-arm-64bit-Mach-O",
+    "system": "Darwin",
+    "machine": "arm64",
+    "python": "3.14.8 (main, Sep 30 2026, 17:55:09) [Clang 21.0.0 (clang-2100.3.34.2)]",
+    "processor": "arm",
+    "cpu_count": 8,
+    "load_average": [
+      3.50341796875,
+      4.81201171875,
+      9.1826171875
+    ],
+    "hardware_raw": "Apple M1\n8589934592\n",
+    "power_state": {
+      "exit_code": 0,
+      "stdout": "Now drawing from 'AC Power'\n",
+      "stderr": ""
+    },
+    "thermal_state": {
+      "exit_code": 0,
+      "stdout": "Note: No thermal warning level has been recorded\nNote: No performance warning level has been recorded\nNote: No CPU power status has been recorded\n",
+      "stderr": ""
+    }
+  },
+  "sampling": {
+    "cold_samples": 5,
+    "samples": 9,
+    "sample_seconds": 0.25,
+    "minimum_warmup_seconds": 10.0,
+    "maximum_warmup_seconds": 45.0,
+    "convergence_windows": 8,
+    "maximum_relative_spread": 0.2,
+    "independent_api_forks": 2
+  },
+  "counts": {
+    "workloads": 6,
+    "cold_cli_samples": 30,
+    "api_independent_forks": 24,
+    "api_measurement_windows": 216,
+    "api_converged_forks": 24,
+    "compatibility_passes": 0
+  },
+  "cases": [
+    {
+      "id": "scalar",
+      "expected_error": false,
+      "cold_cli": {
+        "samples": 5,
+        "elapsed_ns": {
+          "count": 5,
+          "min": 894893458,
+          "median": 918823375,
+          "p90": 967394667,
+          "p95": 967394667,
+          "max": 967394667,
+          "mean": 925360783.4,
+          "sample_stdev": 27500572.181909185,
+          "uncertainty": "Empirical sample distribution only; no significance or target-ratio claim"
+        },
+        "peak_rss_bytes": {
+          "count": 5,
+          "min": 231505920,
+          "median": 232767488,
+          "p90": 248594432,
+          "p95": 248594432,
+          "max": 248594432,
+          "mean": 235660902.4,
+          "sample_stdev": 7249874.643021961,
+          "uncertainty": "Empirical sample distribution only; no significance or target-ratio claim"
+        }
+      },
+      "api": {
+        "persistent": {
+          "forks": 2,
+          "warmup": "converged",
+          "fork_median_operation_ns": {
+            "count": 2,
+            "min": 866.8566049119449,
+            "median": 877.6701861786383,
+            "p90": 888.4837674453318,
+            "p95": 888.4837674453318,
+            "max": 888.4837674453318,
+            "mean": 877.6701861786383,
+            "sample_stdev": 15.292713285181446,
+            "uncertainty": "Empirical sample distribution only; no significance or target-ratio claim"
+          },
+          "fork_peak_rss_bytes": {
+            "count": 2,
+            "min": 741343232,
+            "median": 760438784.0,
+            "p90": 779534336,
+            "p95": 779534336,
+            "max": 779534336,
+            "mean": 760438784,
+            "sample_stdev": 27005188.61940068,
+            "uncertainty": "Empirical sample distribution only; no significance or target-ratio claim"
+          },
+          "warmup_elapsed_ns": [
+            10161505750,
+            10176353208
+          ]
+        },
+        "fresh-evaluator": {
+          "forks": 2,
+          "warmup": "converged",
+          "fork_median_operation_ns": {
+            "count": 2,
+            "min": 63275.52386966406,
+            "median": 63798.32676632161,
+            "p90": 64321.12966297916,
+            "p95": 64321.12966297916,
+            "max": 64321.12966297916,
+            "mean": 63798.32676632161,
+            "sample_stdev": 739.3549469010485,
+            "uncertainty": "Empirical sample distribution only; no significance or target-ratio claim"
+          },
+          "fork_peak_rss_bytes": {
+            "count": 2,
+            "min": 350928896,
+            "median": 380575744.0,
+            "p90": 410222592,
+            "p95": 410222592,
+            "max": 410222592,
+            "mean": 380575744,
+            "sample_stdev": 41926974.52321367,
+            "uncertainty": "Empirical sample distribution only; no significance or target-ratio claim"
+          },
+          "warmup_elapsed_ns": [
+            10017921500,
+            10016645000
+          ]
+        }
+      }
+    },
+    {
+      "id": "stdlib-collections",
+      "expected_error": false,
+      "cold_cli": {
+        "samples": 5,
+        "elapsed_ns": {
+          "count": 5,
+          "min": 1021190167,
+          "median": 1038560167,
+          "p90": 1050653000,
+          "p95": 1050653000,
+          "max": 1050653000,
+          "mean": 1036109925,
+          "sample_stdev": 11806438.783936225,
+          "uncertainty": "Empirical sample distribution only; no significance or target-ratio claim"
+        },
+        "peak_rss_bytes": {
+          "count": 5,
+          "min": 301350912,
+          "median": 308051968,
+          "p90": 315244544,
+          "p95": 315244544,
+          "max": 315244544,
+          "mean": 307494912,
+          "sample_stdev": 5191427.528377912,
+          "uncertainty": "Empirical sample distribution only; no significance or target-ratio claim"
+        }
+      },
+      "api": {
+        "persistent": {
+          "forks": 2,
+          "warmup": "converged",
+          "fork_median_operation_ns": {
+            "count": 2,
+            "min": 181549.70464441218,
+            "median": 186687.69051239014,
+            "p90": 191825.6763803681,
+            "p95": 191825.6763803681,
+            "max": 191825.6763803681,
+            "mean": 186687.69051239014,
+            "sample_stdev": 7266.209297775726,
+            "uncertainty": "Empirical sample distribution only; no significance or target-ratio claim"
+          },
+          "fork_peak_rss_bytes": {
+            "count": 2,
+            "min": 461635584,
+            "median": 464896000.0,
+            "p90": 468156416,
+            "p95": 468156416,
+            "max": 468156416,
+            "mean": 464896000,
+            "sample_stdev": 4610924.526178237,
+            "uncertainty": "Empirical sample distribution only; no significance or target-ratio claim"
+          },
+          "warmup_elapsed_ns": [
+            10015331292,
+            10014914833
+          ]
+        },
+        "fresh-evaluator": {
+          "forks": 2,
+          "warmup": "converged",
+          "fork_median_operation_ns": {
+            "count": 2,
+            "min": 317563.3185279188,
+            "median": 322278.74684565875,
+            "p90": 326994.1751633987,
+            "p95": 326994.1751633987,
+            "max": 326994.1751633987,
+            "mean": 322278.74684565875,
+            "sample_stdev": 6668.622679345983,
+            "uncertainty": "Empirical sample distribution only; no significance or target-ratio claim"
+          },
+          "fork_peak_rss_bytes": {
+            "count": 2,
+            "min": 451854336,
+            "median": 453451776.0,
+            "p90": 455049216,
+            "p95": 455049216,
+            "max": 455049216,
+            "mean": 453451776,
+            "sample_stdev": 2259121.313077277,
+            "uncertainty": "Empirical sample distribution only; no significance or target-ratio claim"
+          },
+          "warmup_elapsed_ns": [
+            12300819000,
+            11804998958
+          ]
+        }
+      }
+    },
+    {
+      "id": "recursive-compute",
+      "expected_error": false,
+      "cold_cli": {
+        "samples": 5,
+        "elapsed_ns": {
+          "count": 5,
+          "min": 1075753000,
+          "median": 1076737875,
+          "p90": 1120604625,
+          "p95": 1120604625,
+          "max": 1120604625,
+          "mean": 1089437941.8,
+          "sample_stdev": 19755217.878645167,
+          "uncertainty": "Empirical sample distribution only; no significance or target-ratio claim"
+        },
+        "peak_rss_bytes": {
+          "count": 5,
+          "min": 307200000,
+          "median": 311607296,
+          "p90": 314343424,
+          "p95": 314343424,
+          "max": 314343424,
+          "mean": 310827417.6,
+          "sample_stdev": 3228221.8048326233,
+          "uncertainty": "Empirical sample distribution only; no significance or target-ratio claim"
+        }
+      },
+      "api": {
+        "persistent": {
+          "forks": 2,
+          "warmup": "converged",
+          "fork_median_operation_ns": {
+            "count": 2,
+            "min": 8991602.714285715,
+            "median": 9078703.107142858,
+            "p90": 9165803.5,
+            "p95": 9165803.5,
+            "max": 9165803.5,
+            "mean": 9078703.107142858,
+            "sample_stdev": 123178.5568665959,
+            "uncertainty": "Empirical sample distribution only; no significance or target-ratio claim"
+          },
+          "fork_peak_rss_bytes": {
+            "count": 2,
+            "min": 364298240,
+            "median": 386179072.0,
+            "p90": 408059904,
+            "p95": 408059904,
+            "max": 408059904,
+            "mean": 386179072,
+            "sample_stdev": 30944169.370407213,
+            "uncertainty": "Empirical sample distribution only; no significance or target-ratio claim"
+          },
+          "warmup_elapsed_ns": [
+            10226264167,
+            10135951959
+          ]
+        },
+        "fresh-evaluator": {
+          "forks": 2,
+          "warmup": "converged",
+          "fork_median_operation_ns": {
+            "count": 2,
+            "min": 9893424.73076923,
+            "median": 9937218.788461538,
+            "p90": 9981012.846153846,
+            "p95": 9981012.846153846,
+            "max": 9981012.846153846,
+            "mean": 9937218.788461538,
+            "sample_stdev": 61934.15033981171,
+            "uncertainty": "Empirical sample distribution only; no significance or target-ratio claim"
+          },
+          "fork_peak_rss_bytes": {
+            "count": 2,
+            "min": 438894592,
+            "median": 448299008.0,
+            "p90": 457703424,
+            "p95": 457703424,
+            "max": 457703424,
+            "mean": 448299008,
+            "sample_stdev": 13299852.653398532,
+            "uncertainty": "Empirical sample distribution only; no significance or target-ratio claim"
+          },
+          "warmup_elapsed_ns": [
+            10236389250,
+            10005361583
+          ]
+        }
+      }
+    },
+    {
+      "id": "large-output",
+      "expected_error": false,
+      "cold_cli": {
+        "samples": 5,
+        "elapsed_ns": {
+          "count": 5,
+          "min": 1071840208,
+          "median": 1081849083,
+          "p90": 1126478833,
+          "p95": 1126478833,
+          "max": 1126478833,
+          "mean": 1091831299.8,
+          "sample_stdev": 22159695.305860292,
+          "uncertainty": "Empirical sample distribution only; no significance or target-ratio claim"
+        },
+        "peak_rss_bytes": {
+          "count": 5,
+          "min": 298762240,
+          "median": 305250304,
+          "p90": 310018048,
+          "p95": 310018048,
+          "max": 310018048,
+          "mean": 303949414.4,
+          "sample_stdev": 4469013.438133835,
+          "uncertainty": "Empirical sample distribution only; no significance or target-ratio claim"
+        }
+      },
+      "api": {
+        "persistent": {
+          "forks": 2,
+          "warmup": "converged",
+          "fork_median_operation_ns": {
+            "count": 2,
+            "min": 1621664.4838709678,
+            "median": 1621751.7419354839,
+            "p90": 1621839.0,
+            "p95": 1621839.0,
+            "max": 1621839.0,
+            "mean": 1621751.7419354839,
+            "sample_stdev": 123.40153826512558,
+            "uncertainty": "Empirical sample distribution only; no significance or target-ratio claim"
+          },
+          "fork_peak_rss_bytes": {
+            "count": 2,
+            "min": 412762112,
+            "median": 434257920.0,
+            "p90": 455753728,
+            "p95": 455753728,
+            "max": 455753728,
+            "mean": 434257920,
+            "sample_stdev": 30399663.207768075,
+            "uncertainty": "Empirical sample distribution only; no significance or target-ratio claim"
+          },
+          "warmup_elapsed_ns": [
+            10135866416,
+            10139531958
+          ]
+        },
+        "fresh-evaluator": {
+          "forks": 2,
+          "warmup": "converged",
+          "fork_median_operation_ns": {
+            "count": 2,
+            "min": 2100162.875,
+            "median": 2130937.0280172415,
+            "p90": 2161711.1810344825,
+            "p95": 2161711.1810344825,
+            "max": 2161711.1810344825,
+            "mean": 2130937.0280172415,
+            "sample_stdev": 43521.22456752751,
+            "uncertainty": "Empirical sample distribution only; no significance or target-ratio claim"
+          },
+          "fork_peak_rss_bytes": {
+            "count": 2,
+            "min": 424345600,
+            "median": 437903360.0,
+            "p90": 451461120,
+            "p95": 451461120,
+            "max": 451461120,
+            "mean": 437903360,
+            "sample_stdev": 19173568.067399453,
+            "uncertainty": "Empirical sample distribution only; no significance or target-ratio claim"
+          },
+          "warmup_elapsed_ns": [
+            10132805875,
+            10133524125
+          ]
+        }
+      }
+    },
+    {
+      "id": "failure-diagnostics",
+      "expected_error": true,
+      "cold_cli": {
+        "samples": 5,
+        "elapsed_ns": {
+          "count": 5,
+          "min": 917200750,
+          "median": 927252209,
+          "p90": 941569042,
+          "p95": 941569042,
+          "max": 941569042,
+          "mean": 929735841.8,
+          "sample_stdev": 9575089.067197662,
+          "uncertainty": "Empirical sample distribution only; no significance or target-ratio claim"
+        },
+        "peak_rss_bytes": {
+          "count": 5,
+          "min": 230637568,
+          "median": 232882176,
+          "p90": 240812032,
+          "p95": 240812032,
+          "max": 240812032,
+          "mean": 234766336,
+          "sample_stdev": 4126930.8928742674,
+          "uncertainty": "Empirical sample distribution only; no significance or target-ratio claim"
+        }
+      },
+      "api": {
+        "persistent": {
+          "forks": 2,
+          "warmup": "converged",
+          "fork_median_operation_ns": {
+            "count": 2,
+            "min": 12646.323385097881,
+            "median": 12844.164796518893,
+            "p90": 13042.006207939903,
+            "p95": 13042.006207939903,
+            "max": 13042.006207939903,
+            "mean": 12844.164796518893,
+            "sample_stdev": 279.79000723062893,
+            "uncertainty": "Empirical sample distribution only; no significance or target-ratio claim"
+          },
+          "fork_peak_rss_bytes": {
+            "count": 2,
+            "min": 348667904,
+            "median": 359792640.0,
+            "p90": 370917376,
+            "p95": 370917376,
+            "max": 370917376,
+            "mean": 359792640,
+            "sample_stdev": 15732752.529020216,
+            "uncertainty": "Empirical sample distribution only; no significance or target-ratio claim"
+          },
+          "warmup_elapsed_ns": [
+            10027097542,
+            10026217334
+          ]
+        },
+        "fresh-evaluator": {
+          "forks": 2,
+          "warmup": "converged",
+          "fork_median_operation_ns": {
+            "count": 2,
+            "min": 71039.60539772727,
+            "median": 71325.74628420155,
+            "p90": 71611.88717067584,
+            "p95": 71611.88717067584,
+            "max": 71611.88717067584,
+            "mean": 71325.74628420155,
+            "sample_stdev": 404.664322401393,
+            "uncertainty": "Empirical sample distribution only; no significance or target-ratio claim"
+          },
+          "fork_peak_rss_bytes": {
+            "count": 2,
+            "min": 270041088,
+            "median": 287973376.0,
+            "p90": 305905664,
+            "p95": 305905664,
+            "max": 305905664,
+            "mean": 287973376,
+            "sample_stdev": 25360084.893980306,
+            "uncertainty": "Empirical sample distribution only; no significance or target-ratio claim"
+          },
+          "warmup_elapsed_ns": [
+            10022125167,
+            10018596709
+          ]
+        }
+      }
+    },
+    {
+      "id": "import-graph",
+      "expected_error": false,
+      "cold_cli": {
+        "samples": 5,
+        "elapsed_ns": {
+          "count": 5,
+          "min": 890357500,
+          "median": 921280375,
+          "p90": 925747625,
+          "p95": 925747625,
+          "max": 925747625,
+          "mean": 915276133.2,
+          "sample_stdev": 14821614.24344608,
+          "uncertainty": "Empirical sample distribution only; no significance or target-ratio claim"
+        },
+        "peak_rss_bytes": {
+          "count": 5,
+          "min": 230227968,
+          "median": 237010944,
+          "p90": 249954304,
+          "p95": 249954304,
+          "max": 249954304,
+          "mean": 239445606.4,
+          "sample_stdev": 9455978.44070368,
+          "uncertainty": "Empirical sample distribution only; no significance or target-ratio claim"
+        }
+      },
+      "api": {
+        "persistent": {
+          "forks": 2,
+          "warmup": "converged",
+          "fork_median_operation_ns": {
+            "count": 2,
+            "min": 1065.4898352327455,
+            "median": 1079.8825925907668,
+            "p90": 1094.275349948788,
+            "p95": 1094.275349948788,
+            "max": 1094.275349948788,
+            "mean": 1079.8825925907668,
+            "sample_stdev": 20.354432655658876,
+            "uncertainty": "Empirical sample distribution only; no significance or target-ratio claim"
+          },
+          "fork_peak_rss_bytes": {
+            "count": 2,
+            "min": 660193280,
+            "median": 698540032.0,
+            "p90": 736886784,
+            "p95": 736886784,
+            "max": 736886784,
+            "mean": 698540032,
+            "sample_stdev": 54230496.75135761,
+            "uncertainty": "Empirical sample distribution only; no significance or target-ratio claim"
+          },
+          "warmup_elapsed_ns": [
+            10158417250,
+            10187775583
+          ]
+        },
+        "fresh-evaluator": {
+          "forks": 2,
+          "warmup": "converged",
+          "fork_median_operation_ns": {
+            "count": 2,
+            "min": 225284.86486486485,
+            "median": 226427.95563534414,
+            "p90": 227571.04640582346,
+            "p95": 227571.04640582346,
+            "max": 227571.04640582346,
+            "mean": 226427.95563534414,
+            "sample_stdev": 1616.5744706353455,
+            "uncertainty": "Empirical sample distribution only; no significance or target-ratio claim"
+          },
+          "fork_peak_rss_bytes": {
+            "count": 2,
+            "min": 355794944,
+            "median": 362921984.0,
+            "p90": 370049024,
+            "p95": 370049024,
+            "max": 370049024,
+            "mean": 362921984,
+            "sample_stdev": 10079156.627575543,
+            "uncertainty": "Empirical sample distribution only; no significance or target-ratio claim"
+          },
+          "warmup_elapsed_ns": [
+            10015709791,
+            10015963708
+          ]
+        }
+      }
+    }
+  ],
+  "recursive_optimization": {
+    "state": "inconclusive",
+    "guest_target_compilation": "not-observed",
+    "runtime_availability": "verified GraalVM CE optimizing runtime",
+    "bailout_lines": [
+      "[engine] opt failed engine=1  id=341   FunctionNode@346cf30e                              |Tier 1|Time    34(  32+2   )ms|Reason: jdk.graal.compiler.code.SourceStackTraceBailoutException$1: Object of type Lcom/oracle/truffle/api/impl/FrameWithoutBoxing; should not be materialized (must not let virtual object escape at node 109|EndNode):|UTC 2026-10-20T03:24:06.373|Src file:///Users/cody.ij.hwang/Projects/pkl-rs/benchmarks/fixtures/recursive.pkl:1 0xf97ef240",
+      "[engine] opt failed engine=1  id=340   FunctionNode@33f8697d                              |Tier 1|Time    30(  30+0   )ms|Reason: jdk.graal.compiler.code.SourceStackTraceBailoutException$1: Object of type Lcom/oracle/truffle/api/impl/FrameWithoutBoxing; should not be materialized (must not let virtual object escape at node 109|EndNode):|UTC 2026-10-20T03:24:06.643|Src file:///Users/cody.ij.hwang/Projects/pkl-rs/benchmarks/fixtures/recursive.pkl:2 0xf97ef240"
+    ],
+    "other_completed_compilations": [
+      "[engine] opt done   engine=1  id=342   FunctionNode@68443012                              |Tier 1|Time     7(   5+2   )ms|AST    3|Inlined   0Y   0N|IR    113/   137|CodeSize     644|Addr 0x000119522880|CompId 3477   |UTC 2026-10-20T03:24:06.629|Src pkl:base:1032 0xa874606",
+      "[engine] opt done   engine=1  id=342   FunctionNode@68443012                              |Tier 2|Time     4(   1+3   )ms|AST    3|Inlined   0Y   0N|IR     40/    60|CodeSize     396|Addr 0x00011952cb40|CompId 3817   |UTC 2026-10-20T03:24:12.164|Src pkl:base:1032 0xa874606"
+    ],
+    "limitation": "Pinned runtime produced FrameWithoutBoxing escape-related Tier1 bailouts for fib and run. No completed recursive guest target compilation was observed; stable windows do not prove fully optimized recursive performance."
+  },
+  "rejected_attempt": {
+    "state": "rejected-no-eligible-performance-results",
+    "reason": "Harness configured a 30-second per-request timeout; scalar loop performed 4212965 timed operations before exiting with a fixed 512 MiB Java heap exhaustion during timeout scheduler shutdown.",
+    "boundary_change": "CPU baseline removes the per-request timeout; outer process timeout and heap 64/512 MiB are unchanged. Timeout/cancellation remains required pending scope. The Java reference implementation was not modified.",
+    "upstream_evidence": [
+      "external/pkl/pkl-core/src/main/java/org/pkl/core/EvaluatorImpl.java:374",
+      "external/pkl/pkl-core/src/main/java/org/pkl/core/EvaluatorImpl.java:542"
+    ],
+    "archive_metadata_note": "Rejected-run capture metadata retains its original absolute target/m0/benchmarks paths. Archive member paths are relative to the rejected acquisition directory, such as scalar/persistent/0/stdout.bin; EVIDENCE.json inventories these raw members. The rejected acquisition is not a final benchmark report.",
+    "archive": {
+      "archive": "reports/m0/benchmark-timeout-attempt-evidence.tar.gz",
+      "sha256": "2be037b3e31fe4a6db91d597fe034c8d0c44e443592744cc0c61279c353330e2",
+      "bytes": 27729,
+      "file_count": 55,
+      "verification": "tools/evidence.py verify: every inventoried payload path, byte length and SHA-256 verified; EVIDENCE.json is stored inside the archive",
+      "file_manifest": "EVIDENCE.json",
+      "file_manifest_location": "inside the archive"
+    },
+    "observed_timed_operation_count": 4212965
+  },
+  "evidence": {
+    "raw_report": "target/m0/benchmarks/report.json",
+    "archive": {
+      "archive": "reports/m0/benchmark-evidence.tar.gz",
+      "sha256": "5989314839c5f3aa2eeb8dba80d3ad23776590d2f1175348dc3b9798bfda5daa",
+      "bytes": 498596,
+      "file_count": 297,
+      "verification": "tools/evidence.py verify: every inventoried payload path, byte length and SHA-256 verified; EVIDENCE.json is stored inside the archive",
+      "file_manifest": "EVIDENCE.json",
+      "file_manifest_location": "inside the archive"
+    },
+    "validator": "python3 tools/benchmark.py --check-report target/m0/benchmarks",
+    "validator_result": "passed: raw capture bytes, snapshots, commands, sample/fork identities, phase arithmetic, aggregate distributions, and trace claims revalidated"
+  },
+  "required_pending": [
+    {
+      "id": "native-long-running-memory",
+      "state": "unimplemented",
+      "scope": "Repeated successes/failures, unique modules, cycles, create/close, cancellation, cache changes; retention and recovery"
+    },
+    {
+      "id": "native-cold-cache-packages-http",
+      "state": "unimplemented",
+      "scope": "Cold/warm filesystem and package caches, large import graphs, pinned HTTP/package/external-reader I/O"
+    },
+    {
+      "id": "native-renderer-files-binary",
+      "state": "unimplemented",
+      "scope": "Every renderer, output.bytes/output.files, generated path sets and file bytes"
+    },
+    {
+      "id": "repl",
+      "state": "unimplemented",
+      "scope": "Startup, PTY input, steady session evaluation and retained state"
+    },
+    {
+      "id": "server",
+      "state": "unimplemented",
+      "scope": "Initialization, request/response codecs, callbacks, cancellation, timeout and close"
+    },
+    {
+      "id": "wasm",
+      "state": "unimplemented",
+      "scope": "Download, compile, initialization, warm requests, async Host and browser process RSS"
+    },
+    {
+      "id": "napi",
+      "state": "unimplemented",
+      "scope": "Node initialization, JS/Rust integer/byte conversion, requests, async cancellation and lifecycle"
+    },
+    {
+      "id": "jvm-adapter",
+      "state": "unimplemented",
+      "scope": "Existing client calls, export, cancellation and close across JVM/Rust boundary"
+    },
+    {
+      "id": "developer-tools",
+      "state": "unimplemented",
+      "scope": "Formatter, pkldoc, Java/Kotlin generators and generated files"
+    },
+    {
+      "id": "native-image-reference",
+      "state": "unimplemented",
+      "scope": "Separate official native-image comparison; never a replacement for warm optimizing JVM baseline"
+    },
+    {
+      "id": "rust-native-candidate",
+      "state": "unimplemented",
+      "scope": "Exact-output Rust candidates for every required workload; no time or RSS ratio is available"
+    }
+  ],
+  "rust_performance_ratios": null,
+  "assessment": "No Rust performance or memory parity claim. Six-workload initial native subset only; recursive optimization applicability limited by observed compiler bailouts. Empirical sample distributions do not establish a statistical target verdict."
+}

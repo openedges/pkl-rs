@@ -1,0 +1,2 @@
+import "shared.pkl"
+function run(seed: Int): Int = shared.run(seed) * 2

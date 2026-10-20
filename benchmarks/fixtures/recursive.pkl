@@ -1,0 +1,3 @@
+function fib(n: Int): Int = if (n < 2) n else fib(n - 1) + fib(n - 2)
+function run(seed: Int): String = fib(24 + seed).toString() + "\n"
+output { text = run(0) }

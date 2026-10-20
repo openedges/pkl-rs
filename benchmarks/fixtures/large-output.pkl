@@ -1,0 +1,3 @@
+function run(seed: Int): String =
+  IntSeq(1, 10000).map((x) -> "row \(x + seed): 한글 😀").join("\n") + "\n"
+output { text = run(0) }

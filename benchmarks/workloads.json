@@ -1,0 +1,38 @@
+{
+  "schema": 1,
+  "baseline": "0.32.0",
+  "scope": "Initial Java native subset; no Rust results or performance target verdict",
+  "api_settings": {"per_request_timeout": null, "process_timeout": "maximum warmup plus 120 seconds; timed out processes are rejected"},
+  "sampling": {
+    "cold_samples": 5,
+    "samples": 9,
+    "sample_seconds": 0.25,
+    "minimum_warmup_seconds": 10.0,
+    "maximum_warmup_seconds": 45.0,
+    "convergence_windows": 8,
+    "maximum_relative_spread": 0.2,
+    "independent_api_forks": 2
+  },
+  "workloads": [
+    {"id": "scalar", "module": "fixtures/scalar.pkl", "expected_error": false},
+    {"id": "stdlib-collections", "module": "fixtures/collections.pkl", "expected_error": false},
+    {"id": "recursive-compute", "module": "fixtures/recursive.pkl", "expected_error": false},
+    {"id": "large-output", "module": "fixtures/large-output.pkl", "expected_error": false},
+    {"id": "failure-diagnostics", "module": "fixtures/failure.pkl", "expected_error": true},
+    {"id": "import-graph", "module": "fixtures/import-graph.pkl", "resources": ["fixtures/graph/left.pkl", "fixtures/graph/right.pkl", "fixtures/graph/shared.pkl"], "expected_error": false}
+  ],
+  "implemented_modes": ["cold-cli", "persistent", "fresh-evaluator"],
+  "required_pending": [
+    {"id": "native-long-running-memory", "state": "unimplemented", "scope": "Repeated successes/failures, unique modules, cycles, create/close, cancellation, cache changes; retention and recovery"},
+    {"id": "native-cold-cache-packages-http", "state": "unimplemented", "scope": "Cold/warm filesystem and package caches, large import graphs, pinned HTTP/package/external-reader I/O"},
+    {"id": "native-renderer-files-binary", "state": "unimplemented", "scope": "Every renderer, output.bytes/output.files, generated path sets and file bytes"},
+    {"id": "repl", "state": "unimplemented", "scope": "Startup, PTY input, steady session evaluation and retained state"},
+    {"id": "server", "state": "unimplemented", "scope": "Initialization, request/response codecs, callbacks, cancellation, timeout and close"},
+    {"id": "wasm", "state": "unimplemented", "scope": "Download, compile, initialization, warm requests, async Host and browser process RSS"},
+    {"id": "napi", "state": "unimplemented", "scope": "Node initialization, JS/Rust integer/byte conversion, requests, async cancellation and lifecycle"},
+    {"id": "jvm-adapter", "state": "unimplemented", "scope": "Existing client calls, export, cancellation and close across JVM/Rust boundary"},
+    {"id": "developer-tools", "state": "unimplemented", "scope": "Formatter, pkldoc, Java/Kotlin generators and generated files"},
+    {"id": "native-image-reference", "state": "unimplemented", "scope": "Separate official native-image comparison; never a replacement for warm optimizing JVM baseline"},
+    {"id": "rust-native-candidate", "state": "unimplemented", "scope": "Exact-output Rust candidates for every required workload; no time or RSS ratio is available"}
+  ]
+}
