@@ -4,7 +4,7 @@
 
 Reimplement Pkl **0.32.0** in Rust so that existing Pkl programs and integrations preserve their observable behavior, while execution time and memory usage meet or improve on the Java implementation. Deliver native Rust, WebAssembly, and Node.js N-API products built on one evaluation engine.
 
-This document defines the project's durable goals and scope. [PLAN.md](PLAN.md) describes implementation order and milestone gates in Korean; [TESTING.md](TESTING.md) defines the verification contract. The [architecture](docs/architecture.md) describes the intended design, and the [roadmap](docs/roadmap.md) provides a concise milestone overview.
+This document defines the project's durable goals and scope. [PLAN.md](PLAN.md) contains the milestone overview, implementation order, and milestone gates in Korean; [TESTING.md](TESTING.md) defines the verification contract. The [architecture](docs/architecture.md) describes the intended design.
 
 The repository currently contains development setup, a minimal runtime library, and reference verification tooling. Pkl evaluation and the product interfaces remain unimplemented. Existing setup checks establish neither compatibility nor the performance targets below.
 

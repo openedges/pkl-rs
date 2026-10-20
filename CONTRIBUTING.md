@@ -5,7 +5,7 @@ See [README.md](README.md) for the development environment and default checks, a
 ## Workflow
 
 1. Follow the README instructions for preserving line endings and initializing submodules, then check the reference pins with `cargo xtask verify`.
-2. Review the goals in [INTENT.md](INTENT.md) and the task scope and prerequisites in [PLAN.md](PLAN.md). The [roadmap](docs/roadmap.md) summarizes the phases. Establish the semantics of new implementations from the pinned `external/pkl` sources and tests.
+2. Review the goals in [INTENT.md](INTENT.md) and the phase overview, task scope, and prerequisites in [PLAN.md](PLAN.md). Establish the semantics of new implementations from the pinned `external/pkl` sources and tests.
 3. Keep changes small and explain their effects on observable behavior. Do not add placeholders that return success for unimplemented APIs.
 4. Run checks appropriate to the changed area and record the results and unverified scope.
 
@@ -17,7 +17,7 @@ Support compatibility changes with actual Java 0.32.0 results and reproducible i
 
 Before adding dependencies, review their purpose, Wasm support, licensing, and memory and performance impact. Track `Cargo.lock` in the repository and use `--locked` in CI and verification commands.
 
-Write standard project documentation in English, including `INTENT.md`, the README, repository instructions, contribution guide, testing contract, architecture documentation, and API references. Write planning documents in Korean, including `PLAN.md`, `docs/roadmap.md`, implementation plans, and task plans. Apply these language rules to new documents and future updates.
+Write standard project documentation in English, including `INTENT.md`, the README, repository instructions, contribution guide, testing contract, architecture documentation, and API references. Write planning documents in Korean, including `PLAN.md`, implementation plans, and task plans. Apply these language rules to new documents and future updates.
 
 Keep code, commands, identifiers, and file paths unchanged when translating prose. Preserve the original contents of upstream references and compatibility fixtures.
 

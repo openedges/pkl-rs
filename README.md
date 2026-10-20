@@ -12,7 +12,7 @@ The project is currently at the **repository and development environment setup s
 - Native, Wasm, and N-API support through a single Rust evaluation engine.
 - Coverage and implementation tracking through upstream, Pantry, regression, differential, and performance tests.
 
-The [project intent](INTENT.md) defines goals and scope. The [execution plan (Korean)](PLAN.md) defines work items, dependencies, and phase gates, with a [roadmap overview (Korean)](docs/roadmap.md). See the [architecture](docs/architecture.md) for design guidance and [TESTING.md](TESTING.md) for acceptance criteria and verification methods.
+The [project intent](INTENT.md) defines goals and scope. The [execution plan (Korean)](PLAN.md) contains the phase overview, work items, dependencies, and phase gates. See the [architecture](docs/architecture.md) for design guidance and [TESTING.md](TESTING.md) for acceptance criteria and verification methods.
 
 ## Reference versions
 
@@ -64,12 +64,12 @@ cargo check -p pkl-runtime --target wasm32-unknown-unknown --locked
 .cargo/                Cargo aliases and shared configuration
 .github/workflows/     CI for setup checks
 crates/pkl-runtime/    Minimal Rust library for the shared engine
-docs/                  Architecture and roadmap overview
+docs/                  Architecture documentation
 external/pkl/          Pkl 0.32.0 reference submodule
 external/pkl-pantry/   Pantry reference submodule
 xtask/                 Repository verification tool
 INTENT.md              Project goals and scope
-PLAN.md                Execution plan and work status (Korean)
+PLAN.md                Roadmap, execution plan, and work status (Korean)
 references.lock        Reference repositories and revisions
 rust-toolchain.toml    Rust toolchain version
 ```

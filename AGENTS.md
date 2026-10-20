@@ -6,10 +6,10 @@ These instructions apply to agents making changes in this repository. Explicit u
 
 - The compatibility baseline is **Pkl 0.32.0**. Use the sources pinned in `references.lock` and the Git submodules.
 - The project is at the initial setup stage. Do not describe a successful build as completion of the language implementation, compatibility verification, or performance validation.
-- Read `INTENT.md` for goals and scope, `PLAN.md` for execution order and work status, and `TESTING.md` for the verification contract. Use `docs/architecture.md` for design guidance and `docs/roadmap.md` for the phase overview.
+- Read `INTENT.md` for goals and scope, `PLAN.md` for the phase overview, execution order, and work status, and `TESTING.md` for the verification contract. Use `docs/architecture.md` for design guidance. Maintain the roadmap and detailed execution plan together in `PLAN.md`.
 - `../pkl-rs.rev1` is reference material. Its implementation and passing test records are not verification results for this project.
 - Write standard project documentation in English, including `README.md`, `AGENTS.md`, `CONTRIBUTING.md`, `INTENT.md`, `TESTING.md`, architecture documentation, and API references.
-- Write planning documents in Korean, including `PLAN.md`, `docs/roadmap.md`, implementation plans, and task plans. Apply these language rules to new documents and future updates.
+- Write planning documents in Korean, including `PLAN.md`, implementation plans, and task plans. Apply these language rules to new documents and future updates.
 - Keep code, commands, identifiers, and file paths unchanged when translating prose. Preserve the original contents of upstream references and compatibility fixtures.
 
 ## Compatibility and design
