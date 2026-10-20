@@ -124,6 +124,7 @@ fn program(mode: &str, source: &str) -> Arc<Program> {
         members
             .into_iter()
             .map(|(name, code)| Member {
+                entry: false,
                 name: Arc::from(name),
                 code,
                 local: false,

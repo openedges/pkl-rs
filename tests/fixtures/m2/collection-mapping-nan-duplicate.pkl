@@ -1,0 +1,2 @@
+o = new Mapping { [NaN] = 1; [NaN] = 2 }
+result = o[NaN]

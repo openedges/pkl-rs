@@ -92,6 +92,14 @@ The full gate must fail while required language implementations, mappings,
 adapters, or passing executions are missing. It cannot be replaced with the
 selected-case gate.
 
+Collection regressions cover lazy bodies, eager keys and source forcing,
+inheritance order, primitive key equality, generator captures, spread, and
+complete subscript diagnostics. Native lifecycle tests also force collection
+construction through nested Host suspension, GC, retry, cancellation, and
+timeouts. Shared Node/browser scenarios exercise the same collection engine and
+Java-derived error bytes. These checks do not establish generic collection
+wrappers, member predicates, or complete collection compatibility.
+
 M1 experiments have narrower, explicit contracts:
 
 ```sh

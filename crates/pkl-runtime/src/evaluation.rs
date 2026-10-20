@@ -151,6 +151,13 @@ fn runtime_error(
     mut error: RuntimeError,
     include_expression: bool,
 ) -> String {
+    if let Some(span) = error.spread_hint.as_deref()
+        && let Some(operand) = source.slice(*span)
+    {
+        error.hint = Some(format!(
+            "To guard against a nullable value, use `...?` instead of `...`.\nTry: `...?{operand}`"
+        ));
+    }
     if let Some(diagnostic) = &error.type_diagnostic {
         let (message, hint) = diagnostic.render(source);
         error.message = message;

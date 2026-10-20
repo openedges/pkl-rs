@@ -1,0 +1,2 @@
+o = new Mapping { when (missingFirst) { ["x"] = missingBody }; [missingSecond] = 1 }
+result = o["x"]

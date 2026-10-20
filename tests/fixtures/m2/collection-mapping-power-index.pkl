@@ -1,0 +1,2 @@
+o = new Mapping { ["a"] = 1 }
+result: Int(o["a"] > 3) = 42

@@ -1,0 +1,3 @@
+base = new Listing { 1; missingSource }
+o = new Mapping { for (v in base) { [missingKey] = v } }
+result = o.length

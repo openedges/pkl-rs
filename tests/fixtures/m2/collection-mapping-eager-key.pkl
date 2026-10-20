@@ -1,0 +1,2 @@
+o = new Mapping { [missing] = 1; ["good"] = 42 }
+result = o["good"]

@@ -1,0 +1,2 @@
+o = new Mapping { [1] = 42 }
+result = o[1.0]

@@ -3,8 +3,8 @@ use crate::diagnostic::{Diagnostic, DiagnosticKind};
 use crate::source::Span;
 use crate::syntax::{
     BinaryOp, Expr, ExprKind, Member, Modifier, ModifierKind, Module, ModuleDeclaration,
-    ModuleParent, ModuleParentKind, Parameter, Type, TypeKind, TypeParameter, UnaryOp, Variance,
-    modifier_flags,
+    ModuleParent, ModuleParentKind, ObjectMember, Parameter, Type, TypeKind, TypeParameter,
+    UnaryOp, Variance, modifier_flags,
 };
 
 mod unicode_identifier;
@@ -192,7 +192,8 @@ impl Lexer<'_> {
         } else if ch == '"' || ch == '#' {
             self.string(start, ch)?
         } else if let Some(operator) = [
-            "**", "~/", "==", "!=", "<=", ">=", "&&", "||", "??", "->", "!!", "?.", "|>",
+            "...?", "...", "[[", "**", "~/", "==", "!=", "<=", ">=", "&&", "||", "??", "->", "!!",
+            "?.", "|>",
         ]
         .into_iter()
         .find(|operator| self.source[start..].starts_with(operator))
@@ -740,17 +741,6 @@ impl<'a> Parser<'a> {
         })
     }
 
-    fn members(&mut self, in_object: bool) -> Result<Vec<Member>, Diagnostic> {
-        self.member_list(
-            if in_object {
-                MemberContext::Object
-            } else {
-                MemberContext::Module
-            },
-            None,
-        )
-    }
-
     fn member_list(
         &mut self,
         context: MemberContext,
@@ -760,163 +750,171 @@ impl<'a> Parser<'a> {
         while self.token.kind != Kind::Eof
             && !(context != MemberContext::Module && self.is_symbol('}'))
         {
-            let modifiers = match initial.take() {
-                Some(modifiers) => modifiers,
-                None => self.modifiers()?,
-            };
-            let start = modifiers
-                .first()
-                .map_or(self.token.span.start, |modifier| modifier.span.start);
-            let local = modifiers
-                .iter()
-                .any(|modifier| modifier.kind == ModifierKind::Local);
-            let method = self.is_name("function");
-            let class = self.is_name("class");
-            let alias = self.is_name("typealias");
-            // Property/method lexical declarations use syntactic locality;
-            // class/typealias value members use the computed modifier flags.
-            let local = if class || alias {
-                modifier_flags(&modifiers) & ModifierKind::Local.flag() != 0
-            } else {
-                local
-            };
-            if (class || alias) && context != MemberContext::Module {
-                return Err(self.unexpected(Some("property or method")));
-            }
-            if method || class || alias {
-                self.advance()?;
-            }
-            if context == MemberContext::Object
-                && modifiers.is_empty()
-                && (self.is_name("unknown") || self.is_name("nothing"))
-            {
-                return Err(self.unexpected(Some("}")));
-            }
-            let (name, name_span) = self.identifier()?;
-            self.member_path.push(name.clone());
-            let (expr, ty) = if class {
-                let type_parameters = self.type_parameters()?;
-                let superclass = if self.is_name("extends") {
-                    self.advance()?;
-                    Some(self.type_expression()?)
-                } else {
-                    None
-                };
-                let header_span = Span::new(start, self.previous_end);
-                let class_members = if self.is_symbol('{') {
-                    self.advance()?;
-                    let members = self.member_list(MemberContext::Class, None)?;
-                    if self.token.kind == Kind::Eof {
-                        let mut error = self.unexpected(None);
-                        error.message = "Missing `}` delimiter.".to_owned();
-                        return Err(error);
-                    }
-                    self.expect('}')?;
-                    members
-                } else {
-                    Vec::new()
-                };
-                (
-                    Expr {
-                        kind: ExprKind::Class {
-                            type_parameters,
-                            superclass,
-                            members: class_members,
-                            header_span,
-                        },
-                        span: Span::new(start, self.previous_end),
-                    },
-                    None,
-                )
-            } else if alias {
-                let type_parameters = self.type_parameters()?;
-                self.expect('=')?;
-                let ty = self.type_expression()?;
-                let span = Span::new(start, ty.span.end);
-                (
-                    Expr {
-                        kind: ExprKind::TypeAlias {
-                            type_parameters,
-                            ty,
-                        },
-                        span,
-                    },
-                    None,
-                )
-            } else if method {
-                let type_parameters = self.type_parameters()?;
-                let parameters = self.parameters()?;
-                let return_type = self.type_annotation()?;
-                let header_span = Span::new(start, self.previous_end);
-                let body = if self.is_symbol('=') {
-                    self.advance()?;
-                    self.expression_expected(0, (context == MemberContext::Object).then_some('}'))?
-                } else if context != MemberContext::Object {
-                    Expr {
-                        kind: ExprKind::Uninitialized,
-                        span: header_span,
-                    }
-                } else {
-                    return Err(self.unexpected(Some("=")));
-                };
-                let span = Span::new(start, body.span.end);
-                (
-                    Expr {
-                        kind: ExprKind::Function {
-                            type_parameters,
-                            header_span,
-                            parameters,
-                            return_type,
-                            body: Box::new(body),
-                            method: true,
-                        },
-                        span,
-                    },
-                    None,
-                )
-            } else {
-                let ty = self.type_annotation()?;
-                let expr = if self.is_symbol('=') {
-                    self.advance()?;
-                    self.expression_expected(0, (context == MemberContext::Object).then_some('}'))?
-                } else if self.is_symbol('{') && ty.is_none() {
-                    let parent = Expr {
-                        kind: ExprKind::Member(
-                            Box::new(Expr {
-                                kind: ExprKind::Super,
-                                span: name_span,
-                            }),
-                            name.clone(),
-                        ),
-                        span: name_span,
-                    };
-                    self.object(Some(parent))?
-                } else if context != MemberContext::Object && ty.is_some() {
-                    Expr {
-                        kind: ExprKind::Uninitialized,
-                        span: Span::new(name_span.start, self.previous_end),
-                    }
-                } else {
-                    return Err(self.unexpected(Some("=")));
-                };
-                (expr, ty)
-            };
-            let end = expr.span.end;
-            self.member_path.pop();
-            members.push(Member {
-                name,
-                name_span,
-                expr,
-                span: Span::new(start, end),
-                local,
-                ty,
-                modifiers,
-            });
+            members.push(self.member(context, initial.take())?);
             if self.is_symbol(';') {
                 self.advance()?;
             }
         }
         Ok(members)
+    }
+
+    fn member(
+        &mut self,
+        context: MemberContext,
+        initial: Option<Vec<Modifier>>,
+    ) -> Result<Member, Diagnostic> {
+        let modifiers = match initial {
+            Some(modifiers) => modifiers,
+            None => self.modifiers()?,
+        };
+        let start = modifiers
+            .first()
+            .map_or(self.token.span.start, |modifier| modifier.span.start);
+        let local = modifiers
+            .iter()
+            .any(|modifier| modifier.kind == ModifierKind::Local);
+        let method = self.is_name("function");
+        let class = self.is_name("class");
+        let alias = self.is_name("typealias");
+        // Property/method lexical declarations use syntactic locality;
+        // class/typealias value members use the computed modifier flags.
+        let local = if class || alias {
+            modifier_flags(&modifiers) & ModifierKind::Local.flag() != 0
+        } else {
+            local
+        };
+        if (class || alias) && context != MemberContext::Module {
+            return Err(self.unexpected(Some("property or method")));
+        }
+        if method || class || alias {
+            self.advance()?;
+        }
+        if context == MemberContext::Object
+            && modifiers.is_empty()
+            && (self.is_name("unknown") || self.is_name("nothing"))
+        {
+            return Err(self.unexpected(Some("}")));
+        }
+        let (name, name_span) = self.identifier()?;
+        self.member_path.push(name.clone());
+        let (expr, ty) = if class {
+            let type_parameters = self.type_parameters()?;
+            let superclass = if self.is_name("extends") {
+                self.advance()?;
+                Some(self.type_expression()?)
+            } else {
+                None
+            };
+            let header_span = Span::new(start, self.previous_end);
+            let class_members = if self.is_symbol('{') {
+                self.advance()?;
+                let members = self.member_list(MemberContext::Class, None)?;
+                if self.token.kind == Kind::Eof {
+                    let mut error = self.unexpected(None);
+                    error.message = "Missing `}` delimiter.".to_owned();
+                    return Err(error);
+                }
+                self.expect('}')?;
+                members
+            } else {
+                Vec::new()
+            };
+            (
+                Expr {
+                    kind: ExprKind::Class {
+                        type_parameters,
+                        superclass,
+                        members: class_members,
+                        header_span,
+                    },
+                    span: Span::new(start, self.previous_end),
+                },
+                None,
+            )
+        } else if alias {
+            let type_parameters = self.type_parameters()?;
+            self.expect('=')?;
+            let ty = self.type_expression()?;
+            let span = Span::new(start, ty.span.end);
+            (
+                Expr {
+                    kind: ExprKind::TypeAlias {
+                        type_parameters,
+                        ty,
+                    },
+                    span,
+                },
+                None,
+            )
+        } else if method {
+            let type_parameters = self.type_parameters()?;
+            let parameters = self.parameters()?;
+            let return_type = self.type_annotation()?;
+            let header_span = Span::new(start, self.previous_end);
+            let body = if self.is_symbol('=') {
+                self.advance()?;
+                self.expression_expected(0, (context == MemberContext::Object).then_some('}'))?
+            } else if context != MemberContext::Object {
+                Expr {
+                    kind: ExprKind::Uninitialized,
+                    span: header_span,
+                }
+            } else {
+                return Err(self.unexpected(Some("=")));
+            };
+            let span = Span::new(start, body.span.end);
+            (
+                Expr {
+                    kind: ExprKind::Function {
+                        type_parameters,
+                        header_span,
+                        parameters,
+                        return_type,
+                        body: Box::new(body),
+                        method: true,
+                    },
+                    span,
+                },
+                None,
+            )
+        } else {
+            let ty = self.type_annotation()?;
+            let expr = if self.is_symbol('=') {
+                self.advance()?;
+                self.expression_expected(0, (context == MemberContext::Object).then_some('}'))?
+            } else if self.is_symbol('{') && ty.is_none() {
+                let parent = Expr {
+                    kind: ExprKind::Member(
+                        Box::new(Expr {
+                            kind: ExprKind::Super,
+                            span: name_span,
+                        }),
+                        name.clone(),
+                    ),
+                    span: name_span,
+                };
+                self.object(Some(parent))?
+            } else if context != MemberContext::Object && ty.is_some() {
+                Expr {
+                    kind: ExprKind::Uninitialized,
+                    span: Span::new(name_span.start, self.previous_end),
+                }
+            } else {
+                return Err(self.unexpected(Some("=")));
+            };
+            (expr, ty)
+        };
+        let end = expr.span.end;
+        self.member_path.pop();
+        Ok(Member {
+            name,
+            name_span,
+            expr,
+            span: Span::new(start, end),
+            local,
+            ty,
+            modifiers,
+        })
     }
 
     fn type_parameters(&mut self) -> Result<Vec<TypeParameter>, Diagnostic> {
@@ -1021,6 +1019,20 @@ impl<'a> Parser<'a> {
                 let span = Span::new(left.span.start, end);
                 left = Expr {
                     kind: ExprKind::NonNull(Box::new(left)),
+                    span,
+                };
+                continue;
+            }
+            if self.is_symbol('[') && self.same_line() {
+                self.advance()?;
+                let key = self.expression_expected(0, Some(']'))?;
+                let end = self.expect(']')?.span.end;
+                let span = Span::new(left.span.start, end);
+                left = Expr {
+                    kind: ExprKind::Subscript {
+                        receiver: Box::new(left),
+                        key: Box::new(key),
+                    },
                     span,
                 };
                 continue;
@@ -1130,7 +1142,7 @@ impl<'a> Parser<'a> {
             .as_ref()
             .map_or(self.token.span.start, |expr| expr.span.start);
         self.expect('{')?;
-        let members = self.members(true)?;
+        let members = self.object_members()?;
         if self.token.kind == Kind::Eof {
             let mut error = self.unexpected(None);
             error.message = "Missing `}` delimiter.".to_owned();
@@ -1146,23 +1158,186 @@ impl<'a> Parser<'a> {
         })
     }
 
+    fn object_members(&mut self) -> Result<Vec<ObjectMember>, Diagnostic> {
+        let mut members = Vec::new();
+        while !self.is_symbol('}') && self.token.kind != Kind::Eof {
+            members.push(self.object_member()?);
+            if self.is_symbol(';') {
+                self.advance()?;
+            }
+        }
+        Ok(members)
+    }
+
+    fn generator_body(&mut self) -> Result<Vec<ObjectMember>, Diagnostic> {
+        self.expect('{')?;
+        let members = self.object_members()?;
+        self.expect('}')?;
+        Ok(members)
+    }
+
+    fn object_member(&mut self) -> Result<ObjectMember, Diagnostic> {
+        let start = self.token.span.start;
+        if self.is_name("unknown") || self.is_name("nothing") {
+            return Err(self.unexpected(Some("}")));
+        }
+        if self.is_name("when") {
+            self.advance()?;
+            self.expect('(')?;
+            let condition = self.expression_expected(0, Some(')'))?;
+            self.expect(')')?;
+            let then_members = self.generator_body()?;
+            let else_members = if self.is_name("else") {
+                self.advance()?;
+                self.generator_body()?
+            } else {
+                Vec::new()
+            };
+            return Ok(ObjectMember::When {
+                condition,
+                then_members,
+                else_members,
+                span: Span::new(start, self.previous_end),
+            });
+        }
+        if self.is_name("for") {
+            self.advance()?;
+            self.expect('(')?;
+            let mut parameters = vec![self.parameter()?];
+            if self.is_symbol(',') {
+                self.advance()?;
+                parameters.push(self.parameter()?);
+            }
+            if !self.is_name("in") {
+                return Err(self.unexpected(Some("in")));
+            }
+            self.advance()?;
+            let iterable = self.expression_expected(0, Some(')'))?;
+            self.expect(')')?;
+            let members = self.generator_body()?;
+            return Ok(ObjectMember::For {
+                parameters,
+                iterable,
+                members,
+                span: Span::new(start, self.previous_end),
+            });
+        }
+        if self.is_operator("...") || self.is_operator("...?") {
+            let nullable = self.is_operator("...?");
+            self.advance()?;
+            let value = self.expression_expected(0, Some('}'))?;
+            return Ok(ObjectMember::Spread {
+                span: Span::new(start, value.span.end),
+                value,
+                nullable,
+            });
+        }
+        if self.is_symbol('[') || self.is_operator("[[") {
+            let predicate = self.is_operator("[[");
+            self.advance()?;
+            let key = self.expression_with_expectation(
+                0,
+                Some(if predicate { "]]" } else { "]" }.to_owned()),
+            )?;
+            if predicate && !self.is_symbol(']') {
+                return Err(self.unexpected(Some("]]")));
+            }
+            let close = self.expect(']')?;
+            if predicate {
+                if !self.is_symbol(']') {
+                    let mut error = self.unexpected(Some("]]"));
+                    error.span = close.span;
+                    return Err(error);
+                }
+                if self.token.span.start != close.span.end {
+                    return Err(Diagnostic::new(
+                        DiagnosticKind::Syntax,
+                        close.span,
+                        format!(
+                            "Unexpected token `{}`. Expected `]]`.",
+                            &self.lexer.source[close.span.start..self.token.span.end]
+                        ),
+                    ));
+                }
+                self.advance()?;
+            }
+            let value = if self.is_symbol('=') {
+                self.advance()?;
+                self.expression_expected(0, Some('}'))?
+            } else {
+                let mut value = self.object(Some(Expr {
+                    kind: ExprKind::EntryParent,
+                    span: Span::new(start, self.previous_end),
+                }))?;
+                while self.is_symbol('{') {
+                    value = self.object(Some(value))?;
+                }
+                value
+            };
+            let span = Span::new(start, value.span.end);
+            return Ok(if predicate {
+                ObjectMember::Predicate {
+                    condition: key,
+                    value,
+                    span,
+                }
+            } else {
+                ObjectMember::Entry { key, value, span }
+            });
+        }
+        // A bare identifier starts a property only before `=`, `:`, or an
+        // amendment body. In every other position it is an element expression.
+        let property = match &self.token.kind {
+            Kind::Name(name) if is_keyword(name) => matches!(
+                name.as_str(),
+                "function"
+                    | "local"
+                    | "const"
+                    | "hidden"
+                    | "fixed"
+                    | "external"
+                    | "abstract"
+                    | "open"
+            ),
+            Kind::Name(_) | Kind::QuotedName(_) => matches!(
+                self.lexer.clone().next()?.kind,
+                Kind::Symbol('=' | ':' | '{')
+            ),
+            _ => false,
+        };
+        if property {
+            return self
+                .member(MemberContext::Object, None)
+                .map(ObjectMember::Property);
+        }
+        let value = self.expression_expected(0, Some('}'))?;
+        Ok(ObjectMember::Element {
+            span: value.span,
+            value,
+        })
+    }
+
+    fn parameter(&mut self) -> Result<Parameter, Diagnostic> {
+        let (name, span) = if self.is_name("_") {
+            let token = self.advance()?;
+            ("_".to_owned(), token.span)
+        } else {
+            self.identifier()?
+        };
+        let ty = self.type_annotation()?;
+        let end = ty.as_ref().map_or(span.end, |ty| ty.span.end);
+        Ok(Parameter {
+            name,
+            ty,
+            span: Span::new(span.start, end),
+        })
+    }
+
     fn parameters(&mut self) -> Result<Vec<Parameter>, Diagnostic> {
         self.expect('(')?;
         let mut parameters = Vec::new();
         while !self.is_symbol(')') {
-            let (name, span) = if self.is_name("_") {
-                let token = self.advance()?;
-                ("_".to_owned(), token.span)
-            } else {
-                self.identifier()?
-            };
-            let ty = self.type_annotation()?;
-            let end = ty.as_ref().map_or(span.end, |ty| ty.span.end);
-            parameters.push(Parameter {
-                name,
-                ty,
-                span: Span::new(span.start, end),
-            });
+            parameters.push(self.parameter()?);
             if !self.is_symbol(',') {
                 break;
             }
@@ -1455,7 +1630,7 @@ impl<'a> Parser<'a> {
             }
             Kind::Name(name) if name == "super" => {
                 self.advance()?;
-                if !self.is_symbol('.') {
+                if !self.is_symbol('.') && !self.is_symbol('[') {
                     return Err(self.unexpected(Some(".")));
                 }
                 ExprKind::Super
@@ -1469,7 +1644,7 @@ impl<'a> Parser<'a> {
                 }
                 let ty = self.type_expression()?;
                 self.expect('{')?;
-                let members = self.members(true)?;
+                let members = self.object_members()?;
                 let end = self.expect('}')?.span.end;
                 return Ok(Expr {
                     kind: ExprKind::New { ty, members },

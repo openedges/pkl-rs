@@ -1,0 +1,4 @@
+base = new Mapping { ["a"] = 1; ["b"] = 2 }
+o = (base) { ["a"] = 3; ["c"] = 4 }
+force = o["b"]
+result: Int(o["a"] > 5) = if (force == 2) 42 else 0

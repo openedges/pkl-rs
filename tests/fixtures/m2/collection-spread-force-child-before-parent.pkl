@@ -1,0 +1,4 @@
+base = new Mapping { ["a"] = missingParent; ["b"] = 2 }
+child = (base) { ["b"] = missingChild }
+o = new Mapping { ...child }
+result = o.length

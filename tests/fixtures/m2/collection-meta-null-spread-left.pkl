@@ -1,0 +1,2 @@
+o = new Listing { 1; ...?null; 2; when (false) { missing } }
+result = o[0] * 10 + o[1]

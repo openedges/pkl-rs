@@ -1,0 +1,2 @@
+o = new Dynamic { when (false) { 0 }; [0] = 1; 2 }
+result = o[0]

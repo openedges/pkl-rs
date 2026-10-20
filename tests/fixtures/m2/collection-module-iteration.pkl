@@ -1,0 +1,1 @@
+o = new Listing { for (value in module) { value } }; result = o.length

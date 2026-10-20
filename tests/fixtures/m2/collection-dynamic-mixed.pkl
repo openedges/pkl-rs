@@ -1,0 +1,2 @@
+o = new Dynamic { x = 10; 20; ["k"] = 30; 40 }
+result = o.x + o[0] + o["k"] + o[1]

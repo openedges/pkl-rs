@@ -155,3 +155,41 @@ grouping nodes retain both outer source syntax and inner execution spans.
 These mechanisms remain subject to the selected differential and lifecycle
 checks. Complete structural and function types, collection wrappers, imported
 aliases, and the full language corpus remain M2 requirements.
+
+### Ordered collection construction
+
+Object expressions retain properties, entries, elements, and generator clauses
+in their syntax tree. Construction runs on ordinary VM frames. Entry keys and
+generator headers execute during construction; member bodies remain lazy.
+Each generated member captures its own local environment while retaining the
+receiver used when that member is eventually forced. Amending a collection
+keeps inherited positions and replaces matching members.
+
+Properties and entries use separate cache namespaces. A tag distinguishes them
+even when a quoted property contains the same bytes as an internal entry name;
+a reserved string prefix alone cannot provide this distinction. Primitive
+entry keys follow the pinned boxed-key rules: integer and floating-point keys
+are distinct, floating-point signed zeros are distinct, and NaNs compare equal.
+Object and function keys require further structural equality and forcing work.
+
+`Dynamic`, `Listing`, and `Mapping` share ordered member metadata with the
+prototype chain. Strict `List` construction supplies another iterable value.
+Static object bodies and bodies containing generators preserve the different
+ordering rules used by Java. Iteration first shallow-forces source members in
+the pinned child-first order, then visits visible members in inherited order.
+The special `default` property is excluded from iteration and spread.
+Errors in that forcing pass therefore precede generated target keys, conditions,
+or duplicate checks. Spread retains the evaluated source values.
+
+Partially constructed objects and iterator cursors are GC roots of their VM
+frames, including suspended frames. Iterator source values, captured member
+environments, keys, and unpublished builder state remain live across Host reads,
+nested evaluation, and cooperative yields. Failed construction does not publish
+a successful lazy cache entry; retry and terminal cleanup use the existing
+evaluator lifecycle.
+
+Diagnostic rendering walks ordered metadata and completed caches without
+forcing values. Subscript observations use the authored bracket position in
+power assertions. These mechanisms serve native, Node, and Wasm through the
+shared runtime; they do not complete collection wrappers, predicates, structural
+equality, or all typed-object generator rules.

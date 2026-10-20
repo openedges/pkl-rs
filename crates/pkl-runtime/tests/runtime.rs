@@ -101,6 +101,7 @@ fn tracing_collects_cycles_reuses_slots_and_rejects_stale_or_foreign_handles() {
     let mut heap = Heap::new();
     let stale = heap.allocate(Object::default());
     let key = CacheKey {
+        entry: false,
         owner: None,
         name: Arc::from("self"),
         method: false,
@@ -152,6 +153,7 @@ fn resource_program() -> Arc<Program> {
         ],
     ]);
     program.objects.push(vec![Member {
+        entry: false,
         name: Arc::from("answer"),
         code: 1,
         local: false,
@@ -271,6 +273,7 @@ fn malformed_bytecode_is_an_error_and_cannot_leak_a_running_thunk() {
         ],
     ]);
     program.objects.push(vec![Member {
+        entry: false,
         name: Arc::from("bad"),
         code: 1,
         local: false,
@@ -325,6 +328,7 @@ fn super_reads_preserve_receiver_but_do_not_memoize_parent_body() {
         ],
     ]);
     program.objects.push(vec![Member {
+        entry: false,
         name: Arc::from("answer"),
         code: 1,
         local: false,
@@ -334,6 +338,7 @@ fn super_reads_preserve_receiver_but_do_not_memoize_parent_body() {
         constant: false,
     }]);
     program.objects.push(vec![Member {
+        entry: false,
         name: Arc::from("result"),
         code: 2,
         local: false,
@@ -442,6 +447,7 @@ fn transient_failures_retry_in_order_while_successful_dependencies_stay_cached()
     program.objects.push(
         [("first", 1), ("second", 2), ("result", 3)]
             .map(|(name, code)| Member {
+                entry: false,
                 name: Arc::from(name),
                 code,
                 local: false,

@@ -1,0 +1,4 @@
+class C { x: Int }
+o = new C { x = 42 }
+other = (o) { ["a"] = 99 }
+result = other.x

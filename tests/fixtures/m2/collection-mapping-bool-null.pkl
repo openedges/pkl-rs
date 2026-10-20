@@ -1,0 +1,2 @@
+o = new Mapping { [true] = 1; [false] = 2; [null] = 39 }
+result = o[true] + o[false] + o[null]

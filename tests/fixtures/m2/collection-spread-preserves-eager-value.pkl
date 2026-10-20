@@ -1,0 +1,4 @@
+base = new Mapping { ["x"] = this["y"]; ["y"] = 1 }
+o = new Mapping { ...base; ["z"] = 40 }
+other = (o) { ["y"] = 2 }
+result = other["x"] + other["z"]

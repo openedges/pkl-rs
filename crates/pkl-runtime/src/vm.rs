@@ -8,6 +8,7 @@ use crate::heap::{
 };
 use crate::source::Span;
 use crate::value::{ErrorKind, ObjectId, RuntimeError, RuntimeFrame, Value};
+pub mod collections;
 mod typecheck;
 use typecheck::{TypeDestination, TypeRun};
 
@@ -18,6 +19,34 @@ pub enum Instruction {
     LoadLocal(usize),
     PushLocal,
     PopLocal,
+    Swap,
+    BeginCollection {
+        kind: crate::heap::CollectionKind,
+        has_parent: bool,
+        specialized: bool,
+    },
+    EndCollection,
+    AddCollectionProperty(Member),
+    AddCollectionElement(Member),
+    AddCollectionEntry {
+        member: Member,
+        check_index: bool,
+        span: Span,
+    },
+    OpenIterator {
+        nullable: bool,
+        spread: bool,
+    },
+    IteratorNext {
+        end: usize,
+    },
+    SpreadMember,
+    Subscript,
+    SuperSubscript,
+    EntryParent,
+    MakeList {
+        length: usize,
+    },
     LoadThis,
     LoadCustomThis,
     LoadOuter,
@@ -137,6 +166,7 @@ pub enum TypeCheck {
     Number,
     String,
     Bytes,
+    Collection(crate::heap::CollectionKind),
     StringLiteral(Arc<str>),
     Class {
         id: usize,
@@ -182,6 +212,9 @@ impl TypeCheck {
             Self::Number => matches!(value, Value::Int(_) | Value::Float(_)),
             Self::String => matches!(value, Value::String(_)),
             Self::Bytes => matches!(value, Value::Bytes(_)),
+            Self::Collection(kind) => {
+                matches!(value, Value::Object(id) if heap.get(*id).is_ok_and(|object| object.collection_kind == *kind && !object.is_module) && collections::typed_class(heap, *id).is_ok_and(|class| class.is_none()))
+            }
             Self::Class { id, .. } => {
                 let &Value::Object(mut object) = value else {
                     return false;
@@ -231,6 +264,7 @@ pub struct BlockMetadata {
 #[derive(Clone, Debug)]
 pub struct Program {
     pub module_name: Arc<str>,
+    pub module_template: Option<usize>,
     pub blocks: Vec<Vec<Instruction>>,
     pub metadata: Vec<BlockMetadata>,
     pub objects: Vec<Vec<Member>>,
@@ -241,6 +275,7 @@ impl Program {
     pub fn new(blocks: Vec<Vec<Instruction>>) -> Self {
         Self {
             module_name: Arc::from(""),
+            module_template: None,
             metadata: vec![BlockMetadata::default(); blocks.len()],
             blocks,
             objects: Vec::new(),
@@ -264,6 +299,7 @@ pub enum VmPoll {
 
 #[derive(Clone)]
 struct Force {
+    entry: bool,
     receiver: ObjectId,
     owner: ObjectId,
     name: Arc<str>,
@@ -284,6 +320,7 @@ struct Frame {
     return_to_type: bool,
     diagnostic_member: Option<Arc<str>>,
     callsite_hidden: bool,
+    builders: Vec<ObjectId>,
 }
 
 enum State {
@@ -387,6 +424,7 @@ impl Vm {
             return_to_type: false,
             diagnostic_member: None,
             callsite_hidden: false,
+            builders: Vec::new(),
         });
         self.state = State::Running;
         Ok(())
@@ -570,6 +608,7 @@ impl Vm {
 
     pub fn member_state(&self, receiver: ObjectId, name: &str) -> Result<LazyState, RuntimeError> {
         let key = CacheKey {
+            entry: false,
             owner: None,
             name: Arc::from(name),
             method: false,
@@ -610,6 +649,7 @@ impl Vm {
                 roots.push(value.clone());
             }
             for frame in frames {
+                roots.extend(frame.builders.iter().copied().map(Value::Object));
                 roots.extend(frame.environment.locals.iter().cloned());
                 roots.extend(frame.environment.this_value.iter().cloned());
                 roots.extend(frame.environment.outer_value.iter().cloned());
@@ -771,7 +811,22 @@ impl Vm {
         memoize: bool,
         method: bool,
     ) -> Result<(), RuntimeError> {
+        self.force_key(receiver, initial_owner, name, local, memoize, method, false)
+    }
+
+    #[allow(clippy::too_many_arguments)]
+    fn force_key(
+        &mut self,
+        receiver: ObjectId,
+        initial_owner: ObjectId,
+        name: Arc<str>,
+        local: bool,
+        memoize: bool,
+        method: bool,
+        entry: bool,
+    ) -> Result<(), RuntimeError> {
         let key = CacheKey {
+            entry,
             owner: local.then_some(initial_owner),
             name: name.clone(),
             method,
@@ -799,7 +854,10 @@ impl Vm {
             }
             let object = self.heap.get(owner)?;
             if let Some(member) = object.members.iter().find(|member| {
-                member.name == name && member.local == local && member.method == method
+                member.name == name
+                    && member.local == local
+                    && member.method == method
+                    && member.entry == entry
             }) {
                 break member.clone();
             }
@@ -819,7 +877,8 @@ impl Vm {
             .chain(self.suspended.iter().flat_map(|context| &context.frames))
             .any(|frame| {
                 frame.force.as_ref().is_some_and(|force| {
-                    force.receiver == receiver
+                    force.entry == entry
+                        && force.receiver == receiver
                         && force.owner == owner
                         && force.name == name
                         && force.method == method
@@ -830,6 +889,27 @@ impl Vm {
                 ErrorKind::Cycle,
                 format!("cyclic forcing of {name}"),
             ));
+        }
+        if let Some(value) = self
+            .heap
+            .get(owner)?
+            .member_values
+            .get(&CacheKey {
+                owner: None,
+                name: name.clone(),
+                method,
+                entry,
+            })
+            .cloned()
+        {
+            if memoize {
+                self.heap
+                    .get_mut(receiver)?
+                    .cache
+                    .insert(key, LazyState::Completed(value.clone()));
+            }
+            self.stack.push(value);
+            return Ok(());
         }
         if member.code >= self.program.blocks.len() {
             return Err(invalid("invalid member block"));
@@ -849,11 +929,9 @@ impl Vm {
                     return Err(RuntimeError::new(ErrorKind::Cycle, "cyclic parent chain"));
                 }
                 let object = self.heap.get(id)?;
-                for inherited in object
-                    .members
-                    .iter()
-                    .filter(|member| member.name == name && !member.local && !member.method)
-                {
+                for inherited in object.members.iter().filter(|member| {
+                    member.name == name && !member.local && !member.method && member.entry == entry
+                }) {
                     if let (Some(ty), Some(span)) = (&inherited.ty, inherited.type_span) {
                         let name = self.program.metadata.get(inherited.code).map_or_else(
                             || inherited.name.clone(),
@@ -865,7 +943,17 @@ impl Vm {
                 parent = object.parent;
             }
         }
-        let mut environment = self.heap.get(owner)?.environment.clone();
+        let object = self.heap.get(owner)?;
+        let mut environment = object
+            .member_environments
+            .get(&CacheKey {
+                owner: None,
+                name: name.clone(),
+                method,
+                entry,
+            })
+            .unwrap_or(&object.environment)
+            .clone();
         environment.outer_value = environment.this_value.clone();
         environment.this_value = Some(Value::Object(receiver));
         environment.scopes.insert(0, Scope { receiver, owner });
@@ -886,7 +974,9 @@ impl Vm {
             return_to_type: false,
             diagnostic_member: None,
             callsite_hidden: false,
+            builders: Vec::new(),
             force: Some(Force {
+                entry,
                 receiver,
                 owner,
                 name,
@@ -1119,6 +1209,7 @@ impl Vm {
             return_to_type: false,
             diagnostic_member: None,
             callsite_hidden: false,
+            builders: Vec::new(),
         });
         Ok(())
     }
@@ -1144,6 +1235,19 @@ impl Vm {
             .clone();
         frame.pc += 1;
         match instruction {
+            Instruction::Swap
+            | Instruction::BeginCollection { .. }
+            | Instruction::EndCollection
+            | Instruction::AddCollectionProperty(_)
+            | Instruction::AddCollectionElement(_)
+            | Instruction::AddCollectionEntry { .. }
+            | Instruction::OpenIterator { .. }
+            | Instruction::IteratorNext { .. }
+            | Instruction::SpreadMember
+            | Instruction::Subscript
+            | Instruction::SuperSubscript
+            | Instruction::EntryParent
+            | Instruction::MakeList { .. } => self.collection_instruction(instruction)?,
             Instruction::Constant(value) => self.stack.push(value),
             Instruction::Input(index) => self.stack.push(
                 self.inputs
@@ -1286,7 +1390,11 @@ impl Vm {
                     if needs_const {
                         self.require_const(receiver, name, false, method)?;
                     }
-                    self.force(receiver, receiver, name.clone(), false, true, method)?;
+                    if !method && self.collection_builtin(receiver, name)? {
+                        // Builtin collection properties do not force values.
+                    } else {
+                        self.force(receiver, receiver, name.clone(), false, true, method)?;
+                    }
                 }
             }
             Instruction::GetProperty {
@@ -1322,7 +1430,9 @@ impl Vm {
                     .clone()
                     .unwrap_or(Value::Object(self.scope(0)?.receiver));
                 let receiver = receiver.as_object()?;
-                self.force(receiver, receiver, name.clone(), false, true, method)?;
+                if method || !self.collection_builtin(receiver, name)? {
+                    self.force(receiver, receiver, name.clone(), false, true, method)?;
+                }
             }
             Instruction::GetSuperMember(ref name)
             | Instruction::GetSuperMethod(ref name)
@@ -1532,6 +1642,7 @@ impl Vm {
                     .environment
                     .clone();
                 let object = self.heap.allocate(Object {
+                    is_module: self.program.module_template == Some(template),
                     parent,
                     members,
                     environment,
@@ -2025,6 +2136,7 @@ fn compile_module_configured(
         constraint_module: false,
         active_type_parameters: BTreeMap::new(),
         function_counts: BTreeMap::new(),
+        entry_counts: BTreeMap::new(),
         function_names: BTreeMap::new(),
         instrument,
     };
@@ -2038,6 +2150,7 @@ fn compile_module_configured(
             .unwrap_or_default(),
     );
     let template = compiler.object(&resolved.module.members)?;
+    compiler.program.module_template = Some(template);
     let mut entry = Code::default();
     entry.push(Instruction::MakeObject {
         template,
@@ -2088,6 +2201,7 @@ struct Compiler<'a> {
     constraint_module: bool,
     active_type_parameters: BTreeMap<String, TypeCheck>,
     function_counts: BTreeMap<String, usize>,
+    entry_counts: BTreeMap<String, usize>,
     function_names: BTreeMap<Span, String>,
     instrument: bool,
 }
@@ -2122,9 +2236,10 @@ impl Compiler<'_> {
                     self.type_scopes.len(),
                     &mut BTreeSet::new(),
                 )?;
-                let template = self.object(members)?;
+                let properties = Self::body_properties_only(members)?;
+                let template = self.object(&properties)?;
                 instructions.push_at(Instruction::MakeInstance { template }, ty.span);
-                self.initialize_member_types(members, &mut instructions)?;
+                self.initialize_member_types(&properties, &mut instructions)?;
             } else {
                 self.expression(&member.expr, &mut instructions)?;
             }
@@ -2150,6 +2265,7 @@ impl Compiler<'_> {
             self.member = previous_member;
             self.modifiers = previous_modifiers;
             result.push(Member {
+                entry: false,
                 name: Arc::from(member.name.as_str()),
                 code,
                 local: crate::syntax::modifier_flags(&member.modifiers)
@@ -2293,14 +2409,20 @@ impl Compiler<'_> {
                 )));
             }
             ExprKind::New { ty, members } => {
-                if matches!(&ty.kind, crate::syntax::TypeKind::Named { path, arguments } if path == &["Dynamic"] && arguments.is_empty() && self.find_type("Dynamic", self.type_scopes.len()).is_none())
+                if let crate::syntax::TypeKind::Named { path, arguments } = &ty.kind
+                    && path.len() == 1
+                    && matches!(path[0].as_str(), "Dynamic" | "Listing" | "Mapping")
+                    && self.find_type(&path[0], self.type_scopes.len()).is_none()
                 {
-                    let template = self.object(members)?;
-                    output.push(Instruction::MakeObject {
-                        template,
-                        has_parent: false,
-                    });
-                    self.initialize_member_types(members, output)?;
+                    if !arguments.is_empty() {
+                        return Err(unsupported_type("collection type wrappers").at(ty.span));
+                    }
+                    let kind = match path[0].as_str() {
+                        "Listing" => crate::heap::CollectionKind::Listing,
+                        "Mapping" => crate::heap::CollectionKind::Mapping,
+                        _ => crate::heap::CollectionKind::Dynamic,
+                    };
+                    self.collection_body(members, kind, false, output)?;
                 } else {
                     self.class_expression(
                         ty,
@@ -2308,11 +2430,23 @@ impl Compiler<'_> {
                         self.type_scopes.len(),
                         &mut BTreeSet::new(),
                     )?;
-                    let template = self.object(members)?;
+                    let properties = Self::body_properties_only(members)?;
+                    let template = self.object(&properties)?;
                     output.push_at(Instruction::MakeInstance { template }, ty.span);
-                    self.initialize_member_types(members, output)?;
+                    self.initialize_member_types(&properties, output)?;
                 }
             }
+            ExprKind::Subscript { receiver, key } => {
+                if matches!(receiver.unparenthesized().kind, ExprKind::Super) {
+                    self.expression(key, output)?;
+                    output.push(Instruction::SuperSubscript);
+                } else {
+                    self.expression(receiver, output)?;
+                    self.expression(key, output)?;
+                    output.push(Instruction::Subscript);
+                }
+            }
+            ExprKind::EntryParent => output.push(Instruction::EntryParent),
             ExprKind::Uninitialized => output.push(Instruction::AbstractMember {
                 name: Arc::from(self.member.as_str()),
                 method: true,
@@ -2402,13 +2536,20 @@ impl Compiler<'_> {
                         method,
                     });
                 }
-                let name = Arc::from(name.as_str());
+                let name: Arc<str> = Arc::from(name.as_str());
                 match self
                     .resolved
                     .names
                     .get(&expression.span)
                     .ok_or_else(|| invalid("missing static binding"))?
                 {
+                    Binding::BaseConstant => output.push(Instruction::Constant(Value::Float(
+                        if name.as_ref() == "NaN" {
+                            f64::NAN
+                        } else {
+                            f64::INFINITY
+                        },
+                    ))),
                     Binding::Lexical { depth, slot: 0 } => {
                         output.push(Instruction::LoadLocal(*depth))
                     }
@@ -2552,6 +2693,17 @@ impl Compiler<'_> {
                 });
             }
             ExprKind::Call { callee, arguments } => {
+                if matches!(&callee.kind, ExprKind::Name(name) if name == "List")
+                    && self.resolved.names.get(&callee.span) == Some(&Binding::ImplicitMethod)
+                {
+                    for argument in arguments {
+                        self.expression(argument, output)?;
+                    }
+                    output.push(Instruction::MakeList {
+                        length: arguments.len(),
+                    });
+                    return Ok(());
+                }
                 let callee = callee.unparenthesized();
                 if matches!(&callee.kind, ExprKind::Name(name) if name == "read")
                     && self.resolved.names.get(&callee.span) == Some(&Binding::ImplicitMethod)
@@ -2683,12 +2835,12 @@ impl Compiler<'_> {
                 if let Some(parent) = parent {
                     self.expression(parent, output)?;
                 }
-                let template = self.object(members)?;
-                output.push(Instruction::MakeObject {
-                    template,
-                    has_parent: parent.is_some(),
-                });
-                self.initialize_member_types(members, output)?;
+                self.collection_body(
+                    members,
+                    crate::heap::CollectionKind::Dynamic,
+                    parent.is_some(),
+                    output,
+                )?;
             }
         }
         Ok(())
@@ -2740,6 +2892,7 @@ fn type_error_at_width(
 fn type_name(ty: &TypeCheck, module: &str) -> String {
     match ty {
         TypeCheck::Class { name, .. } => format!("{module}#{name}"),
+        TypeCheck::Collection(kind) => format!("{kind:?}"),
         TypeCheck::StringLiteral(value) => format!("{value:?}"),
         TypeCheck::Nullable(inner) => format!("{}?", type_name(inner, module)),
         TypeCheck::Alias(inner) => type_name(inner, module),
@@ -3136,6 +3289,10 @@ impl Compiler<'_> {
                         "Number" => TypeCheck::Number,
                         "String" => TypeCheck::String,
                         "Bytes" => TypeCheck::Bytes,
+                        "Dynamic" => TypeCheck::Collection(crate::heap::CollectionKind::Dynamic),
+                        "Listing" => TypeCheck::Collection(crate::heap::CollectionKind::Listing),
+                        "Mapping" => TypeCheck::Collection(crate::heap::CollectionKind::Mapping),
+                        "List" => TypeCheck::Collection(crate::heap::CollectionKind::List),
                         _ if crate::diagnostic_names::BASE_PROPERTIES
                             .contains(&path[0].as_str()) =>
                         {

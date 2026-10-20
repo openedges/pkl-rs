@@ -1,0 +1,3 @@
+class C { x: Int }
+o: C = new { x = 42 }
+result = o is Dynamic

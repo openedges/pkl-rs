@@ -1,0 +1,2 @@
+o = new Dynamic { x = 1; ["x"] = 2 }
+result = o.x

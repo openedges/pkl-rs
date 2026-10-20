@@ -1,0 +1,2 @@
+o = new Mapping { ["x"] = 10; [2] = 20 }
+result = o["x"] + o[2]

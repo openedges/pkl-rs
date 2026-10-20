@@ -18,6 +18,57 @@ pub struct Member {
     pub modifiers: Vec<Modifier>,
 }
 
+/// Authored object members, retained in source order including generators.
+#[derive(Clone, Debug, PartialEq)]
+pub enum ObjectMember {
+    Property(Member),
+    Element {
+        value: Expr,
+        span: Span,
+    },
+    Entry {
+        key: Expr,
+        value: Expr,
+        span: Span,
+    },
+    When {
+        condition: Expr,
+        then_members: Vec<ObjectMember>,
+        else_members: Vec<ObjectMember>,
+        span: Span,
+    },
+    For {
+        parameters: Vec<Parameter>,
+        iterable: Expr,
+        members: Vec<ObjectMember>,
+        span: Span,
+    },
+    Spread {
+        value: Expr,
+        nullable: bool,
+        span: Span,
+    },
+    Predicate {
+        condition: Expr,
+        value: Expr,
+        span: Span,
+    },
+}
+
+impl ObjectMember {
+    pub fn span(&self) -> Span {
+        match self {
+            Self::Property(member) => member.span,
+            Self::Element { span, .. }
+            | Self::Entry { span, .. }
+            | Self::When { span, .. }
+            | Self::For { span, .. }
+            | Self::Spread { span, .. }
+            | Self::Predicate { span, .. } => *span,
+        }
+    }
+}
+
 #[derive(Clone, Debug, PartialEq)]
 pub struct Parameter {
     pub name: String,
@@ -172,6 +223,8 @@ pub enum ExprKind {
     Outer,
     Module,
     Super,
+    /// Inherited value at the current entry key, used by `[key] { ... }`.
+    EntryParent,
     Parenthesized(Box<Expr>),
     NonNull(Box<Expr>),
     Throw(Box<Expr>),
@@ -185,6 +238,10 @@ pub enum ExprKind {
     },
     NullableMember(Box<Expr>, String),
     Member(Box<Expr>, String),
+    Subscript {
+        receiver: Box<Expr>,
+        key: Box<Expr>,
+    },
     Unary {
         op: UnaryOp,
         operand: Box<Expr>,
@@ -229,12 +286,12 @@ pub enum ExprKind {
     },
     New {
         ty: Type,
-        members: Vec<Member>,
+        members: Vec<ObjectMember>,
     },
     Uninitialized,
     Object {
         parent: Option<Box<Expr>>,
-        members: Vec<Member>,
+        members: Vec<ObjectMember>,
     },
 }
 

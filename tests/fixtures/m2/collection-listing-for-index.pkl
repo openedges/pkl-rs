@@ -1,0 +1,2 @@
+o = new Listing { for (i, n in List(10, 20)) { i + n } }
+result = o[0] + o[1]

@@ -1,5 +1,5 @@
 //! Bounded, non-forcing value snapshots for diagnostics.
-use crate::heap::{CacheKey, Heap, LazyState};
+use crate::heap::{CacheKey, CollectionKind, CollectionMemberKind, Heap, LazyState};
 use crate::value::{ErrorKind, ObjectId, RuntimeError, Value};
 use std::collections::BTreeSet;
 
@@ -26,6 +26,18 @@ fn class_name(id: ObjectId, heap: &Heap) -> Result<Option<String>, RuntimeError>
     Ok(None)
 }
 
+fn object_name(id: ObjectId, heap: &Heap) -> Result<String, RuntimeError> {
+    if heap.get(id)?.is_module {
+        return Ok("ModuleClass".into());
+    }
+    Ok(match heap.get(id)?.collection_kind {
+        CollectionKind::Dynamic => class_name(id, heap)?.unwrap_or_else(|| "Dynamic".into()),
+        CollectionKind::Listing => "Listing".into(),
+        CollectionKind::Mapping => "Mapping".into(),
+        CollectionKind::List => "List".into(),
+    })
+}
+
 pub(crate) fn type_name(value: &Value, heap: &Heap, module: &str) -> Result<String, RuntimeError> {
     Ok(match value {
         Value::Null => "Null".into(),
@@ -36,8 +48,16 @@ pub(crate) fn type_name(value: &Value, heap: &Heap, module: &str) -> Result<Stri
         Value::Bytes(_) => "Bytes".into(),
         Value::Function(_) => "Function".into(),
         Value::Class(_) => "Class".into(),
-        Value::Object(id) => class_name(*id, heap)?
-            .map_or_else(|| "Dynamic".into(), |name| format!("{module}#{name}")),
+        Value::Object(id) => {
+            if heap.get(*id)?.is_module {
+                module.into()
+            } else if heap.get(*id)?.collection_kind == CollectionKind::Dynamic {
+                class_name(*id, heap)?
+                    .map_or_else(|| "Dynamic".into(), |name| format!("{module}#{name}"))
+            } else {
+                object_name(*id, heap)?
+            }
+        }
     })
 }
 
@@ -169,49 +189,81 @@ impl Renderer<'_> {
     }
 
     fn object(&mut self, id: ObjectId, implicit: bool) -> Result<(), RuntimeError> {
-        if !implicit {
-            self.append("new ");
-            self.append(&class_name(id, self.heap)?.unwrap_or_else(|| "Dynamic".into()));
-            self.append(" ");
-        }
-        self.append("{");
-        let mut visited = BTreeSet::new();
-        let mut any = false;
-        for owner in ancestry(id, self.heap)?.into_iter().rev() {
-            for member in &self.heap.get(owner)?.members {
+        if self.heap.get(id)?.collection_kind == CollectionKind::List {
+            self.append("List(");
+            for (index, member) in crate::vm::collections::ordered_members(self.heap, id)?
+                .into_iter()
+                .enumerate()
+            {
                 if self.stopped {
                     return Ok(());
                 }
-                if member.local || member.method || !visited.insert(member.name.clone()) {
-                    continue;
-                }
-                if !any {
-                    self.append(" ");
-                    any = true;
+                if index > 0 {
+                    self.append(", ");
                 }
                 let key = CacheKey {
+                    entry: true,
                     owner: None,
-                    name: member.name.clone(),
+                    name: member.name,
                     method: false,
                 };
-                let value = match self.heap.get(id)?.cache.get(&key) {
-                    Some(LazyState::Completed(value)) => Some(value),
-                    _ => None,
-                };
-                self.identifier(&member.name);
-                self.append(
-                    if matches!(value, Some(Value::Object(_) | Value::Function(_))) {
-                        " "
-                    } else {
-                        " = "
-                    },
-                );
-                match value {
-                    Some(value) => self.value(value, true)?,
-                    None => self.append("?"),
+                match self.heap.get(id)?.cache.get(&key) {
+                    Some(LazyState::Completed(value)) => self.value(value, false)?,
+                    _ => self.append("?"),
                 }
-                self.append("; ");
             }
+            self.append(")");
+            return Ok(());
+        }
+        if !implicit {
+            self.append("new ");
+            self.append(&object_name(id, self.heap)?);
+            self.append(" ");
+        }
+        self.append("{");
+        let mut any = false;
+        for member in crate::vm::collections::ordered_members(self.heap, id)? {
+            if self.stopped {
+                return Ok(());
+            }
+            if !any {
+                self.append(" ");
+                any = true;
+            }
+            let key = CacheKey {
+                entry: member.kind != CollectionMemberKind::Property,
+                owner: None,
+                name: member.name.clone(),
+                method: false,
+            };
+            let value = match self.heap.get(id)?.cache.get(&key) {
+                Some(LazyState::Completed(value)) => Some(value),
+                _ => None,
+            };
+            match member.kind {
+                CollectionMemberKind::Property => self.identifier(&member.name),
+                CollectionMemberKind::Entry => {
+                    self.append("[");
+                    self.value(&member.key, false)?;
+                    self.append("]");
+                }
+                CollectionMemberKind::Element => {}
+            }
+            if member.kind != CollectionMemberKind::Element {
+                let object_like = match value {
+                    Some(Value::Object(value)) => {
+                        self.heap.get(*value)?.collection_kind != CollectionKind::List
+                    }
+                    Some(Value::Function(_)) => true,
+                    _ => false,
+                };
+                self.append(if object_like { " " } else { " = " });
+            }
+            match value {
+                Some(value) => self.value(value, member.kind != CollectionMemberKind::Element)?,
+                None => self.append("?"),
+            }
+            self.append("; ");
         }
         if any && !self.stopped {
             self.units.truncate(self.units.len() - 2);
@@ -256,6 +308,7 @@ mod tests {
 
     fn member(name: &str, local: bool) -> Member {
         Member {
+            entry: false,
             name: name.into(),
             code: usize::MAX, // Rendering must not execute any code.
             local,
@@ -301,6 +354,7 @@ mod tests {
         );
         heap.get_mut(object).unwrap().cache.insert(
             CacheKey {
+                entry: false,
                 owner: None,
                 name: "a".into(),
                 method: false,
@@ -324,6 +378,7 @@ mod tests {
         });
         heap.get_mut(object).unwrap().cache.insert(
             CacheKey {
+                entry: false,
                 owner: None,
                 name: "self".into(),
                 method: false,

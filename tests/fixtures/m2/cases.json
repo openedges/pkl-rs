@@ -3390,6 +3390,1506 @@
         "semantic:diagnostics"
       ],
       "expected_outcome": "failure"
+    },
+    {
+      "id": "collection-dynamic-mixed",
+      "input": "tests/fixtures/m2/collection-dynamic-mixed.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:generators"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "collection-listing-elements",
+      "input": "tests/fixtures/m2/collection-listing-elements.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:generators"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "collection-mapping-entries",
+      "input": "tests/fixtures/m2/collection-mapping-entries.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:generators"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "collection-dynamic-entry-property",
+      "input": "tests/fixtures/m2/collection-dynamic-entry-property.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "collection-dynamic-lazy-body",
+      "input": "tests/fixtures/m2/collection-dynamic-lazy-body.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "collection-listing-lazy-body",
+      "input": "tests/fixtures/m2/collection-listing-lazy-body.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "collection-mapping-lazy-body",
+      "input": "tests/fixtures/m2/collection-mapping-lazy-body.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "collection-mapping-eager-key",
+      "input": "tests/fixtures/m2/collection-mapping-eager-key.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "collection-mapping-unused-key",
+      "input": "tests/fixtures/m2/collection-mapping-unused-key.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "collection-listing-index-negative",
+      "input": "tests/fixtures/m2/collection-listing-index-negative.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "collection-listing-index-upper",
+      "input": "tests/fixtures/m2/collection-listing-index-upper.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "collection-listing-index-string",
+      "input": "tests/fixtures/m2/collection-listing-index-string.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "collection-mapping-missing",
+      "input": "tests/fixtures/m2/collection-mapping-missing.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "collection-dynamic-property-index",
+      "input": "tests/fixtures/m2/collection-dynamic-property-index.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "collection-listing-length-lazy",
+      "input": "tests/fixtures/m2/collection-listing-length-lazy.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "collection-mapping-length-lazy",
+      "input": "tests/fixtures/m2/collection-mapping-length-lazy.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "collection-listing-amend-append",
+      "input": "tests/fixtures/m2/collection-listing-amend-append.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:amendment"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "collection-listing-amend-replace",
+      "input": "tests/fixtures/m2/collection-listing-amend-replace.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:amendment"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "collection-mapping-amend-replace",
+      "input": "tests/fixtures/m2/collection-mapping-amend-replace.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:amendment"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "collection-mapping-amend-late-this",
+      "input": "tests/fixtures/m2/collection-mapping-amend-late-this.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:amendment"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "collection-listing-this",
+      "input": "tests/fixtures/m2/collection-listing-this.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:lazy-evaluation",
+        "semantic:name-resolution"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "collection-mapping-key-lexical",
+      "input": "tests/fixtures/m2/collection-mapping-key-lexical.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:lazy-evaluation",
+        "semantic:name-resolution"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "collection-listing-local",
+      "input": "tests/fixtures/m2/collection-listing-local.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:lazy-evaluation",
+        "semantic:name-resolution"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "collection-listing-for-index",
+      "input": "tests/fixtures/m2/collection-listing-for-index.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:generators"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "collection-listing-for-closure",
+      "input": "tests/fixtures/m2/collection-listing-for-closure.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:lazy-evaluation",
+        "semantic:name-resolution",
+        "semantic:functions",
+        "semantic:closures"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "collection-listing-when-false",
+      "input": "tests/fixtures/m2/collection-listing-when-false.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:generators"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "collection-listing-when-else",
+      "input": "tests/fixtures/m2/collection-listing-when-else.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:generators"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "collection-listing-when-eager",
+      "input": "tests/fixtures/m2/collection-listing-when-eager.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "collection-listing-for-body-lazy",
+      "input": "tests/fixtures/m2/collection-listing-for-body-lazy.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:lazy-evaluation"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "collection-listing-spread-list",
+      "input": "tests/fixtures/m2/collection-listing-spread-list.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:generators"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "collection-mapping-spread",
+      "input": "tests/fixtures/m2/collection-mapping-spread.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:generators"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "collection-listing-spread-lazy",
+      "input": "tests/fixtures/m2/collection-listing-spread-lazy.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "collection-listing-spread-nullable",
+      "input": "tests/fixtures/m2/collection-listing-spread-nullable.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:generators"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "collection-listing-spread-null",
+      "input": "tests/fixtures/m2/collection-listing-spread-null.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "collection-listing-property-rejected",
+      "input": "tests/fixtures/m2/collection-listing-property-rejected.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "collection-listing-when-nonboolean",
+      "input": "tests/fixtures/m2/collection-listing-when-nonboolean.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "collection-listing-entry-new-index",
+      "input": "tests/fixtures/m2/collection-listing-entry-new-index.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "collection-listing-amend-outside-parent",
+      "input": "tests/fixtures/m2/collection-listing-amend-outside-parent.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:amendment",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "collection-mapping-element-forced",
+      "input": "tests/fixtures/m2/collection-mapping-element-forced.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "collection-listing-for-listing",
+      "input": "tests/fixtures/m2/collection-listing-for-listing.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:generators"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "collection-listing-for-unused-bad-value",
+      "input": "tests/fixtures/m2/collection-listing-for-unused-bad-value.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "collection-listing-for-outer",
+      "input": "tests/fixtures/m2/collection-listing-for-outer.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:lazy-evaluation",
+        "semantic:name-resolution"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "collection-mapping-spread-duplicate",
+      "input": "tests/fixtures/m2/collection-mapping-spread-duplicate.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "collection-listing-spread-mapping-error",
+      "input": "tests/fixtures/m2/collection-listing-spread-mapping-error.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "collection-mapping-spread-listing-error",
+      "input": "tests/fixtures/m2/collection-mapping-spread-listing-error.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "collection-listing-spread-order",
+      "input": "tests/fixtures/m2/collection-listing-spread-order.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:generators"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "collection-property-nul",
+      "input": "tests/fixtures/m2/collection-property-nul.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lexing",
+        "semantic:name-resolution"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "collection-mapping-int-float",
+      "input": "tests/fixtures/m2/collection-mapping-int-float.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "collection-mapping-float-int",
+      "input": "tests/fixtures/m2/collection-mapping-float-int.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "collection-mapping-int-float-duplicate",
+      "input": "tests/fixtures/m2/collection-mapping-int-float-duplicate.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "collection-mapping-nan",
+      "input": "tests/fixtures/m2/collection-mapping-nan.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "collection-mapping-nan-duplicate",
+      "input": "tests/fixtures/m2/collection-mapping-nan-duplicate.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "collection-mapping-bool-null",
+      "input": "tests/fixtures/m2/collection-mapping-bool-null.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "collection-mapping-int-bool-distinct",
+      "input": "tests/fixtures/m2/collection-mapping-int-bool-distinct.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "collection-render-dynamic-mixed",
+      "input": "tests/fixtures/m2/collection-render-dynamic-mixed.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:constraints",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "collection-render-dynamic-inherited",
+      "input": "tests/fixtures/m2/collection-render-dynamic-inherited.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:constraints",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "collection-render-dynamic-cached",
+      "input": "tests/fixtures/m2/collection-render-dynamic-cached.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:constraints",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "collection-mapping-positive-negative-zero",
+      "input": "tests/fixtures/m2/collection-mapping-positive-negative-zero.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "collection-mapping-positive-negative-zero-lookup",
+      "input": "tests/fixtures/m2/collection-mapping-positive-negative-zero-lookup.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "collection-listing-power-index",
+      "input": "tests/fixtures/m2/collection-listing-power-index.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:constraints",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure",
+      "power_assertions": true
+    },
+    {
+      "id": "collection-mapping-power-index",
+      "input": "tests/fixtures/m2/collection-mapping-power-index.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:constraints",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure",
+      "power_assertions": true
+    },
+    {
+      "id": "collection-dynamic-power-cached",
+      "input": "tests/fixtures/m2/collection-dynamic-power-cached.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:constraints",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure",
+      "power_assertions": true
+    },
+    {
+      "id": "collection-mapping-power-inherited",
+      "input": "tests/fixtures/m2/collection-mapping-power-inherited.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:constraints",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure",
+      "power_assertions": true
+    },
+    {
+      "id": "collection-listing-power-comment",
+      "input": "tests/fixtures/m2/collection-listing-power-comment.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:constraints",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure",
+      "power_assertions": true
+    },
+    {
+      "id": "collection-dynamic-simple-order",
+      "input": "tests/fixtures/m2/collection-dynamic-simple-order.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:generators"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "collection-dynamic-generated-order",
+      "input": "tests/fixtures/m2/collection-dynamic-generated-order.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:generators"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "collection-dynamic-mixed-generated-order",
+      "input": "tests/fixtures/m2/collection-dynamic-mixed-generated-order.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:generators"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "collection-render-dynamic-generated",
+      "input": "tests/fixtures/m2/collection-render-dynamic-generated.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:constraints",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "collection-render-dynamic-mixed-generated",
+      "input": "tests/fixtures/m2/collection-render-dynamic-mixed-generated.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:constraints",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "collection-listing-lazy-key-capture",
+      "input": "tests/fixtures/m2/collection-listing-lazy-key-capture.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:lazy-evaluation",
+        "semantic:name-resolution"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "collection-listing-nested-generator-closure",
+      "input": "tests/fixtures/m2/collection-listing-nested-generator-closure.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:lazy-evaluation",
+        "semantic:name-resolution",
+        "semantic:functions",
+        "semantic:closures"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "collection-generator-first-key-error",
+      "input": "tests/fixtures/m2/collection-generator-first-key-error.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "collection-generator-first-when-error",
+      "input": "tests/fixtures/m2/collection-generator-first-when-error.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "collection-listing-power-legal-multiline",
+      "input": "tests/fixtures/m2/collection-listing-power-legal-multiline.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:constraints",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure",
+      "power_assertions": true
+    },
+    {
+      "id": "collection-meta-for-alpha-left",
+      "input": "tests/fixtures/m2/collection-meta-for-alpha-left.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:generated-verification",
+        "semantic:functions",
+        "semantic:closures"
+      ],
+      "expected_outcome": "success",
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "collection-meta-for-alpha-left",
+          "collection-meta-for-alpha-right"
+        ],
+        "domain": "Capture-free renaming of two nested bounded Int generator variables preserves lazy closure capture"
+      }
+    },
+    {
+      "id": "collection-meta-for-alpha-right",
+      "input": "tests/fixtures/m2/collection-meta-for-alpha-right.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:generated-verification",
+        "semantic:functions",
+        "semantic:closures"
+      ],
+      "expected_outcome": "success",
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "collection-meta-for-alpha-left",
+          "collection-meta-for-alpha-right"
+        ],
+        "domain": "Capture-free renaming of two nested bounded Int generator variables preserves lazy closure capture"
+      }
+    },
+    {
+      "id": "collection-meta-mapping-amend-left",
+      "input": "tests/fixtures/m2/collection-meta-mapping-amend-left.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:amendment",
+        "semantic:generated-verification"
+      ],
+      "expected_outcome": "success",
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "collection-meta-mapping-amend-left",
+          "collection-meta-mapping-amend-right"
+        ],
+        "domain": "Replacing an existing Mapping key preserves parent order; fresh Mapping with matching final order and values yields equal bounded scalar iteration"
+      }
+    },
+    {
+      "id": "collection-meta-mapping-amend-right",
+      "input": "tests/fixtures/m2/collection-meta-mapping-amend-right.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:amendment",
+        "semantic:generated-verification"
+      ],
+      "expected_outcome": "success",
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "collection-meta-mapping-amend-left",
+          "collection-meta-mapping-amend-right"
+        ],
+        "domain": "Replacing an existing Mapping key preserves parent order; fresh Mapping with matching final order and values yields equal bounded scalar iteration"
+      }
+    },
+    {
+      "id": "collection-meta-null-spread-left",
+      "input": "tests/fixtures/m2/collection-meta-null-spread-left.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:generated-verification"
+      ],
+      "expected_outcome": "success",
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "collection-meta-null-spread-left",
+          "collection-meta-null-spread-right"
+        ],
+        "domain": "A nullable spread of null and a false when branch emit no elements; bounded Listing elements and indexing remain unchanged"
+      }
+    },
+    {
+      "id": "collection-meta-null-spread-right",
+      "input": "tests/fixtures/m2/collection-meta-null-spread-right.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:generated-verification"
+      ],
+      "expected_outcome": "success",
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "collection-meta-null-spread-left",
+          "collection-meta-null-spread-right"
+        ],
+        "domain": "A nullable spread of null and a false when branch emit no elements; bounded Listing elements and indexing remain unchanged"
+      }
+    },
+    {
+      "id": "collection-entry-body-inferred-new",
+      "input": "tests/fixtures/m2/collection-entry-body-inferred-new.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:amendment"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "collection-spread-listing-default",
+      "input": "tests/fixtures/m2/collection-spread-listing-default.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:generators"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "collection-spread-preserves-eager-value",
+      "input": "tests/fixtures/m2/collection-spread-preserves-eager-value.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:amendment"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "collection-dynamic-static-computed-element",
+      "input": "tests/fixtures/m2/collection-dynamic-static-computed-element.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "collection-dynamic-static-literal-element",
+      "input": "tests/fixtures/m2/collection-dynamic-static-literal-element.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:generators"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "collection-dynamic-generated-literal-element",
+      "input": "tests/fixtures/m2/collection-dynamic-generated-literal-element.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "collection-generator-typed-param-false",
+      "input": "tests/fixtures/m2/collection-generator-typed-param-false.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:types",
+        "semantic:lazy-evaluation"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "collection-listing-subscript-entry-super",
+      "input": "tests/fixtures/m2/collection-listing-subscript-entry-super.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:amendment"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "collection-entry-body-amendment",
+      "input": "tests/fixtures/m2/collection-entry-body-amendment.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:amendment"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "collection-element-body-amendment",
+      "input": "tests/fixtures/m2/collection-element-body-amendment.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:amendment"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "collection-class-is-dynamic",
+      "input": "tests/fixtures/m2/collection-class-is-dynamic.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:types"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "collection-class-annotated-dynamic",
+      "input": "tests/fixtures/m2/collection-class-annotated-dynamic.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:types",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "collection-contextual-class-is-dynamic",
+      "input": "tests/fixtures/m2/collection-contextual-class-is-dynamic.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:types"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "collection-class-amend-element",
+      "input": "tests/fixtures/m2/collection-class-amend-element.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:classes",
+        "semantic:types",
+        "semantic:amendment",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "collection-class-amend-entry",
+      "input": "tests/fixtures/m2/collection-class-amend-entry.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:classes",
+        "semantic:types",
+        "semantic:amendment",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "collection-class-amend-for-entry",
+      "input": "tests/fixtures/m2/collection-class-amend-for-entry.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:classes",
+        "semantic:types",
+        "semantic:generators",
+        "semantic:amendment",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "collection-class-amend-spread-entry",
+      "input": "tests/fixtures/m2/collection-class-amend-spread-entry.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:classes",
+        "semantic:types",
+        "semantic:generators",
+        "semantic:amendment",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "collection-for-force-source-before-key",
+      "input": "tests/fixtures/m2/collection-for-force-source-before-key.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "collection-for-force-source-before-when",
+      "input": "tests/fixtures/m2/collection-for-force-source-before-when.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "collection-spread-force-source-before-duplicate",
+      "input": "tests/fixtures/m2/collection-spread-force-source-before-duplicate.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "collection-spread-force-source-before-kind",
+      "input": "tests/fixtures/m2/collection-spread-force-source-before-kind.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "collection-for-force-child-before-parent",
+      "input": "tests/fixtures/m2/collection-for-force-child-before-parent.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:lazy-evaluation",
+        "semantic:amendment",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "collection-spread-force-child-before-parent",
+      "input": "tests/fixtures/m2/collection-spread-force-child-before-parent.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:lazy-evaluation",
+        "semantic:amendment",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "collection-for-source-force-shallow",
+      "input": "tests/fixtures/m2/collection-for-source-force-shallow.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:lazy-evaluation"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "collection-for-default-omitted",
+      "input": "tests/fixtures/m2/collection-for-default-omitted.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:lazy-evaluation"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "collection-spread-default-not-forced",
+      "input": "tests/fixtures/m2/collection-spread-default-not-forced.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:lazy-evaluation"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "collection-nul-internal-collision",
+      "input": "tests/fixtures/m2/collection-nul-internal-collision.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lexing",
+        "semantic:name-resolution"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "collection-typed-class-for-source",
+      "input": "tests/fixtures/m2/collection-typed-class-for-source.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:classes",
+        "semantic:types",
+        "semantic:generators",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "collection-typed-class-spread-source",
+      "input": "tests/fixtures/m2/collection-typed-class-spread-source.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:classes",
+        "semantic:types",
+        "semantic:generators",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "collection-for-force-source-before-param-type",
+      "input": "tests/fixtures/m2/collection-for-force-source-before-param-type.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "collection-for-empty-param-missingtype",
+      "input": "tests/fixtures/m2/collection-for-empty-param-missingtype.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:types",
+        "semantic:generators",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "collection-for-empty-missingtype-skipped",
+      "input": "tests/fixtures/m2/collection-for-empty-missingtype-skipped.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:types",
+        "semantic:generators",
+        "semantic:lazy-evaluation"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "collection-local-duplicate-generated",
+      "input": "tests/fixtures/m2/collection-local-duplicate-generated.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:name-resolution",
+        "semantic:modifiers",
+        "semantic:generators",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "collection-local-method-duplicate-generated",
+      "input": "tests/fixtures/m2/collection-local-method-duplicate-generated.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:name-resolution",
+        "semantic:modifiers",
+        "semantic:generators",
+        "semantic:functions",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "collection-list-method-shadow",
+      "input": "tests/fixtures/m2/collection-list-method-shadow.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:name-resolution",
+        "semantic:functions"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "collection-list-property-shadow",
+      "input": "tests/fixtures/m2/collection-list-property-shadow.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:name-resolution"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "collection-list-nested-method-shadow",
+      "input": "tests/fixtures/m2/collection-list-nested-method-shadow.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:name-resolution",
+        "semantic:functions"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "collection-listing-implicit-length",
+      "input": "tests/fixtures/m2/collection-listing-implicit-length.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:name-resolution"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "collection-listing-implicit-isempty",
+      "input": "tests/fixtures/m2/collection-listing-implicit-isempty.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:name-resolution"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "collection-module-dynamic-classification",
+      "input": "tests/fixtures/m2/collection-module-dynamic-classification.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:name-resolution",
+        "semantic:modules",
+        "semantic:types"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "collection-module-iteration",
+      "input": "tests/fixtures/m2/collection-module-iteration.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:name-resolution",
+        "semantic:modules",
+        "semantic:generators",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
     }
   ]
 }

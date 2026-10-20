@@ -303,6 +303,7 @@ impl Vm {
             return_to_type: true,
             diagnostic_member: Some(member),
             callsite_hidden: false,
+            builders: Vec::new(),
         });
         Ok(())
     }

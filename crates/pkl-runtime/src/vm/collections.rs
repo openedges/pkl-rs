@@ -1,0 +1,1177 @@
+//! Ordered lazy collections and bytecode construction/iteration continuations.
+use super::*;
+use crate::heap::{CollectionIterator, CollectionKind, CollectionMember, CollectionMemberKind};
+
+pub(super) fn typed_class(heap: &Heap, mut id: ObjectId) -> Result<Option<Class>, RuntimeError> {
+    let mut visited = BTreeSet::new();
+    loop {
+        if !visited.insert(id) {
+            return Err(RuntimeError::new(ErrorKind::Cycle, "cyclic parent chain"));
+        }
+        let object = heap.get(id)?;
+        if let Some(class) = &object.class_definition {
+            return Ok(Some(class.clone()));
+        }
+        let Some(parent) = object.parent else {
+            return Ok(None);
+        };
+        id = parent;
+    }
+}
+
+fn same_key(left: &Value, right: &Value) -> bool {
+    match (left, right) {
+        (Value::Float(a), Value::Float(b)) => {
+            a.to_bits() == b.to_bits() || (a.is_nan() && b.is_nan())
+        }
+        _ => left == right,
+    }
+}
+
+fn same_member(left: &CollectionMember, right: &CollectionMember) -> bool {
+    (left.kind == CollectionMemberKind::Property) == (right.kind == CollectionMemberKind::Property)
+        && same_key(&left.key, &right.key)
+}
+
+/// Read declaration order without forcing member values. Overrides retain their
+/// inherited position; properties and entries have distinct key namespaces.
+pub fn ordered_members(
+    heap: &Heap,
+    receiver: ObjectId,
+) -> Result<Vec<CollectionMember>, RuntimeError> {
+    let mut chain = Vec::new();
+    let mut next = Some(receiver);
+    let mut visited = BTreeSet::new();
+    while let Some(id) = next {
+        if !visited.insert(id) {
+            return Err(RuntimeError::new(ErrorKind::Cycle, "cyclic parent chain"));
+        }
+        chain.push(id);
+        next = heap.get(id)?.parent;
+    }
+    let mut result: Vec<CollectionMember> = Vec::new();
+    for id in chain.into_iter().rev() {
+        let object = heap.get(id)?;
+        let fallback;
+        let members = if object.collection_members.is_empty() {
+            fallback = object
+                .members
+                .iter()
+                .filter(|m| !m.local && !m.method && !m.entry)
+                .map(|m| CollectionMember {
+                    key: Value::String(m.name.clone()),
+                    name: m.name.clone(),
+                    kind: CollectionMemberKind::Property,
+                })
+                .collect::<Vec<_>>();
+            &fallback
+        } else {
+            &object.collection_members
+        };
+        for member in members {
+            if member.kind == CollectionMemberKind::Property && member.name.as_ref() == "default" {
+                continue;
+            }
+            if let Some(old) = result.iter_mut().find(|old| same_member(old, member)) {
+                *old = member.clone();
+            } else {
+                result.push(member.clone());
+            }
+        }
+    }
+    Ok(result)
+}
+
+fn forcing_members(heap: &Heap, receiver: ObjectId) -> Result<Vec<CollectionMember>, RuntimeError> {
+    let effective = ordered_members(heap, receiver)?;
+    let mut result = Vec::new();
+    let mut next = Some(receiver);
+    let mut visited = BTreeSet::new();
+    while let Some(id) = next {
+        if !visited.insert(id) {
+            return Err(RuntimeError::new(ErrorKind::Cycle, "cyclic parent chain"));
+        }
+        let object = heap.get(id)?;
+        for member in &object.members {
+            if member.local || member.method {
+                continue;
+            }
+            if let Some(descriptor) = effective.iter().find(|d| {
+                d.name == member.name && (d.kind != CollectionMemberKind::Property) == member.entry
+            }) && !result.iter().any(|old| same_member(old, descriptor))
+            {
+                result.push(descriptor.clone());
+            }
+        }
+        next = object.parent;
+    }
+    Ok(result)
+}
+
+impl Vm {
+    fn builder(&self) -> Result<ObjectId, RuntimeError> {
+        self.frames
+            .last()
+            .and_then(|f| f.builders.last())
+            .copied()
+            .ok_or_else(|| invalid("missing collection builder"))
+    }
+
+    pub(super) fn collection_builtin(
+        &mut self,
+        receiver: ObjectId,
+        name: &str,
+    ) -> Result<bool, RuntimeError> {
+        let object = self.heap.get(receiver)?;
+        if object.collection_kind == CollectionKind::Dynamic || object.is_module {
+            return Ok(false);
+        }
+        let length = if object.collection_kind == CollectionKind::Mapping {
+            ordered_members(&self.heap, receiver)?
+                .iter()
+                .filter(|m| m.kind == CollectionMemberKind::Entry)
+                .count()
+        } else {
+            object.length
+        };
+        let value = match name {
+            "length" => Value::Int(length as i64),
+            "isEmpty" => Value::Bool(length == 0),
+            _ => return Ok(false),
+        };
+        self.stack.push(value);
+        Ok(true)
+    }
+
+    fn add_collection_member(
+        &mut self,
+        mut member: Member,
+        key: Option<Value>,
+        kind: CollectionMemberKind,
+        value: Option<Value>,
+    ) -> Result<(), RuntimeError> {
+        let target = self.builder()?;
+        let object = self.heap.get(target)?;
+        let collection_kind = object.collection_kind;
+        let parent = object.parent;
+        let length = object.length;
+        let key = key.unwrap_or(Value::Int(length as i64));
+        if key.heap_id().is_some() {
+            return Err(unsupported_type(
+                "object, function and class collection keys",
+            ));
+        }
+        if kind != CollectionMemberKind::Property
+            && let Some(class) = typed_class(&self.heap, target)?
+        {
+            let element = kind == CollectionMemberKind::Element;
+            let label = if element { "element" } else { "entry" };
+            let type_label = if !element && !object.specialized_literal {
+                crate::diagnostic_values::render(
+                    &Value::Object(target),
+                    &self.heap,
+                    &self.program.module_name,
+                    80,
+                )?
+            } else {
+                format!("{}#{}", self.program.module_name, class.name)
+            };
+            let mut error = RuntimeError::new(
+                ErrorKind::Type,
+                format!("Object of type `{type_label}` cannot have an {label}."),
+            );
+            error.hint = Some(if element {
+                "Only objects of type `Listing` and `Dynamic` can have elements. If you did not mean to add an element, you probably got the syntax wrong. For example, `obj { name }` adds an element, whereas `obj { name = \"Pigeon\" }` sets a property."
+            } else {
+                "Only objects of type `Mapping` and `Dynamic` can have entries. If you did not mean to add an entry, you probably got the syntax wrong. For example, `obj { [\"name\"] = \"Pigeon\" }` adds an entry, whereas `obj { name = \"Pigeon\" }` sets a property."
+            }.into());
+            return Err(error);
+        }
+        if kind == CollectionMemberKind::Element && collection_kind == CollectionKind::Mapping {
+            let mut error = RuntimeError::new(
+                ErrorKind::Type,
+                "Object of type `Mapping` cannot have an element.",
+            );
+            error.hint = Some("Only objects of type `Listing` and `Dynamic` can have elements. If you did not mean to add an element, you probably got the syntax wrong. For example, `obj { name }` adds an element, whereas `obj { name = \"Pigeon\" }` sets a property.".into());
+            return Err(error);
+        }
+        if kind == CollectionMemberKind::Property
+            && !member.local
+            && member.name.as_ref() != "default"
+            && collection_kind != CollectionKind::Dynamic
+        {
+            let mut error = RuntimeError::new(
+                ErrorKind::Type,
+                format!(
+                    "Object of type `{collection_kind:?}` cannot have a property (other than `default`)."
+                ),
+            );
+            error.hint = Some("Objects of type `Listing` and `Mapping` can only have a `default` property (and `local` properties). If you did not mean to set a property, you probably got the syntax wrong. For example, `obj { name = \"Pigeon\" }` sets a property, whereas `obj { [\"name\"] = \"Pigeon\" }` adds an entry.".into());
+            return Err(error);
+        }
+        if kind == CollectionMemberKind::Entry && collection_kind == CollectionKind::Listing {
+            let Value::Int(index) = key else {
+                return Err(RuntimeError::new(
+                    ErrorKind::Type,
+                    "Listing keys must have type `Int`.",
+                ));
+            };
+            let parent_length = parent
+                .map(|id| self.heap.get(id).map(|o| o.length))
+                .transpose()?
+                .unwrap_or(0);
+            if index < 0 || index as usize >= parent_length {
+                return Err(RuntimeError::new(
+                    ErrorKind::Type,
+                    format!(
+                        "Element index `{index}` is out of range `0`..`{}`.",
+                        parent_length as i64 - 1
+                    ),
+                ));
+            }
+        }
+        if kind == CollectionMemberKind::Property
+            && object.members.iter().any(|old| {
+                !old.entry
+                    && old.name == member.name
+                    && old.local == member.local
+                    && old.method == member.method
+            })
+        {
+            return Err(RuntimeError::new(
+                ErrorKind::Type,
+                format!("Duplicate definition of member `{}`.", member.name),
+            ));
+        }
+        let mut descriptor = CollectionMember {
+            key,
+            name: member.name.clone(),
+            kind,
+        };
+        let replacing = object
+            .collection_members
+            .iter()
+            .position(|old| same_member(old, &descriptor));
+        if replacing.is_some_and(|index| {
+            !(object.specialized_literal
+                && kind == CollectionMemberKind::Element
+                && object.collection_members[index].kind == CollectionMemberKind::Entry)
+        }) {
+            return Err(RuntimeError::new(
+                ErrorKind::Type,
+                format!(
+                    "Duplicate definition of member `{}`.",
+                    display_value(&descriptor.key)
+                ),
+            ));
+        }
+        if kind != CollectionMemberKind::Property {
+            descriptor.name = replacing
+                .map(|index| object.collection_members[index].name.clone())
+                .or_else(|| {
+                    parent
+                        .and_then(|id| ordered_members(&self.heap, id).ok())
+                        .and_then(|members| {
+                            members
+                                .into_iter()
+                                .find(|old| same_member(old, &descriptor))
+                        })
+                        .map(|old| old.name)
+                })
+                .unwrap_or_else(|| {
+                    Arc::from(format!("\0{}:{}", target.index, object.members.len()))
+                });
+            member.name = descriptor.name.clone();
+            member.entry = true;
+        }
+        if let Some(parent) = parent {
+            self.validate_object_members(parent, std::slice::from_ref(&member))?;
+        }
+        let environment = self
+            .frames
+            .last()
+            .expect("active frame")
+            .environment
+            .clone();
+        let cache_key = CacheKey {
+            owner: None,
+            name: member.name.clone(),
+            method: member.method,
+            entry: member.entry,
+        };
+        let object = self.heap.get_mut(target)?;
+        object
+            .member_environments
+            .insert(cache_key.clone(), environment);
+        if !member.local && !member.method {
+            if let Some(index) = replacing {
+                object.collection_members[index] = descriptor;
+            } else {
+                object.collection_members.push(descriptor);
+            }
+        }
+        if let Some(index) = object.members.iter().position(|old| {
+            old.name == member.name
+                && old.entry == member.entry
+                && old.local == member.local
+                && old.method == member.method
+        }) {
+            object.members[index] = member;
+        } else {
+            object.members.push(member);
+        }
+        if kind == CollectionMemberKind::Element {
+            object.length += 1;
+        }
+        if let Some(value) = value {
+            object
+                .member_values
+                .insert(cache_key.clone(), value.clone());
+            object.cache.insert(cache_key, LazyState::Completed(value));
+        }
+        Ok(())
+    }
+
+    fn source_member(
+        &self,
+        mut source: ObjectId,
+        descriptor: &CollectionMember,
+    ) -> Result<Member, RuntimeError> {
+        loop {
+            let object = self.heap.get(source)?;
+            if let Some(member) = object.members.iter().find(|m| {
+                m.name == descriptor.name
+                    && m.entry == (descriptor.kind != CollectionMemberKind::Property)
+                    && !m.local
+                    && !m.method
+            }) {
+                return Ok(member.clone());
+            }
+            source = object
+                .parent
+                .ok_or_else(|| invalid("missing iterable member"))?;
+        }
+    }
+
+    fn spread_error(&mut self, message: String, member: &Member) -> RuntimeError {
+        let mut error = RuntimeError::new(ErrorKind::Type, message);
+        let frame = self.frames.last_mut().expect("active frame");
+        if let Some(metadata) = self.program.metadata.get(frame.block)
+            && let Some(Some(span)) = metadata.spans.get(frame.pc - 1)
+        {
+            error.frames.push(RuntimeFrame {
+                span: *span,
+                member: frame
+                    .diagnostic_member
+                    .clone()
+                    .unwrap_or_else(|| metadata.member.clone()),
+            });
+        }
+        if let Some(metadata) = self.program.metadata.get(member.code)
+            && let Some(span) = metadata.declaration
+        {
+            error.frames.push(RuntimeFrame {
+                span,
+                member: metadata.member.clone(),
+            });
+        }
+        frame.callsite_hidden = true;
+        error
+    }
+
+    pub(super) fn collection_instruction(
+        &mut self,
+        instruction: Instruction,
+    ) -> Result<(), RuntimeError> {
+        match instruction {
+            Instruction::Swap => {
+                let right = self.pop()?;
+                let left = self.pop()?;
+                self.stack.push(right);
+                self.stack.push(left);
+            }
+            Instruction::BeginCollection {
+                kind,
+                has_parent,
+                specialized,
+            } => {
+                let parent = if has_parent {
+                    Some(self.pop()?.as_object()?)
+                } else {
+                    None
+                };
+                let (kind, length) = if let Some(id) = parent {
+                    let object = self.heap.get(id)?;
+                    (object.collection_kind, object.length)
+                } else {
+                    (kind, 0)
+                };
+                let environment = self
+                    .frames
+                    .last()
+                    .expect("active frame")
+                    .environment
+                    .clone();
+                let is_module = parent
+                    .map(|id| self.heap.get(id).map(|o| o.is_module))
+                    .transpose()?
+                    .unwrap_or(false);
+                let id = self.heap.allocate(Object {
+                    is_module,
+                    parent,
+                    collection_kind: kind,
+                    length,
+                    environment,
+                    specialized_literal: specialized,
+                    ..Object::default()
+                });
+                self.frames
+                    .last_mut()
+                    .expect("active frame")
+                    .builders
+                    .push(id);
+            }
+            Instruction::EndCollection => {
+                let id = self
+                    .frames
+                    .last_mut()
+                    .expect("active frame")
+                    .builders
+                    .pop()
+                    .ok_or_else(|| invalid("missing collection builder"))?;
+                self.stack.push(Value::Object(id));
+            }
+            Instruction::AddCollectionProperty(member) => {
+                let key = Value::String(member.name.clone());
+                self.add_collection_member(
+                    member,
+                    Some(key),
+                    CollectionMemberKind::Property,
+                    None,
+                )?;
+            }
+            Instruction::AddCollectionElement(member) => {
+                self.add_collection_member(member, None, CollectionMemberKind::Element, None)?
+            }
+            Instruction::AddCollectionEntry {
+                member,
+                check_index,
+                span,
+            } => {
+                let key = self.pop()?;
+                if check_index {
+                    let parent = self.heap.get(self.builder()?)?.parent;
+                    let length = parent
+                        .map(|id| self.heap.get(id).map(|o| o.length))
+                        .transpose()?
+                        .unwrap_or(0);
+                    let Value::Int(index) = key else {
+                        return Err(RuntimeError::new(
+                            ErrorKind::Type,
+                            format!(
+                                "Expected value of type `Int`, but got type `{}`.",
+                                value_type_name(&key)
+                            ),
+                        ));
+                    };
+                    if index < 0 || index as usize >= length {
+                        return Err(RuntimeError::new(
+                            ErrorKind::Type,
+                            format!(
+                                "Element index `{index}` is out of range `0`..`{}`.",
+                                length as i64 - 1
+                            ),
+                        ));
+                    }
+                }
+                let target = self.builder()?;
+                let generated_typed = !self.heap.get(target)?.specialized_literal
+                    && typed_class(&self.heap, target)?.is_some();
+                self.add_collection_member(member, Some(key), CollectionMemberKind::Entry, None)
+                    .map_err(|error| {
+                        if generated_typed {
+                            error.at(span)
+                        } else {
+                            error
+                        }
+                    })?;
+            }
+            Instruction::Subscript | Instruction::SuperSubscript => {
+                let key = self.pop()?;
+                let is_super = matches!(instruction, Instruction::SuperSubscript);
+                let receiver = if is_super {
+                    self.scope(0)?.receiver
+                } else {
+                    self.pop()?.as_object()?
+                };
+                let owner = if is_super {
+                    self.heap.get(self.scope(0)?.owner)?.parent.ok_or_else(|| {
+                        RuntimeError::new(ErrorKind::MissingMember, "super has no parent")
+                    })?
+                } else {
+                    receiver
+                };
+                if key.heap_id().is_some() {
+                    return Err(unsupported_type(
+                        "object, function and class collection keys",
+                    ));
+                }
+                let object = self.heap.get(receiver)?;
+                if matches!(
+                    object.collection_kind,
+                    CollectionKind::Listing | CollectionKind::List
+                ) {
+                    let Value::Int(index) = key else {
+                        let name = format!("{:?}", object.collection_kind);
+                        return Err(RuntimeError::new(
+                            ErrorKind::Type,
+                            format!(
+                                "Operator `[]` is not defined for operand types `{name}` and `{}`.\nLeft operand : {}\nRight operand: {}",
+                                value_type_name(&key),
+                                crate::diagnostic_values::render(
+                                    &Value::Object(receiver),
+                                    &self.heap,
+                                    &self.program.module_name,
+                                    80
+                                )?,
+                                display_value(&key)
+                            ),
+                        ));
+                    };
+                    if index < 0 || index as usize >= object.length {
+                        return Err(RuntimeError::new(
+                            ErrorKind::Type,
+                            format!(
+                                "Element index `{index}` is out of range `0`..`{}`.",
+                                object.length as i64 - 1
+                            ),
+                        ));
+                    }
+                }
+                let member = ordered_members(&self.heap, owner)?
+                    .into_iter()
+                    .find(|m| m.kind != CollectionMemberKind::Property && same_key(&m.key, &key))
+                    .ok_or_else(|| {
+                        RuntimeError::new(
+                            ErrorKind::MissingMember,
+                            format!("Cannot find key `{}`.", display_value(&key)),
+                        )
+                    })?;
+                self.force_key(receiver, owner, member.name, false, !is_super, false, true)?;
+            }
+            Instruction::EntryParent => {
+                let force = self
+                    .frames
+                    .last()
+                    .and_then(|f| f.force.as_ref())
+                    .cloned()
+                    .ok_or_else(|| invalid("entry parent outside member"))?;
+                let parent = self.heap.get(force.owner)?.parent;
+                if let Some(parent) = parent
+                    && ordered_members(&self.heap, parent)?.iter().any(|member| {
+                        member.name == force.name && member.kind != CollectionMemberKind::Property
+                    })
+                {
+                    self.force_key(
+                        force.receiver,
+                        parent,
+                        force.name,
+                        false,
+                        false,
+                        false,
+                        true,
+                    )?;
+                } else {
+                    let mut owner = Some(force.owner);
+                    while let Some(id) = owner {
+                        let object = self.heap.get(id)?;
+                        if object.members.iter().any(|m| {
+                            !m.entry && !m.method && !m.local && m.name.as_ref() == "default"
+                        }) {
+                            return Err(unsupported_type("custom collection default functions"));
+                        }
+                        owner = object.parent;
+                    }
+                    let object = self.heap.allocate(Object::default());
+                    self.stack.push(Value::Object(object));
+                }
+            }
+            Instruction::OpenIterator { nullable, spread } => {
+                let value = self.pop()?;
+                let iterator = if nullable && value == Value::Null {
+                    let source = self.heap.allocate(Object::default());
+                    Some(CollectionIterator {
+                        source,
+                        members: Vec::new(),
+                        position: 0,
+                        force_members: Vec::new(),
+                        force_position: 0,
+                        awaiting_value: false,
+                    })
+                } else {
+                    let source = value.as_object().map_err(|_| {
+                        let mut error = RuntimeError::new(
+                            ErrorKind::Type,
+                            format!(
+                                "Cannot iterate over value of type `{}`.",
+                                value_type_name(&value)
+                            ),
+                        );
+                        if spread && value == Value::Null {
+                            let frame = self.frames.last().expect("active frame");
+                            error.spread_hint = self
+                                .program
+                                .metadata
+                                .get(frame.block)
+                                .and_then(|m| m.spans.get(frame.pc - 1))
+                                .copied()
+                                .flatten()
+                                .map(Box::new);
+                        }
+                        error
+                    })?;
+                    if self.heap.get(source)?.is_module {
+                        let mut error = RuntimeError::new(
+                            ErrorKind::Type,
+                            format!(
+                                "Cannot iterate over value of type `{}`.\nValue: {}",
+                                self.program.module_name,
+                                crate::diagnostic_values::render(
+                                    &value,
+                                    &self.heap,
+                                    &self.program.module_name,
+                                    80
+                                )?
+                            ),
+                        );
+                        if spread {
+                            error.hint = Some("`Typed` values are not iterable. If you mean to spread its members, convert it to `Dynamic` using `toDynamic()`.".into());
+                        }
+                        self.frames
+                            .last_mut()
+                            .expect("active frame")
+                            .callsite_hidden = true;
+                        return Err(error);
+                    }
+                    if let Some(class) = typed_class(&self.heap, source)? {
+                        let mut error = RuntimeError::new(
+                            ErrorKind::Type,
+                            format!(
+                                "Cannot iterate over value of type `{}#{}`.\nValue: {}",
+                                self.program.module_name,
+                                class.name,
+                                crate::diagnostic_values::render(
+                                    &value,
+                                    &self.heap,
+                                    &self.program.module_name,
+                                    80
+                                )?
+                            ),
+                        );
+                        if spread {
+                            error.hint = Some("`Typed` values are not iterable. If you mean to spread its members, convert it to `Dynamic` using `toDynamic()`.".into());
+                        }
+                        return Err(error);
+                    }
+                    let members = ordered_members(&self.heap, source)?;
+                    Some(CollectionIterator {
+                        source,
+                        force_members: forcing_members(&self.heap, source)?,
+                        members,
+                        position: 0,
+                        force_position: 0,
+                        awaiting_value: false,
+                    })
+                };
+                let id = self.heap.allocate(Object {
+                    iterator,
+                    ..Object::default()
+                });
+                self.stack.push(Value::Object(id));
+            }
+            Instruction::IteratorNext { end } => {
+                let id = self
+                    .stack
+                    .iter()
+                    .rev()
+                    .filter_map(Value::heap_id)
+                    .find(|id| {
+                        self.heap
+                            .get(*id)
+                            .is_ok_and(|object| object.iterator.is_some())
+                    })
+                    .or_else(|| self.stack.last().and_then(Value::heap_id))
+                    .ok_or_else(|| invalid("missing iterator"))?;
+                let awaiting = self
+                    .heap
+                    .get(id)?
+                    .iterator
+                    .as_ref()
+                    .is_some_and(|iterator| iterator.awaiting_value);
+                if awaiting {
+                    self.pop()?;
+                    self.heap
+                        .get_mut(id)?
+                        .iterator
+                        .as_mut()
+                        .expect("active iterator")
+                        .awaiting_value = false;
+                }
+                let forcing = self
+                    .heap
+                    .get_mut(id)?
+                    .iterator
+                    .as_mut()
+                    .and_then(|iterator| {
+                        let member = iterator.force_members.get(iterator.force_position)?.clone();
+                        iterator.force_position += 1;
+                        iterator.awaiting_value = true;
+                        Some((iterator.source, member))
+                    });
+                if let Some((source, member)) = forcing {
+                    let caller = self.frames.len() - 1;
+                    self.frames[caller].pc -= 1;
+                    self.force_key(
+                        source,
+                        source,
+                        member.name,
+                        false,
+                        true,
+                        false,
+                        member.kind != CollectionMemberKind::Property,
+                    )?;
+                    if self.frames.len() > caller + 1 {
+                        self.frames[caller].callsite_hidden = true;
+                    }
+                    return Ok(());
+                }
+                let next = self
+                    .heap
+                    .get_mut(id)?
+                    .iterator
+                    .as_mut()
+                    .and_then(|iterator| {
+                        let member = iterator.members.get(iterator.position)?.clone();
+                        iterator.position += 1;
+                        Some((iterator.source, member))
+                    });
+                if let Some((source, member)) = next {
+                    self.stack.push(member.key);
+                    let caller = self.frames.len() - 1;
+                    self.force_key(
+                        source,
+                        source,
+                        member.name,
+                        false,
+                        true,
+                        false,
+                        member.kind != CollectionMemberKind::Property,
+                    )?;
+                    if self.frames.len() > caller + 1 {
+                        self.frames[caller].callsite_hidden = true;
+                    }
+                } else {
+                    self.jump(end)?;
+                }
+            }
+            Instruction::SpreadMember => {
+                let value = self.pop()?;
+                let key = self.pop()?;
+                let iterator = self
+                    .stack
+                    .last()
+                    .ok_or_else(|| invalid("missing spread iterator"))?
+                    .as_object()?;
+                let state = self
+                    .heap
+                    .get(iterator)?
+                    .iterator
+                    .as_ref()
+                    .ok_or_else(|| invalid("empty spread iterator"))?;
+                let source_member = state.members[state.position - 1].clone();
+                let mut member = self.source_member(state.source, &source_member)?;
+                let target = self.builder()?;
+                let object = self.heap.get(target)?;
+                let target_kind = object.collection_kind;
+                let typed_target = typed_class(&self.heap, target)?;
+                let forbidden = if typed_target.is_some() {
+                    source_member.kind != CollectionMemberKind::Property
+                } else {
+                    match target_kind {
+                        CollectionKind::Listing | CollectionKind::List => {
+                            source_member.kind != CollectionMemberKind::Element
+                        }
+                        CollectionKind::Mapping => {
+                            source_member.kind != CollectionMemberKind::Entry
+                        }
+                        CollectionKind::Dynamic => false,
+                    }
+                };
+                if forbidden {
+                    let kind = match source_member.kind {
+                        CollectionMemberKind::Property => "properties",
+                        CollectionMemberKind::Entry => "entries",
+                        CollectionMemberKind::Element => "elements",
+                    };
+                    let type_label = typed_target.map_or_else(
+                        || format!("{target_kind:?}"),
+                        |class| format!("{}#{}", self.program.module_name, class.name),
+                    );
+                    return Err(self.spread_error(format!("Cannot spread object containing {kind} into object of type `{type_label}`."), &member));
+                }
+                if source_member.kind != CollectionMemberKind::Element
+                    && object
+                        .collection_members
+                        .iter()
+                        .any(|m| same_member(m, &source_member))
+                {
+                    let label = if source_member.kind == CollectionMemberKind::Property {
+                        "property"
+                    } else {
+                        "entry key"
+                    };
+                    let key = if source_member.kind == CollectionMemberKind::Property {
+                        scalar_string(&key)?
+                    } else {
+                        display_value(&key)
+                    };
+                    return Err(self.spread_error(format!("Cannot spread object because the enclosing object already has a declaration of {label} `{key}`."), &member));
+                }
+                member.constant = false;
+                let key = (source_member.kind != CollectionMemberKind::Element).then_some(key);
+                self.add_collection_member(member, key, source_member.kind, Some(value))?;
+            }
+            Instruction::MakeList { length } => {
+                let mut values = Vec::with_capacity(length);
+                for _ in 0..length {
+                    values.push(self.pop()?);
+                }
+                values.reverse();
+                let id = self.heap.allocate(Object {
+                    collection_kind: CollectionKind::List,
+                    ..Object::default()
+                });
+                self.frames
+                    .last_mut()
+                    .expect("active frame")
+                    .builders
+                    .push(id);
+                for value in values {
+                    let member = Member {
+                        entry: true,
+                        name: Arc::from(""),
+                        code: usize::MAX,
+                        local: false,
+                        method: false,
+                        ty: None,
+                        type_span: None,
+                        constant: false,
+                    };
+                    self.add_collection_member(
+                        member,
+                        None,
+                        CollectionMemberKind::Element,
+                        Some(value),
+                    )?;
+                }
+                self.frames.last_mut().expect("active frame").builders.pop();
+                self.stack.push(Value::Object(id));
+            }
+            _ => return Err(invalid("unexpected collection instruction")),
+        }
+        Ok(())
+    }
+}
+
+impl Compiler<'_> {
+    pub(super) fn body_properties_only(
+        members: &[crate::syntax::ObjectMember],
+    ) -> Result<Vec<crate::syntax::Member>, RuntimeError> {
+        members
+            .iter()
+            .map(|member| match member {
+                crate::syntax::ObjectMember::Property(member) => Ok(member.clone()),
+                member => {
+                    Err(unsupported_type("non-property typed object members").at(member.span()))
+                }
+            })
+            .collect()
+    }
+
+    fn body_properties(
+        members: &[crate::syntax::ObjectMember],
+        result: &mut Vec<crate::syntax::Member>,
+    ) {
+        use crate::syntax::ObjectMember;
+        for member in members {
+            match member {
+                ObjectMember::Property(member) => result.push(member.clone()),
+                ObjectMember::When {
+                    then_members,
+                    else_members,
+                    ..
+                } => {
+                    Self::body_properties(then_members, result);
+                    Self::body_properties(else_members, result);
+                }
+                ObjectMember::For { members, .. } => Self::body_properties(members, result),
+                _ => {}
+            }
+        }
+    }
+
+    pub(super) fn collection_body(
+        &mut self,
+        members: &[crate::syntax::ObjectMember],
+        kind: CollectionKind,
+        has_parent: bool,
+        output: &mut Code,
+    ) -> Result<(), RuntimeError> {
+        let mut properties = Vec::new();
+        Self::body_properties(members, &mut properties);
+        self.type_scopes.push(properties.clone());
+        let generators = members.iter().any(|m| {
+            matches!(
+                m,
+                crate::syntax::ObjectMember::When { .. }
+                    | crate::syntax::ObjectMember::For { .. }
+                    | crate::syntax::ObjectMember::Spread { .. }
+                    | crate::syntax::ObjectMember::Predicate { .. }
+            )
+        });
+        output.push(Instruction::BeginCollection {
+            kind,
+            has_parent,
+            specialized: !generators,
+        });
+        let mixed = members
+            .iter()
+            .any(|m| matches!(m, crate::syntax::ObjectMember::Element { .. }));
+        if generators {
+            self.collection_members(members, false, output)?;
+        } else {
+            // Pinned specialized literals install keyed members before elements.
+            for member in members
+                .iter()
+                .filter(|m| matches!(m, crate::syntax::ObjectMember::Property(_)))
+            {
+                self.collection_members(std::slice::from_ref(member), mixed, output)?;
+            }
+            for member in members
+                .iter()
+                .filter(|m| matches!(m, crate::syntax::ObjectMember::Entry { .. }))
+            {
+                self.collection_members(std::slice::from_ref(member), mixed, output)?;
+            }
+            for member in members
+                .iter()
+                .filter(|m| matches!(m, crate::syntax::ObjectMember::Element { .. }))
+            {
+                self.collection_members(std::slice::from_ref(member), mixed, output)?;
+            }
+        }
+        output.push(Instruction::EndCollection);
+        self.initialize_member_types(&properties, output)?;
+        self.type_scopes.pop();
+        Ok(())
+    }
+
+    fn lazy_collection_member(
+        &mut self,
+        value: &crate::syntax::Expr,
+        key: Option<&crate::syntax::Expr>,
+        span: Span,
+    ) -> Result<Member, RuntimeError> {
+        let previous = self.member.clone();
+        let literal = key.and_then(|key| match &key.kind {
+            crate::syntax::ExprKind::String(value) => Some(format!("\"{value}\"")),
+            crate::syntax::ExprKind::Int(value) => Some(value.to_string()),
+            crate::syntax::ExprKind::Float(value) => Some(crate::numeric::double_to_string(*value)),
+            crate::syntax::ExprKind::Bool(value) => Some(value.to_string()),
+            _ => None,
+        });
+        let label = literal.unwrap_or_else(|| {
+            let count = self.entry_counts.entry(previous.clone()).or_default();
+            *count += 1;
+            format!("#{count}")
+        });
+        self.member = format!("{previous}[{label}]");
+        let mut code = Code::default();
+        self.expression(value, &mut code)?;
+        code.push(Instruction::Return);
+        let block = self.block(code, Some(span));
+        self.program.metadata[block].value_span = Some(value.span);
+        self.member = previous;
+        Ok(Member {
+            entry: true,
+            name: Arc::from(""),
+            code: block,
+            local: false,
+            method: false,
+            ty: None,
+            type_span: None,
+            constant: false,
+        })
+    }
+
+    fn collection_eager_expression(
+        &mut self,
+        expression: &crate::syntax::Expr,
+        output: &mut Code,
+    ) -> Result<(), RuntimeError> {
+        let scope = self.type_scopes.pop().expect("collection scope");
+        let result = self.expression(expression, output);
+        self.type_scopes.push(scope);
+        result
+    }
+
+    fn collection_members(
+        &mut self,
+        members: &[crate::syntax::ObjectMember],
+        mixed: bool,
+        output: &mut Code,
+    ) -> Result<(), RuntimeError> {
+        use crate::syntax::ObjectMember;
+        for member in members {
+            match member {
+                ObjectMember::Property(member) => {
+                    let scope = self.type_scopes.pop().expect("collection scope");
+                    let template = self.object(std::slice::from_ref(member));
+                    self.type_scopes.push(scope);
+                    let template = template?;
+                    let compiled = self.program.objects[template][0].clone();
+                    let span = if let crate::syntax::ExprKind::Function {
+                        method: true,
+                        header_span,
+                        ..
+                    } = &member.expr.kind
+                    {
+                        Span::new(member.span.start, header_span.end)
+                    } else {
+                        member.name_span
+                    };
+                    output.push_at(Instruction::AddCollectionProperty(compiled), span);
+                }
+                ObjectMember::Element { value, span } => {
+                    let member = self.lazy_collection_member(value, None, value.span)?;
+                    output.push_at(Instruction::AddCollectionElement(member), *span);
+                }
+                ObjectMember::Entry { key, value, span } => {
+                    self.collection_eager_expression(key, output)?;
+                    let member = self.lazy_collection_member(value, Some(key), key.span)?;
+                    let literal = matches!(
+                        key.kind,
+                        crate::syntax::ExprKind::Int(_)
+                            | crate::syntax::ExprKind::Float(_)
+                            | crate::syntax::ExprKind::String(_)
+                            | crate::syntax::ExprKind::Bool(_)
+                            | crate::syntax::ExprKind::Null
+                    );
+                    output.push_at(
+                        Instruction::AddCollectionEntry {
+                            member,
+                            check_index: mixed && !literal,
+                            span: *span,
+                        },
+                        key.span,
+                    );
+                }
+                ObjectMember::When {
+                    condition,
+                    then_members,
+                    else_members,
+                    ..
+                } => {
+                    self.collection_eager_expression(condition, output)?;
+                    let branch = output.len();
+                    output.push_at(Instruction::JumpIfFalse(0), condition.span);
+                    self.collection_members(then_members, false, output)?;
+                    let end = output.len();
+                    output.push(Instruction::Jump(0));
+                    output[branch] = Instruction::JumpIfFalse(output.len());
+                    self.collection_members(else_members, false, output)?;
+                    output[end] = Instruction::Jump(output.len());
+                }
+                ObjectMember::For {
+                    parameters,
+                    iterable,
+                    members,
+                    span,
+                } => {
+                    let scope = self.type_scopes.pop().expect("collection scope");
+                    let checks = parameters
+                        .iter()
+                        .map(|parameter| {
+                            parameter
+                                .ty
+                                .as_ref()
+                                .and_then(|ty| self.resolve_expression_type(ty, output))
+                        })
+                        .collect::<Vec<_>>();
+                    self.type_scopes.push(scope);
+                    self.collection_eager_expression(iterable, output)?;
+                    output.push_at(
+                        Instruction::OpenIterator {
+                            nullable: false,
+                            spread: false,
+                        },
+                        iterable.span,
+                    );
+                    let start = output.len();
+                    output.push_at(Instruction::IteratorNext { end: 0 }, iterable.span);
+                    if parameters.len() == 1 {
+                        output.push(Instruction::Swap);
+                        output.push(Instruction::Pop);
+                        if let (Some(ty), Some(check)) = (&parameters[0].ty, &checks[0]) {
+                            output.push_at(Instruction::CheckType(check.clone()), ty.span);
+                        }
+                        output.push(Instruction::PushLocal);
+                    } else if parameters.len() == 2 {
+                        output.push(Instruction::Swap);
+                        if let (Some(ty), Some(check)) = (&parameters[0].ty, &checks[0]) {
+                            output.push_at(Instruction::CheckType(check.clone()), ty.span);
+                        }
+                        output.push(Instruction::PushLocal);
+                        if let (Some(ty), Some(check)) = (&parameters[1].ty, &checks[1]) {
+                            output.push_at(Instruction::CheckType(check.clone()), ty.span);
+                        }
+                        output.push(Instruction::PushLocal);
+                    } else {
+                        return Err(unsupported_type("this generator parameter count").at(*span));
+                    }
+                    self.collection_members(members, false, output)?;
+                    for _ in parameters {
+                        output.push(Instruction::PopLocal);
+                    }
+                    output.push(Instruction::Jump(start));
+                    output[start] = Instruction::IteratorNext { end: output.len() };
+                    output.push(Instruction::Pop);
+                }
+                ObjectMember::Spread {
+                    value,
+                    nullable,
+                    span,
+                } => {
+                    self.collection_eager_expression(value, output)?;
+                    output.push_at(
+                        Instruction::OpenIterator {
+                            nullable: *nullable,
+                            spread: true,
+                        },
+                        value.span,
+                    );
+                    let start = output.len();
+                    output.push_at(Instruction::IteratorNext { end: 0 }, value.span);
+                    output.push_at(Instruction::SpreadMember, *span);
+                    output.push(Instruction::Jump(start));
+                    output[start] = Instruction::IteratorNext { end: output.len() };
+                    output.push(Instruction::Pop);
+                }
+                ObjectMember::Predicate { span, .. } => {
+                    return Err(unsupported_type("member predicate generators").at(*span));
+                }
+            }
+        }
+        Ok(())
+    }
+}

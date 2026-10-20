@@ -1,0 +1,2 @@
+o: Dynamic(false) = new Dynamic { a = 10; 20; ["k"] = 30; 40 }
+result = o

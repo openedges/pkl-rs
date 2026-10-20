@@ -69,6 +69,20 @@ export async function scenarios(api) {
     // Enabling tracking must not turn an ordinary type test into an exception.
     eq(api.evaluateLanguage('result = 42 is Int(this < 0)\n', 'file:///m2-platform.pkl', 'm2-platform', 'result', true), 'false');
   });
+  // Expected bytes captured from pinned Java at the identical module URI.
+  await check('m2-ordered-collection-members-and-amendments', () => {
+    eq(api.evaluateLanguage("o = new Dynamic { count = 2; 20; [\"answer\"] = 22 }\nresult = o[0] + o[\"answer\"]\n", 'file:///m2-platform.pkl', 'm2-platform', 'result', false), "42");
+    eq(api.evaluateLanguage("base = new Listing { 10; 20 }\no = (base) { [0] = 12; 10 }\nresult = o[0] + o[1] + o[2]\n", 'file:///m2-platform.pkl', 'm2-platform', 'result', false), "42");
+  });
+  await check('m2-collection-generators-and-spread', () => {
+    eq(api.evaluateLanguage("source = new Listing { 10; 20 }\no = new Listing { for (i, v in source) { (x) -> i + v + x }; ...List(9) }\nresult = o[0].apply(1) + o[1].apply(1) + o[2]\n", 'file:///m2-platform.pkl', 'm2-platform', 'result', false), "42");
+  });
+  await check('m2-collection-diagnostics-and-power-assertions', () => {
+    throws(() => api.evaluateLanguage("values = new Listing { 42 }\nresult = values[1]\n", 'file:///m2-platform.pkl', 'm2-platform', 'result', false),
+      "–– Pkl Error ––\nElement index `1` is out of range `0`..`0`.\n\n2 | result = values[1]\n             ^^^^^^^^^\nat m2-platform#result (file:///m2-platform.pkl)\n\n1 | result\n    ^^^^^^\nat  (repl:text)\n");
+    throws(() => api.evaluateLanguage("values = new Listing { 1; 2 }\nresult: Int(values[0] > 3) = 42\n", 'file:///m2-platform.pkl', 'm2-platform', 'result', true),
+      "–– Pkl Error ––\nType constraint `values[0] > 3` violated.\nValue: 42\n\n    values[0] > 3\n    │     │   │\n    │     1   false\n    new Listing { 1; ? }\n\n2 | result: Int(values[0] > 3) = 42\n                ^^^^^^^^^^^^^\nat m2-platform#result (file:///m2-platform.pkl)\n\n2 | result: Int(values[0] > 3) = 42\n                                 ^^\nat m2-platform#result (file:///m2-platform.pkl)\n\n1 | result\n    ^^^^^^\nat  (repl:text)\n");
+  });
   await check('utf8-utf16-string-boundary', () => {
     for (const value of ['', '한글🙂e\u0301\0\r\n', '𐐀漢字']) eq(api.roundtripString(value), value);
     for (const value of ['\ud800', '\udfff', 'a\ud800b']) throws(() => api.roundtripString(value), 'unpaired UTF-16 surrogate is unsupported');

@@ -1,0 +1,3 @@
+o = new Mapping { [2] = 30; [1] = 20; [3] = 40 }
+x = new Listing { for (k, v in o) { k * 100 + v } }
+result = x[0] * 1000000 + x[1] * 1000 + x[2]

@@ -1,0 +1,3 @@
+n = 41
+o = new Listing { for (v in List(1)) { outer.n + v } }
+result = o[0]

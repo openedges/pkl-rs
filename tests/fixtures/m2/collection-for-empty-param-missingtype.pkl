@@ -1,0 +1,2 @@
+o = new Listing { for (v: MissingType in List()) { v } }
+result = o.length

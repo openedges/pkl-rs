@@ -1,0 +1,2 @@
+o = new Listing { for (n in List(1, 2)) { when (n > 0) { for (m in List(3, 4)) { () -> n * 10 + m } } } }
+result = o[0].apply() * 100 + o[3].apply()

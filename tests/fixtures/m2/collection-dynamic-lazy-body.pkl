@@ -1,0 +1,2 @@
+o = new Dynamic { missing; ["x"] = missing; good = 42 }
+result = o.good

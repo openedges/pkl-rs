@@ -5455,6 +5455,2353 @@
       ]
     },
     {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "collection-dynamic-mixed",
+      "input": "tests/fixtures/m2/collection-dynamic-mixed.pkl",
+      "input_sha256": "21d970f4f9205eef90c493645a9cf830f51fe04bfbfdb74b09c88f4d1b2fd4d4",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:generators"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "collection-listing-elements",
+      "input": "tests/fixtures/m2/collection-listing-elements.pkl",
+      "input_sha256": "1613de76508bf1cf38fda62e96e974150c1e44091d8b0d286e85eccebf99892b",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:generators"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "collection-mapping-entries",
+      "input": "tests/fixtures/m2/collection-mapping-entries.pkl",
+      "input_sha256": "9af1abf67cbb7bce3dc9380d05ea843a8b5aa77184c349dcc0774d06adf17017",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:generators"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "collection-dynamic-entry-property",
+      "input": "tests/fixtures/m2/collection-dynamic-entry-property.pkl",
+      "input_sha256": "bcfb35e265d9d08cc8bd7177694ab07df511a2bb3b4cc9ce8fb9857bb936e9ee",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "collection-dynamic-lazy-body",
+      "input": "tests/fixtures/m2/collection-dynamic-lazy-body.pkl",
+      "input_sha256": "a322edf61bbac8090935f4056623da74ab2d145705341dc751e6cab0d8b7571e",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "collection-listing-lazy-body",
+      "input": "tests/fixtures/m2/collection-listing-lazy-body.pkl",
+      "input_sha256": "075be8eca27f4aad15634f0b7d5272817e9c93a6aeb0c91c5b3ea39834b2b523",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "collection-mapping-lazy-body",
+      "input": "tests/fixtures/m2/collection-mapping-lazy-body.pkl",
+      "input_sha256": "214bb11dc6ce3a61709f6e01257b4f6bb244109c8cd90e466793aaba548f8743",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "collection-mapping-eager-key",
+      "input": "tests/fixtures/m2/collection-mapping-eager-key.pkl",
+      "input_sha256": "4c602b91446d1de2ba7e40bf18d708be14e34e7c839ba1008aefce7a543ace28",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "collection-mapping-unused-key",
+      "input": "tests/fixtures/m2/collection-mapping-unused-key.pkl",
+      "input_sha256": "de20dda6b3cb7096116f4a32f4d22b707250b4ccdcc980e235c572e95d504715",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "collection-listing-index-negative",
+      "input": "tests/fixtures/m2/collection-listing-index-negative.pkl",
+      "input_sha256": "067c1182f8bb0bb5b081f010136a6fe5639cdba02266de7ab3b3582b0e32cbf8",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "collection-listing-index-upper",
+      "input": "tests/fixtures/m2/collection-listing-index-upper.pkl",
+      "input_sha256": "cc6e85e7fe8013ccea3d8fd52e563518c33e58ba1373912781c52cdb8251ca3f",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "collection-listing-index-string",
+      "input": "tests/fixtures/m2/collection-listing-index-string.pkl",
+      "input_sha256": "bbe4ee1ecfc3dd79761ec9d72486aacdf16e776e86dea1da2120c9cc0f7ee3b4",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "collection-mapping-missing",
+      "input": "tests/fixtures/m2/collection-mapping-missing.pkl",
+      "input_sha256": "a5bcd0d9e3f5e05db5803fb789d6b8d83ae3f96b67a6983326626dd95d45583e",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "collection-dynamic-property-index",
+      "input": "tests/fixtures/m2/collection-dynamic-property-index.pkl",
+      "input_sha256": "1202609e43e609f91f6687746fce8b8dd45536d6ea85fd83d893fdb60aab13b2",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "collection-listing-length-lazy",
+      "input": "tests/fixtures/m2/collection-listing-length-lazy.pkl",
+      "input_sha256": "5105307aefc27b9f2b64d4217e50e887aa6e17c974032dd58c95d8ac194d75ba",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "collection-mapping-length-lazy",
+      "input": "tests/fixtures/m2/collection-mapping-length-lazy.pkl",
+      "input_sha256": "2a6b9d743c4c48ddc4a14fa98ef7e3fe560f31dcce3975159a5a4b6d3b9436f8",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "collection-listing-amend-append",
+      "input": "tests/fixtures/m2/collection-listing-amend-append.pkl",
+      "input_sha256": "095c929463b30c69665100b407f440b22fb2abeb51b7407d76e8a7da7b4f5406",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:amendment"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "collection-listing-amend-replace",
+      "input": "tests/fixtures/m2/collection-listing-amend-replace.pkl",
+      "input_sha256": "ba546ed5aa7df8cf16db99d1f16a52414b8ca4b0d1abb41759e672a298c9ad05",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:amendment"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "collection-mapping-amend-replace",
+      "input": "tests/fixtures/m2/collection-mapping-amend-replace.pkl",
+      "input_sha256": "7839fcba2dfe94bc0d76ede82732840d511e86d7519c02398e47eac79246aafa",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:amendment"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "collection-mapping-amend-late-this",
+      "input": "tests/fixtures/m2/collection-mapping-amend-late-this.pkl",
+      "input_sha256": "0a67130ebbcca5ad3b79ed6964d292bb68b3560ecf19bef50e9c6460fd778d72",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:amendment"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "collection-listing-this",
+      "input": "tests/fixtures/m2/collection-listing-this.pkl",
+      "input_sha256": "d218dc3aca1c88fb9ae8bc618bdf047968bd08c29760665acfd4fa57cf0b6e1c",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:lazy-evaluation",
+        "semantic:name-resolution"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "collection-mapping-key-lexical",
+      "input": "tests/fixtures/m2/collection-mapping-key-lexical.pkl",
+      "input_sha256": "ac1a819377af7ce6e8655572f70e61f12b3403b0678ac682d5ba1a114275ed3b",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:lazy-evaluation",
+        "semantic:name-resolution"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "collection-listing-local",
+      "input": "tests/fixtures/m2/collection-listing-local.pkl",
+      "input_sha256": "7eef597573bcbb9ea1241f24362ce3dfb3e102920fd32448b1c6d80fb50fe408",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:lazy-evaluation",
+        "semantic:name-resolution"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "collection-listing-for-index",
+      "input": "tests/fixtures/m2/collection-listing-for-index.pkl",
+      "input_sha256": "b9c4fc85d4f8dcf62d2399bc2947756ddcdb241d6b3d0d78c250773e585d5d1d",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:generators"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "collection-listing-for-closure",
+      "input": "tests/fixtures/m2/collection-listing-for-closure.pkl",
+      "input_sha256": "af28c7bf355ab5e1354edee21623abda91acf6736fcf89542d6029b7a01897be",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:lazy-evaluation",
+        "semantic:name-resolution",
+        "semantic:functions",
+        "semantic:closures"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "collection-listing-when-false",
+      "input": "tests/fixtures/m2/collection-listing-when-false.pkl",
+      "input_sha256": "0a337ba2cfd726d0bdd9c6c4d60fe215c5d17bc101dbe3e4e734efed08eaf78e",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:generators"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "collection-listing-when-else",
+      "input": "tests/fixtures/m2/collection-listing-when-else.pkl",
+      "input_sha256": "554124ac5976233606909515186ad26ac75b2f638c474d7d6089c5fee1ab68c7",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:generators"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "collection-listing-when-eager",
+      "input": "tests/fixtures/m2/collection-listing-when-eager.pkl",
+      "input_sha256": "c33821f8ec45c3e89fd0c7db1d025662ddbd1bd64f85bfca1d4f210c39f2b736",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "collection-listing-for-body-lazy",
+      "input": "tests/fixtures/m2/collection-listing-for-body-lazy.pkl",
+      "input_sha256": "a948aff8f04d792165ebd9b4881f7cad9b37ecc11cb047a9c17a992514b72784",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "collection-listing-spread-list",
+      "input": "tests/fixtures/m2/collection-listing-spread-list.pkl",
+      "input_sha256": "1c684501c4f158d2dd3647560be1d24405ba21c23465800e0eb1f44be337e0af",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:generators"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "collection-mapping-spread",
+      "input": "tests/fixtures/m2/collection-mapping-spread.pkl",
+      "input_sha256": "49fe9c4d7c4ae23bfef914e5b984ea0839787b54e5104b415587930a3836cfef",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:generators"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "collection-listing-spread-lazy",
+      "input": "tests/fixtures/m2/collection-listing-spread-lazy.pkl",
+      "input_sha256": "cf626b0e2c2e1e6c20c3f409451788667f3faf44a854fe7709eb5dc11a2c2995",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "collection-listing-spread-nullable",
+      "input": "tests/fixtures/m2/collection-listing-spread-nullable.pkl",
+      "input_sha256": "e2f390c571d986f0b52cc7329d359cde96ea9776135e551b3d3247069705d218",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:generators"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "collection-listing-spread-null",
+      "input": "tests/fixtures/m2/collection-listing-spread-null.pkl",
+      "input_sha256": "6c35611beb5ef135d3105e1005e5791cbb60699b857f41ec3ebade93cfbfe570",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "collection-listing-property-rejected",
+      "input": "tests/fixtures/m2/collection-listing-property-rejected.pkl",
+      "input_sha256": "6c7deeaa5936879af268c546b2f59180427ad02d2d0e50654a1432a02efa3af1",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "collection-listing-when-nonboolean",
+      "input": "tests/fixtures/m2/collection-listing-when-nonboolean.pkl",
+      "input_sha256": "3b3a61127a38b8529e70c3cc03fac784c807dfc0c9a32f5e866de80547ffe9df",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "collection-listing-entry-new-index",
+      "input": "tests/fixtures/m2/collection-listing-entry-new-index.pkl",
+      "input_sha256": "13b2f1b7ae5d9ede2c0593e5c293abaeb6a528efb9e79f0c815796c015a4c9a8",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "collection-listing-amend-outside-parent",
+      "input": "tests/fixtures/m2/collection-listing-amend-outside-parent.pkl",
+      "input_sha256": "5ed19da77a271d6f8b1af982068ec4d8ff774b2a6bbd8b6d10d101fb0fa03b80",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:amendment",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "collection-mapping-element-forced",
+      "input": "tests/fixtures/m2/collection-mapping-element-forced.pkl",
+      "input_sha256": "2669829bd813e63961f51b1f62be2a98901f8008b7445fac4665d6d28d35b302",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "collection-listing-for-listing",
+      "input": "tests/fixtures/m2/collection-listing-for-listing.pkl",
+      "input_sha256": "85288dbe83d8f82ef586ffe619cda2388caf4761cb406ed9f8616c5b0d3b0151",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:generators"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "collection-listing-for-unused-bad-value",
+      "input": "tests/fixtures/m2/collection-listing-for-unused-bad-value.pkl",
+      "input_sha256": "39d2228a9585a2b9a31ce442bccc1e6e4a966b9eff683a3d347945e3bd8bdbf4",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "collection-listing-for-outer",
+      "input": "tests/fixtures/m2/collection-listing-for-outer.pkl",
+      "input_sha256": "12f1d1fb516b50c8d87c68923077bc138135f847b8eb0f3261dd056c26d98a67",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:lazy-evaluation",
+        "semantic:name-resolution"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "collection-mapping-spread-duplicate",
+      "input": "tests/fixtures/m2/collection-mapping-spread-duplicate.pkl",
+      "input_sha256": "4b587d011b61526480ee418cc72e981a758b52103adbe1ba8f43723f20cb94c0",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "collection-listing-spread-mapping-error",
+      "input": "tests/fixtures/m2/collection-listing-spread-mapping-error.pkl",
+      "input_sha256": "4490306561a2bc2b419a75a73940cea085dada92e51c80eaba5a903f32fb861f",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "collection-mapping-spread-listing-error",
+      "input": "tests/fixtures/m2/collection-mapping-spread-listing-error.pkl",
+      "input_sha256": "b7ddacd298f4c82885b9506eb5eb91b394c357f6009dbc6baf8ca7b4d55d7f77",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "collection-listing-spread-order",
+      "input": "tests/fixtures/m2/collection-listing-spread-order.pkl",
+      "input_sha256": "cc3cd60006abccd3da2eb0cf76ecfe950d67199a4ebc424f05844d4674370748",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:generators"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "collection-property-nul",
+      "input": "tests/fixtures/m2/collection-property-nul.pkl",
+      "input_sha256": "b4094ac380ebd94dc5efb822a8c208f32880317254852aa938d1d8c0d316319d",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lexing",
+        "semantic:name-resolution"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "collection-mapping-int-float",
+      "input": "tests/fixtures/m2/collection-mapping-int-float.pkl",
+      "input_sha256": "182a822d6d9a639ad437569e6a09be1854e1ba1e98f8560842f63cc19da09b5b",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "collection-mapping-float-int",
+      "input": "tests/fixtures/m2/collection-mapping-float-int.pkl",
+      "input_sha256": "14d9e3a04511add043a1be59b3a7dfee9e3e268dd29969fee27ea336dc1427a1",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "collection-mapping-int-float-duplicate",
+      "input": "tests/fixtures/m2/collection-mapping-int-float-duplicate.pkl",
+      "input_sha256": "991582da192e03af4c6215077a1900ac5f7351472086bce0e9320734858af326",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "collection-mapping-nan",
+      "input": "tests/fixtures/m2/collection-mapping-nan.pkl",
+      "input_sha256": "1e9d4aa07d89f2c763f81d55ffca32e1c3510995cf2ac077a6d840ad0ed69de9",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "collection-mapping-nan-duplicate",
+      "input": "tests/fixtures/m2/collection-mapping-nan-duplicate.pkl",
+      "input_sha256": "e9bea1bd41f94e50070f64fc265cc150291b974e1486b0cf04317343a735eb79",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "collection-mapping-bool-null",
+      "input": "tests/fixtures/m2/collection-mapping-bool-null.pkl",
+      "input_sha256": "853704907a083a4ad571ff83abffa4974517076d2f4fd240f6097878d720afff",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "collection-mapping-int-bool-distinct",
+      "input": "tests/fixtures/m2/collection-mapping-int-bool-distinct.pkl",
+      "input_sha256": "40e01bffffa8ff46f07e5cfebddabaf28e7b9aeff756beb0ca6e94ca44c335d1",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "collection-render-dynamic-mixed",
+      "input": "tests/fixtures/m2/collection-render-dynamic-mixed.pkl",
+      "input_sha256": "c986beda9e940d090a18e526fc21824828dad8ca8c016eb8a438db72facf26f4",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:constraints",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "collection-render-dynamic-inherited",
+      "input": "tests/fixtures/m2/collection-render-dynamic-inherited.pkl",
+      "input_sha256": "6da613c1e41e4bbea68fcfe5dbc375861c973c7c328ba851c59e8e318807c680",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:constraints",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "collection-render-dynamic-cached",
+      "input": "tests/fixtures/m2/collection-render-dynamic-cached.pkl",
+      "input_sha256": "522fe0c07071bed50131389fdc68d20406e9f3a134989c9afd5c390efa366b5a",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:constraints",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "collection-mapping-positive-negative-zero",
+      "input": "tests/fixtures/m2/collection-mapping-positive-negative-zero.pkl",
+      "input_sha256": "c641a13da50d84353b1996e08d216176796b66c67b7f1df8838496b52964e017",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "collection-mapping-positive-negative-zero-lookup",
+      "input": "tests/fixtures/m2/collection-mapping-positive-negative-zero-lookup.pkl",
+      "input_sha256": "cbb53206190de2ee9b77e3af38bca6493d00a7a6383c0f5ee98dbda71767f7d8",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "collection-listing-power-index",
+      "input": "tests/fixtures/m2/collection-listing-power-index.pkl",
+      "input_sha256": "52e9dea2b93e8716702a416f90b2f6b57a55ba00dcadaae8aab9e12d0eab27dd",
+      "power_assertions": true,
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:constraints",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "collection-mapping-power-index",
+      "input": "tests/fixtures/m2/collection-mapping-power-index.pkl",
+      "input_sha256": "2d807f79b5800cb6e794d3dc183ed3e232aacbd42301bd1d6c38716ed783e733",
+      "power_assertions": true,
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:constraints",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "collection-dynamic-power-cached",
+      "input": "tests/fixtures/m2/collection-dynamic-power-cached.pkl",
+      "input_sha256": "d35918a4e332830d9f295578268c872ef7249c52851528d7181985224a0ef6b2",
+      "power_assertions": true,
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:constraints",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "collection-mapping-power-inherited",
+      "input": "tests/fixtures/m2/collection-mapping-power-inherited.pkl",
+      "input_sha256": "76aae6758ce36be7a0997d297e26bc54089b7fc00eb0600fddb3c6594ca53afe",
+      "power_assertions": true,
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:constraints",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "collection-listing-power-comment",
+      "input": "tests/fixtures/m2/collection-listing-power-comment.pkl",
+      "input_sha256": "f7f5ec8e9305a7590d7475e46d5408a291738c301320ce5f0a95951c2eddf4b6",
+      "power_assertions": true,
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:constraints",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "collection-dynamic-simple-order",
+      "input": "tests/fixtures/m2/collection-dynamic-simple-order.pkl",
+      "input_sha256": "231583c73a342d17a6060706e92c28b33afcd4ca8239e699c0f1c1208c2eeed6",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:generators"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "collection-dynamic-generated-order",
+      "input": "tests/fixtures/m2/collection-dynamic-generated-order.pkl",
+      "input_sha256": "7284fff96bb35dd59b61f3a4311f053e331d5bfd9d16235a96b03d7c40310095",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:generators"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "collection-dynamic-mixed-generated-order",
+      "input": "tests/fixtures/m2/collection-dynamic-mixed-generated-order.pkl",
+      "input_sha256": "359ef74f68340cb56e88b024e33d9bb7375eeeb4fda9edefe1e78ddc63e61fe6",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:generators"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "collection-render-dynamic-generated",
+      "input": "tests/fixtures/m2/collection-render-dynamic-generated.pkl",
+      "input_sha256": "aff31392971a2978d5f027c31e0ff1246f7e0cf290ab340d85a57526eda17e73",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:constraints",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "collection-render-dynamic-mixed-generated",
+      "input": "tests/fixtures/m2/collection-render-dynamic-mixed-generated.pkl",
+      "input_sha256": "78075d733b9ad2fcdbf0a1d893ca406a391cc5b6bd4ef67f3a42cb52f8aa13d6",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:constraints",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "collection-listing-lazy-key-capture",
+      "input": "tests/fixtures/m2/collection-listing-lazy-key-capture.pkl",
+      "input_sha256": "d60b5d8a3bb0c5f69abfc3d70e138536f21e22323b9392f9693b18cb8fc55f2e",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:lazy-evaluation",
+        "semantic:name-resolution"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "collection-listing-nested-generator-closure",
+      "input": "tests/fixtures/m2/collection-listing-nested-generator-closure.pkl",
+      "input_sha256": "8ab6c13a164e7d60d40b50f9d87657c333f30619e5b0f21e5631fb81f36c1dae",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:lazy-evaluation",
+        "semantic:name-resolution",
+        "semantic:functions",
+        "semantic:closures"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "collection-generator-first-key-error",
+      "input": "tests/fixtures/m2/collection-generator-first-key-error.pkl",
+      "input_sha256": "046ba76eda187501639861c47485515f9482e850e8f4ac39f8ff613dfe37612d",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "collection-generator-first-when-error",
+      "input": "tests/fixtures/m2/collection-generator-first-when-error.pkl",
+      "input_sha256": "db41a5a149db6053b1b7f7337cb897a280349f7f712762dbb556ee92e0155e54",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "collection-listing-power-legal-multiline",
+      "input": "tests/fixtures/m2/collection-listing-power-legal-multiline.pkl",
+      "input_sha256": "447275a30187055cc3d7c85ef5a1c8e6b661e31f6a48fbdfd3239029d7fba514",
+      "power_assertions": true,
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:constraints",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "collection-meta-for-alpha-left",
+      "input": "tests/fixtures/m2/collection-meta-for-alpha-left.pkl",
+      "input_sha256": "c7d001741df541e9657ff11fbfce8be4a5d5b51b292f4eee3d79562d8d134d48",
+      "metamorphic_relation": {
+        "case_ids": [
+          "collection-meta-for-alpha-left",
+          "collection-meta-for-alpha-right"
+        ],
+        "domain": "Capture-free renaming of two nested bounded Int generator variables preserves lazy closure capture",
+        "kind": "equal-stdout"
+      },
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:generated-verification",
+        "semantic:functions",
+        "semantic:closures"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "collection-meta-for-alpha-right",
+      "input": "tests/fixtures/m2/collection-meta-for-alpha-right.pkl",
+      "input_sha256": "5283cb60bd79b2e2ea36020eaf9f042dc127834e1de80b51579e61d339f5332d",
+      "metamorphic_relation": {
+        "case_ids": [
+          "collection-meta-for-alpha-left",
+          "collection-meta-for-alpha-right"
+        ],
+        "domain": "Capture-free renaming of two nested bounded Int generator variables preserves lazy closure capture",
+        "kind": "equal-stdout"
+      },
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:generated-verification",
+        "semantic:functions",
+        "semantic:closures"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "collection-meta-mapping-amend-left",
+      "input": "tests/fixtures/m2/collection-meta-mapping-amend-left.pkl",
+      "input_sha256": "eac83ca3153fb030c2ddd4b874fbb7bbac1f08682286f47e5cbe794b5ad935f5",
+      "metamorphic_relation": {
+        "case_ids": [
+          "collection-meta-mapping-amend-left",
+          "collection-meta-mapping-amend-right"
+        ],
+        "domain": "Replacing an existing Mapping key preserves parent order; fresh Mapping with matching final order and values yields equal bounded scalar iteration",
+        "kind": "equal-stdout"
+      },
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:amendment",
+        "semantic:generated-verification"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "collection-meta-mapping-amend-right",
+      "input": "tests/fixtures/m2/collection-meta-mapping-amend-right.pkl",
+      "input_sha256": "f04abdef93755c15fe1c8359a0cd839386960ccd0e4c6c0bc100009abb138bdc",
+      "metamorphic_relation": {
+        "case_ids": [
+          "collection-meta-mapping-amend-left",
+          "collection-meta-mapping-amend-right"
+        ],
+        "domain": "Replacing an existing Mapping key preserves parent order; fresh Mapping with matching final order and values yields equal bounded scalar iteration",
+        "kind": "equal-stdout"
+      },
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:amendment",
+        "semantic:generated-verification"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "collection-meta-null-spread-left",
+      "input": "tests/fixtures/m2/collection-meta-null-spread-left.pkl",
+      "input_sha256": "aafd8e272ffa21bf91785d88adc39d161518c1dab7f559f96d1720cfa1bc7b0f",
+      "metamorphic_relation": {
+        "case_ids": [
+          "collection-meta-null-spread-left",
+          "collection-meta-null-spread-right"
+        ],
+        "domain": "A nullable spread of null and a false when branch emit no elements; bounded Listing elements and indexing remain unchanged",
+        "kind": "equal-stdout"
+      },
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:generated-verification"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "collection-meta-null-spread-right",
+      "input": "tests/fixtures/m2/collection-meta-null-spread-right.pkl",
+      "input_sha256": "141b61cff23c60bdfaec195e7c89ebd59843c39784487f9b6fcd60cb3081dad4",
+      "metamorphic_relation": {
+        "case_ids": [
+          "collection-meta-null-spread-left",
+          "collection-meta-null-spread-right"
+        ],
+        "domain": "A nullable spread of null and a false when branch emit no elements; bounded Listing elements and indexing remain unchanged",
+        "kind": "equal-stdout"
+      },
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:generated-verification"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "collection-entry-body-inferred-new",
+      "input": "tests/fixtures/m2/collection-entry-body-inferred-new.pkl",
+      "input_sha256": "80e2145e2d3b5cc44ef93e961e2699af1ca55b58a53b7a155bece51e54f9e85f",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:amendment"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "collection-spread-listing-default",
+      "input": "tests/fixtures/m2/collection-spread-listing-default.pkl",
+      "input_sha256": "00bdc0af0c20c172d392318c5d26ccdb891135dbd70e5aea7516052996cc12ac",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:generators"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "collection-spread-preserves-eager-value",
+      "input": "tests/fixtures/m2/collection-spread-preserves-eager-value.pkl",
+      "input_sha256": "c459fdb72d847f152b7e9688267737fa8614c151082fa773d4b8a06839a4345c",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:amendment"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "collection-dynamic-static-computed-element",
+      "input": "tests/fixtures/m2/collection-dynamic-static-computed-element.pkl",
+      "input_sha256": "6868f26c9c9734fbd8cda13ba4c6cda14265b67365a337760756d44fc9e865aa",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "collection-dynamic-static-literal-element",
+      "input": "tests/fixtures/m2/collection-dynamic-static-literal-element.pkl",
+      "input_sha256": "7d01ae2524ba89684696b6f51b81ad99fdd99dbf726d2a383721fbb452e70aa8",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:generators"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "collection-dynamic-generated-literal-element",
+      "input": "tests/fixtures/m2/collection-dynamic-generated-literal-element.pkl",
+      "input_sha256": "017bda37fba90c7273848147633c419c716ea7d353eaba7e6233426fe2672c8a",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "collection-generator-typed-param-false",
+      "input": "tests/fixtures/m2/collection-generator-typed-param-false.pkl",
+      "input_sha256": "54ad8348499ad82a431120b74c0643be5ad8e1563664061e17c00440141d3259",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:types",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "collection-listing-subscript-entry-super",
+      "input": "tests/fixtures/m2/collection-listing-subscript-entry-super.pkl",
+      "input_sha256": "99d6b46fb12790ed23673a465e0bb51b206df1b899726061fd2fe2a5e88fac6a",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:amendment"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "collection-entry-body-amendment",
+      "input": "tests/fixtures/m2/collection-entry-body-amendment.pkl",
+      "input_sha256": "965393117f8da0fc60a87ba3cba0e3872b28e35644b1816ee65fc510b6d1cc3f",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:amendment"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "collection-element-body-amendment",
+      "input": "tests/fixtures/m2/collection-element-body-amendment.pkl",
+      "input_sha256": "d854b0d4fe6abea91bf94a7b5f97ed330d3fab132a6764fd9dbbbf62d665c170",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:amendment"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "collection-class-is-dynamic",
+      "input": "tests/fixtures/m2/collection-class-is-dynamic.pkl",
+      "input_sha256": "418606926a5e8bf974008b8de5d09982a4e4cbf49c5c7106f1ac1528fd4dbd3b",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:types"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "collection-class-annotated-dynamic",
+      "input": "tests/fixtures/m2/collection-class-annotated-dynamic.pkl",
+      "input_sha256": "49f9685e92735db47635e657408c73660057826381b16d5394c760fd73aea9ba",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:types",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "collection-contextual-class-is-dynamic",
+      "input": "tests/fixtures/m2/collection-contextual-class-is-dynamic.pkl",
+      "input_sha256": "46c387205fbeeb4e123507f8ed3b370ef5f320b76aa092d5c6cf0fb378c80c94",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:types"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "collection-class-amend-element",
+      "input": "tests/fixtures/m2/collection-class-amend-element.pkl",
+      "input_sha256": "4309986f966cde159e4af1c34a2bfc863cbf552632a689b05c1ba63fc2db6012",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:classes",
+        "semantic:types",
+        "semantic:amendment",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "collection-class-amend-entry",
+      "input": "tests/fixtures/m2/collection-class-amend-entry.pkl",
+      "input_sha256": "9d6c69fc051ce9459b02eba8dc429f114de90830392952c690d21e1f26f8ab49",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:classes",
+        "semantic:types",
+        "semantic:amendment",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "collection-class-amend-for-entry",
+      "input": "tests/fixtures/m2/collection-class-amend-for-entry.pkl",
+      "input_sha256": "fd13d14118dd3d06de736a5d6aeab3827a919c585648a0d530928db1ae5744d8",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:classes",
+        "semantic:types",
+        "semantic:generators",
+        "semantic:amendment",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "collection-class-amend-spread-entry",
+      "input": "tests/fixtures/m2/collection-class-amend-spread-entry.pkl",
+      "input_sha256": "25d0b323ece7f08e6c9da4f13f4ae4741a531fc82d6cc3f8dbf316ba4acdf8e8",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:classes",
+        "semantic:types",
+        "semantic:generators",
+        "semantic:amendment",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "collection-for-force-source-before-key",
+      "input": "tests/fixtures/m2/collection-for-force-source-before-key.pkl",
+      "input_sha256": "b5d916f8dd0b990cd8fa31d9555e42c061f1639e8fc5898e97134ba357469fcb",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "collection-for-force-source-before-when",
+      "input": "tests/fixtures/m2/collection-for-force-source-before-when.pkl",
+      "input_sha256": "4e397f9944ff35c7ff5a818e970e7cd784024bcc930e9310b24371753719cf8e",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "collection-spread-force-source-before-duplicate",
+      "input": "tests/fixtures/m2/collection-spread-force-source-before-duplicate.pkl",
+      "input_sha256": "1bd295c805d12334c8a12e783a07c0c60ef3eb4b060aca7f2e2c83a5129c0f83",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "collection-spread-force-source-before-kind",
+      "input": "tests/fixtures/m2/collection-spread-force-source-before-kind.pkl",
+      "input_sha256": "df47909f93c03e00ce07a0191bf04a77e511ee60e4e860a036fda00957bb0550",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "collection-for-force-child-before-parent",
+      "input": "tests/fixtures/m2/collection-for-force-child-before-parent.pkl",
+      "input_sha256": "ef9ebba12cf7308342f2532d69e2484b8929fc50643557498354b898fd5b7492",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:lazy-evaluation",
+        "semantic:amendment",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "collection-spread-force-child-before-parent",
+      "input": "tests/fixtures/m2/collection-spread-force-child-before-parent.pkl",
+      "input_sha256": "0710ada7c49e69160008b25545e4c22a271fc57625e2c032403e3cd2133d1348",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:lazy-evaluation",
+        "semantic:amendment",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "collection-for-source-force-shallow",
+      "input": "tests/fixtures/m2/collection-for-source-force-shallow.pkl",
+      "input_sha256": "533f21b91fd0470350ac76e4db85f60396983e54e747be628f63b500c4afe6af",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "collection-for-default-omitted",
+      "input": "tests/fixtures/m2/collection-for-default-omitted.pkl",
+      "input_sha256": "31f082977ed4a1f6feb409997644afc69665c3192c2c1e709a69c53bd6ba5c34",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "collection-spread-default-not-forced",
+      "input": "tests/fixtures/m2/collection-spread-default-not-forced.pkl",
+      "input_sha256": "48a1eadae3ff84b7fa767d20d58c609a6dfdb88842390fe4e14771626a905c59",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "collection-nul-internal-collision",
+      "input": "tests/fixtures/m2/collection-nul-internal-collision.pkl",
+      "input_sha256": "ba02f697b83cf2aa88d40ddb3d81acb3bc8539c68394852127f70748bd2da745",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lexing",
+        "semantic:name-resolution"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "collection-typed-class-for-source",
+      "input": "tests/fixtures/m2/collection-typed-class-for-source.pkl",
+      "input_sha256": "e9f5258ceb2f5aa883b6eb10a86afee4cca3c58e199b0ed5a052f803585a4980",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:classes",
+        "semantic:types",
+        "semantic:generators",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "collection-typed-class-spread-source",
+      "input": "tests/fixtures/m2/collection-typed-class-spread-source.pkl",
+      "input_sha256": "229197f0d069ecace018efe6354b15fda1e09a1621618336e9bfe42bbe734de8",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:classes",
+        "semantic:types",
+        "semantic:generators",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "collection-for-force-source-before-param-type",
+      "input": "tests/fixtures/m2/collection-for-force-source-before-param-type.pkl",
+      "input_sha256": "a6608e323c7eae4b4e74a9ffa6027717b19d30ba0682e8c683c80d58bb4334e9",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "collection-for-empty-param-missingtype",
+      "input": "tests/fixtures/m2/collection-for-empty-param-missingtype.pkl",
+      "input_sha256": "949b0d400f9df5a439b38196a4ee1ec240f0ed1009bac6b4ed983afb71ab17ef",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:types",
+        "semantic:generators",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "collection-for-empty-missingtype-skipped",
+      "input": "tests/fixtures/m2/collection-for-empty-missingtype-skipped.pkl",
+      "input_sha256": "d85b64443ed8a39caaf4f34f4678e52f031ef18bcdf1b01da1b428a7a2a18e6b",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:types",
+        "semantic:generators",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "collection-local-duplicate-generated",
+      "input": "tests/fixtures/m2/collection-local-duplicate-generated.pkl",
+      "input_sha256": "43c7c95d3d04e49e210a3f770b4bc8be1046f28686632154d8e4ff2d2365551d",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:name-resolution",
+        "semantic:modifiers",
+        "semantic:generators",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "collection-local-method-duplicate-generated",
+      "input": "tests/fixtures/m2/collection-local-method-duplicate-generated.pkl",
+      "input_sha256": "d1b30682348fcf6d8c424ca881c10477dee8d1fc140161438b0dd4f498aabe7a",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:name-resolution",
+        "semantic:modifiers",
+        "semantic:generators",
+        "semantic:functions",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "collection-list-method-shadow",
+      "input": "tests/fixtures/m2/collection-list-method-shadow.pkl",
+      "input_sha256": "fa41e72898ff78aca264107572d97c1e5c1c87ddf44089823f96cd1817ba8f39",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:name-resolution",
+        "semantic:functions"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "collection-list-property-shadow",
+      "input": "tests/fixtures/m2/collection-list-property-shadow.pkl",
+      "input_sha256": "307840111a0fe05da0b9f9cbb634305b83f61c5e88170206f165e10fcf7f5925",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:name-resolution"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "collection-list-nested-method-shadow",
+      "input": "tests/fixtures/m2/collection-list-nested-method-shadow.pkl",
+      "input_sha256": "f000b70e3489ae7517672cab80e3e2c69242bbac1c288507ebd96e0d0990dd74",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:name-resolution",
+        "semantic:functions"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "collection-listing-implicit-length",
+      "input": "tests/fixtures/m2/collection-listing-implicit-length.pkl",
+      "input_sha256": "a304a29f83ccd40d51965d679f63930acf5fbbaadef0b8df58543a18b7297536",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:name-resolution"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "collection-listing-implicit-isempty",
+      "input": "tests/fixtures/m2/collection-listing-implicit-isempty.pkl",
+      "input_sha256": "157045d797bfb6af0ac88c8ed47a8ff7a0b7f36270aaeda02409cd3e916882d2",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:name-resolution"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "collection-module-dynamic-classification",
+      "input": "tests/fixtures/m2/collection-module-dynamic-classification.pkl",
+      "input_sha256": "067d4687451bb6fcb27664abf499b95c5972095523d048782dac5bab550c6612",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:name-resolution",
+        "semantic:modules",
+        "semantic:types"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "collection-module-iteration",
+      "input": "tests/fixtures/m2/collection-module-iteration.pkl",
+      "input_sha256": "072bafbc02896507e47eb4e44a9b2a5094e360c3eb9dd15441b72cfa187a2225",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:name-resolution",
+        "semantic:modules",
+        "semantic:generators",
+        "semantic:diagnostics"
+      ]
+    },
+    {
       "adapter": null,
       "execution": {
         "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
@@ -96867,9 +99214,9 @@
   "comparison_boundary": "evaluateExpressionString(ModuleSource.path(same absolute URI), expression) UTF-8 stdout; whole PklException.getMessage() UTF-8 stderr and exit 1; no trimming. Power assertions default to disabled; an explicit per-case power_assertions boolean enables the same option in both probes. Stringification alone is not typed value/API compatibility.",
   "completion": "Every required semantic/source requirement needs implementation/test mappings and complete passing execution. Pending/unmapped/unimplemented/mismatch remains a full-gate failure.",
   "counts": {
-    "cases": 1294,
+    "cases": 1415,
     "cases_by_execution": {
-      "ready": 294,
+      "ready": 415,
       "unimplemented": 960,
       "unmapped": 40
     },
@@ -96899,7 +99246,9 @@
           "identifier-supplementary",
           "identifier-join-control",
           "identifier-dollar",
-          "error-keyword-property"
+          "error-keyword-property",
+          "collection-property-nul",
+          "collection-nul-internal-collision"
         ],
         "state": "partial"
       }
@@ -97132,7 +99481,25 @@
           "constraint-nested-lambda-outer",
           "constraint-inherited-local-owner",
           "constraint-amended-local-owner",
-          "constraint-generic-actual-class-scope"
+          "constraint-generic-actual-class-scope",
+          "collection-listing-this",
+          "collection-mapping-key-lexical",
+          "collection-listing-local",
+          "collection-listing-for-closure",
+          "collection-listing-for-outer",
+          "collection-property-nul",
+          "collection-listing-lazy-key-capture",
+          "collection-listing-nested-generator-closure",
+          "collection-nul-internal-collision",
+          "collection-local-duplicate-generated",
+          "collection-local-method-duplicate-generated",
+          "collection-list-method-shadow",
+          "collection-list-property-shadow",
+          "collection-list-nested-method-shadow",
+          "collection-listing-implicit-length",
+          "collection-listing-implicit-isempty",
+          "collection-module-dynamic-classification",
+          "collection-module-iteration"
         ],
         "state": "partial"
       }
@@ -97164,7 +99531,38 @@
           "error-class-forced-missing-method-type",
           "constraint-object-unforced-order",
           "constraint-object-cached-order",
-          "constraint-object-cache-no-force"
+          "constraint-object-cache-no-force",
+          "collection-dynamic-lazy-body",
+          "collection-listing-lazy-body",
+          "collection-mapping-lazy-body",
+          "collection-mapping-eager-key",
+          "collection-mapping-unused-key",
+          "collection-listing-length-lazy",
+          "collection-mapping-length-lazy",
+          "collection-listing-this",
+          "collection-mapping-key-lexical",
+          "collection-listing-local",
+          "collection-listing-for-closure",
+          "collection-listing-for-body-lazy",
+          "collection-listing-spread-lazy",
+          "collection-listing-for-unused-bad-value",
+          "collection-listing-for-outer",
+          "collection-listing-lazy-key-capture",
+          "collection-listing-nested-generator-closure",
+          "collection-generator-first-key-error",
+          "collection-generator-first-when-error",
+          "collection-generator-typed-param-false",
+          "collection-for-force-source-before-key",
+          "collection-for-force-source-before-when",
+          "collection-spread-force-source-before-duplicate",
+          "collection-spread-force-source-before-kind",
+          "collection-for-force-child-before-parent",
+          "collection-spread-force-child-before-parent",
+          "collection-for-source-force-shallow",
+          "collection-for-default-omitted",
+          "collection-spread-default-not-forced",
+          "collection-for-force-source-before-param-type",
+          "collection-for-empty-missingtype-skipped"
         ],
         "state": "partial"
       }
@@ -97182,7 +99580,128 @@
       "tests": {
         "case_ids": [
           "object-member",
-          "error-object-nonlocal-method-frame"
+          "error-object-nonlocal-method-frame",
+          "collection-dynamic-mixed",
+          "collection-listing-elements",
+          "collection-mapping-entries",
+          "collection-dynamic-entry-property",
+          "collection-dynamic-lazy-body",
+          "collection-listing-lazy-body",
+          "collection-mapping-lazy-body",
+          "collection-mapping-eager-key",
+          "collection-mapping-unused-key",
+          "collection-listing-index-negative",
+          "collection-listing-index-upper",
+          "collection-listing-index-string",
+          "collection-mapping-missing",
+          "collection-dynamic-property-index",
+          "collection-listing-length-lazy",
+          "collection-mapping-length-lazy",
+          "collection-listing-amend-append",
+          "collection-listing-amend-replace",
+          "collection-mapping-amend-replace",
+          "collection-mapping-amend-late-this",
+          "collection-listing-this",
+          "collection-mapping-key-lexical",
+          "collection-listing-local",
+          "collection-listing-for-index",
+          "collection-listing-for-closure",
+          "collection-listing-when-false",
+          "collection-listing-when-else",
+          "collection-listing-when-eager",
+          "collection-listing-for-body-lazy",
+          "collection-listing-spread-list",
+          "collection-mapping-spread",
+          "collection-listing-spread-lazy",
+          "collection-listing-spread-nullable",
+          "collection-listing-spread-null",
+          "collection-listing-property-rejected",
+          "collection-listing-when-nonboolean",
+          "collection-listing-entry-new-index",
+          "collection-listing-amend-outside-parent",
+          "collection-mapping-element-forced",
+          "collection-listing-for-listing",
+          "collection-listing-for-unused-bad-value",
+          "collection-listing-for-outer",
+          "collection-mapping-spread-duplicate",
+          "collection-listing-spread-mapping-error",
+          "collection-mapping-spread-listing-error",
+          "collection-listing-spread-order",
+          "collection-property-nul",
+          "collection-mapping-int-float",
+          "collection-mapping-float-int",
+          "collection-mapping-int-float-duplicate",
+          "collection-mapping-nan",
+          "collection-mapping-nan-duplicate",
+          "collection-mapping-bool-null",
+          "collection-mapping-int-bool-distinct",
+          "collection-render-dynamic-mixed",
+          "collection-render-dynamic-inherited",
+          "collection-render-dynamic-cached",
+          "collection-mapping-positive-negative-zero",
+          "collection-mapping-positive-negative-zero-lookup",
+          "collection-listing-power-index",
+          "collection-mapping-power-index",
+          "collection-dynamic-power-cached",
+          "collection-mapping-power-inherited",
+          "collection-listing-power-comment",
+          "collection-dynamic-simple-order",
+          "collection-dynamic-generated-order",
+          "collection-dynamic-mixed-generated-order",
+          "collection-render-dynamic-generated",
+          "collection-render-dynamic-mixed-generated",
+          "collection-listing-lazy-key-capture",
+          "collection-listing-nested-generator-closure",
+          "collection-generator-first-key-error",
+          "collection-generator-first-when-error",
+          "collection-listing-power-legal-multiline",
+          "collection-meta-for-alpha-left",
+          "collection-meta-for-alpha-right",
+          "collection-meta-mapping-amend-left",
+          "collection-meta-mapping-amend-right",
+          "collection-meta-null-spread-left",
+          "collection-meta-null-spread-right",
+          "collection-entry-body-inferred-new",
+          "collection-spread-listing-default",
+          "collection-spread-preserves-eager-value",
+          "collection-dynamic-static-computed-element",
+          "collection-dynamic-static-literal-element",
+          "collection-dynamic-generated-literal-element",
+          "collection-generator-typed-param-false",
+          "collection-listing-subscript-entry-super",
+          "collection-entry-body-amendment",
+          "collection-element-body-amendment",
+          "collection-class-is-dynamic",
+          "collection-class-annotated-dynamic",
+          "collection-contextual-class-is-dynamic",
+          "collection-class-amend-element",
+          "collection-class-amend-entry",
+          "collection-class-amend-for-entry",
+          "collection-class-amend-spread-entry",
+          "collection-for-force-source-before-key",
+          "collection-for-force-source-before-when",
+          "collection-spread-force-source-before-duplicate",
+          "collection-spread-force-source-before-kind",
+          "collection-for-force-child-before-parent",
+          "collection-spread-force-child-before-parent",
+          "collection-for-source-force-shallow",
+          "collection-for-default-omitted",
+          "collection-spread-default-not-forced",
+          "collection-nul-internal-collision",
+          "collection-typed-class-for-source",
+          "collection-typed-class-spread-source",
+          "collection-for-force-source-before-param-type",
+          "collection-for-empty-param-missingtype",
+          "collection-for-empty-missingtype-skipped",
+          "collection-local-duplicate-generated",
+          "collection-local-method-duplicate-generated",
+          "collection-list-method-shadow",
+          "collection-list-property-shadow",
+          "collection-list-nested-method-shadow",
+          "collection-listing-implicit-length",
+          "collection-listing-implicit-isempty",
+          "collection-module-dynamic-classification",
+          "collection-module-iteration"
         ],
         "state": "partial"
       }
@@ -97201,7 +99720,25 @@
         "case_ids": [
           "object-amendment",
           "constraint-inherited-local-owner",
-          "constraint-amended-local-owner"
+          "constraint-amended-local-owner",
+          "collection-listing-amend-append",
+          "collection-listing-amend-replace",
+          "collection-mapping-amend-replace",
+          "collection-mapping-amend-late-this",
+          "collection-listing-amend-outside-parent",
+          "collection-meta-mapping-amend-left",
+          "collection-meta-mapping-amend-right",
+          "collection-entry-body-inferred-new",
+          "collection-spread-preserves-eager-value",
+          "collection-listing-subscript-entry-super",
+          "collection-entry-body-amendment",
+          "collection-element-body-amendment",
+          "collection-class-amend-element",
+          "collection-class-amend-entry",
+          "collection-class-amend-for-entry",
+          "collection-class-amend-spread-entry",
+          "collection-for-force-child-before-parent",
+          "collection-spread-force-child-before-parent"
         ],
         "state": "partial"
       }
@@ -97234,7 +99771,13 @@
           "pipe-class-rhs",
           "constraint-inherited-fatal-frame",
           "constraint-inherited-nonbool-frame",
-          "constraint-inherited-function-result-frame"
+          "constraint-inherited-function-result-frame",
+          "collection-class-amend-element",
+          "collection-class-amend-entry",
+          "collection-class-amend-for-entry",
+          "collection-class-amend-spread-entry",
+          "collection-typed-class-for-source",
+          "collection-typed-class-spread-source"
         ],
         "state": "partial"
       }
@@ -97257,7 +99800,9 @@
           "error-abstract-literal",
           "error-duplicate-const-capture",
           "error-abstract-method",
-          "class-unused-abstract-members"
+          "class-unused-abstract-members",
+          "collection-local-duplicate-generated",
+          "collection-local-method-duplicate-generated"
         ],
         "state": "partial"
       }
@@ -97298,7 +99843,14 @@
           "pipe-function-body-error",
           "generated-pipeline-apply-left",
           "generated-pipeline-apply-right",
-          "error-object-nonlocal-method-frame"
+          "error-object-nonlocal-method-frame",
+          "collection-listing-for-closure",
+          "collection-listing-nested-generator-closure",
+          "collection-meta-for-alpha-left",
+          "collection-meta-for-alpha-right",
+          "collection-local-method-duplicate-generated",
+          "collection-list-method-shadow",
+          "collection-list-nested-method-shadow"
         ],
         "state": "partial"
       }
@@ -97322,7 +99874,11 @@
           "class-closure-receiver",
           "constraint-lambda-implicit-receiver",
           "constraint-lexical-before-custom",
-          "constraint-nested-lambda-outer"
+          "constraint-nested-lambda-outer",
+          "collection-listing-for-closure",
+          "collection-listing-nested-generator-closure",
+          "collection-meta-for-alpha-left",
+          "collection-meta-for-alpha-right"
         ],
         "state": "partial"
       }
@@ -97332,14 +99888,76 @@
       "id": "semantic:generators",
       "implementation": {
         "links": [],
-        "state": "unimplemented"
+        "state": "partial"
       },
       "kind": "semantic-family",
       "reason": "A selected probe does not establish implementation or complete edge-case coverage.",
       "required": true,
       "tests": {
-        "case_ids": [],
-        "state": "unmapped"
+        "case_ids": [
+          "collection-dynamic-mixed",
+          "collection-listing-elements",
+          "collection-mapping-entries",
+          "collection-listing-this",
+          "collection-mapping-key-lexical",
+          "collection-listing-local",
+          "collection-listing-for-index",
+          "collection-listing-for-closure",
+          "collection-listing-when-false",
+          "collection-listing-when-else",
+          "collection-listing-when-eager",
+          "collection-listing-for-body-lazy",
+          "collection-listing-spread-list",
+          "collection-mapping-spread",
+          "collection-listing-spread-lazy",
+          "collection-listing-spread-nullable",
+          "collection-listing-spread-null",
+          "collection-listing-when-nonboolean",
+          "collection-listing-for-listing",
+          "collection-listing-for-unused-bad-value",
+          "collection-listing-for-outer",
+          "collection-mapping-spread-duplicate",
+          "collection-listing-spread-mapping-error",
+          "collection-mapping-spread-listing-error",
+          "collection-listing-spread-order",
+          "collection-dynamic-simple-order",
+          "collection-dynamic-generated-order",
+          "collection-dynamic-mixed-generated-order",
+          "collection-listing-lazy-key-capture",
+          "collection-listing-nested-generator-closure",
+          "collection-generator-first-when-error",
+          "collection-meta-for-alpha-left",
+          "collection-meta-for-alpha-right",
+          "collection-meta-mapping-amend-left",
+          "collection-meta-mapping-amend-right",
+          "collection-meta-null-spread-left",
+          "collection-meta-null-spread-right",
+          "collection-spread-listing-default",
+          "collection-spread-preserves-eager-value",
+          "collection-dynamic-static-computed-element",
+          "collection-dynamic-static-literal-element",
+          "collection-dynamic-generated-literal-element",
+          "collection-class-amend-for-entry",
+          "collection-class-amend-spread-entry",
+          "collection-for-force-source-before-key",
+          "collection-for-force-source-before-when",
+          "collection-spread-force-source-before-duplicate",
+          "collection-spread-force-source-before-kind",
+          "collection-for-force-child-before-parent",
+          "collection-spread-force-child-before-parent",
+          "collection-for-source-force-shallow",
+          "collection-for-default-omitted",
+          "collection-spread-default-not-forced",
+          "collection-typed-class-for-source",
+          "collection-typed-class-spread-source",
+          "collection-for-force-source-before-param-type",
+          "collection-for-empty-param-missingtype",
+          "collection-for-empty-missingtype-skipped",
+          "collection-local-duplicate-generated",
+          "collection-local-method-duplicate-generated",
+          "collection-module-iteration"
+        ],
+        "state": "partial"
       }
     },
     {
@@ -97347,14 +99965,136 @@
       "id": "semantic:collections",
       "implementation": {
         "links": [],
-        "state": "unimplemented"
+        "state": "partial"
       },
       "kind": "semantic-family",
       "reason": "A selected probe does not establish implementation or complete edge-case coverage.",
       "required": true,
       "tests": {
-        "case_ids": [],
-        "state": "unmapped"
+        "case_ids": [
+          "collection-dynamic-mixed",
+          "collection-listing-elements",
+          "collection-mapping-entries",
+          "collection-dynamic-entry-property",
+          "collection-dynamic-lazy-body",
+          "collection-listing-lazy-body",
+          "collection-mapping-lazy-body",
+          "collection-mapping-eager-key",
+          "collection-mapping-unused-key",
+          "collection-listing-index-negative",
+          "collection-listing-index-upper",
+          "collection-listing-index-string",
+          "collection-mapping-missing",
+          "collection-dynamic-property-index",
+          "collection-listing-length-lazy",
+          "collection-mapping-length-lazy",
+          "collection-listing-amend-append",
+          "collection-listing-amend-replace",
+          "collection-mapping-amend-replace",
+          "collection-mapping-amend-late-this",
+          "collection-listing-this",
+          "collection-mapping-key-lexical",
+          "collection-listing-local",
+          "collection-listing-for-index",
+          "collection-listing-for-closure",
+          "collection-listing-when-false",
+          "collection-listing-when-else",
+          "collection-listing-when-eager",
+          "collection-listing-for-body-lazy",
+          "collection-listing-spread-list",
+          "collection-mapping-spread",
+          "collection-listing-spread-lazy",
+          "collection-listing-spread-nullable",
+          "collection-listing-spread-null",
+          "collection-listing-property-rejected",
+          "collection-listing-when-nonboolean",
+          "collection-listing-entry-new-index",
+          "collection-listing-amend-outside-parent",
+          "collection-mapping-element-forced",
+          "collection-listing-for-listing",
+          "collection-listing-for-unused-bad-value",
+          "collection-listing-for-outer",
+          "collection-mapping-spread-duplicate",
+          "collection-listing-spread-mapping-error",
+          "collection-mapping-spread-listing-error",
+          "collection-listing-spread-order",
+          "collection-property-nul",
+          "collection-mapping-int-float",
+          "collection-mapping-float-int",
+          "collection-mapping-int-float-duplicate",
+          "collection-mapping-nan",
+          "collection-mapping-nan-duplicate",
+          "collection-mapping-bool-null",
+          "collection-mapping-int-bool-distinct",
+          "collection-render-dynamic-mixed",
+          "collection-render-dynamic-inherited",
+          "collection-render-dynamic-cached",
+          "collection-mapping-positive-negative-zero",
+          "collection-mapping-positive-negative-zero-lookup",
+          "collection-listing-power-index",
+          "collection-mapping-power-index",
+          "collection-dynamic-power-cached",
+          "collection-mapping-power-inherited",
+          "collection-listing-power-comment",
+          "collection-dynamic-simple-order",
+          "collection-dynamic-generated-order",
+          "collection-dynamic-mixed-generated-order",
+          "collection-render-dynamic-generated",
+          "collection-render-dynamic-mixed-generated",
+          "collection-listing-lazy-key-capture",
+          "collection-listing-nested-generator-closure",
+          "collection-generator-first-key-error",
+          "collection-generator-first-when-error",
+          "collection-listing-power-legal-multiline",
+          "collection-meta-for-alpha-left",
+          "collection-meta-for-alpha-right",
+          "collection-meta-mapping-amend-left",
+          "collection-meta-mapping-amend-right",
+          "collection-meta-null-spread-left",
+          "collection-meta-null-spread-right",
+          "collection-entry-body-inferred-new",
+          "collection-spread-listing-default",
+          "collection-spread-preserves-eager-value",
+          "collection-dynamic-static-computed-element",
+          "collection-dynamic-static-literal-element",
+          "collection-dynamic-generated-literal-element",
+          "collection-generator-typed-param-false",
+          "collection-listing-subscript-entry-super",
+          "collection-entry-body-amendment",
+          "collection-element-body-amendment",
+          "collection-class-is-dynamic",
+          "collection-class-annotated-dynamic",
+          "collection-contextual-class-is-dynamic",
+          "collection-class-amend-element",
+          "collection-class-amend-entry",
+          "collection-class-amend-for-entry",
+          "collection-class-amend-spread-entry",
+          "collection-for-force-source-before-key",
+          "collection-for-force-source-before-when",
+          "collection-spread-force-source-before-duplicate",
+          "collection-spread-force-source-before-kind",
+          "collection-for-force-child-before-parent",
+          "collection-spread-force-child-before-parent",
+          "collection-for-source-force-shallow",
+          "collection-for-default-omitted",
+          "collection-spread-default-not-forced",
+          "collection-nul-internal-collision",
+          "collection-typed-class-for-source",
+          "collection-typed-class-spread-source",
+          "collection-for-force-source-before-param-type",
+          "collection-for-empty-param-missingtype",
+          "collection-for-empty-missingtype-skipped",
+          "collection-local-duplicate-generated",
+          "collection-local-method-duplicate-generated",
+          "collection-list-method-shadow",
+          "collection-list-property-shadow",
+          "collection-list-nested-method-shadow",
+          "collection-listing-implicit-length",
+          "collection-listing-implicit-isempty",
+          "collection-module-dynamic-classification",
+          "collection-module-iteration"
+        ],
+        "state": "partial"
       }
     },
     {
@@ -97430,7 +100170,20 @@
           "power-constraint-alias-scope",
           "power-constraint-expression-multiline",
           "power-constraint-expression-comment",
-          "error-grouped-contextual-new"
+          "error-grouped-contextual-new",
+          "collection-generator-typed-param-false",
+          "collection-class-is-dynamic",
+          "collection-class-annotated-dynamic",
+          "collection-contextual-class-is-dynamic",
+          "collection-class-amend-element",
+          "collection-class-amend-entry",
+          "collection-class-amend-for-entry",
+          "collection-class-amend-spread-entry",
+          "collection-typed-class-for-source",
+          "collection-typed-class-spread-source",
+          "collection-for-empty-param-missingtype",
+          "collection-for-empty-missingtype-skipped",
+          "collection-module-dynamic-classification"
         ],
         "state": "partial"
       }
@@ -97554,7 +100307,18 @@
           "constraint-generic-actual-class-scope",
           "constraint-inherited-fatal-frame",
           "constraint-inherited-nonbool-frame",
-          "constraint-inherited-function-result-frame"
+          "constraint-inherited-function-result-frame",
+          "collection-render-dynamic-mixed",
+          "collection-render-dynamic-inherited",
+          "collection-render-dynamic-cached",
+          "collection-listing-power-index",
+          "collection-mapping-power-index",
+          "collection-dynamic-power-cached",
+          "collection-mapping-power-inherited",
+          "collection-listing-power-comment",
+          "collection-render-dynamic-generated",
+          "collection-render-dynamic-mixed-generated",
+          "collection-listing-power-legal-multiline"
         ],
         "state": "partial"
       }
@@ -97686,7 +100450,9 @@
       "required": true,
       "tests": {
         "case_ids": [
-          "module-basic"
+          "module-basic",
+          "collection-module-dynamic-classification",
+          "collection-module-iteration"
         ],
         "state": "partial"
       }
@@ -97810,7 +100576,62 @@
           "pipe-class-rhs",
           "constraint-inherited-fatal-frame",
           "constraint-inherited-nonbool-frame",
-          "constraint-inherited-function-result-frame"
+          "constraint-inherited-function-result-frame",
+          "collection-mapping-eager-key",
+          "collection-listing-index-negative",
+          "collection-listing-index-upper",
+          "collection-listing-index-string",
+          "collection-mapping-missing",
+          "collection-dynamic-property-index",
+          "collection-listing-when-eager",
+          "collection-listing-spread-lazy",
+          "collection-listing-spread-null",
+          "collection-listing-property-rejected",
+          "collection-listing-when-nonboolean",
+          "collection-listing-entry-new-index",
+          "collection-listing-amend-outside-parent",
+          "collection-mapping-element-forced",
+          "collection-listing-for-unused-bad-value",
+          "collection-mapping-spread-duplicate",
+          "collection-listing-spread-mapping-error",
+          "collection-mapping-spread-listing-error",
+          "collection-mapping-int-float",
+          "collection-mapping-float-int",
+          "collection-mapping-nan-duplicate",
+          "collection-render-dynamic-mixed",
+          "collection-render-dynamic-inherited",
+          "collection-render-dynamic-cached",
+          "collection-mapping-positive-negative-zero-lookup",
+          "collection-listing-power-index",
+          "collection-mapping-power-index",
+          "collection-dynamic-power-cached",
+          "collection-mapping-power-inherited",
+          "collection-listing-power-comment",
+          "collection-render-dynamic-generated",
+          "collection-render-dynamic-mixed-generated",
+          "collection-generator-first-key-error",
+          "collection-generator-first-when-error",
+          "collection-listing-power-legal-multiline",
+          "collection-dynamic-static-computed-element",
+          "collection-dynamic-generated-literal-element",
+          "collection-class-annotated-dynamic",
+          "collection-class-amend-element",
+          "collection-class-amend-entry",
+          "collection-class-amend-for-entry",
+          "collection-class-amend-spread-entry",
+          "collection-for-force-source-before-key",
+          "collection-for-force-source-before-when",
+          "collection-spread-force-source-before-duplicate",
+          "collection-spread-force-source-before-kind",
+          "collection-for-force-child-before-parent",
+          "collection-spread-force-child-before-parent",
+          "collection-typed-class-for-source",
+          "collection-typed-class-spread-source",
+          "collection-for-force-source-before-param-type",
+          "collection-for-empty-param-missingtype",
+          "collection-local-duplicate-generated",
+          "collection-local-method-duplicate-generated",
+          "collection-module-iteration"
         ],
         "state": "partial"
       }
@@ -97883,7 +100704,13 @@
           "generated-constraint-union-left",
           "generated-constraint-union-right",
           "generated-constraint-base-left",
-          "generated-constraint-base-right"
+          "generated-constraint-base-right",
+          "collection-meta-for-alpha-left",
+          "collection-meta-for-alpha-right",
+          "collection-meta-mapping-amend-left",
+          "collection-meta-mapping-amend-right",
+          "collection-meta-null-spread-left",
+          "collection-meta-null-spread-right"
         ],
         "state": "partial"
       }
@@ -106333,6 +109160,6 @@
     "compatibility/regressions.json": "09c064f65730d30f72bf87a45c88d47ecc0844e57966a999dc8e759f083af3da",
     "compatibility/rev1-inventory.json": "6061f202ba3f04565efed3617ac69d3c2fadc54eec1f562b67a4758b3d0a8ab5",
     "references.lock": "278f48fd7697459281aa78a706c9ca57222f36a8c0785d838a6449fbaf26d30b",
-    "tests/fixtures/m2/cases.json": "e6734f1d51abc85ec27a3595e793f07ce5ee6a9c49f220adf4188c7d38f219c9"
+    "tests/fixtures/m2/cases.json": "b524dd49afae3891aee2ce8cf00a749fdef023039a940d03807b41bbb20f82c9"
   }
 }

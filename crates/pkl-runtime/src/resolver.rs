@@ -6,8 +6,8 @@
 use crate::diagnostic::{Diagnostic, DiagnosticKind};
 use crate::source::Span;
 use crate::syntax::{
-    Expr, ExprKind, Member, Modifier, ModifierKind, Module, ModuleParentKind, Parameter, Type,
-    TypeKind, TypeParameter, modifier_flags,
+    Expr, ExprKind, Member, Modifier, ModifierKind, Module, ModuleParentKind, ObjectMember,
+    Parameter, Type, TypeKind, TypeParameter, modifier_flags,
 };
 use std::collections::BTreeMap;
 
@@ -132,6 +132,8 @@ pub enum Binding {
         local: bool,
     },
     ImplicitMethod,
+    /// Pinned scalar constants, after lexical declarations have been checked.
+    BaseConstant,
     /// Missing lexical/base name in an immediate type-constraint scope.
     CustomThis,
     CustomMethod,
@@ -153,9 +155,10 @@ fn is_method(member: &Member) -> bool {
 }
 
 enum Scope<'a> {
-    Object(&'a [Member]),
+    Object(Vec<&'a Member>),
     Let(&'a str),
     Parameters(&'a [Parameter]),
+    GeneratorParameters(&'a [Parameter]),
     TypeParameters(&'a [TypeParameter]),
     CustomThis,
 }
@@ -175,6 +178,7 @@ struct Resolver<'a> {
     custom_functions: std::collections::BTreeSet<Span>,
     const_level: ConstLevel,
     object_levels: Vec<ConstLevel>,
+    object_receiver_lambdas: Vec<bool>,
     receiver_is_lambda: bool,
     member_path: Vec<String>,
     diagnostic_path: Vec<String>,
@@ -195,7 +199,7 @@ impl<'a> Resolver<'a> {
                     }
                     let_depth += 1;
                 }
-                Scope::Parameters(parameters) => {
+                Scope::Parameters(parameters) | Scope::GeneratorParameters(parameters) => {
                     if !method
                         && name != "_"
                         && let Some(index) = parameters
@@ -242,7 +246,7 @@ impl<'a> Resolver<'a> {
         self.scopes
             .iter()
             .rev()
-            .find(|scope| !matches!(scope, Scope::Let(_)))
+            .find(|scope| !matches!(scope, Scope::Let(_) | Scope::GeneratorParameters(_)))
             .is_some_and(|scope| matches!(scope, Scope::CustomThis))
     }
 
@@ -257,48 +261,228 @@ impl<'a> Resolver<'a> {
                 ));
             }
         }
-        self.scopes.push(Scope::Object(members));
+        self.scopes.push(Scope::Object(members.iter().collect()));
         self.object_levels.push(self.const_level);
         let previous_lambda = std::mem::replace(&mut self.receiver_is_lambda, false);
+        self.object_receiver_lambdas.push(previous_lambda);
         for member in members {
-            self.member_path.push(member.name.clone());
-            self.diagnostic_path.push(member.name.clone());
-            let previous_level = self.const_level;
-            if modifier_flags(&member.modifiers) & ModifierKind::Const.flag() != 0 {
-                self.const_level = ConstLevel::All;
+            self.member(member, object)?;
+        }
+        self.receiver_is_lambda = previous_lambda;
+        self.object_receiver_lambdas.pop();
+        self.object_levels.pop();
+        self.scopes.pop();
+        Ok(())
+    }
+
+    fn member(&mut self, member: &'a Member, object: bool) -> Result<(), Diagnostic> {
+        self.member_path.push(member.name.clone());
+        self.diagnostic_path.push(member.name.clone());
+        let previous_level = self.const_level;
+        if modifier_flags(&member.modifiers) & ModifierKind::Const.flag() != 0 {
+            self.const_level = ConstLevel::All;
+        }
+        self.validate_member(member, object)?;
+        if let Some(ty) = &member.ty {
+            self.type_expression(ty)?;
+        }
+        if object
+            && is_method(member)
+            && modifier_flags(&member.modifiers) & ModifierKind::Local.flag() == 0
+        {
+            let ExprKind::Function { header_span, .. } = member.expr.kind else {
+                unreachable!()
+            };
+            let mut error = Diagnostic::new(
+                DiagnosticKind::Syntax,
+                header_span,
+                "Method needs a `local` modifier because it is defined in an object, not a class.",
+            );
+            // The object builder rejects this declaration before entering
+            // its method scope, so the enclosing authored member owns it.
+            let enclosing = &self.diagnostic_path[..self.diagnostic_path.len() - 1];
+            if !enclosing.is_empty() {
+                error.member = Some(enclosing.join(".").into());
             }
-            self.validate_member(member, object)?;
-            if let Some(ty) = &member.ty {
-                self.type_expression(ty)?;
+            return Err(error);
+        }
+        self.expression(&member.expr, true)?;
+        self.const_level = previous_level;
+        self.member_path.pop();
+        self.diagnostic_path.pop();
+        Ok(())
+    }
+
+    fn object_members(&mut self, members: &'a [ObjectMember]) -> Result<(), Diagnostic> {
+        fn declarations<'b>(members: &'b [ObjectMember], names: &mut Vec<&'b Member>) {
+            for member in members {
+                match member {
+                    ObjectMember::Property(member) => names.push(member),
+                    ObjectMember::When {
+                        then_members,
+                        else_members,
+                        ..
+                    } => {
+                        declarations(then_members, names);
+                        declarations(else_members, names);
+                    }
+                    _ => {}
+                }
             }
-            if object
-                && is_method(member)
-                && modifier_flags(&member.modifiers) & ModifierKind::Local.flag() == 0
-            {
-                let ExprKind::Function { header_span, .. } = member.expr.kind else {
-                    unreachable!()
-                };
+        }
+        let mut names = Vec::new();
+        declarations(members, &mut names);
+        for pair in members.windows(2) {
+            if pair[0].span().end == pair[1].span().start {
                 let mut error = Diagnostic::new(
                     DiagnosticKind::Syntax,
-                    header_span,
-                    "Method needs a `local` modifier because it is defined in an object, not a class.",
+                    pair[1].span(),
+                    "Object members must be separated by whitespace, newline, or semicolon.\nObject entries must be separated by newline or semicolon.",
                 );
-                // The object builder rejects this declaration before entering
-                // its method scope, so the enclosing authored member owns it.
-                let enclosing = &self.diagnostic_path[..self.diagnostic_path.len() - 1];
-                if !enclosing.is_empty() {
-                    error.member = Some(enclosing.join(".").into());
+                if !self.diagnostic_path.is_empty() {
+                    error.member = Some(self.diagnostic_path.join(".").into());
                 }
                 return Err(error);
             }
-            self.expression(&member.expr, true)?;
-            self.const_level = previous_level;
-            self.member_path.pop();
-            self.diagnostic_path.pop();
         }
+        if members.iter().all(|member| {
+            matches!(
+                member,
+                ObjectMember::Property(_)
+                    | ObjectMember::Element { .. }
+                    | ObjectMember::Entry { .. }
+            )
+        }) {
+            let mut seen = std::collections::BTreeSet::new();
+            for member in &names {
+                if !seen.insert((&member.name, is_method(member))) {
+                    return Err(Diagnostic::new(
+                        DiagnosticKind::DuplicateMember,
+                        member.name_span,
+                        format!("Duplicate definition of member `{}`.", member.name),
+                    ));
+                }
+            }
+        }
+        self.scopes.push(Scope::Object(names));
+        self.object_levels.push(self.const_level);
+        let previous_lambda = std::mem::replace(&mut self.receiver_is_lambda, false);
+        self.object_receiver_lambdas.push(previous_lambda);
+        self.object_body(members, None)?;
+        self.object_receiver_lambdas.pop();
         self.receiver_is_lambda = previous_lambda;
         self.object_levels.pop();
         self.scopes.pop();
+        Ok(())
+    }
+
+    /// Generator headers execute in the enclosing receiver while retaining
+    /// every active for binding. See pinned SymbolTable.EagerGeneratorScope.
+    fn eager_expression(&mut self, expression: &'a Expr, custom: bool) -> Result<(), Diagnostic> {
+        let index = self
+            .scopes
+            .iter()
+            .rposition(|scope| matches!(scope, Scope::Object(_)))
+            .expect("object generator scope");
+        let scope = self.scopes.remove(index);
+        let level = self.object_levels.pop().expect("object level");
+        let lambda = std::mem::replace(
+            &mut self.receiver_is_lambda,
+            *self
+                .object_receiver_lambdas
+                .last()
+                .expect("object receiver"),
+        );
+        if custom {
+            self.scopes.push(Scope::CustomThis);
+        }
+        let result = self.expression(expression, false);
+        if custom {
+            self.scopes.pop();
+        }
+        self.receiver_is_lambda = lambda;
+        self.object_levels.push(level);
+        self.scopes.insert(index, scope);
+        result
+    }
+
+    fn object_body(
+        &mut self,
+        members: &'a [ObjectMember],
+        for_span: Option<Span>,
+    ) -> Result<(), Diagnostic> {
+        for member in members {
+            match member {
+                ObjectMember::Property(member) => {
+                    if let Some(span) = for_span {
+                        let message = if is_method(member) {
+                            "A for-generator cannot generate object methods (only entries and elements)."
+                        } else {
+                            "A for-generator cannot generate object properties (only entries and elements)."
+                        };
+                        return Err(self.const_error(
+                            &Expr {
+                                kind: ExprKind::Uninitialized,
+                                span: Span::new(span.start, span.start + 3),
+                            },
+                            message,
+                        ));
+                    }
+                    self.member(member, true)?;
+                }
+                ObjectMember::Element { value, .. } => self.expression(value, true)?,
+                ObjectMember::Entry { key, value, .. } => {
+                    self.eager_expression(key, false)?;
+                    self.expression(value, true)?;
+                }
+                ObjectMember::Spread { value, .. } => self.eager_expression(value, false)?,
+                ObjectMember::Predicate {
+                    condition, value, ..
+                } => {
+                    self.eager_expression(condition, true)?;
+                    self.expression(value, false)?;
+                }
+                ObjectMember::When {
+                    condition,
+                    then_members,
+                    else_members,
+                    ..
+                } => {
+                    // Upstream visits authored bodies before the eager predicate.
+                    self.object_body(then_members, for_span)?;
+                    self.object_body(else_members, for_span)?;
+                    self.eager_expression(condition, false)?;
+                }
+                ObjectMember::For {
+                    parameters,
+                    iterable,
+                    members,
+                    span,
+                } => {
+                    let mut seen = std::collections::BTreeSet::new();
+                    for parameter in parameters {
+                        if parameter.name != "_" && !seen.insert(&parameter.name) {
+                            let mut error = Diagnostic::new(
+                                DiagnosticKind::DuplicateMember,
+                                parameter.span,
+                                format!("Duplicate definition of member `{}`.", parameter.name),
+                            );
+                            if !self.diagnostic_path.is_empty() {
+                                error.member = Some(self.diagnostic_path.join(".").into());
+                            }
+                            return Err(error);
+                        }
+                        if let Some(ty) = &parameter.ty {
+                            self.type_expression(ty)?;
+                        }
+                    }
+                    self.eager_expression(iterable, false)?;
+                    self.scopes.push(Scope::GeneratorParameters(parameters));
+                    self.object_body(members, Some(*span))?;
+                    self.scopes.pop();
+                }
+            }
+        }
         Ok(())
     }
 
@@ -343,7 +527,7 @@ impl<'a> Resolver<'a> {
                         .scopes
                         .iter()
                         .filter_map(|scope| match scope {
-                            Scope::Object(members) => Some(*members),
+                            Scope::Object(members) => Some(members),
                             _ => None,
                         })
                         .collect::<Vec<_>>();
@@ -519,7 +703,10 @@ impl<'a> Resolver<'a> {
             Binding::ImplicitThis | Binding::ImplicitMethod => {
                 self.const_level == ConstLevel::All && self.needs_const(0)
             }
-            Binding::Lexical { .. } | Binding::CustomThis | Binding::CustomMethod => false,
+            Binding::Lexical { .. }
+            | Binding::BaseConstant
+            | Binding::CustomThis
+            | Binding::CustomMethod => false,
         };
         if needed {
             self.const_names.insert(span);
@@ -568,6 +755,9 @@ impl<'a> Resolver<'a> {
             ExprKind::Parenthesized(inner) => self.expression(inner, false)?,
             ExprKind::Name(name) => {
                 let mut binding = self.binding(name, false);
+                if binding == Binding::ImplicitThis && matches!(name.as_str(), "NaN" | "Infinity") {
+                    binding = Binding::BaseConstant;
+                }
                 // Base-module static resolution belongs to M2. Refuse the
                 // supported spelling rather than silently treating it as this.
                 if binding == Binding::ImplicitThis && is_base_property(name) {
@@ -678,6 +868,10 @@ impl<'a> Resolver<'a> {
                 }
                 self.receiver(receiver)?;
             }
+            ExprKind::Subscript { receiver, key } => {
+                self.receiver(receiver)?;
+                self.expression(key, false)?;
+            }
             ExprKind::Binary { left, right, .. } => {
                 self.expression(left, false)?;
                 self.expression(right, false)?;
@@ -740,7 +934,7 @@ impl<'a> Resolver<'a> {
             }
             ExprKind::New { ty, members } => {
                 self.type_expression(ty)?;
-                self.members(members, true)?;
+                self.object_members(members)?;
             }
             ExprKind::Uninitialized => {}
             ExprKind::Object { parent, members } => {
@@ -754,7 +948,7 @@ impl<'a> Resolver<'a> {
                 if let Some(parent) = parent {
                     self.expression(parent, false)?;
                 }
-                self.members(members, true)?;
+                self.object_members(members)?;
             }
             ExprKind::This => {
                 if self.is_custom_this_scope() {
@@ -796,7 +990,8 @@ impl<'a> Resolver<'a> {
             | ExprKind::Null
             | ExprKind::String(_)
             | ExprKind::Bool(_)
-            | ExprKind::Super => {}
+            | ExprKind::Super
+            | ExprKind::EntryParent => {}
         }
         Ok(())
     }
@@ -880,6 +1075,7 @@ pub fn resolve_module(module: &Module) -> Result<ResolvedModule, Diagnostic> {
         custom_functions: std::collections::BTreeSet::new(),
         const_level: ConstLevel::None,
         object_levels: Vec::new(),
+        object_receiver_lambdas: Vec::new(),
         receiver_is_lambda: false,
         member_path: Vec::new(),
         diagnostic_path: Vec::new(),

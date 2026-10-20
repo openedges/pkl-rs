@@ -1,0 +1,2 @@
+class C { x: Int }
+result: Dynamic = new C { x = 42 }

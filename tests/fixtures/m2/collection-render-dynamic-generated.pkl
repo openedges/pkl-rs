@@ -1,0 +1,2 @@
+o: Dynamic(false) = new Dynamic { when (true) { a = 1; 2; ["k"] = 3; b = 4; 5 } }
+result = o

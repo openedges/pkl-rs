@@ -26,6 +26,7 @@ pub struct Environment {
 
 #[derive(Clone, Debug)]
 pub struct Member {
+    pub entry: bool,
     pub name: Arc<str>,
     pub code: usize,
     pub local: bool,
@@ -45,6 +46,7 @@ pub enum LazyState {
 /// Local definitions use owner identity; ordinary virtual properties use `None`.
 #[derive(Clone, Debug, PartialEq, Eq, PartialOrd, Ord)]
 pub struct CacheKey {
+    pub entry: bool,
     pub owner: Option<ObjectId>,
     pub name: Arc<str>,
     pub method: bool,
@@ -66,14 +68,55 @@ pub struct Class {
     pub abstract_: bool,
 }
 
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
+pub enum CollectionKind {
+    #[default]
+    Dynamic,
+    Listing,
+    Mapping,
+    List,
+}
+
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub enum CollectionMemberKind {
+    Property,
+    Entry,
+    Element,
+}
+
+#[derive(Clone, Debug)]
+pub struct CollectionMember {
+    pub key: Value,
+    pub name: Arc<str>,
+    pub kind: CollectionMemberKind,
+}
+
+#[derive(Clone, Debug)]
+pub struct CollectionIterator {
+    pub source: ObjectId,
+    pub members: Vec<CollectionMember>,
+    pub position: usize,
+    pub force_members: Vec<CollectionMember>,
+    pub force_position: usize,
+    pub awaiting_value: bool,
+}
+
 #[derive(Clone, Debug, Default)]
 pub struct Object {
     pub function: Option<Function>,
+    pub is_module: bool,
     pub class_definition: Option<Class>,
     pub parent: Option<ObjectId>,
     pub members: Vec<Member>,
     pub environment: Environment,
     pub cache: BTreeMap<CacheKey, LazyState>,
+    pub collection_kind: CollectionKind,
+    pub collection_members: Vec<CollectionMember>,
+    pub length: usize,
+    pub specialized_literal: bool,
+    pub member_environments: BTreeMap<CacheKey, Environment>,
+    pub member_values: BTreeMap<CacheKey, Value>,
+    pub iterator: Option<CollectionIterator>,
 }
 
 struct Slot {
@@ -170,6 +213,30 @@ impl Heap {
             }
             marked[id.index] = true;
             pending.extend(object.parent);
+            for member in &object.collection_members {
+                pending.extend(member.key.heap_id());
+            }
+            if let Some(iterator) = &object.iterator {
+                pending.push(iterator.source);
+                for member in iterator.members.iter().chain(&iterator.force_members) {
+                    pending.extend(member.key.heap_id());
+                }
+            }
+            for environment in object.member_environments.values() {
+                for scope in &environment.scopes {
+                    pending.push(scope.receiver);
+                    pending.push(scope.owner);
+                }
+                pending.extend(
+                    environment
+                        .locals
+                        .iter()
+                        .chain(environment.this_value.iter())
+                        .chain(environment.outer_value.iter())
+                        .chain(environment.custom_this.iter())
+                        .filter_map(Value::heap_id),
+                );
+            }
             for scope in &object.environment.scopes {
                 pending.push(scope.receiver);
                 pending.push(scope.owner);
@@ -181,6 +248,7 @@ impl Heap {
                 .chain(object.environment.this_value.iter())
                 .chain(object.environment.outer_value.iter())
                 .chain(object.environment.custom_this.iter())
+                .chain(object.member_values.values())
                 .chain(object.cache.values().filter_map(|state| match state {
                     LazyState::Completed(value) => Some(value),
                     _ => None,

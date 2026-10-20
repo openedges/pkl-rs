@@ -1,0 +1,2 @@
+o = new Listing { for (n in List(1, 2)) { missing }; 42 }
+result = o[2]

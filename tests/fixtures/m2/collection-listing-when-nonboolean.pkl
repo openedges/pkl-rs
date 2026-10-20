@@ -1,0 +1,2 @@
+o = new Listing { when (42) { 1 } }
+result = o[0]

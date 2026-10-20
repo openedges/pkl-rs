@@ -1,0 +1,2 @@
+o = new Listing { when (false) { for (v: MissingType in List()) { v } }; 42 }
+result = o[0]

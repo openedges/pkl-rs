@@ -39,6 +39,21 @@ class PlatformEvidenceTests(unittest.TestCase):
                                          'browserErrors': [], 'playwright': '1.64.1',
                                          'playwrightCore': '1.64.1', 'playwrightPin': '1.64.1'})
 
+    def test_collection_scenarios_are_required_on_each_target(self):
+        collections = {
+            'm2-ordered-collection-members-and-amendments',
+            'm2-collection-generators-and-spread',
+            'm2-collection-diagnostics-and-power-assertions',
+        }
+        names = sorted(m1_platforms.REQUIRED_SCENARIOS)
+        valid = {'nodeChecks': names, 'browserChecks': names, 'browserErrors': [],
+                 'playwright': '1.64.1', 'playwrightCore': '1.64.1',
+                 'playwrightPin': '1.64.1'}
+        for target in ['nodeChecks', 'browserChecks']:
+            for missing in collections:
+                with self.subTest(target=target, missing=missing), self.assertRaises(ValueError):
+                    m1_platforms.check_scenarios({**valid, target: [name for name in names if name != missing]})
+
     def capture(self, values):
         return b''.join(value.hex().encode()+b'\n' for value in values)
 

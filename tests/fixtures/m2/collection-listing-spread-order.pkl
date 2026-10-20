@@ -1,0 +1,3 @@
+base = new Listing { 10; 20 }
+o = new Listing { 1; ...base; 2 }
+result = o[0] * 1000 + o[1] * 100 + o[2] * 10 + o[3]

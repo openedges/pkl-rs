@@ -1,0 +1,3 @@
+base = new Mapping { ["x"] = this["y"]; ["y"] = 10 }
+o = (base) { ["y"] = 42 }
+result = o["x"]

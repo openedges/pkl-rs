@@ -1,0 +1,1 @@
+o = new Dynamic { local x = 1; when (true) { local x = 2 }; result = x }; result = o.result

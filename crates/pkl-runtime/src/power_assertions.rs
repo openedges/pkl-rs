@@ -4,7 +4,7 @@
 //! expressions with display positions; it never evaluates the source.
 use crate::diagnostic::PowerAssertionValue;
 use crate::source::{Source, Span};
-use crate::syntax::{Expr, ExprKind};
+use crate::syntax::{Expr, ExprKind, ObjectMember};
 use std::collections::{BTreeMap, BTreeSet, VecDeque};
 
 #[derive(Clone, Debug, PartialEq, Eq, PartialOrd, Ord)]
@@ -202,6 +202,7 @@ fn expression_anchors(
         | ExprKind::String(_)
         | ExprKind::Bool(_)
         | ExprKind::Uninitialized
+        | ExprKind::EntryParent
         | ExprKind::TypeAlias { .. }
         | ExprKind::Class { .. } => anchor = None,
         ExprKind::Function { body, .. } => {
@@ -225,6 +226,10 @@ fn expression_anchors(
         ExprKind::NullableMember(receiver, _) | ExprKind::Member(receiver, _) => {
             anchor = Some(next_token(text, receiver.span.end, true));
             children.push(receiver.as_ref());
+        }
+        ExprKind::Subscript { receiver, key } => {
+            anchor = Some(next_token(text, receiver.span.end, false));
+            children.extend([receiver.as_ref(), key.as_ref()]);
         }
         ExprKind::Call { callee, arguments } => {
             anchor = match &callee.kind {
@@ -251,10 +256,10 @@ fn expression_anchors(
         ExprKind::InterpolatedString(parts) => children.extend(parts),
         ExprKind::Object { parent, members } => {
             children.extend(parent.iter().map(AsRef::as_ref));
-            children.extend(members.iter().map(|member| &member.expr));
+            member_expressions(members, &mut children);
         }
         ExprKind::New { members, .. } => {
-            children.extend(members.iter().map(|member| &member.expr));
+            member_expressions(members, &mut children);
         }
         ExprKind::Name(_)
         | ExprKind::This
@@ -265,6 +270,37 @@ fn expression_anchors(
     anchors.insert(expression.span, anchor);
     for child in children {
         expression_anchors(child, text, false, anchors);
+    }
+}
+
+fn member_expressions<'a>(members: &'a [ObjectMember], expressions: &mut Vec<&'a Expr>) {
+    for member in members {
+        match member {
+            ObjectMember::Property(member) => expressions.push(&member.expr),
+            ObjectMember::Element { value, .. } | ObjectMember::Spread { value, .. } => {
+                expressions.push(value);
+            }
+            ObjectMember::Entry { key, value, .. } => expressions.extend([key, value]),
+            ObjectMember::When {
+                condition,
+                then_members,
+                else_members,
+                ..
+            } => {
+                expressions.push(condition);
+                member_expressions(then_members, expressions);
+                member_expressions(else_members, expressions);
+            }
+            ObjectMember::For {
+                iterable, members, ..
+            } => {
+                expressions.push(iterable);
+                member_expressions(members, expressions);
+            }
+            ObjectMember::Predicate {
+                condition, value, ..
+            } => expressions.extend([condition, value]),
+        }
     }
 }
 

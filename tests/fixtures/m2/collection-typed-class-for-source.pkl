@@ -1,0 +1,4 @@
+class C { x: Int }
+c = new C { x = 42 }
+o = new Listing { for (v in c) { v } }
+result = o.length

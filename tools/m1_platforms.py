@@ -31,6 +31,9 @@ REQUIRED_SCENARIOS = {
     'm2-shared-language-diagnostics', 'm2-class-method-and-type-alias',
     'm2-pipeline-and-constraint-values',
     'm2-constraint-diagnostics-and-power-assertions',
+    'm2-ordered-collection-members-and-amendments',
+    'm2-collection-generators-and-spread',
+    'm2-collection-diagnostics-and-power-assertions',
 }
 
 

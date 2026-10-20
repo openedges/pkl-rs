@@ -1,0 +1,3 @@
+o = new Dynamic { a = 1; 2; when (true) { ["k"] = 3; b = 4 }; 5 }
+x = new Listing { for (k, v in o) { v } }
+result = x[0] * 10000 + x[1] * 1000 + x[2] * 100 + x[3] * 10 + x[4]

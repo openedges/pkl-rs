@@ -1,0 +1,2 @@
+o = new Listing { when (false) { missing } else { 42 } }
+result = o[0]
