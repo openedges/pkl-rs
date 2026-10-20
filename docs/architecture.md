@@ -284,11 +284,12 @@ The special collection default and hidden/local properties retain their
 separate rules. Retry preserves already completed members and publishes newly
 successful members at their completion position.
 
-Structural key preparation completes deep value forcing before recursively
-preparing member keys and values. That second phase uses cache or class property
-order. Both phases run on the same scheduler and retain their operands across
+Dynamic, Listing, Mapping, and typed key preparation completes deep value forcing
+before recursively preparing member keys and values. That second phase uses
+cache or class property order. Both phases run on the same scheduler and retain their operands across
 Host suspension, nested evaluation, GC, and failure recovery. The resulting
 canonical identities still represent structural equality, not Java hash integers.
+Strict List retains sequential element hashing.
 
 An empty object body preserves the parent's identity; empty typed construction
 uses the class prototype. Compile-time constant entry validation recognizes

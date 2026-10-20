@@ -7,8 +7,79 @@ shared engine. Stage 3 adds pipelines, resumable constraints, and optional power
 assertions. Stage 4 adds ordered collections and resumable generators. Stage 5
 adds generic collection checks and lazy wrappers. Stage 6 adds member predicates
 and their scope, cache, and lifecycle behavior. Stage 7 adds structural equality,
-nonprimitive keys, and related diagnostics. These checkpoints do not complete the
-language milestone.
+nonprimitive keys, and related diagnostics. Stage 8 corrects typed defaults,
+cache-sensitive comparison order, and deep-force/hash preparation order. These
+checkpoints do not complete the language milestone.
+
+## Stage 8 checkpoint
+
+The [stage 8 summary](stage8-final-summary.json) records **907 selected
+comparisons: 905 raw-byte matches, one remainder-zero mismatch, and one cycle
+oracle failure**. All 32 metamorphic relations pass. The 33 additions and six
+new relations preserve the original 874 definitions and input bytes. The
+[language archive](language-stage8-final-evidence.tar.gz) retains a recorded
+release build, 983 source snapshots, exact fixture URIs, Java identity,
+outcome sidecars, and complete output channels. Source and artifact identities
+remained stable; every source snapshot matches implementation commit `5024708`.
+
+Ordinary typed properties named `default` now participate in forcing, equality,
+and structural key preparation. Eligible collection members compare in successful
+cache insertion order; typed objects compare in class declaration order, including
+inheritance. Dynamic, Listing, Mapping, and typed key preparation finishes deep
+forcing before recursively hashing member keys and values. Strict List preserves
+sequential element hashing. Completed cache values survive retries, while failed
+evaluations do not reserve an insertion position. These changes preserve the shared VM scheduler
+across native, Wasm, and N-API.
+
+The [validation record](validation-stage8-final.json) and
+[raw checks](validation-stage8-final-evidence.tar.gz) retain reference pin checks,
+formatting, workspace Clippy, **212 Rust tests and 171 Python tests**, Wasm
+compilation, and inventory freshness. One existing differential probe remains
+intentionally ignored by ordinary unit tests. Ten structural equality lifecycle
+tests cover Host suspension, nested evaluation, GC, failed reads and retries,
+stale completions, cancellation, close, and both timeout scopes. The new cases
+also cross the deep-force/hash boundary.
+
+The [platform archive](platforms-stage8-final-evidence.tar.gz) records **35
+scenarios in each of actual Node and Chromium**. Java captures at the identical
+module URI supply values and complete diagnostic expectations. All 6,078
+primitive results agree across Rust targets; each target matches Java on 6,076,
+retaining two regex failures. The [regression archive](regressions-stage8-final-evidence.tar.gz)
+retains all 874 unchanged-input replays, the pre-push acquisition of 33 additions
+at their actual fixture URIs, 15 frontend matches, six runtime value matches,
+two runtime diagnostic matches, one cycle diagnostic mismatch, two matching
+lifecycle protocols, and four full lifecycle diagnostic mismatches.
+
+The [exploration archive](exploration-stage8-evidence.tar.gz) preserves 1,877
+payload files, plus its evidence manifest. It contains 56 original Java/frozen
+Stage 7 observations, two candidate replay rounds (52 and 56 captures), and
+eight Java platform captures. The final exploratory replay has 46 raw matches
+and ten retained mismatches: four cached-map fifth insertions, three warmed
+Listing hash cases, one nested-let diagnostic frame, and two nonconstant local
+cache cases. Platform captures include an additional observation of the held
+nested-let error. Captures and repeated observations are not distinct language
+requirements. Provisional replays remain separate from source-bound final evidence.
+No failure is normalized, removed, or converted into a new development exception.
+
+The [gate captures](gates-stage8-final-evidence.tar.gz) retain integrity and
+development success, with strict selected and full compatibility failure. The
+inventory has 474 requirement records and 1,907 overlapping accounting rows:
+907 executable selections, 960 unimplemented rows, and 40 unmapped rows. These
+are not distinct feature counts or a completion percentage. The full gate still
+reports 1,950 failure reasons. Complete hash/cache behavior, cyclic keys, remaining
+types and amendments, `Reference`, metadata, diagnostics, and the full language
+corpus remain open. No new speed or memory parity measurement was made.
+**M2 remains in progress.**
+
+All six jobs of the [implementation CI run](https://github.com/luuvish/pkl-rs/actions/runs/39435577349)
+passed for commit `5024708`. The [independent verification](ci-stage8-summary.json)
+and [CI package](ci-stage8-evidence.tar.gz) retain both original artifact ZIPs
+and verify their GitHub SHA-256 digests. Verification matched
+1,198 snapshot copies covering 1,023 distinct paths to the exact
+implementation commit. Remote results retain 905 matches, the same two known
+failures, all 32 relations, all four identifier tables, and 35 scenarios per JS
+target. Two offline checks passed; the final [sealed replay](ci-stage8-offline-evidence.tar.gz)
+verified unchanged package contents and reproduced outcomes and verifier identities.
 
 ## Stage 7 checkpoint
 

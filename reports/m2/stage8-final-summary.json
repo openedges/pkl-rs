@@ -1,0 +1,200 @@
+{
+  "scope": "M2 stage 8 ordinary typed default properties, completed-cache/class comparison order, and deep-force-before-hash preparation, including diagnostics, GC and Host lifecycle verification. Full language milestone remains incomplete.",
+  "language": {
+    "selected_count": 907,
+    "status_counts": {
+      "mismatch": 1,
+      "oracle-error": 1,
+      "pass": 905
+    },
+    "source_stability": true,
+    "artifact_stability": true,
+    "candidate": {
+      "build": {
+        "command": [
+          "cargo",
+          "build",
+          "-p",
+          "pkl-runtime",
+          "--example",
+          "language_probe",
+          "--locked",
+          "--release",
+          "--target-dir",
+          "/Users/cody.ij.hwang/Projects/pkl-rs/target"
+        ],
+        "exit_code": 0,
+        "stderr_sha256": "dc80db7ccd1a6421554f934c2d530861736b2acd4c66750f59921fbb968be6aa",
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "timed_out": false
+      },
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/release/examples/language_probe",
+      "sha256": "61d350cb244b02aa8521a24af4a447a2e41a63822423271c288eac89651414c2",
+      "source_binding": "recorded-build"
+    },
+    "inventory_counts": {
+      "cases": 1907,
+      "cases_by_execution": {
+        "ready": 907,
+        "unimplemented": 960,
+        "unmapped": 40
+      },
+      "requirements": 474,
+      "requirements_by_kind": {
+        "language_parser": 137,
+        "language_token": 109,
+        "semantic-family": 30,
+        "specification": 198
+      }
+    },
+    "metamorphic_relations": 32,
+    "metamorphic_statuses": [
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass"
+    ],
+    "full_gate_failure_reasons": 1950,
+    "known_failures": [
+      {
+        "id": "error-cycle",
+        "status": "oracle-error"
+      },
+      {
+        "id": "error-remainder-zero",
+        "status": "mismatch"
+      }
+    ],
+    "power_assertion_profiles": 44,
+    "source_snapshot_count": 983
+  },
+  "platforms": {
+    "total": 6078,
+    "oracle_passed": {
+      "rust": 6076,
+      "node": 6076,
+      "browser": 6076
+    },
+    "shared_engine_passed": 6078,
+    "compatibility_status": "fail",
+    "known_gaps": [
+      "regex-unicode-15-vs-16",
+      "regex-zero-width-supplementary"
+    ],
+    "experiment_contract_status": "pass",
+    "source_stability": true,
+    "node_scenarios": 35,
+    "browser_scenarios": 35
+  },
+  "regressions": {
+    "frontend_raw_matches": 15,
+    "runtime_value_matches": 6,
+    "runtime_diagnostic_matches": 2,
+    "runtime_diagnostic_mismatches": 1,
+    "lifecycle_protocol_matches": 2,
+    "lifecycle_full_diagnostic_mismatches": 4
+  },
+  "validation": {
+    "rust_passed": 212,
+    "rust_intentionally_ignored": 1,
+    "python_passed": 171
+  },
+  "performance": "No new speed or memory parity measurement; original full performance gates remain open.",
+  "gates": {
+    "scope": "Integrity/development checks and strict selected/full compatibility gates; failures retained.",
+    "rows": [
+      {
+        "command": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "tools/m2_language.py",
+          "--verify-report",
+          "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/language-stage8-final"
+        ],
+        "exit_code": 0,
+        "stdout_sha256": "53bfe1625474db723506c461dab9b79305f87b851787cfcd1a65af2fa507ea72",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "command": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "tools/m2_language.py",
+          "--verify-development",
+          "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/language-stage8-final"
+        ],
+        "exit_code": 0,
+        "stdout_sha256": "53bfe1625474db723506c461dab9b79305f87b851787cfcd1a65af2fa507ea72",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "command": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "tools/m2_language.py",
+          "--verify-subset",
+          "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/language-stage8-final"
+        ],
+        "exit_code": 1,
+        "stdout_sha256": "53bfe1625474db723506c461dab9b79305f87b851787cfcd1a65af2fa507ea72",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "command": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "tools/m2_language.py",
+          "--verify-full",
+          "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/language-stage8-final"
+        ],
+        "exit_code": 1,
+        "stdout_sha256": "53bfe1625474db723506c461dab9b79305f87b851787cfcd1a65af2fa507ea72",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    ]
+  },
+  "prior_selection_replay": {
+    "count": 874,
+    "status_counts": {
+      "mismatch": 1,
+      "oracle-error": 1,
+      "pass": 872
+    },
+    "scope": "Unchanged prior inputs against preserved stage 7 Java bytes; fresh full Java acquisition is recorded separately."
+  },
+  "new_selection_prepush": {
+    "count": 33,
+    "scope": "Fresh Java and frozen recorded candidate at actual fixture URIs before implementation push; full acquisition recorded separately.",
+    "report": "regressions-stage8-final-evidence.tar.gz/new-selection-prepush/report.json"
+  },
+  "implementation_commit": "5024708a8d6a1867376a9b722606c91939a22166",
+  "implementation_source_verification": {
+    "source_snapshots_verified": 983,
+    "matched_exact_git_commit": true,
+    "method": "SHA-256 of git show <implementation-commit>:<recorded-source-path> equals every language source_sha256 entry."
+  }
+}
