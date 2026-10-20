@@ -51,7 +51,7 @@ Pantry's 31 checked-in dependency lockfiles (including `.github` and `scripts` p
 
 [rev1-inventory.json](../compatibility/rev1-inventory.json) is a checked-in optional snapshot at revision `008930df07f457fefd5d6f4ac9308ff3063daabc`. It records historical Pkl input hashes, Rust/Python test-source hashes, and license provenance from Git objects. It includes historical source/support files as well as regression candidates. No historical expected output or passing test record is a Java 0.32.0 verification result.
 
-The sibling checkout is never accessed by normal discovery or CI. To explicitly refresh the historical census, use `python3 tools/discover.py --snapshot-rev1 /path/to/historical/repository`. Selecting or importing particular regressions, preserving their full resource closure and license, and obtaining fresh Java 0.32.0 results remain separate work. Historical entries stay `not-selected`/blocked until then. Their snapshot inventory is not a production or build dependency.
+The sibling checkout is never accessed by normal discovery or CI. To explicitly refresh the historical census, use `python3 tools/discover.py --snapshot-rev1 /path/to/historical/repository`. The historical snapshot remains an inventory, not a production or build dependency. A separate [selected regression manifest](regressions.md) imports three nominal-class/diagnostic entrypoints with their resource closures and licenses, and records fresh Java 0.32.0 outcomes. The remaining historical candidates are unselected; the snapshot itself does not claim execution results.
 
 ## Tool verification
 

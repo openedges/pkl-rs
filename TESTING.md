@@ -41,7 +41,12 @@ python3 tools/discover.py --check
 python3 -m unittest discover -s tools/tests -p 'test_discover.py'
 ```
 
-Ready commands have not necessarily run. Blocked suites and cases with an outcome requiring observation remain visible; file counts are not assertion counts. Historical rev1 inputs are inventoried separately and require selection and fresh Java results before use.
+Ready commands have not necessarily run. Blocked suites and cases with an outcome requiring observation remain visible; file counts are not assertion counts. Historical rev1 inputs are inventoried separately. [Three selected regressions](docs/regressions.md) retain their original input/license bytes and have fresh Java 0.32.0 outcomes; the remaining historical candidates stay unselected.
+
+```sh
+python3 tools/regression_manifest.py --check
+python3 -m unittest discover -s tools/tests -p 'test_regressions.py'
+```
 
 The [execution tool](docs/compatibility-tooling.md) records and checks a required seven-case smoke corpus, including error bytes and multiple generated files:
 

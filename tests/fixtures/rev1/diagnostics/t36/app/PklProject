@@ -1,0 +1,2 @@
+amends "pkl:Project"
+dependencies { ["dep"] { uri = "package://example.test/dep@1.0.0" } }

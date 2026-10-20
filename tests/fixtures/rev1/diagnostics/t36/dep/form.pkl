@@ -1,0 +1,11 @@
+open module form
+open class Label { hidden name: String }
+open class Selection extends Label {
+ hidden items: Listing<Label>(toList().map((s) -> s.name).distinct.length == toList().length)
+ value: Label(items.toList().map((s) -> s.name).contains(name))
+ hidden default: Label(items.toList().map((s) -> s.name).contains(name))
+}
+class Group { hidden name: String; items: Listing<Selection> }
+root: Group
+output { value = new Dynamic { result = root.items[0].value.name } }
+typealias Unused = String

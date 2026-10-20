@@ -1,0 +1,13 @@
+amends "@dep/form.pkl"
+import "@dep/form.pkl" as Form
+import "foreign.pkl" as Foreign
+local function choose(choices: Listing<Label>, def: String): Selection = new Selection {
+  name = "choice"
+  items = choices
+  value = new Label { name = def }
+  default = new Label { name = def }
+}
+root = new Group {
+ name = "root"
+ items = new Listing { choose(new Listing { new Foreign.Label { name = "x" } }, "x") }
+}

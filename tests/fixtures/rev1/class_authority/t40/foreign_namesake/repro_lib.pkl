@@ -1,0 +1,5 @@
+module repro_lib
+class Item { value: Int = 1 }
+class Group { items: Listing<Item> }
+typealias Mode = String
+const function values(g: Group, mode: Mode): List<Int> = g.items.toList().map((i) -> i.value)

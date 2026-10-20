@@ -1,0 +1,3 @@
+import "repro_lib.pkl" as Lib
+local root: Lib.Group = new { items = new Listing { new Lib.Item {} } }
+result = Lib.values(root, "x")

@@ -1,0 +1,4 @@
+import "foreign.pkl" as Foreign
+import "repro_lib.pkl" as Lib
+local root: Lib.Group = new { items = new Listing { new Foreign.Item {} } }
+result = Lib.values(root, "x")
