@@ -25,6 +25,15 @@ python3 -m unittest discover -s tools/tests -p 'test_oracle.py'
 
 Oracle smoke checks capture Java success and error bytes and verify exact Java replay. They do not execute a Rust evaluator. The separately pinned optimizing GraalVM profile is used for performance baselines.
 
+The [source inventory](docs/inventory.md) tracks language, stdlib, builtin, renderer, CLI, protocol, and JVM source declarations. Regeneration detects missing entries and source drift:
+
+```sh
+python3 tools/inventory.py --check
+python3 -m unittest discover -s tools/tests -p 'test_inventory.py'
+```
+
+Source declaration counts and builtin registration matches are not semantic coverage or proof of compiled JVM API compatibility. Implementation and behavioral test mappings remain explicit unimplemented/unmapped records.
+
 ## Compatibility Comparisons
 
 Run the pinned Java 0.32.0 oracle and Rust with identical inputs and environments. Compare:
