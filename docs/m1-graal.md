@@ -122,3 +122,9 @@ pass that directory to `--check-report`; relocation preserves the recorded
 absolute source URIs and commands without rewriting any diagnostic bytes.
 The separate graph archive contains its own `reproduce.py`, exact command
 captures, graph parser, and source provenance.
+
+The final code passed all five jobs in
+[CI run 39378401720](https://github.com/luuvish/pkl-rs/actions/runs/39378401720).
+That run reverified this stored acquisition on Linux and retained the result;
+the [downloaded CI evidence](../reports/m1/ci-graal-evidence.tar.gz) was checked
+against its GitHub digest and committed source identities.

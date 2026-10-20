@@ -24,6 +24,14 @@ compile the original fixtures; those overrides are diagnostic only. This closes
 the investigation requirement without replacing the original failing baseline
 or claiming a new performance result.
 
+The final code `4cd9c08` passed all five jobs in
+[run 39378401720](https://github.com/luuvish/pkl-rs/actions/runs/39378401720),
+including portable verification of the nine recorded Graal cases. The downloaded
+artifact digest, committed source snapshots, raw comparisons, and existing known
+gaps were independently rechecked. See the [final CI summary](ci-graal-summary.json)
+and [retained evidence](ci-graal-evidence.tar.gz). M1 is complete within its bounded
+architecture and investigation scope.
+
 The initial implementation is committed as
 `ce99720` and experiment/CI integration as `e9ee8d5`. All five jobs in
 [the initial code CI run](https://github.com/luuvish/pkl-rs/actions/runs/39372369602)

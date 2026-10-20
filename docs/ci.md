@@ -104,3 +104,14 @@ reverified. The [closing summary](../reports/m1/ci-closing-summary.json) and
 [archive](../reports/m1/ci-closing-evidence.tar.gz) retain the original artifact,
 logs and verification procedure. Unpacked Cargo intermediates are excluded from
 the archive; the original artifact ZIP and all evidence inputs remain retained.
+
+The Graal investigation and CI shell correction are committed as `bb80685` and
+`4cd9c08`. All five jobs in
+[run 39378401720](https://github.com/luuvish/pkl-rs/actions/runs/39378401720)
+passed. Linux verified the retained macOS acquisition's nine diagnostic cases,
+then reran the bounded frontend, runtime, Host, lifecycle, Node and Chromium
+experiments. The artifact digest, exact committed sources, and raw outcomes
+were independently verified after download. The [final CI summary](../reports/m1/ci-graal-summary.json)
+and [archive](../reports/m1/ci-graal-evidence.tar.gz) retain the original ZIP,
+workflow logs, and verification procedure. The Graal step verifies stored
+compilation evidence; it does not acquire a new Linux performance baseline.
