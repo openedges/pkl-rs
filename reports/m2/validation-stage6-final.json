@@ -1,0 +1,111 @@
+{
+  "scope": "M2 stage 6 development checks; full compatibility remains separate.",
+  "checks": [
+    {
+      "command": [
+        "cargo",
+        "xtask",
+        "verify"
+      ],
+      "exit_code": 0,
+      "stdout_sha256": "900802c9cf4f23bd9dbc0e79f58d3e21493ec0c990782bc5b690a7432148e9eb",
+      "stderr_sha256": "f4b8a117389ad0c5b41fd17312b54082dcc7f5b63c304b32df000da0f8be1876"
+    },
+    {
+      "command": [
+        "cargo",
+        "fmt",
+        "--all",
+        "--",
+        "--check"
+      ],
+      "exit_code": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "cargo",
+        "clippy",
+        "--workspace",
+        "--all-targets",
+        "--locked",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "exit_code": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "0cb3193cc53f85a240211a342252963f36199b39cec60098b4e9cc10d5a5e736"
+    },
+    {
+      "command": [
+        "cargo",
+        "test",
+        "--workspace",
+        "--locked"
+      ],
+      "exit_code": 0,
+      "stdout_sha256": "88e0306f4a2fd74dd82a4120476d61434e1e41a56a22334f54150556b49a7d10",
+      "stderr_sha256": "d0b33399e92812f7b4f3c17bedfc3811422f2d1a4b48782b292f48ed4ae380b9"
+    },
+    {
+      "command": [
+        "cargo",
+        "check",
+        "-p",
+        "pkl-runtime",
+        "--target",
+        "wasm32-unknown-unknown",
+        "--locked"
+      ],
+      "exit_code": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "040ecadf9aaf15d9b861b8af3e71790c40d2b97dc3456c8ff2e7ee7fe195bf4f"
+    },
+    {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools/tests",
+        "-v"
+      ],
+      "exit_code": 0,
+      "stdout_sha256": "bab3cbd59915962392c3a7696bfa740d18308db170ca4a4f19493a58d05e3f5f",
+      "stderr_sha256": "3e869a6929698a8b8dd5fef1ea5f57b12d1872fcd999037922f79a3f3c34ca9b"
+    },
+    {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/m2_manifest.py",
+        "--check"
+      ],
+      "exit_code": 0,
+      "stdout_sha256": "ab95ba6339edb87f70561739520734e162f2d14348fbcead169f5b7635facb43",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "rust_passed": 191,
+  "rust_intentionally_ignored": 1,
+  "python_passed": 171,
+  "evidence_sha256": {
+    "0.stderr.bin": "f4b8a117389ad0c5b41fd17312b54082dcc7f5b63c304b32df000da0f8be1876",
+    "0.stdout.bin": "900802c9cf4f23bd9dbc0e79f58d3e21493ec0c990782bc5b690a7432148e9eb",
+    "1.stderr.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "1.stdout.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "2.stderr.bin": "0cb3193cc53f85a240211a342252963f36199b39cec60098b4e9cc10d5a5e736",
+    "2.stdout.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "3.stderr.bin": "d0b33399e92812f7b4f3c17bedfc3811422f2d1a4b48782b292f48ed4ae380b9",
+    "3.stdout.bin": "88e0306f4a2fd74dd82a4120476d61434e1e41a56a22334f54150556b49a7d10",
+    "4.stderr.bin": "040ecadf9aaf15d9b861b8af3e71790c40d2b97dc3456c8ff2e7ee7fe195bf4f",
+    "4.stdout.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "5.stderr.bin": "3e869a6929698a8b8dd5fef1ea5f57b12d1872fcd999037922f79a3f3c34ca9b",
+    "5.stdout.bin": "bab3cbd59915962392c3a7696bfa740d18308db170ca4a4f19493a58d05e3f5f",
+    "6.stderr.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "6.stdout.bin": "ab95ba6339edb87f70561739520734e162f2d14348fbcead169f5b7635facb43",
+    "report.json": "4bf82f94ece019674228be0e6342bcebc9ca4cd7080c87c077fb4609c62cdcc6"
+  }
+}

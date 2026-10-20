@@ -5,8 +5,89 @@ closures, primitive type checks, and source diagnostics. Stage 2 adds selected
 class, inheritance, generic alias, default-value, and modifier semantics to the
 shared engine. Stage 3 adds pipelines, resumable constraints, and optional power
 assertions. Stage 4 adds ordered collections and resumable generators. Stage 5
-adds generic collection checks and lazy wrappers. These checkpoints do not
-complete the language milestone.
+adds generic collection checks and lazy wrappers. Stage 6 adds member predicates
+and their scope, cache, and lifecycle behavior. These checkpoints do not complete
+the language milestone.
+
+## Stage 6 checkpoint
+
+The [stage 6 summary](stage6-final-summary.json) records **673 selected
+comparisons: 671 raw-byte matches, one remainder-zero mismatch, and one cycle
+oracle failure**. All 23 metamorphic relations pass. The 113 additions preserve
+the original 560 definitions and input bytes; 39 cases use explicit power
+assertions. The [language archive](language-stage6-final-evidence.tar.gz) retains
+the recorded release build, 744 source snapshots, exact fixture URIs,
+oracle identity, outcome sidecars, and complete output channels. Source and
+artifact identities remained stable throughout acquisition.
+
+Member predicates now select parent elements and entries for lazy replacement
+or amendment. Traversal visits child declarations first and evaluates each value
+immediately before its condition, using the declaration owner's cache. Properties,
+locals, and newly declared target members are excluded. Nested predicates restore
+custom `this`; generator locals and lexical captures remain available to lazy
+bodies. Const checks distinguish immediate predicate lookup from closure lookup.
+Selected elements retain their element kind and index, while diagnostics retain
+the authored predicate label and condition span. Reached typed predicates and
+primitive/List amendments preserve the selected rejection order.
+
+The [validation record](validation-stage6-final.json) and
+[raw checks](validation-stage6-final-evidence.tar.gz) retain reference pin
+verification, formatting, workspace Clippy, **191 Rust tests, 171 Python tests**,
+Wasm compilation, and inventory freshness. One existing differential probe
+remains intentionally ignored by ordinary unit tests. Nineteen new Rust tests
+cover frontend scopes, forcing order, nested captures, temporary parents, Host
+suspension and reentry, GC, failure retry, cancellation, close, and timeouts.
+The [identifier archive](identifier-stage6-evidence.tar.gz) verifies all four
+unchanged tables against pinned Java.
+
+The [platform archive](platforms-stage6-final-evidence.tar.gz) records **29
+scenarios in each of actual Node and Chromium**. New scenarios cover predicate
+values, nested custom receivers, declaration-owner caches, and complete errors
+and power assertions. All 6,078 primitive results agree across Rust targets;
+each target matches Java on 6,076, retaining two regex failures. The
+[M1 regressions](regressions-stage6-final-evidence.tar.gz) retain 15 frontend
+matches, six runtime value matches, two complete runtime diagnostic matches,
+one cycle diagnostic mismatch, two matching lifecycle protocols, and four
+failed full lifecycle diagnostics. The same archive preserves the pre-push
+replay of unchanged inputs against prior Java captures; the full language
+archive separately contains the fresh Java acquisition. No new speed or memory
+parity measurement was made.
+
+The [exploration archive](exploration-stage6-evidence.tar.gz) preserves 2,802
+files: 127 language observations, six platform Java observations, preliminary
+candidate replays, and fresh actual-URI Java captures for all 113 additions.
+Provisional replays remain explicitly unbound to a recorded build. Eight held
+cases and six superseded exploratory inputs remain visible. These include
+unimplemented compound-value stringification and modifier/diagnostic paths,
+a pinned Java null-pointer failure, and the original erroneous amendment probes
+that produced upstream stack-overflow initialization failures. Corrected inputs
+were acquired separately; their earlier bytes were not replaced.
+
+Structural object keys and equality, function/class-valued amendments, full
+custom defaults, remaining typed generator rules, structural/function types,
+`Reference`, metadata, format-time wrapper checks, and the full language corpus
+remain open. No new development exceptions were added. The M2 CI job allowance
+increased from 20 to 30 minutes for the larger serial Java corpus; per-case
+execution limits and compatibility verdicts are unchanged.
+
+The [gate captures](gates-stage6-final-evidence.tar.gz) retain integrity and
+development success with strict selected and full compatibility failure. The
+inventory has 474 requirement records and 1,673 overlapping accounting rows:
+673 executable selections, 960 unimplemented rows, and 40 unmapped rows. These
+are not distinct feature counts or a completion percentage. The full gate still
+reports 1,950 failure reasons. **M2 remains in progress.**
+
+All six jobs of the [implementation CI run](https://github.com/luuvish/pkl-rs/actions/runs/39417418349)
+passed for commit `ca751a1`. The
+[independent verification](ci-stage6-summary.json) and
+[CI package](ci-stage6-evidence.tar.gz) retain both original artifact ZIPs and
+verify their GitHub SHA-256 digests. Verification matched 945 snapshot
+copies covering 784 distinct files to the exact implementation
+commit. Remote language results retain 671 matches and the same two known
+failures, all 23 relations, all four identifier tables, and 29 scenarios per
+JS target. An [offline replay](ci-stage6-offline-evidence.tar.gz) verifies the
+sealed package without changing its contents; M1's existing failures remain
+visible.
 
 ## Stage 5 checkpoint
 

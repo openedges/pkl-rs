@@ -1,0 +1,379 @@
+{
+  "all_six_jobs_succeeded": true,
+  "artifact_payloads": {
+    "m1": {
+      "files": 611,
+      "uncompressed_bytes": 61350276,
+      "zip_bytes": 17474221,
+      "zip_sha256": "7ea4ebff225258ada28e608b0df7c8d875a3265f24adcf56486f1e7c12da8a61"
+    },
+    "m2": {
+      "files": 6156,
+      "uncompressed_bytes": 25305554,
+      "zip_bytes": 4529730,
+      "zip_sha256": "82fc6f22f37b32bfba1b4f8d79e0e937d378c29eb1047ccacea7f5060534bec8"
+    }
+  },
+  "artifacts": {
+    "m1": {
+      "github_digest_verified": true,
+      "id": 12262595482,
+      "name": "m1-experiment-evidence",
+      "sha256": "7ea4ebff225258ada28e608b0df7c8d875a3265f24adcf56486f1e7c12da8a61"
+    },
+    "m2": {
+      "github_digest_verified": true,
+      "id": 12262662314,
+      "name": "m2-language-evidence",
+      "sha256": "82fc6f22f37b32bfba1b4f8d79e0e937d378c29eb1047ccacea7f5060534bec8"
+    }
+  },
+  "captured_processes": {
+    "acquire": {
+      "command": [
+        "python3",
+        "target/m2/ci-stage6/verify.py",
+        "acquire",
+        "--commit",
+        "ca751a1295640008154800a6c14eb760d976eb42",
+        "--run",
+        "39417418349",
+        "--repo",
+        "luuvish/pkl-rs",
+        "--output",
+        "target/m2/ci-stage6-acquired",
+        "--wait"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs",
+      "elapsed_ns": 889914604208,
+      "exit_code": 0,
+      "python": "/opt/homebrew/opt/python@3.14/bin/python3.14",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_bytes": 6564,
+      "stdout_sha256": "a654774d751b371f95df277353c418bde4c464a6824fe3cf771cc8fdd5575232",
+      "timed_out": false
+    },
+    "offline-initial": {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/ci-stage6-final-evidence/package/verification/unpack_and_verify.py",
+        "--repository-root",
+        "/Users/cody.ij.hwang/Projects/pkl-rs",
+        "--output",
+        "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/ci-stage6-offline-initial"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs",
+      "elapsed_ns": 14187359875,
+      "exit_code": 0,
+      "python": "/opt/homebrew/opt/python@3.14/bin/python3.14",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_bytes": 4725,
+      "stdout_sha256": "8bb24cb724eab7f87d738c28375ace0feac38672fc1c917cca8adfbf0332f7dd",
+      "timed_out": false
+    },
+    "offline-sealed": {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/ci-stage6-final-evidence/package/verification/unpack_and_verify.py",
+        "--repository-root",
+        "/Users/cody.ij.hwang/Projects/pkl-rs",
+        "--output",
+        "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/ci-stage6-offline-sealed"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs",
+      "elapsed_ns": 14297766292,
+      "exit_code": 0,
+      "python": "/opt/homebrew/opt/python@3.14/bin/python3.14",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_bytes": 4718,
+      "stdout_sha256": "df84527dedec7e1a42556a9606fb6f957efa7c08695aa70383364f90b1c984b3",
+      "timed_out": false
+    },
+    "package": {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/ci-stage6/package.py",
+        "--acquired",
+        "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/ci-stage6-acquired",
+        "--output",
+        "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/ci-stage6-final-evidence/package"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs",
+      "elapsed_ns": 280984334,
+      "exit_code": 0,
+      "python": "/opt/homebrew/opt/python@3.14/bin/python3.14",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_bytes": 576,
+      "stdout_sha256": "6a2fec2dfbe4e312f8eb3fd63fdc0e72d771b9a9bedbfdb669ba547ecdd0b627",
+      "timed_out": false
+    },
+    "terminal-status": {
+      "command": [
+        "python3",
+        "target/m2/ci-stage6/monitor_status.py",
+        "--commit",
+        "ca751a1295640008154800a6c14eb760d976eb42",
+        "--run",
+        "39417418349",
+        "--repo",
+        "luuvish/pkl-rs",
+        "--output",
+        "target/m2/ci-stage6-terminal-status"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs",
+      "elapsed_ns": 859602516583,
+      "exit_code": 0,
+      "python": "/opt/homebrew/opt/python@3.14/bin/python3.14",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_bytes": 3765,
+      "stdout_sha256": "35d7487e626d4028c9eef7917f8cd7279b03dcf75e13e35ab3db776d997ee228",
+      "timed_out": false
+    }
+  },
+  "ci_m2_comparison_step": {
+    "completed_at": "2026-10-20T12:01:56Z",
+    "elapsed_seconds": 849,
+    "started_at": "2026-10-20T11:47:47Z"
+  },
+  "commit": "ca751a1295640008154800a6c14eb760d976eb42",
+  "evidence_archives": {
+    "main": {
+      "bytes": 20046660,
+      "files_including_inventory": 303,
+      "inventory_verified": true,
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/ci-stage6-evidence.tar.gz",
+      "sha256": "b07e70458f3326d16ac1249c596c8986f9936301112e662babf03dd4c21b29ae"
+    },
+    "offline": {
+      "bytes": 3601,
+      "files_including_inventory": 6,
+      "inventory_verified": true,
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/ci-stage6-offline-evidence.tar.gz",
+      "sha256": "633e6a756aa99dac0562e41ea0eba5c28603c62f6026996caf98b72ab7f9f340"
+    }
+  },
+  "exact_source_snapshot_copies": 945,
+  "frozen_verifiers": {
+    "m1_frontend": {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/ci-stage6-acquired/verification/verified-sources/tools/m1_frontend.py",
+      "sha256": "cbdb4d68329cc09cc9f31a80056f32cfbd68b868d45ff67a8d1c5a1ed333b358"
+    },
+    "m1_host": {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/ci-stage6-acquired/verification/verified-sources/tools/m1_host.py",
+      "sha256": "bfb6fa918936e609760ac83bc762e6c304cb07edd000b124898020ab5354bbdf"
+    },
+    "m1_lifecycle": {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/ci-stage6-acquired/verification/verified-sources/tools/m1_lifecycle.py",
+      "sha256": "d1ffa5f16c92a9c2aa783eab4b1adf4b02f4e10e0c738eead5ca79629d28a21b"
+    },
+    "m1_platforms": {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/ci-stage6-acquired/verification/verified-sources/tools/m1_platforms.py",
+      "sha256": "8a24b1a02077e1c7e64dae18376a1668492c8bace944bc732f15cd68ca6e29c7"
+    },
+    "m1_runtime": {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/ci-stage6-acquired/verification/verified-sources/tools/m1_runtime.py",
+      "sha256": "bfe731bea8736fa5fadc37748dc53a8985475dc1435e052380b98f26d4e2a991"
+    },
+    "m2_identifier_tables": {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/ci-stage6-acquired/verification/verified-sources/tools/m2_identifier_tables.py",
+      "sha256": "7aedef36d2fca482f2d7ec3675155bddfa549bdbc8cce4f8eda21796c200c536"
+    },
+    "m2_language": {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/ci-stage6-acquired/verification/verified-sources/tools/m2_language.py",
+      "sha256": "5aee31e10bbbcaa142190fd844f787da57de1d70a35861ebbd4d5b7653981198"
+    }
+  },
+  "jobs": [
+    {
+      "conclusion": "success",
+      "name": "M2 language development (full gate incomplete)"
+    },
+    {
+      "conclusion": "success",
+      "name": "Workspace (windows-latest)"
+    },
+    {
+      "conclusion": "success",
+      "name": "M1 architecture experiments (known gaps recorded)"
+    },
+    {
+      "conclusion": "success",
+      "name": "Workspace (ubuntu-latest)"
+    },
+    {
+      "conclusion": "success",
+      "name": "Compatibility tooling and Java replay"
+    },
+    {
+      "conclusion": "success",
+      "name": "Workspace (macos-latest)"
+    }
+  ],
+  "m1": {
+    "committed_snapshot_copies_checked": 195,
+    "frontend": {
+      "exact_comparisons": 15,
+      "source_stability": true
+    },
+    "java_host": {
+      "observation_suites": 5,
+      "rust_byte_comparisons": 0,
+      "source_stability": true
+    },
+    "lifecycle": {
+      "exact_protocol_comparisons": 2,
+      "full_diagnostic_byte_mismatches": 4,
+      "java_negative_observation": {
+        "cause": "java.util.ConcurrentModificationException",
+        "compatibility_pass": false,
+        "error_class": "org.pkl.core.PklBugException",
+        "rust_comparison": false,
+        "status": "observed-upstream-failure"
+      },
+      "source_stability_after_execution": true,
+      "source_stability_before_execution": true
+    },
+    "platform": {
+      "all_shared_engine_matches": 6078,
+      "compatibility_status": "fail",
+      "experiment_contract_status": "pass",
+      "java_matches_each_target": 6076,
+      "known_gaps": [
+        "regex-unicode-15-vs-16",
+        "regex-zero-width-supplementary"
+      ],
+      "scenarios_each_target": 29,
+      "total": 6078
+    },
+    "retained_graal_evidence": {
+      "performance_evidence": false,
+      "verified_diagnostic_cases": 9
+    },
+    "runtime": {
+      "exact_value_cases": [
+        "amendment",
+        "captured-receiver",
+        "lexical-let",
+        "object-cycle",
+        "lazy-unused",
+        "mixed-numeric"
+      ],
+      "exact_whole_diagnostic_cases": [
+        "first-error",
+        "overflow-first"
+      ],
+      "known_diagnostic_byte_mismatches": [
+        "forcing-cycle"
+      ]
+    },
+    "unique_committed_source_files": 98
+  },
+  "m2": {
+    "artifact_stability": true,
+    "development_contract": true,
+    "full_gate_failures": 1950,
+    "full_m2_complete": false,
+    "identifier_evidence_files": 10,
+    "identifier_intervals": {
+      "part": 441,
+      "regular_part": 784,
+      "regular_start": 662,
+      "start": 381
+    },
+    "known_failures": [
+      {
+        "id": "error-cycle",
+        "status": "oracle-error"
+      },
+      {
+        "id": "error-remainder-zero",
+        "status": "mismatch"
+      }
+    ],
+    "language_evidence_files": 6144,
+    "metamorphic_relations": 23,
+    "original_ci_root": "/home/runner/work/pkl-rs/pkl-rs",
+    "power_profiles": 39,
+    "raw_comparisons": {
+      "mismatch": 1,
+      "oracle-error": 1,
+      "pass": 671
+    },
+    "selected_count": 673,
+    "source_snapshot_count": 744,
+    "source_stability": true,
+    "strict_subset_complete": false
+  },
+  "package": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/ci-stage6-final-evidence/package",
+  "portable_recheck": {
+    "capture_rounds": "Initial replay capture was integrated, then the final sealed package was replayed without further package mutation.",
+    "commit": "ca751a1295640008154800a6c14eb760d976eb42",
+    "compared_result_fields": [
+      "artifacts",
+      "commit",
+      "exact_source_snapshot_copies",
+      "jobs",
+      "m1",
+      "m2",
+      "repository",
+      "run_id",
+      "schema_version",
+      "scope",
+      "unique_source_files",
+      "verifiers"
+    ],
+    "complete_result_fields_equal": true,
+    "frozen_verifier_hashes_equal": true,
+    "offline_exit_code": 0,
+    "original_package": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/ci-stage6-final-evidence/package",
+    "package_files": 296,
+    "package_manifest_sha256": "38ffdb68fdfeb35ca022a01cbb1a393e2079444232f47e8a0a06556948f686e9",
+    "package_unchanged": true,
+    "packaged_initial_offline_capture": "verification/captured-processes/offline-initial",
+    "packaged_initial_offline_result": "verification/portable-recheck.json",
+    "run_id": 39417418349,
+    "source_snapshot_copies": 945,
+    "status": "pass",
+    "unique_source_files": 784,
+    "unpacked_replay": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/ci-stage6-offline-sealed",
+    "verification_sha256": "bcdfe83a9190ccfb019ccb2aa5152673c329cc1d5df676afac05aa78c246f239"
+  },
+  "portable_recheck_process": {
+    "command": [
+      "/opt/homebrew/opt/python@3.14/bin/python3.14",
+      "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/ci-stage6-final-evidence/package/verification/unpack_and_verify.py",
+      "--repository-root",
+      "/Users/cody.ij.hwang/Projects/pkl-rs",
+      "--output",
+      "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/ci-stage6-offline-sealed"
+    ],
+    "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs",
+    "elapsed_ns": 14297766292,
+    "exit_code": 0,
+    "python": "/opt/homebrew/opt/python@3.14/bin/python3.14",
+    "stderr_bytes": 0,
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_bytes": 4718,
+    "stdout_sha256": "df84527dedec7e1a42556a9606fb6f957efa7c08695aa70383364f90b1c984b3",
+    "timed_out": false
+  },
+  "repository": "luuvish/pkl-rs",
+  "run_id": 39417418349,
+  "schema_version": 1,
+  "scope": "Independent exact-commit CI raw evidence verification; remaining language/API/performance scope and recorded mismatches remain incomplete.",
+  "supplemental_report_identity": {
+    "path": "target/m2/ci-stage6-acquired/m2/artifact/ci-language/report.json",
+    "scope": "Additional summary fields read from the independently verified original CI language report; the frozen verification result is preserved separately unchanged.",
+    "sha256": "6dd3c2d5cd30003595e3100cc8b2851ff6ce4c121ab31c95c9ac0330a274b7c0"
+  },
+  "unique_source_files": 784,
+  "verifiers": {
+    "m1_checks.py": "5832dfca5393431d4472675642c6991b9aa6d306c50221d1f9b7c3e7e17a02b7",
+    "verify.py": "3d591a5ef7429c72fb50531cc3ea69977568905678d4798456011f303fd04b1b"
+  }
+}
