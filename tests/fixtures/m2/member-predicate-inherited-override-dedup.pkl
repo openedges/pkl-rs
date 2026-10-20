@@ -1,0 +1,4 @@
+p = new Mapping { ["a"] = missing; ["b"] = 2 }
+x = (p) { ["a"] = 1 }
+q = (x) { [[this == 1]] = 9 }
+result = q["a"] * 10 + q["b"]

@@ -1,0 +1,2 @@
+q = new Mapping { [[missing]] = missing }
+result = q.length

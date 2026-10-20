@@ -1,0 +1,6 @@
+base = new Dynamic { marker = 1; ["k"] = marker }
+a = (base) { marker = 2 }
+b = (base) { marker = 3 }
+sa = (a) { [[true]] = 0 }
+sb = (b) { [[this == 2]] = 42 }
+result = let (ignored = sa["k"]) sb["k"]

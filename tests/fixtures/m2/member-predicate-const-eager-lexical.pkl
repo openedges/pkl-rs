@@ -1,0 +1,4 @@
+x = 1
+const p = new Listing { 1 }
+const q = (p) { [[x == 1]] = 2 }
+result = q[0]

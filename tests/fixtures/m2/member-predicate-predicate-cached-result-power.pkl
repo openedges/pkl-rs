@@ -1,0 +1,3 @@
+base = new Listing { 1; 2 }
+values = (base) { [[this > 1]] = 42 }
+result: Int(values[1] == 3) = 0

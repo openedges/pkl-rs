@@ -1,0 +1,3 @@
+p: Listing<Int> = new Listing { 1 }
+q = (p) { [[true]] = "ok" }
+result = q[0]

@@ -6831,6 +6831,1533 @@
         "semantic:diagnostics"
       ],
       "expected_outcome": "failure"
+    },
+    {
+      "id": "member-predicate-listing-select",
+      "input": "tests/fixtures/m2/member-predicate-listing-select.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:generated-verification"
+      ],
+      "expected_outcome": "success",
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "member-predicate-listing-select",
+          "member-predicate-listing-select-direct"
+        ],
+        "domain": "Selected Int entry replacement equals explicit index replacement for two fixed bounded Int values."
+      }
+    },
+    {
+      "id": "member-predicate-listing-all",
+      "input": "tests/fixtures/m2/member-predicate-listing-all.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "member-predicate-listing-none",
+      "input": "tests/fixtures/m2/member-predicate-listing-none.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:generated-verification"
+      ],
+      "expected_outcome": "success",
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "member-predicate-listing-none",
+          "member-predicate-listing-none-direct"
+        ],
+        "domain": "False predicate leaves the same two fixed Int entries as an empty amendment."
+      }
+    },
+    {
+      "id": "member-predicate-listing-amendment",
+      "input": "tests/fixtures/m2/member-predicate-listing-amendment.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:amendment"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "member-predicate-listing-same-block-excluded",
+      "input": "tests/fixtures/m2/member-predicate-listing-same-block-excluded.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:name-resolution",
+        "semantic:amendment"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "member-predicate-listing-later-inherited",
+      "input": "tests/fixtures/m2/member-predicate-listing-later-inherited.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:name-resolution",
+        "semantic:amendment"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "member-predicate-listing-lambda-this",
+      "input": "tests/fixtures/m2/member-predicate-listing-lambda-this.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:name-resolution"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "member-predicate-listing-let-this",
+      "input": "tests/fixtures/m2/member-predicate-listing-let-this.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:name-resolution"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "member-predicate-listing-lexical",
+      "input": "tests/fixtures/m2/member-predicate-listing-lexical.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:name-resolution"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "member-predicate-listing-for",
+      "input": "tests/fixtures/m2/member-predicate-listing-for.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:name-resolution",
+        "semantic:generated-verification"
+      ],
+      "expected_outcome": "success",
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "member-predicate-listing-for",
+          "member-predicate-listing-for-direct"
+        ],
+        "domain": "Captured for-generator predicates equal two explicit index replacements for fixed Int values 1 and 2."
+      }
+    },
+    {
+      "id": "member-predicate-listing-when",
+      "input": "tests/fixtures/m2/member-predicate-listing-when.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:name-resolution"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "member-predicate-listing-duplicate-predicates",
+      "input": "tests/fixtures/m2/member-predicate-listing-duplicate-predicates.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "member-predicate-listing-duplicate-direct-first",
+      "input": "tests/fixtures/m2/member-predicate-listing-duplicate-direct-first.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "member-predicate-listing-duplicate-direct-last",
+      "input": "tests/fixtures/m2/member-predicate-listing-duplicate-direct-last.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "member-predicate-listing-non-bool",
+      "input": "tests/fixtures/m2/member-predicate-listing-non-bool.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "member-predicate-mapping-select",
+      "input": "tests/fixtures/m2/member-predicate-mapping-select.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "member-predicate-mapping-all",
+      "input": "tests/fixtures/m2/member-predicate-mapping-all.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "member-predicate-mapping-none",
+      "input": "tests/fixtures/m2/member-predicate-mapping-none.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "member-predicate-mapping-amendment",
+      "input": "tests/fixtures/m2/member-predicate-mapping-amendment.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:amendment"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "member-predicate-mapping-same-block-excluded",
+      "input": "tests/fixtures/m2/member-predicate-mapping-same-block-excluded.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:name-resolution",
+        "semantic:amendment"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "member-predicate-mapping-later-inherited",
+      "input": "tests/fixtures/m2/member-predicate-mapping-later-inherited.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:name-resolution",
+        "semantic:amendment"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "member-predicate-mapping-lambda-this",
+      "input": "tests/fixtures/m2/member-predicate-mapping-lambda-this.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:name-resolution"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "member-predicate-mapping-let-this",
+      "input": "tests/fixtures/m2/member-predicate-mapping-let-this.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:name-resolution"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "member-predicate-mapping-lexical",
+      "input": "tests/fixtures/m2/member-predicate-mapping-lexical.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:name-resolution"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "member-predicate-mapping-for",
+      "input": "tests/fixtures/m2/member-predicate-mapping-for.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:name-resolution"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "member-predicate-mapping-when",
+      "input": "tests/fixtures/m2/member-predicate-mapping-when.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:name-resolution"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "member-predicate-mapping-duplicate-predicates",
+      "input": "tests/fixtures/m2/member-predicate-mapping-duplicate-predicates.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "member-predicate-mapping-duplicate-direct-first",
+      "input": "tests/fixtures/m2/member-predicate-mapping-duplicate-direct-first.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "member-predicate-mapping-duplicate-direct-last",
+      "input": "tests/fixtures/m2/member-predicate-mapping-duplicate-direct-last.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "member-predicate-mapping-non-bool",
+      "input": "tests/fixtures/m2/member-predicate-mapping-non-bool.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "member-predicate-dynamic-elements-select",
+      "input": "tests/fixtures/m2/member-predicate-dynamic-elements-select.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "member-predicate-dynamic-elements-all",
+      "input": "tests/fixtures/m2/member-predicate-dynamic-elements-all.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "member-predicate-dynamic-elements-none",
+      "input": "tests/fixtures/m2/member-predicate-dynamic-elements-none.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "member-predicate-dynamic-elements-amendment",
+      "input": "tests/fixtures/m2/member-predicate-dynamic-elements-amendment.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:amendment"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "member-predicate-dynamic-elements-same-block-excluded",
+      "input": "tests/fixtures/m2/member-predicate-dynamic-elements-same-block-excluded.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:name-resolution",
+        "semantic:amendment"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "member-predicate-dynamic-elements-later-inherited",
+      "input": "tests/fixtures/m2/member-predicate-dynamic-elements-later-inherited.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:name-resolution",
+        "semantic:amendment"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "member-predicate-dynamic-elements-lambda-this",
+      "input": "tests/fixtures/m2/member-predicate-dynamic-elements-lambda-this.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:name-resolution"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "member-predicate-dynamic-elements-let-this",
+      "input": "tests/fixtures/m2/member-predicate-dynamic-elements-let-this.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:name-resolution"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "member-predicate-dynamic-elements-lexical",
+      "input": "tests/fixtures/m2/member-predicate-dynamic-elements-lexical.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:name-resolution"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "member-predicate-dynamic-elements-for",
+      "input": "tests/fixtures/m2/member-predicate-dynamic-elements-for.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:name-resolution"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "member-predicate-dynamic-elements-when",
+      "input": "tests/fixtures/m2/member-predicate-dynamic-elements-when.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:name-resolution"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "member-predicate-dynamic-elements-duplicate-predicates",
+      "input": "tests/fixtures/m2/member-predicate-dynamic-elements-duplicate-predicates.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "member-predicate-dynamic-elements-duplicate-direct-first",
+      "input": "tests/fixtures/m2/member-predicate-dynamic-elements-duplicate-direct-first.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "member-predicate-dynamic-elements-duplicate-direct-last",
+      "input": "tests/fixtures/m2/member-predicate-dynamic-elements-duplicate-direct-last.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "member-predicate-dynamic-elements-non-bool",
+      "input": "tests/fixtures/m2/member-predicate-dynamic-elements-non-bool.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "member-predicate-dynamic-entries-select",
+      "input": "tests/fixtures/m2/member-predicate-dynamic-entries-select.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "member-predicate-dynamic-entries-all",
+      "input": "tests/fixtures/m2/member-predicate-dynamic-entries-all.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "member-predicate-dynamic-entries-none",
+      "input": "tests/fixtures/m2/member-predicate-dynamic-entries-none.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "member-predicate-dynamic-entries-amendment",
+      "input": "tests/fixtures/m2/member-predicate-dynamic-entries-amendment.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:amendment"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "member-predicate-dynamic-entries-same-block-excluded",
+      "input": "tests/fixtures/m2/member-predicate-dynamic-entries-same-block-excluded.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:name-resolution",
+        "semantic:amendment"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "member-predicate-dynamic-entries-later-inherited",
+      "input": "tests/fixtures/m2/member-predicate-dynamic-entries-later-inherited.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:name-resolution",
+        "semantic:amendment"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "member-predicate-dynamic-entries-lambda-this",
+      "input": "tests/fixtures/m2/member-predicate-dynamic-entries-lambda-this.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:name-resolution"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "member-predicate-dynamic-entries-let-this",
+      "input": "tests/fixtures/m2/member-predicate-dynamic-entries-let-this.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:name-resolution"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "member-predicate-dynamic-entries-lexical",
+      "input": "tests/fixtures/m2/member-predicate-dynamic-entries-lexical.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:name-resolution"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "member-predicate-dynamic-entries-for",
+      "input": "tests/fixtures/m2/member-predicate-dynamic-entries-for.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:name-resolution"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "member-predicate-dynamic-entries-when",
+      "input": "tests/fixtures/m2/member-predicate-dynamic-entries-when.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:name-resolution"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "member-predicate-dynamic-entries-duplicate-predicates",
+      "input": "tests/fixtures/m2/member-predicate-dynamic-entries-duplicate-predicates.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "member-predicate-dynamic-entries-duplicate-direct-first",
+      "input": "tests/fixtures/m2/member-predicate-dynamic-entries-duplicate-direct-first.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "member-predicate-dynamic-entries-duplicate-direct-last",
+      "input": "tests/fixtures/m2/member-predicate-dynamic-entries-duplicate-direct-last.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "member-predicate-dynamic-entries-non-bool",
+      "input": "tests/fixtures/m2/member-predicate-dynamic-entries-non-bool.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "member-predicate-listing-forces-parent-on-false",
+      "input": "tests/fixtures/m2/member-predicate-listing-forces-parent-on-false.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "member-predicate-mapping-forces-parent-on-false",
+      "input": "tests/fixtures/m2/member-predicate-mapping-forces-parent-on-false.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "member-predicate-predicate-before-later-parent-error",
+      "input": "tests/fixtures/m2/member-predicate-predicate-before-later-parent-error.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "member-predicate-parent-before-predicate-error",
+      "input": "tests/fixtures/m2/member-predicate-parent-before-predicate-error.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "member-predicate-own-before-inherited-error",
+      "input": "tests/fixtures/m2/member-predicate-own-before-inherited-error.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "member-predicate-inherited-override-dedup",
+      "input": "tests/fixtures/m2/member-predicate-inherited-override-dedup.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:name-resolution",
+        "semantic:amendment"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "member-predicate-dynamic-properties-omitted",
+      "input": "tests/fixtures/m2/member-predicate-dynamic-properties-omitted.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:modifiers"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "member-predicate-dynamic-property-name-key-dedup",
+      "input": "tests/fixtures/m2/member-predicate-dynamic-property-name-key-dedup.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:modifiers"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "member-predicate-mapping-default-omitted",
+      "input": "tests/fixtures/m2/member-predicate-mapping-default-omitted.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:modifiers"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "member-predicate-listing-local-omitted",
+      "input": "tests/fixtures/m2/member-predicate-listing-local-omitted.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:modifiers"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "member-predicate-empty-listing",
+      "input": "tests/fixtures/m2/member-predicate-empty-listing.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "member-predicate-empty-mapping",
+      "input": "tests/fixtures/m2/member-predicate-empty-mapping.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "member-predicate-empty-dynamic",
+      "input": "tests/fixtures/m2/member-predicate-empty-dynamic.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "member-predicate-unsupported-typed-object",
+      "input": "tests/fixtures/m2/member-predicate-unsupported-typed-object.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "member-predicate-unsupported-list",
+      "input": "tests/fixtures/m2/member-predicate-unsupported-list.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "member-predicate-unsupported-int",
+      "input": "tests/fixtures/m2/member-predicate-unsupported-int.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "member-predicate-lexical-shadows-custom-property",
+      "input": "tests/fixtures/m2/member-predicate-lexical-shadows-custom-property.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:name-resolution"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "member-predicate-nested-generators-capture",
+      "input": "tests/fixtures/m2/member-predicate-nested-generators-capture.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:name-resolution"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "member-predicate-typed-listing-value",
+      "input": "tests/fixtures/m2/member-predicate-typed-listing-value.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:types",
+        "semantic:generics"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "member-predicate-typed-mapping-key",
+      "input": "tests/fixtures/m2/member-predicate-typed-mapping-key.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "member-predicate-typed-listing-override",
+      "input": "tests/fixtures/m2/member-predicate-typed-listing-override.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:types",
+        "semantic:generics"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "member-predicate-lexical-outer-module",
+      "input": "tests/fixtures/m2/member-predicate-lexical-outer-module.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:name-resolution"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "member-predicate-mapping-object-this-fallback",
+      "input": "tests/fixtures/m2/member-predicate-mapping-object-this-fallback.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:name-resolution"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "member-predicate-listing-select-direct",
+      "input": "tests/fixtures/m2/member-predicate-listing-select-direct.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:generated-verification"
+      ],
+      "expected_outcome": "success",
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "member-predicate-listing-select",
+          "member-predicate-listing-select-direct"
+        ],
+        "domain": "Selected Int entry replacement equals explicit index replacement for two fixed bounded Int values."
+      }
+    },
+    {
+      "id": "member-predicate-listing-none-direct",
+      "input": "tests/fixtures/m2/member-predicate-listing-none-direct.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:generated-verification"
+      ],
+      "expected_outcome": "success",
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "member-predicate-listing-none",
+          "member-predicate-listing-none-direct"
+        ],
+        "domain": "False predicate leaves the same two fixed Int entries as an empty amendment."
+      }
+    },
+    {
+      "id": "member-predicate-listing-for-direct",
+      "input": "tests/fixtures/m2/member-predicate-listing-for-direct.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:generated-verification"
+      ],
+      "expected_outcome": "success",
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "member-predicate-listing-for",
+          "member-predicate-listing-for-direct"
+        ],
+        "domain": "Captured for-generator predicates equal two explicit index replacements for fixed Int values 1 and 2."
+      }
+    },
+    {
+      "id": "member-predicate-typed-parent-precedes-condition",
+      "input": "tests/fixtures/m2/member-predicate-typed-parent-precedes-condition.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "member-predicate-inferred-parent-rejected",
+      "input": "tests/fixtures/m2/member-predicate-inferred-parent-rejected.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "member-predicate-inferred-parent-let-rejected",
+      "input": "tests/fixtures/m2/member-predicate-inferred-parent-let-rejected.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "member-predicate-const-eager-lexical",
+      "input": "tests/fixtures/m2/member-predicate-const-eager-lexical.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:name-resolution",
+        "semantic:modifiers"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "member-predicate-const-eager-lambda-lexical",
+      "input": "tests/fixtures/m2/member-predicate-const-eager-lambda-lexical.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:name-resolution",
+        "semantic:modifiers",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "member-predicate-condition-outer-skips-holder",
+      "input": "tests/fixtures/m2/member-predicate-condition-outer-skips-holder.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:name-resolution"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "member-predicate-condition-lambda-outer-holder",
+      "input": "tests/fixtures/m2/member-predicate-condition-lambda-outer-holder.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:name-resolution"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "member-predicate-nested-custom-restoration",
+      "input": "tests/fixtures/m2/member-predicate-nested-custom-restoration.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "member-predicate-predicate-owner-cache",
+      "input": "tests/fixtures/m2/member-predicate-predicate-owner-cache.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:name-resolution"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "member-predicate-predicate-owner-cache-before",
+      "input": "tests/fixtures/m2/member-predicate-predicate-owner-cache-before.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:name-resolution"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "member-predicate-predicate-owner-cache-two-children",
+      "input": "tests/fixtures/m2/member-predicate-predicate-owner-cache-two-children.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:name-resolution"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "member-predicate-predicate-unselected-body-lazy",
+      "input": "tests/fixtures/m2/member-predicate-predicate-unselected-body-lazy.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "member-predicate-predicate-selected-body-lazy",
+      "input": "tests/fixtures/m2/member-predicate-predicate-selected-body-lazy.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "member-predicate-predicate-selected-body-error",
+      "input": "tests/fixtures/m2/member-predicate-predicate-selected-body-error.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "member-predicate-predicate-nested-this-restore",
+      "input": "tests/fixtures/m2/member-predicate-predicate-nested-this-restore.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:name-resolution"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "member-predicate-predicate-nested-this-restore-let",
+      "input": "tests/fixtures/m2/member-predicate-predicate-nested-this-restore-let.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:name-resolution"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "member-predicate-predicate-wrapper-raw-selection",
+      "input": "tests/fixtures/m2/member-predicate-predicate-wrapper-raw-selection.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "member-predicate-predicate-parent-before-body",
+      "input": "tests/fixtures/m2/member-predicate-predicate-parent-before-body.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "member-predicate-predicate-error-before-tail",
+      "input": "tests/fixtures/m2/member-predicate-predicate-error-before-tail.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "member-predicate-predicate-cached-result-plain",
+      "input": "tests/fixtures/m2/member-predicate-predicate-cached-result-plain.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:name-resolution",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "member-predicate-predicate-type-test-plain",
+      "input": "tests/fixtures/m2/member-predicate-predicate-type-test-plain.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "member-predicate-predicate-cached-result-power",
+      "input": "tests/fixtures/m2/member-predicate-predicate-cached-result-power.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:name-resolution",
+        "semantic:constraints",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure",
+      "power_assertions": true
+    },
+    {
+      "id": "member-predicate-predicate-type-test-power",
+      "input": "tests/fixtures/m2/member-predicate-predicate-type-test-power.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:constraints",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure",
+      "power_assertions": true
+    },
+    {
+      "id": "member-predicate-predicate-owner-cache-condition",
+      "input": "tests/fixtures/m2/member-predicate-predicate-owner-cache-condition.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:name-resolution"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "member-predicate-predicate-owner-cache-two-conditions",
+      "input": "tests/fixtures/m2/member-predicate-predicate-owner-cache-two-conditions.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:name-resolution"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "member-predicate-predicate-owner-cache-no-parent-force",
+      "input": "tests/fixtures/m2/member-predicate-predicate-owner-cache-no-parent-force.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:name-resolution"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "member-predicate-predicate-replacement-lexical-environment",
+      "input": "tests/fixtures/m2/member-predicate-predicate-replacement-lexical-environment.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:name-resolution"
+      ],
+      "expected_outcome": "success"
     }
   ]
 }

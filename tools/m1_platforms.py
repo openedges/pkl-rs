@@ -37,6 +37,9 @@ REQUIRED_SCENARIOS = {
     'm2-lazy-generic-collection-values',
     'm2-strict-list-nested-wrappers',
     'm2-generic-collection-diagnostics',
+    'm2-member-predicate-values',
+    'm2-member-predicate-owner-cache',
+    'm2-member-predicate-diagnostics',
 }
 
 

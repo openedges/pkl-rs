@@ -1,0 +1,4 @@
+raw = new Listing { "bad" }
+typed: Listing<Int> = raw
+values = (typed) { [[this is String]] = 42 }
+result = values[0]

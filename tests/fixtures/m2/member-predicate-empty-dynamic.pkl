@@ -1,0 +1,2 @@
+q = new Dynamic { [[missing]] = missing; x = 42 }
+result = q.x

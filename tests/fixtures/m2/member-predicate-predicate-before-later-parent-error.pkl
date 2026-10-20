@@ -1,0 +1,3 @@
+p = new Listing { 1; missing }
+q = (p) { [[1 ~/ 0 == this]] = 9 }
+result = q.length

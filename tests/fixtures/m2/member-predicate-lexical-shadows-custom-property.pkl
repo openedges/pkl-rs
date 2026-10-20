@@ -1,0 +1,4 @@
+x = 2
+p = new Listing { new { x = 1 } }
+q = (p) { [[x == 2]] = 9 }
+result = q[0]

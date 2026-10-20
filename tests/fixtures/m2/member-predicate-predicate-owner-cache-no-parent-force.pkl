@@ -1,0 +1,4 @@
+base = new Dynamic { marker = 1; ["k"] = marker }
+child = (base) { marker = 2 }
+scanned = (child) { [[this == 2]] = 42 }
+result = scanned["k"]

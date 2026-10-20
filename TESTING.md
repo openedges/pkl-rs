@@ -102,8 +102,15 @@ lazy `Listing<T>` values, eager `Mapping<K,V>` keys, strict `List<T>` members,
 nested wrappers, casts, unions, aliases, defaults, cache reuse, and first errors.
 Lifecycle checks retain temporary and successful wrapped values across GC,
 Host suspension, reentry, failure retry, and terminal cleanup. Complete custom
-defaults, format-time wrapper checks, member predicates, and the full collection
-corpus remain unverified.
+defaults, format-time wrapper checks, and the full collection corpus remain
+unverified.
+
+Member predicate regressions compare parent-only selection, interleaved forcing
+and condition evaluation, declaration-owner caches, replacement versus amendment,
+lexical and custom `this` scopes, nested generators, duplicates, const checks,
+and complete diagnostics. Dedicated lifecycle tests retain the parent cursor,
+prior custom receiver, and unpublished target across Host suspension, nested
+evaluation, GC, retry, cancellation, close, and timeouts.
 
 M1 experiments have narrower, explicit contracts:
 

@@ -191,8 +191,8 @@ evaluator lifecycle.
 Diagnostic rendering walks ordered metadata and completed caches without
 forcing values. Subscript observations use the authored bracket position in
 power assertions. These mechanisms serve native, Node, and Wasm through the
-shared runtime; they do not complete predicates, structural
-equality, or all typed-object generator rules.
+shared runtime; they do not complete structural equality or all typed-object
+generator rules.
 
 ### Generic collection checks
 
@@ -218,10 +218,38 @@ Selected inferred constructors and class-valued collection defaults use the
 same metadata and prototype paths as explicitly constructed objects.
 
 This remains a bounded implementation. Full custom default functions, structural
-types and keys, member predicates, and the remaining constructor rules are open.
+types and keys, and the remaining constructor rules are open.
 The pinned Java diagnostic formatter can steal parent caches and execute a
 wrapper cast while displaying values; that can itself fail or invoke a
 constraint. The Rust formatter currently reads completed caches only. Supporting
 those format-time checks requires resumable diagnostic preparation, including
 Host and GC handling. Exploratory failures remain recorded separately from the
 selected passing wrapper diagnostics.
+
+### Member predicates
+
+Member predicates traverse the parent's declarations child first, suppressing
+already visited keys and excluding properties and local members. Each candidate
+value is evaluated immediately before its condition. This differs from the
+shallow forcing pass used by `for` and spread. Newly declared members in the
+target body do not become candidates.
+
+A dedicated resumable cursor retains the parent receiver, declaration owners,
+member keys, and previous custom `this`. The predicate binds custom `this` to the
+candidate value while preserving surrounding lexical lookup. Selection restores
+the previous context before capturing a lazy replacement body. Nested predicates,
+closures, and generator locals use the same frame environments and heap tracing
+as other expressions.
+
+Candidate evaluation reads and publishes the declaration owner's cache while
+executing the body against the parent receiver. It follows the pinned raw
+declaration call path rather than the ordinary collection-wrapper cast path.
+Selected members preserve the original element or entry kind, inherited index,
+and duplicate checks; their bodies remain lazy. Diagnostics retain the authored
+predicate label and condition span.
+
+Typed constructors with generated bodies validate their class before executing
+the body. A reached predicate rejects an ineligible typed parent, while an
+inactive branch leaves it untouched. Null amendments create an empty Dynamic
+parent. These paths are covered by selected probes; complete constructor,
+modifier, and standard-library behavior remains open.

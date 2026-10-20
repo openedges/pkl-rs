@@ -1,0 +1,4 @@
+threshold = 2
+p = new Dynamic { ["a"] = 1; ["b"] = 2 }
+q = (p) { [[this == threshold]] = threshold + 7 }
+result = q["a"] * 10 + q["b"]

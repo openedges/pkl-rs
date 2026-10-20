@@ -180,6 +180,9 @@ struct Resolver<'a> {
     object_levels: Vec<ConstLevel>,
     object_receiver_lambdas: Vec<bool>,
     receiver_is_lambda: bool,
+    lambda_depth: usize,
+    predicate_const_scopes: Vec<usize>,
+    entry_counts: BTreeMap<String, usize>,
     member_path: Vec<String>,
     diagnostic_path: Vec<String>,
 }
@@ -393,12 +396,22 @@ impl<'a> Resolver<'a> {
                 .last()
                 .expect("object receiver"),
         );
+        // Eager lookup skips the target object, but Java's getConstDepth
+        // still counts that object's const scope. A lambda adds a lexical
+        // lookup level without adding a const barrier of its own.
+        let const_barrier = custom && level == ConstLevel::All;
+        if const_barrier {
+            self.predicate_const_scopes.push(self.lambda_depth);
+        }
         if custom {
             self.scopes.push(Scope::CustomThis);
         }
         let result = self.expression(expression, false);
         if custom {
             self.scopes.pop();
+        }
+        if const_barrier {
+            self.predicate_const_scopes.pop();
         }
         self.receiver_is_lambda = lambda;
         self.object_levels.push(level);
@@ -430,9 +443,13 @@ impl<'a> Resolver<'a> {
                     }
                     self.member(member, true)?;
                 }
-                ObjectMember::Element { value, .. } => self.expression(value, true)?,
+                ObjectMember::Element { value, .. } => {
+                    self.entry_label(None);
+                    self.expression(value, true)?;
+                }
                 ObjectMember::Entry { key, value, .. } => {
                     self.eager_expression(key, false)?;
+                    self.entry_label(Some(key));
                     self.expression(value, true)?;
                 }
                 ObjectMember::Spread { value, .. } => self.eager_expression(value, false)?,
@@ -440,7 +457,14 @@ impl<'a> Resolver<'a> {
                     condition, value, ..
                 } => {
                     self.eager_expression(condition, true)?;
+                    let label = self.entry_label(Some(condition));
+                    let previous = self.diagnostic_path.pop().unwrap_or_default();
+                    self.diagnostic_path.push(format!("{previous}[{label}]"));
                     self.expression(value, false)?;
+                    self.diagnostic_path.pop();
+                    if !previous.is_empty() {
+                        self.diagnostic_path.push(previous);
+                    }
                 }
                 ObjectMember::When {
                     condition,
@@ -484,6 +508,24 @@ impl<'a> Resolver<'a> {
             }
         }
         Ok(())
+    }
+
+    fn entry_label(&mut self, key: Option<&Expr>) -> String {
+        let literal = key.and_then(|key| match &key.kind {
+            ExprKind::String(value) => Some(format!("\"{value}\"")),
+            ExprKind::Int(value) => Some(value.to_string()),
+            ExprKind::Float(value) => Some(crate::numeric::double_to_string(*value)),
+            ExprKind::Bool(value) => Some(value.to_string()),
+            _ => None,
+        });
+        literal.unwrap_or_else(|| {
+            let count = self
+                .entry_counts
+                .entry(self.diagnostic_path.join("."))
+                .or_default();
+            *count += 1;
+            format!("#{count}")
+        })
     }
 
     fn reject_nonstdlib_type_parameters(
@@ -684,13 +726,19 @@ impl<'a> Resolver<'a> {
             ConstLevel::None => false,
             ConstLevel::Module => depth + 1 == self.object_levels.len(),
             ConstLevel::All => {
+                let object_depth = self
+                    .object_levels
+                    .iter()
+                    .rev()
+                    .take_while(|level| **level == ConstLevel::All)
+                    .count();
+                let lambda_depth = self
+                    .predicate_const_scopes
+                    .first()
+                    .map_or(0, |depth| self.lambda_depth - depth);
                 depth
-                    >= self
-                        .object_levels
-                        .iter()
-                        .rev()
-                        .take_while(|level| **level == ConstLevel::All)
-                        .count()
+                    >= (object_depth + self.predicate_const_scopes.len())
+                        .saturating_sub(lambda_depth)
             }
         }
     }
@@ -824,6 +872,7 @@ impl<'a> Resolver<'a> {
                     self.custom_functions.insert(expression.span);
                 }
                 self.scopes.push(Scope::Parameters(parameters));
+                self.lambda_depth += usize::from(!method);
                 let previous_lambda = std::mem::replace(&mut self.receiver_is_lambda, !method);
                 for parameter in parameters {
                     if let Some(ty) = &parameter.ty {
@@ -835,6 +884,7 @@ impl<'a> Resolver<'a> {
                 }
                 self.expression(body, false)?;
                 self.receiver_is_lambda = previous_lambda;
+                self.lambda_depth -= usize::from(!method);
                 self.scopes.pop();
             }
             ExprKind::Call { callee, arguments } => {
@@ -1077,6 +1127,9 @@ pub fn resolve_module(module: &Module) -> Result<ResolvedModule, Diagnostic> {
         object_levels: Vec::new(),
         object_receiver_lambdas: Vec::new(),
         receiver_is_lambda: false,
+        lambda_depth: 0,
+        predicate_const_scopes: Vec::new(),
+        entry_counts: BTreeMap::new(),
         member_path: Vec::new(),
         diagnostic_path: Vec::new(),
     };

@@ -1,0 +1,3 @@
+p = new Mapping { ["a"] = missing }
+q = (p) { [[false]] = 9 }
+result = q.length

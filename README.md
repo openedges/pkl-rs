@@ -7,12 +7,12 @@ The project has completed its **M0 compatibility tooling and initial Java baseli
 **M2 language implementation is in progress.** The shared engine is being extended
 with operators, control flow, strings, typed methods, recursive calls, closures,
 classes, inheritance, generic type aliases, resumable type constraints, pipelines,
-ordered collection members, `for`/`when` generators, spread, generic collection
-checks and lazy wrappers, and structured source
+ordered collection members, `for`/`when` generators, spread, member predicates,
+generic collection checks and lazy wrappers, and structured source
 diagnostics with optional power assertions.
 The [M2 verification contract](docs/m2-language.md)
 keeps the complete language inventory separate from selected executable probes.
-Complete modifier and type semantics, remaining collection rules and member predicates,
+Complete modifier and type semantics, remaining collection rules,
 `Reference`, and the remaining language corpus are required before M2 can close.
 
 ## Goals

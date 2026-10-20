@@ -1,0 +1,4 @@
+class C { x = 1 }
+p = new C {}
+q = (p) { [[throw("condition")]] = throw("replacement") }
+result = q.x

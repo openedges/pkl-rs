@@ -1,0 +1,4 @@
+base = new Dynamic { marker = 1; ["k"] = marker }
+child = (base) { marker = 2 }
+scanned = (child) { [[false]] = 0 }
+result = let (ignored = scanned["k"]) base["k"]

@@ -1,0 +1,3 @@
+p = new Dynamic { ["a"] = 1; ["b"] = 2 }
+q = (p) { ["b"] = 9; [[this == 2]] = 8 }
+result = q["a"] * 10 + q["b"]

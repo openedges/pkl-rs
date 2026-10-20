@@ -1,0 +1,4 @@
+marker = 42
+base = new Listing { new { marker = 1 } }
+values = (base) { [[this.marker == 1]] = marker }
+result = values[0]

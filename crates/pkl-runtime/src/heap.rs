@@ -102,6 +102,15 @@ pub struct CollectionIterator {
 }
 
 #[derive(Clone, Debug)]
+pub struct PredicateIterator {
+    pub source: ObjectId,
+    pub members: Vec<(ObjectId, CollectionMember)>,
+    pub position: usize,
+    pub awaiting_value: bool,
+    pub previous_this: Option<Value>,
+}
+
+#[derive(Clone, Debug)]
 pub struct CollectionCast {
     pub ty: crate::vm::TypeCheck,
     pub span: crate::source::Span,
@@ -125,6 +134,7 @@ pub struct Object {
     pub member_environments: BTreeMap<CacheKey, Environment>,
     pub member_values: BTreeMap<CacheKey, Value>,
     pub iterator: Option<CollectionIterator>,
+    pub predicate_iterator: Option<PredicateIterator>,
     pub collection_cast: Option<CollectionCast>,
     /// Inherited default value for inferred element/entry objects. `Some(None)`
     /// means the annotated value type has no default; `None` uses Dynamic's default.
@@ -231,6 +241,14 @@ impl Heap {
             if let Some(iterator) = &object.iterator {
                 pending.push(iterator.source);
                 for member in iterator.members.iter().chain(&iterator.force_members) {
+                    pending.extend(member.key.heap_id());
+                }
+            }
+            if let Some(iterator) = &object.predicate_iterator {
+                pending.push(iterator.source);
+                pending.extend(iterator.previous_this.iter().filter_map(Value::heap_id));
+                for (owner, member) in &iterator.members {
+                    pending.push(*owner);
                     pending.extend(member.key.heap_id());
                 }
             }

@@ -1,0 +1,3 @@
+p = new Listing { missing }
+q = (p) { [[false]] = 9 }
+result = q.length

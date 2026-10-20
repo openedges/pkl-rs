@@ -47,6 +47,9 @@ class PlatformEvidenceTests(unittest.TestCase):
             'm2-lazy-generic-collection-values',
             'm2-strict-list-nested-wrappers',
             'm2-generic-collection-diagnostics',
+            'm2-member-predicate-values',
+            'm2-member-predicate-owner-cache',
+            'm2-member-predicate-diagnostics',
         }
         names = sorted(m1_platforms.REQUIRED_SCENARIOS)
         valid = {'nodeChecks': names, 'browserChecks': names, 'browserErrors': [],

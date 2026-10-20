@@ -1,0 +1,3 @@
+p = new Dynamic { x = missing; local y = missing; 1 }
+q = (p) { [[true]] = 9 }
+result = q[0]

@@ -1,0 +1,3 @@
+p = new Listing { new { x = 1 } }
+q = (p) { [[true]] = let (x = 1) new {} }
+result = q[0].x

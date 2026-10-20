@@ -97,6 +97,19 @@ export async function scenarios(api) {
     throws(() => api.evaluateLanguage("values: Listing<Int> = new Listing { 1; 2 }\nresult: Int(values[0] > 3) = 42\n", 'file:///m2-platform.pkl', 'm2-platform', 'result', true),
       "–– Pkl Error ––\nType constraint `values[0] > 3` violated.\nValue: 42\n\n    values[0] > 3\n    │     │   │\n    │     1   false\n    new Listing { 1; 2 }\n\n2 | result: Int(values[0] > 3) = 42\n                ^^^^^^^^^^^^^\nat m2-platform#result (file:///m2-platform.pkl)\n\n2 | result: Int(values[0] > 3) = 42\n                                 ^^\nat m2-platform#result (file:///m2-platform.pkl)\n\n1 | result\n    ^^^^^^\nat  (repl:text)\n");
   });
+  // Predicate expectations were captured from pinned Java at this exact URI.
+  await check('m2-member-predicate-values', () => {
+    eq(api.evaluateLanguage("base = new Listing { new { value = 1 }; new { value = 2 } }\nvalues = (base) { [[value == 2]] { value = 41 } }\nresult = values[0].value + values[1].value\n", 'file:///m2-platform.pkl', 'm2-platform', 'result', false), "42");
+    eq(api.evaluateLanguage("base = new Mapping { [\"x\"] = 1; [\"y\"] = 2 }\nvalues = (base) { [[this == 2]] = 41 }\nresult = values[\"x\"] + values[\"y\"]\n", 'file:///m2-platform.pkl', 'm2-platform', 'result', false), "42");
+    eq(api.evaluateLanguage("base = new Listing { 1; 2 }\nvalues = (base) { [[let (nested = (new Listing { 9 }) { [[this == 9]] = 0 }) nested[0] == 0 && this == 2]] = 42 }\nresult = values[0] + values[1]\n", 'file:///m2-platform.pkl', 'm2-platform', 'result', false), "43");
+  });
+  await check('m2-member-predicate-owner-cache', () => {
+    eq(api.evaluateLanguage("base = new Dynamic { marker = 1; [\"k\"] = marker }\nchild = (base) { marker = 2 }\nscanned = (child) { [[false]] = 0 }\nresult = let (ignored = scanned[\"k\"]) base[\"k\"]\n", 'file:///m2-platform.pkl', 'm2-platform', 'result', false), "2");
+  });
+  await check('m2-member-predicate-diagnostics', () => {
+    throws(() => api.evaluateLanguage("base = new Listing { 1; 2 }\nvalues = (base) { [[\"bad\"]] = 42 }\nresult = values.length\n", 'file:///m2-platform.pkl', 'm2-platform', 'result', false), "–– Pkl Error ––\nExpected value of type `Boolean`, but got type `String`.\nValue: \"bad\"\n\n2 | values = (base) { [[\"bad\"]] = 42 }\n                        ^^^^^\nat m2-platform#values (file:///m2-platform.pkl)\n\n3 | result = values.length\n             ^^^^^^\nat m2-platform#result (file:///m2-platform.pkl)\n\n1 | result\n    ^^^^^^\nat  (repl:text)\n");
+    throws(() => api.evaluateLanguage("base = new Listing { 1; 2 }\nvalues = (base) { [[this > 1]] = 42 }\nresult: Int(values[1] == 3) = 0\n", 'file:///m2-platform.pkl', 'm2-platform', 'result', true), "–– Pkl Error ––\nType constraint `values[1] == 3` violated.\nValue: 0\n\n    values[1] == 3\n    │     │   │\n    │     42  false\n    new Listing { ?; 42 }\n\n3 | result: Int(values[1] == 3) = 0\n                ^^^^^^^^^^^^^^\nat m2-platform#result (file:///m2-platform.pkl)\n\n3 | result: Int(values[1] == 3) = 0\n                                  ^\nat m2-platform#result (file:///m2-platform.pkl)\n\n1 | result\n    ^^^^^^\nat  (repl:text)\n");
+  });
   await check('utf8-utf16-string-boundary', () => {
     for (const value of ['', '한글🙂e\u0301\0\r\n', '𐐀漢字']) eq(api.roundtripString(value), value);
     for (const value of ['\ud800', '\udfff', 'a\ud800b']) throws(() => api.roundtripString(value), 'unpaired UTF-16 surrogate is unsupported');

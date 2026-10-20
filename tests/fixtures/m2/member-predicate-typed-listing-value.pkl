@@ -1,0 +1,3 @@
+p: Listing<Int> = new Listing { 1; "bad" }
+q = (p) { [[false]] = 9 }
+result = q.length

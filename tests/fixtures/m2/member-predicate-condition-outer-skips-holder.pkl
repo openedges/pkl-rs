@@ -1,0 +1,3 @@
+threshold = 2
+holder = new { threshold = 1; p = new Listing { 1; 2 }; q = (p) { [[this == outer.threshold]] = 9 } }
+result = holder.q[0] * 10 + holder.q[1]

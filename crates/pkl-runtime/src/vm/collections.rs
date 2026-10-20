@@ -1,6 +1,8 @@
 //! Ordered lazy collections and bytecode construction/iteration continuations.
 use super::*;
-use crate::heap::{CollectionIterator, CollectionKind, CollectionMember, CollectionMemberKind};
+use crate::heap::{
+    CollectionIterator, CollectionKind, CollectionMember, CollectionMemberKind, PredicateIterator,
+};
 
 pub(super) fn typed_class(heap: &Heap, mut id: ObjectId) -> Result<Option<Class>, RuntimeError> {
     let mut visited = BTreeSet::new();
@@ -106,6 +108,45 @@ fn forcing_members(heap: &Heap, receiver: ObjectId) -> Result<Vec<CollectionMemb
         next = object.parent;
     }
     Ok(result)
+}
+
+/// Predicates visit declarations child first and test each value immediately.
+/// Their cache belongs to the declaration owner, even when the member executes
+/// against a more derived source receiver.
+fn predicate_members(
+    heap: &Heap,
+    source: ObjectId,
+) -> Result<Vec<(ObjectId, CollectionMember)>, RuntimeError> {
+    let mut result = Vec::new();
+    let mut seen = Vec::new();
+    let mut next = Some(source);
+    let mut visited = BTreeSet::new();
+    while let Some(owner) = next {
+        if !visited.insert(owner) {
+            return Err(RuntimeError::new(ErrorKind::Cycle, "cyclic parent chain"));
+        }
+        let object = heap.get(owner)?;
+        for descriptor in &object.collection_members {
+            if seen.iter().any(|old| same_member(old, descriptor)) {
+                continue;
+            }
+            seen.push(descriptor.clone());
+            if descriptor.kind != CollectionMemberKind::Property {
+                result.push((owner, descriptor.clone()));
+            }
+        }
+        next = object.parent;
+    }
+    Ok(result)
+}
+
+fn external_amendment_error(name: &str) -> RuntimeError {
+    let mut error = RuntimeError::new(
+        ErrorKind::Type,
+        format!("Cannot instantiate, or amend an instance of, external class `{name}`."),
+    );
+    error.hint = Some("To create an instance of an external class, use its literal syntax or constructor method.\nExamples:\n* `123` uses literal syntax to create an instance of class `Int`.\n* `Pair(1, 2)` uses the `Pair()` constructor method to create an instance of class `Pair`.".into());
+    error
 }
 
 impl Vm {
@@ -396,12 +437,24 @@ impl Vm {
                 specialized,
             } => {
                 let parent = if has_parent {
-                    Some(self.pop()?.as_object()?)
+                    match self.pop()? {
+                        Value::Null => None,
+                        value @ (Value::Bool(_)
+                        | Value::Int(_)
+                        | Value::Float(_)
+                        | Value::String(_)) => {
+                            return Err(external_amendment_error(value_type_name(&value)));
+                        }
+                        value => Some(value.as_object()?),
+                    }
                 } else {
                     None
                 };
                 let (kind, length) = if let Some(id) = parent {
                     let object = self.heap.get(id)?;
+                    if object.collection_kind == CollectionKind::List {
+                        return Err(external_amendment_error("List"));
+                    }
                     (object.collection_kind, object.length)
                 } else {
                     (kind, 0)
@@ -856,6 +909,212 @@ impl Vm {
                 let key = (source_member.kind != CollectionMemberKind::Element).then_some(key);
                 self.add_collection_member(member, key, source_member.kind, Some(value))?;
             }
+            Instruction::OpenPredicate => {
+                let target = self.builder()?;
+                let object = self.heap.get(target)?;
+                let class = typed_class(&self.heap, target)?;
+                if object.is_module
+                    || class.is_some()
+                    || object.collection_kind == CollectionKind::List
+                {
+                    let label = class.map_or_else(
+                        || {
+                            if object.is_module {
+                                self.program.module_name.to_string()
+                            } else {
+                                format!("{:?}", object.collection_kind)
+                            }
+                        },
+                        |class| format!("{}#{}", self.program.module_name, class.name),
+                    );
+                    return Err(RuntimeError::new(
+                        ErrorKind::Type,
+                        format!("Object of type `{label}` cannot have a predicate member."),
+                    ));
+                }
+                let source = object.parent.unwrap_or(target);
+                let members = if object.parent.is_some() {
+                    predicate_members(&self.heap, source)?
+                } else {
+                    Vec::new()
+                };
+                let previous_this = self
+                    .frames
+                    .last()
+                    .expect("active frame")
+                    .environment
+                    .custom_this
+                    .clone();
+                let id = self.heap.allocate(Object {
+                    predicate_iterator: Some(PredicateIterator {
+                        source,
+                        members,
+                        position: 0,
+                        awaiting_value: false,
+                        previous_this,
+                    }),
+                    ..Object::default()
+                });
+                self.stack.push(Value::Object(id));
+            }
+            Instruction::PredicateNext { end } => {
+                let id = self
+                    .stack
+                    .last()
+                    .and_then(Value::heap_id)
+                    .filter(|id| {
+                        self.heap
+                            .get(*id)
+                            .is_ok_and(|object| object.predicate_iterator.is_some())
+                    })
+                    .or_else(|| {
+                        self.stack
+                            .iter()
+                            .rev()
+                            .filter_map(Value::heap_id)
+                            .find(|id| {
+                                self.heap
+                                    .get(*id)
+                                    .is_ok_and(|object| object.predicate_iterator.is_some())
+                            })
+                    })
+                    .ok_or_else(|| invalid("missing predicate iterator"))?;
+                let state = self
+                    .heap
+                    .get(id)?
+                    .predicate_iterator
+                    .as_ref()
+                    .expect("predicate iterator");
+                let source = state.source;
+                let awaiting_value = state.awaiting_value;
+                let previous_this = state.previous_this.clone();
+                let next = state
+                    .members
+                    .get(state.position - usize::from(awaiting_value))
+                    .cloned();
+                if awaiting_value {
+                    let value = self.pop()?;
+                    let (owner, member) =
+                        next.ok_or_else(|| invalid("missing pending predicate member"))?;
+                    self.heap.get_mut(owner)?.cache.insert(
+                        CacheKey {
+                            owner: None,
+                            name: member.name.clone(),
+                            method: false,
+                            entry: true,
+                        },
+                        LazyState::Completed(value.clone()),
+                    );
+                    self.heap
+                        .get_mut(id)?
+                        .predicate_iterator
+                        .as_mut()
+                        .expect("predicate iterator")
+                        .awaiting_value = false;
+                    self.frames
+                        .last_mut()
+                        .expect("active frame")
+                        .environment
+                        .custom_this = Some(value);
+                    return Ok(());
+                }
+                let Some((owner, member)) = next else {
+                    self.frames
+                        .last_mut()
+                        .expect("active frame")
+                        .environment
+                        .custom_this = previous_this;
+                    self.pop()?;
+                    self.jump(end)?;
+                    return Ok(());
+                };
+                self.heap
+                    .get_mut(id)?
+                    .predicate_iterator
+                    .as_mut()
+                    .expect("predicate iterator")
+                    .position += 1;
+                let key = CacheKey {
+                    owner: None,
+                    name: member.name.clone(),
+                    method: false,
+                    entry: true,
+                };
+                if let Some(LazyState::Completed(value)) = self.heap.get(owner)?.cache.get(&key) {
+                    self.frames
+                        .last_mut()
+                        .expect("active frame")
+                        .environment
+                        .custom_this = Some(value.clone());
+                } else {
+                    self.heap
+                        .get_mut(id)?
+                        .predicate_iterator
+                        .as_mut()
+                        .expect("predicate iterator")
+                        .awaiting_value = true;
+                    let caller = self.frames.len() - 1;
+                    self.frames[caller].pc -= 1;
+                    self.force_key_mode(
+                        source,
+                        owner,
+                        member.name.clone(),
+                        false,
+                        false,
+                        false,
+                        true,
+                        true,
+                    )?;
+                    if self.frames.len() > caller + 1 {
+                        self.frames[caller].callsite_hidden = true;
+                    }
+                }
+            }
+            Instruction::AddPredicateMember(member) => {
+                let applicable = self.pop()?;
+                let id = self
+                    .stack
+                    .last()
+                    .ok_or_else(|| invalid("missing predicate iterator"))?
+                    .as_object()?;
+                let state = self
+                    .heap
+                    .get(id)?
+                    .predicate_iterator
+                    .as_ref()
+                    .ok_or_else(|| invalid("missing predicate iterator"))?;
+                let key = state.members[state.position - 1].1.key.clone();
+                let kind = state.members[state.position - 1].1.kind;
+                self.frames
+                    .last_mut()
+                    .expect("active frame")
+                    .environment
+                    .custom_this = state.previous_this.clone();
+                let Value::Bool(applicable) = applicable else {
+                    return Err(type_error(
+                        &TypeCheck::Boolean,
+                        &applicable,
+                        &self.program.module_name,
+                        &self.heap,
+                    )?);
+                };
+                if applicable {
+                    // Selected elements replace existing indices; they do not
+                    // append or increase the collection's length.
+                    self.add_collection_member(
+                        member,
+                        Some(key),
+                        CollectionMemberKind::Entry,
+                        None,
+                    )?;
+                    self.heap
+                        .get_mut(self.builder()?)?
+                        .collection_members
+                        .last_mut()
+                        .ok_or_else(|| invalid("missing selected predicate member"))?
+                        .kind = kind;
+                }
+            }
             Instruction::MakeList { length } => {
                 let mut values = Vec::with_capacity(length);
                 for _ in 0..length {
@@ -899,6 +1158,31 @@ impl Vm {
 }
 
 impl Compiler<'_> {
+    pub(super) fn instance_body(
+        &mut self,
+        members: &[crate::syntax::ObjectMember],
+        span: Span,
+        output: &mut Code,
+    ) -> Result<(), RuntimeError> {
+        if members
+            .iter()
+            .all(|member| matches!(member, crate::syntax::ObjectMember::Property(_)))
+        {
+            let properties = Self::body_properties_only(members)?;
+            let template = self.object(&properties)?;
+            output.push_at(Instruction::MakeInstance { template }, span);
+            self.initialize_member_types(&properties, output)?;
+        } else {
+            // Construct the typed parent first, preserving class validation.
+            // Generator clauses then execute in source order, including
+            // predicates that reject typed parents only when reached.
+            let template = self.object(&[])?;
+            output.push_at(Instruction::MakeInstance { template }, span);
+            self.collection_body(members, CollectionKind::Dynamic, true, output)?;
+        }
+        Ok(())
+    }
+
     pub(super) fn body_properties_only(
         members: &[crate::syntax::ObjectMember],
     ) -> Result<Vec<crate::syntax::Member>, RuntimeError> {
@@ -1191,8 +1475,18 @@ impl Compiler<'_> {
                     output[start] = Instruction::IteratorNext { end: output.len() };
                     output.push(Instruction::Pop);
                 }
-                ObjectMember::Predicate { span, .. } => {
-                    return Err(unsupported_type("member predicate generators").at(*span));
+                ObjectMember::Predicate {
+                    condition, value, ..
+                } => {
+                    output.push_at(Instruction::OpenPredicate, condition.span);
+                    let start = output.len();
+                    output.push_at(Instruction::PredicateNext { end: 0 }, condition.span);
+                    self.collection_eager_expression(condition, output)?;
+                    let member =
+                        self.lazy_collection_member(value, Some(condition), condition.span)?;
+                    output.push_at(Instruction::AddPredicateMember(member), condition.span);
+                    output.push(Instruction::Jump(start));
+                    output[start] = Instruction::PredicateNext { end: output.len() };
                 }
             }
         }

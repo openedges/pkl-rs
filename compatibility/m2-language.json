@@ -10758,6 +10758,2324 @@
       ]
     },
     {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "member-predicate-listing-select",
+      "input": "tests/fixtures/m2/member-predicate-listing-select.pkl",
+      "input_sha256": "c4041a7f42049de1a65098b0f251ea7d31a453807b914d34a5985f89f7326151",
+      "metamorphic_relation": {
+        "case_ids": [
+          "member-predicate-listing-select",
+          "member-predicate-listing-select-direct"
+        ],
+        "domain": "Selected Int entry replacement equals explicit index replacement for two fixed bounded Int values.",
+        "kind": "equal-stdout"
+      },
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:generated-verification"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "member-predicate-listing-all",
+      "input": "tests/fixtures/m2/member-predicate-listing-all.pkl",
+      "input_sha256": "6ba03ffcafa1059aae140757dd07ace00c9256c480293e75878d6ef304504622",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "member-predicate-listing-none",
+      "input": "tests/fixtures/m2/member-predicate-listing-none.pkl",
+      "input_sha256": "279443cc584c3c4a56590ca28eb5a6060fd9271efdf8b8ab7a342e90c98f7eee",
+      "metamorphic_relation": {
+        "case_ids": [
+          "member-predicate-listing-none",
+          "member-predicate-listing-none-direct"
+        ],
+        "domain": "False predicate leaves the same two fixed Int entries as an empty amendment.",
+        "kind": "equal-stdout"
+      },
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:generated-verification"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "member-predicate-listing-amendment",
+      "input": "tests/fixtures/m2/member-predicate-listing-amendment.pkl",
+      "input_sha256": "be2e42ba73de62008e2cf7d97d195509ed28c36b22efd9f04179913548b52b55",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:amendment"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "member-predicate-listing-same-block-excluded",
+      "input": "tests/fixtures/m2/member-predicate-listing-same-block-excluded.pkl",
+      "input_sha256": "3c98c892922a3106c79faeb2e9fda87ed96b012572d88c0c18c7c581c5999e6a",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:name-resolution",
+        "semantic:amendment"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "member-predicate-listing-later-inherited",
+      "input": "tests/fixtures/m2/member-predicate-listing-later-inherited.pkl",
+      "input_sha256": "55ab0785f77423f9f322f2413a5a6abc8acc1b2206b88063ac40c2722709ac04",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:name-resolution",
+        "semantic:amendment"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "member-predicate-listing-lambda-this",
+      "input": "tests/fixtures/m2/member-predicate-listing-lambda-this.pkl",
+      "input_sha256": "ed9ddf51690bf2b670a22b4a561250c6266f2ec58567426016476483c6c577b5",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:name-resolution"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "member-predicate-listing-let-this",
+      "input": "tests/fixtures/m2/member-predicate-listing-let-this.pkl",
+      "input_sha256": "2adc472df0e111efab4bac03832a23fe46ac86f24b939b149fdb716398521d34",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:name-resolution"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "member-predicate-listing-lexical",
+      "input": "tests/fixtures/m2/member-predicate-listing-lexical.pkl",
+      "input_sha256": "d932f735471af9f76d5ff3191feb51dfea57a888a038b90cd90a9f03b5fa12c0",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:name-resolution"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "member-predicate-listing-for",
+      "input": "tests/fixtures/m2/member-predicate-listing-for.pkl",
+      "input_sha256": "8a74d2b3786c2ed996135dd1eaefa42a44d5e353b86f7d543071429302db4a95",
+      "metamorphic_relation": {
+        "case_ids": [
+          "member-predicate-listing-for",
+          "member-predicate-listing-for-direct"
+        ],
+        "domain": "Captured for-generator predicates equal two explicit index replacements for fixed Int values 1 and 2.",
+        "kind": "equal-stdout"
+      },
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:name-resolution",
+        "semantic:generated-verification"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "member-predicate-listing-when",
+      "input": "tests/fixtures/m2/member-predicate-listing-when.pkl",
+      "input_sha256": "8e7bb26a2a9f429226d34c47642914f4dc88ccd7d8d49f12adb206eb96df6e89",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:name-resolution"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "member-predicate-listing-duplicate-predicates",
+      "input": "tests/fixtures/m2/member-predicate-listing-duplicate-predicates.pkl",
+      "input_sha256": "9a0f2b190d7c36bb7b242f9146203b15b93557cfbdd1c1d9759ea18d47facb2a",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "member-predicate-listing-duplicate-direct-first",
+      "input": "tests/fixtures/m2/member-predicate-listing-duplicate-direct-first.pkl",
+      "input_sha256": "0901015d1b14a616035b75164a52dd718a7c18995ad16cffaf45ac65873c9a44",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "member-predicate-listing-duplicate-direct-last",
+      "input": "tests/fixtures/m2/member-predicate-listing-duplicate-direct-last.pkl",
+      "input_sha256": "d9d519addf76ea120d038b57f6a60c616920dcfef1c28055ea4058530136e952",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "member-predicate-listing-non-bool",
+      "input": "tests/fixtures/m2/member-predicate-listing-non-bool.pkl",
+      "input_sha256": "4d5bbf0d1472ece2cbcc29c506010ccaf2a0e185793bcd20299d67a78d5eba5c",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "member-predicate-mapping-select",
+      "input": "tests/fixtures/m2/member-predicate-mapping-select.pkl",
+      "input_sha256": "14669a9e70a9d656f4816ec53ec67f07e202d4234279b18181c58aa2dee83678",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "member-predicate-mapping-all",
+      "input": "tests/fixtures/m2/member-predicate-mapping-all.pkl",
+      "input_sha256": "97064784b15515e23758dbcaa68ee8cbbee06f20b1ee4dc606803d4cbacc6164",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "member-predicate-mapping-none",
+      "input": "tests/fixtures/m2/member-predicate-mapping-none.pkl",
+      "input_sha256": "e1664fa23f5a0a1702d634ff0a15041642dd3ac3fd25ac413f5e0f40dcb933f4",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "member-predicate-mapping-amendment",
+      "input": "tests/fixtures/m2/member-predicate-mapping-amendment.pkl",
+      "input_sha256": "585d338ed9c3ebbe60a55bbfa4796a532bf1d6023a0e003bbf73e46456fb9b32",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:amendment"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "member-predicate-mapping-same-block-excluded",
+      "input": "tests/fixtures/m2/member-predicate-mapping-same-block-excluded.pkl",
+      "input_sha256": "836fb480f6cae2cdf4eeb3f0b5dc4c66155123626b5111c2505f3d9a4b2e4830",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:name-resolution",
+        "semantic:amendment"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "member-predicate-mapping-later-inherited",
+      "input": "tests/fixtures/m2/member-predicate-mapping-later-inherited.pkl",
+      "input_sha256": "bf93f1874de34f9de0af01c4114d0f95c45d0d956a6ff53e0af7a44ab5962a04",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:name-resolution",
+        "semantic:amendment"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "member-predicate-mapping-lambda-this",
+      "input": "tests/fixtures/m2/member-predicate-mapping-lambda-this.pkl",
+      "input_sha256": "2fd2181f936358449eb0b958f1f45c92eb6933b2cf4348a69cb5a34a0c536d40",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:name-resolution"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "member-predicate-mapping-let-this",
+      "input": "tests/fixtures/m2/member-predicate-mapping-let-this.pkl",
+      "input_sha256": "f249ca4a28aecd19f47e3e4d4877d82e66fbd3e3b73a1100ae2d2a146037d149",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:name-resolution"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "member-predicate-mapping-lexical",
+      "input": "tests/fixtures/m2/member-predicate-mapping-lexical.pkl",
+      "input_sha256": "6a511700372fe83b249e59e72ca94eef87e2df4260cbd7aaf5294ce8643107b6",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:name-resolution"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "member-predicate-mapping-for",
+      "input": "tests/fixtures/m2/member-predicate-mapping-for.pkl",
+      "input_sha256": "058711b2d00cda6f7e9d499f3cd31d48f4b85c50ea866ccd3a8c665edd98fa3d",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:name-resolution"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "member-predicate-mapping-when",
+      "input": "tests/fixtures/m2/member-predicate-mapping-when.pkl",
+      "input_sha256": "1c2d9923aafb49f0cd9624ecdb4e9d1636e54ff79d1cb3948d095a72a8093976",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:name-resolution"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "member-predicate-mapping-duplicate-predicates",
+      "input": "tests/fixtures/m2/member-predicate-mapping-duplicate-predicates.pkl",
+      "input_sha256": "204732b34a9f02c77a356c54aa6ae64be73b7f9d5dfef0a04cbb511af51cd72c",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "member-predicate-mapping-duplicate-direct-first",
+      "input": "tests/fixtures/m2/member-predicate-mapping-duplicate-direct-first.pkl",
+      "input_sha256": "6d75ae0aee237793ca1bb720c1a54bf734409aaace8e48e5cc693ea6ae68bfce",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "member-predicate-mapping-duplicate-direct-last",
+      "input": "tests/fixtures/m2/member-predicate-mapping-duplicate-direct-last.pkl",
+      "input_sha256": "aea2c6af8a5e11ab6a7b89903b8290d315eaa4215d289ee107bdc658f40b135f",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "member-predicate-mapping-non-bool",
+      "input": "tests/fixtures/m2/member-predicate-mapping-non-bool.pkl",
+      "input_sha256": "ad598efa23b2c29047f91fb38c5f2abc9a94ccd6c1afc2396962aaaaabd6b957",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "member-predicate-dynamic-elements-select",
+      "input": "tests/fixtures/m2/member-predicate-dynamic-elements-select.pkl",
+      "input_sha256": "90b82e2e4c9f4b773c4679d0d99937f3d8c4ecec5b64d89e9a94c11053270059",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "member-predicate-dynamic-elements-all",
+      "input": "tests/fixtures/m2/member-predicate-dynamic-elements-all.pkl",
+      "input_sha256": "8460ca0ad0b6529735a73285a3b6eb1ac9392fafd3eaf755315a6090b50fc77f",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "member-predicate-dynamic-elements-none",
+      "input": "tests/fixtures/m2/member-predicate-dynamic-elements-none.pkl",
+      "input_sha256": "b444b7e6fc3bd69f704b45884fdd56ae131d10527965bf205ab0bdd3b8d9a097",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "member-predicate-dynamic-elements-amendment",
+      "input": "tests/fixtures/m2/member-predicate-dynamic-elements-amendment.pkl",
+      "input_sha256": "b314c9a8b9506b6609a304a8bdead1a1adab8139a7a84843d67e7156b3920b81",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:amendment"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "member-predicate-dynamic-elements-same-block-excluded",
+      "input": "tests/fixtures/m2/member-predicate-dynamic-elements-same-block-excluded.pkl",
+      "input_sha256": "1d00bed0bcc4c50482e09192bb65ef1b10e5e0fc15d3334fea53eb69dce97150",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:name-resolution",
+        "semantic:amendment"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "member-predicate-dynamic-elements-later-inherited",
+      "input": "tests/fixtures/m2/member-predicate-dynamic-elements-later-inherited.pkl",
+      "input_sha256": "c05b96cdc66b667383913098796fd98f83472bbe8cb47227f7f65a28c9df22a7",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:name-resolution",
+        "semantic:amendment"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "member-predicate-dynamic-elements-lambda-this",
+      "input": "tests/fixtures/m2/member-predicate-dynamic-elements-lambda-this.pkl",
+      "input_sha256": "559f83a6d5d7d2b853cebdd22f516646c7a82db2fdd7e41c7203916975ac4a8e",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:name-resolution"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "member-predicate-dynamic-elements-let-this",
+      "input": "tests/fixtures/m2/member-predicate-dynamic-elements-let-this.pkl",
+      "input_sha256": "1157cb60e2bf2663a6d61ad03be6c92f8e2dbfffd02491fa513cc8f42eff5047",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:name-resolution"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "member-predicate-dynamic-elements-lexical",
+      "input": "tests/fixtures/m2/member-predicate-dynamic-elements-lexical.pkl",
+      "input_sha256": "ab1160bc910e2c85acca89654966e75a2df59efcee5cabeef5411de40aec799c",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:name-resolution"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "member-predicate-dynamic-elements-for",
+      "input": "tests/fixtures/m2/member-predicate-dynamic-elements-for.pkl",
+      "input_sha256": "f45a32e62520004ac263f37473d463d75cf6ab9b5d30c890a97986d464d40134",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:name-resolution"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "member-predicate-dynamic-elements-when",
+      "input": "tests/fixtures/m2/member-predicate-dynamic-elements-when.pkl",
+      "input_sha256": "5c47987d82962c7978ad94095bd8ef081003affc505ab60bd1d8f5e7a0070b18",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:name-resolution"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "member-predicate-dynamic-elements-duplicate-predicates",
+      "input": "tests/fixtures/m2/member-predicate-dynamic-elements-duplicate-predicates.pkl",
+      "input_sha256": "612a20ebacd8d317ed8eb1db849715ca0de9f2a4821c5220a9b461157f0155f5",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "member-predicate-dynamic-elements-duplicate-direct-first",
+      "input": "tests/fixtures/m2/member-predicate-dynamic-elements-duplicate-direct-first.pkl",
+      "input_sha256": "1f60c317c570e34f6e845b859deba032e76019bd1e7726c96dbd2c13351bdb6f",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "member-predicate-dynamic-elements-duplicate-direct-last",
+      "input": "tests/fixtures/m2/member-predicate-dynamic-elements-duplicate-direct-last.pkl",
+      "input_sha256": "9f68e2fc72735a0b055e185d141d1a821fbdde77160b344f22e7f10de02e4279",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "member-predicate-dynamic-elements-non-bool",
+      "input": "tests/fixtures/m2/member-predicate-dynamic-elements-non-bool.pkl",
+      "input_sha256": "984486640b63536ed390636f9cb831af64e23d6bd157d9459565d57e2e5590ac",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "member-predicate-dynamic-entries-select",
+      "input": "tests/fixtures/m2/member-predicate-dynamic-entries-select.pkl",
+      "input_sha256": "0428b799db86a6bacb7c9eb0642da5ebf97c89a8f461f1bed1ce1a3b56b69bc7",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "member-predicate-dynamic-entries-all",
+      "input": "tests/fixtures/m2/member-predicate-dynamic-entries-all.pkl",
+      "input_sha256": "2fd556cc014cafec8c22e39f316215fae0f5c21e8b901501649ced4ac1f22ccd",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "member-predicate-dynamic-entries-none",
+      "input": "tests/fixtures/m2/member-predicate-dynamic-entries-none.pkl",
+      "input_sha256": "ab627d291aa1f21ffe36c207411fbc003d5c4c6992f96326240534d2e134f9c0",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "member-predicate-dynamic-entries-amendment",
+      "input": "tests/fixtures/m2/member-predicate-dynamic-entries-amendment.pkl",
+      "input_sha256": "3fd657546bc4cf4769a7aa0d6cc92772348b9d9d6bd4ee8fd6bb63619526da5b",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:amendment"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "member-predicate-dynamic-entries-same-block-excluded",
+      "input": "tests/fixtures/m2/member-predicate-dynamic-entries-same-block-excluded.pkl",
+      "input_sha256": "cbf75f957bce2c8b468874c45521556d17d11b6a4c6c8cfcfa66f3b2addaa0f9",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:name-resolution",
+        "semantic:amendment"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "member-predicate-dynamic-entries-later-inherited",
+      "input": "tests/fixtures/m2/member-predicate-dynamic-entries-later-inherited.pkl",
+      "input_sha256": "5edbb49ca7d1c59f98bbdb76d4c70d07b5c43b75fe5b9e1ed120d9d23c8704a8",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:name-resolution",
+        "semantic:amendment"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "member-predicate-dynamic-entries-lambda-this",
+      "input": "tests/fixtures/m2/member-predicate-dynamic-entries-lambda-this.pkl",
+      "input_sha256": "22d0c9dfe5444265826f183241f18952ee2d57d5cb76f61618de40cf991822b7",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:name-resolution"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "member-predicate-dynamic-entries-let-this",
+      "input": "tests/fixtures/m2/member-predicate-dynamic-entries-let-this.pkl",
+      "input_sha256": "96c9a6ca4ea2ac10966079e396ecb53315bb8aa20380c37eedc524f10e3ee66a",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:name-resolution"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "member-predicate-dynamic-entries-lexical",
+      "input": "tests/fixtures/m2/member-predicate-dynamic-entries-lexical.pkl",
+      "input_sha256": "5b96f1ac12a11a38b3c49602113d496673d847e04debfc305291f04ff61fc775",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:name-resolution"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "member-predicate-dynamic-entries-for",
+      "input": "tests/fixtures/m2/member-predicate-dynamic-entries-for.pkl",
+      "input_sha256": "6928d5ac4a416d0d00ac99415dfdd02adc1e8a615a18b0a9923751a43c1ad131",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:name-resolution"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "member-predicate-dynamic-entries-when",
+      "input": "tests/fixtures/m2/member-predicate-dynamic-entries-when.pkl",
+      "input_sha256": "3f6346e84ae51f559243a33ebb7c955e5c88eb7d895ee7c5566b5577f8d35166",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:name-resolution"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "member-predicate-dynamic-entries-duplicate-predicates",
+      "input": "tests/fixtures/m2/member-predicate-dynamic-entries-duplicate-predicates.pkl",
+      "input_sha256": "ddf707fcee49579068222ab77d5a78ac6b875cdaf988adeeb16ebd8319a60303",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "member-predicate-dynamic-entries-duplicate-direct-first",
+      "input": "tests/fixtures/m2/member-predicate-dynamic-entries-duplicate-direct-first.pkl",
+      "input_sha256": "f512d5512add92f4cdd754f3c42ce2d99d43fe07ce59c95769ef4c387279f117",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "member-predicate-dynamic-entries-duplicate-direct-last",
+      "input": "tests/fixtures/m2/member-predicate-dynamic-entries-duplicate-direct-last.pkl",
+      "input_sha256": "10da2afc69b6f1b6ccaba3114829ff61ca7a7308c53497027ec57761a06f7e89",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "member-predicate-dynamic-entries-non-bool",
+      "input": "tests/fixtures/m2/member-predicate-dynamic-entries-non-bool.pkl",
+      "input_sha256": "c286fae4aaad386b2185d600dbbbb22a457669ed9706a4948d00f9c508dc54f0",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "member-predicate-listing-forces-parent-on-false",
+      "input": "tests/fixtures/m2/member-predicate-listing-forces-parent-on-false.pkl",
+      "input_sha256": "f0c78b290e910700b88a8397d7ad3e2a63498a83c03751b77a1fdab4554c8343",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "member-predicate-mapping-forces-parent-on-false",
+      "input": "tests/fixtures/m2/member-predicate-mapping-forces-parent-on-false.pkl",
+      "input_sha256": "230717e887a38bd1d61dd2b89356f1a38f6f53265edd841a90bb097a54f889ae",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "member-predicate-predicate-before-later-parent-error",
+      "input": "tests/fixtures/m2/member-predicate-predicate-before-later-parent-error.pkl",
+      "input_sha256": "3cd5e94ce45e0608bc439cc28e051bfc402a583d6a1ddfee089082e094cedf5d",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "member-predicate-parent-before-predicate-error",
+      "input": "tests/fixtures/m2/member-predicate-parent-before-predicate-error.pkl",
+      "input_sha256": "6964406623bea5f74b2501eda4a8715bc9ac9bf88fe0fa9cee14d2f96f39cef0",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "member-predicate-own-before-inherited-error",
+      "input": "tests/fixtures/m2/member-predicate-own-before-inherited-error.pkl",
+      "input_sha256": "dc7f6b302682ac197dd677e316596a8231a103b977b8a7fbc5f009faf70f22e5",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "member-predicate-inherited-override-dedup",
+      "input": "tests/fixtures/m2/member-predicate-inherited-override-dedup.pkl",
+      "input_sha256": "74398f7c3e98083115e36ad0123833b15110de376a7ac6083d3a71a2c36a861a",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:name-resolution",
+        "semantic:amendment"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "member-predicate-dynamic-properties-omitted",
+      "input": "tests/fixtures/m2/member-predicate-dynamic-properties-omitted.pkl",
+      "input_sha256": "16af164421a9411b95ae16d5bda5a125b67f321b39de160f861d4491ef885384",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:modifiers"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "member-predicate-dynamic-property-name-key-dedup",
+      "input": "tests/fixtures/m2/member-predicate-dynamic-property-name-key-dedup.pkl",
+      "input_sha256": "b2177e27ef979bf89a8acb442bb8cf139f21c5fc3ffc8cffc452544da4429856",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:modifiers"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "member-predicate-mapping-default-omitted",
+      "input": "tests/fixtures/m2/member-predicate-mapping-default-omitted.pkl",
+      "input_sha256": "5f21023b611118fa21b19f352764f233921f7b517fd487c2b94417d7a24fb315",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:modifiers"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "member-predicate-listing-local-omitted",
+      "input": "tests/fixtures/m2/member-predicate-listing-local-omitted.pkl",
+      "input_sha256": "e1a865f951dea622a1ccb17d7af1dfd213148aa91e706e88302b410826c5e158",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:modifiers"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "member-predicate-empty-listing",
+      "input": "tests/fixtures/m2/member-predicate-empty-listing.pkl",
+      "input_sha256": "80617fa535e0a2f8f3e5f2330938bdc80f2ec82b3c6bd58946a09980e53e0a42",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "member-predicate-empty-mapping",
+      "input": "tests/fixtures/m2/member-predicate-empty-mapping.pkl",
+      "input_sha256": "f8999ff1fab3caa24dedd3f2410ac0091e1fc78a1d2e55d68b72eff85a7fc623",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "member-predicate-empty-dynamic",
+      "input": "tests/fixtures/m2/member-predicate-empty-dynamic.pkl",
+      "input_sha256": "3f680cddf6a7bbd8c82f79a50505aea195aea134e6e5290167c0a646392db273",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "member-predicate-unsupported-typed-object",
+      "input": "tests/fixtures/m2/member-predicate-unsupported-typed-object.pkl",
+      "input_sha256": "4892be03ea933ef0d37e23d6375bd65398d40d6f20405aebe64e8d8731a18ff8",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "member-predicate-unsupported-list",
+      "input": "tests/fixtures/m2/member-predicate-unsupported-list.pkl",
+      "input_sha256": "5e5db5ff20aab78778f1453dc36122363d70d57ea6db1d3acc02305ea97eb57f",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "member-predicate-unsupported-int",
+      "input": "tests/fixtures/m2/member-predicate-unsupported-int.pkl",
+      "input_sha256": "b852c2cacba2e22fc68c8aa60dd05e4f641f188ea77f2e91d2b1c7b4b1d844ea",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "member-predicate-lexical-shadows-custom-property",
+      "input": "tests/fixtures/m2/member-predicate-lexical-shadows-custom-property.pkl",
+      "input_sha256": "f9db41489f5a11dcc654306947719743a763b8092a7993846029c298b8365e57",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:name-resolution"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "member-predicate-nested-generators-capture",
+      "input": "tests/fixtures/m2/member-predicate-nested-generators-capture.pkl",
+      "input_sha256": "23bc4a916bf8a67127f7f923120c2e699f6cad03ae792a4303acbb4918e4ee12",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:name-resolution"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "member-predicate-typed-listing-value",
+      "input": "tests/fixtures/m2/member-predicate-typed-listing-value.pkl",
+      "input_sha256": "dd839abfad6bff46ec0f139410a0472ef335bba9d5c20f5bf6e2084d69a1add9",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:types",
+        "semantic:generics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "member-predicate-typed-mapping-key",
+      "input": "tests/fixtures/m2/member-predicate-typed-mapping-key.pkl",
+      "input_sha256": "96df4fa2e9e773ffb357f1cb1eecd0c6cde18ffac200220a8cdeed6e85875f96",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "member-predicate-typed-listing-override",
+      "input": "tests/fixtures/m2/member-predicate-typed-listing-override.pkl",
+      "input_sha256": "9ea05f6644936647835efc28bba060cafe2071c604b19297d9e7914900a37866",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:types",
+        "semantic:generics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "member-predicate-lexical-outer-module",
+      "input": "tests/fixtures/m2/member-predicate-lexical-outer-module.pkl",
+      "input_sha256": "64ee496e7ec7f8d709c24c63d9903fb9c9dc98eb5f9e0495ac261a1420683373",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:name-resolution"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "member-predicate-mapping-object-this-fallback",
+      "input": "tests/fixtures/m2/member-predicate-mapping-object-this-fallback.pkl",
+      "input_sha256": "6d33becef74dd5afb0780d3b6953e5d3ed9d72f9499adc68cd253ca97d313108",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:name-resolution"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "member-predicate-listing-select-direct",
+      "input": "tests/fixtures/m2/member-predicate-listing-select-direct.pkl",
+      "input_sha256": "ae7de7d6d82e4d40fa7b94db7c85f19c03bd0a2a3a6e83da0a75e649d2bb39c2",
+      "metamorphic_relation": {
+        "case_ids": [
+          "member-predicate-listing-select",
+          "member-predicate-listing-select-direct"
+        ],
+        "domain": "Selected Int entry replacement equals explicit index replacement for two fixed bounded Int values.",
+        "kind": "equal-stdout"
+      },
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:generated-verification"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "member-predicate-listing-none-direct",
+      "input": "tests/fixtures/m2/member-predicate-listing-none-direct.pkl",
+      "input_sha256": "8f1c80d69f7dbaff7aa270c5346ee31ebdd853274dc64d5d0226a68ea194e4eb",
+      "metamorphic_relation": {
+        "case_ids": [
+          "member-predicate-listing-none",
+          "member-predicate-listing-none-direct"
+        ],
+        "domain": "False predicate leaves the same two fixed Int entries as an empty amendment.",
+        "kind": "equal-stdout"
+      },
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:generated-verification"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "member-predicate-listing-for-direct",
+      "input": "tests/fixtures/m2/member-predicate-listing-for-direct.pkl",
+      "input_sha256": "4ae9a728084d1426c75b7a662805b019b03652a137f4316a6e453364ea1d4a8f",
+      "metamorphic_relation": {
+        "case_ids": [
+          "member-predicate-listing-for",
+          "member-predicate-listing-for-direct"
+        ],
+        "domain": "Captured for-generator predicates equal two explicit index replacements for fixed Int values 1 and 2.",
+        "kind": "equal-stdout"
+      },
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:generated-verification"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "member-predicate-typed-parent-precedes-condition",
+      "input": "tests/fixtures/m2/member-predicate-typed-parent-precedes-condition.pkl",
+      "input_sha256": "61fa54aad9fc5e18139be82eb60aa05ec917c8803406ee914c2e96d3965a66ef",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "member-predicate-inferred-parent-rejected",
+      "input": "tests/fixtures/m2/member-predicate-inferred-parent-rejected.pkl",
+      "input_sha256": "5ebad0d7f16aaa038f9d53d9d839dca2ff99121c735311f9d9e451ad69e0ff9a",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "member-predicate-inferred-parent-let-rejected",
+      "input": "tests/fixtures/m2/member-predicate-inferred-parent-let-rejected.pkl",
+      "input_sha256": "854a329b57e85d1594b9a913b7bb955af642c0d49e3eea00234e95f430e9af92",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "member-predicate-const-eager-lexical",
+      "input": "tests/fixtures/m2/member-predicate-const-eager-lexical.pkl",
+      "input_sha256": "86d4651c89f3cb9a860552ce63be6cbcb3f16444b03e4cd715fceb3ee096823e",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:name-resolution",
+        "semantic:modifiers"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "member-predicate-const-eager-lambda-lexical",
+      "input": "tests/fixtures/m2/member-predicate-const-eager-lambda-lexical.pkl",
+      "input_sha256": "cfe4f7cf43d14fea3f3c8769b3d45d424ab62ae43903e20557eccd7eb9cf0c04",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:name-resolution",
+        "semantic:modifiers",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "member-predicate-condition-outer-skips-holder",
+      "input": "tests/fixtures/m2/member-predicate-condition-outer-skips-holder.pkl",
+      "input_sha256": "d8e96c49b1c3a4d15ce6b3e35d8f0ed36aa2c32e68f55fec49554fe121ab84be",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:name-resolution"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "member-predicate-condition-lambda-outer-holder",
+      "input": "tests/fixtures/m2/member-predicate-condition-lambda-outer-holder.pkl",
+      "input_sha256": "115cda1beecd35a8d56ed9a2b54d1b2a7e699136fd8f6c99204c308cd6d7d589",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:name-resolution"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "member-predicate-nested-custom-restoration",
+      "input": "tests/fixtures/m2/member-predicate-nested-custom-restoration.pkl",
+      "input_sha256": "3a821539aff2426665b5e4d6f7b17c11763cc83c2511c7b0ca5672754971dd13",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "member-predicate-predicate-owner-cache",
+      "input": "tests/fixtures/m2/member-predicate-predicate-owner-cache.pkl",
+      "input_sha256": "ca362d105e857da7c182a3ba01c6565fd533879e5ee7f33188daf94805f15362",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:name-resolution"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "member-predicate-predicate-owner-cache-before",
+      "input": "tests/fixtures/m2/member-predicate-predicate-owner-cache-before.pkl",
+      "input_sha256": "a1ee2851d13976a6cb547cac378f48d3276d9245fe24381fc1c69a580a7d0b1c",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:name-resolution"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "member-predicate-predicate-owner-cache-two-children",
+      "input": "tests/fixtures/m2/member-predicate-predicate-owner-cache-two-children.pkl",
+      "input_sha256": "3f37d88a627608774969c630f51f6a40d264347b29995566f97256fda884922a",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:name-resolution"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "member-predicate-predicate-unselected-body-lazy",
+      "input": "tests/fixtures/m2/member-predicate-predicate-unselected-body-lazy.pkl",
+      "input_sha256": "d33c947c41eadcad4afc90623921ee2e5678642fbd31cc38e212a09df789a3f7",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "member-predicate-predicate-selected-body-lazy",
+      "input": "tests/fixtures/m2/member-predicate-predicate-selected-body-lazy.pkl",
+      "input_sha256": "fe1ac43e31f7f2dee3615445f4ed235b72c10d157ae93e3e32209c76ba0aef89",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "member-predicate-predicate-selected-body-error",
+      "input": "tests/fixtures/m2/member-predicate-predicate-selected-body-error.pkl",
+      "input_sha256": "9ac84f52131f88119a283a2f9960a94eaf3fe1110c7512d0961877cc16373891",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "member-predicate-predicate-nested-this-restore",
+      "input": "tests/fixtures/m2/member-predicate-predicate-nested-this-restore.pkl",
+      "input_sha256": "e8a77b151d58078d4ab319a6abc0255254b0cf968f6b6b73ff844c207d028cc2",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:name-resolution"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "member-predicate-predicate-nested-this-restore-let",
+      "input": "tests/fixtures/m2/member-predicate-predicate-nested-this-restore-let.pkl",
+      "input_sha256": "cb7b733e5ae57e4575015e570a3737c8014c283fd4717f2f6be78e324a955d58",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:name-resolution"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "member-predicate-predicate-wrapper-raw-selection",
+      "input": "tests/fixtures/m2/member-predicate-predicate-wrapper-raw-selection.pkl",
+      "input_sha256": "455c902d9dd11a4878f12dd3a7c001db680e562dc3f4fbeab288cc7f19b4800f",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "member-predicate-predicate-parent-before-body",
+      "input": "tests/fixtures/m2/member-predicate-predicate-parent-before-body.pkl",
+      "input_sha256": "f891c76dd9fe5759486dea93440d4e0ba72361334af951c71782ce3b6ac7572a",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "member-predicate-predicate-error-before-tail",
+      "input": "tests/fixtures/m2/member-predicate-predicate-error-before-tail.pkl",
+      "input_sha256": "dffa0989b55e6f453640685107fe13c0686f75121c96046e3cbd674e5438c62a",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "member-predicate-predicate-cached-result-plain",
+      "input": "tests/fixtures/m2/member-predicate-predicate-cached-result-plain.pkl",
+      "input_sha256": "f00d5e78f2a643e438c340471ae92f46a3e4d63f42183b86b72d8fb9e2632099",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:name-resolution",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "member-predicate-predicate-type-test-plain",
+      "input": "tests/fixtures/m2/member-predicate-predicate-type-test-plain.pkl",
+      "input_sha256": "f89ad5a91120ee1062ad3913672f635cebb70421d0ab788126ddd635b579742e",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "member-predicate-predicate-cached-result-power",
+      "input": "tests/fixtures/m2/member-predicate-predicate-cached-result-power.pkl",
+      "input_sha256": "f00d5e78f2a643e438c340471ae92f46a3e4d63f42183b86b72d8fb9e2632099",
+      "power_assertions": true,
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:name-resolution",
+        "semantic:constraints",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "member-predicate-predicate-type-test-power",
+      "input": "tests/fixtures/m2/member-predicate-predicate-type-test-power.pkl",
+      "input_sha256": "f89ad5a91120ee1062ad3913672f635cebb70421d0ab788126ddd635b579742e",
+      "power_assertions": true,
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:constraints",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "member-predicate-predicate-owner-cache-condition",
+      "input": "tests/fixtures/m2/member-predicate-predicate-owner-cache-condition.pkl",
+      "input_sha256": "748149aad608c19f91dfd2ba9812ae59090c05942102c438b88ada2277db353f",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:name-resolution"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "member-predicate-predicate-owner-cache-two-conditions",
+      "input": "tests/fixtures/m2/member-predicate-predicate-owner-cache-two-conditions.pkl",
+      "input_sha256": "1afd0b17db4fd0dccb1e287863dd51aa6982cb5e158f8cb2502f3082b21eb0a0",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:name-resolution"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "member-predicate-predicate-owner-cache-no-parent-force",
+      "input": "tests/fixtures/m2/member-predicate-predicate-owner-cache-no-parent-force.pkl",
+      "input_sha256": "f700a3864310283cd093a847ecb3454907144a1326195168d5e0530149801ca4",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:name-resolution"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "member-predicate-predicate-replacement-lexical-environment",
+      "input": "tests/fixtures/m2/member-predicate-predicate-replacement-lexical-environment.pkl",
+      "input_sha256": "b218b8e4c278b4c1b6e41e6e8f89624200caf425817661b0d6b6c6adc1ea7931",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:name-resolution"
+      ]
+    },
+    {
       "adapter": null,
       "execution": {
         "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
@@ -102170,9 +104488,9 @@
   "comparison_boundary": "evaluateExpressionString(ModuleSource.path(same absolute URI), expression) UTF-8 stdout; whole PklException.getMessage() UTF-8 stderr and exit 1; no trimming. Power assertions default to disabled; an explicit per-case power_assertions boolean enables the same option in both probes. Stringification alone is not typed value/API compatibility.",
   "completion": "Every required semantic/source requirement needs implementation/test mappings and complete passing execution. Pending/unmapped/unimplemented/mismatch remains a full-gate failure.",
   "counts": {
-    "cases": 1560,
+    "cases": 1673,
     "cases_by_execution": {
-      "ready": 560,
+      "ready": 673,
       "unimplemented": 960,
       "unmapped": 40
     },
@@ -102473,7 +104791,55 @@
           "collection-type-listing-wrapper-property-cache",
           "collection-type-listing-stolen-inner-wrapper",
           "collection-type-cast-same-site-different-receiver",
-          "collection-type-cast-different-sites"
+          "collection-type-cast-different-sites",
+          "member-predicate-listing-same-block-excluded",
+          "member-predicate-listing-later-inherited",
+          "member-predicate-listing-lambda-this",
+          "member-predicate-listing-let-this",
+          "member-predicate-listing-lexical",
+          "member-predicate-listing-for",
+          "member-predicate-listing-when",
+          "member-predicate-mapping-same-block-excluded",
+          "member-predicate-mapping-later-inherited",
+          "member-predicate-mapping-lambda-this",
+          "member-predicate-mapping-let-this",
+          "member-predicate-mapping-lexical",
+          "member-predicate-mapping-for",
+          "member-predicate-mapping-when",
+          "member-predicate-dynamic-elements-same-block-excluded",
+          "member-predicate-dynamic-elements-later-inherited",
+          "member-predicate-dynamic-elements-lambda-this",
+          "member-predicate-dynamic-elements-let-this",
+          "member-predicate-dynamic-elements-lexical",
+          "member-predicate-dynamic-elements-for",
+          "member-predicate-dynamic-elements-when",
+          "member-predicate-dynamic-entries-same-block-excluded",
+          "member-predicate-dynamic-entries-later-inherited",
+          "member-predicate-dynamic-entries-lambda-this",
+          "member-predicate-dynamic-entries-let-this",
+          "member-predicate-dynamic-entries-lexical",
+          "member-predicate-dynamic-entries-for",
+          "member-predicate-dynamic-entries-when",
+          "member-predicate-inherited-override-dedup",
+          "member-predicate-lexical-shadows-custom-property",
+          "member-predicate-nested-generators-capture",
+          "member-predicate-lexical-outer-module",
+          "member-predicate-mapping-object-this-fallback",
+          "member-predicate-const-eager-lexical",
+          "member-predicate-const-eager-lambda-lexical",
+          "member-predicate-condition-outer-skips-holder",
+          "member-predicate-condition-lambda-outer-holder",
+          "member-predicate-predicate-owner-cache",
+          "member-predicate-predicate-owner-cache-before",
+          "member-predicate-predicate-owner-cache-two-children",
+          "member-predicate-predicate-nested-this-restore",
+          "member-predicate-predicate-nested-this-restore-let",
+          "member-predicate-predicate-cached-result-plain",
+          "member-predicate-predicate-cached-result-power",
+          "member-predicate-predicate-owner-cache-condition",
+          "member-predicate-predicate-owner-cache-two-conditions",
+          "member-predicate-predicate-owner-cache-no-parent-force",
+          "member-predicate-predicate-replacement-lexical-environment"
         ],
         "state": "partial"
       }
@@ -102671,7 +105037,120 @@
           "collection-type-union-generic-alias-eager",
           "collection-type-cast-same-site-different-receiver",
           "collection-type-cast-different-sites",
-          "collection-type-union-generic-alias"
+          "collection-type-union-generic-alias",
+          "member-predicate-listing-select",
+          "member-predicate-listing-all",
+          "member-predicate-listing-none",
+          "member-predicate-listing-amendment",
+          "member-predicate-listing-same-block-excluded",
+          "member-predicate-listing-later-inherited",
+          "member-predicate-listing-lambda-this",
+          "member-predicate-listing-let-this",
+          "member-predicate-listing-lexical",
+          "member-predicate-listing-for",
+          "member-predicate-listing-when",
+          "member-predicate-listing-duplicate-predicates",
+          "member-predicate-listing-duplicate-direct-first",
+          "member-predicate-listing-duplicate-direct-last",
+          "member-predicate-listing-non-bool",
+          "member-predicate-mapping-select",
+          "member-predicate-mapping-all",
+          "member-predicate-mapping-none",
+          "member-predicate-mapping-amendment",
+          "member-predicate-mapping-same-block-excluded",
+          "member-predicate-mapping-later-inherited",
+          "member-predicate-mapping-lambda-this",
+          "member-predicate-mapping-let-this",
+          "member-predicate-mapping-lexical",
+          "member-predicate-mapping-for",
+          "member-predicate-mapping-when",
+          "member-predicate-mapping-duplicate-predicates",
+          "member-predicate-mapping-duplicate-direct-first",
+          "member-predicate-mapping-duplicate-direct-last",
+          "member-predicate-mapping-non-bool",
+          "member-predicate-dynamic-elements-select",
+          "member-predicate-dynamic-elements-all",
+          "member-predicate-dynamic-elements-none",
+          "member-predicate-dynamic-elements-amendment",
+          "member-predicate-dynamic-elements-same-block-excluded",
+          "member-predicate-dynamic-elements-later-inherited",
+          "member-predicate-dynamic-elements-lambda-this",
+          "member-predicate-dynamic-elements-let-this",
+          "member-predicate-dynamic-elements-lexical",
+          "member-predicate-dynamic-elements-for",
+          "member-predicate-dynamic-elements-when",
+          "member-predicate-dynamic-elements-duplicate-predicates",
+          "member-predicate-dynamic-elements-duplicate-direct-first",
+          "member-predicate-dynamic-elements-duplicate-direct-last",
+          "member-predicate-dynamic-elements-non-bool",
+          "member-predicate-dynamic-entries-select",
+          "member-predicate-dynamic-entries-all",
+          "member-predicate-dynamic-entries-none",
+          "member-predicate-dynamic-entries-amendment",
+          "member-predicate-dynamic-entries-same-block-excluded",
+          "member-predicate-dynamic-entries-later-inherited",
+          "member-predicate-dynamic-entries-lambda-this",
+          "member-predicate-dynamic-entries-let-this",
+          "member-predicate-dynamic-entries-lexical",
+          "member-predicate-dynamic-entries-for",
+          "member-predicate-dynamic-entries-when",
+          "member-predicate-dynamic-entries-duplicate-predicates",
+          "member-predicate-dynamic-entries-duplicate-direct-first",
+          "member-predicate-dynamic-entries-duplicate-direct-last",
+          "member-predicate-dynamic-entries-non-bool",
+          "member-predicate-listing-forces-parent-on-false",
+          "member-predicate-mapping-forces-parent-on-false",
+          "member-predicate-predicate-before-later-parent-error",
+          "member-predicate-parent-before-predicate-error",
+          "member-predicate-own-before-inherited-error",
+          "member-predicate-inherited-override-dedup",
+          "member-predicate-dynamic-properties-omitted",
+          "member-predicate-dynamic-property-name-key-dedup",
+          "member-predicate-mapping-default-omitted",
+          "member-predicate-listing-local-omitted",
+          "member-predicate-empty-listing",
+          "member-predicate-empty-mapping",
+          "member-predicate-empty-dynamic",
+          "member-predicate-unsupported-typed-object",
+          "member-predicate-unsupported-list",
+          "member-predicate-unsupported-int",
+          "member-predicate-lexical-shadows-custom-property",
+          "member-predicate-nested-generators-capture",
+          "member-predicate-typed-listing-value",
+          "member-predicate-typed-mapping-key",
+          "member-predicate-typed-listing-override",
+          "member-predicate-lexical-outer-module",
+          "member-predicate-mapping-object-this-fallback",
+          "member-predicate-listing-select-direct",
+          "member-predicate-listing-none-direct",
+          "member-predicate-listing-for-direct",
+          "member-predicate-typed-parent-precedes-condition",
+          "member-predicate-inferred-parent-rejected",
+          "member-predicate-inferred-parent-let-rejected",
+          "member-predicate-const-eager-lexical",
+          "member-predicate-const-eager-lambda-lexical",
+          "member-predicate-condition-outer-skips-holder",
+          "member-predicate-condition-lambda-outer-holder",
+          "member-predicate-nested-custom-restoration",
+          "member-predicate-predicate-owner-cache",
+          "member-predicate-predicate-owner-cache-before",
+          "member-predicate-predicate-owner-cache-two-children",
+          "member-predicate-predicate-unselected-body-lazy",
+          "member-predicate-predicate-selected-body-lazy",
+          "member-predicate-predicate-selected-body-error",
+          "member-predicate-predicate-nested-this-restore",
+          "member-predicate-predicate-nested-this-restore-let",
+          "member-predicate-predicate-wrapper-raw-selection",
+          "member-predicate-predicate-parent-before-body",
+          "member-predicate-predicate-error-before-tail",
+          "member-predicate-predicate-cached-result-plain",
+          "member-predicate-predicate-type-test-plain",
+          "member-predicate-predicate-cached-result-power",
+          "member-predicate-predicate-type-test-power",
+          "member-predicate-predicate-owner-cache-condition",
+          "member-predicate-predicate-owner-cache-two-conditions",
+          "member-predicate-predicate-owner-cache-no-parent-force",
+          "member-predicate-predicate-replacement-lexical-environment"
         ],
         "state": "partial"
       }
@@ -102810,7 +105289,120 @@
           "collection-listing-implicit-length",
           "collection-listing-implicit-isempty",
           "collection-module-dynamic-classification",
-          "collection-module-iteration"
+          "collection-module-iteration",
+          "member-predicate-listing-select",
+          "member-predicate-listing-all",
+          "member-predicate-listing-none",
+          "member-predicate-listing-amendment",
+          "member-predicate-listing-same-block-excluded",
+          "member-predicate-listing-later-inherited",
+          "member-predicate-listing-lambda-this",
+          "member-predicate-listing-let-this",
+          "member-predicate-listing-lexical",
+          "member-predicate-listing-for",
+          "member-predicate-listing-when",
+          "member-predicate-listing-duplicate-predicates",
+          "member-predicate-listing-duplicate-direct-first",
+          "member-predicate-listing-duplicate-direct-last",
+          "member-predicate-listing-non-bool",
+          "member-predicate-mapping-select",
+          "member-predicate-mapping-all",
+          "member-predicate-mapping-none",
+          "member-predicate-mapping-amendment",
+          "member-predicate-mapping-same-block-excluded",
+          "member-predicate-mapping-later-inherited",
+          "member-predicate-mapping-lambda-this",
+          "member-predicate-mapping-let-this",
+          "member-predicate-mapping-lexical",
+          "member-predicate-mapping-for",
+          "member-predicate-mapping-when",
+          "member-predicate-mapping-duplicate-predicates",
+          "member-predicate-mapping-duplicate-direct-first",
+          "member-predicate-mapping-duplicate-direct-last",
+          "member-predicate-mapping-non-bool",
+          "member-predicate-dynamic-elements-select",
+          "member-predicate-dynamic-elements-all",
+          "member-predicate-dynamic-elements-none",
+          "member-predicate-dynamic-elements-amendment",
+          "member-predicate-dynamic-elements-same-block-excluded",
+          "member-predicate-dynamic-elements-later-inherited",
+          "member-predicate-dynamic-elements-lambda-this",
+          "member-predicate-dynamic-elements-let-this",
+          "member-predicate-dynamic-elements-lexical",
+          "member-predicate-dynamic-elements-for",
+          "member-predicate-dynamic-elements-when",
+          "member-predicate-dynamic-elements-duplicate-predicates",
+          "member-predicate-dynamic-elements-duplicate-direct-first",
+          "member-predicate-dynamic-elements-duplicate-direct-last",
+          "member-predicate-dynamic-elements-non-bool",
+          "member-predicate-dynamic-entries-select",
+          "member-predicate-dynamic-entries-all",
+          "member-predicate-dynamic-entries-none",
+          "member-predicate-dynamic-entries-amendment",
+          "member-predicate-dynamic-entries-same-block-excluded",
+          "member-predicate-dynamic-entries-later-inherited",
+          "member-predicate-dynamic-entries-lambda-this",
+          "member-predicate-dynamic-entries-let-this",
+          "member-predicate-dynamic-entries-lexical",
+          "member-predicate-dynamic-entries-for",
+          "member-predicate-dynamic-entries-when",
+          "member-predicate-dynamic-entries-duplicate-predicates",
+          "member-predicate-dynamic-entries-duplicate-direct-first",
+          "member-predicate-dynamic-entries-duplicate-direct-last",
+          "member-predicate-dynamic-entries-non-bool",
+          "member-predicate-listing-forces-parent-on-false",
+          "member-predicate-mapping-forces-parent-on-false",
+          "member-predicate-predicate-before-later-parent-error",
+          "member-predicate-parent-before-predicate-error",
+          "member-predicate-own-before-inherited-error",
+          "member-predicate-inherited-override-dedup",
+          "member-predicate-dynamic-properties-omitted",
+          "member-predicate-dynamic-property-name-key-dedup",
+          "member-predicate-mapping-default-omitted",
+          "member-predicate-listing-local-omitted",
+          "member-predicate-empty-listing",
+          "member-predicate-empty-mapping",
+          "member-predicate-empty-dynamic",
+          "member-predicate-unsupported-typed-object",
+          "member-predicate-unsupported-list",
+          "member-predicate-unsupported-int",
+          "member-predicate-lexical-shadows-custom-property",
+          "member-predicate-nested-generators-capture",
+          "member-predicate-typed-listing-value",
+          "member-predicate-typed-mapping-key",
+          "member-predicate-typed-listing-override",
+          "member-predicate-lexical-outer-module",
+          "member-predicate-mapping-object-this-fallback",
+          "member-predicate-listing-select-direct",
+          "member-predicate-listing-none-direct",
+          "member-predicate-listing-for-direct",
+          "member-predicate-typed-parent-precedes-condition",
+          "member-predicate-inferred-parent-rejected",
+          "member-predicate-inferred-parent-let-rejected",
+          "member-predicate-const-eager-lexical",
+          "member-predicate-const-eager-lambda-lexical",
+          "member-predicate-condition-outer-skips-holder",
+          "member-predicate-condition-lambda-outer-holder",
+          "member-predicate-nested-custom-restoration",
+          "member-predicate-predicate-owner-cache",
+          "member-predicate-predicate-owner-cache-before",
+          "member-predicate-predicate-owner-cache-two-children",
+          "member-predicate-predicate-unselected-body-lazy",
+          "member-predicate-predicate-selected-body-lazy",
+          "member-predicate-predicate-selected-body-error",
+          "member-predicate-predicate-nested-this-restore",
+          "member-predicate-predicate-nested-this-restore-let",
+          "member-predicate-predicate-wrapper-raw-selection",
+          "member-predicate-predicate-parent-before-body",
+          "member-predicate-predicate-error-before-tail",
+          "member-predicate-predicate-cached-result-plain",
+          "member-predicate-predicate-type-test-plain",
+          "member-predicate-predicate-cached-result-power",
+          "member-predicate-predicate-type-test-power",
+          "member-predicate-predicate-owner-cache-condition",
+          "member-predicate-predicate-owner-cache-two-conditions",
+          "member-predicate-predicate-owner-cache-no-parent-force",
+          "member-predicate-predicate-replacement-lexical-environment"
         ],
         "state": "partial"
       }
@@ -102860,7 +105452,20 @@
           "collection-type-listing-default-element",
           "collection-type-mapping-default-element",
           "collection-type-listing-default-value-referent",
-          "collection-type-mapping-default-value-referent"
+          "collection-type-mapping-default-value-referent",
+          "member-predicate-listing-amendment",
+          "member-predicate-listing-same-block-excluded",
+          "member-predicate-listing-later-inherited",
+          "member-predicate-mapping-amendment",
+          "member-predicate-mapping-same-block-excluded",
+          "member-predicate-mapping-later-inherited",
+          "member-predicate-dynamic-elements-amendment",
+          "member-predicate-dynamic-elements-same-block-excluded",
+          "member-predicate-dynamic-elements-later-inherited",
+          "member-predicate-dynamic-entries-amendment",
+          "member-predicate-dynamic-entries-same-block-excluded",
+          "member-predicate-dynamic-entries-later-inherited",
+          "member-predicate-inherited-override-dedup"
         ],
         "state": "partial"
       }
@@ -102928,7 +105533,13 @@
           "error-abstract-method",
           "class-unused-abstract-members",
           "collection-local-duplicate-generated",
-          "collection-local-method-duplicate-generated"
+          "collection-local-method-duplicate-generated",
+          "member-predicate-dynamic-properties-omitted",
+          "member-predicate-dynamic-property-name-key-dedup",
+          "member-predicate-mapping-default-omitted",
+          "member-predicate-listing-local-omitted",
+          "member-predicate-const-eager-lexical",
+          "member-predicate-const-eager-lambda-lexical"
         ],
         "state": "partial"
       }
@@ -103097,7 +105708,120 @@
           "collection-for-empty-missingtype-skipped",
           "collection-local-duplicate-generated",
           "collection-local-method-duplicate-generated",
-          "collection-module-iteration"
+          "collection-module-iteration",
+          "member-predicate-listing-select",
+          "member-predicate-listing-all",
+          "member-predicate-listing-none",
+          "member-predicate-listing-amendment",
+          "member-predicate-listing-same-block-excluded",
+          "member-predicate-listing-later-inherited",
+          "member-predicate-listing-lambda-this",
+          "member-predicate-listing-let-this",
+          "member-predicate-listing-lexical",
+          "member-predicate-listing-for",
+          "member-predicate-listing-when",
+          "member-predicate-listing-duplicate-predicates",
+          "member-predicate-listing-duplicate-direct-first",
+          "member-predicate-listing-duplicate-direct-last",
+          "member-predicate-listing-non-bool",
+          "member-predicate-mapping-select",
+          "member-predicate-mapping-all",
+          "member-predicate-mapping-none",
+          "member-predicate-mapping-amendment",
+          "member-predicate-mapping-same-block-excluded",
+          "member-predicate-mapping-later-inherited",
+          "member-predicate-mapping-lambda-this",
+          "member-predicate-mapping-let-this",
+          "member-predicate-mapping-lexical",
+          "member-predicate-mapping-for",
+          "member-predicate-mapping-when",
+          "member-predicate-mapping-duplicate-predicates",
+          "member-predicate-mapping-duplicate-direct-first",
+          "member-predicate-mapping-duplicate-direct-last",
+          "member-predicate-mapping-non-bool",
+          "member-predicate-dynamic-elements-select",
+          "member-predicate-dynamic-elements-all",
+          "member-predicate-dynamic-elements-none",
+          "member-predicate-dynamic-elements-amendment",
+          "member-predicate-dynamic-elements-same-block-excluded",
+          "member-predicate-dynamic-elements-later-inherited",
+          "member-predicate-dynamic-elements-lambda-this",
+          "member-predicate-dynamic-elements-let-this",
+          "member-predicate-dynamic-elements-lexical",
+          "member-predicate-dynamic-elements-for",
+          "member-predicate-dynamic-elements-when",
+          "member-predicate-dynamic-elements-duplicate-predicates",
+          "member-predicate-dynamic-elements-duplicate-direct-first",
+          "member-predicate-dynamic-elements-duplicate-direct-last",
+          "member-predicate-dynamic-elements-non-bool",
+          "member-predicate-dynamic-entries-select",
+          "member-predicate-dynamic-entries-all",
+          "member-predicate-dynamic-entries-none",
+          "member-predicate-dynamic-entries-amendment",
+          "member-predicate-dynamic-entries-same-block-excluded",
+          "member-predicate-dynamic-entries-later-inherited",
+          "member-predicate-dynamic-entries-lambda-this",
+          "member-predicate-dynamic-entries-let-this",
+          "member-predicate-dynamic-entries-lexical",
+          "member-predicate-dynamic-entries-for",
+          "member-predicate-dynamic-entries-when",
+          "member-predicate-dynamic-entries-duplicate-predicates",
+          "member-predicate-dynamic-entries-duplicate-direct-first",
+          "member-predicate-dynamic-entries-duplicate-direct-last",
+          "member-predicate-dynamic-entries-non-bool",
+          "member-predicate-listing-forces-parent-on-false",
+          "member-predicate-mapping-forces-parent-on-false",
+          "member-predicate-predicate-before-later-parent-error",
+          "member-predicate-parent-before-predicate-error",
+          "member-predicate-own-before-inherited-error",
+          "member-predicate-inherited-override-dedup",
+          "member-predicate-dynamic-properties-omitted",
+          "member-predicate-dynamic-property-name-key-dedup",
+          "member-predicate-mapping-default-omitted",
+          "member-predicate-listing-local-omitted",
+          "member-predicate-empty-listing",
+          "member-predicate-empty-mapping",
+          "member-predicate-empty-dynamic",
+          "member-predicate-unsupported-typed-object",
+          "member-predicate-unsupported-list",
+          "member-predicate-unsupported-int",
+          "member-predicate-lexical-shadows-custom-property",
+          "member-predicate-nested-generators-capture",
+          "member-predicate-typed-listing-value",
+          "member-predicate-typed-mapping-key",
+          "member-predicate-typed-listing-override",
+          "member-predicate-lexical-outer-module",
+          "member-predicate-mapping-object-this-fallback",
+          "member-predicate-listing-select-direct",
+          "member-predicate-listing-none-direct",
+          "member-predicate-listing-for-direct",
+          "member-predicate-typed-parent-precedes-condition",
+          "member-predicate-inferred-parent-rejected",
+          "member-predicate-inferred-parent-let-rejected",
+          "member-predicate-const-eager-lexical",
+          "member-predicate-const-eager-lambda-lexical",
+          "member-predicate-condition-outer-skips-holder",
+          "member-predicate-condition-lambda-outer-holder",
+          "member-predicate-nested-custom-restoration",
+          "member-predicate-predicate-owner-cache",
+          "member-predicate-predicate-owner-cache-before",
+          "member-predicate-predicate-owner-cache-two-children",
+          "member-predicate-predicate-unselected-body-lazy",
+          "member-predicate-predicate-selected-body-lazy",
+          "member-predicate-predicate-selected-body-error",
+          "member-predicate-predicate-nested-this-restore",
+          "member-predicate-predicate-nested-this-restore-let",
+          "member-predicate-predicate-wrapper-raw-selection",
+          "member-predicate-predicate-parent-before-body",
+          "member-predicate-predicate-error-before-tail",
+          "member-predicate-predicate-cached-result-plain",
+          "member-predicate-predicate-type-test-plain",
+          "member-predicate-predicate-cached-result-power",
+          "member-predicate-predicate-type-test-power",
+          "member-predicate-predicate-owner-cache-condition",
+          "member-predicate-predicate-owner-cache-two-conditions",
+          "member-predicate-predicate-owner-cache-no-parent-force",
+          "member-predicate-predicate-replacement-lexical-environment"
         ],
         "state": "partial"
       }
@@ -103374,7 +106098,120 @@
           "collection-type-listing-default-value-referent",
           "collection-type-mapping-default-value-referent",
           "collection-type-constraint-alias-node-identity",
-          "collection-type-union-generic-alias"
+          "collection-type-union-generic-alias",
+          "member-predicate-listing-select",
+          "member-predicate-listing-all",
+          "member-predicate-listing-none",
+          "member-predicate-listing-amendment",
+          "member-predicate-listing-same-block-excluded",
+          "member-predicate-listing-later-inherited",
+          "member-predicate-listing-lambda-this",
+          "member-predicate-listing-let-this",
+          "member-predicate-listing-lexical",
+          "member-predicate-listing-for",
+          "member-predicate-listing-when",
+          "member-predicate-listing-duplicate-predicates",
+          "member-predicate-listing-duplicate-direct-first",
+          "member-predicate-listing-duplicate-direct-last",
+          "member-predicate-listing-non-bool",
+          "member-predicate-mapping-select",
+          "member-predicate-mapping-all",
+          "member-predicate-mapping-none",
+          "member-predicate-mapping-amendment",
+          "member-predicate-mapping-same-block-excluded",
+          "member-predicate-mapping-later-inherited",
+          "member-predicate-mapping-lambda-this",
+          "member-predicate-mapping-let-this",
+          "member-predicate-mapping-lexical",
+          "member-predicate-mapping-for",
+          "member-predicate-mapping-when",
+          "member-predicate-mapping-duplicate-predicates",
+          "member-predicate-mapping-duplicate-direct-first",
+          "member-predicate-mapping-duplicate-direct-last",
+          "member-predicate-mapping-non-bool",
+          "member-predicate-dynamic-elements-select",
+          "member-predicate-dynamic-elements-all",
+          "member-predicate-dynamic-elements-none",
+          "member-predicate-dynamic-elements-amendment",
+          "member-predicate-dynamic-elements-same-block-excluded",
+          "member-predicate-dynamic-elements-later-inherited",
+          "member-predicate-dynamic-elements-lambda-this",
+          "member-predicate-dynamic-elements-let-this",
+          "member-predicate-dynamic-elements-lexical",
+          "member-predicate-dynamic-elements-for",
+          "member-predicate-dynamic-elements-when",
+          "member-predicate-dynamic-elements-duplicate-predicates",
+          "member-predicate-dynamic-elements-duplicate-direct-first",
+          "member-predicate-dynamic-elements-duplicate-direct-last",
+          "member-predicate-dynamic-elements-non-bool",
+          "member-predicate-dynamic-entries-select",
+          "member-predicate-dynamic-entries-all",
+          "member-predicate-dynamic-entries-none",
+          "member-predicate-dynamic-entries-amendment",
+          "member-predicate-dynamic-entries-same-block-excluded",
+          "member-predicate-dynamic-entries-later-inherited",
+          "member-predicate-dynamic-entries-lambda-this",
+          "member-predicate-dynamic-entries-let-this",
+          "member-predicate-dynamic-entries-lexical",
+          "member-predicate-dynamic-entries-for",
+          "member-predicate-dynamic-entries-when",
+          "member-predicate-dynamic-entries-duplicate-predicates",
+          "member-predicate-dynamic-entries-duplicate-direct-first",
+          "member-predicate-dynamic-entries-duplicate-direct-last",
+          "member-predicate-dynamic-entries-non-bool",
+          "member-predicate-listing-forces-parent-on-false",
+          "member-predicate-mapping-forces-parent-on-false",
+          "member-predicate-predicate-before-later-parent-error",
+          "member-predicate-parent-before-predicate-error",
+          "member-predicate-own-before-inherited-error",
+          "member-predicate-inherited-override-dedup",
+          "member-predicate-dynamic-properties-omitted",
+          "member-predicate-dynamic-property-name-key-dedup",
+          "member-predicate-mapping-default-omitted",
+          "member-predicate-listing-local-omitted",
+          "member-predicate-empty-listing",
+          "member-predicate-empty-mapping",
+          "member-predicate-empty-dynamic",
+          "member-predicate-unsupported-typed-object",
+          "member-predicate-unsupported-list",
+          "member-predicate-unsupported-int",
+          "member-predicate-lexical-shadows-custom-property",
+          "member-predicate-nested-generators-capture",
+          "member-predicate-typed-listing-value",
+          "member-predicate-typed-mapping-key",
+          "member-predicate-typed-listing-override",
+          "member-predicate-lexical-outer-module",
+          "member-predicate-mapping-object-this-fallback",
+          "member-predicate-listing-select-direct",
+          "member-predicate-listing-none-direct",
+          "member-predicate-listing-for-direct",
+          "member-predicate-typed-parent-precedes-condition",
+          "member-predicate-inferred-parent-rejected",
+          "member-predicate-inferred-parent-let-rejected",
+          "member-predicate-const-eager-lexical",
+          "member-predicate-const-eager-lambda-lexical",
+          "member-predicate-condition-outer-skips-holder",
+          "member-predicate-condition-lambda-outer-holder",
+          "member-predicate-nested-custom-restoration",
+          "member-predicate-predicate-owner-cache",
+          "member-predicate-predicate-owner-cache-before",
+          "member-predicate-predicate-owner-cache-two-children",
+          "member-predicate-predicate-unselected-body-lazy",
+          "member-predicate-predicate-selected-body-lazy",
+          "member-predicate-predicate-selected-body-error",
+          "member-predicate-predicate-nested-this-restore",
+          "member-predicate-predicate-nested-this-restore-let",
+          "member-predicate-predicate-wrapper-raw-selection",
+          "member-predicate-predicate-parent-before-body",
+          "member-predicate-predicate-error-before-tail",
+          "member-predicate-predicate-cached-result-plain",
+          "member-predicate-predicate-type-test-plain",
+          "member-predicate-predicate-cached-result-power",
+          "member-predicate-predicate-type-test-power",
+          "member-predicate-predicate-owner-cache-condition",
+          "member-predicate-predicate-owner-cache-two-conditions",
+          "member-predicate-predicate-owner-cache-no-parent-force",
+          "member-predicate-predicate-replacement-lexical-environment"
         ],
         "state": "partial"
       }
@@ -103610,7 +106447,12 @@
           "collection-type-union-generic-alias",
           "collection-type-union-substituted-argument",
           "collection-type-union-nullable-alternative",
-          "collection-type-union-nothing-alternative"
+          "collection-type-union-nothing-alternative",
+          "member-predicate-typed-listing-value",
+          "member-predicate-typed-mapping-key",
+          "member-predicate-typed-listing-override",
+          "member-predicate-predicate-type-test-plain",
+          "member-predicate-predicate-type-test-power"
         ],
         "state": "partial"
       }
@@ -103791,7 +106633,9 @@
           "collection-type-cast-same-site-different-receiver",
           "collection-type-cast-different-sites",
           "collection-type-constraint-alias-node-identity",
-          "collection-type-union-constraint-alias"
+          "collection-type-union-constraint-alias",
+          "member-predicate-predicate-cached-result-power",
+          "member-predicate-predicate-type-test-power"
         ],
         "state": "partial"
       }
@@ -103953,7 +106797,12 @@
           "collection-type-listing-default-value-referent",
           "collection-type-mapping-default-value-referent",
           "collection-type-constraint-alias-node-identity",
-          "collection-type-union-generic-alias"
+          "collection-type-union-generic-alias",
+          "member-predicate-typed-listing-value",
+          "member-predicate-typed-mapping-key",
+          "member-predicate-typed-listing-override",
+          "member-predicate-predicate-type-test-plain",
+          "member-predicate-predicate-type-test-power"
         ],
         "state": "partial"
       }
@@ -104360,7 +107209,43 @@
           "collection-type-union-generic-alias",
           "collection-type-union-substituted-argument",
           "collection-type-union-nullable-alternative",
-          "collection-type-union-nothing-alternative"
+          "collection-type-union-nothing-alternative",
+          "member-predicate-listing-duplicate-predicates",
+          "member-predicate-listing-duplicate-direct-first",
+          "member-predicate-listing-duplicate-direct-last",
+          "member-predicate-listing-non-bool",
+          "member-predicate-mapping-duplicate-predicates",
+          "member-predicate-mapping-duplicate-direct-first",
+          "member-predicate-mapping-duplicate-direct-last",
+          "member-predicate-mapping-non-bool",
+          "member-predicate-dynamic-elements-duplicate-predicates",
+          "member-predicate-dynamic-elements-duplicate-direct-first",
+          "member-predicate-dynamic-elements-duplicate-direct-last",
+          "member-predicate-dynamic-elements-non-bool",
+          "member-predicate-dynamic-entries-duplicate-predicates",
+          "member-predicate-dynamic-entries-duplicate-direct-first",
+          "member-predicate-dynamic-entries-duplicate-direct-last",
+          "member-predicate-dynamic-entries-non-bool",
+          "member-predicate-listing-forces-parent-on-false",
+          "member-predicate-mapping-forces-parent-on-false",
+          "member-predicate-predicate-before-later-parent-error",
+          "member-predicate-parent-before-predicate-error",
+          "member-predicate-own-before-inherited-error",
+          "member-predicate-unsupported-typed-object",
+          "member-predicate-unsupported-list",
+          "member-predicate-unsupported-int",
+          "member-predicate-typed-mapping-key",
+          "member-predicate-typed-parent-precedes-condition",
+          "member-predicate-inferred-parent-rejected",
+          "member-predicate-inferred-parent-let-rejected",
+          "member-predicate-const-eager-lambda-lexical",
+          "member-predicate-predicate-selected-body-error",
+          "member-predicate-predicate-parent-before-body",
+          "member-predicate-predicate-error-before-tail",
+          "member-predicate-predicate-cached-result-plain",
+          "member-predicate-predicate-type-test-plain",
+          "member-predicate-predicate-cached-result-power",
+          "member-predicate-predicate-type-test-power"
         ],
         "state": "partial"
       }
@@ -104439,7 +107324,13 @@
           "collection-meta-mapping-amend-left",
           "collection-meta-mapping-amend-right",
           "collection-meta-null-spread-left",
-          "collection-meta-null-spread-right"
+          "collection-meta-null-spread-right",
+          "member-predicate-listing-select",
+          "member-predicate-listing-none",
+          "member-predicate-listing-for",
+          "member-predicate-listing-select-direct",
+          "member-predicate-listing-none-direct",
+          "member-predicate-listing-for-direct"
         ],
         "state": "partial"
       }
@@ -112889,6 +115780,6 @@
     "compatibility/regressions.json": "09c064f65730d30f72bf87a45c88d47ecc0844e57966a999dc8e759f083af3da",
     "compatibility/rev1-inventory.json": "6061f202ba3f04565efed3617ac69d3c2fadc54eec1f562b67a4758b3d0a8ab5",
     "references.lock": "278f48fd7697459281aa78a706c9ca57222f36a8c0785d838a6449fbaf26d30b",
-    "tests/fixtures/m2/cases.json": "b301b1b645989f529d8059ed7a59a4f3ab9016f891781ba63b95b77835d918e2"
+    "tests/fixtures/m2/cases.json": "9b1705899b6cd1b3532d6ee04473f3ee9aa3b87dac6ab2e90f0cca650a60053d"
   }
 }

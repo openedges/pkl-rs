@@ -1,0 +1,4 @@
+p = new Mapping { ["a"] = 1; ["b"] = 2 }
+q = (p) { ["c"] = 3 }
+r = (q) { [[this == 3]] = 9 }
+result = r["c"]

@@ -45,6 +45,11 @@ pub enum Instruction {
         end: usize,
     },
     SpreadMember,
+    OpenPredicate,
+    PredicateNext {
+        end: usize,
+    },
+    AddPredicateMember(Member),
     Subscript,
     SuperSubscript,
     EntryParent,
@@ -917,6 +922,30 @@ impl Vm {
         method: bool,
         entry: bool,
     ) -> Result<(), RuntimeError> {
+        self.force_key_mode(
+            receiver,
+            initial_owner,
+            name,
+            local,
+            memoize,
+            method,
+            entry,
+            false,
+        )
+    }
+
+    #[allow(clippy::too_many_arguments)]
+    fn force_key_mode(
+        &mut self,
+        receiver: ObjectId,
+        initial_owner: ObjectId,
+        name: Arc<str>,
+        local: bool,
+        memoize: bool,
+        method: bool,
+        entry: bool,
+        predicate: bool,
+    ) -> Result<(), RuntimeError> {
         let key = CacheKey {
             entry,
             owner: local.then_some(initial_owner),
@@ -984,7 +1013,7 @@ impl Vm {
         }
         let mut collection_casts = Vec::new();
         let mut constant_value = None;
-        if entry && !local && !method {
+        if entry && !local && !method && !predicate {
             let mut current = receiver;
             let mut cached = None;
             loop {
@@ -1405,6 +1434,9 @@ impl Vm {
             | Instruction::OpenIterator { .. }
             | Instruction::IteratorNext { .. }
             | Instruction::SpreadMember
+            | Instruction::OpenPredicate
+            | Instruction::PredicateNext { .. }
+            | Instruction::AddPredicateMember(_)
             | Instruction::Subscript
             | Instruction::SuperSubscript
             | Instruction::EntryParent
@@ -2441,10 +2473,7 @@ impl Compiler<'_> {
                     self.type_scopes.len(),
                     &mut BTreeSet::new(),
                 )?;
-                let properties = Self::body_properties_only(members)?;
-                let template = self.object(&properties)?;
-                instructions.push_at(Instruction::MakeInstance { template }, ty.span);
-                self.initialize_member_types(&properties, &mut instructions)?;
+                self.instance_body(members, ty.span, &mut instructions)?;
             } else if let crate::syntax::ExprKind::Object {
                 parent: None,
                 members,
@@ -2652,10 +2681,7 @@ impl Compiler<'_> {
                         self.type_scopes.len(),
                         &mut BTreeSet::new(),
                     )?;
-                    let properties = Self::body_properties_only(members)?;
-                    let template = self.object(&properties)?;
-                    output.push_at(Instruction::MakeInstance { template }, ty.span);
-                    self.initialize_member_types(&properties, output)?;
+                    self.instance_body(members, ty.span, output)?;
                 }
             }
             ExprKind::Subscript { receiver, key } => {
@@ -3057,12 +3083,16 @@ impl Compiler<'_> {
                 if let Some(parent) = parent {
                     self.expression(parent, output)?;
                 }
+                let begin = output.len();
                 self.collection_body(
                     members,
                     crate::heap::CollectionKind::Dynamic,
                     parent.is_some(),
                     output,
                 )?;
+                if let Some(parent) = parent {
+                    output.spans[begin] = Some(parent.unparenthesized().span);
+                }
             }
         }
         Ok(())
