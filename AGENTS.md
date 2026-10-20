@@ -8,7 +8,9 @@ These instructions apply to agents making changes in this repository. Explicit u
 - The project is at the initial setup stage. Do not describe a successful build as completion of the language implementation, compatibility verification, or performance validation.
 - Read `docs/architecture.md` and `docs/roadmap.md` for the implementation plan, and `TESTING.md` for the verification contract.
 - `../pkl-rs.rev1` is reference material. Its implementation and passing test records are not verification results for this project.
-- Write all project documentation in English. Preserve the original contents of upstream references and compatibility fixtures.
+- Write standard project documentation in English, including `README.md`, `AGENTS.md`, `CONTRIBUTING.md`, `TESTING.md`, architecture documentation, and API references.
+- Write planning documents in Korean, including `docs/roadmap.md`, implementation plans, and task plans. Apply these language rules to new documents and future updates.
+- Keep code, commands, identifiers, and file paths unchanged when translating prose. Preserve the original contents of upstream references and compatibility fixtures.
 
 ## Compatibility and design
 

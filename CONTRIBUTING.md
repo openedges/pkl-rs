@@ -17,7 +17,9 @@ Support compatibility changes with actual Java 0.32.0 results and reproducible i
 
 Before adding dependencies, review their purpose, Wasm support, licensing, and memory and performance impact. Track `Cargo.lock` in the repository and use `--locked` in CI and verification commands.
 
-Write all project documentation in English, including new documents and updates to existing ones. Preserve the original contents of upstream references and compatibility fixtures.
+Write standard project documentation in English, including the README, repository instructions, contribution guide, testing contract, architecture documentation, and API references. Write planning documents in Korean, including `docs/roadmap.md`, implementation plans, and task plans. Apply these language rules to new documents and future updates.
+
+Keep code, commands, identifiers, and file paths unchanged when translating prose. Preserve the original contents of upstream references and compatibility fixtures.
 
 ## Verification and change descriptions
 

@@ -12,7 +12,7 @@ The project is currently at the **repository and development environment setup s
 - Native, Wasm, and N-API support through a single Rust evaluation engine.
 - Coverage and implementation tracking through upstream, Pantry, regression, differential, and performance tests.
 
-See [TESTING.md](TESTING.md) for acceptance criteria and verification methods, and the [architecture](docs/architecture.md) and [roadmap](docs/roadmap.md) for the implementation plan.
+See [TESTING.md](TESTING.md) for acceptance criteria and verification methods, and the [architecture](docs/architecture.md) and [roadmap (Korean)](docs/roadmap.md) for the implementation plan.
 
 ## Reference versions
 
