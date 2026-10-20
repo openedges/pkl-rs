@@ -80,6 +80,7 @@ pub struct RuntimeError {
     pub span: Option<Span>,
     pub frames: Vec<RuntimeFrame>,
     pub hint: Option<String>,
+    pub type_diagnostic: Option<Box<crate::diagnostic::TypeDiagnostic>>,
 }
 
 impl RuntimeError {
@@ -90,6 +91,7 @@ impl RuntimeError {
             span: None,
             frames: Vec::new(),
             hint: None,
+            type_diagnostic: None,
         }
     }
 

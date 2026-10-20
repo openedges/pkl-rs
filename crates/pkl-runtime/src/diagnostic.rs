@@ -17,6 +17,134 @@ pub struct LogicalFrame {
     pub member: String,
 }
 
+/// A detached observation from a completed constraint trace.
+///
+/// Runtime tracking owns and traces the original values until the check ends.
+/// Diagnostics contain rendered snapshots, so retaining an error never keeps
+/// evaluator heap handles alive.
+#[derive(Clone, Debug, PartialEq, Eq)]
+pub struct PowerAssertionValue {
+    pub span: Span,
+    pub value: String,
+    pub executions: usize,
+    pub hidden: bool,
+}
+
+#[derive(Clone, Debug, PartialEq, Eq)]
+pub struct UnionTypeDiagnostic {
+    pub type_span: Span,
+    pub nontrivial: bool,
+    pub diagnostic: Box<TypeDiagnostic>,
+}
+
+/// Source-dependent type mismatch details, rendered at the common boundary.
+#[derive(Clone, Debug, PartialEq, Eq)]
+pub enum TypeDiagnostic {
+    Simple {
+        span: Span,
+        message: String,
+    },
+    Constraint {
+        span: Span,
+        value: String,
+        body_span: Span,
+        observations: Option<Vec<PowerAssertionValue>>,
+    },
+    Union {
+        span: Span,
+        value: String,
+        actual_type: String,
+        is_null: bool,
+        children: Vec<UnionTypeDiagnostic>,
+    },
+}
+
+impl TypeDiagnostic {
+    pub fn span(&self) -> Span {
+        match self {
+            Self::Simple { span, .. }
+            | Self::Constraint { span, .. }
+            | Self::Union { span, .. } => *span,
+        }
+    }
+
+    pub fn render(&self, source: &Source) -> (String, Option<String>) {
+        self.render_indented(source, "")
+    }
+
+    fn render_indented(&self, source: &Source, indent: &str) -> (String, Option<String>) {
+        match self {
+            Self::Simple { message, .. } => (
+                message
+                    .split('\n')
+                    .map(|line| format!("{indent}{line}"))
+                    .collect::<Vec<_>>()
+                    .join("\n"),
+                None,
+            ),
+            Self::Constraint {
+                span,
+                value,
+                body_span,
+                observations,
+            } => {
+                let expression = source.slice(*span).unwrap_or("");
+                let mut message = format!(
+                    "{indent}Type constraint `{expression}` violated.\n{indent}Value: {value}"
+                );
+                if let Some(observations) = observations {
+                    message.push_str("\n\n");
+                    message.push_str(&crate::power_assertions::render(
+                        source,
+                        *body_span,
+                        observations,
+                        &format!("{indent}    "),
+                    ));
+                }
+                (message, None)
+            }
+            Self::Union {
+                span,
+                value,
+                actual_type,
+                is_null,
+                children,
+            } => {
+                let expected = source.slice(*span).unwrap_or("");
+                let nontrivial: Vec<_> = children.iter().filter(|child| child.nontrivial).collect();
+                let actual = if !nontrivial.is_empty() {
+                    format!("a different `{actual_type}`")
+                } else if *is_null {
+                    "`null`".to_owned()
+                } else {
+                    format!("type `{actual_type}`")
+                };
+                let message = format!(
+                    "{indent}Expected value of type `{expected}`, but got {actual}.\n{indent}Value: {value}"
+                );
+                let hints: Vec<_> = nontrivial
+                    .into_iter()
+                    .map(|child| {
+                        let expected = source.slice(child.type_span).unwrap_or("");
+                        let (message, hint) = child
+                            .diagnostic
+                            .render_indented(source, &format!("{indent}  "));
+                        let mut text = format!(
+                            "{indent}* Value is not of type `{expected}` because:\n{message}"
+                        );
+                        if let Some(hint) = hint {
+                            text.push_str("\n\n");
+                            text.push_str(&hint);
+                        }
+                        text
+                    })
+                    .collect();
+                (message, (!hints.is_empty()).then(|| hints.join("\n\n")))
+            }
+        }
+    }
+}
+
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub struct Diagnostic {
     pub kind: DiagnosticKind,
@@ -30,7 +158,13 @@ pub struct Diagnostic {
     pub member: Option<Box<str>>,
     /// Explicit module identity for AST validation after its header was parsed.
     pub module_name: Option<Box<str>>,
-    pub frames: Vec<LogicalFrame>,
+    pub frames: Box<[LogicalFrame]>,
+    details: Option<Box<DiagnosticDetails>>,
+}
+
+#[derive(Clone, Debug, Eq, PartialEq)]
+struct DiagnosticDetails {
+    hint: String,
 }
 
 impl Diagnostic {
@@ -42,8 +176,18 @@ impl Diagnostic {
             highlight_length_utf16: None,
             member: None,
             module_name: None,
-            frames: Vec::new(),
+            frames: Box::default(),
+            details: None,
         }
+    }
+
+    pub fn with_hint(mut self, hint: impl Into<String>) -> Self {
+        self.details = Some(Box::new(DiagnosticDetails { hint: hint.into() }));
+        self
+    }
+
+    pub fn hint(&self) -> Option<&str> {
+        self.details.as_ref().map(|details| details.hint.as_str())
     }
 }
 
@@ -135,7 +279,7 @@ fn render_frame(output: &mut String, frame: &RenderFrame<'_>) {
 }
 
 // Java Character.isWhitespace deliberately excludes the non-breaking spaces.
-fn java_whitespace(ch: char) -> bool {
+pub(crate) fn java_whitespace(ch: char) -> bool {
     matches!(ch, '\u{0009}'..='\u{000d}' | '\u{001c}'..='\u{0020}' | '\u{1680}'
         | '\u{2000}'..='\u{2006}' | '\u{2008}'..='\u{200a}' | '\u{2028}'
         | '\u{2029}' | '\u{205f}' | '\u{3000}')

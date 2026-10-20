@@ -151,10 +151,11 @@ fn contextual_new_is_not_silently_accepted_as_a_qualified_receiver() {
     let source =
         "result = let (x = 7) let (y = x + 1) new { nested = new { value = x + y } }.nested.value";
     let module = parse_module(source).unwrap();
-    assert_eq!(
-        resolve_module(&module).unwrap_err().kind,
-        DiagnosticKind::Unsupported
-    );
+    let error = resolve_module(&module).unwrap_err();
+    assert_eq!(error.kind, DiagnosticKind::Syntax);
+    assert_eq!(error.message, "Cannot tell which parent to amend.");
+    assert_eq!(&source[error.span.start..error.span.end], "new");
+    assert_eq!(error.member.as_deref(), Some("result.<let expr>"));
 }
 
 #[test]

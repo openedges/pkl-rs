@@ -1,0 +1,3 @@
+class C { value = 5 }
+checked: C((ignored) -> value == 5) = new C {}
+result = checked.value

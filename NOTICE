@@ -7,6 +7,14 @@ by Apple Inc. and the Pkl project authors. Their original licenses, notices, and
 third-party notices are retained in the pinned submodules. Preserve the relevant
 notices when importing source code or test assets into this repository.
 
+The shared constraint diagnostics and value rendering in
+crates/pkl-runtime/src/power_assertions.rs and diagnostic_values.rs adapt
+algorithms from Pkl 0.32.0 PowerAssertions.java, VmValueRenderer.java, and
+ValueFormatter.java, rewritten in Rust for the shared VM.
+Copyright © 2024-2026 Apple Inc. and the Pkl project authors.
+These upstream sources are licensed under the Apache License, Version 2.0;
+their original notices remain in the pinned external/pkl checkout.
+
 Selected historical regression fixtures under tests/fixtures/rev1 are imported
 from pkl-rs revision 008930df07f457fefd5d6f4ac9308ff3063daabc. Their original
 Apache-2.0 LICENSE and NOTICE are retained in that directory, including OpenEdges

@@ -81,7 +81,9 @@ from the executable selection:
 
 ```sh
 python3 tools/m2_manifest.py --check
-python3 tools/m2_language.py --output target/m2/language-new
+python3 tools/m2_language.py --output target/m2/language-new --record-only
+python3 tools/m2_language.py --verify-report target/m2/language-new
+python3 tools/m2_language.py --verify-development target/m2/language-new
 python3 tools/m2_language.py --verify-subset target/m2/language-new
 python3 tools/m2_language.py --verify-full target/m2/language-new
 ```
@@ -106,8 +108,9 @@ See [frontend](docs/m1-frontend.md), [runtime](docs/m1-runtime.md),
 [semantics](docs/m1-semantics.md), [Host](docs/m1-host.md), and
 [platform](docs/m1-platforms.md) contracts, plus the
 [closing lifecycle comparison](docs/m1-lifecycle.md). Primitive comparisons are not full
-Pkl renderer/error comparisons. The runtime retains three full diagnostic byte
-mismatches; the platform command returns nonzero for its two known Java regex
+Pkl renderer/error comparisons. The latest M2 regression capture matches two of
+the three original runtime diagnostics; the cycle difference remains. The
+platform command returns nonzero for its two known Java regex
 backend differences. CI uses the separately named architecture contract mode,
 which still reports failed compatibility cases and requires the exact gap
 inventory. A green experiment job cannot establish release conformance.

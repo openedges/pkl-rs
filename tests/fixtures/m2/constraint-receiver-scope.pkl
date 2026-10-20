@@ -1,0 +1,2 @@
+class C { threshold = 100; value: Int(this < threshold) = 42 }
+result = (new C {}).value

@@ -179,10 +179,12 @@ fn gc_traces_closure_cycles_and_invalidates_reclaimed_function_handles() {
             block: 0,
             arity: 0,
             method: false,
+            capture_custom_this: false,
         }),
         environment: Environment {
             locals: vec![Value::Object(parent)],
             scopes: vec![],
+            ..Environment::default()
         },
         ..Object::default()
     });
@@ -763,5 +765,301 @@ fn repeated_modifier_flags_preserve_upstream_addition_semantics() {
     assert!(
         error.message.starts_with("Cannot extend non-open class"),
         "{error}"
+    );
+}
+
+#[test]
+fn pipeline_preserves_precedence_capture_and_left_to_right_failure_order() {
+    assert_eq!(
+        evaluate("result = 1 + 2 |> (x) -> x * 3"),
+        Ok(Value::Int(9))
+    );
+    assert_eq!(
+        evaluate("result = let (add = 4) 2 |> (x) -> x + add"),
+        Ok(Value::Int(6))
+    );
+    assert_eq!(
+        evaluate("result = 1 |> ((x) -> x + 2) |> ((x) -> x * 3)"),
+        Ok(Value::Int(9))
+    );
+    assert_eq!(
+        evaluate("result = 42 ?? missing |> missingToo"),
+        Ok(Value::Int(42))
+    );
+    assert_eq!(
+        evaluate("result = throw(\"left\") |> throw(\"right\")")
+            .unwrap_err()
+            .message,
+        "left"
+    );
+    assert!(
+        evaluate("result = 1 |> 2")
+            .unwrap_err()
+            .message
+            .starts_with("Operator `|>`")
+    );
+    assert!(
+        evaluate("result = 1 |> ((x, y) -> x)")
+            .unwrap_err()
+            .message
+            .starts_with("Expected 2 function arguments but got 1")
+    );
+}
+
+#[test]
+fn constraints_execute_in_order_with_custom_receivers_aliases_and_recoverable_unions() {
+    for source in [
+        "result: Int(this > 0) = 42",
+        "result: Int(this > 0, this < 100) = 42",
+        "result: Int((x) -> x > 0) = 42",
+        "result: Int(false) | Int = 42",
+        "typealias Positive = Int(this > 0)\nresult: Positive = 42",
+        "typealias Same<T> = T(this is T)\nresult: Same<Int> = 42",
+        "class C { threshold = 100; value: Int(this < threshold) = 42 }\nresult = (new C {}).value",
+        "result = let (x: Int(this > 0) = 42) x",
+        "function f(x: Int(this > 0)): Int(this < 100) = x\nresult = f(42)",
+    ] {
+        assert_eq!(evaluate(source), Ok(Value::Int(42)), "{source}");
+    }
+    assert_eq!(
+        evaluate("result = 42 is Int(false)"),
+        Ok(Value::Bool(false))
+    );
+    assert!(evaluate("result = 42 is Int(1)").is_err());
+    assert!(evaluate("result: Int(1) | Int = 42").is_err());
+    let error = evaluate("result: Int(false, throw(\"later\")) = 42").unwrap_err();
+    assert!(error.type_diagnostic.is_some());
+    assert_ne!(error.message, "later");
+}
+
+#[test]
+fn constraint_receivers_preserve_lambda_outer_and_declaration_owner() {
+    for source in [
+        "value: Int((ignored) -> ((q) -> this == 5 && outer == 5).apply(0)) = 5\nresult = value",
+        "marker=42\nvalue: Int((new Dynamic {marker=7; answer=outer.marker==42 && this.marker==7}).answer)=5\nresult=value",
+        "value: Int((ignored) -> (new Dynamic {marker=7; answer=outer==5 && this.marker==7}).answer)=5\nresult=value",
+        "function check(other:Int,value:Int(this>other)):Int(this>other)=value\nresult=check(3,5)",
+        "x=3\nresult=let(x:Int(this>x)=5) x",
+        "class C {value=5}\nv:C((ignored)->value==5)=new C{}\nresult=v.value",
+        "value=99\nclass C{value=5}\nv:C(value==99 && this.value==5)=new C{}\nresult=v.value",
+    ] {
+        assert_eq!(evaluate(source), Ok(Value::Int(5)), "{source}");
+    }
+    for source in [
+        "open class Base{local limit=4; value:Int(this>limit)=5}\nclass C extends Base{value=6}\nresult=(new C{}).value",
+        "class C{local limit=4; value:Int(this>limit)=5}\nresult=(new C{value=6}).value",
+    ] {
+        assert_eq!(evaluate(source), Ok(Value::Int(6)), "{source}");
+    }
+    assert_eq!(evaluate("typealias Identity<T> = T\nclass C{limit=4;value:Identity<Int(this>limit)> = 5}\nresult=(new C{}).value").unwrap_err().kind, ErrorKind::MissingMember);
+    assert_eq!(
+        evaluate(
+            "typealias Identity<T> = T\nfunction f(limit:Int,value:Identity<Int(this>limit)>)=value\nresult=f(4,5)"
+        ),
+        Ok(Value::Int(5))
+    );
+}
+
+#[test]
+fn constraint_host_suspension_cancellation_failure_and_retry_preserve_lazy_state() {
+    let (mut vm, object) = module(
+        "data=new {prefix=\"ok\"}\nfunction predicate(captured)=(value)->read(\"mem:predicate\")==captured.prefix && value==5\nresult:Int(predicate(data))=5",
+    );
+    let object_id = object.as_object().unwrap();
+    vm.start_member(object_id, "result").unwrap();
+    let request = match vm.poll(1000) {
+        VmPoll::Pending(request) => request,
+        other => panic!("{other:?}"),
+    };
+    assert!(vm.collect(&[]).live >= 3);
+    vm.cancel();
+    assert_eq!(done(&mut vm).unwrap_err().kind, ErrorKind::Cancelled);
+    assert!(vm.resume(request.id, Ok(Value::string("ok"))).is_err());
+    vm.start_member(object_id, "result").unwrap();
+    let failed = match vm.poll(1000) {
+        VmPoll::Pending(request) => request,
+        other => panic!("{other:?}"),
+    };
+    vm.resume(
+        failed.id,
+        Err(RuntimeError::new(ErrorKind::Host, "reader failed")),
+    )
+    .unwrap();
+    assert_eq!(done(&mut vm).unwrap_err().kind, ErrorKind::Host);
+    vm.collect(std::slice::from_ref(&object));
+    vm.start_member(object_id, "result").unwrap();
+    let retry = match vm.poll(1000) {
+        VmPoll::Pending(request) => request,
+        other => panic!("{other:?}"),
+    };
+    vm.collect(&[]);
+    vm.resume(retry.id, Ok(Value::string("ok"))).unwrap();
+    assert_eq!(done(&mut vm), Ok(Value::Int(5)));
+    // A completed check is cached; forcing again cannot issue another read.
+    vm.start_member(object_id, "result").unwrap();
+    assert_eq!(done(&mut vm), Ok(Value::Int(5)));
+    assert_eq!(
+        evaluate("result:Int(false,read(\"mem:must-not-read\")==\"ok\")=5")
+            .unwrap_err()
+            .kind,
+        ErrorKind::Type
+    );
+}
+
+#[test]
+fn constraint_host_reentry_roots_both_continuations() {
+    use pkl_runtime::host::{HostPoll, HostSession};
+    let parsed=parse_module("class C {value=5}\nresult:C(read(\"mem:outer\")==\"ok\" && this.value==5)=new C{}\nnested:Int((v)->read(\"mem:inner\")==\"ok\" && v==7)=7").unwrap();
+    let mut program = (*compile_module(&resolve_module(&parsed).unwrap()).unwrap()).clone();
+    let root_entry = program.entry;
+    let outer_entry = program.blocks.len();
+    program.blocks.push(vec![
+        I::Input(0),
+        I::GetMember(Arc::from("result")),
+        I::GetMember(Arc::from("value")),
+        I::Return,
+    ]);
+    let inner_entry = program.blocks.len();
+    program.blocks.push(vec![
+        I::Input(0),
+        I::GetMember(Arc::from("nested")),
+        I::Return,
+    ]);
+    let mut session = HostSession::new(Arc::new(program));
+    session.start(root_entry, vec![], 0, None).unwrap();
+    let object = match session.poll(0, 1000) {
+        HostPoll::Ready(Ok(value)) => value,
+        other => panic!("{other:?}"),
+    };
+    session
+        .start(outer_entry, vec![object.clone()], 0, None)
+        .unwrap();
+    let outer = match session.poll(0, 1000) {
+        HostPoll::Read { token, .. } => token,
+        other => panic!("{other:?}"),
+    };
+    session
+        .reenter(&outer, inner_entry, vec![object], 0, None)
+        .unwrap();
+    let inner = match session.poll(0, 1000) {
+        HostPoll::Read { token, .. } => token,
+        other => panic!("{other:?}"),
+    };
+    assert!(session.collect(&[]).live >= 4);
+    session.resume(&inner, Ok(Value::string("ok")), 0).unwrap();
+    assert_eq!(session.poll(0, 1000), HostPoll::Ready(Ok(Value::Int(7))));
+    session.collect(&[]);
+    session.resume(&outer, Ok(Value::string("ok")), 0).unwrap();
+    assert_eq!(session.poll(0, 1000), HostPoll::Ready(Ok(Value::Int(5))));
+    session.close();
+    assert_eq!(session.heap_stats().live, 0);
+}
+
+#[test]
+fn power_constraint_replay_resumes_and_gc_traces_observed_values() {
+    use pkl_runtime::vm::compile_module_with_power_assertions;
+    let parsed=parse_module("class C{value=5}\nresult:C(let(seen=this) read(\"mem:check\")==\"ok\" && seen.value>10)=new C{}").unwrap();
+    let program = compile_module_with_power_assertions(&resolve_module(&parsed).unwrap()).unwrap();
+    let mut vm = Vm::new(program.clone());
+    vm.set_power_assertions(true);
+    vm.start(program.entry, vec![]).unwrap();
+    let object = done(&mut vm).unwrap();
+    vm.start_member(object.as_object().unwrap(), "result")
+        .unwrap();
+    for _ in 0..2 {
+        let request = match vm.poll(1000) {
+            VmPoll::Pending(request) => request,
+            other => panic!("{other:?}"),
+        };
+        assert!(vm.collect(&[]).live >= 3);
+        vm.resume(request.id, Ok(Value::string("ok"))).unwrap();
+    }
+    let error = done(&mut vm).unwrap_err();
+    let Some(diagnostic) = error.type_diagnostic else {
+        panic!("missing diagnostic")
+    };
+    let pkl_runtime::diagnostic::TypeDiagnostic::Constraint {
+        observations: Some(observations),
+        ..
+    } = *diagnostic
+    else {
+        panic!("missing trace")
+    };
+    assert!(
+        observations
+            .iter()
+            .any(|item| item.value == "new C { value = 5 }")
+    );
+    assert!(observations.iter().any(|item| item.value == "false"));
+}
+
+#[test]
+fn enabled_union_replays_only_after_all_alternatives_fail_and_type_tests_do_not_replay() {
+    use pkl_runtime::vm::compile_module_with_power_assertions;
+    for test in [false, true] {
+        let source = if test {
+            "result=5 is (Int(read(\"mem:a\")==\"pass\") | Int(read(\"mem:b\")==\"pass\"))"
+        } else {
+            "result:Int(read(\"mem:a\")==\"pass\") | Int(read(\"mem:b\")==\"pass\")=5"
+        };
+        let parsed = parse_module(source).unwrap();
+        let program =
+            compile_module_with_power_assertions(&resolve_module(&parsed).unwrap()).unwrap();
+        let mut vm = Vm::new(program.clone());
+        vm.set_power_assertions(true);
+        vm.start(program.entry, vec![]).unwrap();
+        let object = done(&mut vm).unwrap();
+        vm.start_member(object.as_object().unwrap(), "result")
+            .unwrap();
+        let mut requests = Vec::new();
+        let outcome = loop {
+            match vm.poll(1000) {
+                VmPoll::Yielded => {}
+                VmPoll::Ready(result) => break result,
+                VmPoll::Pending(request) => {
+                    requests.push(request.uri.to_string());
+                    vm.collect(&[]);
+                    vm.resume(request.id, Ok(Value::string("fail"))).unwrap();
+                }
+            }
+        };
+        if test {
+            assert_eq!(requests, ["mem:a", "mem:b"]);
+            assert_eq!(outcome, Ok(Value::Bool(false)));
+        } else {
+            assert_eq!(
+                requests,
+                ["mem:a", "mem:b", "mem:a", "mem:a", "mem:b", "mem:b"]
+            );
+            assert_eq!(outcome.unwrap_err().kind, ErrorKind::Type);
+        }
+    }
+}
+
+#[test]
+fn inherited_constraint_fatal_errors_keep_declaration_and_override_value_frames() {
+    let source =
+        "open class A{value:Int(1 ~/ 0 > 0)=5}\nclass B extends A{value=6}\nresult=(new B{}).value";
+    let error = evaluate(source).unwrap_err();
+    assert_eq!(error.kind, ErrorKind::Arithmetic);
+    assert_eq!(error.frames[0].member.as_ref(), "#A.value");
+    assert_eq!(
+        &source[error.frames[0].span.start..error.frames[0].span.end],
+        "1 ~/ 0"
+    );
+    assert_eq!(error.frames[1].member.as_ref(), "#B.value");
+    assert_eq!(
+        &source[error.frames[1].span.start..error.frames[1].span.end],
+        "6"
+    );
+    assert_eq!(error.frames[2].member.as_ref(), "#result");
+    assert_eq!(
+        evaluate("result=1 |> new Dynamic{}").unwrap_err().message,
+        "Operator `|>` is not defined for operand types `Int` and `Dynamic`.\nLeft operand : 1\nRight operand: new Dynamic {}"
+    );
+    let error = evaluate("class C{x=missing}\nresult=1 |> new C{}").unwrap_err();
+    assert_eq!(
+        error.message,
+        "Operator `|>` is not defined for operand types `Int` and `#C`.\nLeft operand : 1\nRight operand: new C { x = ? }"
     );
 }

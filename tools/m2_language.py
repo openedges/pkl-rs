@@ -54,17 +54,23 @@ def valid_exception_outcome(outcome):
     return bool(name) and all(ch in b'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_$' for ch in name)
 
 
-def java_case_command(metadata, binary, identifier, source, expression):
+def expression_arguments(source, expression, power_assertions=False):
+    if not isinstance(power_assertions, bool):
+        raise ValueError('power_assertions must be a boolean')
+    return [str(source), expression, *(['--power-assertions'] if power_assertions else [])]
+
+
+def java_case_command(metadata, binary, identifier, source, expression, power_assertions=False):
     output = binary.parent.parent
     outcome = output / 'cases' / identifier / 'java.outcome.bin'
     base = list(metadata['command'][:-1])
     base[-1] += os.pathsep + str(binary.parent / 'java')
     base.insert(1, '-Dpkl.m2.outcome=' + str(outcome))
-    return [*base, 'M2LanguageProbe', str(source), expression]
+    return [*base, 'M2LanguageProbe', *expression_arguments(source, expression, power_assertions)]
 
 
-def capture_java(metadata, binary, identifier, source, expression, directory):
-    row = capture(java_case_command(metadata, binary, identifier, source, expression),
+def capture_java(metadata, binary, identifier, source, expression, directory, power_assertions=False):
+    row = capture(java_case_command(metadata, binary, identifier, source, expression, power_assertions),
                   directory, 'java', metadata['environment'])
     outcome = directory / 'java.outcome.bin'
     if not outcome.exists():
@@ -127,8 +133,9 @@ def execute(output: Path, candidate: Path | None):
         directory.mkdir(parents=True)
         source = ROOT / case['input']
         (directory / 'input.pkl').write_bytes(source.read_bytes())
-        arguments = [str(source), case['expression']]
-        java = capture_java(metadata, frozen, case['id'], source, case['expression'], directory)
+        arguments = expression_arguments(source, case['expression'], case.get('power_assertions', False))
+        java = capture_java(metadata, frozen, case['id'], source, case['expression'], directory,
+                            case.get('power_assertions', False))
         rust = capture([str(frozen), *arguments], directory, 'rust', metadata['environment'])
         outcome = status(case, java, rust, *( (directory / f'{name}.{channel}.bin').read_bytes()
                                              for name in ('java', 'rust') for channel in ('stdout', 'stderr')),
@@ -138,7 +145,8 @@ def execute(output: Path, candidate: Path | None):
             repeated = directory / 'java-repeat'
             repeated.mkdir()
             result['java_repeat'] = capture_java(metadata, frozen, case['id'] + '/java-repeat',
-                                                 source, case['expression'], repeated)
+                                                 source, case['expression'], repeated,
+                                                 case.get('power_assertions', False))
         results.append(result)
         print(f"{case['id']}: {outcome}", flush=True)
     relations = check_relations(manifest, output)
@@ -262,13 +270,17 @@ def check_report(directory: Path):
             process = json.loads((folder / f'{runtime}.process.json').read_bytes())
             if process != row[runtime]:
                 raise ValueError('process metadata differs: ' + row['id'])
-            if process['command'][-2:] != [str(ROOT / case['input']), case['expression']]:
-                raise ValueError('oracle/candidate input URI or expression differs: ' + row['id'])
+            arguments = expression_arguments(ROOT / case['input'], case['expression'],
+                                             case.get('power_assertions', False))
+            if process['command'][-len(arguments):] != arguments:
+                raise ValueError('oracle/candidate input URI, expression or power assertion mode differs: ' + row['id'])
+            if runtime == 'rust' and process['command'][1:] != arguments:
+                raise ValueError('candidate command adds unrecorded evaluation options: ' + row['id'])
             for channel in ('stdout', 'stderr'):
                 if oracle.sha256(folder / f'{runtime}.{channel}.bin') != process[channel + '_sha256']:
                     raise ValueError('process raw hash differs: ' + row['id'])
         if row['java']['command'] != java_case_command(report['oracle'], Path(row['rust']['command'][0]),
-                case['id'], ROOT / case['input'], case['expression']):
+                case['id'], ROOT / case['input'], case['expression'], case.get('power_assertions', False)):
             raise ValueError('case Java command changes pinned oracle options/classpath')
         if oracle.sha256(folder / 'java.outcome.bin') != row['java']['outcome_sha256']:
             raise ValueError('oracle outcome sidecar differs')
@@ -278,7 +290,8 @@ def check_report(directory: Path):
             if process != row.get('java_repeat'):
                 raise ValueError('independent remainder Java capture metadata differs')
             if process['command'] != java_case_command(report['oracle'], Path(row['rust']['command'][0]),
-                    case['id'] + '/java-repeat', ROOT / case['input'], case['expression']):
+                    case['id'] + '/java-repeat', ROOT / case['input'], case['expression'],
+                    case.get('power_assertions', False)):
                 raise ValueError('independent remainder Java command differs')
             for channel in ('stdout', 'stderr', 'outcome'):
                 if oracle.sha256(repeated / f'java.{channel}.bin') != process[channel + '_sha256']:

@@ -1,0 +1,2 @@
+local obj = new Dynamic { function positive(x) = x > 42 }
+result = 5

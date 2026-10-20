@@ -1,0 +1,164 @@
+{
+  "scope": "M2 stage 3 selected pipelines, resumable constraints and shared diagnostics. Full language milestone remains incomplete.",
+  "language": {
+    "selected_count": 292,
+    "status_counts": {
+      "mismatch": 1,
+      "oracle-error": 1,
+      "pass": 290
+    },
+    "source_stability": true,
+    "artifact_stability": true,
+    "candidate": {
+      "build": {
+        "command": [
+          "cargo",
+          "build",
+          "-p",
+          "pkl-runtime",
+          "--example",
+          "language_probe",
+          "--locked",
+          "--release",
+          "--target-dir",
+          "/Users/cody.ij.hwang/Projects/pkl-rs/target"
+        ],
+        "exit_code": 0,
+        "stderr_sha256": "9eeb13bbf1f53bce8165fc288359df66d264a084645805b2b6dd41d0d19bf59b",
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "timed_out": false
+      },
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/release/examples/language_probe",
+      "sha256": "0bfda402d0fdd8f2fd1a5bb54c2fe158d41cf1bf5d49f08ade68b900f9c6ce8c",
+      "source_binding": "recorded-build"
+    },
+    "inventory_counts": {
+      "cases": 1292,
+      "cases_by_execution": {
+        "ready": 292,
+        "unimplemented": 960,
+        "unmapped": 40
+      },
+      "requirements": 474,
+      "requirements_by_kind": {
+        "language_parser": 137,
+        "language_token": 109,
+        "semantic-family": 30,
+        "specification": 198
+      }
+    },
+    "metamorphic_relations": 17,
+    "metamorphic_statuses": [
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass"
+    ],
+    "full_gate_failure_reasons": 1950,
+    "known_failures": [
+      {
+        "id": "error-cycle",
+        "status": "oracle-error"
+      },
+      {
+        "id": "error-remainder-zero",
+        "status": "mismatch"
+      }
+    ],
+    "power_assertion_profiles": 23
+  },
+  "platforms": {
+    "total": 6078,
+    "oracle_passed": {
+      "rust": 6076,
+      "node": 6076,
+      "browser": 6076
+    },
+    "shared_engine_passed": 6078,
+    "compatibility_status": "fail",
+    "known_gaps": [
+      "regex-unicode-15-vs-16",
+      "regex-zero-width-supplementary"
+    ],
+    "experiment_contract_status": "pass",
+    "source_stability": true,
+    "node_scenarios": 20,
+    "browser_scenarios": 20
+  },
+  "regressions": {
+    "frontend_raw_matches": 15,
+    "runtime_value_matches": 6,
+    "runtime_diagnostic_matches": 2,
+    "runtime_diagnostic_mismatches": 1,
+    "lifecycle_protocol_matches": 2,
+    "lifecycle_full_diagnostic_mismatches": 4
+  },
+  "validation": {
+    "rust_passed": 139,
+    "rust_intentionally_ignored": 1,
+    "python_passed": 170
+  },
+  "performance": "No new speed or memory parity measurement; original full performance gates remain open.",
+  "gates": {
+    "scope": "Integrity/development checks and strict selected/full compatibility gates; failures retained.",
+    "rows": [
+      {
+        "command": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "tools/m2_language.py",
+          "--verify-report",
+          "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/language-stage3-final"
+        ],
+        "exit_code": 0,
+        "stdout_sha256": "d5339ae56fd61328f26d6e08893e732f00795a5415f4bacd61d60e1c9b0d8401",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "command": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "tools/m2_language.py",
+          "--verify-development",
+          "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/language-stage3-final"
+        ],
+        "exit_code": 0,
+        "stdout_sha256": "d5339ae56fd61328f26d6e08893e732f00795a5415f4bacd61d60e1c9b0d8401",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "command": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "tools/m2_language.py",
+          "--verify-subset",
+          "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/language-stage3-final"
+        ],
+        "exit_code": 1,
+        "stdout_sha256": "d5339ae56fd61328f26d6e08893e732f00795a5415f4bacd61d60e1c9b0d8401",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "command": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "tools/m2_language.py",
+          "--verify-full",
+          "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/language-stage3-final"
+        ],
+        "exit_code": 1,
+        "stdout_sha256": "d5339ae56fd61328f26d6e08893e732f00795a5415f4bacd61d60e1c9b0d8401",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    ]
+  }
+}

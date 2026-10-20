@@ -49,12 +49,16 @@ pub fn evaluate_language(
     uri: Utf16String,
     module_name: Utf16String,
     expression: Utf16String,
+    power_assertions: Option<bool>,
 ) -> Result<String> {
-    pkl_runtime::evaluation::scalar_expression(
+    pkl_runtime::evaluation::scalar_expression_with_options(
         &string(&source)?,
         &string(&uri)?,
         &string(&module_name)?,
         &string(&expression)?,
+        pkl_runtime::evaluation::EvaluationOptions {
+            power_assertions: power_assertions.unwrap_or(false),
+        },
     )
     .map_err(error)
 }

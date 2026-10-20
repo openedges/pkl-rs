@@ -1,0 +1,2 @@
+class C { first = 1; unused = 1 ~/ 0; last = 3 }
+result: C(this.last == 3 && false) = new C {}

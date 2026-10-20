@@ -322,6 +322,25 @@ fn object_methods_need_local_and_lambda_arity_is_bounded_by_the_language() {
 }
 
 #[test]
+fn invalid_object_method_belongs_to_enclosing_member_before_method_scope() {
+    for (source, member) in [
+        (
+            "local obj = new Dynamic { function positive(x) = x > 42 } result = 5",
+            "obj",
+        ),
+        (
+            "local obj = let (x = 1) new Dynamic { function positive() = x } result = 5",
+            "obj.<let expr>",
+        ),
+    ] {
+        let error = resolve_module(&parse_module(source).unwrap()).unwrap_err();
+        assert_eq!(error.kind, DiagnosticKind::Syntax);
+        assert_eq!(error.member.as_deref(), Some(member));
+        assert!(source[error.span.start..error.span.end].starts_with("function positive("));
+    }
+}
+
+#[test]
 fn let_parameters_accept_types_and_discard_bindings() {
     let source = "result = let (x: Int = 4) let (_: Int = x) x";
     let module = parse_module(source).unwrap();
@@ -397,4 +416,109 @@ fn type_only_keywords_in_object_bodies_preserve_expression_expectation() {
         );
         assert_eq!(&source[error.span.start..error.span.end], keyword);
     }
+}
+
+#[test]
+fn pipelines_are_left_associative_between_coalesce_and_logical_or() {
+    let expression = parse_expression("value ?? first |> second |> third || fallback").unwrap();
+    let ExprKind::Binary {
+        op: BinaryOp::NullCoalesce,
+        right,
+        ..
+    } = expression.kind
+    else {
+        panic!("coalesce")
+    };
+    let ExprKind::Binary {
+        op: BinaryOp::Pipe,
+        left,
+        right,
+    } = right.kind
+    else {
+        panic!("pipeline")
+    };
+    assert!(matches!(
+        left.kind,
+        ExprKind::Binary {
+            op: BinaryOp::Pipe,
+            ..
+        }
+    ));
+    assert!(matches!(
+        right.kind,
+        ExprKind::Binary {
+            op: BinaryOp::Or,
+            ..
+        }
+    ));
+    let expression = parse_expression("1 |> (x) -> x + 1").unwrap();
+    let ExprKind::Binary {
+        op: BinaryOp::Pipe,
+        right,
+        ..
+    } = expression.kind
+    else {
+        panic!("pipeline")
+    };
+    assert!(matches!(right.kind, ExprKind::Function { .. }));
+}
+
+#[test]
+fn grouping_preserves_authored_and_executable_spans_separately() {
+    let source = "((this)) > (limit)";
+    let expression = parse_expression(source).unwrap();
+    let ExprKind::Binary { left, right, .. } = &expression.kind else {
+        panic!("comparison")
+    };
+    assert_eq!(left.span, Span::new(0, 8));
+    assert_eq!(left.unparenthesized().span, Span::new(2, 6));
+    assert!(matches!(left.unparenthesized().kind, ExprKind::This));
+    assert_eq!(right.span, Span::new(11, 18));
+    assert_eq!(right.unparenthesized().span, Span::new(12, 17));
+
+    let source = "limit = 1 result: Int(((this)) > (limit)) = 5";
+    let module = parse_module(source).unwrap();
+    let resolved = resolve_module(&module).unwrap();
+    let start = source.find("this").unwrap();
+    assert!(resolved.custom_this.contains(&Span::new(start, start + 4)));
+    let start = source.rfind("limit").unwrap();
+    assert_eq!(
+        resolved.names[&Span::new(start, start + 5)],
+        Binding::Property {
+            owner_depth: 0,
+            local: false
+        }
+    );
+
+    assert!(parse_expression("(f)(1)").is_err());
+    assert!(parse_expression("(obj.f)(1)").is_err());
+    assert!(parse_expression("(obj).f(1)").is_ok());
+
+    let source = "class C { value = 42 } c: C = (new {}) result = c.value";
+    let error = resolve_module(&parse_module(source).unwrap()).unwrap_err();
+    assert_eq!(error.message, "Cannot tell which parent to amend.");
+    assert_eq!(&source[error.span.start..error.span.end], "new");
+    assert_eq!(error.member.as_deref(), Some("c"));
+    resolve_module(&parse_module("class C {} c: C = new {}").unwrap()).unwrap();
+}
+
+#[test]
+fn semantic_diagnostics_flatten_consecutive_let_scopes_only_after_binding() {
+    for source in [
+        "result = let (x = 1) (new {})",
+        "result = let (x = 1) let (y = x) (new {})",
+    ] {
+        let error = resolve_module(&parse_module(source).unwrap()).unwrap_err();
+        assert_eq!(error.member.as_deref(), Some("result.<let expr>"));
+        assert_eq!(error.message, "Cannot tell which parent to amend.");
+        assert!(
+            error
+                .hint()
+                .unwrap()
+                .starts_with("Please specify a parent explicitly")
+        );
+    }
+    let source = "result = let (x: Int(new {}) = 1) x";
+    let error = resolve_module(&parse_module(source).unwrap()).unwrap_err();
+    assert_eq!(error.member.as_deref(), Some("result"));
 }

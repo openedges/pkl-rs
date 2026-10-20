@@ -42,6 +42,13 @@ stdout or stderr. The initial Rust probe accepts scalar property
 paths. This stringification boundary does not prove typed API compatibility or
 compound-value rendering.
 
+The default uses Java's API setting with power assertions disabled. Selected
+cases can opt in with `"power_assertions": true`; the runner then passes
+`--power-assertions` to both probes and verifies that option in the recorded
+commands. These cases compare the complete value graph, message, hints, and
+frames as raw bytes. Enabling this profile does not change historical captures
+or the default mode of other cases.
+
 The commands have distinct meanings:
 
 - `--verify-report` checks evidence integrity and recomputes recorded outcomes,
@@ -90,6 +97,8 @@ experimental scalar boundary is available as `evaluateLanguage` in the Node
 and Wasm development bindings, including complete diagnostics. It accepts a
 source string, URI, inferred module name, and scalar property path; explicit
 module declarations take precedence over the inferred name.
+An optional fifth Boolean argument enables power assertions, with the same
+disabled default as the native probe and Java API.
 
 The generated identifier tables reproduce the pinned lexer's UTF-16 code-unit
 predicates. `m2_identifier_tables.py` records the raw Java intervals and checks

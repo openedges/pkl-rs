@@ -5,6 +5,13 @@ use crate::source::{Source, SourceMap, Span};
 use crate::value::{ErrorKind, RuntimeError, Value};
 use crate::vm::{Vm, VmPoll};
 
+/// Options shared by all experimental language adapters.
+#[derive(Clone, Copy, Debug, Default)]
+pub struct EvaluationOptions {
+    /// Match the Java API default (disabled) unless explicitly requested.
+    pub power_assertions: bool,
+}
+
 /// Evaluate a scalar property path and retain complete source diagnostic text.
 /// The supplied URI and inferred module name are transport context, never rewritten
 /// after evaluation. Explicit module declarations override the inferred name.
@@ -13,6 +20,22 @@ pub fn scalar_expression(
     uri: &str,
     name: &str,
     expression: &str,
+) -> Result<String, String> {
+    scalar_expression_with_options(
+        source_text,
+        uri,
+        name,
+        expression,
+        EvaluationOptions::default(),
+    )
+}
+
+pub fn scalar_expression_with_options(
+    source_text: &str,
+    uri: &str,
+    name: &str,
+    expression: &str,
+    options: EvaluationOptions,
 ) -> Result<String, String> {
     let mut sources = SourceMap::default();
     let source_id = sources.add(uri, source_text);
@@ -32,7 +55,7 @@ pub fn scalar_expression(
                 span: error.span,
                 highlight_length_utf16: error.highlight_length_utf16,
             }],
-            None,
+            error.hint(),
         )
     })?;
     let declared_name = module
@@ -55,14 +78,19 @@ pub fn scalar_expression(
                 span: error.span,
                 highlight_length_utf16: error.highlight_length_utf16,
             }],
-            None,
+            error.hint(),
         )
     })?;
-    let mut program = crate::vm::compile_module(&resolved)
-        .map_err(|error| runtime_error(source, uri, name, expression, error, false))?;
+    let mut program = if options.power_assertions {
+        crate::vm::compile_module_with_power_assertions(&resolved)
+    } else {
+        crate::vm::compile_module(&resolved)
+    }
+    .map_err(|error| runtime_error(source, uri, name, expression, error, false))?;
     std::sync::Arc::make_mut(&mut program).module_name = name.into();
     let entry = program.entry;
     let mut vm = Vm::new(program);
+    vm.set_power_assertions(options.power_assertions);
     let mut evaluate = || -> Result<Value, RuntimeError> {
         vm.start(entry, vec![])?;
         let mut value = poll(&mut vm)?;
@@ -123,6 +151,11 @@ fn runtime_error(
     mut error: RuntimeError,
     include_expression: bool,
 ) -> String {
+    if let Some(diagnostic) = &error.type_diagnostic {
+        let (message, hint) = diagnostic.render(source);
+        error.message = message;
+        error.hint = hint;
+    }
     if error.kind == ErrorKind::MissingType {
         error.hint = Some(format!(
             "Searched in the following places:\n* Module `{module}` and any supermodules\n* Module `pkl#base`"

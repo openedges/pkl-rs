@@ -6,7 +6,7 @@ Reimplement Pkl **0.32.0** in Rust so that existing Pkl programs and integration
 
 This document defines the project's durable goals and scope. [PLAN.md](PLAN.md) contains the milestone overview, implementation order, and milestone gates in Korean; [TESTING.md](TESTING.md) defines the verification contract. The [architecture](docs/architecture.md) describes the intended design.
 
-The repository currently contains development setup, a minimal runtime library, and Java baseline verification tooling. Pkl evaluation and the product interfaces remain unimplemented. Builds and Java baseline results establish neither Rust compatibility nor the performance targets below.
+The repository currently contains Java baseline verification tooling and a bounded shared Rust evaluator with native, browser, and Node experiments. M2 is expanding language support; the complete evaluator and product interfaces remain unfinished. Selected differential results establish compatibility only for the recorded cases, not the full language or the performance targets below.
 
 ## Reference Baseline
 

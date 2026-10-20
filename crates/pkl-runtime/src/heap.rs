@@ -17,6 +17,9 @@ pub struct Scope {
 #[derive(Clone, Debug, Default)]
 pub struct Environment {
     pub locals: Vec<Value>,
+    pub this_value: Option<Value>,
+    pub outer_value: Option<Value>,
+    pub custom_this: Option<Value>,
     /// Innermost first; immutable captured lexical object scopes.
     pub scopes: Vec<Scope>,
 }
@@ -52,6 +55,7 @@ pub struct Function {
     pub block: usize,
     pub arity: usize,
     pub method: bool,
+    pub capture_custom_this: bool,
 }
 
 #[derive(Clone, Debug)]
@@ -174,6 +178,9 @@ impl Heap {
                 .environment
                 .locals
                 .iter()
+                .chain(object.environment.this_value.iter())
+                .chain(object.environment.outer_value.iter())
+                .chain(object.environment.custom_this.iter())
                 .chain(object.cache.values().filter_map(|state| match state {
                     LazyState::Completed(value) => Some(value),
                     _ => None,

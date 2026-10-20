@@ -70,6 +70,36 @@ def generated_cases():
         if next_int(2):
             source = 'prefix = "😀한"\n' + source
         add(f'fuzz-parser-{index:02}', source, 'diagnostics', 'malformed-grammar-mutation', failure=True)
+
+    # Keep these draws after the historical generator so its fixture bytes remain
+    # unchanged. The domains state why each expression pair is equivalent.
+    value, offset, bound = [next_int(101) - 50 for _ in range(3)]
+    relations = [
+        ('pipeline-apply', 'functions',
+         [f'offset = {offset}\nf = (x) -> x + offset\ng = (x) -> x * 2\nresult = {value} |> f |> g\n',
+          f'offset = {offset}\nf = (x) -> x + offset\ng = (x) -> x * 2\nresult = g.apply(f.apply({value}))\n'],
+         'One-argument captured Int functions; left-associated pipeline equals nested apply, no overflow'),
+        ('constraint-is', 'constraints',
+         [f'result = {value} is Int(this > {bound})\n',
+          f'result = ({value} is Int) && {value} > {bound}\n'],
+         'Bounded Int value and bound; successful base type leaves the same Boolean predicate'),
+        ('constraint-nullable', 'constraints',
+         [f'result = (null is Int(this > {bound})?) && ({bound + 1} is Int(this > {bound})?)\n',
+          f'result = true && {bound + 1} > {bound}\n'],
+         'Nullable constrained Int accepts null and a bounded Int strictly above its bound; both checks must succeed'),
+        ('constraint-union', 'unions',
+         [f'result = {value} is (Int(this > {value + 1}) | Int)\n',
+          f'result = {value} is Int\n'],
+         'Bounded Int fails the first constraint and succeeds in the unconstrained Int union branch'),
+        ('constraint-base', 'constraints',
+         ['result = "wrong base" is Int(this ~/ 0 > 0)\n', 'result = false\n'],
+         'A String fails the Int base check before the fatal division predicate can execute'),
+    ]
+    for family, feature, sources, domain in relations:
+        ids = [f'generated-{family}-{side}' for side in ('left', 'right')]
+        relation = dict(kind='equal-stdout', case_ids=ids, domain=domain)
+        for identifier, source in zip(ids, sources, strict=True):
+            add(identifier, source, feature, 'metamorphic', relation)
     return cases
 
 

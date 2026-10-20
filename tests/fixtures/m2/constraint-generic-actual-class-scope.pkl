@@ -1,0 +1,3 @@
+typealias Identity<T> = T
+class C { limit = 4; value: Identity<Int(this > limit)> = 5 }
+result = (new C {}).value

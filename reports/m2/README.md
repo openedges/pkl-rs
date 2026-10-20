@@ -3,7 +3,74 @@
 M2 is **in progress**. Stage 1 added expressions, strings, recursive methods,
 closures, primitive type checks, and source diagnostics. Stage 2 adds selected
 class, inheritance, generic alias, default-value, and modifier semantics to the
-shared engine. Neither stage completes the language milestone.
+shared engine. Stage 3 adds pipelines, resumable constraints, and optional power
+assertions. These checkpoints do not complete the language milestone.
+
+## Stage 3 checkpoint
+
+The [stage 3 summary](stage3-summary.json) records **292 selected comparisons:
+290 raw-byte matches, one Java remainder-zero bug mismatch, and one cyclic
+property oracle failure**. All 17 metamorphic relations pass. The selection
+includes 23 explicit power-assertion profiles; the other cases retain the
+Java API's disabled default. The [language archive](language-stage3-evidence.tar.gz)
+contains the recorded release build, complete source snapshots, oracle identity,
+exact commands and inputs, outcome sidecars, and full stdout/stderr. Sources and
+artifacts stayed stable during acquisition.
+
+The shared VM now executes Boolean and function-valued constraints as resumable
+continuations. The checks cover base-first evaluation, nullable wrapper order,
+union alternatives, casts and type tests, captured receivers, inherited
+declaration owners, and alias receiver changes that preserve frame locals.
+Pipelines use ordinary function calls with the pinned precedence, evaluation
+order, arity checks, and authored diagnostics.
+
+Power assertions use an explicitly instrumented compilation. The ordinary
+compilation does not add observation instructions. Failure construction retains
+the pinned conditional re-execution order and renders complete value graphs,
+including grouping, multiline expressions, comments, and UTF-16 columns.
+Diagnostic value snapshots do not force members; they preserve inherited
+declaration order, completed caches, Pkl string escapes, and UTF-16 truncation,
+including the Java writer's replacement of a split surrogate.
+
+The [validation record](validation-stage3.json) and
+[raw checks](validation-stage3-evidence.tar.gz) contain reference verification,
+formatting, workspace Clippy, **139 Rust tests, 170 Python tests**, Wasm runtime
+compilation, and inventory freshness. One existing Rust probe is intentionally
+ignored by the unit suite and runs through its differential adapter. Constraint
+lifecycle tests exercise Host suspension, nested evaluation, GC, cancellation,
+failure retry, successful caching, union replay order, pending close, ancestor
+timeout, resume-time timeout, and rejection of late callbacks. These unit
+protocols do not establish the complete Java Host/resource API contract.
+
+The [platform archive](platforms-stage3-evidence.tar.gz) records **20 scenarios
+in each of actual Node and Chromium**, including constraint failures with power
+assertions both disabled and enabled through the shared boundary. All 6,078
+primitive results agree across Rust targets; each target matches Java on 6,076.
+The two known regex differences remain failures. The
+[M1 regression archive](regressions-stage3-evidence.tar.gz) retains 15 frontend
+matches, six runtime value matches, two full runtime diagnostic matches, the
+unresolved cycle diagnostic, two matching lifecycle protocols, and four failed
+full lifecycle diagnostic comparisons. No new performance parity claim is made.
+
+The [identifier evidence](identifier-stage3-evidence.tar.gz) verifies the
+unchanged UTF-16 lexer intervals and additional full code-point intervals for
+diagnostic identifier quoting. A supplementary character can require quoting
+in source while the pinned diagnostic renderer displays it unquoted.
+
+The [gate captures](gates-stage3-evidence.tar.gz) retain integrity and development
+success, with strict selected and full compatibility failure. The inventory has
+474 requirement records and 1,292 accounting rows: 292 executable selections
+and 1,000 pending upstream/historical obligations. These overlap and are not
+distinct feature counts. The full gate retains 1,950 failure reasons.
+
+The [exploration archive](exploration-stage3-evidence.tar.gz) preserves Java
+specimens, intermediate Rust mismatches, and independent adversarial reviews.
+Those exploratory directories do not claim a frozen whole-source acquisition.
+Confirmed inherited-owner, generic-alias receiver, grouped-source, method-frame,
+pipeline object-value, and inherited fatal-frame defects were corrected and
+added to the final selection. A review also retained Java alias JVM bugs and
+unsupported Dynamic-method diagnostic differences outside that selection;
+they are unresolved scope, without new development exceptions.
 
 ## Stage 2 checkpoint
 
@@ -145,7 +212,8 @@ digest, raw results, and source snapshots against the exact commit.
 ## Remaining milestone scope
 
 Known remaining scope includes complete class initialization/retry and modifier
-semantics, imported and structural/function types, constraints and full generics,
+semantics, imported and structural/function types, complete constraint/generic
+and collection-wrapper semantics,
 collection members and generators,
 `Reference`, reflection metadata, full source grammar, compound values,
 complete error selection/rendering, and the upstream semantic corpus.

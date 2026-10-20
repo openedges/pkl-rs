@@ -1,0 +1,1 @@
+result = 1 |> (if (missing) (() -> 42) else (() -> 42))

@@ -2111,6 +2111,1263 @@
         "semantic:diagnostics"
       ],
       "expected_outcome": "failure"
+    },
+    {
+      "id": "pipe-basic",
+      "input": "tests/fixtures/m2/pipe-basic.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:functions"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "pipe-chain",
+      "input": "tests/fixtures/m2/pipe-chain.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:functions"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "pipe-add-precedence",
+      "input": "tests/fixtures/m2/pipe-add-precedence.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:functions"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "pipe-or-precedence",
+      "input": "tests/fixtures/m2/pipe-or-precedence.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:functions"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "pipe-coalesce-precedence",
+      "input": "tests/fixtures/m2/pipe-coalesce-precedence.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:functions"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "pipe-coalesce-lazy",
+      "input": "tests/fixtures/m2/pipe-coalesce-lazy.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:functions"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "pipe-not-function",
+      "input": "tests/fixtures/m2/pipe-not-function.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:functions",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "pipe-null-function",
+      "input": "tests/fixtures/m2/pipe-null-function.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:functions",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "pipe-zero-arity",
+      "input": "tests/fixtures/m2/pipe-zero-arity.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:functions",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "pipe-two-arity",
+      "input": "tests/fixtures/m2/pipe-two-arity.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:functions",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "pipe-parameter-type",
+      "input": "tests/fixtures/m2/pipe-parameter-type.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:functions",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "pipe-left-first",
+      "input": "tests/fixtures/m2/pipe-left-first.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:functions",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "pipe-right-before-arity",
+      "input": "tests/fixtures/m2/pipe-right-before-arity.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:functions",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "pipe-function-body-error",
+      "input": "tests/fixtures/m2/pipe-function-body-error.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:functions",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "constraint-true",
+      "input": "tests/fixtures/m2/constraint-true.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:constraints",
+        "semantic:types"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "constraint-false",
+      "input": "tests/fixtures/m2/constraint-false.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:constraints",
+        "semantic:types",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "constraint-compare-false",
+      "input": "tests/fixtures/m2/constraint-compare-false.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:constraints",
+        "semantic:types",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "constraint-base-before-body",
+      "input": "tests/fixtures/m2/constraint-base-before-body.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:constraints",
+        "semantic:types",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "constraint-first-before-second",
+      "input": "tests/fixtures/m2/constraint-first-before-second.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:constraints",
+        "semantic:types",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "constraint-second-false",
+      "input": "tests/fixtures/m2/constraint-second-false.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:constraints",
+        "semantic:types",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "constraint-nonbool",
+      "input": "tests/fixtures/m2/constraint-nonbool.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:constraints",
+        "semantic:types",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "constraint-function-true",
+      "input": "tests/fixtures/m2/constraint-function-true.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:constraints",
+        "semantic:types"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "constraint-function-false",
+      "input": "tests/fixtures/m2/constraint-function-false.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:constraints",
+        "semantic:types",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "constraint-function-nonbool",
+      "input": "tests/fixtures/m2/constraint-function-nonbool.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:constraints",
+        "semantic:types",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "constraint-function-zero-arity",
+      "input": "tests/fixtures/m2/constraint-function-zero-arity.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:constraints",
+        "semantic:types",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "constraint-function-two-arity",
+      "input": "tests/fixtures/m2/constraint-function-two-arity.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:constraints",
+        "semantic:types",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "constraint-fatal-division",
+      "input": "tests/fixtures/m2/constraint-fatal-division.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:constraints",
+        "semantic:types",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "constraint-nullable-skip",
+      "input": "tests/fixtures/m2/constraint-nullable-skip.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:constraints",
+        "semantic:types",
+        "semantic:unions"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "constraint-nullable-overall",
+      "input": "tests/fixtures/m2/constraint-nullable-overall.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:constraints",
+        "semantic:types",
+        "semantic:unions",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "constraint-union-fallback",
+      "input": "tests/fixtures/m2/constraint-union-fallback.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:constraints",
+        "semantic:types",
+        "semantic:unions"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "constraint-union-fatal",
+      "input": "tests/fixtures/m2/constraint-union-fatal.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:constraints",
+        "semantic:types",
+        "semantic:unions",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "constraint-is-false",
+      "input": "tests/fixtures/m2/constraint-is-false.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:constraints",
+        "semantic:types",
+        "semantic:type-tests-casts"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "constraint-is-fatal",
+      "input": "tests/fixtures/m2/constraint-is-fatal.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:constraints",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "constraint-as-false",
+      "input": "tests/fixtures/m2/constraint-as-false.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:constraints",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "constraint-this-closure",
+      "input": "tests/fixtures/m2/constraint-this-closure.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:constraints",
+        "semantic:types",
+        "semantic:name-resolution"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "constraint-let",
+      "input": "tests/fixtures/m2/constraint-let.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:constraints",
+        "semantic:types"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "constraint-unicode",
+      "input": "tests/fixtures/m2/constraint-unicode.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:constraints",
+        "semantic:types",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "constraint-multiline",
+      "input": "tests/fixtures/m2/constraint-multiline.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:constraints",
+        "semantic:types",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "constraint-power-and",
+      "input": "tests/fixtures/m2/constraint-power-and.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:constraints",
+        "semantic:types",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "constraint-power-nested",
+      "input": "tests/fixtures/m2/constraint-power-nested.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:constraints",
+        "semantic:types",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "alias-nested-identity-type",
+      "input": "tests/fixtures/m2/alias-nested-identity-type.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:type-aliases",
+        "semantic:generics",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "constraint-alias-scope",
+      "input": "tests/fixtures/m2/constraint-alias-scope.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:constraints",
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:name-resolution",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "constraint-receiver-scope",
+      "input": "tests/fixtures/m2/constraint-receiver-scope.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:constraints",
+        "semantic:types",
+        "semantic:name-resolution"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "constraint-nested-object-outer",
+      "input": "tests/fixtures/m2/constraint-nested-object-outer.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:constraints",
+        "semantic:types",
+        "semantic:name-resolution"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "constraint-nested-object-this",
+      "input": "tests/fixtures/m2/constraint-nested-object-this.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:constraints",
+        "semantic:types",
+        "semantic:name-resolution",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "constraint-alias-generic",
+      "input": "tests/fixtures/m2/constraint-alias-generic.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:constraints",
+        "semantic:types",
+        "semantic:type-aliases"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "constraint-union-both-false",
+      "input": "tests/fixtures/m2/constraint-union-both-false.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:constraints",
+        "semantic:types",
+        "semantic:unions",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "constraint-nested-constraint",
+      "input": "tests/fixtures/m2/constraint-nested-constraint.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:constraints",
+        "semantic:types",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "constraint-function-closure",
+      "input": "tests/fixtures/m2/constraint-function-closure.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:constraints",
+        "semantic:types",
+        "semantic:name-resolution",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "constraint-shortcircuit",
+      "input": "tests/fixtures/m2/constraint-shortcircuit.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:constraints",
+        "semantic:types",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "constraint-alias-this-capture",
+      "input": "tests/fixtures/m2/constraint-alias-this-capture.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:constraints",
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:name-resolution"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "power-constraint-false",
+      "input": "tests/fixtures/m2/power-constraint-false.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:constraints",
+        "semantic:types",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure",
+      "power_assertions": true
+    },
+    {
+      "id": "power-constraint-compare-false",
+      "input": "tests/fixtures/m2/power-constraint-compare-false.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:constraints",
+        "semantic:types",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure",
+      "power_assertions": true
+    },
+    {
+      "id": "power-constraint-second-false",
+      "input": "tests/fixtures/m2/power-constraint-second-false.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:constraints",
+        "semantic:types",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure",
+      "power_assertions": true
+    },
+    {
+      "id": "power-constraint-function-false",
+      "input": "tests/fixtures/m2/power-constraint-function-false.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:constraints",
+        "semantic:types",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure",
+      "power_assertions": true
+    },
+    {
+      "id": "power-constraint-unicode",
+      "input": "tests/fixtures/m2/power-constraint-unicode.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:constraints",
+        "semantic:types",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure",
+      "power_assertions": true
+    },
+    {
+      "id": "power-constraint-multiline",
+      "input": "tests/fixtures/m2/power-constraint-multiline.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:constraints",
+        "semantic:types",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure",
+      "power_assertions": true
+    },
+    {
+      "id": "power-constraint-power-and",
+      "input": "tests/fixtures/m2/power-constraint-power-and.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:constraints",
+        "semantic:types",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure",
+      "power_assertions": true
+    },
+    {
+      "id": "power-constraint-power-nested",
+      "input": "tests/fixtures/m2/power-constraint-power-nested.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:constraints",
+        "semantic:types",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure",
+      "power_assertions": true
+    },
+    {
+      "id": "power-constraint-as-false",
+      "input": "tests/fixtures/m2/power-constraint-as-false.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:constraints",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure",
+      "power_assertions": true
+    },
+    {
+      "id": "power-constraint-union-both-false",
+      "input": "tests/fixtures/m2/power-constraint-union-both-false.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:constraints",
+        "semantic:types",
+        "semantic:unions",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure",
+      "power_assertions": true
+    },
+    {
+      "id": "power-constraint-nested-constraint",
+      "input": "tests/fixtures/m2/power-constraint-nested-constraint.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:constraints",
+        "semantic:types",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure",
+      "power_assertions": true
+    },
+    {
+      "id": "power-constraint-function-closure",
+      "input": "tests/fixtures/m2/power-constraint-function-closure.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:constraints",
+        "semantic:types",
+        "semantic:name-resolution",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure",
+      "power_assertions": true
+    },
+    {
+      "id": "power-constraint-shortcircuit",
+      "input": "tests/fixtures/m2/power-constraint-shortcircuit.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:constraints",
+        "semantic:types",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure",
+      "power_assertions": true
+    },
+    {
+      "id": "power-constraint-alias-scope",
+      "input": "tests/fixtures/m2/power-constraint-alias-scope.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:constraints",
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:name-resolution",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure",
+      "power_assertions": true
+    },
+    {
+      "id": "power-constraint-expression-multiline",
+      "input": "tests/fixtures/m2/power-constraint-expression-multiline.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:constraints",
+        "semantic:types",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure",
+      "power_assertions": true
+    },
+    {
+      "id": "power-constraint-expression-comment",
+      "input": "tests/fixtures/m2/power-constraint-expression-comment.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:constraints",
+        "semantic:types",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure",
+      "power_assertions": true
+    },
+    {
+      "id": "generated-pipeline-apply-left",
+      "input": "tests/fixtures/m2/generated-pipeline-apply-left.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:functions",
+        "semantic:generated-verification"
+      ],
+      "expected_outcome": "success",
+      "generated": {
+        "seed": "4d32504b4c303332",
+        "algorithm": "xorshift64-13-7-17",
+        "kind": "metamorphic"
+      },
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "generated-pipeline-apply-left",
+          "generated-pipeline-apply-right"
+        ],
+        "domain": "One-argument captured Int functions; left-associated pipeline equals nested apply, no overflow"
+      }
+    },
+    {
+      "id": "generated-pipeline-apply-right",
+      "input": "tests/fixtures/m2/generated-pipeline-apply-right.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:functions",
+        "semantic:generated-verification"
+      ],
+      "expected_outcome": "success",
+      "generated": {
+        "seed": "4d32504b4c303332",
+        "algorithm": "xorshift64-13-7-17",
+        "kind": "metamorphic"
+      },
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "generated-pipeline-apply-left",
+          "generated-pipeline-apply-right"
+        ],
+        "domain": "One-argument captured Int functions; left-associated pipeline equals nested apply, no overflow"
+      }
+    },
+    {
+      "id": "generated-constraint-is-left",
+      "input": "tests/fixtures/m2/generated-constraint-is-left.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:constraints",
+        "semantic:generated-verification"
+      ],
+      "expected_outcome": "success",
+      "generated": {
+        "seed": "4d32504b4c303332",
+        "algorithm": "xorshift64-13-7-17",
+        "kind": "metamorphic"
+      },
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "generated-constraint-is-left",
+          "generated-constraint-is-right"
+        ],
+        "domain": "Bounded Int value and bound; successful base type leaves the same Boolean predicate"
+      }
+    },
+    {
+      "id": "generated-constraint-is-right",
+      "input": "tests/fixtures/m2/generated-constraint-is-right.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:constraints",
+        "semantic:generated-verification"
+      ],
+      "expected_outcome": "success",
+      "generated": {
+        "seed": "4d32504b4c303332",
+        "algorithm": "xorshift64-13-7-17",
+        "kind": "metamorphic"
+      },
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "generated-constraint-is-left",
+          "generated-constraint-is-right"
+        ],
+        "domain": "Bounded Int value and bound; successful base type leaves the same Boolean predicate"
+      }
+    },
+    {
+      "id": "generated-constraint-nullable-left",
+      "input": "tests/fixtures/m2/generated-constraint-nullable-left.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:constraints",
+        "semantic:generated-verification"
+      ],
+      "expected_outcome": "success",
+      "generated": {
+        "seed": "4d32504b4c303332",
+        "algorithm": "xorshift64-13-7-17",
+        "kind": "metamorphic"
+      },
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "generated-constraint-nullable-left",
+          "generated-constraint-nullable-right"
+        ],
+        "domain": "Nullable constrained Int accepts null and a bounded Int strictly above its bound; both checks must succeed"
+      }
+    },
+    {
+      "id": "generated-constraint-nullable-right",
+      "input": "tests/fixtures/m2/generated-constraint-nullable-right.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:constraints",
+        "semantic:generated-verification"
+      ],
+      "expected_outcome": "success",
+      "generated": {
+        "seed": "4d32504b4c303332",
+        "algorithm": "xorshift64-13-7-17",
+        "kind": "metamorphic"
+      },
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "generated-constraint-nullable-left",
+          "generated-constraint-nullable-right"
+        ],
+        "domain": "Nullable constrained Int accepts null and a bounded Int strictly above its bound; both checks must succeed"
+      }
+    },
+    {
+      "id": "generated-constraint-union-left",
+      "input": "tests/fixtures/m2/generated-constraint-union-left.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:unions",
+        "semantic:generated-verification"
+      ],
+      "expected_outcome": "success",
+      "generated": {
+        "seed": "4d32504b4c303332",
+        "algorithm": "xorshift64-13-7-17",
+        "kind": "metamorphic"
+      },
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "generated-constraint-union-left",
+          "generated-constraint-union-right"
+        ],
+        "domain": "Bounded Int fails the first constraint and succeeds in the unconstrained Int union branch"
+      }
+    },
+    {
+      "id": "generated-constraint-union-right",
+      "input": "tests/fixtures/m2/generated-constraint-union-right.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:unions",
+        "semantic:generated-verification"
+      ],
+      "expected_outcome": "success",
+      "generated": {
+        "seed": "4d32504b4c303332",
+        "algorithm": "xorshift64-13-7-17",
+        "kind": "metamorphic"
+      },
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "generated-constraint-union-left",
+          "generated-constraint-union-right"
+        ],
+        "domain": "Bounded Int fails the first constraint and succeeds in the unconstrained Int union branch"
+      }
+    },
+    {
+      "id": "generated-constraint-base-left",
+      "input": "tests/fixtures/m2/generated-constraint-base-left.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:constraints",
+        "semantic:generated-verification"
+      ],
+      "expected_outcome": "success",
+      "generated": {
+        "seed": "4d32504b4c303332",
+        "algorithm": "xorshift64-13-7-17",
+        "kind": "metamorphic"
+      },
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "generated-constraint-base-left",
+          "generated-constraint-base-right"
+        ],
+        "domain": "A String fails the Int base check before the fatal division predicate can execute"
+      }
+    },
+    {
+      "id": "generated-constraint-base-right",
+      "input": "tests/fixtures/m2/generated-constraint-base-right.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:constraints",
+        "semantic:generated-verification"
+      ],
+      "expected_outcome": "success",
+      "generated": {
+        "seed": "4d32504b4c303332",
+        "algorithm": "xorshift64-13-7-17",
+        "kind": "metamorphic"
+      },
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "generated-constraint-base-left",
+          "generated-constraint-base-right"
+        ],
+        "domain": "A String fails the Int base check before the fatal division predicate can execute"
+      }
+    },
+    {
+      "id": "constraint-lambda-implicit-receiver",
+      "input": "tests/fixtures/m2/constraint-lambda-implicit-receiver.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:constraints",
+        "semantic:name-resolution",
+        "semantic:closures"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "constraint-lexical-before-custom",
+      "input": "tests/fixtures/m2/constraint-lexical-before-custom.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:constraints",
+        "semantic:name-resolution",
+        "semantic:closures"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "constraint-nested-lambda-outer",
+      "input": "tests/fixtures/m2/constraint-nested-lambda-outer.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:constraints",
+        "semantic:name-resolution",
+        "semantic:closures"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "constraint-inherited-local-owner",
+      "input": "tests/fixtures/m2/constraint-inherited-local-owner.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:constraints",
+        "semantic:name-resolution",
+        "semantic:amendment",
+        "semantic:classes"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "constraint-amended-local-owner",
+      "input": "tests/fixtures/m2/constraint-amended-local-owner.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:constraints",
+        "semantic:name-resolution",
+        "semantic:amendment",
+        "semantic:classes"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "power-constraint-grouped-this",
+      "input": "tests/fixtures/m2/power-constraint-grouped-this.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:constraints",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure",
+      "power_assertions": true
+    },
+    {
+      "id": "power-constraint-grouped-name",
+      "input": "tests/fixtures/m2/power-constraint-grouped-name.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:constraints",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure",
+      "power_assertions": true
+    },
+    {
+      "id": "power-constraint-whole-group",
+      "input": "tests/fixtures/m2/power-constraint-whole-group.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:constraints",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure",
+      "power_assertions": true
+    },
+    {
+      "id": "constraint-string-control",
+      "input": "tests/fixtures/m2/constraint-string-control.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:constraints",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "power-constraint-string-control",
+      "input": "tests/fixtures/m2/power-constraint-string-control.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:constraints",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure",
+      "power_assertions": true
+    },
+    {
+      "id": "constraint-object-unforced-order",
+      "input": "tests/fixtures/m2/constraint-object-unforced-order.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:constraints",
+        "semantic:diagnostics",
+        "semantic:lazy-evaluation",
+        "semantic:classes"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "constraint-object-cached-order",
+      "input": "tests/fixtures/m2/constraint-object-cached-order.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:constraints",
+        "semantic:diagnostics",
+        "semantic:lazy-evaluation",
+        "semantic:classes"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "constraint-object-cache-no-force",
+      "input": "tests/fixtures/m2/constraint-object-cache-no-force.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:constraints",
+        "semantic:diagnostics",
+        "semantic:lazy-evaluation",
+        "semantic:classes"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "constraint-string-length-77",
+      "input": "tests/fixtures/m2/constraint-string-length-77.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:constraints",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "constraint-string-length-78",
+      "input": "tests/fixtures/m2/constraint-string-length-78.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:constraints",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "power-constraint-string-length-97",
+      "input": "tests/fixtures/m2/power-constraint-string-length-97.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:constraints",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure",
+      "power_assertions": true
+    },
+    {
+      "id": "power-constraint-string-length-98",
+      "input": "tests/fixtures/m2/power-constraint-string-length-98.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:constraints",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure",
+      "power_assertions": true
+    },
+    {
+      "id": "power-constraint-string-surrogate-boundary",
+      "input": "tests/fixtures/m2/power-constraint-string-surrogate-boundary.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:constraints",
+        "semantic:diagnostics",
+        "semantic:strings"
+      ],
+      "expected_outcome": "failure",
+      "power_assertions": true
+    },
+    {
+      "id": "error-grouped-contextual-new",
+      "input": "tests/fixtures/m2/error-grouped-contextual-new.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:classes",
+        "semantic:types",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "constraint-generic-actual-class-scope",
+      "input": "tests/fixtures/m2/constraint-generic-actual-class-scope.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:constraints",
+        "semantic:type-aliases",
+        "semantic:generics",
+        "semantic:name-resolution",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "error-object-nonlocal-method-frame",
+      "input": "tests/fixtures/m2/error-object-nonlocal-method-frame.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "pipe-dynamic-rhs",
+      "input": "tests/fixtures/m2/pipe-dynamic-rhs.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "pipe-class-rhs",
+      "input": "tests/fixtures/m2/pipe-class-rhs.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:classes",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "constraint-inherited-fatal-frame",
+      "input": "tests/fixtures/m2/constraint-inherited-fatal-frame.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:constraints",
+        "semantic:classes",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
     }
   ]
 }

@@ -5,11 +5,13 @@
 
 pub mod diagnostic;
 mod diagnostic_names;
+mod diagnostic_values;
 pub mod evaluation;
 pub mod heap;
 pub mod host;
 pub mod numeric;
 pub mod parser;
+mod power_assertions;
 pub mod probe;
 pub mod regex;
 pub mod resolver;

@@ -1,0 +1,2 @@
+class Box { value: Int = 42 }
+result: Int((new Box { value = this }).value == 42) = 42

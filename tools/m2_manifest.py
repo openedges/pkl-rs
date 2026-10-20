@@ -110,7 +110,7 @@ def build_manifest(root: Path = ROOT) -> dict:
                           regression_case=row))
     result = dict(schema_version=1, baseline=inventory['baseline'],
                   scope='Complete M2 language requirement accounting with a conservative superset of all pinned language snippets; initial executable probes are a separate selection.',
-                  comparison_boundary='evaluateExpressionString(ModuleSource.path(same absolute URI), expression) UTF-8 stdout; whole PklException.getMessage() UTF-8 stderr and exit 1; no trimming. Stringification alone is not typed value/API compatibility.',
+                  comparison_boundary='evaluateExpressionString(ModuleSource.path(same absolute URI), expression) UTF-8 stdout; whole PklException.getMessage() UTF-8 stderr and exit 1; no trimming. Power assertions default to disabled; an explicit per-case power_assertions boolean enables the same option in both probes. Stringification alone is not typed value/API compatibility.',
                   sources={path: digest((root / path).read_bytes()) for path in INPUTS},
                   requirements=requirements, cases=cases,
                   completion='Every required semantic/source requirement needs implementation/test mappings and complete passing execution. Pending/unmapped/unimplemented/mismatch remains a full-gate failure.')
@@ -141,6 +141,8 @@ def validate_manifest(manifest: dict, root: Path = ROOT):
                 raise ValueError('input bytes changed: ' + row['id'])
             if row['expected_outcome'] not in ('success', 'failure'):
                 raise ValueError('expected Java outcome is unspecified')
+            if not isinstance(row.get('power_assertions', False), bool):
+                raise ValueError('power_assertions must be a boolean')
 
 
 def full_gate_failures(manifest: dict, results: list[dict]) -> list[str]:

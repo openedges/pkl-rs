@@ -1,0 +1,2 @@
+class C { local limit = 4; value: Int(this > limit) = 5 }
+result = (new C { value = 6 }).value

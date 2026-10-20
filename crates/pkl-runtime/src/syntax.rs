@@ -148,6 +148,17 @@ pub struct Expr {
     pub span: Span,
 }
 
+impl Expr {
+    /// The executable expression inside any authored grouping parentheses.
+    pub fn unparenthesized(&self) -> &Self {
+        let mut expression = self;
+        while let ExprKind::Parenthesized(inner) = &expression.kind {
+            expression = inner;
+        }
+        expression
+    }
+}
+
 #[derive(Clone, Debug, PartialEq)]
 pub enum ExprKind {
     Int(i64),
@@ -161,6 +172,7 @@ pub enum ExprKind {
     Outer,
     Module,
     Super,
+    Parenthesized(Box<Expr>),
     NonNull(Box<Expr>),
     Throw(Box<Expr>),
     TypeCheck {
@@ -250,4 +262,5 @@ pub enum BinaryOp {
     And,
     Or,
     NullCoalesce,
+    Pipe,
 }

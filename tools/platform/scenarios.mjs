@@ -52,6 +52,23 @@ export async function scenarios(api) {
       'file:///m2-platform.pkl', 'm2-platform', 'result'),
       '–– Pkl Error ––\nCannot find property `extra` in object of type `m2-platform#C`.\n\n2 | c = new C { extra = 2 }\n                ^^^^^\nat m2-platform#c (file:///m2-platform.pkl)\n\nAvailable properties:\nx\n\n3 | result = c.x\n             ^\nat m2-platform#result (file:///m2-platform.pkl)\n\n1 | result\n    ^^^^^^\nat  (repl:text)\n');
   });
+  await check('m2-pipeline-and-constraint-values', () => {
+    const evaluate = source => api.evaluateLanguage(source, 'file:///m2-platform.pkl', 'm2-platform', 'result');
+    eq(evaluate('result = 20 |> ((x) -> x + 1) |> ((x) -> x * 2)\n'), '42');
+    eq(evaluate('result = let (n: Int(this > 0) = 42) n\n'), '42');
+    eq(evaluate('result: Int(this < 0) | Int(this > 0) = 42\n'), '42');
+    eq(evaluate('result = 42 is Int(this < 0)\n'), 'false');
+    eq(evaluate('typealias Positive = Int((x) -> x > 0)\nresult: Positive = 42\n'), '42');
+  });
+  await check('m2-constraint-diagnostics-and-power-assertions', () => {
+    const source = 'result: Int(this > 42) = 42\n';
+    const evaluate = power => api.evaluateLanguage(source, 'file:///m2-platform.pkl', 'm2-platform', 'result', power);
+    const frames = '\n1 | result: Int(this > 42) = 42\n                ^^^^^^^^^\nat m2-platform#result (file:///m2-platform.pkl)\n\n1 | result: Int(this > 42) = 42\n                             ^^\nat m2-platform#result (file:///m2-platform.pkl)\n\n1 | result\n    ^^^^^^\nat  (repl:text)\n';
+    throws(() => evaluate(undefined), '–– Pkl Error ––\nType constraint `this > 42` violated.\nValue: 42\n' + frames);
+    throws(() => evaluate(true), '–– Pkl Error ––\nType constraint `this > 42` violated.\nValue: 42\n\n    this > 42\n    │    │\n    42   false\n' + frames);
+    // Enabling tracking must not turn an ordinary type test into an exception.
+    eq(api.evaluateLanguage('result = 42 is Int(this < 0)\n', 'file:///m2-platform.pkl', 'm2-platform', 'result', true), 'false');
+  });
   await check('utf8-utf16-string-boundary', () => {
     for (const value of ['', '한글🙂e\u0301\0\r\n', '𐐀漢字']) eq(api.roundtripString(value), value);
     for (const value of ['\ud800', '\udfff', 'a\ud800b']) throws(() => api.roundtripString(value), 'unpaired UTF-16 surrogate is unsupported');

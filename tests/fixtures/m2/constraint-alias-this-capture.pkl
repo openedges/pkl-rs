@@ -1,0 +1,2 @@
+typealias Check = Int(((x) -> this == x).apply(42))
+result: Check = 42

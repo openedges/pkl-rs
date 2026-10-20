@@ -1,0 +1,343 @@
+//! Bounded, non-forcing value snapshots for diagnostics.
+use crate::heap::{CacheKey, Heap, LazyState};
+use crate::value::{ErrorKind, ObjectId, RuntimeError, Value};
+use std::collections::BTreeSet;
+
+fn ancestry(id: ObjectId, heap: &Heap) -> Result<Vec<ObjectId>, RuntimeError> {
+    let mut result = Vec::new();
+    let mut seen = BTreeSet::new();
+    let mut next = Some(id);
+    while let Some(id) = next {
+        if !seen.insert(id) {
+            return Err(RuntimeError::new(ErrorKind::Cycle, "cyclic parent chain"));
+        }
+        result.push(id);
+        next = heap.get(id)?.parent;
+    }
+    Ok(result)
+}
+
+fn class_name(id: ObjectId, heap: &Heap) -> Result<Option<String>, RuntimeError> {
+    for id in ancestry(id, heap)? {
+        if let Some(class) = &heap.get(id)?.class_definition {
+            return Ok(Some(class.name.to_string()));
+        }
+    }
+    Ok(None)
+}
+
+pub(crate) fn type_name(value: &Value, heap: &Heap, module: &str) -> Result<String, RuntimeError> {
+    Ok(match value {
+        Value::Null => "Null".into(),
+        Value::Bool(_) => "Boolean".into(),
+        Value::Int(_) => "Int".into(),
+        Value::Float(_) => "Float".into(),
+        Value::String(_) => "String".into(),
+        Value::Bytes(_) => "Bytes".into(),
+        Value::Function(_) => "Function".into(),
+        Value::Class(_) => "Class".into(),
+        Value::Object(id) => class_name(*id, heap)?
+            .map_or_else(|| "Dynamic".into(), |name| format!("{module}#{name}")),
+    })
+}
+
+pub(crate) fn render(
+    value: &Value,
+    heap: &Heap,
+    module: &str,
+    limit: usize,
+) -> Result<String, RuntimeError> {
+    let mut renderer = Renderer {
+        heap,
+        module,
+        units: Vec::new(),
+        limit: limit.max(3),
+        stopped: false,
+    };
+    renderer.value(value, false)?;
+    // Java's UTF-8 writer replaces an unmatched surrogate with '?'. The
+    // upstream UTF-16 length limit can split a supplementary character.
+    Ok(char::decode_utf16(renderer.units)
+        .map(|unit| unit.unwrap_or('?'))
+        .collect())
+}
+
+struct Renderer<'a> {
+    heap: &'a Heap,
+    module: &'a str,
+    units: Vec<u16>,
+    limit: usize,
+    stopped: bool,
+}
+
+impl Renderer<'_> {
+    fn append(&mut self, text: &str) {
+        if self.stopped {
+            return;
+        }
+        self.units.extend(text.encode_utf16());
+        if self.units.len() >= self.limit {
+            self.units.truncate(self.limit - 3);
+            self.units.extend("...".encode_utf16());
+            self.stopped = true;
+        }
+    }
+
+    fn identifier(&mut self, name: &str) {
+        if crate::parser::is_regular_identifier(name) {
+            self.append(name);
+        } else {
+            self.append("`");
+            self.append(name);
+            self.append("`");
+        }
+    }
+
+    fn value(&mut self, value: &Value, implicit: bool) -> Result<(), RuntimeError> {
+        if self.stopped {
+            return Ok(());
+        }
+        match value {
+            Value::Null => self.append("null"),
+            Value::Bool(value) => self.append(if *value { "true" } else { "false" }),
+            Value::Int(value) => self.append(&value.to_string()),
+            Value::Float(value) => self.append(&crate::numeric::double_to_string(*value)),
+            Value::String(value) => {
+                let mut text = String::from("\"");
+                for ch in value.chars() {
+                    match ch {
+                        '\n' => text.push_str("\\n"),
+                        '\r' => text.push_str("\\r"),
+                        '\t' => text.push_str("\\t"),
+                        '\\' => text.push_str("\\\\"),
+                        '"' => text.push_str("\\\""),
+                        ch => text.push(ch),
+                    }
+                }
+                text.push('"');
+                self.append(&text);
+            }
+            Value::Bytes(bytes) => {
+                self.append("Bytes(");
+                for (index, value) in bytes.iter().take(8).enumerate() {
+                    if index > 0 {
+                        self.append(", ");
+                    }
+                    self.append(&value.to_string());
+                }
+                if bytes.len() > 8 {
+                    self.append(", ... <total size: ");
+                    let (divisor, unit) = if bytes.len() >= 1_000_000_000 {
+                        (1_000_000_000, "gb")
+                    } else if bytes.len() >= 1_000_000 {
+                        (1_000_000, "mb")
+                    } else if bytes.len() >= 1_000 {
+                        (1_000, "kb")
+                    } else {
+                        (1, "b")
+                    };
+                    let count = bytes.len() as f64 / divisor as f64;
+                    self.append(&if count.fract() == 0.0 {
+                        format!("{count:.0}")
+                    } else if (count * 10.0).fract() == 0.0 {
+                        format!("{count:.1}")
+                    } else {
+                        format!("{count:.2}")
+                    });
+                    self.append(".");
+                    self.append(unit);
+                    self.append(">");
+                }
+                self.append(")");
+            }
+            Value::Function(id) => {
+                self.heap.get(*id)?;
+                if !implicit {
+                    self.append("new Function ");
+                }
+                self.append("{}");
+            }
+            Value::Class(id) => {
+                let name = class_name(*id, self.heap)?.ok_or_else(|| {
+                    RuntimeError::new(ErrorKind::InvalidBytecode, "class has no definition")
+                })?;
+                self.append(&format!("{}#{name}", self.module));
+            }
+            Value::Object(id) => self.object(*id, implicit)?,
+        }
+        Ok(())
+    }
+
+    fn object(&mut self, id: ObjectId, implicit: bool) -> Result<(), RuntimeError> {
+        if !implicit {
+            self.append("new ");
+            self.append(&class_name(id, self.heap)?.unwrap_or_else(|| "Dynamic".into()));
+            self.append(" ");
+        }
+        self.append("{");
+        let mut visited = BTreeSet::new();
+        let mut any = false;
+        for owner in ancestry(id, self.heap)?.into_iter().rev() {
+            for member in &self.heap.get(owner)?.members {
+                if self.stopped {
+                    return Ok(());
+                }
+                if member.local || member.method || !visited.insert(member.name.clone()) {
+                    continue;
+                }
+                if !any {
+                    self.append(" ");
+                    any = true;
+                }
+                let key = CacheKey {
+                    owner: None,
+                    name: member.name.clone(),
+                    method: false,
+                };
+                let value = match self.heap.get(id)?.cache.get(&key) {
+                    Some(LazyState::Completed(value)) => Some(value),
+                    _ => None,
+                };
+                self.identifier(&member.name);
+                self.append(
+                    if matches!(value, Some(Value::Object(_) | Value::Function(_))) {
+                        " "
+                    } else {
+                        " = "
+                    },
+                );
+                match value {
+                    Some(value) => self.value(value, true)?,
+                    None => self.append("?"),
+                }
+                self.append("; ");
+            }
+        }
+        if any && !self.stopped {
+            self.units.truncate(self.units.len() - 2);
+            self.append(" ");
+        }
+        self.append("}");
+        Ok(())
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::heap::{Class, Member, Object};
+
+    #[test]
+    fn strings_use_pkl_escapes_and_utf16_length_boundaries() {
+        let heap = Heap::new();
+        assert_eq!(
+            render(&Value::string("\0\u{1}\t\n\r\"\\"), &heap, "test", 80).unwrap(),
+            "\"\0\u{1}\\t\\n\\r\\\"\\\\\""
+        );
+        assert_eq!(
+            render(&Value::string("x".repeat(77)), &heap, "test", 80).unwrap(),
+            format!("\"{}\"", "x".repeat(77))
+        );
+        assert_eq!(
+            render(&Value::string("x".repeat(78)), &heap, "test", 80).unwrap(),
+            format!("\"{}...", "x".repeat(76))
+        );
+        assert_eq!(
+            render(
+                &Value::string(format!("{}😀suffix", "a".repeat(75))),
+                &heap,
+                "test",
+                80
+            )
+            .unwrap(),
+            format!("\"{}?...", "a".repeat(75))
+        );
+    }
+
+    fn member(name: &str, local: bool) -> Member {
+        Member {
+            name: name.into(),
+            code: usize::MAX, // Rendering must not execute any code.
+            local,
+            method: false,
+            ty: None,
+            type_span: None,
+            constant: false,
+        }
+    }
+
+    #[test]
+    fn inherited_order_uses_receiver_cache_without_forcing_members() {
+        let mut heap = Heap::new();
+        let base = heap.allocate(Object {
+            members: vec![
+                member("z", false),
+                member("private", true),
+                member("a", false),
+            ],
+            ..Object::default()
+        });
+        let class = heap.allocate(Object {
+            class_definition: Some(Class {
+                id: 1,
+                name: "Child".into(),
+                open: false,
+                abstract_: false,
+            }),
+            parent: Some(base),
+            members: vec![member("m", false)],
+            ..Object::default()
+        });
+        let object = heap.allocate(Object {
+            parent: Some(class),
+            members: vec![member("a", false)],
+            ..Object::default()
+        });
+        let value = Value::Object(object);
+        assert_eq!(type_name(&value, &heap, "test").unwrap(), "test#Child");
+        assert_eq!(
+            render(&value, &heap, "test", 80).unwrap(),
+            "new Child { z = ?; a = ?; m = ? }"
+        );
+        heap.get_mut(object).unwrap().cache.insert(
+            CacheKey {
+                owner: None,
+                name: "a".into(),
+                method: false,
+            },
+            LazyState::Completed(Value::Int(1)),
+        );
+        let before = heap.get(object).unwrap().cache.clone();
+        assert_eq!(
+            render(&value, &heap, "test", 80).unwrap(),
+            "new Child { z = ?; a = 1; m = ? }"
+        );
+        assert_eq!(heap.get(object).unwrap().cache, before);
+    }
+
+    #[test]
+    fn cached_cycles_stop_at_the_same_length_limit_and_stale_handles_fail() {
+        let mut heap = Heap::new();
+        let object = heap.allocate(Object {
+            members: vec![member("self", false)],
+            ..Object::default()
+        });
+        heap.get_mut(object).unwrap().cache.insert(
+            CacheKey {
+                owner: None,
+                name: "self".into(),
+                method: false,
+            },
+            LazyState::Completed(Value::Object(object)),
+        );
+        let value = Value::Object(object);
+        let text = render(&value, &heap, "test", 80).unwrap();
+        assert_eq!(text.encode_utf16().count(), 80);
+        assert!(text.ends_with("..."));
+        assert!(text.starts_with("new Dynamic { self { self {"));
+        assert_eq!(
+            render(&value, &Heap::new(), "test", 80).unwrap_err().kind,
+            ErrorKind::StaleHandle
+        );
+    }
+}

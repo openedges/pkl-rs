@@ -92,6 +92,23 @@ fn is_base_property(name: &str) -> bool {
     )
 }
 
+// Top-level nonlocal methods from the pinned stdlib/base.pkl.
+fn is_base_method(name: &str) -> bool {
+    matches!(
+        name,
+        "Regex"
+            | "Undefined"
+            | "TODO"
+            | "Null"
+            | "Pair"
+            | "IntSeq"
+            | "List"
+            | "Set"
+            | "Map"
+            | "Bytes"
+    )
+}
+
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 pub enum Binding {
     /// Reverse index in the flat lexical environment; slot is currently 0.
@@ -115,6 +132,9 @@ pub enum Binding {
         local: bool,
     },
     ImplicitMethod,
+    /// Missing lexical/base name in an immediate type-constraint scope.
+    CustomThis,
+    CustomMethod,
 }
 
 #[derive(Clone, Debug)]
@@ -122,6 +142,10 @@ pub struct ResolvedModule {
     pub module: Module,
     pub names: BTreeMap<Span, Binding>,
     pub const_names: std::collections::BTreeSet<Span>,
+    /// Direct custom-this reads; lambda bodies use their captured normal receiver.
+    pub custom_this: std::collections::BTreeSet<Span>,
+    /// Lambda literals that capture the constraint's input as their receiver.
+    pub custom_functions: std::collections::BTreeSet<Span>,
 }
 
 fn is_method(member: &Member) -> bool {
@@ -133,6 +157,7 @@ enum Scope<'a> {
     Let(&'a str),
     Parameters(&'a [Parameter]),
     TypeParameters(&'a [TypeParameter]),
+    CustomThis,
 }
 
 #[derive(Clone, Copy, Eq, PartialEq, Ord, PartialOrd)]
@@ -146,10 +171,13 @@ struct Resolver<'a> {
     scopes: Vec<Scope<'a>>,
     names: BTreeMap<Span, Binding>,
     const_names: std::collections::BTreeSet<Span>,
+    custom_this: std::collections::BTreeSet<Span>,
+    custom_functions: std::collections::BTreeSet<Span>,
     const_level: ConstLevel,
     object_levels: Vec<ConstLevel>,
     receiver_is_lambda: bool,
     member_path: Vec<String>,
+    diagnostic_path: Vec<String>,
 }
 
 impl<'a> Resolver<'a> {
@@ -181,7 +209,7 @@ impl<'a> Resolver<'a> {
                     }
                     let_depth += parameters.len();
                 }
-                Scope::TypeParameters(_) => {}
+                Scope::TypeParameters(_) | Scope::CustomThis => {}
                 Scope::Object(members) => {
                     if let Some(member) = members
                         .iter()
@@ -210,6 +238,14 @@ impl<'a> Resolver<'a> {
         }
     }
 
+    fn is_custom_this_scope(&self) -> bool {
+        self.scopes
+            .iter()
+            .rev()
+            .find(|scope| !matches!(scope, Scope::Let(_)))
+            .is_some_and(|scope| matches!(scope, Scope::CustomThis))
+    }
+
     fn members(&mut self, members: &'a [Member], object: bool) -> Result<(), Diagnostic> {
         let mut seen = std::collections::BTreeSet::new();
         for member in members {
@@ -226,6 +262,7 @@ impl<'a> Resolver<'a> {
         let previous_lambda = std::mem::replace(&mut self.receiver_is_lambda, false);
         for member in members {
             self.member_path.push(member.name.clone());
+            self.diagnostic_path.push(member.name.clone());
             let previous_level = self.const_level;
             if modifier_flags(&member.modifiers) & ModifierKind::Const.flag() != 0 {
                 self.const_level = ConstLevel::All;
@@ -241,15 +278,23 @@ impl<'a> Resolver<'a> {
                 let ExprKind::Function { header_span, .. } = member.expr.kind else {
                     unreachable!()
                 };
-                return Err(Diagnostic::new(
+                let mut error = Diagnostic::new(
                     DiagnosticKind::Syntax,
                     header_span,
                     "Method needs a `local` modifier because it is defined in an object, not a class.",
-                ));
+                );
+                // The object builder rejects this declaration before entering
+                // its method scope, so the enclosing authored member owns it.
+                let enclosing = &self.diagnostic_path[..self.diagnostic_path.len() - 1];
+                if !enclosing.is_empty() {
+                    error.member = Some(enclosing.join(".").into());
+                }
+                return Err(error);
             }
             self.expression(&member.expr, true)?;
             self.const_level = previous_level;
             self.member_path.pop();
+            self.diagnostic_path.pop();
         }
         self.receiver_is_lambda = previous_lambda;
         self.object_levels.pop();
@@ -336,9 +381,11 @@ impl<'a> Resolver<'a> {
             }
             TypeKind::Constrained { base, constraints } => {
                 self.type_expression(base)?;
+                self.scopes.push(Scope::CustomThis);
                 for constraint in constraints {
                     self.expression(constraint, false)?;
                 }
+                self.scopes.pop();
             }
             TypeKind::Unknown | TypeKind::Nothing | TypeKind::Module | TypeKind::String(_) => {}
         }
@@ -419,7 +466,7 @@ impl<'a> Resolver<'a> {
                 *header_span,
                 format!("Method `{}` is missing a body.", member.name),
             );
-            error.member = Some(self.member_path.join(".").into());
+            error.member = Some(self.diagnostic_path.join(".").into());
             return Err(error);
         }
         if has(M::Abstract) {
@@ -472,7 +519,7 @@ impl<'a> Resolver<'a> {
             Binding::ImplicitThis | Binding::ImplicitMethod => {
                 self.const_level == ConstLevel::All && self.needs_const(0)
             }
-            Binding::Lexical { .. } => false,
+            Binding::Lexical { .. } | Binding::CustomThis | Binding::CustomMethod => false,
         };
         if needed {
             self.const_names.insert(span);
@@ -480,8 +527,10 @@ impl<'a> Resolver<'a> {
     }
 
     fn receiver_const(&self, receiver: &Expr) -> bool {
+        let receiver = receiver.unparenthesized();
         match receiver.kind {
             ExprKind::Module => self.const_level != ConstLevel::None,
+            ExprKind::This if self.is_custom_this_scope() => false,
             ExprKind::This | ExprKind::Super => {
                 self.const_level == ConstLevel::All && self.needs_const(0)
             }
@@ -491,6 +540,10 @@ impl<'a> Resolver<'a> {
     }
 
     fn receiver(&mut self, receiver: &'a Expr) -> Result<(), Diagnostic> {
+        let receiver = receiver.unparenthesized();
+        if matches!(receiver.kind, ExprKind::This) && self.is_custom_this_scope() {
+            self.custom_this.insert(receiver.span);
+        }
         if matches!(
             receiver.kind,
             ExprKind::This | ExprKind::Module | ExprKind::Outer
@@ -502,16 +555,19 @@ impl<'a> Resolver<'a> {
 
     fn const_error(&self, expression: &Expr, message: impl Into<String>) -> Diagnostic {
         let mut error = Diagnostic::new(DiagnosticKind::Syntax, expression.span, message);
-        if !self.member_path.is_empty() {
-            error.member = Some(self.member_path.join(".").into());
+        if !self.diagnostic_path.is_empty() {
+            error.member = Some(self.diagnostic_path.join(".").into());
         }
         error
     }
 
     fn expression(&mut self, expression: &'a Expr, contextual_new: bool) -> Result<(), Diagnostic> {
         match &expression.kind {
+            // Parent inference walks through if/let, but not a grouping node.
+            // See AstBuilder.doVisitNewExprWithInferredParent.
+            ExprKind::Parenthesized(inner) => self.expression(inner, false)?,
             ExprKind::Name(name) => {
-                let binding = self.binding(name, false);
+                let mut binding = self.binding(name, false);
                 // Base-module static resolution belongs to M2. Refuse the
                 // supported spelling rather than silently treating it as this.
                 if binding == Binding::ImplicitThis && is_base_property(name) {
@@ -520,6 +576,9 @@ impl<'a> Resolver<'a> {
                         expression.span,
                         "M1 base-module name resolution is unsupported.",
                     ));
+                }
+                if binding == Binding::ImplicitThis && self.is_custom_this_scope() {
+                    binding = Binding::CustomThis;
                 }
                 self.mark_const_binding(expression.span, binding);
                 self.names.insert(expression.span, binding);
@@ -554,14 +613,6 @@ impl<'a> Resolver<'a> {
                 ..
             } => {
                 self.reject_nonstdlib_type_parameters(type_parameters)?;
-                for parameter in parameters {
-                    if let Some(ty) = &parameter.ty {
-                        self.type_expression(ty)?;
-                    }
-                }
-                if let Some(ty) = return_type {
-                    self.type_expression(ty)?;
-                }
                 if !method && parameters.len() > 5 {
                     return Err(Diagnostic::new(
                         DiagnosticKind::Syntax,
@@ -579,15 +630,39 @@ impl<'a> Resolver<'a> {
                         ));
                     }
                 }
+                if !method && self.is_custom_this_scope() {
+                    self.custom_functions.insert(expression.span);
+                }
                 self.scopes.push(Scope::Parameters(parameters));
                 let previous_lambda = std::mem::replace(&mut self.receiver_is_lambda, !method);
+                for parameter in parameters {
+                    if let Some(ty) = &parameter.ty {
+                        self.type_expression(ty)?;
+                    }
+                }
+                if let Some(ty) = return_type {
+                    self.type_expression(ty)?;
+                }
                 self.expression(body, false)?;
                 self.receiver_is_lambda = previous_lambda;
                 self.scopes.pop();
             }
             ExprKind::Call { callee, arguments } => {
                 if let ExprKind::Name(name) = &callee.kind {
-                    let binding = self.binding(name, true);
+                    let mut binding = self.binding(name, true);
+                    if binding == Binding::ImplicitMethod
+                        && self.is_custom_this_scope()
+                        && name != "read"
+                    {
+                        if is_base_method(name) {
+                            return Err(Diagnostic::new(
+                                DiagnosticKind::Unsupported,
+                                callee.span,
+                                "Base-module method resolution is not implemented.",
+                            ));
+                        }
+                        binding = Binding::CustomMethod;
+                    }
                     self.mark_const_binding(callee.span, binding);
                     self.names.insert(callee.span, binding);
                 } else {
@@ -617,9 +692,18 @@ impl<'a> Resolver<'a> {
                     self.type_expression(ty)?;
                 }
                 self.expression(value, false)?;
+                // Upstream flattens consecutive let scopes for display, but
+                // keeps a new component when another scope intervenes.
+                let nested_let = matches!(self.scopes.last(), Some(Scope::Let(_)));
+                if !nested_let {
+                    self.diagnostic_path.push("<let expr>".to_owned());
+                }
                 self.scopes.push(Scope::Let(name));
                 self.expression(body, contextual_new)?;
                 self.scopes.pop();
+                if !nested_let {
+                    self.diagnostic_path.pop();
+                }
             }
             ExprKind::Class {
                 type_parameters,
@@ -661,11 +745,11 @@ impl<'a> Resolver<'a> {
             ExprKind::Uninitialized => {}
             ExprKind::Object { parent, members } => {
                 if parent.is_none() && !contextual_new {
-                    return Err(Diagnostic::new(
-                        DiagnosticKind::Unsupported,
-                        expression.span,
-                        "M1 contextual new requires a member RHS; use an explicit amendment parent.",
-                    ));
+                    let mut error = self
+                        .const_error(expression, "Cannot tell which parent to amend.")
+                        .with_hint("Please specify a parent explicitly, for example `new Person { ... }` instead of `new { ... }`.");
+                    error.span.end = error.span.start + 3; // `new`, as upstream newSpan().
+                    return Err(error);
                 }
                 if let Some(parent) = parent {
                     self.expression(parent, false)?;
@@ -673,7 +757,9 @@ impl<'a> Resolver<'a> {
                 self.members(members, true)?;
             }
             ExprKind::This => {
-                if self.const_level == ConstLevel::All && self.needs_const(0) {
+                if self.is_custom_this_scope() {
+                    self.custom_this.insert(expression.span);
+                } else if self.const_level == ConstLevel::All && self.needs_const(0) {
                     return Err(self.const_error(
                         expression,
                         "Cannot reference `this` from here because it is not `const`.",
@@ -790,10 +876,13 @@ pub fn resolve_module(module: &Module) -> Result<ResolvedModule, Diagnostic> {
         scopes: Vec::new(),
         names: BTreeMap::new(),
         const_names: std::collections::BTreeSet::new(),
+        custom_this: std::collections::BTreeSet::new(),
+        custom_functions: std::collections::BTreeSet::new(),
         const_level: ConstLevel::None,
         object_levels: Vec::new(),
         receiver_is_lambda: false,
         member_path: Vec::new(),
+        diagnostic_path: Vec::new(),
     };
     let validation = (|| {
         if let Some(declaration) = &module.declaration {
@@ -830,5 +919,7 @@ pub fn resolve_module(module: &Module) -> Result<ResolvedModule, Diagnostic> {
         module: module.clone(),
         names: resolver.names,
         const_names: resolver.const_names,
+        custom_this: resolver.custom_this,
+        custom_functions: resolver.custom_functions,
     })
 }

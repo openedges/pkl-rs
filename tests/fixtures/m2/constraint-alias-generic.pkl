@@ -1,0 +1,2 @@
+typealias Same<T> = T(this is T)
+result: Same<Int> = 42

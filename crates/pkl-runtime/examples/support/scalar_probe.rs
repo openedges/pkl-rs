@@ -13,8 +13,8 @@ pub fn main() {
 
 fn run() -> Result<String, String> {
     let args: Vec<_> = std::env::args().collect();
-    if args.len() != 3 {
-        return Err("expected source path and expression".into());
+    if args.len() != 3 && !(args.len() == 4 && args[3] == "--power-assertions") {
+        return Err("expected source path, expression, and optional --power-assertions".into());
     }
     let path = std::fs::canonicalize(&args[1]).map_err(|error| error.to_string())?;
     let text = std::fs::read_to_string(&path).map_err(|error| error.to_string())?;
@@ -23,7 +23,15 @@ fn run() -> Result<String, String> {
         .file_stem()
         .and_then(|name| name.to_str())
         .ok_or("source path must be UTF-8")?;
-    pkl_runtime::evaluation::scalar_expression(&text, &uri, name, &args[2])
+    pkl_runtime::evaluation::scalar_expression_with_options(
+        &text,
+        &uri,
+        name,
+        &args[2],
+        pkl_runtime::evaluation::EvaluationOptions {
+            power_assertions: args.len() == 4,
+        },
+    )
 }
 
 fn file_uri(path: &Path) -> Result<String, String> {

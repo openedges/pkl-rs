@@ -49,6 +49,14 @@ class ManifestTests(unittest.TestCase):
             with self.assertRaises(ValueError):
                 m2_manifest.validate_manifest(broken)
 
+    def test_power_assertion_mode_is_an_explicit_boolean(self):
+        manifest = m2_manifest.current_manifest()
+        for value in ['false', 0, None]:
+            broken = copy.deepcopy(manifest)
+            broken['cases'][0]['power_assertions'] = value
+            with self.assertRaises(ValueError):
+                m2_manifest.validate_manifest(broken)
+
 
 class DevelopmentGateTests(unittest.TestCase):
     def setUp(self):
@@ -203,6 +211,35 @@ class OracleProvenanceTests(unittest.TestCase):
                 self.check(dict(self.metadata, **{key: value}))
 
 
+class MetamorphicTests(unittest.TestCase):
+    def test_each_runtime_must_execute_and_preserve_complete_equivalent_payloads(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            directory = Path(temporary)
+            relation = dict(kind='equal-stdout', case_ids=['pipe', 'apply'],
+                            domain='Bounded one-argument Int function application')
+            manifest = dict(cases=[dict(id=name, metamorphic_relation=relation) for name in relation['case_ids']])
+            for name in relation['case_ids']:
+                folder = directory / 'cases' / name
+                folder.mkdir(parents=True)
+                for runtime in ('java', 'rust'):
+                    (folder / f'{runtime}.process.json').write_bytes(m2_manifest.encoded(dict(exit_code=0, timed_out=False)))
+                    (folder / f'{runtime}.stdout.bin').write_bytes(b'42')
+                    (folder / f'{runtime}.stderr.bin').write_bytes(b'')
+            self.assertEqual(m2_language.check_relations(manifest, directory)[0]['status'], 'pass')
+            java = directory / 'cases/apply/java.stdout.bin'
+            java.write_bytes(b'42\n')
+            result = m2_language.check_relations(manifest, directory)[0]
+            self.assertEqual(result['status'], 'mismatch')
+            self.assertEqual(result['runtimes'], dict(java=False, rust=True))
+            java.write_bytes(b'42')
+            process = directory / 'cases/pipe/rust.process.json'
+            process.write_bytes(m2_manifest.encoded(dict(exit_code=1, timed_out=False)))
+            self.assertEqual(m2_language.check_relations(manifest, directory)[0]['status'], 'mismatch')
+            process.unlink()
+            with self.assertRaises(OSError):
+                m2_language.check_relations(manifest, directory)
+
+
 class EvidenceTests(unittest.TestCase):
     def setUp(self):
         self.temporary = tempfile.TemporaryDirectory()
@@ -282,13 +319,43 @@ class EvidenceTests(unittest.TestCase):
         result = m2_language.check_report(self.directory)
         self.assertFalse(m2_language.subset_passes(result))
 
-    def test_different_input_uri_and_missing_source_identity_fail(self):
+    def test_different_input_uri_fails(self):
         row = self.report['results'][0]['rust']
         row['command'][-2] = '/another/module.pkl'
         (self.case / 'rust.process.json').write_bytes(m2_manifest.encoded(row))
         self.refresh()
         with self.assertRaises(ValueError):
             m2_language.check_report(self.directory)
+
+    def test_explicit_power_assertion_mode_binds_both_recorded_commands(self):
+        self.manifest['cases'][0]['power_assertions'] = True
+        (self.directory / 'sources' / m2_manifest.MANIFEST).write_bytes(m2_manifest.encoded(self.manifest))
+        self.report['source_sha256'][str(m2_manifest.MANIFEST)] = m2_manifest.digest(m2_manifest.encoded(self.manifest))
+        for runtime in ('java', 'rust'):
+            row = self.report['results'][0][runtime]
+            row['command'].append('--power-assertions')
+            (self.case / f'{runtime}.process.json').write_bytes(m2_manifest.encoded(row))
+        self.refresh()
+        m2_language.check_report(self.directory)
+        for runtime in ('java', 'rust'):
+            row = self.report['results'][0][runtime]
+            row['command'].pop()
+            (self.case / f'{runtime}.process.json').write_bytes(m2_manifest.encoded(row))
+            self.refresh()
+            with self.assertRaises(ValueError):
+                m2_language.check_report(self.directory)
+            row['command'].append('--power-assertions')
+            (self.case / f'{runtime}.process.json').write_bytes(m2_manifest.encoded(row))
+
+    def test_default_candidate_cannot_inject_power_assertions_before_source(self):
+        row = self.report['results'][0]['rust']
+        row['command'].insert(1, '--power-assertions')
+        (self.case / 'rust.process.json').write_bytes(m2_manifest.encoded(row))
+        self.refresh()
+        with self.assertRaises(ValueError):
+            m2_language.check_report(self.directory)
+
+    def test_missing_source_identity_fails(self):
         self.report['source_sha256'] = {}
         self.save()
         with self.assertRaises(ValueError):

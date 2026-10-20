@@ -1,0 +1,3 @@
+open class Base { z = 3; a = 1 }
+class Child extends Base { m = 2 }
+result: Child(false) = new Child { z = 4 }

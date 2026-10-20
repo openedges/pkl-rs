@@ -1,0 +1,2 @@
+function greater(bound) = (x) -> x > bound
+result: Int(greater(50)) = 42

@@ -45,12 +45,16 @@ pub fn evaluate_language(
     uri: JsString,
     module_name: JsString,
     expression: JsString,
+    power_assertions: Option<bool>,
 ) -> Result<String, JsValue> {
-    pkl_runtime::evaluation::scalar_expression(
+    pkl_runtime::evaluation::scalar_expression_with_options(
         &string(&source)?,
         &string(&uri)?,
         &string(&module_name)?,
         &string(&expression)?,
+        pkl_runtime::evaluation::EvaluationOptions {
+            power_assertions: power_assertions.unwrap_or(false),
+        },
     )
     .map_err(error)
 }

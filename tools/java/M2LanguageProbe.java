@@ -14,8 +14,11 @@ public final class M2LanguageProbe {
   }
 
   public static void main(String[] args) throws Exception {
-    if (args.length != 2) throw new IllegalArgumentException("source expression");
+    if (args.length < 2 || args.length > 3 || (args.length == 3 && !args[2].equals("--power-assertions"))) {
+      throw new IllegalArgumentException("source expression [--power-assertions]");
+    }
     try (var evaluator = EvaluatorBuilder.preconfigured().setModuleCacheDir(null)
+        .setPowerAssertionsEnabled(args.length == 3)
         .setColor(false).setEnvironmentVariables(Map.of()).setExternalProperties(Map.of()).build()) {
       try {
         var value = evaluator.evaluateExpressionString(ModuleSource.path(Path.of(args[0])), args[1]);

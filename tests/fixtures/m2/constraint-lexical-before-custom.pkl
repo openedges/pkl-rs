@@ -1,0 +1,4 @@
+value = 99
+class C { value = 5 }
+checked: C(value == 99 && this.value == 5) = new C {}
+result = checked.value

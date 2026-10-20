@@ -1,0 +1,4 @@
+offset = 37
+f = (x) -> x + offset
+g = (x) -> x * 2
+result = g.apply(f.apply(-41))

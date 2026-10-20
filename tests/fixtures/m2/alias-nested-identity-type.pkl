@@ -1,0 +1,2 @@
+typealias Identity<T> = T
+result: Identity<Identity<Int>> = "bad"

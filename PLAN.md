@@ -144,21 +144,23 @@ M1의 공통 VM을 확장합니다. VM·heap·호출 의미론은 `gpt-6-astra /
 | --- | --- | --- |
 | M2-01 전체 목록과 실행 판정 | 진행 중 | `compatibility/m2-language.json`에 의미론 분류·upstream 선언·언어 snippet·rev1 후보를 보존합니다. 선언 수는 기능 커버리지가 아니며, 미연결 항목은 전체 gate 실패로 남깁니다. |
 | M2-02 lexer·표현식·문자열 | 진행 중 | 숫자·연산자 우선순위·조건식·nullable 연산·raw/multiline/interpolation과 0.32 continuation을 구현했습니다. 고정 Java의 UTF-16 식별자 표, CR/CRLF, 지연 AST 검증 순서를 연결했습니다. 전체 유효·오류 문법 코퍼스 연결이 필요합니다. |
-| M2-03 함수·closure·호출 | 진행 중 | 별도 method namespace, 재귀, lexical capture, primitive 매개변수·반환 타입 검사, Host 중단·재개 중 GC를 구현·검증합니다. 전체 함수 타입·amendment·오류 조건은 후속 항목입니다. |
+| M2-03 함수·closure·호출 | 진행 중 | 별도 method namespace, 재귀, lexical capture, 매개변수·반환 타입 검사, `\|>` 호출과 함수형 제약을 구현했습니다. Host 중단·재개 중 GC를 검증하며 전체 함수 타입·amendment·오류 조건은 후속 항목입니다. |
 | M2-04 객체·클래스·상속 | 진행 중 | 클래스·prototype·상속·super 메서드·const capture·runtime identity와 타입 초기화 순서를 연결했습니다. 전체 modifier·override·초기화 재시도·상속 순환 및 eager/lazy 규칙의 완료가 필요합니다. |
-| M2-05 타입·제약·generic | 진행 중 | primitive·nullable·union 검사와 클래스 타입, generic alias 치환, 타입 기본 값과 지연 alias 오류를 구현했습니다. constraint·함수/구조 타입·recursive 타입·lazy wrapper·전체 상세 오류는 남아 있습니다. |
+| M2-05 타입·제약·generic | 진행 중 | primitive·nullable·union·클래스 타입과 generic alias·기본 값을 구현했습니다. 같은 VM의 제약 continuation, custom `this`, 상속된 제약의 선언 owner, alias 실행 환경, 복구 가능한 불일치와 실행 오류 구분을 연결했습니다. 함수/구조 타입·recursive 타입·collection wrapper·전체 제약 코퍼스는 남아 있습니다. |
 | M2-06 collection·generator | 계획됨 | element·entry·member predicate·for/when·spread·inferred new 및 타입 검사를 함께 검증합니다. |
 | M2-07 Reference·메타데이터 | 계획됨 | `Reference<Domain, Type>` 및 reflection에 필요한 module/class/member/type 정보를 구현합니다. |
-| M2-08 진단·첫 오류·논리적 스택 | 진행 중 | bytecode와 별도의 source metadata와 공통 uncolored renderer를 연결합니다. 원시 오류 바이트·힌트·호출 위치·재귀 frame 압축·전체 오류 선택이 일치해야 합니다. |
+| M2-08 진단·첫 오류·논리적 스택 | 진행 중 | 공통 uncolored renderer에 제약·union 진단, 선택적인 power assertion 재실행·관찰값 그래프, 값을 강제하지 않는 객체 표시와 UTF-16 길이 제한을 연결했습니다. 재귀 frame 압축·전체 method 진단·전체 오류 선택은 남아 있습니다. |
 | M2-09 생성 검사·플랫폼·완료 gate | 진행 중 | Java 차등 입력·metamorphic 관계·seeded 생성과 실제 native/Node/browser 실행을 연결합니다. 작은 선택 코퍼스 성공은 M2 전체 완료가 아닙니다. |
 
-다음 구현은 `|>` 연산자, custom `this`와 같은 VM 안의 타입 검사 continuation, nullable·union·함수형 제약·오류 재실행 순서로 진행합니다. 제약의 실행 오류를 타입 불일치로 숨기지 않고 Host 중단·재진입·GC를 함께 검증합니다. 이후 객체 본문을 순서 있는 멤버 모델로 확장하여 element·entry·generator·spread를 연결합니다. 이 순서는 기존 M2 범위와 종료 조건을 줄이지 않습니다.
+`|>`와 타입 제약 증분을 구현했습니다. 다음 구현은 객체 본문을 순서 있는 멤버 모델로 확장하여 element·entry·generator·spread와 타입 검사를 연결합니다. 함수/구조 타입·collection wrapper, `Reference`·메타데이터, 전체 진단·upstream 코퍼스도 원래 M2 범위로 남습니다. 현재 선택 사례의 성공은 이 범위나 종료 조건을 줄이지 않습니다.
 
-타입 제약의 실행 상태·alias 선언 환경·GC 설계는 [아키텍처](docs/architecture.md)의 미구현 설계 절에 기록했습니다. 동일 alias를 타입 인자로 중첩할 때 오류 span이 가장 안쪽 타입 선언을 유지하는지, 클래스 초기화 실패 후 재시도 및 부분 초기화가 일치하는지도 추가 확인 항목입니다.
+타입 제약의 실행 상태·alias 실행 환경·GC와 선택적인 관찰 명령은 [아키텍처](docs/architecture.md)에 기록했습니다. 동일 alias를 타입 인자로 중첩한 오류 span은 새 회귀 사례로 확인했습니다. 클래스 초기화 실패 후 재시도 및 부분 초기화의 전체 규칙, 탐색 과정에서 드러난 Java alias JVM 버그와 미구현 Dynamic method 진단은 별도의 미해결 범위로 유지합니다.
 
 ### 원래 범위와 종료 조건
 
-첫 구현 단계와 클래스·타입 별칭을 확장한 두 번째 단계의 [검증 기록](reports/m2/README.md)을 확보했습니다. 최신 선택 사례 191개 중 189개는 Java와 원시 바이트가 일치하며, 순환 참조 오류와 정수 `% 0`의 Java 버그 출력은 실패로 유지합니다. Rust 검사 111개와 Python 검사 164개, Node·브라우저 각 18개 시나리오가 통과했습니다. `fb5a348`과 `281ef6c`를 커밋·푸시했고, 각 원격 CI 6개 작업이 통과했습니다. [두 번째 단계 CI 증거](reports/m2/ci-stage2-summary.json)에서 내려받은 원시 비교 결과와 커밋 소스 246개, 식별자 표 재생성도 검증했습니다. 전체 목록의 클래스·타입 나머지 규칙, generator·Reference 및 미연결 코퍼스가 남아 있으므로 **M2는 진행 중**입니다. 개발 gate 성공과 엄격한 전체 gate 실패를 구분합니다.
+첫 구현과 클래스·타입 별칭 단계는 `fb5a348`, `281ef6c`에 커밋·푸시했고 각 원격 CI 6개 작업과 내려받은 증거를 검증했습니다. 원래 [두 번째 단계 기록](reports/m2/stage2-summary.json)도 유지합니다.
+
+타입 제약을 확장한 [세 번째 단계 로컬 검증](reports/m2/stage3-summary.json)에서는 선택 사례 292개 중 290개가 Java와 원시 바이트로 일치했습니다. 순환 참조 오류와 정수 `% 0`의 Java 버그 출력은 실패로 유지하며 새 예외는 추가하지 않았습니다. Metamorphic 관계 17개, Rust 검사 139개, Python 검사 170개, Node·브라우저 각 20개 시나리오가 통과했습니다. 제약 안의 Host 중단·재진입·GC·취소·재시도·종료·시간 초과와 power assertion 재실행 순서도 검증했습니다. 전체 목록의 클래스·타입 나머지 규칙, generator·Reference 및 미연결 코퍼스가 남아 있으므로 **M2는 진행 중**입니다. 개발 gate 성공과 엄격한 전체 gate 실패를 구분합니다.
 
 - 전체 문법, 이름 해석, IR·compiler, lazy evaluation, 객체·amendment·상속, closure, generator를 구현합니다.
 - 타입·제약·generic·union, `Reference<Domain, Type>`, reflection에 필요한 런타임 메타데이터를 구현합니다. 다중 행 문자열의 continuation 등 0.32 기능을 목록에 연결합니다.

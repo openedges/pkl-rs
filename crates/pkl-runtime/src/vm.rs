@@ -8,6 +8,8 @@ use crate::heap::{
 };
 use crate::source::Span;
 use crate::value::{ErrorKind, ObjectId, RuntimeError, RuntimeFrame, Value};
+mod typecheck;
+use typecheck::{TypeDestination, TypeRun};
 
 #[derive(Clone, Debug)]
 pub enum Instruction {
@@ -17,15 +19,19 @@ pub enum Instruction {
     PushLocal,
     PopLocal,
     LoadThis,
+    LoadCustomThis,
     LoadOuter,
     LoadModule,
     NonNull,
     Throw,
     ToString,
+    Observe(Span),
     TestType(TypeCheck),
     JumpIfNull(usize),
     GetMember(Arc<str>),
     GetMethod(Arc<str>),
+    GetImplicitProperty(Arc<str>),
+    GetImplicitMethod(Arc<str>),
     GetConstMember(Arc<str>),
     GetConstMethod(Arc<str>),
     RequireConstProperty {
@@ -56,7 +62,9 @@ pub enum Instruction {
         block: usize,
         arity: usize,
         method: bool,
+        capture_custom_this: bool,
     },
+    PipeApply,
     Call {
         arity: usize,
         method: bool,
@@ -135,13 +143,33 @@ pub enum TypeCheck {
         name: Arc<str>,
     },
     Nullable(Box<TypeCheck>),
+    Alias(Box<TypeCheck>),
     Union {
         types: Vec<TypeCheck>,
+        spans: Vec<Span>,
         default: Option<usize>,
+    },
+    Constrained {
+        base: Box<TypeCheck>,
+        base_span: Span,
+        constraints: Vec<ConstraintCode>,
     },
 }
 
+#[derive(Clone, Debug)]
+pub struct ConstraintCode {
+    block: usize,
+    span: Span,
+    module_environment: bool,
+}
+
 impl TypeCheck {
+    fn unaliased(&self) -> &Self {
+        match self {
+            Self::Alias(inner) => inner.unaliased(),
+            _ => self,
+        }
+    }
     fn accepts(&self, value: &Value, heap: &Heap) -> bool {
         match self {
             Self::Any => true,
@@ -183,7 +211,9 @@ impl TypeCheck {
                 matches!(value, Value::String(actual) if actual == expected)
             }
             Self::Nullable(inner) => matches!(value, Value::Null) || inner.accepts(value, heap),
+            Self::Alias(inner) => inner.accepts(value, heap),
             Self::Union { types, .. } => types.iter().any(|ty| ty.accepts(value, heap)),
+            Self::Constrained { .. } => false,
         }
     }
 }
@@ -195,6 +225,7 @@ pub struct BlockMetadata {
     pub member: Arc<str>,
     pub declaration: Option<Span>,
     pub value_span: Option<Span>,
+    pub property_typecheck: Option<usize>,
 }
 
 #[derive(Clone, Debug)]
@@ -238,7 +269,7 @@ struct Force {
     name: Arc<str>,
     cache: Option<CacheKey>,
     method: bool,
-    inherited_types: Vec<(TypeCheck, Span, Arc<str>)>,
+    inherited_types: Vec<(TypeCheck, Span, Arc<str>, ObjectId)>,
     skip_typecheck: bool,
 }
 
@@ -249,6 +280,10 @@ struct Frame {
     environment: Environment,
     force: Option<Force>,
     lambda: bool,
+    type_run: Option<TypeRun>,
+    return_to_type: bool,
+    diagnostic_member: Option<Arc<str>>,
+    callsite_hidden: bool,
 }
 
 enum State {
@@ -278,6 +313,7 @@ pub struct Vm {
     instructions: u64,
     member_evaluations: u64,
     code_validation: Result<(), RuntimeError>,
+    power_assertions: bool,
 }
 
 impl Vm {
@@ -308,7 +344,12 @@ impl Vm {
             instructions: 0,
             member_evaluations: 0,
             code_validation,
+            power_assertions: false,
         }
+    }
+
+    pub fn set_power_assertions(&mut self, enabled: bool) {
+        self.power_assertions = enabled;
     }
 
     fn available(&self) -> Result<(), RuntimeError> {
@@ -342,6 +383,10 @@ impl Vm {
             environment: Environment::default(),
             force: None,
             lambda: false,
+            type_run: None,
+            return_to_type: false,
+            diagnostic_member: None,
+            callsite_hidden: false,
         });
         self.state = State::Running;
         Ok(())
@@ -566,6 +611,12 @@ impl Vm {
             }
             for frame in frames {
                 roots.extend(frame.environment.locals.iter().cloned());
+                roots.extend(frame.environment.this_value.iter().cloned());
+                roots.extend(frame.environment.outer_value.iter().cloned());
+                roots.extend(frame.environment.custom_this.iter().cloned());
+                if let Some(run) = &frame.type_run {
+                    run.roots(&mut roots);
+                }
                 for scope in &frame.environment.scopes {
                     roots.push(Value::Object(scope.receiver));
                     roots.push(Value::Object(scope.owner));
@@ -573,6 +624,12 @@ impl Vm {
                 if let Some(force) = &frame.force {
                     roots.push(Value::Object(force.receiver));
                     roots.push(Value::Object(force.owner));
+                    roots.extend(
+                        force
+                            .inherited_types
+                            .iter()
+                            .map(|(_, _, _, owner)| Value::Object(*owner)),
+                    );
                 }
             }
         }
@@ -582,7 +639,9 @@ impl Vm {
     fn fail(&mut self, mut error: RuntimeError) {
         if error.kind == ErrorKind::MissingMember
             && let Some(frame) = self.frames.last()
-            && let Some(Instruction::GetProperty { name, .. }) = self
+            && let Some(
+                Instruction::GetProperty { name, .. } | Instruction::GetImplicitProperty(name),
+            ) = self
                 .program
                 .blocks
                 .get(frame.block)
@@ -625,16 +684,21 @@ impl Vm {
             if let Some(metadata) = self.program.metadata.get(frame.block)
                 && let Some(Some(span)) = metadata.spans.get(frame.pc.saturating_sub(1))
             {
-                error.frames.push(RuntimeFrame {
-                    span: if error.frames.is_empty() {
-                        error.span.unwrap_or(*span)
-                    } else {
-                        *span
-                    },
-                    member: metadata.member.clone(),
-                });
+                if !frame.callsite_hidden {
+                    error.frames.push(RuntimeFrame {
+                        span: if error.frames.is_empty() {
+                            error.span.unwrap_or(*span)
+                        } else {
+                            *span
+                        },
+                        member: frame
+                            .diagnostic_member
+                            .clone()
+                            .unwrap_or_else(|| metadata.member.clone()),
+                    });
+                }
                 if frame.force.is_some()
-                    && frame.pc + 1 == self.program.blocks[frame.block].len()
+                    && metadata.property_typecheck == Some(frame.pc.saturating_sub(1))
                     && matches!(
                         self.program.blocks[frame.block].get(frame.pc.saturating_sub(1)),
                         Some(Instruction::CheckType(_))
@@ -646,6 +710,9 @@ impl Vm {
                         member: metadata.member.clone(),
                     });
                 }
+            }
+            if let Some(run) = &frame.type_run {
+                error.frames.extend(run.fatal_value_frames().cloned());
             }
         }
         if error.span.is_none() {
@@ -792,13 +859,15 @@ impl Vm {
                             || inherited.name.clone(),
                             |metadata| metadata.member.clone(),
                         );
-                        inherited_types.push((ty.clone(), span, name));
+                        inherited_types.push((ty.clone(), span, name, id));
                     }
                 }
                 parent = object.parent;
             }
         }
         let mut environment = self.heap.get(owner)?.environment.clone();
+        environment.outer_value = environment.this_value.clone();
+        environment.this_value = Some(Value::Object(receiver));
         environment.scopes.insert(0, Scope { receiver, owner });
         if memoize {
             self.heap
@@ -813,6 +882,10 @@ impl Vm {
             base: self.stack.len(),
             environment,
             lambda: false,
+            type_run: None,
+            return_to_type: false,
+            diagnostic_member: None,
+            callsite_hidden: false,
             force: Some(Force {
                 receiver,
                 owner,
@@ -987,7 +1060,77 @@ impl Vm {
         Ok(())
     }
 
+    fn invoke_function(
+        &mut self,
+        id: ObjectId,
+        arguments: Vec<Value>,
+        method: bool,
+    ) -> Result<(), RuntimeError> {
+        let arity = arguments.len();
+        let object = self.heap.get(id)?;
+        let function = object
+            .function
+            .as_ref()
+            .ok_or_else(|| invalid("invalid function handle"))?;
+        if !function.method && method {
+            return Err(RuntimeError::new(
+                ErrorKind::Type,
+                "function values must be invoked with apply",
+            ));
+        }
+        if function.arity != arity {
+            let mut error = RuntimeError::new(
+                ErrorKind::Type,
+                format!(
+                    "Expected {} function arguments but got {arity}.",
+                    function.arity
+                ),
+            );
+            if let Some(metadata) = self.program.metadata.get(function.block)
+                && let Some(span) = metadata.declaration
+            {
+                error.frames.push(RuntimeFrame {
+                    span,
+                    member: metadata.member.clone(),
+                });
+            }
+            return Err(error);
+        }
+        if self.frames.len() >= 4096 {
+            return Err(RuntimeError::new(
+                ErrorKind::Cycle,
+                "evaluation frame limit exceeded",
+            ));
+        }
+        let mut environment = object.environment.clone();
+        environment.outer_value = environment.this_value.clone();
+        if function.capture_custom_this {
+            environment.this_value = environment.custom_this.clone();
+        }
+        environment.locals.extend(arguments);
+        self.frames.push(Frame {
+            block: function.block,
+            pc: 0,
+            base: self.stack.len(),
+            environment,
+            force: None,
+            lambda: !function.method,
+            type_run: None,
+            return_to_type: false,
+            diagnostic_member: None,
+            callsite_hidden: false,
+        });
+        Ok(())
+    }
+
     fn step(&mut self) -> Result<(), RuntimeError> {
+        if self
+            .frames
+            .last()
+            .is_some_and(|frame| frame.type_run.is_some())
+        {
+            return self.step_type();
+        }
         let frame = self
             .frames
             .last_mut()
@@ -1033,8 +1176,25 @@ impl Vm {
                     return Err(invalid("lexical stack underflow"));
                 }
             }
-            Instruction::LoadThis => self.stack.push(Value::Object(self.scope(0)?.receiver)),
+            Instruction::LoadThis => self.stack.push(
+                frame
+                    .environment
+                    .this_value
+                    .clone()
+                    .unwrap_or(Value::Object(self.scope(0)?.receiver)),
+            ),
+            Instruction::LoadCustomThis => self.stack.push(
+                frame
+                    .environment
+                    .custom_this
+                    .clone()
+                    .ok_or_else(|| invalid("missing custom receiver"))?,
+            ),
             Instruction::LoadOuter => {
+                if let Some(value) = frame.environment.outer_value.clone() {
+                    self.stack.push(value);
+                    return Ok(());
+                }
                 let depth = usize::from(!frame.lambda);
                 let scope = frame.environment.scopes.get(depth).ok_or_else(|| {
                     RuntimeError::new(ErrorKind::MissingMember, "No outer scope is available.")
@@ -1048,6 +1208,14 @@ impl Vm {
                     .last()
                     .ok_or_else(|| invalid("missing module scope"))?;
                 self.stack.push(Value::Object(scope.receiver));
+            }
+            Instruction::Observe(span) => {
+                let value = self
+                    .stack
+                    .last()
+                    .cloned()
+                    .ok_or_else(|| invalid("missing observed value"))?;
+                self.observe(span, value);
             }
             Instruction::NonNull => {
                 let value = self.pop()?;
@@ -1066,7 +1234,8 @@ impl Vm {
                         &TypeCheck::String,
                         &value,
                         &self.program.module_name,
-                    ));
+                        &self.heap,
+                    )?);
                 };
                 return Err(RuntimeError::new(ErrorKind::Type, message.as_ref()));
             }
@@ -1076,7 +1245,7 @@ impl Vm {
             }
             Instruction::TestType(ty) => {
                 let value = self.pop()?;
-                self.stack.push(Value::Bool(ty.accepts(&value, &self.heap)));
+                self.begin_type(ty, value, TypeDestination::Test, Vec::new())?;
             }
             Instruction::JumpIfNull(target) => {
                 if matches!(self.pop()?, Value::Null) {
@@ -1140,6 +1309,20 @@ impl Vm {
                     true,
                     method,
                 )?;
+            }
+            Instruction::GetImplicitProperty(ref name)
+            | Instruction::GetImplicitMethod(ref name) => {
+                let method = matches!(instruction, Instruction::GetImplicitMethod(_));
+                let receiver = self
+                    .frames
+                    .last()
+                    .expect("active frame")
+                    .environment
+                    .this_value
+                    .clone()
+                    .unwrap_or(Value::Object(self.scope(0)?.receiver));
+                let receiver = receiver.as_object()?;
+                self.force(receiver, receiver, name.clone(), false, true, method)?;
             }
             Instruction::GetSuperMember(ref name)
             | Instruction::GetSuperMethod(ref name)
@@ -1360,6 +1543,7 @@ impl Vm {
                 block,
                 arity,
                 method,
+                capture_custom_this,
             } => {
                 if block >= self.program.blocks.len() {
                     return Err(invalid("invalid function block"));
@@ -1375,6 +1559,7 @@ impl Vm {
                         block,
                         arity,
                         method,
+                        capture_custom_this,
                     }),
                     environment,
                     ..Object::default()
@@ -1390,55 +1575,56 @@ impl Vm {
                 let Value::Function(id) = self.pop()? else {
                     return Err(RuntimeError::new(ErrorKind::Type, "value is not callable"));
                 };
-                let object = self.heap.get(id)?;
-                let function = object
-                    .function
-                    .as_ref()
-                    .ok_or_else(|| invalid("invalid function handle"))?;
-                if !function.method && method {
+                self.invoke_function(id, arguments, method)?;
+            }
+            Instruction::PipeApply => {
+                let right = self.pop()?;
+                let left = self.pop()?;
+                let Value::Function(id) = right else {
                     return Err(RuntimeError::new(
-                        ErrorKind::Type,
-                        "function values must be invoked with apply",
-                    ));
-                }
-                if function.arity != arity {
-                    let mut error = RuntimeError::new(
                         ErrorKind::Type,
                         format!(
-                            "Expected {} function arguments but got {arity}.",
-                            function.arity
+                            "Operator `|>` is not defined for operand types `{}` and `{}`.\nLeft operand : {}\nRight operand: {}",
+                            crate::diagnostic_values::type_name(
+                                &left,
+                                &self.heap,
+                                &self.program.module_name
+                            )?,
+                            crate::diagnostic_values::type_name(
+                                &right,
+                                &self.heap,
+                                &self.program.module_name
+                            )?,
+                            crate::diagnostic_values::render(
+                                &left,
+                                &self.heap,
+                                &self.program.module_name,
+                                80
+                            )?,
+                            crate::diagnostic_values::render(
+                                &right,
+                                &self.heap,
+                                &self.program.module_name,
+                                80
+                            )?,
                         ),
-                    );
-                    if let Some(metadata) = self.program.metadata.get(function.block)
-                        && let Some(span) = metadata.declaration
-                    {
-                        error.frames.push(RuntimeFrame {
-                            span,
-                            member: metadata.member.clone(),
-                        });
-                    }
-                    return Err(error);
-                }
-                if self.frames.len() >= 4096 {
-                    return Err(RuntimeError::new(
-                        ErrorKind::Cycle,
-                        "evaluation frame limit exceeded",
                     ));
-                }
-                let mut environment = object.environment.clone();
-                environment.locals.extend(arguments);
-                self.frames.push(Frame {
-                    block: function.block,
-                    pc: 0,
-                    base: self.stack.len(),
-                    environment,
-                    force: None,
-                    lambda: !function.method,
-                });
+                };
+                self.frames
+                    .last_mut()
+                    .expect("active frame")
+                    .callsite_hidden = true;
+                self.invoke_function(id, vec![left], false)?;
             }
             Instruction::CheckType(ty) => {
                 let frame = self.frames.last().expect("active frame");
-                if frame.pc + 1 == self.program.blocks[frame.block].len()
+                if self
+                    .program
+                    .metadata
+                    .get(frame.block)
+                    .is_some_and(|metadata| {
+                        metadata.property_typecheck == Some(frame.pc.saturating_sub(1))
+                    })
                     && frame
                         .force
                         .as_ref()
@@ -1447,10 +1633,7 @@ impl Vm {
                     return Ok(());
                 }
                 let value = self.pop()?;
-                if !ty.accepts(&value, &self.heap) {
-                    return Err(type_error(&ty, &value, &self.program.module_name));
-                }
-                self.stack.push(value);
+                self.begin_type(ty, value, TypeDestination::Stack, Vec::new())?;
             }
             Instruction::Duplicate => {
                 let value = self.pop()?;
@@ -1552,7 +1735,8 @@ impl Vm {
                         &TypeCheck::Boolean,
                         &value,
                         &self.program.module_name,
-                    ));
+                        &self.heap,
+                    )?);
                 }
             },
             Instruction::ReadResource => {
@@ -1574,30 +1758,35 @@ impl Vm {
                     return Err(invalid("unbalanced return stack"));
                 }
                 let value = self.pop()?;
-                if let Some(force) = &self.frames.last().expect("active frame").force {
-                    for (ty, span, member) in &force.inherited_types {
-                        if force.skip_typecheck {
-                            break;
-                        }
-                        if !ty.accepts(&value, &self.heap) {
-                            let mut error =
-                                type_error(ty, &value, &self.program.module_name).at(*span);
-                            error.frames.push(RuntimeFrame {
-                                span: *span,
-                                member: member.clone(),
-                            });
-                            let frame = self.frames.last().expect("active frame");
-                            if let Some(metadata) = self.program.metadata.get(frame.block)
-                                && let Some(span) = metadata.value_span
-                            {
-                                error.frames.push(RuntimeFrame {
-                                    span,
-                                    member: metadata.member.clone(),
-                                });
-                            }
-                            return Err(error);
-                        }
+                if let Some(force) = &mut self.frames.last_mut().expect("active frame").force
+                    && !force.skip_typecheck
+                    && !force.inherited_types.is_empty()
+                {
+                    let receiver = force.receiver;
+                    let (ty, span, member, owner) = force.inherited_types.remove(0);
+                    let mut frames = vec![RuntimeFrame { span, member }];
+                    let frame = self.frames.last().expect("active frame");
+                    if let Some(metadata) = self.program.metadata.get(frame.block)
+                        && let Some(span) = metadata.value_span
+                    {
+                        frames.push(RuntimeFrame {
+                            span,
+                            member: metadata.member.clone(),
+                        });
                     }
+                    self.begin_type(ty, value, TypeDestination::Return, frames)?;
+                    let mut environment = self.heap.get(owner)?.environment.clone();
+                    environment.outer_value = environment.this_value.clone();
+                    environment.this_value = Some(Value::Object(receiver));
+                    environment.scopes.insert(0, Scope { receiver, owner });
+                    self.frames
+                        .last_mut()
+                        .expect("type frame")
+                        .type_run
+                        .as_mut()
+                        .expect("type run")
+                        .environment = environment;
+                    return Ok(());
                 }
                 let frame = self.frames.pop().expect("active frame");
                 if let Some(force) = frame.force
@@ -1607,6 +1796,17 @@ impl Vm {
                         .get_mut(force.receiver)?
                         .cache
                         .insert(key, LazyState::Completed(value.clone()));
+                }
+                if frame.return_to_type {
+                    self.frames
+                        .last_mut()
+                        .and_then(|frame| frame.type_run.as_mut())
+                        .ok_or_else(|| invalid("missing constraint continuation"))?
+                        .returned = Some(value);
+                    return Ok(());
+                }
+                if let Some(caller) = self.frames.last_mut() {
+                    caller.callsite_hidden = false;
                 }
                 self.stack.push(value);
                 if self.frames.is_empty() {
@@ -1790,6 +1990,26 @@ pub fn compile_module_with_options(
     resolved: &crate::resolver::ResolvedModule,
     options: CompileOptions,
 ) -> Result<Arc<Program>, RuntimeError> {
+    compile_module_configured(resolved, options, false)
+}
+
+pub fn compile_module_with_power_assertions(
+    resolved: &crate::resolver::ResolvedModule,
+) -> Result<Arc<Program>, RuntimeError> {
+    compile_module_configured(
+        resolved,
+        CompileOptions {
+            fuse_constant_add: true,
+        },
+        true,
+    )
+}
+
+fn compile_module_configured(
+    resolved: &crate::resolver::ResolvedModule,
+    options: CompileOptions,
+    instrument: bool,
+) -> Result<Arc<Program>, RuntimeError> {
     if let Some(declaration) = &resolved.module.declaration
         && (declaration.parent.is_some() || !declaration.modifiers.is_empty())
     {
@@ -1802,6 +2022,11 @@ pub fn compile_module_with_options(
         member: String::new(),
         type_scopes: Vec::new(),
         modifiers: Vec::new(),
+        constraint_module: false,
+        active_type_parameters: BTreeMap::new(),
+        function_counts: BTreeMap::new(),
+        function_names: BTreeMap::new(),
+        instrument,
     };
     compiler.program.module_name = Arc::from(
         resolved
@@ -1818,7 +2043,9 @@ pub fn compile_module_with_options(
         template,
         has_parent: false,
     });
+    compiler.type_scopes.push(resolved.module.members.clone());
     compiler.initialize_member_types(&resolved.module.members, &mut entry)?;
+    compiler.type_scopes.pop();
     entry.push(Instruction::Return);
     compiler.program.entry = compiler.block(entry, None);
     Ok(Arc::new(compiler.program))
@@ -1858,6 +2085,11 @@ struct Compiler<'a> {
     member: String,
     type_scopes: Vec<Vec<crate::syntax::Member>>,
     modifiers: Vec<crate::syntax::Modifier>,
+    constraint_module: bool,
+    active_type_parameters: BTreeMap<String, TypeCheck>,
+    function_counts: BTreeMap<String, usize>,
+    function_names: BTreeMap<Span, String>,
+    instrument: bool,
 }
 
 impl Compiler<'_> {
@@ -1882,7 +2114,7 @@ impl Compiler<'_> {
                 members,
             } = &member.expr.kind
                 && let Some(ty) = &member.ty
-                && matches!(self.compile_type(ty)?, TypeCheck::Class { .. })
+                && matches!(self.compile_type(ty)?.unaliased(), TypeCheck::Class { .. })
             {
                 self.class_expression(
                     ty,
@@ -1896,6 +2128,7 @@ impl Compiler<'_> {
             } else {
                 self.expression(&member.expr, &mut instructions)?;
             }
+            let property_typecheck = member.ty.as_ref().map(|_| instructions.len());
             if let Some(ty) = &member.ty {
                 instructions.push_at(
                     Instruction::CheckType(self.compile_type(ty)?),
@@ -1913,6 +2146,7 @@ impl Compiler<'_> {
             );
             self.block(instructions, Some(header_span));
             self.program.metadata[code].value_span = Some(member.expr.span);
+            self.program.metadata[code].property_typecheck = property_typecheck;
             self.member = previous_member;
             self.modifiers = previous_modifiers;
             result.push(Member {
@@ -1955,6 +2189,7 @@ impl Compiler<'_> {
             member: Arc::from(self.member.as_str()),
             declaration,
             value_span: None,
+            property_typecheck: None,
         });
         index
     }
@@ -1972,6 +2207,10 @@ impl Compiler<'_> {
                 *span = Some(expression.span);
             }
         }
+        if self.instrument && !matches!(expression.kind, crate::syntax::ExprKind::Parenthesized(_))
+        {
+            output.push_at(Instruction::Observe(expression.span), expression.span);
+        }
         Ok(())
     }
 
@@ -1983,6 +2222,7 @@ impl Compiler<'_> {
         use crate::resolver::Binding;
         use crate::syntax::{BinaryOp, ExprKind};
         match &expression.kind {
+            ExprKind::Parenthesized(inner) => self.expression(inner, output)?,
             ExprKind::Class {
                 type_parameters,
                 superclass,
@@ -2084,7 +2324,13 @@ impl Compiler<'_> {
                 output.push(Instruction::Constant(Value::string(value.as_str())))
             }
             ExprKind::Bool(value) => output.push(Instruction::Constant(Value::Bool(*value))),
-            ExprKind::This => output.push(Instruction::LoadThis),
+            ExprKind::This => {
+                output.push(if self.resolved.custom_this.contains(&expression.span) {
+                    Instruction::LoadCustomThis
+                } else {
+                    Instruction::LoadThis
+                })
+            }
             ExprKind::Outer => output.push(Instruction::LoadOuter),
             ExprKind::Module => output.push(Instruction::LoadModule),
             ExprKind::InterpolatedString(parts) => {
@@ -2181,20 +2427,20 @@ impl Compiler<'_> {
                             local: *local,
                         })
                     }
-                    Binding::ImplicitMethod => output.push(Instruction::GetMethodProperty {
-                        name,
-                        owner_depth: 0,
-                        local: false,
-                    }),
-                    Binding::ImplicitThis => output.push(Instruction::GetProperty {
-                        name,
-                        owner_depth: 0,
-                        local: false,
-                    }),
+                    Binding::ImplicitMethod => output.push(Instruction::GetImplicitMethod(name)),
+                    Binding::ImplicitThis => output.push(Instruction::GetImplicitProperty(name)),
+                    Binding::CustomThis => {
+                        output.push(Instruction::LoadCustomThis);
+                        output.push(Instruction::GetMember(name));
+                    }
+                    Binding::CustomMethod => {
+                        output.push(Instruction::LoadCustomThis);
+                        output.push(Instruction::GetMethod(name));
+                    }
                 }
             }
             ExprKind::Member(receiver, name) => {
-                if matches!(receiver.kind, ExprKind::Super) {
+                if matches!(receiver.unparenthesized().kind, ExprKind::Super) {
                     output.push(if self.resolved.const_names.contains(&expression.span) {
                         Instruction::GetConstSuperMember(Arc::from(name.as_str()))
                     } else {
@@ -2242,6 +2488,21 @@ impl Compiler<'_> {
                 if !type_parameters.is_empty() {
                     return Err(unsupported_type("generic methods"));
                 }
+                let previous_member = self.member.clone();
+                if !method {
+                    self.member = self
+                        .function_names
+                        .entry(expression.span)
+                        .or_insert_with(|| {
+                            let count = self
+                                .function_counts
+                                .entry(previous_member.clone())
+                                .or_default();
+                            *count += 1;
+                            format!("{previous_member}.<function#{count}>")
+                        })
+                        .clone();
+                }
                 if !method {
                     for ty in parameters
                         .iter()
@@ -2249,6 +2510,7 @@ impl Compiler<'_> {
                         .chain(return_type.iter())
                     {
                         if self.resolve_expression_type(ty, output).is_none() {
+                            self.member = previous_member;
                             return Ok(());
                         }
                     }
@@ -2272,14 +2534,25 @@ impl Compiler<'_> {
                     );
                 }
                 instructions.push(Instruction::Return);
-                let block = self.block(instructions, Some(*header_span));
+                let block = self.block(
+                    instructions,
+                    Some(if *method {
+                        *header_span
+                    } else {
+                        expression.span
+                    }),
+                );
+                self.program.metadata[block].value_span = Some(body.span);
+                self.member = previous_member;
                 output.push(Instruction::MakeFunction {
                     block,
                     arity: parameters.len(),
                     method: *method,
+                    capture_custom_this: self.resolved.custom_functions.contains(&expression.span),
                 });
             }
             ExprKind::Call { callee, arguments } => {
+                let callee = callee.unparenthesized();
                 if matches!(&callee.kind, ExprKind::Name(name) if name == "read")
                     && self.resolved.names.get(&callee.span) == Some(&Binding::ImplicitMethod)
                 {
@@ -2306,7 +2579,7 @@ impl Compiler<'_> {
                     });
                     name != "apply"
                 } else if let ExprKind::Member(receiver, name) = &callee.kind {
-                    if matches!(receiver.kind, ExprKind::Super) {
+                    if matches!(receiver.unparenthesized().kind, ExprKind::Super) {
                         output.push(if self.resolved.const_names.contains(&callee.span) {
                             Instruction::GetConstSuperMethod(Arc::from(name.as_str()))
                         } else {
@@ -2374,6 +2647,7 @@ impl Compiler<'_> {
                 } else {
                     self.expression(right, output)?;
                     output.push(match op {
+                        BinaryOp::Pipe => Instruction::PipeApply,
                         BinaryOp::Add => Instruction::Add,
                         BinaryOp::Subtract => Instruction::Subtract,
                         BinaryOp::Multiply => Instruction::Multiply,
@@ -2437,29 +2711,30 @@ fn scalar_string(value: &Value) -> Result<String, RuntimeError> {
     })
 }
 
-fn type_error(expected: &TypeCheck, actual: &Value, module: &str) -> RuntimeError {
+fn type_error(
+    expected: &TypeCheck,
+    actual: &Value,
+    module: &str,
+    heap: &Heap,
+) -> Result<RuntimeError, RuntimeError> {
+    type_error_at_width(expected, actual, module, heap, 80)
+}
+fn type_error_at_width(
+    expected: &TypeCheck,
+    actual: &Value,
+    module: &str,
+    heap: &Heap,
+    limit: usize,
+) -> Result<RuntimeError, RuntimeError> {
     let expected = type_name(expected, module);
-    let actual_type = match actual {
-        Value::Null => "Null",
-        Value::Bool(_) => "Boolean",
-        Value::Int(_) => "Int",
-        Value::Float(_) => "Float",
-        Value::String(_) => "String",
-        Value::Bytes(_) => "Bytes",
-        Value::Object(_) => "Dynamic",
-        Value::Function(_) => "Function",
-        Value::Class(_) => "Class",
-    };
-    let value = match actual {
-        Value::String(value) => format!("{value:?}"),
-        _ => scalar_string(actual).unwrap_or_else(|_| actual_type.to_owned()),
-    };
-    RuntimeError::new(
+    let actual_type = crate::diagnostic_values::type_name(actual, heap, module)?;
+    let value = crate::diagnostic_values::render(actual, heap, module, limit)?;
+    Ok(RuntimeError::new(
         ErrorKind::Type,
         format!(
             "Expected value of type `{expected}`, but got type `{actual_type}`.\nValue: {value}"
         ),
-    )
+    ))
 }
 
 fn type_name(ty: &TypeCheck, module: &str) -> String {
@@ -2467,6 +2742,8 @@ fn type_name(ty: &TypeCheck, module: &str) -> String {
         TypeCheck::Class { name, .. } => format!("{module}#{name}"),
         TypeCheck::StringLiteral(value) => format!("{value:?}"),
         TypeCheck::Nullable(inner) => format!("{}?", type_name(inner, module)),
+        TypeCheck::Alias(inner) => type_name(inner, module),
+        TypeCheck::Constrained { base, .. } => type_name(base, module),
         TypeCheck::Union { types, .. } => types
             .iter()
             .map(|ty| type_name(ty, module))
@@ -2565,13 +2842,14 @@ impl Compiler<'_> {
     }
 
     fn initialize_member_types(
-        &self,
+        &mut self,
         members: &[crate::syntax::Member],
         output: &mut Code,
     ) -> Result<(), RuntimeError> {
         for member in members {
             if let Some(ty) = &member.ty {
-                self.initialize_type(&self.compile_type(ty)?, self.type_source_span(ty), output);
+                let check = self.compile_type(ty)?;
+                self.initialize_type(&check, self.type_source_span(ty), output);
             }
             if let crate::syntax::ExprKind::Function {
                 parameters,
@@ -2585,18 +2863,15 @@ impl Compiler<'_> {
                     .filter_map(|parameter| parameter.ty.as_ref())
                     .chain(return_type.iter())
                 {
-                    self.initialize_type(
-                        &self.compile_type(ty)?,
-                        self.type_source_span(ty),
-                        output,
-                    );
+                    let check = self.compile_type(ty)?;
+                    self.initialize_type(&check, self.type_source_span(ty), output);
                 }
             }
         }
         Ok(())
     }
 
-    fn initialize_type(&self, check: &TypeCheck, span: Span, output: &mut Code) {
+    fn initialize_type(&mut self, check: &TypeCheck, span: Span, output: &mut Code) {
         match check {
             TypeCheck::Class { id, .. } => {
                 if let Some(member) = self
@@ -2619,6 +2894,10 @@ impl Compiler<'_> {
                 }
             }
             TypeCheck::Nullable(inner) => self.initialize_type(inner, span, output),
+            TypeCheck::Alias(inner) => self.initialize_type(inner, span, output),
+            TypeCheck::Constrained {
+                base, base_span, ..
+            } => self.initialize_type(base, *base_span, output),
             TypeCheck::Union { types, .. } => {
                 for ty in types {
                     self.initialize_type(ty, span, output);
@@ -2629,7 +2908,7 @@ impl Compiler<'_> {
     }
 
     fn resolve_expression_type(
-        &self,
+        &mut self,
         ty: &crate::syntax::Type,
         output: &mut Code,
     ) -> Option<TypeCheck> {
@@ -2637,7 +2916,7 @@ impl Compiler<'_> {
             ty,
             self.type_scopes.len(),
             &mut BTreeSet::new(),
-            &BTreeMap::new(),
+            &self.active_type_parameters.clone(),
         ) {
             Ok(check) => {
                 self.initialize_type(&check, self.type_source_span(ty), output);
@@ -2650,12 +2929,12 @@ impl Compiler<'_> {
         }
     }
 
-    fn compile_type(&self, ty: &crate::syntax::Type) -> Result<TypeCheck, RuntimeError> {
+    fn compile_type(&mut self, ty: &crate::syntax::Type) -> Result<TypeCheck, RuntimeError> {
         self.compile_type_at(
             ty,
             self.type_scopes.len(),
             &mut BTreeSet::new(),
-            &BTreeMap::new(),
+            &self.active_type_parameters.clone(),
         )
         .map_err(|mut error| {
             if !error.frames.is_empty() {
@@ -2692,7 +2971,6 @@ impl Compiler<'_> {
                         type_parameters,
                         ty: aliased,
                     } = &member.expr.kind
-                    && aliases.insert(member.expr.span)
                 {
                     let substitutions = type_parameters
                         .iter()
@@ -2704,6 +2982,9 @@ impl Compiler<'_> {
                             )
                         })
                         .collect();
+                    if !aliases.insert(member.expr.span) {
+                        return ty.span;
+                    }
                     let span = self.type_source_span_at(aliased, &substitutions, aliases);
                     aliases.remove(&member.expr.span);
                     return span;
@@ -2715,7 +2996,7 @@ impl Compiler<'_> {
     }
 
     fn compile_type_at(
-        &self,
+        &mut self,
         ty: &crate::syntax::Type,
         limit: usize,
         aliases: &mut BTreeSet<Span>,
@@ -2729,7 +3010,33 @@ impl Compiler<'_> {
             TypeKind::Nullable(inner) => TypeCheck::Nullable(Box::new(
                 self.compile_type_at(inner, limit, aliases, parameters)?,
             )),
+            TypeKind::Constrained { base, constraints } => {
+                let base_check = self.compile_type_at(base, limit, aliases, parameters)?;
+                let mut compiled = Vec::new();
+                for expression in constraints {
+                    let expression = expression.unparenthesized();
+                    let previous =
+                        std::mem::replace(&mut self.active_type_parameters, parameters.clone());
+                    let mut code = Code::default();
+                    let result = self.expression(expression, &mut code);
+                    self.active_type_parameters = previous;
+                    result?;
+                    code.push(Instruction::Return);
+                    let block = self.block(code, Some(expression.span));
+                    compiled.push(ConstraintCode {
+                        block,
+                        span: expression.span,
+                        module_environment: self.constraint_module,
+                    });
+                }
+                TypeCheck::Constrained {
+                    base: Box::new(base_check),
+                    base_span: self.type_source_span(base),
+                    constraints: compiled,
+                }
+            }
             TypeKind::Union { types, default } => TypeCheck::Union {
+                spans: types.iter().map(|ty| self.type_source_span(ty)).collect(),
                 types: types
                     .iter()
                     .map(|ty| self.compile_type_at(ty, limit, aliases, parameters))
@@ -2792,6 +3099,8 @@ impl Compiler<'_> {
                                 )
                                 .at(ty.span));
                             }
+                            let previous_module =
+                                std::mem::replace(&mut self.constraint_module, true);
                             let result = self
                                 .compile_type_at(aliased, index + 1, aliases, &substitutions)
                                 .map_err(|mut error| {
@@ -2800,9 +3109,11 @@ impl Compiler<'_> {
                                         member: Arc::from(format!("#{}", member.name)),
                                     });
                                     error
-                                })?;
+                                });
+                            self.constraint_module = previous_module;
+                            let result = result?;
                             aliases.remove(&member.expr.span);
-                            result
+                            TypeCheck::Alias(Box::new(result))
                         }
                         _ => {
                             return Err(RuntimeError::new(
@@ -2863,7 +3174,7 @@ impl Compiler<'_> {
         output: &mut Code,
         span: Span,
     ) -> Result<(), RuntimeError> {
-        let TypeCheck::Class { id, .. } = check else {
+        let TypeCheck::Class { id, .. } = check.unaliased() else {
             return Err(RuntimeError::new(ErrorKind::Type, "Expected a class type."));
         };
         for (index, members) in self.type_scopes.iter().enumerate().rev() {
@@ -2936,7 +3247,10 @@ impl Compiler<'_> {
             TypeCheck::Union {
                 types,
                 default: Some(index),
+                ..
             } => return self.default_type(&types[*index], output, span),
+            TypeCheck::Constrained { base, .. } => return self.default_type(base, output, span),
+            TypeCheck::Alias(inner) => return self.default_type(inner, output, span),
             TypeCheck::Class { .. } => {
                 self.class_value(check, output, span)?;
                 output.push_at(Instruction::DefaultClassInstance, span);

@@ -115,32 +115,43 @@ Selected differential checks establish only the behavior they execute. See
 [the M2 contract](m2-language.md) and [raw results](../reports/m2/README.md)
 for the remaining language and diagnostic obligations.
 
-### Constraint evaluation design (not implemented)
+### Constraint continuations
 
-Constraints will execute as continuations in the existing VM. The current
-synchronous `TypeCheck::accepts` can classify primitive leaves, but cannot
-execute a predicate, wait on a Host, or recover a union alternative. Predicate
-blocks and function-valued predicates must use ordinary VM call frames with
-an explicit return destination for the pending type check. A lazy member may
-publish its cached value only after every inherited and local check succeeds.
+Constraint checks use a continuation in the checking VM frame. Primitive
+classification remains a pure operation; predicate blocks and function-valued
+predicates run on ordinary bytecode frames, return into the continuation, and
+can suspend on the same Host interface. Lazy members publish cached values only
+after their inherited and local checks succeed. Inherited constraints bind the
+original declaration owner while retaining the actual object receiver.
 
-Recoverable type mismatch must be separate from evaluation failure. A false
-constraint can select the next union alternative or produce `false` for `is`;
-an invalid predicate result, thrown error, or Host failure must propagate.
-The pinned union implementation first tries alternatives with assertion
-tracking suppressed, then may execute them again to construct a failure.
-A failing constraint can execute again under value tracking. Those repetitions,
-their side effects, and diagnostic values are observable compatibility behavior.
+Recoverable mismatch is separate from an evaluation failure. A false constraint
+can select the next union alternative or produce `false` for `is`; an invalid
+predicate result, thrown error, or Host failure propagates. Nullable wrapper
+order is preserved. Union alternatives first run with assertion tracking
+suppressed. With power assertions enabled, a failed check can execute again to
+construct its diagnostic, including another tracked predicate invocation.
 
-The resolver must distinguish a constraint's scalar-capable custom `this` from
-ordinary object receivers. Closures capture that context, while nested objects
-keep their own `this`. Alias bodies require their declaration environment;
-actual generic arguments retain their use-site environment. Immutable programs
-must contain environment lookup plans rather than evaluator-owned heap handles.
+The resolver distinguishes a constraint's scalar-capable custom `this` from
+ordinary object receivers. Closures capture that context; nested objects retain
+their own `this`. Type names in generic arguments resolve at their use site.
+The pinned alias checker then changes the checking frame's receiver and owner
+to the alias declaration environment while preserving its local slots. That
+runtime behavior also affects substituted constraints; it is different from
+capturing an independent use-site receiver for every type argument.
 
-Active and suspended type-check continuations must retain their input and
-checked values, predicate closures, bound environments, mismatch values, and
-assertion observations as GC roots. Host suspension, nested evaluation, cancel,
-close, failure retry, and logical diagnostics must use the same lifecycle as
-ordinary VM frames. Nullable wrapper order and union failure selection require
-fresh Java comparisons before this design can count as implemented behavior.
+Active and suspended continuations trace their values, predicate functions,
+environments, mismatch values, and assertion observations. Diagnostic snapshots
+contain rendered strings rather than heap handles. Value rendering reads only
+completed caches, keeps inherited declaration order, and applies the pinned
+UTF-16 length limit without forcing unevaluated members.
+
+Power assertions default to disabled, as in the Java API. An explicitly
+instrumented compilation adds observation instructions; ordinary compilation
+does not add these dispatches. The shared source renderer associates executed
+expression spans with operator and member positions, hides literals and
+repeated observations, and preserves multiline and UTF-16 layout. Parser
+grouping nodes retain both outer source syntax and inner execution spans.
+
+These mechanisms remain subject to the selected differential and lifecycle
+checks. Complete structural and function types, collection wrappers, imported
+aliases, and the full language corpus remain M2 requirements.

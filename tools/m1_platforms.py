@@ -29,6 +29,8 @@ REQUIRED_SCENARIOS = {
     'cooperative-loop-cancel', 'invalid-clock-budget-boundary',
     'm2-recursive-methods-and-closures', 'm2-lazy-control-and-interpolation',
     'm2-shared-language-diagnostics', 'm2-class-method-and-type-alias',
+    'm2-pipeline-and-constraint-values',
+    'm2-constraint-diagnostics-and-power-assertions',
 }
 
 

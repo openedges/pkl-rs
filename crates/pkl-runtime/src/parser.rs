@@ -33,6 +33,18 @@ fn is_identifier_part(character: char) -> bool {
     identifier_contains(unicode_identifier::PART_RANGES, character)
 }
 
+/// The pinned renderer uses code points here, unlike the UTF-16 lexer.
+pub(crate) fn is_regular_identifier(name: &str) -> bool {
+    if name == "_" || is_keyword(name) {
+        return false;
+    }
+    let mut characters = name.chars();
+    characters.next().is_some_and(|character| {
+        identifier_contains(unicode_identifier::REGULAR_START_RANGES, character)
+    }) && characters
+        .all(|character| identifier_contains(unicode_identifier::REGULAR_PART_RANGES, character))
+}
+
 fn is_keyword(name: &str) -> bool {
     matches!(
         name,
@@ -1072,6 +1084,7 @@ impl<'a> Parser<'a> {
             }
             let (precedence, op, right_associative) = match self.token.kind {
                 Kind::Operator("??") => (1, BinaryOp::NullCoalesce, true),
+                Kind::Operator("|>") => (2, BinaryOp::Pipe, false),
                 Kind::Operator("||") => (3, BinaryOp::Or, false),
                 Kind::Operator("&&") => (4, BinaryOp::And, false),
                 Kind::Operator("==") => (5, BinaryOp::Equal, false),
@@ -1526,10 +1539,12 @@ impl<'a> Parser<'a> {
                     });
                 }
                 self.advance()?;
-                let mut expr = self.expression_expected(0, Some(')'))?;
+                let expr = self.expression_expected(0, Some(')'))?;
                 let end = self.expect(')')?.span.end;
-                expr.span = Span::new(span.start, end);
-                return Ok(expr);
+                return Ok(Expr {
+                    kind: ExprKind::Parenthesized(Box::new(expr)),
+                    span: Span::new(span.start, end),
+                });
             }
             Kind::Symbol('-' | '!') => {
                 let negate = self.is_symbol('-');
@@ -1689,4 +1704,22 @@ pub fn parse_expression(source: &str) -> Result<Expr, Diagnostic> {
         return Err(error);
     }
     Ok(expression)
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn regular_identifiers_render_code_points_while_lexing_utf16_units() {
+        for name in ["value", "$", "_name", "α\u{301}", "a\u{200d}", "\u{10400}"] {
+            assert!(is_regular_identifier(name), "{name:?}");
+        }
+        for name in ["", "_", "class", "unknown", "read", "case", "1value", "a-b"] {
+            assert!(!is_regular_identifier(name), "{name:?}");
+        }
+        assert!(parse_module("`\u{10400}` = 1").is_ok());
+        let error = parse_module("\u{10400} = 1").unwrap_err();
+        assert_eq!(error.message, "Invalid identifier `?`.");
+    }
 }
