@@ -3,6 +3,13 @@ name: CI
 on:
   push:
   pull_request:
+  workflow_dispatch:
+    inputs:
+      full_corpus:
+        description: Record the full Java corpus (blocked or failing cases fail this job)
+        required: false
+        default: false
+        type: boolean
 
 permissions:
   contents: read
@@ -12,6 +19,78 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  compatibility-tooling:
+    name: Compatibility tooling and Java replay
+    runs-on: ubuntu-24.04
+    timeout-minutes: 40
+    steps:
+      - name: Preserve reference fixture line endings
+        run: git config --global core.autocrlf false
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          submodules: recursive
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-java@b843ebf9b913146b38da2eaa7aeddf76074ae1ad # v6
+        with:
+          distribution: temurin
+          java-version: '21.0.12.1+1'
+      - name: Verify reference source pins
+        run: cargo xtask verify
+      - name: Check inventories and required smoke inputs
+        run: |
+          python3 tools/inventory.py --check
+          python3 tools/discover.py --check
+          python3 tools/smoke_manifest.py --check
+          python3 tools/regression_manifest.py --check
+          python3 tools/benchmark.py --check-contract
+      - name: Test failure detection and measurement tooling
+        run: python3 -m unittest discover -s tools/tests -v
+      - name: Bootstrap and replay pinned Java oracle
+        run: |
+          python3 tools/oracle.py fetch
+          python3 tools/oracle.py smoke
+      - name: Record required Java smoke corpus
+        run: python3 tools/compat.py record --manifest compatibility/smoke.json --output target/m0/ci-baseline
+      - name: Verify stored evidence completeness
+        run: python3 tools/compat.py check --manifest compatibility/smoke.json --output target/m0/ci-baseline
+      - name: Replay Java through candidate comparison (tool verification only)
+        run: |
+          python3 - <<'PY'
+          import json, pathlib, sys
+          sys.path.insert(0, 'tools')
+          from oracle import ensure_oracle
+          metadata = ensure_oracle(pathlib.Path.cwd())
+          pathlib.Path('target/m0/java-replay.json').write_text(json.dumps({'command': metadata['command'], 'kind': 'java-replay-not-rust'}))
+          PY
+          python3 tools/compat.py compare --manifest compatibility/smoke.json --expected target/m0/ci-baseline --runner target/m0/java-replay.json --output target/m0/ci-replay
+          python3 tools/compat.py check --manifest compatibility/smoke.json --output target/m0/ci-replay
+      - name: Record selected historical regressions with Java 0.32.0
+        run: |
+          python3 tools/compat.py record --manifest compatibility/regressions.json --output target/m0/ci-regressions
+          python3 tools/compat.py check --manifest compatibility/regressions.json --output target/m0/ci-regressions
+      - name: Record all discovered command cases
+        if: ${{ github.event_name == 'workflow_dispatch' && inputs.full_corpus }}
+        run: python3 tools/compat.py record --output target/m0/ci-full-corpus
+      - name: Confirm reference checkouts remain clean
+        if: ${{ always() }}
+        run: cargo xtask verify
+      - name: Retain raw evidence and execution reports
+        if: ${{ always() }}
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: m0-java-evidence
+          path: |
+            target/m0/oracle
+            target/m0/ci-baseline
+            target/m0/ci-replay
+            target/m0/ci-regressions
+            target/m0/ci-full-corpus
+          if-no-files-found: error
+          include-hidden-files: true
+          retention-days: 14
+
   workspace:
     name: Workspace (${{ matrix.os }})
     strategy:

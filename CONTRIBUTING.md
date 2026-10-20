@@ -1,6 +1,6 @@
 # Contributing
 
-See [README.md](README.md) for the development environment and default checks, and [TESTING.md](TESTING.md) for compatibility criteria. The shared runtime and verification tools are currently at the initial setup stage.
+See [README.md](README.md) for the development environment and default checks, and [TESTING.md](TESTING.md) for compatibility criteria. Baseline verification tools are available; the shared Rust evaluator remains unimplemented.
 
 ## Workflow
 
@@ -23,7 +23,7 @@ Keep code, commands, identifiers, and file paths unchanged when translating pros
 
 ## Verification and change descriptions
 
-Run the default checks in the README after changing Rust code or development configuration. For documentation changes, check links, paths, commands, and the accuracy of implementation status statements. Do not claim to have run Java differential tests or performance measurements that have not been implemented yet.
+Run the default checks in the README after changing Rust code or development configuration. For Python tooling changes, run the relevant regression tests and manifest freshness checks. For documentation changes, check links, paths, commands, and the accuracy of implementation status statements. Distinguish recorded Java baselines and Java-to-Java replay from actual Java/Rust comparisons.
 
 Include the following in change descriptions:
 

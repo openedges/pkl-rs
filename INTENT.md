@@ -6,7 +6,7 @@ Reimplement Pkl **0.32.0** in Rust so that existing Pkl programs and integration
 
 This document defines the project's durable goals and scope. [PLAN.md](PLAN.md) contains the milestone overview, implementation order, and milestone gates in Korean; [TESTING.md](TESTING.md) defines the verification contract. The [architecture](docs/architecture.md) describes the intended design.
 
-The repository currently contains development setup, a minimal runtime library, and reference verification tooling. Pkl evaluation and the product interfaces remain unimplemented. Existing setup checks establish neither compatibility nor the performance targets below.
+The repository currently contains development setup, a minimal runtime library, and Java baseline verification tooling. Pkl evaluation and the product interfaces remain unimplemented. Builds and Java baseline results establish neither Rust compatibility nor the performance targets below.
 
 ## Reference Baseline
 
@@ -18,7 +18,7 @@ The compatibility authority is the Java implementation and sources of Pkl 0.32.0
 | `external/pkl-pantry` | `904a68184e54da378b0a0e8a911a3fab3956f693` | Real packages, examples, and integration test inputs |
 | `../pkl-rs.rev1` | Local reference material | Prior implementation ideas, test inputs, and regression reproductions |
 
-Pantry pinning establishes the corpus inputs; its cases still need validation with Java 0.32.0. Earlier Rust implementations and their passing test records are not evidence that this project is compatible. Reused code and tests require verification against the pinned baseline.
+Pantry pinning establishes the corpus inputs; Java execution outcomes and remaining limitations are recorded in the [M0 evidence report](reports/m0/README.md). Earlier Rust implementations and their passing test records are not evidence that this project is compatible. Reused code and tests require verification against the pinned baseline.
 
 Pin the Java executable artifacts and execution configuration before generating reference results or performance baselines. Later upstream releases do not silently change this project's target.
 

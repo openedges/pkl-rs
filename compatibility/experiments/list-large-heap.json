@@ -1,0 +1,112 @@
+{
+  "artifact_sha256": "c3b6f6215a08b31453b0fb0edd8c9da0aee31233f65abb8ab07f9c945151e059",
+  "baseline": "0.32.0",
+  "case": {
+    "assertion_count": null,
+    "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
+    "channels": [
+      "stdout",
+      "stderr",
+      "exit_code",
+      "files"
+    ],
+    "command": [
+      "eval",
+      "--no-cache",
+      "--no-project",
+      "--settings",
+      "pkl:settings",
+      "--property",
+      "name1=value1",
+      "--property",
+      "name2=value2",
+      "--property",
+      "/foo/bar=foobar",
+      "--env-var",
+      "NAME1=value1",
+      "--env-var",
+      "NAME2=value2",
+      "--env-var",
+      "/foo/bar=foobar",
+      "--env-var",
+      "foo bar=foo bar",
+      "--env-var",
+      "file:///foo/bar=file:///foo/bar",
+      "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/api/list.pkl"
+    ],
+    "cwd": ".",
+    "environment": {
+      "LANG": "C.UTF-8",
+      "LC_ALL": "C.UTF-8",
+      "NO_COLOR": "1",
+      "TERM": "dumb",
+      "TZ": "UTC"
+    },
+    "execution": {
+      "reason": null,
+      "status": "ready"
+    },
+    "expected_exit": [
+      0
+    ],
+    "expected_outcome": "success",
+    "host_requirements": [
+      "filesystem",
+      "source-tree-resource-set"
+    ],
+    "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/list.pkl",
+    "resource_set": "pkl",
+    "resources": [
+      {
+        "path": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/output/api/list.pcf",
+        "sha256": "39e6cd3034f224c420fbe5fdd95f8611952ced8ffd0b14ed8608597ae7d06cf7"
+      }
+    ],
+    "source": {
+      "path": "pkl-core/src/test/files/LanguageSnippetTests/input/api/list.pkl",
+      "repository": "pkl",
+      "revision": "e51fb2f91774265666f94980ec630db794a4db2d",
+      "sha256": "dcb20f760f2d1cafad6d88195889534e21a9b90898a49524b01d04a085488457"
+    },
+    "suite": "language-snippet",
+    "target": [
+      "native",
+      "wasm",
+      "napi"
+    ],
+    "upstream_goldens": [
+      {
+        "path": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/output/api/list.pcf",
+        "sha256": "39e6cd3034f224c420fbe5fdd95f8611952ced8ffd0b14ed8608597ae7d06cf7",
+        "use": "provenance-only-normalized-by-upstream"
+      }
+    ],
+    "upstream_outcome": "success"
+  },
+  "case_id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/list.pkl",
+  "expected_exit_code": 0,
+  "experiment_id": "list-large-heap",
+  "jvm_override": {
+    "replace": "-Xmx512m",
+    "with": "-Xmx2g"
+  },
+  "oracle_lock_sha256": "7b77395ff5b64f7a220db74975e4c3858a36b19c5c0f5bca92681e3b1bc6504b",
+  "oracle_profile": "reference",
+  "performance_claim": false,
+  "process_timeout_seconds": 180,
+  "purpose": "Diagnose canonical 512 MiB Java heap failure without changing the canonical oracle or full report.",
+  "replay_count": 2,
+  "schema_version": 1,
+  "source_resource_sets": [
+    {
+      "repository": "pkl",
+      "resource_set_sha256": "caaece316d09ffdce01e29871c8accbcf2783b1d1557b515ca7f117f1eaaf3c2",
+      "revision": "e51fb2f91774265666f94980ec630db794a4db2d"
+    },
+    {
+      "repository": "pkl-pantry",
+      "resource_set_sha256": "ce8902c934fb21aea92bdfad78edb3194863f90b30c73585e84b8c6363518ab0",
+      "revision": "904a68184e54da378b0a0e8a911a3fab3956f693"
+    }
+  ]
+}

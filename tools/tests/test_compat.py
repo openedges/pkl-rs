@@ -304,6 +304,37 @@ class IntegrityTests(unittest.TestCase):
             self.assertEqual([r["status"] for r in results], ["environment_error", "environment_error"])
             self.assertEqual((workspace / "input").read_bytes(), b"original")
 
+    def test_check_revalidates_corrupted_failed_case_capture(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            directory = compat.case_directory("failed")
+            metadata = compat.store_capture(root / directory, ComparisonTests().fixture())
+            compat.write_json(root / "inputs.json", {})
+            manifest = {"cases": [{"id": "failed"}]}
+            report = {"schema_version": 1, "mode": "oracle-recording", "manifest_sha256": "manifest",
+                      "inputs": {"snapshot_sha256": compat.digest(compat.encoded({}))},
+                      "results": [{"id": "failed", "directory": directory,
+                                   "status": "unexpected_oracle_exit", "result": metadata}]}
+            self.assertEqual(compat.check_report(manifest, report, root, "manifest"),
+                             ["failed: unexpected_oracle_exit"])
+            (root / directory / "stderr.bin").write_bytes(b"changed failing diagnostic")
+            failures = compat.check_report(manifest, report, root, "manifest")
+            self.assertEqual(len(failures), 2)
+            self.assertIn("Corrupt expected stderr", failures[1])
+
+    def test_source_revision_cannot_bypass_reference_lock_with_changed_manifest(self):
+        from unittest.mock import patch
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            (root / "references.lock").write_text("baseline.pkl=0.32.0\npkl.path=external/pkl\npkl.revision=pinned\npkl.url=https://github.com/apple/pkl.git\n")
+            manifest = {"baseline": "0.32.0", "cases": [], "sources": [
+                {"repository": "pkl", "path": "external/pkl", "revision": "changed",
+                 "url": "https://github.com/apple/pkl.git", "resources": []}]}
+            with patch.object(compat.subprocess, "check_output") as execute:
+                with self.assertRaisesRegex(ValueError, "references.lock"):
+                    compat.validate_inputs(root, manifest)
+                execute.assert_not_called()
+
 
 if __name__ == "__main__":
     unittest.main()

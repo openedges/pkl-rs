@@ -1,0 +1,54 @@
+{
+  "schema_version": 1,
+  "mode": "oracle-recording",
+  "manifest_sha256": "0e95da22f965dede398f1a1f136703ba913d588aa51c1fb871cd97a11c84a0dd",
+  "counts": {
+    "blocked": 99,
+    "recorded": 1012,
+    "unexpected_oracle_exit": 1
+  },
+  "inputs": {
+    "files": 5584,
+    "sha256": "4ba6379774113c92a88e0da124102005af1c8494914323873984fc49365a4604",
+    "snapshot_sha256": "380d310cb4ad338ec7ea4e20259f633d8eeee3e4919fc07f488766bc38c03c9f"
+  },
+  "execution": {
+    "parallel_read_only_eval_jobs": 4,
+    "process_cleanup": "POSIX process groups; Windows unavailable",
+    "writable_cases": "serialized, secondary writes captured and restored"
+  },
+  "source_and_suite_counts": {
+    "pkl:language-snippet": {
+      "recorded": 887,
+      "blocked": 69,
+      "unexpected_oracle_exit": 1
+    },
+    "pkl:formatter-snippet": {
+      "blocked": 30
+    },
+    "pkl-pantry:package-api-tests": {
+      "recorded": 29
+    },
+    "pkl-pantry:example": {
+      "recorded": 51
+    },
+    "pkl-pantry:project-test": {
+      "recorded": 44
+    },
+    "pkl-pantry:module-names": {
+      "recorded": 1
+    }
+  },
+  "strict_gate": {
+    "exit_code": 1,
+    "accepted": false,
+    "reasons": [
+      "99 required cases have unavailable host or formatter adapters",
+      "One list workload exceeds the fixed 512 MiB Java heap"
+    ],
+    "raw_capture_integrity": "Validated; all 1,013 ready commands were invoked",
+    "supplemental_heap_experiment": "list-large-heap-evidence.tar.gz (2 GiB succeeds twice; does not overwrite the original failure)"
+  },
+  "scope": "Java raw baseline acquisition, not Rust compatibility. JVM source suites and supplemental Pantry/rev1 runs are accounted for separately.",
+  "evidence_archive": "full-corpus-evidence.tar.gz"
+}

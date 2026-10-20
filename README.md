@@ -2,7 +2,7 @@
 
 This project reimplements [Pkl](https://pkl-lang.org/) 0.32.0 in Rust. It aims to share one engine across native Rust, WebAssembly, and Node.js N-API, with automated compatibility checks against the Java implementation.
 
-The project is currently building its **compatibility and performance baseline tooling**. Pkl parsing and evaluation, the CLI, REPL, server, and Wasm and N-API products are not implemented yet. Passing the current builds and tooling tests does not establish Rust Pkl compatibility or achievement of the performance targets.
+The project has established its **M0 compatibility tooling and initial Java baselines**. Pkl parsing and evaluation, the CLI, REPL, server, and Wasm and N-API products are not implemented yet. Passing the current builds and tooling tests does not establish Rust Pkl compatibility or achievement of the performance targets. The [M0 report](reports/m0/README.md) records known failures, measurement limitations, and unverified remote CI status.
 
 ## Goals
 
@@ -23,7 +23,7 @@ Reference sources are pinned as Git submodules under `external/`. The Git gitlin
 | `external/pkl` | Pkl 0.32.0 language, API, standard library, and test reference | `e51fb2f91774265666f94980ec630db794a4db2d` |
 | `external/pkl-pantry` | Candidate compatibility corpus of real packages and examples | `904a68184e54da378b0a0e8a911a3fab3956f693` |
 
-The pinned Pantry revision defines the corpus inputs. The full corpus has not yet been validated by running it with Java 0.32.0 or Rust. `../pkl-rs.rev1` is earlier work used as a design and test reference, not a build dependency.
+The pinned Pantry revision defines the corpus inputs. Java baseline acquisition has exercised its 29 package/API commands and 206 generated package modules; configuration-dependent errors and unfixed network inputs remain explicitly recorded. The full command corpus still has blocked requirements and a Java heap failure. See the [M0 evidence report](reports/m0/README.md) for counts and limitations. `../pkl-rs.rev1` is earlier work used as a design and test reference, not a build dependency.
 
 ## Getting started
 
@@ -62,15 +62,21 @@ cargo check -p pkl-runtime --target wasm32-unknown-unknown --locked
 
 ```text
 .cargo/                Cargo aliases and shared configuration
-.github/workflows/     CI for setup checks
+.github/workflows/     Workspace checks and Java tooling replay
+benchmarks/            Initial Java workloads and sampling contract
+compatibility/         Source, corpus, smoke, and regression manifests
 crates/pkl-runtime/    Minimal Rust library for the shared engine
-docs/                  Architecture documentation
+docs/                  Architecture and verification tool contracts
 external/pkl/          Pkl 0.32.0 reference submodule
 external/pkl-pantry/   Pantry reference submodule
+reports/m0/            Baseline summaries and checksummed raw evidence
+tests/fixtures/        Owned smoke inputs and selected historical regressions
+tools/                 Python verification and Java measurement helpers
 xtask/                 Repository verification tool
 INTENT.md              Project goals and scope
 PLAN.md                Roadmap, execution plan, and work status (Korean)
 references.lock        Reference repositories and revisions
+oracle.lock.json       Java artifact, runtime, and execution profiles
 rust-toolchain.toml    Rust toolchain version
 ```
 

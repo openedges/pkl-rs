@@ -79,7 +79,7 @@ stored as `inputs.json`; comparisons require it to match the Java snapshot.
 
 A Java baseline must have complete recorded coverage, intact raw capture files,
 and the same oracle lock, source, JAR, JDK identity/binary hashes, and JVM command
-as the current verified oracle. `check` rereads all accepted case captures and
+as the current verified oracle. `check` rereads every available case capture and
 validates their bytes, generated file sets/hashes, report metadata, and input
 snapshot. Missing or corrupted evidence cannot pass by retaining a successful
 status in `report.json`.

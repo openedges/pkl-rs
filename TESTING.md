@@ -14,7 +14,7 @@ cargo check -p pkl-runtime --target wasm32-unknown-unknown --locked
 
 The first command checks reference pins. The remaining commands check Rust formatting, run static analysis and the current workspace tests, and verify Wasm compilation. Successful Wasm compilation does not establish browser evaluation or API compatibility. Do not use the number of passing `cargo test` cases as a measure of Pkl feature completion.
 
-The [oracle contract](docs/oracle.md) describes the exact JDK requirement, artifact and source pins, execution environment, and evidence. With that JDK installed:
+Python verification tools use the standard library; use Python 3.12 or newer. CI selects Python 3.12. The [oracle contract](docs/oracle.md) describes the exact JDK requirement, artifact and source pins, execution environment, and evidence. With that JDK installed:
 
 ```sh
 python3 tools/oracle.py fetch
@@ -71,6 +71,8 @@ python3 tools/evidence.py verify reports/m0/pantry-evidence.tar.gz
 
 The runner requires a new `target/m0/pantry` evidence directory. It runs package/API tests, evaluates generated ZIP modules, checks configured generators and the tar pipeline, and records dependency payload hashes. Abstract or user-configured module errors remain provisional observations. Reported test/assertion invocation totals can repeat dependency suites; they are not distinct coverage counts. Unfixed live GitHub discovery inputs remain outside the hermetic baseline.
 
+Run all verification-tool regressions with `python3 -m unittest discover -s tools/tests -v`. The [M0 report](reports/m0/README.md) links recorded outcomes and raw evidence. The [CI contract](docs/ci.md) distinguishes the required tooling smoke run from optional full-corpus acquisition and performance measurements.
+
 ## Compatibility Comparisons
 
 Run the pinned Java 0.32.0 oracle and Rust with identical inputs and environments. Compare:
@@ -107,6 +109,17 @@ Each test manifest records the case ID, source repository, revision and path, in
 Distinguish passes, failures, tests not run, unimplemented cases, and environment errors. Do not count skips or known failures as passes. Add minimal reproductions of failures to the required regression cases, and compare the test inventory with actual execution results to detect omissions.
 
 ## Performance and Memory
+
+The [initial Java benchmark contract](docs/benchmarks.md) implements cold CLI, persistent evaluator, and fresh evaluator measurements for six fixtures. Use a quiet host with the pinned optimizing runtime:
+
+```sh
+python3 tools/oracle.py fetch --profile performance
+python3 tools/benchmark.py --check-contract
+python3 tools/benchmark.py
+python3 tools/benchmark.py --check-report target/m0/benchmarks
+```
+
+Every run uses a new evidence directory. Raw bytes, per-process RSS, first requests, warmup windows, and measurement windows are retained. Nonconverged forks remain inconclusive. These initial Java measurements do not complete the required workload inventory or provide a Rust performance verdict.
 
 Only runs that produce correct output are eligible for measurement. Every required workload must satisfy both conditions:
 

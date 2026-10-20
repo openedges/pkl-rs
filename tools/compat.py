@@ -121,15 +121,26 @@ def validate_inputs(root: Path, manifest: dict, staged: Path | None = None) -> d
     staged = staged or root
     repositories = {"pkl-rs": {"path": "."}}
     verified = {}
+    references = {}
+    if manifest.get("sources"):
+        from oracle import read_properties
+        references = read_properties((root / "references.lock").read_text(encoding="utf-8"))
+        if "baseline" in manifest and manifest["baseline"] != references["baseline.pkl"]:
+            raise ValueError("Manifest baseline disagrees with references.lock")
     for source in manifest.get("sources", []):
         name = source["repository"]
         if name in repositories:
             raise ValueError(f"Duplicate source repository: {name}")
         repositories[name] = source
+        if any(references.get(f"{name}.{field}") != source[field] for field in ("path", "revision", "url")):
+            raise ValueError(f"Source provenance disagrees with references.lock: {name}")
         checkout = contained(root, source["path"])
         revision = subprocess.check_output(["git", "-C", str(checkout), "rev-parse", "HEAD"]).decode().strip()
         if revision != source["revision"]:
             raise ValueError(f"Source revision mismatch: {name}")
+        gitlink = subprocess.check_output(["git", "-C", str(root), "ls-tree", "HEAD", source["path"]])
+        if not gitlink.startswith(f"160000 commit {source['revision']}\t".encode()):
+            raise ValueError(f"Source gitlink mismatch: {name}")
         resources = source["resources"]
         if digest(encoded(resources)) != source["resource_set_sha256"]:
             raise ValueError(f"Resource inventory checksum mismatch: {name}")
@@ -251,10 +262,11 @@ def capture(command: list[str], cwd: Path, env: dict[str, str], timeout: float,
                 process.stderr.close()
                 process.wait(timeout=5)
     finally:
-        try:
-            os.killpg(process.pid, signal.SIGKILL)
-        except ProcessLookupError:
-            pass
+        if not timed_out:
+            try:
+                os.killpg(process.pid, signal.SIGKILL)
+            except ProcessLookupError:
+                pass
     result = {"stdout": stdout, "stderr": stderr, "exit_code": process.returncode,
               "files": output_files(generated), "timed_out": timed_out,
               "elapsed_ns": time.perf_counter_ns() - before}
@@ -495,7 +507,7 @@ def check_report(manifest: dict, report: dict, directory: Path, manifest_hash: s
     if digest(encoded(read_json(directory / "inputs.json"))) != report["inputs"]["snapshot_sha256"]:
         raise ValueError("Staged input evidence missing or corrupt")
     for record in report.get("results", []):
-        if record.get("status") not in accepted:
+        if record.get("status") not in accepted and "result" not in record:
             continue
         expected_directory = case_directory(record["id"])
         if record.get("directory") != expected_directory:
@@ -504,8 +516,8 @@ def check_report(manifest: dict, report: dict, directory: Path, manifest_hash: s
         try:
             capture_data = load_capture(directory / expected_directory)
             metadata = read_json(directory / expected_directory / "result.json")
-            if metadata != record.get("result") or capture_data["timed_out"]:
-                raise ValueError("Capture metadata changed or execution timed out")
+            if metadata != record.get("result") or (capture_data["timed_out"] and record.get("status") != "timeout"):
+                raise ValueError("Capture metadata changed or timed-out execution was accepted")
         except (OSError, ValueError, KeyError) as error:
             failures.append(f"{record['id']}: {error}")
     return failures
