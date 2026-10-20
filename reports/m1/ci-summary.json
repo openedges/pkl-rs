@@ -1,0 +1,89 @@
+{
+  "schema_version": 1,
+  "repository": "luuvish/pkl-rs",
+  "commit": "e9ee8d5d8c0c1cb1a88ad8172c4b3449f672b5ad",
+  "run_id": 39372369602,
+  "run_url": "https://github.com/luuvish/pkl-rs/actions/runs/39372369602",
+  "run_conclusion": "success",
+  "jobs": [
+    {
+      "name": "Workspace (windows-latest)",
+      "id": 118462865015,
+      "conclusion": "success"
+    },
+    {
+      "name": "M1 architecture experiments (known gaps recorded)",
+      "id": 118462865199,
+      "conclusion": "success"
+    },
+    {
+      "name": "Compatibility tooling and Java replay",
+      "id": 118462865200,
+      "conclusion": "success"
+    },
+    {
+      "name": "Workspace (ubuntu-latest)",
+      "id": 118462865294,
+      "conclusion": "success"
+    },
+    {
+      "name": "Workspace (macos-latest)",
+      "id": 118462865299,
+      "conclusion": "success"
+    }
+  ],
+  "github_artifact": {
+    "id": 12242362167,
+    "name": "m1-experiment-evidence",
+    "sha256": "fc3f5213527ff88353c70e11829e85a58c4a46a77815da2ee054d6b0025aba4b",
+    "github_digest": "sha256:fc3f5213527ff88353c70e11829e85a58c4a46a77815da2ee054d6b0025aba4b",
+    "zip_bytes": 5227845,
+    "uncompressed_bytes": 22073560,
+    "zip_members": 376,
+    "digest_verified": true
+  },
+  "workflow_logs": {
+    "zip_sha256": "4c083dac776a50d87693befec09ad82268fe09a071bac602a76b95fe8024c2b5",
+    "members": 82
+  },
+  "verified_outcomes": {
+    "frontend": {
+      "exact_comparisons": 15,
+      "source_stability": true
+    },
+    "java_host": {
+      "observation_suites": 5,
+      "rust_byte_comparisons": 0,
+      "source_stability": true
+    },
+    "runtime": {
+      "exact_value_cases": [
+        "amendment",
+        "captured-receiver",
+        "lexical-let",
+        "object-cycle",
+        "lazy-unused",
+        "mixed-numeric"
+      ],
+      "known_diagnostic_byte_mismatches": [
+        "first-error",
+        "forcing-cycle",
+        "overflow-first"
+      ]
+    },
+    "platform": {
+      "total": 6078,
+      "all_shared_engine_matches": 6078,
+      "java_matches_each_target": 6076,
+      "known_gaps": [
+        "regex-unicode-15-vs-16",
+        "regex-zero-width-supplementary"
+      ],
+      "scenarios_each_target": 12,
+      "compatibility_status": "fail",
+      "experiment_contract_status": "pass"
+    }
+  },
+  "evidence_archive": "reports/m1/ci-evidence.tar.gz",
+  "scope": "Exact remote CI architecture contracts and raw evidence; known diagnostic/regex failures remain failures; no full language/API/performance compatibility claim"
+}

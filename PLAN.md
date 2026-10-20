@@ -18,7 +18,7 @@ M0의 참조 소스·Java oracle 고정, 기능·코퍼스 목록, 원시 차등
 | --- | --- | --- | --- |
 | 초기 구성 | 구축됨 | 없음 | Git·Rust workspace·참조 submodule·개발 문서와 초기 구성 검증 |
 | M0 기준선 | 완료: 로컬 기준선·원격 CI 검증 확인 | 초기 구성 | oracle·목록·원시 비교 도구·Java 초기 측정과 전체 처리 상태 확보; 판정 보류와 미구현 범위 보존 |
-| M1 구조 검증 | 진행 중 | M0의 oracle·실행 계약·초기 기준선 | parser·SourceMap·resolver·진단과 regex·숫자·heap·VM 실험; 주요 의미론 위험과 공통 엔진·성능 전략 검증 |
+| M1 구조 검증 | 완료: 비교 실험·설계 결정·원격 CI 증거 확인 | M0의 oracle·실행 계약·초기 기준선 | 제한된 공통 엔진·실제 Node/브라우저·원시 비교와 비용 측정 완료. 후보 기각과 알려진 호환성·성능 실패는 후속 필수 조건으로 보존 |
 | M2 언어 런타임 | 계획됨 | M1의 이름 해석·값·heap·진단 설계 결정 | 객체·lazy 평가·상속·closure·타입·Reference 구현; 언어 코퍼스의 결과·오류 바이트 일치 |
 | M3 표준 라이브러리·출력 | 계획됨 | M2의 해당 언어 기능 | 전체 builtin·renderer·reflection·Pkl Binary 구현; 공개 멤버 누락 0, 출력·오류 일치 |
 | M4 외부 기능 | 계획됨 | M1 Host 계약과 M2·M3의 해당 기능 | module/resource Host·HTTP·프로젝트·패키지·external reader 구현; 실제 I/O·패키지 코퍼스 통과 |
@@ -103,7 +103,7 @@ M1은 아래 항목별 구현·비교 증거·설계 결정이 갖춰진 뒤 완
 | M1-05 VM·캐시 | 완료 | [일반 VM](reports/m1/runtime-performance.json)은 Java API 대비 약 1.27배 느림. [정수 특수화](reports/m1/runtime-specialized.json)는 약 0.46배, 일반 Rust 대비 약 2.75배 개선. M2의 제한된 기반으로 특수화 bytecode를 선택하며, Java target 컴파일 실패와 전체 성능 gate는 미해결입니다. |
 | M1-06 Host·수명주기 | 완료 | [Java 관찰 5개](reports/m1/host-java.json), Rust Host 회귀 7개와 실제 JS callback·timer 검증. Java 콜백 재진입 성공을 확인했으므로 제품 계약은 중첩 평가 context를 요구합니다. 현재 단일 continuation의 Busy 제한은 호환성 차이로 기록했습니다. |
 | M1-07 브라우저·Node | 완료 | [실제 플랫폼 결과](reports/m1/platforms.json): Native·Node·Chromium의 6,078개 primitive 바이트 모두 동일, Node·브라우저 각각 필수 시나리오 12개 통과. Java 비교는 각 6,076개 일치·동일한 정규식 실패 2개입니다. |
-| M1-08 통합·기록 | 진행 중 | core 커밋 `ce99720` 푸시, 로컬 Rust·실제 플랫폼 검증 완료. 전체 도구 검사·최종 원격 CI와 증거 archive 정리를 진행합니다. |
+| M1-08 통합·기록 | 완료 | core `ce99720`·검증 통합 `e9ee8d5` 푸시. 로컬 검증 명령 13개·Python 검사 114개 통과. 최종 코드의 [CI 5개 작업](https://github.com/luuvish/pkl-rs/actions/runs/39372369602) 성공, 내려받은 artifact checksum·소스·원시 결과 재검증 완료. [CI 기록](reports/m1/ci-summary.json)·[증거](reports/m1/ci-evidence.tar.gz). |
 
 구문·이름 해석과 VM·heap은 각각 `gpt-6.1-sol / high`, 숫자·정규식 실험은 `gpt-6-astra / high` 에이전트가 담당합니다. 주 에이전트는 Host·플랫폼 연결·통합 검증을 담당하며 공유 인터페이스와 Cargo 설정을 관리합니다. 기능 검증은 병행하고 성능 측정은 호스트를 비운 상태에서 순차 실행합니다.
 
@@ -121,6 +121,14 @@ M1은 아래 항목별 구현·비교 증거·설계 결정이 갖춰진 뒤 완
 이 단계부터 실제 브라우저와 Node의 작은 호출 경로를 구성합니다. 공통 engine 연결, 문자열·정수·바이트 전달, 비동기 Host 재개와 오류 전달을 확인합니다. Wasm 컴파일 성공만으로 이 실험을 대체하지 않습니다.
 
 **종료 조건:** 이름 해석·값·heap·진단·Host의 계약을 확정하고 주요 위험에 대한 비교 증거를 확보합니다. bytecode VM을 채택할지 또는 실행 전략을 재검토할지 측정으로 결정합니다. 미달한 실험을 숨기거나 성능 기준을 완화하여 통과시키지 않습니다. 제한된 prototype의 성공은 전체 성능 목표 달성을 뜻하지 않습니다.
+
+### M1에서 확인한 후속 구현·검증 조건
+
+- regex의 현재 backend는 Java Unicode 버전과 supplementary 문자 내부의 zero-width 위치에서 실패합니다. Java 21의 Unicode table과 UTF-16 cursor를 갖춘 공통 matcher를 구현하고, 기존 실패 2개를 포함한 전체 비교를 통과해야 합니다. 별도의 빈 pattern·dot cursor 실험은 이 구현 전체의 완료 증거가 아닙니다.
+- 현재 3개 실행 오류의 전체 stderr가 Java와 다릅니다. M2의 진단 renderer·논리적 frame·오류 선택과 함께 바이트 차이를 없애야 합니다. 미구현된 failure-cache 재시도와 missing-super 동작도 언어 의미론 검증에 포함합니다.
+- Java는 reader callback 내부의 평가 재진입을 허용합니다. 제품 evaluator에는 cache와 종료 수명을 공유하는 중첩 평가 context가 필요하며, 단일 HostSession의 Busy 제한을 그대로 공개 API로 확정하지 않습니다. JS의 unpaired surrogate와 장기 clock 범위도 제품 지원 전에 해결해야 합니다.
+- 숫자 formatter는 선택한 primitive 비용 측정에서 Java보다 약 6.1배 느립니다. 정확한 출력 바이트를 유지하며 알고리즘·할당 비용을 개선하고 같은 입력·조건에서 다시 측정해야 합니다.
+- 특수화 VM의 작은 정수 workload 개선은 전체 성능 통과가 아닙니다. 고정 Graal/Pkl 조합의 `FrameWithoutBoxing` 컴파일 실패를 해결하거나 명시적 별도 oracle 실험으로 원인을 규명하고, 실제 최적화된 Java·큰 lazy 객체·장기 세션·제품 API를 비교해야 합니다.
 
 ## M2 — 언어 런타임
 

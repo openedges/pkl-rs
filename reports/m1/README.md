@@ -5,8 +5,13 @@ with actual Node N-API and Chromium Wasm execution. It establishes architecture
 contracts and records rejected candidates. It does not establish full Pkl
 0.32.0 language/API compatibility or release performance.
 
-The initial implementation is committed as `ce99720`. Integration and remote CI
-verification are still in progress.
+M1 architecture verification is complete. The implementation is committed as
+`ce99720` and experiment/CI integration as `e9ee8d5`. All five jobs in
+[the final code CI run](https://github.com/luuvish/pkl-rs/actions/runs/39372369602)
+succeeded. The downloaded artifact digest, exact source snapshots and raw
+comparison results were independently verified; see the [CI summary](ci-summary.json)
+and [471-file retained evidence](ci-evidence.tar.gz). Known compatibility and
+performance failures below remain open requirements for subsequent milestones.
 
 | Experiment | Observed result | Evidence and decision |
 | --- | --- | --- |
@@ -19,7 +24,7 @@ verification are still in progress.
 | Actual browser and Node | 6,078/6,078 shared-engine primitive outputs agree; each target has the same 6,076 Java matches and two failures; 12 required scenarios per environment | [Platform report](platforms.json), [archive](platform-evidence.tar.gz), [contract](../../docs/m1-platforms.md). BigInt/bytes/Unicode/real asynchronous calls and timers run in Node 26.10.0 and Chromium 156.0.8078.4. |
 
 All 13 local validation commands passed, including the complete Rust workspace
-checks, all Python tooling regressions, and source/corpus/probe freshness checks.
+checks, 114 Python tooling regressions, and source/corpus/probe freshness checks.
 See the [validation report](validation.json) and [raw logs](validation-evidence.tar.gz).
 
 Every primitive result is compared through a complete lossless hex transport.

@@ -63,3 +63,15 @@ reference lock. The [CI summary](../reports/m0/ci-summary.json) and
 the original artifact ZIP, and extracted raw captures beyond GitHub's retention period.
 This verifies workspace and Java tooling behavior; the full corpus, Pantry investigation,
 performance acquisition, and Rust evaluation are outside this CI run's scope.
+
+The M1 code commit `e9ee8d5` passed all five jobs in
+[run 39372369602](https://github.com/luuvish/pkl-rs/actions/runs/39372369602),
+including the real Node/Chromium experiment. Its downloaded artifact ZIP matches
+GitHub's SHA-256 digest. Recomputed raw results confirm 15 frontend matches,
+five Java Host suites, six runtime value matches and three diagnostic byte
+failures, and 6,078 shared-engine primitive results with the same two Java regex
+backend failures on every target. All 12 required platform scenarios ran in
+each JS environment. Captured source snapshots match the exact checked commit.
+The [M1 CI summary](../reports/m1/ci-summary.json) and
+[retained raw archive](../reports/m1/ci-evidence.tar.gz) preserve the artifact,
+logs, verification procedure and result beyond GitHub artifact retention.
