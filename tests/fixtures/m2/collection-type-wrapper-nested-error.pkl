@@ -1,0 +1,2 @@
+typed: List<Listing<Int>> = List(new Listing { "bad" })
+result = typed[0][0]

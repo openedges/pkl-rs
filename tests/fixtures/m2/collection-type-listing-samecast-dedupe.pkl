@@ -1,0 +1,3 @@
+x = new Listing<Int> { "bad" }
+y: Listing<Int> = x
+result = y[0]

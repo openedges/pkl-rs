@@ -431,6 +431,11 @@ impl Vm {
                     .builders
                     .push(id);
             }
+            Instruction::SetCollectionDefault { defined } => {
+                let value = if defined { Some(self.pop()?) } else { None };
+                let target = self.builder()?;
+                self.heap.get_mut(target)?.collection_default = Some(value);
+            }
             Instruction::EndCollection => {
                 let id = self
                     .frames
@@ -585,6 +590,16 @@ impl Vm {
                     let mut owner = Some(force.owner);
                     while let Some(id) = owner {
                         let object = self.heap.get(id)?;
+                        if let Some(value) = &object.collection_default {
+                            if let Some(value) = value {
+                                self.stack.push(value.clone());
+                                return Ok(());
+                            }
+                            return Err(RuntimeError::new(
+                                ErrorKind::MissingMember,
+                                "Tried to read property `default` but its value is undefined.",
+                            ));
+                        }
                         if object.members.iter().any(|m| {
                             !m.entry && !m.method && !m.local && m.name.as_ref() == "default"
                         }) {
@@ -997,7 +1012,16 @@ impl Compiler<'_> {
         });
         self.member = format!("{previous}[{label}]");
         let mut code = Code::default();
-        self.expression(value, &mut code)?;
+        if let crate::syntax::ExprKind::Object {
+            parent: None,
+            members,
+        } = &value.unparenthesized().kind
+        {
+            code.push(Instruction::EntryParent);
+            self.collection_body(members, CollectionKind::Dynamic, true, &mut code)?;
+        } else {
+            self.expression(value, &mut code)?;
+        }
         code.push(Instruction::Return);
         let block = self.block(code, Some(span));
         self.program.metadata[block].value_span = Some(value.span);

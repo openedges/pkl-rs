@@ -101,6 +101,14 @@ pub struct CollectionIterator {
     pub awaiting_value: bool,
 }
 
+#[derive(Clone, Debug)]
+pub struct CollectionCast {
+    pub ty: crate::vm::TypeCheck,
+    pub span: crate::source::Span,
+    pub member: Arc<str>,
+    pub environment: Environment,
+}
+
 #[derive(Clone, Debug, Default)]
 pub struct Object {
     pub function: Option<Function>,
@@ -117,6 +125,10 @@ pub struct Object {
     pub member_environments: BTreeMap<CacheKey, Environment>,
     pub member_values: BTreeMap<CacheKey, Value>,
     pub iterator: Option<CollectionIterator>,
+    pub collection_cast: Option<CollectionCast>,
+    /// Inherited default value for inferred element/entry objects. `Some(None)`
+    /// means the annotated value type has no default; `None` uses Dynamic's default.
+    pub collection_default: Option<Option<Value>>,
 }
 
 struct Slot {
@@ -222,7 +234,11 @@ impl Heap {
                     pending.extend(member.key.heap_id());
                 }
             }
-            for environment in object.member_environments.values() {
+            for environment in object
+                .member_environments
+                .values()
+                .chain(object.collection_cast.iter().map(|cast| &cast.environment))
+            {
                 for scope in &environment.scopes {
                     pending.push(scope.receiver);
                     pending.push(scope.owner);
@@ -248,6 +264,7 @@ impl Heap {
                 .chain(object.environment.this_value.iter())
                 .chain(object.environment.outer_value.iter())
                 .chain(object.environment.custom_this.iter())
+                .chain(object.collection_default.iter().flatten())
                 .chain(object.member_values.values())
                 .chain(object.cache.values().filter_map(|state| match state {
                     LazyState::Completed(value) => Some(value),

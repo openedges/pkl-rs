@@ -1,0 +1,3 @@
+source = new Listing { 42 }
+x: Listing<Int(this > 0)> = source
+result = if (source[0] == 42) x[0] else 0

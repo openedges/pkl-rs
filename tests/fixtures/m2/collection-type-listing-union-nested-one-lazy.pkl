@@ -1,0 +1,2 @@
+x: Listing<Listing<Int>>|String = new Listing { new Listing { "bad" } }
+result = x[0].length

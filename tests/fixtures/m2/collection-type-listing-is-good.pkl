@@ -1,0 +1,2 @@
+x = new Listing { 1; "bad" }
+result = x is Listing<Int|String>

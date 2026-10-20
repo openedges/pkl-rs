@@ -4890,6 +4890,1947 @@
         "semantic:diagnostics"
       ],
       "expected_outcome": "failure"
+    },
+    {
+      "id": "collection-type-listing-lazy-length",
+      "input": "tests/fixtures/m2/collection-type-listing-lazy-length.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "collection-type-listing-lazy-good",
+      "input": "tests/fixtures/m2/collection-type-listing-lazy-good.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "collection-type-listing-lazy-bad",
+      "input": "tests/fixtures/m2/collection-type-listing-lazy-bad.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "collection-type-listing-cast-lazy",
+      "input": "tests/fixtures/m2/collection-type-listing-cast-lazy.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:type-tests-casts"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "collection-type-listing-cast-bad",
+      "input": "tests/fixtures/m2/collection-type-listing-cast-bad.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:type-tests-casts",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "collection-type-listing-is-deep",
+      "input": "tests/fixtures/m2/collection-type-listing-is-deep.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:type-tests-casts"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "collection-type-listing-is-good",
+      "input": "tests/fixtures/m2/collection-type-listing-is-good.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:type-tests-casts"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "collection-type-listing-is-body-error",
+      "input": "tests/fixtures/m2/collection-type-listing-is-body-error.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:type-tests-casts",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "collection-type-listing-union-single-lazy",
+      "input": "tests/fixtures/m2/collection-type-listing-union-single-lazy.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:unions"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "collection-type-listing-union-many-eager",
+      "input": "tests/fixtures/m2/collection-type-listing-union-many-eager.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:unions",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "collection-type-listing-union-select-second",
+      "input": "tests/fixtures/m2/collection-type-listing-union-select-second.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:unions"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "collection-type-listing-new-generic-length",
+      "input": "tests/fixtures/m2/collection-type-listing-new-generic-length.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "collection-type-listing-new-generic-bad",
+      "input": "tests/fixtures/m2/collection-type-listing-new-generic-bad.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "collection-type-listing-alias-lazy",
+      "input": "tests/fixtures/m2/collection-type-listing-alias-lazy.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:type-aliases"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "collection-type-listing-alias-bad",
+      "input": "tests/fixtures/m2/collection-type-listing-alias-bad.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:type-aliases",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "collection-type-listing-bare-unforced",
+      "input": "tests/fixtures/m2/collection-type-listing-bare-unforced.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "collection-type-listing-default-empty",
+      "input": "tests/fixtures/m2/collection-type-listing-default-empty.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "collection-type-listing-amend-new-unchecked",
+      "input": "tests/fixtures/m2/collection-type-listing-amend-new-unchecked.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:amendment"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "collection-type-listing-amend-inherited-check",
+      "input": "tests/fixtures/m2/collection-type-listing-amend-inherited-check.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:amendment",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "collection-type-listing-function-lazy",
+      "input": "tests/fixtures/m2/collection-type-listing-function-lazy.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:functions"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "collection-type-listing-function-force",
+      "input": "tests/fixtures/m2/collection-type-listing-function-force.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:functions",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "collection-type-listing-return-lazy",
+      "input": "tests/fixtures/m2/collection-type-listing-return-lazy.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:functions"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "collection-type-listing-lambda-force",
+      "input": "tests/fixtures/m2/collection-type-listing-lambda-force.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:functions",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "collection-type-mapping-lazy-length",
+      "input": "tests/fixtures/m2/collection-type-mapping-lazy-length.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "collection-type-mapping-lazy-good",
+      "input": "tests/fixtures/m2/collection-type-mapping-lazy-good.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "collection-type-mapping-lazy-bad",
+      "input": "tests/fixtures/m2/collection-type-mapping-lazy-bad.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "collection-type-mapping-cast-lazy",
+      "input": "tests/fixtures/m2/collection-type-mapping-cast-lazy.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:type-tests-casts"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "collection-type-mapping-cast-bad",
+      "input": "tests/fixtures/m2/collection-type-mapping-cast-bad.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:type-tests-casts",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "collection-type-mapping-is-deep",
+      "input": "tests/fixtures/m2/collection-type-mapping-is-deep.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:type-tests-casts"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "collection-type-mapping-is-good",
+      "input": "tests/fixtures/m2/collection-type-mapping-is-good.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:type-tests-casts"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "collection-type-mapping-is-body-error",
+      "input": "tests/fixtures/m2/collection-type-mapping-is-body-error.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:type-tests-casts",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "collection-type-mapping-union-single-lazy",
+      "input": "tests/fixtures/m2/collection-type-mapping-union-single-lazy.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:unions"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "collection-type-mapping-union-many-eager",
+      "input": "tests/fixtures/m2/collection-type-mapping-union-many-eager.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:unions",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "collection-type-mapping-union-select-second",
+      "input": "tests/fixtures/m2/collection-type-mapping-union-select-second.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:unions"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "collection-type-mapping-new-generic-length",
+      "input": "tests/fixtures/m2/collection-type-mapping-new-generic-length.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "collection-type-mapping-new-generic-bad",
+      "input": "tests/fixtures/m2/collection-type-mapping-new-generic-bad.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "collection-type-mapping-alias-lazy",
+      "input": "tests/fixtures/m2/collection-type-mapping-alias-lazy.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:type-aliases"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "collection-type-mapping-alias-bad",
+      "input": "tests/fixtures/m2/collection-type-mapping-alias-bad.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:type-aliases",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "collection-type-mapping-bare-unforced",
+      "input": "tests/fixtures/m2/collection-type-mapping-bare-unforced.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "collection-type-mapping-default-empty",
+      "input": "tests/fixtures/m2/collection-type-mapping-default-empty.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "collection-type-mapping-amend-new-unchecked",
+      "input": "tests/fixtures/m2/collection-type-mapping-amend-new-unchecked.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:amendment"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "collection-type-mapping-amend-inherited-check",
+      "input": "tests/fixtures/m2/collection-type-mapping-amend-inherited-check.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:amendment",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "collection-type-mapping-function-lazy",
+      "input": "tests/fixtures/m2/collection-type-mapping-function-lazy.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:functions"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "collection-type-mapping-function-force",
+      "input": "tests/fixtures/m2/collection-type-mapping-function-force.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:functions",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "collection-type-mapping-return-lazy",
+      "input": "tests/fixtures/m2/collection-type-mapping-return-lazy.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:functions"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "collection-type-mapping-lambda-force",
+      "input": "tests/fixtures/m2/collection-type-mapping-lambda-force.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:functions",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "collection-type-mapping-key-eager",
+      "input": "tests/fixtures/m2/collection-type-mapping-key-eager.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "collection-type-mapping-key-before-value",
+      "input": "tests/fixtures/m2/collection-type-mapping-key-before-value.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "collection-type-mapping-key-source-before-type",
+      "input": "tests/fixtures/m2/collection-type-mapping-key-source-before-type.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "collection-type-mapping-key-constraint",
+      "input": "tests/fixtures/m2/collection-type-mapping-key-constraint.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:constraints",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "collection-type-mapping-key-union",
+      "input": "tests/fixtures/m2/collection-type-mapping-key-union.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "collection-type-listing-constraint-owner",
+      "input": "tests/fixtures/m2/collection-type-listing-constraint-owner.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:constraints",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "collection-type-listing-constraint-amended-owner",
+      "input": "tests/fixtures/m2/collection-type-listing-constraint-amended-owner.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:amendment",
+        "semantic:constraints",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "collection-type-listing-nested-lazy",
+      "input": "tests/fixtures/m2/collection-type-listing-nested-lazy.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "collection-type-listing-nested-bad",
+      "input": "tests/fixtures/m2/collection-type-listing-nested-bad.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "collection-type-listing-inner-mapping-key",
+      "input": "tests/fixtures/m2/collection-type-listing-inner-mapping-key.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "collection-type-mapping-nested-lazy",
+      "input": "tests/fixtures/m2/collection-type-mapping-nested-lazy.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "collection-type-mapping-nested-bad",
+      "input": "tests/fixtures/m2/collection-type-mapping-nested-bad.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "collection-type-list-check-eager",
+      "input": "tests/fixtures/m2/collection-type-list-check-eager.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "collection-type-list-good",
+      "input": "tests/fixtures/m2/collection-type-list-good.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "collection-type-list-default",
+      "input": "tests/fixtures/m2/collection-type-list-default.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "collection-type-list-nested-wrapper-lazy",
+      "input": "tests/fixtures/m2/collection-type-list-nested-wrapper-lazy.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "collection-type-list-nested-wrapper-bad",
+      "input": "tests/fixtures/m2/collection-type-list-nested-wrapper-bad.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "collection-type-list-nested-mapping-key",
+      "input": "tests/fixtures/m2/collection-type-list-nested-mapping-key.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "collection-type-list-is-deep",
+      "input": "tests/fixtures/m2/collection-type-list-is-deep.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:type-tests-casts"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "collection-type-list-union-ambiguous",
+      "input": "tests/fixtures/m2/collection-type-list-union-ambiguous.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:unions",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "collection-type-list-construction-first",
+      "input": "tests/fixtures/m2/collection-type-list-construction-first.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "collection-type-listing-default-amend",
+      "input": "tests/fixtures/m2/collection-type-listing-default-amend.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:amendment"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "collection-type-listing-identity-original-receiver",
+      "input": "tests/fixtures/m2/collection-type-listing-identity-original-receiver.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:name-resolution"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "collection-type-listing-wrapper-original-unchecked",
+      "input": "tests/fixtures/m2/collection-type-listing-wrapper-original-unchecked.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:name-resolution"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "collection-type-listing-two-wrappers",
+      "input": "tests/fixtures/m2/collection-type-listing-two-wrappers.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:name-resolution"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "collection-type-listing-stacked-constraints",
+      "input": "tests/fixtures/m2/collection-type-listing-stacked-constraints.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:constraints",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "collection-type-listing-typed-new-first-span",
+      "input": "tests/fixtures/m2/collection-type-listing-typed-new-first-span.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "collection-type-listing-cache-steal-pass",
+      "input": "tests/fixtures/m2/collection-type-listing-cache-steal-pass.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:name-resolution"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "collection-type-listing-cache-steal-fail",
+      "input": "tests/fixtures/m2/collection-type-listing-cache-steal-fail.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:name-resolution",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "collection-type-mapping-cache-steal-fail",
+      "input": "tests/fixtures/m2/collection-type-mapping-cache-steal-fail.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:name-resolution",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "collection-type-listing-cache-amended-receiver",
+      "input": "tests/fixtures/m2/collection-type-listing-cache-amended-receiver.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:amendment",
+        "semantic:name-resolution"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "collection-type-listing-cache-empty-amendment",
+      "input": "tests/fixtures/m2/collection-type-listing-cache-empty-amendment.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:amendment",
+        "semantic:name-resolution"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "collection-type-listing-cache-owner",
+      "input": "tests/fixtures/m2/collection-type-listing-cache-owner.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:name-resolution",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "collection-type-listing-samecast-dedupe",
+      "input": "tests/fixtures/m2/collection-type-listing-samecast-dedupe.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:type-aliases",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "collection-type-listing-samecast-alias",
+      "input": "tests/fixtures/m2/collection-type-listing-samecast-alias.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:type-aliases",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "collection-type-listing-recast-amendment",
+      "input": "tests/fixtures/m2/collection-type-listing-recast-amendment.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:type-aliases",
+        "semantic:amendment",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "collection-type-listing-sameconstraint-dedupe",
+      "input": "tests/fixtures/m2/collection-type-listing-sameconstraint-dedupe.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "collection-type-listing-any-no-wrapper",
+      "input": "tests/fixtures/m2/collection-type-listing-any-no-wrapper.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:type-aliases",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "collection-type-mapping-samecast-dedupe",
+      "input": "tests/fixtures/m2/collection-type-mapping-samecast-dedupe.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:type-aliases",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "collection-type-mapping-key-parent-order",
+      "input": "tests/fixtures/m2/collection-type-mapping-key-parent-order.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:name-resolution",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "collection-type-mapping-key-child-before-parent",
+      "input": "tests/fixtures/m2/collection-type-mapping-key-child-before-parent.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:name-resolution",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "collection-type-mapping-key-overridden-header",
+      "input": "tests/fixtures/m2/collection-type-mapping-key-overridden-header.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:name-resolution",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "collection-type-mapping-is-overridden-value",
+      "input": "tests/fixtures/m2/collection-type-mapping-is-overridden-value.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:name-resolution"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "collection-type-listing-is-overridden-value",
+      "input": "tests/fixtures/m2/collection-type-listing-is-overridden-value.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:name-resolution"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "collection-type-listing-wrapper-property-cache",
+      "input": "tests/fixtures/m2/collection-type-listing-wrapper-property-cache.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:name-resolution"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "collection-type-listing-stolen-inner-wrapper",
+      "input": "tests/fixtures/m2/collection-type-listing-stolen-inner-wrapper.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:name-resolution",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "collection-type-listing-return-force",
+      "input": "tests/fixtures/m2/collection-type-listing-return-force.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:functions",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "collection-type-mapping-return-force",
+      "input": "tests/fixtures/m2/collection-type-mapping-return-force.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:functions",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "collection-type-listing-arg-return-force",
+      "input": "tests/fixtures/m2/collection-type-listing-arg-return-force.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:functions",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "collection-type-listing-lambda-return-lazy",
+      "input": "tests/fixtures/m2/collection-type-listing-lambda-return-lazy.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:functions"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "collection-type-listing-lambda-return-force",
+      "input": "tests/fixtures/m2/collection-type-listing-lambda-return-force.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:functions",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "collection-type-listing-method-local-cast",
+      "input": "tests/fixtures/m2/collection-type-listing-method-local-cast.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:functions"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "collection-type-listing-nothing-empty",
+      "input": "tests/fixtures/m2/collection-type-listing-nothing-empty.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "collection-type-listing-nothing-bad",
+      "input": "tests/fixtures/m2/collection-type-listing-nothing-bad.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "collection-type-listing-nullable",
+      "input": "tests/fixtures/m2/collection-type-listing-nullable.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "collection-type-listing-nullability-before-wrapper",
+      "input": "tests/fixtures/m2/collection-type-listing-nullability-before-wrapper.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "collection-type-listing-as-noncollection",
+      "input": "tests/fixtures/m2/collection-type-listing-as-noncollection.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:type-tests-casts",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "collection-type-listing-is-noncollection",
+      "input": "tests/fixtures/m2/collection-type-listing-is-noncollection.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:type-tests-casts"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "collection-type-listing-is-first-mismatch",
+      "input": "tests/fixtures/m2/collection-type-listing-is-first-mismatch.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:type-tests-casts"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "collection-type-listing-is-first-runtime",
+      "input": "tests/fixtures/m2/collection-type-listing-is-first-runtime.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:type-tests-casts",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "collection-type-mapping-is-key-before-value",
+      "input": "tests/fixtures/m2/collection-type-mapping-is-key-before-value.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:type-tests-casts"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "collection-type-mapping-is-value-before-later-key",
+      "input": "tests/fixtures/m2/collection-type-mapping-is-value-before-later-key.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:type-tests-casts",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "collection-type-listing-union-nested-one-lazy",
+      "input": "tests/fixtures/m2/collection-type-listing-union-nested-one-lazy.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:unions"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "collection-type-listing-union-nested-two-eager",
+      "input": "tests/fixtures/m2/collection-type-listing-union-nested-two-eager.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:unions",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "collection-type-listing-constrained-outer-eager",
+      "input": "tests/fixtures/m2/collection-type-listing-constrained-outer-eager.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:constraints"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "collection-type-listing-constrained-inner-alias",
+      "input": "tests/fixtures/m2/collection-type-listing-constrained-inner-alias.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:type-aliases",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "collection-type-listing-alias-default",
+      "input": "tests/fixtures/m2/collection-type-listing-alias-default.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:type-aliases"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "collection-type-list-alias-element-default",
+      "input": "tests/fixtures/m2/collection-type-list-alias-element-default.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:type-aliases"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "collection-type-wrapper-cached-parent-invalid-plain",
+      "input": "tests/fixtures/m2/collection-type-wrapper-cached-parent-invalid-plain.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:constraints",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "collection-type-wrapper-cached-parent-valid-plain",
+      "input": "tests/fixtures/m2/collection-type-wrapper-cached-parent-valid-plain.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:constraints",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "collection-type-wrapper-constraint-value-cached-plain",
+      "input": "tests/fixtures/m2/collection-type-wrapper-constraint-value-cached-plain.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:constraints",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "collection-type-wrapper-constraint-invalid-cached-plain",
+      "input": "tests/fixtures/m2/collection-type-wrapper-constraint-invalid-cached-plain.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:constraints",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "collection-type-nested-list-wrapper-cached-plain",
+      "input": "tests/fixtures/m2/collection-type-nested-list-wrapper-cached-plain.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:constraints",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "collection-type-mapping-wrapper-cached-plain",
+      "input": "tests/fixtures/m2/collection-type-mapping-wrapper-cached-plain.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:constraints",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "collection-type-wrapper-cached-parent-invalid-power",
+      "input": "tests/fixtures/m2/collection-type-wrapper-cached-parent-invalid-power.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:constraints",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure",
+      "power_assertions": true
+    },
+    {
+      "id": "collection-type-wrapper-cached-parent-valid-power",
+      "input": "tests/fixtures/m2/collection-type-wrapper-cached-parent-valid-power.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:constraints",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure",
+      "power_assertions": true
+    },
+    {
+      "id": "collection-type-wrapper-constraint-value-cached-power",
+      "input": "tests/fixtures/m2/collection-type-wrapper-constraint-value-cached-power.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:constraints",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure",
+      "power_assertions": true
+    },
+    {
+      "id": "collection-type-wrapper-constraint-invalid-cached-power",
+      "input": "tests/fixtures/m2/collection-type-wrapper-constraint-invalid-cached-power.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:constraints",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure",
+      "power_assertions": true
+    },
+    {
+      "id": "collection-type-nested-list-wrapper-cached-power",
+      "input": "tests/fixtures/m2/collection-type-nested-list-wrapper-cached-power.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:constraints",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure",
+      "power_assertions": true
+    },
+    {
+      "id": "collection-type-mapping-wrapper-cached-power",
+      "input": "tests/fixtures/m2/collection-type-mapping-wrapper-cached-power.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:constraints",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure",
+      "power_assertions": true
+    },
+    {
+      "id": "collection-type-wrapper-noop-preserves-cache",
+      "input": "tests/fixtures/m2/collection-type-wrapper-noop-preserves-cache.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:constraints",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "collection-type-wrapper-alias-error",
+      "input": "tests/fixtures/m2/collection-type-wrapper-alias-error.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure",
+      "power_assertions": true
+    },
+    {
+      "id": "collection-type-wrapper-nested-error",
+      "input": "tests/fixtures/m2/collection-type-wrapper-nested-error.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:constraints",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure",
+      "power_assertions": true
+    },
+    {
+      "id": "collection-type-union-direct-single",
+      "input": "tests/fixtures/m2/collection-type-union-direct-single.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:unions"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "collection-type-union-plain-alias-single",
+      "input": "tests/fixtures/m2/collection-type-union-plain-alias-single.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:unions",
+        "semantic:type-aliases"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "collection-type-union-generic-alias-eager",
+      "input": "tests/fixtures/m2/collection-type-union-generic-alias-eager.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:unions",
+        "semantic:type-aliases",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "collection-type-cast-same-site-different-receiver",
+      "input": "tests/fixtures/m2/collection-type-cast-same-site-different-receiver.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:functions",
+        "semantic:constraints",
+        "semantic:name-resolution"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "collection-type-cast-different-sites",
+      "input": "tests/fixtures/m2/collection-type-cast-different-sites.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:functions",
+        "semantic:constraints",
+        "semantic:name-resolution",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "collection-type-listing-default-element",
+      "input": "tests/fixtures/m2/collection-type-listing-default-element.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:amendment"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "collection-type-mapping-default-element",
+      "input": "tests/fixtures/m2/collection-type-mapping-default-element.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:amendment"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "collection-type-listing-default-value-referent",
+      "input": "tests/fixtures/m2/collection-type-listing-default-value-referent.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:amendment"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "collection-type-mapping-default-value-referent",
+      "input": "tests/fixtures/m2/collection-type-mapping-default-value-referent.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:amendment"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "collection-type-constraint-alias-node-identity",
+      "input": "tests/fixtures/m2/collection-type-constraint-alias-node-identity.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "collection-type-union-primitive-alias",
+      "input": "tests/fixtures/m2/collection-type-union-primitive-alias.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:types",
+        "semantic:unions",
+        "semantic:diagnostics",
+        "semantic:type-aliases"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "collection-type-union-constraint-alias",
+      "input": "tests/fixtures/m2/collection-type-union-constraint-alias.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:types",
+        "semantic:unions",
+        "semantic:diagnostics",
+        "semantic:type-aliases",
+        "semantic:constraints"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "collection-type-union-generic-alias",
+      "input": "tests/fixtures/m2/collection-type-union-generic-alias.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:types",
+        "semantic:unions",
+        "semantic:diagnostics",
+        "semantic:type-aliases",
+        "semantic:collections",
+        "semantic:generics",
+        "semantic:lazy-evaluation"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "collection-type-union-substituted-argument",
+      "input": "tests/fixtures/m2/collection-type-union-substituted-argument.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:types",
+        "semantic:unions",
+        "semantic:diagnostics",
+        "semantic:type-aliases"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "collection-type-union-nullable-alternative",
+      "input": "tests/fixtures/m2/collection-type-union-nullable-alternative.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:types",
+        "semantic:unions",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "collection-type-union-nothing-alternative",
+      "input": "tests/fixtures/m2/collection-type-union-nothing-alternative.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:types",
+        "semantic:unions",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
     }
   ]
 }

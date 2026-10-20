@@ -1,0 +1,2 @@
+x: List<Int> = List("bad", missing)
+result = x.length

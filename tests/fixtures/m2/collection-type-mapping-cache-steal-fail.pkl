@@ -1,0 +1,3 @@
+source = new Mapping { ["k"] = 1 }
+x: Mapping<String, Int(this > 10)> = source
+result = if (source["k"] == 1) x["k"] else 0

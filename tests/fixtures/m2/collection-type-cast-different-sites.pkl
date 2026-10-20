@@ -1,0 +1,4 @@
+class C { bound=0; function first(values: Listing<Int(this > bound)>) = values; function second(values: Listing<Int(this > bound)>) = values }
+first = new C { bound=0 }.first(new Listing {1})
+second = new C { bound=5 }.second(first)
+result=second[0]

@@ -1,0 +1,4 @@
+class C { x = 42 }
+x: Mapping<String, C>
+y = (x) { ["k"] {} }
+result = y["k"].x

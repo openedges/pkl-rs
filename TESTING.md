@@ -97,8 +97,13 @@ inheritance order, primitive key equality, generator captures, spread, and
 complete subscript diagnostics. Native lifecycle tests also force collection
 construction through nested Host suspension, GC, retry, cancellation, and
 timeouts. Shared Node/browser scenarios exercise the same collection engine and
-Java-derived error bytes. These checks do not establish generic collection
-wrappers, member predicates, or complete collection compatibility.
+Java-derived error bytes. Generic collection regressions additionally cover
+lazy `Listing<T>` values, eager `Mapping<K,V>` keys, strict `List<T>` members,
+nested wrappers, casts, unions, aliases, defaults, cache reuse, and first errors.
+Lifecycle checks retain temporary and successful wrapped values across GC,
+Host suspension, reentry, failure retry, and terminal cleanup. Complete custom
+defaults, format-time wrapper checks, member predicates, and the full collection
+corpus remain unverified.
 
 M1 experiments have narrower, explicit contracts:
 

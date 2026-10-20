@@ -1,0 +1,4 @@
+source = new Listing { this.length }
+x: Listing<Int(this > 0)> = source
+y = (x) { 42 }
+result = if (source[0] == 1) x[0] * 10 + y[0] else 0

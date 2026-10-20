@@ -1,0 +1,2 @@
+x: List<Listing<Int>> = List(new Listing { "bad" })
+result = x[0][0]

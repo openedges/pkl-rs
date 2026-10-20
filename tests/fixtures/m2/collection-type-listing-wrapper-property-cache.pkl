@@ -1,0 +1,3 @@
+source = new Listing { 42 }
+x: Listing<Int> = source
+result = if (source.length == 1) x.length else 0

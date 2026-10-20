@@ -2,7 +2,7 @@
 use super::*;
 use crate::diagnostic::{PowerAssertionValue, TypeDiagnostic, UnionTypeDiagnostic};
 
-#[derive(Clone)]
+#[derive(Clone, Copy)]
 pub(super) enum TypeDestination {
     Stack,
     Test,
@@ -18,6 +18,10 @@ type Trace = BTreeMap<Span, Observation>;
 
 #[derive(Clone)]
 enum Mismatch {
+    InsertedFrame {
+        inner: Box<Mismatch>,
+        frame: RuntimeFrame,
+    },
     Simple {
         span: Span,
         ty: TypeCheck,
@@ -44,6 +48,7 @@ impl Mismatch {
     ) -> Result<TypeDiagnostic, RuntimeError> {
         use crate::diagnostic_values::{render, type_name as actual_type};
         Ok(match self {
+            Self::InsertedFrame { inner, .. } => inner.diagnostic(heap, module, indent)?,
             Self::Simple { span, ty, value } => TypeDiagnostic::Simple { span: *span, message: type_error_at_width(ty, value, module, heap, 80usize.saturating_sub(indent))?.message },
             Self::Constraint { span, value, body_span, observations } => TypeDiagnostic::Constraint {
                 span: *span, value: render(value, heap, module, 80usize.saturating_sub(indent))?, body_span: *body_span,
@@ -56,7 +61,7 @@ impl Mismatch {
                 span: *span, value: render(value, heap, module, 80usize.saturating_sub(indent))?, actual_type: actual_type(value, heap, module)?, is_null: matches!(value, Value::Null),
                 children: children.iter().map(|(type_span, mismatch)| Ok(UnionTypeDiagnostic {
                     type_span: *type_span,
-                    nontrivial: !matches!(mismatch, Mismatch::Simple { span, .. } if span == type_span),
+                    nontrivial: !matches!(mismatch, Mismatch::Simple { span, ty, .. } if span == type_span && !matches!(ty.unaliased(), TypeCheck::Nothing)),
                     diagnostic: Box::new(mismatch.diagnostic(heap, module, indent + 2)?),
                 })).collect::<Result<Vec<_>, RuntimeError>>()?,
             },
@@ -64,6 +69,7 @@ impl Mismatch {
     }
     fn roots(&self, roots: &mut Vec<Value>) {
         match self {
+            Self::InsertedFrame { inner, .. } => inner.roots(roots),
             Self::Simple { value, .. } => roots.push(value.clone()),
             Self::Constraint {
                 value,
@@ -91,11 +97,29 @@ impl Mismatch {
 struct UnionState {
     types: Vec<TypeCheck>,
     spans: Vec<Span>,
+    labels: Vec<Span>,
     span: Span,
     index: usize,
     failures: Vec<(Span, Mismatch)>,
     parent_test: bool,
+    parent_eager: bool,
     replay: bool,
+}
+#[derive(Clone)]
+struct CollectionItem {
+    owner: ObjectId,
+    member: crate::heap::CollectionMember,
+}
+#[derive(Clone)]
+struct CollectionState {
+    value: Value,
+    checked: Value,
+    kind: crate::heap::CollectionKind,
+    arguments: Vec<(TypeCheck, Span)>,
+    items: Vec<CollectionItem>,
+    index: usize,
+    eager: bool,
+    replacements: Vec<(Arc<str>, Value)>,
 }
 #[derive(Clone)]
 enum Task {
@@ -103,6 +127,10 @@ enum Task {
         ty: TypeCheck,
         span: Span,
     },
+    CollectionNext(CollectionState),
+    CollectionKeyResult(CollectionState),
+    CollectionValueReady(CollectionState),
+    CollectionValueResult(CollectionState),
     RestoreEnvironment(Environment),
     AfterBase {
         constraints: Vec<ConstraintCode>,
@@ -139,9 +167,11 @@ pub(super) struct TypeRun {
     destination: TypeDestination,
     frames: Vec<RuntimeFrame>,
     in_type_test: bool,
+    eager: bool,
+    constraint_active: bool,
     tracker: Option<Trace>,
 }
-fn environment_roots(environment: &Environment, roots: &mut Vec<Value>) {
+pub(super) fn environment_roots(environment: &Environment, roots: &mut Vec<Value>) {
     roots.extend(environment.locals.iter().cloned());
     roots.extend(environment.this_value.iter().cloned());
     roots.extend(environment.outer_value.iter().cloned());
@@ -163,11 +193,23 @@ impl TypeRun {
         if let Some(trace) = &self.tracker {
             roots.extend(trace.values().map(|observation| observation.value.clone()));
         }
-        if let Some(Err(mismatch)) = &self.outcome {
-            mismatch.roots(roots);
+        match &self.outcome {
+            Some(Err(mismatch)) => mismatch.roots(roots),
+            Some(Ok(value)) => roots.push(value.clone()),
+            None => {}
         }
         for task in &self.tasks {
             match task {
+                Task::CollectionNext(state)
+                | Task::CollectionKeyResult(state)
+                | Task::CollectionValueReady(state)
+                | Task::CollectionValueResult(state) => {
+                    roots.extend([state.value.clone(), state.checked.clone()]);
+                    for item in &state.items {
+                        roots.extend([Value::Object(item.owner), item.member.key.clone()]);
+                    }
+                    roots.extend(state.replacements.iter().map(|(_, value)| value.clone()));
+                }
                 Task::UnionResult(state) => {
                     for (_, mismatch) in &state.failures {
                         mismatch.roots(roots);
@@ -242,6 +284,17 @@ impl Vm {
                 .rev()
                 .find_map(|frame| frame.type_run.as_ref())
                 .is_some_and(|run| run.in_type_test);
+        let eager = matches!(destination, TypeDestination::Test)
+            || self
+                .frames
+                .iter()
+                .chain(self.suspended.iter().flat_map(|context| &context.frames))
+                .any(|frame| {
+                    frame
+                        .type_run
+                        .as_ref()
+                        .is_some_and(|run| run.constraint_active)
+                });
         let frame = self
             .frames
             .last_mut()
@@ -274,13 +327,15 @@ impl Vm {
             destination,
             frames,
             in_type_test,
+            eager,
+            constraint_active: false,
             tracker: None,
         });
         Ok(())
     }
     fn launch_constraint(
         &mut self,
-        run: TypeRun,
+        mut run: TypeRun,
         constraint: ConstraintCode,
     ) -> Result<(), RuntimeError> {
         let mut environment = if constraint.module_environment {
@@ -290,6 +345,7 @@ impl Vm {
         };
         environment.custom_this = Some(run.value.clone());
         let member = run.member.clone();
+        run.constraint_active = true;
         self.frames.last_mut().expect("type frame").type_run = Some(run);
         self.frames.last_mut().expect("type frame").callsite_hidden = true;
         self.frames.push(Frame {
@@ -307,8 +363,13 @@ impl Vm {
         });
         Ok(())
     }
-    fn launch_predicate(&mut self, run: TypeRun, function: ObjectId) -> Result<(), RuntimeError> {
+    fn launch_predicate(
+        &mut self,
+        mut run: TypeRun,
+        function: ObjectId,
+    ) -> Result<(), RuntimeError> {
         let argument = run.value.clone();
+        run.constraint_active = true;
         self.frames.last_mut().expect("type frame").type_run = Some(run);
         self.frames.last_mut().expect("type frame").callsite_hidden = true;
         self.invoke_function(function, vec![argument], false)?;
@@ -379,6 +440,16 @@ impl Vm {
                     );
                     error.span = Some(diagnostic.span());
                     error.frames = run.frames;
+                    if let Mismatch::InsertedFrame { frame, .. } = &mismatch {
+                        if error.frames.is_empty() {
+                            error.frames.push(RuntimeFrame {
+                                span: diagnostic.span(),
+                                member: run.member.clone(),
+                            });
+                        }
+                        error.frames.insert(1, frame.clone());
+                        self.frames.last_mut().expect("type frame").callsite_hidden = true;
+                    }
                     if let Some(frame) = error.frames.first_mut() {
                         frame.span = diagnostic.span();
                     }
@@ -390,7 +461,7 @@ impl Vm {
         };
         match task {
             Task::Check { ty, span } => match ty {
-                TypeCheck::Alias(inner) => {
+                TypeCheck::Alias(inner) | TypeCheck::GenericAlias(inner) => {
                     let environment = module_environment(&run.environment)?;
                     run.tasks.push(Task::RestoreEnvironment(std::mem::replace(
                         &mut run.environment,
@@ -401,22 +472,68 @@ impl Vm {
                 TypeCheck::Nullable(inner) if !matches!(run.value, Value::Null) => {
                     run.tasks.push(Task::Check { ty: *inner, span })
                 }
-                TypeCheck::Union { types, spans, .. } if !types.is_empty() => {
+                TypeCheck::Union {
+                    types,
+                    spans,
+                    labels,
+                    ..
+                } if !types.is_empty() => {
                     let parent_test = run.in_type_test;
+                    let parent_eager = run.eager;
+                    run.eager |= union_eager(&types);
                     run.in_type_test = true;
                     run.tasks.push(Task::UnionResult(UnionState {
                         types: types.clone(),
                         spans: spans.clone(),
+                        labels,
                         span,
                         index: 0,
                         failures: Vec::new(),
                         parent_test,
+                        parent_eager,
                         replay: false,
                     }));
                     run.tasks.push(Task::Check {
                         ty: types[0].clone(),
                         span: spans[0],
                     });
+                }
+                TypeCheck::ParameterizedCollection { kind, arguments }
+                    if TypeCheck::Collection(kind).accepts(&run.value, &self.heap) =>
+                {
+                    let Value::Object(id) = run.value else {
+                        unreachable!()
+                    };
+                    let mut items = Vec::new();
+                    if !arguments.iter().all(|(ty, _)| ty.noop())
+                        && (kind == crate::heap::CollectionKind::List
+                            || run.eager
+                            || kind == crate::heap::CollectionKind::Mapping)
+                    {
+                        let mut current = Some(id);
+                        while let Some(owner) = current {
+                            let object = self.heap.get(owner)?;
+                            for member in &object.collection_members {
+                                if member.kind != crate::heap::CollectionMemberKind::Property {
+                                    items.push(CollectionItem {
+                                        owner,
+                                        member: member.clone(),
+                                    });
+                                }
+                            }
+                            current = object.parent;
+                        }
+                    }
+                    run.tasks.push(Task::CollectionNext(CollectionState {
+                        value: run.value.clone(),
+                        checked: run.checked.clone(),
+                        kind,
+                        arguments,
+                        items,
+                        index: 0,
+                        eager: run.eager,
+                        replacements: Vec::new(),
+                    }));
                 }
                 TypeCheck::Constrained {
                     base,
@@ -441,6 +558,89 @@ impl Vm {
                     });
                 }
             },
+            Task::CollectionNext(state) => {
+                if state.index == state.items.len() {
+                    self.finish_collection(&mut run, state)?;
+                } else if state.kind == crate::heap::CollectionKind::Mapping
+                    && !state.arguments[0].0.noop()
+                {
+                    run.value = state.items[state.index].member.key.clone();
+                    run.checked = run.value.clone();
+                    run.eager = true;
+                    let (ty, span) = state.arguments[0].clone();
+                    run.tasks.push(Task::CollectionKeyResult(state));
+                    run.tasks.push(Task::Check { ty, span });
+                } else if state.kind != crate::heap::CollectionKind::Mapping || state.eager {
+                    return self.collection_value(run, state);
+                } else {
+                    let mut state = state;
+                    state.index += 1;
+                    run.tasks.push(Task::CollectionNext(state));
+                }
+            }
+            Task::CollectionKeyResult(mut state) => {
+                run.eager = state.eager;
+                if let Some(Err(mismatch)) = run.outcome.take() {
+                    let item = &state.items[state.index];
+                    let member = self
+                        .heap
+                        .get(item.owner)?
+                        .members
+                        .iter()
+                        .find(|member| member.entry && member.name == item.member.name);
+                    let frame = member
+                        .and_then(|member| self.program.metadata.get(member.code))
+                        .and_then(|metadata| {
+                            metadata.declaration.map(|span| RuntimeFrame {
+                                span,
+                                member: metadata.member.clone(),
+                            })
+                        });
+                    run.outcome = Some(Err(if let Some(frame) = frame {
+                        Mismatch::InsertedFrame {
+                            inner: Box::new(mismatch),
+                            frame,
+                        }
+                    } else {
+                        mismatch
+                    }));
+                    restore_collection(&mut run, &state);
+                } else if state.eager {
+                    return self.collection_value(run, state);
+                } else {
+                    state.index += 1;
+                    run.tasks.push(Task::CollectionNext(state));
+                }
+            }
+            Task::CollectionValueReady(state) => {
+                self.frames.last_mut().expect("type frame").callsite_hidden = false;
+                run.value = run
+                    .returned
+                    .take()
+                    .ok_or_else(|| invalid("missing collection value"))?;
+                run.checked = run.value.clone();
+                let (ty, span) = state
+                    .arguments
+                    .last()
+                    .expect("collection value type")
+                    .clone();
+                run.tasks.push(Task::CollectionValueResult(state));
+                run.tasks.push(Task::Check { ty, span });
+            }
+            Task::CollectionValueResult(mut state) => {
+                if let Some(Ok(value)) = &run.outcome {
+                    if state.kind == crate::heap::CollectionKind::List && *value != run.value {
+                        state
+                            .replacements
+                            .push((state.items[state.index].member.name.clone(), value.clone()));
+                    }
+                    state.index += 1;
+                    restore_collection(&mut run, &state);
+                    run.tasks.push(Task::CollectionNext(state));
+                } else {
+                    restore_collection(&mut run, &state);
+                }
+            }
             Task::RestoreEnvironment(environment) => run.environment = environment,
             Task::AfterBase { constraints } => {
                 if let Some(Ok(value)) = &run.outcome {
@@ -462,6 +662,7 @@ impl Vm {
                 }
             }
             Task::ConstraintResult { constraints, index } => {
+                run.constraint_active = false;
                 self.frames.last_mut().expect("type frame").callsite_hidden = false;
                 let result = run
                     .returned
@@ -536,6 +737,7 @@ impl Vm {
                 body_span,
                 function,
             } => {
+                run.constraint_active = false;
                 let result = run
                     .returned
                     .take()
@@ -572,6 +774,7 @@ impl Vm {
                 }
             }
             Task::TraceResult { span, body_span } => {
+                run.constraint_active = false;
                 self.frames.last_mut().expect("type frame").callsite_hidden = false;
                 run.returned
                     .take()
@@ -585,13 +788,14 @@ impl Vm {
                     .ok_or_else(|| invalid("missing union alternative result"))?;
                 if outcome.is_ok() && !state.replay {
                     run.in_type_test = state.parent_test;
+                    run.eager = state.parent_eager;
                     run.outcome = Some(outcome);
                 } else {
                     if let Err(mismatch) = outcome {
                         if state.replay {
-                            state.failures[state.index] = (state.spans[state.index], mismatch);
+                            state.failures[state.index] = (state.labels[state.index], mismatch);
                         } else {
-                            state.failures.push((state.spans[state.index], mismatch));
+                            state.failures.push((state.labels[state.index], mismatch));
                         }
                     }
                     state.index += 1;
@@ -606,6 +810,7 @@ impl Vm {
                             state.index = 0;
                             state.replay = true;
                         } else {
+                            run.eager = state.parent_eager;
                             run.outcome = Some(Err(Mismatch::Union {
                                 span: state.span,
                                 value: run.value.clone(),
@@ -623,6 +828,158 @@ impl Vm {
             }
         }
         self.frames.last_mut().expect("type frame").type_run = Some(run);
+        Ok(())
+    }
+}
+
+fn restore_collection(run: &mut TypeRun, state: &CollectionState) {
+    run.value = state.value.clone();
+    run.checked = state.checked.clone();
+    run.eager = state.eager;
+}
+fn union_eager(types: &[TypeCheck]) -> bool {
+    fn visit(ty: &TypeCheck, kinds: &mut Vec<crate::heap::CollectionKind>) -> bool {
+        match ty {
+            TypeCheck::ParameterizedCollection { kind, .. } => {
+                if kinds.contains(kind) {
+                    true
+                } else {
+                    kinds.push(*kind);
+                    false
+                }
+            }
+            TypeCheck::GenericAlias(inner) => {
+                let kind = match inner.unaliased() {
+                    TypeCheck::ParameterizedCollection { kind, .. } => Some(*kind),
+                    _ => None,
+                };
+                if let Some(kind) = kind {
+                    if kinds.contains(&kind) {
+                        return true;
+                    }
+                    kinds.push(kind);
+                }
+                visit(inner, kinds)
+            }
+            TypeCheck::Alias(inner) | TypeCheck::Nullable(inner) => visit(inner, kinds),
+            TypeCheck::Constrained { base, .. } => visit(base, kinds),
+            TypeCheck::Union { types, .. } => types.iter().any(|ty| visit(ty, kinds)),
+            _ => false,
+        }
+    }
+    let mut kinds = Vec::new();
+    types.iter().any(|ty| visit(ty, &mut kinds))
+}
+impl Vm {
+    fn collection_value(
+        &mut self,
+        run: TypeRun,
+        state: CollectionState,
+    ) -> Result<(), RuntimeError> {
+        if state.arguments.last().expect("value type").0.noop() {
+            let mut run = run;
+            let mut state = state;
+            state.index += 1;
+            run.tasks.push(Task::CollectionNext(state));
+            self.frames.last_mut().expect("type frame").type_run = Some(run);
+            return Ok(());
+        }
+        let Value::Object(receiver) = state.value else {
+            unreachable!()
+        };
+        let item = state.items[state.index].clone();
+        let mut run = run;
+        run.eager = state.eager;
+        run.tasks.push(Task::CollectionValueReady(state));
+        self.frames.last_mut().expect("type frame").type_run = Some(run);
+        let depth = self.frames.len();
+        self.force_key(
+            receiver,
+            item.owner,
+            item.member.name,
+            false,
+            true,
+            false,
+            true,
+        )?;
+        if self.frames.len() > depth {
+            self.frames[depth - 1].callsite_hidden = true;
+            self.frames
+                .last_mut()
+                .expect("collection value frame")
+                .return_to_type = true;
+        } else {
+            let value = self.pop()?;
+            self.frames
+                .last_mut()
+                .expect("type frame")
+                .type_run
+                .as_mut()
+                .expect("type run")
+                .returned = Some(value);
+        }
+        Ok(())
+    }
+    fn finish_collection(
+        &mut self,
+        run: &mut TypeRun,
+        state: CollectionState,
+    ) -> Result<(), RuntimeError> {
+        restore_collection(run, &state);
+        let Value::Object(id) = state.value else {
+            unreachable!()
+        };
+        let result = if state.eager {
+            Value::Object(id)
+        } else if state.kind == crate::heap::CollectionKind::List {
+            if state.replacements.is_empty() {
+                Value::Object(id)
+            } else {
+                let mut object = self.heap.get(id)?.clone();
+                for (name, value) in state.replacements {
+                    let key = CacheKey {
+                        entry: true,
+                        owner: None,
+                        name,
+                        method: false,
+                    };
+                    object.member_values.insert(key.clone(), value.clone());
+                    object.cache.insert(key, LazyState::Completed(value));
+                }
+                Value::Object(self.heap.allocate(object))
+            }
+        } else {
+            let (ty, span) = state.arguments.last().expect("value type").clone();
+            if ty.noop()
+                || self
+                    .heap
+                    .get(id)?
+                    .collection_cast
+                    .as_ref()
+                    .is_some_and(|cast| cast.ty.equivalent(&ty))
+            {
+                Value::Object(id)
+            } else {
+                let object = self.heap.get(id)?;
+                let mut environment = run.environment.clone();
+                environment.locals.clear();
+                let wrapper = Object {
+                    parent: Some(id),
+                    environment: object.environment.clone(),
+                    collection_kind: state.kind,
+                    length: object.length,
+                    collection_cast: Some(crate::heap::CollectionCast {
+                        ty,
+                        span,
+                        member: run.member.clone(),
+                        environment,
+                    }),
+                    ..Object::default()
+                };
+                Value::Object(self.heap.allocate(wrapper))
+            }
+        };
+        run.outcome = Some(Ok(result));
         Ok(())
     }
 }

@@ -1,0 +1,3 @@
+x: Listing<Int>
+y = (x) { 42 }
+result = y[0]

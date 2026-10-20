@@ -1,0 +1,2 @@
+function use(x: Listing<Int>) = x[1]
+result = use(new Listing { 1; "bad" })

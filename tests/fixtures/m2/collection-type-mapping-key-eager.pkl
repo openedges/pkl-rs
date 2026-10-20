@@ -1,0 +1,2 @@
+x: Mapping<String, Int> = new Mapping { [1] = missing; ["ok"] = 42 }
+result = x.length

@@ -1,0 +1,2 @@
+function make(): Mapping<String, Int> = new Mapping { ["k"] = "bad" }
+result = make()["k"]

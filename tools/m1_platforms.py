@@ -34,6 +34,9 @@ REQUIRED_SCENARIOS = {
     'm2-ordered-collection-members-and-amendments',
     'm2-collection-generators-and-spread',
     'm2-collection-diagnostics-and-power-assertions',
+    'm2-lazy-generic-collection-values',
+    'm2-strict-list-nested-wrappers',
+    'm2-generic-collection-diagnostics',
 }
 
 

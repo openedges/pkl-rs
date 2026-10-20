@@ -1,0 +1,3 @@
+x = new Mapping<String, Int> { ["k"] = "bad" }
+y: Mapping<String, Int> = x
+result = y["k"]

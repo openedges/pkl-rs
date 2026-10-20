@@ -153,7 +153,7 @@ repeated observations, and preserves multiline and UTF-16 layout. Parser
 grouping nodes retain both outer source syntax and inner execution spans.
 
 These mechanisms remain subject to the selected differential and lifecycle
-checks. Complete structural and function types, collection wrappers, imported
+checks. Complete structural and function types, imported
 aliases, and the full language corpus remain M2 requirements.
 
 ### Ordered collection construction
@@ -191,5 +191,37 @@ evaluator lifecycle.
 Diagnostic rendering walks ordered metadata and completed caches without
 forcing values. Subscript observations use the authored bracket position in
 power assertions. These mechanisms serve native, Node, and Wasm through the
-shared runtime; they do not complete collection wrappers, predicates, structural
+shared runtime; they do not complete predicates, structural
 equality, or all typed-object generator rules.
+
+### Generic collection checks
+
+Parameterized collection checks run through the same type-check continuation.
+`Listing<T>` retains a lazy value cast; `Mapping<K,V>` checks keys before
+installing a lazy value cast. `List<T>` checks its strict elements and stores
+returned wrappers, including nested collections. Type tests, selected union
+alternatives, and checks reached while evaluating a constraint can require eager
+member checks. The constraint's eager mode remains active across Host reentry.
+
+Wrappers retain the declaration environment and ordered parent chain. Forcing
+checks applicable inherited casts before publishing a successful cache entry.
+Cache stealing and adjacent cast reuse follow type-node equivalence; distinct
+constraint nodes remain distinct even when their source text is identical.
+Generic alias instantiations therefore cannot share a predicate check merely
+because they point at the same declaration span. Union diagnostics retain
+alternative labels separately from expanded alias check spans.
+
+The heap traces wrapper environments and inferred default values. Continuations
+also root temporary receivers, checked nested values, and successful results
+awaiting delivery. Checked parameter values replace their original bindings.
+Selected inferred constructors and class-valued collection defaults use the
+same metadata and prototype paths as explicitly constructed objects.
+
+This remains a bounded implementation. Full custom default functions, structural
+types and keys, member predicates, and the remaining constructor rules are open.
+The pinned Java diagnostic formatter can steal parent caches and execute a
+wrapper cast while displaying values; that can itself fail or invoke a
+constraint. The Rust formatter currently reads completed caches only. Supporting
+those format-time checks requires resumable diagnostic preparation, including
+Host and GC handling. Exploratory failures remain recorded separately from the
+selected passing wrapper diagnostics.

@@ -1,0 +1,2 @@
+typealias Choice<T> = T | String
+result: Choice<Int> = true

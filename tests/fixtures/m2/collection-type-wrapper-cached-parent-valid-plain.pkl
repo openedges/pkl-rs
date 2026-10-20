@@ -1,0 +1,3 @@
+raw = new Listing { 1; 2 }
+typed: Listing<Int> = raw
+result: Int(typed.length > 10) = let (ignored = raw[0]) 42

@@ -1,0 +1,2 @@
+x: Mapping<String(this != "bad"), Int> = new Mapping { ["bad"] = missing }
+result = x.length

@@ -1,0 +1,3 @@
+source = new Listing { new Listing { "bad" } }
+x: Listing<Listing<Int>> = source
+result = if (source[0].length == 1) x[0][0] else 0

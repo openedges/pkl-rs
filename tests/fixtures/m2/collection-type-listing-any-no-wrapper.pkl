@@ -1,0 +1,3 @@
+x: Listing<Int(this > 0)> = new Listing { -1 }
+y: Listing<Any> = x
+result = y[0]

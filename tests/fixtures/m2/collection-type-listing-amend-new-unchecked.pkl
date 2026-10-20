@@ -1,0 +1,3 @@
+x: Listing<Int> = new Listing { 1 }
+y = (x) { "new" }
+result = y[1]

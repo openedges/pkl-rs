@@ -1,0 +1,2 @@
+function check() = let (x = new Listing { 1 }) (x as Listing<Int(this > 0)>)[0]
+result = check()

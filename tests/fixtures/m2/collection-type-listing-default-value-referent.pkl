@@ -1,0 +1,4 @@
+class C { x = 42 }
+x: Listing<C>
+y = (x) { new {} }
+result = y[0].x

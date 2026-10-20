@@ -7802,6 +7802,2962 @@
       ]
     },
     {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "collection-type-listing-lazy-length",
+      "input": "tests/fixtures/m2/collection-type-listing-lazy-length.pkl",
+      "input_sha256": "3567970883e030b81454fd7828bf526dad9491dd033983cd3d88b258e2eb653e",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "collection-type-listing-lazy-good",
+      "input": "tests/fixtures/m2/collection-type-listing-lazy-good.pkl",
+      "input_sha256": "985438733b78a2b50eafcacb5e7bf4efba5e4ca7795650a15db20eba05865da7",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "collection-type-listing-lazy-bad",
+      "input": "tests/fixtures/m2/collection-type-listing-lazy-bad.pkl",
+      "input_sha256": "7b363d1d186d6e270931d77dcbcc125f7be31bdc7a6d48b54f795e686c35bec0",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "collection-type-listing-cast-lazy",
+      "input": "tests/fixtures/m2/collection-type-listing-cast-lazy.pkl",
+      "input_sha256": "341f807092e68ce601a7f4cd102e1dd30f13840c11da8144386bc59c694869ac",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:type-tests-casts"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "collection-type-listing-cast-bad",
+      "input": "tests/fixtures/m2/collection-type-listing-cast-bad.pkl",
+      "input_sha256": "6dc7e856aa3f04a953d249abb57189f2b70745a9750be162a7104e650576e45f",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:type-tests-casts",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "collection-type-listing-is-deep",
+      "input": "tests/fixtures/m2/collection-type-listing-is-deep.pkl",
+      "input_sha256": "bd0c7a495f21f152c890025802f17167b25fac1abec9d4d9b4087407b44b947d",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:type-tests-casts"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "collection-type-listing-is-good",
+      "input": "tests/fixtures/m2/collection-type-listing-is-good.pkl",
+      "input_sha256": "a0f7e79d3a672b368b6e6ae2acbc286f98bbdc666b7cc8884eb0e5dd34a02917",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:type-tests-casts"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "collection-type-listing-is-body-error",
+      "input": "tests/fixtures/m2/collection-type-listing-is-body-error.pkl",
+      "input_sha256": "b054224ec6ca37b6b87172ed10c45d11bd6787c021b8c80cd5d9d7f920bef092",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:type-tests-casts",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "collection-type-listing-union-single-lazy",
+      "input": "tests/fixtures/m2/collection-type-listing-union-single-lazy.pkl",
+      "input_sha256": "ce45a5a22428962a631d1856a19735daa00b1683e848e8b33486ccb83e3a96f6",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:unions"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "collection-type-listing-union-many-eager",
+      "input": "tests/fixtures/m2/collection-type-listing-union-many-eager.pkl",
+      "input_sha256": "4aa902a2d6045249db829195d7168ced313ffb9752968cb74828b1cd8308935d",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:unions",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "collection-type-listing-union-select-second",
+      "input": "tests/fixtures/m2/collection-type-listing-union-select-second.pkl",
+      "input_sha256": "c5d39661230ccb7dce73d2fd8ee95cc4ce55b95870d7a188781baf156cc5cc09",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:unions"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "collection-type-listing-new-generic-length",
+      "input": "tests/fixtures/m2/collection-type-listing-new-generic-length.pkl",
+      "input_sha256": "b137ac68bfcfc5b7b1b0be8e26ba79b926b5b968c53a935cc1443779e89c5fea",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "collection-type-listing-new-generic-bad",
+      "input": "tests/fixtures/m2/collection-type-listing-new-generic-bad.pkl",
+      "input_sha256": "f77512cf34de80d4bdbb4afa988affbafc5cf58e586ccac071a0db65723c592a",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "collection-type-listing-alias-lazy",
+      "input": "tests/fixtures/m2/collection-type-listing-alias-lazy.pkl",
+      "input_sha256": "0f44ff0df22303ea42d4c324477290c2db0df3ea12d943d29a5fd0dd2f4d341a",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:type-aliases"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "collection-type-listing-alias-bad",
+      "input": "tests/fixtures/m2/collection-type-listing-alias-bad.pkl",
+      "input_sha256": "05248137f68d2ebe29241aa45bcd353b4066a1a6f656c43b05ff138999c596dd",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:type-aliases",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "collection-type-listing-bare-unforced",
+      "input": "tests/fixtures/m2/collection-type-listing-bare-unforced.pkl",
+      "input_sha256": "6e1c91876673a52b5b45a05cbe846e3f33a13bb37b71eeaead8f8eeaca9d3077",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "collection-type-listing-default-empty",
+      "input": "tests/fixtures/m2/collection-type-listing-default-empty.pkl",
+      "input_sha256": "8ff1532fb9ae53980da48bd47186ce2df1559700e2175e9d29a24d61286218ff",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "collection-type-listing-amend-new-unchecked",
+      "input": "tests/fixtures/m2/collection-type-listing-amend-new-unchecked.pkl",
+      "input_sha256": "3aca01013713fd7ba1cc8aa97314db86f1f23f29817dc46e5e862cd2988cb2d6",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:amendment"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "collection-type-listing-amend-inherited-check",
+      "input": "tests/fixtures/m2/collection-type-listing-amend-inherited-check.pkl",
+      "input_sha256": "48e205ae52dd732f77c8a231b8b313899d2341b1ded807689b219ee093234cb2",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:amendment",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "collection-type-listing-function-lazy",
+      "input": "tests/fixtures/m2/collection-type-listing-function-lazy.pkl",
+      "input_sha256": "5af001aec8b7b0d0ea91a39d16a55a601e355eb4de44e769668e88d3f5ae1958",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:functions"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "collection-type-listing-function-force",
+      "input": "tests/fixtures/m2/collection-type-listing-function-force.pkl",
+      "input_sha256": "3031059a3f517da8f1c6037e33a75dbc579891d5b604ce72acab66c06c8d1ebb",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:functions",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "collection-type-listing-return-lazy",
+      "input": "tests/fixtures/m2/collection-type-listing-return-lazy.pkl",
+      "input_sha256": "4270cf5268c24c550ac785fd4769201bed0b15ec7dac0915ec901ee264706632",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:functions"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "collection-type-listing-lambda-force",
+      "input": "tests/fixtures/m2/collection-type-listing-lambda-force.pkl",
+      "input_sha256": "e152022b40ae3dfd16494768384b298cd25d0373d9fd0c1a7aa005c67b3753ed",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:functions",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "collection-type-mapping-lazy-length",
+      "input": "tests/fixtures/m2/collection-type-mapping-lazy-length.pkl",
+      "input_sha256": "ce21db270aeb9e9efc30a208f675ce928a10726042fb7caeb68e99f1c183068f",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "collection-type-mapping-lazy-good",
+      "input": "tests/fixtures/m2/collection-type-mapping-lazy-good.pkl",
+      "input_sha256": "c28dbe9df9c3ac9aca58ab870dbde4bcc40679173c2f523b0644ff3e89fd1190",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "collection-type-mapping-lazy-bad",
+      "input": "tests/fixtures/m2/collection-type-mapping-lazy-bad.pkl",
+      "input_sha256": "3374560e746d1466a209e926984bdd002dc2a8c30c42c4cb61d2d24a5c96bfd6",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "collection-type-mapping-cast-lazy",
+      "input": "tests/fixtures/m2/collection-type-mapping-cast-lazy.pkl",
+      "input_sha256": "f8b22be9dfbabd1ce0204677c207b455345168db518bdea730b89275f9588388",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:type-tests-casts"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "collection-type-mapping-cast-bad",
+      "input": "tests/fixtures/m2/collection-type-mapping-cast-bad.pkl",
+      "input_sha256": "505739aba8b4dc7919ff65d248345f1b53666279d06cf07c10155441392063b0",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:type-tests-casts",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "collection-type-mapping-is-deep",
+      "input": "tests/fixtures/m2/collection-type-mapping-is-deep.pkl",
+      "input_sha256": "710c3a8707e6fb84b3935b1e0bb9956c83b0b27649c9cc4a3c116f8ee03725d2",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:type-tests-casts"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "collection-type-mapping-is-good",
+      "input": "tests/fixtures/m2/collection-type-mapping-is-good.pkl",
+      "input_sha256": "9a861cbfd92ac8eaedf2432d57c536a8a221d3eb908345c60fde069a317b0bd6",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:type-tests-casts"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "collection-type-mapping-is-body-error",
+      "input": "tests/fixtures/m2/collection-type-mapping-is-body-error.pkl",
+      "input_sha256": "f741415961420bc643d7221613d5d6716ae58cfe18fc288a3436c6571c85643e",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:type-tests-casts",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "collection-type-mapping-union-single-lazy",
+      "input": "tests/fixtures/m2/collection-type-mapping-union-single-lazy.pkl",
+      "input_sha256": "4a5fa575e5f79ff9d0f74f352c80a922c2962e117319d68e75b9d2d09b3fff92",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:unions"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "collection-type-mapping-union-many-eager",
+      "input": "tests/fixtures/m2/collection-type-mapping-union-many-eager.pkl",
+      "input_sha256": "7316e99db6a04feba1f185ad08be5ccdd3254ad914bf4d3846f7964452f0945b",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:unions",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "collection-type-mapping-union-select-second",
+      "input": "tests/fixtures/m2/collection-type-mapping-union-select-second.pkl",
+      "input_sha256": "2b6e20f145105e8d482229f4efee7ca176acc3312dc69444a5340a9a2274c1f3",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:unions"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "collection-type-mapping-new-generic-length",
+      "input": "tests/fixtures/m2/collection-type-mapping-new-generic-length.pkl",
+      "input_sha256": "79a683626d79136562f1ee424670f8347e592885373d638f7d14743108ba695e",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "collection-type-mapping-new-generic-bad",
+      "input": "tests/fixtures/m2/collection-type-mapping-new-generic-bad.pkl",
+      "input_sha256": "4469d3514505db14513216dd691e720baf6902fb5cd99c63f9b591962bcd7982",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "collection-type-mapping-alias-lazy",
+      "input": "tests/fixtures/m2/collection-type-mapping-alias-lazy.pkl",
+      "input_sha256": "f279cb9e2e69f12f2f2b4b6883628590a36bf8e7c75ca2d52c16ea683bf185fb",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:type-aliases"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "collection-type-mapping-alias-bad",
+      "input": "tests/fixtures/m2/collection-type-mapping-alias-bad.pkl",
+      "input_sha256": "7ab45a54895367d2b428c049e1997141511894b1618b5c3d2ae27581c6936161",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:type-aliases",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "collection-type-mapping-bare-unforced",
+      "input": "tests/fixtures/m2/collection-type-mapping-bare-unforced.pkl",
+      "input_sha256": "75f0bd267f872ece092fbad128faa9268625755c629a87968e16411c191967ca",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "collection-type-mapping-default-empty",
+      "input": "tests/fixtures/m2/collection-type-mapping-default-empty.pkl",
+      "input_sha256": "51518c841573583f97181c20dd026ceff223d7699913400b04dc3b1e3fc44983",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "collection-type-mapping-amend-new-unchecked",
+      "input": "tests/fixtures/m2/collection-type-mapping-amend-new-unchecked.pkl",
+      "input_sha256": "111d1d52004a0ae948f6de10731d368a6fd644fa7bf63f080f097087976c79e2",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:amendment"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "collection-type-mapping-amend-inherited-check",
+      "input": "tests/fixtures/m2/collection-type-mapping-amend-inherited-check.pkl",
+      "input_sha256": "122f115fc4c05fddbf48286724d001f8a6261bf2b246054f07ad5edb1b46f510",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:amendment",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "collection-type-mapping-function-lazy",
+      "input": "tests/fixtures/m2/collection-type-mapping-function-lazy.pkl",
+      "input_sha256": "52155e2e52602ed870d8851a35064f347fe0ec7582b730ae9e8472a2535a0c30",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:functions"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "collection-type-mapping-function-force",
+      "input": "tests/fixtures/m2/collection-type-mapping-function-force.pkl",
+      "input_sha256": "ccaacfc08a51b6df8e05fca052a5b23ab17c5861589c393f9d663fa1234b055a",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:functions",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "collection-type-mapping-return-lazy",
+      "input": "tests/fixtures/m2/collection-type-mapping-return-lazy.pkl",
+      "input_sha256": "8e5cf85cde680c206fc518901a7a5ed5915d9f3df0fb2b998ff3bf2949d97342",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:functions"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "collection-type-mapping-lambda-force",
+      "input": "tests/fixtures/m2/collection-type-mapping-lambda-force.pkl",
+      "input_sha256": "d23f9b904302f5a2633048743ba96b348dbbab105e56354fa8b7afe13f5b83ee",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:functions",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "collection-type-mapping-key-eager",
+      "input": "tests/fixtures/m2/collection-type-mapping-key-eager.pkl",
+      "input_sha256": "88789cd2c075217f7ed9855076e63878d01ecf53c52187b6fb3be486fa746b64",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "collection-type-mapping-key-before-value",
+      "input": "tests/fixtures/m2/collection-type-mapping-key-before-value.pkl",
+      "input_sha256": "1b2e91702b67bdc8dd64a3f4ae35643146aecefbe67754db22e88325036dad66",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "collection-type-mapping-key-source-before-type",
+      "input": "tests/fixtures/m2/collection-type-mapping-key-source-before-type.pkl",
+      "input_sha256": "5f0cfc9db339e5d23ea3b020d89ee8c2b2b95b1017ce0ea8239b82d08b02f3e8",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "collection-type-mapping-key-constraint",
+      "input": "tests/fixtures/m2/collection-type-mapping-key-constraint.pkl",
+      "input_sha256": "e00d77496f1119c5bc968a881804d6cc4bd63bf95aca53b76705ba4dd3a62554",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:constraints",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "collection-type-mapping-key-union",
+      "input": "tests/fixtures/m2/collection-type-mapping-key-union.pkl",
+      "input_sha256": "0d624dc64dff0fd2095f14263777dea9b440ba9bb59e0c294bbe4df3b25d055a",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "collection-type-listing-constraint-owner",
+      "input": "tests/fixtures/m2/collection-type-listing-constraint-owner.pkl",
+      "input_sha256": "7c77d83d0d477151a85be727df4e8aa0ebe9c131b6d42220a9393b3be32013f6",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:constraints",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "collection-type-listing-constraint-amended-owner",
+      "input": "tests/fixtures/m2/collection-type-listing-constraint-amended-owner.pkl",
+      "input_sha256": "53d1fdd4b844657ae6faf6ca4905c7efe0bbe8cf66e3b3a7e9b8e1ffaba45aa5",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:amendment",
+        "semantic:constraints",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "collection-type-listing-nested-lazy",
+      "input": "tests/fixtures/m2/collection-type-listing-nested-lazy.pkl",
+      "input_sha256": "9ef85947d4ae4c119a99480ce9a97872423e383f924a4a568867a2ee6144e7bd",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "collection-type-listing-nested-bad",
+      "input": "tests/fixtures/m2/collection-type-listing-nested-bad.pkl",
+      "input_sha256": "2b0e03aea132d2c55d8319cab244767b1203670bcd17b0bd5d719b34d1f18e45",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "collection-type-listing-inner-mapping-key",
+      "input": "tests/fixtures/m2/collection-type-listing-inner-mapping-key.pkl",
+      "input_sha256": "c819a2f7538079baa702714ab4015e22c08ec172e14236225367776935b003cc",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "collection-type-mapping-nested-lazy",
+      "input": "tests/fixtures/m2/collection-type-mapping-nested-lazy.pkl",
+      "input_sha256": "d98b43bac423bf65fab2646b0b0ffbd9335be808033c0cf634c2ea83e219ac2a",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "collection-type-mapping-nested-bad",
+      "input": "tests/fixtures/m2/collection-type-mapping-nested-bad.pkl",
+      "input_sha256": "50322829c2dfdc156ebc12c27f9fb3ed42e72b1621024e93b05cd5d3add3037a",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "collection-type-list-check-eager",
+      "input": "tests/fixtures/m2/collection-type-list-check-eager.pkl",
+      "input_sha256": "4859bfb2e696f1180b61bf91701e9a06769349fee15532f41a7b8ae3184cffdc",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "collection-type-list-good",
+      "input": "tests/fixtures/m2/collection-type-list-good.pkl",
+      "input_sha256": "ce16c34ad05cdbb062b9073906ad29510cfc0803ac6cf4d7f7d4a122aeb2cd8c",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "collection-type-list-default",
+      "input": "tests/fixtures/m2/collection-type-list-default.pkl",
+      "input_sha256": "4b0c3da468bce5fcda36d9fc252d2d7d95c45055827bcf29ac82fdffdf91b7f2",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "collection-type-list-nested-wrapper-lazy",
+      "input": "tests/fixtures/m2/collection-type-list-nested-wrapper-lazy.pkl",
+      "input_sha256": "d11cfce749a50b96f243f918b2fd8adcbb9eb4e09314c0403ba21e77ae68f726",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "collection-type-list-nested-wrapper-bad",
+      "input": "tests/fixtures/m2/collection-type-list-nested-wrapper-bad.pkl",
+      "input_sha256": "d2d3206bc839edb0d4d5aa84c68ea3ae1604ff3d17e6c46039c67e54b83d7f9c",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "collection-type-list-nested-mapping-key",
+      "input": "tests/fixtures/m2/collection-type-list-nested-mapping-key.pkl",
+      "input_sha256": "49a90c70aecd996d7d28f46d0b32e555fa085f7f2db68040e9504cd8195e06c7",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "collection-type-list-is-deep",
+      "input": "tests/fixtures/m2/collection-type-list-is-deep.pkl",
+      "input_sha256": "17c5ac13b28024a053d9861aef60c671f48241356664f3475f7e898cc064857b",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:type-tests-casts"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "collection-type-list-union-ambiguous",
+      "input": "tests/fixtures/m2/collection-type-list-union-ambiguous.pkl",
+      "input_sha256": "5d6919882700655c879ec352df39a7dc4d830a7463d52739b535d6c6436f132a",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:unions",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "collection-type-list-construction-first",
+      "input": "tests/fixtures/m2/collection-type-list-construction-first.pkl",
+      "input_sha256": "701383945ec1198e9f3b92132357a6486a83c6cf432984c577bd3890f209acbb",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "collection-type-listing-default-amend",
+      "input": "tests/fixtures/m2/collection-type-listing-default-amend.pkl",
+      "input_sha256": "61b63a9e934f6ddbc057a7f5ec01c8c72349415df10d8e42c055dc72db46eb58",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:amendment"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "collection-type-listing-identity-original-receiver",
+      "input": "tests/fixtures/m2/collection-type-listing-identity-original-receiver.pkl",
+      "input_sha256": "1f4a66654540a2d72cba285f96f3120f13f3dd0de88801089e0afa9ea2996154",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:name-resolution"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "collection-type-listing-wrapper-original-unchecked",
+      "input": "tests/fixtures/m2/collection-type-listing-wrapper-original-unchecked.pkl",
+      "input_sha256": "dfcf86c33667f3f49ab75f0805c214fc7dfa8e88f4937a0a830b12fbac26c81c",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:name-resolution"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "collection-type-listing-two-wrappers",
+      "input": "tests/fixtures/m2/collection-type-listing-two-wrappers.pkl",
+      "input_sha256": "ceacc8570f1751686ba6398553b14e3f623c7000158cc186735f11b85bfbde6d",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:name-resolution"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "collection-type-listing-stacked-constraints",
+      "input": "tests/fixtures/m2/collection-type-listing-stacked-constraints.pkl",
+      "input_sha256": "523ab1ce7f3e3c5738a274eb81ec0d444907f85e3d949186c53c35c7e9ce04cc",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:constraints",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "collection-type-listing-typed-new-first-span",
+      "input": "tests/fixtures/m2/collection-type-listing-typed-new-first-span.pkl",
+      "input_sha256": "a2fd0695339c7937ebfc55e683e5b0dcca058e131e037dc27c9b2cad914c513d",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "collection-type-listing-cache-steal-pass",
+      "input": "tests/fixtures/m2/collection-type-listing-cache-steal-pass.pkl",
+      "input_sha256": "54c248df131687095e29817056e098d468022041326091e7bed60ca5c492df06",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:name-resolution"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "collection-type-listing-cache-steal-fail",
+      "input": "tests/fixtures/m2/collection-type-listing-cache-steal-fail.pkl",
+      "input_sha256": "a3b3ade2b3a58e3dfe3df941f6755b62de723db7b562be15c8587a669fbb4a4a",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:name-resolution",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "collection-type-mapping-cache-steal-fail",
+      "input": "tests/fixtures/m2/collection-type-mapping-cache-steal-fail.pkl",
+      "input_sha256": "44126f94df96708856dfc74cfd98d51a22a4cb8cf74ab7b243a6289cca2ee4e5",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:name-resolution",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "collection-type-listing-cache-amended-receiver",
+      "input": "tests/fixtures/m2/collection-type-listing-cache-amended-receiver.pkl",
+      "input_sha256": "f7d58d1d6da812e1cadc3ed869e34ca7d683f385e51aa84c4d4add546e72086a",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:amendment",
+        "semantic:name-resolution"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "collection-type-listing-cache-empty-amendment",
+      "input": "tests/fixtures/m2/collection-type-listing-cache-empty-amendment.pkl",
+      "input_sha256": "579cea2bbeca0f0107786b4ddb81a594a1f0a0fe0f3b632a4709cd12b6e05be2",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:amendment",
+        "semantic:name-resolution"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "collection-type-listing-cache-owner",
+      "input": "tests/fixtures/m2/collection-type-listing-cache-owner.pkl",
+      "input_sha256": "0713eb443030aecb6b8fa0076cdeff95d41f6a8288ef8debe2be7ab090d47ef3",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:name-resolution",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "collection-type-listing-samecast-dedupe",
+      "input": "tests/fixtures/m2/collection-type-listing-samecast-dedupe.pkl",
+      "input_sha256": "59c18cded2b2ca879772848b3121c6e1182dfc611bebe010fd59b3ec57b120bb",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:type-aliases",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "collection-type-listing-samecast-alias",
+      "input": "tests/fixtures/m2/collection-type-listing-samecast-alias.pkl",
+      "input_sha256": "bb208db728e18f82887eb729e4509bcb104ff99b650aff46f402a93afa55b923",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:type-aliases",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "collection-type-listing-recast-amendment",
+      "input": "tests/fixtures/m2/collection-type-listing-recast-amendment.pkl",
+      "input_sha256": "a2268902cf5f0f9162905adeb51ce44d619f30d6d6e77762977b75bfdc7ea145",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:type-aliases",
+        "semantic:amendment",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "collection-type-listing-sameconstraint-dedupe",
+      "input": "tests/fixtures/m2/collection-type-listing-sameconstraint-dedupe.pkl",
+      "input_sha256": "a3747a5e9963fd9f8a16362d27cd367d213429aa2cd4347e518fc866edc96bab",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "collection-type-listing-any-no-wrapper",
+      "input": "tests/fixtures/m2/collection-type-listing-any-no-wrapper.pkl",
+      "input_sha256": "67aef44ca58bd4eaf0ec7146c1f066ccaedd050bb130532f402507c4e22e443d",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:type-aliases",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "collection-type-mapping-samecast-dedupe",
+      "input": "tests/fixtures/m2/collection-type-mapping-samecast-dedupe.pkl",
+      "input_sha256": "18b902f3221edaa9df8a92f194152414e0e34e67299745a73c38e23ee366cef4",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:type-aliases",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "collection-type-mapping-key-parent-order",
+      "input": "tests/fixtures/m2/collection-type-mapping-key-parent-order.pkl",
+      "input_sha256": "c866b19ee2070896f8554a7d65801d2816fe6e5f55bdce9fae490db1ebc660df",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:name-resolution",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "collection-type-mapping-key-child-before-parent",
+      "input": "tests/fixtures/m2/collection-type-mapping-key-child-before-parent.pkl",
+      "input_sha256": "9ad41cea802429d7373a9daedcc1343d208ef4d53bb2fd75c517e258f70a56f8",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:name-resolution",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "collection-type-mapping-key-overridden-header",
+      "input": "tests/fixtures/m2/collection-type-mapping-key-overridden-header.pkl",
+      "input_sha256": "eeaf194bd4ae18c5b52a40fc47b6679934661f963cf1ff43011cb1e515c9f468",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:name-resolution",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "collection-type-mapping-is-overridden-value",
+      "input": "tests/fixtures/m2/collection-type-mapping-is-overridden-value.pkl",
+      "input_sha256": "71a1cc9a7f1a4aa93a9611fb693124ca7b77699691e456de2ba7475c0f74c048",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:name-resolution"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "collection-type-listing-is-overridden-value",
+      "input": "tests/fixtures/m2/collection-type-listing-is-overridden-value.pkl",
+      "input_sha256": "d4ddca6101adb33f651ae6955adbb6f63bc20a917a43d0fec7b57ff7e98664d8",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:name-resolution"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "collection-type-listing-wrapper-property-cache",
+      "input": "tests/fixtures/m2/collection-type-listing-wrapper-property-cache.pkl",
+      "input_sha256": "8f424fcf9fc0018d78cd6474b363a59f4302043e320262636d98255f69f9c1a9",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:name-resolution"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "collection-type-listing-stolen-inner-wrapper",
+      "input": "tests/fixtures/m2/collection-type-listing-stolen-inner-wrapper.pkl",
+      "input_sha256": "cdcec63ef38fe6f89c69c418a622f442c78ec444e73faf8c5369d77a0860aef3",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:name-resolution",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "collection-type-listing-return-force",
+      "input": "tests/fixtures/m2/collection-type-listing-return-force.pkl",
+      "input_sha256": "457e4acce1cc96ce29a303bc90a0e979b404f43f7a33d5f6c9857dbc21eb2dd2",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:functions",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "collection-type-mapping-return-force",
+      "input": "tests/fixtures/m2/collection-type-mapping-return-force.pkl",
+      "input_sha256": "9107923bbad04ac7ae86d9bcdb14bdbc8a2f5c9f6a9d768024fb0a11de524aaf",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:functions",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "collection-type-listing-arg-return-force",
+      "input": "tests/fixtures/m2/collection-type-listing-arg-return-force.pkl",
+      "input_sha256": "1e0b0748998fcde93f6399c98b1de3500eeb8bd9ee937aabf84dcd0d94daa314",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:functions",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "collection-type-listing-lambda-return-lazy",
+      "input": "tests/fixtures/m2/collection-type-listing-lambda-return-lazy.pkl",
+      "input_sha256": "04b75817ad9661e963d589eac3d2d80bc3769b30b38ee8f447eedea14fb58813",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:functions"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "collection-type-listing-lambda-return-force",
+      "input": "tests/fixtures/m2/collection-type-listing-lambda-return-force.pkl",
+      "input_sha256": "4d0d5a635a28047312ebe73e9f2bc3e419aa1f2f84bc9732d25f14b15c300137",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:functions",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "collection-type-listing-method-local-cast",
+      "input": "tests/fixtures/m2/collection-type-listing-method-local-cast.pkl",
+      "input_sha256": "a638568133acdd1005a10efa83ae245ba06db281eabe59e21c94dd35fd227bbe",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:functions"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "collection-type-listing-nothing-empty",
+      "input": "tests/fixtures/m2/collection-type-listing-nothing-empty.pkl",
+      "input_sha256": "350c83b5889d40df9ffa7ce117fceebb2e58d96fb620dc12aa050fa649426f2e",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "collection-type-listing-nothing-bad",
+      "input": "tests/fixtures/m2/collection-type-listing-nothing-bad.pkl",
+      "input_sha256": "3d373e43db52d80e5f54f2e6e48943e11269b20c809de2f116af111375a5d882",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "collection-type-listing-nullable",
+      "input": "tests/fixtures/m2/collection-type-listing-nullable.pkl",
+      "input_sha256": "3d167004836464724fa34238d1f6a958f1991f5ac8f9387cb34fd09f7d05b282",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "collection-type-listing-nullability-before-wrapper",
+      "input": "tests/fixtures/m2/collection-type-listing-nullability-before-wrapper.pkl",
+      "input_sha256": "b19118409579ba9b89556c9aeb6e870bd056d177d715261d4b543f456d2a4825",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "collection-type-listing-as-noncollection",
+      "input": "tests/fixtures/m2/collection-type-listing-as-noncollection.pkl",
+      "input_sha256": "4ae1dc8e3dd4c744c49b5f55877046cbc5bc5098a8848f01e1d319036b2c12ab",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:type-tests-casts",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "collection-type-listing-is-noncollection",
+      "input": "tests/fixtures/m2/collection-type-listing-is-noncollection.pkl",
+      "input_sha256": "b5bbd74d5f882ad07d230eb1233694c995ab8dccb78e24f71078a47e9a72e479",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:type-tests-casts"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "collection-type-listing-is-first-mismatch",
+      "input": "tests/fixtures/m2/collection-type-listing-is-first-mismatch.pkl",
+      "input_sha256": "cb1ae3d13869d366883290f21e2260c96341816cebe90904b3da751419838894",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:type-tests-casts"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "collection-type-listing-is-first-runtime",
+      "input": "tests/fixtures/m2/collection-type-listing-is-first-runtime.pkl",
+      "input_sha256": "2eeccb19aa2d472fb4151d97588824fba7c82b2b2083592437d88bd1677e5244",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:type-tests-casts",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "collection-type-mapping-is-key-before-value",
+      "input": "tests/fixtures/m2/collection-type-mapping-is-key-before-value.pkl",
+      "input_sha256": "0729bc4f5be1728e88e48ef0075a08919696c276aeb390c3691a2594e43a42d8",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:type-tests-casts"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "collection-type-mapping-is-value-before-later-key",
+      "input": "tests/fixtures/m2/collection-type-mapping-is-value-before-later-key.pkl",
+      "input_sha256": "dbc832fc9ba24d88f21ad74334e45667157b43dec38751377afde96ad5cf1dca",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:type-tests-casts",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "collection-type-listing-union-nested-one-lazy",
+      "input": "tests/fixtures/m2/collection-type-listing-union-nested-one-lazy.pkl",
+      "input_sha256": "628bd29d2764f3b1998258109017213b4a6afa4b0809992f44cd11b4805e2935",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:unions"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "collection-type-listing-union-nested-two-eager",
+      "input": "tests/fixtures/m2/collection-type-listing-union-nested-two-eager.pkl",
+      "input_sha256": "0d11547ffb67eff87736e856a8f011b6a5261a4217cd95f768f5add9ba3e9839",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:unions",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "collection-type-listing-constrained-outer-eager",
+      "input": "tests/fixtures/m2/collection-type-listing-constrained-outer-eager.pkl",
+      "input_sha256": "8801f7e60d83b1a0a76e0b66c16efdc4d9acab0b192fbb3de288b63e4ee49551",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:constraints"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "collection-type-listing-constrained-inner-alias",
+      "input": "tests/fixtures/m2/collection-type-listing-constrained-inner-alias.pkl",
+      "input_sha256": "fb9c1832fa72f89c9ee2d6e9f529ec14ba86c711f0e187e96dde3e71b9ee6485",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:type-aliases",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "collection-type-listing-alias-default",
+      "input": "tests/fixtures/m2/collection-type-listing-alias-default.pkl",
+      "input_sha256": "d21797924f003b7df76c47d45834f93d3534422e928a7f4723824a188660d0c7",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:type-aliases"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "collection-type-list-alias-element-default",
+      "input": "tests/fixtures/m2/collection-type-list-alias-element-default.pkl",
+      "input_sha256": "3b2b40d3249bae317564fabec96623fa0a61cb1d700837508ad4d73f0dcb3fd0",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:type-aliases"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "collection-type-wrapper-cached-parent-invalid-plain",
+      "input": "tests/fixtures/m2/collection-type-wrapper-cached-parent-invalid-plain.pkl",
+      "input_sha256": "78d7a837820d3da361040a2b208326e89b673569ad49307ab01bee0222675f18",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:constraints",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "collection-type-wrapper-cached-parent-valid-plain",
+      "input": "tests/fixtures/m2/collection-type-wrapper-cached-parent-valid-plain.pkl",
+      "input_sha256": "6a64cc779d6556dfdb4de284ca7472e68c6fdc55d1bd5112ec77e9515489512a",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:constraints",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "collection-type-wrapper-constraint-value-cached-plain",
+      "input": "tests/fixtures/m2/collection-type-wrapper-constraint-value-cached-plain.pkl",
+      "input_sha256": "abb9129a6d1a564f469ffff13efb8574810d44f29a7efa737e45d78d2969a7b7",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:constraints",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "collection-type-wrapper-constraint-invalid-cached-plain",
+      "input": "tests/fixtures/m2/collection-type-wrapper-constraint-invalid-cached-plain.pkl",
+      "input_sha256": "216a4c324b33e8bb51d10e8013f1de942d4a9fd3d8b78fdcc724c059d449f4f9",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:constraints",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "collection-type-nested-list-wrapper-cached-plain",
+      "input": "tests/fixtures/m2/collection-type-nested-list-wrapper-cached-plain.pkl",
+      "input_sha256": "e25c950af35a7e4e317d8f767acf42153613bd9e19b473cdbd7f09caad7e6008",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:constraints",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "collection-type-mapping-wrapper-cached-plain",
+      "input": "tests/fixtures/m2/collection-type-mapping-wrapper-cached-plain.pkl",
+      "input_sha256": "02fa2cbe532bc4fa99a76a67ebfd4d70ccc3569b4c4728e2dea3ee39caba8482",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:constraints",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "collection-type-wrapper-cached-parent-invalid-power",
+      "input": "tests/fixtures/m2/collection-type-wrapper-cached-parent-invalid-power.pkl",
+      "input_sha256": "78d7a837820d3da361040a2b208326e89b673569ad49307ab01bee0222675f18",
+      "power_assertions": true,
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:constraints",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "collection-type-wrapper-cached-parent-valid-power",
+      "input": "tests/fixtures/m2/collection-type-wrapper-cached-parent-valid-power.pkl",
+      "input_sha256": "6a64cc779d6556dfdb4de284ca7472e68c6fdc55d1bd5112ec77e9515489512a",
+      "power_assertions": true,
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:constraints",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "collection-type-wrapper-constraint-value-cached-power",
+      "input": "tests/fixtures/m2/collection-type-wrapper-constraint-value-cached-power.pkl",
+      "input_sha256": "abb9129a6d1a564f469ffff13efb8574810d44f29a7efa737e45d78d2969a7b7",
+      "power_assertions": true,
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:constraints",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "collection-type-wrapper-constraint-invalid-cached-power",
+      "input": "tests/fixtures/m2/collection-type-wrapper-constraint-invalid-cached-power.pkl",
+      "input_sha256": "216a4c324b33e8bb51d10e8013f1de942d4a9fd3d8b78fdcc724c059d449f4f9",
+      "power_assertions": true,
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:constraints",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "collection-type-nested-list-wrapper-cached-power",
+      "input": "tests/fixtures/m2/collection-type-nested-list-wrapper-cached-power.pkl",
+      "input_sha256": "e25c950af35a7e4e317d8f767acf42153613bd9e19b473cdbd7f09caad7e6008",
+      "power_assertions": true,
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:constraints",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "collection-type-mapping-wrapper-cached-power",
+      "input": "tests/fixtures/m2/collection-type-mapping-wrapper-cached-power.pkl",
+      "input_sha256": "02fa2cbe532bc4fa99a76a67ebfd4d70ccc3569b4c4728e2dea3ee39caba8482",
+      "power_assertions": true,
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:constraints",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "collection-type-wrapper-noop-preserves-cache",
+      "input": "tests/fixtures/m2/collection-type-wrapper-noop-preserves-cache.pkl",
+      "input_sha256": "9c4420e212023b85a0fce760e26ff72aa560539c0477e62aec9f7799e0fdeba9",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:constraints",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "collection-type-wrapper-alias-error",
+      "input": "tests/fixtures/m2/collection-type-wrapper-alias-error.pkl",
+      "input_sha256": "29382862a05da9cd22779580d4afc4ae23f7f0d8f23030557620a9e7b9e06d99",
+      "power_assertions": true,
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "collection-type-wrapper-nested-error",
+      "input": "tests/fixtures/m2/collection-type-wrapper-nested-error.pkl",
+      "input_sha256": "447565151ae8cfb2bd42bf6eaf23948f8f7e6a459896a1e232b728a464159ba6",
+      "power_assertions": true,
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:constraints",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "collection-type-union-direct-single",
+      "input": "tests/fixtures/m2/collection-type-union-direct-single.pkl",
+      "input_sha256": "7638d4cc6d598ed94e0afac9c8b33453c72f2f1d9a43ac8fabd20051598640e9",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:unions"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "collection-type-union-plain-alias-single",
+      "input": "tests/fixtures/m2/collection-type-union-plain-alias-single.pkl",
+      "input_sha256": "7f810aebe91ef9c3cdcfe71fa9c8a1d81da5e493e30e5ce0cb1fffa3e57e286b",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:unions",
+        "semantic:type-aliases"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "collection-type-union-generic-alias-eager",
+      "input": "tests/fixtures/m2/collection-type-union-generic-alias-eager.pkl",
+      "input_sha256": "8557170a9a9bb4397f4be6c73a48b54e87d18e6b2279f3aca6e12c8b08f84666",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:unions",
+        "semantic:type-aliases",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "collection-type-cast-same-site-different-receiver",
+      "input": "tests/fixtures/m2/collection-type-cast-same-site-different-receiver.pkl",
+      "input_sha256": "9367a448cea8f7a7f5dd0686085d1cb50636bf4995d113412c86e13609d8e0ef",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:functions",
+        "semantic:constraints",
+        "semantic:name-resolution"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "collection-type-cast-different-sites",
+      "input": "tests/fixtures/m2/collection-type-cast-different-sites.pkl",
+      "input_sha256": "2713952946264e81eed946b662ba8265fafb7ecfe6060bdf6560f4e38358925a",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:functions",
+        "semantic:constraints",
+        "semantic:name-resolution",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "collection-type-listing-default-element",
+      "input": "tests/fixtures/m2/collection-type-listing-default-element.pkl",
+      "input_sha256": "7a040cbdc6d72cd4b0fbae54965f70c41d82913b4bf8fa1923bb753399a801c7",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:amendment"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "collection-type-mapping-default-element",
+      "input": "tests/fixtures/m2/collection-type-mapping-default-element.pkl",
+      "input_sha256": "7d2829a20f58117980dba405dbcc87669b90d49d3de761538c57d673ef79e47d",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:amendment"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "collection-type-listing-default-value-referent",
+      "input": "tests/fixtures/m2/collection-type-listing-default-value-referent.pkl",
+      "input_sha256": "72450659642c2274544997c5b85b018af4d6e261125a54f01d4bbc87149b17cb",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:amendment"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "collection-type-mapping-default-value-referent",
+      "input": "tests/fixtures/m2/collection-type-mapping-default-value-referent.pkl",
+      "input_sha256": "3b8d854e21351859438e49089e1696522dc593227aceaeb60975a206e77e4abb",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:amendment"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "collection-type-constraint-alias-node-identity",
+      "input": "tests/fixtures/m2/collection-type-constraint-alias-node-identity.pkl",
+      "input_sha256": "0a4fc405a04f350e798c521ce9f880ae7bf1f225261d4bac68dcb87f39daad85",
+      "required": true,
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "collection-type-union-primitive-alias",
+      "input": "tests/fixtures/m2/collection-type-union-primitive-alias.pkl",
+      "input_sha256": "76fd51c19a263e4a0712acc20686944bb6ffcd5db8fd2b11a7873c805b1370a6",
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:unions",
+        "semantic:diagnostics",
+        "semantic:type-aliases"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "collection-type-union-constraint-alias",
+      "input": "tests/fixtures/m2/collection-type-union-constraint-alias.pkl",
+      "input_sha256": "995fbc835fca083e679f44a579925a9b916e62b9900991d5cef0b6da675fba99",
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:unions",
+        "semantic:diagnostics",
+        "semantic:type-aliases",
+        "semantic:constraints"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "collection-type-union-generic-alias",
+      "input": "tests/fixtures/m2/collection-type-union-generic-alias.pkl",
+      "input_sha256": "8b6d1ae075cd1ce1ce5c869bd8cda7f6e98814bc0b5f3b844020198f1b3add33",
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:unions",
+        "semantic:diagnostics",
+        "semantic:type-aliases",
+        "semantic:collections",
+        "semantic:generics",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "collection-type-union-substituted-argument",
+      "input": "tests/fixtures/m2/collection-type-union-substituted-argument.pkl",
+      "input_sha256": "363a735e9842951cd15c35a20e714c2bc9a8bc8bf4d77f3fb5f9e95f5ad8e150",
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:unions",
+        "semantic:diagnostics",
+        "semantic:type-aliases"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "collection-type-union-nullable-alternative",
+      "input": "tests/fixtures/m2/collection-type-union-nullable-alternative.pkl",
+      "input_sha256": "a0d1928e3111f05ae99fce7febb560fba9a94cbb692c3f63d662ccb20577b2f9",
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:unions",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "collection-type-union-nothing-alternative",
+      "input": "tests/fixtures/m2/collection-type-union-nothing-alternative.pkl",
+      "input_sha256": "d88a2d610b68f013f1b5bcff8f77dea95a76c0b67f302401cb39fcf06585ba4b",
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:unions",
+        "semantic:diagnostics"
+      ]
+    },
+    {
       "adapter": null,
       "execution": {
         "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
@@ -99214,9 +102170,9 @@
   "comparison_boundary": "evaluateExpressionString(ModuleSource.path(same absolute URI), expression) UTF-8 stdout; whole PklException.getMessage() UTF-8 stderr and exit 1; no trimming. Power assertions default to disabled; an explicit per-case power_assertions boolean enables the same option in both probes. Stringification alone is not typed value/API compatibility.",
   "completion": "Every required semantic/source requirement needs implementation/test mappings and complete passing execution. Pending/unmapped/unimplemented/mismatch remains a full-gate failure.",
   "counts": {
-    "cases": 1415,
+    "cases": 1560,
     "cases_by_execution": {
-      "ready": 415,
+      "ready": 560,
       "unimplemented": 960,
       "unmapped": 40
     },
@@ -99499,7 +102455,25 @@
           "collection-listing-implicit-length",
           "collection-listing-implicit-isempty",
           "collection-module-dynamic-classification",
-          "collection-module-iteration"
+          "collection-module-iteration",
+          "collection-type-listing-identity-original-receiver",
+          "collection-type-listing-wrapper-original-unchecked",
+          "collection-type-listing-two-wrappers",
+          "collection-type-listing-cache-steal-pass",
+          "collection-type-listing-cache-steal-fail",
+          "collection-type-mapping-cache-steal-fail",
+          "collection-type-listing-cache-amended-receiver",
+          "collection-type-listing-cache-empty-amendment",
+          "collection-type-listing-cache-owner",
+          "collection-type-mapping-key-parent-order",
+          "collection-type-mapping-key-child-before-parent",
+          "collection-type-mapping-key-overridden-header",
+          "collection-type-mapping-is-overridden-value",
+          "collection-type-listing-is-overridden-value",
+          "collection-type-listing-wrapper-property-cache",
+          "collection-type-listing-stolen-inner-wrapper",
+          "collection-type-cast-same-site-different-receiver",
+          "collection-type-cast-different-sites"
         ],
         "state": "partial"
       }
@@ -99562,7 +102536,142 @@
           "collection-for-default-omitted",
           "collection-spread-default-not-forced",
           "collection-for-force-source-before-param-type",
-          "collection-for-empty-missingtype-skipped"
+          "collection-for-empty-missingtype-skipped",
+          "collection-type-listing-lazy-length",
+          "collection-type-listing-lazy-good",
+          "collection-type-listing-lazy-bad",
+          "collection-type-listing-cast-lazy",
+          "collection-type-listing-cast-bad",
+          "collection-type-listing-is-deep",
+          "collection-type-listing-is-good",
+          "collection-type-listing-is-body-error",
+          "collection-type-listing-union-single-lazy",
+          "collection-type-listing-union-many-eager",
+          "collection-type-listing-union-select-second",
+          "collection-type-listing-new-generic-length",
+          "collection-type-listing-new-generic-bad",
+          "collection-type-listing-alias-lazy",
+          "collection-type-listing-alias-bad",
+          "collection-type-listing-bare-unforced",
+          "collection-type-listing-default-empty",
+          "collection-type-listing-amend-new-unchecked",
+          "collection-type-listing-amend-inherited-check",
+          "collection-type-listing-function-lazy",
+          "collection-type-listing-function-force",
+          "collection-type-listing-return-lazy",
+          "collection-type-listing-lambda-force",
+          "collection-type-mapping-lazy-length",
+          "collection-type-mapping-lazy-good",
+          "collection-type-mapping-lazy-bad",
+          "collection-type-mapping-cast-lazy",
+          "collection-type-mapping-cast-bad",
+          "collection-type-mapping-is-deep",
+          "collection-type-mapping-is-good",
+          "collection-type-mapping-is-body-error",
+          "collection-type-mapping-union-single-lazy",
+          "collection-type-mapping-union-many-eager",
+          "collection-type-mapping-union-select-second",
+          "collection-type-mapping-new-generic-length",
+          "collection-type-mapping-new-generic-bad",
+          "collection-type-mapping-alias-lazy",
+          "collection-type-mapping-alias-bad",
+          "collection-type-mapping-bare-unforced",
+          "collection-type-mapping-default-empty",
+          "collection-type-mapping-amend-new-unchecked",
+          "collection-type-mapping-amend-inherited-check",
+          "collection-type-mapping-function-lazy",
+          "collection-type-mapping-function-force",
+          "collection-type-mapping-return-lazy",
+          "collection-type-mapping-lambda-force",
+          "collection-type-mapping-key-eager",
+          "collection-type-mapping-key-before-value",
+          "collection-type-mapping-key-source-before-type",
+          "collection-type-mapping-key-constraint",
+          "collection-type-mapping-key-union",
+          "collection-type-listing-constraint-owner",
+          "collection-type-listing-constraint-amended-owner",
+          "collection-type-listing-nested-lazy",
+          "collection-type-listing-nested-bad",
+          "collection-type-listing-inner-mapping-key",
+          "collection-type-mapping-nested-lazy",
+          "collection-type-mapping-nested-bad",
+          "collection-type-list-check-eager",
+          "collection-type-list-good",
+          "collection-type-list-default",
+          "collection-type-list-nested-wrapper-lazy",
+          "collection-type-list-nested-wrapper-bad",
+          "collection-type-list-nested-mapping-key",
+          "collection-type-list-is-deep",
+          "collection-type-list-union-ambiguous",
+          "collection-type-list-construction-first",
+          "collection-type-listing-default-amend",
+          "collection-type-listing-identity-original-receiver",
+          "collection-type-listing-wrapper-original-unchecked",
+          "collection-type-listing-two-wrappers",
+          "collection-type-listing-stacked-constraints",
+          "collection-type-listing-typed-new-first-span",
+          "collection-type-listing-cache-steal-pass",
+          "collection-type-listing-cache-steal-fail",
+          "collection-type-mapping-cache-steal-fail",
+          "collection-type-listing-cache-amended-receiver",
+          "collection-type-listing-cache-empty-amendment",
+          "collection-type-listing-cache-owner",
+          "collection-type-listing-samecast-dedupe",
+          "collection-type-listing-samecast-alias",
+          "collection-type-listing-recast-amendment",
+          "collection-type-listing-sameconstraint-dedupe",
+          "collection-type-listing-any-no-wrapper",
+          "collection-type-mapping-samecast-dedupe",
+          "collection-type-mapping-key-parent-order",
+          "collection-type-mapping-key-child-before-parent",
+          "collection-type-mapping-key-overridden-header",
+          "collection-type-mapping-is-overridden-value",
+          "collection-type-listing-is-overridden-value",
+          "collection-type-listing-wrapper-property-cache",
+          "collection-type-listing-stolen-inner-wrapper",
+          "collection-type-listing-return-force",
+          "collection-type-mapping-return-force",
+          "collection-type-listing-arg-return-force",
+          "collection-type-listing-lambda-return-lazy",
+          "collection-type-listing-lambda-return-force",
+          "collection-type-listing-method-local-cast",
+          "collection-type-listing-nothing-empty",
+          "collection-type-listing-nothing-bad",
+          "collection-type-listing-nullable",
+          "collection-type-listing-nullability-before-wrapper",
+          "collection-type-listing-as-noncollection",
+          "collection-type-listing-is-noncollection",
+          "collection-type-listing-is-first-mismatch",
+          "collection-type-listing-is-first-runtime",
+          "collection-type-mapping-is-key-before-value",
+          "collection-type-mapping-is-value-before-later-key",
+          "collection-type-listing-union-nested-one-lazy",
+          "collection-type-listing-union-nested-two-eager",
+          "collection-type-listing-constrained-outer-eager",
+          "collection-type-listing-constrained-inner-alias",
+          "collection-type-listing-alias-default",
+          "collection-type-list-alias-element-default",
+          "collection-type-wrapper-cached-parent-invalid-plain",
+          "collection-type-wrapper-cached-parent-valid-plain",
+          "collection-type-wrapper-constraint-value-cached-plain",
+          "collection-type-wrapper-constraint-invalid-cached-plain",
+          "collection-type-nested-list-wrapper-cached-plain",
+          "collection-type-mapping-wrapper-cached-plain",
+          "collection-type-wrapper-cached-parent-invalid-power",
+          "collection-type-wrapper-cached-parent-valid-power",
+          "collection-type-wrapper-constraint-value-cached-power",
+          "collection-type-wrapper-constraint-invalid-cached-power",
+          "collection-type-nested-list-wrapper-cached-power",
+          "collection-type-mapping-wrapper-cached-power",
+          "collection-type-wrapper-noop-preserves-cache",
+          "collection-type-wrapper-alias-error",
+          "collection-type-wrapper-nested-error",
+          "collection-type-union-direct-single",
+          "collection-type-union-plain-alias-single",
+          "collection-type-union-generic-alias-eager",
+          "collection-type-cast-same-site-different-receiver",
+          "collection-type-cast-different-sites",
+          "collection-type-union-generic-alias"
         ],
         "state": "partial"
       }
@@ -99738,7 +102847,20 @@
           "collection-class-amend-for-entry",
           "collection-class-amend-spread-entry",
           "collection-for-force-child-before-parent",
-          "collection-spread-force-child-before-parent"
+          "collection-spread-force-child-before-parent",
+          "collection-type-listing-amend-new-unchecked",
+          "collection-type-listing-amend-inherited-check",
+          "collection-type-mapping-amend-new-unchecked",
+          "collection-type-mapping-amend-inherited-check",
+          "collection-type-listing-constraint-amended-owner",
+          "collection-type-listing-default-amend",
+          "collection-type-listing-cache-amended-receiver",
+          "collection-type-listing-cache-empty-amendment",
+          "collection-type-listing-recast-amendment",
+          "collection-type-listing-default-element",
+          "collection-type-mapping-default-element",
+          "collection-type-listing-default-value-referent",
+          "collection-type-mapping-default-value-referent"
         ],
         "state": "partial"
       }
@@ -99777,7 +102899,11 @@
           "collection-class-amend-for-entry",
           "collection-class-amend-spread-entry",
           "collection-typed-class-for-source",
-          "collection-typed-class-spread-source"
+          "collection-typed-class-spread-source",
+          "collection-type-listing-default-element",
+          "collection-type-mapping-default-element",
+          "collection-type-listing-default-value-referent",
+          "collection-type-mapping-default-value-referent"
         ],
         "state": "partial"
       }
@@ -99850,7 +102976,23 @@
           "collection-meta-for-alpha-right",
           "collection-local-method-duplicate-generated",
           "collection-list-method-shadow",
-          "collection-list-nested-method-shadow"
+          "collection-list-nested-method-shadow",
+          "collection-type-listing-function-lazy",
+          "collection-type-listing-function-force",
+          "collection-type-listing-return-lazy",
+          "collection-type-listing-lambda-force",
+          "collection-type-mapping-function-lazy",
+          "collection-type-mapping-function-force",
+          "collection-type-mapping-return-lazy",
+          "collection-type-mapping-lambda-force",
+          "collection-type-listing-return-force",
+          "collection-type-mapping-return-force",
+          "collection-type-listing-arg-return-force",
+          "collection-type-listing-lambda-return-lazy",
+          "collection-type-listing-lambda-return-force",
+          "collection-type-listing-method-local-cast",
+          "collection-type-cast-same-site-different-receiver",
+          "collection-type-cast-different-sites"
         ],
         "state": "partial"
       }
@@ -100092,7 +103234,147 @@
           "collection-listing-implicit-length",
           "collection-listing-implicit-isempty",
           "collection-module-dynamic-classification",
-          "collection-module-iteration"
+          "collection-module-iteration",
+          "collection-type-listing-lazy-length",
+          "collection-type-listing-lazy-good",
+          "collection-type-listing-lazy-bad",
+          "collection-type-listing-cast-lazy",
+          "collection-type-listing-cast-bad",
+          "collection-type-listing-is-deep",
+          "collection-type-listing-is-good",
+          "collection-type-listing-is-body-error",
+          "collection-type-listing-union-single-lazy",
+          "collection-type-listing-union-many-eager",
+          "collection-type-listing-union-select-second",
+          "collection-type-listing-new-generic-length",
+          "collection-type-listing-new-generic-bad",
+          "collection-type-listing-alias-lazy",
+          "collection-type-listing-alias-bad",
+          "collection-type-listing-bare-unforced",
+          "collection-type-listing-default-empty",
+          "collection-type-listing-amend-new-unchecked",
+          "collection-type-listing-amend-inherited-check",
+          "collection-type-listing-function-lazy",
+          "collection-type-listing-function-force",
+          "collection-type-listing-return-lazy",
+          "collection-type-listing-lambda-force",
+          "collection-type-mapping-lazy-length",
+          "collection-type-mapping-lazy-good",
+          "collection-type-mapping-lazy-bad",
+          "collection-type-mapping-cast-lazy",
+          "collection-type-mapping-cast-bad",
+          "collection-type-mapping-is-deep",
+          "collection-type-mapping-is-good",
+          "collection-type-mapping-is-body-error",
+          "collection-type-mapping-union-single-lazy",
+          "collection-type-mapping-union-many-eager",
+          "collection-type-mapping-union-select-second",
+          "collection-type-mapping-new-generic-length",
+          "collection-type-mapping-new-generic-bad",
+          "collection-type-mapping-alias-lazy",
+          "collection-type-mapping-alias-bad",
+          "collection-type-mapping-bare-unforced",
+          "collection-type-mapping-default-empty",
+          "collection-type-mapping-amend-new-unchecked",
+          "collection-type-mapping-amend-inherited-check",
+          "collection-type-mapping-function-lazy",
+          "collection-type-mapping-function-force",
+          "collection-type-mapping-return-lazy",
+          "collection-type-mapping-lambda-force",
+          "collection-type-mapping-key-eager",
+          "collection-type-mapping-key-before-value",
+          "collection-type-mapping-key-source-before-type",
+          "collection-type-mapping-key-constraint",
+          "collection-type-mapping-key-union",
+          "collection-type-listing-constraint-owner",
+          "collection-type-listing-constraint-amended-owner",
+          "collection-type-listing-nested-lazy",
+          "collection-type-listing-nested-bad",
+          "collection-type-listing-inner-mapping-key",
+          "collection-type-mapping-nested-lazy",
+          "collection-type-mapping-nested-bad",
+          "collection-type-list-check-eager",
+          "collection-type-list-good",
+          "collection-type-list-default",
+          "collection-type-list-nested-wrapper-lazy",
+          "collection-type-list-nested-wrapper-bad",
+          "collection-type-list-nested-mapping-key",
+          "collection-type-list-is-deep",
+          "collection-type-list-union-ambiguous",
+          "collection-type-list-construction-first",
+          "collection-type-listing-default-amend",
+          "collection-type-listing-identity-original-receiver",
+          "collection-type-listing-wrapper-original-unchecked",
+          "collection-type-listing-two-wrappers",
+          "collection-type-listing-stacked-constraints",
+          "collection-type-listing-typed-new-first-span",
+          "collection-type-listing-cache-steal-pass",
+          "collection-type-listing-cache-steal-fail",
+          "collection-type-mapping-cache-steal-fail",
+          "collection-type-listing-cache-amended-receiver",
+          "collection-type-listing-cache-empty-amendment",
+          "collection-type-listing-cache-owner",
+          "collection-type-listing-samecast-dedupe",
+          "collection-type-listing-samecast-alias",
+          "collection-type-listing-recast-amendment",
+          "collection-type-listing-sameconstraint-dedupe",
+          "collection-type-listing-any-no-wrapper",
+          "collection-type-mapping-samecast-dedupe",
+          "collection-type-mapping-key-parent-order",
+          "collection-type-mapping-key-child-before-parent",
+          "collection-type-mapping-key-overridden-header",
+          "collection-type-mapping-is-overridden-value",
+          "collection-type-listing-is-overridden-value",
+          "collection-type-listing-wrapper-property-cache",
+          "collection-type-listing-stolen-inner-wrapper",
+          "collection-type-listing-return-force",
+          "collection-type-mapping-return-force",
+          "collection-type-listing-arg-return-force",
+          "collection-type-listing-lambda-return-lazy",
+          "collection-type-listing-lambda-return-force",
+          "collection-type-listing-method-local-cast",
+          "collection-type-listing-nothing-empty",
+          "collection-type-listing-nothing-bad",
+          "collection-type-listing-nullable",
+          "collection-type-listing-nullability-before-wrapper",
+          "collection-type-listing-as-noncollection",
+          "collection-type-listing-is-noncollection",
+          "collection-type-listing-is-first-mismatch",
+          "collection-type-listing-is-first-runtime",
+          "collection-type-mapping-is-key-before-value",
+          "collection-type-mapping-is-value-before-later-key",
+          "collection-type-listing-union-nested-one-lazy",
+          "collection-type-listing-union-nested-two-eager",
+          "collection-type-listing-constrained-outer-eager",
+          "collection-type-listing-constrained-inner-alias",
+          "collection-type-listing-alias-default",
+          "collection-type-list-alias-element-default",
+          "collection-type-wrapper-cached-parent-invalid-plain",
+          "collection-type-wrapper-cached-parent-valid-plain",
+          "collection-type-wrapper-constraint-value-cached-plain",
+          "collection-type-wrapper-constraint-invalid-cached-plain",
+          "collection-type-nested-list-wrapper-cached-plain",
+          "collection-type-mapping-wrapper-cached-plain",
+          "collection-type-wrapper-cached-parent-invalid-power",
+          "collection-type-wrapper-cached-parent-valid-power",
+          "collection-type-wrapper-constraint-value-cached-power",
+          "collection-type-wrapper-constraint-invalid-cached-power",
+          "collection-type-nested-list-wrapper-cached-power",
+          "collection-type-mapping-wrapper-cached-power",
+          "collection-type-wrapper-noop-preserves-cache",
+          "collection-type-wrapper-alias-error",
+          "collection-type-wrapper-nested-error",
+          "collection-type-union-direct-single",
+          "collection-type-union-plain-alias-single",
+          "collection-type-union-generic-alias-eager",
+          "collection-type-cast-same-site-different-receiver",
+          "collection-type-cast-different-sites",
+          "collection-type-listing-default-element",
+          "collection-type-mapping-default-element",
+          "collection-type-listing-default-value-referent",
+          "collection-type-mapping-default-value-referent",
+          "collection-type-constraint-alias-node-identity",
+          "collection-type-union-generic-alias"
         ],
         "state": "partial"
       }
@@ -100183,7 +103465,152 @@
           "collection-typed-class-spread-source",
           "collection-for-empty-param-missingtype",
           "collection-for-empty-missingtype-skipped",
-          "collection-module-dynamic-classification"
+          "collection-module-dynamic-classification",
+          "collection-type-listing-lazy-length",
+          "collection-type-listing-lazy-good",
+          "collection-type-listing-lazy-bad",
+          "collection-type-listing-cast-lazy",
+          "collection-type-listing-cast-bad",
+          "collection-type-listing-is-deep",
+          "collection-type-listing-is-good",
+          "collection-type-listing-is-body-error",
+          "collection-type-listing-union-single-lazy",
+          "collection-type-listing-union-many-eager",
+          "collection-type-listing-union-select-second",
+          "collection-type-listing-new-generic-length",
+          "collection-type-listing-new-generic-bad",
+          "collection-type-listing-alias-lazy",
+          "collection-type-listing-alias-bad",
+          "collection-type-listing-bare-unforced",
+          "collection-type-listing-default-empty",
+          "collection-type-listing-amend-new-unchecked",
+          "collection-type-listing-amend-inherited-check",
+          "collection-type-listing-function-lazy",
+          "collection-type-listing-function-force",
+          "collection-type-listing-return-lazy",
+          "collection-type-listing-lambda-force",
+          "collection-type-mapping-lazy-length",
+          "collection-type-mapping-lazy-good",
+          "collection-type-mapping-lazy-bad",
+          "collection-type-mapping-cast-lazy",
+          "collection-type-mapping-cast-bad",
+          "collection-type-mapping-is-deep",
+          "collection-type-mapping-is-good",
+          "collection-type-mapping-is-body-error",
+          "collection-type-mapping-union-single-lazy",
+          "collection-type-mapping-union-many-eager",
+          "collection-type-mapping-union-select-second",
+          "collection-type-mapping-new-generic-length",
+          "collection-type-mapping-new-generic-bad",
+          "collection-type-mapping-alias-lazy",
+          "collection-type-mapping-alias-bad",
+          "collection-type-mapping-bare-unforced",
+          "collection-type-mapping-default-empty",
+          "collection-type-mapping-amend-new-unchecked",
+          "collection-type-mapping-amend-inherited-check",
+          "collection-type-mapping-function-lazy",
+          "collection-type-mapping-function-force",
+          "collection-type-mapping-return-lazy",
+          "collection-type-mapping-lambda-force",
+          "collection-type-mapping-key-eager",
+          "collection-type-mapping-key-before-value",
+          "collection-type-mapping-key-source-before-type",
+          "collection-type-mapping-key-constraint",
+          "collection-type-mapping-key-union",
+          "collection-type-listing-constraint-owner",
+          "collection-type-listing-constraint-amended-owner",
+          "collection-type-listing-nested-lazy",
+          "collection-type-listing-nested-bad",
+          "collection-type-listing-inner-mapping-key",
+          "collection-type-mapping-nested-lazy",
+          "collection-type-mapping-nested-bad",
+          "collection-type-list-check-eager",
+          "collection-type-list-good",
+          "collection-type-list-default",
+          "collection-type-list-nested-wrapper-lazy",
+          "collection-type-list-nested-wrapper-bad",
+          "collection-type-list-nested-mapping-key",
+          "collection-type-list-is-deep",
+          "collection-type-list-union-ambiguous",
+          "collection-type-list-construction-first",
+          "collection-type-listing-default-amend",
+          "collection-type-listing-identity-original-receiver",
+          "collection-type-listing-wrapper-original-unchecked",
+          "collection-type-listing-two-wrappers",
+          "collection-type-listing-stacked-constraints",
+          "collection-type-listing-typed-new-first-span",
+          "collection-type-listing-cache-steal-pass",
+          "collection-type-listing-cache-steal-fail",
+          "collection-type-mapping-cache-steal-fail",
+          "collection-type-listing-cache-amended-receiver",
+          "collection-type-listing-cache-empty-amendment",
+          "collection-type-listing-cache-owner",
+          "collection-type-listing-samecast-dedupe",
+          "collection-type-listing-samecast-alias",
+          "collection-type-listing-recast-amendment",
+          "collection-type-listing-sameconstraint-dedupe",
+          "collection-type-listing-any-no-wrapper",
+          "collection-type-mapping-samecast-dedupe",
+          "collection-type-mapping-key-parent-order",
+          "collection-type-mapping-key-child-before-parent",
+          "collection-type-mapping-key-overridden-header",
+          "collection-type-mapping-is-overridden-value",
+          "collection-type-listing-is-overridden-value",
+          "collection-type-listing-wrapper-property-cache",
+          "collection-type-listing-stolen-inner-wrapper",
+          "collection-type-listing-return-force",
+          "collection-type-mapping-return-force",
+          "collection-type-listing-arg-return-force",
+          "collection-type-listing-lambda-return-lazy",
+          "collection-type-listing-lambda-return-force",
+          "collection-type-listing-method-local-cast",
+          "collection-type-listing-nothing-empty",
+          "collection-type-listing-nothing-bad",
+          "collection-type-listing-nullable",
+          "collection-type-listing-nullability-before-wrapper",
+          "collection-type-listing-as-noncollection",
+          "collection-type-listing-is-noncollection",
+          "collection-type-listing-is-first-mismatch",
+          "collection-type-listing-is-first-runtime",
+          "collection-type-mapping-is-key-before-value",
+          "collection-type-mapping-is-value-before-later-key",
+          "collection-type-listing-union-nested-one-lazy",
+          "collection-type-listing-union-nested-two-eager",
+          "collection-type-listing-constrained-outer-eager",
+          "collection-type-listing-constrained-inner-alias",
+          "collection-type-listing-alias-default",
+          "collection-type-list-alias-element-default",
+          "collection-type-wrapper-cached-parent-invalid-plain",
+          "collection-type-wrapper-cached-parent-valid-plain",
+          "collection-type-wrapper-constraint-value-cached-plain",
+          "collection-type-wrapper-constraint-invalid-cached-plain",
+          "collection-type-nested-list-wrapper-cached-plain",
+          "collection-type-mapping-wrapper-cached-plain",
+          "collection-type-wrapper-cached-parent-invalid-power",
+          "collection-type-wrapper-cached-parent-valid-power",
+          "collection-type-wrapper-constraint-value-cached-power",
+          "collection-type-wrapper-constraint-invalid-cached-power",
+          "collection-type-nested-list-wrapper-cached-power",
+          "collection-type-mapping-wrapper-cached-power",
+          "collection-type-wrapper-noop-preserves-cache",
+          "collection-type-wrapper-alias-error",
+          "collection-type-wrapper-nested-error",
+          "collection-type-union-direct-single",
+          "collection-type-union-plain-alias-single",
+          "collection-type-union-generic-alias-eager",
+          "collection-type-cast-same-site-different-receiver",
+          "collection-type-cast-different-sites",
+          "collection-type-listing-default-element",
+          "collection-type-mapping-default-element",
+          "collection-type-listing-default-value-referent",
+          "collection-type-mapping-default-value-referent",
+          "collection-type-constraint-alias-node-identity",
+          "collection-type-union-primitive-alias",
+          "collection-type-union-constraint-alias",
+          "collection-type-union-generic-alias",
+          "collection-type-union-substituted-argument",
+          "collection-type-union-nullable-alternative",
+          "collection-type-union-nothing-alternative"
         ],
         "state": "partial"
       }
@@ -100211,7 +103638,28 @@
           "constraint-alias-generic",
           "constraint-alias-this-capture",
           "power-constraint-alias-scope",
-          "constraint-generic-actual-class-scope"
+          "constraint-generic-actual-class-scope",
+          "collection-type-listing-alias-lazy",
+          "collection-type-listing-alias-bad",
+          "collection-type-mapping-alias-lazy",
+          "collection-type-mapping-alias-bad",
+          "collection-type-listing-samecast-dedupe",
+          "collection-type-listing-samecast-alias",
+          "collection-type-listing-recast-amendment",
+          "collection-type-listing-sameconstraint-dedupe",
+          "collection-type-listing-any-no-wrapper",
+          "collection-type-mapping-samecast-dedupe",
+          "collection-type-listing-constrained-inner-alias",
+          "collection-type-listing-alias-default",
+          "collection-type-list-alias-element-default",
+          "collection-type-wrapper-alias-error",
+          "collection-type-union-plain-alias-single",
+          "collection-type-union-generic-alias-eager",
+          "collection-type-constraint-alias-node-identity",
+          "collection-type-union-primitive-alias",
+          "collection-type-union-constraint-alias",
+          "collection-type-union-generic-alias",
+          "collection-type-union-substituted-argument"
         ],
         "state": "partial"
       }
@@ -100318,7 +103766,32 @@
           "collection-listing-power-comment",
           "collection-render-dynamic-generated",
           "collection-render-dynamic-mixed-generated",
-          "collection-listing-power-legal-multiline"
+          "collection-listing-power-legal-multiline",
+          "collection-type-mapping-key-constraint",
+          "collection-type-listing-constraint-owner",
+          "collection-type-listing-constraint-amended-owner",
+          "collection-type-listing-stacked-constraints",
+          "collection-type-listing-sameconstraint-dedupe",
+          "collection-type-listing-constrained-outer-eager",
+          "collection-type-wrapper-cached-parent-invalid-plain",
+          "collection-type-wrapper-cached-parent-valid-plain",
+          "collection-type-wrapper-constraint-value-cached-plain",
+          "collection-type-wrapper-constraint-invalid-cached-plain",
+          "collection-type-nested-list-wrapper-cached-plain",
+          "collection-type-mapping-wrapper-cached-plain",
+          "collection-type-wrapper-cached-parent-invalid-power",
+          "collection-type-wrapper-cached-parent-valid-power",
+          "collection-type-wrapper-constraint-value-cached-power",
+          "collection-type-wrapper-constraint-invalid-cached-power",
+          "collection-type-nested-list-wrapper-cached-power",
+          "collection-type-mapping-wrapper-cached-power",
+          "collection-type-wrapper-noop-preserves-cache",
+          "collection-type-wrapper-alias-error",
+          "collection-type-wrapper-nested-error",
+          "collection-type-cast-same-site-different-receiver",
+          "collection-type-cast-different-sites",
+          "collection-type-constraint-alias-node-identity",
+          "collection-type-union-constraint-alias"
         ],
         "state": "partial"
       }
@@ -100340,7 +103813,147 @@
           "alias-generic-identity-class",
           "alias-generic-default",
           "alias-nested-identity-type",
-          "constraint-generic-actual-class-scope"
+          "constraint-generic-actual-class-scope",
+          "collection-type-listing-lazy-length",
+          "collection-type-listing-lazy-good",
+          "collection-type-listing-lazy-bad",
+          "collection-type-listing-cast-lazy",
+          "collection-type-listing-cast-bad",
+          "collection-type-listing-is-deep",
+          "collection-type-listing-is-good",
+          "collection-type-listing-is-body-error",
+          "collection-type-listing-union-single-lazy",
+          "collection-type-listing-union-many-eager",
+          "collection-type-listing-union-select-second",
+          "collection-type-listing-new-generic-length",
+          "collection-type-listing-new-generic-bad",
+          "collection-type-listing-alias-lazy",
+          "collection-type-listing-alias-bad",
+          "collection-type-listing-bare-unforced",
+          "collection-type-listing-default-empty",
+          "collection-type-listing-amend-new-unchecked",
+          "collection-type-listing-amend-inherited-check",
+          "collection-type-listing-function-lazy",
+          "collection-type-listing-function-force",
+          "collection-type-listing-return-lazy",
+          "collection-type-listing-lambda-force",
+          "collection-type-mapping-lazy-length",
+          "collection-type-mapping-lazy-good",
+          "collection-type-mapping-lazy-bad",
+          "collection-type-mapping-cast-lazy",
+          "collection-type-mapping-cast-bad",
+          "collection-type-mapping-is-deep",
+          "collection-type-mapping-is-good",
+          "collection-type-mapping-is-body-error",
+          "collection-type-mapping-union-single-lazy",
+          "collection-type-mapping-union-many-eager",
+          "collection-type-mapping-union-select-second",
+          "collection-type-mapping-new-generic-length",
+          "collection-type-mapping-new-generic-bad",
+          "collection-type-mapping-alias-lazy",
+          "collection-type-mapping-alias-bad",
+          "collection-type-mapping-bare-unforced",
+          "collection-type-mapping-default-empty",
+          "collection-type-mapping-amend-new-unchecked",
+          "collection-type-mapping-amend-inherited-check",
+          "collection-type-mapping-function-lazy",
+          "collection-type-mapping-function-force",
+          "collection-type-mapping-return-lazy",
+          "collection-type-mapping-lambda-force",
+          "collection-type-mapping-key-eager",
+          "collection-type-mapping-key-before-value",
+          "collection-type-mapping-key-source-before-type",
+          "collection-type-mapping-key-constraint",
+          "collection-type-mapping-key-union",
+          "collection-type-listing-constraint-owner",
+          "collection-type-listing-constraint-amended-owner",
+          "collection-type-listing-nested-lazy",
+          "collection-type-listing-nested-bad",
+          "collection-type-listing-inner-mapping-key",
+          "collection-type-mapping-nested-lazy",
+          "collection-type-mapping-nested-bad",
+          "collection-type-list-check-eager",
+          "collection-type-list-good",
+          "collection-type-list-default",
+          "collection-type-list-nested-wrapper-lazy",
+          "collection-type-list-nested-wrapper-bad",
+          "collection-type-list-nested-mapping-key",
+          "collection-type-list-is-deep",
+          "collection-type-list-union-ambiguous",
+          "collection-type-list-construction-first",
+          "collection-type-listing-default-amend",
+          "collection-type-listing-identity-original-receiver",
+          "collection-type-listing-wrapper-original-unchecked",
+          "collection-type-listing-two-wrappers",
+          "collection-type-listing-stacked-constraints",
+          "collection-type-listing-typed-new-first-span",
+          "collection-type-listing-cache-steal-pass",
+          "collection-type-listing-cache-steal-fail",
+          "collection-type-mapping-cache-steal-fail",
+          "collection-type-listing-cache-amended-receiver",
+          "collection-type-listing-cache-empty-amendment",
+          "collection-type-listing-cache-owner",
+          "collection-type-listing-samecast-dedupe",
+          "collection-type-listing-samecast-alias",
+          "collection-type-listing-recast-amendment",
+          "collection-type-listing-sameconstraint-dedupe",
+          "collection-type-listing-any-no-wrapper",
+          "collection-type-mapping-samecast-dedupe",
+          "collection-type-mapping-key-parent-order",
+          "collection-type-mapping-key-child-before-parent",
+          "collection-type-mapping-key-overridden-header",
+          "collection-type-mapping-is-overridden-value",
+          "collection-type-listing-is-overridden-value",
+          "collection-type-listing-wrapper-property-cache",
+          "collection-type-listing-stolen-inner-wrapper",
+          "collection-type-listing-return-force",
+          "collection-type-mapping-return-force",
+          "collection-type-listing-arg-return-force",
+          "collection-type-listing-lambda-return-lazy",
+          "collection-type-listing-lambda-return-force",
+          "collection-type-listing-method-local-cast",
+          "collection-type-listing-nothing-empty",
+          "collection-type-listing-nothing-bad",
+          "collection-type-listing-nullable",
+          "collection-type-listing-nullability-before-wrapper",
+          "collection-type-listing-as-noncollection",
+          "collection-type-listing-is-noncollection",
+          "collection-type-listing-is-first-mismatch",
+          "collection-type-listing-is-first-runtime",
+          "collection-type-mapping-is-key-before-value",
+          "collection-type-mapping-is-value-before-later-key",
+          "collection-type-listing-union-nested-one-lazy",
+          "collection-type-listing-union-nested-two-eager",
+          "collection-type-listing-constrained-outer-eager",
+          "collection-type-listing-constrained-inner-alias",
+          "collection-type-listing-alias-default",
+          "collection-type-list-alias-element-default",
+          "collection-type-wrapper-cached-parent-invalid-plain",
+          "collection-type-wrapper-cached-parent-valid-plain",
+          "collection-type-wrapper-constraint-value-cached-plain",
+          "collection-type-wrapper-constraint-invalid-cached-plain",
+          "collection-type-nested-list-wrapper-cached-plain",
+          "collection-type-mapping-wrapper-cached-plain",
+          "collection-type-wrapper-cached-parent-invalid-power",
+          "collection-type-wrapper-cached-parent-valid-power",
+          "collection-type-wrapper-constraint-value-cached-power",
+          "collection-type-wrapper-constraint-invalid-cached-power",
+          "collection-type-nested-list-wrapper-cached-power",
+          "collection-type-mapping-wrapper-cached-power",
+          "collection-type-wrapper-noop-preserves-cache",
+          "collection-type-wrapper-alias-error",
+          "collection-type-wrapper-nested-error",
+          "collection-type-union-direct-single",
+          "collection-type-union-plain-alias-single",
+          "collection-type-union-generic-alias-eager",
+          "collection-type-cast-same-site-different-receiver",
+          "collection-type-cast-different-sites",
+          "collection-type-listing-default-element",
+          "collection-type-mapping-default-element",
+          "collection-type-listing-default-value-referent",
+          "collection-type-mapping-default-value-referent",
+          "collection-type-constraint-alias-node-identity",
+          "collection-type-union-generic-alias"
         ],
         "state": "partial"
       }
@@ -100366,7 +103979,25 @@
           "constraint-union-both-false",
           "power-constraint-union-both-false",
           "generated-constraint-union-left",
-          "generated-constraint-union-right"
+          "generated-constraint-union-right",
+          "collection-type-listing-union-single-lazy",
+          "collection-type-listing-union-many-eager",
+          "collection-type-listing-union-select-second",
+          "collection-type-mapping-union-single-lazy",
+          "collection-type-mapping-union-many-eager",
+          "collection-type-mapping-union-select-second",
+          "collection-type-list-union-ambiguous",
+          "collection-type-listing-union-nested-one-lazy",
+          "collection-type-listing-union-nested-two-eager",
+          "collection-type-union-direct-single",
+          "collection-type-union-plain-alias-single",
+          "collection-type-union-generic-alias-eager",
+          "collection-type-union-primitive-alias",
+          "collection-type-union-constraint-alias",
+          "collection-type-union-generic-alias",
+          "collection-type-union-substituted-argument",
+          "collection-type-union-nullable-alternative",
+          "collection-type-union-nothing-alternative"
         ],
         "state": "partial"
       }
@@ -100388,7 +104019,24 @@
           "constraint-is-false",
           "constraint-is-fatal",
           "constraint-as-false",
-          "power-constraint-as-false"
+          "power-constraint-as-false",
+          "collection-type-listing-cast-lazy",
+          "collection-type-listing-cast-bad",
+          "collection-type-listing-is-deep",
+          "collection-type-listing-is-good",
+          "collection-type-listing-is-body-error",
+          "collection-type-mapping-cast-lazy",
+          "collection-type-mapping-cast-bad",
+          "collection-type-mapping-is-deep",
+          "collection-type-mapping-is-good",
+          "collection-type-mapping-is-body-error",
+          "collection-type-list-is-deep",
+          "collection-type-listing-as-noncollection",
+          "collection-type-listing-is-noncollection",
+          "collection-type-listing-is-first-mismatch",
+          "collection-type-listing-is-first-runtime",
+          "collection-type-mapping-is-key-before-value",
+          "collection-type-mapping-is-value-before-later-key"
         ],
         "state": "partial"
       }
@@ -100631,7 +104279,88 @@
           "collection-for-empty-param-missingtype",
           "collection-local-duplicate-generated",
           "collection-local-method-duplicate-generated",
-          "collection-module-iteration"
+          "collection-module-iteration",
+          "collection-type-listing-lazy-bad",
+          "collection-type-listing-cast-bad",
+          "collection-type-listing-is-body-error",
+          "collection-type-listing-union-many-eager",
+          "collection-type-listing-new-generic-bad",
+          "collection-type-listing-alias-bad",
+          "collection-type-listing-amend-inherited-check",
+          "collection-type-listing-function-force",
+          "collection-type-listing-lambda-force",
+          "collection-type-mapping-lazy-bad",
+          "collection-type-mapping-cast-bad",
+          "collection-type-mapping-is-body-error",
+          "collection-type-mapping-union-many-eager",
+          "collection-type-mapping-new-generic-bad",
+          "collection-type-mapping-alias-bad",
+          "collection-type-mapping-amend-inherited-check",
+          "collection-type-mapping-function-force",
+          "collection-type-mapping-lambda-force",
+          "collection-type-mapping-key-eager",
+          "collection-type-mapping-key-before-value",
+          "collection-type-mapping-key-source-before-type",
+          "collection-type-mapping-key-constraint",
+          "collection-type-listing-constraint-owner",
+          "collection-type-listing-constraint-amended-owner",
+          "collection-type-listing-nested-bad",
+          "collection-type-listing-inner-mapping-key",
+          "collection-type-mapping-nested-bad",
+          "collection-type-list-check-eager",
+          "collection-type-list-nested-wrapper-bad",
+          "collection-type-list-nested-mapping-key",
+          "collection-type-list-union-ambiguous",
+          "collection-type-list-construction-first",
+          "collection-type-listing-stacked-constraints",
+          "collection-type-listing-typed-new-first-span",
+          "collection-type-listing-cache-steal-fail",
+          "collection-type-mapping-cache-steal-fail",
+          "collection-type-listing-cache-owner",
+          "collection-type-listing-samecast-dedupe",
+          "collection-type-listing-samecast-alias",
+          "collection-type-listing-recast-amendment",
+          "collection-type-listing-sameconstraint-dedupe",
+          "collection-type-listing-any-no-wrapper",
+          "collection-type-mapping-samecast-dedupe",
+          "collection-type-mapping-key-parent-order",
+          "collection-type-mapping-key-child-before-parent",
+          "collection-type-mapping-key-overridden-header",
+          "collection-type-listing-stolen-inner-wrapper",
+          "collection-type-listing-return-force",
+          "collection-type-mapping-return-force",
+          "collection-type-listing-arg-return-force",
+          "collection-type-listing-lambda-return-force",
+          "collection-type-listing-nothing-bad",
+          "collection-type-listing-as-noncollection",
+          "collection-type-listing-is-first-runtime",
+          "collection-type-mapping-is-value-before-later-key",
+          "collection-type-listing-union-nested-two-eager",
+          "collection-type-listing-constrained-inner-alias",
+          "collection-type-wrapper-cached-parent-invalid-plain",
+          "collection-type-wrapper-cached-parent-valid-plain",
+          "collection-type-wrapper-constraint-value-cached-plain",
+          "collection-type-wrapper-constraint-invalid-cached-plain",
+          "collection-type-nested-list-wrapper-cached-plain",
+          "collection-type-mapping-wrapper-cached-plain",
+          "collection-type-wrapper-cached-parent-invalid-power",
+          "collection-type-wrapper-cached-parent-valid-power",
+          "collection-type-wrapper-constraint-value-cached-power",
+          "collection-type-wrapper-constraint-invalid-cached-power",
+          "collection-type-nested-list-wrapper-cached-power",
+          "collection-type-mapping-wrapper-cached-power",
+          "collection-type-wrapper-noop-preserves-cache",
+          "collection-type-wrapper-alias-error",
+          "collection-type-wrapper-nested-error",
+          "collection-type-union-generic-alias-eager",
+          "collection-type-cast-different-sites",
+          "collection-type-constraint-alias-node-identity",
+          "collection-type-union-primitive-alias",
+          "collection-type-union-constraint-alias",
+          "collection-type-union-generic-alias",
+          "collection-type-union-substituted-argument",
+          "collection-type-union-nullable-alternative",
+          "collection-type-union-nothing-alternative"
         ],
         "state": "partial"
       }
@@ -109160,6 +112889,6 @@
     "compatibility/regressions.json": "09c064f65730d30f72bf87a45c88d47ecc0844e57966a999dc8e759f083af3da",
     "compatibility/rev1-inventory.json": "6061f202ba3f04565efed3617ac69d3c2fadc54eec1f562b67a4758b3d0a8ab5",
     "references.lock": "278f48fd7697459281aa78a706c9ca57222f36a8c0785d838a6449fbaf26d30b",
-    "tests/fixtures/m2/cases.json": "b524dd49afae3891aee2ce8cf00a749fdef023039a940d03807b41bbb20f82c9"
+    "tests/fixtures/m2/cases.json": "b301b1b645989f529d8059ed7a59a4f3ab9016f891781ba63b95b77835d918e2"
   }
 }

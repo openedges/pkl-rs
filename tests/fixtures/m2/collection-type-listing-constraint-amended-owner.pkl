@@ -1,0 +1,3 @@
+open class C { limit = 3; x: Listing<Int(this > limit)> = new Listing { 4 } }
+c = new C { limit = 5 }
+result = c.x[0]

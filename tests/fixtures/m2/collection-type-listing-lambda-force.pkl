@@ -1,0 +1,2 @@
+f = (x: Listing<Int>) -> x[1]
+result = f.apply(new Listing { 1; "bad" })

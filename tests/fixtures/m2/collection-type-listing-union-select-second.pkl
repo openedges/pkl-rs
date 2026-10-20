@@ -1,0 +1,2 @@
+x: Listing<Int>|Listing<String> = new Listing { "ok" }
+result = x[0]

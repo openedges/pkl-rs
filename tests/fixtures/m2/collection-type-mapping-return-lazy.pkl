@@ -1,0 +1,2 @@
+function use(): Mapping<String, Int> = new Mapping { ["good"] = 1; ["bad"] = "bad" }
+result = use().length

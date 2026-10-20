@@ -83,6 +83,20 @@ export async function scenarios(api) {
     throws(() => api.evaluateLanguage("values = new Listing { 1; 2 }\nresult: Int(values[0] > 3) = 42\n", 'file:///m2-platform.pkl', 'm2-platform', 'result', true),
       "–– Pkl Error ––\nType constraint `values[0] > 3` violated.\nValue: 42\n\n    values[0] > 3\n    │     │   │\n    │     1   false\n    new Listing { 1; ? }\n\n2 | result: Int(values[0] > 3) = 42\n                ^^^^^^^^^^^^^\nat m2-platform#result (file:///m2-platform.pkl)\n\n2 | result: Int(values[0] > 3) = 42\n                                 ^^\nat m2-platform#result (file:///m2-platform.pkl)\n\n1 | result\n    ^^^^^^\nat  (repl:text)\n");
   });
+  // Generic collection expectations use the identical pinned Java module URI.
+  await check('m2-lazy-generic-collection-values', () => {
+    eq(api.evaluateLanguage("values: Listing<Int> = new Listing { 40; 2; \"unused\" }\nresult = values[0] + values[1]\n", 'file:///m2-platform.pkl', 'm2-platform', 'result', false), "42");
+    eq(api.evaluateLanguage("values: Mapping<String, Int> = new Mapping { [\"x\"] = 40; [\"y\"] = 2; [\"unused\"] = \"bad\" }\nresult = values[\"x\"] + values[\"y\"]\n", 'file:///m2-platform.pkl', 'm2-platform', 'result', false), "42");
+  });
+  await check('m2-strict-list-nested-wrappers', () => {
+    eq(api.evaluateLanguage("values: List<Listing<Int>> = List(new Listing { 42; \"unused\" })\nresult = values[0][0]\n", 'file:///m2-platform.pkl', 'm2-platform', 'result', false), "42");
+  });
+  await check('m2-generic-collection-diagnostics', () => {
+    throws(() => api.evaluateLanguage("values: Mapping<Int, Int> = new Mapping { [\"bad\"] = 42 }\nresult = values.length\n", 'file:///m2-platform.pkl', 'm2-platform', 'result', false),
+      "–– Pkl Error ––\nExpected value of type `Int`, but got type `String`.\nValue: \"bad\"\n\n1 | values: Mapping<Int, Int> = new Mapping { [\"bad\"] = 42 }\n                    ^^^\nat m2-platform#values (file:///m2-platform.pkl)\n\n1 | values: Mapping<Int, Int> = new Mapping { [\"bad\"] = 42 }\n                                               ^^^^^\nat m2-platform#values[\"bad\"] (file:///m2-platform.pkl)\n\n1 | values: Mapping<Int, Int> = new Mapping { [\"bad\"] = 42 }\n                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nat m2-platform#values (file:///m2-platform.pkl)\n\n2 | result = values.length\n             ^^^^^^\nat m2-platform#result (file:///m2-platform.pkl)\n\n1 | result\n    ^^^^^^\nat  (repl:text)\n");
+    throws(() => api.evaluateLanguage("values: Listing<Int> = new Listing { 1; 2 }\nresult: Int(values[0] > 3) = 42\n", 'file:///m2-platform.pkl', 'm2-platform', 'result', true),
+      "–– Pkl Error ––\nType constraint `values[0] > 3` violated.\nValue: 42\n\n    values[0] > 3\n    │     │   │\n    │     1   false\n    new Listing { 1; 2 }\n\n2 | result: Int(values[0] > 3) = 42\n                ^^^^^^^^^^^^^\nat m2-platform#result (file:///m2-platform.pkl)\n\n2 | result: Int(values[0] > 3) = 42\n                                 ^^\nat m2-platform#result (file:///m2-platform.pkl)\n\n1 | result\n    ^^^^^^\nat  (repl:text)\n");
+  });
   await check('utf8-utf16-string-boundary', () => {
     for (const value of ['', '한글🙂e\u0301\0\r\n', '𐐀漢字']) eq(api.roundtripString(value), value);
     for (const value of ['\ud800', '\udfff', 'a\ud800b']) throws(() => api.roundtripString(value), 'unpaired UTF-16 surrogate is unsupported');

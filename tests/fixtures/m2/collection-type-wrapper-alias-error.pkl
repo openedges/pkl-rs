@@ -1,0 +1,4 @@
+typealias Items<T> = Listing<T>
+raw = new Listing { "bad" }
+typed: Items<Int> = raw
+result = typed[0]

@@ -1,0 +1,4 @@
+source = new Listing { 1; "bad" }
+a: Listing<Int> = source
+b: Listing<String> = source
+result = if (a[0] == 1) b[1] else "no"

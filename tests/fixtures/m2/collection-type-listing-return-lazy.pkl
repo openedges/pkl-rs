@@ -1,0 +1,2 @@
+function use(): Listing<Int> = new Listing { 1; "bad" }
+result = use().length

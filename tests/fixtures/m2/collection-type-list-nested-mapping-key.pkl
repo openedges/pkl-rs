@@ -1,0 +1,2 @@
+x: List<Mapping<String, Int>> = List(new Mapping { [1] = missing })
+result = x.length

@@ -1,0 +1,3 @@
+raw = new Listing { 1; 2 }
+wrapped: List<Listing<Int>> = List(raw)
+result: Int(wrapped.length > 10) = let (ignored = raw[0]) 42

@@ -1,0 +1,3 @@
+typealias Rows = Listing<Int>
+values: Rows | String = new Listing { 1; "wrong" }
+result=values[0]

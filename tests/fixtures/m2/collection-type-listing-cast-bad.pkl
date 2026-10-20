@@ -1,0 +1,2 @@
+x = new Listing { 1; "bad" } as Listing<Int>
+result = x[1]

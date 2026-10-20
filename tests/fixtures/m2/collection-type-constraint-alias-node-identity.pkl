@@ -1,0 +1,4 @@
+typealias Accept<T> = Int(this is T)
+x: Listing<Accept<Int>> = new Listing { 1 }
+y: Listing<Accept<String>> = x
+result = y[0]

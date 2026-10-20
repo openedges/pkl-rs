@@ -1,0 +1,2 @@
+raw = new Listing { 1; 2 }
+result: Listing<Any>(false) = let (ignored = raw[0]) raw

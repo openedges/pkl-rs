@@ -1,0 +1,2 @@
+x: Mapping<String, Int>|Mapping<String, String> = new Mapping { ["good"] = 1; ["bad"] = "bad" }
+result = x.length

@@ -1,0 +1,4 @@
+x: Listing<Int> = new Listing { 1 }
+y = (x) { "bad" }
+z: Listing<Int> = y
+result = z[1]

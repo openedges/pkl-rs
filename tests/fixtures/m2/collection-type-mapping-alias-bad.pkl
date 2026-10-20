@@ -1,0 +1,3 @@
+typealias Items<T> = Mapping<String, T>
+x: Items<Int> = new Mapping { ["good"] = 1; ["bad"] = "bad" }
+result = x["bad"]

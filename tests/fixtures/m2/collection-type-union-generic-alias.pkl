@@ -1,0 +1,2 @@
+typealias Rows<T> = Listing<T>
+result: Rows<Int> | String = new Listing { 1; "bad" }

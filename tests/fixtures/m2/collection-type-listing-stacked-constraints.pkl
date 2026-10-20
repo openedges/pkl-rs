@@ -1,0 +1,2 @@
+x: Listing<Int(this > 10)> = new Listing<Int(this > 0)> { -1 }
+result = x[0]

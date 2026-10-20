@@ -1,0 +1,2 @@
+f = (x: Mapping<String, Int>) -> x["bad"]
+result = f.apply(new Mapping { ["good"] = 1; ["bad"] = "bad" })

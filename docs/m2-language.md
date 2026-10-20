@@ -107,3 +107,11 @@ the generated Rust bytes. CI repeats this check against the pinned JDK.
 M1's platform and Host contracts remain regression requirements. New language
 features must retain captured values across VM suspension and collection and use
 the same engine in native Rust, browser Wasm, and Node N-API.
+
+The collection-type selection compares lazy and eager checking, wrapper
+composition, aliases, defaults, constraint identity, cache reuse, and complete
+diagnostics at the actual fixture URI. Exploratory captures remain separate:
+unimplemented format-time cache stealing can cause further checks while Java
+renders a diagnostic, including uncaught Java rendering failures. These
+observations do not add development exceptions or establish full generic
+collection compatibility. See the [checkpoint evidence](../reports/m2/README.md).

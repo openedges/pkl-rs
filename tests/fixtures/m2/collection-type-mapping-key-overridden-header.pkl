@@ -1,0 +1,4 @@
+base = new Mapping { [1] = missing }
+child = (base) { [1] = 42 }
+x: Mapping<String, Int> = child
+result = x.length

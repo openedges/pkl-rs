@@ -1,0 +1,4 @@
+open class C { minimum = 0; values: Listing<Int(this > minimum)> = new Listing { 1 } }
+base = new C {}
+child = (base) { minimum = 2 }
+result = if (base.values[0] == 1) child.values[0] else 0

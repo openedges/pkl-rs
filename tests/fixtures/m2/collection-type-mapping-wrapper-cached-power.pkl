@@ -1,0 +1,3 @@
+raw = new Mapping { ["k"] = 1; ["v"] = 2 }
+typed: Mapping<String,Int> = raw
+result: Int(typed.length > 10) = let (ignored = raw["k"]) 42

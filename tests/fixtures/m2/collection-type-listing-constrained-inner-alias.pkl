@@ -1,0 +1,4 @@
+typealias Positive = Int(this > 0)
+typealias Items<T> = Listing<T>
+x: Items<Positive> = new Listing { -1 }
+result = x[0]

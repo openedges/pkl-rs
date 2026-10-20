@@ -1,0 +1,2 @@
+x = new Listing { missing; "bad" }
+result = x is Listing<Int>

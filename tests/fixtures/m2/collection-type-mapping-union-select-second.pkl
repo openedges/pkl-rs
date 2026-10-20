@@ -1,0 +1,2 @@
+x: Mapping<String, Int>|Mapping<String, String> = new Mapping { ["k"] = "ok" }
+result = x["k"]

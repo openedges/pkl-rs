@@ -1,0 +1,4 @@
+source = new Listing { this.length }
+x: Listing<Int> = source
+y = (x) { 42 }
+result = source[0] * 100 + x[0] * 10 + y[0]

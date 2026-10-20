@@ -1,0 +1,2 @@
+x: Mapping<String, Listing<Int>> = new Mapping { ["k"] = new Listing { "bad" } }
+result = x["k"][0]

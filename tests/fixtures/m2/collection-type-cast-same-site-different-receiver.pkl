@@ -1,0 +1,4 @@
+class C { bound=0; function check(values: Listing<Int(this > bound)>) = values }
+first = new C { bound=0 }.check(new Listing {1})
+second = new C { bound=5 }.check(first)
+result=second[0]

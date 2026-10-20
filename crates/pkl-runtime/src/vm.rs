@@ -17,6 +17,7 @@ pub enum Instruction {
     Constant(Value),
     Input(usize),
     LoadLocal(usize),
+    StoreLocal(usize),
     PushLocal,
     PopLocal,
     Swap,
@@ -26,6 +27,9 @@ pub enum Instruction {
         specialized: bool,
     },
     EndCollection,
+    SetCollectionDefault {
+        defined: bool,
+    },
     AddCollectionProperty(Member),
     AddCollectionElement(Member),
     AddCollectionEntry {
@@ -152,8 +156,8 @@ pub enum Instruction {
     Return,
 }
 
-/// Type checks supported by the shared evaluator. Composite object/function types
-/// need their own lazy wrappers and are rejected by the compiler for now.
+/// Type checks supported by the shared evaluator. Parametric collections use
+/// resumable checks and lazy wrappers; structural/function types remain unsupported.
 #[derive(Clone, Debug)]
 pub enum TypeCheck {
     Any,
@@ -167,6 +171,10 @@ pub enum TypeCheck {
     String,
     Bytes,
     Collection(crate::heap::CollectionKind),
+    ParameterizedCollection {
+        kind: crate::heap::CollectionKind,
+        arguments: Vec<(TypeCheck, Span)>,
+    },
     StringLiteral(Arc<str>),
     Class {
         id: usize,
@@ -174,9 +182,12 @@ pub enum TypeCheck {
     },
     Nullable(Box<TypeCheck>),
     Alias(Box<TypeCheck>),
+    /// Generic aliases themselves participate in upstream union eager classification.
+    GenericAlias(Box<TypeCheck>),
     Union {
         types: Vec<TypeCheck>,
         spans: Vec<Span>,
+        labels: Vec<Span>,
         default: Option<usize>,
     },
     Constrained {
@@ -196,8 +207,82 @@ pub struct ConstraintCode {
 impl TypeCheck {
     fn unaliased(&self) -> &Self {
         match self {
-            Self::Alias(inner) => inner.unaliased(),
+            Self::Alias(inner) | Self::GenericAlias(inner) => inner.unaliased(),
             _ => self,
+        }
+    }
+    fn equivalent(&self, other: &Self) -> bool {
+        let left = self.unaliased();
+        let right = other.unaliased();
+        match (left, right) {
+            (Self::Nullable(a), Self::Nullable(b)) => a.equivalent(b),
+            (Self::StringLiteral(a), Self::StringLiteral(b)) => a == b,
+            (Self::Class { id: a, .. }, Self::Class { id: b, .. }) => a == b,
+            (Self::Collection(a), Self::Collection(b)) => a == b,
+            (
+                Self::ParameterizedCollection {
+                    kind: a,
+                    arguments: aa,
+                },
+                Self::ParameterizedCollection {
+                    kind: b,
+                    arguments: ba,
+                },
+            ) => {
+                a == b
+                    && aa.len() == ba.len()
+                    && aa.iter().zip(ba).all(|((a, _), (b, _))| a.equivalent(b))
+            }
+            (
+                Self::Union {
+                    types: a,
+                    default: ad,
+                    ..
+                },
+                Self::Union {
+                    types: b,
+                    default: bd,
+                    ..
+                },
+            ) => ad == bd && a.len() == b.len() && a.iter().zip(b).all(|(a, b)| a.equivalent(b)),
+            (
+                Self::Constrained {
+                    base: a,
+                    constraints: ac,
+                    ..
+                },
+                Self::Constrained {
+                    base: b,
+                    constraints: bc,
+                    ..
+                },
+            ) => {
+                a.equivalent(b)
+                    && ac.len() == bc.len()
+                    && ac.iter().zip(bc).all(|(a, b)| a.block == b.block)
+            }
+            (
+                Self::Any
+                | Self::Nothing
+                | Self::NonNull
+                | Self::Null
+                | Self::Boolean
+                | Self::Int
+                | Self::Float
+                | Self::Number
+                | Self::String
+                | Self::Bytes,
+                _,
+            ) => std::mem::discriminant(left) == std::mem::discriminant(right),
+            _ => false,
+        }
+    }
+    fn noop(&self) -> bool {
+        match self {
+            Self::Any => true,
+            Self::Alias(inner) | Self::GenericAlias(inner) => inner.noop(),
+            Self::Union { types, .. } => types.iter().all(Self::noop),
+            _ => false,
         }
     }
     fn accepts(&self, value: &Value, heap: &Heap) -> bool {
@@ -214,6 +299,9 @@ impl TypeCheck {
             Self::Bytes => matches!(value, Value::Bytes(_)),
             Self::Collection(kind) => {
                 matches!(value, Value::Object(id) if heap.get(*id).is_ok_and(|object| object.collection_kind == *kind && !object.is_module) && collections::typed_class(heap, *id).is_ok_and(|class| class.is_none()))
+            }
+            Self::ParameterizedCollection { kind, .. } => {
+                Self::Collection(*kind).accepts(value, heap)
             }
             Self::Class { id, .. } => {
                 let &Value::Object(mut object) = value else {
@@ -244,7 +332,7 @@ impl TypeCheck {
                 matches!(value, Value::String(actual) if actual == expected)
             }
             Self::Nullable(inner) => matches!(value, Value::Null) || inner.accepts(value, heap),
-            Self::Alias(inner) => inner.accepts(value, heap),
+            Self::Alias(inner) | Self::GenericAlias(inner) => inner.accepts(value, heap),
             Self::Union { types, .. } => types.iter().any(|ty| ty.accepts(value, heap)),
             Self::Constrained { .. } => false,
         }
@@ -306,6 +394,7 @@ struct Force {
     cache: Option<CacheKey>,
     method: bool,
     inherited_types: Vec<(TypeCheck, Span, Arc<str>, ObjectId)>,
+    collection_casts: Vec<crate::heap::CollectionCast>,
     skip_typecheck: bool,
 }
 
@@ -664,6 +753,9 @@ impl Vm {
                 if let Some(force) = &frame.force {
                     roots.push(Value::Object(force.receiver));
                     roots.push(Value::Object(force.owner));
+                    for cast in &force.collection_casts {
+                        typecheck::environment_roots(&cast.environment, &mut roots);
+                    }
                     roots.extend(
                         force
                             .inherited_types
@@ -890,28 +982,81 @@ impl Vm {
                 format!("cyclic forcing of {name}"),
             ));
         }
-        if let Some(value) = self
-            .heap
-            .get(owner)?
-            .member_values
-            .get(&CacheKey {
-                owner: None,
-                name: name.clone(),
-                method,
-                entry,
-            })
-            .cloned()
-        {
-            if memoize {
-                self.heap
-                    .get_mut(receiver)?
-                    .cache
-                    .insert(key, LazyState::Completed(value.clone()));
+        let mut collection_casts = Vec::new();
+        let mut constant_value = None;
+        if entry && !local && !method {
+            let mut current = receiver;
+            let mut cached = None;
+            loop {
+                let object = self.heap.get(current)?;
+                if current != receiver
+                    && let Some(LazyState::Completed(value)) = object.cache.get(&key)
+                {
+                    cached = Some(value.clone());
+                    break;
+                }
+                if let Some(cast) = &object.collection_cast {
+                    collection_casts.push(cast.clone());
+                }
+                if current == owner {
+                    break;
+                }
+                let Some(parent) = object.parent else {
+                    break;
+                };
+                if !object.members.is_empty() {
+                    // Amendments change the receiver. Cached ancestor values cannot be reused.
+                    current = parent;
+                    while current != owner {
+                        let object = self.heap.get(current)?;
+                        if let Some(cast) = &object.collection_cast {
+                            collection_casts.push(cast.clone());
+                        }
+                        current = object
+                            .parent
+                            .ok_or_else(|| invalid("missing collection owner"))?;
+                    }
+                    break;
+                }
+                current = parent;
             }
-            self.stack.push(value);
-            return Ok(());
+            collection_casts.reverse();
+            collection_casts.dedup_by(|later, earlier| {
+                later.span == earlier.span && later.ty.equivalent(&earlier.ty)
+            });
+            if cached.is_some()
+                && !collection_casts.is_empty()
+                && let Some(frame) = self.frames.last_mut()
+            {
+                frame.callsite_hidden = true;
+            }
+            constant_value = cached;
         }
-        if member.code >= self.program.blocks.len() {
+        if constant_value.is_none() {
+            constant_value = self
+                .heap
+                .get(owner)?
+                .member_values
+                .get(&CacheKey {
+                    owner: None,
+                    name: name.clone(),
+                    method,
+                    entry,
+                })
+                .cloned();
+        }
+        if let Some(value) = &constant_value {
+            if collection_casts.is_empty() {
+                if memoize {
+                    self.heap
+                        .get_mut(receiver)?
+                        .cache
+                        .insert(key, LazyState::Completed(value.clone()));
+                }
+                self.stack.push(value.clone());
+                return Ok(());
+            }
+        } else if member.code >= self.program.blocks.len() {
             return Err(invalid("invalid member block"));
         }
         if self.frames.len() >= 4096 {
@@ -963,11 +1108,22 @@ impl Vm {
                 .cache
                 .insert(key.clone(), LazyState::Evaluating);
         }
-        self.member_evaluations += 1;
+        self.member_evaluations += usize::from(constant_value.is_none()) as u64;
+        let base = self.stack.len();
+        let (block, pc) = if let Some(value) = constant_value {
+            self.stack.push(value);
+            if let Some(block) = self.program.blocks.get(member.code) {
+                (member.code, block.len() - 1)
+            } else {
+                (usize::MAX, 0)
+            }
+        } else {
+            (member.code, 0)
+        };
         self.frames.push(Frame {
-            block: member.code,
-            pc: 0,
-            base: self.stack.len(),
+            block,
+            pc,
+            base,
             environment,
             lambda: false,
             type_run: None,
@@ -983,6 +1139,7 @@ impl Vm {
                 cache: memoize.then_some(key),
                 method,
                 inherited_types,
+                collection_casts,
                 skip_typecheck: !memoize && !method,
             }),
         });
@@ -1226,18 +1383,22 @@ impl Vm {
             .frames
             .last_mut()
             .ok_or_else(|| invalid("missing execution frame"))?;
-        let instruction = self
-            .program
-            .blocks
-            .get(frame.block)
-            .and_then(|block| block.get(frame.pc))
-            .ok_or_else(|| invalid("instruction pointer outside block"))?
-            .clone();
+        let instruction = if frame.block == usize::MAX {
+            Instruction::Return
+        } else {
+            self.program
+                .blocks
+                .get(frame.block)
+                .and_then(|block| block.get(frame.pc))
+                .ok_or_else(|| invalid("instruction pointer outside block"))?
+                .clone()
+        };
         frame.pc += 1;
         match instruction {
             Instruction::Swap
             | Instruction::BeginCollection { .. }
             | Instruction::EndCollection
+            | Instruction::SetCollectionDefault { .. }
             | Instruction::AddCollectionProperty(_)
             | Instruction::AddCollectionElement(_)
             | Instruction::AddCollectionEntry { .. }
@@ -1255,6 +1416,20 @@ impl Vm {
                     .cloned()
                     .ok_or_else(|| invalid("missing input"))?,
             ),
+            Instruction::StoreLocal(depth) => {
+                let value = self.pop()?;
+                let locals = &mut self
+                    .frames
+                    .last_mut()
+                    .expect("active frame")
+                    .environment
+                    .locals;
+                let index = locals
+                    .len()
+                    .checked_sub(depth + 1)
+                    .ok_or_else(|| invalid("invalid local slot"))?;
+                locals[index] = value;
+            }
             Instruction::LoadLocal(depth) => {
                 let locals = &frame.environment.locals;
                 let offset = depth
@@ -1899,6 +2074,34 @@ impl Vm {
                         .environment = environment;
                     return Ok(());
                 }
+                if let Some(force) = &mut self.frames.last_mut().expect("active frame").force
+                    && !force.skip_typecheck
+                    && !force.collection_casts.is_empty()
+                {
+                    let cast = force.collection_casts.remove(0);
+                    let mut frames = vec![RuntimeFrame {
+                        span: cast.span,
+                        member: cast.member,
+                    }];
+                    let frame = self.frames.last().expect("active frame");
+                    if let Some(metadata) = self.program.metadata.get(frame.block)
+                        && let Some(span) = metadata.value_span
+                    {
+                        frames.push(RuntimeFrame {
+                            span,
+                            member: metadata.member.clone(),
+                        });
+                    }
+                    self.begin_type(cast.ty, value, TypeDestination::Return, frames)?;
+                    self.frames
+                        .last_mut()
+                        .expect("type frame")
+                        .type_run
+                        .as_mut()
+                        .expect("type run")
+                        .environment = cast.environment;
+                    return Ok(());
+                }
                 let frame = self.frames.pop().expect("active frame");
                 if let Some(force) = frame.force
                     && let Some(key) = force.cache
@@ -2135,6 +2338,7 @@ fn compile_module_configured(
         modifiers: Vec::new(),
         constraint_module: false,
         active_type_parameters: BTreeMap::new(),
+        parameter_spans: BTreeMap::new(),
         function_counts: BTreeMap::new(),
         entry_counts: BTreeMap::new(),
         function_names: BTreeMap::new(),
@@ -2200,6 +2404,7 @@ struct Compiler<'a> {
     modifiers: Vec<crate::syntax::Modifier>,
     constraint_module: bool,
     active_type_parameters: BTreeMap<String, TypeCheck>,
+    parameter_spans: BTreeMap<String, Span>,
     function_counts: BTreeMap<String, usize>,
     entry_counts: BTreeMap<String, usize>,
     function_names: BTreeMap<Span, String>,
@@ -2240,13 +2445,34 @@ impl Compiler<'_> {
                 let template = self.object(&properties)?;
                 instructions.push_at(Instruction::MakeInstance { template }, ty.span);
                 self.initialize_member_types(&properties, &mut instructions)?;
+            } else if let crate::syntax::ExprKind::Object {
+                parent: None,
+                members,
+            } = &member.expr.kind
+                && let Some(ty) = &member.ty
+                && let TypeCheck::Collection(kind) | TypeCheck::ParameterizedCollection { kind, .. } =
+                    self.compile_type(ty)?.unaliased()
+            {
+                let kind = *kind;
+                let check = self.compile_type(ty)?;
+                let has_default =
+                    matches!(check.unaliased(), TypeCheck::ParameterizedCollection { .. });
+                if has_default {
+                    self.default_type(&check, &mut instructions, ty.span)?;
+                }
+                self.collection_body(members, kind, has_default, &mut instructions)?;
             } else {
                 self.expression(&member.expr, &mut instructions)?;
             }
             let property_typecheck = member.ty.as_ref().map(|_| instructions.len());
+            let compiled_type = member
+                .ty
+                .as_ref()
+                .map(|ty| self.compile_type(ty))
+                .transpose()?;
             if let Some(ty) = &member.ty {
                 instructions.push_at(
-                    Instruction::CheckType(self.compile_type(ty)?),
+                    Instruction::CheckType(compiled_type.clone().expect("member annotation")),
                     self.type_source_span(ty),
                 );
             }
@@ -2271,11 +2497,7 @@ impl Compiler<'_> {
                 local: crate::syntax::modifier_flags(&member.modifiers)
                     & crate::syntax::ModifierKind::Local.flag()
                     != 0,
-                ty: member
-                    .ty
-                    .as_ref()
-                    .map(|ty| self.compile_type(ty))
-                    .transpose()?,
+                ty: compiled_type,
                 type_span: member.ty.as_ref().map(|ty| self.type_source_span(ty)),
                 constant: crate::syntax::modifier_flags(&member.modifiers)
                     & crate::syntax::ModifierKind::Const.flag()
@@ -2409,20 +2631,20 @@ impl Compiler<'_> {
                 )));
             }
             ExprKind::New { ty, members } => {
-                if let crate::syntax::TypeKind::Named { path, arguments } = &ty.kind
-                    && path.len() == 1
-                    && matches!(path[0].as_str(), "Dynamic" | "Listing" | "Mapping")
-                    && self.find_type(&path[0], self.type_scopes.len()).is_none()
+                let check = self.compile_type(ty)?;
+                if let TypeCheck::Collection(kind)
+                | TypeCheck::ParameterizedCollection { kind, .. } = check.unaliased()
                 {
-                    if !arguments.is_empty() {
-                        return Err(unsupported_type("collection type wrappers").at(ty.span));
+                    let kind = *kind;
+                    let has_default =
+                        matches!(check.unaliased(), TypeCheck::ParameterizedCollection { .. });
+                    if has_default {
+                        self.default_type(&check, output, ty.span)?;
                     }
-                    let kind = match path[0].as_str() {
-                        "Listing" => crate::heap::CollectionKind::Listing,
-                        "Mapping" => crate::heap::CollectionKind::Mapping,
-                        _ => crate::heap::CollectionKind::Dynamic,
-                    };
-                    self.collection_body(members, kind, false, output)?;
+                    self.collection_body(members, kind, has_default, output)?;
+                    if matches!(check.unaliased(), TypeCheck::ParameterizedCollection { .. }) {
+                        output.push_at(Instruction::CheckType(check), self.type_source_span(ty));
+                    }
                 } else {
                     self.class_expression(
                         ty,
@@ -2664,7 +2886,7 @@ impl Compiler<'_> {
                             Instruction::CheckType(self.compile_type(ty)?),
                             self.type_source_span(ty),
                         );
-                        instructions.push(Instruction::Pop);
+                        instructions.push(Instruction::StoreLocal(parameters.len() - 1 - index));
                     }
                 }
                 self.expression(body, &mut instructions)?;
@@ -2878,9 +3100,19 @@ fn type_error_at_width(
     heap: &Heap,
     limit: usize,
 ) -> Result<RuntimeError, RuntimeError> {
-    let expected = type_name(expected, module);
     let actual_type = crate::diagnostic_values::type_name(actual, heap, module)?;
     let value = crate::diagnostic_values::render(actual, heap, module, limit)?;
+    if matches!(expected.unaliased(), TypeCheck::Nothing) {
+        return Ok(RuntimeError::new(
+            ErrorKind::Type,
+            format!(
+                "Expected `nothing`, but got type `{actual_type}`.\n\n\
+                 `nothing` is typically used as the return type of functions that throw errors.\n\
+                 Value: {value}"
+            ),
+        ));
+    }
+    let expected = type_name(expected, module);
     Ok(RuntimeError::new(
         ErrorKind::Type,
         format!(
@@ -2892,10 +3124,12 @@ fn type_error_at_width(
 fn type_name(ty: &TypeCheck, module: &str) -> String {
     match ty {
         TypeCheck::Class { name, .. } => format!("{module}#{name}"),
-        TypeCheck::Collection(kind) => format!("{kind:?}"),
+        TypeCheck::Collection(kind) | TypeCheck::ParameterizedCollection { kind, .. } => {
+            format!("{kind:?}")
+        }
         TypeCheck::StringLiteral(value) => format!("{value:?}"),
         TypeCheck::Nullable(inner) => format!("{}?", type_name(inner, module)),
-        TypeCheck::Alias(inner) => type_name(inner, module),
+        TypeCheck::Alias(inner) | TypeCheck::GenericAlias(inner) => type_name(inner, module),
         TypeCheck::Constrained { base, .. } => type_name(base, module),
         TypeCheck::Union { types, .. } => types
             .iter()
@@ -3046,8 +3280,15 @@ impl Compiler<'_> {
                     output.push(Instruction::Pop);
                 }
             }
+            TypeCheck::ParameterizedCollection { arguments, .. } => {
+                for (ty, span) in arguments {
+                    self.initialize_type(ty, *span, output);
+                }
+            }
             TypeCheck::Nullable(inner) => self.initialize_type(inner, span, output),
-            TypeCheck::Alias(inner) => self.initialize_type(inner, span, output),
+            TypeCheck::Alias(inner) | TypeCheck::GenericAlias(inner) => {
+                self.initialize_type(inner, span, output)
+            }
             TypeCheck::Constrained {
                 base, base_span, ..
             } => self.initialize_type(base, *base_span, output),
@@ -3103,7 +3344,7 @@ impl Compiler<'_> {
     /// Alias expansion retains the source section of the instantiated type node.
     /// Type parameters inherit the actual argument's source section.
     fn type_source_span(&self, ty: &crate::syntax::Type) -> Span {
-        self.type_source_span_at(ty, &BTreeMap::new(), &mut BTreeSet::new())
+        self.type_source_span_at(ty, &self.parameter_spans, &mut BTreeSet::new())
     }
 
     fn type_source_span_at(
@@ -3190,6 +3431,20 @@ impl Compiler<'_> {
             }
             TypeKind::Union { types, default } => TypeCheck::Union {
                 spans: types.iter().map(|ty| self.type_source_span(ty)).collect(),
+                // Alternatives retain their use-site labels even when checking an
+                // alias expands to a different source section. Type parameters
+                // alone inherit the actual argument's source section.
+                labels: types
+                    .iter()
+                    .map(|ty| match &ty.kind {
+                        TypeKind::Named { path, .. } if path.len() == 1 => self
+                            .parameter_spans
+                            .get(&path[0])
+                            .copied()
+                            .unwrap_or(ty.span),
+                        _ => ty.span,
+                    })
+                    .collect(),
                 types: types
                     .iter()
                     .map(|ty| self.compile_type_at(ty, limit, aliases, parameters))
@@ -3252,6 +3507,15 @@ impl Compiler<'_> {
                                 )
                                 .at(ty.span));
                             }
+                            let spans = type_parameters
+                                .iter()
+                                .zip(arguments)
+                                .map(|(parameter, argument)| {
+                                    (parameter.name.clone(), self.type_source_span(argument))
+                                })
+                                .collect();
+                            let previous_spans =
+                                std::mem::replace(&mut self.parameter_spans, spans);
                             let previous_module =
                                 std::mem::replace(&mut self.constraint_module, true);
                             let result = self
@@ -3264,9 +3528,14 @@ impl Compiler<'_> {
                                     error
                                 });
                             self.constraint_module = previous_module;
+                            self.parameter_spans = previous_spans;
                             let result = result?;
                             aliases.remove(&member.expr.span);
-                            TypeCheck::Alias(Box::new(result))
+                            if type_parameters.is_empty() {
+                                TypeCheck::Alias(Box::new(result))
+                            } else {
+                                TypeCheck::GenericAlias(Box::new(result))
+                            }
                         }
                         _ => {
                             return Err(RuntimeError::new(
@@ -3277,7 +3546,36 @@ impl Compiler<'_> {
                     }
                 } else {
                     if !arguments.is_empty() {
-                        return Err(unsupported_type("generic builtin types"));
+                        let kind = match path[0].as_str() {
+                            "Listing" => crate::heap::CollectionKind::Listing,
+                            "Mapping" => crate::heap::CollectionKind::Mapping,
+                            "List" => crate::heap::CollectionKind::List,
+                            _ => return Err(unsupported_type("generic builtin types")),
+                        };
+                        let arity = if kind == crate::heap::CollectionKind::Mapping {
+                            2
+                        } else {
+                            1
+                        };
+                        if arguments.len() != arity {
+                            return Err(RuntimeError::new(
+                                ErrorKind::Type,
+                                format!(
+                                    "Expected {arity} type arguments but got {}.",
+                                    arguments.len()
+                                ),
+                            ));
+                        }
+                        let arguments = arguments
+                            .iter()
+                            .map(|argument| {
+                                Ok((
+                                    self.compile_type_at(argument, limit, aliases, parameters)?,
+                                    self.type_source_span(argument),
+                                ))
+                            })
+                            .collect::<Result<Vec<_>, RuntimeError>>()?;
+                        return Ok(TypeCheck::ParameterizedCollection { kind, arguments });
                     }
                     match path[0].as_str() {
                         "Any" => TypeCheck::Any,
@@ -3389,7 +3687,7 @@ impl Compiler<'_> {
     }
 
     fn default_type(
-        &self,
+        &mut self,
         check: &TypeCheck,
         output: &mut Code,
         span: Span,
@@ -3407,7 +3705,28 @@ impl Compiler<'_> {
                 ..
             } => return self.default_type(&types[*index], output, span),
             TypeCheck::Constrained { base, .. } => return self.default_type(base, output, span),
-            TypeCheck::Alias(inner) => return self.default_type(inner, output, span),
+            TypeCheck::Alias(inner) | TypeCheck::GenericAlias(inner) => {
+                return self.default_type(inner, output, span);
+            }
+            TypeCheck::Collection(kind) | TypeCheck::ParameterizedCollection { kind, .. } => {
+                if *kind == crate::heap::CollectionKind::List {
+                    output.push_at(Instruction::MakeList { length: 0 }, span);
+                } else {
+                    output.push(Instruction::BeginCollection {
+                        kind: *kind,
+                        has_parent: false,
+                        specialized: true,
+                    });
+                    if let TypeCheck::ParameterizedCollection { arguments, .. } = check {
+                        let (ty, span) = arguments.last().expect("collection value type");
+                        if !ty.noop() {
+                            let defined = self.default_type(ty, output, *span)?;
+                            output.push(Instruction::SetCollectionDefault { defined });
+                        }
+                    }
+                    output.push(Instruction::EndCollection);
+                }
+            }
             TypeCheck::Class { .. } => {
                 self.class_value(check, output, span)?;
                 output.push_at(Instruction::DefaultClassInstance, span);

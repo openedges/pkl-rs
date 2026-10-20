@@ -1,0 +1,2 @@
+x: Mapping<String, Int> = new Mapping { ["a"] = missing; [1] = 2 }
+result = x["a"]

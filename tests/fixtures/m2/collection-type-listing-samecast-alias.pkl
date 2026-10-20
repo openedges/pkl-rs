@@ -1,0 +1,4 @@
+typealias Items = Listing<Int>
+x: Items = new Listing { "bad" }
+y: Listing<Int> = x
+result = y[0]

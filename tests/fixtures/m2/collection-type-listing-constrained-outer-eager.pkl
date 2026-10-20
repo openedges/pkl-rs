@@ -1,0 +1,2 @@
+x: Listing<Int>(this[0] > 0) = new Listing { 1; "bad" }
+result = x.length

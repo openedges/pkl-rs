@@ -1,0 +1,2 @@
+x = new Mapping { ["k"] = missing; [1] = 2 }
+result = x is Mapping<String, Int>

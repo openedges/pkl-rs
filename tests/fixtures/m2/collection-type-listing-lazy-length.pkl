@@ -1,0 +1,2 @@
+x: Listing<Int> = new Listing { 1; "bad" }
+result = x.length

@@ -1,0 +1,3 @@
+x: Mapping<String, Int> = new Mapping { ["a"] = 1 }
+y = (x) { ["b"] = "new" }
+result = y["b"]
