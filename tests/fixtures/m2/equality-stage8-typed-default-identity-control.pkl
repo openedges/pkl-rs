@@ -1,0 +1,1 @@
+class C { default: Int }; a=new C { default=throw("skip") }; result=a==a

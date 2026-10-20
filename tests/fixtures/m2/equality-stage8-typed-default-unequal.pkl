@@ -1,0 +1,1 @@
+class C { default: Int = 1 }; result = new C {} == new C { default = 2 }

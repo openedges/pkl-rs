@@ -1,0 +1,1 @@
+class C { default: Int }; result = new Mapping { [new C {default=1}]=10; [new C {default=2}]=20 }[new C {default=2}]

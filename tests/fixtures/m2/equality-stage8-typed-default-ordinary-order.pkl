@@ -1,0 +1,1 @@
+class C { default: Int; other: Int }; result = new C {other=throw("other first");default=throw("default second")} == new C {default=0;other=0}

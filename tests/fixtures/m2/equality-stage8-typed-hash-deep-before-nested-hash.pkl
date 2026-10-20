@@ -1,0 +1,1 @@
+class C {first:Mapping;later:Int}; result=let(m=new Mapping {[new C { first=new Mapping {[new Dynamic {x=throw("nested hash")}]=1};later=throw("deep force first") }]=0;["a"]=1;["b"]=2;["c"]=3;["d"]=4}) 1

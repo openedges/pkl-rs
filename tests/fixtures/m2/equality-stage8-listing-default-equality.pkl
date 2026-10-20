@@ -1,0 +1,1 @@
+result = new Listing { default=1; 4 } == new Listing { default=2; 4 }

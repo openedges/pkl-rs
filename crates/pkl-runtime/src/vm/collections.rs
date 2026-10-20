@@ -34,6 +34,7 @@ pub fn ordered_members(
     heap: &Heap,
     receiver: ObjectId,
 ) -> Result<Vec<CollectionMember>, RuntimeError> {
+    let typed = typed_class(heap, receiver)?.is_some() || heap.get(receiver)?.is_module;
     let mut chain = Vec::new();
     let mut next = Some(receiver);
     let mut visited = BTreeSet::new();
@@ -64,7 +65,10 @@ pub fn ordered_members(
             &object.collection_members
         };
         for member in members {
-            if member.kind == CollectionMemberKind::Property && member.name.as_ref() == "default" {
+            if !typed
+                && member.kind == CollectionMemberKind::Property
+                && member.name.as_ref() == "default"
+            {
                 continue;
             }
             if let Some(old) = result.iter_mut().find(|old| same_member(heap, old, member)) {
@@ -428,7 +432,7 @@ impl Vm {
             object
                 .member_values
                 .insert(cache_key.clone(), value.clone());
-            object.cache.insert(cache_key, LazyState::Completed(value));
+            object.complete_cache(cache_key, value);
         }
         Ok(())
     }
@@ -1183,14 +1187,14 @@ impl Vm {
                     let value = self.pop()?;
                     let (owner, member) =
                         next.ok_or_else(|| invalid("missing pending predicate member"))?;
-                    self.heap.get_mut(owner)?.cache.insert(
+                    self.heap.get_mut(owner)?.complete_cache(
                         CacheKey {
                             owner: None,
                             name: member.name.clone(),
                             method: false,
                             entry: true,
                         },
-                        LazyState::Completed(value.clone()),
+                        value.clone(),
                     );
                     self.heap
                         .get_mut(id)?

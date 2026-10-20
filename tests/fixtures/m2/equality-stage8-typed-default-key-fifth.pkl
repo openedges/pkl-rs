@@ -1,0 +1,1 @@
+class C { default: Int }; result = new Mapping { [new C {default=throw("hash default")}]=10; ["a"]=1; ["b"]=2; ["c"]=3; ["d"]=4 }["a"]

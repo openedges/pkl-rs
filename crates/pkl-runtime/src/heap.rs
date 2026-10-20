@@ -129,6 +129,9 @@ pub struct Object {
     pub members: Vec<Member>,
     pub environment: Environment,
     pub cache: BTreeMap<CacheKey, LazyState>,
+    /// Successful cache publication order, matching VmObject.cachedValues.
+    /// Evaluating markers do not occupy an insertion position.
+    pub completed_cache_order: Vec<CacheKey>,
     pub collection_kind: CollectionKind,
     pub collection_members: Vec<CollectionMember>,
     pub length: usize,
@@ -141,6 +144,17 @@ pub struct Object {
     /// Inherited default value for inferred element/entry objects. `Some(None)`
     /// means the annotated value type has no default; `None` uses Dynamic's default.
     pub collection_default: Option<Option<Value>>,
+}
+
+impl Object {
+    pub(crate) fn complete_cache(&mut self, key: CacheKey, value: Value) {
+        // Completed entries persist for the object's lifetime. Failure cleanup
+        // removes only pending entries, so retries acquire their position here.
+        if !matches!(self.cache.get(&key), Some(LazyState::Completed(_))) {
+            self.completed_cache_order.push(key.clone());
+        }
+        self.cache.insert(key, LazyState::Completed(value));
+    }
 }
 
 struct Slot {

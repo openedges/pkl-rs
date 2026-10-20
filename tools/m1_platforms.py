@@ -43,6 +43,9 @@ REQUIRED_SCENARIOS = {
     'm2-structural-equality',
     'm2-structural-keys',
     'm2-structural-equality-diagnostics',
+    'm2-typed-default-equality-and-keys',
+    'm2-comparison-cache-and-class-order',
+    'm2-deep-force-before-key-hash',
 }
 
 

@@ -11064,6 +11064,592 @@
         "semantic:strings"
       ],
       "expected_outcome": "failure"
+    },
+    {
+      "id": "equality-stage8-typed-default-unequal",
+      "input": "tests/fixtures/m2/equality-stage8-typed-default-unequal.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:classes",
+        "semantic:types",
+        "semantic:generated-verification"
+      ],
+      "expected_outcome": "success",
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "equality-stage8-typed-default-unequal",
+          "equality-stage8-typed-ordinary-unequal",
+          "equality-stage8-typed-default-inherited"
+        ],
+        "domain": "Renaming a regular typed Int property to default and inheriting its declaration preserve unequal explicit override comparison."
+      }
+    },
+    {
+      "id": "equality-stage8-typed-default-equal",
+      "input": "tests/fixtures/m2/equality-stage8-typed-default-equal.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:classes",
+        "semantic:types",
+        "semantic:generated-verification"
+      ],
+      "expected_outcome": "success",
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "equality-stage8-typed-default-equal",
+          "equality-stage8-typed-default-override-equal"
+        ],
+        "domain": "Comparing matching regular typed default values remains equal under an identical explicit override."
+      }
+    },
+    {
+      "id": "equality-stage8-typed-default-left-error",
+      "input": "tests/fixtures/m2/equality-stage8-typed-default-left-error.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:classes",
+        "semantic:types"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "equality-stage8-typed-default-right-error",
+      "input": "tests/fixtures/m2/equality-stage8-typed-default-right-error.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:classes",
+        "semantic:types"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "equality-stage8-typed-default-inherited",
+      "input": "tests/fixtures/m2/equality-stage8-typed-default-inherited.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:classes",
+        "semantic:types",
+        "semantic:amendment",
+        "semantic:generated-verification"
+      ],
+      "expected_outcome": "success",
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "equality-stage8-typed-default-unequal",
+          "equality-stage8-typed-ordinary-unequal",
+          "equality-stage8-typed-default-inherited"
+        ],
+        "domain": "Renaming a regular typed Int property to default and inheriting its declaration preserve unequal explicit override comparison."
+      }
+    },
+    {
+      "id": "equality-stage8-typed-default-key-distinct",
+      "input": "tests/fixtures/m2/equality-stage8-typed-default-key-distinct.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:classes",
+        "semantic:types"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-stage8-typed-default-key-fifth",
+      "input": "tests/fixtures/m2/equality-stage8-typed-default-key-fifth.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:classes",
+        "semantic:types"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "equality-stage8-dynamic-default-equality",
+      "input": "tests/fixtures/m2/equality-stage8-dynamic-default-equality.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-stage8-listing-default-equality",
+      "input": "tests/fixtures/m2/equality-stage8-listing-default-equality.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-stage8-mapping-default-equality",
+      "input": "tests/fixtures/m2/equality-stage8-mapping-default-equality.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-stage8-typed-hidden-default-control",
+      "input": "tests/fixtures/m2/equality-stage8-typed-hidden-default-control.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:classes",
+        "semantic:types"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-stage8-typed-default-identity-control",
+      "input": "tests/fixtures/m2/equality-stage8-typed-default-identity-control.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:classes",
+        "semantic:types"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-stage8-typed-ordinary-unequal",
+      "input": "tests/fixtures/m2/equality-stage8-typed-ordinary-unequal.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:classes",
+        "semantic:types",
+        "semantic:generated-verification"
+      ],
+      "expected_outcome": "success",
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "equality-stage8-typed-default-unequal",
+          "equality-stage8-typed-ordinary-unequal",
+          "equality-stage8-typed-default-inherited"
+        ],
+        "domain": "Renaming a regular typed Int property to default and inheriting its declaration preserve unequal explicit override comparison."
+      }
+    },
+    {
+      "id": "equality-stage8-typed-default-override-equal",
+      "input": "tests/fixtures/m2/equality-stage8-typed-default-override-equal.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:classes",
+        "semantic:types",
+        "semantic:generated-verification"
+      ],
+      "expected_outcome": "success",
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "equality-stage8-typed-default-equal",
+          "equality-stage8-typed-default-override-equal"
+        ],
+        "domain": "Comparing matching regular typed default values remains equal under an identical explicit override."
+      }
+    },
+    {
+      "id": "equality-stage8-typed-default-ordinary-order",
+      "input": "tests/fixtures/m2/equality-stage8-typed-default-ordinary-order.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:classes",
+        "semantic:types"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "equality-stage8-dynamic-cache-warm-comparison-order",
+      "input": "tests/fixtures/m2/equality-stage8-dynamic-cache-warm-comparison-order.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "equality-stage8-dynamic-cache-cold-comparison-order",
+      "input": "tests/fixtures/m2/equality-stage8-dynamic-cache-cold-comparison-order.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:generated-verification"
+      ],
+      "expected_outcome": "success",
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "equality-stage8-dynamic-cache-cold-comparison-order",
+          "equality-stage8-dynamic-cache-warm-a-comparison-order"
+        ],
+        "domain": "Successfully reading the first declared scalar dynamic member preserves the same unequal result and cache comparison order."
+      }
+    },
+    {
+      "id": "equality-stage8-dynamic-cache-warm-a-comparison-order",
+      "input": "tests/fixtures/m2/equality-stage8-dynamic-cache-warm-a-comparison-order.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:generated-verification"
+      ],
+      "expected_outcome": "success",
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "equality-stage8-dynamic-cache-cold-comparison-order",
+          "equality-stage8-dynamic-cache-warm-a-comparison-order"
+        ],
+        "domain": "Successfully reading the first declared scalar dynamic member preserves the same unequal result and cache comparison order."
+      }
+    },
+    {
+      "id": "equality-stage8-mapping-cache-warm-comparison-order",
+      "input": "tests/fixtures/m2/equality-stage8-mapping-cache-warm-comparison-order.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "equality-stage8-mapping-cache-cold-comparison-order",
+      "input": "tests/fixtures/m2/equality-stage8-mapping-cache-cold-comparison-order.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:generated-verification"
+      ],
+      "expected_outcome": "success",
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "equality-stage8-mapping-cache-cold-comparison-order",
+          "equality-stage8-mapping-cache-warm-a-comparison-order"
+        ],
+        "domain": "Successfully reading the first declared scalar mapping member preserves the same unequal result and cache comparison order."
+      }
+    },
+    {
+      "id": "equality-stage8-mapping-cache-warm-a-comparison-order",
+      "input": "tests/fixtures/m2/equality-stage8-mapping-cache-warm-a-comparison-order.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:generated-verification"
+      ],
+      "expected_outcome": "success",
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "equality-stage8-mapping-cache-cold-comparison-order",
+          "equality-stage8-mapping-cache-warm-a-comparison-order"
+        ],
+        "domain": "Successfully reading the first declared scalar mapping member preserves the same unequal result and cache comparison order."
+      }
+    },
+    {
+      "id": "equality-stage8-listing-cache-warm-comparison-order",
+      "input": "tests/fixtures/m2/equality-stage8-listing-cache-warm-comparison-order.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "equality-stage8-listing-cache-cold-comparison-order",
+      "input": "tests/fixtures/m2/equality-stage8-listing-cache-cold-comparison-order.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:generated-verification"
+      ],
+      "expected_outcome": "success",
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "equality-stage8-listing-cache-cold-comparison-order",
+          "equality-stage8-listing-cache-warm-a-comparison-order"
+        ],
+        "domain": "Successfully reading the first declared scalar listing member preserves the same unequal result and cache comparison order."
+      }
+    },
+    {
+      "id": "equality-stage8-listing-cache-warm-a-comparison-order",
+      "input": "tests/fixtures/m2/equality-stage8-listing-cache-warm-a-comparison-order.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:generated-verification"
+      ],
+      "expected_outcome": "success",
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "equality-stage8-listing-cache-cold-comparison-order",
+          "equality-stage8-listing-cache-warm-a-comparison-order"
+        ],
+        "domain": "Successfully reading the first declared scalar listing member preserves the same unequal result and cache comparison order."
+      }
+    },
+    {
+      "id": "equality-stage8-typed-cache-warm-class-order",
+      "input": "tests/fixtures/m2/equality-stage8-typed-cache-warm-class-order.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:classes",
+        "semantic:types",
+        "semantic:generated-verification"
+      ],
+      "expected_outcome": "success",
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "equality-stage8-typed-cache-warm-class-order",
+          "equality-stage8-typed-cache-amendment-class-order"
+        ],
+        "domain": "Typed class declaration order selects the unequal Int before a nested Mapping key comparison despite successful member prewarming or reordered assignments."
+      }
+    },
+    {
+      "id": "equality-stage8-typed-cache-amendment-class-order",
+      "input": "tests/fixtures/m2/equality-stage8-typed-cache-amendment-class-order.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:classes",
+        "semantic:types",
+        "semantic:amendment",
+        "semantic:generated-verification"
+      ],
+      "expected_outcome": "success",
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "equality-stage8-typed-cache-warm-class-order",
+          "equality-stage8-typed-cache-amendment-class-order"
+        ],
+        "domain": "Typed class declaration order selects the unequal Int before a nested Mapping key comparison despite successful member prewarming or reordered assignments."
+      }
+    },
+    {
+      "id": "equality-stage8-typed-cache-child-class-order",
+      "input": "tests/fixtures/m2/equality-stage8-typed-cache-child-class-order.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:classes",
+        "semantic:types"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "equality-stage8-dynamic-hash-deep-before-nested-hash",
+      "input": "tests/fixtures/m2/equality-stage8-dynamic-hash-deep-before-nested-hash.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "equality-stage8-listing-hash-deep-before-nested-hash",
+      "input": "tests/fixtures/m2/equality-stage8-listing-hash-deep-before-nested-hash.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "equality-stage8-typed-hash-deep-before-nested-hash",
+      "input": "tests/fixtures/m2/equality-stage8-typed-hash-deep-before-nested-hash.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:classes",
+        "semantic:types"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "equality-stage8-dynamic-hash-cold-cache-order",
+      "input": "tests/fixtures/m2/equality-stage8-dynamic-hash-cold-cache-order.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "equality-stage8-typed-hash-child-before-parent",
+      "input": "tests/fixtures/m2/equality-stage8-typed-hash-child-before-parent.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:classes",
+        "semantic:types",
+        "semantic:amendment"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "equality-stage8-dynamic-hash-warm-b-cache-order-initializer",
+      "input": "tests/fixtures/m2/equality-stage8-dynamic-hash-warm-b-cache-order-initializer.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
     }
   ]
 }

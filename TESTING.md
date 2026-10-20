@@ -128,6 +128,15 @@ Lifecycle tests exercise temporary operands and keys through Host suspension,
 GC, reentry, retry, and terminal cleanup. Cyclic keys and complete Java
 hash-bucket/cache behavior remain outside the verified selection.
 
+Additional comparison regressions cover ordinary typed `default` properties,
+inherited and hidden properties, completed regular-member cache order, and
+class declaration order independently of amendment order. Key preparation
+cases distinguish whole-object deep forcing from subsequent recursive member
+hash preparation. Host lifecycle tests cross this phase boundary and preserve
+completed values while retrying failed reads. Actual Node and Chromium scenarios
+compare values and complete diagnostics captured from the pinned Java oracle at
+the identical module URI.
+
 M1 experiments have narrower, explicit contracts:
 
 ```sh

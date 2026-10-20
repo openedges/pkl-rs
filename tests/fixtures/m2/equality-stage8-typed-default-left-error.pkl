@@ -1,0 +1,1 @@
+class C { default: Int }; result = new C { default = throw("left default") } == new C { default = throw("right default") }

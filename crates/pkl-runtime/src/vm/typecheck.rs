@@ -946,7 +946,7 @@ impl Vm {
                         method: false,
                     };
                     object.member_values.insert(key.clone(), value.clone());
-                    object.cache.insert(key, LazyState::Completed(value));
+                    object.complete_cache(key, value);
                 }
                 Value::Object(self.heap.allocate(object))
             }

@@ -1,0 +1,1 @@
+key=new Dynamic { a=new Mapping {[new Dynamic {x=throw("nested hash a")}]=1}; b=new Mapping {[new Dynamic {x=throw("nested hash b")}]=1} }; result=(key.b==key.b) && (let(m=new Mapping {[key]=0;["a"]=1;["b"]=2;["c"]=3;["d"]=4}) true)

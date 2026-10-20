@@ -83,6 +83,7 @@ enum Task {
     Match(Value, Value, Vec<(Value, Value)>, usize),
     Matched(Value, Value, Value, Value),
     Prepare(Value),
+    HashMembers(ObjectId),
     Build(ObjectId),
     Force(ObjectId, CollectionMember, bool),
     Resolve(
@@ -291,6 +292,50 @@ impl Vm {
             _ => Err(invalid("unforced equality member")),
         }
     }
+    /// Equality visits typed properties in class declaration order; collection
+    /// equality visits values in successful cache insertion order. Neither order
+    /// is the child-first declaration traversal used by VmObject.force.
+    fn comparison_members(&self, id: ObjectId) -> Result<Vec<CollectionMember>, RuntimeError> {
+        let members = self.equality_members(id)?;
+        let mut result = Vec::with_capacity(members.len());
+        if let Some(class) = self
+            .class_identity(id)?
+            .or(self.heap.get(id)?.is_module.then_some(id))
+        {
+            let mut owner = Some(class);
+            while let Some(id) = owner {
+                let object = self.heap.get(id)?;
+                for member in &object.members {
+                    if !member.local
+                        && !member.method
+                        && !member.entry
+                        && let Some(descriptor) = members
+                            .iter()
+                            .find(|candidate| candidate.name == member.name)
+                        && !result.iter().any(|old: &CollectionMember| {
+                            old.name == descriptor.name && old.kind == descriptor.kind
+                        })
+                    {
+                        result.push(descriptor.clone());
+                    }
+                }
+                owner = object.parent;
+            }
+        } else {
+            for key in &self.heap.get(id)?.completed_cache_order {
+                if key.owner.is_none()
+                    && !key.method
+                    && let Some(member) = members.iter().find(|member| {
+                        member.name == key.name
+                            && (member.kind != CollectionMemberKind::Property) == key.entry
+                    })
+                {
+                    result.push(member.clone());
+                }
+            }
+        }
+        Ok(result)
+    }
     pub(super) fn step_equality(&mut self) -> Result<(), RuntimeError> {
         let frame_index = self.frames.len() - 1;
         let mut run = self.frames[frame_index]
@@ -382,8 +427,8 @@ impl Vm {
                         return Ok(());
                     }
                 }
-                let lhs = self.equality_members(a)?;
-                let rhs = self.equality_members(b)?;
+                let lhs = self.comparison_members(a)?;
+                let rhs = self.comparison_members(b)?;
                 if lhs.len() != rhs.len() {
                     run.reject();
                 } else {
@@ -449,14 +494,27 @@ impl Vm {
                     if !run.active.insert(id) {
                         return Err(RuntimeError::new(ErrorKind::Cycle, "cyclic structural key"));
                     }
-                    let members = self.equality_members(id)?;
                     run.tasks.push(Task::Build(id));
-                    for member in members.iter().rev() {
-                        run.tasks.push(Task::Prepare(member.key.clone()));
+                    run.tasks.push(Task::HashMembers(id));
+                    if self.heap.get(id)?.collection_kind != CollectionKind::List {
+                        run.tasks.push(Task::Deep(Value::Object(id)));
                     }
-                    for member in members.into_iter().rev() {
-                        run.tasks.push(Task::Force(id, member, true));
-                    }
+                }
+            }
+            Task::HashMembers(id) => {
+                // Java completes recursive value forcing before computing member
+                // hashes. Nested Mapping keys can still be lazy at that point.
+                // Hashing then follows cache order (or class property order).
+                let members = if self.heap.get(id)?.collection_kind == CollectionKind::List {
+                    collections::ordered_members(&self.heap, id)?
+                } else {
+                    self.comparison_members(id)?
+                };
+                for member in members.into_iter().rev() {
+                    let value = self.cached_equality_member(id, &member)?;
+                    run.roots.extend([member.key.clone(), value.clone()]);
+                    run.tasks.push(Task::Prepare(value));
+                    run.tasks.push(Task::Prepare(member.key));
                 }
             }
             Task::Force(id, member, prepare) => {

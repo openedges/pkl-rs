@@ -1091,8 +1091,7 @@ impl Vm {
                 if memoize {
                     self.heap
                         .get_mut(receiver)?
-                        .cache
-                        .insert(key, LazyState::Completed(value.clone()));
+                        .complete_cache(key, value.clone());
                 }
                 self.stack.push(value.clone());
                 return Ok(());
@@ -2174,8 +2173,7 @@ impl Vm {
                 {
                     self.heap
                         .get_mut(force.receiver)?
-                        .cache
-                        .insert(key, LazyState::Completed(value.clone()));
+                        .complete_cache(key, value.clone());
                 }
                 if frame.return_to_type {
                     self.frames

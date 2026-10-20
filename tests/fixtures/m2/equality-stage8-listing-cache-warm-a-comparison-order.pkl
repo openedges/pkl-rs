@@ -1,0 +1,1 @@
+left=new Listing { 0; new Mapping { [new Dynamic {key=throw("cached b first")}]=1 } }; right=new Listing { 1; new Mapping { [new Dynamic {key=1}]=1 } }; result=let(pre=left[0]) left==right

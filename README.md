@@ -9,7 +9,8 @@ with operators, control flow, strings, typed methods, recursive calls, closures,
 classes, inheritance, generic type aliases, resumable type constraints, pipelines,
 ordered collection members, `for`/`when` generators, spread, member predicates,
 generic collection checks and lazy wrappers, structural equality and object keys,
-and structured source diagnostics with optional power assertions.
+typed default properties and cache-sensitive comparison order, and structured
+source diagnostics with optional power assertions.
 The [M2 verification contract](docs/m2-language.md)
 keeps the complete language inventory separate from selected executable probes.
 Complete modifier and type semantics, remaining collection rules,

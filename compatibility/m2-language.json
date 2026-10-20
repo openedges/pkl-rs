@@ -17189,6 +17189,823 @@
       ]
     },
     {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-stage8-typed-default-unequal",
+      "input": "tests/fixtures/m2/equality-stage8-typed-default-unequal.pkl",
+      "input_sha256": "dc55f2d13efee6ba89cc34f79c28fb907458356edd304c9d29f0b4a57156cfd5",
+      "metamorphic_relation": {
+        "case_ids": [
+          "equality-stage8-typed-default-unequal",
+          "equality-stage8-typed-ordinary-unequal",
+          "equality-stage8-typed-default-inherited"
+        ],
+        "domain": "Renaming a regular typed Int property to default and inheriting its declaration preserve unequal explicit override comparison.",
+        "kind": "equal-stdout"
+      },
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:classes",
+        "semantic:types",
+        "semantic:generated-verification"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-stage8-typed-default-equal",
+      "input": "tests/fixtures/m2/equality-stage8-typed-default-equal.pkl",
+      "input_sha256": "4de0f6be6c4778c1c5f4d71230ce7c5dc22b7f3733e2540233ed4a01aa761483",
+      "metamorphic_relation": {
+        "case_ids": [
+          "equality-stage8-typed-default-equal",
+          "equality-stage8-typed-default-override-equal"
+        ],
+        "domain": "Comparing matching regular typed default values remains equal under an identical explicit override.",
+        "kind": "equal-stdout"
+      },
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:classes",
+        "semantic:types",
+        "semantic:generated-verification"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "equality-stage8-typed-default-left-error",
+      "input": "tests/fixtures/m2/equality-stage8-typed-default-left-error.pkl",
+      "input_sha256": "9665cb7ff2b74a3010edb970668947150455f8c2d71608cfd4355e62016143b0",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:classes",
+        "semantic:types"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "equality-stage8-typed-default-right-error",
+      "input": "tests/fixtures/m2/equality-stage8-typed-default-right-error.pkl",
+      "input_sha256": "bf1e1148ecd20b53b65b45febf9f970fceaeec29a8489a4b34649ff0b6a99f31",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:classes",
+        "semantic:types"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-stage8-typed-default-inherited",
+      "input": "tests/fixtures/m2/equality-stage8-typed-default-inherited.pkl",
+      "input_sha256": "68c29e5268abf76273fab5f8f911d4dcd5d28f4bffb12e59db70da0afbd86af5",
+      "metamorphic_relation": {
+        "case_ids": [
+          "equality-stage8-typed-default-unequal",
+          "equality-stage8-typed-ordinary-unequal",
+          "equality-stage8-typed-default-inherited"
+        ],
+        "domain": "Renaming a regular typed Int property to default and inheriting its declaration preserve unequal explicit override comparison.",
+        "kind": "equal-stdout"
+      },
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:classes",
+        "semantic:types",
+        "semantic:amendment",
+        "semantic:generated-verification"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-stage8-typed-default-key-distinct",
+      "input": "tests/fixtures/m2/equality-stage8-typed-default-key-distinct.pkl",
+      "input_sha256": "24ba016f6f71b2b20e09cd3d11dcc2c8e22c3bbe1c646b6238452e48bb5c5a4b",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:classes",
+        "semantic:types"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "equality-stage8-typed-default-key-fifth",
+      "input": "tests/fixtures/m2/equality-stage8-typed-default-key-fifth.pkl",
+      "input_sha256": "4d9c70811f1fc6e290d159cac92805b68b4333f35a5eae35dc2749f6758e3880",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:classes",
+        "semantic:types"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-stage8-dynamic-default-equality",
+      "input": "tests/fixtures/m2/equality-stage8-dynamic-default-equality.pkl",
+      "input_sha256": "bf86ffb32674e5470b70302f37d11a479fc9f7c5095a13246cce5342a5f75e32",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-stage8-listing-default-equality",
+      "input": "tests/fixtures/m2/equality-stage8-listing-default-equality.pkl",
+      "input_sha256": "c57046565011ebf7f319ca2cdabb5fe98f671e224ca15c896951e451b1956645",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-stage8-mapping-default-equality",
+      "input": "tests/fixtures/m2/equality-stage8-mapping-default-equality.pkl",
+      "input_sha256": "338e6c831eab0aad5d5178722cc8109a0be3c3547daf3dacf823e58f09dca142",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-stage8-typed-hidden-default-control",
+      "input": "tests/fixtures/m2/equality-stage8-typed-hidden-default-control.pkl",
+      "input_sha256": "c1a615314e584ad04cbecb0be9c1200e9833c2fbdc278d0fefaee49263b1bfd9",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:classes",
+        "semantic:types"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-stage8-typed-default-identity-control",
+      "input": "tests/fixtures/m2/equality-stage8-typed-default-identity-control.pkl",
+      "input_sha256": "90e6eec1d211cd0496831d6a7e16350ae907d910ba22443503b1784dc6dbcb32",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:classes",
+        "semantic:types"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-stage8-typed-ordinary-unequal",
+      "input": "tests/fixtures/m2/equality-stage8-typed-ordinary-unequal.pkl",
+      "input_sha256": "1a3484bbe6fb7b16f3999bc1e87cdd58ca15a759e489fb8947f64ab9cba263c3",
+      "metamorphic_relation": {
+        "case_ids": [
+          "equality-stage8-typed-default-unequal",
+          "equality-stage8-typed-ordinary-unequal",
+          "equality-stage8-typed-default-inherited"
+        ],
+        "domain": "Renaming a regular typed Int property to default and inheriting its declaration preserve unequal explicit override comparison.",
+        "kind": "equal-stdout"
+      },
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:classes",
+        "semantic:types",
+        "semantic:generated-verification"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-stage8-typed-default-override-equal",
+      "input": "tests/fixtures/m2/equality-stage8-typed-default-override-equal.pkl",
+      "input_sha256": "0d654bd1a9abed13b0729af4d779a8a4867a688f235e4040bfb9de9bdcd47038",
+      "metamorphic_relation": {
+        "case_ids": [
+          "equality-stage8-typed-default-equal",
+          "equality-stage8-typed-default-override-equal"
+        ],
+        "domain": "Comparing matching regular typed default values remains equal under an identical explicit override.",
+        "kind": "equal-stdout"
+      },
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:classes",
+        "semantic:types",
+        "semantic:generated-verification"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "equality-stage8-typed-default-ordinary-order",
+      "input": "tests/fixtures/m2/equality-stage8-typed-default-ordinary-order.pkl",
+      "input_sha256": "841e8231100228053331176f1a7d9c71abfec65f0e53c454797675e620d1acde",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:classes",
+        "semantic:types"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "equality-stage8-dynamic-cache-warm-comparison-order",
+      "input": "tests/fixtures/m2/equality-stage8-dynamic-cache-warm-comparison-order.pkl",
+      "input_sha256": "fd1dc6246d9d0c8d3574be006c0a2018aa1fa905a9436f0b1d98d9f9fcad63b7",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-stage8-dynamic-cache-cold-comparison-order",
+      "input": "tests/fixtures/m2/equality-stage8-dynamic-cache-cold-comparison-order.pkl",
+      "input_sha256": "6d9dd32c67d246cf0f79db5a1776410de22fdc65331b9deb76828e768495f3dc",
+      "metamorphic_relation": {
+        "case_ids": [
+          "equality-stage8-dynamic-cache-cold-comparison-order",
+          "equality-stage8-dynamic-cache-warm-a-comparison-order"
+        ],
+        "domain": "Successfully reading the first declared scalar dynamic member preserves the same unequal result and cache comparison order.",
+        "kind": "equal-stdout"
+      },
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:generated-verification"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-stage8-dynamic-cache-warm-a-comparison-order",
+      "input": "tests/fixtures/m2/equality-stage8-dynamic-cache-warm-a-comparison-order.pkl",
+      "input_sha256": "73032be707f3af89d88ae8f41ecf74c391751e2d111f3b0b8795df5377c6b729",
+      "metamorphic_relation": {
+        "case_ids": [
+          "equality-stage8-dynamic-cache-cold-comparison-order",
+          "equality-stage8-dynamic-cache-warm-a-comparison-order"
+        ],
+        "domain": "Successfully reading the first declared scalar dynamic member preserves the same unequal result and cache comparison order.",
+        "kind": "equal-stdout"
+      },
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:generated-verification"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "equality-stage8-mapping-cache-warm-comparison-order",
+      "input": "tests/fixtures/m2/equality-stage8-mapping-cache-warm-comparison-order.pkl",
+      "input_sha256": "c4c4734f861b6c59ba67f6db4bff31e20ae7e8ed664eac90fcd709ac3d1852ba",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-stage8-mapping-cache-cold-comparison-order",
+      "input": "tests/fixtures/m2/equality-stage8-mapping-cache-cold-comparison-order.pkl",
+      "input_sha256": "0556a04b2eb40b56a7fd56dc5f6fbf2fc574812118c5143e2af74e4400037b0a",
+      "metamorphic_relation": {
+        "case_ids": [
+          "equality-stage8-mapping-cache-cold-comparison-order",
+          "equality-stage8-mapping-cache-warm-a-comparison-order"
+        ],
+        "domain": "Successfully reading the first declared scalar mapping member preserves the same unequal result and cache comparison order.",
+        "kind": "equal-stdout"
+      },
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:generated-verification"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-stage8-mapping-cache-warm-a-comparison-order",
+      "input": "tests/fixtures/m2/equality-stage8-mapping-cache-warm-a-comparison-order.pkl",
+      "input_sha256": "b585f2adc7e02faa976dbd845c69c2602a2a4c395a99c05f4364f08b3d61d1ca",
+      "metamorphic_relation": {
+        "case_ids": [
+          "equality-stage8-mapping-cache-cold-comparison-order",
+          "equality-stage8-mapping-cache-warm-a-comparison-order"
+        ],
+        "domain": "Successfully reading the first declared scalar mapping member preserves the same unequal result and cache comparison order.",
+        "kind": "equal-stdout"
+      },
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:generated-verification"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "equality-stage8-listing-cache-warm-comparison-order",
+      "input": "tests/fixtures/m2/equality-stage8-listing-cache-warm-comparison-order.pkl",
+      "input_sha256": "8b5290c0ac787ddec917ffcd7b9c479101ddbf7e7615acb416d99a86959ce359",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-stage8-listing-cache-cold-comparison-order",
+      "input": "tests/fixtures/m2/equality-stage8-listing-cache-cold-comparison-order.pkl",
+      "input_sha256": "86489a3b061a3907e0f9e8692bc2d4086c289e08530697cd421aa33874832457",
+      "metamorphic_relation": {
+        "case_ids": [
+          "equality-stage8-listing-cache-cold-comparison-order",
+          "equality-stage8-listing-cache-warm-a-comparison-order"
+        ],
+        "domain": "Successfully reading the first declared scalar listing member preserves the same unequal result and cache comparison order.",
+        "kind": "equal-stdout"
+      },
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:generated-verification"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-stage8-listing-cache-warm-a-comparison-order",
+      "input": "tests/fixtures/m2/equality-stage8-listing-cache-warm-a-comparison-order.pkl",
+      "input_sha256": "6f371818f4d0c34331220bafa5efcfd0cb25942a9881b93e36a070b20d6b9f3e",
+      "metamorphic_relation": {
+        "case_ids": [
+          "equality-stage8-listing-cache-cold-comparison-order",
+          "equality-stage8-listing-cache-warm-a-comparison-order"
+        ],
+        "domain": "Successfully reading the first declared scalar listing member preserves the same unequal result and cache comparison order.",
+        "kind": "equal-stdout"
+      },
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:generated-verification"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-stage8-typed-cache-warm-class-order",
+      "input": "tests/fixtures/m2/equality-stage8-typed-cache-warm-class-order.pkl",
+      "input_sha256": "fe94aed500b33a8cef75a2a2bca0d4062e4e172a6b012704f0aecd9b9d983039",
+      "metamorphic_relation": {
+        "case_ids": [
+          "equality-stage8-typed-cache-warm-class-order",
+          "equality-stage8-typed-cache-amendment-class-order"
+        ],
+        "domain": "Typed class declaration order selects the unequal Int before a nested Mapping key comparison despite successful member prewarming or reordered assignments.",
+        "kind": "equal-stdout"
+      },
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:classes",
+        "semantic:types",
+        "semantic:generated-verification"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-stage8-typed-cache-amendment-class-order",
+      "input": "tests/fixtures/m2/equality-stage8-typed-cache-amendment-class-order.pkl",
+      "input_sha256": "fbcdf243999f29f497ba960a507f364431f8839e7a8fe8c4b11d7bd5f045999f",
+      "metamorphic_relation": {
+        "case_ids": [
+          "equality-stage8-typed-cache-warm-class-order",
+          "equality-stage8-typed-cache-amendment-class-order"
+        ],
+        "domain": "Typed class declaration order selects the unequal Int before a nested Mapping key comparison despite successful member prewarming or reordered assignments.",
+        "kind": "equal-stdout"
+      },
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:classes",
+        "semantic:types",
+        "semantic:amendment",
+        "semantic:generated-verification"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "equality-stage8-typed-cache-child-class-order",
+      "input": "tests/fixtures/m2/equality-stage8-typed-cache-child-class-order.pkl",
+      "input_sha256": "fdd4067f976461f4f5e2fbec5519c03ca2e4163f4a783c5b09d8e235ea054626",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:classes",
+        "semantic:types"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "equality-stage8-dynamic-hash-deep-before-nested-hash",
+      "input": "tests/fixtures/m2/equality-stage8-dynamic-hash-deep-before-nested-hash.pkl",
+      "input_sha256": "52cc949cd3b9a1075ebcbbcd96c447373815cfb95de51c4cd6b5a837b6a54331",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "equality-stage8-listing-hash-deep-before-nested-hash",
+      "input": "tests/fixtures/m2/equality-stage8-listing-hash-deep-before-nested-hash.pkl",
+      "input_sha256": "9a6ddbab7f1627d37e013e5bfbe5a9ecb79374d4315b2aefa0bdb57b39d503f0",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "equality-stage8-typed-hash-deep-before-nested-hash",
+      "input": "tests/fixtures/m2/equality-stage8-typed-hash-deep-before-nested-hash.pkl",
+      "input_sha256": "8756f31a8c32da834cd124226444679eba40f1432e3467475306a27e2a19f7a0",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:classes",
+        "semantic:types"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "equality-stage8-dynamic-hash-cold-cache-order",
+      "input": "tests/fixtures/m2/equality-stage8-dynamic-hash-cold-cache-order.pkl",
+      "input_sha256": "c34623cb692ba097d0be828c4cfb16f11801f7cc1045225cee8a2baa8fee1bf6",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "equality-stage8-typed-hash-child-before-parent",
+      "input": "tests/fixtures/m2/equality-stage8-typed-hash-child-before-parent.pkl",
+      "input_sha256": "9313bc7b71017ff697fe2329d095757be86b2c830f1a03b79fd7929a27d599df",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:classes",
+        "semantic:types",
+        "semantic:amendment"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "equality-stage8-dynamic-hash-warm-b-cache-order-initializer",
+      "input": "tests/fixtures/m2/equality-stage8-dynamic-hash-warm-b-cache-order-initializer.pkl",
+      "input_sha256": "923d184b1c99f79fe7721f8ed4bcc4a2b2b241707ae95bf35fca6917d43627d2",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
       "adapter": null,
       "execution": {
         "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
@@ -108601,9 +109418,9 @@
   "comparison_boundary": "evaluateExpressionString(ModuleSource.path(same absolute URI), expression) UTF-8 stdout; whole PklException.getMessage() UTF-8 stderr and exit 1; no trimming. Power assertions default to disabled; an explicit per-case power_assertions boolean enables the same option in both probes. Stringification alone is not typed value/API compatibility.",
   "completion": "Every required semantic/source requirement needs implementation/test mappings and complete passing execution. Pending/unmapped/unimplemented/mismatch remains a full-gate failure.",
   "counts": {
-    "cases": 1874,
+    "cases": 1907,
     "cases_by_execution": {
-      "ready": 874,
+      "ready": 907,
       "unimplemented": 960,
       "unmapped": 40
     },
@@ -109002,7 +109819,40 @@
           "equality-constant-parenthesized-scalar-span",
           "equality-constant-negative-space-span",
           "equality-constant-negative-zero-span",
-          "equality-constant-negative-interpolation-span"
+          "equality-constant-negative-interpolation-span",
+          "equality-stage8-typed-default-unequal",
+          "equality-stage8-typed-default-equal",
+          "equality-stage8-typed-default-left-error",
+          "equality-stage8-typed-default-right-error",
+          "equality-stage8-typed-default-inherited",
+          "equality-stage8-typed-default-key-distinct",
+          "equality-stage8-typed-default-key-fifth",
+          "equality-stage8-dynamic-default-equality",
+          "equality-stage8-listing-default-equality",
+          "equality-stage8-mapping-default-equality",
+          "equality-stage8-typed-hidden-default-control",
+          "equality-stage8-typed-default-identity-control",
+          "equality-stage8-typed-ordinary-unequal",
+          "equality-stage8-typed-default-override-equal",
+          "equality-stage8-typed-default-ordinary-order",
+          "equality-stage8-dynamic-cache-warm-comparison-order",
+          "equality-stage8-dynamic-cache-cold-comparison-order",
+          "equality-stage8-dynamic-cache-warm-a-comparison-order",
+          "equality-stage8-mapping-cache-warm-comparison-order",
+          "equality-stage8-mapping-cache-cold-comparison-order",
+          "equality-stage8-mapping-cache-warm-a-comparison-order",
+          "equality-stage8-listing-cache-warm-comparison-order",
+          "equality-stage8-listing-cache-cold-comparison-order",
+          "equality-stage8-listing-cache-warm-a-comparison-order",
+          "equality-stage8-typed-cache-warm-class-order",
+          "equality-stage8-typed-cache-amendment-class-order",
+          "equality-stage8-typed-cache-child-class-order",
+          "equality-stage8-dynamic-hash-deep-before-nested-hash",
+          "equality-stage8-listing-hash-deep-before-nested-hash",
+          "equality-stage8-typed-hash-deep-before-nested-hash",
+          "equality-stage8-dynamic-hash-cold-cache-order",
+          "equality-stage8-typed-hash-child-before-parent",
+          "equality-stage8-dynamic-hash-warm-b-cache-order-initializer"
         ],
         "state": "partial"
       }
@@ -109713,7 +110563,40 @@
           "equality-constant-parenthesized-scalar-span",
           "equality-constant-negative-space-span",
           "equality-constant-negative-zero-span",
-          "equality-constant-negative-interpolation-span"
+          "equality-constant-negative-interpolation-span",
+          "equality-stage8-typed-default-unequal",
+          "equality-stage8-typed-default-equal",
+          "equality-stage8-typed-default-left-error",
+          "equality-stage8-typed-default-right-error",
+          "equality-stage8-typed-default-inherited",
+          "equality-stage8-typed-default-key-distinct",
+          "equality-stage8-typed-default-key-fifth",
+          "equality-stage8-dynamic-default-equality",
+          "equality-stage8-listing-default-equality",
+          "equality-stage8-mapping-default-equality",
+          "equality-stage8-typed-hidden-default-control",
+          "equality-stage8-typed-default-identity-control",
+          "equality-stage8-typed-ordinary-unequal",
+          "equality-stage8-typed-default-override-equal",
+          "equality-stage8-typed-default-ordinary-order",
+          "equality-stage8-dynamic-cache-warm-comparison-order",
+          "equality-stage8-dynamic-cache-cold-comparison-order",
+          "equality-stage8-dynamic-cache-warm-a-comparison-order",
+          "equality-stage8-mapping-cache-warm-comparison-order",
+          "equality-stage8-mapping-cache-cold-comparison-order",
+          "equality-stage8-mapping-cache-warm-a-comparison-order",
+          "equality-stage8-listing-cache-warm-comparison-order",
+          "equality-stage8-listing-cache-cold-comparison-order",
+          "equality-stage8-listing-cache-warm-a-comparison-order",
+          "equality-stage8-typed-cache-warm-class-order",
+          "equality-stage8-typed-cache-amendment-class-order",
+          "equality-stage8-typed-cache-child-class-order",
+          "equality-stage8-dynamic-hash-deep-before-nested-hash",
+          "equality-stage8-listing-hash-deep-before-nested-hash",
+          "equality-stage8-typed-hash-deep-before-nested-hash",
+          "equality-stage8-dynamic-hash-cold-cache-order",
+          "equality-stage8-typed-hash-child-before-parent",
+          "equality-stage8-dynamic-hash-warm-b-cache-order-initializer"
         ],
         "state": "partial"
       }
@@ -110166,7 +111049,40 @@
           "equality-constant-parenthesized-scalar-span",
           "equality-constant-negative-space-span",
           "equality-constant-negative-zero-span",
-          "equality-constant-negative-interpolation-span"
+          "equality-constant-negative-interpolation-span",
+          "equality-stage8-typed-default-unequal",
+          "equality-stage8-typed-default-equal",
+          "equality-stage8-typed-default-left-error",
+          "equality-stage8-typed-default-right-error",
+          "equality-stage8-typed-default-inherited",
+          "equality-stage8-typed-default-key-distinct",
+          "equality-stage8-typed-default-key-fifth",
+          "equality-stage8-dynamic-default-equality",
+          "equality-stage8-listing-default-equality",
+          "equality-stage8-mapping-default-equality",
+          "equality-stage8-typed-hidden-default-control",
+          "equality-stage8-typed-default-identity-control",
+          "equality-stage8-typed-ordinary-unequal",
+          "equality-stage8-typed-default-override-equal",
+          "equality-stage8-typed-default-ordinary-order",
+          "equality-stage8-dynamic-cache-warm-comparison-order",
+          "equality-stage8-dynamic-cache-cold-comparison-order",
+          "equality-stage8-dynamic-cache-warm-a-comparison-order",
+          "equality-stage8-mapping-cache-warm-comparison-order",
+          "equality-stage8-mapping-cache-cold-comparison-order",
+          "equality-stage8-mapping-cache-warm-a-comparison-order",
+          "equality-stage8-listing-cache-warm-comparison-order",
+          "equality-stage8-listing-cache-cold-comparison-order",
+          "equality-stage8-listing-cache-warm-a-comparison-order",
+          "equality-stage8-typed-cache-warm-class-order",
+          "equality-stage8-typed-cache-amendment-class-order",
+          "equality-stage8-typed-cache-child-class-order",
+          "equality-stage8-dynamic-hash-deep-before-nested-hash",
+          "equality-stage8-listing-hash-deep-before-nested-hash",
+          "equality-stage8-typed-hash-deep-before-nested-hash",
+          "equality-stage8-dynamic-hash-cold-cache-order",
+          "equality-stage8-typed-hash-child-before-parent",
+          "equality-stage8-dynamic-hash-warm-b-cache-order-initializer"
         ],
         "state": "partial"
       }
@@ -110255,7 +111171,10 @@
           "equality-key-review-mapping-equal-key-override-loop",
           "equality-key-review-mapping-override-key-force-order",
           "equality-key-review-dynamic-override-key-force-order",
-          "equality-key-review-mapping-override-value-before-key"
+          "equality-key-review-mapping-override-value-before-key",
+          "equality-stage8-typed-default-inherited",
+          "equality-stage8-typed-cache-amendment-class-order",
+          "equality-stage8-typed-hash-child-before-parent"
         ],
         "state": "partial"
       }
@@ -110327,7 +111246,24 @@
           "equality-supplement-key-missing-class",
           "equality-supplement-key-rejected-typed-force-order",
           "equality-supplement-equality-hidden-cache",
-          "equality-key-review-typed-target-before-key"
+          "equality-key-review-typed-target-before-key",
+          "equality-stage8-typed-default-unequal",
+          "equality-stage8-typed-default-equal",
+          "equality-stage8-typed-default-left-error",
+          "equality-stage8-typed-default-right-error",
+          "equality-stage8-typed-default-inherited",
+          "equality-stage8-typed-default-key-distinct",
+          "equality-stage8-typed-default-key-fifth",
+          "equality-stage8-typed-hidden-default-control",
+          "equality-stage8-typed-default-identity-control",
+          "equality-stage8-typed-ordinary-unequal",
+          "equality-stage8-typed-default-override-equal",
+          "equality-stage8-typed-default-ordinary-order",
+          "equality-stage8-typed-cache-warm-class-order",
+          "equality-stage8-typed-cache-amendment-class-order",
+          "equality-stage8-typed-cache-child-class-order",
+          "equality-stage8-typed-hash-deep-before-nested-hash",
+          "equality-stage8-typed-hash-child-before-parent"
         ],
         "state": "partial"
       }
@@ -111265,7 +112201,40 @@
           "equality-constant-parenthesized-scalar-span",
           "equality-constant-negative-space-span",
           "equality-constant-negative-zero-span",
-          "equality-constant-negative-interpolation-span"
+          "equality-constant-negative-interpolation-span",
+          "equality-stage8-typed-default-unequal",
+          "equality-stage8-typed-default-equal",
+          "equality-stage8-typed-default-left-error",
+          "equality-stage8-typed-default-right-error",
+          "equality-stage8-typed-default-inherited",
+          "equality-stage8-typed-default-key-distinct",
+          "equality-stage8-typed-default-key-fifth",
+          "equality-stage8-dynamic-default-equality",
+          "equality-stage8-listing-default-equality",
+          "equality-stage8-mapping-default-equality",
+          "equality-stage8-typed-hidden-default-control",
+          "equality-stage8-typed-default-identity-control",
+          "equality-stage8-typed-ordinary-unequal",
+          "equality-stage8-typed-default-override-equal",
+          "equality-stage8-typed-default-ordinary-order",
+          "equality-stage8-dynamic-cache-warm-comparison-order",
+          "equality-stage8-dynamic-cache-cold-comparison-order",
+          "equality-stage8-dynamic-cache-warm-a-comparison-order",
+          "equality-stage8-mapping-cache-warm-comparison-order",
+          "equality-stage8-mapping-cache-cold-comparison-order",
+          "equality-stage8-mapping-cache-warm-a-comparison-order",
+          "equality-stage8-listing-cache-warm-comparison-order",
+          "equality-stage8-listing-cache-cold-comparison-order",
+          "equality-stage8-listing-cache-warm-a-comparison-order",
+          "equality-stage8-typed-cache-warm-class-order",
+          "equality-stage8-typed-cache-amendment-class-order",
+          "equality-stage8-typed-cache-child-class-order",
+          "equality-stage8-dynamic-hash-deep-before-nested-hash",
+          "equality-stage8-listing-hash-deep-before-nested-hash",
+          "equality-stage8-typed-hash-deep-before-nested-hash",
+          "equality-stage8-dynamic-hash-cold-cache-order",
+          "equality-stage8-typed-hash-child-before-parent",
+          "equality-stage8-dynamic-hash-warm-b-cache-order-initializer"
         ],
         "state": "partial"
       }
@@ -111516,7 +112485,24 @@
           "equality-key-mapping-wrapper-bad",
           "equality-power-wrapper-force",
           "equality-supplement-wrapper-identity-skip",
-          "equality-supplement-wrapper-length-skip"
+          "equality-supplement-wrapper-length-skip",
+          "equality-stage8-typed-default-unequal",
+          "equality-stage8-typed-default-equal",
+          "equality-stage8-typed-default-left-error",
+          "equality-stage8-typed-default-right-error",
+          "equality-stage8-typed-default-inherited",
+          "equality-stage8-typed-default-key-distinct",
+          "equality-stage8-typed-default-key-fifth",
+          "equality-stage8-typed-hidden-default-control",
+          "equality-stage8-typed-default-identity-control",
+          "equality-stage8-typed-ordinary-unequal",
+          "equality-stage8-typed-default-override-equal",
+          "equality-stage8-typed-default-ordinary-order",
+          "equality-stage8-typed-cache-warm-class-order",
+          "equality-stage8-typed-cache-amendment-class-order",
+          "equality-stage8-typed-cache-child-class-order",
+          "equality-stage8-typed-hash-deep-before-nested-hash",
+          "equality-stage8-typed-hash-child-before-parent"
         ],
         "state": "partial"
       }
@@ -112397,7 +113383,40 @@
           "equality-constant-parenthesized-scalar-span",
           "equality-constant-negative-space-span",
           "equality-constant-negative-zero-span",
-          "equality-constant-negative-interpolation-span"
+          "equality-constant-negative-interpolation-span",
+          "equality-stage8-typed-default-unequal",
+          "equality-stage8-typed-default-equal",
+          "equality-stage8-typed-default-left-error",
+          "equality-stage8-typed-default-right-error",
+          "equality-stage8-typed-default-inherited",
+          "equality-stage8-typed-default-key-distinct",
+          "equality-stage8-typed-default-key-fifth",
+          "equality-stage8-dynamic-default-equality",
+          "equality-stage8-listing-default-equality",
+          "equality-stage8-mapping-default-equality",
+          "equality-stage8-typed-hidden-default-control",
+          "equality-stage8-typed-default-identity-control",
+          "equality-stage8-typed-ordinary-unequal",
+          "equality-stage8-typed-default-override-equal",
+          "equality-stage8-typed-default-ordinary-order",
+          "equality-stage8-dynamic-cache-warm-comparison-order",
+          "equality-stage8-dynamic-cache-cold-comparison-order",
+          "equality-stage8-dynamic-cache-warm-a-comparison-order",
+          "equality-stage8-mapping-cache-warm-comparison-order",
+          "equality-stage8-mapping-cache-cold-comparison-order",
+          "equality-stage8-mapping-cache-warm-a-comparison-order",
+          "equality-stage8-listing-cache-warm-comparison-order",
+          "equality-stage8-listing-cache-cold-comparison-order",
+          "equality-stage8-listing-cache-warm-a-comparison-order",
+          "equality-stage8-typed-cache-warm-class-order",
+          "equality-stage8-typed-cache-amendment-class-order",
+          "equality-stage8-typed-cache-child-class-order",
+          "equality-stage8-dynamic-hash-deep-before-nested-hash",
+          "equality-stage8-listing-hash-deep-before-nested-hash",
+          "equality-stage8-typed-hash-deep-before-nested-hash",
+          "equality-stage8-dynamic-hash-cold-cache-order",
+          "equality-stage8-typed-hash-child-before-parent",
+          "equality-stage8-dynamic-hash-warm-b-cache-order-initializer"
         ],
         "state": "partial"
       }
@@ -112488,7 +113507,20 @@
           "equality-key-predicate-replace",
           "equality-key-amend-replace-direct",
           "equality-key-predicate-replace-direct",
-          "equality-dynamic-inherited-direct"
+          "equality-dynamic-inherited-direct",
+          "equality-stage8-typed-default-unequal",
+          "equality-stage8-typed-default-equal",
+          "equality-stage8-typed-default-inherited",
+          "equality-stage8-typed-ordinary-unequal",
+          "equality-stage8-typed-default-override-equal",
+          "equality-stage8-dynamic-cache-cold-comparison-order",
+          "equality-stage8-dynamic-cache-warm-a-comparison-order",
+          "equality-stage8-mapping-cache-cold-comparison-order",
+          "equality-stage8-mapping-cache-warm-a-comparison-order",
+          "equality-stage8-listing-cache-cold-comparison-order",
+          "equality-stage8-listing-cache-warm-a-comparison-order",
+          "equality-stage8-typed-cache-warm-class-order",
+          "equality-stage8-typed-cache-amendment-class-order"
         ],
         "state": "partial"
       }
@@ -120938,6 +121970,6 @@
     "compatibility/regressions.json": "09c064f65730d30f72bf87a45c88d47ecc0844e57966a999dc8e759f083af3da",
     "compatibility/rev1-inventory.json": "6061f202ba3f04565efed3617ac69d3c2fadc54eec1f562b67a4758b3d0a8ab5",
     "references.lock": "278f48fd7697459281aa78a706c9ca57222f36a8c0785d838a6449fbaf26d30b",
-    "tests/fixtures/m2/cases.json": "088b48b3bea3b748e0e95ccea065d5fb8d5e28c4fa3d2da444aa13032ceb2140"
+    "tests/fixtures/m2/cases.json": "99a222fa4fc0fa8f838ef65b13f09b1524aaa3bce8b4e976407748575fd1da0c"
   }
 }

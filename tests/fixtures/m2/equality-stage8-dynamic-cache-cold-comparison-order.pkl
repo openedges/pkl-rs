@@ -1,0 +1,1 @@
+left=new Dynamic { a=0; b=new Mapping { [new Dynamic {key=throw("cached b first")}]=1 } }; right=new Dynamic { a=1; b=new Mapping { [new Dynamic {key=1}]=1 } }; result=left==right

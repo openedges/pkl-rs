@@ -1,0 +1,1 @@
+class C { hidden default: Int }; result = new C { default=throw("skip") } == new C { default=2 }

@@ -275,6 +275,21 @@ spread. Mapping length prepares keys in ancestor order; equality performs this
 after deep forcing. Prepared structural identities and successful key-equality
 pairs are heap metadata, pruned when their objects are reclaimed.
 
+Successful cache publications retain their insertion order separately from
+pending evaluation markers. Regular Dynamic, Listing, and Mapping comparisons
+use that order; typed comparisons use class property declarations, visiting
+the most derived class before its ancestors. Ordinary typed properties named
+`default` participate in forcing, comparison, and structural key preparation.
+The special collection default and hidden/local properties retain their
+separate rules. Retry preserves already completed members and publishes newly
+successful members at their completion position.
+
+Structural key preparation completes deep value forcing before recursively
+preparing member keys and values. That second phase uses cache or class property
+order. Both phases run on the same scheduler and retain their operands across
+Host suspension, nested evaluation, GC, and failure recovery. The resulting
+canonical identities still represent structural equality, not Java hash integers.
+
 An empty object body preserves the parent's identity; empty typed construction
 uses the class prototype. Compile-time constant entry validation recognizes
 scalar and nested List literals after name resolution. It runs only for
@@ -289,8 +304,11 @@ the original source positions. A lexical error restores the complete source
 line. This display path does not rewrite source inputs or comparison evidence.
 
 The selected cases do not establish complete Java map behavior. Cached-member
-hash-table transitions, all hash-bucket collision orders, typed properties named
-`default`, and cyclic structural hashes remain open. Cyclic key preparation
+hash-table transitions, all hash-bucket collision orders, and cyclic structural
+hashes remain open. Listing/Mapping caches containing nonconstant local members
+also have observed comparison differences. A nested-let hash failure retains a
+diagnostic frame difference. These raw failures remain separate from selected
+passing regressions. Cyclic key preparation
 currently reports a Rust cycle error;
 the observed Java cases fail inside the JVM. Full format-time wrapper checks,
 function/class amendments, and the remaining types and metadata also remain
