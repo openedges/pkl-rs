@@ -92,6 +92,13 @@ enum State {
     Closed,
 }
 
+struct SuspendedContext {
+    frames: Vec<Frame>,
+    stack: Vec<Value>,
+    inputs: Vec<Value>,
+    state: State,
+}
+
 pub struct Vm {
     program: Arc<Program>,
     heap: Heap,
@@ -99,6 +106,7 @@ pub struct Vm {
     stack: Vec<Value>,
     inputs: Vec<Value>,
     state: State,
+    suspended: Vec<SuspendedContext>,
     next_request: u64,
     instructions: u64,
     member_evaluations: u64,
@@ -128,6 +136,7 @@ impl Vm {
             stack: Vec::new(),
             inputs: Vec::new(),
             state: State::Idle,
+            suspended: Vec::new(),
             next_request: 1,
             instructions: 0,
             member_evaluations: 0,
@@ -168,6 +177,67 @@ impl Vm {
         });
         self.state = State::Running;
         Ok(())
+    }
+
+    /// Enter a callback evaluation while the current context waits for Host I/O.
+    /// The program, heap and successful member cache belong to the evaluator.
+    pub(crate) fn reenter(
+        &mut self,
+        request: u64,
+        entry: usize,
+        inputs: Vec<Value>,
+    ) -> Result<(), RuntimeError> {
+        if !matches!(&self.state, State::Waiting(read) if read.id == request) {
+            return Err(RuntimeError::new(
+                ErrorKind::Host,
+                "stale or unexpected Host completion",
+            ));
+        }
+        if self.suspended.len() >= 63 {
+            return Err(RuntimeError::new(
+                ErrorKind::Busy,
+                "experiment context limit exceeded",
+            ));
+        }
+        self.suspended.push(SuspendedContext {
+            frames: std::mem::take(&mut self.frames),
+            stack: std::mem::take(&mut self.stack),
+            inputs: std::mem::take(&mut self.inputs),
+            state: std::mem::replace(&mut self.state, State::Idle),
+        });
+        if let Err(error) = self.start(entry, inputs) {
+            self.restore_context();
+            return Err(error);
+        }
+        Ok(())
+    }
+
+    /// Called only after the Host has captured the completed nested result.
+    pub(crate) fn finish_reentry(&mut self) {
+        if matches!(self.state, State::Finished(_)) {
+            self.restore_context();
+        }
+    }
+
+    fn restore_context(&mut self) {
+        if let Some(context) = self.suspended.pop() {
+            self.frames = context.frames;
+            self.stack = context.stack;
+            self.inputs = context.inputs;
+            self.state = context.state;
+        }
+    }
+
+    pub(crate) fn pending_requests(&self) -> Vec<u64> {
+        self.suspended
+            .iter()
+            .map(|context| &context.state)
+            .chain(std::iter::once(&self.state))
+            .filter_map(|state| match state {
+                State::Waiting(request) => Some(request.id),
+                _ => None,
+            })
+            .collect()
     }
 
     pub fn start_member(&mut self, receiver: ObjectId, name: &str) -> Result<(), RuntimeError> {
@@ -249,14 +319,21 @@ impl Vm {
     /// Cancellation terminates the active computation; a later start has fresh stack state.
     pub fn cancel(&mut self) {
         if matches!(self.state, State::Running | State::Waiting(_)) {
-            self.fail(RuntimeError::new(
-                ErrorKind::Cancelled,
-                "evaluation cancelled",
-            ));
+            loop {
+                self.fail(RuntimeError::new(
+                    ErrorKind::Cancelled,
+                    "evaluation cancelled",
+                ));
+                if self.suspended.is_empty() {
+                    break;
+                }
+                self.restore_context();
+            }
         }
     }
 
     pub fn close(&mut self) {
+        self.suspended = Vec::new();
         self.frames = Vec::new();
         self.stack = Vec::new();
         self.inputs = Vec::new();
@@ -295,20 +372,39 @@ impl Vm {
     /// Safepoint collection includes suspended frames and externally pinned results.
     pub fn collect(&mut self, external_roots: &[Value]) -> HeapStats {
         let mut roots = external_roots.to_vec();
-        roots.extend(self.stack.iter().cloned());
-        roots.extend(self.inputs.iter().cloned());
-        if let State::Finished(Ok(value)) = &self.state {
-            roots.push(value.clone());
-        }
-        for frame in &self.frames {
-            roots.extend(frame.environment.locals.iter().cloned());
-            for scope in &frame.environment.scopes {
-                roots.push(Value::Object(scope.receiver));
-                roots.push(Value::Object(scope.owner));
+        for (stack, inputs, frames, state) in self
+            .suspended
+            .iter()
+            .map(|context| {
+                (
+                    &context.stack,
+                    &context.inputs,
+                    &context.frames,
+                    &context.state,
+                )
+            })
+            .chain(std::iter::once((
+                &self.stack,
+                &self.inputs,
+                &self.frames,
+                &self.state,
+            )))
+        {
+            roots.extend(stack.iter().cloned());
+            roots.extend(inputs.iter().cloned());
+            if let State::Finished(Ok(value)) = state {
+                roots.push(value.clone());
             }
-            if let Some(force) = &frame.force {
-                roots.push(Value::Object(force.receiver));
-                roots.push(Value::Object(force.owner));
+            for frame in frames {
+                roots.extend(frame.environment.locals.iter().cloned());
+                for scope in &frame.environment.scopes {
+                    roots.push(Value::Object(scope.receiver));
+                    roots.push(Value::Object(scope.owner));
+                }
+                if let Some(force) = &frame.force {
+                    roots.push(Value::Object(force.receiver));
+                    roots.push(Value::Object(force.owner));
+                }
             }
         }
         self.heap.collect(&roots)
@@ -320,9 +416,9 @@ impl Vm {
                 && let Some(key) = &force.cache
                 && let Ok(object) = self.heap.get_mut(force.receiver)
             {
-                object
-                    .cache
-                    .insert(key.clone(), LazyState::Failed(error.clone()));
+                // VmUtils.doReadMember and ReadLocalPropertyNode publish only successful
+                // return values. A failed attempt must be retryable in this evaluator.
+                object.cache.remove(key);
             }
         }
         self.frames.clear();
@@ -377,7 +473,6 @@ impl Vm {
                     self.stack.push(value.clone());
                     return Ok(());
                 }
-                Some(LazyState::Failed(error)) => return Err(error.clone()),
                 Some(LazyState::Evaluating) => {
                     return Err(RuntimeError::new(
                         ErrorKind::Cycle,
@@ -411,11 +506,16 @@ impl Vm {
                 RuntimeError::new(ErrorKind::MissingMember, format!("missing member {name}"))
             })?;
         };
-        if self.frames.iter().any(|frame| {
-            frame.force.as_ref().is_some_and(|force| {
-                force.receiver == receiver && force.owner == owner && force.name == name
+        if self
+            .frames
+            .iter()
+            .chain(self.suspended.iter().flat_map(|context| &context.frames))
+            .any(|frame| {
+                frame.force.as_ref().is_some_and(|force| {
+                    force.receiver == receiver && force.owner == owner && force.name == name
+                })
             })
-        }) {
+        {
             return Err(RuntimeError::new(
                 ErrorKind::Cycle,
                 format!("cyclic forcing of {name}"),

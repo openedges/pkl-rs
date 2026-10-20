@@ -5,7 +5,13 @@ with actual Node N-API and Chromium Wasm execution. It establishes architecture
 contracts and records rejected candidates. It does not establish full Pkl
 0.32.0 language/API compatibility or release performance.
 
-M1 architecture verification is complete. The implementation is committed as
+An independent completion review reopened M1-04 and M1-06. The closing changes
+now recover failed lazy members, implement nested contexts in one VM and heap,
+and propagate terminal cancellation to live platform operations. Local closing
+evidence passes; final remote CI evidence is pending. The earlier green CI below
+did not cover these missing contracts.
+
+The initial implementation is committed as
 `ce99720` and experiment/CI integration as `e9ee8d5`. All five jobs in
 [the final code CI run](https://github.com/luuvish/pkl-rs/actions/runs/39372369602)
 succeeded. The downloaded artifact digest, exact source snapshots and raw
@@ -23,9 +29,20 @@ performance failures below remain open requirements for subsequent milestones.
 | Host lifecycle | Five real Java observation suites; seven native Host regressions | [Java report](host-java.json), [archive](host-java-evidence.tar.gz), [Host contract](../../docs/m1-host.md). Java callback reentry succeeds; single-continuation Rust Busy behavior remains a prototype difference. Product contexts must support nested evaluation. |
 | Actual browser and Node | 6,078/6,078 shared-engine primitive outputs agree; each target has the same 6,076 Java matches and two failures; 12 required scenarios per environment | [Platform report](platforms.json), [archive](platform-evidence.tar.gz), [contract](../../docs/m1-platforms.md). BigInt/bytes/Unicode/real asynchronous calls and timers run in Node 26.10.0 and Chromium 156.0.8078.4. |
 
-All 13 local validation commands passed, including the complete Rust workspace
-checks, 114 Python tooling regressions, and source/corpus/probe freshness checks.
-See the [validation report](validation.json) and [raw logs](validation-evidence.tar.gz).
+The table above preserves the initial experiment results, including its original
+failure-cache and single-context limitations. Closing evidence supersedes those
+two contracts without rewriting the historical captures:
+
+| Closing check | Result | Evidence |
+| --- | --- | --- |
+| Failed lazy retry and callback reentry | Two complete Java/Rust observation protocols match. Four diagnostic payload differences remain explicit. A separate Java-only nested-new-resource read raises the observed upstream cache-mutation error. | [Lifecycle report](lifecycle.json), [archive](lifecycle-evidence.tar.gz), [contract](../../docs/m1-lifecycle.md) |
+| Shared native/Node/browser runtime | All 6,078 primitive outputs agree across Rust targets; 6,076 match Java on each target. Fourteen required scenarios per JS environment verify nested reads and abort, Promise settlement, and timer/listener/map cleanup for single and nested operations. | [Closing platform report](platform-closing.json), [archive](platform-closing-evidence.tar.gz) |
+| Integrated local checks | All 13 commands pass: 124 Python tests, 45 Rust tests, formatting, lint, Wasm compilation and inventory checks. One frontend probe is intentionally ignored by ordinary cargo test and invoked explicitly by its differential runner. Host and runtime suites contain 15 and 13 tests respectively. | [Closing validation](validation-closing.json), [raw logs](validation-closing-evidence.tar.gz) |
+
+The original [validation report](validation.json) and
+[raw logs](validation-evidence.tar.gz) remain available. Earlier performance
+measurements belong to their retained source snapshots; closing lifecycle work
+does not claim a new performance measurement or achievement of release targets.
 
 Every primitive result is compared through a complete lossless hex transport.
 Parser probes compare their explicitly declared message/location payloads;
@@ -41,8 +58,11 @@ all shared-engine bytes agree, and the exact known-gap inventory is retained.
 It still reports compatibility `fail`. This distinction is also explicit in CI.
 
 The native and JS Host prototypes use cooperative cancellation. Their public
-error messages, resource cache behavior, nested evaluation, and API surface
-are not Java-compatible yet. Unpaired surrogate input is rejected explicitly
+error messages, full module/resource cache behavior, and API surface remain
+unfinished. Nested contexts and successful member-cache sharing are now verified.
+The Java-only new-resource callback failure is retained as a later resource-cache
+compatibility requirement; nested new reads in the Rust platform probe are not
+a Java parity claim. Unpaired surrogate input is rejected explicitly
 at the current JS boundary. The parser rejects unsupported constructs instead
 of providing a complete language implementation. These remain release gates,
 along with the full M0 inventories, product APIs and performance workloads.

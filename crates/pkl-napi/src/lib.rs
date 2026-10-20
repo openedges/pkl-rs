@@ -87,6 +87,16 @@ impl HostProbe {
         Ok(self.inner.poll(unsigned(now)?, unsigned(budget)?))
     }
     #[napi]
+    pub fn reenter(&mut self, token: Utf16String, now: f64, timeout: f64) -> Result<()> {
+        self.inner
+            .reenter(&string(&token)?, unsigned(now)?, unsigned(timeout)?)
+            .map_err(error)
+    }
+    #[napi]
+    pub fn drain_cancelled_reads(&mut self) -> Vec<String> {
+        self.inner.drain_cancelled_reads()
+    }
+    #[napi]
     pub fn respond_integer(&mut self, token: Utf16String, value: BigInt, now: f64) -> Result<()> {
         self.inner
             .respond(

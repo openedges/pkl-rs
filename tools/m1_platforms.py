@@ -21,9 +21,12 @@ KNOWN_GAPS = {'regex-unicode-15-vs-16', 'regex-zero-width-supplementary'}
 REQUIRED_SCENARIOS = {
     'shared-parser-resolver-vm', 'utf8-utf16-string-boundary',
     'lossless-i64-bigint-range', 'owned-byte-array-boundary',
-    'async-same-stack-resume-reentry-duplicate', 'cross-session-completion-rejected',
-    'async-resource-bytes', 'host-error-bytes', 'cancel-close-late-callback',
-    'real-timer-waiting-timeout', 'cooperative-loop-cancel', 'invalid-clock-budget-boundary',
+    'same-evaluator-nested-read-resume', 'cross-session-completion-rejected',
+    'async-resource-bytes', 'host-error-bytes',
+    'live-host-cancel-abort-release-settle', 'live-host-close-abort-release-settle',
+    'live-host-timeout-abort-release-settle',
+    'nested-terminal-aborts-all-live-host-operations',
+    'cooperative-loop-cancel', 'invalid-clock-budget-boundary',
 }
 
 
@@ -34,6 +37,9 @@ def check_scenarios(execution):
             raise ValueError(f'{target}: missing, duplicate, or unexpected platform scenarios')
     if execution.get('browserErrors') != []:
         raise ValueError('browser error inventory missing or nonempty')
+    pin = json.loads((ROOT/'tools/platform/package.json').read_text())['devDependencies']['playwright']
+    if any(execution.get(name) != pin for name in ['playwright', 'playwrightCore', 'playwrightPin']):
+        raise ValueError('platform execution did not use the pinned Playwright installation')
 
 
 def sha(path):

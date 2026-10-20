@@ -68,13 +68,13 @@ fn lazy_object_cycles_are_values_but_forcing_cycles_fail() {
     for name in ["result", "left", "right"] {
         assert!(matches!(
             vm.member_state(object, name).unwrap(),
-            LazyState::Failed(_)
+            LazyState::Unevaluated
         ));
     }
 }
 
 #[test]
-fn first_error_stops_forcing_and_failed_state_does_not_reexecute() {
+fn first_error_stops_forcing_and_failed_attempt_is_retryable() {
     fixture(
         include_str!("../../../tests/fixtures/m1/runtime/lazy-unused.pkl"),
         42,
@@ -93,7 +93,7 @@ fn first_error_stops_forcing_and_failed_state_does_not_reexecute() {
     let count = vm.member_evaluations();
     vm.start_member(object, "result").unwrap();
     assert_eq!(done(&mut vm), Err(error));
-    assert_eq!(vm.member_evaluations(), count);
+    assert!(vm.member_evaluations() > count);
 }
 
 #[test]
@@ -212,7 +212,7 @@ fn cancellation_is_bounded_at_instruction_safepoints_and_rejects_stale_resume() 
     assert_eq!(done(&mut waiting).unwrap_err().kind, ErrorKind::Cancelled);
     assert!(matches!(
         waiting.member_state(object, "answer").unwrap(),
-        LazyState::Failed(_)
+        LazyState::Unevaluated
     ));
     assert_eq!(waiting.collect(&[]).live, 0);
     waiting.close();
@@ -277,7 +277,7 @@ fn malformed_bytecode_is_an_error_and_cannot_leak_a_running_thunk() {
     assert_eq!(done(&mut vm).unwrap_err().kind, ErrorKind::InvalidBytecode);
     assert!(matches!(
         vm.member_state(object, "bad").unwrap(),
-        LazyState::Failed(_)
+        LazyState::Unevaluated
     ));
 }
 
@@ -385,4 +385,90 @@ fn compiler_fusion_preserves_checked_overflow_types_and_first_error() {
     );
     assert_eq!(results[3].as_ref().unwrap_err().kind, ErrorKind::Type);
     assert_eq!(results[4], Ok(Value::Float(1.5)));
+}
+
+#[test]
+fn transient_failures_retry_in_order_while_successful_dependencies_stay_cached() {
+    let mut program = Program::new(vec![
+        vec![
+            I::MakeObject {
+                template: 0,
+                has_parent: false,
+            },
+            I::Return,
+        ],
+        vec![
+            I::Constant(Value::string("memory:first")),
+            I::ReadResource,
+            I::Return,
+        ],
+        vec![
+            I::Constant(Value::string("memory:second")),
+            I::ReadResource,
+            I::Return,
+        ],
+        vec![
+            I::GetProperty {
+                name: Arc::from("first"),
+                owner_depth: 0,
+                local: false,
+            },
+            I::GetProperty {
+                name: Arc::from("second"),
+                owner_depth: 0,
+                local: false,
+            },
+            I::Add,
+            I::Return,
+        ],
+    ]);
+    program.objects.push(
+        [("first", 1), ("second", 2), ("result", 3)]
+            .map(|(name, code)| Member {
+                name: Arc::from(name),
+                code,
+                local: false,
+            })
+            .to_vec(),
+    );
+    let mut vm = Vm::new(Arc::new(program));
+    vm.start(0, vec![]).unwrap();
+    let object = done(&mut vm).unwrap().as_object().unwrap();
+    let read = |vm: &mut Vm, uri: &str| {
+        let VmPoll::Pending(request) = vm.poll(100) else {
+            panic!("expected read")
+        };
+        assert_eq!(&*request.uri, uri);
+        request.id
+    };
+    let failure = RuntimeError::new(ErrorKind::Host, "transient\0failure\r\n🙂");
+    vm.start_member(object, "result").unwrap();
+    let first = read(&mut vm, "memory:first");
+    vm.resume(first, Err(failure.clone())).unwrap();
+    assert_eq!(done(&mut vm), Err(failure.clone()));
+    for name in ["first", "second", "result"] {
+        assert_eq!(
+            vm.member_state(object, name).unwrap(),
+            LazyState::Unevaluated
+        );
+    }
+    vm.start_member(object, "result").unwrap();
+    let retry = read(&mut vm, "memory:first");
+    assert_ne!(first, retry);
+    vm.resume(retry, Ok(Value::Int(40))).unwrap();
+    let second = read(&mut vm, "memory:second");
+    vm.resume(second, Err(failure.clone())).unwrap();
+    assert_eq!(done(&mut vm), Err(failure));
+    assert_eq!(
+        vm.member_state(object, "first").unwrap(),
+        LazyState::Completed(Value::Int(40))
+    );
+    vm.start_member(object, "result").unwrap();
+    let retry = read(&mut vm, "memory:second");
+    vm.resume(retry, Ok(Value::Int(2))).unwrap();
+    assert_eq!(done(&mut vm), Ok(Value::Int(42)));
+    let evaluations = vm.member_evaluations();
+    vm.start_member(object, "result").unwrap();
+    assert_eq!(done(&mut vm), Ok(Value::Int(42)));
+    assert_eq!(vm.member_evaluations(), evaluations);
 }

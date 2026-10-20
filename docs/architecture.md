@@ -25,7 +25,7 @@ Maintain one product evaluator and value model. A bytecode VM is the first candi
 
 Incorporate Pkl 0.32 name resolution into compilation. Distinguish lexical bindings, receivers, owners, `this`, and `super`, and preserve error order across parsing, name resolution, and execution.
 
-Represent lazy objects with explicit unevaluated, evaluating, completed, and failed states. Design inheritance, amendments, closures, type constraints, and memoization together. An evaluator-owned heap must support reclamation, including cyclic objects, in long-running REPL and server sessions.
+Represent lazy members with unevaluated, evaluating, and completed cache states. Keep a failed evaluation's result separate from the member cache so a later attempt can retry. Design inheritance, amendments, closures, type constraints, and memoization together. An evaluator-owned heap must support reclamation, including cyclic objects, in long-running REPL and server sessions.
 
 ## Compatibility Boundaries
 
@@ -61,7 +61,8 @@ The Java oracle is a development and validation tool. Product evaluation must no
   from source spans. Resolution records lexical depth, owner and receiver
   choices before execution; product diagnostic rendering remains unfinished.
 - Immutable compiled programs and evaluator-owned traced heaps have separate
-  lifetimes. Lazy states retain success and failure, active/suspended frames
+  lifetimes. Lazy caches retain successful values; failed forcing unwinds only
+  the current context's evaluating entries. Active and suspended contexts
   contribute roots, and generation-tagged handles reject stale objects.
 - Numeric compatibility uses shared checked integer operations, Java decimal
   formatting rules and audited fdlibm operations where generic libm differs.
@@ -74,9 +75,11 @@ The Java oracle is a development and validation tool. Product evaluation must no
   work and the candidate's known mismatches remain failed cases.
 - Host operations suspend and resume the same continuation, with evaluator
   identity, exactly-once request delivery, cooperative deadlines and terminal
-  cleanup. Java callback reentry requires nested evaluation contexts sharing
-  evaluator caches; the single active HostSession prototype does not yet
-  implement that public behavior. See [the Host contract](m1-host.md).
+  cleanup. Callback reentry uses nested contexts in the same VM and heap,
+  sharing successful member caches while preserving each continuation and
+  deadline. Terminal transitions identify outstanding reads for platform
+  adapters to abort. Full module/resource caches and product APIs remain later
+  work. See [the Host contract](m1-host.md).
 - The generic bytecode prototype's measured slowdown rejects unconditional
   adoption on performance grounds. Checked scalar-specialized bytecode is
   selected as the bounded M2 baseline after a separate measured improvement,

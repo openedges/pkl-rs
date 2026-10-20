@@ -83,12 +83,14 @@ python3 tools/m1_semantics.py --check
 python3 tools/m1_frontend.py --output target/m1/frontend-new
 python3 tools/m1_runtime.py --output target/m1/runtime-new
 python3 tools/m1_host.py --output target/m1/host-new
+python3 tools/m1_lifecycle.py --output target/m1/lifecycle-new
 python3 tools/m1_platforms.py --output target/m1/platforms-new
 ```
 
 See [frontend](docs/m1-frontend.md), [runtime](docs/m1-runtime.md),
 [semantics](docs/m1-semantics.md), [Host](docs/m1-host.md), and
-[platform](docs/m1-platforms.md) contracts. Primitive comparisons are not full
+[platform](docs/m1-platforms.md) contracts, plus the
+[closing lifecycle comparison](docs/m1-lifecycle.md). Primitive comparisons are not full
 Pkl renderer/error comparisons. The runtime retains three full diagnostic byte
 mismatches; the platform command returns nonzero for its two known Java regex
 backend differences. CI uses the separately named architecture contract mode,

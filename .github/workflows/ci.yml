@@ -129,6 +129,8 @@ jobs:
         run: python3 tools/m1_runtime.py --output target/m1/ci-runtime
       - name: Verify actual Java Host lifecycle observations
         run: python3 tools/m1_host.py --output target/m1/ci-host-java
+      - name: Compare Java and Rust lazy retry and nested Host evaluation
+        run: python3 tools/m1_lifecycle.py --output target/m1/ci-lifecycle
       - name: Run native, Node and actual browser architecture contract
         run: python3 tools/m1_platforms.py --verify-contract --output target/m1/ci-platforms
       - name: Confirm reference checkouts remain clean

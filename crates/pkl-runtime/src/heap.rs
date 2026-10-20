@@ -33,7 +33,6 @@ pub enum LazyState {
     Unevaluated,
     Evaluating,
     Completed(Value),
-    Failed(RuntimeError),
 }
 
 /// Local definitions use owner identity; ordinary virtual properties use `None`.

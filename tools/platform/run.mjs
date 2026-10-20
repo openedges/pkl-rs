@@ -8,6 +8,18 @@ import { scenarios } from './scenarios.mjs';
 
 const [outputArg, wasmArg, napiArg, casesArg] = process.argv.slice(2);
 if (!casesArg) throw new Error('usage: run.mjs OUTPUT WASM_DIR NAPI_BINARY CASES_JSON');
+const require = createRequire(import.meta.url);
+const packageManifest = JSON.parse(await readFile(new URL('./package.json', import.meta.url)));
+const packageLock = JSON.parse(await readFile(new URL('./package-lock.json', import.meta.url)));
+const playwrightVersion = require('playwright/package.json').version;
+const playwrightCoreVersion = require('playwright-core/package.json').version;
+const pin = packageManifest.devDependencies.playwright;
+if (!/^\d+\.\d+\.\d+$/.test(pin) || playwrightVersion !== pin || playwrightCoreVersion !== pin
+    || packageLock.packages[''].devDependencies.playwright !== pin
+    || packageLock.packages['node_modules/playwright'].version !== pin
+    || packageLock.packages['node_modules/playwright-core'].version !== pin) {
+  throw new Error(`installed Playwright and playwright-core must match manifest/lock pin ${pin}`);
+}
 const output = resolve(outputArg), wasm = resolve(wasmArg);
 await mkdir(output, { recursive: false });
 const manifestBytes = await readFile(resolve(casesArg));
@@ -26,7 +38,7 @@ const server = createServer(async (request, response) => {
     const url = new URL(request.url, 'http://127.0.0.1');
     if (url.pathname === '/') { response.writeHead(200, { 'Content-Type': 'text/html' }); response.end('<!doctype html><title>M1 Wasm verification</title>'); return; }
     let path;
-    if (url.pathname === '/scenarios.mjs') path = new URL('./scenarios.mjs', import.meta.url);
+    if (['/scenarios.mjs', '/host-adapter.mjs'].includes(url.pathname)) path = new URL('.' + url.pathname, import.meta.url);
     else {
       path = resolve(wasm, '.' + decodeURIComponent(url.pathname));
       if (!path.startsWith(wasm + sep)) throw new Error('invalid path');
@@ -54,7 +66,7 @@ try {
   }, cases);
   await writeFile(resolve(output, 'browser.stdout.bin'), result.outputs.join('\n') + '\n');
   await writeFile(resolve(output, 'browser-checks.json'), JSON.stringify(result.checks, null, 2) + '\n');
-  const report = { schema: 1, node: process.version, nodeVersions: process.versions, browser: browser.version(), browserExecutable: chromium.executablePath(), playwright: createRequire(import.meta.url)('playwright/package.json').version, fixtureSha256: createHash('sha256').update(manifestBytes).digest('hex'), total: cases.length, nodeChecks, browserChecks: result.checks, browserErrors };
+  const report = { schema: 1, node: process.version, nodeVersions: process.versions, browser: browser.version(), browserExecutable: chromium.executablePath(), playwright: playwrightVersion, playwrightCore: playwrightCoreVersion, playwrightPin: pin, fixtureSha256: createHash('sha256').update(manifestBytes).digest('hex'), total: cases.length, nodeChecks, browserChecks: result.checks, browserErrors };
   await writeFile(resolve(output, 'execution.json'), JSON.stringify(report, null, 2) + '\n');
   if (browserErrors.length) throw new Error('browser reported uncaught errors');
   console.log(JSON.stringify({ total: cases.length, nodeChecks: nodeChecks.length, browserChecks: result.checks.length, browser: browser.version() }));

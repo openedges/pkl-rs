@@ -68,18 +68,22 @@ source paths and the captured exception stack.
 The selected public evaluator architecture must permit same-thread callback
 reentry. It needs a stack of evaluation contexts, each with its own continuation,
 locals, return state, and Host root set, sharing the evaluator's module/resource
-caches and terminal lifetime. The present `HostSession` supports one active
-continuation and returns `Busy` for a second start. That is an explicit prototype
-limitation. Implementing the context stack and its cancellation/rooting rules is
-M2/M4 work; the successful Java reentry probe prevents treating that restriction
-as a compatible public API contract.
+caches and terminal lifetime. The original `HostSession` supported one active
+continuation and returned `Busy` for a second start. Completion review required
+that replacement architecture to be demonstrated before closing M1. The bounded
+implementation now exposes callback `reenter`, preserves outer continuations,
+shares successful member caches, roots every context, and closes them together.
+Ordinary `start` still rejects an active evaluation. Full module/resource caches
+and public evaluator APIs remain M2/M4 work; see [the Host contract](m1-host.md).
 
 `ResourceReader.read(URI)` is synchronous. Java's public SPI has no Rust-style
 poll/resume token protocol. The Rust design's stale-completion rejection,
 monotonic host clock, and explicit instruction budgets are shared-engine adapter
-choices requiring their own target tests. Same-thread reentry, cancellation of
-in-flight platform I/O, exported-value validity after close, arbitrary callback
-exceptions, and precise JVM adapter diagnostics remain compatibility work.
+choices requiring their own target tests. The closing experiment adds bounded
+Java/Rust reentry and retry comparisons and actual Node/browser cancellation of
+live fake operations. Real filesystem/HTTP reader integration, exported-value
+validity after close, arbitrary callback exceptions, and precise JVM adapter
+diagnostics remain compatibility work.
 
 Source references:
 

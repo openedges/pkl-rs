@@ -83,6 +83,15 @@ impl HostProbe {
     pub fn poll(&mut self, now: f64, budget: f64) -> Result<String, JsValue> {
         Ok(self.inner.poll(unsigned(now)?, unsigned(budget)?))
     }
+    pub fn reenter(&mut self, token: JsString, now: f64, timeout: f64) -> Result<(), JsValue> {
+        self.inner
+            .reenter(&string(&token)?, unsigned(now)?, unsigned(timeout)?)
+            .map_err(error)
+    }
+    #[wasm_bindgen(js_name = drainCancelledReads)]
+    pub fn drain_cancelled_reads(&mut self) -> Vec<String> {
+        self.inner.drain_cancelled_reads()
+    }
     #[wasm_bindgen(js_name = respondInteger)]
     pub fn respond_integer(
         &mut self,

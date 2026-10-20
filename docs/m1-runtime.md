@@ -34,12 +34,13 @@ ownership mechanism, not a substitute for whole-process RSS measurements.
 
 ## Lazy forcing and inheritance
 
-The observable experiment states are `Unevaluated`, `Evaluating`, `Completed`, and
-`Failed`. `Unevaluated` is represented by an absent cache entry. Forcing marks a
-member as evaluating before executing its body; completion caches its value.
-Reentering an active member reports a cycle. An error records the same first error
-in all active memoized forcing frames and stops later operands from running.
-Repeated access to a completed or failed member does not rerun its body.
+The member cache states are `Unevaluated`, `Evaluating`, and `Completed`.
+`Unevaluated` is represented by an absent cache entry. Forcing marks a member as
+evaluating before executing its body; completion caches its value. Reentering an
+active member reports a cycle. An error stops later operands, removes evaluating
+entries owned by the current context, and remains the result of that evaluation.
+A later evaluation retries failed members; completed values remain cached.
+An inner failure must not remove an outer context's active forcing marker.
 
 An ordinary property caches by name on its dynamic receiver. A local property
 also records its definition owner, so an inherited local reference is not replaced
@@ -59,13 +60,14 @@ and [`ReadLocalPropertyNode`](../external/pkl/pkl-core/src/main/java/org/pkl/cor
 Let initializers execute before their bodies, as in
 [`LetExprNode`](../external/pkl/pkl-core/src/main/java/org/pkl/core/ast/expression/binary/LetExprNode.java).
 
-Failure memoization is an experiment contract, not an assertion that Java caches
-failed member calls. Java's ordinary member path writes successful values after
-the call. Retrying failed thunks, caught failures, resource effects, and constraints
-need a fuller semantic decision before exposing recoverable evaluation. The
-prototype terminates its current evaluation at the first error. Missing `super`
-members currently report an error; Java can return an empty Dynamic object. This
-known difference remains outside the verified subset.
+The original prototype cached failures permanently. Independent review reproduced
+a Java 0.32.0 reader that fails once, recovers on the second attempt in the same
+evaluator, and then serves the cached success. The runtime now follows Java's
+successful-return-only caching rule. The bounded retry and reentry differential
+runner is `tools/m1_lifecycle.py`; it preserves diagnostic files separately from
+its deterministic observation protocol. Constraints and the full error renderer
+remain later work. Missing `super` members currently report an error; Java can
+return an empty Dynamic object. This difference remains outside the verified subset.
 
 ## Bytecode, suspension, and caches
 
@@ -94,9 +96,12 @@ experiments. Both paths have boundary and first-error regressions.
 returns a completed result, a yield, or an explicit resource request with a
 monotonically increasing request ID. `resume` delivers a value or error to that
 same suspended frame. The runtime performs no platform I/O. Suspended frames remain
-GC roots. Duplicate or stale completions, reentrant starts, and completions after
-cancellation or close are rejected. A budget permits the Host to regain control
-even for an infinite bytecode loop.
+GC roots. `HostSession::reenter` saves a waiting context and starts a callback
+evaluation in the same VM. Nested completion restores the parent continuation;
+the parent read can then resume. Every suspended context contributes GC roots.
+Duplicate, stale, out-of-order and post-close completions are rejected. Ordinary
+`start` still rejects an active evaluation; callback reentry requires its current
+read token. A budget permits the Host to regain control even for an infinite loop.
 
 The internal VM cancellation primitive clears an active computation and supports
 a later independent start. The public Host wrapper uses permanent closure for
@@ -115,7 +120,7 @@ python3 -m unittest discover -s tools/tests -p test_m1_runtime.py -v
 
 The runtime tests cover actual frontend-to-VM evaluation, amended receivers,
 definition-local reads, nested let captures, legal object cycles, forcing cycles,
-first-error selection, successful and failed memoization, nonmemoized super reads,
+first-error selection, successful memoization and retryable failures, nonmemoized super reads,
 suspended-frame roots, stale/foreign handles, slot reuse, cancellation, and malformed
 bytecode cleanup. The cycle-reclamation test allocates 10,000 mutually referring
 pairs, collects each unrooted pair, and checks that only two arena slots are needed.

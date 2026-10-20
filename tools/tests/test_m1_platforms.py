@@ -9,7 +9,9 @@ import m1_platforms
 class PlatformEvidenceTests(unittest.TestCase):
     def test_platform_scenario_omission_duplication_and_errors_fail(self):
         names = sorted(m1_platforms.REQUIRED_SCENARIOS)
-        valid = {'nodeChecks': names, 'browserChecks': names, 'browserErrors': []}
+        pin = '1.64.1'
+        valid = {'nodeChecks': names, 'browserChecks': names, 'browserErrors': [],
+                 'playwright': pin, 'playwrightCore': pin, 'playwrightPin': pin}
         m1_platforms.check_scenarios(valid)
         for target in ['nodeChecks', 'browserChecks']:
             for broken in [[], names[:-1], names[:-1]+names[:1], names+['unexpected']]:
@@ -17,6 +19,25 @@ class PlatformEvidenceTests(unittest.TestCase):
                     m1_platforms.check_scenarios({**valid, target: broken})
         with self.assertRaises(ValueError):
             m1_platforms.check_scenarios({**valid, 'browserErrors': ['uncaught error']})
+        for key in ['playwright', 'playwrightCore', 'playwrightPin']:
+            for value in [None, '1.64.0', '^1.64.1']:
+                with self.assertRaises(ValueError):
+                    m1_platforms.check_scenarios({**valid, key: value})
+
+    def test_obsolete_busy_and_manual_cancellation_scenarios_do_not_satisfy_contract(self):
+        legacy = set(m1_platforms.REQUIRED_SCENARIOS) - {
+            'same-evaluator-nested-read-resume',
+            'live-host-cancel-abort-release-settle',
+            'live-host-close-abort-release-settle',
+            'live-host-timeout-abort-release-settle',
+            'nested-terminal-aborts-all-live-host-operations',
+        }
+        legacy.update({'async-same-stack-resume-reentry-duplicate',
+                       'cancel-close-late-callback', 'real-timer-waiting-timeout'})
+        with self.assertRaises(ValueError):
+            m1_platforms.check_scenarios({'nodeChecks': sorted(legacy), 'browserChecks': sorted(legacy),
+                                         'browserErrors': [], 'playwright': '1.64.1',
+                                         'playwrightCore': '1.64.1', 'playwrightPin': '1.64.1'})
 
     def capture(self, values):
         return b''.join(value.hex().encode()+b'\n' for value in values)

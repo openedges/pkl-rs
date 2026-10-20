@@ -9,7 +9,8 @@ three selected historical regression cases. Java replay verifies the comparison 
 that M0 job does not execute a Rust Pkl evaluator.
 
 The separate M1 experiment job executes bounded Java/Rust frontend and runtime
-comparisons, actual Java Host lifecycle observations, and the shared primitive
+comparisons, actual Java Host lifecycle observations, exact Java/Rust retry and
+nested-evaluation observation protocols, and the shared primitive
 corpus through native Rust, a Node addon, and real Chromium Wasm. It pins Node,
 Playwright and wasm-bindgen, builds artifacts, and uploads captures, artifacts,
 source snapshots and failures. Its architecture contract requires complete
@@ -17,6 +18,10 @@ execution and cross-target consistency while preserving the exact known regex
 backend mismatches as failed compatibility cases. Three complete runtime
 diagnostic byte mismatches are also recorded explicitly. A green M1 job means
 the experiments and known-gap accounting reproduced, not full conformance.
+Lifecycle diagnostics are retained and compared separately from the observation
+protocol; protocol equality does not establish Java error rendering. Node and
+browser scenarios also require live Host operations to abort and release their
+resources on cancellation, close, and timeout.
 Host-sensitive VM performance measurements remain local, separately recorded
 experiments on a quiet host.
 

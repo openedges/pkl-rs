@@ -99,13 +99,15 @@ M1은 아래 항목별 구현·비교 증거·설계 결정이 갖춰진 뒤 완
 | M1-01 SourceMap·parser | 완료 | [프런트엔드 증거](reports/m1/frontend.json): 제한된 Java/Rust 비교 15/15, UTF-8·UTF-16·code point와 EOF underline 구분. 전체 문법은 M2입니다. |
 | M1-02 이름 해석·진단 | 완료 | lexical binding·receiver·owner·this·super의 정적 계약과 Java 값·첫 parser 오류 비교. [계약](docs/m1-frontend.md)에 전체 진단 renderer 미구현을 명시했습니다. |
 | M1-03 숫자·정규식 | 완료 | [6,078개 비교](reports/m1/semantics.json)와 Native·Node·Wasm 공통 결과 확보. 숫자 표본은 모두 일치, regex 후보는 Unicode·UTF-16 차이 2개로 기각하고 별도 cursor 증거를 갖춘 공통 대안을 선택했습니다. 숫자 비용 96개 결과 사전 일치·6개 프로세스 수렴 확인: 현재 formatter 약 6.1배 느림을 후속 성능 gate로 남깁니다. |
-| M1-04 lazy 값·heap | 완료 | [런타임 계약](docs/m1-runtime.md): forcing·memoization·실패·상속, 중단 frame의 GC root와 순환 회수·세대 handle 검증. 전체 언어 오류 바이트 불일치는 그대로 보존합니다. |
+| M1-04 lazy 값·heap | 완료 | 실패를 영구 캐시하지 않도록 수정했습니다. [마감 차등 증거](reports/m1/lifecycle.json)의 retry protocol 전체 바이트가 Java와 일치하며 첫 오류 순서·복구·성공 의존성 캐싱을 확인했습니다. runtime 회귀 13개 통과, 진단 바이트 차이는 별도 실패로 보존합니다. |
 | M1-05 VM·캐시 | 완료 | [일반 VM](reports/m1/runtime-performance.json)은 Java API 대비 약 1.27배 느림. [정수 특수화](reports/m1/runtime-specialized.json)는 약 0.46배, 일반 Rust 대비 약 2.75배 개선. M2의 제한된 기반으로 특수화 bytecode를 선택하며, Java target 컴파일 실패와 전체 성능 gate는 미해결입니다. |
-| M1-06 Host·수명주기 | 완료 | [Java 관찰 5개](reports/m1/host-java.json), Rust Host 회귀 7개와 실제 JS callback·timer 검증. Java 콜백 재진입 성공을 확인했으므로 제품 계약은 중첩 평가 context를 요구합니다. 현재 단일 continuation의 Busy 제한은 호환성 차이로 기록했습니다. |
-| M1-07 브라우저·Node | 완료 | [실제 플랫폼 결과](reports/m1/platforms.json): Native·Node·Chromium의 6,078개 primitive 바이트 모두 동일, Node·브라우저 각각 필수 시나리오 12개 통과. Java 비교는 각 6,076개 일치·동일한 정규식 실패 2개입니다. |
-| M1-08 통합·기록 | 완료 | core `ce99720`·검증 통합 `e9ee8d5` 푸시. 로컬 검증 명령 13개·Python 검사 114개 통과. 최종 코드의 [CI 5개 작업](https://github.com/luuvish/pkl-rs/actions/runs/39372369602) 성공, 내려받은 artifact checksum·소스·원시 결과 재검증 완료. [CI 기록](reports/m1/ci-summary.json)·[증거](reports/m1/ci-evidence.tar.gz). |
+| M1-06 Host·수명주기 | 완료 | 같은 VM·heap·성공 member cache를 공유하는 중첩 context를 구현했습니다. [재진입 protocol](reports/m1/lifecycle.json) 바이트가 Java와 일치하며 Host 회귀 15개가 root·token·deadline·종료를 검증합니다. 실제 JS에서 진행 중인 단일·중첩 Host 작업의 abort·Promise 종료·timer/listener/map 해제를 확인했습니다. |
+| M1-07 브라우저·Node | 완료 | [마감 플랫폼 결과](reports/m1/platform-closing.json): Native·Node·Chromium의 6,078개 primitive 바이트 모두 동일, Node·브라우저 각각 필수 시나리오 14개 통과. Java 비교는 각 6,076개 일치·동일한 정규식 실패 2개입니다. |
+| M1-08 통합·기록 | 보완 중 | 기존 코드의 [CI 5개 작업](https://github.com/luuvish/pkl-rs/actions/runs/39373077181)은 성공했습니다. 보완 구현의 차등 테스트·플랫폼 실행·새 CI와 원시 artifact를 다시 검증하고 별도 증거로 보관합니다. 기존 [CI 기록](reports/m1/ci-summary.json)·[증거](reports/m1/ci-evidence.tar.gz)는 유지합니다. |
 
 구문·이름 해석과 VM·heap은 각각 `gpt-6.1-sol / high`, 숫자·정규식 실험은 `gpt-6-astra / high` 에이전트가 담당합니다. 주 에이전트는 Host·플랫폼 연결·통합 검증을 담당하며 공유 인터페이스와 Cargo 설정을 관리합니다. 기능 검증은 병행하고 성능 측정은 호스트를 비운 상태에서 순차 실행합니다.
+
+마감 보완은 공유 VM·Host 구현에 `gpt-6-astra / high`, Java 차등 검증과 Node·브라우저 검증에 각각 `gpt-6.1-sol / high`를 배정합니다. 주 에이전트는 코드 검토·증거 보관·문서·CI 통합을 담당합니다. 구현과 검증 통합, 최종 CI 증거 보관을 단계별로 커밋·푸시합니다. M1-04와 M1-06의 미달 항목이 닫히기 전에는 M1 전체를 완료로 보고하지 않습니다.
 
 | 실험 | 확인할 내용 | 설계 결정에 필요한 증거 |
 | --- | --- | --- |
@@ -125,8 +127,8 @@ M1은 아래 항목별 구현·비교 증거·설계 결정이 갖춰진 뒤 완
 ### M1에서 확인한 후속 구현·검증 조건
 
 - regex의 현재 backend는 Java Unicode 버전과 supplementary 문자 내부의 zero-width 위치에서 실패합니다. Java 21의 Unicode table과 UTF-16 cursor를 갖춘 공통 matcher를 구현하고, 기존 실패 2개를 포함한 전체 비교를 통과해야 합니다. 별도의 빈 pattern·dot cursor 실험은 이 구현 전체의 완료 증거가 아닙니다.
-- 현재 3개 실행 오류의 전체 stderr가 Java와 다릅니다. M2의 진단 renderer·논리적 frame·오류 선택과 함께 바이트 차이를 없애야 합니다. 미구현된 failure-cache 재시도와 missing-super 동작도 언어 의미론 검증에 포함합니다.
-- Java는 reader callback 내부의 평가 재진입을 허용합니다. 제품 evaluator에는 cache와 종료 수명을 공유하는 중첩 평가 context가 필요하며, 단일 HostSession의 Busy 제한을 그대로 공개 API로 확정하지 않습니다. JS의 unpaired surrogate와 장기 clock 범위도 제품 지원 전에 해결해야 합니다.
+- 현재 3개 실행 오류의 전체 stderr와 마감 lifecycle 실험의 4개 오류 payload가 Java와 다릅니다. M2의 진단 renderer·논리적 frame·오류 선택과 함께 바이트 차이를 없애야 합니다. missing-super 동작도 언어 의미론 검증에 포함합니다. 실패 재시도는 마감 실험에서 수정·검증했습니다.
+- 중첩 context·실패 복구·종료 시 취소 전달은 작은 구현으로 검증했습니다. 제품 module/resource cache와 공개 API는 후속 구현입니다. Java 0.32.0은 callback 안에서 새 resource를 읽으면 `ConcurrentModificationException`에 의한 `PklBugException`을 낼 수 있습니다. [Java-only 실패 관찰](reports/m1/lifecycle.json)을 보존하며 M4 cache 구현에서 이 동작을 다룹니다. JS의 unpaired surrogate와 장기 clock 범위도 제품 지원 전에 해결해야 합니다.
 - 숫자 formatter는 선택한 primitive 비용 측정에서 Java보다 약 6.1배 느립니다. 정확한 출력 바이트를 유지하며 알고리즘·할당 비용을 개선하고 같은 입력·조건에서 다시 측정해야 합니다.
 - 특수화 VM의 작은 정수 workload 개선은 전체 성능 통과가 아닙니다. 고정 Graal/Pkl 조합의 `FrameWithoutBoxing` 컴파일 실패를 해결하거나 명시적 별도 oracle 실험으로 원인을 규명하고, 실제 최적화된 Java·큰 lazy 객체·장기 세션·제품 API를 비교해야 합니다.
 

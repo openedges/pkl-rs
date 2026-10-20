@@ -1,3 +1,5 @@
+import { FakeHostOperations, waitingEvaluation } from './host-adapter.mjs';
+
 // Identical assertions execute inside Node and an actual Chromium page.
 export async function scenarios(api) {
   const passed = [];
@@ -42,22 +44,37 @@ export async function scenarios(api) {
     input[1] = 7; eq(result[1], 255);
     for (const value of [[], {}, new Uint16Array([1]), null]) throws(() => api.roundtripBytes(value));
   });
-  await check('async-same-stack-resume-reentry-duplicate', async () => {
+  await check('same-evaluator-nested-read-resume', async () => {
     const probe = new api.HostProbe('add');
+    const host = new FakeHostOperations(probe, clock);
     try {
       probe.start(clock(), 10000); const token = read(probe);
+      const outer = host.begin(token);
       eq(read(probe), token);
-      throws(() => probe.start(clock(), 10000), 'evaluation is already active');
+      probe.reenter(token, clock(), 10000);
+      const nestedToken = read(probe);
+      assert(nestedToken !== token, 'nested read reused parent identity');
+      const nested = host.begin(nestedToken);
+      eq(host.stats.active, 2); eq(host.stats.resources, 2);
+      throws(() => probe.respondInteger(token, 9n, clock()), 'stale or unexpected Host completion');
       await delay(5);
-      probe.respondInteger(token, 2n, clock());
-      throws(() => probe.respondInteger(token, 2n, clock()), 'stale or unexpected Host completion');
-      eq(probe.poll(clock(), 100), 'ready\tint\t42');
+      host.complete(nestedToken, 2n);
+      eq((await nested.settled).value, 2n);
+      eq(probe.poll(clock(), 100), 'ready\tint\t102');
+      eq(read(probe), token);
+      eq(host.stats.active, 1); eq(host.stats.resources, 1);
+      host.complete(token, 3n);
+      eq((await outer.settled).value, 3n);
+      throws(() => probe.respondInteger(token, 3n, clock()), 'stale or unexpected Host completion');
+      eq(probe.poll(clock(), 100), 'ready\tint\t43');
+      eq(host.stats.resources, 0); eq(host.stats.settled, 2); eq(host.stats.aborted, 0);
+      eq(host.operations.size, 0); eq(host.stats.timers, 0); eq(host.stats.listeners, 0);
       probe.start(clock(), 10000); const next = read(probe);
       assert(next !== token, 'request identity reused');
       throws(() => probe.respondInteger(token, 2n, clock()), 'stale or unexpected Host completion');
       probe.respondInteger(next, 3n, clock());
       eq(probe.poll(clock(), 100), 'ready\tint\t43');
-    } finally { dispose(probe); }
+    } finally { probe.close(); host.drainAborts(); if (probe.free) probe.free(); }
   });
   await check('cross-session-completion-rejected', () => {
     const a = new api.HostProbe('read'), b = new api.HostProbe('read');
@@ -85,26 +102,70 @@ export async function scenarios(api) {
       eq(probe.poll(clock(), 100), 'error\tHost\t6661696c6564000d0af09f9982');
     } finally { dispose(probe); }
   });
-  await check('cancel-close-late-callback', async () => {
-    for (const action of ['cancel', 'close']) {
+  for (const action of ['cancel', 'close', 'timeout']) {
+    await check(`live-host-${action}-abort-release-settle`, async () => {
       const probe = new api.HostProbe('read');
+      let evaluation;
       try {
-        probe.start(clock(), 10000); const token = read(probe);
-        await delay(5); probe[action]();
-        eq(probe.poll(clock(), 100).split('\t')[1], action === 'cancel' ? 'Cancelled' : 'Closed');
-        throws(() => probe.respondInteger(token, 1n, clock()), 'evaluator is closed');
+        evaluation = waitingEvaluation(probe, action === 'timeout' ? 50 : 10000, clock);
+        const { host } = evaluation;
+        const [operation] = host.operations.values();
+        eq(host.stats.active, 1); eq(host.stats.resources, 1);
+        assert(!operation.controller.signal.aborted, 'operation aborted before terminal action');
+        await delay(5);
+        eq(host.stats.active, 1); eq(host.stats.settled, 0);
+        if (action !== 'timeout') { probe[action](); evaluation.pump(); }
+        const result = await evaluation.result;
+        eq(result.split('\t')[1], { cancel: 'Cancelled', close: 'Closed', timeout: 'Timeout' }[action]);
+        eq((await operation.settled).error, 'AbortError');
+        assert(operation.controller.signal.aborted, 'underlying Host operation was not aborted');
+        eq(host.stats.aborted, 1); eq(host.stats.active, 0); eq(host.stats.resources, 0);
+        eq(host.operations.size, 0); eq(host.stats.timers, 0); eq(host.stats.listeners, 0);
+        eq(host.stats.settled, 1); eq(host.stats.rejected, 1); eq(host.stats.fulfilled, 0);
+        eq(probe.drainCancelledReads().length, 0);
+        throws(() => host.complete(operation.token, 1n), 'evaluator is closed');
+        eq(host.stats.lateRejected, 1); eq(host.stats.settled, 1);
         throws(() => probe.start(clock(), 10000), 'evaluator is closed');
-      } finally { dispose(probe); }
+      } finally {
+        if (evaluation) { evaluation.stop(); probe.close(); evaluation.host.drainAborts(); }
+        dispose(probe);
+      }
+    });
+  }
+  await check('nested-terminal-aborts-all-live-host-operations', async () => {
+    for (const action of ['cancel', 'close', 'timeout']) {
+      const probe = new api.HostProbe('add');
+      let evaluation;
+      try {
+        // The outer deadline also bounds a nested context with a longer deadline.
+        evaluation = waitingEvaluation(probe, action === 'timeout' ? 50 : 10000, clock);
+        const { host } = evaluation;
+        const [outer] = host.operations.values();
+        probe.reenter(outer.token, clock(), 10000);
+        evaluation.pump();
+        const operations = [...host.operations.values()];
+        eq(operations.length, 2); eq(host.stats.active, 2); eq(host.stats.resources, 2);
+        eq(host.stats.timers, 2); eq(host.stats.listeners, 2);
+        await delay(5);
+        eq(host.stats.settled, 0);
+        if (action !== 'timeout') { probe[action](); evaluation.pump(); }
+        eq((await evaluation.result).split('\t')[1], { cancel: 'Cancelled', close: 'Closed', timeout: 'Timeout' }[action]);
+        for (const operation of operations) {
+          eq((await operation.settled).error, 'AbortError');
+          assert(operation.controller.signal.aborted, 'nested terminal left an active Host operation');
+          throws(() => host.complete(operation.token, 1n), 'evaluator is closed');
+        }
+        eq(host.stats.aborted, 2); eq(host.stats.rejected, 2); eq(host.stats.settled, 2);
+        eq(host.stats.fulfilled, 0); eq(host.stats.lateRejected, 2);
+        eq(host.stats.active, 0); eq(host.stats.resources, 0); eq(host.operations.size, 0);
+        eq(host.stats.timers, 0); eq(host.stats.listeners, 0);
+        eq(probe.drainCancelledReads().length, 0);
+        throws(() => probe.start(clock(), 10000), 'evaluator is closed');
+      } finally {
+        if (evaluation) { evaluation.stop(); probe.close(); evaluation.host.drainAborts(); }
+        dispose(probe);
+      }
     }
-  });
-  await check('real-timer-waiting-timeout', async () => {
-    const probe = new api.HostProbe('read');
-    try {
-      const start = clock(); probe.start(start, 50); const token = read(probe);
-      await delay(70);
-      eq(probe.poll(clock(), 100).split('\t')[1], 'Timeout');
-      throws(() => probe.respondInteger(token, 1n, clock()), 'evaluator is closed');
-    } finally { dispose(probe); }
   });
   await check('cooperative-loop-cancel', async () => {
     const probe = new api.HostProbe('loop');

@@ -195,3 +195,308 @@ fn adapters_use_real_frontend_and_vm_and_reject_dangling_objects() {
     assert!(evaluate_member("answer = new { value = 1 }", "answer").is_err());
     assert!(evaluate_member("answer = 1 +", "answer").is_err());
 }
+
+fn shared_session() -> (HostSession, Value) {
+    use pkl_runtime::heap::Member;
+    let mut program = Program::new(vec![
+        vec![
+            I::MakeObject {
+                template: 0,
+                has_parent: false,
+            },
+            I::Return,
+        ],
+        vec![I::Input(0), I::GetMember(Arc::from("outer")), I::Return],
+        vec![I::Input(0), I::GetMember(Arc::from("shared")), I::Return],
+        vec![
+            I::Constant(Value::string("test:/resource")),
+            I::ReadResource,
+            I::GetProperty {
+                name: Arc::from("shared"),
+                owner_depth: 0,
+                local: false,
+            },
+            I::Add,
+            I::Return,
+        ],
+        vec![
+            I::Constant(Value::string("test:/resource")),
+            I::ReadResource,
+            I::Return,
+        ],
+    ]);
+    program.objects.push(vec![
+        Member {
+            name: Arc::from("outer"),
+            code: 3,
+            local: false,
+        },
+        Member {
+            name: Arc::from("shared"),
+            code: 4,
+            local: false,
+        },
+    ]);
+    let mut session = HostSession::new(Arc::new(program));
+    session.start(0, vec![], 0, None).unwrap();
+    let HostPoll::Ready(Ok(value)) = session.poll(0, 100) else {
+        panic!("expected module")
+    };
+    (session, value)
+}
+
+#[test]
+fn nested_contexts_share_member_cache_preserve_parent_and_reject_out_of_order_completion() {
+    let (mut session, object) = shared_session();
+    session
+        .start(1, vec![object.clone()], 0, Some(100))
+        .unwrap();
+    let outer = request(&mut session, 0);
+    session
+        .reenter(&outer, 2, vec![object.clone()], 1, None)
+        .unwrap();
+    let inner = request(&mut session, 1);
+    assert_ne!(outer, inner);
+    assert_eq!(session.context_depth(), 2);
+    assert_eq!(
+        session
+            .resume(&outer, Ok(Value::Int(500)), 1)
+            .unwrap_err()
+            .kind,
+        ErrorKind::Host
+    );
+    assert_eq!(
+        session
+            .reenter(&outer, 0, vec![], 1, None)
+            .unwrap_err()
+            .kind,
+        ErrorKind::Host
+    );
+    session.resume(&inner, Ok(Value::Int(2)), 2).unwrap();
+    // Even after resume, the inner continuation must finish before the parent can resume.
+    assert_eq!(
+        session
+            .resume(&outer, Ok(Value::Int(500)), 2)
+            .unwrap_err()
+            .kind,
+        ErrorKind::Host
+    );
+    assert_eq!(session.poll(2, 100), HostPoll::Ready(Ok(Value::Int(2))));
+    assert_eq!(session.context_depth(), 1);
+    assert_eq!(request(&mut session, 2), outer);
+    assert_eq!(
+        session
+            .resume(&inner, Ok(Value::Int(3)), 2)
+            .unwrap_err()
+            .kind,
+        ErrorKind::Host
+    );
+    session.resume(&outer, Ok(Value::Int(40)), 2).unwrap();
+    // No additional shared-member read: the inner completion populated this same object.
+    assert_eq!(session.poll(2, 100), HostPoll::Ready(Ok(Value::Int(42))));
+    session.start(2, vec![object], 3, None).unwrap();
+    assert_eq!(session.poll(3, 100), HostPoll::Ready(Ok(Value::Int(2))));
+    assert!(session.drain_cancelled_reads().is_empty());
+}
+
+#[test]
+fn nested_failure_retries_and_cyclic_child_does_not_clear_parent_lazy_marker() {
+    let (mut session, object) = shared_session();
+    session.start(1, vec![object.clone()], 0, None).unwrap();
+    let outer = request(&mut session, 0);
+    // Reenter the very member whose force is suspended in the parent.
+    for _ in 0..2 {
+        session
+            .reenter(&outer, 1, vec![object.clone()], 0, None)
+            .unwrap();
+        assert_eq!(error_kind(session.poll(0, 100)), ErrorKind::Cycle);
+        assert_eq!(request(&mut session, 0), outer);
+    }
+    session
+        .reenter(&outer, 2, vec![object.clone()], 0, None)
+        .unwrap();
+    let failed = request(&mut session, 0);
+    let error = RuntimeError::new(ErrorKind::Host, "nested transient\0error\r\n🙂");
+    session.resume(&failed, Err(error.clone()), 0).unwrap();
+    assert_eq!(session.poll(0, 100), HostPoll::Ready(Err(error)));
+    assert_eq!(request(&mut session, 0), outer);
+    session.reenter(&outer, 2, vec![object], 0, None).unwrap();
+    let retry = request(&mut session, 0);
+    assert_ne!(failed, retry);
+    session.resume(&retry, Ok(Value::Int(2)), 0).unwrap();
+    assert_eq!(session.poll(0, 100), HostPoll::Ready(Ok(Value::Int(2))));
+    session.resume(&outer, Ok(Value::Int(40)), 0).unwrap();
+    assert_eq!(session.poll(0, 100), HostPoll::Ready(Ok(Value::Int(42))));
+}
+
+#[test]
+fn suspended_parent_roots_survive_collection_in_child() {
+    let (mut session, object) = shared_session();
+    session.start(1, vec![object], 0, None).unwrap();
+    let outer = request(&mut session, 0);
+    // The child has no object input: only the suspended parent keeps its object alive.
+    session.reenter(&outer, 4, vec![], 0, None).unwrap();
+    let inner = request(&mut session, 0);
+    assert_eq!(session.collect(&[]).live, 1);
+    session.resume(&inner, Ok(Value::Int(99)), 0).unwrap();
+    assert_eq!(session.poll(0, 100), HostPoll::Ready(Ok(Value::Int(99))));
+    session.resume(&outer, Ok(Value::Int(40)), 0).unwrap();
+    let shared = request(&mut session, 0);
+    session.resume(&shared, Ok(Value::Int(2)), 0).unwrap();
+    assert_eq!(session.poll(0, 100), HostPoll::Ready(Ok(Value::Int(42))));
+    assert_eq!(session.collect(&[]).live, 0);
+}
+
+#[test]
+fn rejected_reentry_preserves_parent_and_its_original_deadline() {
+    let mut session = reader();
+    start(&mut session, 0, 10);
+    let outer = request(&mut session, 0);
+    assert_eq!(
+        session
+            .reenter(&outer, usize::MAX, vec![], 1, Some(100))
+            .unwrap_err()
+            .kind,
+        ErrorKind::InvalidBytecode
+    );
+    assert_eq!(session.context_depth(), 1);
+    assert_eq!(request(&mut session, 1), outer);
+    let (_foreign_session, foreign_object) = shared_session();
+    assert_eq!(
+        session
+            .reenter(&outer, 0, vec![foreign_object], 1, None)
+            .unwrap_err()
+            .kind,
+        ErrorKind::StaleHandle
+    );
+    assert_eq!(session.context_depth(), 1);
+    assert_eq!(request(&mut session, 1), outer);
+    assert_eq!(
+        session
+            .reenter("foreign:token", 0, vec![], 2, None)
+            .unwrap_err()
+            .kind,
+        ErrorKind::Host
+    );
+    assert_eq!(request(&mut session, 2), outer);
+    assert_eq!(error_kind(session.poll(10, 100)), ErrorKind::Timeout);
+    assert_eq!(session.drain_cancelled_reads(), vec![outer]);
+}
+
+#[test]
+fn terminal_lifecycle_releases_all_contexts_and_drains_pending_reads_once() {
+    for terminal in [ErrorKind::Cancelled, ErrorKind::Closed, ErrorKind::Timeout] {
+        let (mut session, object) = shared_session();
+        session.start(1, vec![object], 0, Some(10)).unwrap();
+        let outer = request(&mut session, 0);
+        session.reenter(&outer, 4, vec![], 1, Some(100)).unwrap();
+        let inner = request(&mut session, 1);
+        session.reenter(&inner, 4, vec![], 2, None).unwrap();
+        let deepest = request(&mut session, 2);
+        match terminal {
+            ErrorKind::Cancelled => session.cancel(),
+            ErrorKind::Closed => session.close(),
+            ErrorKind::Timeout => assert_eq!(error_kind(session.poll(10, 100)), ErrorKind::Timeout),
+            _ => unreachable!(),
+        }
+        assert_eq!(error_kind(session.poll(10, 100)), terminal);
+        assert_eq!(session.context_depth(), 0);
+        assert_eq!(session.heap_stats().live, 0);
+        assert_eq!(session.heap_stats().slots, 0);
+        let tokens = vec![outer, inner, deepest];
+        assert_eq!(session.drain_cancelled_reads(), tokens);
+        for token in tokens {
+            assert_eq!(
+                session
+                    .resume(&token, Ok(Value::Int(1)), 10)
+                    .unwrap_err()
+                    .kind,
+                ErrorKind::Closed
+            );
+        }
+        session.close();
+        session.cancel();
+        assert!(session.drain_cancelled_reads().is_empty());
+    }
+}
+
+#[test]
+fn child_deadline_and_expired_reentry_close_the_whole_evaluator() {
+    for expire_before_entry in [false, true] {
+        let mut session = reader();
+        start(&mut session, 0, 100);
+        let outer = request(&mut session, 0);
+        if expire_before_entry {
+            assert_eq!(
+                session
+                    .reenter(&outer, 0, vec![], 100, None)
+                    .unwrap_err()
+                    .kind,
+                ErrorKind::Timeout
+            );
+        } else {
+            session.reenter(&outer, 0, vec![], 1, Some(0)).unwrap();
+            assert_eq!(error_kind(session.poll(1, 100)), ErrorKind::Timeout);
+        }
+        assert!(session.is_closed());
+        // Child did not issue a read, so only the suspended parent requires aborting.
+        assert_eq!(session.drain_cancelled_reads(), vec![outer]);
+        assert_eq!(session.context_depth(), 0);
+    }
+}
+
+#[test]
+fn bounded_context_stack_rejects_overflow_without_losing_any_parent() {
+    let mut session = reader();
+    start(&mut session, 0, 100);
+    let mut tokens = vec![request(&mut session, 0)];
+    for _ in 1..64 {
+        session
+            .reenter(
+                tokens.last().unwrap(),
+                0,
+                vec![Value::string("test:/resource")],
+                0,
+                None,
+            )
+            .unwrap();
+        let token = request(&mut session, 0);
+        assert!(!tokens.contains(&token));
+        tokens.push(token);
+    }
+    assert_eq!(session.context_depth(), 64);
+    assert_eq!(
+        session
+            .reenter(tokens.last().unwrap(), 0, vec![], 0, None)
+            .unwrap_err()
+            .kind,
+        ErrorKind::Busy
+    );
+    assert_eq!(request(&mut session, 0), *tokens.last().unwrap());
+    for token in tokens.into_iter().rev() {
+        session.resume(&token, Ok(Value::Int(2)), 0).unwrap();
+        assert_eq!(session.poll(0, 100), HostPoll::Ready(Ok(Value::Int(42))));
+    }
+    assert_eq!(session.context_depth(), 0);
+    assert!(session.drain_cancelled_reads().is_empty());
+}
+
+#[test]
+fn close_after_child_error_drains_only_the_still_pending_parent() {
+    let (mut session, object) = shared_session();
+    session.start(1, vec![object], 0, None).unwrap();
+    let outer = request(&mut session, 0);
+    session.reenter(&outer, 4, vec![], 0, None).unwrap();
+    let inner = request(&mut session, 0);
+    let error = RuntimeError::new(ErrorKind::Host, "child failure");
+    session.resume(&inner, Err(error.clone()), 0).unwrap();
+    assert_eq!(session.poll(0, 100), HostPoll::Ready(Err(error)));
+    assert_eq!(session.context_depth(), 1);
+    assert_eq!(request(&mut session, 0), outer);
+    session.close();
+    assert_eq!(session.context_depth(), 0);
+    assert_eq!(session.heap_stats().live, 0);
+    assert_eq!(session.heap_stats().slots, 0);
+    assert_eq!(session.drain_cancelled_reads(), vec![outer]);
+    assert!(session.drain_cancelled_reads().is_empty());
+}

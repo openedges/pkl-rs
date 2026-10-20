@@ -110,7 +110,16 @@ impl HostProbe {
             _ => return Err(unsupported("unknown Host probe mode")),
         };
         Ok(Self {
-            session: HostSession::new(Arc::new(Program::new(vec![code]))),
+            session: HostSession::new(Arc::new(Program::new(vec![
+                code,
+                vec![
+                    Instruction::Constant(Value::Int(100)),
+                    Instruction::Input(0),
+                    Instruction::ReadResource,
+                    Instruction::Add,
+                    Instruction::Return,
+                ],
+            ]))),
         })
     }
     pub fn start(&mut self, now: u32, timeout: u32) -> Result<(), RuntimeError> {
@@ -130,6 +139,19 @@ impl HostProbe {
                 format!("error\t{:?}\t{}", e.kind, hex(e.message.as_bytes()))
             }
         }
+    }
+    pub fn reenter(&mut self, token: &str, now: u32, timeout: u32) -> Result<(), RuntimeError> {
+        self.session.reenter(
+            token,
+            1,
+            vec![Value::string("test:/resource")],
+            now.into(),
+            Some(timeout.into()),
+        )
+    }
+    /// Drain the shared Host's exactly-once abort signals for platform I/O adapters.
+    pub fn drain_cancelled_reads(&mut self) -> Vec<String> {
+        self.session.drain_cancelled_reads()
     }
     pub fn respond(&mut self, token: &str, value: Value, now: u32) -> Result<(), RuntimeError> {
         self.session.resume(token, Ok(value), now.into())

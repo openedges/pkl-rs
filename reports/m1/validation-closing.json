@@ -1,0 +1,240 @@
+{
+  "timestamp_utc": "2026-10-20T05:21:39.595468+00:00",
+  "platform": "macOS-27.0-arm64-arm-64bit-Mach-O",
+  "source_hashes": {
+    "crates/pkl-napi/Cargo.toml": "0e102eb1b79bda75f7044789eef7ef48b8bce399a5210126611a54d85d5fa452",
+    "crates/pkl-napi/build.rs": "fcbd1ff3f627a7553fa1704dc6f558998daff8bc256015c37aace62cc49ce584",
+    "crates/pkl-runtime/Cargo.toml": "e6a605602038dac45d16ac8f45e749e91dc9f57f2ad3b32d4b6b4e86dd476f55",
+    "crates/pkl-wasm/Cargo.toml": "920188996694727331a4d6153d8645d91e6f8ebfa5dbb666dd0031104e2ae82f",
+    "crates/pkl-wasm/src/lib.rs": "61a27ac2654612ae160bcd176d8bd185f4f3ca5b43c039771b138d484b33e1d4",
+    "crates/pkl-runtime/tests/frontend.rs": "c0996f81d416e9ee122b57e5b6f37e94e59dd1147693031c83fbbdeb25eb34d4",
+    "crates/pkl-runtime/tests/runtime.rs": "6d67ddd0f3f8df75ebf65e78db387af5f69fe5bbaa149455655ba8259236a870",
+    "crates/pkl-runtime/tests/semantics.rs": "205d2297ec864b819ab66dc769ed0fcd8f4022e9e7e8e47a054db9e81a603e4f",
+    "crates/pkl-runtime/tests/host.rs": "27f04889829e72e4cb02352c4923500c741203525cfa93f989b1d6e0d1357bef",
+    "crates/pkl-runtime/examples/runtime_probe.rs": "c5e579b4834f30c556554a64451c571b0f3e35e95b4d17c5ff538465518accbe",
+    "crates/pkl-runtime/examples/runtime_bench.rs": "de57e472c544b066cfad12693392e6cd71dea318386f999c8481a3f703b0d159",
+    "crates/pkl-runtime/examples/lifecycle_probe.rs": "6037eb30061b676895fb9cff219678464c08d1d1744773053c32a7029194af64",
+    "crates/pkl-runtime/examples/semantics_probe.rs": "98347f237e0817cad13616c1cc75aae30ceca10c46d295692edd46a0261563c6",
+    "crates/pkl-runtime/examples/semantics_bench.rs": "4fbd6f5642674657332a90a9e12080de8e9ad15918ac8e09dc92fe4826b1504c",
+    "crates/pkl-runtime/src/host.rs": "f6e348790b4b51224bc5fafd33b6f9fd062a9b407777e80a39b6073a406091fb",
+    "crates/pkl-runtime/src/vm.rs": "3f2ddade070b83059ce7d953f8493d04358e35fe4240059c02a1bef2c41872e5",
+    "crates/pkl-runtime/src/heap.rs": "d48ad669ce0191624c670b686b3579657c00fe476abb07d75322f3bb5bc74632",
+    "crates/pkl-runtime/src/lib.rs": "09fc8c267a22eb40ada933847f51628d7c376cd1259c6f3db4b223411657714f",
+    "crates/pkl-runtime/src/regex.rs": "7d105b0df534f51dfd8a8649681b4b309d14b7a4f212c2b93efb2acc668aaa89",
+    "crates/pkl-runtime/src/source.rs": "fb7672927f31952b2c1a951e8efcb2b61f3f48f03468e19eb297d4892355bcd1",
+    "crates/pkl-runtime/src/value.rs": "0a61e5fcb2c7130dcb8988fce764dd0d895ef72f99a6c200829369cf8b221ce4",
+    "crates/pkl-runtime/src/numeric.rs": "6d318ab81dee53600bdd3ef5a78daa87419346456ead54912e47312eacf7ec07",
+    "crates/pkl-runtime/src/resolver.rs": "5e8207f293b57b01cb062b775aa7e6e687f1bd28e7676fac5f398acf04cfa28f",
+    "crates/pkl-runtime/src/probe.rs": "75fdc1c978b21cc43c33aa8be21540184f4c3d17e34ed9a256bacbce0a83751d",
+    "crates/pkl-runtime/src/syntax.rs": "928c423ae4b1bd8e451dbaa094e462a0a4f476d41f29a9fc8dfc9ae916be4eb7",
+    "crates/pkl-runtime/src/diagnostic.rs": "5bd18e3960bff48d714d3a2da6d9408fb54768398c62cb5b931be0ac6626de11",
+    "crates/pkl-runtime/src/parser.rs": "a62dcb36953050008a118b8e7b0ffd08cac02467b97d10d6ef8fa5081e6253d5",
+    "crates/pkl-napi/src/lib.rs": "dfd0e13729df42f816d36eb62428ddbebf8c769033c99c8bab25c926077eb591",
+    "xtask/Cargo.toml": "1f92cd71773f4d4bc56500d15855e9c01a9cd0a1b634ca2531a703f2c0fd4fb4",
+    "xtask/src/main.rs": "2c870ee3df046936cfc45ca2b43afed3fac075cdb003dd5f135b41f49591394b",
+    "tools/m1_frontend.py": "cbdb4d68329cc09cc9f31a80056f32cfbd68b868d45ff67a8d1c5a1ed333b358",
+    "tools/compat.py": "fa40a0daee29eb078c7b9cb814fc3779556ceaacc2634657c96e3f7810aa5edc",
+    "tools/m1_platforms.py": "391d1d5357534cebccd3fc73329999489997e6489f40f7843d23c5241d8a3940",
+    "tools/benchmark.py": "a3822a1702abf7a6a385b1d8173d45e3ba941b5fb7e80cb66a0b86adf1681604",
+    "tools/m1_semantics.py": "6a9914d9f1101613ab758a2fd77f91251a615eecb4f786248d31317a696f1927",
+    "tools/discover.py": "b8f212a0f7f74cb67cd4a4f1b54949452b58b55037585c2947b9a1f0126dffe3",
+    "tools/smoke_manifest.py": "2dbc51a95ffcc83dc4bb1006f5049e38bd6a8c47e2ed7882f0603bb8295773e8",
+    "tools/OracleRuntimeProbe.java": "19885ab4f5a65bd722e2d25d9794470b310515273c210f9a85309230fa1911bb",
+    "tools/m1_runtime.py": "e6e12e6a9c6927ce0ddbdd897d2f5ee07f7286d01c8fa79ec836581207f5f9db",
+    "tools/m1_host.py": "bfb6fa918936e609760ac83bc762e6c304cb07edd000b124898020ab5354bbdf",
+    "tools/m1_lifecycle.py": "d1ffa5f16c92a9c2aa783eab4b1adf4b02f4e10e0c738eead5ca79629d28a21b",
+    "tools/oracle.py": "0433e4cec011d8daadf0f779d643712019bc6334cce205f02c75799c232f533e",
+    "tools/regression_manifest.py": "3959343f989dfeb695691f112342a5697376b17df22f678e582fdfcffb3be1d9",
+    "tools/evidence.py": "24c4c37e572eed21446f12f258454cf64be411104ee39dc934e3835b2fd73f05",
+    "tools/m1_semantics_bench.py": "08cc9b7d0deabcad2a256b60661c8da3fe34dea65cd5af7ab9a082432abdb777",
+    "tools/pantry.py": "f58abc61bc0ee71712bccfb87a1aee5b8454762e7465bae32090228e5c2b2031",
+    "tools/inventory.py": "24868c2fe77025230522dd9888d9c17b6b992ba9554ce39516cefd57397552e3",
+    "tools/platform/run.mjs": "fbc6e03e35e70107fb22466c794b7117c3e0f5b3f6bea0de57b393f35a188c79",
+    "tools/platform/host-adapter.mjs": "45538ae9bcc46f681da1a83af1d6988de7b290bdc7b98249fe046b061e62e4f2",
+    "tools/platform/scenarios.mjs": "5281238cd7832800cfb6138fb539dc613534da25edb37865e6dd91de1eeaacb3",
+    "tools/platform/package-lock.json": "3d676ac6103c16ecaf51d29417eff80cfffbed0ff7ab9137a7dc8c70aba0c46d",
+    "tools/platform/package.json": "803c8d50727edfe67dc349b657824a76157e6dc4b1af0b8ebbe22976ca91d51c",
+    "tools/tests/test_discover.py": "8bd8b98197480ab9ae2748b49630a878d7a2a4b9c19d1114d3e3ce764fa43611",
+    "tools/tests/test_m1_semantics_bench.py": "e02c2cd1a7f5a464bc1ea351b32b2290bac3bf44acf194e0ec5fdfafcc0bcef9",
+    "tools/tests/test_m1_runtime.py": "e7a3e6feb589f7c66a4d57a28b83c7f1663a184d28904f185e6152e6485ab97c",
+    "tools/tests/test_inventory.py": "d1383d18cf1a2adc8dd6a8d7def373173cad657ec50f2e07a503faff6c7a3f8d",
+    "tools/tests/test_oracle.py": "f5c70467cfb8f5824e41175745d86368c8759115b49f783244a06100ecda7d86",
+    "tools/tests/test_m1_frontend.py": "eaddff92ff8d5aca0d1a255b93bd33e2c28cc56b019061e3ae33c6b730717b1a",
+    "tools/tests/test_m1_lifecycle.py": "814e0ef27f5afc39ed1b20b5ea8081f3428a22eefbeff5de3e2dd1551ad72b62",
+    "tools/tests/test_pantry.py": "52e2bd116fdc77b88864c014ac31155d01b946087d4fbcf4f2dccb523492ad81",
+    "tools/tests/test_m1_semantics.py": "e8e3b4b671c9431b8c28d15ba5e6bef950efb72f5b8638dc08c7e9ccf1583b55",
+    "tools/tests/test_m1_host.py": "a71dc11898bb120c2475cd0c43d7a6995d1fffc795d8df2b9a3a1598c7d7742e",
+    "tools/tests/test_benchmark.py": "95152e76c10c8c102addbef937caa3e7388fda224acd685d4ff0e9f29569c70a",
+    "tools/tests/test_evidence.py": "3dc292c4b2476b08a4b86c3d7d4a9bd13d43a84e117c3ca44c33f6026438f9ce",
+    "tools/tests/test_compat.py": "4a43f280be487ad40b60b5d00bea1bae84abb00ecae6ca6a1e3649b08e08558a",
+    "tools/tests/test_regressions.py": "893e238d88e25071a3ac593503ea572f9d8c0af75ef32f361bc3a40e9ea5913d",
+    "tools/tests/test_m1_platforms.py": "63b915609246cd9fe67b06e58a0b5546e5091413c4c9b7a9aaaaf84397e6d2ef",
+    "tools/java/M1FrontendProbe.java": "b7c7d9fcf689cde66ff9a71806cbe9a7a57aaffa8456b97b6399e2bc4a6a33dd",
+    "tools/java/M1SemanticsProbe.java": "b24d9539f568d51ac940319b0385b541e398a711b309214c425a29bd812d6afa",
+    "tools/java/M1HostProbe.java": "1dbe2f639ad9edbbdc2c1f1baa7568c791887117598b2ece6708c209824f2e8e",
+    "tools/java/M1RuntimeProbe.java": "180234891cc2c7345b6202f350d2f71459604ad5446587ddef73505ed7593483",
+    "tools/java/M1LifecycleProbe.java": "96bf62406f535687be57c9f928507178b9f476f854937e7fcbe799a4e8be5e24",
+    "tools/java/M1SemanticsBench.java": "8c469fb229dd7dd8ba26d6334090c2f7e189a13a45fb64894065576b655575dd",
+    "tools/java/Benchmark.java": "36c92f31c5193816405ecc846062e1cba4f6a1534014d01e11057249516622d8",
+    ".github/workflows/ci.yml": "c9a98da180faf360114e956b7d6ada9c0dc1182fd60daa4c1156d547edb83294",
+    "Cargo.toml": "f1ef2c20d58d3dad9d755a5c26939784216a54aeec4ab95da5c9a375b269e9de",
+    "Cargo.lock": "17114bdbbe6146393c569475c128bdfc618863bbaab8f4bada41860bf8eab96b",
+    "rust-toolchain.toml": "04ab0c8ee214f246c7c53bdfba7ba80a93dad65da5b8455edf17c5ec226d5b20"
+  },
+  "commands": [
+    {
+      "command": [
+        "cargo",
+        "xtask",
+        "verify"
+      ],
+      "exit_code": 0,
+      "stdout": "01.stdout.bin",
+      "stderr": "01.stderr.bin"
+    },
+    {
+      "command": [
+        "cargo",
+        "fmt",
+        "--all",
+        "--",
+        "--check"
+      ],
+      "exit_code": 0,
+      "stdout": "02.stdout.bin",
+      "stderr": "02.stderr.bin"
+    },
+    {
+      "command": [
+        "cargo",
+        "clippy",
+        "--workspace",
+        "--all-targets",
+        "--locked",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "exit_code": 0,
+      "stdout": "03.stdout.bin",
+      "stderr": "03.stderr.bin"
+    },
+    {
+      "command": [
+        "cargo",
+        "test",
+        "--workspace",
+        "--locked"
+      ],
+      "exit_code": 0,
+      "stdout": "04.stdout.bin",
+      "stderr": "04.stderr.bin"
+    },
+    {
+      "command": [
+        "cargo",
+        "check",
+        "-p",
+        "pkl-runtime",
+        "--target",
+        "wasm32-unknown-unknown",
+        "--locked"
+      ],
+      "exit_code": 0,
+      "stdout": "05.stdout.bin",
+      "stderr": "05.stderr.bin"
+    },
+    {
+      "command": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools/tests",
+        "-v"
+      ],
+      "exit_code": 0,
+      "stdout": "06.stdout.bin",
+      "stderr": "06.stderr.bin"
+    },
+    {
+      "command": [
+        "python3",
+        "tools/inventory.py",
+        "--check"
+      ],
+      "exit_code": 0,
+      "stdout": "07.stdout.bin",
+      "stderr": "07.stderr.bin"
+    },
+    {
+      "command": [
+        "python3",
+        "tools/discover.py",
+        "--check"
+      ],
+      "exit_code": 0,
+      "stdout": "08.stdout.bin",
+      "stderr": "08.stderr.bin"
+    },
+    {
+      "command": [
+        "python3",
+        "tools/smoke_manifest.py",
+        "--check"
+      ],
+      "exit_code": 0,
+      "stdout": "09.stdout.bin",
+      "stderr": "09.stderr.bin"
+    },
+    {
+      "command": [
+        "python3",
+        "tools/regression_manifest.py",
+        "--check"
+      ],
+      "exit_code": 0,
+      "stdout": "10.stdout.bin",
+      "stderr": "10.stderr.bin"
+    },
+    {
+      "command": [
+        "python3",
+        "tools/benchmark.py",
+        "--check-contract"
+      ],
+      "exit_code": 0,
+      "stdout": "11.stdout.bin",
+      "stderr": "11.stderr.bin"
+    },
+    {
+      "command": [
+        "python3",
+        "tools/m1_frontend.py",
+        "--check-contract"
+      ],
+      "exit_code": 0,
+      "stdout": "12.stdout.bin",
+      "stderr": "12.stderr.bin"
+    },
+    {
+      "command": [
+        "python3",
+        "tools/m1_semantics.py",
+        "--check"
+      ],
+      "exit_code": 0,
+      "stdout": "13.stdout.bin",
+      "stderr": "13.stderr.bin"
+    }
+  ],
+  "source_stability": true,
+  "python_regression_count": 124,
+  "rust_workspace": {
+    "passed": 45,
+    "ignored": 1,
+    "ignored_reason": "frontend_probe is invoked explicitly by the differential runner"
+  },
+  "evidence_archive": "reports/m1/validation-closing-evidence.tar.gz"
+}

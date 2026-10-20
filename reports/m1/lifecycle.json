@@ -1,0 +1,712 @@
+{
+  "schema": 1,
+  "timestamp_utc": "2026-10-20T05:21:39.590705+00:00",
+  "scope": "bounded lifecycle protocol: failed member retry, successful member memoization, first-error order, same-evaluator callback reentry, shared object/cache, outer resumption, idempotent close and post-close rejection",
+  "limitations": [
+    "protocol bytes are not full Java diagnostics or public API compatibility",
+    "Java parses the Pkl fixtures; Rust uses explicit bytecode translations checked against exact fixture bytes, not frontend read(...) lowering",
+    "reentry uses a prewarmed resource: a new nested Java resource read inside an outer read can raise ConcurrentModificationException; that unsupported upstream edge is outside this successful protocol",
+    "native bounded VM/Host only; not browser/Node lifecycle parity",
+    "no performance or long-session memory claim"
+  ],
+  "compatibility_complete": false,
+  "modes": [
+    "retry",
+    "reentry"
+  ],
+  "cases": [
+    {
+      "id": "retry",
+      "java": {
+        "command": [
+          "/usr/bin/java",
+          "-Xms64m",
+          "-Xmx512m",
+          "-Dfile.encoding=UTF-8",
+          "-Dstdout.encoding=UTF-8",
+          "-Dstderr.encoding=UTF-8",
+          "-Duser.language=en",
+          "-Duser.country=US",
+          "-Duser.timezone=UTC",
+          "-Djava.awt.headless=true",
+          "-Duser.name=oracle",
+          "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs/.cache/oracle/home",
+          "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs/.cache/oracle/tmp",
+          "-cp",
+          "/Users/cody.ij.hwang/Projects/pkl-rs/target/m1/closing-lifecycle-20261020-01/classes:/Users/cody.ij.hwang/Projects/pkl-rs/.cache/oracle/pkl-tools-0.32.0.jar",
+          "M1LifecycleProbe",
+          "retry",
+          "/Users/cody.ij.hwang/Projects/pkl-rs/target/m1/closing-lifecycle-20261020-01/inputs/retry.pkl",
+          "/Users/cody.ij.hwang/Projects/pkl-rs/target/m1/closing-lifecycle-20261020-01/retry/java"
+        ],
+        "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs",
+        "status": "executed",
+        "exit_code": 0,
+        "elapsed_ns": 545975750,
+        "peak_rss_bytes": 131940352,
+        "user_cpu_seconds": 0.943838,
+        "system_cpu_seconds": 0.065897,
+        "stdout": {
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m1/closing-lifecycle-20261020-01/retry/java/stdout.bin",
+          "sha256": "11ddbe5516c3a06698382e2481b4158f2866b101655d8bc2b5d2c740d13fead8",
+          "bytes": 267
+        },
+        "stderr": {
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m1/closing-lifecycle-20261020-01/retry/java/stderr.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        }
+      },
+      "rust": {
+        "command": [
+          "/Users/cody.ij.hwang/Projects/pkl-rs/target/m1/closing-lifecycle-20261020-01/binaries/lifecycle_probe",
+          "retry",
+          "/Users/cody.ij.hwang/Projects/pkl-rs/target/m1/closing-lifecycle-20261020-01/inputs/retry.pkl",
+          "/Users/cody.ij.hwang/Projects/pkl-rs/target/m1/closing-lifecycle-20261020-01/retry/rust"
+        ],
+        "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs",
+        "status": "executed",
+        "exit_code": 0,
+        "elapsed_ns": 270171292,
+        "peak_rss_bytes": 1949696,
+        "user_cpu_seconds": 0.0010299999999999999,
+        "system_cpu_seconds": 0.0030139999999999998,
+        "stdout": {
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m1/closing-lifecycle-20261020-01/retry/rust/stdout.bin",
+          "sha256": "11ddbe5516c3a06698382e2481b4158f2866b101655d8bc2b5d2c740d13fead8",
+          "bytes": 267
+        },
+        "stderr": {
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m1/closing-lifecycle-20261020-01/retry/rust/stderr.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        }
+      },
+      "observations": {
+        "protocol_raw_equal": true,
+        "diagnostics": [
+          {
+            "id": "attempt-1",
+            "raw_equal": false,
+            "status": "full-diagnostic-byte-mismatch"
+          },
+          {
+            "id": "attempt-2",
+            "raw_equal": false,
+            "status": "full-diagnostic-byte-mismatch"
+          },
+          {
+            "id": "after-close",
+            "raw_equal": false,
+            "status": "full-diagnostic-byte-mismatch"
+          }
+        ]
+      }
+    },
+    {
+      "id": "reentry",
+      "java": {
+        "command": [
+          "/usr/bin/java",
+          "-Xms64m",
+          "-Xmx512m",
+          "-Dfile.encoding=UTF-8",
+          "-Dstdout.encoding=UTF-8",
+          "-Dstderr.encoding=UTF-8",
+          "-Duser.language=en",
+          "-Duser.country=US",
+          "-Duser.timezone=UTC",
+          "-Djava.awt.headless=true",
+          "-Duser.name=oracle",
+          "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs/.cache/oracle/home",
+          "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs/.cache/oracle/tmp",
+          "-cp",
+          "/Users/cody.ij.hwang/Projects/pkl-rs/target/m1/closing-lifecycle-20261020-01/classes:/Users/cody.ij.hwang/Projects/pkl-rs/.cache/oracle/pkl-tools-0.32.0.jar",
+          "M1LifecycleProbe",
+          "reentry",
+          "/Users/cody.ij.hwang/Projects/pkl-rs/target/m1/closing-lifecycle-20261020-01/inputs/reentry.pkl",
+          "/Users/cody.ij.hwang/Projects/pkl-rs/target/m1/closing-lifecycle-20261020-01/reentry/java"
+        ],
+        "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs",
+        "status": "executed",
+        "exit_code": 0,
+        "elapsed_ns": 540115542,
+        "peak_rss_bytes": 134053888,
+        "user_cpu_seconds": 0.9387399999999999,
+        "system_cpu_seconds": 0.062998,
+        "stdout": {
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m1/closing-lifecycle-20261020-01/reentry/java/stdout.bin",
+          "sha256": "b8ece9511e22bf703ac73e7b02ea9b64cff52d216f929bca0ed0d7f295017194",
+          "bytes": 199
+        },
+        "stderr": {
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m1/closing-lifecycle-20261020-01/reentry/java/stderr.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        }
+      },
+      "rust": {
+        "command": [
+          "/Users/cody.ij.hwang/Projects/pkl-rs/target/m1/closing-lifecycle-20261020-01/binaries/lifecycle_probe",
+          "reentry",
+          "/Users/cody.ij.hwang/Projects/pkl-rs/target/m1/closing-lifecycle-20261020-01/inputs/reentry.pkl",
+          "/Users/cody.ij.hwang/Projects/pkl-rs/target/m1/closing-lifecycle-20261020-01/reentry/rust"
+        ],
+        "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs",
+        "status": "executed",
+        "exit_code": 0,
+        "elapsed_ns": 5784333,
+        "peak_rss_bytes": 1949696,
+        "user_cpu_seconds": 0.0010199999999999999,
+        "system_cpu_seconds": 0.002168,
+        "stdout": {
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m1/closing-lifecycle-20261020-01/reentry/rust/stdout.bin",
+          "sha256": "b8ece9511e22bf703ac73e7b02ea9b64cff52d216f929bca0ed0d7f295017194",
+          "bytes": 199
+        },
+        "stderr": {
+          "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m1/closing-lifecycle-20261020-01/reentry/rust/stderr.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        }
+      },
+      "observations": {
+        "protocol_raw_equal": true,
+        "diagnostics": [
+          {
+            "id": "after-close",
+            "raw_equal": false,
+            "status": "full-diagnostic-byte-mismatch"
+          }
+        ]
+      }
+    }
+  ],
+  "sources": [
+    {
+      "path": "Cargo.toml",
+      "snapshot": "sources/Cargo.toml",
+      "sha256": "f1ef2c20d58d3dad9d755a5c26939784216a54aeec4ab95da5c9a375b269e9de",
+      "bytes": 319
+    },
+    {
+      "path": "Cargo.lock",
+      "snapshot": "sources/Cargo.lock",
+      "sha256": "17114bdbbe6146393c569475c128bdfc618863bbaab8f4bada41860bf8eab96b",
+      "bytes": 8660
+    },
+    {
+      "path": "rust-toolchain.toml",
+      "snapshot": "sources/rust-toolchain.toml",
+      "sha256": "04ab0c8ee214f246c7c53bdfba7ba80a93dad65da5b8455edf17c5ec226d5b20",
+      "bytes": 123
+    },
+    {
+      "path": "references.lock",
+      "snapshot": "sources/references.lock",
+      "sha256": "278f48fd7697459281aa78a706c9ca57222f36a8c0785d838a6449fbaf26d30b",
+      "bytes": 648
+    },
+    {
+      "path": "oracle.lock.json",
+      "snapshot": "sources/oracle.lock.json",
+      "sha256": "7b77395ff5b64f7a220db74975e4c3858a36b19c5c0f5bca92681e3b1bc6504b",
+      "bytes": 4421
+    },
+    {
+      "path": "tools/m1_lifecycle.py",
+      "snapshot": "sources/tools/m1_lifecycle.py",
+      "sha256": "d1ffa5f16c92a9c2aa783eab4b1adf4b02f4e10e0c738eead5ca79629d28a21b",
+      "bytes": 15128
+    },
+    {
+      "path": "tools/oracle.py",
+      "snapshot": "sources/tools/oracle.py",
+      "sha256": "0433e4cec011d8daadf0f779d643712019bc6334cce205f02c75799c232f533e",
+      "bytes": 16102
+    },
+    {
+      "path": "tools/benchmark.py",
+      "snapshot": "sources/tools/benchmark.py",
+      "sha256": "a3822a1702abf7a6a385b1d8173d45e3ba941b5fb7e80cb66a0b86adf1681604",
+      "bytes": 33908
+    },
+    {
+      "path": "tools/java/M1LifecycleProbe.java",
+      "snapshot": "sources/tools/java/M1LifecycleProbe.java",
+      "sha256": "96bf62406f535687be57c9f928507178b9f476f854937e7fcbe799a4e8be5e24",
+      "bytes": 5228
+    },
+    {
+      "path": "tools/tests/test_m1_lifecycle.py",
+      "snapshot": "sources/tools/tests/test_m1_lifecycle.py",
+      "sha256": "814e0ef27f5afc39ed1b20b5ea8081f3428a22eefbeff5de3e2dd1551ad72b62",
+      "bytes": 8482
+    },
+    {
+      "path": "crates/pkl-napi/Cargo.toml",
+      "snapshot": "sources/crates/pkl-napi/Cargo.toml",
+      "sha256": "0e102eb1b79bda75f7044789eef7ef48b8bce399a5210126611a54d85d5fa452",
+      "bytes": 580
+    },
+    {
+      "path": "crates/pkl-napi/build.rs",
+      "snapshot": "sources/crates/pkl-napi/build.rs",
+      "sha256": "fcbd1ff3f627a7553fa1704dc6f558998daff8bc256015c37aace62cc49ce584",
+      "bytes": 39
+    },
+    {
+      "path": "crates/pkl-napi/src/lib.rs",
+      "snapshot": "sources/crates/pkl-napi/src/lib.rs",
+      "sha256": "dfd0e13729df42f816d36eb62428ddbebf8c769033c99c8bab25c926077eb591",
+      "bytes": 4191
+    },
+    {
+      "path": "crates/pkl-runtime/Cargo.toml",
+      "snapshot": "sources/crates/pkl-runtime/Cargo.toml",
+      "sha256": "e6a605602038dac45d16ac8f45e749e91dc9f57f2ad3b32d4b6b4e86dd476f55",
+      "bytes": 359
+    },
+    {
+      "path": "crates/pkl-runtime/examples/lifecycle_probe.rs",
+      "snapshot": "sources/crates/pkl-runtime/examples/lifecycle_probe.rs",
+      "sha256": "6037eb30061b676895fb9cff219678464c08d1d1744773053c32a7029194af64",
+      "bytes": 9180
+    },
+    {
+      "path": "crates/pkl-runtime/examples/runtime_bench.rs",
+      "snapshot": "sources/crates/pkl-runtime/examples/runtime_bench.rs",
+      "sha256": "de57e472c544b066cfad12693392e6cd71dea318386f999c8481a3f703b0d159",
+      "bytes": 3014
+    },
+    {
+      "path": "crates/pkl-runtime/examples/runtime_probe.rs",
+      "snapshot": "sources/crates/pkl-runtime/examples/runtime_probe.rs",
+      "sha256": "c5e579b4834f30c556554a64451c571b0f3e35e95b4d17c5ff538465518accbe",
+      "bytes": 1982
+    },
+    {
+      "path": "crates/pkl-runtime/examples/semantics_bench.rs",
+      "snapshot": "sources/crates/pkl-runtime/examples/semantics_bench.rs",
+      "sha256": "4fbd6f5642674657332a90a9e12080de8e9ad15918ac8e09dc92fe4826b1504c",
+      "bytes": 5131
+    },
+    {
+      "path": "crates/pkl-runtime/examples/semantics_probe.rs",
+      "snapshot": "sources/crates/pkl-runtime/examples/semantics_probe.rs",
+      "sha256": "98347f237e0817cad13616c1cc75aae30ceca10c46d295692edd46a0261563c6",
+      "bytes": 811
+    },
+    {
+      "path": "crates/pkl-runtime/src/diagnostic.rs",
+      "snapshot": "sources/crates/pkl-runtime/src/diagnostic.rs",
+      "sha256": "5bd18e3960bff48d714d3a2da6d9408fb54768398c62cb5b931be0ac6626de11",
+      "bytes": 1181
+    },
+    {
+      "path": "crates/pkl-runtime/src/heap.rs",
+      "snapshot": "sources/crates/pkl-runtime/src/heap.rs",
+      "sha256": "d48ad669ce0191624c670b686b3579657c00fe476abb07d75322f3bb5bc74632",
+      "bytes": 5757
+    },
+    {
+      "path": "crates/pkl-runtime/src/host.rs",
+      "snapshot": "sources/crates/pkl-runtime/src/host.rs",
+      "sha256": "f6e348790b4b51224bc5fafd33b6f9fd062a9b407777e80a39b6073a406091fb",
+      "bytes": 8462
+    },
+    {
+      "path": "crates/pkl-runtime/src/lib.rs",
+      "snapshot": "sources/crates/pkl-runtime/src/lib.rs",
+      "sha256": "09fc8c267a22eb40ada933847f51628d7c376cd1259c6f3db4b223411657714f",
+      "bytes": 416
+    },
+    {
+      "path": "crates/pkl-runtime/src/numeric.rs",
+      "snapshot": "sources/crates/pkl-runtime/src/numeric.rs",
+      "sha256": "6d318ab81dee53600bdd3ef5a78daa87419346456ead54912e47312eacf7ec07",
+      "bytes": 35230
+    },
+    {
+      "path": "crates/pkl-runtime/src/parser.rs",
+      "snapshot": "sources/crates/pkl-runtime/src/parser.rs",
+      "sha256": "a62dcb36953050008a118b8e7b0ffd08cac02467b97d10d6ef8fa5081e6253d5",
+      "bytes": 17446
+    },
+    {
+      "path": "crates/pkl-runtime/src/probe.rs",
+      "snapshot": "sources/crates/pkl-runtime/src/probe.rs",
+      "sha256": "75fdc1c978b21cc43c33aa8be21540184f4c3d17e34ed9a256bacbce0a83751d",
+      "bytes": 6111
+    },
+    {
+      "path": "crates/pkl-runtime/src/regex.rs",
+      "snapshot": "sources/crates/pkl-runtime/src/regex.rs",
+      "sha256": "7d105b0df534f51dfd8a8649681b4b309d14b7a4f212c2b93efb2acc668aaa89",
+      "bytes": 15419
+    },
+    {
+      "path": "crates/pkl-runtime/src/resolver.rs",
+      "snapshot": "sources/crates/pkl-runtime/src/resolver.rs",
+      "sha256": "5e8207f293b57b01cb062b775aa7e6e687f1bd28e7676fac5f398acf04cfa28f",
+      "bytes": 7354
+    },
+    {
+      "path": "crates/pkl-runtime/src/source.rs",
+      "snapshot": "sources/crates/pkl-runtime/src/source.rs",
+      "sha256": "fb7672927f31952b2c1a951e8efcb2b61f3f48f03468e19eb297d4892355bcd1",
+      "bytes": 2961
+    },
+    {
+      "path": "crates/pkl-runtime/src/syntax.rs",
+      "snapshot": "sources/crates/pkl-runtime/src/syntax.rs",
+      "sha256": "928c423ae4b1bd8e451dbaa094e462a0a4f476d41f29a9fc8dfc9ae916be4eb7",
+      "bytes": 988
+    },
+    {
+      "path": "crates/pkl-runtime/src/value.rs",
+      "snapshot": "sources/crates/pkl-runtime/src/value.rs",
+      "sha256": "0a61e5fcb2c7130dcb8988fce764dd0d895ef72f99a6c200829369cf8b221ce4",
+      "bytes": 1726
+    },
+    {
+      "path": "crates/pkl-runtime/src/vm.rs",
+      "snapshot": "sources/crates/pkl-runtime/src/vm.rs",
+      "sha256": "3f2ddade070b83059ce7d953f8493d04358e35fe4240059c02a1bef2c41872e5",
+      "bytes": 32134
+    },
+    {
+      "path": "crates/pkl-runtime/tests/frontend.rs",
+      "snapshot": "sources/crates/pkl-runtime/tests/frontend.rs",
+      "sha256": "c0996f81d416e9ee122b57e5b6f37e94e59dd1147693031c83fbbdeb25eb34d4",
+      "bytes": 9560
+    },
+    {
+      "path": "crates/pkl-runtime/tests/host.rs",
+      "snapshot": "sources/crates/pkl-runtime/tests/host.rs",
+      "sha256": "27f04889829e72e4cb02352c4923500c741203525cfa93f989b1d6e0d1357bef",
+      "bytes": 17208
+    },
+    {
+      "path": "crates/pkl-runtime/tests/runtime.rs",
+      "snapshot": "sources/crates/pkl-runtime/tests/runtime.rs",
+      "sha256": "6d67ddd0f3f8df75ebf65e78db387af5f69fe5bbaa149455655ba8259236a870",
+      "bytes": 15784
+    },
+    {
+      "path": "crates/pkl-runtime/tests/semantics.rs",
+      "snapshot": "sources/crates/pkl-runtime/tests/semantics.rs",
+      "sha256": "205d2297ec864b819ab66dc769ed0fcd8f4022e9e7e8e47a054db9e81a603e4f",
+      "bytes": 1116
+    },
+    {
+      "path": "crates/pkl-wasm/Cargo.toml",
+      "snapshot": "sources/crates/pkl-wasm/Cargo.toml",
+      "sha256": "920188996694727331a4d6153d8645d91e6f8ebfa5dbb666dd0031104e2ae82f",
+      "bytes": 388
+    },
+    {
+      "path": "crates/pkl-wasm/src/lib.rs",
+      "snapshot": "sources/crates/pkl-wasm/src/lib.rs",
+      "sha256": "61a27ac2654612ae160bcd176d8bd185f4f3ca5b43c039771b138d484b33e1d4",
+      "bytes": 4854
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "binaries/lifecycle_probe",
+      "sha256": "203dae66de772da2e962544e5b1e41ed2563619827804610244fb95a80f367e9",
+      "bytes": 566880
+    },
+    {
+      "path": "classes/M1LifecycleProbe$Reader.class",
+      "sha256": "2d1bf958efce8541352f12153f953d41341d19c84a8cddbd06b6747dae04829b",
+      "bytes": 2567
+    },
+    {
+      "path": "classes/M1LifecycleProbe.class",
+      "sha256": "6fc4ed0e41ffce8abd74b33922e51acb12fee3258a1c140098ce60d67be104c0",
+      "bytes": 5383
+    }
+  ],
+  "acquisition_error": null,
+  "oracle": {
+    "schema": 1,
+    "profile": "reference",
+    "version": "0.32.0",
+    "lock_sha256": "7b77395ff5b64f7a220db74975e4c3858a36b19c5c0f5bca92681e3b1bc6504b",
+    "source": {
+      "path": "external/pkl",
+      "url": "https://github.com/apple/pkl.git",
+      "revision": "e51fb2f91774265666f94980ec630db794a4db2d",
+      "metadata_sha256": {
+        "gradle.properties": "1d76fc163cba8cabc502948a7dbc05cf7b7afc4a5e8efe35b3a746a89829be13",
+        "gradle/libs.versions.toml": "f2c818bfff6f30a096bcca18256ea9aae967a21707babae8c2b34a77a225b046",
+        "build-logic/src/main/kotlin/BuildInfo.kt": "a082b8aa717d9fb6f15fee6f4c74c62089b5cae1d1666d55cbb0d70318920ba6",
+        "pkl-tools/pkl-tools.gradle.kts": "c32aca46fa3fb845b205ecdf5b75d037e0b1f4ac6b6cd8cb9d1359667a06aa80",
+        "LICENSE.txt": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+        "NOTICE.txt": "d03b8db1a0d36ba65550ba30a51c7897f4b48b0eae7582d3f0576ea41e23d48e",
+        "THIRD-PARTY-NOTICES.txt": "8ac4f6b18b00227f8dbc5222c6259f6cb5084ad0053ebcebf83d5147cea31aaf"
+      }
+    },
+    "artifact": "/Users/cody.ij.hwang/Projects/pkl-rs/.cache/oracle/pkl-tools-0.32.0.jar",
+    "artifact_sha256": "c3b6f6215a08b31453b0fb0edd8c9da0aee31233f65abb8ab07f9c945151e059",
+    "artifact_url": "https://repo.maven.apache.org/maven2/org/pkl-lang/pkl-tools/0.32.0/pkl-tools-0.32.0.jar",
+    "release": {
+      "version": "0.32.0",
+      "commitId": "e51fb2f",
+      "stdlibModules": "pkl:analyze,pkl:base,pkl:Benchmark,pkl:Command,pkl:DocPackageInfo,pkl:DocsiteInfo,pkl:EvaluatorSettings,pkl:json,pkl:jsonnet,pkl:math,pkl:pklbinary,pkl:platform,pkl:Project,pkl:protobuf,pkl:ref,pkl:reflect,pkl:release,pkl:semver,pkl:settings,pkl:shell,pkl:test,pkl:xml,pkl:yaml"
+    },
+    "java": "/usr/bin/java",
+    "jdk": {
+      "executable": "/usr/bin/java",
+      "executable_sha256": "51ec0764f7225b40d5b286b01401aa6b3990d0d171b446d7dc81ca7542b45552",
+      "runtime_modules_sha256": "40fcf7a32bada7e299e3513939a4472d27f8f61eb81cdd1675ea00648de7e7cf",
+      "release_sha256": "ab66b8afeea98b25f1869fbe7c0dde368d448e7cc0f7bab0359b322ade134fe1",
+      "properties": {
+        "java.vendor": "Eclipse Adoptium",
+        "java.version": "21.0.12.1",
+        "java.runtime.version": "21.0.12.1+1-LTS",
+        "java.vm.name": "OpenJDK 64-Bit Server VM",
+        "java.vm.version": "21.0.12.1+1-LTS",
+        "java.home": "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home",
+        "os.name": "Mac OS X",
+        "os.arch": "aarch64",
+        "os.version": "27.0"
+      },
+      "version_stdout_hex": "",
+      "version_stderr_hex": "50726f70657274792073657474696e67733a0a2020202066696c652e656e636f64696e67203d205554462d380a2020202066696c652e736570617261746f72203d202f0a202020206674702e6e6f6e50726f7879486f737473203d206c6f63616c7c2a2e6c6f63616c7c3136392e3235342f31367c2a2e3136392e3235342f31360a20202020687474702e6e6f6e50726f7879486f737473203d206c6f63616c7c2a2e6c6f63616c7c3136392e3235342f31367c2a2e3136392e3235342f31360a202020206a6176612e636c6173732e70617468203d200a202020206a6176612e636c6173732e76657273696f6e203d2036352e300a202020206a6176612e686f6d65203d202f4c6962726172792f4a6176612f4a6176615669727475616c4d616368696e65732f74656d7572696e2d32312e6a646b2f436f6e74656e74732f486f6d650a202020206a6176612e696f2e746d70646972203d202f7661722f666f6c646572732f5f712f733936397a686b783671643870333276326e6438377967683030303067702f542f0a202020206a6176612e6c6962726172792e70617468203d202f55736572732f636f64792e696a2e6877616e672f50726f6a656374732f706b6c2d72732f2e63616368652f6f7261636c652f686f6d652f4c6962726172792f4a6176612f457874656e73696f6e730a20202020202020202f4c6962726172792f4a6176612f457874656e73696f6e730a20202020202020202f4e6574776f726b2f4c6962726172792f4a6176612f457874656e73696f6e730a20202020202020202f53797374656d2f4c6962726172792f4a6176612f457874656e73696f6e730a20202020202020202f7573722f6c69622f6a6176610a20202020202020202e0a202020206a6176612e72756e74696d652e6e616d65203d204f70656e4a444b2052756e74696d6520456e7669726f6e6d656e740a202020206a6176612e72756e74696d652e76657273696f6e203d2032312e302e31322e312b312d4c54530a202020206a6176612e73706563696669636174696f6e2e6e616d65203d204a61766120506c6174666f726d204150492053706563696669636174696f6e0a202020206a6176612e73706563696669636174696f6e2e76656e646f72203d204f7261636c6520436f72706f726174696f6e0a202020206a6176612e73706563696669636174696f6e2e76657273696f6e203d2032310a202020206a6176612e76656e646f72203d2045636c697073652041646f707469756d0a202020206a6176612e76656e646f722e75726c203d2068747470733a2f2f61646f707469756d2e6e65742f0a202020206a6176612e76656e646f722e75726c2e627567203d2068747470733a2f2f6769746875622e636f6d2f61646f707469756d2f61646f707469756d2d737570706f72742f6973737565730a202020206a6176612e76656e646f722e76657273696f6e203d2054656d7572696e2d32312e302e31322e312b310a202020206a6176612e76657273696f6e203d2032312e302e31322e310a202020206a6176612e76657273696f6e2e64617465203d20323032362d30382d31380a202020206a6176612e766d2e636f6d707265737365644f6f70734d6f6465203d204e6f6e2d7a65726f206469736a6f696e7420626173650a202020206a6176612e766d2e696e666f203d206d69786564206d6f64652c2073686172696e670a202020206a6176612e766d2e6e616d65203d204f70656e4a444b2036342d4269742053657276657220564d0a202020206a6176612e766d2e73706563696669636174696f6e2e6e616d65203d204a617661205669727475616c204d616368696e652053706563696669636174696f6e0a202020206a6176612e766d2e73706563696669636174696f6e2e76656e646f72203d204f7261636c6520436f72706f726174696f6e0a202020206a6176612e766d2e73706563696669636174696f6e2e76657273696f6e203d2032310a202020206a6176612e766d2e76656e646f72203d2045636c697073652041646f707469756d0a202020206a6176612e766d2e76657273696f6e203d2032312e302e31322e312b312d4c54530a202020206a646b2e6465627567203d2072656c656173650a202020206c696e652e736570617261746f72203d205c6e200a202020206e61746976652e656e636f64696e67203d2055532d41534349490a202020206f732e61726368203d20616172636836340a202020206f732e6e616d65203d204d6163204f5320580a202020206f732e76657273696f6e203d2032372e300a20202020706174682e736570617261746f72203d203a0a20202020736f636b734e6f6e50726f7879486f737473203d206c6f63616c7c2a2e6c6f63616c7c3136392e3235342f31367c2a2e3136392e3235342f31360a202020207374646572722e656e636f64696e67203d2055532d41534349490a202020207374646f75742e656e636f64696e67203d2055532d41534349490a2020202073756e2e617263682e646174612e6d6f64656c203d2036340a2020202073756e2e626f6f742e6c6962726172792e70617468203d202f4c6962726172792f4a6176612f4a6176615669727475616c4d616368696e65732f74656d7572696e2d32312e6a646b2f436f6e74656e74732f486f6d652f6c69620a2020202073756e2e6370752e656e6469616e203d206c6974746c650a2020202073756e2e696f2e756e69636f64652e656e636f64696e67203d20556e69636f64654269670a2020202073756e2e6a6176612e6c61756e63686572203d2053554e5f5354414e444152440a2020202073756e2e6a6e752e656e636f64696e67203d205554462d380a2020202073756e2e6d616e6167656d656e742e636f6d70696c6572203d20486f7453706f742036342d4269742054696572656420436f6d70696c6572730a20202020757365722e636f756e747279203d204b520a20202020757365722e646972203d202f55736572732f636f64792e696a2e6877616e672f50726f6a656374732f706b6c2d72730a20202020757365722e686f6d65203d202f55736572732f636f64792e696a2e6877616e670a20202020757365722e6c616e6775616765203d206b6f0a20202020757365722e6e616d65203d20636f64792e696a2e6877616e670a0a6f70656e6a646b2076657273696f6e202232312e302e31322e312220323032362d30382d3138204c54530a4f70656e4a444b2052756e74696d6520456e7669726f6e6d656e742054656d7572696e2d32312e302e31322e312b3120286275696c642032312e302e31322e312b312d4c5453290a4f70656e4a444b2036342d4269742053657276657220564d2054656d7572696e2d32312e302e31322e312b3120286275696c642032312e302e31322e312b312d4c54532c206d69786564206d6f64652c2073686172696e67290a"
+    },
+    "command": [
+      "/usr/bin/java",
+      "-Xms64m",
+      "-Xmx512m",
+      "-Dfile.encoding=UTF-8",
+      "-Dstdout.encoding=UTF-8",
+      "-Dstderr.encoding=UTF-8",
+      "-Duser.language=en",
+      "-Duser.country=US",
+      "-Duser.timezone=UTC",
+      "-Djava.awt.headless=true",
+      "-Duser.name=oracle",
+      "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs/.cache/oracle/home",
+      "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs/.cache/oracle/tmp",
+      "-cp",
+      "/Users/cody.ij.hwang/Projects/pkl-rs/.cache/oracle/pkl-tools-0.32.0.jar",
+      "org.pkl.cli.Main"
+    ],
+    "environment": {
+      "PATH": "/bin:/usr/bin",
+      "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs/.cache/oracle/home",
+      "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs/.cache/oracle/tmp",
+      "TMP": "/Users/cody.ij.hwang/Projects/pkl-rs/.cache/oracle/tmp",
+      "TEMP": "/Users/cody.ij.hwang/Projects/pkl-rs/.cache/oracle/tmp",
+      "LC_ALL": "C",
+      "LANG": "C",
+      "TZ": "UTC",
+      "TERM": "dumb",
+      "NO_COLOR": "1",
+      "COLUMNS": "80"
+    },
+    "platform": "macOS-27.0-arm64-arm-64bit-Mach-O",
+    "version_stdout_hex": "506b6c20302e33322e3020286d61634f532032372e302c204a6176612032312e302e31322e31290a",
+    "version_stderr_hex": ""
+  },
+  "rustc": {
+    "command": [
+      "rustc",
+      "-vV"
+    ],
+    "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs",
+    "status": "executed",
+    "exit_code": 0,
+    "elapsed_ns": 54851250,
+    "peak_rss_bytes": 32833536,
+    "user_cpu_seconds": 0.03306,
+    "system_cpu_seconds": 0.01341,
+    "stdout": {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m1/closing-lifecycle-20261020-01/rustc/stdout.bin",
+      "sha256": "e2211d4c0760a2a3b03eab88e42f8848952b7aa2ed649277a8fdbf3ce1838fd4",
+      "bytes": 192
+    },
+    "stderr": {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m1/closing-lifecycle-20261020-01/rustc/stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    }
+  },
+  "build": {
+    "command": [
+      "cargo",
+      "build",
+      "-p",
+      "pkl-runtime",
+      "--locked",
+      "--release",
+      "--example",
+      "lifecycle_probe",
+      "--message-format=json"
+    ],
+    "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs",
+    "status": "executed",
+    "exit_code": 0,
+    "elapsed_ns": 6651195250,
+    "peak_rss_bytes": 246120448,
+    "user_cpu_seconds": 9.414609,
+    "system_cpu_seconds": 1.421386,
+    "stdout": {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m1/closing-lifecycle-20261020-01/cargo/stdout.bin",
+      "sha256": "9141e83ef74a5864d80bd9a6bc1c62a82be746ef912e4d5846d7fb0801535d84",
+      "bytes": 10010
+    },
+    "stderr": {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m1/closing-lifecycle-20261020-01/cargo/stderr.bin",
+      "sha256": "48c4680c67b7561fcf024b6de4acfe8674a6a652f5708e03bf6b10e5870bdae9",
+      "bytes": 364
+    }
+  },
+  "source_stability_before_execution": true,
+  "java_negative_observation": {
+    "java": {
+      "command": [
+        "/usr/bin/java",
+        "-Xms64m",
+        "-Xmx512m",
+        "-Dfile.encoding=UTF-8",
+        "-Dstdout.encoding=UTF-8",
+        "-Dstderr.encoding=UTF-8",
+        "-Duser.language=en",
+        "-Duser.country=US",
+        "-Duser.timezone=UTC",
+        "-Djava.awt.headless=true",
+        "-Duser.name=oracle",
+        "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs/.cache/oracle/home",
+        "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs/.cache/oracle/tmp",
+        "-cp",
+        "/Users/cody.ij.hwang/Projects/pkl-rs/target/m1/closing-lifecycle-20261020-01/classes:/Users/cody.ij.hwang/Projects/pkl-rs/.cache/oracle/pkl-tools-0.32.0.jar",
+        "M1LifecycleProbe",
+        "nested-new-read",
+        "/Users/cody.ij.hwang/Projects/pkl-rs/target/m1/closing-lifecycle-20261020-01/inputs/nested-new-read.pkl",
+        "/Users/cody.ij.hwang/Projects/pkl-rs/target/m1/closing-lifecycle-20261020-01/nested-new-read/java"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs",
+      "status": "executed",
+      "exit_code": 0,
+      "elapsed_ns": 523459417,
+      "peak_rss_bytes": 134266880,
+      "user_cpu_seconds": 0.9364899999999999,
+      "system_cpu_seconds": 0.060989999999999996,
+      "stdout": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m1/closing-lifecycle-20261020-01/nested-new-read/java/stdout.bin",
+        "sha256": "6507faafa89efacc50e6a5773930fd66ed1107b46d6dc278c9b93efec6e55216",
+        "bytes": 107
+      },
+      "stderr": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m1/closing-lifecycle-20261020-01/nested-new-read/java/stderr.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0
+      }
+    },
+    "observations": {
+      "status": "observed-upstream-failure",
+      "error_class": "org.pkl.core.PklBugException",
+      "cause": "java.util.ConcurrentModificationException",
+      "rust_comparison": false,
+      "compatibility_pass": false
+    }
+  },
+  "source_stability_after_execution": true,
+  "evidence_sha256": {
+    "binaries/lifecycle_probe": "203dae66de772da2e962544e5b1e41ed2563619827804610244fb95a80f367e9",
+    "cargo/result.json": "9e702fd59b76a3b1711c18f62142296bd16687e5dae2a69eee37d083ce4b4ae1",
+    "cargo/stderr.bin": "48c4680c67b7561fcf024b6de4acfe8674a6a652f5708e03bf6b10e5870bdae9",
+    "cargo/stdout.bin": "9141e83ef74a5864d80bd9a6bc1c62a82be746ef912e4d5846d7fb0801535d84",
+    "classes/M1LifecycleProbe$Reader.class": "2d1bf958efce8541352f12153f953d41341d19c84a8cddbd06b6747dae04829b",
+    "classes/M1LifecycleProbe.class": "6fc4ed0e41ffce8abd74b33922e51acb12fee3258a1c140098ce60d67be104c0",
+    "inputs/nested-new-read.pkl": "ba63097a312b671a5f7349c115f9abdbaf8ca76435112a1b64bb8dac5ea28b34",
+    "inputs/reentry.pkl": "15c8d63db38060ba1193352b47b2e4fd3dc2ddc21b1f6f6a01c06f2d9e5dd96c",
+    "inputs/retry.pkl": "7f4ef04308a342ad0ef1be8500e71c42c7aadfa9abc91b64f50ceb54aa353211",
+    "javac/result.json": "ae474fa4c6fa232fc0293a4515b834cc1f9e6cfd633a0e76147f882a2b9c3091",
+    "javac/stderr.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "javac/stdout.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "nested-new-read/java/after-close.error-class.bin": "6c1726ca460bdae5e71eb2303c6ee9ee261c5ab8088cc4067a9099488d911861",
+    "nested-new-read/java/after-close.error.bin": "17c30d984a91c0fbe060bf310dbe7d6ee24cb96bb7adff93e60872759b286504",
+    "nested-new-read/java/outer.error-class.bin": "29d67798b7711928a2a39c578687f2ca163c801882665290a7490a7a1ca76407",
+    "nested-new-read/java/outer.error.bin": "c0de2b9230be24f954bc963043ea3bd480bc746051113a7ad342871c5762c59d",
+    "nested-new-read/java/outer.trace.bin": "dfdb05a49233ddb51f4642a71809a38a6f68e7301320fb9a37598a5b68730c08",
+    "nested-new-read/java/result.json": "42b13b4306f8b7de50422bc0b907d97ad3a43829821be0be84d049ec3c59292b",
+    "nested-new-read/java/stderr.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "nested-new-read/java/stdout.bin": "6507faafa89efacc50e6a5773930fd66ed1107b46d6dc278c9b93efec6e55216",
+    "oracle.json": "064836920a3c5089197317276fd3e2ea19a8b6c35330a19e7ccf6bea642ab6ec",
+    "reentry/java/after-close.error-class.bin": "6c1726ca460bdae5e71eb2303c6ee9ee261c5ab8088cc4067a9099488d911861",
+    "reentry/java/after-close.error.bin": "17c30d984a91c0fbe060bf310dbe7d6ee24cb96bb7adff93e60872759b286504",
+    "reentry/java/result.json": "3ba6f9b2f8342c0b926b70414dca2f220791182035a064bbfe337e7b3e2383c2",
+    "reentry/java/stderr.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "reentry/java/stdout.bin": "b8ece9511e22bf703ac73e7b02ea9b64cff52d216f929bca0ed0d7f295017194",
+    "reentry/rust/after-close.error-class.bin": "c21ead0614e7e1b70edb3759e1d19ca1e12e6036980d10bfb73052fb1a018efa",
+    "reentry/rust/after-close.error.bin": "5b6cc5d6cfeed94d7a74e8e0910346d25f6b9228cd0c6edfb84cf223116471ec",
+    "reentry/rust/result.json": "fb97909fd5a7259c80482829cf367354f3013c983ed5bb58835fde1ada8a3e12",
+    "reentry/rust/stderr.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "reentry/rust/stdout.bin": "b8ece9511e22bf703ac73e7b02ea9b64cff52d216f929bca0ed0d7f295017194",
+    "retry/java/after-close.error-class.bin": "6c1726ca460bdae5e71eb2303c6ee9ee261c5ab8088cc4067a9099488d911861",
+    "retry/java/after-close.error.bin": "17c30d984a91c0fbe060bf310dbe7d6ee24cb96bb7adff93e60872759b286504",
+    "retry/java/attempt-1.error-class.bin": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591",
+    "retry/java/attempt-1.error.bin": "99f77c9a4701b18d39be189a4ce8ef99b590fcf8be6441164129f897767dffe4",
+    "retry/java/attempt-2.error-class.bin": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591",
+    "retry/java/attempt-2.error.bin": "493a9590a5d689e4009462abd89aca6861ddbde8353eaac0f986ea1e623b2170",
+    "retry/java/result.json": "3a4b8149f7c1dfc157cf53f0bb519c7476914058d15c4b8d18c77ac996b201d8",
+    "retry/java/stderr.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "retry/java/stdout.bin": "11ddbe5516c3a06698382e2481b4158f2866b101655d8bc2b5d2c740d13fead8",
+    "retry/rust/after-close.error-class.bin": "c21ead0614e7e1b70edb3759e1d19ca1e12e6036980d10bfb73052fb1a018efa",
+    "retry/rust/after-close.error.bin": "5b6cc5d6cfeed94d7a74e8e0910346d25f6b9228cd0c6edfb84cf223116471ec",
+    "retry/rust/attempt-1.error-class.bin": "4a823118b9ba8baa2f47489c0716f52755368e3e3c2c26d60736ccfa1bb21b5e",
+    "retry/rust/attempt-1.error.bin": "6333b35ff467dba649c66ceb65f2ab848c22144097b32e2fcfd90e8fb1440ff7",
+    "retry/rust/attempt-2.error-class.bin": "4a823118b9ba8baa2f47489c0716f52755368e3e3c2c26d60736ccfa1bb21b5e",
+    "retry/rust/attempt-2.error.bin": "a5b0543232505771b8c14216b554f4915ad84415838cc2a58de82f0ee67fdb61",
+    "retry/rust/result.json": "5e1c7ea85d347bf9c5ed63fc3babae09eae349a94213053f7e2fa11a53eaa867",
+    "retry/rust/stderr.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "retry/rust/stdout.bin": "11ddbe5516c3a06698382e2481b4158f2866b101655d8bc2b5d2c740d13fead8",
+    "rustc/result.json": "e636584a3845a38cf23ba509d0a49e3a84adfdb1746d06e7df7c69312ca9c9b9",
+    "rustc/stderr.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "rustc/stdout.bin": "e2211d4c0760a2a3b03eab88e42f8848952b7aa2ed649277a8fdbf3ce1838fd4",
+    "sources/Cargo.lock": "17114bdbbe6146393c569475c128bdfc618863bbaab8f4bada41860bf8eab96b",
+    "sources/Cargo.toml": "f1ef2c20d58d3dad9d755a5c26939784216a54aeec4ab95da5c9a375b269e9de",
+    "sources/crates/pkl-napi/Cargo.toml": "0e102eb1b79bda75f7044789eef7ef48b8bce399a5210126611a54d85d5fa452",
+    "sources/crates/pkl-napi/build.rs": "fcbd1ff3f627a7553fa1704dc6f558998daff8bc256015c37aace62cc49ce584",
+    "sources/crates/pkl-napi/src/lib.rs": "dfd0e13729df42f816d36eb62428ddbebf8c769033c99c8bab25c926077eb591",
+    "sources/crates/pkl-runtime/Cargo.toml": "e6a605602038dac45d16ac8f45e749e91dc9f57f2ad3b32d4b6b4e86dd476f55",
+    "sources/crates/pkl-runtime/examples/lifecycle_probe.rs": "6037eb30061b676895fb9cff219678464c08d1d1744773053c32a7029194af64",
+    "sources/crates/pkl-runtime/examples/runtime_bench.rs": "de57e472c544b066cfad12693392e6cd71dea318386f999c8481a3f703b0d159",
+    "sources/crates/pkl-runtime/examples/runtime_probe.rs": "c5e579b4834f30c556554a64451c571b0f3e35e95b4d17c5ff538465518accbe",
+    "sources/crates/pkl-runtime/examples/semantics_bench.rs": "4fbd6f5642674657332a90a9e12080de8e9ad15918ac8e09dc92fe4826b1504c",
+    "sources/crates/pkl-runtime/examples/semantics_probe.rs": "98347f237e0817cad13616c1cc75aae30ceca10c46d295692edd46a0261563c6",
+    "sources/crates/pkl-runtime/src/diagnostic.rs": "5bd18e3960bff48d714d3a2da6d9408fb54768398c62cb5b931be0ac6626de11",
+    "sources/crates/pkl-runtime/src/heap.rs": "d48ad669ce0191624c670b686b3579657c00fe476abb07d75322f3bb5bc74632",
+    "sources/crates/pkl-runtime/src/host.rs": "f6e348790b4b51224bc5fafd33b6f9fd062a9b407777e80a39b6073a406091fb",
+    "sources/crates/pkl-runtime/src/lib.rs": "09fc8c267a22eb40ada933847f51628d7c376cd1259c6f3db4b223411657714f",
+    "sources/crates/pkl-runtime/src/numeric.rs": "6d318ab81dee53600bdd3ef5a78daa87419346456ead54912e47312eacf7ec07",
+    "sources/crates/pkl-runtime/src/parser.rs": "a62dcb36953050008a118b8e7b0ffd08cac02467b97d10d6ef8fa5081e6253d5",
+    "sources/crates/pkl-runtime/src/probe.rs": "75fdc1c978b21cc43c33aa8be21540184f4c3d17e34ed9a256bacbce0a83751d",
+    "sources/crates/pkl-runtime/src/regex.rs": "7d105b0df534f51dfd8a8649681b4b309d14b7a4f212c2b93efb2acc668aaa89",
+    "sources/crates/pkl-runtime/src/resolver.rs": "5e8207f293b57b01cb062b775aa7e6e687f1bd28e7676fac5f398acf04cfa28f",
+    "sources/crates/pkl-runtime/src/source.rs": "fb7672927f31952b2c1a951e8efcb2b61f3f48f03468e19eb297d4892355bcd1",
+    "sources/crates/pkl-runtime/src/syntax.rs": "928c423ae4b1bd8e451dbaa094e462a0a4f476d41f29a9fc8dfc9ae916be4eb7",
+    "sources/crates/pkl-runtime/src/value.rs": "0a61e5fcb2c7130dcb8988fce764dd0d895ef72f99a6c200829369cf8b221ce4",
+    "sources/crates/pkl-runtime/src/vm.rs": "3f2ddade070b83059ce7d953f8493d04358e35fe4240059c02a1bef2c41872e5",
+    "sources/crates/pkl-runtime/tests/frontend.rs": "c0996f81d416e9ee122b57e5b6f37e94e59dd1147693031c83fbbdeb25eb34d4",
+    "sources/crates/pkl-runtime/tests/host.rs": "27f04889829e72e4cb02352c4923500c741203525cfa93f989b1d6e0d1357bef",
+    "sources/crates/pkl-runtime/tests/runtime.rs": "6d67ddd0f3f8df75ebf65e78db387af5f69fe5bbaa149455655ba8259236a870",
+    "sources/crates/pkl-runtime/tests/semantics.rs": "205d2297ec864b819ab66dc769ed0fcd8f4022e9e7e8e47a054db9e81a603e4f",
+    "sources/crates/pkl-wasm/Cargo.toml": "920188996694727331a4d6153d8645d91e6f8ebfa5dbb666dd0031104e2ae82f",
+    "sources/crates/pkl-wasm/src/lib.rs": "61a27ac2654612ae160bcd176d8bd185f4f3ca5b43c039771b138d484b33e1d4",
+    "sources/oracle.lock.json": "7b77395ff5b64f7a220db74975e4c3858a36b19c5c0f5bca92681e3b1bc6504b",
+    "sources/references.lock": "278f48fd7697459281aa78a706c9ca57222f36a8c0785d838a6449fbaf26d30b",
+    "sources/rust-toolchain.toml": "04ab0c8ee214f246c7c53bdfba7ba80a93dad65da5b8455edf17c5ec226d5b20",
+    "sources/tools/benchmark.py": "a3822a1702abf7a6a385b1d8173d45e3ba941b5fb7e80cb66a0b86adf1681604",
+    "sources/tools/java/M1LifecycleProbe.java": "96bf62406f535687be57c9f928507178b9f476f854937e7fcbe799a4e8be5e24",
+    "sources/tools/m1_lifecycle.py": "d1ffa5f16c92a9c2aa783eab4b1adf4b02f4e10e0c738eead5ca79629d28a21b",
+    "sources/tools/oracle.py": "0433e4cec011d8daadf0f779d643712019bc6334cce205f02c75799c232f533e",
+    "sources/tools/tests/test_m1_lifecycle.py": "814e0ef27f5afc39ed1b20b5ea8081f3428a22eefbeff5de3e2dd1551ad72b62"
+  },
+  "evidence_archive": "reports/m1/lifecycle-evidence.tar.gz"
+}

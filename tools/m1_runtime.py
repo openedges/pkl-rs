@@ -180,7 +180,6 @@ def run(output, measure=False, forks=2, samples=9, specialized=False):
               "oracle": metadata, "machine": benchmark.machine(), "identities": identities, "rustc": rustc,
               "cases": cases, "measurements": measured, "compatibility_complete": False,
               "known_gaps": ["Java diagnostic bytes and logical call stacks", "super missing-member empty Dynamic behavior",
-                             "failure-cache retry semantics beyond the terminal experiment evaluation",
                              "full required workloads, cold startup, product boundaries and long sessions"],
               "candidate_decision": candidate_decision(measured, specialized),
               "measurement_contract": {"workload": "128 checked integer additions, seed cycles through 0..255",
