@@ -1,31 +1,32 @@
 # Repository instructions
 
-이 문서는 이 저장소를 수정하는 에이전트의 작업 규칙입니다. 사용자의 명시적인 지시를 우선합니다.
+These instructions apply to agents making changes in this repository. Explicit user instructions take precedence.
 
-## 범위와 현재 상태
+## Scope and current status
 
-- 호환 기준은 **Pkl 0.32.0**입니다. `references.lock`과 Git submodule에 고정한 소스를 사용합니다.
-- 현재는 초기 구성 단계입니다. 빌드 성공을 언어 구현·호환성·성능 검증 완료로 표현하지 않습니다.
-- 구현 계획은 `docs/architecture.md`, `docs/roadmap.md`, 검증 계약은 `TESTING.md`를 확인합니다.
-- `../pkl-rs.rev1`은 참고 자료입니다. 그 구현이나 통과 기록을 현재 프로젝트의 검증 결과로 취급하지 않습니다.
+- The compatibility baseline is **Pkl 0.32.0**. Use the sources pinned in `references.lock` and the Git submodules.
+- The project is at the initial setup stage. Do not describe a successful build as completion of the language implementation, compatibility verification, or performance validation.
+- Read `docs/architecture.md` and `docs/roadmap.md` for the implementation plan, and `TESTING.md` for the verification contract.
+- `../pkl-rs.rev1` is reference material. Its implementation and passing test records are not verification results for this project.
+- Write all project documentation in English. Preserve the original contents of upstream references and compatibility fixtures.
 
-## 호환성과 설계
+## Compatibility and design
 
-- Java 0.32.0 oracle과의 차등 검증이 호환성 판정 기준입니다. 예상 결과를 Rust 구현에서 생성해 호환성을 주장하지 않습니다.
-- 출력·오류·생성 파일은 원시 바이트로 비교합니다. `trim`, 정렬, 재직렬화, 메시지 일부 비교 등으로 차이를 숨기지 않습니다.
-- 테스트 누락, 미실행, 미구현, 알려진 실패를 성공으로 집계하지 않습니다. 임시 예외는 이유와 범위를 기록하고 릴리스 조건에 포함합니다.
-- 평가 엔진·값 모델·진단·renderer는 Native·Wasm·N-API가 공유합니다. 플랫폼별 I/O는 Host 경계에 둡니다.
-- 제품의 평가 경로에서 Java를 호출하는 fallback을 추가하지 않습니다. Java는 참조 검증과 성능 비교에 사용합니다.
-- 이름 해석, lazy 평가, 오류 발생 순서, 문자열 위치, 숫자·정규식 동작을 바꿀 때는 upstream 의미론과 경계 사례를 확인합니다.
-- 속도·메모리 개선은 올바른 결과를 유지해야 합니다. 다른 워크로드의 평균 향상으로 필수 워크로드의 회귀를 덮지 않습니다.
+- Differential verification against the Java 0.32.0 oracle determines compatibility. Do not generate expected results from the Rust implementation and claim compatibility.
+- Compare output, errors, and generated files as raw bytes. Do not hide differences with `trim`, sorting, reserialization, or partial message comparisons.
+- Do not count missing tests, unexecuted checks, unimplemented features, or known failures as passes. Record the reason and scope of temporary exceptions and account for them in release criteria.
+- Share the evaluation engine, value model, diagnostics, and renderers across native, Wasm, and N-API targets. Keep platform-specific I/O behind the Host interface.
+- Do not add a Java fallback to production evaluation paths. Use Java for reference verification and performance comparisons.
+- Check upstream semantics and edge cases when changing name resolution, lazy evaluation, error ordering, string positions, numeric operations, or regular expressions.
+- Speed and memory improvements must preserve correct results. Do not hide regressions in required workloads behind average improvements elsewhere.
 
-## 변경과 검증
+## Changes and verification
 
-- 참조 버전 변경을 요청받은 작업이 아니라면 `external/`의 참조 checkout과 gitlink를 수정하지 않습니다. 필요하면 먼저 외부 소스에서 근거를 읽고 본 프로젝트에 변경합니다.
-- 참조 버전을 갱신하는 작업에서는 gitlink·`references.lock`·문서·검증 기준을 함께 갱신합니다.
-- 필요한 변경만 구현하고 현재 존재하지 않는 기능을 문서나 명령으로 제공한다고 표현하지 않습니다.
-- Rust 버전은 `rust-toolchain.toml`을 따릅니다. 의존성 변경 시 `Cargo.lock`을 함께 검토합니다.
-- 변경에 맞는 검증을 수행합니다. Rust 또는 개발 설정 변경의 기본 검증은 아래와 같습니다.
+- Do not modify reference checkouts or gitlinks under `external/` unless the task requests a reference version update. Consult the reference sources for evidence, then make implementation changes in this project.
+- When updating reference versions, update the gitlinks, `references.lock`, documentation, and verification criteria together.
+- Implement only the changes needed for the task. Document features and commands as available only after they are implemented.
+- Use the Rust version in `rust-toolchain.toml`. Review `Cargo.lock` when changing dependencies.
+- Run checks appropriate to the change. The default checks for Rust code or development configuration changes are:
 
 ```sh
 cargo xtask verify
@@ -35,5 +36,5 @@ cargo test --workspace --locked
 cargo check -p pkl-runtime --target wasm32-unknown-unknown --locked
 ```
 
-- 동작 변경에는 의미 있는 회귀 사례를 추가합니다. 단순 문서 수정이나 구현을 그대로 반복하는 테스트를 위해 테스트를 늘리지 않습니다.
-- 완료 보고에는 변경 내용, 실행한 검증, 미검증 범위와 알려진 문제를 구분합니다. 실행하지 않은 검증을 통과했다고 보고하지 않습니다.
+- Add meaningful regression cases for behavior changes. Do not add tests for simple documentation edits or tests that merely repeat the implementation.
+- In completion reports, distinguish changes made, checks run, unverified scope, and known issues. Do not report unexecuted checks as passing.
