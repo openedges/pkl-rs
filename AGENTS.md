@@ -6,6 +6,7 @@ These instructions apply to agents making changes in this repository. Explicit u
 
 - The compatibility baseline is **Pkl 0.32.0**. Use the sources pinned in `references.lock` and the Git submodules.
 - M0 baseline tooling and initial Java evidence are available. M1 adds a bounded shared Rust frontend/VM/heap/Host with native, browser, and Node experiments, not the full evaluator. See `reports/m0/README.md` and `reports/m1/README.md` for scope and known gaps. Do not describe builds, Java replay, or bounded experiment success as complete language/API compatibility or achievement of the performance targets.
+- M2 is in progress. Its whole-language inventory and selected raw comparisons are described in `docs/m2-language.md`. Inventory freshness, evidence integrity, and the selected development contract are separate from the strict full completion gate. Preserve known failures and unmapped requirements.
 - Read `INTENT.md` for goals and scope, `PLAN.md` for the phase overview, execution order, and work status, and `TESTING.md` for the verification contract. Use `docs/architecture.md` for design guidance. Maintain the roadmap and detailed execution plan together in `PLAN.md`.
 - `../pkl-rs.rev1` is reference material. Its implementation and passing test records are not verification results for this project.
 - Write standard project documentation in English, including `README.md`, `AGENTS.md`, `CONTRIBUTING.md`, `INTENT.md`, `TESTING.md`, architecture documentation, and API references.

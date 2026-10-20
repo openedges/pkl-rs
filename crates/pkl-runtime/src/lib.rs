@@ -4,6 +4,7 @@
 //! Their explicitly bounded language and probe coverage is not a complete evaluator.
 
 pub mod diagnostic;
+mod diagnostic_names;
 pub mod heap;
 pub mod host;
 pub mod numeric;

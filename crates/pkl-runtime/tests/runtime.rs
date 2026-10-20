@@ -85,7 +85,7 @@ fn first_error_stops_forcing_and_failed_attempt_is_retryable() {
     let object = object.as_object().unwrap();
     vm.start_member(object, "result").unwrap();
     let error = done(&mut vm).unwrap_err();
-    assert_eq!(error.message, "missing member missingFirst");
+    assert_eq!(error.message, "Cannot find property `missingFirst`.");
     assert_eq!(
         vm.member_state(object, "second").unwrap(),
         LazyState::Unevaluated
@@ -103,6 +103,7 @@ fn tracing_collects_cycles_reuses_slots_and_rejects_stale_or_foreign_handles() {
     let key = CacheKey {
         owner: None,
         name: Arc::from("self"),
+        method: false,
     };
     heap.get_mut(stale)
         .unwrap()
@@ -154,6 +155,7 @@ fn resource_program() -> Arc<Program> {
         name: Arc::from("answer"),
         code: 1,
         local: false,
+        method: false,
     }]);
     Arc::new(program)
 }
@@ -269,6 +271,7 @@ fn malformed_bytecode_is_an_error_and_cannot_leak_a_running_thunk() {
         name: Arc::from("bad"),
         code: 1,
         local: false,
+        method: false,
     }]);
     let mut vm = Vm::new(Arc::new(program));
     vm.start(0, vec![]).unwrap();
@@ -319,11 +322,13 @@ fn super_reads_preserve_receiver_but_do_not_memoize_parent_body() {
         name: Arc::from("answer"),
         code: 1,
         local: false,
+        method: false,
     }]);
     program.objects.push(vec![Member {
         name: Arc::from("result"),
         code: 2,
         local: false,
+        method: false,
     }]);
     let mut vm = Vm::new(Arc::new(program));
     vm.start(0, vec![]).unwrap();
@@ -381,7 +386,7 @@ fn compiler_fusion_preserves_checked_overflow_types_and_first_error() {
     assert_eq!(results[1].as_ref().unwrap_err().kind, ErrorKind::Arithmetic);
     assert_eq!(
         results[2].as_ref().unwrap_err().message,
-        "missing member missingFirst"
+        "Cannot find property `missingFirst`."
     );
     assert_eq!(results[3].as_ref().unwrap_err().kind, ErrorKind::Type);
     assert_eq!(results[4], Ok(Value::Float(1.5)));
@@ -428,6 +433,7 @@ fn transient_failures_retry_in_order_while_successful_dependencies_stay_cached()
                 name: Arc::from(name),
                 code,
                 local: false,
+                method: false,
             })
             .to_vec(),
     );

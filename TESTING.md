@@ -75,6 +75,21 @@ Run all verification-tool regressions with `python3 -m unittest discover -s tool
 
 ## Compatibility Comparisons
 
+M2 language implementation and verification are in progress. The
+[M2 contract](docs/m2-language.md) separates whole-language requirement accounting
+from the executable selection:
+
+```sh
+python3 tools/m2_manifest.py --check
+python3 tools/m2_language.py --output target/m2/language-new
+python3 tools/m2_language.py --verify-subset target/m2/language-new
+python3 tools/m2_language.py --verify-full target/m2/language-new
+```
+
+The full gate must fail while required language implementations, mappings,
+adapters, or passing executions are missing. It cannot be replaced with the
+selected-case gate.
+
 M1 experiments have narrower, explicit contracts:
 
 ```sh

@@ -27,6 +27,7 @@ REQUIRED_SCENARIOS = {
     'live-host-timeout-abort-release-settle',
     'nested-terminal-aborts-all-live-host-operations',
     'cooperative-loop-cancel', 'invalid-clock-budget-boundary',
+    'm2-recursive-methods-and-closures', 'm2-lazy-control-and-interpolation',
 }
 
 

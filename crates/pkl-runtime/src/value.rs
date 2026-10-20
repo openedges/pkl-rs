@@ -3,6 +3,8 @@
 use std::fmt;
 use std::sync::Arc;
 
+use crate::source::Span;
+
 /// A generation prevents a reclaimed slot from aliasing its next occupant.
 #[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct ObjectId {
@@ -20,11 +22,20 @@ pub enum Value {
     String(Arc<str>),
     Bytes(Arc<[u8]>),
     Object(ObjectId),
+    Function(ObjectId),
 }
 
 impl Value {
     pub fn string(value: impl Into<Arc<str>>) -> Self {
         Self::String(value.into())
+    }
+
+    /// Heap identity for every traced value variant.
+    pub fn heap_id(&self) -> Option<ObjectId> {
+        match self {
+            Self::Object(id) | Self::Function(id) => Some(*id),
+            _ => None,
+        }
     }
 
     pub fn as_object(&self) -> Result<ObjectId, RuntimeError> {
@@ -51,11 +62,22 @@ pub enum ErrorKind {
     Unsupported,
 }
 
-/// Structured experiment error, deliberately not a claim of Java diagnostic formatting.
+/// A logical language frame, independent of Rust call-stack layout.
+#[derive(Clone, Debug, PartialEq, Eq)]
+pub struct RuntimeFrame {
+    pub span: Span,
+    pub member: Arc<str>,
+}
+
+/// Runtime failures carry authored source locations separately from their message.
+/// Rendering belongs to the evaluation boundary, which owns the source and URI.
 #[derive(Clone, Debug, PartialEq, Eq)]
 pub struct RuntimeError {
     pub kind: ErrorKind,
     pub message: String,
+    pub span: Option<Span>,
+    pub frames: Vec<RuntimeFrame>,
+    pub hint: Option<String>,
 }
 
 impl RuntimeError {
@@ -63,7 +85,17 @@ impl RuntimeError {
         Self {
             kind,
             message: message.into(),
+            span: None,
+            frames: Vec::new(),
+            hint: None,
         }
+    }
+
+    pub fn at(mut self, span: Span) -> Self {
+        if self.span.is_none() {
+            self.span = Some(span);
+        }
+        self
     }
 }
 

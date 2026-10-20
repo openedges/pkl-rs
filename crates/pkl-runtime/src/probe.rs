@@ -26,7 +26,7 @@ pub fn primitive(family: &str, input: &str) -> Result<String, String> {
 }
 
 pub fn identity(value: Value) -> Result<Value, RuntimeError> {
-    if matches!(value, Value::Object(_)) {
+    if matches!(value, Value::Object(_) | Value::Function(_)) {
         return Err(unsupported(
             "object handles cannot cross the probe boundary",
         ));
@@ -51,7 +51,7 @@ pub fn evaluate_member(source: &str, member: &str) -> Result<Value, String> {
         .map_err(|e| e.to_string())?;
     vm.start_member(object, member).map_err(|e| e.to_string())?;
     let value = finish(&mut vm).map_err(|e| e.to_string())?;
-    if matches!(value, Value::Object(_)) {
+    if matches!(value, Value::Object(_) | Value::Function(_)) {
         return Err("object results require evaluator-owned handles".into());
     }
     Ok(value)
@@ -85,6 +85,7 @@ pub fn encode_value(value: Value) -> String {
         Value::String(v) => format!("string\t{}", hex(v.as_bytes())),
         Value::Bytes(v) => format!("bytes\t{}", hex(&v)),
         Value::Object(_) => "unsupported\tobject".into(),
+        Value::Function(_) => "unsupported\tfunction".into(),
     }
 }
 

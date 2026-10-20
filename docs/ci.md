@@ -1,6 +1,6 @@
 # CI and local reproduction
 
-[The workflow](../.github/workflows/ci.yml) has three independent scopes. The workspace
+[The workflow](../.github/workflows/ci.yml) has four independent scopes. The workspace
 matrix checks reference pins, formatting, lint, workspace tests, and Wasm compilation
 on Linux, macOS, and Windows. The Linux compatibility job checks inventories and all
 tooling regressions and the benchmark contract, installs the exact reference JDK, fetches the checksummed Java
@@ -24,6 +24,15 @@ browser scenarios also require live Host operations to abort and release their
 resources on cancellation, close, and timeout.
 Host-sensitive VM performance measurements remain local, separately recorded
 experiments on a quiet host.
+
+The M2 language job builds and freezes the current Rust probe, acquires raw Java
+and Rust language results, and verifies the selected development contract.
+Every selected case must match except the explicitly tracked cyclic-property
+diagnostic failure described in [the M2 contract](m2-language.md). That exception
+retains its failed status; unrelated crashes, timeouts, missing results, or new
+differences fail the job. The full inventory remains incomplete and its strict
+gate runs additionally on manual full-corpus dispatch. A green M2 development
+job does not mean the language milestone is complete.
 
 The M1 job also checks the retained Graal compilation archive and rederives its
 diagnostic verdict from raw captures, source/artifact identities, correctness

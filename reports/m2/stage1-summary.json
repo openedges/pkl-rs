@@ -1,0 +1,84 @@
+{
+  "scope": "M2 stage 1 selected implementation; full milestone incomplete",
+  "language": {
+    "selected_count": 119,
+    "status_counts": {
+      "oracle-error": 1,
+      "pass": 118
+    },
+    "metamorphic_relations": 12,
+    "metamorphic_statuses": [
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass"
+    ],
+    "source_stability": true,
+    "artifact_stability": true,
+    "candidate": {
+      "build": {
+        "command": [
+          "cargo",
+          "build",
+          "-p",
+          "pkl-runtime",
+          "--example",
+          "language_probe",
+          "--locked",
+          "--release",
+          "--target-dir",
+          "/Users/cody.ij.hwang/Projects/pkl-rs/target"
+        ],
+        "exit_code": 0,
+        "stderr_sha256": "0e1656198e819277f0515b2e4a511509893692baec207aec1c2f3c6ad14a4f99",
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "timed_out": false
+      },
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/release/examples/language_probe",
+      "sha256": "0323e9c9fe895f85cbfc8c1fe310648412283c7978344a0e0770bdb4cfdd2c6c",
+      "source_binding": "recorded-build"
+    },
+    "inventory_counts": {
+      "cases": 1119,
+      "cases_by_execution": {
+        "ready": 119,
+        "unimplemented": 960,
+        "unmapped": 40
+      },
+      "requirements": 474,
+      "requirements_by_kind": {
+        "language_parser": 137,
+        "language_token": 109,
+        "semantic-family": 30,
+        "specification": 198
+      }
+    },
+    "full_gate_failure_reasons": 1949
+  },
+  "platforms": {
+    "total": 6078,
+    "oracle_passed": {
+      "rust": 6076,
+      "node": 6076,
+      "browser": 6076
+    },
+    "shared_engine_passed": 6078,
+    "compatibility_status": "fail",
+    "known_gaps": [
+      "regex-unicode-15-vs-16",
+      "regex-zero-width-supplementary"
+    ],
+    "experiment_contract_status": "pass",
+    "source_stability": true,
+    "node_scenarios": 16,
+    "browser_scenarios": 16
+  }
+}

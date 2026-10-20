@@ -179,3 +179,46 @@ jobs:
         run: cargo test --workspace --locked
       - name: Build portable runtime
         run: cargo check -p pkl-runtime --target wasm32-unknown-unknown --locked
+
+  m2-language:
+    name: M2 language development (full gate incomplete)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - name: Preserve reference fixture line endings
+        run: git config --global core.autocrlf false
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          submodules: recursive
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-java@b843ebf9b913146b38da2eaa7aeddf76074ae1ad # v6
+        with:
+          distribution: temurin
+          java-version: '21.0.12.1+1'
+      - name: Check full M2 requirement inventory and failure detection
+        run: |
+          python3 tools/m2_manifest.py --check
+          python3 -m unittest discover -s tools/tests -p 'test_m2_*.py' -v
+      - name: Bootstrap pinned Java oracle
+        run: python3 tools/oracle.py fetch
+      - name: Record raw language comparisons including failures
+        run: python3 tools/m2_language.py --output target/m2/ci-language --record-only
+      - name: Verify selected development contract with explicit cycle failure
+        run: python3 tools/m2_language.py --verify-development target/m2/ci-language
+      - name: Strict full M2 completion gate
+        if: ${{ github.event_name == 'workflow_dispatch' && inputs.full_corpus }}
+        run: python3 tools/m2_language.py --verify-full target/m2/ci-language
+      - name: Confirm reference checkouts remain clean
+        if: ${{ always() }}
+        run: cargo xtask verify
+      - name: Retain M2 source snapshots, artifacts, and raw failures
+        if: ${{ always() }}
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: m2-language-evidence
+          path: target/m2/ci-language
+          if-no-files-found: error
+          include-hidden-files: true
+          retention-days: 14

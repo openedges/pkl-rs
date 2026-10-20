@@ -127,6 +127,7 @@ fn program(mode: &str, source: &str) -> Arc<Program> {
                 name: Arc::from(name),
                 code,
                 local: false,
+                method: false,
             })
             .collect(),
     );

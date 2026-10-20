@@ -1,0 +1,3 @@
+base = new { x = 40; y = x + 2 }
+child = (base) { x = 41 }
+result = child.y

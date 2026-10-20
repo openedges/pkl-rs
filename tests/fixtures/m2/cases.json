@@ -1,0 +1,1465 @@
+{
+  "schema_version": 1,
+  "scope": "Explicit initial scalar API-string and complete diagnostic-byte probes. This selection is not the full M2 language corpus.",
+  "cases": [
+    {
+      "id": "int-zero",
+      "input": "tests/fixtures/m2/int-zero.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:numeric-literals"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "int-negative",
+      "input": "tests/fixtures/m2/int-negative.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:numeric-literals"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "int-hex",
+      "input": "tests/fixtures/m2/int-hex.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:numeric-literals"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "int-binary",
+      "input": "tests/fixtures/m2/int-binary.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:numeric-literals"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "int-octal",
+      "input": "tests/fixtures/m2/int-octal.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:numeric-literals"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "int-separated",
+      "input": "tests/fixtures/m2/int-separated.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:numeric-literals"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "int-max",
+      "input": "tests/fixtures/m2/int-max.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:numeric-literals"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "int-min",
+      "input": "tests/fixtures/m2/int-min.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:numeric-literals"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "float-decimal",
+      "input": "tests/fixtures/m2/float-decimal.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:numeric-literals"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "float-exponent",
+      "input": "tests/fixtures/m2/float-exponent.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:numeric-literals"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "float-negative-zero",
+      "input": "tests/fixtures/m2/float-negative-zero.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:numeric-literals"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "literal-true",
+      "input": "tests/fixtures/m2/literal-true.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:scalar-literals"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "literal-false",
+      "input": "tests/fixtures/m2/literal-false.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:scalar-literals"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "literal-null",
+      "input": "tests/fixtures/m2/literal-null.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:scalar-literals"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "string-empty",
+      "input": "tests/fixtures/m2/string-empty.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:strings"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "string-unicode",
+      "input": "tests/fixtures/m2/string-unicode.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:strings"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "string-escapes",
+      "input": "tests/fixtures/m2/string-escapes.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:strings"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "string-custom",
+      "input": "tests/fixtures/m2/string-custom.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:strings"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "string-multiline",
+      "input": "tests/fixtures/m2/string-multiline.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:strings"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "string-interpolation",
+      "input": "tests/fixtures/m2/string-interpolation.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:strings"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "string-continuation",
+      "input": "tests/fixtures/m2/string-continuation.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:strings"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "operator-precedence",
+      "input": "tests/fixtures/m2/operator-precedence.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "operator-grouping",
+      "input": "tests/fixtures/m2/operator-grouping.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "operator-subtract",
+      "input": "tests/fixtures/m2/operator-subtract.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "operator-multiply",
+      "input": "tests/fixtures/m2/operator-multiply.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "operator-float-divide",
+      "input": "tests/fixtures/m2/operator-float-divide.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "operator-int-divide",
+      "input": "tests/fixtures/m2/operator-int-divide.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "operator-remainder",
+      "input": "tests/fixtures/m2/operator-remainder.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "operator-power",
+      "input": "tests/fixtures/m2/operator-power.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "operator-power-associativity",
+      "input": "tests/fixtures/m2/operator-power-associativity.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "operator-mixed",
+      "input": "tests/fixtures/m2/operator-mixed.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "operator-string-concat",
+      "input": "tests/fixtures/m2/operator-string-concat.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "operator-eq",
+      "input": "tests/fixtures/m2/operator-eq.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "operator-neq",
+      "input": "tests/fixtures/m2/operator-neq.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "operator-mixed-eq",
+      "input": "tests/fixtures/m2/operator-mixed-eq.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "operator-lt",
+      "input": "tests/fixtures/m2/operator-lt.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "operator-le",
+      "input": "tests/fixtures/m2/operator-le.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "operator-gt",
+      "input": "tests/fixtures/m2/operator-gt.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "operator-ge",
+      "input": "tests/fixtures/m2/operator-ge.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "operator-not",
+      "input": "tests/fixtures/m2/operator-not.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "operator-and",
+      "input": "tests/fixtures/m2/operator-and.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "operator-or",
+      "input": "tests/fixtures/m2/operator-or.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "control-if-true",
+      "input": "tests/fixtures/m2/control-if-true.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:control-flow"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "control-if-false",
+      "input": "tests/fixtures/m2/control-if-false.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:control-flow"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "control-and-lazy",
+      "input": "tests/fixtures/m2/control-and-lazy.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:control-flow"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "control-or-lazy",
+      "input": "tests/fixtures/m2/control-or-lazy.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:control-flow"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "control-coalesce-null",
+      "input": "tests/fixtures/m2/control-coalesce-null.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:control-flow"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "control-coalesce-lazy",
+      "input": "tests/fixtures/m2/control-coalesce-lazy.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:control-flow"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "control-coalesce-associativity",
+      "input": "tests/fixtures/m2/control-coalesce-associativity.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:control-flow"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "let-basic",
+      "input": "tests/fixtures/m2/let-basic.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:closures"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "let-shadow",
+      "input": "tests/fixtures/m2/let-shadow.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:name-resolution"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "closure-capture",
+      "input": "tests/fixtures/m2/closure-capture.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:closures"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "closure-shadow",
+      "input": "tests/fixtures/m2/closure-shadow.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:closures"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "closure-return",
+      "input": "tests/fixtures/m2/closure-return.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:closures"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "method-basic",
+      "input": "tests/fixtures/m2/method-basic.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:functions"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "method-recursive",
+      "input": "tests/fixtures/m2/method-recursive.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:functions"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "method-typed",
+      "input": "tests/fixtures/m2/method-typed.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:types"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "property-forward",
+      "input": "tests/fixtures/m2/property-forward.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:name-resolution"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "property-lazy",
+      "input": "tests/fixtures/m2/property-lazy.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:lazy-evaluation"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "object-member",
+      "input": "tests/fixtures/m2/object-member.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:objects"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "object-amendment",
+      "input": "tests/fixtures/m2/object-amendment.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:amendment"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "local-capture",
+      "input": "tests/fixtures/m2/local-capture.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:name-resolution"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "error-division-zero",
+      "input": "tests/fixtures/m2/error-division-zero.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:numeric-errors"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "error-overflow",
+      "input": "tests/fixtures/m2/error-overflow.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:numeric-errors"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "error-missing-name",
+      "input": "tests/fixtures/m2/error-missing-name.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "error-type-add",
+      "input": "tests/fixtures/m2/error-type-add.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "error-if-type",
+      "input": "tests/fixtures/m2/error-if-type.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "error-unary-type",
+      "input": "tests/fixtures/m2/error-unary-type.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "error-parser",
+      "input": "tests/fixtures/m2/error-parser.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "error-unicode-parser",
+      "input": "tests/fixtures/m2/error-unicode-parser.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "error-cycle",
+      "input": "tests/fixtures/m2/error-cycle.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:lazy-evaluation"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "error-argument-count",
+      "input": "tests/fixtures/m2/error-argument-count.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:functions"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "error-parameter-type",
+      "input": "tests/fixtures/m2/error-parameter-type.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:types"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "error-property-type",
+      "input": "tests/fixtures/m2/error-property-type.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:types"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "generated-add-0-left",
+      "input": "tests/fixtures/m2/generated-add-0-left.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators"
+      ],
+      "expected_outcome": "success",
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "generated-add-0-left",
+          "generated-add-0-right"
+        ],
+        "domain": "bounded Int addition commutativity without overflow"
+      }
+    },
+    {
+      "id": "generated-add-0-right",
+      "input": "tests/fixtures/m2/generated-add-0-right.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators"
+      ],
+      "expected_outcome": "success",
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "generated-add-0-left",
+          "generated-add-0-right"
+        ],
+        "domain": "bounded Int addition commutativity without overflow"
+      }
+    },
+    {
+      "id": "generated-add-1-left",
+      "input": "tests/fixtures/m2/generated-add-1-left.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators"
+      ],
+      "expected_outcome": "success",
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "generated-add-1-left",
+          "generated-add-1-right"
+        ],
+        "domain": "bounded Int addition commutativity without overflow"
+      }
+    },
+    {
+      "id": "generated-add-1-right",
+      "input": "tests/fixtures/m2/generated-add-1-right.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators"
+      ],
+      "expected_outcome": "success",
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "generated-add-1-left",
+          "generated-add-1-right"
+        ],
+        "domain": "bounded Int addition commutativity without overflow"
+      }
+    },
+    {
+      "id": "generated-add-2-left",
+      "input": "tests/fixtures/m2/generated-add-2-left.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators"
+      ],
+      "expected_outcome": "success",
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "generated-add-2-left",
+          "generated-add-2-right"
+        ],
+        "domain": "bounded Int addition commutativity without overflow"
+      }
+    },
+    {
+      "id": "generated-add-2-right",
+      "input": "tests/fixtures/m2/generated-add-2-right.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators"
+      ],
+      "expected_outcome": "success",
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "generated-add-2-left",
+          "generated-add-2-right"
+        ],
+        "domain": "bounded Int addition commutativity without overflow"
+      }
+    },
+    {
+      "id": "generated-add-3-left",
+      "input": "tests/fixtures/m2/generated-add-3-left.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators"
+      ],
+      "expected_outcome": "success",
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "generated-add-3-left",
+          "generated-add-3-right"
+        ],
+        "domain": "bounded Int addition commutativity without overflow"
+      }
+    },
+    {
+      "id": "generated-add-3-right",
+      "input": "tests/fixtures/m2/generated-add-3-right.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators"
+      ],
+      "expected_outcome": "success",
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "generated-add-3-left",
+          "generated-add-3-right"
+        ],
+        "domain": "bounded Int addition commutativity without overflow"
+      }
+    },
+    {
+      "id": "error-direct-lambda-call",
+      "input": "tests/fixtures/m2/error-direct-lambda-call.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "generated-alpha-rename-0-left",
+      "input": "tests/fixtures/m2/generated-alpha-rename-0-left.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:name-resolution",
+        "semantic:generated-verification"
+      ],
+      "expected_outcome": "success",
+      "generated": {
+        "seed": "4d32504b4c303332",
+        "algorithm": "xorshift64-13-7-17",
+        "kind": "metamorphic"
+      },
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "generated-alpha-rename-0-left",
+          "generated-alpha-rename-0-right"
+        ],
+        "domain": "Capture-free alpha renaming of bounded Int let bindings"
+      }
+    },
+    {
+      "id": "generated-alpha-rename-0-right",
+      "input": "tests/fixtures/m2/generated-alpha-rename-0-right.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:name-resolution",
+        "semantic:generated-verification"
+      ],
+      "expected_outcome": "success",
+      "generated": {
+        "seed": "4d32504b4c303332",
+        "algorithm": "xorshift64-13-7-17",
+        "kind": "metamorphic"
+      },
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "generated-alpha-rename-0-left",
+          "generated-alpha-rename-0-right"
+        ],
+        "domain": "Capture-free alpha renaming of bounded Int let bindings"
+      }
+    },
+    {
+      "id": "generated-recursive-sum-1-left",
+      "input": "tests/fixtures/m2/generated-recursive-sum-1-left.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:functions",
+        "semantic:generated-verification"
+      ],
+      "expected_outcome": "success",
+      "generated": {
+        "seed": "4d32504b4c303332",
+        "algorithm": "xorshift64-13-7-17",
+        "kind": "metamorphic"
+      },
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "generated-recursive-sum-1-left",
+          "generated-recursive-sum-1-right"
+        ],
+        "domain": "Sum recursion and closed form, Int n in [0,16]"
+      }
+    },
+    {
+      "id": "generated-recursive-sum-1-right",
+      "input": "tests/fixtures/m2/generated-recursive-sum-1-right.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:functions",
+        "semantic:generated-verification"
+      ],
+      "expected_outcome": "success",
+      "generated": {
+        "seed": "4d32504b4c303332",
+        "algorithm": "xorshift64-13-7-17",
+        "kind": "metamorphic"
+      },
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "generated-recursive-sum-1-left",
+          "generated-recursive-sum-1-right"
+        ],
+        "domain": "Sum recursion and closed form, Int n in [0,16]"
+      }
+    },
+    {
+      "id": "generated-associativity-2-left",
+      "input": "tests/fixtures/m2/generated-associativity-2-left.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:generated-verification"
+      ],
+      "expected_outcome": "success",
+      "generated": {
+        "seed": "4d32504b4c303332",
+        "algorithm": "xorshift64-13-7-17",
+        "kind": "metamorphic"
+      },
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "generated-associativity-2-left",
+          "generated-associativity-2-right"
+        ],
+        "domain": "Int addition associativity with each operand in [-500,500], no overflow"
+      }
+    },
+    {
+      "id": "generated-associativity-2-right",
+      "input": "tests/fixtures/m2/generated-associativity-2-right.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:generated-verification"
+      ],
+      "expected_outcome": "success",
+      "generated": {
+        "seed": "4d32504b4c303332",
+        "algorithm": "xorshift64-13-7-17",
+        "kind": "metamorphic"
+      },
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "generated-associativity-2-left",
+          "generated-associativity-2-right"
+        ],
+        "domain": "Int addition associativity with each operand in [-500,500], no overflow"
+      }
+    },
+    {
+      "id": "generated-unused-branch-3-left",
+      "input": "tests/fixtures/m2/generated-unused-branch-3-left.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:control-flow",
+        "semantic:generated-verification"
+      ],
+      "expected_outcome": "success",
+      "generated": {
+        "seed": "4d32504b4c303332",
+        "algorithm": "xorshift64-13-7-17",
+        "kind": "metamorphic"
+      },
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "generated-unused-branch-3-left",
+          "generated-unused-branch-3-right"
+        ],
+        "domain": "Unselected conditional branch must remain unforced"
+      }
+    },
+    {
+      "id": "generated-unused-branch-3-right",
+      "input": "tests/fixtures/m2/generated-unused-branch-3-right.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:control-flow",
+        "semantic:generated-verification"
+      ],
+      "expected_outcome": "success",
+      "generated": {
+        "seed": "4d32504b4c303332",
+        "algorithm": "xorshift64-13-7-17",
+        "kind": "metamorphic"
+      },
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "generated-unused-branch-3-left",
+          "generated-unused-branch-3-right"
+        ],
+        "domain": "Unselected conditional branch must remain unforced"
+      }
+    },
+    {
+      "id": "generated-alpha-rename-4-left",
+      "input": "tests/fixtures/m2/generated-alpha-rename-4-left.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:name-resolution",
+        "semantic:generated-verification"
+      ],
+      "expected_outcome": "success",
+      "generated": {
+        "seed": "4d32504b4c303332",
+        "algorithm": "xorshift64-13-7-17",
+        "kind": "metamorphic"
+      },
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "generated-alpha-rename-4-left",
+          "generated-alpha-rename-4-right"
+        ],
+        "domain": "Capture-free alpha renaming of bounded Int let bindings"
+      }
+    },
+    {
+      "id": "generated-alpha-rename-4-right",
+      "input": "tests/fixtures/m2/generated-alpha-rename-4-right.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:name-resolution",
+        "semantic:generated-verification"
+      ],
+      "expected_outcome": "success",
+      "generated": {
+        "seed": "4d32504b4c303332",
+        "algorithm": "xorshift64-13-7-17",
+        "kind": "metamorphic"
+      },
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "generated-alpha-rename-4-left",
+          "generated-alpha-rename-4-right"
+        ],
+        "domain": "Capture-free alpha renaming of bounded Int let bindings"
+      }
+    },
+    {
+      "id": "generated-recursive-sum-5-left",
+      "input": "tests/fixtures/m2/generated-recursive-sum-5-left.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:functions",
+        "semantic:generated-verification"
+      ],
+      "expected_outcome": "success",
+      "generated": {
+        "seed": "4d32504b4c303332",
+        "algorithm": "xorshift64-13-7-17",
+        "kind": "metamorphic"
+      },
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "generated-recursive-sum-5-left",
+          "generated-recursive-sum-5-right"
+        ],
+        "domain": "Sum recursion and closed form, Int n in [0,16]"
+      }
+    },
+    {
+      "id": "generated-recursive-sum-5-right",
+      "input": "tests/fixtures/m2/generated-recursive-sum-5-right.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:functions",
+        "semantic:generated-verification"
+      ],
+      "expected_outcome": "success",
+      "generated": {
+        "seed": "4d32504b4c303332",
+        "algorithm": "xorshift64-13-7-17",
+        "kind": "metamorphic"
+      },
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "generated-recursive-sum-5-left",
+          "generated-recursive-sum-5-right"
+        ],
+        "domain": "Sum recursion and closed form, Int n in [0,16]"
+      }
+    },
+    {
+      "id": "generated-associativity-6-left",
+      "input": "tests/fixtures/m2/generated-associativity-6-left.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:generated-verification"
+      ],
+      "expected_outcome": "success",
+      "generated": {
+        "seed": "4d32504b4c303332",
+        "algorithm": "xorshift64-13-7-17",
+        "kind": "metamorphic"
+      },
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "generated-associativity-6-left",
+          "generated-associativity-6-right"
+        ],
+        "domain": "Int addition associativity with each operand in [-500,500], no overflow"
+      }
+    },
+    {
+      "id": "generated-associativity-6-right",
+      "input": "tests/fixtures/m2/generated-associativity-6-right.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:generated-verification"
+      ],
+      "expected_outcome": "success",
+      "generated": {
+        "seed": "4d32504b4c303332",
+        "algorithm": "xorshift64-13-7-17",
+        "kind": "metamorphic"
+      },
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "generated-associativity-6-left",
+          "generated-associativity-6-right"
+        ],
+        "domain": "Int addition associativity with each operand in [-500,500], no overflow"
+      }
+    },
+    {
+      "id": "generated-unused-branch-7-left",
+      "input": "tests/fixtures/m2/generated-unused-branch-7-left.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:control-flow",
+        "semantic:generated-verification"
+      ],
+      "expected_outcome": "success",
+      "generated": {
+        "seed": "4d32504b4c303332",
+        "algorithm": "xorshift64-13-7-17",
+        "kind": "metamorphic"
+      },
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "generated-unused-branch-7-left",
+          "generated-unused-branch-7-right"
+        ],
+        "domain": "Unselected conditional branch must remain unforced"
+      }
+    },
+    {
+      "id": "generated-unused-branch-7-right",
+      "input": "tests/fixtures/m2/generated-unused-branch-7-right.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:control-flow",
+        "semantic:generated-verification"
+      ],
+      "expected_outcome": "success",
+      "generated": {
+        "seed": "4d32504b4c303332",
+        "algorithm": "xorshift64-13-7-17",
+        "kind": "metamorphic"
+      },
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "generated-unused-branch-7-left",
+          "generated-unused-branch-7-right"
+        ],
+        "domain": "Unselected conditional branch must remain unforced"
+      }
+    },
+    {
+      "id": "fuzz-parser-00",
+      "input": "tests/fixtures/m2/fuzz-parser-00.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:diagnostics",
+        "semantic:generated-verification"
+      ],
+      "expected_outcome": "failure",
+      "generated": {
+        "seed": "4d32504b4c303332",
+        "algorithm": "xorshift64-13-7-17",
+        "kind": "malformed-grammar-mutation"
+      }
+    },
+    {
+      "id": "fuzz-parser-01",
+      "input": "tests/fixtures/m2/fuzz-parser-01.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:diagnostics",
+        "semantic:generated-verification"
+      ],
+      "expected_outcome": "failure",
+      "generated": {
+        "seed": "4d32504b4c303332",
+        "algorithm": "xorshift64-13-7-17",
+        "kind": "malformed-grammar-mutation"
+      }
+    },
+    {
+      "id": "fuzz-parser-02",
+      "input": "tests/fixtures/m2/fuzz-parser-02.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:diagnostics",
+        "semantic:generated-verification"
+      ],
+      "expected_outcome": "failure",
+      "generated": {
+        "seed": "4d32504b4c303332",
+        "algorithm": "xorshift64-13-7-17",
+        "kind": "malformed-grammar-mutation"
+      }
+    },
+    {
+      "id": "fuzz-parser-03",
+      "input": "tests/fixtures/m2/fuzz-parser-03.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:diagnostics",
+        "semantic:generated-verification"
+      ],
+      "expected_outcome": "failure",
+      "generated": {
+        "seed": "4d32504b4c303332",
+        "algorithm": "xorshift64-13-7-17",
+        "kind": "malformed-grammar-mutation"
+      }
+    },
+    {
+      "id": "fuzz-parser-04",
+      "input": "tests/fixtures/m2/fuzz-parser-04.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:diagnostics",
+        "semantic:generated-verification"
+      ],
+      "expected_outcome": "failure",
+      "generated": {
+        "seed": "4d32504b4c303332",
+        "algorithm": "xorshift64-13-7-17",
+        "kind": "malformed-grammar-mutation"
+      }
+    },
+    {
+      "id": "fuzz-parser-05",
+      "input": "tests/fixtures/m2/fuzz-parser-05.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:diagnostics",
+        "semantic:generated-verification"
+      ],
+      "expected_outcome": "failure",
+      "generated": {
+        "seed": "4d32504b4c303332",
+        "algorithm": "xorshift64-13-7-17",
+        "kind": "malformed-grammar-mutation"
+      }
+    },
+    {
+      "id": "fuzz-parser-06",
+      "input": "tests/fixtures/m2/fuzz-parser-06.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:diagnostics",
+        "semantic:generated-verification"
+      ],
+      "expected_outcome": "failure",
+      "generated": {
+        "seed": "4d32504b4c303332",
+        "algorithm": "xorshift64-13-7-17",
+        "kind": "malformed-grammar-mutation"
+      }
+    },
+    {
+      "id": "fuzz-parser-07",
+      "input": "tests/fixtures/m2/fuzz-parser-07.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:diagnostics",
+        "semantic:generated-verification"
+      ],
+      "expected_outcome": "failure",
+      "generated": {
+        "seed": "4d32504b4c303332",
+        "algorithm": "xorshift64-13-7-17",
+        "kind": "malformed-grammar-mutation"
+      }
+    },
+    {
+      "id": "fuzz-parser-08",
+      "input": "tests/fixtures/m2/fuzz-parser-08.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:diagnostics",
+        "semantic:generated-verification"
+      ],
+      "expected_outcome": "failure",
+      "generated": {
+        "seed": "4d32504b4c303332",
+        "algorithm": "xorshift64-13-7-17",
+        "kind": "malformed-grammar-mutation"
+      }
+    },
+    {
+      "id": "fuzz-parser-09",
+      "input": "tests/fixtures/m2/fuzz-parser-09.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:diagnostics",
+        "semantic:generated-verification"
+      ],
+      "expected_outcome": "failure",
+      "generated": {
+        "seed": "4d32504b4c303332",
+        "algorithm": "xorshift64-13-7-17",
+        "kind": "malformed-grammar-mutation"
+      }
+    },
+    {
+      "id": "fuzz-parser-10",
+      "input": "tests/fixtures/m2/fuzz-parser-10.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:diagnostics",
+        "semantic:generated-verification"
+      ],
+      "expected_outcome": "failure",
+      "generated": {
+        "seed": "4d32504b4c303332",
+        "algorithm": "xorshift64-13-7-17",
+        "kind": "malformed-grammar-mutation"
+      }
+    },
+    {
+      "id": "fuzz-parser-11",
+      "input": "tests/fixtures/m2/fuzz-parser-11.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:diagnostics",
+        "semantic:generated-verification"
+      ],
+      "expected_outcome": "failure",
+      "generated": {
+        "seed": "4d32504b4c303332",
+        "algorithm": "xorshift64-13-7-17",
+        "kind": "malformed-grammar-mutation"
+      }
+    },
+    {
+      "id": "fuzz-parser-12",
+      "input": "tests/fixtures/m2/fuzz-parser-12.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:diagnostics",
+        "semantic:generated-verification"
+      ],
+      "expected_outcome": "failure",
+      "generated": {
+        "seed": "4d32504b4c303332",
+        "algorithm": "xorshift64-13-7-17",
+        "kind": "malformed-grammar-mutation"
+      }
+    },
+    {
+      "id": "fuzz-parser-13",
+      "input": "tests/fixtures/m2/fuzz-parser-13.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:diagnostics",
+        "semantic:generated-verification"
+      ],
+      "expected_outcome": "failure",
+      "generated": {
+        "seed": "4d32504b4c303332",
+        "algorithm": "xorshift64-13-7-17",
+        "kind": "malformed-grammar-mutation"
+      }
+    },
+    {
+      "id": "fuzz-parser-14",
+      "input": "tests/fixtures/m2/fuzz-parser-14.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:diagnostics",
+        "semantic:generated-verification"
+      ],
+      "expected_outcome": "failure",
+      "generated": {
+        "seed": "4d32504b4c303332",
+        "algorithm": "xorshift64-13-7-17",
+        "kind": "malformed-grammar-mutation"
+      }
+    },
+    {
+      "id": "fuzz-parser-15",
+      "input": "tests/fixtures/m2/fuzz-parser-15.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:diagnostics",
+        "semantic:generated-verification"
+      ],
+      "expected_outcome": "failure",
+      "generated": {
+        "seed": "4d32504b4c303332",
+        "algorithm": "xorshift64-13-7-17",
+        "kind": "malformed-grammar-mutation"
+      }
+    },
+    {
+      "id": "error-logical-left-and",
+      "input": "tests/fixtures/m2/error-logical-left-and.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "error-logical-left-or",
+      "input": "tests/fixtures/m2/error-logical-left-or.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "error-logical-right-and",
+      "input": "tests/fixtures/m2/error-logical-right-and.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "error-logical-right-or",
+      "input": "tests/fixtures/m2/error-logical-right-or.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    }
+  ]
+}

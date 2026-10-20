@@ -26,6 +26,7 @@ pub struct Member {
     pub name: Arc<str>,
     pub code: usize,
     pub local: bool,
+    pub method: bool,
 }
 
 #[derive(Clone, Debug, PartialEq)]
@@ -40,10 +41,19 @@ pub enum LazyState {
 pub struct CacheKey {
     pub owner: Option<ObjectId>,
     pub name: Arc<str>,
+    pub method: bool,
+}
+
+#[derive(Clone, Debug)]
+pub struct Function {
+    pub block: usize,
+    pub arity: usize,
+    pub method: bool,
 }
 
 #[derive(Clone, Debug, Default)]
 pub struct Object {
+    pub function: Option<Function>,
     pub parent: Option<ObjectId>,
     pub members: Vec<Member>,
     pub environment: Environment,
@@ -136,13 +146,7 @@ impl Heap {
     /// The caller must include every externally retained handle in `roots`.
     pub fn collect(&mut self, roots: &[Value]) -> HeapStats {
         let mut marked = vec![false; self.slots.len()];
-        let mut pending: Vec<ObjectId> = roots
-            .iter()
-            .filter_map(|value| match value {
-                Value::Object(id) => Some(*id),
-                _ => None,
-            })
-            .collect();
+        let mut pending: Vec<ObjectId> = roots.iter().filter_map(Value::heap_id).collect();
         while let Some(id) = pending.pop() {
             let Ok(object) = self.get(id) else { continue };
             if marked[id.index] {
@@ -163,8 +167,8 @@ impl Heap {
                     _ => None,
                 }))
             {
-                if let Value::Object(id) = value {
-                    pending.push(*id);
+                if let Some(id) = value.heap_id() {
+                    pending.push(id);
                 }
             }
             for key in object.cache.keys() {

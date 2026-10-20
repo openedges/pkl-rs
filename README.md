@@ -4,6 +4,13 @@ This project reimplements [Pkl](https://pkl-lang.org/) 0.32.0 in Rust. It aims t
 
 The project has completed its **M0 compatibility tooling and initial Java baselines** and **M1 architecture experiments**, including failed-lazy-retry, nested Host evaluation, cancellation, and the Graal compilation investigation. A bounded parser/resolver, lazy bytecode VM, tracing heap, numeric/regex probes, and resumable Host run through native Rust, Node N-API, and browser Wasm. These are prototypes; the complete language, CLI, REPL, server, and product APIs remain unimplemented. The [M0 report](reports/m0/README.md) and [M1 experiments](reports/m1/README.md) distinguish verified results, known differences, and performance limitations.
 
+**M2 language implementation is in progress.** The shared engine is being extended
+with operators, control flow, strings, typed methods, recursive calls, closures,
+and structured source diagnostics. The [M2 verification contract](docs/m2-language.md)
+keeps the complete language inventory separate from selected executable probes.
+Classes, advanced types, generators, and the remaining language corpus are
+required before M2 can close.
+
 ## Goals
 
 - Compatibility with the Pkl 0.32.0 language, standard library, CLI, REPL, server, and public APIs.
@@ -65,7 +72,7 @@ cargo check -p pkl-runtime --target wasm32-unknown-unknown --locked
 .github/workflows/     Workspace checks and Java tooling replay
 benchmarks/            Initial Java workloads and sampling contract
 compatibility/         Source, corpus, smoke, and regression manifests
-crates/pkl-runtime/    Bounded M1 frontend, VM, heap, primitives, and Host
+crates/pkl-runtime/    Shared frontend, VM, heap, diagnostics, primitives, and Host
 crates/pkl-wasm/       Experimental browser bindings to the shared engine
 crates/pkl-napi/       Experimental Node bindings to the shared engine
 docs/                  Architecture and verification tool contracts

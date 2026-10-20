@@ -26,6 +26,18 @@ export async function scenarios(api) {
     eq(api.evaluate('base = new { n = 1; value = this.n }; child = (base) { n = 3 }; answer = child.value', 'answer'), 'int\t3');
     throws(() => api.evaluate('answer = 1 +', 'answer'));
   });
+  // These source cases also execute against Java in the M2 native differential
+  // selection. Here they verify the same engine through real JS/Wasm bindings.
+  await check('m2-recursive-methods-and-closures', () => {
+    eq(api.evaluate('function sum(n) = if (n == 0) 0 else n + sum(n - 1)\nresult = sum(10)', 'result'), 'int\t55');
+    eq(api.evaluate('result = let (x = 40) ((y) -> x + y).apply(2)', 'result'), 'int\t42');
+    eq(api.evaluate('function add(x: Int, y: Int): Int = x + y\nresult = add(40, 2)', 'result'), 'int\t42');
+  });
+  await check('m2-lazy-control-and-interpolation', () => {
+    eq(api.evaluate('result = 42 ?? missing', 'result'), 'int\t42');
+    eq(api.evaluate('result = false && missing', 'result'), 'bool\tfalse');
+    eq(api.evaluate('result = "answer: \\(40 + 2)"', 'result'), 'string\t616e737765723a203432');
+  });
   await check('utf8-utf16-string-boundary', () => {
     for (const value of ['', '한글🙂e\u0301\0\r\n', '𐐀漢字']) eq(api.roundtripString(value), value);
     for (const value of ['\ud800', '\udfff', 'a\ud800b']) throws(() => api.roundtripString(value), 'unpaired UTF-16 surrogate is unsupported');

@@ -19,7 +19,7 @@ M0의 참조 소스·Java oracle 고정, 기능·코퍼스 목록, 원시 차등
 | 초기 구성 | 구축됨 | 없음 | Git·Rust workspace·참조 submodule·개발 문서와 초기 구성 검증 |
 | M0 기준선 | 완료: 로컬 기준선·원격 CI 검증 확인 | 초기 구성 | oracle·목록·원시 비교 도구·Java 초기 측정과 전체 처리 상태 확보; 판정 보류와 미구현 범위 보존 |
 | M1 구조 검증 | 완료: 구조·Graal 조사·원격 CI 증거 확인 | M0의 oracle·실행 계약·초기 기준선 | 제한된 공통 엔진·실제 Node/브라우저·원시 비교와 비용 측정 완료. 후보 기각과 알려진 호환성·성능 실패는 후속 필수 조건으로 보존 |
-| M2 언어 런타임 | 계획됨 | M1의 이름 해석·값·heap·진단 설계 결정 | 객체·lazy 평가·상속·closure·타입·Reference 구현; 언어 코퍼스의 결과·오류 바이트 일치 |
+| M2 언어 런타임 | 진행 중: 공통 VM·문법 확대와 차등 검증 | M1의 이름 해석·값·heap·진단 설계 결정 | 객체·lazy 평가·상속·closure·타입·Reference 구현; 언어 코퍼스의 결과·오류 바이트 일치 |
 | M3 표준 라이브러리·출력 | 계획됨 | M2의 해당 언어 기능 | 전체 builtin·renderer·reflection·Pkl Binary 구현; 공개 멤버 누락 0, 출력·오류 일치 |
 | M4 외부 기능 | 계획됨 | M1 Host 계약과 M2·M3의 해당 기능 | module/resource Host·HTTP·프로젝트·패키지·external reader 구현; 실제 I/O·패키지 코퍼스 통과 |
 | M5 제품 API | 계획됨 | M2·M3·M4의 해당 기능 | CLI·REPL·server·Rust API·formatter·문서 생성·코드 생성·JVM adapter 구현; 기존 호출·client·수명주기 호환 |
@@ -135,6 +135,26 @@ M1은 아래 항목별 구현·비교 증거·설계 결정이 갖춰진 뒤 완
 - 특수화 VM의 작은 정수 workload 개선은 전체 성능 통과가 아닙니다. 고정 Graal/Pkl 조합의 `FrameWithoutBoxing` 중단 원인과 실제 Tier 2 workload는 [마감 조사](docs/m1-graal.md)에서 확인했습니다. 원인 확인용 우회는 의미론을 생략하므로 기준 oracle에 적용하지 않습니다. 실제 컴파일된 Java와 같은 입력·호출 경계로 새 성능 측정을 수행하고, 큰 lazy 객체·장기 세션·제품 API를 비교해야 합니다.
 
 ## M2 — 언어 런타임
+
+M1의 공통 VM을 확장합니다. VM·heap·호출 의미론은 `gpt-6-astra / high`, parser·resolver와 검증 도구는 각각 `gpt-6.1-sol / high`에 배정합니다. 주 에이전트가 공통 진단 렌더러, 통합 검증, 문서와 커밋·원격 CI를 담당합니다.
+
+### 실행 항목과 진행 상태
+
+| 작업 | 상태 | 구현·검증 범위와 남은 조건 |
+| --- | --- | --- |
+| M2-01 전체 목록과 실행 판정 | 진행 중 | `compatibility/m2-language.json`에 의미론 분류·upstream 선언·언어 snippet·rev1 후보를 보존합니다. 선언 수는 기능 커버리지가 아니며, 미연결 항목은 전체 gate 실패로 남깁니다. |
+| M2-02 lexer·표현식·문자열 | 진행 중 | 숫자·연산자 우선순위·조건식·nullable 연산·raw/multiline/interpolation과 0.32 continuation을 확장합니다. 전체 유효·오류 문법 코퍼스 연결이 필요합니다. |
+| M2-03 함수·closure·호출 | 진행 중 | 별도 method namespace, 재귀, lexical capture, primitive 매개변수·반환 타입 검사, Host 중단·재개 중 GC를 구현·검증합니다. 전체 함수 타입·amendment·오류 조건은 후속 항목입니다. |
+| M2-04 객체·클래스·상속 | 진행 중 | 기존 lazy 객체·amendment에 클래스·멤버 modifier·override·runtime identity를 연결합니다. hidden/fixed/const/abstract와 eager/lazy 순서를 포함해야 합니다. |
+| M2-05 타입·제약·generic | 진행 중 | primitive·nullable·union 검사 기반을 확장합니다. alias·constraint·generic·recursive 타입·default·lazy wrapper·상세 오류는 전체 완료 조건입니다. |
+| M2-06 collection·generator | 계획됨 | element·entry·member predicate·for/when·spread·inferred new 및 타입 검사를 함께 검증합니다. |
+| M2-07 Reference·메타데이터 | 계획됨 | `Reference<Domain, Type>` 및 reflection에 필요한 module/class/member/type 정보를 구현합니다. |
+| M2-08 진단·첫 오류·논리적 스택 | 진행 중 | bytecode와 별도의 source metadata와 공통 uncolored renderer를 연결합니다. 원시 오류 바이트·힌트·호출 위치·재귀 frame 압축·전체 오류 선택이 일치해야 합니다. |
+| M2-09 생성 검사·플랫폼·완료 gate | 진행 중 | Java 차등 입력·metamorphic 관계·seeded 생성과 실제 native/Node/browser 실행을 연결합니다. 작은 선택 코퍼스 성공은 M2 전체 완료가 아닙니다. |
+
+### 원래 범위와 종료 조건
+
+첫 구현 단계의 [검증 기록](reports/m2/README.md)을 확보했습니다. 선택 사례 119개 중 118개는 Java와 원시 바이트가 일치하며, 순환 참조 1개는 Java 오류 자체가 불안정해 실패로 유지합니다. Rust 검사 78개와 Python 검사 156개, Node·브라우저 각 16개 시나리오가 통과했습니다. 전체 목록의 클래스·타입·generator·Reference 및 미연결 코퍼스는 남아 있으므로 **M2는 진행 중**입니다.
 
 - 전체 문법, 이름 해석, IR·compiler, lazy evaluation, 객체·amendment·상속, closure, generator를 구현합니다.
 - 타입·제약·generic·union, `Reference<Domain, Type>`, reflection에 필요한 런타임 메타데이터를 구현합니다. 다중 행 문자열의 continuation 등 0.32 기능을 목록에 연결합니다.
