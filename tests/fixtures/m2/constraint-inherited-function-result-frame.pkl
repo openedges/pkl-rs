@@ -1,0 +1,3 @@
+open class A { value: Int((x) -> 42) = 5 }
+class B extends A { value = 6 }
+result = (new B {}).value

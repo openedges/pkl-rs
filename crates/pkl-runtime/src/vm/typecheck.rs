@@ -317,6 +317,32 @@ impl Vm {
             .return_to_type = true;
         Ok(())
     }
+    /// Result validation happens after the child frame has returned. Keep the
+    /// checking continuation available to `fail`, including inherited value sites.
+    fn fail_type_result(
+        &mut self,
+        run: TypeRun,
+        error: Result<RuntimeError, RuntimeError>,
+        authored_span: Option<Span>,
+    ) -> Result<(), RuntimeError> {
+        // Rendering failures are fatal too; propagate them with the same frames.
+        let mut error = match error {
+            Ok(error) | Err(error) => error,
+        };
+        if let Some(span) = authored_span {
+            error = error.at(span);
+            if let Some(declaration) = run.frames.first() {
+                // Inherited checks execute at a source-less Return instruction.
+                // Ordinary property checks already have this authored VM frame.
+                error.frames.push(RuntimeFrame {
+                    span,
+                    member: declaration.member.clone(),
+                });
+            }
+        }
+        self.frames.last_mut().expect("type frame").type_run = Some(run);
+        Err(error)
+    }
     pub(super) fn step_type(&mut self) -> Result<(), RuntimeError> {
         let mut run = self
             .frames
@@ -442,20 +468,65 @@ impl Vm {
                     .ok_or_else(|| invalid("missing constraint return"))?;
                 let constraint = constraints[index].clone();
                 match result {
-                    Value::Bool(true) => run.tasks.push(Task::Constraints { constraints, index: index+1 }),
+                    Value::Bool(true) => run.tasks.push(Task::Constraints {
+                        constraints,
+                        index: index + 1,
+                    }),
                     Value::Bool(false) if should_trace => {
                         run.tracker = Some(BTreeMap::new());
-                        run.tasks.push(Task::TraceResult { span: constraint.span, body_span: constraint.span });
+                        run.tasks.push(Task::TraceResult {
+                            span: constraint.span,
+                            body_span: constraint.span,
+                        });
                         return self.launch_constraint(run, constraint);
                     }
                     Value::Bool(false) => run.mismatch(constraint.span, constraint.span),
                     Value::Function(function) => {
-                        let body_span = self.heap.get(function)?.function.as_ref().and_then(|function| self.program.metadata.get(function.block)).and_then(|metadata| metadata.declaration.or(metadata.value_span)).unwrap_or(constraint.span);
-                        run.tasks.push(Task::PredicateResult { constraints, index, body_span, function });
+                        let body_span = self
+                            .heap
+                            .get(function)?
+                            .function
+                            .as_ref()
+                            .and_then(|function| self.program.metadata.get(function.block))
+                            .and_then(|metadata| metadata.declaration.or(metadata.value_span))
+                            .unwrap_or(constraint.span);
+                        run.tasks.push(Task::PredicateResult {
+                            constraints,
+                            index,
+                            body_span,
+                            function,
+                        });
                         return self.launch_predicate(run, function);
                     }
-                    Value::Null => return Err(RuntimeError::new(ErrorKind::Type, "Expected value of type `Boolean` or `Function`, but got `null`.").at(constraint.span)),
-                    value => return Err(RuntimeError::new(ErrorKind::Type, format!("Expected value of type `Boolean` or `Function`, but got type `{}`.\nValue: {}", crate::diagnostic_values::type_name(&value, &self.heap, &self.program.module_name)?, crate::diagnostic_values::render(&value, &self.heap, &self.program.module_name, 80)?)).at(constraint.span)),
+                    value => {
+                        let error = if matches!(value, Value::Null) {
+                            Ok(RuntimeError::new(
+                                ErrorKind::Type,
+                                "Expected value of type `Boolean` or `Function`, but got `null`.",
+                            ))
+                        } else {
+                            (|| {
+                                Ok(RuntimeError::new(
+                                    ErrorKind::Type,
+                                    format!(
+                                        "Expected value of type `Boolean` or `Function`, but got type `{}`.\nValue: {}",
+                                        crate::diagnostic_values::type_name(
+                                            &value,
+                                            &self.heap,
+                                            &self.program.module_name
+                                        )?,
+                                        crate::diagnostic_values::render(
+                                            &value,
+                                            &self.heap,
+                                            &self.program.module_name,
+                                            80
+                                        )?,
+                                    ),
+                                ))
+                            })()
+                        };
+                        return self.fail_type_result(run, error, Some(constraint.span));
+                    }
                 }
             }
             Task::PredicateResult {
@@ -489,12 +560,13 @@ impl Vm {
                         run.mismatch(constraints[index].span, body_span);
                     }
                     value => {
-                        return Err(type_error(
+                        let error = type_error(
                             &TypeCheck::Boolean,
                             &value,
                             &self.program.module_name,
                             &self.heap,
-                        )?);
+                        );
+                        return self.fail_type_result(run, error, None);
                     }
                 }
             }

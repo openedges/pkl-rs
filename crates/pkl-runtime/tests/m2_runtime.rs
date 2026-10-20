@@ -1063,3 +1063,58 @@ fn inherited_constraint_fatal_errors_keep_declaration_and_override_value_frames(
         "Operator `|>` is not defined for operand types `Int` and `#C`.\nLeft operand : 1\nRight operand: new C { x = ? }"
     );
 }
+
+#[test]
+fn inherited_invalid_constraint_results_preserve_fatal_validation_frames() {
+    for power in [false, true] {
+        for (constraint, authored) in [
+            ("42", Some("42")),
+            ("null", Some("null")),
+            ("(x) -> 42", None),
+        ] {
+            let source = format!(
+                "open class A {{ value: Int({constraint}) = 5 }}\nclass B extends A {{ value = 6 }}\nresult = (new B {{}}).value"
+            );
+            let parsed = parse_module(&source).unwrap();
+            let resolved = resolve_module(&parsed).unwrap();
+            let program = if power {
+                pkl_runtime::vm::compile_module_with_power_assertions(&resolved)
+            } else {
+                compile_module(&resolved)
+            }
+            .unwrap();
+            let mut vm = Vm::new(program.clone());
+            vm.set_power_assertions(power);
+            vm.start(program.entry, vec![]).unwrap();
+            let object = done(&mut vm).unwrap();
+            vm.start_member(object.as_object().unwrap(), "result")
+                .unwrap();
+            let error = done(&mut vm).unwrap_err();
+            assert_eq!(error.kind, ErrorKind::Type);
+            assert!(
+                error.type_diagnostic.is_none(),
+                "fatal errors must not become recoverable mismatches"
+            );
+            let actual: Vec<_> = error
+                .frames
+                .iter()
+                .map(|frame| {
+                    (
+                        frame.member.as_ref(),
+                        &source[frame.span.start..frame.span.end],
+                    )
+                })
+                .collect();
+            let mut expected = Vec::new();
+            if let Some(expression) = authored {
+                expected.push(("#A.value", expression));
+            }
+            expected.extend([("#B.value", "6"), ("#result", "(new B {}).value")]);
+            assert_eq!(actual, expected, "constraint={constraint}, power={power}");
+            // Failed validation must not publish a cached property value.
+            vm.start_member(object.as_object().unwrap(), "result")
+                .unwrap();
+            assert_eq!(done(&mut vm), Err(error));
+        }
+    }
+}

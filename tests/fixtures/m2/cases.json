@@ -3368,6 +3368,28 @@
         "semantic:diagnostics"
       ],
       "expected_outcome": "failure"
+    },
+    {
+      "id": "constraint-inherited-nonbool-frame",
+      "input": "tests/fixtures/m2/constraint-inherited-nonbool-frame.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:constraints",
+        "semantic:classes",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "constraint-inherited-function-result-frame",
+      "input": "tests/fixtures/m2/constraint-inherited-function-result-frame.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:constraints",
+        "semantic:classes",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
     }
   ]
 }
