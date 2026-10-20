@@ -128,6 +128,9 @@ fn program(mode: &str, source: &str) -> Arc<Program> {
                 code,
                 local: false,
                 method: false,
+                ty: None,
+                type_span: None,
+                constant: false,
             })
             .collect(),
     );

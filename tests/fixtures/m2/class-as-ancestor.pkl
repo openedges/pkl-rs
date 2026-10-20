@@ -1,0 +1,4 @@
+open class A { x = 42 }
+class B extends A {}
+x = new B {}
+result = (x as A).x

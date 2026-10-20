@@ -1,0 +1,40 @@
+{
+  "selected_count": 184,
+  "status_counts": {
+    "mismatch": 3,
+    "pass": 181
+  },
+  "source_stability": true,
+  "artifact_stability": true,
+  "inventory_counts": {
+    "cases": 1184,
+    "cases_by_execution": {
+      "ready": 184,
+      "unimplemented": 960,
+      "unmapped": 40
+    },
+    "requirements": 474,
+    "requirements_by_kind": {
+      "language_parser": 137,
+      "language_token": 109,
+      "semantic-family": 30,
+      "specification": 198
+    }
+  },
+  "scope": "Stage 2 diagnostic corrections before legal unknown-member and independent review fixes; not the final stage checkpoint.",
+  "failures": [
+    {
+      "id": "error-cycle",
+      "status": "mismatch"
+    },
+    {
+      "id": "error-remainder-zero",
+      "status": "mismatch"
+    },
+    {
+      "id": "error-class-unknown-member",
+      "status": "mismatch"
+    }
+  ],
+  "metamorphic_relations": 12
+}

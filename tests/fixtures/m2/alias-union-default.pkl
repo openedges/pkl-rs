@@ -1,0 +1,3 @@
+typealias Choice = "foo"|*"bar"
+x: Choice
+result = x

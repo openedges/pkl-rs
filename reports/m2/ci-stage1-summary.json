@@ -1,0 +1,43 @@
+{
+  "run_id": 39382215737,
+  "commit": "fb5a3488ec9c6045111c8240b9ac44240529ef67",
+  "url": "https://github.com/luuvish/pkl-rs/actions/runs/39382215737",
+  "jobs": [
+    {
+      "name": "M1 architecture experiments (known gaps recorded)",
+      "conclusion": "success"
+    },
+    {
+      "name": "Compatibility tooling and Java replay",
+      "conclusion": "success"
+    },
+    {
+      "name": "M2 language development (full gate incomplete)",
+      "conclusion": "success"
+    },
+    {
+      "name": "Workspace (ubuntu-latest)",
+      "conclusion": "success"
+    },
+    {
+      "name": "Workspace (macos-latest)",
+      "conclusion": "success"
+    },
+    {
+      "name": "Workspace (windows-latest)",
+      "conclusion": "success"
+    }
+  ],
+  "artifact_id": 12246540371,
+  "artifact_sha256": "01bae1cc7cc4c1778aab149aa59f2cf328e185c94e62658c62f43c4031f731c9",
+  "exact_committed_source_files_verified": 168,
+  "evidence_files_verified": 1013,
+  "raw_comparisons": {
+    "pass": 118,
+    "oracle-error": 1
+  },
+  "metamorphic_relations": 12,
+  "strict_subset_complete": false,
+  "full_m2_complete": false,
+  "scope": "Stage 1 CI and downloaded M2 evidence; cyclic diagnostics and remaining language requirements stay incomplete."
+}

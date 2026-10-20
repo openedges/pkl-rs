@@ -1,0 +1,81 @@
+{
+  "selected_count": 178,
+  "status_counts": {
+    "mismatch": 12,
+    "oracle-error": 1,
+    "pass": 165
+  },
+  "source_stability": true,
+  "artifact_stability": true,
+  "inventory_counts": {
+    "cases": 1178,
+    "cases_by_execution": {
+      "ready": 178,
+      "unimplemented": 960,
+      "unmapped": 40
+    },
+    "requirements": 474,
+    "requirements_by_kind": {
+      "language_parser": 137,
+      "language_token": 109,
+      "semantic-family": 30,
+      "specification": 198
+    }
+  },
+  "scope": "Stage 2 initial acquisition before diagnostic corrections; all mismatches remain failures.",
+  "failures": [
+    {
+      "id": "error-cycle",
+      "status": "oracle-error"
+    },
+    {
+      "id": "error-remainder-zero",
+      "status": "mismatch"
+    },
+    {
+      "id": "error-class-undefined",
+      "status": "mismatch"
+    },
+    {
+      "id": "error-class-member-type",
+      "status": "mismatch"
+    },
+    {
+      "id": "error-class-inherited-type",
+      "status": "mismatch"
+    },
+    {
+      "id": "error-class-unknown-member",
+      "status": "mismatch"
+    },
+    {
+      "id": "error-class-final-parent",
+      "status": "mismatch"
+    },
+    {
+      "id": "error-class-abstract-new",
+      "status": "mismatch"
+    },
+    {
+      "id": "error-alias-property-type",
+      "status": "mismatch"
+    },
+    {
+      "id": "error-typed-let",
+      "status": "mismatch"
+    },
+    {
+      "id": "error-class-nonconst-capture",
+      "status": "mismatch"
+    },
+    {
+      "id": "error-alias-cyclic-forced",
+      "status": "mismatch"
+    },
+    {
+      "id": "error-named-range",
+      "status": "mismatch"
+    }
+  ],
+  "metamorphic_relations": 12
+}

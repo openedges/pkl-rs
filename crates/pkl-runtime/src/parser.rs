@@ -1,7 +1,37 @@
 //! Shared incremental parser, following the pinned Pkl 0.32 grammar.
 use crate::diagnostic::{Diagnostic, DiagnosticKind};
 use crate::source::Span;
-use crate::syntax::{BinaryOp, Expr, ExprKind, Member, Module, Parameter, Type, TypeKind, UnaryOp};
+use crate::syntax::{
+    BinaryOp, Expr, ExprKind, Member, Modifier, ModifierKind, Module, ModuleDeclaration,
+    ModuleParent, ModuleParentKind, Parameter, Type, TypeKind, TypeParameter, UnaryOp, Variance,
+    modifier_flags,
+};
+
+mod unicode_identifier;
+
+fn identifier_contains(ranges: &[(u32, u32)], character: char) -> bool {
+    use std::cmp::Ordering;
+    let point = character as u32;
+    ranges
+        .binary_search_by(|&(start, end)| {
+            if point < start {
+                Ordering::Greater
+            } else if point > end {
+                Ordering::Less
+            } else {
+                Ordering::Equal
+            }
+        })
+        .is_ok()
+}
+
+fn is_identifier_start(character: char) -> bool {
+    identifier_contains(unicode_identifier::START_RANGES, character)
+}
+
+fn is_identifier_part(character: char) -> bool {
+    identifier_contains(unicode_identifier::PART_RANGES, character)
+}
 
 fn is_keyword(name: &str) -> bool {
     matches!(
@@ -138,11 +168,8 @@ impl Lexer<'_> {
                 ));
             }
             Kind::QuotedName(self.source[begin..end].to_owned())
-        } else if ch.is_ascii_alphabetic() || ch == '_' || ch == '$' {
-            while self
-                .peek()
-                .is_some_and(|ch| ch.is_ascii_alphanumeric() || ch == '_' || ch == '$')
-            {
+        } else if is_identifier_start(ch) {
+            while self.peek().is_some_and(is_identifier_part) {
                 self.advance();
             }
             Kind::Name(self.source[start..self.cursor].to_owned())
@@ -162,6 +189,21 @@ impl Lexer<'_> {
             Kind::Operator(operator)
         } else if "=(){};.,+-*/%<>!:?|[]".contains(ch) {
             Kind::Symbol(ch)
+        } else if !ch.is_ascii() {
+            let mut diagnostic = Diagnostic::new(
+                DiagnosticKind::Syntax,
+                Span::new(start, self.cursor),
+                format!(
+                    "Invalid identifier `{}`.",
+                    if ch as u32 > 0xffff {
+                        '?'.to_string()
+                    } else {
+                        ch.to_string()
+                    }
+                ),
+            );
+            diagnostic.highlight_length_utf16 = Some(1);
+            return Err(diagnostic);
         } else {
             return Err(Diagnostic::new(
                 DiagnosticKind::Unsupported,
@@ -300,7 +342,13 @@ impl Lexer<'_> {
                         let begin = self.cursor;
                         let mut nesting = 1;
                         loop {
-                            let token = self.next()?;
+                            // Scan delimiters without letting a later lexical failure
+                            // supersede an earlier expression syntax error. Parsing
+                            // the captured range below reports failures in order.
+                            let token = match self.next() {
+                                Ok(token) => token,
+                                Err(_) => continue,
+                            };
                             match token.kind {
                                 Kind::Symbol('(') => nesting += 1,
                                 Kind::Symbol(')') => {
@@ -314,6 +362,11 @@ impl Lexer<'_> {
                                     }
                                 }
                                 Kind::Eof => {
+                                    let mut parser = Parser::interpolation(
+                                        self.source,
+                                        Span::new(begin, self.cursor),
+                                    )?;
+                                    parser.expression_expected(0, Some(')'))?;
                                     return Err(Diagnostic::new(
                                         DiagnosticKind::Syntax,
                                         Span::new(begin, self.cursor),
@@ -466,6 +519,13 @@ impl Lexer<'_> {
     }
 }
 
+#[derive(Clone, Copy, Eq, PartialEq)]
+enum MemberContext {
+    Module,
+    Class,
+    Object,
+}
+
 #[derive(Clone)]
 struct Parser<'a> {
     lexer: Lexer<'a>,
@@ -474,6 +534,8 @@ struct Parser<'a> {
     previous_end: usize,
     expectation: Option<String>,
     expressions: usize,
+    pending: Vec<Diagnostic>,
+    member_path: Vec<String>,
 }
 
 impl<'a> Parser<'a> {
@@ -491,12 +553,14 @@ impl<'a> Parser<'a> {
             previous_end: 0,
             expectation: None,
             expressions: 0,
+            pending: Vec::new(),
+            member_path: Vec::new(),
         })
     }
 
     fn interpolation(source: &'a str, span: Span) -> Result<Self, Diagnostic> {
         let mut lexer = Lexer {
-            source: &source[..span.end],
+            source: &source[..(span.end + 1).min(source.len())],
             cursor: span.start,
             string_depth: 0,
         };
@@ -508,6 +572,8 @@ impl<'a> Parser<'a> {
             previous_end: span.start,
             expectation: None,
             expressions: 0,
+            pending: Vec::new(),
+            member_path: Vec::new(),
         })
     }
 
@@ -547,7 +613,8 @@ impl<'a> Parser<'a> {
         };
         let synthetic = eof
             || (expected.is_some()
-                && self.lexer.source[self.previous_end..self.token.span.start].contains('\n'));
+                && self.lexer.source[self.previous_end..self.token.span.start]
+                    .contains(['\n', '\r']));
         let mut diagnostic = Diagnostic::new(
             DiagnosticKind::Syntax,
             if synthetic {
@@ -586,29 +653,205 @@ impl<'a> Parser<'a> {
         Ok((name, token.span))
     }
 
+    fn modifiers(&mut self) -> Result<Vec<Modifier>, Diagnostic> {
+        let mut modifiers = Vec::new();
+        loop {
+            let kind = if self.is_name("abstract") {
+                ModifierKind::Abstract
+            } else if self.is_name("open") {
+                ModifierKind::Open
+            } else if self.is_name("local") {
+                ModifierKind::Local
+            } else if self.is_name("hidden") {
+                ModifierKind::Hidden
+            } else if self.is_name("external") {
+                ModifierKind::External
+            } else if self.is_name("fixed") {
+                ModifierKind::Fixed
+            } else if self.is_name("const") {
+                ModifierKind::Const
+            } else {
+                break;
+            };
+            let span = self.advance()?.span;
+            modifiers.push(Modifier { kind, span });
+        }
+        Ok(modifiers)
+    }
+
+    fn module_declaration(
+        &mut self,
+        modifiers: Vec<Modifier>,
+    ) -> Result<Option<ModuleDeclaration>, Diagnostic> {
+        let start = modifiers
+            .first()
+            .map_or(self.token.span.start, |modifier| modifier.span.start);
+        let name = if self.is_name("module") {
+            self.advance()?;
+            let mut path = vec![self.identifier()?.0];
+            while self.is_symbol('.') {
+                self.advance()?;
+                path.push(self.identifier()?.0);
+            }
+            Some(path)
+        } else {
+            None
+        };
+        let parent = if self.is_name("extends") || self.is_name("amends") {
+            let kind = if self.is_name("extends") {
+                ModuleParentKind::Extends
+            } else {
+                ModuleParentKind::Amends
+            };
+            let begin = self.advance()?.span.start;
+            let Kind::String(uri) = self.token.kind.clone() else {
+                return Err(self.unexpected(Some("string constant")));
+            };
+            let end = self.advance()?.span.end;
+            Some(ModuleParent {
+                kind,
+                uri,
+                span: Span::new(begin, end),
+            })
+        } else {
+            None
+        };
+        Ok(if name.is_some() || parent.is_some() {
+            Some(ModuleDeclaration {
+                name,
+                parent,
+                modifiers,
+                span: Span::new(start, self.previous_end),
+            })
+        } else {
+            None
+        })
+    }
+
     fn members(&mut self, in_object: bool) -> Result<Vec<Member>, Diagnostic> {
+        self.member_list(
+            if in_object {
+                MemberContext::Object
+            } else {
+                MemberContext::Module
+            },
+            None,
+        )
+    }
+
+    fn member_list(
+        &mut self,
+        context: MemberContext,
+        mut initial: Option<Vec<Modifier>>,
+    ) -> Result<Vec<Member>, Diagnostic> {
         let mut members = Vec::new();
-        while self.token.kind != Kind::Eof && !(in_object && self.is_symbol('}')) {
-            let start = self.token.span.start;
-            let local = self.is_name("local");
-            if local {
-                self.advance()?;
-            }
+        while self.token.kind != Kind::Eof
+            && !(context != MemberContext::Module && self.is_symbol('}'))
+        {
+            let modifiers = match initial.take() {
+                Some(modifiers) => modifiers,
+                None => self.modifiers()?,
+            };
+            let start = modifiers
+                .first()
+                .map_or(self.token.span.start, |modifier| modifier.span.start);
+            let local = modifiers
+                .iter()
+                .any(|modifier| modifier.kind == ModifierKind::Local);
             let method = self.is_name("function");
-            if method {
+            let class = self.is_name("class");
+            let alias = self.is_name("typealias");
+            // Property/method lexical declarations use syntactic locality;
+            // class/typealias value members use the computed modifier flags.
+            let local = if class || alias {
+                modifier_flags(&modifiers) & ModifierKind::Local.flag() != 0
+            } else {
+                local
+            };
+            if (class || alias) && context != MemberContext::Module {
+                return Err(self.unexpected(Some("property or method")));
+            }
+            if method || class || alias {
                 self.advance()?;
             }
-            let (name, _) = self.identifier()?;
-            let (expr, ty) = if method {
+            if context == MemberContext::Object
+                && modifiers.is_empty()
+                && (self.is_name("unknown") || self.is_name("nothing"))
+            {
+                return Err(self.unexpected(Some("}")));
+            }
+            let (name, name_span) = self.identifier()?;
+            self.member_path.push(name.clone());
+            let (expr, ty) = if class {
+                let type_parameters = self.type_parameters()?;
+                let superclass = if self.is_name("extends") {
+                    self.advance()?;
+                    Some(self.type_expression()?)
+                } else {
+                    None
+                };
+                let header_span = Span::new(start, self.previous_end);
+                let class_members = if self.is_symbol('{') {
+                    self.advance()?;
+                    let members = self.member_list(MemberContext::Class, None)?;
+                    if self.token.kind == Kind::Eof {
+                        let mut error = self.unexpected(None);
+                        error.message = "Missing `}` delimiter.".to_owned();
+                        return Err(error);
+                    }
+                    self.expect('}')?;
+                    members
+                } else {
+                    Vec::new()
+                };
+                (
+                    Expr {
+                        kind: ExprKind::Class {
+                            type_parameters,
+                            superclass,
+                            members: class_members,
+                            header_span,
+                        },
+                        span: Span::new(start, self.previous_end),
+                    },
+                    None,
+                )
+            } else if alias {
+                let type_parameters = self.type_parameters()?;
+                self.expect('=')?;
+                let ty = self.type_expression()?;
+                let span = Span::new(start, ty.span.end);
+                (
+                    Expr {
+                        kind: ExprKind::TypeAlias {
+                            type_parameters,
+                            ty,
+                        },
+                        span,
+                    },
+                    None,
+                )
+            } else if method {
+                let type_parameters = self.type_parameters()?;
                 let parameters = self.parameters()?;
                 let return_type = self.type_annotation()?;
                 let header_span = Span::new(start, self.previous_end);
-                self.expect('=')?;
-                let body = self.expression_expected(0, in_object.then_some('}'))?;
+                let body = if self.is_symbol('=') {
+                    self.advance()?;
+                    self.expression_expected(0, (context == MemberContext::Object).then_some('}'))?
+                } else if context != MemberContext::Object {
+                    Expr {
+                        kind: ExprKind::Uninitialized,
+                        span: header_span,
+                    }
+                } else {
+                    return Err(self.unexpected(Some("=")));
+                };
                 let span = Span::new(start, body.span.end);
                 (
                     Expr {
                         kind: ExprKind::Function {
+                            type_parameters,
                             header_span,
                             parameters,
                             return_type,
@@ -621,22 +864,82 @@ impl<'a> Parser<'a> {
                 )
             } else {
                 let ty = self.type_annotation()?;
-                self.expect('=')?;
-                (self.expression_expected(0, in_object.then_some('}'))?, ty)
+                let expr = if self.is_symbol('=') {
+                    self.advance()?;
+                    self.expression_expected(0, (context == MemberContext::Object).then_some('}'))?
+                } else if self.is_symbol('{') && ty.is_none() {
+                    let parent = Expr {
+                        kind: ExprKind::Member(
+                            Box::new(Expr {
+                                kind: ExprKind::Super,
+                                span: name_span,
+                            }),
+                            name.clone(),
+                        ),
+                        span: name_span,
+                    };
+                    self.object(Some(parent))?
+                } else if context != MemberContext::Object && ty.is_some() {
+                    Expr {
+                        kind: ExprKind::Uninitialized,
+                        span: Span::new(name_span.start, self.previous_end),
+                    }
+                } else {
+                    return Err(self.unexpected(Some("=")));
+                };
+                (expr, ty)
             };
             let end = expr.span.end;
+            self.member_path.pop();
             members.push(Member {
                 name,
+                name_span,
                 expr,
                 span: Span::new(start, end),
                 local,
                 ty,
+                modifiers,
             });
             if self.is_symbol(';') {
                 self.advance()?;
             }
         }
         Ok(members)
+    }
+
+    fn type_parameters(&mut self) -> Result<Vec<TypeParameter>, Diagnostic> {
+        if !self.is_symbol('<') {
+            return Ok(Vec::new());
+        }
+        self.advance()?;
+        let mut parameters = Vec::new();
+        loop {
+            let start = self.token.span.start;
+            let variance = if self.is_name("in") {
+                self.advance()?;
+                Variance::In
+            } else if self.is_name("out") {
+                self.advance()?;
+                Variance::Out
+            } else {
+                Variance::Invariant
+            };
+            let (name, span) = self.identifier()?;
+            parameters.push(TypeParameter {
+                name,
+                variance,
+                span: Span::new(start, span.end),
+            });
+            if !self.is_symbol(',') {
+                break;
+            }
+            self.advance()?;
+            if self.is_symbol('>') {
+                break;
+            }
+        }
+        self.expect('>')?;
+        Ok(parameters)
     }
 
     fn expression_expected(
@@ -1016,11 +1319,24 @@ impl<'a> Parser<'a> {
         Ok(ty)
     }
 
+    fn integer_literal(&mut self, text: &str, negative: bool, span: Span) -> i64 {
+        match integer(text, negative, span) {
+            Ok(value) => value,
+            Err(mut diagnostic) => {
+                if !self.member_path.is_empty() {
+                    diagnostic.member = Some(self.member_path.join(".").into());
+                }
+                self.pending.push(diagnostic);
+                0 // Never escapes public parsing while pending errors exist.
+            }
+        }
+    }
+
     fn primary(&mut self) -> Result<Expr, Diagnostic> {
         let span = self.token.span;
         let kind = match self.token.kind.clone() {
             Kind::Int(text) => {
-                let value = integer(&text, false, span)?;
+                let value = self.integer_literal(&text, false, span);
                 self.advance()?;
                 ExprKind::Int(value)
             }
@@ -1046,10 +1362,10 @@ impl<'a> Parser<'a> {
                         }),
                         StringPart::Expression(range) => {
                             let mut parser = Self::interpolation(self.lexer.source, range)?;
-                            let expression = parser.expression(0)?;
-                            if parser.token.kind != Kind::Eof {
-                                return Err(parser.unexpected(Some(")")));
-                            }
+                            parser.member_path.clone_from(&self.member_path);
+                            let expression = parser.expression_expected(0, Some(')'))?;
+                            parser.expect(')')?;
+                            self.pending.append(&mut parser.pending);
                             expressions.push(expression);
                         }
                         _ => unreachable!("string lexer returns rendered parts"),
@@ -1133,14 +1449,30 @@ impl<'a> Parser<'a> {
             }
             Kind::Name(name) if name == "new" => {
                 self.advance()?;
-                let mut expr = self.object(None)?;
-                expr.span.start = span.start;
-                return Ok(expr);
+                if self.is_symbol('{') {
+                    let mut expr = self.object(None)?;
+                    expr.span.start = span.start;
+                    return Ok(expr);
+                }
+                let ty = self.type_expression()?;
+                self.expect('{')?;
+                let members = self.members(true)?;
+                let end = self.expect('}')?.span.end;
+                return Ok(Expr {
+                    kind: ExprKind::New { ty, members },
+                    span: Span::new(span.start, end),
+                });
             }
             Kind::Name(name) if name == "let" => {
                 self.advance()?;
                 self.expect('(')?;
-                let (name, _) = self.identifier()?;
+                let name = if self.is_name("_") {
+                    self.advance()?;
+                    "_".to_owned()
+                } else {
+                    self.identifier()?.0
+                };
+                let ty = self.type_annotation()?;
                 self.expect('=')?;
                 let value = self.expression_expected(0, Some(')'))?;
                 self.expect(')')?;
@@ -1149,6 +1481,7 @@ impl<'a> Parser<'a> {
                 return Ok(Expr {
                     kind: ExprKind::Let {
                         name,
+                        ty,
                         value: Box::new(value),
                         body: Box::new(body),
                     },
@@ -1182,6 +1515,7 @@ impl<'a> Parser<'a> {
                     let end = body.span.end;
                     return Ok(Expr {
                         kind: ExprKind::Function {
+                            type_parameters: Vec::new(),
                             header_span,
                             parameters,
                             return_type: None,
@@ -1200,13 +1534,21 @@ impl<'a> Parser<'a> {
             Kind::Symbol('-' | '!') => {
                 let negate = self.is_symbol('-');
                 self.advance()?;
-                if negate && let Kind::Int(text) = &self.token.kind {
-                    let value = integer(text, true, Span::new(span.start, self.token.span.end))?;
-                    let end = self.advance()?.span.end;
-                    return Ok(Expr {
-                        kind: ExprKind::Int(value),
-                        span: Span::new(span.start, end),
-                    });
+                if negate && let Kind::Int(text) = self.token.kind.clone() {
+                    let mut following = self.clone();
+                    following.advance()?;
+                    if !following.is_symbol('.')
+                        && !following.is_operator("?.")
+                        && !following.is_operator("!!")
+                        && !following.is_symbol('[')
+                    {
+                        let value = self.integer_literal(&text, true, self.token.span);
+                        let end = self.advance()?.span.end;
+                        return Ok(Expr {
+                            kind: ExprKind::Int(value),
+                            span: Span::new(span.start, end),
+                        });
+                    }
                 }
                 let operand = self.expression(11)?;
                 let end = operand.span.end;
@@ -1290,13 +1632,14 @@ fn multiline_parts(mut parts: Vec<StringPart>, span: Span) -> Result<Vec<StringP
 }
 
 fn integer(text: &str, negative: bool, span: Span) -> Result<i64, Diagnostic> {
+    let literal = text;
     let text = text.replace('_', "");
-    let (digits, radix) = if text.starts_with("0x") || text.starts_with("0X") {
-        (&text[2..], 16)
-    } else if text.starts_with("0b") || text.starts_with("0B") {
-        (&text[2..], 2)
-    } else if text.starts_with("0o") || text.starts_with("0O") {
-        (&text[2..], 8)
+    let (digits, radix) = if let Some(digits) = text.strip_prefix("0x") {
+        (digits, 16)
+    } else if let Some(digits) = text.strip_prefix("0b") {
+        (digits, 2)
+    } else if let Some(digits) = text.strip_prefix("0o") {
+        (digits, 8)
     } else {
         (text.as_str(), 10)
     };
@@ -1307,15 +1650,33 @@ fn integer(text: &str, negative: bool, span: Span) -> Result<i64, Diagnostic> {
         Diagnostic::new(
             DiagnosticKind::IntegerRange,
             span,
-            "M1 integer literal is outside the signed 64-bit range.",
+            format!("Int literal `{literal}` is too large."),
         )
     })
 }
 
 pub fn parse_module(source: &str) -> Result<Module, Diagnostic> {
     let mut parser = Parser::new(source)?;
-    let members = parser.members(false)?;
-    Ok(Module { members })
+    let modifiers = parser.modifiers()?;
+    let has_declaration =
+        parser.is_name("module") || parser.is_name("extends") || parser.is_name("amends");
+    let (declaration, initial) = if has_declaration {
+        (parser.module_declaration(modifiers)?, None)
+    } else {
+        (None, Some(modifiers))
+    };
+    let members = parser.member_list(MemberContext::Module, initial)?;
+    if let Some(mut error) = parser.pending.into_iter().next() {
+        error.module_name = declaration
+            .as_ref()
+            .and_then(|declaration| declaration.name.as_ref())
+            .map(|name| name.join(".").into_boxed_str());
+        return Err(error);
+    }
+    Ok(Module {
+        declaration,
+        members,
+    })
 }
 
 pub fn parse_expression(source: &str) -> Result<Expr, Diagnostic> {
@@ -1323,6 +1684,9 @@ pub fn parse_expression(source: &str) -> Result<Expr, Diagnostic> {
     let expression = parser.expression(0)?;
     if parser.token.kind != Kind::Eof {
         return Err(parser.unexpected(Some("end of file")));
+    }
+    if let Some(error) = parser.pending.into_iter().next() {
+        return Err(error);
     }
     Ok(expression)
 }

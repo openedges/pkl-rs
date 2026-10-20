@@ -6,9 +6,10 @@ The project has completed its **M0 compatibility tooling and initial Java baseli
 
 **M2 language implementation is in progress.** The shared engine is being extended
 with operators, control flow, strings, typed methods, recursive calls, closures,
-and structured source diagnostics. The [M2 verification contract](docs/m2-language.md)
+classes, inheritance, generic type aliases, and structured source diagnostics.
+The [M2 verification contract](docs/m2-language.md)
 keeps the complete language inventory separate from selected executable probes.
-Classes, advanced types, generators, and the remaining language corpus are
+Complete modifier and type semantics, generators, `Reference`, and the remaining language corpus are
 required before M2 can close.
 
 ## Goals
@@ -80,6 +81,7 @@ external/pkl/          Pkl 0.32.0 reference submodule
 external/pkl-pantry/   Pantry reference submodule
 reports/m0/            Baseline summaries and checksummed raw evidence
 reports/m1/            Architecture experiment decisions and raw evidence
+reports/m2/            Incremental language results and raw evidence
 tests/fixtures/        Owned smoke inputs and selected historical regressions
 tools/                 Python verification and Java measurement helpers
 xtask/                 Repository verification tool

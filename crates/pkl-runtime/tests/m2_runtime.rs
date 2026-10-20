@@ -389,3 +389,379 @@ fn logical_operator_errors_preserve_operator_and_skip_unneeded_operands() {
         "Operator `||` is not defined for operand types `Boolean` and `Int`.\nLeft operand : false\nRight operand: 1"
     );
 }
+
+#[test]
+fn power_and_truncating_division_follow_java_special_value_rules() {
+    for source in [
+        "result = 1.0 ** (1.0 / 0.0)",
+        "result = (-1.0) ** (1.0 / 0.0)",
+        "result = 1.0 ** (0.0 / 0.0)",
+    ] {
+        assert!(matches!(evaluate(source), Ok(Value::Float(value)) if value.is_nan()));
+    }
+    assert_eq!(
+        evaluate("result = (0.0 / 0.0) ** 0.0"),
+        Ok(Value::Float(1.0))
+    );
+    assert_eq!(
+        evaluate("result = 1.0 ~/ 0.0").unwrap_err().message,
+        "Cannot convert Float `1.0` to Int because it is too large."
+    );
+    assert_eq!(
+        evaluate("result = (1.0 / 0.0) ~/ 2.0").unwrap_err().message,
+        "Cannot convert non-finite Float `Infinity` to Int."
+    );
+}
+
+#[test]
+fn class_methods_preserve_subclass_receiver_and_super_owner() {
+    assert_eq!(
+        evaluate(
+            "open class A { x: Int = 1; function f() = x + 2 }\nclass B extends A { x = 3; function f() = super.f() + x }\nb = new B {}\nresult = b.f()"
+        ),
+        Ok(Value::Int(8))
+    );
+    assert_eq!(
+        evaluate(
+            "class C { x: Int = 2; function make(y) = (z) -> x + y + z }\nc = new C { x = 5 }\nresult = c.make(2).apply(3)"
+        ),
+        Ok(Value::Int(10))
+    );
+}
+
+#[test]
+fn class_type_checks_follow_ancestry_and_inherited_property_annotations() {
+    assert_eq!(
+        evaluate("open class A {}\nclass B extends A {}\nx = new B {}\nresult = x is A"),
+        Ok(Value::Bool(true))
+    );
+    assert_eq!(
+        evaluate("class C { x: Int = 2 }\nc = new C { x = \"wrong\" }\nresult = c.x")
+            .unwrap_err()
+            .kind,
+        ErrorKind::Type
+    );
+    assert_eq!(evaluate("open class A { x: Int = 2 }\nclass B extends A { x = \"wrong\" }\nb = new B {}\nresult = b.x").unwrap_err().kind, ErrorKind::Type);
+}
+
+#[test]
+fn type_aliases_resolve_lexically_and_contextual_new_uses_declared_class() {
+    assert_eq!(
+        evaluate("typealias Num = Int\nresult: Num = 42"),
+        Ok(Value::Int(42))
+    );
+    assert_eq!(
+        evaluate("class C { x = 42 }\ntypealias Alias = C\nc: Alias = new {}\nresult = c.x"),
+        Ok(Value::Int(42))
+    );
+    let parsed = parse_module("local Int = 5\nresult: Int = 1").unwrap();
+    let error = compile_module(&resolve_module(&parsed).unwrap()).unwrap_err();
+    assert_eq!(error.kind, ErrorKind::Type);
+    let parsed = parse_module("typealias A = B\ntypealias B = A\nresult: A = 1").unwrap();
+    assert_eq!(
+        compile_module(&resolve_module(&parsed).unwrap())
+            .unwrap_err()
+            .kind,
+        ErrorKind::Cycle
+    );
+}
+
+#[test]
+fn undefined_typed_properties_are_lazy_and_supported_defaults_are_values() {
+    assert_eq!(
+        evaluate("class C { missing: Int }\nresult = 42"),
+        Ok(Value::Int(42))
+    );
+    assert_eq!(
+        evaluate("class C { x: Int }\nc = new C { x = 42 }\nresult = c.x"),
+        Ok(Value::Int(42))
+    );
+    assert_eq!(
+        evaluate("class C { x = 42 }\nc: C\nresult = c.x"),
+        Ok(Value::Int(42))
+    );
+    assert_eq!(evaluate("x: Int?\nresult = x"), Ok(Value::Null));
+    assert_eq!(
+        evaluate("x: \"default\"\nresult = x"),
+        Ok(Value::string("default"))
+    );
+    assert_eq!(
+        evaluate("class C { missing: Int }\nc = new C {}\nresult = c.missing")
+            .unwrap_err()
+            .kind,
+        ErrorKind::MissingMember
+    );
+}
+
+#[test]
+fn generic_alias_arguments_substitute_at_use_site_and_defaults_survive_expansion() {
+    assert_eq!(
+        evaluate("typealias Optional<T> = T?\nvalue: Optional<Int>\nresult = value"),
+        Ok(Value::Null)
+    );
+    assert_eq!(
+        evaluate("typealias Either<A, B> = A | B\nresult: Either<Int, String> = \"ok\""),
+        Ok(Value::string("ok"))
+    );
+    assert_eq!(
+        evaluate(
+            "typealias Identity<T> = T\nclass C { x = 42 }\nc: Identity<C> = new Identity<C> {}\nresult = c.x"
+        ),
+        Ok(Value::Int(42))
+    );
+    assert_eq!(
+        evaluate("typealias Identity<T> = T\nresult: Identity<Identity<Int>> = 42"),
+        Ok(Value::Int(42))
+    );
+    assert_eq!(
+        evaluate("typealias Choice<T> = *\"default\" | T\nvalue: Choice<Int>\nresult = value"),
+        Ok(Value::string("default"))
+    );
+    assert_eq!(
+        evaluate(
+            "class C { x = 42 }\nclass D { C = 2; value: C = new C {} }\nd = new D {}\nresult = d.value.x"
+        ),
+        Ok(Value::Int(42))
+    );
+    assert_eq!(
+        evaluate("function f(Int) = let (x: Int = 42) x\nresult = f(\"not a type\")"),
+        Ok(Value::Int(42))
+    );
+}
+
+#[test]
+fn unused_invalid_type_declarations_do_not_force_their_definitions() {
+    for source in [
+        "typealias Unused = Missing\nresult = 42",
+        "typealias A = B\ntypealias B = A\nresult = 42",
+        "class A {}\nclass B extends A {}\nresult = 42",
+        "class B extends Missing {}\nresult = 42",
+    ] {
+        assert_eq!(evaluate(source), Ok(Value::Int(42)));
+    }
+}
+
+#[test]
+fn const_barriers_are_checked_on_reads_and_keep_unused_class_members_lazy() {
+    assert_eq!(
+        evaluate("x = 1\nclass C { value = x }\nresult = 42"),
+        Ok(Value::Int(42))
+    );
+    let error =
+        evaluate("x = 1\nclass C { value = x }\nc = new C {}\nresult = c.value").unwrap_err();
+    assert!(
+        error
+            .message
+            .starts_with("Cannot reference property `x` from here because it is not `const`.")
+    );
+    assert_eq!(
+        evaluate("const x = 2\nclass C { value = x }\nc = new C {}\nresult = c.value"),
+        Ok(Value::Int(2))
+    );
+    assert_eq!(
+        evaluate(
+            "const function f(x) = x + 1\nclass C { function g() = f(2) }\nc = new C {}\nresult = c.g()"
+        ),
+        Ok(Value::Int(3))
+    );
+    let error = evaluate("class C { const x = 1 }\nc = new C { x = 2 }\nresult = c.x").unwrap_err();
+    assert_eq!(error.message, "Cannot assign to const property `x`.");
+}
+
+#[test]
+fn class_handles_and_prototype_captures_are_traced_and_reject_foreign_heaps() {
+    let parsed = parse_module("class C { value = 42 }\nresult = C").unwrap();
+    let mut program = (*compile_module(&resolve_module(&parsed).unwrap()).unwrap()).clone();
+    let entry = program.entry;
+    let instantiate = program.blocks.len();
+    program
+        .blocks
+        .push(vec![I::Input(0), I::DefaultClassInstance, I::Return]);
+    let program = Arc::new(program);
+    let mut vm = Vm::new(program.clone());
+    vm.start(entry, vec![]).unwrap();
+    let module = done(&mut vm).unwrap();
+    vm.start_member(module.as_object().unwrap(), "result")
+        .unwrap();
+    let class = done(&mut vm).unwrap();
+    assert!(matches!(class, Value::Class(_)));
+    assert_eq!(vm.collect(std::slice::from_ref(&class)).live, 2);
+    vm.start(instantiate, vec![class.clone()]).unwrap();
+    let instance = done(&mut vm).unwrap();
+    vm.start_member(instance.as_object().unwrap(), "value")
+        .unwrap();
+    assert_eq!(done(&mut vm), Ok(Value::Int(42)));
+    let mut other = Vm::new(program);
+    assert_eq!(
+        other.start(instantiate, vec![class]).unwrap_err().kind,
+        ErrorKind::StaleHandle
+    );
+}
+
+#[test]
+fn inherited_and_alias_type_failures_retain_definition_and_value_sources() {
+    let source = "open class A { x: Int = 2 }\nclass B extends A { x = \"wrong\" }\nb = new B {}\nresult = b.x";
+    let error = evaluate(source).unwrap_err();
+    assert_eq!(
+        error
+            .frames
+            .iter()
+            .map(|frame| frame.member.as_ref())
+            .collect::<Vec<_>>(),
+        ["#A.x", "#B.x", "#result"]
+    );
+    assert_eq!(
+        &source[error.frames[0].span.start..error.frames[0].span.end],
+        "Int"
+    );
+    assert_eq!(
+        &source[error.frames[1].span.start..error.frames[1].span.end],
+        "\"wrong\""
+    );
+    let source = "typealias Num = Int\nvalue: Num = \"wrong\"\nresult = value";
+    let error = evaluate(source).unwrap_err();
+    assert_eq!(
+        &source[error.frames[0].span.start..error.frames[0].span.end],
+        "Int"
+    );
+    assert_eq!(
+        evaluate("result = let (x: Int = \"wrong\") 42")
+            .unwrap_err()
+            .frames
+            .len(),
+        1
+    );
+}
+
+#[test]
+fn class_type_initialization_is_eager_for_declarations_and_lazy_for_expressions() {
+    use pkl_runtime::evaluation::scalar_expression;
+    let prefix = "class A {}\nclass B extends A {}\n";
+    for body in [
+        "unused: B = 1\nresult = 42",
+        "function f(x: B) = x\nresult = 42",
+        "result = 1 is B",
+        "result = throw(\"value evaluated first\") as B",
+    ] {
+        let error = scalar_expression(&format!("{prefix}{body}"), "repl:types", "types", "result")
+            .unwrap_err();
+        assert!(
+            error.contains("Cannot extend non-open class `types#A`."),
+            "{error}"
+        );
+    }
+    for body in [
+        "result = if (false) 1 is B else true",
+        "result = if (false) 1 as B else true",
+    ] {
+        assert_eq!(
+            scalar_expression(&format!("{prefix}{body}"), "repl:types", "types", "result"),
+            Ok("true".into())
+        );
+    }
+    assert_eq!(
+        evaluate("class A { b: B? }\nclass B { a: A? }\na = new A {}\nresult = a.b"),
+        Ok(Value::Null)
+    );
+    assert_eq!(
+        evaluate("result = if (false) 1 is Missing else true"),
+        Ok(Value::Bool(true))
+    );
+    assert_eq!(
+        evaluate("result = if (false) let (x: Missing = 1) x else 42"),
+        Ok(Value::Int(42))
+    );
+}
+
+#[test]
+fn super_property_skips_its_annotation_until_the_overriding_value_is_checked() {
+    let source = "open class A { x: Int = \"bad\" }\nclass B extends A { x = super.x + \"!\" }\nb = new B {}\nresult = b.x";
+    let error = evaluate(source).unwrap_err();
+    assert!(error.message.ends_with("Value: \"bad!\""), "{error}");
+    assert_eq!(error.frames[0].member.as_ref(), "#A.x");
+    assert_eq!(error.frames[1].member.as_ref(), "#B.x");
+}
+
+#[test]
+fn unknown_typed_object_properties_report_headers_and_visible_property_candidates() {
+    let source = "module sample\nopen class A { x = 1 }\nclass B extends A { z = 2; local extraPrivate = 3; function extraMethod() = 4 }\nb = new B { extra = 5 }\nresult = b.x";
+    let error = evaluate(source).unwrap_err();
+    assert_eq!(
+        error.message,
+        "Cannot find property `extra` in object of type `sample#B`."
+    );
+    assert_eq!(error.hint.as_deref(), Some("Available properties:\nx\nz"));
+    assert_eq!(
+        &source[error.frames[0].span.start..error.frames[0].span.end],
+        "extra"
+    );
+    assert_eq!(error.frames[0].member.as_ref(), "#b");
+
+    let error = evaluate("class C { answer = 42 }\nc = new C { answr = 2 }\nresult = c.answer")
+        .unwrap_err();
+    assert_eq!(
+        error.hint.as_deref(),
+        Some("Did you mean any of the following?\nanswer")
+    );
+}
+
+#[test]
+fn abstract_members_fail_lazily_before_defaults_and_keep_qualified_identity() {
+    for declaration in [
+        "abstract value: Int?",
+        "abstract value: \"default\"",
+        "abstract function value(): Int",
+    ] {
+        let prefix = format!(
+            "module example.named\nabstract class Base {{ {declaration} }}\nclass Child extends Base {{}}\n"
+        );
+        assert_eq!(
+            evaluate(&format!("{prefix}result = 42")),
+            Ok(Value::Int(42))
+        );
+        let call = if declaration.contains("function") {
+            "()"
+        } else {
+            ""
+        };
+        let error =
+            evaluate(&format!("{prefix}result = (new Child {{}}).value{call}")).unwrap_err();
+        let kind = if call.is_empty() {
+            "property"
+        } else {
+            "method"
+        };
+        assert_eq!(
+            error.message,
+            format!("Cannot invoke abstract {kind} `example.named#Base.value`.")
+        );
+        assert_eq!(error.frames[0].member.as_ref(), "#Base.value");
+    }
+    let error = evaluate("module example.named\nclass C {}\nresult: C = 1").unwrap_err();
+    assert!(
+        error
+            .message
+            .starts_with("Expected value of type `example.named#C`,")
+    );
+}
+
+#[test]
+fn repeated_modifier_flags_preserve_upstream_addition_semantics() {
+    let error = evaluate("const const x = 42\nclass C { value = x }\nresult = (new C {}).value")
+        .unwrap_err();
+    assert_eq!(
+        error.message,
+        "Cannot reference property `x` from here because it is not `const`."
+    );
+    assert_eq!(
+        evaluate("open open class A { x = 42 }\nresult = (new A {}).x"),
+        Ok(Value::Int(42))
+    );
+    let error =
+        evaluate("open open class A { x = 42 }\nclass B extends A {}\nresult = (new B {}).x")
+            .unwrap_err();
+    assert!(
+        error.message.starts_with("Cannot extend non-open class"),
+        "{error}"
+    );
+}

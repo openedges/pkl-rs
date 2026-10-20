@@ -1,0 +1,3 @@
+class C { function f(x: Missing) = x }
+c = new C {}
+result = c.f(1)

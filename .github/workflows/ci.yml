@@ -205,7 +205,9 @@ jobs:
         run: python3 tools/oracle.py fetch
       - name: Record raw language comparisons including failures
         run: python3 tools/m2_language.py --output target/m2/ci-language --record-only
-      - name: Verify selected development contract with explicit cycle failure
+      - name: Verify generated identifier predicates against pinned Java
+        run: python3 tools/m2_identifier_tables.py --output target/m2/ci-identifier
+      - name: Verify selected development contract with recorded oracle exceptions
         run: python3 tools/m2_language.py --verify-development target/m2/ci-language
       - name: Strict full M2 completion gate
         if: ${{ github.event_name == 'workflow_dispatch' && inputs.full_corpus }}
@@ -218,7 +220,7 @@ jobs:
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: m2-language-evidence
-          path: target/m2/ci-language
+          path: target/m2/ci-*
           if-no-files-found: error
           include-hidden-files: true
           retention-days: 14

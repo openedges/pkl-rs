@@ -103,8 +103,8 @@ def run(output, measure=False, forks=2, samples=9, specialized=False):
               ROOT / "references.lock", ROOT / "oracle.lock.json",
               ROOT / "crates/pkl-runtime/Cargo.toml", ROOT / "tools/java/M1RuntimeProbe.java",
               Path(__file__), ROOT / "tools/tests/test_m1_runtime.py",
-              *sorted((ROOT / "crates/pkl-runtime/src").glob("*.rs")),
-              *sorted((ROOT / "crates/pkl-runtime/examples").glob("runtime_*.rs")),
+              *sorted((ROOT / "crates/pkl-runtime/src").rglob("*.rs")),
+              *sorted((ROOT / "crates/pkl-runtime/examples").rglob("*.rs")),
               *sorted((ROOT / "tests/fixtures/m1/runtime").glob("*.pkl"))]
     input_identities = []
     for path in inputs:
@@ -146,7 +146,8 @@ def run(output, measure=False, forks=2, samples=9, specialized=False):
             raise ValueError(f"unexpected experiment outcome: {name}")
         cases.append({"id": name, "input": str(module), "input_sha256": oracle.sha256(module),
                       "java": java, "rust": rust, "raw_equal": equality,
-                      "status": "bounded-value-bytes-match" if equality else "diagnostic-byte-mismatch"})
+                      "status": ("bounded-value-bytes-match" if expected_success else "diagnostic-bytes-match")
+                      if equality else "diagnostic-byte-mismatch"})
     measured = []
     if measure:
         if forks < 2 or samples < 5:
@@ -204,7 +205,10 @@ def main():
     report = run(arguments.output, measure=arguments.benchmark, specialized=arguments.specialized)
     if arguments.report:
         benchmark.write_json(arguments.report, report)
-    print(json.dumps({"bounded_value_matches": sum(case["raw_equal"] for case in report["cases"]),
+    print(json.dumps({"bounded_value_matches": sum(case["raw_equal"] for case in report["cases"]
+                                                  if case["id"] in SUCCESS_CASES),
+                      "diagnostic_matches": sum(case["raw_equal"] for case in report["cases"]
+                                                 if case["id"] in ERROR_CASES),
                       "diagnostic_mismatches": sum(not case["raw_equal"] for case in report["cases"]),
                       "measured_forks": len(report["measurements"]), "report": str(arguments.output / "report.json")}))
 

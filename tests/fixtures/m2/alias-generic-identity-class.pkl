@@ -1,0 +1,4 @@
+class C { x = 42 }
+typealias Identity<T> = T
+c: Identity<C> = new {}
+result = c.x

@@ -1,0 +1,3 @@
+class C { local y = 2; z = 3; function f() = y + z }
+c = new C { z = 4 }
+result = c.f()

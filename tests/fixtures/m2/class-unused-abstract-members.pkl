@@ -1,0 +1,2 @@
+abstract class Base { abstract value: Int?; abstract function compute(): Int }
+result = 42

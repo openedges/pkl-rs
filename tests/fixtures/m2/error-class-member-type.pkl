@@ -1,0 +1,3 @@
+class C { x: Int = 2 }
+c = new C { x = "wrong" }
+result = c.x

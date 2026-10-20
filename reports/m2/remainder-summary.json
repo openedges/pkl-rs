@@ -1,0 +1,15 @@
+{
+  "scope": "Separate known integer remainder-by-zero caught-PklBug reproducibility investigation; no Rust compatibility pass.",
+  "source": {
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs/tests/fixtures/m2/error-remainder-zero.pkl",
+    "sha256": "d7f2c40bdc290143438f2ee579c2b2d03b96b52265934c39b517c909fd3a3112"
+  },
+  "java_raw_stability": true,
+  "rust_raw_stability": true,
+  "candidate_sha256": "8e887805bfd124f7e19abae5de685cfa6d9101443608d5c060483596b4cbdc0c",
+  "java_class_sha256": "14899f608d67328fc352e335da483a1bdf9c6d18a91e9b386bd5bc8cd8121d69",
+  "repeats": 3,
+  "java_stderr_sha256": "b34c8afb08b283aa048746d889cb9c8d668158ccf0e477bdb8b4494a501bc84b",
+  "java_exception": "org.pkl.core.PklBugException",
+  "strict_compatibility_status": "mismatch"
+}

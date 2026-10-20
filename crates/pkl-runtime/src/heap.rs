@@ -27,6 +27,9 @@ pub struct Member {
     pub code: usize,
     pub local: bool,
     pub method: bool,
+    pub ty: Option<crate::vm::TypeCheck>,
+    pub type_span: Option<crate::source::Span>,
+    pub constant: bool,
 }
 
 #[derive(Clone, Debug, PartialEq)]
@@ -51,9 +54,18 @@ pub struct Function {
     pub method: bool,
 }
 
+#[derive(Clone, Debug)]
+pub struct Class {
+    pub id: usize,
+    pub name: Arc<str>,
+    pub open: bool,
+    pub abstract_: bool,
+}
+
 #[derive(Clone, Debug, Default)]
 pub struct Object {
     pub function: Option<Function>,
+    pub class_definition: Option<Class>,
     pub parent: Option<ObjectId>,
     pub members: Vec<Member>,
     pub environment: Environment,

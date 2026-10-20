@@ -129,7 +129,7 @@ M1은 아래 항목별 구현·비교 증거·설계 결정이 갖춰진 뒤 완
 ### M1에서 확인한 후속 구현·검증 조건
 
 - regex의 현재 backend는 Java Unicode 버전과 supplementary 문자 내부의 zero-width 위치에서 실패합니다. Java 21의 Unicode table과 UTF-16 cursor를 갖춘 공통 matcher를 구현하고, 기존 실패 2개를 포함한 전체 비교를 통과해야 합니다. 별도의 빈 pattern·dot cursor 실험은 이 구현 전체의 완료 증거가 아닙니다.
-- 현재 3개 실행 오류의 전체 stderr와 마감 lifecycle 실험의 4개 오류 payload가 Java와 다릅니다. M2의 진단 renderer·논리적 frame·오류 선택과 함께 바이트 차이를 없애야 합니다. missing-super 동작도 언어 의미론 검증에 포함합니다. 실패 재시도는 마감 실험에서 수정·검증했습니다.
+- M1 마감 시 실행 오류 3개의 전체 stderr와 lifecycle 실험의 오류 payload 4개가 Java와 달랐습니다. M2의 공통 진단 경로를 연결한 재검사에서는 실행 오류 2개가 일치했고 순환 참조와 lifecycle payload 차이는 남았습니다. M2의 진단 renderer·논리적 frame·오류 선택과 함께 나머지 바이트 차이를 없애야 합니다. missing-super 동작도 언어 의미론 검증에 포함합니다. 실패 재시도는 마감 실험에서 수정·검증했습니다.
 - 중첩 context·실패 복구·종료 시 취소 전달은 작은 구현으로 검증했습니다. 제품 module/resource cache와 공개 API는 후속 구현입니다. Java 0.32.0은 callback 안에서 새 resource를 읽으면 `ConcurrentModificationException`에 의한 `PklBugException`을 낼 수 있습니다. [Java-only 실패 관찰](reports/m1/lifecycle.json)을 보존하며 M4 cache 구현에서 이 동작을 다룹니다. JS의 unpaired surrogate와 장기 clock 범위도 제품 지원 전에 해결해야 합니다.
 - 숫자 formatter는 선택한 primitive 비용 측정에서 Java보다 약 6.1배 느립니다. 정확한 출력 바이트를 유지하며 알고리즘·할당 비용을 개선하고 같은 입력·조건에서 다시 측정해야 합니다.
 - 특수화 VM의 작은 정수 workload 개선은 전체 성능 통과가 아닙니다. 고정 Graal/Pkl 조합의 `FrameWithoutBoxing` 중단 원인과 실제 Tier 2 workload는 [마감 조사](docs/m1-graal.md)에서 확인했습니다. 원인 확인용 우회는 의미론을 생략하므로 기준 oracle에 적용하지 않습니다. 실제 컴파일된 Java와 같은 입력·호출 경계로 새 성능 측정을 수행하고, 큰 lazy 객체·장기 세션·제품 API를 비교해야 합니다.
@@ -143,18 +143,20 @@ M1의 공통 VM을 확장합니다. VM·heap·호출 의미론은 `gpt-6-astra /
 | 작업 | 상태 | 구현·검증 범위와 남은 조건 |
 | --- | --- | --- |
 | M2-01 전체 목록과 실행 판정 | 진행 중 | `compatibility/m2-language.json`에 의미론 분류·upstream 선언·언어 snippet·rev1 후보를 보존합니다. 선언 수는 기능 커버리지가 아니며, 미연결 항목은 전체 gate 실패로 남깁니다. |
-| M2-02 lexer·표현식·문자열 | 진행 중 | 숫자·연산자 우선순위·조건식·nullable 연산·raw/multiline/interpolation과 0.32 continuation을 확장합니다. 전체 유효·오류 문법 코퍼스 연결이 필요합니다. |
+| M2-02 lexer·표현식·문자열 | 진행 중 | 숫자·연산자 우선순위·조건식·nullable 연산·raw/multiline/interpolation과 0.32 continuation을 구현했습니다. 고정 Java의 UTF-16 식별자 표, CR/CRLF, 지연 AST 검증 순서를 연결했습니다. 전체 유효·오류 문법 코퍼스 연결이 필요합니다. |
 | M2-03 함수·closure·호출 | 진행 중 | 별도 method namespace, 재귀, lexical capture, primitive 매개변수·반환 타입 검사, Host 중단·재개 중 GC를 구현·검증합니다. 전체 함수 타입·amendment·오류 조건은 후속 항목입니다. |
-| M2-04 객체·클래스·상속 | 진행 중 | 기존 lazy 객체·amendment에 클래스·멤버 modifier·override·runtime identity를 연결합니다. hidden/fixed/const/abstract와 eager/lazy 순서를 포함해야 합니다. |
-| M2-05 타입·제약·generic | 진행 중 | primitive·nullable·union 검사 기반을 확장합니다. alias·constraint·generic·recursive 타입·default·lazy wrapper·상세 오류는 전체 완료 조건입니다. |
+| M2-04 객체·클래스·상속 | 진행 중 | 클래스·prototype·상속·super 메서드·const capture·runtime identity와 타입 초기화 순서를 연결했습니다. 전체 modifier·override·초기화 재시도·상속 순환 및 eager/lazy 규칙의 완료가 필요합니다. |
+| M2-05 타입·제약·generic | 진행 중 | primitive·nullable·union 검사와 클래스 타입, generic alias 치환, 타입 기본 값과 지연 alias 오류를 구현했습니다. constraint·함수/구조 타입·recursive 타입·lazy wrapper·전체 상세 오류는 남아 있습니다. |
 | M2-06 collection·generator | 계획됨 | element·entry·member predicate·for/when·spread·inferred new 및 타입 검사를 함께 검증합니다. |
 | M2-07 Reference·메타데이터 | 계획됨 | `Reference<Domain, Type>` 및 reflection에 필요한 module/class/member/type 정보를 구현합니다. |
 | M2-08 진단·첫 오류·논리적 스택 | 진행 중 | bytecode와 별도의 source metadata와 공통 uncolored renderer를 연결합니다. 원시 오류 바이트·힌트·호출 위치·재귀 frame 압축·전체 오류 선택이 일치해야 합니다. |
 | M2-09 생성 검사·플랫폼·완료 gate | 진행 중 | Java 차등 입력·metamorphic 관계·seeded 생성과 실제 native/Node/browser 실행을 연결합니다. 작은 선택 코퍼스 성공은 M2 전체 완료가 아닙니다. |
 
+다음 구현은 `|>` 연산자, custom `this`와 같은 VM 안의 타입 검사 continuation, nullable·union·함수형 제약·오류 재실행 순서로 진행합니다. 제약의 실행 오류를 타입 불일치로 숨기지 않고 Host 중단·재진입·GC를 함께 검증합니다. 이후 객체 본문을 순서 있는 멤버 모델로 확장하여 element·entry·generator·spread를 연결합니다. 이 순서는 기존 M2 범위와 종료 조건을 줄이지 않습니다.
+
 ### 원래 범위와 종료 조건
 
-첫 구현 단계의 [검증 기록](reports/m2/README.md)을 확보했습니다. 선택 사례 119개 중 118개는 Java와 원시 바이트가 일치하며, 순환 참조 1개는 Java 오류 자체가 불안정해 실패로 유지합니다. Rust 검사 78개와 Python 검사 156개, Node·브라우저 각 16개 시나리오가 통과했습니다. 전체 목록의 클래스·타입·generator·Reference 및 미연결 코퍼스는 남아 있으므로 **M2는 진행 중**입니다.
+첫 구현 단계와 클래스·타입 별칭을 확장한 두 번째 단계의 [검증 기록](reports/m2/README.md)을 확보했습니다. 최신 선택 사례 191개 중 189개는 Java와 원시 바이트가 일치하며, 순환 참조 오류와 정수 `% 0`의 Java 버그 출력은 실패로 유지합니다. Rust 검사 111개와 Python 검사 164개, Node·브라우저 각 18개 시나리오가 통과했습니다. 첫 단계의 원격 CI 6개 작업과 내려받은 증거도 검증했습니다. 전체 목록의 클래스·타입 나머지 규칙, generator·Reference 및 미연결 코퍼스가 남아 있으므로 **M2는 진행 중**입니다. 개발 gate 성공과 엄격한 전체 gate 실패를 구분합니다.
 
 - 전체 문법, 이름 해석, IR·compiler, lazy evaluation, 객체·amendment·상속, closure, generator를 구현합니다.
 - 타입·제약·generic·union, `Reference<Domain, Type>`, reflection에 필요한 런타임 메타데이터를 구현합니다. 다중 행 문자열의 continuation 등 0.32 기능을 목록에 연결합니다.

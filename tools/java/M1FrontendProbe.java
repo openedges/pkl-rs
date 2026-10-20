@@ -17,7 +17,9 @@ public final class M1FrontendProbe {
         byteIndex += new String(Character.toChars(ch)).getBytes(StandardCharsets.UTF_8).length;
         utf16 += width;
         codepoint++;
-        if (ch == '\n') { line++; column = 1; } else { column += width; }
+        if (ch == '\n' || (ch == '\r' && (utf16 == source.length() || source.charAt(utf16) != '\n'))) {
+          line++; column = 1;
+        } else { column += width; }
         System.out.println(byteIndex + "\t" + utf16 + "\t" + codepoint + "\t" + line + "\t" + column);
       }
     } else if (args[0].equals("parse")) {

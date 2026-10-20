@@ -3,16 +3,19 @@ use crate::source::Span;
 
 #[derive(Clone, Debug, PartialEq)]
 pub struct Module {
+    pub declaration: Option<ModuleDeclaration>,
     pub members: Vec<Member>,
 }
 
 #[derive(Clone, Debug, PartialEq)]
 pub struct Member {
     pub name: String,
+    pub name_span: Span,
     pub expr: Expr,
     pub span: Span,
     pub local: bool,
     pub ty: Option<Type>,
+    pub modifiers: Vec<Modifier>,
 }
 
 #[derive(Clone, Debug, PartialEq)]
@@ -20,6 +23,92 @@ pub struct Parameter {
     pub name: String,
     pub ty: Option<Type>,
     pub span: Span,
+}
+
+#[derive(Clone, Debug, PartialEq)]
+pub struct ModuleDeclaration {
+    pub name: Option<Vec<String>>,
+    pub parent: Option<ModuleParent>,
+    pub modifiers: Vec<Modifier>,
+    pub span: Span,
+}
+
+#[derive(Clone, Debug, PartialEq)]
+pub struct ModuleParent {
+    pub kind: ModuleParentKind,
+    pub uri: String,
+    pub span: Span,
+}
+
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub enum ModuleParentKind {
+    Extends,
+    Amends,
+}
+
+#[derive(Clone, Debug, PartialEq)]
+pub struct TypeParameter {
+    pub name: String,
+    pub variance: Variance,
+    pub span: Span,
+}
+
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub enum Variance {
+    Invariant,
+    In,
+    Out,
+}
+
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub struct Modifier {
+    pub kind: ModifierKind,
+    pub span: Span,
+}
+
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub enum ModifierKind {
+    Abstract,
+    Open,
+    Local,
+    Hidden,
+    External,
+    Fixed,
+    Const,
+}
+
+/// Match Pkl 0.32 AstBuilder.doVisitModifiers, including repeated tokens.
+/// Upstream adds flag values rather than combining them with bitwise OR.
+pub fn modifier_flags(modifiers: &[Modifier]) -> u32 {
+    modifiers.iter().fold(0_u32, |flags, modifier| {
+        flags.wrapping_add(modifier.kind.flag())
+    })
+}
+
+impl ModifierKind {
+    pub const fn flag(self) -> u32 {
+        match self {
+            Self::Abstract => 0x01,
+            Self::Open => 0x02,
+            Self::Local => 0x04,
+            Self::Hidden => 0x08,
+            Self::External => 0x10,
+            Self::Fixed => 0x20,
+            Self::Const => 0x40,
+        }
+    }
+
+    pub fn spelling(self) -> &'static str {
+        match self {
+            Self::Abstract => "abstract",
+            Self::Open => "open",
+            Self::Local => "local",
+            Self::Hidden => "hidden",
+            Self::External => "external",
+            Self::Fixed => "fixed",
+            Self::Const => "const",
+        }
+    }
 }
 
 #[derive(Clone, Debug, PartialEq)]
@@ -99,6 +188,7 @@ pub enum ExprKind {
         else_branch: Box<Expr>,
     },
     Function {
+        type_parameters: Vec<TypeParameter>,
         header_span: Span,
         parameters: Vec<Parameter>,
         return_type: Option<Type>,
@@ -111,9 +201,25 @@ pub enum ExprKind {
     },
     Let {
         name: String,
+        ty: Option<Type>,
         value: Box<Expr>,
         body: Box<Expr>,
     },
+    Class {
+        type_parameters: Vec<TypeParameter>,
+        superclass: Option<Type>,
+        members: Vec<Member>,
+        header_span: Span,
+    },
+    TypeAlias {
+        type_parameters: Vec<TypeParameter>,
+        ty: Type,
+    },
+    New {
+        ty: Type,
+        members: Vec<Member>,
+    },
+    Uninitialized,
     Object {
         parent: Option<Box<Expr>>,
         members: Vec<Member>,

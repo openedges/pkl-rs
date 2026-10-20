@@ -1,0 +1,4 @@
+open class A {}
+class B extends A {}
+x = new B {}
+result = x is A

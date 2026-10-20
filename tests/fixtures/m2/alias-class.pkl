@@ -1,0 +1,4 @@
+class C { x = 42 }
+typealias Alias = C
+c: Alias = new {}
+result = c.x

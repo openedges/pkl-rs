@@ -100,6 +100,70 @@ class DevelopmentGateTests(unittest.TestCase):
             path.write_bytes(saved)
 
 
+class RemainderDevelopmentTests(unittest.TestCase):
+    def setUp(self):
+        temporary = tempfile.TemporaryDirectory()
+        self.addCleanup(temporary.cleanup)
+        self.directory = Path(temporary.name)
+        self.folder = self.directory / 'cases/error-remainder-zero'
+        (self.folder / 'java-repeat').mkdir(parents=True)
+        (self.folder / 'input.pkl').write_bytes(b'result = 1 % 0\n')
+        self.source = m2_language.ROOT / 'tests/fixtures/m2/error-remainder-zero.pkl'
+        java = (b'An unexpected error has occurred. Would you mind filing a bug report?\n'
+                b'Complete full Java message retained here.\n'
+                b'java.lang.ArithmeticException%3A%20%2F%20by%20zero\n'
+                b'java.lang.ArithmeticException: / by zero\n'
+                b'\tat org.pkl.core.runtime.VmSafeMath.remainder(VmSafeMath.java:93)\n')
+        for prefix in ('', 'java-repeat/'):
+            (self.folder / (prefix + 'java.stdout.bin')).write_bytes(b'')
+            (self.folder / (prefix + 'java.stderr.bin')).write_bytes(java)
+            (self.folder / (prefix + 'java.outcome.bin')).write_bytes(b'pkl-exception\torg.pkl.core.PklBugException\n')
+        (self.folder / 'rust.stdout.bin').write_bytes(b'')
+        rust = ('–– Pkl Error ––\nDivision by zero.\n\n1 | result = 1 % 0\n'
+                '             ^^^^^\nat error-remainder-zero#result (' + self.source.as_uri() + ')\n'
+                '\n1 | result\n    ^^^^^^\nat  (repl:text)\n').encode()
+        (self.folder / 'rust.stderr.bin').write_bytes(rust)
+        process = dict(exit_code=1, timed_out=False, command=['probe', str(self.source), 'result'])
+        self.row = dict(id='error-remainder-zero', status='mismatch', java=copy.deepcopy(process),
+                        rust=copy.deepcopy(process), java_repeat=copy.deepcopy(process))
+        self.report = dict(results=[self.row], metamorphic_results=[dict(status='pass')])
+
+    def test_known_bug_requires_duplicate_raw_reproducibility_and_stays_mismatch(self):
+        self.assertTrue(m2_language.development_passes(self.report, self.directory))
+        self.assertEqual(self.row['status'], 'mismatch')
+        self.assertFalse(m2_language.subset_passes(self.report))
+
+    def test_primary_duplicate_candidate_sidecar_and_source_corruption_fail(self):
+        for name in ('java.stderr.bin', 'java-repeat/java.stderr.bin', 'rust.stderr.bin',
+                     'java.outcome.bin', 'java-repeat/java.outcome.bin', 'input.pkl'):
+            path = self.folder / name
+            saved = path.read_bytes()
+            path.write_bytes(saved + b'corruption')
+            self.assertFalse(m2_language.development_passes(self.report, self.directory), name)
+            path.write_bytes(saved)
+
+    def test_different_bug_or_origin_is_not_allowed_even_if_reproducible(self):
+        for replacement in (b'java.lang.IllegalArgumentException: wrong\n',
+                            b'java.lang.ArithmeticException: another operation\n'):
+            for prefix in ('', 'java-repeat/'):
+                path = self.folder / (prefix + 'java.stderr.bin')
+                path.write_bytes(b'An unexpected error has occurred. Would you mind filing a bug report?\n' + replacement)
+            self.assertFalse(m2_language.development_passes(self.report, self.directory))
+
+    def test_missing_repeat_timeout_exit_and_new_failure_are_not_allowed(self):
+        repeated = self.row.pop('java_repeat')
+        self.assertFalse(m2_language.development_passes(self.report, self.directory))
+        self.row['java_repeat'] = repeated
+        repeated['timed_out'] = True
+        self.assertFalse(m2_language.development_passes(self.report, self.directory))
+        repeated['timed_out'] = False
+        self.row['rust']['exit_code'] = 101
+        self.assertFalse(m2_language.development_passes(self.report, self.directory))
+        self.row['rust']['exit_code'] = 1
+        self.report['results'].append(dict(id='new-failure', status='mismatch'))
+        self.assertFalse(m2_language.development_passes(self.report, self.directory))
+
+
 class OracleProvenanceTests(unittest.TestCase):
     def setUp(self):
         temporary = tempfile.TemporaryDirectory()
@@ -159,11 +223,14 @@ class EvidenceTests(unittest.TestCase):
         (self.directory / 'artifacts/language_probe').write_bytes(b'binary')
         processes = {}
         for runtime in ('java', 'rust'):
-            command = [str(self.directory / 'artifacts/language_probe'), str(m2_language.ROOT / selected['input']), 'result'] if runtime == 'rust' else ['java', '-cp', 'jar' + m2_language.os.pathsep + str(self.directory / 'artifacts/java'), 'M2LanguageProbe', str(m2_language.ROOT / selected['input']), 'result']
+            command = [str(self.directory / 'artifacts/language_probe'), str(m2_language.ROOT / selected['input']), 'result'] if runtime == 'rust' else m2_language.java_case_command(dict(command=['java', '-cp', 'jar', 'org.pkl.cli.Main']), self.directory / 'artifacts/language_probe', 'one', m2_language.ROOT / selected['input'], 'result')
             row = dict(command=command, exit_code=0, timed_out=False)
             for channel, data in [('stdout', b'42'), ('stderr', b'')]:
                 (self.case / f'{runtime}.{channel}.bin').write_bytes(data)
                 row[channel + '_sha256'] = m2_manifest.digest(data)
+            if runtime == 'java':
+                (self.case / 'java.outcome.bin').write_bytes(b'success\n')
+                row['outcome_sha256'] = m2_manifest.digest(b'success\n')
             (self.case / f'{runtime}.process.json').write_bytes(m2_manifest.encoded(row))
             processes[runtime] = row
         results = [dict(id='one', status='pass', **processes)]
@@ -251,19 +318,29 @@ class EvidenceTests(unittest.TestCase):
     def test_empty_success_string_is_valid_but_empty_error_is_not(self):
         case = dict(expected_outcome='success')
         process = dict(exit_code=0, timed_out=False)
-        self.assertEqual(m2_language.status(case, process, process, b'', b'', b'', b''), 'pass')
+        self.assertEqual(m2_language.status(case, process, process, b'', b'', b'', b'', b'success\n'), 'pass')
         failed = dict(exit_code=1, timed_out=False)
         self.assertEqual(m2_language.status(dict(expected_outcome='failure'), failed, failed,
-                                          b'', b'', b'', b''), 'oracle-error')
+                                          b'', b'', b'', b'', b'pkl-exception\torg.pkl.core.PklException\n'), 'oracle-error')
+
+    def test_caught_bug_and_uncaught_jvm_failure_are_distinguished_by_sidecar(self):
+        case = dict(expected_outcome='failure')
+        process = dict(exit_code=1, timed_out=False)
+        payload = b'An unexpected error has occurred. Full caught PklBugException payload.\n'
+        self.assertEqual(m2_language.status(case, process, process, b'', payload, b'', payload,
+                b'pkl-exception\torg.pkl.core.PklBugException\n'), 'pass')
+        self.assertEqual(m2_language.status(case, process, process, b'', payload, b'', b'other',
+                b'pkl-exception\torg.pkl.core.PklBugException\n'), 'mismatch')
+        self.assertEqual(m2_language.status(case, process, process, b'', payload, b'', payload, b''), 'oracle-error')
 
     def test_whole_error_payload_including_last_newline_is_compared(self):
         error = '–– Pkl Error ––\nproblem\n\n1 | x\n    ^\nat m (file:///x.pkl)\n'.encode()
         case = dict(expected_outcome='failure')
         process = dict(exit_code=1, timed_out=False)
-        self.assertEqual(m2_language.status(case, process, process, b'', error, b'', error), 'pass')
-        self.assertEqual(m2_language.status(case, process, process, b'', error, b'', error[:-1]), 'mismatch')
+        self.assertEqual(m2_language.status(case, process, process, b'', error, b'', error, b'pkl-exception\torg.pkl.core.PklException\n'), 'pass')
+        self.assertEqual(m2_language.status(case, process, process, b'', error, b'', error[:-1], b'pkl-exception\torg.pkl.core.PklException\n'), 'mismatch')
         process = dict(exit_code=1, timed_out=True)
-        self.assertEqual(m2_language.status(case, process, process, b'', error, b'', error), 'oracle-error')
+        self.assertEqual(m2_language.status(case, process, process, b'', error, b'', error, b'pkl-exception\torg.pkl.core.PklException\n'), 'oracle-error')
 
 
 if __name__ == '__main__':

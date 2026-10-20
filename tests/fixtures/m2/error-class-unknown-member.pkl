@@ -1,0 +1,3 @@
+class C { x = 1 }
+c = new C { extra = 2 }
+result = c.x

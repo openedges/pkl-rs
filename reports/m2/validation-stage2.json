@@ -1,0 +1,108 @@
+{
+  "scope": "Stage 2 development checks. Strict subset/full failures remain unresolved compatibility, not passes.",
+  "rust_passed": 111,
+  "rust_intentionally_ignored": 1,
+  "python_passed": 164,
+  "checks": [
+    {
+      "command": "cargo xtask verify",
+      "exit_code": 0
+    },
+    {
+      "command": "cargo fmt --all -- --check",
+      "exit_code": 0
+    },
+    {
+      "command": "cargo clippy --workspace --all-targets --locked -- -D warnings",
+      "exit_code": 0
+    },
+    {
+      "command": "cargo test --workspace --locked",
+      "exit_code": 0
+    },
+    {
+      "command": "cargo check -p pkl-runtime --target wasm32-unknown-unknown --locked",
+      "exit_code": 0
+    },
+    {
+      "command": "python3 -m unittest discover -s tools/tests -v",
+      "exit_code": 0
+    },
+    {
+      "command": "python3 tools/m2_manifest.py --check",
+      "exit_code": 0
+    },
+    {
+      "command": "python3 tools/m2_identifier_tables.py --output target/m2/identifier-stage2-verified",
+      "exit_code": 0
+    }
+  ],
+  "gates": {
+    "rows": [
+      {
+        "command": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "/Users/cody.ij.hwang/Projects/pkl-rs/tools/m2_language.py",
+          "--verify-report",
+          "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/language-stage2-verified"
+        ],
+        "exit_code": 0,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_sha256": "f36139c3279d0be3af02b3a79a9a3845465665f05179e0567df917cab198a7d4"
+      },
+      {
+        "command": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "/Users/cody.ij.hwang/Projects/pkl-rs/tools/m2_language.py",
+          "--verify-development",
+          "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/language-stage2-verified"
+        ],
+        "exit_code": 0,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_sha256": "f36139c3279d0be3af02b3a79a9a3845465665f05179e0567df917cab198a7d4"
+      },
+      {
+        "command": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "/Users/cody.ij.hwang/Projects/pkl-rs/tools/m2_language.py",
+          "--verify-subset",
+          "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/language-stage2-verified"
+        ],
+        "exit_code": 1,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_sha256": "f36139c3279d0be3af02b3a79a9a3845465665f05179e0567df917cab198a7d4"
+      },
+      {
+        "command": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "/Users/cody.ij.hwang/Projects/pkl-rs/tools/m2_language.py",
+          "--verify-full",
+          "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/language-stage2-verified"
+        ],
+        "exit_code": 1,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_sha256": "f36139c3279d0be3af02b3a79a9a3845465665f05179e0567df917cab198a7d4"
+      }
+    ],
+    "scope": "Integrity/development/strict subset/full gate outcomes; failed compatibility gates retained."
+  },
+  "evidence_sha256": {
+    "0.stderr": "7b56e08e5ab4f7539dc789d0d8a2414f327f36114e3bf830339a228a223b1b56",
+    "0.stdout": "900802c9cf4f23bd9dbc0e79f58d3e21493ec0c990782bc5b690a7432148e9eb",
+    "1.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "1.stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "2.stderr": "dbf5a22c7ab102a0948fb14408953e6cbc4bb015253b66b625de69c99a736d7f",
+    "2.stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "3.stderr": "33ad7dfa131082d63b29ebb2b3fd606a9cf42343bb0f9276401a67a871055fee",
+    "3.stdout": "6812be20896fbda202c410b8df5defe12f3e5aebea7c7f4f00a18c8d326515bb",
+    "4.stderr": "20ce81d14258f01b019dfc89304218916d83e04552556fdffa3fd664f79ac521",
+    "4.stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "5.stderr": "166ed85959cff8c3f5a354922acb746fe5b240be87b0c580f7ecd9236b8b0e54",
+    "5.stdout": "14042482403a4c8678bc9eec22173f5cbead44b59e07f609cedcbc2ea2795d75",
+    "6.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "6.stdout": "c835b1309fbea23c796d99fb5b6944591666bdf734b516ec5b9130d0701d9408",
+    "7.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "7.stdout": "0134a3071d459e2effb2875ca19e133838202bf53e4b6f909cb02d789960add3",
+    "report.json": "187498c7f3c0c545840692f70fd3242b2012d2dcc13a57bc40440535e35484a5"
+  }
+}

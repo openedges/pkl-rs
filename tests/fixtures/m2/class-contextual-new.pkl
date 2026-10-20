@@ -1,0 +1,3 @@
+class C { x: Int = 42 }
+c: C = new {}
+result = c.x

@@ -5,6 +5,7 @@
 
 pub mod diagnostic;
 mod diagnostic_names;
+pub mod evaluation;
 pub mod heap;
 pub mod host;
 pub mod numeric;

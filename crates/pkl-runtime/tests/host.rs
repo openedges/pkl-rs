@@ -231,12 +231,18 @@ fn shared_session() -> (HostSession, Value) {
             code: 3,
             local: false,
             method: false,
+            ty: None,
+            type_span: None,
+            constant: false,
         },
         Member {
             name: Arc::from("shared"),
             code: 4,
             local: false,
             method: false,
+            ty: None,
+            type_span: None,
+            constant: false,
         },
     ]);
     let mut session = HostSession::new(Arc::new(program));

@@ -1,0 +1,3 @@
+typealias Choice<T> = *"default"|T
+x: Choice<Int>
+result = x

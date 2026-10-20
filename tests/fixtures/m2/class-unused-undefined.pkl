@@ -1,0 +1,3 @@
+class C { missing: Int }
+c = new C {}
+result = 42

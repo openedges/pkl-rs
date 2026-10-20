@@ -1,0 +1,3 @@
+class C { x: Int = 2; function make(y) = (z) -> x + y + z }
+c = new C { x = 5 }
+result = c.make(2).apply(3)

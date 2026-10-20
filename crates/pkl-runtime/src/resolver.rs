@@ -5,7 +5,10 @@
 //! searching enclosing objects dynamically. See Pkl 0.32 SymbolTable.resolveVariable.
 use crate::diagnostic::{Diagnostic, DiagnosticKind};
 use crate::source::Span;
-use crate::syntax::{Expr, ExprKind, Member, Module, Parameter};
+use crate::syntax::{
+    Expr, ExprKind, Member, Modifier, ModifierKind, Module, ModuleParentKind, Parameter, Type,
+    TypeKind, TypeParameter, modifier_flags,
+};
 use std::collections::BTreeMap;
 
 // Nonlocal properties/classes/type aliases in the pinned stdlib/base.pkl,
@@ -118,6 +121,7 @@ pub enum Binding {
 pub struct ResolvedModule {
     pub module: Module,
     pub names: BTreeMap<Span, Binding>,
+    pub const_names: std::collections::BTreeSet<Span>,
 }
 
 fn is_method(member: &Member) -> bool {
@@ -128,11 +132,24 @@ enum Scope<'a> {
     Object(&'a [Member]),
     Let(&'a str),
     Parameters(&'a [Parameter]),
+    TypeParameters(&'a [TypeParameter]),
+}
+
+#[derive(Clone, Copy, Eq, PartialEq, Ord, PartialOrd)]
+enum ConstLevel {
+    None,
+    Module,
+    All,
 }
 
 struct Resolver<'a> {
     scopes: Vec<Scope<'a>>,
     names: BTreeMap<Span, Binding>,
+    const_names: std::collections::BTreeSet<Span>,
+    const_level: ConstLevel,
+    object_levels: Vec<ConstLevel>,
+    receiver_is_lambda: bool,
+    member_path: Vec<String>,
 }
 
 impl<'a> Resolver<'a> {
@@ -164,6 +181,7 @@ impl<'a> Resolver<'a> {
                     }
                     let_depth += parameters.len();
                 }
+                Scope::TypeParameters(_) => {}
                 Scope::Object(members) => {
                     if let Some(member) = members
                         .iter()
@@ -198,14 +216,28 @@ impl<'a> Resolver<'a> {
             if !seen.insert((&member.name, is_method(member))) {
                 return Err(Diagnostic::new(
                     DiagnosticKind::DuplicateMember,
-                    member.span,
-                    format!("M1 duplicate member `{}`.", member.name),
+                    member.name_span,
+                    format!("Duplicate definition of member `{}`.", member.name),
                 ));
             }
         }
         self.scopes.push(Scope::Object(members));
+        self.object_levels.push(self.const_level);
+        let previous_lambda = std::mem::replace(&mut self.receiver_is_lambda, false);
         for member in members {
-            if object && is_method(member) && !member.local {
+            self.member_path.push(member.name.clone());
+            let previous_level = self.const_level;
+            if modifier_flags(&member.modifiers) & ModifierKind::Const.flag() != 0 {
+                self.const_level = ConstLevel::All;
+            }
+            self.validate_member(member, object)?;
+            if let Some(ty) = &member.ty {
+                self.type_expression(ty)?;
+            }
+            if object
+                && is_method(member)
+                && modifier_flags(&member.modifiers) & ModifierKind::Local.flag() == 0
+            {
                 let ExprKind::Function { header_span, .. } = member.expr.kind else {
                     unreachable!()
                 };
@@ -216,9 +248,264 @@ impl<'a> Resolver<'a> {
                 ));
             }
             self.expression(&member.expr, true)?;
+            self.const_level = previous_level;
+            self.member_path.pop();
         }
+        self.receiver_is_lambda = previous_lambda;
+        self.object_levels.pop();
         self.scopes.pop();
         Ok(())
+    }
+
+    fn reject_nonstdlib_type_parameters(
+        &self,
+        parameters: &[TypeParameter],
+    ) -> Result<(), Diagnostic> {
+        if let Some(parameter) = parameters.first() {
+            return Err(Diagnostic::new(
+                DiagnosticKind::Syntax,
+                parameter.span,
+                "Only standard library members can have type parameters.",
+            ));
+        }
+        Ok(())
+    }
+
+    fn type_expression(&mut self, ty: &'a Type) -> Result<(), Diagnostic> {
+        match &ty.kind {
+            TypeKind::Named { path, arguments } => {
+                let parameter = self.scopes.iter().rev().any(|scope| match scope {
+                    Scope::TypeParameters(parameters) => {
+                        parameters.iter().any(|parameter| parameter.name == path[0])
+                    }
+                    _ => false,
+                });
+                if path.len() > 2 {
+                    return Err(Diagnostic::new(
+                        DiagnosticKind::Syntax,
+                        ty.span,
+                        format!(
+                            "Invalid type name `{}`.\n\nA qualified type name consists of a module import name and a type name.\nExample: `importedModule.SomeClass`",
+                            path.join(".")
+                        ),
+                    ));
+                }
+                if !parameter {
+                    // Declared types resolve in the enclosing module, not in
+                    // value/parameter or nested object scopes. Type variables
+                    // are handled separately above. See ResolveSimpleDeclaredTypeNode.
+                    let objects = self
+                        .scopes
+                        .iter()
+                        .filter_map(|scope| match scope {
+                            Scope::Object(members) => Some(*members),
+                            _ => None,
+                        })
+                        .collect::<Vec<_>>();
+                    let binding = objects
+                        .first()
+                        .and_then(|members| {
+                            members
+                                .iter()
+                                .find(|member| member.name == path[0] && !is_method(member))
+                        })
+                        .map_or(Binding::ImplicitThis, |member| Binding::Property {
+                            owner_depth: objects.len() - 1,
+                            local: member.local,
+                        });
+                    self.names.insert(ty.span, binding);
+                }
+                for argument in arguments {
+                    self.type_expression(argument)?;
+                }
+            }
+            TypeKind::Nullable(inner) => self.type_expression(inner)?,
+            TypeKind::Union { types, .. } => {
+                for ty in types {
+                    self.type_expression(ty)?;
+                }
+            }
+            TypeKind::Function {
+                parameters,
+                return_type,
+            } => {
+                for parameter in parameters {
+                    self.type_expression(parameter)?;
+                }
+                self.type_expression(return_type)?;
+            }
+            TypeKind::Constrained { base, constraints } => {
+                self.type_expression(base)?;
+                for constraint in constraints {
+                    self.expression(constraint, false)?;
+                }
+            }
+            TypeKind::Unknown | TypeKind::Nothing | TypeKind::Module | TypeKind::String(_) => {}
+        }
+        Ok(())
+    }
+
+    fn validate_member(&self, member: &Member, object: bool) -> Result<(), Diagnostic> {
+        use ModifierKind as M;
+        let (valid, target): (&[ModifierKind], &str) = if object {
+            (&[M::Local, M::Const], "object members")
+        } else {
+            match member.expr.kind {
+                ExprKind::Class { .. } => {
+                    (&[M::Abstract, M::Open, M::Local, M::External], "classes")
+                }
+                ExprKind::TypeAlias { .. } => (&[M::Local, M::External], "type aliases"),
+                ExprKind::Function { method: true, .. } => {
+                    (&[M::Abstract, M::Local, M::External, M::Const], "methods")
+                }
+                _ => (
+                    &[
+                        M::Abstract,
+                        M::Local,
+                        M::Hidden,
+                        M::External,
+                        M::Fixed,
+                        M::Const,
+                    ],
+                    "properties",
+                ),
+            }
+        };
+        validate_modifiers(&member.modifiers, valid, target)?;
+        let flags = modifier_flags(&member.modifiers);
+        let has = |kind: ModifierKind| flags & kind.flag() != 0;
+        let modifier = |kind| {
+            member
+                .modifiers
+                .iter()
+                .find(|modifier| modifier.kind == kind)
+        };
+        if object && has(M::Const) && !has(M::Local) {
+            let Some(const_modifier) = modifier(M::Const) else {
+                return Err(Diagnostic::new(
+                    DiagnosticKind::Unsupported,
+                    member.modifiers[0].span,
+                    "Derived const modifier diagnostics are not implemented.",
+                ));
+            };
+            return Err(Diagnostic::new(
+                DiagnosticKind::Syntax,
+                const_modifier.span,
+                "Modifier `const` can only be applied to object members that are also `local`.",
+            ));
+        }
+        if object
+            && !has(M::Local)
+            && let Some(ty) = &member.ty
+        {
+            return Err(Diagnostic::new(
+                DiagnosticKind::Syntax,
+                ty.span,
+                "A non-local object property cannot have a type annotation.",
+            ));
+        }
+        if let ExprKind::Function {
+            method: true,
+            body,
+            header_span,
+            ..
+        } = &member.expr.kind
+            && matches!(body.kind, ExprKind::Uninitialized)
+            && !has(M::Abstract)
+            && !has(M::External)
+        {
+            let mut error = Diagnostic::new(
+                DiagnosticKind::Syntax,
+                *header_span,
+                format!("Method `{}` is missing a body.", member.name),
+            );
+            error.member = Some(self.member_path.join(".").into());
+            return Err(error);
+        }
+        if has(M::Abstract) {
+            let has_body = match &member.expr.kind {
+                ExprKind::Function { body, .. } => !matches!(body.kind, ExprKind::Uninitialized),
+                _ => !matches!(
+                    member.expr.kind,
+                    ExprKind::Class { .. } | ExprKind::Uninitialized
+                ),
+            };
+            if has_body {
+                return Err(Diagnostic::new(
+                    DiagnosticKind::Syntax,
+                    member.span,
+                    "Abstract members cannot have a body.",
+                ));
+            }
+        }
+        if has(M::Local) && matches!(member.expr.kind, ExprKind::Uninitialized) {
+            return Err(Diagnostic::new(
+                DiagnosticKind::Syntax,
+                member.ty.as_ref().map_or(member.span, |ty| ty.span),
+                "Missing property value.",
+            ));
+        }
+        Ok(())
+    }
+
+    fn needs_const(&self, depth: usize) -> bool {
+        match self.const_level {
+            ConstLevel::None => false,
+            ConstLevel::Module => depth + 1 == self.object_levels.len(),
+            ConstLevel::All => {
+                depth
+                    >= self
+                        .object_levels
+                        .iter()
+                        .rev()
+                        .take_while(|level| **level == ConstLevel::All)
+                        .count()
+            }
+        }
+    }
+
+    fn mark_const_binding(&mut self, span: Span, binding: Binding) {
+        let needed = match binding {
+            Binding::Property { owner_depth, .. } | Binding::Method { owner_depth, .. } => {
+                self.needs_const(owner_depth)
+            }
+            Binding::ImplicitThis | Binding::ImplicitMethod => {
+                self.const_level == ConstLevel::All && self.needs_const(0)
+            }
+            Binding::Lexical { .. } => false,
+        };
+        if needed {
+            self.const_names.insert(span);
+        }
+    }
+
+    fn receiver_const(&self, receiver: &Expr) -> bool {
+        match receiver.kind {
+            ExprKind::Module => self.const_level != ConstLevel::None,
+            ExprKind::This | ExprKind::Super => {
+                self.const_level == ConstLevel::All && self.needs_const(0)
+            }
+            ExprKind::Outer => self.needs_const(usize::from(!self.receiver_is_lambda)),
+            _ => false,
+        }
+    }
+
+    fn receiver(&mut self, receiver: &'a Expr) -> Result<(), Diagnostic> {
+        if matches!(
+            receiver.kind,
+            ExprKind::This | ExprKind::Module | ExprKind::Outer
+        ) {
+            return Ok(());
+        }
+        self.expression(receiver, false)
+    }
+
+    fn const_error(&self, expression: &Expr, message: impl Into<String>) -> Diagnostic {
+        let mut error = Diagnostic::new(DiagnosticKind::Syntax, expression.span, message);
+        if !self.member_path.is_empty() {
+            error.member = Some(self.member_path.join(".").into());
+        }
+        error
     }
 
     fn expression(&mut self, expression: &'a Expr, contextual_new: bool) -> Result<(), Diagnostic> {
@@ -234,13 +521,16 @@ impl<'a> Resolver<'a> {
                         "M1 base-module name resolution is unsupported.",
                     ));
                 }
+                self.mark_const_binding(expression.span, binding);
                 self.names.insert(expression.span, binding);
             }
             ExprKind::Unary { operand, .. }
             | ExprKind::NonNull(operand)
-            | ExprKind::Throw(operand)
-            | ExprKind::TypeCheck { value: operand, .. }
-            | ExprKind::TypeCast { value: operand, .. } => self.expression(operand, false)?,
+            | ExprKind::Throw(operand) => self.expression(operand, false)?,
+            ExprKind::TypeCheck { value, ty } | ExprKind::TypeCast { value, ty } => {
+                self.expression(value, false)?;
+                self.type_expression(ty)?;
+            }
             ExprKind::InterpolatedString(parts) => {
                 for part in parts {
                     self.expression(part, false)?;
@@ -256,11 +546,22 @@ impl<'a> Resolver<'a> {
                 self.expression(else_branch, contextual_new)?;
             }
             ExprKind::Function {
+                type_parameters,
                 parameters,
+                return_type,
                 body,
                 method,
                 ..
             } => {
+                self.reject_nonstdlib_type_parameters(type_parameters)?;
+                for parameter in parameters {
+                    if let Some(ty) = &parameter.ty {
+                        self.type_expression(ty)?;
+                    }
+                }
+                if let Some(ty) = return_type {
+                    self.type_expression(ty)?;
+                }
                 if !method && parameters.len() > 5 {
                     return Err(Diagnostic::new(
                         DiagnosticKind::Syntax,
@@ -279,12 +580,16 @@ impl<'a> Resolver<'a> {
                     }
                 }
                 self.scopes.push(Scope::Parameters(parameters));
+                let previous_lambda = std::mem::replace(&mut self.receiver_is_lambda, !method);
                 self.expression(body, false)?;
+                self.receiver_is_lambda = previous_lambda;
                 self.scopes.pop();
             }
             ExprKind::Call { callee, arguments } => {
                 if let ExprKind::Name(name) = &callee.kind {
-                    self.names.insert(callee.span, self.binding(name, true));
+                    let binding = self.binding(name, true);
+                    self.mark_const_binding(callee.span, binding);
+                    self.names.insert(callee.span, binding);
                 } else {
                     self.expression(callee, false)?;
                 }
@@ -293,18 +598,67 @@ impl<'a> Resolver<'a> {
                 }
             }
             ExprKind::Member(receiver, _) | ExprKind::NullableMember(receiver, _) => {
-                self.expression(receiver, false)?
+                if self.receiver_const(receiver) {
+                    self.const_names.insert(expression.span);
+                }
+                self.receiver(receiver)?;
             }
             ExprKind::Binary { left, right, .. } => {
                 self.expression(left, false)?;
                 self.expression(right, false)?;
             }
-            ExprKind::Let { name, value, body } => {
+            ExprKind::Let {
+                name,
+                ty,
+                value,
+                body,
+            } => {
+                if let Some(ty) = ty {
+                    self.type_expression(ty)?;
+                }
                 self.expression(value, false)?;
                 self.scopes.push(Scope::Let(name));
                 self.expression(body, contextual_new)?;
                 self.scopes.pop();
             }
+            ExprKind::Class {
+                type_parameters,
+                superclass,
+                members,
+                ..
+            } => {
+                self.reject_nonstdlib_type_parameters(type_parameters)?;
+                if let Some(ty) = superclass {
+                    self.type_expression(ty)?;
+                }
+                let previous_level = self.const_level;
+                self.const_level = self.const_level.max(ConstLevel::Module);
+                self.members(members, false)?;
+                self.const_level = previous_level;
+            }
+            ExprKind::TypeAlias {
+                type_parameters,
+                ty,
+            } => {
+                let mut seen = std::collections::BTreeSet::new();
+                for parameter in type_parameters {
+                    if !seen.insert(&parameter.name) {
+                        return Err(Diagnostic::new(
+                            DiagnosticKind::DuplicateMember,
+                            parameter.span,
+                            format!("Duplicate type parameter `{}`.", parameter.name),
+                        ));
+                    }
+                }
+                self.scopes.push(Scope::TypeParameters(type_parameters));
+                self.type_expression(ty)?;
+                self.scopes.pop();
+            }
+            ExprKind::New { ty, members } => {
+                self.type_expression(ty)?;
+                self.members(members, true)?;
+            }
+            ExprKind::Uninitialized => {}
             ExprKind::Object { parent, members } => {
                 if parent.is_none() && !contextual_new {
                     return Err(Diagnostic::new(
@@ -318,28 +672,163 @@ impl<'a> Resolver<'a> {
                 }
                 self.members(members, true)?;
             }
+            ExprKind::This => {
+                if self.const_level == ConstLevel::All && self.needs_const(0) {
+                    return Err(self.const_error(
+                        expression,
+                        "Cannot reference `this` from here because it is not `const`.",
+                    ));
+                }
+            }
+            ExprKind::Module => {
+                if self.const_level != ConstLevel::None {
+                    let message = if self.object_levels.contains(&ConstLevel::Module) {
+                        "Cannot reference `module` within a class body.".to_owned()
+                    } else {
+                        format!(
+                            "Cannot reference `module` from const property `{}`.",
+                            self.member_path.last().map(String::as_str).unwrap_or("")
+                        )
+                    };
+                    return Err(self.const_error(expression, message));
+                }
+            }
+            ExprKind::Outer => {
+                let target = self
+                    .object_levels
+                    .len()
+                    .checked_sub(1 + usize::from(!self.receiver_is_lambda));
+                if target.is_some_and(|index| self.const_level > self.object_levels[index]) {
+                    return Err(self.const_error(
+                        expression,
+                        "Cannot reference `outer` from here because it's not `const`.",
+                    ));
+                }
+            }
             ExprKind::Int(_)
             | ExprKind::Float(_)
             | ExprKind::Null
             | ExprKind::String(_)
             | ExprKind::Bool(_)
-            | ExprKind::This
-            | ExprKind::Outer
-            | ExprKind::Module
             | ExprKind::Super => {}
         }
         Ok(())
     }
 }
 
+fn validate_modifiers(
+    modifiers: &[Modifier],
+    valid: &[ModifierKind],
+    target: &str,
+) -> Result<(), Diagnostic> {
+    use ModifierKind as M;
+    for modifier in modifiers {
+        if !valid.contains(&modifier.kind) {
+            return Err(Diagnostic::new(
+                DiagnosticKind::Syntax,
+                modifier.span,
+                format!(
+                    "Modifier `{}` is not applicable to {target}.",
+                    modifier.kind.spelling()
+                ),
+            ));
+        }
+    }
+    let find = |kind| modifiers.iter().find(|modifier| modifier.kind == kind);
+    let flags = modifier_flags(modifiers);
+    if flags & M::External.flag() != 0 {
+        let Some(modifier) = find(M::External) else {
+            return Err(Diagnostic::new(
+                DiagnosticKind::Unsupported,
+                modifiers[0].span,
+                "Derived external modifier semantics are not implemented.",
+            ));
+        };
+        return Err(Diagnostic::new(
+            DiagnosticKind::Unsupported,
+            modifier.span,
+            "External members can only be defined by standard library modules.",
+        ));
+    }
+    for (first, second, message) in [
+        (
+            M::Local,
+            M::Hidden,
+            "Modifier `hidden` is redundant here; just use `local`.",
+        ),
+        (
+            M::Local,
+            M::Fixed,
+            "Modifier `fixed` is redundant here; just use `local`.",
+        ),
+        (
+            M::Abstract,
+            M::Open,
+            "Modifier `open` is redundant here; just use `abstract`.",
+        ),
+    ] {
+        if flags & first.flag() != 0 && flags & second.flag() != 0 {
+            let Some(modifier) = find(second) else {
+                return Err(Diagnostic::new(
+                    DiagnosticKind::Unsupported,
+                    modifiers[0].span,
+                    "Derived modifier diagnostics are not implemented.",
+                ));
+            };
+            return Err(Diagnostic::new(
+                DiagnosticKind::Syntax,
+                modifier.span,
+                message,
+            ));
+        }
+    }
+    Ok(())
+}
+
 pub fn resolve_module(module: &Module) -> Result<ResolvedModule, Diagnostic> {
     let mut resolver = Resolver {
         scopes: Vec::new(),
         names: BTreeMap::new(),
+        const_names: std::collections::BTreeSet::new(),
+        const_level: ConstLevel::None,
+        object_levels: Vec::new(),
+        receiver_is_lambda: false,
+        member_path: Vec::new(),
     };
-    resolver.members(&module.members, false)?;
+    let validation = (|| {
+        if let Some(declaration) = &module.declaration {
+            let amends = declaration
+                .parent
+                .as_ref()
+                .is_some_and(|parent| parent.kind == ModuleParentKind::Amends);
+            validate_modifiers(
+                &declaration.modifiers,
+                if amends {
+                    &[]
+                } else {
+                    &[ModifierKind::Abstract, ModifierKind::Open]
+                },
+                if amends {
+                    "modules that amend another module"
+                } else {
+                    "modules"
+                },
+            )?;
+        }
+        resolver.members(&module.members, false)?;
+        Ok::<(), Diagnostic>(())
+    })();
+    validation.map_err(|mut error| {
+        error.module_name = module
+            .declaration
+            .as_ref()
+            .and_then(|declaration| declaration.name.as_ref())
+            .map(|name| name.join(".").into_boxed_str());
+        error
+    })?;
     Ok(ResolvedModule {
         module: module.clone(),
         names: resolver.names,
+        const_names: resolver.const_names,
     })
 }

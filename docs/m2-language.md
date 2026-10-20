@@ -18,6 +18,7 @@ presented as distinct feature or test counts. Semantic mappings require review.
 
 ```sh
 python3 tools/m2_manifest.py --check
+python3 tools/m2_identifier_tables.py --output target/m2/identifiers-new
 python3 -m unittest discover -s tools/tests -p 'test_m2_*.py' -v
 python3 tools/m2_language.py --output target/m2/language-new
 python3 tools/m2_language.py --verify-report target/m2/language-new
@@ -34,7 +35,10 @@ pinned oracle, and retains source snapshots and raw process captures.
 The Java boundary is `evaluateExpressionString` with a file module and an
 expression. Both processes receive the same absolute source path. Successful
 UTF-8 stdout, full uncolored `PklException.getMessage()` stderr, and exit codes are
-compared without normalization. The initial Rust probe accepts scalar property
+compared without normalization. A separate outcome file records whether Java
+returned normally or caught a particular `PklException` class. This distinguishes
+a handled upstream bug report from an uncaught JVM failure without changing
+stdout or stderr. The initial Rust probe accepts scalar property
 paths. This stringification boundary does not prove typed API compatibility or
 compound-value rendering.
 
@@ -43,7 +47,8 @@ The commands have distinct meanings:
 - `--verify-report` checks evidence integrity and recomputes recorded outcomes,
   including failures.
 - `--verify-development` requires selected cases to match except for the explicitly
-  tracked cycle diagnostic failure. The cycle remains failed in the report.
+  tracked cycle diagnostic failure and integer remainder-by-zero upstream bug.
+  Both remain failed in the report.
 - `--verify-subset` additionally requires every selected comparison and
   metamorphic relation to pass.
 - `--verify-full` additionally requires all language requirements to have
@@ -68,10 +73,27 @@ across runs. Both conditions and all raw bytes are retained in
 oracle, and no repetition counts are normalized. This unresolved case prevents
 strict selected-case completion.
 
+For integer `1 % 0`, the pinned Java implementation reports a caught
+`PklBugException` caused by `ArithmeticException` in `VmSafeMath.remainder`.
+The development exception is limited to that exact input and failure shape;
+it additionally requires a separate cold Java capture with identical complete
+raw bytes. The Rust diagnostic must retain its recorded complete division-error
+form. No stack traces are normalized or treated as matches. A changed failure,
+timeout, or different output fails the development gate. Resolving the raw
+diagnostic difference is still required by the strict selected and full gates.
+
 Runtime diagnostics carry authored source spans and logical frames separately
 from their message. Instruction spans are parallel metadata, preserving the
 bytecode dispatch count. The text renderer is shared runtime code; native probe
-code supplies source URIs and the expression boundary frame.
+code supplies source URIs and the expression boundary frame. The same
+experimental scalar boundary is available as `evaluateLanguage` in the Node
+and Wasm development bindings, including complete diagnostics. It accepts a
+source string, URI, inferred module name, and scalar property path; explicit
+module declarations take precedence over the inferred name.
+
+The generated identifier tables reproduce the pinned lexer's UTF-16 code-unit
+predicates. `m2_identifier_tables.py` records the raw Java intervals and checks
+the generated Rust bytes. CI repeats this check against the pinned JDK.
 
 M1's platform and Host contracts remain regression requirements. New language
 features must retain captured values across VM suspension and collection and use

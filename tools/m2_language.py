@@ -31,13 +31,13 @@ def capture(command, directory, name, environment=None, timeout=120):
     return row
 
 
-def status(case, java, rust, java_stdout, java_stderr, rust_stdout, rust_stderr):
+def status(case, java, rust, java_stdout, java_stderr, rust_stdout, rust_stderr, java_outcome):
     expected = 0 if case['expected_outcome'] == 'success' else 1
     if java['timed_out'] or java['exit_code'] != expected:
         return 'oracle-error'
-    if expected == 0 and java_stderr:
+    if expected == 0 and (java_stderr or java_outcome != b'success\n'):
         return 'oracle-error'
-    if expected == 1 and (java_stdout or not java_stderr.startswith('–– Pkl Error ––\n'.encode())):
+    if expected == 1 and (java_stdout or not java_stderr or not valid_exception_outcome(java_outcome)):
         return 'oracle-error'
     if rust['timed_out']:
         return 'candidate-timeout'
@@ -46,9 +46,37 @@ def status(case, java, rust, java_stdout, java_stderr, rust_stdout, rust_stderr)
     return 'mismatch'
 
 
+def valid_exception_outcome(outcome):
+    prefix = b'pkl-exception\torg.pkl.core.'
+    if not outcome.startswith(prefix) or not outcome.endswith(b'\n'):
+        return False
+    name = outcome[len(prefix):-1]
+    return bool(name) and all(ch in b'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_$' for ch in name)
+
+
+def java_case_command(metadata, binary, identifier, source, expression):
+    output = binary.parent.parent
+    outcome = output / 'cases' / identifier / 'java.outcome.bin'
+    base = list(metadata['command'][:-1])
+    base[-1] += os.pathsep + str(binary.parent / 'java')
+    base.insert(1, '-Dpkl.m2.outcome=' + str(outcome))
+    return [*base, 'M2LanguageProbe', str(source), expression]
+
+
+def capture_java(metadata, binary, identifier, source, expression, directory):
+    row = capture(java_case_command(metadata, binary, identifier, source, expression),
+                  directory, 'java', metadata['environment'])
+    outcome = directory / 'java.outcome.bin'
+    if not outcome.exists():
+        outcome.write_bytes(b'')
+    row['outcome_sha256'] = oracle.sha256(outcome)
+    (directory / 'java.process.json').write_bytes(contract.encoded(row))
+    return row
+
+
 def source_paths(root=ROOT):
     paths = set(contract.INPUTS) | {'tools/m2_manifest.py', 'tools/m2_language.py',
-            'tools/m2_generate.py', 'tools/java/M2LanguageProbe.java', str(contract.MANIFEST), 'tools/oracle.py', 'oracle.lock.json',
+            'tools/m2_generate.py', 'tools/m2_identifier_tables.py', 'tools/java/M2IdentifierProbe.java', 'tools/java/M2LanguageProbe.java', str(contract.MANIFEST), 'tools/oracle.py', 'oracle.lock.json',
             'Cargo.toml', 'Cargo.lock', 'rust-toolchain.toml'}
     for directory, pattern in [('crates', '*.rs'), ('crates', 'Cargo.toml'), ('tests/fixtures/m2', '*')]:
         paths.update(str(p.relative_to(root)) for p in (root / directory).rglob(pattern) if p.is_file())
@@ -92,8 +120,6 @@ def execute(output: Path, candidate: Path | None):
                           output, 'javac', metadata['environment'])
     if compile_row['exit_code'] != 0:
         raise ValueError('Java oracle compile failed; raw evidence preserved')
-    java_base = list(metadata['command'][:-1])
-    java_base[-1] += os.pathsep + str(classes)
     results = []
     selected = [row for row in manifest['cases'] if row.get('adapter') == 'language-api-string']
     for case in selected:
@@ -102,14 +128,21 @@ def execute(output: Path, candidate: Path | None):
         source = ROOT / case['input']
         (directory / 'input.pkl').write_bytes(source.read_bytes())
         arguments = [str(source), case['expression']]
-        java = capture([*java_base, 'M2LanguageProbe', *arguments], directory, 'java', metadata['environment'])
+        java = capture_java(metadata, frozen, case['id'], source, case['expression'], directory)
         rust = capture([str(frozen), *arguments], directory, 'rust', metadata['environment'])
         outcome = status(case, java, rust, *( (directory / f'{name}.{channel}.bin').read_bytes()
-                                             for name in ('java', 'rust') for channel in ('stdout', 'stderr')))
-        results.append(dict(id=case['id'], status=outcome, java=java, rust=rust))
+                                             for name in ('java', 'rust') for channel in ('stdout', 'stderr')),
+                         (directory / 'java.outcome.bin').read_bytes())
+        result = dict(id=case['id'], status=outcome, java=java, rust=rust)
+        if case['id'] == 'error-remainder-zero':
+            repeated = directory / 'java-repeat'
+            repeated.mkdir()
+            result['java_repeat'] = capture_java(metadata, frozen, case['id'] + '/java-repeat',
+                                                 source, case['expression'], repeated)
+        results.append(result)
         print(f"{case['id']}: {outcome}", flush=True)
     relations = check_relations(manifest, output)
-    report = dict(schema_version=1, scope=manifest['comparison_boundary'],
+    report = dict(schema_version=2, scope=manifest['comparison_boundary'],
                   inventory_counts=manifest['counts'], selected_count=len(selected),
                   oracle=metadata, candidate=dict(path=str(candidate), sha256=candidate_hash,
                                  source_binding='recorded-build' if build else 'unbound-caller-supplied', build=build),
@@ -234,12 +267,25 @@ def check_report(directory: Path):
             for channel in ('stdout', 'stderr'):
                 if oracle.sha256(folder / f'{runtime}.{channel}.bin') != process[channel + '_sha256']:
                     raise ValueError('process raw hash differs: ' + row['id'])
-        java_base = list(report['oracle']['command'][:-1])
-        java_base[-1] += os.pathsep + str(Path(row['rust']['command'][0]).parent / 'java')
-        if row['java']['command'] != [*java_base, 'M2LanguageProbe', str(ROOT / case['input']), case['expression']]:
+        if row['java']['command'] != java_case_command(report['oracle'], Path(row['rust']['command'][0]),
+                case['id'], ROOT / case['input'], case['expression']):
             raise ValueError('case Java command changes pinned oracle options/classpath')
+        if oracle.sha256(folder / 'java.outcome.bin') != row['java']['outcome_sha256']:
+            raise ValueError('oracle outcome sidecar differs')
+        if row['id'] == 'error-remainder-zero':
+            repeated = folder / 'java-repeat'
+            process = json.loads((repeated / 'java.process.json').read_bytes())
+            if process != row.get('java_repeat'):
+                raise ValueError('independent remainder Java capture metadata differs')
+            if process['command'] != java_case_command(report['oracle'], Path(row['rust']['command'][0]),
+                    case['id'] + '/java-repeat', ROOT / case['input'], case['expression']):
+                raise ValueError('independent remainder Java command differs')
+            for channel in ('stdout', 'stderr', 'outcome'):
+                if oracle.sha256(repeated / f'java.{channel}.bin') != process[channel + '_sha256']:
+                    raise ValueError('independent remainder Java raw capture differs')
         outcome = status(case, row['java'], row['rust'], *((folder / f'{name}.{channel}.bin').read_bytes()
-                                    for name in ('java', 'rust') for channel in ('stdout', 'stderr')))
+                                    for name in ('java', 'rust') for channel in ('stdout', 'stderr')),
+                         (folder / 'java.outcome.bin').read_bytes())
         if row['status'] != outcome:
             raise ValueError('raw comparison status differs: ' + row['id'])
     if report['metamorphic_results'] != check_relations(manifest, directory):
@@ -256,8 +302,44 @@ def subset_passes(report):
         row['status'] == 'pass' for row in report['metamorphic_results'])
 
 
+def remainder_development_exception(row, directory: Path):
+    """Known Pkl 0.32 remainder bug, retained as a failed compatibility case."""
+    if row['status'] != 'mismatch' or 'java_repeat' not in row:
+        return False
+    folder = directory / 'cases/error-remainder-zero'
+    if (folder / 'input.pkl').read_bytes() != b'result = 1 % 0\n':
+        return False
+    for runtime, process in [('java', row['java']), ('rust', row['rust']),
+                              ('java-repeat/java', row['java_repeat'])]:
+        if process['exit_code'] != 1 or process['timed_out'] or (folder / f'{runtime}.stdout.bin').read_bytes():
+            return False
+    outcome = b'pkl-exception\torg.pkl.core.PklBugException\n'
+    if any((folder / prefix / 'java.outcome.bin').read_bytes() != outcome
+           for prefix in ('', 'java-repeat')):
+        return False
+    java = (folder / 'java.stderr.bin').read_bytes()
+    repeated = (folder / 'java-repeat/java.stderr.bin').read_bytes()
+    if java != repeated:
+        return False
+    banner = (b'An unexpected error has occurred. Would you mind filing a bug report?\n')
+    # This class/cause/origin check identifies the explicitly investigated bug;
+    # compatibility still compares the entire Java/Rust payloads and remains failed.
+    if (not java.startswith(banner)
+            or b'java.lang.ArithmeticException%3A%20%2F%20by%20zero\n' not in java
+            or b'java.lang.ArithmeticException: / by zero\n' not in java
+            or b'\tat org.pkl.core.runtime.VmSafeMath.remainder(VmSafeMath.java:93)\n' not in java):
+        return False
+    source = Path(row['java']['command'][-2])
+    if source != ROOT / 'tests/fixtures/m2/error-remainder-zero.pkl':
+        return False
+    expected = ('–– Pkl Error ––\nDivision by zero.\n\n1 | result = 1 % 0\n'
+                '             ^^^^^\nat error-remainder-zero#result (' + source.as_uri() + ')\n'
+                '\n1 | result\n    ^^^^^^\nat  (repl:text)\n').encode()
+    return (folder / 'rust.stderr.bin').read_bytes() == expected
+
+
 def development_passes(report, directory: Path):
-    """Temporary development gate; retains the explicit cycle failure as failed.
+    """Temporary development gate; retains explicit cycle/remainder failures as failed.
 
     This is not a compatibility gate. Strict subset/full verification continues
     to reject the exact same report while this known exception is present.
@@ -266,6 +348,10 @@ def development_passes(report, directory: Path):
         return False
     for row in report['results']:
         if row['status'] == 'pass':
+            continue
+        if row['id'] == 'error-remainder-zero':
+            if not remainder_development_exception(row, directory):
+                return False
             continue
         if row['id'] != 'error-cycle' or row['status'] not in ('oracle-error', 'mismatch'):
             return False
@@ -294,7 +380,7 @@ def main():
     action.add_argument('--verify-report', type=Path, help='integrity only; preserves recorded compatibility failures')
     action.add_argument('--verify-subset', type=Path, help='integrity and every selected probe must pass')
     action.add_argument('--verify-full', type=Path, help='strict full M2 language completion')
-    action.add_argument('--verify-development', type=Path, help='development-only gate allowing the explicitly recorded cycle failure; does not establish compatibility')
+    action.add_argument('--verify-development', type=Path, help='development-only gate allowing explicitly recorded cycle/remainder failures; does not establish compatibility')
     parser.add_argument('--record-only', action='store_true', help='with --output, acquire and validate evidence without requiring compatibility success')
     parser.add_argument('--candidate', type=Path, help='override the default recorded release build; caller-supplied artifact has no verified source binding')
     args = parser.parse_args()

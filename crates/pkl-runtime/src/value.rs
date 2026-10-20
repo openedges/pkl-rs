@@ -23,6 +23,7 @@ pub enum Value {
     Bytes(Arc<[u8]>),
     Object(ObjectId),
     Function(ObjectId),
+    Class(ObjectId),
 }
 
 impl Value {
@@ -33,7 +34,7 @@ impl Value {
     /// Heap identity for every traced value variant.
     pub fn heap_id(&self) -> Option<ObjectId> {
         match self {
-            Self::Object(id) | Self::Function(id) => Some(*id),
+            Self::Object(id) | Self::Function(id) | Self::Class(id) => Some(*id),
             _ => None,
         }
     }
@@ -50,6 +51,7 @@ impl Value {
 pub enum ErrorKind {
     Type,
     MissingMember,
+    MissingType,
     Cycle,
     Arithmetic,
     InvalidBytecode,

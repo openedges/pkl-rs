@@ -1,0 +1,3 @@
+class C { x = 1 }
+c = new C { unknown = 2 }
+result = c.x

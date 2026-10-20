@@ -38,6 +38,20 @@ export async function scenarios(api) {
     eq(api.evaluate('result = false && missing', 'result'), 'bool\tfalse');
     eq(api.evaluate('result = "answer: \\(40 + 2)"', 'result'), 'string\t616e737765723a203432');
   });
+  await check('m2-shared-language-diagnostics', () => {
+    const uri = 'file:///m2-platform.pkl';
+    const source = 'result = 1 ~/ 0\n';
+    throws(() => api.evaluateLanguage(source, uri, 'm2-platform', 'result'),
+      '–– Pkl Error ––\nDivision by zero.\n\n1 | result = 1 ~/ 0\n             ^^^^^^\nat m2-platform#result (file:///m2-platform.pkl)\n\n1 | result\n    ^^^^^^\nat  (repl:text)\n');
+    eq(api.evaluateLanguage('result = "한글🙂"', uri, 'm2-platform', 'result'), '한글🙂');
+  });
+  await check('m2-class-method-and-type-alias', () => {
+    const source = 'typealias Count = Int\nclass Box { value: Count = 40; function add(n: Count): Count = value + n }\nbox = new Box {}\nresult = box.add(2)';
+    eq(api.evaluateLanguage(source, 'file:///m2-platform.pkl', 'm2-platform', 'result'), '42');
+    throws(() => api.evaluateLanguage('class C { x = 1 }\nc = new C { extra = 2 }\nresult = c.x\n',
+      'file:///m2-platform.pkl', 'm2-platform', 'result'),
+      '–– Pkl Error ––\nCannot find property `extra` in object of type `m2-platform#C`.\n\n2 | c = new C { extra = 2 }\n                ^^^^^\nat m2-platform#c (file:///m2-platform.pkl)\n\nAvailable properties:\nx\n\n3 | result = c.x\n             ^\nat m2-platform#result (file:///m2-platform.pkl)\n\n1 | result\n    ^^^^^^\nat  (repl:text)\n');
+  });
   await check('utf8-utf16-string-boundary', () => {
     for (const value of ['', '한글🙂e\u0301\0\r\n', '𐐀漢字']) eq(api.roundtripString(value), value);
     for (const value of ['\ud800', '\udfff', 'a\ud800b']) throws(() => api.roundtripString(value), 'unpaired UTF-16 surrogate is unsupported');

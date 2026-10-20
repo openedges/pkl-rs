@@ -1,0 +1,4 @@
+local x = 1
+class C { local y = 2; z = 3; function f() = x + y + z }
+c = new C { z = 4 }
+result = c.f()

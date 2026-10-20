@@ -1,0 +1,3 @@
+const const value = 42
+class C { result = value }
+result = (new C {}).result

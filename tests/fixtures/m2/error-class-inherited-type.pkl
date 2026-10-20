@@ -1,0 +1,4 @@
+open class A { x: Int = 2 }
+class B extends A { x = "wrong" }
+b = new B {}
+result = b.x

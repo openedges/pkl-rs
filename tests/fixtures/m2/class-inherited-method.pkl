@@ -1,0 +1,4 @@
+open class A { x: Int = 1; function f() = x + 2 }
+class B extends A { x = 3; function f() = super.f() + x }
+b = new B {}
+result = b.f()

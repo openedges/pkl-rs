@@ -2300,6 +2300,1161 @@
       ]
     },
     {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "power-one-infinity",
+      "input": "tests/fixtures/m2/power-one-infinity.pkl",
+      "input_sha256": "1e600dffb9c52c0dde89199d298547df3766d9a22ff8bd9cb36f7d6abd1ff266",
+      "required": true,
+      "requirements": [
+        "semantic:operators"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "power-negative-one-infinity",
+      "input": "tests/fixtures/m2/power-negative-one-infinity.pkl",
+      "input_sha256": "76389ca7a129c506851ca83dd0a85e37fdcd34bcb88eb2efe2d412414961651d",
+      "required": true,
+      "requirements": [
+        "semantic:operators"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "power-one-nan",
+      "input": "tests/fixtures/m2/power-one-nan.pkl",
+      "input_sha256": "66b290ec7db1791c735d31a9eb0e53f68353584047b1d383ad299a54034a278d",
+      "required": true,
+      "requirements": [
+        "semantic:operators"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "error-float-div-zero",
+      "input": "tests/fixtures/m2/error-float-div-zero.pkl",
+      "input_sha256": "1489a83ac52b1bf49dbff1a7d05a0e3c797883593e88a0281d618e590f3b4c5b",
+      "required": true,
+      "requirements": [
+        "semantic:numeric-errors"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "error-float-div-large",
+      "input": "tests/fixtures/m2/error-float-div-large.pkl",
+      "input_sha256": "2ba033fdb22603283080b4ac3936b01994975ac5ae5303c360f44f416b2fca78",
+      "required": true,
+      "requirements": [
+        "semantic:numeric-errors"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "error-float-div-nonfinite",
+      "input": "tests/fixtures/m2/error-float-div-nonfinite.pkl",
+      "input_sha256": "039e65ec44476dcc1c9f9bc3e46df30f4df8dfdb27898d4d4c224c3c4b9ce62e",
+      "required": true,
+      "requirements": [
+        "semantic:numeric-errors"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "error-remainder-zero",
+      "input": "tests/fixtures/m2/error-remainder-zero.pkl",
+      "input_sha256": "d7f2c40bdc290143438f2ee579c2b2d03b96b52265934c39b517c909fd3a3112",
+      "required": true,
+      "requirements": [
+        "semantic:numeric-errors"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "class-basic",
+      "input": "tests/fixtures/m2/class-basic.pkl",
+      "input_sha256": "7d50246e4dab52e6d83cae892b8d6add35c4af9b06d4a88a22c39ce3ccd9f496",
+      "required": true,
+      "requirements": [
+        "semantic:classes"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "class-local-capture",
+      "input": "tests/fixtures/m2/class-local-capture.pkl",
+      "input_sha256": "d00f8cb5782549066c6b1a2ddaf97e4137974217cfb7429f5525630648ddf519",
+      "required": true,
+      "requirements": [
+        "semantic:name-resolution"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "class-inherited-method",
+      "input": "tests/fixtures/m2/class-inherited-method.pkl",
+      "input_sha256": "b8fc816825f0ed73262591eaa3aff08a1d4025b4368348f7e1babd0d00dae77c",
+      "required": true,
+      "requirements": [
+        "semantic:classes"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "class-inherited-property",
+      "input": "tests/fixtures/m2/class-inherited-property.pkl",
+      "input_sha256": "2ce5a900cd35a1e876357f5030e0bddbcff8a67fc2d6e4d23c5056ff6909853b",
+      "required": true,
+      "requirements": [
+        "semantic:classes"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "class-closure-receiver",
+      "input": "tests/fixtures/m2/class-closure-receiver.pkl",
+      "input_sha256": "e78612801a72818d963e040c5f3be0193919872928be50200c1732ebf1611675",
+      "required": true,
+      "requirements": [
+        "semantic:closures"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "class-is-ancestor",
+      "input": "tests/fixtures/m2/class-is-ancestor.pkl",
+      "input_sha256": "dba0560f15784140031ac54e74262b574989fe9b48e89ca2d4540a550998656e",
+      "required": true,
+      "requirements": [
+        "semantic:type-tests-casts"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "class-as-ancestor",
+      "input": "tests/fixtures/m2/class-as-ancestor.pkl",
+      "input_sha256": "85a545fd54540220511f539bc26b7abb991d2e0ba38887c471b654e9e33ef3fd",
+      "required": true,
+      "requirements": [
+        "semantic:type-tests-casts"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "class-contextual-new",
+      "input": "tests/fixtures/m2/class-contextual-new.pkl",
+      "input_sha256": "a269ba0b895d6c2e9045214f517eadd210a32a0d9225d2673e2071b405281c78",
+      "required": true,
+      "requirements": [
+        "semantic:classes"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "class-default-instance",
+      "input": "tests/fixtures/m2/class-default-instance.pkl",
+      "input_sha256": "9dc287683f6a5e6039271c2e38373d5b8c262a7542c6747f8b11d87d56044e34",
+      "required": true,
+      "requirements": [
+        "semantic:types"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "class-unused-undefined",
+      "input": "tests/fixtures/m2/class-unused-undefined.pkl",
+      "input_sha256": "ab75b570ebdc188972961e1380a3fca1014a789bc2b053b1cf6c3251846522fc",
+      "required": true,
+      "requirements": [
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "error-class-undefined",
+      "input": "tests/fixtures/m2/error-class-undefined.pkl",
+      "input_sha256": "887a4dd242a241f7fe74d0139b85898bbbd726cacace6bd70c30bd4b7a9aa635",
+      "required": true,
+      "requirements": [
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "error-class-member-type",
+      "input": "tests/fixtures/m2/error-class-member-type.pkl",
+      "input_sha256": "4ec11646acddc63fbf91add42a8dc7cdaa1308e136afb6f9577e176199c2c30f",
+      "required": true,
+      "requirements": [
+        "semantic:types"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "error-class-inherited-type",
+      "input": "tests/fixtures/m2/error-class-inherited-type.pkl",
+      "input_sha256": "8b519661b65c3cc08a74c4eea11e07364aaf0cb1f3b252733d2e2e92b370bbf7",
+      "required": true,
+      "requirements": [
+        "semantic:types"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "error-class-unknown-member",
+      "input": "tests/fixtures/m2/error-class-unknown-member.pkl",
+      "input_sha256": "8d970421d8b2915556d337439893f46a2df27c861954e7328199a89a8ff54ff1",
+      "required": true,
+      "requirements": [
+        "semantic:classes"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "error-class-final-parent",
+      "input": "tests/fixtures/m2/error-class-final-parent.pkl",
+      "input_sha256": "2a73bd0f7643be61af98e43951bbb01ae94fce71a3abf3eb3bc55821a08bdb1d",
+      "required": true,
+      "requirements": [
+        "semantic:classes"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "error-class-abstract-new",
+      "input": "tests/fixtures/m2/error-class-abstract-new.pkl",
+      "input_sha256": "20c680d19e9405942d1000da51bd5e5115c285b0ab381bbab59dca44f61a577b",
+      "required": true,
+      "requirements": [
+        "semantic:classes"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "alias-primitive",
+      "input": "tests/fixtures/m2/alias-primitive.pkl",
+      "input_sha256": "c80e6b8d9f5147a31c6549b2c83025c8c472f1889d381a1f5e231c057ba390da",
+      "required": true,
+      "requirements": [
+        "semantic:type-aliases"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "alias-class",
+      "input": "tests/fixtures/m2/alias-class.pkl",
+      "input_sha256": "26d2295db9fa177324eda3c65238e3148d3620423d357d31fe3f28ccbfa13dec",
+      "required": true,
+      "requirements": [
+        "semantic:type-aliases"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "alias-nullable-default",
+      "input": "tests/fixtures/m2/alias-nullable-default.pkl",
+      "input_sha256": "f5ffd6cb2c4d0659f22ba2c3f053717984f814f9d19bdbe705b5766096af9c8f",
+      "required": true,
+      "requirements": [
+        "semantic:type-aliases"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "alias-literal-default",
+      "input": "tests/fixtures/m2/alias-literal-default.pkl",
+      "input_sha256": "4efa18bf8702e13442140920487ad1dedb114771b9a9c9fecf26dd6e2f1276a8",
+      "required": true,
+      "requirements": [
+        "semantic:type-aliases"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "alias-union-default",
+      "input": "tests/fixtures/m2/alias-union-default.pkl",
+      "input_sha256": "45abe64245d3ecb3ad9f8feeb60bbca5075cbd4331b4a4e072f05ef41c7e7a55",
+      "required": true,
+      "requirements": [
+        "semantic:unions"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "alias-nested-union-default",
+      "input": "tests/fixtures/m2/alias-nested-union-default.pkl",
+      "input_sha256": "fa145b12633aa37e8558c769f3e260f176739847e5fb176e5c927238b1e6d4a8",
+      "required": true,
+      "requirements": [
+        "semantic:unions"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "error-alias-property-type",
+      "input": "tests/fixtures/m2/error-alias-property-type.pkl",
+      "input_sha256": "a3621f1fe3746cac807a1162afe1f4c50e3fbe1ae2dda2436a235f9e72d1f85f",
+      "required": true,
+      "requirements": [
+        "semantic:type-aliases"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "typed-let",
+      "input": "tests/fixtures/m2/typed-let.pkl",
+      "input_sha256": "4783fc8b8980154c01e7b348ce56420670309e375b37e1403a324e2e80ac35fd",
+      "required": true,
+      "requirements": [
+        "semantic:types"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "error-typed-let",
+      "input": "tests/fixtures/m2/error-typed-let.pkl",
+      "input_sha256": "d8d707d28101234d4038f40e4923a5f7e2c2590d51688605200403d1baed2ef9",
+      "required": true,
+      "requirements": [
+        "semantic:types"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "module-declared-name-error",
+      "input": "tests/fixtures/m2/module-declared-name-error.pkl",
+      "input_sha256": "0bf775a0ba17175e0a2a0d7b203e476da284a9e31fe9b34071aa355698534f9d",
+      "required": true,
+      "requirements": [
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "module-basic",
+      "input": "tests/fixtures/m2/module-basic.pkl",
+      "input_sha256": "99940e02bc4adf691a5c554a32cd00527e426d29cc9e34f5a051ea404ff02513",
+      "required": true,
+      "requirements": [
+        "semantic:modules"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "error-class-nonconst-capture",
+      "input": "tests/fixtures/m2/error-class-nonconst-capture.pkl",
+      "input_sha256": "cfec6b3f89a94b0f02771991bcd427279b82ef41e29fc124b1434e3f9cfa90e5",
+      "required": true,
+      "requirements": [
+        "semantic:modifiers"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "class-const-capture",
+      "input": "tests/fixtures/m2/class-const-capture.pkl",
+      "input_sha256": "8a32bbadd79ac95afb9677089dbf1cae9753b8b7bfc2a61f51a4590689e098a6",
+      "required": true,
+      "requirements": [
+        "semantic:modifiers"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "class-unused-final-parent",
+      "input": "tests/fixtures/m2/class-unused-final-parent.pkl",
+      "input_sha256": "cc08a09d8a6d0e73a1de6112fe4d1a2c516fdc67f9d46dfead3314b7cdbcf008",
+      "required": true,
+      "requirements": [
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "alias-unused-missing",
+      "input": "tests/fixtures/m2/alias-unused-missing.pkl",
+      "input_sha256": "00a34a79d4367c9e5c43c1750afd475b67b1cffcc867a0547a166007a928493a",
+      "required": true,
+      "requirements": [
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "alias-unused-cycle",
+      "input": "tests/fixtures/m2/alias-unused-cycle.pkl",
+      "input_sha256": "b31ed24dc863a017e0040e589a3ba569f4253e61c10e59d604aa21a79069158a",
+      "required": true,
+      "requirements": [
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "error-alias-cyclic-forced",
+      "input": "tests/fixtures/m2/error-alias-cyclic-forced.pkl",
+      "input_sha256": "d2a807ec043b152cca7b4c4edb11d9635da1fa3bdd8334b9e0b3421b89eeaa65",
+      "required": true,
+      "requirements": [
+        "semantic:type-aliases"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "identifier-greek",
+      "input": "tests/fixtures/m2/identifier-greek.pkl",
+      "input_sha256": "88540e57ce75a74b07eddadeacbc58173af92540836e5b81664d4421649d3e5d",
+      "required": true,
+      "requirements": [
+        "semantic:lexing"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "identifier-combining",
+      "input": "tests/fixtures/m2/identifier-combining.pkl",
+      "input_sha256": "7cccc4a5ba5470f644cd276dc2e8c7a23fd0ec7b0875abab5fc3c7d45e242ab3",
+      "required": true,
+      "requirements": [
+        "semantic:lexing"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "identifier-supplementary",
+      "input": "tests/fixtures/m2/identifier-supplementary.pkl",
+      "input_sha256": "94f7b52d0d9dd85c65f58933164740d2dee3df02a95188a3ab800424f5a0355e",
+      "required": true,
+      "requirements": [
+        "semantic:lexing"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "identifier-join-control",
+      "input": "tests/fixtures/m2/identifier-join-control.pkl",
+      "input_sha256": "3432565cc9f4fac1cb5c0b3b303b2896e39f69777188bd2454122d458eb44c60",
+      "required": true,
+      "requirements": [
+        "semantic:lexing"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "identifier-dollar",
+      "input": "tests/fixtures/m2/identifier-dollar.pkl",
+      "input_sha256": "a3c94625e8b9d3e4465effa88b9197118a558bda6a80f69e09e963c0f680b9f6",
+      "required": true,
+      "requirements": [
+        "semantic:lexing"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "error-source-lines-cr",
+      "input": "tests/fixtures/m2/error-source-lines-cr.pkl",
+      "input_sha256": "8a0cda1570227b00e77631f1901d31f6d08a210b0e75cf467917d2a9327c6e98",
+      "required": true,
+      "requirements": [
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "error-source-lines-crlf",
+      "input": "tests/fixtures/m2/error-source-lines-crlf.pkl",
+      "input_sha256": "e6d27bee6c6e7d1e9826d938a86739cc98a392f5a4cbf4c8354b9ba4c660f5a6",
+      "required": true,
+      "requirements": [
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "alias-generic-nullable",
+      "input": "tests/fixtures/m2/alias-generic-nullable.pkl",
+      "input_sha256": "623dc38ef2ac733762905a407d6b4c2d221e7629c0632daa92e0ba84b962dc4e",
+      "required": true,
+      "requirements": [
+        "semantic:generics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "alias-generic-union",
+      "input": "tests/fixtures/m2/alias-generic-union.pkl",
+      "input_sha256": "64e6983529f177e981e64ccda265c5dca0c81b42a8f1279f758e8a2f14e7b2d8",
+      "required": true,
+      "requirements": [
+        "semantic:generics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "alias-generic-identity-class",
+      "input": "tests/fixtures/m2/alias-generic-identity-class.pkl",
+      "input_sha256": "1e403741a88b9bb1832896fabfe68f2b08e3ca4af21e8006f8bc66df31e52e05",
+      "required": true,
+      "requirements": [
+        "semantic:generics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "alias-generic-default",
+      "input": "tests/fixtures/m2/alias-generic-default.pkl",
+      "input_sha256": "faa6ed1dfc81e8d8635b137e0e21632ab8aafbd759d459e1665b9891c97946ce",
+      "required": true,
+      "requirements": [
+        "semantic:generics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "type-unused-missing",
+      "input": "tests/fixtures/m2/type-unused-missing.pkl",
+      "input_sha256": "df22e16632d68e4a5b0f84b59d86ec3b5acc80d6b0516d7429eafede591af07b",
+      "required": true,
+      "requirements": [
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "method-unused-missing-type",
+      "input": "tests/fixtures/m2/method-unused-missing-type.pkl",
+      "input_sha256": "c6f75e79eda6a855dcc063c78a6b9ed544eef10865124f594e174f58268b29f3",
+      "required": true,
+      "requirements": [
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "class-unused-missing-parent",
+      "input": "tests/fixtures/m2/class-unused-missing-parent.pkl",
+      "input_sha256": "e276ae0dd6c909d39e0828298978958085081633ec28c8b294fd8bf742756dfc",
+      "required": true,
+      "requirements": [
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "error-interpolation-empty",
+      "input": "tests/fixtures/m2/error-interpolation-empty.pkl",
+      "input_sha256": "370a5093dcbb7167e66cae2a5078f37aa5f88ed9d7cbc6559f0387e18a7e041c",
+      "required": true,
+      "requirements": [
+        "semantic:strings",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "error-interpolation-first",
+      "input": "tests/fixtures/m2/error-interpolation-first.pkl",
+      "input_sha256": "c0883395cddd92e1be8ce7c1a35bcb715607c0632618e2183d5249bfc811bf42",
+      "required": true,
+      "requirements": [
+        "semantic:strings",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "error-named-range",
+      "input": "tests/fixtures/m2/error-named-range.pkl",
+      "input_sha256": "b7d61e6cc3d74817a62fb0e0afbb3278aacc29366c1635ba8bb05657dd9ce905",
+      "required": true,
+      "requirements": [
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "error-range-before-syntax",
+      "input": "tests/fixtures/m2/error-range-before-syntax.pkl",
+      "input_sha256": "c259d5cd3151ee5aec872f884e7944d84c5ac322b0fe08456f7df63eb8cae13a",
+      "required": true,
+      "requirements": [
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "error-named-duplicate",
+      "input": "tests/fixtures/m2/error-named-duplicate.pkl",
+      "input_sha256": "645b8c4aae37a47b1b2ca30fe9e35c1c369a0a7848abee313dd628a8d2574d0d",
+      "required": true,
+      "requirements": [
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "error-keyword-property",
+      "input": "tests/fixtures/m2/error-keyword-property.pkl",
+      "input_sha256": "ca002c422e839adeb912018707c2f2f492965b731063faaae45e67b0ebde2d10",
+      "required": true,
+      "requirements": [
+        "semantic:lexing"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "class-unused-missing-type",
+      "input": "tests/fixtures/m2/class-unused-missing-type.pkl",
+      "input_sha256": "fa3be95bce9d941cf0df4630ea02808321d2de4bd7e2731788bc0d8e8a5d39c4",
+      "required": true,
+      "requirements": [
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "error-class-forced-missing-type",
+      "input": "tests/fixtures/m2/error-class-forced-missing-type.pkl",
+      "input_sha256": "fd0827d2399cc4fe5d2c038518be9cf3f55f9b303717fa224e05bc5f7949e351",
+      "required": true,
+      "requirements": [
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "class-unused-missing-method-type",
+      "input": "tests/fixtures/m2/class-unused-missing-method-type.pkl",
+      "input_sha256": "cb02235e7be3971fd1456215c7b0fa640f1e28ebbaed2c7bfa252c4aec454c71",
+      "required": true,
+      "requirements": [
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "error-class-forced-missing-method-type",
+      "input": "tests/fixtures/m2/error-class-forced-missing-method-type.pkl",
+      "input_sha256": "1de296d78e7d577b1a729a1fb74071cb3524f9df9d16acdebf746f56b52219e0",
+      "required": true,
+      "requirements": [
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "error-string-subtract",
+      "input": "tests/fixtures/m2/error-string-subtract.pkl",
+      "input_sha256": "f217cc5cfb11533224a9ab4d8a3bfd5d3b79ce438299c136efb0e0a58511c333",
+      "required": true,
+      "requirements": [
+        "semantic:operators"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "error-abstract-nullable",
+      "input": "tests/fixtures/m2/error-abstract-nullable.pkl",
+      "input_sha256": "7115b9b191c344ea672ccbf9771dc5106054f5e43aaf43384ec26ba6cc196ee1",
+      "required": true,
+      "requirements": [
+        "semantic:modifiers"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "error-abstract-literal",
+      "input": "tests/fixtures/m2/error-abstract-literal.pkl",
+      "input_sha256": "fc4350e0fa82d85a750862ed9561b7857384f98fd2924fa1bc847abe05c0a36d",
+      "required": true,
+      "requirements": [
+        "semantic:modifiers"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "error-duplicate-const-capture",
+      "input": "tests/fixtures/m2/error-duplicate-const-capture.pkl",
+      "input_sha256": "00f5a41f4c84f216ecd9c3bf69a703138031374836fb45e30489f1428f40a356",
+      "required": true,
+      "requirements": [
+        "semantic:modifiers"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "error-named-class-type",
+      "input": "tests/fixtures/m2/error-named-class-type.pkl",
+      "input_sha256": "5c06d6729ed8b4111868d30ab3eac5f91d1b2015a78a6c1fce10052e43637a31",
+      "required": true,
+      "requirements": [
+        "semantic:types"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "error-abstract-method",
+      "input": "tests/fixtures/m2/error-abstract-method.pkl",
+      "input_sha256": "19cb1c4ed8140500899b7c231a473070fb79596d02ab05f264f419a9fe077c4f",
+      "required": true,
+      "requirements": [
+        "semantic:modifiers"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "class-unused-abstract-members",
+      "input": "tests/fixtures/m2/class-unused-abstract-members.pkl",
+      "input_sha256": "6059f86e57fd95b8e7a9049b862413dc8af876d77bb87a9515bfd21b4c18b922",
+      "required": true,
+      "requirements": [
+        "semantic:modifiers"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "error-unused-method-body",
+      "input": "tests/fixtures/m2/error-unused-method-body.pkl",
+      "input_sha256": "9a0d69d604b3d1eb4cee1e09afc9502e55159333953267ccd79c4124b928e5d3",
+      "required": true,
+      "requirements": [
+        "semantic:functions",
+        "semantic:diagnostics"
+      ]
+    },
+    {
       "adapter": null,
       "execution": {
         "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
@@ -93712,9 +94867,9 @@
   "comparison_boundary": "evaluateExpressionString(ModuleSource.path(same absolute URI), expression) UTF-8 stdout; whole PklException.getMessage() UTF-8 stderr and exit 1; no trimming. Stringification alone is not typed value/API compatibility.",
   "completion": "Every required semantic/source requirement needs implementation/test mappings and complete passing execution. Pending/unmapped/unimplemented/mismatch remains a full-gate failure.",
   "counts": {
-    "cases": 1119,
+    "cases": 1191,
     "cases_by_execution": {
-      "ready": 119,
+      "ready": 191,
       "unimplemented": 960,
       "unmapped": 40
     },
@@ -93732,14 +94887,21 @@
       "id": "semantic:lexing",
       "implementation": {
         "links": [],
-        "state": "unimplemented"
+        "state": "partial"
       },
       "kind": "semantic-family",
       "reason": "A selected probe does not establish implementation or complete edge-case coverage.",
       "required": true,
       "tests": {
-        "case_ids": [],
-        "state": "unmapped"
+        "case_ids": [
+          "identifier-greek",
+          "identifier-combining",
+          "identifier-supplementary",
+          "identifier-join-control",
+          "identifier-dollar",
+          "error-keyword-property"
+        ],
+        "state": "partial"
       }
     },
     {
@@ -93806,7 +94968,9 @@
           "string-custom",
           "string-multiline",
           "string-interpolation",
-          "string-continuation"
+          "string-continuation",
+          "error-interpolation-empty",
+          "error-interpolation-first"
         ],
         "state": "partial"
       }
@@ -93859,7 +95023,11 @@
           "error-logical-left-and",
           "error-logical-left-or",
           "error-logical-right-and",
-          "error-logical-right-or"
+          "error-logical-right-or",
+          "power-one-infinity",
+          "power-negative-one-infinity",
+          "power-one-nan",
+          "error-string-subtract"
         ],
         "state": "partial"
       }
@@ -93877,7 +95045,11 @@
       "tests": {
         "case_ids": [
           "error-division-zero",
-          "error-overflow"
+          "error-overflow",
+          "error-float-div-zero",
+          "error-float-div-large",
+          "error-float-div-nonfinite",
+          "error-remainder-zero"
         ],
         "state": "partial"
       }
@@ -93927,7 +95099,8 @@
           "generated-alpha-rename-0-left",
           "generated-alpha-rename-0-right",
           "generated-alpha-rename-4-left",
-          "generated-alpha-rename-4-right"
+          "generated-alpha-rename-4-right",
+          "class-local-capture"
         ],
         "state": "partial"
       }
@@ -93945,7 +95118,18 @@
       "tests": {
         "case_ids": [
           "property-lazy",
-          "error-cycle"
+          "error-cycle",
+          "class-unused-undefined",
+          "class-unused-final-parent",
+          "alias-unused-missing",
+          "alias-unused-cycle",
+          "type-unused-missing",
+          "method-unused-missing-type",
+          "class-unused-missing-parent",
+          "class-unused-missing-type",
+          "error-class-forced-missing-type",
+          "class-unused-missing-method-type",
+          "error-class-forced-missing-method-type"
         ],
         "state": "partial"
       }
@@ -93989,14 +95173,22 @@
       "id": "semantic:classes",
       "implementation": {
         "links": [],
-        "state": "unimplemented"
+        "state": "partial"
       },
       "kind": "semantic-family",
       "reason": "A selected probe does not establish implementation or complete edge-case coverage.",
       "required": true,
       "tests": {
-        "case_ids": [],
-        "state": "unmapped"
+        "case_ids": [
+          "class-basic",
+          "class-inherited-method",
+          "class-inherited-property",
+          "class-contextual-new",
+          "error-class-unknown-member",
+          "error-class-final-parent",
+          "error-class-abstract-new"
+        ],
+        "state": "partial"
       }
     },
     {
@@ -94004,14 +95196,22 @@
       "id": "semantic:modifiers",
       "implementation": {
         "links": [],
-        "state": "unimplemented"
+        "state": "partial"
       },
       "kind": "semantic-family",
       "reason": "A selected probe does not establish implementation or complete edge-case coverage.",
       "required": true,
       "tests": {
-        "case_ids": [],
-        "state": "unmapped"
+        "case_ids": [
+          "error-class-nonconst-capture",
+          "class-const-capture",
+          "error-abstract-nullable",
+          "error-abstract-literal",
+          "error-duplicate-const-capture",
+          "error-abstract-method",
+          "class-unused-abstract-members"
+        ],
+        "state": "partial"
       }
     },
     {
@@ -94032,7 +95232,8 @@
           "generated-recursive-sum-1-left",
           "generated-recursive-sum-1-right",
           "generated-recursive-sum-5-left",
-          "generated-recursive-sum-5-right"
+          "generated-recursive-sum-5-right",
+          "error-unused-method-body"
         ],
         "state": "partial"
       }
@@ -94052,7 +95253,8 @@
           "let-basic",
           "closure-capture",
           "closure-shadow",
-          "closure-return"
+          "closure-return",
+          "class-closure-receiver"
         ],
         "state": "partial"
       }
@@ -94101,7 +95303,13 @@
         "case_ids": [
           "method-typed",
           "error-parameter-type",
-          "error-property-type"
+          "error-property-type",
+          "class-default-instance",
+          "error-class-member-type",
+          "error-class-inherited-type",
+          "typed-let",
+          "error-typed-let",
+          "error-named-class-type"
         ],
         "state": "partial"
       }
@@ -94111,14 +95319,21 @@
       "id": "semantic:type-aliases",
       "implementation": {
         "links": [],
-        "state": "unimplemented"
+        "state": "partial"
       },
       "kind": "semantic-family",
       "reason": "A selected probe does not establish implementation or complete edge-case coverage.",
       "required": true,
       "tests": {
-        "case_ids": [],
-        "state": "unmapped"
+        "case_ids": [
+          "alias-primitive",
+          "alias-class",
+          "alias-nullable-default",
+          "alias-literal-default",
+          "error-alias-property-type",
+          "error-alias-cyclic-forced"
+        ],
+        "state": "partial"
       }
     },
     {
@@ -94141,14 +95356,19 @@
       "id": "semantic:generics",
       "implementation": {
         "links": [],
-        "state": "unimplemented"
+        "state": "partial"
       },
       "kind": "semantic-family",
       "reason": "A selected probe does not establish implementation or complete edge-case coverage.",
       "required": true,
       "tests": {
-        "case_ids": [],
-        "state": "unmapped"
+        "case_ids": [
+          "alias-generic-nullable",
+          "alias-generic-union",
+          "alias-generic-identity-class",
+          "alias-generic-default"
+        ],
+        "state": "partial"
       }
     },
     {
@@ -94156,14 +95376,17 @@
       "id": "semantic:unions",
       "implementation": {
         "links": [],
-        "state": "unimplemented"
+        "state": "partial"
       },
       "kind": "semantic-family",
       "reason": "A selected probe does not establish implementation or complete edge-case coverage.",
       "required": true,
       "tests": {
-        "case_ids": [],
-        "state": "unmapped"
+        "case_ids": [
+          "alias-union-default",
+          "alias-nested-union-default"
+        ],
+        "state": "partial"
       }
     },
     {
@@ -94171,14 +95394,17 @@
       "id": "semantic:type-tests-casts",
       "implementation": {
         "links": [],
-        "state": "unimplemented"
+        "state": "partial"
       },
       "kind": "semantic-family",
       "reason": "A selected probe does not establish implementation or complete edge-case coverage.",
       "required": true,
       "tests": {
-        "case_ids": [],
-        "state": "unmapped"
+        "case_ids": [
+          "class-is-ancestor",
+          "class-as-ancestor"
+        ],
+        "state": "partial"
       }
     },
     {
@@ -94231,14 +95457,16 @@
       "id": "semantic:modules",
       "implementation": {
         "links": [],
-        "state": "unimplemented"
+        "state": "partial"
       },
       "kind": "semantic-family",
       "reason": "A selected probe does not establish implementation or complete edge-case coverage.",
       "required": true,
       "tests": {
-        "case_ids": [],
-        "state": "unmapped"
+        "case_ids": [
+          "module-basic"
+        ],
+        "state": "partial"
       }
     },
     {
@@ -94279,7 +95507,17 @@
           "error-logical-left-and",
           "error-logical-left-or",
           "error-logical-right-and",
-          "error-logical-right-or"
+          "error-logical-right-or",
+          "error-class-undefined",
+          "module-declared-name-error",
+          "error-source-lines-cr",
+          "error-source-lines-crlf",
+          "error-interpolation-empty",
+          "error-interpolation-first",
+          "error-named-range",
+          "error-range-before-syntax",
+          "error-named-duplicate",
+          "error-unused-method-body"
         ],
         "state": "partial"
       }
@@ -102792,6 +104030,6 @@
     "compatibility/regressions.json": "09c064f65730d30f72bf87a45c88d47ecc0844e57966a999dc8e759f083af3da",
     "compatibility/rev1-inventory.json": "6061f202ba3f04565efed3617ac69d3c2fadc54eec1f562b67a4758b3d0a8ab5",
     "references.lock": "278f48fd7697459281aa78a706c9ca57222f36a8c0785d838a6449fbaf26d30b",
-    "tests/fixtures/m2/cases.json": "f344c67f90b61db1344379b47ca0fd904d9d0258b64e6bf761a3695ee8e54144"
+    "tests/fixtures/m2/cases.json": "3c62535f0551aa60328d7f5a00a3439bf9880ddd5eacdd1fe575d41315a17af4"
   }
 }

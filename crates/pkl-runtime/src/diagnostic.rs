@@ -24,6 +24,12 @@ pub struct Diagnostic {
     pub message: String,
     /// Synthetic JVM underline width (not a source byte length), e.g. at EOF.
     pub highlight_length_utf16: Option<usize>,
+    /// Authored member path for delayed AST validation (e.g. `result` or `C.x`).
+    /// The evaluation boundary inserts `#` between the module and this path.
+    /// Syntax errors retain a module frame and leave this unset.
+    pub member: Option<Box<str>>,
+    /// Explicit module identity for AST validation after its header was parsed.
+    pub module_name: Option<Box<str>>,
     pub frames: Vec<LogicalFrame>,
 }
 
@@ -34,6 +40,8 @@ impl Diagnostic {
             span,
             message: message.into(),
             highlight_length_utf16: None,
+            member: None,
+            module_name: None,
             frames: Vec::new(),
         }
     }
@@ -90,10 +98,10 @@ fn render_frame(output: &mut String, frame: &RenderFrame<'_>) {
         return;
     };
     let line_start = text[..frame.span.start]
-        .rfind('\n')
+        .rfind(['\r', '\n'])
         .map_or(0, |index| index + 1);
     let line_end = text[line_start..]
-        .find('\n')
+        .find(['\r', '\n'])
         .map_or(text.len(), |index| line_start + index);
     let original = &text[line_start..line_end];
     let stripped = original.trim_matches(java_whitespace);

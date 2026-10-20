@@ -1,10 +1,10 @@
 //! Bounded, resumable bytecode candidate. This is an architecture experiment, not full Pkl.
 
-use std::collections::BTreeSet;
+use std::collections::{BTreeMap, BTreeSet};
 use std::sync::Arc;
 
 use crate::heap::{
-    CacheKey, Environment, Function, Heap, HeapStats, LazyState, Member, Object, Scope,
+    CacheKey, Class, Environment, Function, Heap, HeapStats, LazyState, Member, Object, Scope,
 };
 use crate::source::Span;
 use crate::value::{ErrorKind, ObjectId, RuntimeError, RuntimeFrame, Value};
@@ -26,6 +26,18 @@ pub enum Instruction {
     JumpIfNull(usize),
     GetMember(Arc<str>),
     GetMethod(Arc<str>),
+    GetConstMember(Arc<str>),
+    GetConstMethod(Arc<str>),
+    RequireConstProperty {
+        name: Arc<str>,
+        owner_depth: usize,
+        local: bool,
+        method: bool,
+    },
+    ResolveClassType {
+        name: Arc<str>,
+        local: bool,
+    },
     GetProperty {
         name: Arc<str>,
         owner_depth: usize,
@@ -38,6 +50,8 @@ pub enum Instruction {
     },
     GetSuperMember(Arc<str>),
     GetSuperMethod(Arc<str>),
+    GetConstSuperMember(Arc<str>),
+    GetConstSuperMethod(Arc<str>),
     MakeFunction {
         block: usize,
         arity: usize,
@@ -60,6 +74,22 @@ pub enum Instruction {
         or: bool,
     },
     JumpIfNotNull(usize),
+    MakeClass {
+        template: usize,
+        class: Class,
+        has_parent: bool,
+    },
+    MakeInstance {
+        template: usize,
+    },
+    DefaultClassInstance,
+    Undefined(Arc<str>),
+    AbstractMember {
+        name: Arc<str>,
+        method: bool,
+    },
+    Unsupported(Arc<str>),
+    Fail(RuntimeError),
     MakeObject {
         template: usize,
         has_parent: bool,
@@ -100,12 +130,19 @@ pub enum TypeCheck {
     String,
     Bytes,
     StringLiteral(Arc<str>),
+    Class {
+        id: usize,
+        name: Arc<str>,
+    },
     Nullable(Box<TypeCheck>),
-    Union(Vec<TypeCheck>),
+    Union {
+        types: Vec<TypeCheck>,
+        default: Option<usize>,
+    },
 }
 
 impl TypeCheck {
-    fn accepts(&self, value: &Value) -> bool {
+    fn accepts(&self, value: &Value, heap: &Heap) -> bool {
         match self {
             Self::Any => true,
             Self::Nothing => false,
@@ -117,11 +154,36 @@ impl TypeCheck {
             Self::Number => matches!(value, Value::Int(_) | Value::Float(_)),
             Self::String => matches!(value, Value::String(_)),
             Self::Bytes => matches!(value, Value::Bytes(_)),
+            Self::Class { id, .. } => {
+                let &Value::Object(mut object) = value else {
+                    return false;
+                };
+                let mut visited = BTreeSet::new();
+                loop {
+                    if !visited.insert(object) {
+                        return false;
+                    }
+                    let Ok(value) = heap.get(object) else {
+                        return false;
+                    };
+                    if value
+                        .class_definition
+                        .as_ref()
+                        .is_some_and(|class| class.id == *id)
+                    {
+                        return true;
+                    }
+                    let Some(parent) = value.parent else {
+                        return false;
+                    };
+                    object = parent;
+                }
+            }
             Self::StringLiteral(expected) => {
                 matches!(value, Value::String(actual) if actual == expected)
             }
-            Self::Nullable(inner) => matches!(value, Value::Null) || inner.accepts(value),
-            Self::Union(types) => types.iter().any(|ty| ty.accepts(value)),
+            Self::Nullable(inner) => matches!(value, Value::Null) || inner.accepts(value, heap),
+            Self::Union { types, .. } => types.iter().any(|ty| ty.accepts(value, heap)),
         }
     }
 }
@@ -137,6 +199,7 @@ pub struct BlockMetadata {
 
 #[derive(Clone, Debug)]
 pub struct Program {
+    pub module_name: Arc<str>,
     pub blocks: Vec<Vec<Instruction>>,
     pub metadata: Vec<BlockMetadata>,
     pub objects: Vec<Vec<Member>>,
@@ -146,6 +209,7 @@ pub struct Program {
 impl Program {
     pub fn new(blocks: Vec<Vec<Instruction>>) -> Self {
         Self {
+            module_name: Arc::from(""),
             metadata: vec![BlockMetadata::default(); blocks.len()],
             blocks,
             objects: Vec::new(),
@@ -174,6 +238,8 @@ struct Force {
     name: Arc<str>,
     cache: Option<CacheKey>,
     method: bool,
+    inherited_types: Vec<(TypeCheck, Span, Arc<str>)>,
+    skip_typecheck: bool,
 }
 
 struct Frame {
@@ -560,10 +626,15 @@ impl Vm {
                 && let Some(Some(span)) = metadata.spans.get(frame.pc.saturating_sub(1))
             {
                 error.frames.push(RuntimeFrame {
-                    span: *span,
+                    span: if error.frames.is_empty() {
+                        error.span.unwrap_or(*span)
+                    } else {
+                        *span
+                    },
                     member: metadata.member.clone(),
                 });
                 if frame.force.is_some()
+                    && frame.pc + 1 == self.program.blocks[frame.block].len()
                     && matches!(
                         self.program.blocks[frame.block].get(frame.pc.saturating_sub(1)),
                         Some(Instruction::CheckType(_))
@@ -702,6 +773,31 @@ impl Vm {
                 "experiment frame limit exceeded",
             ));
         }
+        let mut inherited_types = Vec::new();
+        if !local && !method {
+            let mut parent = self.heap.get(owner)?.parent;
+            let mut visited = BTreeSet::new();
+            while let Some(id) = parent {
+                if !visited.insert(id) {
+                    return Err(RuntimeError::new(ErrorKind::Cycle, "cyclic parent chain"));
+                }
+                let object = self.heap.get(id)?;
+                for inherited in object
+                    .members
+                    .iter()
+                    .filter(|member| member.name == name && !member.local && !member.method)
+                {
+                    if let (Some(ty), Some(span)) = (&inherited.ty, inherited.type_span) {
+                        let name = self.program.metadata.get(inherited.code).map_or_else(
+                            || inherited.name.clone(),
+                            |metadata| metadata.member.clone(),
+                        );
+                        inherited_types.push((ty.clone(), span, name));
+                    }
+                }
+                parent = object.parent;
+            }
+        }
         let mut environment = self.heap.get(owner)?.environment.clone();
         environment.scopes.insert(0, Scope { receiver, owner });
         if memoize {
@@ -723,8 +819,171 @@ impl Vm {
                 name,
                 cache: memoize.then_some(key),
                 method,
+                inherited_types,
+                skip_typecheck: !memoize && !method,
             }),
         });
+        Ok(())
+    }
+
+    fn require_const(
+        &self,
+        initial: ObjectId,
+        name: &str,
+        local: bool,
+        method: bool,
+    ) -> Result<(), RuntimeError> {
+        let mut owner = Some(initial);
+        let mut visited = BTreeSet::new();
+        while let Some(id) = owner {
+            if !visited.insert(id) {
+                return Err(RuntimeError::new(ErrorKind::Cycle, "cyclic parent chain"));
+            }
+            let object = self.heap.get(id)?;
+            if let Some(member) = object.members.iter().find(|member| {
+                member.name.as_ref() == name && member.local == local && member.method == method
+            }) {
+                if member.constant {
+                    return Ok(());
+                }
+                let (verb, kind, reference) = if method {
+                    ("call", "method", "reference this method")
+                } else {
+                    ("reference", "property", "reference this property")
+                };
+                let mut error = RuntimeError::new(
+                    ErrorKind::Type,
+                    format!("Cannot {verb} {kind} `{name}` from here because it is not `const`."),
+                );
+                error.hint = Some(format!(
+                    "To fix, do either of:\n1. Add modifier `const` to {kind} `{name}`\n2. Self-import this module, and {reference} from the import."
+                ));
+                return Err(error);
+            }
+            if local {
+                break;
+            }
+            owner = object.parent;
+        }
+        Ok(())
+    }
+
+    fn validate_const_overrides(
+        &self,
+        parent: ObjectId,
+        members: &[Member],
+    ) -> Result<(), RuntimeError> {
+        for member in members.iter().filter(|member| !member.local) {
+            let mut current = Some(parent);
+            let mut visited = BTreeSet::new();
+            while let Some(id) = current {
+                if !visited.insert(id) {
+                    return Err(RuntimeError::new(ErrorKind::Cycle, "cyclic parent chain"));
+                }
+                let object = self.heap.get(id)?;
+                if let Some(inherited) = object.members.iter().find(|inherited| {
+                    !inherited.local
+                        && inherited.method == member.method
+                        && inherited.name == member.name
+                }) {
+                    if inherited.constant && !member.method {
+                        return Err(RuntimeError::new(
+                            ErrorKind::Type,
+                            format!("Cannot assign to const property `{}`.", member.name),
+                        ));
+                    }
+                    if inherited.constant && member.method && !member.constant {
+                        return Err(RuntimeError::new(
+                            ErrorKind::Type,
+                            format!(
+                                "Method `{}` must be const because it overrides a const method.",
+                                member.name
+                            ),
+                        ));
+                    }
+                    break;
+                }
+                current = object.parent;
+            }
+        }
+        Ok(())
+    }
+
+    fn validate_object_members(
+        &self,
+        parent: ObjectId,
+        members: &[Member],
+    ) -> Result<(), RuntimeError> {
+        self.validate_const_overrides(parent, members)?;
+        let mut ancestor = Some(parent);
+        let mut declared = BTreeSet::new();
+        let mut property_names = Vec::new();
+        let mut class_name = None;
+        let mut visited = BTreeSet::new();
+        while let Some(id) = ancestor {
+            if !visited.insert(id) {
+                return Err(RuntimeError::new(ErrorKind::Cycle, "cyclic parent chain"));
+            }
+            let object = self.heap.get(id)?;
+            if class_name.is_none() {
+                class_name = object
+                    .class_definition
+                    .as_ref()
+                    .map(|class| class.name.clone());
+            }
+            property_names.extend(
+                object
+                    .members
+                    .iter()
+                    .filter(|member| !member.local && !member.method)
+                    .map(|member| member.name.to_string()),
+            );
+            declared.extend(
+                object
+                    .members
+                    .iter()
+                    .filter(|member| !member.local)
+                    .map(|member| (member.name.clone(), member.method)),
+            );
+            ancestor = object.parent;
+        }
+        if let Some(class_name) = class_name {
+            for member in members.iter().filter(|member| !member.local) {
+                if !declared.contains(&(member.name.clone(), member.method)) {
+                    let mut error = RuntimeError::new(
+                        ErrorKind::MissingMember,
+                        format!(
+                            "Cannot find property `{}` in object of type `{}#{class_name}`.",
+                            member.name, self.program.module_name
+                        ),
+                    );
+                    error.span = self
+                        .program
+                        .metadata
+                        .get(member.code)
+                        .and_then(|metadata| metadata.declaration);
+                    error.hint = crate::diagnostic::property_suggestions(
+                        &member.name,
+                        property_names.clone(),
+                        false,
+                    )
+                    .or_else(|| {
+                        let mut names = property_names.clone();
+                        names.sort_by(|left, right| left.encode_utf16().cmp(right.encode_utf16()));
+                        names.dedup();
+                        Some(format!(
+                            "Available properties:\n{}",
+                            if names.is_empty() {
+                                "(none)".into()
+                            } else {
+                                names.join("\n")
+                            }
+                        ))
+                    });
+                    return Err(error);
+                }
+            }
+        }
         Ok(())
     }
 
@@ -803,7 +1062,11 @@ impl Vm {
             Instruction::Throw => {
                 let value = self.pop()?;
                 let Value::String(message) = value else {
-                    return Err(type_error(&TypeCheck::String, &value));
+                    return Err(type_error(
+                        &TypeCheck::String,
+                        &value,
+                        &self.program.module_name,
+                    ));
                 };
                 return Err(RuntimeError::new(ErrorKind::Type, message.as_ref()));
             }
@@ -813,20 +1076,47 @@ impl Vm {
             }
             Instruction::TestType(ty) => {
                 let value = self.pop()?;
-                self.stack.push(Value::Bool(ty.accepts(&value)));
+                self.stack.push(Value::Bool(ty.accepts(&value, &self.heap)));
             }
             Instruction::JumpIfNull(target) => {
                 if matches!(self.pop()?, Value::Null) {
                     self.jump(target)?;
                 }
             }
-            Instruction::GetMember(ref name) | Instruction::GetMethod(ref name) => {
-                let method = matches!(instruction, Instruction::GetMethod(_));
+            Instruction::RequireConstProperty {
+                name,
+                owner_depth,
+                local,
+                method,
+            } => {
+                let scope = self.scope(owner_depth)?;
+                self.require_const(
+                    if local { scope.owner } else { scope.receiver },
+                    &name,
+                    local,
+                    method,
+                )?;
+            }
+            Instruction::GetMember(ref name)
+            | Instruction::GetMethod(ref name)
+            | Instruction::GetConstMember(ref name)
+            | Instruction::GetConstMethod(ref name) => {
+                let method = matches!(
+                    instruction,
+                    Instruction::GetMethod(_) | Instruction::GetConstMethod(_)
+                );
+                let needs_const = matches!(
+                    instruction,
+                    Instruction::GetConstMember(_) | Instruction::GetConstMethod(_)
+                );
                 let receiver = self.pop()?;
                 if matches!(receiver, Value::Function(_)) && method && name.as_ref() == "apply" {
                     self.stack.push(receiver);
                 } else {
                     let receiver = receiver.as_object()?;
+                    if needs_const {
+                        self.require_const(receiver, name, false, method)?;
+                    }
                     self.force(receiver, receiver, name.clone(), false, true, method)?;
                 }
             }
@@ -851,14 +1141,185 @@ impl Vm {
                     method,
                 )?;
             }
-            Instruction::GetSuperMember(ref name) | Instruction::GetSuperMethod(ref name) => {
-                let method = matches!(instruction, Instruction::GetSuperMethod(_));
+            Instruction::GetSuperMember(ref name)
+            | Instruction::GetSuperMethod(ref name)
+            | Instruction::GetConstSuperMember(ref name)
+            | Instruction::GetConstSuperMethod(ref name) => {
+                let method = matches!(
+                    instruction,
+                    Instruction::GetSuperMethod(_) | Instruction::GetConstSuperMethod(_)
+                );
                 let scope = self.scope(0)?;
                 let parent = self.heap.get(scope.owner)?.parent.ok_or_else(|| {
                     RuntimeError::new(ErrorKind::MissingMember, "super has no parent")
                 })?;
+                if matches!(
+                    instruction,
+                    Instruction::GetConstSuperMember(_) | Instruction::GetConstSuperMethod(_)
+                ) {
+                    self.require_const(parent, name, false, method)?;
+                }
                 // Java ReadSuperPropertyNode deliberately does not memoize super calls.
                 self.force(scope.receiver, parent, name.clone(), false, false, method)?;
+            }
+            Instruction::Fail(error) => return Err(error),
+            Instruction::ResolveClassType { name, local } => {
+                let frame = self.frames.last().expect("active frame");
+                let module = match frame.environment.scopes.last() {
+                    Some(scope) => scope.receiver,
+                    None => self
+                        .stack
+                        .last()
+                        .ok_or_else(|| invalid("missing module for type resolution"))?
+                        .as_object()?,
+                };
+                // ClassNode publishes a partially initialized singleton before resolving
+                // property types. A type-only back edge is therefore valid.
+                if self.frames.iter().any(|frame| {
+                    frame.force.as_ref().is_some_and(|force| {
+                        force.receiver == module && force.name == name && !force.method
+                    })
+                }) {
+                    self.stack.push(Value::Null);
+                } else {
+                    self.force(module, module, name, local, true, false)?;
+                }
+            }
+            Instruction::Undefined(name) => {
+                return Err(RuntimeError::new(
+                    ErrorKind::MissingMember,
+                    format!("Tried to read property `{name}` but its value is undefined."),
+                ));
+            }
+            Instruction::AbstractMember { name, method } => {
+                let kind = if method { "method" } else { "property" };
+                return Err(RuntimeError::new(
+                    ErrorKind::Type,
+                    format!(
+                        "Cannot invoke abstract {kind} `{}{name}`.",
+                        self.program.module_name
+                    ),
+                ));
+            }
+            Instruction::Unsupported(message) => {
+                return Err(RuntimeError::new(ErrorKind::Unsupported, message.as_ref()));
+            }
+            Instruction::MakeClass {
+                template,
+                class,
+                has_parent,
+            } => {
+                let parent = if has_parent {
+                    let Value::Class(id) = self.pop()? else {
+                        return Err(RuntimeError::new(
+                            ErrorKind::Type,
+                            "Superclass must be a class.",
+                        ));
+                    };
+                    let parent_class = self
+                        .heap
+                        .get(id)?
+                        .class_definition
+                        .as_ref()
+                        .ok_or_else(|| invalid("invalid class handle"))?;
+                    if !parent_class.open && !parent_class.abstract_ {
+                        let mut error = RuntimeError::new(
+                            ErrorKind::Type,
+                            format!(
+                                "Cannot extend non-open class `{}#{}`.",
+                                self.program.module_name, parent_class.name
+                            ),
+                        );
+                        error.hint = Some("By default, classes are closed for extension.\nTo make a class extensible, add an `open` modifier: `open class MyClass { ... }`".into());
+                        return Err(error);
+                    }
+                    Some(id)
+                } else {
+                    None
+                };
+                let members = self
+                    .program
+                    .objects
+                    .get(template)
+                    .ok_or_else(|| invalid("invalid class template"))?
+                    .clone();
+                if let Some(parent) = parent {
+                    self.validate_const_overrides(parent, &members)?;
+                }
+                let environment = self
+                    .frames
+                    .last()
+                    .expect("active frame")
+                    .environment
+                    .clone();
+                let id = self.heap.allocate(Object {
+                    class_definition: Some(class),
+                    parent,
+                    members,
+                    environment,
+                    ..Object::default()
+                });
+                self.stack.push(Value::Class(id));
+            }
+            Instruction::MakeInstance { template } => {
+                let Value::Class(parent) = self.pop()? else {
+                    return Err(RuntimeError::new(ErrorKind::Type, "Expected a class."));
+                };
+                let class = self
+                    .heap
+                    .get(parent)?
+                    .class_definition
+                    .as_ref()
+                    .ok_or_else(|| invalid("invalid class handle"))?;
+                if class.abstract_ {
+                    let mut error = RuntimeError::new(
+                        ErrorKind::Type,
+                        format!(
+                            "Cannot instantiate abstract class `{}#{}`.",
+                            self.program.module_name, class.name
+                        ),
+                    );
+                    error.hint = Some("Abstract classes cannot be instantiated.\nInstead, instantiate a concrete subclass.".into());
+                    return Err(error);
+                }
+                let members = self
+                    .program
+                    .objects
+                    .get(template)
+                    .ok_or_else(|| invalid("invalid instance template"))?
+                    .clone();
+                self.validate_object_members(parent, &members)?;
+                let environment = self
+                    .frames
+                    .last()
+                    .expect("active frame")
+                    .environment
+                    .clone();
+                let id = self.heap.allocate(Object {
+                    parent: Some(parent),
+                    members,
+                    environment,
+                    ..Object::default()
+                });
+                self.stack.push(Value::Object(id));
+            }
+            Instruction::DefaultClassInstance => {
+                let Value::Class(id) = self.pop()? else {
+                    return Err(RuntimeError::new(ErrorKind::Type, "Expected a class."));
+                };
+                if self
+                    .heap
+                    .get(id)?
+                    .class_definition
+                    .as_ref()
+                    .is_none_or(|class| class.abstract_)
+                {
+                    return Err(RuntimeError::new(
+                        ErrorKind::Type,
+                        "Abstract class has no default value.",
+                    ));
+                }
+                self.stack.push(Value::Object(id));
             }
             Instruction::MakeObject {
                 template,
@@ -878,6 +1339,9 @@ impl Vm {
                     .get(template)
                     .ok_or_else(|| invalid("invalid object template"))?
                     .clone();
+                if let Some(parent) = parent {
+                    self.validate_object_members(parent, &members)?;
+                }
                 let environment = self
                     .frames
                     .last()
@@ -973,9 +1437,18 @@ impl Vm {
                 });
             }
             Instruction::CheckType(ty) => {
+                let frame = self.frames.last().expect("active frame");
+                if frame.pc + 1 == self.program.blocks[frame.block].len()
+                    && frame
+                        .force
+                        .as_ref()
+                        .is_some_and(|force| force.skip_typecheck)
+                {
+                    return Ok(());
+                }
                 let value = self.pop()?;
-                if !ty.accepts(&value) {
-                    return Err(type_error(&ty, &value));
+                if !ty.accepts(&value, &self.heap) {
+                    return Err(type_error(&ty, &value, &self.program.module_name));
                 }
                 self.stack.push(value);
             }
@@ -1074,7 +1547,13 @@ impl Vm {
             Instruction::JumpIfFalse(target) => match self.pop()? {
                 Value::Bool(false) => self.jump(target)?,
                 Value::Bool(true) => {}
-                value => return Err(type_error(&TypeCheck::Boolean, &value)),
+                value => {
+                    return Err(type_error(
+                        &TypeCheck::Boolean,
+                        &value,
+                        &self.program.module_name,
+                    ));
+                }
             },
             Instruction::ReadResource => {
                 let Value::String(uri) = self.pop()? else {
@@ -1095,6 +1574,31 @@ impl Vm {
                     return Err(invalid("unbalanced return stack"));
                 }
                 let value = self.pop()?;
+                if let Some(force) = &self.frames.last().expect("active frame").force {
+                    for (ty, span, member) in &force.inherited_types {
+                        if force.skip_typecheck {
+                            break;
+                        }
+                        if !ty.accepts(&value, &self.heap) {
+                            let mut error =
+                                type_error(ty, &value, &self.program.module_name).at(*span);
+                            error.frames.push(RuntimeFrame {
+                                span: *span,
+                                member: member.clone(),
+                            });
+                            let frame = self.frames.last().expect("active frame");
+                            if let Some(metadata) = self.program.metadata.get(frame.block)
+                                && let Some(span) = metadata.value_span
+                            {
+                                error.frames.push(RuntimeFrame {
+                                    span,
+                                    member: metadata.member.clone(),
+                                });
+                            }
+                            return Err(error);
+                        }
+                    }
+                }
                 let frame = self.frames.pop().expect("active frame");
                 if let Some(force) = frame.force
                     && let Some(key) = force.cache
@@ -1174,7 +1678,7 @@ fn binary(instruction: &Instruction, left: Value, right: Value) -> Result<Value,
                 Value::Int(crate::numeric::remainder(left, right).map_err(numeric_error)?)
             }
             Instruction::Power if right >= 0 => Value::Int(integer_power(left, right as u64)?),
-            Instruction::Power => Value::Float(libm::pow(left as f64, right as f64)),
+            Instruction::Power => Value::Float(float_power(left as f64, right as f64)),
             _ => return Err(invalid("invalid binary instruction")),
         }),
         (Value::String(left), Value::String(right)) if matches!(instruction, Instruction::Add) => {
@@ -1188,9 +1692,10 @@ fn binary(instruction: &Instruction, left: Value, right: Value) -> Result<Value,
                 Instruction::Greater => order.is_gt(),
                 Instruction::GreaterEqual => order.is_ge(),
                 _ => {
-                    return Err(RuntimeError::new(
-                        ErrorKind::Type,
-                        "unsupported binary operand types",
+                    return Err(binary_error(
+                        operator_name(instruction),
+                        &Value::String(left),
+                        &Value::String(right),
                     ));
                 }
             }))
@@ -1213,7 +1718,7 @@ fn float_binary(instruction: &Instruction, left: f64, right: f64) -> Result<Valu
         Instruction::Greater => Value::Bool(left > right),
         Instruction::GreaterEqual => Value::Bool(left >= right),
         Instruction::Remainder => Value::Float(left % right),
-        Instruction::Power => Value::Float(libm::pow(left, right)),
+        Instruction::Power => Value::Float(float_power(left, right)),
         Instruction::IntegerDivide => {
             let result = (left / right).trunc();
             if !result.is_finite()
@@ -1221,7 +1726,17 @@ fn float_binary(instruction: &Instruction, left: f64, right: f64) -> Result<Valu
             {
                 return Err(RuntimeError::new(
                     ErrorKind::Arithmetic,
-                    "cannot convert quotient to Int",
+                    if left.is_finite() {
+                        format!(
+                            "Cannot convert Float `{}` to Int because it is too large.",
+                            crate::numeric::double_to_string(left)
+                        )
+                    } else {
+                        format!(
+                            "Cannot convert non-finite Float `{}` to Int.",
+                            crate::numeric::double_to_string(left)
+                        )
+                    },
                 ));
             }
             Value::Int(result as i64)
@@ -1275,22 +1790,37 @@ pub fn compile_module_with_options(
     resolved: &crate::resolver::ResolvedModule,
     options: CompileOptions,
 ) -> Result<Arc<Program>, RuntimeError> {
+    if let Some(declaration) = &resolved.module.declaration
+        && (declaration.parent.is_some() || !declaration.modifiers.is_empty())
+    {
+        return Err(unsupported_type("module inheritance and modifiers").at(declaration.span));
+    }
     let mut compiler = Compiler {
         resolved,
         program: Program::new(Vec::new()),
         options,
         member: String::new(),
+        type_scopes: Vec::new(),
+        modifiers: Vec::new(),
     };
+    compiler.program.module_name = Arc::from(
+        resolved
+            .module
+            .declaration
+            .as_ref()
+            .and_then(|declaration| declaration.name.as_ref())
+            .map(|parts| parts.join("."))
+            .unwrap_or_default(),
+    );
     let template = compiler.object(&resolved.module.members)?;
-    compiler.program.entry = compiler.program.blocks.len();
-    compiler.program.blocks.push(vec![
-        Instruction::MakeObject {
-            template,
-            has_parent: false,
-        },
-        Instruction::Return,
-    ]);
-    compiler.program.metadata.push(BlockMetadata::default());
+    let mut entry = Code::default();
+    entry.push(Instruction::MakeObject {
+        template,
+        has_parent: false,
+    });
+    compiler.initialize_member_types(&resolved.module.members, &mut entry)?;
+    entry.push(Instruction::Return);
+    compiler.program.entry = compiler.block(entry, None);
     Ok(Arc::new(compiler.program))
 }
 
@@ -1326,12 +1856,18 @@ struct Compiler<'a> {
     program: Program,
     options: CompileOptions,
     member: String,
+    type_scopes: Vec<Vec<crate::syntax::Member>>,
+    modifiers: Vec<crate::syntax::Modifier>,
 }
 
 impl Compiler<'_> {
     fn object(&mut self, members: &[crate::syntax::Member]) -> Result<usize, RuntimeError> {
+        self.type_scopes.push(members.to_vec());
         let mut result = Vec::new();
         for member in members {
+            let previous_modifiers =
+                std::mem::replace(&mut self.modifiers, member.modifiers.clone());
+            self.validate_modifiers(member)?;
             let previous_member = self.member.clone();
             self.member = if previous_member.is_empty() {
                 format!("#{}", member.name)
@@ -1339,19 +1875,66 @@ impl Compiler<'_> {
                 format!("{previous_member}.{}", member.name)
             };
             let mut instructions = Code::default();
-            self.expression(&member.expr, &mut instructions)?;
+            if matches!(member.expr.kind, crate::syntax::ExprKind::Uninitialized) {
+                self.default_property(member, &mut instructions)?;
+            } else if let crate::syntax::ExprKind::Object {
+                parent: None,
+                members,
+            } = &member.expr.kind
+                && let Some(ty) = &member.ty
+                && matches!(self.compile_type(ty)?, TypeCheck::Class { .. })
+            {
+                self.class_expression(
+                    ty,
+                    &mut instructions,
+                    self.type_scopes.len(),
+                    &mut BTreeSet::new(),
+                )?;
+                let template = self.object(members)?;
+                instructions.push_at(Instruction::MakeInstance { template }, ty.span);
+                self.initialize_member_types(members, &mut instructions)?;
+            } else {
+                self.expression(&member.expr, &mut instructions)?;
+            }
             if let Some(ty) = &member.ty {
-                instructions.push_at(Instruction::CheckType(compile_type(ty)?), ty.span);
+                instructions.push_at(
+                    Instruction::CheckType(self.compile_type(ty)?),
+                    self.type_source_span(ty),
+                );
             }
             instructions.push(Instruction::Return);
             let code = self.program.blocks.len();
-            self.block(instructions, Some(member.span));
+            let header_span = Span::new(
+                member.span.start,
+                member
+                    .ty
+                    .as_ref()
+                    .map_or(member.name_span.end, |ty| ty.span.end),
+            );
+            self.block(instructions, Some(header_span));
             self.program.metadata[code].value_span = Some(member.expr.span);
             self.member = previous_member;
+            self.modifiers = previous_modifiers;
             result.push(Member {
                 name: Arc::from(member.name.as_str()),
                 code,
-                local: member.local,
+                local: crate::syntax::modifier_flags(&member.modifiers)
+                    & crate::syntax::ModifierKind::Local.flag()
+                    != 0,
+                ty: member
+                    .ty
+                    .as_ref()
+                    .map(|ty| self.compile_type(ty))
+                    .transpose()?,
+                type_span: member.ty.as_ref().map(|ty| self.type_source_span(ty)),
+                constant: crate::syntax::modifier_flags(&member.modifiers)
+                    & crate::syntax::ModifierKind::Const.flag()
+                    != 0
+                    || matches!(
+                        member.expr.kind,
+                        crate::syntax::ExprKind::Class { .. }
+                            | crate::syntax::ExprKind::TypeAlias { .. }
+                    ),
                 method: matches!(
                     member.expr.kind,
                     crate::syntax::ExprKind::Function { method: true, .. }
@@ -1360,6 +1943,7 @@ impl Compiler<'_> {
         }
         let index = self.program.objects.len();
         self.program.objects.push(result);
+        self.type_scopes.pop();
         Ok(index)
     }
 
@@ -1399,6 +1983,100 @@ impl Compiler<'_> {
         use crate::resolver::Binding;
         use crate::syntax::{BinaryOp, ExprKind};
         match &expression.kind {
+            ExprKind::Class {
+                type_parameters,
+                superclass,
+                members,
+                ..
+            } => {
+                if !type_parameters.is_empty() {
+                    return Err(unsupported_type("generic classes"));
+                }
+                if let Some(parent) = superclass
+                    && let Err(error) = self.class_expression(
+                        parent,
+                        output,
+                        self.type_scopes.len(),
+                        &mut BTreeSet::new(),
+                    )
+                {
+                    output.push_at(Instruction::Fail(error.at(parent.span)), parent.span);
+                    return Ok(());
+                }
+                let class = Class {
+                    id: expression.span.start,
+                    name: Arc::from(self.member.trim_start_matches('#')),
+                    open: crate::syntax::modifier_flags(&self.modifiers)
+                        & crate::syntax::ModifierKind::Open.flag()
+                        != 0,
+                    abstract_: crate::syntax::modifier_flags(&self.modifiers)
+                        & crate::syntax::ModifierKind::Abstract.flag()
+                        != 0,
+                };
+                // Class definitions are forced lazily, including their member type resolution.
+                let checkpoint = (
+                    self.program.blocks.len(),
+                    self.program.metadata.len(),
+                    self.program.objects.len(),
+                    self.type_scopes.len(),
+                    self.member.clone(),
+                    self.modifiers.clone(),
+                );
+                let template = match self.object(members) {
+                    Ok(template) => template,
+                    Err(error) => {
+                        self.program.blocks.truncate(checkpoint.0);
+                        self.program.metadata.truncate(checkpoint.1);
+                        self.program.objects.truncate(checkpoint.2);
+                        self.type_scopes.truncate(checkpoint.3);
+                        self.member = checkpoint.4;
+                        self.modifiers = checkpoint.5;
+                        let span = error.span.unwrap_or(expression.span);
+                        output.push_at(Instruction::Fail(error.at(span)), span);
+                        return Ok(());
+                    }
+                };
+                output.push_at(
+                    Instruction::MakeClass {
+                        template,
+                        class,
+                        has_parent: superclass.is_some(),
+                    },
+                    superclass.as_ref().map_or(expression.span, |ty| ty.span),
+                );
+                self.initialize_member_types(members, output)?;
+            }
+            ExprKind::TypeAlias { .. } => {
+                // Declarations are lazy. Expand only when a type annotation or constructor uses the alias.
+                output.push(Instruction::Unsupported(Arc::from(
+                    "type alias values and reflection are not implemented",
+                )));
+            }
+            ExprKind::New { ty, members } => {
+                if matches!(&ty.kind, crate::syntax::TypeKind::Named { path, arguments } if path == &["Dynamic"] && arguments.is_empty() && self.find_type("Dynamic", self.type_scopes.len()).is_none())
+                {
+                    let template = self.object(members)?;
+                    output.push(Instruction::MakeObject {
+                        template,
+                        has_parent: false,
+                    });
+                    self.initialize_member_types(members, output)?;
+                } else {
+                    self.class_expression(
+                        ty,
+                        output,
+                        self.type_scopes.len(),
+                        &mut BTreeSet::new(),
+                    )?;
+                    let template = self.object(members)?;
+                    output.push_at(Instruction::MakeInstance { template }, ty.span);
+                    self.initialize_member_types(members, output)?;
+                }
+            }
+            ExprKind::Uninitialized => output.push(Instruction::AbstractMember {
+                name: Arc::from(self.member.as_str()),
+                method: true,
+            }),
             ExprKind::Int(value) => output.push(Instruction::Constant(Value::Int(*value))),
             ExprKind::Float(value) => output.push(Instruction::Constant(Value::Float(*value))),
             ExprKind::Null => output.push(Instruction::Constant(Value::Null)),
@@ -1426,19 +2104,29 @@ impl Compiler<'_> {
                 output.push(Instruction::Throw);
             }
             ExprKind::TypeCheck { value, ty } => {
+                let Some(check) = self.resolve_expression_type(ty, output) else {
+                    return Ok(());
+                };
                 self.expression(value, output)?;
-                output.push(Instruction::TestType(compile_type(ty)?));
+                output.push(Instruction::TestType(check));
             }
             ExprKind::TypeCast { value, ty } => {
+                let Some(check) = self.resolve_expression_type(ty, output) else {
+                    return Ok(());
+                };
                 self.expression(value, output)?;
-                output.push_at(Instruction::CheckType(compile_type(ty)?), ty.span);
+                output.push_at(Instruction::CheckType(check), self.type_source_span(ty));
             }
             ExprKind::NullableMember(receiver, name) => {
                 self.expression(receiver, output)?;
                 output.push(Instruction::Duplicate);
                 let branch = output.len();
                 output.push(Instruction::JumpIfNull(0));
-                output.push(Instruction::GetMember(Arc::from(name.as_str())));
+                output.push(if self.resolved.const_names.contains(&expression.span) {
+                    Instruction::GetConstMember(Arc::from(name.as_str()))
+                } else {
+                    Instruction::GetMember(Arc::from(name.as_str()))
+                });
                 output[branch] = Instruction::JumpIfNull(output.len());
             }
             ExprKind::Super => {
@@ -1448,6 +2136,26 @@ impl Compiler<'_> {
                 ));
             }
             ExprKind::Name(name) => {
+                if self.resolved.const_names.contains(&expression.span) {
+                    let (owner_depth, local, method) =
+                        match self.resolved.names.get(&expression.span) {
+                            Some(Binding::Property { owner_depth, local }) => {
+                                (*owner_depth, *local, false)
+                            }
+                            Some(Binding::Method { owner_depth, local }) => {
+                                (*owner_depth, *local, true)
+                            }
+                            Some(Binding::ImplicitThis) => (0, false, false),
+                            Some(Binding::ImplicitMethod) => (0, false, true),
+                            _ => return Err(invalid("invalid const member binding")),
+                        };
+                    output.push(Instruction::RequireConstProperty {
+                        name: Arc::from(name.as_str()),
+                        owner_depth,
+                        local,
+                        method,
+                    });
+                }
                 let name = Arc::from(name.as_str());
                 match self
                     .resolved
@@ -1487,10 +2195,18 @@ impl Compiler<'_> {
             }
             ExprKind::Member(receiver, name) => {
                 if matches!(receiver.kind, ExprKind::Super) {
-                    output.push(Instruction::GetSuperMember(Arc::from(name.as_str())));
+                    output.push(if self.resolved.const_names.contains(&expression.span) {
+                        Instruction::GetConstSuperMember(Arc::from(name.as_str()))
+                    } else {
+                        Instruction::GetSuperMember(Arc::from(name.as_str()))
+                    });
                 } else {
                     self.expression(receiver, output)?;
-                    output.push(Instruction::GetMember(Arc::from(name.as_str())));
+                    output.push(if self.resolved.const_names.contains(&expression.span) {
+                        Instruction::GetConstMember(Arc::from(name.as_str()))
+                    } else {
+                        Instruction::GetMember(Arc::from(name.as_str()))
+                    });
                 }
             }
             ExprKind::Unary { op, operand } => {
@@ -1521,18 +2237,39 @@ impl Compiler<'_> {
                 body,
                 method,
                 header_span,
+                type_parameters,
             } => {
+                if !type_parameters.is_empty() {
+                    return Err(unsupported_type("generic methods"));
+                }
+                if !method {
+                    for ty in parameters
+                        .iter()
+                        .filter_map(|parameter| parameter.ty.as_ref())
+                        .chain(return_type.iter())
+                    {
+                        if self.resolve_expression_type(ty, output).is_none() {
+                            return Ok(());
+                        }
+                    }
+                }
                 let mut instructions = Code::default();
                 for (index, parameter) in parameters.iter().enumerate() {
                     if let Some(ty) = &parameter.ty {
                         instructions.push(Instruction::LoadLocal(parameters.len() - 1 - index));
-                        instructions.push_at(Instruction::CheckType(compile_type(ty)?), ty.span);
+                        instructions.push_at(
+                            Instruction::CheckType(self.compile_type(ty)?),
+                            self.type_source_span(ty),
+                        );
                         instructions.push(Instruction::Pop);
                     }
                 }
                 self.expression(body, &mut instructions)?;
                 if let Some(ty) = return_type {
-                    instructions.push_at(Instruction::CheckType(compile_type(ty)?), ty.span);
+                    instructions.push_at(
+                        Instruction::CheckType(self.compile_type(ty)?),
+                        self.type_source_span(ty),
+                    );
                 }
                 instructions.push(Instruction::Return);
                 let block = self.block(instructions, Some(*header_span));
@@ -1562,14 +2299,26 @@ impl Compiler<'_> {
                     output.push(Instruction::Duplicate);
                     nullable_branch = Some(output.len());
                     output.push(Instruction::JumpIfNull(0));
-                    output.push(Instruction::GetMethod(Arc::from(name.as_str())));
+                    output.push(if self.resolved.const_names.contains(&callee.span) {
+                        Instruction::GetConstMethod(Arc::from(name.as_str()))
+                    } else {
+                        Instruction::GetMethod(Arc::from(name.as_str()))
+                    });
                     name != "apply"
                 } else if let ExprKind::Member(receiver, name) = &callee.kind {
                     if matches!(receiver.kind, ExprKind::Super) {
-                        output.push(Instruction::GetSuperMethod(Arc::from(name.as_str())));
+                        output.push(if self.resolved.const_names.contains(&callee.span) {
+                            Instruction::GetConstSuperMethod(Arc::from(name.as_str()))
+                        } else {
+                            Instruction::GetSuperMethod(Arc::from(name.as_str()))
+                        });
                     } else {
                         self.expression(receiver, output)?;
-                        output.push(Instruction::GetMethod(Arc::from(name.as_str())));
+                        output.push(if self.resolved.const_names.contains(&callee.span) {
+                            Instruction::GetConstMethod(Arc::from(name.as_str()))
+                        } else {
+                            Instruction::GetMethod(Arc::from(name.as_str()))
+                        });
                     }
                     name != "apply"
                 } else {
@@ -1642,8 +2391,16 @@ impl Compiler<'_> {
                     });
                 }
             }
-            ExprKind::Let { value, body, .. } => {
+            ExprKind::Let {
+                value, body, ty, ..
+            } => {
                 self.expression(value, output)?;
+                if let Some(ty) = ty {
+                    let Some(check) = self.resolve_expression_type(ty, output) else {
+                        return Ok(());
+                    };
+                    output.push_at(Instruction::CheckType(check), self.type_source_span(ty));
+                }
                 output.push(Instruction::PushLocal);
                 self.expression(body, output)?;
                 output.push(Instruction::PopLocal);
@@ -1657,48 +2414,11 @@ impl Compiler<'_> {
                     template,
                     has_parent: parent.is_some(),
                 });
+                self.initialize_member_types(members, output)?;
             }
         }
         Ok(())
     }
-}
-
-fn compile_type(ty: &crate::syntax::Type) -> Result<TypeCheck, RuntimeError> {
-    use crate::syntax::TypeKind;
-    Ok(match &ty.kind {
-        TypeKind::Unknown => TypeCheck::Any,
-        TypeKind::Nothing => TypeCheck::Nothing,
-        TypeKind::String(value) => TypeCheck::StringLiteral(Arc::from(value.as_str())),
-        TypeKind::Nullable(inner) => TypeCheck::Nullable(Box::new(compile_type(inner)?)),
-        TypeKind::Union { types, .. } => {
-            TypeCheck::Union(types.iter().map(compile_type).collect::<Result<_, _>>()?)
-        }
-        TypeKind::Named { path, arguments } if path.len() == 1 && arguments.is_empty() => {
-            match path[0].as_str() {
-                "Any" => TypeCheck::Any,
-                "NonNull" => TypeCheck::NonNull,
-                "Null" => TypeCheck::Null,
-                "Boolean" => TypeCheck::Boolean,
-                "Int" => TypeCheck::Int,
-                "Float" => TypeCheck::Float,
-                "Number" => TypeCheck::Number,
-                "String" => TypeCheck::String,
-                "Bytes" => TypeCheck::Bytes,
-                _ => {
-                    return Err(RuntimeError::new(
-                        ErrorKind::Unsupported,
-                        format!("type {} is not implemented", path[0]),
-                    ));
-                }
-            }
-        }
-        _ => {
-            return Err(RuntimeError::new(
-                ErrorKind::Unsupported,
-                "this type requires runtime support that is not implemented",
-            ));
-        }
-    })
 }
 
 fn scalar_string(value: &Value) -> Result<String, RuntimeError> {
@@ -1717,8 +2437,8 @@ fn scalar_string(value: &Value) -> Result<String, RuntimeError> {
     })
 }
 
-fn type_error(expected: &TypeCheck, actual: &Value) -> RuntimeError {
-    let expected = type_name(expected);
+fn type_error(expected: &TypeCheck, actual: &Value, module: &str) -> RuntimeError {
+    let expected = type_name(expected, module);
     let actual_type = match actual {
         Value::Null => "Null",
         Value::Bool(_) => "Boolean",
@@ -1728,6 +2448,7 @@ fn type_error(expected: &TypeCheck, actual: &Value) -> RuntimeError {
         Value::Bytes(_) => "Bytes",
         Value::Object(_) => "Dynamic",
         Value::Function(_) => "Function",
+        Value::Class(_) => "Class",
     };
     let value = match actual {
         Value::String(value) => format!("{value:?}"),
@@ -1741,11 +2462,16 @@ fn type_error(expected: &TypeCheck, actual: &Value) -> RuntimeError {
     )
 }
 
-fn type_name(ty: &TypeCheck) -> String {
+fn type_name(ty: &TypeCheck, module: &str) -> String {
     match ty {
+        TypeCheck::Class { name, .. } => format!("{module}#{name}"),
         TypeCheck::StringLiteral(value) => format!("{value:?}"),
-        TypeCheck::Nullable(inner) => format!("{}?", type_name(inner)),
-        TypeCheck::Union(types) => types.iter().map(type_name).collect::<Vec<_>>().join("|"),
+        TypeCheck::Nullable(inner) => format!("{}?", type_name(inner, module)),
+        TypeCheck::Union { types, .. } => types
+            .iter()
+            .map(|ty| type_name(ty, module))
+            .collect::<Vec<_>>()
+            .join("|"),
         _ => format!("{ty:?}"),
     }
 }
@@ -1760,6 +2486,7 @@ fn value_type_name(value: &Value) -> &'static str {
         Value::Bytes(_) => "Bytes",
         Value::Object(_) => "Dynamic",
         Value::Function(_) => "Function",
+        Value::Class(_) => "Class",
     }
 }
 
@@ -1808,5 +2535,455 @@ fn operator_name(instruction: &Instruction) -> &'static str {
         Instruction::Greater => ">",
         Instruction::GreaterEqual => ">=",
         _ => "unknown",
+    }
+}
+
+fn unsupported_type(feature: &str) -> RuntimeError {
+    RuntimeError::new(
+        ErrorKind::Unsupported,
+        format!("{feature} are not implemented"),
+    )
+}
+
+impl Compiler<'_> {
+    fn find_type(&self, name: &str, _limit: usize) -> Option<(crate::syntax::Member, usize)> {
+        // ResolveSimpleDeclaredTypeNode starts at the enclosing module. Ordinary
+        // module properties can shadow types, but locals/parameters/class members cannot.
+        self.resolved
+            .module
+            .members
+            .iter()
+            .find(|member| {
+                member.name == name
+                    && !matches!(
+                        member.expr.kind,
+                        crate::syntax::ExprKind::Function { method: true, .. }
+                    )
+            })
+            .cloned()
+            .map(|member| (member, 0))
+    }
+
+    fn initialize_member_types(
+        &self,
+        members: &[crate::syntax::Member],
+        output: &mut Code,
+    ) -> Result<(), RuntimeError> {
+        for member in members {
+            if let Some(ty) = &member.ty {
+                self.initialize_type(&self.compile_type(ty)?, self.type_source_span(ty), output);
+            }
+            if let crate::syntax::ExprKind::Function {
+                parameters,
+                return_type,
+                method: true,
+                ..
+            } = &member.expr.kind
+            {
+                for ty in parameters
+                    .iter()
+                    .filter_map(|parameter| parameter.ty.as_ref())
+                    .chain(return_type.iter())
+                {
+                    self.initialize_type(
+                        &self.compile_type(ty)?,
+                        self.type_source_span(ty),
+                        output,
+                    );
+                }
+            }
+        }
+        Ok(())
+    }
+
+    fn initialize_type(&self, check: &TypeCheck, span: Span, output: &mut Code) {
+        match check {
+            TypeCheck::Class { id, .. } => {
+                if let Some(member) = self
+                    .resolved
+                    .module
+                    .members
+                    .iter()
+                    .find(|member| member.expr.span.start == *id)
+                {
+                    output.push_at(
+                        Instruction::ResolveClassType {
+                            name: Arc::from(member.name.as_str()),
+                            local: crate::syntax::modifier_flags(&member.modifiers)
+                                & crate::syntax::ModifierKind::Local.flag()
+                                != 0,
+                        },
+                        span,
+                    );
+                    output.push(Instruction::Pop);
+                }
+            }
+            TypeCheck::Nullable(inner) => self.initialize_type(inner, span, output),
+            TypeCheck::Union { types, .. } => {
+                for ty in types {
+                    self.initialize_type(ty, span, output);
+                }
+            }
+            _ => {}
+        }
+    }
+
+    fn resolve_expression_type(
+        &self,
+        ty: &crate::syntax::Type,
+        output: &mut Code,
+    ) -> Option<TypeCheck> {
+        match self.compile_type_at(
+            ty,
+            self.type_scopes.len(),
+            &mut BTreeSet::new(),
+            &BTreeMap::new(),
+        ) {
+            Ok(check) => {
+                self.initialize_type(&check, self.type_source_span(ty), output);
+                Some(check)
+            }
+            Err(error) => {
+                output.push_at(Instruction::Fail(error.at(ty.span)), ty.span);
+                None
+            }
+        }
+    }
+
+    fn compile_type(&self, ty: &crate::syntax::Type) -> Result<TypeCheck, RuntimeError> {
+        self.compile_type_at(
+            ty,
+            self.type_scopes.len(),
+            &mut BTreeSet::new(),
+            &BTreeMap::new(),
+        )
+        .map_err(|mut error| {
+            if !error.frames.is_empty() {
+                error.frames.push(RuntimeFrame {
+                    span: ty.span,
+                    member: Arc::from(""),
+                });
+            }
+            error.at(ty.span)
+        })
+    }
+
+    /// Alias expansion retains the source section of the instantiated type node.
+    /// Type parameters inherit the actual argument's source section.
+    fn type_source_span(&self, ty: &crate::syntax::Type) -> Span {
+        self.type_source_span_at(ty, &BTreeMap::new(), &mut BTreeSet::new())
+    }
+
+    fn type_source_span_at(
+        &self,
+        ty: &crate::syntax::Type,
+        parameters: &BTreeMap<String, Span>,
+        aliases: &mut BTreeSet<Span>,
+    ) -> Span {
+        use crate::syntax::{ExprKind, TypeKind};
+        match &ty.kind {
+            TypeKind::Nullable(inner) => self.type_source_span_at(inner, parameters, aliases),
+            TypeKind::Named { path, arguments } if path.len() == 1 => {
+                if let Some(span) = parameters.get(&path[0]) {
+                    return *span;
+                }
+                if let Some((member, _)) = self.find_type(&path[0], self.type_scopes.len())
+                    && let ExprKind::TypeAlias {
+                        type_parameters,
+                        ty: aliased,
+                    } = &member.expr.kind
+                    && aliases.insert(member.expr.span)
+                {
+                    let substitutions = type_parameters
+                        .iter()
+                        .zip(arguments)
+                        .map(|(parameter, argument)| {
+                            (
+                                parameter.name.clone(),
+                                self.type_source_span_at(argument, parameters, aliases),
+                            )
+                        })
+                        .collect();
+                    let span = self.type_source_span_at(aliased, &substitutions, aliases);
+                    aliases.remove(&member.expr.span);
+                    return span;
+                }
+                ty.span
+            }
+            _ => ty.span,
+        }
+    }
+
+    fn compile_type_at(
+        &self,
+        ty: &crate::syntax::Type,
+        limit: usize,
+        aliases: &mut BTreeSet<Span>,
+        parameters: &BTreeMap<String, TypeCheck>,
+    ) -> Result<TypeCheck, RuntimeError> {
+        use crate::syntax::{ExprKind, TypeKind};
+        Ok(match &ty.kind {
+            TypeKind::Unknown => TypeCheck::Any,
+            TypeKind::Nothing => TypeCheck::Nothing,
+            TypeKind::String(value) => TypeCheck::StringLiteral(Arc::from(value.as_str())),
+            TypeKind::Nullable(inner) => TypeCheck::Nullable(Box::new(
+                self.compile_type_at(inner, limit, aliases, parameters)?,
+            )),
+            TypeKind::Union { types, default } => TypeCheck::Union {
+                types: types
+                    .iter()
+                    .map(|ty| self.compile_type_at(ty, limit, aliases, parameters))
+                    .collect::<Result<_, _>>()?,
+                default: *default,
+            },
+            TypeKind::Named { path, arguments } if path.len() == 1 => {
+                if let Some(parameter) = parameters.get(&path[0]) {
+                    if !arguments.is_empty() {
+                        return Err(RuntimeError::new(
+                            ErrorKind::Type,
+                            "Type parameters cannot have type arguments.",
+                        ));
+                    }
+                    parameter.clone()
+                } else if let Some((member, index)) = self.find_type(&path[0], limit) {
+                    match &member.expr.kind {
+                        ExprKind::Class { .. } => {
+                            if !arguments.is_empty() {
+                                return Err(RuntimeError::new(
+                                    ErrorKind::Type,
+                                    format!("Class `{}` does not have type parameters.", path[0]),
+                                ));
+                            }
+                            TypeCheck::Class {
+                                id: member.expr.span.start,
+                                name: Arc::from(member.name),
+                            }
+                        }
+                        ExprKind::TypeAlias {
+                            type_parameters,
+                            ty: aliased,
+                        } => {
+                            if type_parameters.len() != arguments.len() {
+                                return Err(RuntimeError::new(
+                                    ErrorKind::Type,
+                                    format!(
+                                        "Expected {} type arguments but got {}.",
+                                        type_parameters.len(),
+                                        arguments.len()
+                                    ),
+                                ));
+                            }
+                            // Resolve actual arguments at the use site before entering the alias's lexical scope.
+                            let actual = arguments
+                                .iter()
+                                .map(|argument| {
+                                    self.compile_type_at(argument, limit, aliases, parameters)
+                                })
+                                .collect::<Result<Vec<_>, _>>()?;
+                            let substitutions = type_parameters
+                                .iter()
+                                .zip(actual)
+                                .map(|(parameter, actual)| (parameter.name.clone(), actual))
+                                .collect();
+                            if !aliases.insert(member.expr.span) {
+                                return Err(RuntimeError::new(
+                                    ErrorKind::Cycle,
+                                    "Type alias definitions must not be cyclic.",
+                                )
+                                .at(ty.span));
+                            }
+                            let result = self
+                                .compile_type_at(aliased, index + 1, aliases, &substitutions)
+                                .map_err(|mut error| {
+                                    error.frames.push(RuntimeFrame {
+                                        span: aliased.span,
+                                        member: Arc::from(format!("#{}", member.name)),
+                                    });
+                                    error
+                                })?;
+                            aliases.remove(&member.expr.span);
+                            result
+                        }
+                        _ => {
+                            return Err(RuntimeError::new(
+                                ErrorKind::Type,
+                                format!("`{}` is not a type.", path[0]),
+                            ));
+                        }
+                    }
+                } else {
+                    if !arguments.is_empty() {
+                        return Err(unsupported_type("generic builtin types"));
+                    }
+                    match path[0].as_str() {
+                        "Any" => TypeCheck::Any,
+                        "NonNull" => TypeCheck::NonNull,
+                        "Null" => TypeCheck::Null,
+                        "Boolean" => TypeCheck::Boolean,
+                        "Int" => TypeCheck::Int,
+                        "Float" => TypeCheck::Float,
+                        "Number" => TypeCheck::Number,
+                        "String" => TypeCheck::String,
+                        "Bytes" => TypeCheck::Bytes,
+                        _ if crate::diagnostic_names::BASE_PROPERTIES
+                            .contains(&path[0].as_str()) =>
+                        {
+                            return Err(unsupported_type(&format!("type {}", path[0])));
+                        }
+                        _ => {
+                            return Err(RuntimeError::new(
+                                ErrorKind::MissingType,
+                                format!("Cannot find type `{}`.", path[0]),
+                            )
+                            .at(ty.span));
+                        }
+                    }
+                }
+            }
+            _ => return Err(unsupported_type("this composite type")),
+        })
+    }
+
+    fn class_expression(
+        &mut self,
+        ty: &crate::syntax::Type,
+        output: &mut Code,
+        limit: usize,
+        aliases: &mut BTreeSet<Span>,
+    ) -> Result<(), RuntimeError> {
+        let check = self
+            .compile_type_at(ty, limit, aliases, &BTreeMap::new())
+            .map_err(|error| error.at(ty.span))?;
+        self.class_value(&check, output, ty.span)
+    }
+
+    fn class_value(
+        &self,
+        check: &TypeCheck,
+        output: &mut Code,
+        span: Span,
+    ) -> Result<(), RuntimeError> {
+        let TypeCheck::Class { id, .. } = check else {
+            return Err(RuntimeError::new(ErrorKind::Type, "Expected a class type."));
+        };
+        for (index, members) in self.type_scopes.iter().enumerate().rev() {
+            if let Some(member) = members.iter().find(|member| {
+                member.expr.span.start == *id
+                    && matches!(member.expr.kind, crate::syntax::ExprKind::Class { .. })
+            }) {
+                output.push_at(
+                    Instruction::GetProperty {
+                        name: Arc::from(member.name.as_str()),
+                        owner_depth: self.type_scopes.len() - 1 - index,
+                        local: crate::syntax::modifier_flags(&member.modifiers)
+                            & crate::syntax::ModifierKind::Local.flag()
+                            != 0,
+                    },
+                    span,
+                );
+                return Ok(());
+            }
+        }
+        Err(invalid(
+            "class declaration is outside the compiled lexical scopes",
+        ))
+    }
+
+    fn default_property(
+        &mut self,
+        member: &crate::syntax::Member,
+        output: &mut Code,
+    ) -> Result<(), RuntimeError> {
+        if crate::syntax::modifier_flags(&member.modifiers)
+            & crate::syntax::ModifierKind::Abstract.flag()
+            != 0
+        {
+            output.push_at(
+                Instruction::AbstractMember {
+                    name: Arc::from(self.member.as_str()),
+                    method: false,
+                },
+                member.span,
+            );
+            return Ok(());
+        }
+        if let Some(ty) = &member.ty {
+            let check = self.compile_type(ty)?;
+            if self.default_type(&check, output, ty.span)? {
+                return Ok(());
+            }
+        }
+        output.push_at(
+            Instruction::Undefined(Arc::from(member.name.as_str())),
+            member.name_span,
+        );
+        Ok(())
+    }
+
+    fn default_type(
+        &self,
+        check: &TypeCheck,
+        output: &mut Code,
+        span: Span,
+    ) -> Result<bool, RuntimeError> {
+        match check {
+            TypeCheck::Null | TypeCheck::Nullable(_) => {
+                output.push_at(Instruction::Constant(Value::Null), span)
+            }
+            TypeCheck::StringLiteral(value) => {
+                output.push_at(Instruction::Constant(Value::String(value.clone())), span)
+            }
+            TypeCheck::Union {
+                types,
+                default: Some(index),
+            } => return self.default_type(&types[*index], output, span),
+            TypeCheck::Class { .. } => {
+                self.class_value(check, output, span)?;
+                output.push_at(Instruction::DefaultClassInstance, span);
+            }
+            _ => return Ok(false),
+        }
+        Ok(true)
+    }
+
+    fn validate_modifiers(&self, member: &crate::syntax::Member) -> Result<(), RuntimeError> {
+        use crate::syntax::{ExprKind, ModifierKind};
+        for modifier in &member.modifiers {
+            let supported = match modifier.kind {
+                ModifierKind::Local | ModifierKind::Const => true,
+                ModifierKind::Abstract => true,
+                ModifierKind::Open => matches!(member.expr.kind, ExprKind::Class { .. }),
+                _ => false,
+            };
+            if !supported {
+                return Err(
+                    unsupported_type(&format!("{} modifiers", modifier.kind.spelling()))
+                        .at(modifier.span),
+                );
+            }
+        }
+        let flags = crate::syntax::modifier_flags(&member.modifiers);
+        for kind in [
+            ModifierKind::Hidden,
+            ModifierKind::External,
+            ModifierKind::Fixed,
+        ] {
+            if flags & kind.flag() != 0 {
+                return Err(
+                    unsupported_type(&format!("{} modifiers", kind.spelling())).at(member.span)
+                );
+            }
+        }
+        Ok(())
+    }
+}
+
+// StrictMath.pow specifies NaN for |base| == 1 with an infinite exponent,
+// and for every NaN exponent. Generic libm follows C's different 1**NaN rule.
+fn float_power(base: f64, exponent: f64) -> f64 {
+    if exponent.is_nan() || (base.abs() == 1.0 && exponent.is_infinite()) {
+        f64::NAN
+    } else {
+        libm::pow(base, exponent)
     }
 }

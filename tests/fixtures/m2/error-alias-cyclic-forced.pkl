@@ -1,0 +1,3 @@
+typealias A = B
+typealias B = A
+result: A = 1

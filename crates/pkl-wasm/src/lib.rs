@@ -38,6 +38,22 @@ pub fn evaluate(source: JsString, member: JsString) -> Result<String, JsValue> {
         .map(probe::encode_value)
         .map_err(error)
 }
+/// Development-only scalar boundary with shared Pkl diagnostic rendering.
+#[wasm_bindgen(js_name = evaluateLanguage)]
+pub fn evaluate_language(
+    source: JsString,
+    uri: JsString,
+    module_name: JsString,
+    expression: JsString,
+) -> Result<String, JsValue> {
+    pkl_runtime::evaluation::scalar_expression(
+        &string(&source)?,
+        &string(&uri)?,
+        &string(&module_name)?,
+        &string(&expression)?,
+    )
+    .map_err(error)
+}
 #[wasm_bindgen(js_name = roundtripString)]
 pub fn roundtrip_string(input: JsString) -> Result<String, JsValue> {
     match probe::identity(Value::string(string(&input)?)).map_err(error)? {

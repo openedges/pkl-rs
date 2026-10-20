@@ -84,7 +84,7 @@ impl SourceMap {
             position.byte += ch.len_utf8();
             position.utf16 += ch.len_utf16();
             position.codepoint += 1;
-            if ch == '\n' {
+            if ch == '\n' || (ch == '\r' && text.as_bytes().get(position.byte) != Some(&b'\n')) {
                 position.line += 1;
                 position.column_utf16 = 1;
             } else {

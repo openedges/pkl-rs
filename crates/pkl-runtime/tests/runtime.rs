@@ -156,6 +156,9 @@ fn resource_program() -> Arc<Program> {
         code: 1,
         local: false,
         method: false,
+        ty: None,
+        type_span: None,
+        constant: false,
     }]);
     Arc::new(program)
 }
@@ -272,6 +275,9 @@ fn malformed_bytecode_is_an_error_and_cannot_leak_a_running_thunk() {
         code: 1,
         local: false,
         method: false,
+        ty: None,
+        type_span: None,
+        constant: false,
     }]);
     let mut vm = Vm::new(Arc::new(program));
     vm.start(0, vec![]).unwrap();
@@ -323,12 +329,18 @@ fn super_reads_preserve_receiver_but_do_not_memoize_parent_body() {
         code: 1,
         local: false,
         method: false,
+        ty: None,
+        type_span: None,
+        constant: false,
     }]);
     program.objects.push(vec![Member {
         name: Arc::from("result"),
         code: 2,
         local: false,
         method: false,
+        ty: None,
+        type_span: None,
+        constant: false,
     }]);
     let mut vm = Vm::new(Arc::new(program));
     vm.start(0, vec![]).unwrap();
@@ -434,6 +446,9 @@ fn transient_failures_retry_in_order_while_successful_dependencies_stay_cached()
                 code,
                 local: false,
                 method: false,
+                ty: None,
+                type_span: None,
+                constant: false,
             })
             .to_vec(),
     );

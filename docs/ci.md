@@ -28,11 +28,14 @@ experiments on a quiet host.
 The M2 language job builds and freezes the current Rust probe, acquires raw Java
 and Rust language results, and verifies the selected development contract.
 Every selected case must match except the explicitly tracked cyclic-property
-diagnostic failure described in [the M2 contract](m2-language.md). That exception
-retains its failed status; unrelated crashes, timeouts, missing results, or new
+diagnostic and integer remainder upstream bug described in
+[the M2 contract](m2-language.md). These exceptions retain their failed status;
+unrelated crashes, timeouts, missing results, or new
 differences fail the job. The full inventory remains incomplete and its strict
 gate runs additionally on manual full-corpus dispatch. A green M2 development
-job does not mean the language milestone is complete.
+job does not mean the language milestone is complete. The job also regenerates
+the identifier intervals against the pinned Java lexer/JDK and checks the exact
+Rust table bytes. Both evidence directories are retained in its artifact.
 
 The M1 job also checks the retained Graal compilation archive and rederives its
 diagnostic verdict from raw captures, source/artifact identities, correctness

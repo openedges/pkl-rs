@@ -1,0 +1,2 @@
+typealias Either<A, B> = A|B
+result: Either<Int, String> = 42

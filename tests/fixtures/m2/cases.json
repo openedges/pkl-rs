@@ -1460,6 +1460,657 @@
         "semantic:diagnostics"
       ],
       "expected_outcome": "failure"
+    },
+    {
+      "id": "power-one-infinity",
+      "input": "tests/fixtures/m2/power-one-infinity.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "power-negative-one-infinity",
+      "input": "tests/fixtures/m2/power-negative-one-infinity.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "power-one-nan",
+      "input": "tests/fixtures/m2/power-one-nan.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "error-float-div-zero",
+      "input": "tests/fixtures/m2/error-float-div-zero.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:numeric-errors"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "error-float-div-large",
+      "input": "tests/fixtures/m2/error-float-div-large.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:numeric-errors"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "error-float-div-nonfinite",
+      "input": "tests/fixtures/m2/error-float-div-nonfinite.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:numeric-errors"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "error-remainder-zero",
+      "input": "tests/fixtures/m2/error-remainder-zero.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:numeric-errors"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "class-basic",
+      "input": "tests/fixtures/m2/class-basic.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:classes"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "class-local-capture",
+      "input": "tests/fixtures/m2/class-local-capture.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:name-resolution"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "class-inherited-method",
+      "input": "tests/fixtures/m2/class-inherited-method.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:classes"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "class-inherited-property",
+      "input": "tests/fixtures/m2/class-inherited-property.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:classes"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "class-closure-receiver",
+      "input": "tests/fixtures/m2/class-closure-receiver.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:closures"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "class-is-ancestor",
+      "input": "tests/fixtures/m2/class-is-ancestor.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:type-tests-casts"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "class-as-ancestor",
+      "input": "tests/fixtures/m2/class-as-ancestor.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:type-tests-casts"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "class-contextual-new",
+      "input": "tests/fixtures/m2/class-contextual-new.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:classes"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "class-default-instance",
+      "input": "tests/fixtures/m2/class-default-instance.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:types"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "class-unused-undefined",
+      "input": "tests/fixtures/m2/class-unused-undefined.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:lazy-evaluation"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "error-class-undefined",
+      "input": "tests/fixtures/m2/error-class-undefined.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "error-class-member-type",
+      "input": "tests/fixtures/m2/error-class-member-type.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:types"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "error-class-inherited-type",
+      "input": "tests/fixtures/m2/error-class-inherited-type.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:types"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "error-class-unknown-member",
+      "input": "tests/fixtures/m2/error-class-unknown-member.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:classes"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "error-class-final-parent",
+      "input": "tests/fixtures/m2/error-class-final-parent.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:classes"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "error-class-abstract-new",
+      "input": "tests/fixtures/m2/error-class-abstract-new.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:classes"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "alias-primitive",
+      "input": "tests/fixtures/m2/alias-primitive.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:type-aliases"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "alias-class",
+      "input": "tests/fixtures/m2/alias-class.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:type-aliases"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "alias-nullable-default",
+      "input": "tests/fixtures/m2/alias-nullable-default.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:type-aliases"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "alias-literal-default",
+      "input": "tests/fixtures/m2/alias-literal-default.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:type-aliases"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "alias-union-default",
+      "input": "tests/fixtures/m2/alias-union-default.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:unions"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "alias-nested-union-default",
+      "input": "tests/fixtures/m2/alias-nested-union-default.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:unions"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "error-alias-property-type",
+      "input": "tests/fixtures/m2/error-alias-property-type.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:type-aliases"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "typed-let",
+      "input": "tests/fixtures/m2/typed-let.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:types"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "error-typed-let",
+      "input": "tests/fixtures/m2/error-typed-let.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:types"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "module-declared-name-error",
+      "input": "tests/fixtures/m2/module-declared-name-error.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "module-basic",
+      "input": "tests/fixtures/m2/module-basic.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:modules"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "error-class-nonconst-capture",
+      "input": "tests/fixtures/m2/error-class-nonconst-capture.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:modifiers"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "class-const-capture",
+      "input": "tests/fixtures/m2/class-const-capture.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:modifiers"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "class-unused-final-parent",
+      "input": "tests/fixtures/m2/class-unused-final-parent.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:lazy-evaluation"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "alias-unused-missing",
+      "input": "tests/fixtures/m2/alias-unused-missing.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:lazy-evaluation"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "alias-unused-cycle",
+      "input": "tests/fixtures/m2/alias-unused-cycle.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:lazy-evaluation"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "error-alias-cyclic-forced",
+      "input": "tests/fixtures/m2/error-alias-cyclic-forced.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:type-aliases"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "identifier-greek",
+      "input": "tests/fixtures/m2/identifier-greek.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:lexing"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "identifier-combining",
+      "input": "tests/fixtures/m2/identifier-combining.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:lexing"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "identifier-supplementary",
+      "input": "tests/fixtures/m2/identifier-supplementary.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:lexing"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "identifier-join-control",
+      "input": "tests/fixtures/m2/identifier-join-control.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:lexing"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "identifier-dollar",
+      "input": "tests/fixtures/m2/identifier-dollar.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:lexing"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "error-source-lines-cr",
+      "input": "tests/fixtures/m2/error-source-lines-cr.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "error-source-lines-crlf",
+      "input": "tests/fixtures/m2/error-source-lines-crlf.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "alias-generic-nullable",
+      "input": "tests/fixtures/m2/alias-generic-nullable.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:generics"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "alias-generic-union",
+      "input": "tests/fixtures/m2/alias-generic-union.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:generics"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "alias-generic-identity-class",
+      "input": "tests/fixtures/m2/alias-generic-identity-class.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:generics"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "alias-generic-default",
+      "input": "tests/fixtures/m2/alias-generic-default.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:generics"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "type-unused-missing",
+      "input": "tests/fixtures/m2/type-unused-missing.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:lazy-evaluation"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "method-unused-missing-type",
+      "input": "tests/fixtures/m2/method-unused-missing-type.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:lazy-evaluation"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "class-unused-missing-parent",
+      "input": "tests/fixtures/m2/class-unused-missing-parent.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:lazy-evaluation"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "error-interpolation-empty",
+      "input": "tests/fixtures/m2/error-interpolation-empty.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:strings",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "error-interpolation-first",
+      "input": "tests/fixtures/m2/error-interpolation-first.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:strings",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "error-named-range",
+      "input": "tests/fixtures/m2/error-named-range.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "error-range-before-syntax",
+      "input": "tests/fixtures/m2/error-range-before-syntax.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "error-named-duplicate",
+      "input": "tests/fixtures/m2/error-named-duplicate.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "error-keyword-property",
+      "input": "tests/fixtures/m2/error-keyword-property.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:lexing"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "class-unused-missing-type",
+      "input": "tests/fixtures/m2/class-unused-missing-type.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:lazy-evaluation"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "error-class-forced-missing-type",
+      "input": "tests/fixtures/m2/error-class-forced-missing-type.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:lazy-evaluation"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "class-unused-missing-method-type",
+      "input": "tests/fixtures/m2/class-unused-missing-method-type.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:lazy-evaluation"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "error-class-forced-missing-method-type",
+      "input": "tests/fixtures/m2/error-class-forced-missing-method-type.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:lazy-evaluation"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "error-string-subtract",
+      "input": "tests/fixtures/m2/error-string-subtract.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "error-abstract-nullable",
+      "input": "tests/fixtures/m2/error-abstract-nullable.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:modifiers"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "error-abstract-literal",
+      "input": "tests/fixtures/m2/error-abstract-literal.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:modifiers"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "error-duplicate-const-capture",
+      "input": "tests/fixtures/m2/error-duplicate-const-capture.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:modifiers"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "error-named-class-type",
+      "input": "tests/fixtures/m2/error-named-class-type.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:types"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "error-abstract-method",
+      "input": "tests/fixtures/m2/error-abstract-method.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:modifiers"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "class-unused-abstract-members",
+      "input": "tests/fixtures/m2/class-unused-abstract-members.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:modifiers"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "error-unused-method-body",
+      "input": "tests/fixtures/m2/error-unused-method-body.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:functions",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
     }
   ]
 }

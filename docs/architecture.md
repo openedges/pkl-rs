@@ -86,3 +86,31 @@ The Java oracle is a development and validation tool. Product evaluation must no
   with the generic path retained for fallback and equivalence regressions.
   The Java target compilation bailout and broader workloads remain open gates.
   No M1 microbenchmark establishes the complete release performance target.
+
+## M2 implementation in progress
+
+Classes and closures live in the evaluator's existing traced arena. Class
+prototypes use the same parent chain as amended objects, and their captured
+environments participate in collection. Class identity and inherited member
+checks are shared across all three runtime targets. Type aliases resolve in
+their declaration scope; generic arguments resolve at their use site. The
+timing of class initialization and type validation is part of compatibility,
+including declarations whose errors remain unobserved until they are used.
+
+Instruction source spans and authored member names are metadata beside the
+bytecode. VM errors retain these logical frames before unwinding. A shared
+scalar evaluation boundary combines them with source URIs and module names
+and renders complete uncolored diagnostics. Native `language_probe`, Node
+`evaluateLanguage`, and Wasm `evaluateLanguage` use this boundary. These are
+development adapters with scalar property-path results; full expression APIs,
+compound rendering, and external module loading remain separate requirements.
+
+Identifier predicates are generated from the pinned Java lexer and JDK.
+The upstream lexer tests UTF-16 code units, so supplementary characters are
+not accepted as unquoted identifiers even when their Unicode code point is
+a Java identifier character. Source spans remain UTF-8, with explicit UTF-16
+conversion for error columns and underlines.
+
+Selected differential checks establish only the behavior they execute. See
+[the M2 contract](m2-language.md) and [raw results](../reports/m2/README.md)
+for the remaining language and diagnostic obligations.

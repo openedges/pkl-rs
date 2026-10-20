@@ -42,6 +42,22 @@ pub fn evaluate(source: Utf16String, member: Utf16String) -> Result<String> {
         .map(probe::encode_value)
         .map_err(error)
 }
+/// Development-only scalar boundary with shared Pkl diagnostic rendering.
+#[napi]
+pub fn evaluate_language(
+    source: Utf16String,
+    uri: Utf16String,
+    module_name: Utf16String,
+    expression: Utf16String,
+) -> Result<String> {
+    pkl_runtime::evaluation::scalar_expression(
+        &string(&source)?,
+        &string(&uri)?,
+        &string(&module_name)?,
+        &string(&expression)?,
+    )
+    .map_err(error)
+}
 #[napi]
 pub fn roundtrip_string(input: Utf16String) -> Result<String> {
     match probe::identity(Value::string(string(&input)?)).map_err(error)? {

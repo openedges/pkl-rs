@@ -1,0 +1,3 @@
+abstract class C { x: Int }
+c = new C {}
+result = c.x

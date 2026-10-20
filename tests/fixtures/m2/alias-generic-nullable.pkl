@@ -1,0 +1,3 @@
+typealias Optional<T> = T?
+x: Optional<Int>
+result = x

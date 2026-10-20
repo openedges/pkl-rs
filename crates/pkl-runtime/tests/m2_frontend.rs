@@ -320,3 +320,81 @@ fn object_methods_need_local_and_lambda_arity_is_bounded_by_the_language() {
     );
     resolve_module(&parse_module("function f(a, b, c, d, e, f) = a").unwrap()).unwrap();
 }
+
+#[test]
+fn let_parameters_accept_types_and_discard_bindings() {
+    let source = "result = let (x: Int = 4) let (_: Int = x) x";
+    let module = parse_module(source).unwrap();
+    resolve_module(&module).unwrap();
+    let ExprKind::Let { ty, body, .. } = &module.members[0].expr.kind else {
+        panic!("let")
+    };
+    assert!(matches!(ty.as_ref().unwrap().kind, TypeKind::Named { .. }));
+    let ExprKind::Let { name, .. } = &body.kind else {
+        panic!("discard let")
+    };
+    assert_eq!(name, "_");
+}
+
+#[test]
+fn interpolation_syntax_precedes_later_bad_tokens_and_keeps_closing_paren() {
+    for (source, token) in [(r#"result = "\()""#, ")"), (r#"result = "\(, @)""#, ",")] {
+        let error = parse_module(source).unwrap_err();
+        assert_eq!(
+            error.message,
+            format!("Unexpected token `{token}`. Expected `)`.")
+        );
+        assert_eq!(&source[error.span.start..error.span.end], token);
+    }
+}
+
+#[test]
+fn identifiers_use_the_pinned_java_unicode_predicates() {
+    let source = "이름 = 1 π = 2 `𐐀` = 3 a\u{301} = 4 $value = 5 a\u{200c}b = 6 result = 이름 + π + `𐐀` + a\u{301} + $value + a\u{200c}b";
+    let module = parse_module(source).unwrap();
+    resolve_module(&module).unwrap();
+    assert_eq!(module.members[0].name, "이름");
+    assert_eq!(module.members[2].name, "𐐀");
+    assert_eq!(module.members[3].name, "a\u{301}");
+    assert_eq!(module.members[5].name, "a\u{200c}b");
+    for source in ["\u{301} = 1", "€ = 1", "😀 = 1", "𐐀 = 1"] {
+        assert!(parse_module(source).is_err(), "{source}");
+    }
+    assert_eq!(parse_module("`€` = 1").unwrap().members[0].name, "€");
+}
+
+#[test]
+fn numeric_validation_waits_for_syntax_and_unary_postfix_precedence() {
+    let error = parse_module("x = 9223372036854775808\ny = )").unwrap_err();
+    assert_eq!(error.message, "Unexpected token `)`.");
+    let error = parse_module("result = -0X10").unwrap_err();
+    assert_eq!(error.message, "Int literal `0X10` is too large.");
+    assert_eq!(error.span, Span::new(10, 14));
+    assert_eq!(error.member.as_deref(), Some("result"));
+    let expression = parse_expression("-1.toString()").unwrap();
+    assert!(
+        matches!(expression.kind, ExprKind::Unary { op: UnaryOp::Negate, operand } if matches!(operand.kind, ExprKind::Call { .. }))
+    );
+    let error = parse_expression("-9223372036854775808.member").unwrap_err();
+    assert_eq!(error.span, Span::new(1, 20));
+    assert_eq!(
+        parse_expression("-9223372036854775808").unwrap().kind,
+        ExprKind::Int(i64::MIN)
+    );
+    let error = parse_module("value = (1\rnext = 2").unwrap_err();
+    assert_eq!(error.span, Span::new(10, 10));
+    assert_eq!(error.highlight_length_utf16, Some(1));
+}
+
+#[test]
+fn type_only_keywords_in_object_bodies_preserve_expression_expectation() {
+    for keyword in ["unknown", "nothing"] {
+        let source = format!("result = new C {{ {keyword} = 1 }}");
+        let error = parse_module(&source).unwrap_err();
+        assert_eq!(
+            error.message,
+            format!("Unexpected token `{keyword}`. Expected `}}`.")
+        );
+        assert_eq!(&source[error.span.start..error.span.end], keyword);
+    }
+}
