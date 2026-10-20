@@ -1,6 +1,6 @@
 # Validation Contract
 
-The goals are behavioral and byte compatibility with the Java implementation of Pkl 0.32.0, with execution time and memory usage at least as good as Java for every required workload. **Only bootstrap checks are currently available.** Java differential tests, Pantry execution, and product benchmarks have not been implemented yet.
+The goals are behavioral and byte compatibility with the Java implementation of Pkl 0.32.0, with execution time and memory usage at least as good as Java for every required workload. Bootstrap checks and a pinned Java oracle are available. Rust differential execution and product performance comparisons are not available yet.
 
 ## Current Checks
 
@@ -13,6 +13,17 @@ cargo check -p pkl-runtime --target wasm32-unknown-unknown --locked
 ```
 
 The first command checks reference pins. The remaining commands check Rust formatting, run static analysis and the current workspace tests, and verify Wasm compilation. Successful Wasm compilation does not establish browser evaluation or API compatibility. Do not use the number of passing `cargo test` cases as a measure of Pkl feature completion.
+
+The [oracle contract](docs/oracle.md) describes the exact JDK requirement, artifact and source pins, execution environment, and evidence. With that JDK installed:
+
+```sh
+python3 tools/oracle.py fetch
+python3 tools/oracle.py verify
+python3 tools/oracle.py smoke
+python3 -m unittest discover -s tools/tests -p 'test_oracle.py'
+```
+
+Oracle smoke checks capture Java success and error bytes and verify exact Java replay. They do not execute a Rust evaluator. The separately pinned optimizing GraalVM profile is used for performance baselines.
 
 ## Compatibility Comparisons
 

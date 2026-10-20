@@ -1,0 +1,88 @@
+{
+  "schema": 1,
+  "version": "0.32.0",
+  "source": {
+    "path": "external/pkl",
+    "url": "https://github.com/apple/pkl.git",
+    "revision": "e51fb2f91774265666f94980ec630db794a4db2d",
+    "metadata_sha256": {
+      "gradle.properties": "1d76fc163cba8cabc502948a7dbc05cf7b7afc4a5e8efe35b3a746a89829be13",
+      "gradle/libs.versions.toml": "f2c818bfff6f30a096bcca18256ea9aae967a21707babae8c2b34a77a225b046",
+      "build-logic/src/main/kotlin/BuildInfo.kt": "a082b8aa717d9fb6f15fee6f4c74c62089b5cae1d1666d55cbb0d70318920ba6",
+      "pkl-tools/pkl-tools.gradle.kts": "c32aca46fa3fb845b205ecdf5b75d037e0b1f4ac6b6cd8cb9d1359667a06aa80",
+      "LICENSE.txt": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "NOTICE.txt": "d03b8db1a0d36ba65550ba30a51c7897f4b48b0eae7582d3f0576ea41e23d48e",
+      "THIRD-PARTY-NOTICES.txt": "8ac4f6b18b00227f8dbc5222c6259f6cb5084ad0053ebcebf83d5147cea31aaf"
+    }
+  },
+  "artifact": {
+    "coordinate": "org.pkl-lang:pkl-tools:0.32.0",
+    "filename": "pkl-tools-0.32.0.jar",
+    "url": "https://repo.maven.apache.org/maven2/org/pkl-lang/pkl-tools/0.32.0/pkl-tools-0.32.0.jar",
+    "sha256": "c3b6f6215a08b31453b0fb0edd8c9da0aee31233f65abb8ab07f9c945151e059",
+    "commit_id": "e51fb2f",
+    "build": "Official upstream shaded JVM publication; not rebuilt locally",
+    "license": "Apache-2.0, with bundled dependencies covered by upstream THIRD-PARTY-NOTICES.txt"
+  },
+  "jdk": {
+    "policy": "Require exact vendor and runtime build below; provision externally, select with PKL_ORACLE_JAVA; record executable, runtime modules, and release hashes per run. No automatic JDK installation.",
+    "properties": {
+      "java.vendor": "Eclipse Adoptium",
+      "java.version": "21.0.12.1",
+      "java.runtime.version": "21.0.12.1+1-LTS",
+      "java.vm.name": "OpenJDK 64-Bit Server VM",
+      "java.vm.version": "21.0.12.1+1-LTS"
+    },
+    "license": "GPL-2.0-with-classpath-exception; see the selected JDK legal/ directory",
+    "upstream_runtime_minimum": 17,
+    "upstream_build_minimum": 25
+  },
+  "truffle": {
+    "version": "25.0.1",
+    "configuration": "Shaded upstream Truffle runtime on Temurin HotSpot; no external Graal compiler or native-image executable. No additional polyglot options. This interpreter-based reference is not evidence of optimized GraalVM performance."
+  },
+  "jvm_options": [
+    "-Xms64m",
+    "-Xmx512m",
+    "-Dfile.encoding=UTF-8",
+    "-Dstdout.encoding=UTF-8",
+    "-Dstderr.encoding=UTF-8",
+    "-Duser.language=en",
+    "-Duser.country=US",
+    "-Duser.timezone=UTC",
+    "-Djava.awt.headless=true",
+    "-Duser.name=oracle"
+  ],
+  "performance_jdk": {
+    "policy": "Task-local official GraalVM Community25.0.1 distribution; exact archive SHA256 and runtime identity; optimizing reference for measurements. No system installation.",
+    "properties": {
+      "java.vendor": "GraalVM Community",
+      "java.version": "25.0.1",
+      "java.runtime.version": "25.0.1+8-jvmci-b01",
+      "java.vm.name": "OpenJDK 64-Bit Server VM",
+      "java.vm.version": "25.0.1+8-jvmci-b01"
+    },
+    "distributions": {
+      "Darwin-arm64": {
+        "filename": "graalvm-community-jdk-25.0.1_macos-aarch64_bin.tar.gz",
+        "url": "https://github.com/graalvm/graalvm-ce-builds/releases/download/jdk-25.0.1/graalvm-community-jdk-25.0.1_macos-aarch64_bin.tar.gz",
+        "sha256": "066339f24a8ab5c161548491a9400f7344e7761a1e46f8979e76c7ef11d5bc76",
+        "java_path": "graalvm-community-openjdk-25.0.1+8.1/Contents/Home/bin/java",
+        "runtime_sha256": {
+          "bin/java": "707a93de0d16a376736700568fb9030ab714d10cfb575144b7ac930bbeca2cdc",
+          "release": "37ba12c1fa435351c575cb04b73445a9b0a93e0d200924d1c8e44fc4eedd8cc4",
+          "lib/modules": "977ea476b5ac679dceaf74f8cb6bb5e7ae2f6890076a92393ea15c4bc5bd1dcf",
+          "lib/libjvmcicompiler.dylib": "73a2ad5dc55560c5431558282a2a1c52a14cdafd2fcc0957dc88222d1d1777d9",
+          "lib/server/libjvm.dylib": "7789e218f8b993f5cab610cda1e25ad6c62697937d982f430c33e7c306d6e860",
+          "lib/libjava.dylib": "d6f3828d7daf0389ce00892d2540bceb29a2824c93016795f570a0bd798d6263"
+        }
+      }
+    },
+    "license": "GPL-2.0-with-classpath-exception and bundled components; see extracted JDK legal/",
+    "jvm_options": [
+      "--enable-native-access=ALL-UNNAMED",
+      "--sun-misc-unsafe-memory-access=allow"
+    ],
+    "truffle_runtime_name": "GraalVM CE"
+  }
+}

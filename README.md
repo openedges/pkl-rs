@@ -56,7 +56,7 @@ cargo test --workspace --locked
 cargo check -p pkl-runtime --target wasm32-unknown-unknown --locked
 ```
 
-`cargo xtask verify` checks the reference source pins. Commands that compare Pkl evaluation results against Java will be implemented in a later phase.
+`cargo xtask verify` checks the reference source pins. The [Java oracle](docs/oracle.md) provides pinned Pkl 0.32.0 execution and exact replay checks. Rust evaluation is not implemented yet.
 
 ## Current structure
 
