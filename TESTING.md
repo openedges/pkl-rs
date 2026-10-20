@@ -102,6 +102,14 @@ on a quiet host with the separately pinned optimizing Java profile. Preserve
 negative results, convergence data, compilation traces, and the different API
 boundaries; do not interpret a prototype ratio as a product performance claim.
 
+Run `python3 tools/m1_graal.py --output target/m1/graal-new` to reproduce the
+[Graal compilation investigation](docs/m1-graal.md) on the pinned macOS arm64 JDK.
+Use `python3 tools/m1_graal.py --check-report target/m1/graal-new` to verify the
+stored raw evidence without executing that JDK. The diagnostic class override
+is an explicitly separate causal control, never an oracle or performance update.
+The unchanged-JAR positive workload requires actual guest Tier 2 compilation
+and per-call output checks. These checks do not measure performance.
+
 Run the pinned Java 0.32.0 oracle and Rust with identical inputs and environments. Compare:
 
 - Raw stdout and stderr bytes, and exit codes.

@@ -1,0 +1,360 @@
+{
+  "schema": 1,
+  "scope": "Local checks for M1 Graal diagnostic tooling and CI integration; not a product compatibility or performance verdict",
+  "base_commit": "113f30b30444b754e72eb710ed3a1675ac26e463",
+  "source_sha256": {
+    "tools/m1_graal.py": "638f30dc648394a86decda9a595df98023528a0ef950c3aefe16fb8dc9d2cd93",
+    "tools/tests/test_m1_graal.py": "ca8dc8065809122359fd12fba86a705a78167a39fcc677e30ac4dd557c85785f",
+    "tools/java/M1GraalProbe.java": "7fed1fb059da75c382d36d38d166bb0ec8e22e69a1900e43d2ad668e09dfeeaf",
+    ".github/workflows/ci.yml": "c98cd2afe2554e7250a272f632c470f74fd31e7866591126e21a1665b5274c07"
+  },
+  "commands": [
+    {
+      "name": "references",
+      "command": [
+        "cargo",
+        "xtask",
+        "verify"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs",
+      "status": "executed",
+      "exit_code": 0,
+      "elapsed_ns": 1219020041,
+      "peak_rss_bytes": 10747904,
+      "user_cpu_seconds": 0.07299499999999999,
+      "system_cpu_seconds": 0.24853199999999998,
+      "stdout": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m1/graal-validation-20261020-01/references/stdout.bin",
+        "sha256": "900802c9cf4f23bd9dbc0e79f58d3e21493ec0c990782bc5b690a7432148e9eb",
+        "bytes": 40
+      },
+      "stderr": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m1/graal-validation-20261020-01/references/stderr.bin",
+        "sha256": "7a52106d9f90e8992b69708ef91ecaa4f5a5c1b22c95e1ca043481ab028a3c32",
+        "bytes": 113
+      }
+    },
+    {
+      "name": "format",
+      "command": [
+        "cargo",
+        "fmt",
+        "--all",
+        "--",
+        "--check"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs",
+      "status": "executed",
+      "exit_code": 0,
+      "elapsed_ns": 358224667,
+      "peak_rss_bytes": 40271872,
+      "user_cpu_seconds": 0.09461499999999999,
+      "system_cpu_seconds": 0.067054,
+      "stdout": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m1/graal-validation-20261020-01/format/stdout.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0
+      },
+      "stderr": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m1/graal-validation-20261020-01/format/stderr.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0
+      }
+    },
+    {
+      "name": "clippy",
+      "command": [
+        "cargo",
+        "clippy",
+        "--workspace",
+        "--all-targets",
+        "--locked",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs",
+      "status": "executed",
+      "exit_code": 0,
+      "elapsed_ns": 525524750,
+      "peak_rss_bytes": 41107456,
+      "user_cpu_seconds": 0.132356,
+      "system_cpu_seconds": 0.095483,
+      "stdout": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m1/graal-validation-20261020-01/clippy/stdout.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0
+      },
+      "stderr": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m1/graal-validation-20261020-01/clippy/stderr.bin",
+        "sha256": "a178c7902ac24dda0e2c0cd4cf0e47a2a6976ef30481cb4015f2f71620380d8b",
+        "bytes": 72
+      }
+    },
+    {
+      "name": "rust-tests",
+      "command": [
+        "cargo",
+        "test",
+        "--workspace",
+        "--locked"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs",
+      "status": "executed",
+      "exit_code": 0,
+      "elapsed_ns": 1464845750,
+      "peak_rss_bytes": 80723968,
+      "user_cpu_seconds": 0.566909,
+      "system_cpu_seconds": 0.9827539999999999,
+      "stdout": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m1/graal-validation-20261020-01/rust-tests/stdout.bin",
+        "sha256": "2d84e4be84de9d4e64f0fd80787b9fb0e29cc0d234bf3846a6798dfecd91509a",
+        "bytes": 4389
+      },
+      "stderr": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m1/graal-validation-20261020-01/rust-tests/stderr.bin",
+        "sha256": "e76dea4ba0a44c2b1f88b7b0f5d8ca7009212c32f7fdb101287ed723dfe409d9",
+        "bytes": 661
+      }
+    },
+    {
+      "name": "wasm",
+      "command": [
+        "cargo",
+        "check",
+        "-p",
+        "pkl-runtime",
+        "--target",
+        "wasm32-unknown-unknown",
+        "--locked"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs",
+      "status": "executed",
+      "exit_code": 0,
+      "elapsed_ns": 144688459,
+      "peak_rss_bytes": 39731200,
+      "user_cpu_seconds": 0.046717999999999996,
+      "system_cpu_seconds": 0.033517,
+      "stdout": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m1/graal-validation-20261020-01/wasm/stdout.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0
+      },
+      "stderr": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m1/graal-validation-20261020-01/wasm/stderr.bin",
+        "sha256": "a5f4c585ee974ca44916ac30a98bbc189e067a7e0a6bc6d2e8d6bc525be724af",
+        "bytes": 72
+      }
+    },
+    {
+      "name": "inventory",
+      "command": [
+        "python3",
+        "tools/inventory.py",
+        "--check"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs",
+      "status": "executed",
+      "exit_code": 0,
+      "elapsed_ns": 2632844458,
+      "peak_rss_bytes": 85458944,
+      "user_cpu_seconds": 2.19541,
+      "system_cpu_seconds": 0.214352,
+      "stdout": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m1/graal-validation-20261020-01/inventory/stdout.bin",
+        "sha256": "e6869069fa7e754470122e842abc8f0ead7a71b7f34ded78450530cc7169438b",
+        "bytes": 926
+      },
+      "stderr": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m1/graal-validation-20261020-01/inventory/stderr.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0
+      }
+    },
+    {
+      "name": "discovery",
+      "command": [
+        "python3",
+        "tools/discover.py",
+        "--check"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs",
+      "status": "executed",
+      "exit_code": 0,
+      "elapsed_ns": 1258917500,
+      "peak_rss_bytes": 78086144,
+      "user_cpu_seconds": 0.22846999999999998,
+      "system_cpu_seconds": 0.45283599999999996,
+      "stdout": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m1/graal-validation-20261020-01/discovery/stdout.bin",
+        "sha256": "728426b228f32e69b8bb35aedc6c1dad352bdf9ed1ee9287525941098f2d5850",
+        "bytes": 735
+      },
+      "stderr": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m1/graal-validation-20261020-01/discovery/stderr.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0
+      }
+    },
+    {
+      "name": "smoke",
+      "command": [
+        "python3",
+        "tools/smoke_manifest.py",
+        "--check"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs",
+      "status": "executed",
+      "exit_code": 0,
+      "elapsed_ns": 58333375,
+      "peak_rss_bytes": 22937600,
+      "user_cpu_seconds": 0.034842,
+      "system_cpu_seconds": 0.013264999999999999,
+      "stdout": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m1/graal-validation-20261020-01/smoke/stdout.bin",
+        "sha256": "f30a4f6442ba37b66127198ba7953e78937b9ce71557dda6850cbe152e13e6b9",
+        "bytes": 24
+      },
+      "stderr": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m1/graal-validation-20261020-01/smoke/stderr.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0
+      }
+    },
+    {
+      "name": "regressions",
+      "command": [
+        "python3",
+        "tools/regression_manifest.py",
+        "--check"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs",
+      "status": "executed",
+      "exit_code": 0,
+      "elapsed_ns": 66698792,
+      "peak_rss_bytes": 26361856,
+      "user_cpu_seconds": 0.04375,
+      "system_cpu_seconds": 0.016064,
+      "stdout": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m1/graal-validation-20261020-01/regressions/stdout.bin",
+        "sha256": "217946fe72373579b8e2b9cd645c387eb49efa1a70cec4111629ce6b2b0ef460",
+        "bytes": 98
+      },
+      "stderr": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m1/graal-validation-20261020-01/regressions/stderr.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0
+      }
+    },
+    {
+      "name": "benchmark-contract",
+      "command": [
+        "python3",
+        "tools/benchmark.py",
+        "--check-contract"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs",
+      "status": "executed",
+      "exit_code": 0,
+      "elapsed_ns": 106886375,
+      "peak_rss_bytes": 32161792,
+      "user_cpu_seconds": 0.06426899999999999,
+      "system_cpu_seconds": 0.020489,
+      "stdout": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m1/graal-validation-20261020-01/benchmark-contract/stdout.bin",
+        "sha256": "836c7c60eb79a003bf1a03d5d509c105e4166d9b8c5a4e4667d2a13016c2522f",
+        "bytes": 51
+      },
+      "stderr": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m1/graal-validation-20261020-01/benchmark-contract/stderr.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0
+      }
+    },
+    {
+      "name": "frontend-contract",
+      "command": [
+        "python3",
+        "tools/m1_frontend.py",
+        "--check-contract"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs",
+      "status": "executed",
+      "exit_code": 0,
+      "elapsed_ns": 84467334,
+      "peak_rss_bytes": 29442048,
+      "user_cpu_seconds": 0.054875,
+      "system_cpu_seconds": 0.017566,
+      "stdout": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m1/graal-validation-20261020-01/frontend-contract/stdout.bin",
+        "sha256": "f4fb812f98597cc4ff9804b61c6f989ade41cb6c06d8756a2ac777e5e1fa2096",
+        "bytes": 37
+      },
+      "stderr": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m1/graal-validation-20261020-01/frontend-contract/stderr.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0
+      }
+    },
+    {
+      "name": "semantics-contract",
+      "command": [
+        "python3",
+        "tools/m1_semantics.py",
+        "--check"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs",
+      "status": "executed",
+      "exit_code": 0,
+      "elapsed_ns": 88178208,
+      "peak_rss_bytes": 34799616,
+      "user_cpu_seconds": 0.064799,
+      "system_cpu_seconds": 0.016898,
+      "stdout": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m1/graal-validation-20261020-01/semantics-contract/stdout.bin",
+        "sha256": "52eae15fe823cc158308b47c6965aef6eab830891b4133e5b4eb99d041a88db8",
+        "bytes": 38
+      },
+      "stderr": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m1/graal-validation-20261020-01/semantics-contract/stderr.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0
+      }
+    },
+    {
+      "name": "python-tests",
+      "command": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools/tests",
+        "-v"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs",
+      "status": "executed",
+      "exit_code": 0,
+      "elapsed_ns": 8396828625,
+      "peak_rss_bytes": 58720256,
+      "user_cpu_seconds": 1.570987,
+      "system_cpu_seconds": 3.63343,
+      "stdout": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m1/graal-validation-20261020-01/python-tests/stdout.bin",
+        "sha256": "245c3740568636227a676ed0539d090e9647b9e0f99ff0b4635007077b125e1f",
+        "bytes": 198
+      },
+      "stderr": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m1/graal-validation-20261020-01/python-tests/stderr.bin",
+        "sha256": "1279312bda03d28be97f84e8b84b5fe8fb348c9450be4bcefb9992cca14c787b",
+        "bytes": 21203
+      }
+    }
+  ],
+  "passed_commands": 13,
+  "python_tests": 141,
+  "rust_tests_passed": 45,
+  "rust_tests_ignored": 1,
+  "ignored_test_reason": "Bounded frontend differential probe is intentionally invoked by its runner and CI, not ordinary cargo test.",
+  "evidence_archive": "reports/m1/validation-graal-evidence.tar.gz"
+}

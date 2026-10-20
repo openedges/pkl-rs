@@ -123,6 +123,13 @@ jobs:
           python3 tools/m1_frontend.py --check-contract
           python3 tools/m1_semantics.py --check
           python3 -m unittest discover -s tools/tests -p 'test_m1_*.py' -v
+      - name: Verify retained Graal compilation evidence (no JDK acquisition)
+        run: |
+          python3 tools/evidence.py verify reports/m1/graal-evidence.tar.gz
+          python3 tools/evidence.py verify reports/m1/graal-cause-evidence.tar.gz
+          mkdir -p target/m1/retained-graal
+          tar -xzf reports/m1/graal-evidence.tar.gz -C target/m1/retained-graal
+          python3 tools/m1_graal.py --check-report target/m1/retained-graal | tee target/m1/ci-graal-verification.log
       - name: Compare bounded frontend values and parser diagnostics
         run: python3 tools/m1_frontend.py --output target/m1/ci-frontend
       - name: Record runtime values and known diagnostic byte differences

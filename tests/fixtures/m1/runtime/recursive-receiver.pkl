@@ -1,0 +1,5 @@
+class Fibonacci {
+  n: Int
+  function fib(): Int = if (n < 2) n else new Fibonacci { n = outer.n - 1 }.fib() + new Fibonacci { n = outer.n - 2 }.fib()
+}
+function run(seed: Int): String = new Fibonacci { n = 24 + seed }.fib().toString() + "\n"

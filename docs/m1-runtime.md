@@ -209,18 +209,28 @@ control, not a newly paired Java measurement. The measured native `Value` occupi
 32 bytes and an instruction occupies 40 bytes. These target-specific sizes do not
 establish a production object-layout or memory policy.
 
-No measured Java workload target completed Truffle compilation. The pinned GraalVM
-reported `FrameWithoutBoxing` materialization bailouts. Separate diagnostic runs
-with typed integer, untyped integer, and untyped floating inputs reproduced the
-same bailout while checking every result. Thus neither the type annotation nor
-checked integer addition alone explains the failure; this is an inference from
-those variants, not an identified compiler root cause. A separate attempt to
-disable tiered compilation was rejected because the pinned Pkl engine does
-not allow the experimental `engine.MultiTier` option. That failed experiment and
-the full compiler stack traces are preserved in the
-[compilation investigation](../reports/m1/runtime-compilation.json). The original
-oracle configuration was not changed. Fully optimized Java comparisons remain
-an explicit unresolved requirement.
+No measured Java workload target completed Truffle compilation in the timing
+runs above. The pinned GraalVM reported `FrameWithoutBoxing` materialization
+bailouts. The initial typed integer, untyped integer, and untyped floating controls
+all failed, while an initial `engine.MultiTier` attempt was rejected. Those
+observations remain in the [initial investigation](../reports/m1/runtime-compilation.json).
+
+The [closing investigation](m1-graal.md) localizes the failure to
+`VmUtils.skipInvisibleScopes`: a loop merges the virtual current call frame with
+an enclosing materialized frame, forcing allocation that Graal's virtual-frame
+contract forbids. Compiler graphs, source-position traces, recompiled-original
+negative controls, and explicitly separate semantic-bypass controls establish
+this path for the original arithmetic and recursive fixtures. The narrow bypass
+of parameter reads leaves the recursive lexical-call path failing; bypassing the
+shared loop also permits the original recursive target to compile through Tier 2.
+
+Separate receiver-field arithmetic and recursive fixtures compile actual Pkl
+functions through Tier 2 using the unchanged pinned JAR. Their outputs match
+baseline per-seed bytes. They establish positive compilation controls, not a new
+performance denominator: their input access and allocation differ from the old
+workloads. The diagnostic overrides omit invisible-scope semantics and are not
+production fixes. The baseline remains unchanged. Fully compiled Java/Rust
+performance comparisons still require new, matched measurements.
 
 The [runtime evidence archive](../reports/m1/runtime-evidence.tar.gz) preserves
 both performance experiments, the initial failed fixture run, diagnostic

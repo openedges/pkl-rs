@@ -25,6 +25,14 @@ resources on cancellation, close, and timeout.
 Host-sensitive VM performance measurements remain local, separately recorded
 experiments on a quiet host.
 
+The M1 job also checks the retained Graal compilation archive and rederives its
+diagnostic verdict from raw captures, source/artifact identities, correctness
+records, and exact guest target/tier events. This is portable verification of a
+macOS arm64 acquisition, not a fresh Linux Graal execution or a benchmark.
+Missing target compilation, changed bytes, and incomplete cases fail the check.
+The separate diagnostic class override remains outside the oracle baseline.
+See the [compilation investigation](m1-graal.md) for acquisition commands.
+
 The Java job pins Python 3.12, Temurin `21.0.12.1+1`, and action revisions. Oracle
 verification also checks the actual JDK vendor/build and Pkl artifact identity. A
 missing artifact, incompatible JDK, failed inventory check, missing case, corrupted

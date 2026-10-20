@@ -1,0 +1,2493 @@
+{
+  "schema": 1,
+  "timestamp_utc": "2026-10-20T05:56:42.670737+00:00",
+  "seconds": 15,
+  "acquisition_directory": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m1/graal-closing-20261020-01",
+  "acquisition_workspace": "/Users/cody.ij.hwang/Projects/pkl-rs",
+  "scope": "bounded original failures, recompiled negative control, semantic bypass diagnostic and genuine unchanged-baseline receiver arithmetic compilation",
+  "performance_evidence": false,
+  "compatibility_complete": false,
+  "contract": [
+    {
+      "id": "arithmetic-baseline",
+      "source": "tests/fixtures/m1/runtime/arithmetic-workload.pkl",
+      "workload": "arithmetic",
+      "overlay": null,
+      "line": 1,
+      "required_tiers": [],
+      "require_bailout": true
+    },
+    {
+      "id": "arithmetic-recompiled-control",
+      "source": "tests/fixtures/m1/runtime/arithmetic-workload.pkl",
+      "workload": "arithmetic",
+      "overlay": "original",
+      "line": 1,
+      "required_tiers": [],
+      "require_bailout": true
+    },
+    {
+      "id": "arithmetic-frame-bypass",
+      "source": "tests/fixtures/m1/runtime/arithmetic-workload.pkl",
+      "workload": "arithmetic",
+      "overlay": "bypass",
+      "line": 1,
+      "required_tiers": [
+        1,
+        2
+      ],
+      "require_bailout": false
+    },
+    {
+      "id": "arithmetic-receiver-baseline",
+      "source": "tests/fixtures/m1/runtime/arithmetic-receiver.pkl",
+      "workload": "arithmetic",
+      "overlay": null,
+      "line": 3,
+      "required_tiers": [
+        1,
+        2
+      ],
+      "require_bailout": false
+    },
+    {
+      "id": "fib-baseline",
+      "source": "benchmarks/fixtures/recursive.pkl",
+      "workload": "fib",
+      "overlay": null,
+      "line": 1,
+      "required_tiers": [],
+      "require_bailout": true
+    },
+    {
+      "id": "fib-frame-bypass",
+      "source": "benchmarks/fixtures/recursive.pkl",
+      "workload": "fib",
+      "overlay": "bypass",
+      "line": 1,
+      "required_tiers": [],
+      "require_bailout": true
+    },
+    {
+      "id": "fib-receiver-baseline",
+      "source": "tests/fixtures/m1/runtime/recursive-receiver.pkl",
+      "workload": "fib",
+      "overlay": null,
+      "line": 3,
+      "required_tiers": [
+        1,
+        2
+      ],
+      "require_bailout": false
+    },
+    {
+      "id": "fib-scope-recompiled-control",
+      "source": "benchmarks/fixtures/recursive.pkl",
+      "workload": "fib",
+      "overlay": "scope-original",
+      "line": 1,
+      "required_tiers": [],
+      "require_bailout": true
+    },
+    {
+      "id": "fib-scope-loop-bypass",
+      "source": "benchmarks/fixtures/recursive.pkl",
+      "workload": "fib",
+      "overlay": "scope-bypass",
+      "line": 1,
+      "required_tiers": [
+        1,
+        2
+      ],
+      "require_bailout": false
+    }
+  ],
+  "limitations": [
+    "the zero-level frame bypass intentionally omits invisible-scope semantics and is not a production fix",
+    "compilation events do not establish optimized performance or Rust/Java ratios",
+    "other guest targets can still fail compilation; complete raw diagnostics are retained"
+  ],
+  "sources": [
+    {
+      "path": "sources/benchmarks/fixtures/recursive.pkl",
+      "sha256": "10df4cdb8a2e74e31ca41bbd1cb02dbf84830ce154050f9b9c325fa8a2aebeda",
+      "bytes": 162
+    },
+    {
+      "path": "sources/external/pkl/LICENSE.txt",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "bytes": 11358
+    },
+    {
+      "path": "sources/external/pkl/NOTICE.txt",
+      "sha256": "d03b8db1a0d36ba65550ba30a51c7897f4b48b0eae7582d3f0576ea41e23d48e",
+      "bytes": 8952
+    },
+    {
+      "path": "sources/external/pkl/THIRD-PARTY-NOTICES.txt",
+      "sha256": "8ac4f6b18b00227f8dbc5222c6259f6cb5084ad0053ebcebf83d5147cea31aaf",
+      "bytes": 32491
+    },
+    {
+      "path": "sources/external/pkl/build-logic/src/main/kotlin/BuildInfo.kt",
+      "sha256": "a082b8aa717d9fb6f15fee6f4c74c62089b5cae1d1666d55cbb0d70318920ba6",
+      "bytes": 16556
+    },
+    {
+      "path": "sources/external/pkl/gradle.properties",
+      "sha256": "1d76fc163cba8cabc502948a7dbc05cf7b7afc4a5e8efe35b3a746a89829be13",
+      "bytes": 707
+    },
+    {
+      "path": "sources/external/pkl/gradle/libs.versions.toml",
+      "sha256": "f2c818bfff6f30a096bcca18256ea9aae967a21707babae8c2b34a77a225b046",
+      "bytes": 8360
+    },
+    {
+      "path": "sources/external/pkl/pkl-core/src/main/java/org/pkl/core/ast/expression/member/AbstractInvokeMethodLexicalNode.java",
+      "sha256": "02e16eaa0d6994bb61bbd7cd5c61c989cfb4049c122f16a1ca6dcbf949dca471",
+      "bytes": 3372
+    },
+    {
+      "path": "sources/external/pkl/pkl-core/src/main/java/org/pkl/core/ast/frame/GetEnclosingFrameNode.java",
+      "sha256": "05b720008e41e8bd167a78520f41e7c5eefb955afc5d857ac8b55837ac5d1ac5",
+      "bytes": 1184
+    },
+    {
+      "path": "sources/external/pkl/pkl-core/src/main/java/org/pkl/core/ast/frame/ReadFrameSlotNode.java",
+      "sha256": "256929240730f1ddcd1be5a58e9fb7c9f31d47131bba81b34a4979713fa6cfe9",
+      "bytes": 2168
+    },
+    {
+      "path": "sources/external/pkl/pkl-core/src/main/java/org/pkl/core/runtime/VmUtils.java",
+      "sha256": "17a5b4a3750ec5ebf9a1bc8ed930cd6165f072ca97ce9d37f4f4043ac8fcce2a",
+      "bytes": 35993
+    },
+    {
+      "path": "sources/external/pkl/pkl-tools/pkl-tools.gradle.kts",
+      "sha256": "c32aca46fa3fb845b205ecdf5b75d037e0b1f4ac6b6cd8cb9d1359667a06aa80",
+      "bytes": 6320
+    },
+    {
+      "path": "sources/oracle.lock.json",
+      "sha256": "7b77395ff5b64f7a220db74975e4c3858a36b19c5c0f5bca92681e3b1bc6504b",
+      "bytes": 4421
+    },
+    {
+      "path": "sources/references.lock",
+      "sha256": "278f48fd7697459281aa78a706c9ca57222f36a8c0785d838a6449fbaf26d30b",
+      "bytes": 648
+    },
+    {
+      "path": "sources/tests/fixtures/m1/runtime/arithmetic-receiver.pkl",
+      "sha256": "cf0dc6f44ff6fd0a5a58e4187ebe0a5deabda15bb97b4d82b7392e5dae9cf5c5",
+      "bytes": 801
+    },
+    {
+      "path": "sources/tests/fixtures/m1/runtime/arithmetic-workload.pkl",
+      "sha256": "c3fe0ee99ea2e04c60b35ce9467c21e5ff1cc3b2577360c65bed02e7c93437b8",
+      "bytes": 696
+    },
+    {
+      "path": "sources/tests/fixtures/m1/runtime/recursive-receiver.pkl",
+      "sha256": "201f4b846b918d2d90b634b132e5a571b0770d44ee84a3a4c3dc290fe04126a0",
+      "bytes": 243
+    },
+    {
+      "path": "sources/tools/OracleRuntimeProbe.java",
+      "sha256": "19885ab4f5a65bd722e2d25d9794470b310515273c210f9a85309230fa1911bb",
+      "bytes": 268
+    },
+    {
+      "path": "sources/tools/benchmark.py",
+      "sha256": "a3822a1702abf7a6a385b1d8173d45e3ba941b5fb7e80cb66a0b86adf1681604",
+      "bytes": 33908
+    },
+    {
+      "path": "sources/tools/java/M1GraalProbe.java",
+      "sha256": "7fed1fb059da75c382d36d38d166bb0ec8e22e69a1900e43d2ad668e09dfeeaf",
+      "bytes": 3111
+    },
+    {
+      "path": "sources/tools/m1_graal.py",
+      "sha256": "638f30dc648394a86decda9a595df98023528a0ef950c3aefe16fb8dc9d2cd93",
+      "bytes": 27444
+    },
+    {
+      "path": "sources/tools/oracle.py",
+      "sha256": "0433e4cec011d8daadf0f779d643712019bc6334cce205f02c75799c232f533e",
+      "bytes": 16102
+    },
+    {
+      "path": "sources/tools/tests/test_m1_graal.py",
+      "sha256": "ca8dc8065809122359fd12fba86a705a78167a39fcc677e30ac4dd557c85785f",
+      "bytes": 19360
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "artifacts/bypass/org/pkl/core/ast/frame/GetEnclosingFrameNode.class",
+      "sha256": "e21335078405388ccd522348d75c5fd5e4683e7796a4140d3b88f9e12265c7b0",
+      "bytes": 866
+    },
+    {
+      "path": "artifacts/helper/M1GraalProbe.class",
+      "sha256": "fcd421500460217ce379f3535165c3e2d4d39df3b9e0480a98820145b80c1e6a",
+      "bytes": 4576
+    },
+    {
+      "path": "artifacts/original/org/pkl/core/ast/frame/GetEnclosingFrameNode.class",
+      "sha256": "39e19f7dbd56e57ef7e43ad259c54c453f61ae05c97133e2364a1a4b3c6eab93",
+      "bytes": 824
+    },
+    {
+      "path": "artifacts/pkl-tools-0.32.0.jar",
+      "sha256": "c3b6f6215a08b31453b0fb0edd8c9da0aee31233f65abb8ab07f9c945151e059",
+      "bytes": 26877190
+    },
+    {
+      "path": "artifacts/scope-bypass/org/pkl/core/runtime/VmUtils$1.class",
+      "sha256": "783d73f073eba3887272ac84eb4b724d51d0e91e981191508f7bbbfdb5bd5f3d",
+      "bytes": 832
+    },
+    {
+      "path": "artifacts/scope-bypass/org/pkl/core/runtime/VmUtils.class",
+      "sha256": "752d135f0af1450946df9b391409ba42a6aa4ad062722f04df9a2d7395147704",
+      "bytes": 36223
+    },
+    {
+      "path": "artifacts/scope-original/org/pkl/core/runtime/VmUtils$1.class",
+      "sha256": "372c898c85c25222bf6b4f79891d68b1d6d566fb8a42565d4097c3fd30c3c4c5",
+      "bytes": 832
+    },
+    {
+      "path": "artifacts/scope-original/org/pkl/core/runtime/VmUtils.class",
+      "sha256": "f4f160b97ba6c9f9d60db3ccaa9d38263561fac5b38cbabfa051be9af254f40c",
+      "bytes": 36279
+    }
+  ],
+  "expected": [
+    {
+      "path": "expected/arithmetic/seed-000.bin",
+      "sha256": "0a175804c6121bb5c18d731b51ff688573a3e849e31b15d98db7d3ebca77a06f",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-001.bin",
+      "sha256": "2f3b1a647736218c52cd637eebd7b2ce8ff6bd74592c8330a9ba44d09e87bfa9",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-002.bin",
+      "sha256": "0c4ac44319057095e81430ece2a62060e1a54534f8705341d87495d5793d3e94",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-003.bin",
+      "sha256": "251162b16155535de1f0f68c61ef6b8a5ee033ab83dd3e866345a7f4c27c6e4b",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-004.bin",
+      "sha256": "a47e085a7d34a217298cb123b2b4524102c66307659805122e3b7dbe58dcd210",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-005.bin",
+      "sha256": "067eb10bda23eb93cd7ad768777582e4a322f2241e7e9c4306186ec7c25eab25",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-006.bin",
+      "sha256": "26480e3574424293795346425b6e91093c3d11c77614386a34f412c090859e38",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-007.bin",
+      "sha256": "d598b1b8173419235d55d477a94a913a6fbc28def778d642ca56eba263ce3c62",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-008.bin",
+      "sha256": "d0da1af52e98f34c3aff69217697a224e02319e12382c699618bea678ba89eb2",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-009.bin",
+      "sha256": "644053e42eae43b95919ae4d1ba781ddcade453418cd6ab87e7e0a2c873342af",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-010.bin",
+      "sha256": "af1b4ceb0da8dbd31e107af811de3965b3dd6096e48b968df5dc80faa114fda0",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-011.bin",
+      "sha256": "e37d4b8af9e720ee28ad9fdb31c8c07a3ff4e85d15b0b93a37fdda2bfedb0cfb",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-012.bin",
+      "sha256": "0e74f3e37a16c676bf3b87ad8b65ad4baa393dd26c8110fd5099ce8d9b2298a5",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-013.bin",
+      "sha256": "91f80f3e9861fc97bedd19cb35c3faf16c0ba4ce754cf77ddcb86281586ffd66",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-014.bin",
+      "sha256": "3bf362dd9a328a6877a4fb452f2137e1894e8608979af3b32a96e6ab4a39a435",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-015.bin",
+      "sha256": "a416fca7788000633fbbc9e02537f51ea60abf1db103303a0fb3f6f5a848a965",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-016.bin",
+      "sha256": "6cce069177cd58ebda99fbb5ae0895e832b223c363644270f2439ec8be44115c",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-017.bin",
+      "sha256": "425584af14978145c8533ebac083ab2d9fd913c91987fef226efdef0353a4d79",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-018.bin",
+      "sha256": "281caf41ac36f3bb3d8632d79fc1c6063461fc8dd7109dee4e4e83ff94b5776d",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-019.bin",
+      "sha256": "cc53fd82eb6b3abb855e9c4678725818fa456dcf4add1e71dc9c780ab53784b6",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-020.bin",
+      "sha256": "13848743748e003061d382492300e39a8f0c67428ffe45e6f0b59478d940ca8a",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-021.bin",
+      "sha256": "ffb8a68d5b41cb3e233d15c76739c0852331605d644ef7be74d4ceff31a47142",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-022.bin",
+      "sha256": "338db67f8c60690b8cb68e81804c2e68c8e887455bfeceb810b70eeee430325e",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-023.bin",
+      "sha256": "2fc184dd8e7de0c2993ad726850007205c48e74cfb3915de5334c8b28e6b390e",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-024.bin",
+      "sha256": "34a2b99c02411fb2bf674683766efcdc2b53ec76559a1b0776af01ca8415cbb2",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-025.bin",
+      "sha256": "6ac26f2592b5a72c422c5d4b277a74b95f5ae67ad0d04794413752d845fec6eb",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-026.bin",
+      "sha256": "614cb3fc60cb6dc183a042b4603f2a88d5c7fdf4ec626f13b8e5121af01f09ea",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-027.bin",
+      "sha256": "6b106b195b8d3b97992853e16d9db70598978c8ae648d4571f3e11f60e187f91",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-028.bin",
+      "sha256": "bd7997353a3a3c6f6da0e683dbbddd6fb0485481ff2b595cc2008a2e1a98f369",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-029.bin",
+      "sha256": "b69d122c8ac319ed82b2cb1ff6e2a10ae515a07abced7e6ccefc511218b1323e",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-030.bin",
+      "sha256": "6592e596d7db6dd03867efd74f16d3f2d8e32c7376aabc768d1d146380a036ae",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-031.bin",
+      "sha256": "7f7af6137ce9bdf5be21a5855fb0134b9ff84cd77d39c4569ff221e2769ff384",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-032.bin",
+      "sha256": "398a15bc9bdc4db26d1d21dda9bf0e6e018ae388020e0e1398f5ecc9789c18e0",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-033.bin",
+      "sha256": "b1085a6893111a20747e97d0a831afdee971ea3edf39c713a87fa1c2b1b78b0f",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-034.bin",
+      "sha256": "7d96ff26c3d3fa6e137992c792aa9bd665d44f4b7125e354249b913df6b3aa2e",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-035.bin",
+      "sha256": "1c753160f146c373c539040c119db2a019d58f51f226f1e009763326e8a7c302",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-036.bin",
+      "sha256": "b019b5be015f8722687f1ee30aded6a195a53f7eabd271ee08b216de6c94e7da",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-037.bin",
+      "sha256": "ad35e7efe14a98ba8d64059ec64c9dd7f8df8eb8ef97c6fc5fd17e8a929803a0",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-038.bin",
+      "sha256": "cd4dc3be25929d87a6011db29e253d6ce02e88bb9f45742a969eb5b5b0125203",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-039.bin",
+      "sha256": "e5c668c929c59e01a6e63c9c2a74ee6c46ca1c1c60cdf3c5c5cd2c4c21be9ef6",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-040.bin",
+      "sha256": "0a7e9ae0aab05e51d0d14cce4653932df2d3a9850e0c19b596780481fd0d5ecf",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-041.bin",
+      "sha256": "fe94789a48da5dd42e03fa819d7ab6a59e7627f338743b3e8fbf0a537fb1c87a",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-042.bin",
+      "sha256": "69fab7faf4c692add7a21b0a20406cd807122f73537d38c454cd4e7f336fe764",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-043.bin",
+      "sha256": "f463fefdbeab73891baa80455f3ecf480f3e5b1130167d0ebc9026b7848deb5f",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-044.bin",
+      "sha256": "66a3bb31c614dcd81e10da9415b11086c43814f333ace00061a13bbbdcb6cd46",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-045.bin",
+      "sha256": "96b6182f87ded1baa28f8ef40c8cf03714642fa3846be3d8be9170f0d604aabc",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-046.bin",
+      "sha256": "037cce21f9d47121a4b74971cf260545f6f5b8b677c93f175522adc6aa81a163",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-047.bin",
+      "sha256": "4cf826dd75e4707108e654bbfca6bc83cb1d01fe9ed8bcfda4c116ee486be12e",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-048.bin",
+      "sha256": "98ee81c41d70b85ddfbd42869b0eebe22d132a3f70510c61b55c05a813133ee3",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-049.bin",
+      "sha256": "d3d3950d7bc298fb892ef81757a3120b7039ca2910fa882f9d876bf15cfe83b0",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-050.bin",
+      "sha256": "f45d0df1d4e753e786cdc0100aff5844f019a36b280ab07cd851e492f91c88c1",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-051.bin",
+      "sha256": "229be2d76fe86fcf489bd9d5cfc6f23eead7cc4d4db56333a0f873c50b0b87d3",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-052.bin",
+      "sha256": "d2c3f7d7309a3e349ca10bb746d5c8a29f2310df80b9ffdf284cb2845dcceee2",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-053.bin",
+      "sha256": "2e8dc7a001a107c61282df6b5e3f0695a0dd04efbdbd6976ed005ffb10472a15",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-054.bin",
+      "sha256": "a9feb4e42c2596a570a7705ae60b867997f582fa9f39176f212235ee960b5b13",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-055.bin",
+      "sha256": "ca3b40e3f4a5398e09fb11f8eab42096630c3acbd6dce26656a90fdf72b87169",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-056.bin",
+      "sha256": "ad902409795655b93688943fbaf2d3decc38e9e6c2067af02b370d886b1d704d",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-057.bin",
+      "sha256": "deca4a03814c2533efd11bc8dfa61fce410ff9a7520daedea366946074dffbde",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-058.bin",
+      "sha256": "cb217731c496b8e1dc52da3f0fb426360032efca6bec5756917dd52c438a2b8b",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-059.bin",
+      "sha256": "cd6ace28cdbf45131896a1e83854cd798f1973bf79e62ba7aa60f07316184a9d",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-060.bin",
+      "sha256": "41cf091084d6f30cf45e97b16bf165283dc5ab27f7999f7d31bd405e082e3fdd",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-061.bin",
+      "sha256": "724c34e3d1eb1b3ac658735cc811ba8901be8354eca7d7c183af6305ccf15925",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-062.bin",
+      "sha256": "453afb3d310def9d21d43098461dcd25b506fe4b760db482b7b524e82b14b5cc",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-063.bin",
+      "sha256": "38b3642ecec1db9936dbcfde078967b4cb41bdaf5188a745fc7c523b619acb49",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-064.bin",
+      "sha256": "1c40b7658984206544b8b02afdb774bed2bcd4a986a0a7140a9669075edc7a50",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-065.bin",
+      "sha256": "64cd896af0dfaaba4756f32a34a3dec6590687f206a6228274ec847bc6dfb8bc",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-066.bin",
+      "sha256": "4ec586ca911af6331bef99865cd691e97cc7d340f3489ed740e4a34012af27fa",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-067.bin",
+      "sha256": "6fe79ab1802c7c29a95fd5e712078763a0bce84f548fa5e37080f7ba6af1d52e",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-068.bin",
+      "sha256": "bb76dc3c076cd8e06b6b727b1913eff38a71ffc30bd6a4916e52fd39798ec81f",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-069.bin",
+      "sha256": "411b255e8c928b62eb7725b2ce97c600699944a1353e4bc895024cd08c7bc49d",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-070.bin",
+      "sha256": "54c78b45c6a21fd75531ad8f48f43dba39eca748b0fa6d5b41a6cd15d57df36a",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-071.bin",
+      "sha256": "b44891323cc7a2d73ec01793e1e4c42c7e39641c3e7a2ba0eb3e451ac7ed18cc",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-072.bin",
+      "sha256": "adfdf777372e4df2c571cb656de68b7be4dfa47fd6220498807842390242ce97",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-073.bin",
+      "sha256": "5a8872eea42b4ef89a5f912884a55d5077011f4e1f25b2133b3c7bb9d363c8b2",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-074.bin",
+      "sha256": "6d1a1e482ee8e89826600f85acf97591c855e32e07096e013ed5e81f4805849c",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-075.bin",
+      "sha256": "67d4a2b9f78db85adcf58e2f3e2b80a751fbbe5f042991036f2cc3921cc3e25d",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-076.bin",
+      "sha256": "479ef404e9ca3e748232304348bc0113a38f74cce22826bbe2fa807cfa89a9a9",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-077.bin",
+      "sha256": "50bce88abd13ae4f3224d251a16edd7435341d0db068a26069e669c5140bc45a",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-078.bin",
+      "sha256": "c08a1a2684950b2e0cbfa5d8f8d13350b30faa398bd7d32333ed703a78b1dd40",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-079.bin",
+      "sha256": "a3adef724ce899f5dac011fcb148a1c74465745cb70b9e5e6554071a6d7689d8",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-080.bin",
+      "sha256": "55f96e4d0df94dfd6f9572544dc05c92c67fe56c5a28ee74e3263c3712b79558",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-081.bin",
+      "sha256": "557f5337d3e677163ab18acb9b41e0d29e9aa83fd90943ff6ad3baaa90bb51a5",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-082.bin",
+      "sha256": "d49cf7fc88dfb440638ea6e74ed8c528468ac73ba661ce612fe39e9cd701bfc1",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-083.bin",
+      "sha256": "d1069877e7102e0b4c7ad7dad4074e9510420a2e2a1b6996bddf0a1c228e6749",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-084.bin",
+      "sha256": "1ec6907caa76e9263d807c7d61cc1875e46c4417bc3190ec8cc1acc9ea216113",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-085.bin",
+      "sha256": "971da1f0faedbf8e001fbce469a319767f74c2ca9251b4e34bf5b96fe44f8761",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-086.bin",
+      "sha256": "303e652fb5d5c3ea426602416f150519e44fdfa7fec5ef47c2d3e55c6fae2100",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-087.bin",
+      "sha256": "9123176eaf6a91a77e546cc2fc89d566f85e0b5317f0362a2f21351fad80db71",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-088.bin",
+      "sha256": "d44f637a200880a3dd20cf617485f6b383de1f02b98ee96df2bf0e70c22e8291",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-089.bin",
+      "sha256": "5d2f20530ac39a03ae7c469c554f185030e676c02748ff5f6bcae2999e37e2d0",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-090.bin",
+      "sha256": "0c943b6adf66adf86bb7f84faa1d9150a1e6e5559bf2dd7ada2f6897cc3b0e0f",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-091.bin",
+      "sha256": "350c94d619f6aba3379500ff11bfcca6e58b0afe5b3624d0ad56fa607845e38c",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-092.bin",
+      "sha256": "8a3e3a819b86e0e2ba5a60966a0792985e556c021f5995225501688b5e7e8ce7",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-093.bin",
+      "sha256": "f6d052705007509376c88da5d99d1b60b8c9413564c111a2fb46e9f6ea134e5f",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-094.bin",
+      "sha256": "ae53a424384a3eee3b5a0147e239c05bbdc6767d6f1827e95e4545beccc67d1c",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-095.bin",
+      "sha256": "532d79cc5e85d9ecd66260c63b967c2085136c8fb07b392565a62684c353108d",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-096.bin",
+      "sha256": "584f719804cbb166c42754a65f12a9fdae0e79cbcaabb1f7c90dc1c56c926484",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-097.bin",
+      "sha256": "3517a0cd78deae06eb49d785375fc4dd776b66196978dbbac164a67ccd648d64",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-098.bin",
+      "sha256": "76bf14af3f53533f119a421903447d125a071ec170646c78390e8c33ffde372b",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-099.bin",
+      "sha256": "3810958e93e85a27a26bcb094ff158d5cc980a073c20335a00f93bc3ce41be39",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-100.bin",
+      "sha256": "5d10801e95a05cfb95f64a4f8ca5534b0a4915a54c4faf4148ed2a472c3970a7",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-101.bin",
+      "sha256": "e8f4e8455a29aec03c4d4e877d4009e8ad63ff041bac813acb1240ed61e2ecaa",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-102.bin",
+      "sha256": "6f177a3d23d6f1cd8170a59cb5e79fcfebaf00957f9c61d54bdfd348e330615f",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-103.bin",
+      "sha256": "425ab9e9e0aa2213b4c3e192fa110a9be0a55c21956a474204ea526d294d8bac",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-104.bin",
+      "sha256": "8b87536f8a2b8b843e653af46bd30d2806273249f4e1037a4392192c82fa7d80",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-105.bin",
+      "sha256": "20d0fbf03df31f3d680e0b9db8b6508727ad9672135155185fdee11f8e07e7f6",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-106.bin",
+      "sha256": "0f0213af69ae68e40aa2a4d160290283fc71be471d8b132a25bdd63eba5c680e",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-107.bin",
+      "sha256": "c2c358e9dd15de84331652b848b7ad410ef3f0f8a06a312065349f6c58991966",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-108.bin",
+      "sha256": "11d1726fcc6f78ee81108d1db770c7d3020c9e285fb438ec1868dd983835e7cb",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-109.bin",
+      "sha256": "7df0c14cb0d42be40feaed0355561db88ec8cbf774d2d4389f14e02df25b17a7",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-110.bin",
+      "sha256": "3269656aff282ecbab7813b8f2c84adf2bfa0fe2b25a144cd6196f82a63d82fc",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-111.bin",
+      "sha256": "3f9fadc2cc3a306e6bf75dc0c5fb24f1515e700956af243b9b2188dbc1bd6470",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-112.bin",
+      "sha256": "5fcb29b70065f434966d563b60d826e44a200105527fa8534bcb319a4b257c69",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-113.bin",
+      "sha256": "81e649b6fcfd9d691d4ac1337a5b4427cb3116cb0a857515389b60cbfa1daf3e",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-114.bin",
+      "sha256": "e8b4773f260df0fd98d72e3dab8233824d0e992e2657819ebf0f98ccd7fadb28",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-115.bin",
+      "sha256": "db6a986583ff7e003de0dbbe1291c835b5ac445069802302026b433df50a30cb",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-116.bin",
+      "sha256": "ea7fa9e4cbadf19469998096bf8d187c62235aed45c125a25d5541efe249ad3d",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-117.bin",
+      "sha256": "98cb1ca82c6624e9044ed5d60fbc9583fae3fbfcff4d8a15800ff81b980856c7",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-118.bin",
+      "sha256": "aee98c562feee06f1babc0a9a224f870858236d234cf1064eb075f17f303435c",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-119.bin",
+      "sha256": "f338a66d1dc630488f938baf32f8bd95bf6e26fb48e022258e5349c431b618c1",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-120.bin",
+      "sha256": "d7ff7ef674aac2a80726588be254df5549df527d5a1a5f6f6e1477a0bf51ac8d",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-121.bin",
+      "sha256": "16d0382287d4ec2ccc680b917a023864a2affa628f0016a80d7d2dd6e0f42c92",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-122.bin",
+      "sha256": "8e54c1a1f0c1be9de1d0099282496fdc5a10e5d51417e3f4327cde62b62612c2",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-123.bin",
+      "sha256": "cc2632d8e992a947a9b8af5be997cc4de0c4914067fe49e754435993606835f9",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-124.bin",
+      "sha256": "fe44376f5c09fc2fb06ec35c8e2dc052c840c2976029968233fa02d011d21bc5",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-125.bin",
+      "sha256": "c8aa21ac97385cb8c41a6146c1dbe42ff515a8c5dbec8e1fc2303c8aa4206585",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-126.bin",
+      "sha256": "1d6f777772c66c6c8d4040f2d794aaf25eea60d093fa8205a549a9ebe9b89785",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-127.bin",
+      "sha256": "ce332c83a236eaf5a0d83d4630a615dc665115149d1f8bb503c92882819804ab",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-128.bin",
+      "sha256": "c8f3716c3e5efd2c425d57dd4676a06075ed672cb9a004275a6a1a5a459e708c",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-129.bin",
+      "sha256": "ca90f39707c002760f83f743b8ae17bd6fe9705bcb580eca917aa63d515ab082",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-130.bin",
+      "sha256": "a5266239ab5a99c8456d926461b67c9953887f857fd3a7d86dc399e5012b9a5d",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-131.bin",
+      "sha256": "e1fca06213ab71884fa4f52cb630c98d15931df3a9daec2f59b8607c61b2a4d5",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-132.bin",
+      "sha256": "bdca6431f7773a9eea643ed8536901a0662929010d52a5a8a585c9c4d7e9824d",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-133.bin",
+      "sha256": "1a4050a4a05b3b797c530a64f5a1cd810478d0a70288cc32700b54481af5691f",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-134.bin",
+      "sha256": "17e07e2750f3e5656e5da1728aeebf94189a94d279faf701ee79c795a7d5b91b",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-135.bin",
+      "sha256": "024e63e143c4b74cdac88952f787759c4430a26b008ed906cf25779619e481b7",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-136.bin",
+      "sha256": "9740a36f40109182f5f4f0e710205377b3e944daddfd18131e1f1fe8b6fdf39f",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-137.bin",
+      "sha256": "d4e5f572c02d22df1f652d4ecbcd7c87c374b6dcdc1413450963da8adcc5844b",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-138.bin",
+      "sha256": "f0f06e6a36f7cb803c295c948c8597932fe6854dbaf3bb81945ce4adb9724c7a",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-139.bin",
+      "sha256": "fc2fe9eecc87d42b5078a0d0ff5ddbf9a416bddc99ba30449e2426893e98297d",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-140.bin",
+      "sha256": "7a81ab9d68095dc360c48b36423e5bd332a71385a1dec061bbbb6f2f3e3999a3",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-141.bin",
+      "sha256": "d65c42f5766da0b94a7336b5b976bb5e8c936a999c1f4be72d55cb520ea0f5dd",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-142.bin",
+      "sha256": "73c173325e4f67eb4e86eb8c888d2c7d0af50a9856afe9fda670902898949bd6",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-143.bin",
+      "sha256": "b4bcbc5dbbef05cb075750728e692549981d59444b9716ed6b4703306b0fbdad",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-144.bin",
+      "sha256": "27310538826e65b13fa49ea7293609f906cad1a4f734b3b2a9c801cbd0256797",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-145.bin",
+      "sha256": "bac6d66266e892780655de5a49f7c76e64745a96668e565eeae51d7cd9055d4b",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-146.bin",
+      "sha256": "c28c7d9c611c8253a604ecc4db920ada8689064e7b28ab04c624a4819ab31bd1",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-147.bin",
+      "sha256": "c7e17652d2550c698b1ff58a5b5ae3833e3004ecd546fb2d22e038fc2cd295da",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-148.bin",
+      "sha256": "7c704ac6d22acfb5e79c0d6e04e1293606580cc554dd39fd2d48e992e785ffaf",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-149.bin",
+      "sha256": "3a5554022e2df459aed20ee88a3f74c17c78026aaec567714f0ac515ccce6663",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-150.bin",
+      "sha256": "2fe8980f829f6bc345a8b467a01c39cbfcbc605126f9208894660e6b9aad9cca",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-151.bin",
+      "sha256": "3c93dc29be762468845964202a0790f47c448d8197b94c7cb4106bc61ede620a",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-152.bin",
+      "sha256": "b4d61dc34f0d9ac24843fd18225077d3b591f59699155005de5257e18f309ee8",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-153.bin",
+      "sha256": "ec12198047ad505fe77c9c01326cd49b16588d99a19d3a659f1288191bbfb494",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-154.bin",
+      "sha256": "6972c92530945b68a2aa34a74c9621b6fb983c91fef1a7437a1918c62d42f2e8",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-155.bin",
+      "sha256": "54b1cbe702d617c3524c7fee581424003063180af5a8679577d449a1710c60a7",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-156.bin",
+      "sha256": "e4a01106d28da3642eb598fc1c8938b732ea6079177402098b8e52175e6414a1",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-157.bin",
+      "sha256": "4fa50ba878b3d18e3397e785e893a6e47eff9b1b3db68c72f5d865bcb6bfc8c9",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-158.bin",
+      "sha256": "6a6839f92b15dd171539b590b122f212dcb3b6eb6ee14da82f9bf629a20392ec",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-159.bin",
+      "sha256": "8f61d3cbcafb6953f3cd1d77d77e37c2c06c86e6fa86925e5f7ebd9d88c3c6bb",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-160.bin",
+      "sha256": "34d17aedc8e1ed28292747400a400a60835f6868895becd9d7a6be30885a0295",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-161.bin",
+      "sha256": "30ffb3e02588ec95dbc9f74b90d678562166edbcfc9527870f553ce01be9910c",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-162.bin",
+      "sha256": "dca7ee6e13502915ed529e99704e17bd4d0449bec91453223f9c073d1034b382",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-163.bin",
+      "sha256": "6d2d1507c16500155fd51fbacbb7170ad05ecc93dcd3e978f67a99a155a03d90",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-164.bin",
+      "sha256": "33d9f4526b23543c77260989ff4439aca18cff76c61511b6987816f1e9fc6c32",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-165.bin",
+      "sha256": "fcd4e25bb2a919b986574a4432b396deccf6f119f1919efb4ce6e86e1227e9ac",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-166.bin",
+      "sha256": "6041bbb08b7aafc4ae3f88d84e8aa3bb9d91a3104fc4501e0c87f75be701cbfb",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-167.bin",
+      "sha256": "a9bb528ed82c6b31cdbed85d9c41556f174af6e20d65d4eada1edbb746862221",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-168.bin",
+      "sha256": "6a618f6b82f906a08c1136d213b80efb7c5432cfb82b604b9c60834561132386",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-169.bin",
+      "sha256": "819a8ef31663c3bd15ae7b4421811e2011c43eed875485e9161ab506f5d3afde",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-170.bin",
+      "sha256": "e78dcd2ab23bdc60f1f97aced1140b43d2cc47daee343654dc53e8672c74b1f5",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-171.bin",
+      "sha256": "14a7c340ed1fb1e8c9a26a5e6a115a077a86184b6ec15c8e9440f8ef09e41519",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-172.bin",
+      "sha256": "22650cc4e64b7f6f36e91c9b93716843a456b809bef3b3bdf9d755c4fb6fe214",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-173.bin",
+      "sha256": "f8e01d1b17e6402bd31cbdd545aa03cdc46b85a41ec92f69509aa3108f9b1255",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-174.bin",
+      "sha256": "820acd0d5a5893bc204cb145d38ad2c11c1beaf18d1dd4cd2ca26614bbfb82fd",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-175.bin",
+      "sha256": "13b92326aee45b686501b518930032a92c937945b258b461840f4b2572ed9d68",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-176.bin",
+      "sha256": "533f4ff07f8d5bc358bbbe3c655c0099262440baf55b1fbbecc6151a08706f1c",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-177.bin",
+      "sha256": "063c7e26136632a6aa96696e59d03d620310f0cc2697b58d2f2e650cb9ff0c58",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-178.bin",
+      "sha256": "10328971ea9db3098028d3c05f0c79e840925cfc8a583f544e839832dfedb984",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-179.bin",
+      "sha256": "d3bc7beb95452a5c752b2b81b9879c31a84c07a27ff571552f7dfefef5995c9a",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-180.bin",
+      "sha256": "ba1b646a08d80a1f04471938b3fcba822748fdb0c9966769aeb6424b25a21b37",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-181.bin",
+      "sha256": "a24eeae3c68c865eeff4260e05a26d60ea3b36ef636451bcb221a7127cf80e63",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-182.bin",
+      "sha256": "89917e5c4aaa4e6f2997688cd2214d3b3e7f1cbb45e844b33c7c6fe3133ad101",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-183.bin",
+      "sha256": "7890391448702e41bff5e8341942565417801e72b283029aca1be4cc55a10788",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-184.bin",
+      "sha256": "6550bd8d08aa1c1a57bc6ba08616075eb90b5075bced1c82542dd969acc36060",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-185.bin",
+      "sha256": "a16c5b00bf16bf31b3e093e8af1f5b139931f77e7fe9a90fe751babf2db91c45",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-186.bin",
+      "sha256": "1fb34678cd8a644bac1186726c7fafb09dd549eeb8ebdf625250fff84d30c290",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-187.bin",
+      "sha256": "e998d857e5637aa94c02419c98be82013f1571b2f4be936b9c79eae57c17dd2f",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-188.bin",
+      "sha256": "55215bd746ced4883865a3ca7f90af529c7eb88de42403b6d8dafdc55d58d058",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-189.bin",
+      "sha256": "0e3642650bc04ac1d95256309e02fa8ffeafb87968e3623cdd6592f501472de5",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-190.bin",
+      "sha256": "dbbcd3ff029200e0f5aa63097b6a24230f917f93ce4b32931c88a4116d9fa7b9",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-191.bin",
+      "sha256": "891d72848822b42b30e7710a2be07e384310617d65ad6a780725714c06347341",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-192.bin",
+      "sha256": "71bafb61f0793029c0b0539d071a7b3e0fd322abd31e425312775a6d0691ae20",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-193.bin",
+      "sha256": "fef8ef07b0461c95476dd7b995f3333578ae82031501d300354f2263cf1a73cb",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-194.bin",
+      "sha256": "595ccd2fce277b14ea6446fc811bd627c70dde655cd2d285b476fe3b62d61f08",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-195.bin",
+      "sha256": "94bcfe105ad50803f9a5dc7f60974e21d47f608826675250c699467f116608dc",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-196.bin",
+      "sha256": "ecf76566a001ebbfa15cf1c598677b7875acc25ded19c02a7b515cc531e3a6af",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-197.bin",
+      "sha256": "ed6dea48048cfd0c2ececb0e80c6c3b992165dcac4d45528909d9b53164cd79a",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-198.bin",
+      "sha256": "c96094ff9f6cb1329c4ff6d35f13f112b291c2ee4505e1fc60b1a00e125d370e",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-199.bin",
+      "sha256": "575247f7b8346303ef872b6b9f357cf6840b40f090d5e2684971822c42bb81e2",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-200.bin",
+      "sha256": "7bf3c227f531b4cd730604d5b5317698aff98d84c250406dbc621c2fc29dd8ec",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-201.bin",
+      "sha256": "c4ed3cb24e2a7c39952f12760e7865edced45489126854d0e3c3f0ca81ff63bf",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-202.bin",
+      "sha256": "e19a9ae5dcac7e14ae1bbeb9e1da90f260025ba590cb9bae8447d5d34ebecd4d",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-203.bin",
+      "sha256": "b71e3f9398381b230c895510c9269b5392caee1db1f2588c7a930be9e099f5a3",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-204.bin",
+      "sha256": "a31b00d9c6a5bc7f6d922862ca4817228a5f064402fb4d15a1ade5db21ef8dbb",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-205.bin",
+      "sha256": "48f84ea6043f5313382811d79ec2ba3d163c943b0e33ca3fe2ba2e9a4f18e935",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-206.bin",
+      "sha256": "07c903ce633842c12f7430406521a6d57fd72de978b2c667a5bf8ec2cc7f9a9c",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-207.bin",
+      "sha256": "63a8ae3a35554ede20b1f3dee80c4ccca1d287f5cc655d984fc02a6dc53e0111",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-208.bin",
+      "sha256": "0c49468f854e20a591f566e2bd39700725de0d288a564ac7be82eba1b85b75b9",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-209.bin",
+      "sha256": "bbdd91b14d4efbd1deb2515c609c773c31200242cb24818c96f04a0e3e156b6f",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-210.bin",
+      "sha256": "5e6a68690ab43507b80c89c22f5d4f088ca87f7ee6617192a6c44944f2e4533f",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-211.bin",
+      "sha256": "0f68382292ad8876f26f98395e730327a690b653b3b93b291b56879798a7a554",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-212.bin",
+      "sha256": "340595815f7da3eda3b27269381edc7707906ea56733662fb5461eca6225950c",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-213.bin",
+      "sha256": "6f6d5739a0a2b2c191b6e470ef2aa54c422414a704c7df1e999808f80e8d92b0",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-214.bin",
+      "sha256": "1f6ebd8f003635e606b0822bf3301025ce467dc0fdbee1e964c9dcd2adc83471",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-215.bin",
+      "sha256": "da0844658335477536cd2bf3243b0d2f52e8204d78f86690ee4e884fbd083603",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-216.bin",
+      "sha256": "b912bf62fef4cb0ace94878825bc0636b97640e050389e6c2dbc4ed256e0700d",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-217.bin",
+      "sha256": "43116f46b986a4b52e32a95960280f6fc79f702526fa598a5eaef6541c108943",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-218.bin",
+      "sha256": "5d438425064464eba4896e5deeb7aa9776f89585f58078822359a002e07aace0",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-219.bin",
+      "sha256": "9a44b6420127ce38f7498177d0f3c4ea6d2e234b39f45923debf82b976755177",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-220.bin",
+      "sha256": "083f14945e6d7ebdab7194c4d443ac45bfc63ed8b804bb47102d01326da39a4a",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-221.bin",
+      "sha256": "56fee0650f471b6a677901e473aaa4ef06b93198f3dae85a15c5fc260572266d",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-222.bin",
+      "sha256": "1f5e12a1dcc43dfd45e6709479e6cc62b1a6426a6ff78926166808e13a813c9d",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-223.bin",
+      "sha256": "377b01b6e33c26412d8ad7b9742b076e594045c8d2e633f0c29c191737124782",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-224.bin",
+      "sha256": "cc6a251fac8cad5d74151e57915c3cabfa982b5e3a7ddc0204b8a03843b3eff8",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-225.bin",
+      "sha256": "651cd13517828fec0a66a91fa7ec3521ad8d054d74b5da64fd5838699fd3b754",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-226.bin",
+      "sha256": "6995cc07f1bbeaa4fb5bae27eabd12a1da80c7cebcd3fd1b4f53df506b9f77bd",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-227.bin",
+      "sha256": "ee25805dac49adcdff3916bbd8bd1e8d5ee8f6d230f0e23a2614917da628ecf2",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-228.bin",
+      "sha256": "2fdf08aa44660dd8332131f0cc46ab9df025304ac750724d63964fa32d1d2db4",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-229.bin",
+      "sha256": "25359cfb8608d67e74a46b23cf6d113736652692a401705348dd77df687a1ab7",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-230.bin",
+      "sha256": "f0dc74b0f4984d78f2718af42f5321cc1e791644940b3b1e580e26c51ba8bd81",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-231.bin",
+      "sha256": "a325d2b1c02a0f957b78702a10d8cf29819c2bb6ed7202953015368b017c5f84",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-232.bin",
+      "sha256": "03b83534fb9bbd9525ae3d9759a22def80897540c6c402bc452690585d57e505",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-233.bin",
+      "sha256": "9a360f004badf7f9d42c997720ae949c44d9b37084ebe1992881d8c6125b064b",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-234.bin",
+      "sha256": "49432166ece33d4635bf98487edbe8b0b2987bbba38421f4037db3ee9e1ea637",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-235.bin",
+      "sha256": "240571038c5050761742c59df31f1c2804300215576dae8994c97287f1e31c83",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-236.bin",
+      "sha256": "f01b8659742bf11386dd2f9bd27d625316d2b4316461868f20ea7e32acddf6bd",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-237.bin",
+      "sha256": "3a9707340d6981dc3175f218174a717f1b5ba97d8f5529d81a4af80c6e015731",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-238.bin",
+      "sha256": "0e3c11fafad93e6cf504afa3bbb711f307a093e40814bc192d65f562a7135172",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-239.bin",
+      "sha256": "e0786231482674ee2bc7996f458e2a5d3c91f466b84a10582f0223b52000c91d",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-240.bin",
+      "sha256": "f08fd4d892cbe322e25ad792b11409028f3bb2badf46a72e533e807d8b6ce594",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-241.bin",
+      "sha256": "b070751113ee70c6bb584a0de7ae93cfe5c6f489925bbccfb7ab30c59378df69",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-242.bin",
+      "sha256": "1390be8dcd7a201c1d032cd0a4740e39f3cbd5216c54d0ea2c7f888685a06eec",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-243.bin",
+      "sha256": "2fd71aea13702554c8966f3269f3501b0b9fe8ce43c025fe6cdea3549897492e",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-244.bin",
+      "sha256": "d2642c5b5a666062774a9d2834fbbb4aa0d669cfc4342e288f37bf2c5c58bb5f",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-245.bin",
+      "sha256": "21cce305b20c2fb98e6d2d6cf38a2917894191e862fce0a726064856e71dc107",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-246.bin",
+      "sha256": "b185e9bbd82d94b8dfff478dbeaafa5f0382f805cd5b0216b227aafb5ecf2d1e",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-247.bin",
+      "sha256": "fa7c73f19c30cb6360aaa69692325397b36ff396448a26b4599dae476c8ddfe5",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-248.bin",
+      "sha256": "65df7a55f2ef2ed82611da3bf339602a2789ddceb8c2003020dad41f7f3a29b7",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-249.bin",
+      "sha256": "794085b394b246a067bd5dc259bf6ae33584695b26eb9a086e5f5b4620babf41",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-250.bin",
+      "sha256": "56a51e205fee849c8857300e426354a4402b75715f76b8c67b641671500d9477",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-251.bin",
+      "sha256": "f83911c5da4fddd13172dd9aaf4265527976b75ec9730ff2723f8b38e72b5c3b",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-252.bin",
+      "sha256": "cf80f57c9594bad01e3802a54cf4ea15ff89ce503c2af57564bb24efb9d20c51",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-253.bin",
+      "sha256": "1cdfeccf13834f4c6ab5403df8c8e7abd3f9ac26780cefb62714072d26c910ba",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-254.bin",
+      "sha256": "2fcb7918c598688296f9a94d5d165777a5b1e3ffac9d96c665400bd34558f0e0",
+      "bytes": 4
+    },
+    {
+      "path": "expected/arithmetic/seed-255.bin",
+      "sha256": "f443a4be8be4b9f7d354bad1f6e2c1826b9ba6807d73f9685171ca98de642b76",
+      "bytes": 4
+    },
+    {
+      "path": "expected/fib/seed-000.bin",
+      "sha256": "c881eac91974c39e6ce1d20c53d9e5b9f7ee8895c95983f964e550abc43f75e6",
+      "bytes": 6
+    },
+    {
+      "path": "expected/fib/seed-001.bin",
+      "sha256": "f264c2aa02b4aa37296b3a317dc830e70eb71a461b91355451da16dbb0bb0fa9",
+      "bytes": 6
+    }
+  ],
+  "cases": [
+    {
+      "id": "arithmetic-baseline",
+      "observations": {
+        "probe": {
+          "phase": "compilation-probe",
+          "verified_calls": 9278606,
+          "seeds": 256
+        },
+        "target_events": [
+          {
+            "event": "failed",
+            "engine": 1,
+            "source_line": 1,
+            "target_id": 340,
+            "target": "FunctionNode@418eb75f",
+            "tier": 1,
+            "raw_line_hex": "5b656e67696e655d206f7074206661696c656420656e67696e653d31202069643d33343020202046756e6374696f6e4e6f64654034313865623735662020202020202020202020202020202020202020202020202020202020207c5469657220317c54696d6520202020333628202033342b32202020296d737c526561736f6e3a206a646b2e677261616c2e636f6d70696c65722e636f64652e536f75726365537461636b54726163654261696c6f7574457863657074696f6e24313a204f626a656374206f662074797065204c636f6d2f6f7261636c652f74727566666c652f6170692f696d706c2f4672616d65576974686f7574426f78696e673b2073686f756c64206e6f74206265206d6174657269616c697a656420286d757374206e6f74206c6574207669727475616c206f626a65637420657363617065206174206e6f6465203233357c456e644e6f6465293a7c55544320323032362d31302d32305430353a35363a34392e3838347c5372632066696c653a2f2f2f55736572732f636f64792e696a2e6877616e672f50726f6a656374732f706b6c2d72732f7461726765742f6d312f677261616c2d636c6f73696e672d32303236313032302d30312f736f75726365732f74657374732f66697874757265732f6d312f72756e74696d652f61726974686d657469632d776f726b6c6f61642e706b6c3a312030786535323230386166"
+          }
+        ],
+        "frame_class_origin": {
+          "org.pkl.core.ast.frame.GetEnclosingFrameNode": "file:/Users/cody.ij.hwang/Projects/pkl-rs/target/m1/graal-closing-20261020-01/artifacts/pkl-tools-0.32.0.jar",
+          "org.pkl.core.runtime.VmUtils": "file:/Users/cody.ij.hwang/Projects/pkl-rs/target/m1/graal-closing-20261020-01/artifacts/pkl-tools-0.32.0.jar"
+        },
+        "completed_tiers": [],
+        "target_failed_events": 1,
+        "all_guest_failure_events": [
+          {
+            "event": "failed",
+            "engine": 1,
+            "source_line": 1,
+            "target_id": 340,
+            "target": "FunctionNode@418eb75f",
+            "tier": 1,
+            "raw_line_hex": "5b656e67696e655d206f7074206661696c656420656e67696e653d31202069643d33343020202046756e6374696f6e4e6f64654034313865623735662020202020202020202020202020202020202020202020202020202020207c5469657220317c54696d6520202020333628202033342b32202020296d737c526561736f6e3a206a646b2e677261616c2e636f6d70696c65722e636f64652e536f75726365537461636b54726163654261696c6f7574457863657074696f6e24313a204f626a656374206f662074797065204c636f6d2f6f7261636c652f74727566666c652f6170692f696d706c2f4672616d65576974686f7574426f78696e673b2073686f756c64206e6f74206265206d6174657269616c697a656420286d757374206e6f74206c6574207669727475616c206f626a65637420657363617065206174206e6f6465203233357c456e644e6f6465293a7c55544320323032362d31302d32305430353a35363a34392e3838347c5372632066696c653a2f2f2f55736572732f636f64792e696a2e6877616e672f50726f6a656374732f706b6c2d72732f7461726765742f6d312f677261616c2d636c6f73696e672d32303236313032302d30312f736f75726365732f74657374732f66697874757265732f6d312f72756e74696d652f61726974686d657469632d776f726b6c6f61642e706b6c3a312030786535323230386166"
+          }
+        ],
+        "diagnostic_only": true,
+        "performance_evidence": false
+      }
+    },
+    {
+      "id": "arithmetic-recompiled-control",
+      "observations": {
+        "probe": {
+          "phase": "compilation-probe",
+          "verified_calls": 9863346,
+          "seeds": 256
+        },
+        "target_events": [
+          {
+            "event": "failed",
+            "engine": 1,
+            "source_line": 1,
+            "target_id": 340,
+            "target": "FunctionNode@5d3197ec",
+            "tier": 1,
+            "raw_line_hex": "5b656e67696e655d206f7074206661696c656420656e67696e653d31202069643d33343020202046756e6374696f6e4e6f64654035643331393765632020202020202020202020202020202020202020202020202020202020207c5469657220317c54696d6520202020333628202033342b32202020296d737c526561736f6e3a206a646b2e677261616c2e636f6d70696c65722e636f64652e536f75726365537461636b54726163654261696c6f7574457863657074696f6e24313a204f626a656374206f662074797065204c636f6d2f6f7261636c652f74727566666c652f6170692f696d706c2f4672616d65576974686f7574426f78696e673b2073686f756c64206e6f74206265206d6174657269616c697a656420286d757374206e6f74206c6574207669727475616c206f626a65637420657363617065206174206e6f6465203233357c456e644e6f6465293a7c55544320323032362d31302d32305430353a35373a30352e3539357c5372632066696c653a2f2f2f55736572732f636f64792e696a2e6877616e672f50726f6a656374732f706b6c2d72732f7461726765742f6d312f677261616c2d636c6f73696e672d32303236313032302d30312f736f75726365732f74657374732f66697874757265732f6d312f72756e74696d652f61726974686d657469632d776f726b6c6f61642e706b6c3a312030786535323230386166"
+          }
+        ],
+        "frame_class_origin": {
+          "org.pkl.core.ast.frame.GetEnclosingFrameNode": "file:/Users/cody.ij.hwang/Projects/pkl-rs/target/m1/graal-closing-20261020-01/artifacts/original/",
+          "org.pkl.core.runtime.VmUtils": "file:/Users/cody.ij.hwang/Projects/pkl-rs/target/m1/graal-closing-20261020-01/artifacts/pkl-tools-0.32.0.jar"
+        },
+        "completed_tiers": [],
+        "target_failed_events": 1,
+        "all_guest_failure_events": [
+          {
+            "event": "failed",
+            "engine": 1,
+            "source_line": 1,
+            "target_id": 340,
+            "target": "FunctionNode@5d3197ec",
+            "tier": 1,
+            "raw_line_hex": "5b656e67696e655d206f7074206661696c656420656e67696e653d31202069643d33343020202046756e6374696f6e4e6f64654035643331393765632020202020202020202020202020202020202020202020202020202020207c5469657220317c54696d6520202020333628202033342b32202020296d737c526561736f6e3a206a646b2e677261616c2e636f6d70696c65722e636f64652e536f75726365537461636b54726163654261696c6f7574457863657074696f6e24313a204f626a656374206f662074797065204c636f6d2f6f7261636c652f74727566666c652f6170692f696d706c2f4672616d65576974686f7574426f78696e673b2073686f756c64206e6f74206265206d6174657269616c697a656420286d757374206e6f74206c6574207669727475616c206f626a65637420657363617065206174206e6f6465203233357c456e644e6f6465293a7c55544320323032362d31302d32305430353a35373a30352e3539357c5372632066696c653a2f2f2f55736572732f636f64792e696a2e6877616e672f50726f6a656374732f706b6c2d72732f7461726765742f6d312f677261616c2d636c6f73696e672d32303236313032302d30312f736f75726365732f74657374732f66697874757265732f6d312f72756e74696d652f61726974686d657469632d776f726b6c6f61642e706b6c3a312030786535323230386166"
+          }
+        ],
+        "diagnostic_only": true,
+        "performance_evidence": false
+      }
+    },
+    {
+      "id": "arithmetic-frame-bypass",
+      "observations": {
+        "probe": {
+          "phase": "compilation-probe",
+          "verified_calls": 15953146,
+          "seeds": 256
+        },
+        "target_events": [
+          {
+            "event": "done",
+            "engine": 1,
+            "source_line": 1,
+            "target_id": 340,
+            "target": "FunctionNode@5d3197ec",
+            "tier": 1,
+            "raw_line_hex": "5b656e67696e655d206f707420646f6e65202020656e67696e653d31202069643d33343020202046756e6374696f6e4e6f64654035643331393765632020202020202020202020202020202020202020202020202020202020207c5469657220317c54696d6520202020343528202033302b31352020296d737c41535420203236327c496e6c696e65642020203059202020304e7c4952202020203631382f2020203832317c436f646553697a6520202020323936307c416464722030783030303131386530616134307c436f6d70496420333435372020207c55544320323032362d31302d32305430353a35373a32312e3232317c5372632066696c653a2f2f2f55736572732f636f64792e696a2e6877616e672f50726f6a656374732f706b6c2d72732f7461726765742f6d312f677261616c2d636c6f73696e672d32303236313032302d30312f736f75726365732f74657374732f66697874757265732f6d312f72756e74696d652f61726974686d657469632d776f726b6c6f61642e706b6c3a312030786535323230386166"
+          },
+          {
+            "event": "done",
+            "engine": 1,
+            "source_line": 1,
+            "target_id": 340,
+            "target": "FunctionNode@5d3197ec",
+            "tier": 2,
+            "raw_line_hex": "5b656e67696e655d206f707420646f6e65202020656e67696e653d31202069643d33343020202046756e6374696f6e4e6f64654035643331393765632020202020202020202020202020202020202020202020202020202020207c5469657220327c54696d6520202020333428202031392b31352020296d737c41535420203236327c496e6c696e65642020203059202020304e7c4952202020203534362f2020203733387c436f646553697a6520202020323536307c416464722030783030303131386531313263307c436f6d70496420333838312020207c55544320323032362d31302d32305430353a35373a32312e3236307c5372632066696c653a2f2f2f55736572732f636f64792e696a2e6877616e672f50726f6a656374732f706b6c2d72732f7461726765742f6d312f677261616c2d636c6f73696e672d32303236313032302d30312f736f75726365732f74657374732f66697874757265732f6d312f72756e74696d652f61726974686d657469632d776f726b6c6f61642e706b6c3a312030786535323230386166"
+          }
+        ],
+        "frame_class_origin": {
+          "org.pkl.core.ast.frame.GetEnclosingFrameNode": "file:/Users/cody.ij.hwang/Projects/pkl-rs/target/m1/graal-closing-20261020-01/artifacts/bypass/",
+          "org.pkl.core.runtime.VmUtils": "file:/Users/cody.ij.hwang/Projects/pkl-rs/target/m1/graal-closing-20261020-01/artifacts/pkl-tools-0.32.0.jar"
+        },
+        "completed_tiers": [
+          1,
+          2
+        ],
+        "target_failed_events": 0,
+        "all_guest_failure_events": [],
+        "diagnostic_only": true,
+        "performance_evidence": false
+      }
+    },
+    {
+      "id": "arithmetic-receiver-baseline",
+      "observations": {
+        "probe": {
+          "phase": "compilation-probe",
+          "verified_calls": 14842541,
+          "seeds": 256
+        },
+        "target_events": [
+          {
+            "event": "done",
+            "engine": 1,
+            "source_line": 3,
+            "target_id": 343,
+            "target": "FunctionNode@5a4a49ba",
+            "tier": 1,
+            "raw_line_hex": "5b656e67696e655d206f707420646f6e65202020656e67696e653d31202069643d33343320202046756e6374696f6e4e6f64654035613461343962612020202020202020202020202020202020202020202020202020202020207c5469657220317c54696d6520202020353628202033312b32352020296d737c41535420203236327c496e6c696e65642020203059202020304e7c4952202020203839372f2020313131397c436f646553697a6520202020333539367c416464722030783030303131636533326434307c436f6d70496420333532352020207c55544320323032362d31302d32305430353a35373a33362e3838367c5372632066696c653a2f2f2f55736572732f636f64792e696a2e6877616e672f50726f6a656374732f706b6c2d72732f7461726765742f6d312f677261616c2d636c6f73696e672d32303236313032302d30312f736f75726365732f74657374732f66697874757265732f6d312f72756e74696d652f61726974686d657469632d72656365697665722e706b6c3a332030783964653733643439"
+          },
+          {
+            "event": "done",
+            "engine": 1,
+            "source_line": 3,
+            "target_id": 343,
+            "target": "FunctionNode@5a4a49ba",
+            "tier": 2,
+            "raw_line_hex": "5b656e67696e655d206f707420646f6e65202020656e67696e653d31202069643d33343320202046756e6374696f6e4e6f64654035613461343962612020202020202020202020202020202020202020202020202020202020207c5469657220327c54696d6520202020323328202020372b31362020296d737c41535420203236327c496e6c696e65642020203059202020304e7c4952202020203832342f2020313034317c436f646553697a6520202020323735327c416464722030783030303131636533616130307c436f6d70496420333938352020207c55544320323032362d31302d32305430353a35373a33362e3931337c5372632066696c653a2f2f2f55736572732f636f64792e696a2e6877616e672f50726f6a656374732f706b6c2d72732f7461726765742f6d312f677261616c2d636c6f73696e672d32303236313032302d30312f736f75726365732f74657374732f66697874757265732f6d312f72756e74696d652f61726974686d657469632d72656365697665722e706b6c3a332030783964653733643439"
+          }
+        ],
+        "frame_class_origin": {
+          "org.pkl.core.ast.frame.GetEnclosingFrameNode": "file:/Users/cody.ij.hwang/Projects/pkl-rs/target/m1/graal-closing-20261020-01/artifacts/pkl-tools-0.32.0.jar",
+          "org.pkl.core.runtime.VmUtils": "file:/Users/cody.ij.hwang/Projects/pkl-rs/target/m1/graal-closing-20261020-01/artifacts/pkl-tools-0.32.0.jar"
+        },
+        "completed_tiers": [
+          1,
+          2
+        ],
+        "target_failed_events": 0,
+        "all_guest_failure_events": [
+          {
+            "event": "failed",
+            "engine": 1,
+            "source_line": 5,
+            "target_id": 344,
+            "target": "TypeCheckedPropertyNodeGen@52bff00e",
+            "tier": 1,
+            "raw_line_hex": "5b656e67696e655d206f7074206661696c656420656e67696e653d31202069643d33343420202054797065436865636b656450726f70657274794e6f646547656e403532626666303065202020202020202020202020202020207c5469657220317c54696d6520202020323628202032352b31202020296d737c526561736f6e3a206a646b2e677261616c2e636f6d70696c65722e636f64652e536f75726365537461636b54726163654261696c6f7574457863657074696f6e24313a204f626a656374206f662074797065204c636f6d2f6f7261636c652f74727566666c652f6170692f696d706c2f4672616d65576974686f7574426f78696e673b2073686f756c64206e6f74206265206d6174657269616c697a656420286d757374206e6f74206c6574207669727475616c206f626a65637420657363617065206174206e6f64652039387c456e644e6f6465293a7c55544320323032362d31302d32305430353a35373a33362e3835397c5372632066696c653a2f2f2f55736572732f636f64792e696a2e6877616e672f50726f6a656374732f706b6c2d72732f7461726765742f6d312f677261616c2d636c6f73696e672d32303236313032302d30312f736f75726365732f74657374732f66697874757265732f6d312f72756e74696d652f61726974686d657469632d72656365697665722e706b6c3a352030783964653733643439"
+          }
+        ],
+        "diagnostic_only": true,
+        "performance_evidence": false
+      }
+    },
+    {
+      "id": "fib-baseline",
+      "observations": {
+        "probe": {
+          "phase": "compilation-probe",
+          "verified_calls": 1227,
+          "seeds": 2
+        },
+        "target_events": [
+          {
+            "event": "failed",
+            "engine": 1,
+            "source_line": 1,
+            "target_id": 341,
+            "target": "FunctionNode@881de25",
+            "tier": 1,
+            "raw_line_hex": "5b656e67696e655d206f7074206661696c656420656e67696e653d31202069643d33343120202046756e6374696f6e4e6f64654038383164653235202020202020202020202020202020202020202020202020202020202020207c5469657220317c54696d6520202020343528202033362b39202020296d737c526561736f6e3a206a646b2e677261616c2e636f6d70696c65722e636f64652e536f75726365537461636b54726163654261696c6f7574457863657074696f6e24313a204f626a656374206f662074797065204c636f6d2f6f7261636c652f74727566666c652f6170692f696d706c2f4672616d65576974686f7574426f78696e673b2073686f756c64206e6f74206265206d6174657269616c697a656420286d757374206e6f74206c6574207669727475616c206f626a65637420657363617065206174206e6f6465203130397c456e644e6f6465293a7c55544320323032362d31302d32305430353a35373a35322e3437377c5372632066696c653a2f2f2f55736572732f636f64792e696a2e6877616e672f50726f6a656374732f706b6c2d72732f7461726765742f6d312f677261616c2d636c6f73696e672d32303236313032302d30312f736f75726365732f62656e63686d61726b732f66697874757265732f7265637572736976652e706b6c3a3120307835616436343330"
+          }
+        ],
+        "frame_class_origin": {
+          "org.pkl.core.ast.frame.GetEnclosingFrameNode": "file:/Users/cody.ij.hwang/Projects/pkl-rs/target/m1/graal-closing-20261020-01/artifacts/pkl-tools-0.32.0.jar",
+          "org.pkl.core.runtime.VmUtils": "file:/Users/cody.ij.hwang/Projects/pkl-rs/target/m1/graal-closing-20261020-01/artifacts/pkl-tools-0.32.0.jar"
+        },
+        "completed_tiers": [],
+        "target_failed_events": 1,
+        "all_guest_failure_events": [
+          {
+            "event": "failed",
+            "engine": 1,
+            "source_line": 1,
+            "target_id": 341,
+            "target": "FunctionNode@881de25",
+            "tier": 1,
+            "raw_line_hex": "5b656e67696e655d206f7074206661696c656420656e67696e653d31202069643d33343120202046756e6374696f6e4e6f64654038383164653235202020202020202020202020202020202020202020202020202020202020207c5469657220317c54696d6520202020343528202033362b39202020296d737c526561736f6e3a206a646b2e677261616c2e636f6d70696c65722e636f64652e536f75726365537461636b54726163654261696c6f7574457863657074696f6e24313a204f626a656374206f662074797065204c636f6d2f6f7261636c652f74727566666c652f6170692f696d706c2f4672616d65576974686f7574426f78696e673b2073686f756c64206e6f74206265206d6174657269616c697a656420286d757374206e6f74206c6574207669727475616c206f626a65637420657363617065206174206e6f6465203130397c456e644e6f6465293a7c55544320323032362d31302d32305430353a35373a35322e3437377c5372632066696c653a2f2f2f55736572732f636f64792e696a2e6877616e672f50726f6a656374732f706b6c2d72732f7461726765742f6d312f677261616c2d636c6f73696e672d32303236313032302d30312f736f75726365732f62656e63686d61726b732f66697874757265732f7265637572736976652e706b6c3a3120307835616436343330"
+          },
+          {
+            "event": "failed",
+            "engine": 1,
+            "source_line": 2,
+            "target_id": 340,
+            "target": "FunctionNode@2262ecf5",
+            "tier": 1,
+            "raw_line_hex": "5b656e67696e655d206f7074206661696c656420656e67696e653d31202069643d33343020202046756e6374696f6e4e6f64654032323632656366352020202020202020202020202020202020202020202020202020202020207c5469657220317c54696d6520202020333428202033332b30202020296d737c526561736f6e3a206a646b2e677261616c2e636f6d70696c65722e636f64652e536f75726365537461636b54726163654261696c6f7574457863657074696f6e24313a204f626a656374206f662074797065204c636f6d2f6f7261636c652f74727566666c652f6170692f696d706c2f4672616d65576974686f7574426f78696e673b2073686f756c64206e6f74206265206d6174657269616c697a656420286d757374206e6f74206c6574207669727475616c206f626a65637420657363617065206174206e6f6465203130397c456e644e6f6465293a7c55544320323032362d31302d32305430353a35373a35322e3830347c5372632066696c653a2f2f2f55736572732f636f64792e696a2e6877616e672f50726f6a656374732f706b6c2d72732f7461726765742f6d312f677261616c2d636c6f73696e672d32303236313032302d30312f736f75726365732f62656e63686d61726b732f66697874757265732f7265637572736976652e706b6c3a3220307835616436343330"
+          }
+        ],
+        "diagnostic_only": true,
+        "performance_evidence": false
+      }
+    },
+    {
+      "id": "fib-frame-bypass",
+      "observations": {
+        "probe": {
+          "phase": "compilation-probe",
+          "verified_calls": 1288,
+          "seeds": 2
+        },
+        "target_events": [
+          {
+            "event": "failed",
+            "engine": 1,
+            "source_line": 1,
+            "target_id": 341,
+            "target": "FunctionNode@5e8e73e4",
+            "tier": 1,
+            "raw_line_hex": "5b656e67696e655d206f7074206661696c656420656e67696e653d31202069643d33343120202046756e6374696f6e4e6f64654035653865373365342020202020202020202020202020202020202020202020202020202020207c5469657220317c54696d6520202020333128202032392b31202020296d737c526561736f6e3a206a646b2e677261616c2e636f6d70696c65722e636f64652e536f75726365537461636b54726163654261696c6f7574457863657074696f6e24313a204f626a656374206f662074797065204c636f6d2f6f7261636c652f74727566666c652f6170692f696d706c2f4672616d65576974686f7574426f78696e673b2073686f756c64206e6f74206265206d6174657269616c697a656420286d757374206e6f74206c6574207669727475616c206f626a65637420657363617065206174206e6f6465203131337c456e644e6f6465293a7c55544320323032362d31302d32305430353a35383a30382e3035377c5372632066696c653a2f2f2f55736572732f636f64792e696a2e6877616e672f50726f6a656374732f706b6c2d72732f7461726765742f6d312f677261616c2d636c6f73696e672d32303236313032302d30312f736f75726365732f62656e63686d61726b732f66697874757265732f7265637572736976652e706b6c3a3120307835616436343330"
+          }
+        ],
+        "frame_class_origin": {
+          "org.pkl.core.ast.frame.GetEnclosingFrameNode": "file:/Users/cody.ij.hwang/Projects/pkl-rs/target/m1/graal-closing-20261020-01/artifacts/bypass/",
+          "org.pkl.core.runtime.VmUtils": "file:/Users/cody.ij.hwang/Projects/pkl-rs/target/m1/graal-closing-20261020-01/artifacts/pkl-tools-0.32.0.jar"
+        },
+        "completed_tiers": [],
+        "target_failed_events": 1,
+        "all_guest_failure_events": [
+          {
+            "event": "failed",
+            "engine": 1,
+            "source_line": 1,
+            "target_id": 341,
+            "target": "FunctionNode@5e8e73e4",
+            "tier": 1,
+            "raw_line_hex": "5b656e67696e655d206f7074206661696c656420656e67696e653d31202069643d33343120202046756e6374696f6e4e6f64654035653865373365342020202020202020202020202020202020202020202020202020202020207c5469657220317c54696d6520202020333128202032392b31202020296d737c526561736f6e3a206a646b2e677261616c2e636f6d70696c65722e636f64652e536f75726365537461636b54726163654261696c6f7574457863657074696f6e24313a204f626a656374206f662074797065204c636f6d2f6f7261636c652f74727566666c652f6170692f696d706c2f4672616d65576974686f7574426f78696e673b2073686f756c64206e6f74206265206d6174657269616c697a656420286d757374206e6f74206c6574207669727475616c206f626a65637420657363617065206174206e6f6465203131337c456e644e6f6465293a7c55544320323032362d31302d32305430353a35383a30382e3035377c5372632066696c653a2f2f2f55736572732f636f64792e696a2e6877616e672f50726f6a656374732f706b6c2d72732f7461726765742f6d312f677261616c2d636c6f73696e672d32303236313032302d30312f736f75726365732f62656e63686d61726b732f66697874757265732f7265637572736976652e706b6c3a3120307835616436343330"
+          },
+          {
+            "event": "failed",
+            "engine": 1,
+            "source_line": 2,
+            "target_id": 340,
+            "target": "FunctionNode@6a56446e",
+            "tier": 1,
+            "raw_line_hex": "5b656e67696e655d206f7074206661696c656420656e67696e653d31202069643d33343020202046756e6374696f6e4e6f64654036613536343436652020202020202020202020202020202020202020202020202020202020207c5469657220317c54696d6520202020323828202032372b30202020296d737c526561736f6e3a206a646b2e677261616c2e636f6d70696c65722e636f64652e536f75726365537461636b54726163654261696c6f7574457863657074696f6e24313a204f626a656374206f662074797065204c636f6d2f6f7261636c652f74727566666c652f6170692f696d706c2f4672616d65576974686f7574426f78696e673b2073686f756c64206e6f74206265206d6174657269616c697a656420286d757374206e6f74206c6574207669727475616c206f626a65637420657363617065206174206e6f6465203130397c456e644e6f6465293a7c55544320323032362d31302d32305430353a35383a30382e3338367c5372632066696c653a2f2f2f55736572732f636f64792e696a2e6877616e672f50726f6a656374732f706b6c2d72732f7461726765742f6d312f677261616c2d636c6f73696e672d32303236313032302d30312f736f75726365732f62656e63686d61726b732f66697874757265732f7265637572736976652e706b6c3a3220307835616436343330"
+          }
+        ],
+        "diagnostic_only": true,
+        "performance_evidence": false
+      }
+    },
+    {
+      "id": "fib-receiver-baseline",
+      "observations": {
+        "probe": {
+          "phase": "compilation-probe",
+          "verified_calls": 1690,
+          "seeds": 2
+        },
+        "target_events": [
+          {
+            "event": "done",
+            "engine": 1,
+            "source_line": 3,
+            "target_id": 345,
+            "target": "TypeCheckedPropertyNodeGen@34e78844",
+            "tier": 1,
+            "raw_line_hex": "5b656e67696e655d206f707420646f6e65202020656e67696e653d31202069643d33343520202054797065436865636b656450726f70657274794e6f646547656e403334653738383434202020202020202020202020202020207c5469657220317c54696d6520202020323928202032342b35202020296d737c41535420202031307c496e6c696e65642020203059202020314e7c4952202020203138312f2020203337327c436f646553697a6520202020313631367c416464722030783030303131636530613434307c436f6d70496420333139362020207c55544320323032362d31302d32305430353a35383a32332e3532387c5372632066696c653a2f2f2f55736572732f636f64792e696a2e6877616e672f50726f6a656374732f706b6c2d72732f7461726765742f6d312f677261616c2d636c6f73696e672d32303236313032302d30312f736f75726365732f74657374732f66697874757265732f6d312f72756e74696d652f7265637572736976652d72656365697665722e706b6c3a332030786466636466343936"
+          },
+          {
+            "event": "done",
+            "engine": 1,
+            "source_line": 3,
+            "target_id": 346,
+            "target": "TypeCheckedPropertyNodeGen@50ba5460",
+            "tier": 1,
+            "raw_line_hex": "5b656e67696e655d206f707420646f6e65202020656e67696e653d31202069643d33343620202054797065436865636b656450726f70657274794e6f646547656e403530626135343630202020202020202020202020202020207c5469657220317c54696d6520202020313728202020362b31312020296d737c41535420202031307c496e6c696e65642020203059202020314e7c4952202020203138312f2020203337337c436f646553697a6520202020313631367c416464722030783030303131636530653038307c436f6d70496420333337392020207c55544320323032362d31302d32305430353a35383a32332e3534377c5372632066696c653a2f2f2f55736572732f636f64792e696a2e6877616e672f50726f6a656374732f706b6c2d72732f7461726765742f6d312f677261616c2d636c6f73696e672d32303236313032302d30312f736f75726365732f74657374732f66697874757265732f6d312f72756e74696d652f7265637572736976652d72656365697665722e706b6c3a332030786466636466343936"
+          },
+          {
+            "event": "done",
+            "engine": 1,
+            "source_line": 3,
+            "target_id": 345,
+            "target": "TypeCheckedPropertyNodeGen@34e78844",
+            "tier": 2,
+            "raw_line_hex": "5b656e67696e655d206f707420646f6e65202020656e67696e653d31202069643d33343520202054797065436865636b656450726f70657274794e6f646547656e403334653738383434202020202020202020202020202020207c5469657220327c54696d6520202020203528202020322b32202020296d737c41535420202031307c496e6c696e65642020203159202020304e7c4952202020202038332f2020203230377c436f646553697a6520202020203936307c416464722030783030303131636530646138307c436f6d70496420333430362020207c55544320323032362d31302d32305430353a35383a32332e3534377c5372632066696c653a2f2f2f55736572732f636f64792e696a2e6877616e672f50726f6a656374732f706b6c2d72732f7461726765742f6d312f677261616c2d636c6f73696e672d32303236313032302d30312f736f75726365732f74657374732f66697874757265732f6d312f72756e74696d652f7265637572736976652d72656365697665722e706b6c3a332030786466636466343936"
+          },
+          {
+            "event": "done",
+            "engine": 1,
+            "source_line": 3,
+            "target_id": 343,
+            "target": "FunctionNode@12676c0d",
+            "tier": 1,
+            "raw_line_hex": "5b656e67696e655d206f707420646f6e65202020656e67696e653d31202069643d33343320202046756e6374696f6e4e6f64654031323637366330642020202020202020202020202020202020202020202020202020202020207c5469657220317c54696d6520202020353028202033342b31372020296d737c41535420202032387c496e6c696e65642020203059202020324e7c4952202020203239302f2020203832337c436f646553697a6520202020333930307c416464722030783030303131636530663034307c436f6d70496420333233342020207c55544320323032362d31302d32305430353a35383a32332e3535307c5372632066696c653a2f2f2f55736572732f636f64792e696a2e6877616e672f50726f6a656374732f706b6c2d72732f7461726765742f6d312f677261616c2d636c6f73696e672d32303236313032302d30312f736f75726365732f74657374732f66697874757265732f6d312f72756e74696d652f7265637572736976652d72656365697665722e706b6c3a332030786466636466343936"
+          },
+          {
+            "event": "done",
+            "engine": 1,
+            "source_line": 3,
+            "target_id": 346,
+            "target": "TypeCheckedPropertyNodeGen@50ba5460",
+            "tier": 2,
+            "raw_line_hex": "5b656e67696e655d206f707420646f6e65202020656e67696e653d31202069643d33343620202054797065436865636b656450726f70657274794e6f646547656e403530626135343630202020202020202020202020202020207c5469657220327c54696d6520202020203528202020322b33202020296d737c41535420202031307c496e6c696e65642020203159202020304e7c4952202020202038332f2020203230387c436f646553697a6520202020203936307c416464722030783030303131636531306263307c436f6d70496420333431362020207c55544320323032362d31302d32305430353a35383a32332e3535337c5372632066696c653a2f2f2f55736572732f636f64792e696a2e6877616e672f50726f6a656374732f706b6c2d72732f7461726765742f6d312f677261616c2d636c6f73696e672d32303236313032302d30312f736f75726365732f74657374732f66697874757265732f6d312f72756e74696d652f7265637572736976652d72656365697665722e706b6c3a332030786466636466343936"
+          },
+          {
+            "event": "done",
+            "engine": 1,
+            "source_line": 3,
+            "target_id": 343,
+            "target": "FunctionNode@12676c0d",
+            "tier": 2,
+            "raw_line_hex": "5b656e67696e655d206f707420646f6e65202020656e67696e653d31202069643d33343320202046756e6374696f6e4e6f64654031323637366330642020202020202020202020202020202020202020202020202020202020207c5469657220327c54696d6520202020383028202032382b35322020296d737c41535420202032387c496e6c696e65642020203659202020384e7c4952202020313031352f2020333833307c436f646553697a6520202032303636387c416464722030783030303131636531383234307c436f6d70496420333433302020207c55544320323032362d31302d32305430353a35383a32332e3633307c5372632066696c653a2f2f2f55736572732f636f64792e696a2e6877616e672f50726f6a656374732f706b6c2d72732f7461726765742f6d312f677261616c2d636c6f73696e672d32303236313032302d30312f736f75726365732f74657374732f66697874757265732f6d312f72756e74696d652f7265637572736976652d72656365697665722e706b6c3a332030786466636466343936"
+          }
+        ],
+        "frame_class_origin": {
+          "org.pkl.core.ast.frame.GetEnclosingFrameNode": "file:/Users/cody.ij.hwang/Projects/pkl-rs/target/m1/graal-closing-20261020-01/artifacts/pkl-tools-0.32.0.jar",
+          "org.pkl.core.runtime.VmUtils": "file:/Users/cody.ij.hwang/Projects/pkl-rs/target/m1/graal-closing-20261020-01/artifacts/pkl-tools-0.32.0.jar"
+        },
+        "completed_tiers": [
+          1,
+          2
+        ],
+        "target_failed_events": 0,
+        "all_guest_failure_events": [
+          {
+            "event": "failed",
+            "engine": 1,
+            "source_line": 5,
+            "target_id": 344,
+            "target": "TypeCheckedPropertyNodeGen@3df95e31",
+            "tier": 1,
+            "raw_line_hex": "5b656e67696e655d206f7074206661696c656420656e67696e653d31202069643d33343420202054797065436865636b656450726f70657274794e6f646547656e403364663935653331202020202020202020202020202020207c5469657220317c54696d6520202020203728202020352b31202020296d737c526561736f6e3a206a646b2e677261616c2e636f6d70696c65722e636f64652e536f75726365537461636b54726163654261696c6f7574457863657074696f6e24313a204f626a656374206f662074797065204c636f6d2f6f7261636c652f74727566666c652f6170692f696d706c2f4672616d65576974686f7574426f78696e673b2073686f756c64206e6f74206265206d6174657269616c697a656420286d757374206e6f74206c6574207669727475616c206f626a65637420657363617065206174206e6f6465203130307c456e644e6f6465293a7c55544320323032362d31302d32305430353a35383a32332e3831397c5372632066696c653a2f2f2f55736572732f636f64792e696a2e6877616e672f50726f6a656374732f706b6c2d72732f7461726765742f6d312f677261616c2d636c6f73696e672d32303236313032302d30312f736f75726365732f74657374732f66697874757265732f6d312f72756e74696d652f7265637572736976652d72656365697665722e706b6c3a352030786466636466343936"
+          }
+        ],
+        "diagnostic_only": true,
+        "performance_evidence": false
+      }
+    },
+    {
+      "id": "fib-scope-recompiled-control",
+      "observations": {
+        "probe": {
+          "phase": "compilation-probe",
+          "verified_calls": 1237,
+          "seeds": 2
+        },
+        "target_events": [
+          {
+            "event": "failed",
+            "engine": 1,
+            "source_line": 1,
+            "target_id": 341,
+            "target": "FunctionNode@6ad9b747",
+            "tier": 1,
+            "raw_line_hex": "5b656e67696e655d206f7074206661696c656420656e67696e653d31202069643d33343120202046756e6374696f6e4e6f64654036616439623734372020202020202020202020202020202020202020202020202020202020207c5469657220317c54696d6520202020343228202033332b39202020296d737c526561736f6e3a206a646b2e677261616c2e636f6d70696c65722e636f64652e536f75726365537461636b54726163654261696c6f7574457863657074696f6e24313a204f626a656374206f662074797065204c636f6d2f6f7261636c652f74727566666c652f6170692f696d706c2f4672616d65576974686f7574426f78696e673b2073686f756c64206e6f74206265206d6174657269616c697a656420286d757374206e6f74206c6574207669727475616c206f626a65637420657363617065206174206e6f6465203130397c456e644e6f6465293a7c55544320323032362d31302d32305430353a35383a33392e3038347c5372632066696c653a2f2f2f55736572732f636f64792e696a2e6877616e672f50726f6a656374732f706b6c2d72732f7461726765742f6d312f677261616c2d636c6f73696e672d32303236313032302d30312f736f75726365732f62656e63686d61726b732f66697874757265732f7265637572736976652e706b6c3a3120307835616436343330"
+          }
+        ],
+        "frame_class_origin": {
+          "org.pkl.core.ast.frame.GetEnclosingFrameNode": "file:/Users/cody.ij.hwang/Projects/pkl-rs/target/m1/graal-closing-20261020-01/artifacts/pkl-tools-0.32.0.jar",
+          "org.pkl.core.runtime.VmUtils": "file:/Users/cody.ij.hwang/Projects/pkl-rs/target/m1/graal-closing-20261020-01/artifacts/scope-original/"
+        },
+        "completed_tiers": [],
+        "target_failed_events": 1,
+        "all_guest_failure_events": [
+          {
+            "event": "failed",
+            "engine": 1,
+            "source_line": 1,
+            "target_id": 341,
+            "target": "FunctionNode@6ad9b747",
+            "tier": 1,
+            "raw_line_hex": "5b656e67696e655d206f7074206661696c656420656e67696e653d31202069643d33343120202046756e6374696f6e4e6f64654036616439623734372020202020202020202020202020202020202020202020202020202020207c5469657220317c54696d6520202020343228202033332b39202020296d737c526561736f6e3a206a646b2e677261616c2e636f6d70696c65722e636f64652e536f75726365537461636b54726163654261696c6f7574457863657074696f6e24313a204f626a656374206f662074797065204c636f6d2f6f7261636c652f74727566666c652f6170692f696d706c2f4672616d65576974686f7574426f78696e673b2073686f756c64206e6f74206265206d6174657269616c697a656420286d757374206e6f74206c6574207669727475616c206f626a65637420657363617065206174206e6f6465203130397c456e644e6f6465293a7c55544320323032362d31302d32305430353a35383a33392e3038347c5372632066696c653a2f2f2f55736572732f636f64792e696a2e6877616e672f50726f6a656374732f706b6c2d72732f7461726765742f6d312f677261616c2d636c6f73696e672d32303236313032302d30312f736f75726365732f62656e63686d61726b732f66697874757265732f7265637572736976652e706b6c3a3120307835616436343330"
+          },
+          {
+            "event": "failed",
+            "engine": 1,
+            "source_line": 2,
+            "target_id": 340,
+            "target": "FunctionNode@4b8efb4a",
+            "tier": 1,
+            "raw_line_hex": "5b656e67696e655d206f7074206661696c656420656e67696e653d31202069643d33343020202046756e6374696f6e4e6f64654034623865666234612020202020202020202020202020202020202020202020202020202020207c5469657220317c54696d6520202020333428202033342b30202020296d737c526561736f6e3a206a646b2e677261616c2e636f6d70696c65722e636f64652e536f75726365537461636b54726163654261696c6f7574457863657074696f6e24313a204f626a656374206f662074797065204c636f6d2f6f7261636c652f74727566666c652f6170692f696d706c2f4672616d65576974686f7574426f78696e673b2073686f756c64206e6f74206265206d6174657269616c697a656420286d757374206e6f74206c6574207669727475616c206f626a65637420657363617065206174206e6f6465203130397c456e644e6f6465293a7c55544320323032362d31302d32305430353a35383a33392e3434307c5372632066696c653a2f2f2f55736572732f636f64792e696a2e6877616e672f50726f6a656374732f706b6c2d72732f7461726765742f6d312f677261616c2d636c6f73696e672d32303236313032302d30312f736f75726365732f62656e63686d61726b732f66697874757265732f7265637572736976652e706b6c3a3220307835616436343330"
+          }
+        ],
+        "diagnostic_only": true,
+        "performance_evidence": false
+      }
+    },
+    {
+      "id": "fib-scope-loop-bypass",
+      "observations": {
+        "probe": {
+          "phase": "compilation-probe",
+          "verified_calls": 29590,
+          "seeds": 2
+        },
+        "target_events": [
+          {
+            "event": "done",
+            "engine": 1,
+            "source_line": 1,
+            "target_id": 341,
+            "target": "FunctionNode@6ad9b747",
+            "tier": 1,
+            "raw_line_hex": "5b656e67696e655d206f707420646f6e65202020656e67696e653d31202069643d33343120202046756e6374696f6e4e6f64654036616439623734372020202020202020202020202020202020202020202020202020202020207c5469657220317c54696d6520202020343528202033302b31352020296d737c41535420202032347c496e6c696e65642020203059202020324e7c4952202020203232352f2020203532397c436f646553697a6520202020323334347c416464722030783030303131393231353234307c436f6d70496420333232392020207c55544320323032362d31302d32305430353a35383a35342e3634357c5372632066696c653a2f2f2f55736572732f636f64792e696a2e6877616e672f50726f6a656374732f706b6c2d72732f7461726765742f6d312f677261616c2d636c6f73696e672d32303236313032302d30312f736f75726365732f62656e63686d61726b732f66697874757265732f7265637572736976652e706b6c3a3120307835616436343330"
+          },
+          {
+            "event": "done",
+            "engine": 1,
+            "source_line": 1,
+            "target_id": 341,
+            "target": "FunctionNode@6ad9b747",
+            "tier": 2,
+            "raw_line_hex": "5b656e67696e655d206f707420646f6e65202020656e67696e653d31202069643d33343120202046756e6374696f6e4e6f64654036616439623734372020202020202020202020202020202020202020202020202020202020207c5469657220327c54696d6520202020363828202035312b31372020296d737c41535420202032347c496e6c696e65642020203659202020384e7c4952202020203538322f2020313435307c436f646553697a6520202020363234387c416464722030783030303131393232313534307c436f6d70496420333336312020207c55544320323032362d31302d32305430353a35383a35342e3731387c5372632066696c653a2f2f2f55736572732f636f64792e696a2e6877616e672f50726f6a656374732f706b6c2d72732f7461726765742f6d312f677261616c2d636c6f73696e672d32303236313032302d30312f736f75726365732f62656e63686d61726b732f66697874757265732f7265637572736976652e706b6c3a3120307835616436343330"
+          }
+        ],
+        "frame_class_origin": {
+          "org.pkl.core.ast.frame.GetEnclosingFrameNode": "file:/Users/cody.ij.hwang/Projects/pkl-rs/target/m1/graal-closing-20261020-01/artifacts/pkl-tools-0.32.0.jar",
+          "org.pkl.core.runtime.VmUtils": "file:/Users/cody.ij.hwang/Projects/pkl-rs/target/m1/graal-closing-20261020-01/artifacts/scope-bypass/"
+        },
+        "completed_tiers": [
+          1,
+          2
+        ],
+        "target_failed_events": 0,
+        "all_guest_failure_events": [],
+        "diagnostic_only": true,
+        "performance_evidence": false
+      }
+    }
+  ],
+  "acquisition_error": null,
+  "oracle": {
+    "schema": 1,
+    "profile": "performance",
+    "version": "0.32.0",
+    "lock_sha256": "7b77395ff5b64f7a220db74975e4c3858a36b19c5c0f5bca92681e3b1bc6504b",
+    "source": {
+      "path": "external/pkl",
+      "url": "https://github.com/apple/pkl.git",
+      "revision": "e51fb2f91774265666f94980ec630db794a4db2d",
+      "metadata_sha256": {
+        "gradle.properties": "1d76fc163cba8cabc502948a7dbc05cf7b7afc4a5e8efe35b3a746a89829be13",
+        "gradle/libs.versions.toml": "f2c818bfff6f30a096bcca18256ea9aae967a21707babae8c2b34a77a225b046",
+        "build-logic/src/main/kotlin/BuildInfo.kt": "a082b8aa717d9fb6f15fee6f4c74c62089b5cae1d1666d55cbb0d70318920ba6",
+        "pkl-tools/pkl-tools.gradle.kts": "c32aca46fa3fb845b205ecdf5b75d037e0b1f4ac6b6cd8cb9d1359667a06aa80",
+        "LICENSE.txt": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+        "NOTICE.txt": "d03b8db1a0d36ba65550ba30a51c7897f4b48b0eae7582d3f0576ea41e23d48e",
+        "THIRD-PARTY-NOTICES.txt": "8ac4f6b18b00227f8dbc5222c6259f6cb5084ad0053ebcebf83d5147cea31aaf"
+      }
+    },
+    "artifact": "/Users/cody.ij.hwang/Projects/pkl-rs/.cache/oracle/pkl-tools-0.32.0.jar",
+    "artifact_sha256": "c3b6f6215a08b31453b0fb0edd8c9da0aee31233f65abb8ab07f9c945151e059",
+    "artifact_url": "https://repo.maven.apache.org/maven2/org/pkl-lang/pkl-tools/0.32.0/pkl-tools-0.32.0.jar",
+    "release": {
+      "version": "0.32.0",
+      "commitId": "e51fb2f",
+      "stdlibModules": "pkl:analyze,pkl:base,pkl:Benchmark,pkl:Command,pkl:DocPackageInfo,pkl:DocsiteInfo,pkl:EvaluatorSettings,pkl:json,pkl:jsonnet,pkl:math,pkl:pklbinary,pkl:platform,pkl:Project,pkl:protobuf,pkl:ref,pkl:reflect,pkl:release,pkl:semver,pkl:settings,pkl:shell,pkl:test,pkl:xml,pkl:yaml"
+    },
+    "java": "/Users/cody.ij.hwang/Projects/pkl-rs/.cache/oracle/graalvm-community-openjdk-25.0.1+8.1/Contents/Home/bin/java",
+    "jdk": {
+      "executable": "/Users/cody.ij.hwang/Projects/pkl-rs/.cache/oracle/graalvm-community-openjdk-25.0.1+8.1/Contents/Home/bin/java",
+      "executable_sha256": "707a93de0d16a376736700568fb9030ab714d10cfb575144b7ac930bbeca2cdc",
+      "runtime_modules_sha256": "977ea476b5ac679dceaf74f8cb6bb5e7ae2f6890076a92393ea15c4bc5bd1dcf",
+      "release_sha256": "37ba12c1fa435351c575cb04b73445a9b0a93e0d200924d1c8e44fc4eedd8cc4",
+      "properties": {
+        "java.vendor": "GraalVM Community",
+        "java.version": "25.0.1",
+        "java.runtime.version": "25.0.1+8-jvmci-b01",
+        "java.vm.name": "OpenJDK 64-Bit Server VM",
+        "java.vm.version": "25.0.1+8-jvmci-b01",
+        "java.home": "/Users/cody.ij.hwang/Projects/pkl-rs/.cache/oracle/graalvm-community-openjdk-25.0.1+8.1/Contents/Home",
+        "os.name": "Mac OS X",
+        "os.arch": "aarch64",
+        "os.version": "27.0"
+      },
+      "version_stdout_hex": "",
+      "version_stderr_hex": "50726f70657274792073657474696e67733a0a2020202066696c652e656e636f64696e67203d205554462d380a2020202066696c652e736570617261746f72203d202f0a202020206674702e6e6f6e50726f7879486f737473203d206c6f63616c7c2a2e6c6f63616c7c3136392e3235342f31367c2a2e3136392e3235342f31360a20202020687474702e6e6f6e50726f7879486f737473203d206c6f63616c7c2a2e6c6f63616c7c3136392e3235342f31367c2a2e3136392e3235342f31360a202020206a6176612e636c6173732e70617468203d200a202020206a6176612e636c6173732e76657273696f6e203d2036392e300a202020206a6176612e686f6d65203d202f55736572732f636f64792e696a2e6877616e672f50726f6a656374732f706b6c2d72732f2e63616368652f6f7261636c652f677261616c766d2d636f6d6d756e6974792d6f70656e6a646b2d32352e302e312b382e312f436f6e74656e74732f486f6d650a202020206a6176612e696f2e746d70646972203d202f7661722f666f6c646572732f5f712f733936397a686b783671643870333276326e6438377967683030303067702f542f0a202020206a6176612e6c6962726172792e70617468203d202f55736572732f636f64792e696a2e6877616e672f50726f6a656374732f706b6c2d72732f2e63616368652f6f7261636c652f686f6d652f4c6962726172792f4a6176612f457874656e73696f6e730a20202020202020202f4c6962726172792f4a6176612f457874656e73696f6e730a20202020202020202f4e6574776f726b2f4c6962726172792f4a6176612f457874656e73696f6e730a20202020202020202f53797374656d2f4c6962726172792f4a6176612f457874656e73696f6e730a20202020202020202f7573722f6c69622f6a6176610a20202020202020202e0a202020206a6176612e72756e74696d652e6e616d65203d204f70656e4a444b2052756e74696d6520456e7669726f6e6d656e740a202020206a6176612e72756e74696d652e76657273696f6e203d2032352e302e312b382d6a766d63692d6230310a202020206a6176612e73706563696669636174696f6e2e6e616d65203d204a61766120506c6174666f726d204150492053706563696669636174696f6e0a202020206a6176612e73706563696669636174696f6e2e76656e646f72203d204f7261636c6520436f72706f726174696f6e0a202020206a6176612e73706563696669636174696f6e2e76657273696f6e203d2032350a202020206a6176612e76656e646f72203d20477261616c564d20436f6d6d756e6974790a202020206a6176612e76656e646f722e75726c203d2068747470733a2f2f7777772e677261616c766d2e6f72672f0a202020206a6176612e76656e646f722e75726c2e627567203d2068747470733a2f2f6769746875622e636f6d2f6f7261636c652f677261616c2f6973737565730a202020206a6176612e76656e646f722e76657273696f6e203d20477261616c564d2043452032352e302e312b382e310a202020206a6176612e76657273696f6e203d2032352e302e310a202020206a6176612e76657273696f6e2e64617465203d20323032352d31302d32310a202020206a6176612e766d2e636f6d707265737365644f6f70734d6f6465203d204e6f6e2d7a65726f206469736a6f696e7420626173650a202020206a6176612e766d2e696e666f203d206d69786564206d6f64652c2073686172696e670a202020206a6176612e766d2e6e616d65203d204f70656e4a444b2036342d4269742053657276657220564d0a202020206a6176612e766d2e73706563696669636174696f6e2e6e616d65203d204a617661205669727475616c204d616368696e652053706563696669636174696f6e0a202020206a6176612e766d2e73706563696669636174696f6e2e76656e646f72203d204f7261636c6520436f72706f726174696f6e0a202020206a6176612e766d2e73706563696669636174696f6e2e76657273696f6e203d2032350a202020206a6176612e766d2e76656e646f72203d20477261616c564d20436f6d6d756e6974790a202020206a6176612e766d2e76657273696f6e203d2032352e302e312b382d6a766d63692d6230310a202020206a646b2e6465627567203d2072656c656173650a202020206c696e652e736570617261746f72203d205c6e200a202020206e61746976652e656e636f64696e67203d2055532d41534349490a202020206f732e61726368203d20616172636836340a202020206f732e6e616d65203d204d6163204f5320580a202020206f732e76657273696f6e203d2032372e300a20202020706174682e736570617261746f72203d203a0a20202020736f636b734e6f6e50726f7879486f737473203d206c6f63616c7c2a2e6c6f63616c7c3136392e3235342f31367c2a2e3136392e3235342f31360a202020207374646572722e656e636f64696e67203d2055532d41534349490a20202020737464696e2e656e636f64696e67203d2055532d41534349490a202020207374646f75742e656e636f64696e67203d2055532d41534349490a2020202073756e2e617263682e646174612e6d6f64656c203d2036340a2020202073756e2e626f6f742e6c6962726172792e70617468203d202f55736572732f636f64792e696a2e6877616e672f50726f6a656374732f706b6c2d72732f2e63616368652f6f7261636c652f677261616c766d2d636f6d6d756e6974792d6f70656e6a646b2d32352e302e312b382e312f436f6e74656e74732f486f6d652f6c69620a2020202073756e2e6370752e656e6469616e203d206c6974746c650a2020202073756e2e696f2e756e69636f64652e656e636f64696e67203d20556e69636f64654269670a2020202073756e2e6a6176612e6c61756e63686572203d2053554e5f5354414e444152440a2020202073756e2e6a6e752e656e636f64696e67203d205554462d380a2020202073756e2e6d616e6167656d656e742e636f6d70696c6572203d20486f7453706f742036342d4269742054696572656420436f6d70696c6572730a20202020757365722e636f756e747279203d204b520a20202020757365722e646972203d202f55736572732f636f64792e696a2e6877616e672f50726f6a656374732f706b6c2d72730a20202020757365722e686f6d65203d202f55736572732f636f64792e696a2e6877616e670a20202020757365722e6c616e6775616765203d206b6f0a20202020757365722e6e616d65203d20636f64792e696a2e6877616e670a0a6f70656e6a646b2076657273696f6e202232352e302e312220323032352d31302d32310a4f70656e4a444b2052756e74696d6520456e7669726f6e6d656e7420477261616c564d2043452032352e302e312b382e3120286275696c642032352e302e312b382d6a766d63692d623031290a4f70656e4a444b2036342d4269742053657276657220564d20477261616c564d2043452032352e302e312b382e3120286275696c642032352e302e312b382d6a766d63692d6230312c206d69786564206d6f64652c2073686172696e67290a",
+      "distribution": {
+        "filename": "graalvm-community-jdk-25.0.1_macos-aarch64_bin.tar.gz",
+        "url": "https://github.com/graalvm/graalvm-ce-builds/releases/download/jdk-25.0.1/graalvm-community-jdk-25.0.1_macos-aarch64_bin.tar.gz",
+        "sha256": "066339f24a8ab5c161548491a9400f7344e7761a1e46f8979e76c7ef11d5bc76",
+        "java_path": "graalvm-community-openjdk-25.0.1+8.1/Contents/Home/bin/java",
+        "runtime_sha256": {
+          "bin/java": "707a93de0d16a376736700568fb9030ab714d10cfb575144b7ac930bbeca2cdc",
+          "release": "37ba12c1fa435351c575cb04b73445a9b0a93e0d200924d1c8e44fc4eedd8cc4",
+          "lib/modules": "977ea476b5ac679dceaf74f8cb6bb5e7ae2f6890076a92393ea15c4bc5bd1dcf",
+          "lib/libjvmcicompiler.dylib": "73a2ad5dc55560c5431558282a2a1c52a14cdafd2fcc0957dc88222d1d1777d9",
+          "lib/server/libjvm.dylib": "7789e218f8b993f5cab610cda1e25ad6c62697937d982f430c33e7c306d6e860",
+          "lib/libjava.dylib": "d6f3828d7daf0389ce00892d2540bceb29a2824c93016795f570a0bd798d6263"
+        }
+      },
+      "optimizing_runtime_probe": {
+        "command": [
+          "/Users/cody.ij.hwang/Projects/pkl-rs/.cache/oracle/graalvm-community-openjdk-25.0.1+8.1/Contents/Home/bin/java",
+          "-Xms64m",
+          "-Xmx512m",
+          "-Dfile.encoding=UTF-8",
+          "-Dstdout.encoding=UTF-8",
+          "-Dstderr.encoding=UTF-8",
+          "-Duser.language=en",
+          "-Duser.country=US",
+          "-Duser.timezone=UTC",
+          "-Djava.awt.headless=true",
+          "-Duser.name=oracle",
+          "--enable-native-access=ALL-UNNAMED",
+          "--sun-misc-unsafe-memory-access=allow",
+          "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs/.cache/oracle/home",
+          "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs/.cache/oracle/tmp",
+          "-cp",
+          "/Users/cody.ij.hwang/Projects/pkl-rs/.cache/oracle/pkl-tools-0.32.0.jar",
+          "/Users/cody.ij.hwang/Projects/pkl-rs/tools/OracleRuntimeProbe.java"
+        ],
+        "stdout_hex": "477261616c564d2043450a",
+        "stderr_hex": "",
+        "source_sha256": "19885ab4f5a65bd722e2d25d9794470b310515273c210f9a85309230fa1911bb"
+      }
+    },
+    "command": [
+      "/Users/cody.ij.hwang/Projects/pkl-rs/.cache/oracle/graalvm-community-openjdk-25.0.1+8.1/Contents/Home/bin/java",
+      "-Xms64m",
+      "-Xmx512m",
+      "-Dfile.encoding=UTF-8",
+      "-Dstdout.encoding=UTF-8",
+      "-Dstderr.encoding=UTF-8",
+      "-Duser.language=en",
+      "-Duser.country=US",
+      "-Duser.timezone=UTC",
+      "-Djava.awt.headless=true",
+      "-Duser.name=oracle",
+      "--enable-native-access=ALL-UNNAMED",
+      "--sun-misc-unsafe-memory-access=allow",
+      "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs/.cache/oracle/home",
+      "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs/.cache/oracle/tmp",
+      "-cp",
+      "/Users/cody.ij.hwang/Projects/pkl-rs/.cache/oracle/pkl-tools-0.32.0.jar",
+      "org.pkl.cli.Main"
+    ],
+    "environment": {
+      "PATH": "/bin:/usr/bin",
+      "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs/.cache/oracle/home",
+      "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs/.cache/oracle/tmp",
+      "TMP": "/Users/cody.ij.hwang/Projects/pkl-rs/.cache/oracle/tmp",
+      "TEMP": "/Users/cody.ij.hwang/Projects/pkl-rs/.cache/oracle/tmp",
+      "LC_ALL": "C",
+      "LANG": "C",
+      "TZ": "UTC",
+      "TERM": "dumb",
+      "NO_COLOR": "1",
+      "COLUMNS": "80"
+    },
+    "platform": "macOS-27.0-arm64-arm-64bit-Mach-O",
+    "version_stdout_hex": "506b6c20302e33322e3020286d61634f532032372e302c204a6176612032352e302e31290a",
+    "version_stderr_hex": ""
+  },
+  "source_stability_before_execution": true,
+  "source_stability_after_execution": true,
+  "evidence_sha256": {
+    "artifacts/bypass/org/pkl/core/ast/frame/GetEnclosingFrameNode.class": "e21335078405388ccd522348d75c5fd5e4683e7796a4140d3b88f9e12265c7b0",
+    "artifacts/helper/M1GraalProbe.class": "fcd421500460217ce379f3535165c3e2d4d39df3b9e0480a98820145b80c1e6a",
+    "artifacts/original/org/pkl/core/ast/frame/GetEnclosingFrameNode.class": "39e19f7dbd56e57ef7e43ad259c54c453f61ae05c97133e2364a1a4b3c6eab93",
+    "artifacts/pkl-tools-0.32.0.jar": "c3b6f6215a08b31453b0fb0edd8c9da0aee31233f65abb8ab07f9c945151e059",
+    "artifacts/scope-bypass/org/pkl/core/runtime/VmUtils$1.class": "783d73f073eba3887272ac84eb4b724d51d0e91e981191508f7bbbfdb5bd5f3d",
+    "artifacts/scope-bypass/org/pkl/core/runtime/VmUtils.class": "752d135f0af1450946df9b391409ba42a6aa4ad062722f04df9a2d7395147704",
+    "artifacts/scope-original/org/pkl/core/runtime/VmUtils$1.class": "372c898c85c25222bf6b4f79891d68b1d6d566fb8a42565d4097c3fd30c3c4c5",
+    "artifacts/scope-original/org/pkl/core/runtime/VmUtils.class": "f4f160b97ba6c9f9d60db3ccaa9d38263561fac5b38cbabfa051be9af254f40c",
+    "cases/arithmetic-baseline/class-loading.log": "5799b8a82a756b4ba25b952a1c3ee35e18010bf1dd493957f4da921bbbc68cc3",
+    "cases/arithmetic-baseline/result.json": "961acc3789c250ca341f7a52c7cc896b6f8bd5b573134cba4ed18d35cd88a7a8",
+    "cases/arithmetic-baseline/stderr.bin": "352dae05dfbd2b883fd20e613d2e936b250b59399dd466d052528ea4622bf14a",
+    "cases/arithmetic-baseline/stdout.bin": "c6026e1f4c06b3b2188e5990046578b1c465410a2c3036ddef4f1285921180af",
+    "cases/arithmetic-frame-bypass/class-loading.log": "105c821c1037620530b8223838009d16c963a7921fa51c5b4f6fd6ba1284d4d2",
+    "cases/arithmetic-frame-bypass/result.json": "6850e803d0472fd7b750f272436edd682868dd336017eca6c1e2343bb1abe258",
+    "cases/arithmetic-frame-bypass/stderr.bin": "3693cc76ccaf015da1678ad4bd420c758fc23c2ea4750511ebd2f73a63ccd247",
+    "cases/arithmetic-frame-bypass/stdout.bin": "8f072b7333f9909af375a166b03ff43e524ee4bbea8073c9effba8e87f3292b2",
+    "cases/arithmetic-receiver-baseline/class-loading.log": "3024e62f6b621458339edd5ab78d89415ddb9538b6c9d411d3075e774d100ed7",
+    "cases/arithmetic-receiver-baseline/result.json": "428142c592899265a45d296a24abc975ec0ab41cda6458e5f7b980bdc57f8992",
+    "cases/arithmetic-receiver-baseline/stderr.bin": "9a49ac13e307b066c56d8fb9a6633c4e2164ee98b8cf2f63807023718b758516",
+    "cases/arithmetic-receiver-baseline/stdout.bin": "e6ed0e2584f16fca6e87999c87ec98ae9437ccb142b6fb62a4b5666018888e36",
+    "cases/arithmetic-recompiled-control/class-loading.log": "55fb75e52c48b224dbb6753c26d63b2defa823df9abb57d7c53c1d10275525b0",
+    "cases/arithmetic-recompiled-control/result.json": "89470bb51173f13c8c41eeed435bc54c6bc04e5521a42cee0ac05a3b47eeec65",
+    "cases/arithmetic-recompiled-control/stderr.bin": "f9aa1501c1f8eb0b6b57757481ce12dc9b876c7f9800c0eac747fe4f1dcdf412",
+    "cases/arithmetic-recompiled-control/stdout.bin": "23c27642d883e601611de0ed5220b81150a23a175f3aa8646bdf0c650029096a",
+    "cases/fib-baseline/class-loading.log": "625bbd3dcc742b27e80c210f62d173c8d15759a3c8aee86b6125f51a8813738f",
+    "cases/fib-baseline/result.json": "90b53970ca3f14e158eec10e26b7b9ced324ebe9f0fb76dd33131994ed720cab",
+    "cases/fib-baseline/stderr.bin": "e06b5081ce7bf0c980ae2e877578066b4045109ff67ba6a06e107ba71d4e779b",
+    "cases/fib-baseline/stdout.bin": "869796e15bed118406dca2cb442c32e14ba8e764c8bfd66f436b4f8306301c54",
+    "cases/fib-frame-bypass/class-loading.log": "6510058ac01261f6aeb667e0fe580e4c66089abaee096d7ae53b907a8cd81187",
+    "cases/fib-frame-bypass/result.json": "ee06f87606e52b227249022c31887337387003ee26d3c997f80e5c5426a17337",
+    "cases/fib-frame-bypass/stderr.bin": "adea5f3ab75e76e133085621a20060c28bba9c0ba4601b67cefdd342f3286810",
+    "cases/fib-frame-bypass/stdout.bin": "2211091f264aed418e3cbce4bd189573b3424daad9298fff765f3b8c0a5109c9",
+    "cases/fib-receiver-baseline/class-loading.log": "868a2946fadf2048dcb82af0161ac0f902823e9fe4bb18a18e3f4ca6a7246943",
+    "cases/fib-receiver-baseline/result.json": "45664901f97448145f4ab94f7ea2af255b5b7671ccc93b95737a5abe9cccd091",
+    "cases/fib-receiver-baseline/stderr.bin": "e49c7e4a3f4666f8e3d291cda5890f56213219b28f840f6f8d91cc3f906e6beb",
+    "cases/fib-receiver-baseline/stdout.bin": "02f508124c245c262910f76f15174b1698e147cd98fef6b8b6809310d3093d81",
+    "cases/fib-scope-loop-bypass/class-loading.log": "b164fe853fe2ba5733339d99ad3f29562f360ecdeae69b29d8378082228868b9",
+    "cases/fib-scope-loop-bypass/result.json": "766721374f7dcd5eb86eeca6fe90528b4717d63dc9e514e9fd02bf464dd11900",
+    "cases/fib-scope-loop-bypass/stderr.bin": "aa0c15b606158e857eb0e1e284db3e2f811a3ed47a1c3179ad7d9cc0e0b83ed1",
+    "cases/fib-scope-loop-bypass/stdout.bin": "8974484b080254f69235f877d1b2c9e4788eef60bffc06dfdd242557ce85fd32",
+    "cases/fib-scope-recompiled-control/class-loading.log": "7274aa272d7217093d93ef94a5f80361af2a6a1e9d355d2f32c8ad468fb3ced3",
+    "cases/fib-scope-recompiled-control/result.json": "fc1d8f6757a7762dc915c97f1727b9348a9309be5bdd70d602c5b13a65c04a4f",
+    "cases/fib-scope-recompiled-control/stderr.bin": "4d01c807ab9d925a650d0af55eb8e91e1dafd74377264da65239b0c116821865",
+    "cases/fib-scope-recompiled-control/stdout.bin": "171d939965215b1b0ae675cb2f253bed3a8c92fca88b2fe6cf7b36df3383f2b9",
+    "compile/bypass/result.json": "29351f2c14b48a0fd594ed87503e069a60c22a46e7c773370b78af3f384b0605",
+    "compile/bypass/stderr.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "compile/bypass/stdout.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "compile/helper/result.json": "8633b974b7b67ec910ca8c3103e1d68065cbc2fc5f54b31d8b9ed3ed45fe3c59",
+    "compile/helper/stderr.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "compile/helper/stdout.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "compile/original/result.json": "26b52a49d3cd11f7baa34ec883c5cfd07fcf4e0d5de7ee2d796f529fe93dfd3b",
+    "compile/original/stderr.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "compile/original/stdout.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "compile/scope-bypass/result.json": "e92fd2e59aa0885e4192c5072f61791399862598827ef4d993b9863bf4823047",
+    "compile/scope-bypass/stderr.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "compile/scope-bypass/stdout.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "compile/scope-original/result.json": "c14d583acd177f5517e78c74fc4ad38ecf6519ca8f0fe5871a0e2672a7f7d1ef",
+    "compile/scope-original/stderr.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "compile/scope-original/stdout.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "expected/arithmetic/seed-000.bin": "0a175804c6121bb5c18d731b51ff688573a3e849e31b15d98db7d3ebca77a06f",
+    "expected/arithmetic/seed-001.bin": "2f3b1a647736218c52cd637eebd7b2ce8ff6bd74592c8330a9ba44d09e87bfa9",
+    "expected/arithmetic/seed-002.bin": "0c4ac44319057095e81430ece2a62060e1a54534f8705341d87495d5793d3e94",
+    "expected/arithmetic/seed-003.bin": "251162b16155535de1f0f68c61ef6b8a5ee033ab83dd3e866345a7f4c27c6e4b",
+    "expected/arithmetic/seed-004.bin": "a47e085a7d34a217298cb123b2b4524102c66307659805122e3b7dbe58dcd210",
+    "expected/arithmetic/seed-005.bin": "067eb10bda23eb93cd7ad768777582e4a322f2241e7e9c4306186ec7c25eab25",
+    "expected/arithmetic/seed-006.bin": "26480e3574424293795346425b6e91093c3d11c77614386a34f412c090859e38",
+    "expected/arithmetic/seed-007.bin": "d598b1b8173419235d55d477a94a913a6fbc28def778d642ca56eba263ce3c62",
+    "expected/arithmetic/seed-008.bin": "d0da1af52e98f34c3aff69217697a224e02319e12382c699618bea678ba89eb2",
+    "expected/arithmetic/seed-009.bin": "644053e42eae43b95919ae4d1ba781ddcade453418cd6ab87e7e0a2c873342af",
+    "expected/arithmetic/seed-010.bin": "af1b4ceb0da8dbd31e107af811de3965b3dd6096e48b968df5dc80faa114fda0",
+    "expected/arithmetic/seed-011.bin": "e37d4b8af9e720ee28ad9fdb31c8c07a3ff4e85d15b0b93a37fdda2bfedb0cfb",
+    "expected/arithmetic/seed-012.bin": "0e74f3e37a16c676bf3b87ad8b65ad4baa393dd26c8110fd5099ce8d9b2298a5",
+    "expected/arithmetic/seed-013.bin": "91f80f3e9861fc97bedd19cb35c3faf16c0ba4ce754cf77ddcb86281586ffd66",
+    "expected/arithmetic/seed-014.bin": "3bf362dd9a328a6877a4fb452f2137e1894e8608979af3b32a96e6ab4a39a435",
+    "expected/arithmetic/seed-015.bin": "a416fca7788000633fbbc9e02537f51ea60abf1db103303a0fb3f6f5a848a965",
+    "expected/arithmetic/seed-016.bin": "6cce069177cd58ebda99fbb5ae0895e832b223c363644270f2439ec8be44115c",
+    "expected/arithmetic/seed-017.bin": "425584af14978145c8533ebac083ab2d9fd913c91987fef226efdef0353a4d79",
+    "expected/arithmetic/seed-018.bin": "281caf41ac36f3bb3d8632d79fc1c6063461fc8dd7109dee4e4e83ff94b5776d",
+    "expected/arithmetic/seed-019.bin": "cc53fd82eb6b3abb855e9c4678725818fa456dcf4add1e71dc9c780ab53784b6",
+    "expected/arithmetic/seed-020.bin": "13848743748e003061d382492300e39a8f0c67428ffe45e6f0b59478d940ca8a",
+    "expected/arithmetic/seed-021.bin": "ffb8a68d5b41cb3e233d15c76739c0852331605d644ef7be74d4ceff31a47142",
+    "expected/arithmetic/seed-022.bin": "338db67f8c60690b8cb68e81804c2e68c8e887455bfeceb810b70eeee430325e",
+    "expected/arithmetic/seed-023.bin": "2fc184dd8e7de0c2993ad726850007205c48e74cfb3915de5334c8b28e6b390e",
+    "expected/arithmetic/seed-024.bin": "34a2b99c02411fb2bf674683766efcdc2b53ec76559a1b0776af01ca8415cbb2",
+    "expected/arithmetic/seed-025.bin": "6ac26f2592b5a72c422c5d4b277a74b95f5ae67ad0d04794413752d845fec6eb",
+    "expected/arithmetic/seed-026.bin": "614cb3fc60cb6dc183a042b4603f2a88d5c7fdf4ec626f13b8e5121af01f09ea",
+    "expected/arithmetic/seed-027.bin": "6b106b195b8d3b97992853e16d9db70598978c8ae648d4571f3e11f60e187f91",
+    "expected/arithmetic/seed-028.bin": "bd7997353a3a3c6f6da0e683dbbddd6fb0485481ff2b595cc2008a2e1a98f369",
+    "expected/arithmetic/seed-029.bin": "b69d122c8ac319ed82b2cb1ff6e2a10ae515a07abced7e6ccefc511218b1323e",
+    "expected/arithmetic/seed-030.bin": "6592e596d7db6dd03867efd74f16d3f2d8e32c7376aabc768d1d146380a036ae",
+    "expected/arithmetic/seed-031.bin": "7f7af6137ce9bdf5be21a5855fb0134b9ff84cd77d39c4569ff221e2769ff384",
+    "expected/arithmetic/seed-032.bin": "398a15bc9bdc4db26d1d21dda9bf0e6e018ae388020e0e1398f5ecc9789c18e0",
+    "expected/arithmetic/seed-033.bin": "b1085a6893111a20747e97d0a831afdee971ea3edf39c713a87fa1c2b1b78b0f",
+    "expected/arithmetic/seed-034.bin": "7d96ff26c3d3fa6e137992c792aa9bd665d44f4b7125e354249b913df6b3aa2e",
+    "expected/arithmetic/seed-035.bin": "1c753160f146c373c539040c119db2a019d58f51f226f1e009763326e8a7c302",
+    "expected/arithmetic/seed-036.bin": "b019b5be015f8722687f1ee30aded6a195a53f7eabd271ee08b216de6c94e7da",
+    "expected/arithmetic/seed-037.bin": "ad35e7efe14a98ba8d64059ec64c9dd7f8df8eb8ef97c6fc5fd17e8a929803a0",
+    "expected/arithmetic/seed-038.bin": "cd4dc3be25929d87a6011db29e253d6ce02e88bb9f45742a969eb5b5b0125203",
+    "expected/arithmetic/seed-039.bin": "e5c668c929c59e01a6e63c9c2a74ee6c46ca1c1c60cdf3c5c5cd2c4c21be9ef6",
+    "expected/arithmetic/seed-040.bin": "0a7e9ae0aab05e51d0d14cce4653932df2d3a9850e0c19b596780481fd0d5ecf",
+    "expected/arithmetic/seed-041.bin": "fe94789a48da5dd42e03fa819d7ab6a59e7627f338743b3e8fbf0a537fb1c87a",
+    "expected/arithmetic/seed-042.bin": "69fab7faf4c692add7a21b0a20406cd807122f73537d38c454cd4e7f336fe764",
+    "expected/arithmetic/seed-043.bin": "f463fefdbeab73891baa80455f3ecf480f3e5b1130167d0ebc9026b7848deb5f",
+    "expected/arithmetic/seed-044.bin": "66a3bb31c614dcd81e10da9415b11086c43814f333ace00061a13bbbdcb6cd46",
+    "expected/arithmetic/seed-045.bin": "96b6182f87ded1baa28f8ef40c8cf03714642fa3846be3d8be9170f0d604aabc",
+    "expected/arithmetic/seed-046.bin": "037cce21f9d47121a4b74971cf260545f6f5b8b677c93f175522adc6aa81a163",
+    "expected/arithmetic/seed-047.bin": "4cf826dd75e4707108e654bbfca6bc83cb1d01fe9ed8bcfda4c116ee486be12e",
+    "expected/arithmetic/seed-048.bin": "98ee81c41d70b85ddfbd42869b0eebe22d132a3f70510c61b55c05a813133ee3",
+    "expected/arithmetic/seed-049.bin": "d3d3950d7bc298fb892ef81757a3120b7039ca2910fa882f9d876bf15cfe83b0",
+    "expected/arithmetic/seed-050.bin": "f45d0df1d4e753e786cdc0100aff5844f019a36b280ab07cd851e492f91c88c1",
+    "expected/arithmetic/seed-051.bin": "229be2d76fe86fcf489bd9d5cfc6f23eead7cc4d4db56333a0f873c50b0b87d3",
+    "expected/arithmetic/seed-052.bin": "d2c3f7d7309a3e349ca10bb746d5c8a29f2310df80b9ffdf284cb2845dcceee2",
+    "expected/arithmetic/seed-053.bin": "2e8dc7a001a107c61282df6b5e3f0695a0dd04efbdbd6976ed005ffb10472a15",
+    "expected/arithmetic/seed-054.bin": "a9feb4e42c2596a570a7705ae60b867997f582fa9f39176f212235ee960b5b13",
+    "expected/arithmetic/seed-055.bin": "ca3b40e3f4a5398e09fb11f8eab42096630c3acbd6dce26656a90fdf72b87169",
+    "expected/arithmetic/seed-056.bin": "ad902409795655b93688943fbaf2d3decc38e9e6c2067af02b370d886b1d704d",
+    "expected/arithmetic/seed-057.bin": "deca4a03814c2533efd11bc8dfa61fce410ff9a7520daedea366946074dffbde",
+    "expected/arithmetic/seed-058.bin": "cb217731c496b8e1dc52da3f0fb426360032efca6bec5756917dd52c438a2b8b",
+    "expected/arithmetic/seed-059.bin": "cd6ace28cdbf45131896a1e83854cd798f1973bf79e62ba7aa60f07316184a9d",
+    "expected/arithmetic/seed-060.bin": "41cf091084d6f30cf45e97b16bf165283dc5ab27f7999f7d31bd405e082e3fdd",
+    "expected/arithmetic/seed-061.bin": "724c34e3d1eb1b3ac658735cc811ba8901be8354eca7d7c183af6305ccf15925",
+    "expected/arithmetic/seed-062.bin": "453afb3d310def9d21d43098461dcd25b506fe4b760db482b7b524e82b14b5cc",
+    "expected/arithmetic/seed-063.bin": "38b3642ecec1db9936dbcfde078967b4cb41bdaf5188a745fc7c523b619acb49",
+    "expected/arithmetic/seed-064.bin": "1c40b7658984206544b8b02afdb774bed2bcd4a986a0a7140a9669075edc7a50",
+    "expected/arithmetic/seed-065.bin": "64cd896af0dfaaba4756f32a34a3dec6590687f206a6228274ec847bc6dfb8bc",
+    "expected/arithmetic/seed-066.bin": "4ec586ca911af6331bef99865cd691e97cc7d340f3489ed740e4a34012af27fa",
+    "expected/arithmetic/seed-067.bin": "6fe79ab1802c7c29a95fd5e712078763a0bce84f548fa5e37080f7ba6af1d52e",
+    "expected/arithmetic/seed-068.bin": "bb76dc3c076cd8e06b6b727b1913eff38a71ffc30bd6a4916e52fd39798ec81f",
+    "expected/arithmetic/seed-069.bin": "411b255e8c928b62eb7725b2ce97c600699944a1353e4bc895024cd08c7bc49d",
+    "expected/arithmetic/seed-070.bin": "54c78b45c6a21fd75531ad8f48f43dba39eca748b0fa6d5b41a6cd15d57df36a",
+    "expected/arithmetic/seed-071.bin": "b44891323cc7a2d73ec01793e1e4c42c7e39641c3e7a2ba0eb3e451ac7ed18cc",
+    "expected/arithmetic/seed-072.bin": "adfdf777372e4df2c571cb656de68b7be4dfa47fd6220498807842390242ce97",
+    "expected/arithmetic/seed-073.bin": "5a8872eea42b4ef89a5f912884a55d5077011f4e1f25b2133b3c7bb9d363c8b2",
+    "expected/arithmetic/seed-074.bin": "6d1a1e482ee8e89826600f85acf97591c855e32e07096e013ed5e81f4805849c",
+    "expected/arithmetic/seed-075.bin": "67d4a2b9f78db85adcf58e2f3e2b80a751fbbe5f042991036f2cc3921cc3e25d",
+    "expected/arithmetic/seed-076.bin": "479ef404e9ca3e748232304348bc0113a38f74cce22826bbe2fa807cfa89a9a9",
+    "expected/arithmetic/seed-077.bin": "50bce88abd13ae4f3224d251a16edd7435341d0db068a26069e669c5140bc45a",
+    "expected/arithmetic/seed-078.bin": "c08a1a2684950b2e0cbfa5d8f8d13350b30faa398bd7d32333ed703a78b1dd40",
+    "expected/arithmetic/seed-079.bin": "a3adef724ce899f5dac011fcb148a1c74465745cb70b9e5e6554071a6d7689d8",
+    "expected/arithmetic/seed-080.bin": "55f96e4d0df94dfd6f9572544dc05c92c67fe56c5a28ee74e3263c3712b79558",
+    "expected/arithmetic/seed-081.bin": "557f5337d3e677163ab18acb9b41e0d29e9aa83fd90943ff6ad3baaa90bb51a5",
+    "expected/arithmetic/seed-082.bin": "d49cf7fc88dfb440638ea6e74ed8c528468ac73ba661ce612fe39e9cd701bfc1",
+    "expected/arithmetic/seed-083.bin": "d1069877e7102e0b4c7ad7dad4074e9510420a2e2a1b6996bddf0a1c228e6749",
+    "expected/arithmetic/seed-084.bin": "1ec6907caa76e9263d807c7d61cc1875e46c4417bc3190ec8cc1acc9ea216113",
+    "expected/arithmetic/seed-085.bin": "971da1f0faedbf8e001fbce469a319767f74c2ca9251b4e34bf5b96fe44f8761",
+    "expected/arithmetic/seed-086.bin": "303e652fb5d5c3ea426602416f150519e44fdfa7fec5ef47c2d3e55c6fae2100",
+    "expected/arithmetic/seed-087.bin": "9123176eaf6a91a77e546cc2fc89d566f85e0b5317f0362a2f21351fad80db71",
+    "expected/arithmetic/seed-088.bin": "d44f637a200880a3dd20cf617485f6b383de1f02b98ee96df2bf0e70c22e8291",
+    "expected/arithmetic/seed-089.bin": "5d2f20530ac39a03ae7c469c554f185030e676c02748ff5f6bcae2999e37e2d0",
+    "expected/arithmetic/seed-090.bin": "0c943b6adf66adf86bb7f84faa1d9150a1e6e5559bf2dd7ada2f6897cc3b0e0f",
+    "expected/arithmetic/seed-091.bin": "350c94d619f6aba3379500ff11bfcca6e58b0afe5b3624d0ad56fa607845e38c",
+    "expected/arithmetic/seed-092.bin": "8a3e3a819b86e0e2ba5a60966a0792985e556c021f5995225501688b5e7e8ce7",
+    "expected/arithmetic/seed-093.bin": "f6d052705007509376c88da5d99d1b60b8c9413564c111a2fb46e9f6ea134e5f",
+    "expected/arithmetic/seed-094.bin": "ae53a424384a3eee3b5a0147e239c05bbdc6767d6f1827e95e4545beccc67d1c",
+    "expected/arithmetic/seed-095.bin": "532d79cc5e85d9ecd66260c63b967c2085136c8fb07b392565a62684c353108d",
+    "expected/arithmetic/seed-096.bin": "584f719804cbb166c42754a65f12a9fdae0e79cbcaabb1f7c90dc1c56c926484",
+    "expected/arithmetic/seed-097.bin": "3517a0cd78deae06eb49d785375fc4dd776b66196978dbbac164a67ccd648d64",
+    "expected/arithmetic/seed-098.bin": "76bf14af3f53533f119a421903447d125a071ec170646c78390e8c33ffde372b",
+    "expected/arithmetic/seed-099.bin": "3810958e93e85a27a26bcb094ff158d5cc980a073c20335a00f93bc3ce41be39",
+    "expected/arithmetic/seed-100.bin": "5d10801e95a05cfb95f64a4f8ca5534b0a4915a54c4faf4148ed2a472c3970a7",
+    "expected/arithmetic/seed-101.bin": "e8f4e8455a29aec03c4d4e877d4009e8ad63ff041bac813acb1240ed61e2ecaa",
+    "expected/arithmetic/seed-102.bin": "6f177a3d23d6f1cd8170a59cb5e79fcfebaf00957f9c61d54bdfd348e330615f",
+    "expected/arithmetic/seed-103.bin": "425ab9e9e0aa2213b4c3e192fa110a9be0a55c21956a474204ea526d294d8bac",
+    "expected/arithmetic/seed-104.bin": "8b87536f8a2b8b843e653af46bd30d2806273249f4e1037a4392192c82fa7d80",
+    "expected/arithmetic/seed-105.bin": "20d0fbf03df31f3d680e0b9db8b6508727ad9672135155185fdee11f8e07e7f6",
+    "expected/arithmetic/seed-106.bin": "0f0213af69ae68e40aa2a4d160290283fc71be471d8b132a25bdd63eba5c680e",
+    "expected/arithmetic/seed-107.bin": "c2c358e9dd15de84331652b848b7ad410ef3f0f8a06a312065349f6c58991966",
+    "expected/arithmetic/seed-108.bin": "11d1726fcc6f78ee81108d1db770c7d3020c9e285fb438ec1868dd983835e7cb",
+    "expected/arithmetic/seed-109.bin": "7df0c14cb0d42be40feaed0355561db88ec8cbf774d2d4389f14e02df25b17a7",
+    "expected/arithmetic/seed-110.bin": "3269656aff282ecbab7813b8f2c84adf2bfa0fe2b25a144cd6196f82a63d82fc",
+    "expected/arithmetic/seed-111.bin": "3f9fadc2cc3a306e6bf75dc0c5fb24f1515e700956af243b9b2188dbc1bd6470",
+    "expected/arithmetic/seed-112.bin": "5fcb29b70065f434966d563b60d826e44a200105527fa8534bcb319a4b257c69",
+    "expected/arithmetic/seed-113.bin": "81e649b6fcfd9d691d4ac1337a5b4427cb3116cb0a857515389b60cbfa1daf3e",
+    "expected/arithmetic/seed-114.bin": "e8b4773f260df0fd98d72e3dab8233824d0e992e2657819ebf0f98ccd7fadb28",
+    "expected/arithmetic/seed-115.bin": "db6a986583ff7e003de0dbbe1291c835b5ac445069802302026b433df50a30cb",
+    "expected/arithmetic/seed-116.bin": "ea7fa9e4cbadf19469998096bf8d187c62235aed45c125a25d5541efe249ad3d",
+    "expected/arithmetic/seed-117.bin": "98cb1ca82c6624e9044ed5d60fbc9583fae3fbfcff4d8a15800ff81b980856c7",
+    "expected/arithmetic/seed-118.bin": "aee98c562feee06f1babc0a9a224f870858236d234cf1064eb075f17f303435c",
+    "expected/arithmetic/seed-119.bin": "f338a66d1dc630488f938baf32f8bd95bf6e26fb48e022258e5349c431b618c1",
+    "expected/arithmetic/seed-120.bin": "d7ff7ef674aac2a80726588be254df5549df527d5a1a5f6f6e1477a0bf51ac8d",
+    "expected/arithmetic/seed-121.bin": "16d0382287d4ec2ccc680b917a023864a2affa628f0016a80d7d2dd6e0f42c92",
+    "expected/arithmetic/seed-122.bin": "8e54c1a1f0c1be9de1d0099282496fdc5a10e5d51417e3f4327cde62b62612c2",
+    "expected/arithmetic/seed-123.bin": "cc2632d8e992a947a9b8af5be997cc4de0c4914067fe49e754435993606835f9",
+    "expected/arithmetic/seed-124.bin": "fe44376f5c09fc2fb06ec35c8e2dc052c840c2976029968233fa02d011d21bc5",
+    "expected/arithmetic/seed-125.bin": "c8aa21ac97385cb8c41a6146c1dbe42ff515a8c5dbec8e1fc2303c8aa4206585",
+    "expected/arithmetic/seed-126.bin": "1d6f777772c66c6c8d4040f2d794aaf25eea60d093fa8205a549a9ebe9b89785",
+    "expected/arithmetic/seed-127.bin": "ce332c83a236eaf5a0d83d4630a615dc665115149d1f8bb503c92882819804ab",
+    "expected/arithmetic/seed-128.bin": "c8f3716c3e5efd2c425d57dd4676a06075ed672cb9a004275a6a1a5a459e708c",
+    "expected/arithmetic/seed-129.bin": "ca90f39707c002760f83f743b8ae17bd6fe9705bcb580eca917aa63d515ab082",
+    "expected/arithmetic/seed-130.bin": "a5266239ab5a99c8456d926461b67c9953887f857fd3a7d86dc399e5012b9a5d",
+    "expected/arithmetic/seed-131.bin": "e1fca06213ab71884fa4f52cb630c98d15931df3a9daec2f59b8607c61b2a4d5",
+    "expected/arithmetic/seed-132.bin": "bdca6431f7773a9eea643ed8536901a0662929010d52a5a8a585c9c4d7e9824d",
+    "expected/arithmetic/seed-133.bin": "1a4050a4a05b3b797c530a64f5a1cd810478d0a70288cc32700b54481af5691f",
+    "expected/arithmetic/seed-134.bin": "17e07e2750f3e5656e5da1728aeebf94189a94d279faf701ee79c795a7d5b91b",
+    "expected/arithmetic/seed-135.bin": "024e63e143c4b74cdac88952f787759c4430a26b008ed906cf25779619e481b7",
+    "expected/arithmetic/seed-136.bin": "9740a36f40109182f5f4f0e710205377b3e944daddfd18131e1f1fe8b6fdf39f",
+    "expected/arithmetic/seed-137.bin": "d4e5f572c02d22df1f652d4ecbcd7c87c374b6dcdc1413450963da8adcc5844b",
+    "expected/arithmetic/seed-138.bin": "f0f06e6a36f7cb803c295c948c8597932fe6854dbaf3bb81945ce4adb9724c7a",
+    "expected/arithmetic/seed-139.bin": "fc2fe9eecc87d42b5078a0d0ff5ddbf9a416bddc99ba30449e2426893e98297d",
+    "expected/arithmetic/seed-140.bin": "7a81ab9d68095dc360c48b36423e5bd332a71385a1dec061bbbb6f2f3e3999a3",
+    "expected/arithmetic/seed-141.bin": "d65c42f5766da0b94a7336b5b976bb5e8c936a999c1f4be72d55cb520ea0f5dd",
+    "expected/arithmetic/seed-142.bin": "73c173325e4f67eb4e86eb8c888d2c7d0af50a9856afe9fda670902898949bd6",
+    "expected/arithmetic/seed-143.bin": "b4bcbc5dbbef05cb075750728e692549981d59444b9716ed6b4703306b0fbdad",
+    "expected/arithmetic/seed-144.bin": "27310538826e65b13fa49ea7293609f906cad1a4f734b3b2a9c801cbd0256797",
+    "expected/arithmetic/seed-145.bin": "bac6d66266e892780655de5a49f7c76e64745a96668e565eeae51d7cd9055d4b",
+    "expected/arithmetic/seed-146.bin": "c28c7d9c611c8253a604ecc4db920ada8689064e7b28ab04c624a4819ab31bd1",
+    "expected/arithmetic/seed-147.bin": "c7e17652d2550c698b1ff58a5b5ae3833e3004ecd546fb2d22e038fc2cd295da",
+    "expected/arithmetic/seed-148.bin": "7c704ac6d22acfb5e79c0d6e04e1293606580cc554dd39fd2d48e992e785ffaf",
+    "expected/arithmetic/seed-149.bin": "3a5554022e2df459aed20ee88a3f74c17c78026aaec567714f0ac515ccce6663",
+    "expected/arithmetic/seed-150.bin": "2fe8980f829f6bc345a8b467a01c39cbfcbc605126f9208894660e6b9aad9cca",
+    "expected/arithmetic/seed-151.bin": "3c93dc29be762468845964202a0790f47c448d8197b94c7cb4106bc61ede620a",
+    "expected/arithmetic/seed-152.bin": "b4d61dc34f0d9ac24843fd18225077d3b591f59699155005de5257e18f309ee8",
+    "expected/arithmetic/seed-153.bin": "ec12198047ad505fe77c9c01326cd49b16588d99a19d3a659f1288191bbfb494",
+    "expected/arithmetic/seed-154.bin": "6972c92530945b68a2aa34a74c9621b6fb983c91fef1a7437a1918c62d42f2e8",
+    "expected/arithmetic/seed-155.bin": "54b1cbe702d617c3524c7fee581424003063180af5a8679577d449a1710c60a7",
+    "expected/arithmetic/seed-156.bin": "e4a01106d28da3642eb598fc1c8938b732ea6079177402098b8e52175e6414a1",
+    "expected/arithmetic/seed-157.bin": "4fa50ba878b3d18e3397e785e893a6e47eff9b1b3db68c72f5d865bcb6bfc8c9",
+    "expected/arithmetic/seed-158.bin": "6a6839f92b15dd171539b590b122f212dcb3b6eb6ee14da82f9bf629a20392ec",
+    "expected/arithmetic/seed-159.bin": "8f61d3cbcafb6953f3cd1d77d77e37c2c06c86e6fa86925e5f7ebd9d88c3c6bb",
+    "expected/arithmetic/seed-160.bin": "34d17aedc8e1ed28292747400a400a60835f6868895becd9d7a6be30885a0295",
+    "expected/arithmetic/seed-161.bin": "30ffb3e02588ec95dbc9f74b90d678562166edbcfc9527870f553ce01be9910c",
+    "expected/arithmetic/seed-162.bin": "dca7ee6e13502915ed529e99704e17bd4d0449bec91453223f9c073d1034b382",
+    "expected/arithmetic/seed-163.bin": "6d2d1507c16500155fd51fbacbb7170ad05ecc93dcd3e978f67a99a155a03d90",
+    "expected/arithmetic/seed-164.bin": "33d9f4526b23543c77260989ff4439aca18cff76c61511b6987816f1e9fc6c32",
+    "expected/arithmetic/seed-165.bin": "fcd4e25bb2a919b986574a4432b396deccf6f119f1919efb4ce6e86e1227e9ac",
+    "expected/arithmetic/seed-166.bin": "6041bbb08b7aafc4ae3f88d84e8aa3bb9d91a3104fc4501e0c87f75be701cbfb",
+    "expected/arithmetic/seed-167.bin": "a9bb528ed82c6b31cdbed85d9c41556f174af6e20d65d4eada1edbb746862221",
+    "expected/arithmetic/seed-168.bin": "6a618f6b82f906a08c1136d213b80efb7c5432cfb82b604b9c60834561132386",
+    "expected/arithmetic/seed-169.bin": "819a8ef31663c3bd15ae7b4421811e2011c43eed875485e9161ab506f5d3afde",
+    "expected/arithmetic/seed-170.bin": "e78dcd2ab23bdc60f1f97aced1140b43d2cc47daee343654dc53e8672c74b1f5",
+    "expected/arithmetic/seed-171.bin": "14a7c340ed1fb1e8c9a26a5e6a115a077a86184b6ec15c8e9440f8ef09e41519",
+    "expected/arithmetic/seed-172.bin": "22650cc4e64b7f6f36e91c9b93716843a456b809bef3b3bdf9d755c4fb6fe214",
+    "expected/arithmetic/seed-173.bin": "f8e01d1b17e6402bd31cbdd545aa03cdc46b85a41ec92f69509aa3108f9b1255",
+    "expected/arithmetic/seed-174.bin": "820acd0d5a5893bc204cb145d38ad2c11c1beaf18d1dd4cd2ca26614bbfb82fd",
+    "expected/arithmetic/seed-175.bin": "13b92326aee45b686501b518930032a92c937945b258b461840f4b2572ed9d68",
+    "expected/arithmetic/seed-176.bin": "533f4ff07f8d5bc358bbbe3c655c0099262440baf55b1fbbecc6151a08706f1c",
+    "expected/arithmetic/seed-177.bin": "063c7e26136632a6aa96696e59d03d620310f0cc2697b58d2f2e650cb9ff0c58",
+    "expected/arithmetic/seed-178.bin": "10328971ea9db3098028d3c05f0c79e840925cfc8a583f544e839832dfedb984",
+    "expected/arithmetic/seed-179.bin": "d3bc7beb95452a5c752b2b81b9879c31a84c07a27ff571552f7dfefef5995c9a",
+    "expected/arithmetic/seed-180.bin": "ba1b646a08d80a1f04471938b3fcba822748fdb0c9966769aeb6424b25a21b37",
+    "expected/arithmetic/seed-181.bin": "a24eeae3c68c865eeff4260e05a26d60ea3b36ef636451bcb221a7127cf80e63",
+    "expected/arithmetic/seed-182.bin": "89917e5c4aaa4e6f2997688cd2214d3b3e7f1cbb45e844b33c7c6fe3133ad101",
+    "expected/arithmetic/seed-183.bin": "7890391448702e41bff5e8341942565417801e72b283029aca1be4cc55a10788",
+    "expected/arithmetic/seed-184.bin": "6550bd8d08aa1c1a57bc6ba08616075eb90b5075bced1c82542dd969acc36060",
+    "expected/arithmetic/seed-185.bin": "a16c5b00bf16bf31b3e093e8af1f5b139931f77e7fe9a90fe751babf2db91c45",
+    "expected/arithmetic/seed-186.bin": "1fb34678cd8a644bac1186726c7fafb09dd549eeb8ebdf625250fff84d30c290",
+    "expected/arithmetic/seed-187.bin": "e998d857e5637aa94c02419c98be82013f1571b2f4be936b9c79eae57c17dd2f",
+    "expected/arithmetic/seed-188.bin": "55215bd746ced4883865a3ca7f90af529c7eb88de42403b6d8dafdc55d58d058",
+    "expected/arithmetic/seed-189.bin": "0e3642650bc04ac1d95256309e02fa8ffeafb87968e3623cdd6592f501472de5",
+    "expected/arithmetic/seed-190.bin": "dbbcd3ff029200e0f5aa63097b6a24230f917f93ce4b32931c88a4116d9fa7b9",
+    "expected/arithmetic/seed-191.bin": "891d72848822b42b30e7710a2be07e384310617d65ad6a780725714c06347341",
+    "expected/arithmetic/seed-192.bin": "71bafb61f0793029c0b0539d071a7b3e0fd322abd31e425312775a6d0691ae20",
+    "expected/arithmetic/seed-193.bin": "fef8ef07b0461c95476dd7b995f3333578ae82031501d300354f2263cf1a73cb",
+    "expected/arithmetic/seed-194.bin": "595ccd2fce277b14ea6446fc811bd627c70dde655cd2d285b476fe3b62d61f08",
+    "expected/arithmetic/seed-195.bin": "94bcfe105ad50803f9a5dc7f60974e21d47f608826675250c699467f116608dc",
+    "expected/arithmetic/seed-196.bin": "ecf76566a001ebbfa15cf1c598677b7875acc25ded19c02a7b515cc531e3a6af",
+    "expected/arithmetic/seed-197.bin": "ed6dea48048cfd0c2ececb0e80c6c3b992165dcac4d45528909d9b53164cd79a",
+    "expected/arithmetic/seed-198.bin": "c96094ff9f6cb1329c4ff6d35f13f112b291c2ee4505e1fc60b1a00e125d370e",
+    "expected/arithmetic/seed-199.bin": "575247f7b8346303ef872b6b9f357cf6840b40f090d5e2684971822c42bb81e2",
+    "expected/arithmetic/seed-200.bin": "7bf3c227f531b4cd730604d5b5317698aff98d84c250406dbc621c2fc29dd8ec",
+    "expected/arithmetic/seed-201.bin": "c4ed3cb24e2a7c39952f12760e7865edced45489126854d0e3c3f0ca81ff63bf",
+    "expected/arithmetic/seed-202.bin": "e19a9ae5dcac7e14ae1bbeb9e1da90f260025ba590cb9bae8447d5d34ebecd4d",
+    "expected/arithmetic/seed-203.bin": "b71e3f9398381b230c895510c9269b5392caee1db1f2588c7a930be9e099f5a3",
+    "expected/arithmetic/seed-204.bin": "a31b00d9c6a5bc7f6d922862ca4817228a5f064402fb4d15a1ade5db21ef8dbb",
+    "expected/arithmetic/seed-205.bin": "48f84ea6043f5313382811d79ec2ba3d163c943b0e33ca3fe2ba2e9a4f18e935",
+    "expected/arithmetic/seed-206.bin": "07c903ce633842c12f7430406521a6d57fd72de978b2c667a5bf8ec2cc7f9a9c",
+    "expected/arithmetic/seed-207.bin": "63a8ae3a35554ede20b1f3dee80c4ccca1d287f5cc655d984fc02a6dc53e0111",
+    "expected/arithmetic/seed-208.bin": "0c49468f854e20a591f566e2bd39700725de0d288a564ac7be82eba1b85b75b9",
+    "expected/arithmetic/seed-209.bin": "bbdd91b14d4efbd1deb2515c609c773c31200242cb24818c96f04a0e3e156b6f",
+    "expected/arithmetic/seed-210.bin": "5e6a68690ab43507b80c89c22f5d4f088ca87f7ee6617192a6c44944f2e4533f",
+    "expected/arithmetic/seed-211.bin": "0f68382292ad8876f26f98395e730327a690b653b3b93b291b56879798a7a554",
+    "expected/arithmetic/seed-212.bin": "340595815f7da3eda3b27269381edc7707906ea56733662fb5461eca6225950c",
+    "expected/arithmetic/seed-213.bin": "6f6d5739a0a2b2c191b6e470ef2aa54c422414a704c7df1e999808f80e8d92b0",
+    "expected/arithmetic/seed-214.bin": "1f6ebd8f003635e606b0822bf3301025ce467dc0fdbee1e964c9dcd2adc83471",
+    "expected/arithmetic/seed-215.bin": "da0844658335477536cd2bf3243b0d2f52e8204d78f86690ee4e884fbd083603",
+    "expected/arithmetic/seed-216.bin": "b912bf62fef4cb0ace94878825bc0636b97640e050389e6c2dbc4ed256e0700d",
+    "expected/arithmetic/seed-217.bin": "43116f46b986a4b52e32a95960280f6fc79f702526fa598a5eaef6541c108943",
+    "expected/arithmetic/seed-218.bin": "5d438425064464eba4896e5deeb7aa9776f89585f58078822359a002e07aace0",
+    "expected/arithmetic/seed-219.bin": "9a44b6420127ce38f7498177d0f3c4ea6d2e234b39f45923debf82b976755177",
+    "expected/arithmetic/seed-220.bin": "083f14945e6d7ebdab7194c4d443ac45bfc63ed8b804bb47102d01326da39a4a",
+    "expected/arithmetic/seed-221.bin": "56fee0650f471b6a677901e473aaa4ef06b93198f3dae85a15c5fc260572266d",
+    "expected/arithmetic/seed-222.bin": "1f5e12a1dcc43dfd45e6709479e6cc62b1a6426a6ff78926166808e13a813c9d",
+    "expected/arithmetic/seed-223.bin": "377b01b6e33c26412d8ad7b9742b076e594045c8d2e633f0c29c191737124782",
+    "expected/arithmetic/seed-224.bin": "cc6a251fac8cad5d74151e57915c3cabfa982b5e3a7ddc0204b8a03843b3eff8",
+    "expected/arithmetic/seed-225.bin": "651cd13517828fec0a66a91fa7ec3521ad8d054d74b5da64fd5838699fd3b754",
+    "expected/arithmetic/seed-226.bin": "6995cc07f1bbeaa4fb5bae27eabd12a1da80c7cebcd3fd1b4f53df506b9f77bd",
+    "expected/arithmetic/seed-227.bin": "ee25805dac49adcdff3916bbd8bd1e8d5ee8f6d230f0e23a2614917da628ecf2",
+    "expected/arithmetic/seed-228.bin": "2fdf08aa44660dd8332131f0cc46ab9df025304ac750724d63964fa32d1d2db4",
+    "expected/arithmetic/seed-229.bin": "25359cfb8608d67e74a46b23cf6d113736652692a401705348dd77df687a1ab7",
+    "expected/arithmetic/seed-230.bin": "f0dc74b0f4984d78f2718af42f5321cc1e791644940b3b1e580e26c51ba8bd81",
+    "expected/arithmetic/seed-231.bin": "a325d2b1c02a0f957b78702a10d8cf29819c2bb6ed7202953015368b017c5f84",
+    "expected/arithmetic/seed-232.bin": "03b83534fb9bbd9525ae3d9759a22def80897540c6c402bc452690585d57e505",
+    "expected/arithmetic/seed-233.bin": "9a360f004badf7f9d42c997720ae949c44d9b37084ebe1992881d8c6125b064b",
+    "expected/arithmetic/seed-234.bin": "49432166ece33d4635bf98487edbe8b0b2987bbba38421f4037db3ee9e1ea637",
+    "expected/arithmetic/seed-235.bin": "240571038c5050761742c59df31f1c2804300215576dae8994c97287f1e31c83",
+    "expected/arithmetic/seed-236.bin": "f01b8659742bf11386dd2f9bd27d625316d2b4316461868f20ea7e32acddf6bd",
+    "expected/arithmetic/seed-237.bin": "3a9707340d6981dc3175f218174a717f1b5ba97d8f5529d81a4af80c6e015731",
+    "expected/arithmetic/seed-238.bin": "0e3c11fafad93e6cf504afa3bbb711f307a093e40814bc192d65f562a7135172",
+    "expected/arithmetic/seed-239.bin": "e0786231482674ee2bc7996f458e2a5d3c91f466b84a10582f0223b52000c91d",
+    "expected/arithmetic/seed-240.bin": "f08fd4d892cbe322e25ad792b11409028f3bb2badf46a72e533e807d8b6ce594",
+    "expected/arithmetic/seed-241.bin": "b070751113ee70c6bb584a0de7ae93cfe5c6f489925bbccfb7ab30c59378df69",
+    "expected/arithmetic/seed-242.bin": "1390be8dcd7a201c1d032cd0a4740e39f3cbd5216c54d0ea2c7f888685a06eec",
+    "expected/arithmetic/seed-243.bin": "2fd71aea13702554c8966f3269f3501b0b9fe8ce43c025fe6cdea3549897492e",
+    "expected/arithmetic/seed-244.bin": "d2642c5b5a666062774a9d2834fbbb4aa0d669cfc4342e288f37bf2c5c58bb5f",
+    "expected/arithmetic/seed-245.bin": "21cce305b20c2fb98e6d2d6cf38a2917894191e862fce0a726064856e71dc107",
+    "expected/arithmetic/seed-246.bin": "b185e9bbd82d94b8dfff478dbeaafa5f0382f805cd5b0216b227aafb5ecf2d1e",
+    "expected/arithmetic/seed-247.bin": "fa7c73f19c30cb6360aaa69692325397b36ff396448a26b4599dae476c8ddfe5",
+    "expected/arithmetic/seed-248.bin": "65df7a55f2ef2ed82611da3bf339602a2789ddceb8c2003020dad41f7f3a29b7",
+    "expected/arithmetic/seed-249.bin": "794085b394b246a067bd5dc259bf6ae33584695b26eb9a086e5f5b4620babf41",
+    "expected/arithmetic/seed-250.bin": "56a51e205fee849c8857300e426354a4402b75715f76b8c67b641671500d9477",
+    "expected/arithmetic/seed-251.bin": "f83911c5da4fddd13172dd9aaf4265527976b75ec9730ff2723f8b38e72b5c3b",
+    "expected/arithmetic/seed-252.bin": "cf80f57c9594bad01e3802a54cf4ea15ff89ce503c2af57564bb24efb9d20c51",
+    "expected/arithmetic/seed-253.bin": "1cdfeccf13834f4c6ab5403df8c8e7abd3f9ac26780cefb62714072d26c910ba",
+    "expected/arithmetic/seed-254.bin": "2fcb7918c598688296f9a94d5d165777a5b1e3ffac9d96c665400bd34558f0e0",
+    "expected/arithmetic/seed-255.bin": "f443a4be8be4b9f7d354bad1f6e2c1826b9ba6807d73f9685171ca98de642b76",
+    "expected/fib/seed-000.bin": "c881eac91974c39e6ce1d20c53d9e5b9f7ee8895c95983f964e550abc43f75e6",
+    "expected/fib/seed-001.bin": "f264c2aa02b4aa37296b3a317dc830e70eb71a461b91355451da16dbb0bb0fa9",
+    "generated/bypass/GetEnclosingFrameNode.java": "3e7df1ce86b723ced6bbf23628393207fac5c6c5a4f09e27e575aa4b87b15a17",
+    "generated/original/GetEnclosingFrameNode.java": "05b720008e41e8bd167a78520f41e7c5eefb955afc5d857ac8b55837ac5d1ac5",
+    "generated/scope-bypass/VmUtils.java": "36a19accaa734afebed0a2919e7e2fae2b245083b91eda1757f58b84aca9c64d",
+    "generated/scope-original/VmUtils.java": "2484129b87ce2151953a0aaed815dccaf7961b9a9d2347afb353f908df5c3def",
+    "oracle.json": "32841a350f31f8a5f8c54a7a689f4f4147db11a43f45841622e331aa5436be2d",
+    "preflight/arithmetic/result.json": "49fb09748937c6340937f1174929ea1115ac77e0f748d4b7f165746bc05466c6",
+    "preflight/arithmetic/stderr.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "preflight/arithmetic/stdout.bin": "01cdc5e708286983320a37220d193fb61fd0595a3a7cb79754de931c21620c96",
+    "preflight/fib/result.json": "21bbd0a1733f89829c1e55d473c609c5a3e5c1b0ef6f53513960f274c69a2a6f",
+    "preflight/fib/stderr.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "preflight/fib/stdout.bin": "023b4d7393ef6fd6b28578258d6ed06f8698b3079f6f763bc37bf63c2d2e4bf9",
+    "sources/benchmarks/fixtures/recursive.pkl": "10df4cdb8a2e74e31ca41bbd1cb02dbf84830ce154050f9b9c325fa8a2aebeda",
+    "sources/external/pkl/LICENSE.txt": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+    "sources/external/pkl/NOTICE.txt": "d03b8db1a0d36ba65550ba30a51c7897f4b48b0eae7582d3f0576ea41e23d48e",
+    "sources/external/pkl/THIRD-PARTY-NOTICES.txt": "8ac4f6b18b00227f8dbc5222c6259f6cb5084ad0053ebcebf83d5147cea31aaf",
+    "sources/external/pkl/build-logic/src/main/kotlin/BuildInfo.kt": "a082b8aa717d9fb6f15fee6f4c74c62089b5cae1d1666d55cbb0d70318920ba6",
+    "sources/external/pkl/gradle/libs.versions.toml": "f2c818bfff6f30a096bcca18256ea9aae967a21707babae8c2b34a77a225b046",
+    "sources/external/pkl/gradle.properties": "1d76fc163cba8cabc502948a7dbc05cf7b7afc4a5e8efe35b3a746a89829be13",
+    "sources/external/pkl/pkl-core/src/main/java/org/pkl/core/ast/expression/member/AbstractInvokeMethodLexicalNode.java": "02e16eaa0d6994bb61bbd7cd5c61c989cfb4049c122f16a1ca6dcbf949dca471",
+    "sources/external/pkl/pkl-core/src/main/java/org/pkl/core/ast/frame/GetEnclosingFrameNode.java": "05b720008e41e8bd167a78520f41e7c5eefb955afc5d857ac8b55837ac5d1ac5",
+    "sources/external/pkl/pkl-core/src/main/java/org/pkl/core/ast/frame/ReadFrameSlotNode.java": "256929240730f1ddcd1be5a58e9fb7c9f31d47131bba81b34a4979713fa6cfe9",
+    "sources/external/pkl/pkl-core/src/main/java/org/pkl/core/runtime/VmUtils.java": "17a5b4a3750ec5ebf9a1bc8ed930cd6165f072ca97ce9d37f4f4043ac8fcce2a",
+    "sources/external/pkl/pkl-tools/pkl-tools.gradle.kts": "c32aca46fa3fb845b205ecdf5b75d037e0b1f4ac6b6cd8cb9d1359667a06aa80",
+    "sources/oracle.lock.json": "7b77395ff5b64f7a220db74975e4c3858a36b19c5c0f5bca92681e3b1bc6504b",
+    "sources/references.lock": "278f48fd7697459281aa78a706c9ca57222f36a8c0785d838a6449fbaf26d30b",
+    "sources/tests/fixtures/m1/runtime/arithmetic-receiver.pkl": "cf0dc6f44ff6fd0a5a58e4187ebe0a5deabda15bb97b4d82b7392e5dae9cf5c5",
+    "sources/tests/fixtures/m1/runtime/arithmetic-workload.pkl": "c3fe0ee99ea2e04c60b35ce9467c21e5ff1cc3b2577360c65bed02e7c93437b8",
+    "sources/tests/fixtures/m1/runtime/recursive-receiver.pkl": "201f4b846b918d2d90b634b132e5a571b0770d44ee84a3a4c3dc290fe04126a0",
+    "sources/tools/OracleRuntimeProbe.java": "19885ab4f5a65bd722e2d25d9794470b310515273c210f9a85309230fa1911bb",
+    "sources/tools/benchmark.py": "a3822a1702abf7a6a385b1d8173d45e3ba941b5fb7e80cb66a0b86adf1681604",
+    "sources/tools/java/M1GraalProbe.java": "7fed1fb059da75c382d36d38d166bb0ec8e22e69a1900e43d2ad668e09dfeeaf",
+    "sources/tools/m1_graal.py": "638f30dc648394a86decda9a595df98023528a0ef950c3aefe16fb8dc9d2cd93",
+    "sources/tools/oracle.py": "0433e4cec011d8daadf0f779d643712019bc6334cce205f02c75799c232f533e",
+    "sources/tools/tests/test_m1_graal.py": "ca8dc8065809122359fd12fba86a705a78167a39fcc677e30ac4dd557c85785f"
+  }
+}

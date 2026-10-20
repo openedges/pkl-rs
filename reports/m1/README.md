@@ -7,13 +7,22 @@ contracts and records rejected candidates. It does not establish full Pkl
 
 An independent completion review reopened M1-04 and M1-06. The closing changes
 now recover failed lazy members, implement nested contexts in one VM and heap,
-and propagate terminal cancellation to live platform operations. M1 architecture
-verification is complete after these changes. Closing code `6a5e4b5` passed all
+and propagate terminal cancellation to live platform operations. Closing code `6a5e4b5` passed all
 five jobs in [run 39374668362](https://github.com/luuvish/pkl-rs/actions/runs/39374668362).
 Its downloaded artifact digest, exact committed source snapshots and raw results
 were independently reverified. See the [closing CI summary](ci-closing-summary.json)
 and [retained evidence](ci-closing-evidence.tar.gz). The earlier green CI below
 did not cover these missing contracts.
+
+A subsequent review found the originally assigned Graal compilation investigation
+still incomplete. The [closing investigation](../../docs/m1-graal.md) now identifies
+the virtual/materialized frame merge in `VmUtils.skipInvisibleScopes`, with
+compiler graphs and separate negative and causal controls. Actual arithmetic and
+recursive Pkl functions compile through Tier 2 on the unchanged baseline when
+their input is read through a receiver field. Semantic-bypass controls also
+compile the original fixtures; those overrides are diagnostic only. This closes
+the investigation requirement without replacing the original failing baseline
+or claiming a new performance result.
 
 The initial implementation is committed as
 `ce99720` and experiment/CI integration as `e9ee8d5`. All five jobs in
@@ -42,6 +51,8 @@ two contracts without rewriting the historical captures:
 | Failed lazy retry and callback reentry | Two complete Java/Rust observation protocols match. Four diagnostic payload differences remain explicit. A separate Java-only nested-new-resource read raises the observed upstream cache-mutation error. | [Lifecycle report](lifecycle.json), [archive](lifecycle-evidence.tar.gz), [contract](../../docs/m1-lifecycle.md) |
 | Shared native/Node/browser runtime | All 6,078 primitive outputs agree across Rust targets; 6,076 match Java on each target. Fourteen required scenarios per JS environment verify nested reads and abort, Promise settlement, and timer/listener/map cleanup for single and nested operations. | [Closing platform report](platform-closing.json), [archive](platform-closing-evidence.tar.gz) |
 | Integrated local checks | All 13 commands pass: 124 Python tests, 45 Rust tests, formatting, lint, Wasm compilation and inventory checks. One frontend probe is intentionally ignored by ordinary cargo test and invoked explicitly by its differential runner. Host and runtime suites contain 15 and 13 tests respectively. | [Closing validation](validation-closing.json), [raw logs](validation-closing-evidence.tar.gz) |
+| Graal compilation investigation | Original arithmetic and recursive failures traced to an invisible-scope loop that merges virtual and materialized frames. Separate causal controls and unchanged-baseline receiver workloads demonstrate actual guest Tier 2 compilation; every result is checked against baseline bytes. | [Diagnostic report](graal.json), [raw cases](graal-evidence.tar.gz), [compiler graph evidence](graal-cause-evidence.tar.gz), [contract](../../docs/m1-graal.md) |
+| Graal tooling integration | All nine diagnostic cases meet their declared contracts, retaining five expected compilation-failure cases. All 13 local checks pass, including 141 Python and 45 Rust tests. Relocated archived evidence is independently reverified. | [Validation](validation-graal.json), [raw check logs](validation-graal-evidence.tar.gz) |
 
 The original [validation report](validation.json) and
 [raw logs](validation-evidence.tar.gz) remain available. Earlier performance
