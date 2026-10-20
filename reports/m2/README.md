@@ -93,6 +93,25 @@ diagnostic with 697 repetitions; it still differs from Rust. The oracle was not
 preinitialized or normalized. This observed variation does not resolve the
 cycle requirement.
 
+All six jobs of the [final stage 3 CI run](https://github.com/luuvish/pkl-rs/actions/runs/39396439537)
+passed for implementation commit `5d58e76`. The
+[independent verification record](ci-stage3-summary.json) and
+[complete evidence package](ci-stage3-evidence.tar.gz) retain both original
+GitHub artifact ZIPs, their verified SHA-256 digests, metadata, and repeatable
+checks. Verification matched 541 snapshot copies, covering 394 distinct source
+files, to that exact commit; the language acquisition contains 354 source files.
+The ZIPs retain 3,331 payload files in total.
+
+Remote language results are 292 matches, one remainder mismatch, and one cycle
+oracle failure across the same 294 selections. All 17 relations and the four
+identifier tables verify. The M1 artifact independently preserves the same
+20 scenarios per JS target, primitive comparisons, frontend/runtime results,
+and known lifecycle diagnostic failures. The full completion gate remains
+failed. The evidence package includes instructions for checking these records
+without rerunning captured binaries. A captured offline rerun of the unchanged
+package succeeded and reproduced all comparison outcomes, artifact identities,
+source counts, and verifier hashes; its raw process output is also retained.
+
 ## Stage 2 checkpoint
 
 The [stage 2 summary](stage2-summary.json) records **191 selected comparisons:
