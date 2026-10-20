@@ -6,6 +6,7 @@ import argparse
 from collections import Counter
 import hashlib
 import json
+import os
 from pathlib import Path
 import posixpath
 import re
@@ -22,6 +23,11 @@ ENVIRONMENT = {"LANG": "C.UTF-8", "LC_ALL": "C.UTF-8", "TZ": "UTC", "TERM": "dum
 
 def digest(data: bytes) -> str:
     return hashlib.sha256(data).hexdigest()
+
+
+def tracked_bytes(file: Path) -> bytes:
+    # Preserve raw Git link text, including a trailing slash.
+    return os.readlink(file).encode() if file.is_symlink() else file.read_bytes()
 
 
 def encoded(value: object) -> bytes:
@@ -120,7 +126,7 @@ def build_manifest(root: Path = ROOT) -> dict:
         for path in paths:
             file = repo / path
             # Git tracks symlink bytes, not the referred-to file's bytes.
-            data = file.readlink().as_posix().encode() if file.is_symlink() else file.read_bytes()
+            data = tracked_bytes(file)
             hashes[path] = digest(data)
             resources.append({"path": prefix + path, "sha256": hashes[path], "bytes": len(data),
                               "kind": "symlink" if file.is_symlink() else "file"})
@@ -139,6 +145,13 @@ def build_manifest(root: Path = ROOT) -> dict:
                         "schema_version": lock["schemaVersion"],
                         "resolved_dependencies": lock["resolvedDependencies"],
                         "verification": "Declared lock hashes only; package downloads and payloads require oracle resolution."})
+            result["external_inputs"].append({"source": prefix + "packages/com.github.actions.contrib/ActionGenerator.pkl",
+                "kind": "dynamic-https-response",
+                "uri_templates": ["https://raw.githubusercontent.com/{owner}/{repo}/refs/{tags|heads}/{version}/.../action.yml",
+                                  "https://raw.githubusercontent.com/{owner}/{repo}/refs/tags/{version}/.../action-types.yml",
+                                  "https://raw.githubusercontent.com/typesafegithub/github-actions-typing-catalog/refs/heads/main/typings/.../action-types.yml"],
+                "response_sha256": None, "status": "unfixed",
+                "reason": "CLI action generation discovers live manifests/types; programmatic test fixtures supply action data, but the CLI network path still needs pinned response fixtures."})
             result["external_inputs"].append({"source": prefix + "packages/pkl.github.dependabotManagedActions/internal/LockfileGenerator.pkl",
                 "kind": "dynamic-https-response", "uri_template": "https://github.com/{owner}/{repo}.git/info/refs?service=git-upload-pack",
                 "response_sha256": None, "status": "unfixed",
@@ -153,7 +166,9 @@ def build_manifest(root: Path = ROOT) -> dict:
                 result["suites"].append({"id": name + ":shell-suite:" + path,
                     "source": source_ref(name, revision, path, hashes[path]),
                     "kind": "shell-integration-suite", "case_count": None, "assertion_count": None,
-                    "execution": {"status": "blocked", "reason": "Requires a pinned pkl executable on PATH, bash/env, and tar implementation; raw archive evaluation does not run tar integration assertions."}})
+                    "execution": {"status": "ready", "reason": None,
+                        "adapter": "tools/pantry.py:tar-shell",
+                        "host_requirements": ["pinned-oracle-wrapper-on-PATH", "identified-bash-and-tar", "pipefail", "isolated-source-copy"]}})
             if not (path.endswith(".pkl") or Path(path).name == "PklProject"):
                 continue
             text = (repo / path).read_text(errors="replace")

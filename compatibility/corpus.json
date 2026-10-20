@@ -90443,6 +90443,18 @@
   "external_inputs": [
     {
       "kind": "dynamic-https-response",
+      "reason": "CLI action generation discovers live manifests/types; programmatic test fixtures supply action data, but the CLI network path still needs pinned response fixtures.",
+      "response_sha256": null,
+      "source": "external/pkl-pantry/packages/com.github.actions.contrib/ActionGenerator.pkl",
+      "status": "unfixed",
+      "uri_templates": [
+        "https://raw.githubusercontent.com/{owner}/{repo}/refs/{tags|heads}/{version}/.../action.yml",
+        "https://raw.githubusercontent.com/{owner}/{repo}/refs/tags/{version}/.../action-types.yml",
+        "https://raw.githubusercontent.com/typesafegithub/github-actions-typing-catalog/refs/heads/main/typings/.../action-types.yml"
+      ]
+    },
+    {
+      "kind": "dynamic-https-response",
       "reason": "Live GitHub refs are not pinned response bytes; testMode and hermetic fixture coverage must be verified.",
       "response_sha256": null,
       "source": "external/pkl-pantry/packages/pkl.github.dependabotManagedActions/internal/LockfileGenerator.pkl",
@@ -112122,7 +112134,7 @@
     {
       "path": "external/pkl",
       "repository": "pkl",
-      "resource_set_sha256": "98ed36c615895cf9382419886f264d52ea0b44c38c864c54806c9484f6d6cfa3",
+      "resource_set_sha256": "caaece316d09ffdce01e29871c8accbcf2783b1d1557b515ca7f117f1eaaf3c2",
       "resources": [
         {
           "bytes": 213,
@@ -118455,10 +118467,10 @@
           "sha256": "22b92f020b0325610f2651a6b094b44775e8515a512d2b9a22a5d7e2640690df"
         },
         {
-          "bytes": 5,
+          "bytes": 6,
           "kind": "symlink",
           "path": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input-helper/globtest/childlinked",
-          "sha256": "ddc9e669194254cef019a29d3619a2c16592e5d52e1a81e98b01bd52319149a3"
+          "sha256": "2affd42fb4ab5d3937747d31d118219afff6ac4116f0382d4a6bf8a6654ce273"
         },
         {
           "bytes": 0,
@@ -148831,8 +148843,15 @@
       "assertion_count": null,
       "case_count": null,
       "execution": {
-        "reason": "Requires a pinned pkl executable on PATH, bash/env, and tar implementation; raw archive evaluation does not run tar integration assertions.",
-        "status": "blocked"
+        "adapter": "tools/pantry.py:tar-shell",
+        "host_requirements": [
+          "pinned-oracle-wrapper-on-PATH",
+          "identified-bash-and-tar",
+          "pipefail",
+          "isolated-source-copy"
+        ],
+        "reason": null,
+        "status": "ready"
       },
       "id": "pkl-pantry:shell-suite:packages/pkl.tar/examples/test_examples.sh",
       "kind": "shell-integration-suite",

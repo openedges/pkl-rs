@@ -1,0 +1,6 @@
+output {
+  files {
+    ["first.txt"] { text = "first\n" }
+    ["nested/second.txt"] { text = "second\r\n\u{0}" }
+  }
+}

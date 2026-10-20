@@ -1,0 +1,7 @@
+amends "pkl:test"
+facts {
+  ["arithmetic"] {
+    6 * 7 == 42
+    "😀".length == 1
+  }
+}

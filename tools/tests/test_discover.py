@@ -55,6 +55,13 @@ class DiscoveryTests(unittest.TestCase):
                     for resource in case["resources"]:
                         self.assertEqual(hashes[resource["path"]], resource["sha256"])
 
+    def test_symlink_hash_preserves_literal_trailing_slash(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            link = Path(temporary) / "link"
+            link.symlink_to("child/")
+            self.assertEqual(discover.tracked_bytes(link), b"child/")
+            self.assertNotEqual(discover.digest(discover.tracked_bytes(link)), discover.digest(b"child"))
+
     def test_hidden_renderer_extension_and_error_golden_selection(self):
         base = discover.SNIPPETS
         paths = {base + "output/x/sample.json", base + "output/x/bad.err", base + "output/x/日本語.pcf"}

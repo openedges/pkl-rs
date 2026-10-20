@@ -1,0 +1,264 @@
+{
+  "schema_version": 1,
+  "scope": "Required tooling smoke corpus, not full Pkl compatibility",
+  "cases": [
+    {
+      "id": "project:m0-smoke:basic",
+      "suite": "m0-smoke",
+      "source": {
+        "repository": "pkl-rs",
+        "path": "tests/fixtures/m0/basic.pkl",
+        "sha256": "943ab0e6267676b2b93bb1f485ec19fa1c917c556ed7b9aa107d1efc02330532"
+      },
+      "command": [
+        "eval",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "--color=never",
+        "tests/fixtures/m0/basic.pkl"
+      ],
+      "cwd": ".",
+      "expected_exit": [
+        0
+      ],
+      "environment": {},
+      "channels": [
+        "stdout",
+        "stderr",
+        "exit_code",
+        "files"
+      ],
+      "execution": {
+        "status": "ready"
+      },
+      "target": [
+        "native",
+        "wasm",
+        "napi"
+      ]
+    },
+    {
+      "id": "project:m0-smoke:json",
+      "suite": "m0-smoke",
+      "source": {
+        "repository": "pkl-rs",
+        "path": "tests/fixtures/m0/basic.pkl",
+        "sha256": "943ab0e6267676b2b93bb1f485ec19fa1c917c556ed7b9aa107d1efc02330532"
+      },
+      "command": [
+        "eval",
+        "--format",
+        "json",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "--color=never",
+        "tests/fixtures/m0/basic.pkl"
+      ],
+      "cwd": ".",
+      "expected_exit": [
+        0
+      ],
+      "environment": {},
+      "channels": [
+        "stdout",
+        "stderr",
+        "exit_code",
+        "files"
+      ],
+      "execution": {
+        "status": "ready"
+      },
+      "target": [
+        "native",
+        "wasm",
+        "napi"
+      ]
+    },
+    {
+      "id": "project:m0-smoke:yaml",
+      "suite": "m0-smoke",
+      "source": {
+        "repository": "pkl-rs",
+        "path": "tests/fixtures/m0/basic.pkl",
+        "sha256": "943ab0e6267676b2b93bb1f485ec19fa1c917c556ed7b9aa107d1efc02330532"
+      },
+      "command": [
+        "eval",
+        "--format",
+        "yaml",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "--color=never",
+        "tests/fixtures/m0/basic.pkl"
+      ],
+      "cwd": ".",
+      "expected_exit": [
+        0
+      ],
+      "environment": {},
+      "channels": [
+        "stdout",
+        "stderr",
+        "exit_code",
+        "files"
+      ],
+      "execution": {
+        "status": "ready"
+      },
+      "target": [
+        "native",
+        "wasm",
+        "napi"
+      ]
+    },
+    {
+      "id": "project:m0-smoke:error",
+      "suite": "m0-smoke",
+      "source": {
+        "repository": "pkl-rs",
+        "path": "tests/fixtures/m0/error.pkl",
+        "sha256": "10b9552a7cfa94fbe765b7173c22632453a766af5629cc690d85fc625d995572"
+      },
+      "command": [
+        "eval",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "--color=never",
+        "tests/fixtures/m0/error.pkl"
+      ],
+      "cwd": ".",
+      "expected_exit": [
+        1
+      ],
+      "environment": {},
+      "channels": [
+        "stdout",
+        "stderr",
+        "exit_code",
+        "files"
+      ],
+      "execution": {
+        "status": "ready"
+      },
+      "target": [
+        "native",
+        "wasm",
+        "napi"
+      ]
+    },
+    {
+      "id": "project:m0-smoke:files",
+      "suite": "m0-smoke",
+      "source": {
+        "repository": "pkl-rs",
+        "path": "tests/fixtures/m0/files.pkl",
+        "sha256": "ade06a40f62e4604d3b7658421a8e1d9bf99fd89c89bd53e312249ceda65ded0"
+      },
+      "command": [
+        "eval",
+        "--multiple-file-output-path",
+        "{output_dir}",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "--color=never",
+        "tests/fixtures/m0/files.pkl"
+      ],
+      "cwd": ".",
+      "expected_exit": [
+        0
+      ],
+      "environment": {},
+      "channels": [
+        "stdout",
+        "stderr",
+        "exit_code",
+        "files"
+      ],
+      "execution": {
+        "status": "ready"
+      },
+      "target": [
+        "native",
+        "wasm",
+        "napi"
+      ]
+    },
+    {
+      "id": "project:m0-smoke:collections",
+      "suite": "m0-smoke",
+      "source": {
+        "repository": "pkl-rs",
+        "path": "tests/fixtures/m0/collections.pkl",
+        "sha256": "4196fcfab43733829f6d0d5274d683cd80c835fd96cf2f701ac6ca4a8fd82fdd"
+      },
+      "command": [
+        "eval",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "--color=never",
+        "tests/fixtures/m0/collections.pkl"
+      ],
+      "cwd": ".",
+      "expected_exit": [
+        0
+      ],
+      "environment": {},
+      "channels": [
+        "stdout",
+        "stderr",
+        "exit_code",
+        "files"
+      ],
+      "execution": {
+        "status": "ready"
+      },
+      "target": [
+        "native",
+        "wasm",
+        "napi"
+      ]
+    },
+    {
+      "id": "project:m0-smoke:test",
+      "suite": "m0-smoke",
+      "source": {
+        "repository": "pkl-rs",
+        "path": "tests/fixtures/m0/test.pkl",
+        "sha256": "3bd642cab6704e87f24661f91c02ca0fe1b2054293fb8106fcb2f1779730fe6d"
+      },
+      "command": [
+        "test",
+        "--no-project",
+        "--settings",
+        "pkl:settings",
+        "--color=never",
+        "tests/fixtures/m0/test.pkl"
+      ],
+      "cwd": ".",
+      "expected_exit": [
+        0
+      ],
+      "environment": {},
+      "channels": [
+        "stdout",
+        "stderr",
+        "exit_code",
+        "files"
+      ],
+      "execution": {
+        "status": "ready"
+      },
+      "target": [
+        "native",
+        "wasm",
+        "napi"
+      ]
+    }
+  ]
+}

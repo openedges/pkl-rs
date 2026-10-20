@@ -2,7 +2,7 @@
 
 This project reimplements [Pkl](https://pkl-lang.org/) 0.32.0 in Rust. It aims to share one engine across native Rust, WebAssembly, and Node.js N-API, with automated compatibility checks against the Java implementation.
 
-The project is currently at the **repository and development environment setup stage**. Pkl parsing and evaluation, the CLI, REPL, server, and Wasm and N-API products are not implemented yet. Passing the current builds and tests does not establish Pkl compatibility or achievement of the performance targets.
+The project is currently building its **compatibility and performance baseline tooling**. Pkl parsing and evaluation, the CLI, REPL, server, and Wasm and N-API products are not implemented yet. Passing the current builds and tooling tests does not establish Rust Pkl compatibility or achievement of the performance targets.
 
 ## Goals
 
@@ -56,7 +56,7 @@ cargo test --workspace --locked
 cargo check -p pkl-runtime --target wasm32-unknown-unknown --locked
 ```
 
-`cargo xtask verify` checks the reference source pins. The [Java oracle](docs/oracle.md) provides pinned Pkl 0.32.0 execution and exact replay checks. Rust evaluation is not implemented yet.
+`cargo xtask verify` checks the reference source pins. The [Java oracle](docs/oracle.md) provides pinned Pkl 0.32.0 execution and exact replay checks. The [comparison tool](docs/compatibility-tooling.md) captures raw output and generated files and rejects missing or failing cases. See [TESTING.md](TESTING.md) for Python tooling commands and their scope. Rust evaluation is not implemented yet.
 
 ## Current structure
 

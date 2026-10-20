@@ -1,6 +1,6 @@
 # Validation Contract
 
-The goals are behavioral and byte compatibility with the Java implementation of Pkl 0.32.0, with execution time and memory usage at least as good as Java for every required workload. Bootstrap checks and a pinned Java oracle are available. Rust differential execution and product performance comparisons are not available yet.
+The goals are behavioral and byte compatibility with the Java implementation of Pkl 0.32.0, with execution time and memory usage at least as good as Java for every required workload. Source verification, inventories, a pinned Java oracle, and raw comparison tooling are available. The Rust evaluator and Java/Rust product performance comparisons are not available yet.
 
 ## Current Checks
 
@@ -42,6 +42,19 @@ python3 -m unittest discover -s tools/tests -p 'test_discover.py'
 ```
 
 Ready commands have not necessarily run. Blocked suites and cases with an outcome requiring observation remain visible; file counts are not assertion counts. Historical rev1 inputs are inventoried separately and require selection and fresh Java results before use.
+
+The [execution tool](docs/compatibility-tooling.md) records and checks a required seven-case smoke corpus, including error bytes and multiple generated files:
+
+```sh
+python3 tools/smoke_manifest.py --check
+python3 -m unittest discover -s tools/tests -p 'test_compat.py'
+python3 tools/compat.py record --manifest compatibility/smoke.json --output target/m0/smoke-baseline
+python3 tools/compat.py check --manifest compatibility/smoke.json --output target/m0/smoke-baseline
+```
+
+Use a new evidence directory for each run. Candidate comparison requires a complete Java baseline and the same workspace path; the tool verifies source/resource hashes, runner provenance, raw captures, and case coverage. Java-to-Java replay validates tooling only. The process adapter currently requires POSIX process groups. The full discovered corpus includes blocked cases and therefore fails the strict completion gate until all required adapters and execution conditions exist; the smoke corpus is not a substitute for full compatibility.
+
+Reviewable evidence archives under `reports/m0/` retain raw outputs and a per-file checksum inventory. Verify an archive with `python3 tools/evidence.py verify <archive.tar.gz>`. Copied source workspaces can be excluded explicitly; the archive records its exclusions and retains the pinned source manifest.
 
 ## Compatibility Comparisons
 
