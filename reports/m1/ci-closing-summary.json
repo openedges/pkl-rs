@@ -1,0 +1,102 @@
+{
+  "schema_version": 1,
+  "repository": "luuvish/pkl-rs",
+  "commit": "6a5e4b50f45de75c9ff79b341e658ada5cb0d21b",
+  "run_id": 39374668362,
+  "run_url": "https://github.com/luuvish/pkl-rs/actions/runs/39374668362",
+  "run_conclusion": "success",
+  "jobs": [
+    {
+      "name": "M1 architecture experiments (known gaps recorded)",
+      "id": 118470002531,
+      "conclusion": "success"
+    },
+    {
+      "name": "Workspace (macos-latest)",
+      "id": 118470002653,
+      "conclusion": "success"
+    },
+    {
+      "name": "Workspace (ubuntu-latest)",
+      "id": 118470002664,
+      "conclusion": "success"
+    },
+    {
+      "name": "Compatibility tooling and Java replay",
+      "id": 118470002670,
+      "conclusion": "success"
+    },
+    {
+      "name": "Workspace (windows-latest)",
+      "id": 118470002815,
+      "conclusion": "success"
+    }
+  ],
+  "github_artifact": {
+    "id": 12243431032,
+    "name": "m1-experiment-evidence",
+    "sha256": "33becc5729c780603797020166692a22f786323119b15d6bea3df1381352c1c5",
+    "github_digest": "sha256:33becc5729c780603797020166692a22f786323119b15d6bea3df1381352c1c5",
+    "zip_bytes": 11966127,
+    "uncompressed_bytes": 41828829,
+    "zip_members": 557,
+    "digest_verified": true
+  },
+  "workflow_logs": {
+    "zip_sha256": "a0454cea98a321a97dfed14ac2346783536f38b75021bbbe44017a2874d17218",
+    "members": 83
+  },
+  "verified_outcomes": {
+    "lifecycle": {
+      "exact_protocol_comparisons": 2,
+      "full_diagnostic_byte_mismatches": 4,
+      "java_negative_observation": {
+        "status": "observed-upstream-failure",
+        "error_class": "org.pkl.core.PklBugException",
+        "cause": "java.util.ConcurrentModificationException",
+        "rust_comparison": false,
+        "compatibility_pass": false
+      },
+      "source_stability_before_execution": true,
+      "source_stability_after_execution": true
+    },
+    "frontend": {
+      "exact_comparisons": 15,
+      "source_stability": true
+    },
+    "java_host": {
+      "observation_suites": 5,
+      "rust_byte_comparisons": 0,
+      "source_stability": true
+    },
+    "runtime": {
+      "exact_value_cases": [
+        "amendment",
+        "captured-receiver",
+        "lexical-let",
+        "object-cycle",
+        "lazy-unused",
+        "mixed-numeric"
+      ],
+      "known_diagnostic_byte_mismatches": [
+        "first-error",
+        "forcing-cycle",
+        "overflow-first"
+      ]
+    },
+    "platform": {
+      "total": 6078,
+      "all_shared_engine_matches": 6078,
+      "java_matches_each_target": 6076,
+      "known_gaps": [
+        "regex-unicode-15-vs-16",
+        "regex-zero-width-supplementary"
+      ],
+      "scenarios_each_target": 14,
+      "compatibility_status": "fail",
+      "experiment_contract_status": "pass"
+    }
+  },
+  "evidence_archive": "reports/m1/ci-closing-evidence.tar.gz",
+  "scope": "Exact remote CI architecture contracts and raw evidence; known diagnostic/regex failures remain failures; no full language/API/performance compatibility claim"
+}

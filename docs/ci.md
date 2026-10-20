@@ -80,3 +80,15 @@ each JS environment. Captured source snapshots match the exact checked commit.
 The [M1 CI summary](../reports/m1/ci-summary.json) and
 [retained raw archive](../reports/m1/ci-evidence.tar.gz) preserve the artifact,
 logs, verification procedure and result beyond GitHub artifact retention.
+
+The closing code commit `6a5e4b5` passed all five jobs in
+[run 39374668362](https://github.com/luuvish/pkl-rs/actions/runs/39374668362).
+The added lifecycle step compares two complete Java/Rust observation protocols,
+preserves four diagnostic payload differences, and records Java's nested new-read
+cache mutation failure as a separate negative observation. Fourteen scenarios
+ran in both Node and Chromium, including live nested-operation cleanup. The
+downloaded ZIP digest, exact committed sources, raw results and Java identity were
+reverified. The [closing summary](../reports/m1/ci-closing-summary.json) and
+[archive](../reports/m1/ci-closing-evidence.tar.gz) retain the original artifact,
+logs and verification procedure. Unpacked Cargo intermediates are excluded from
+the archive; the original artifact ZIP and all evidence inputs remain retained.

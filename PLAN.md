@@ -103,11 +103,13 @@ M1은 아래 항목별 구현·비교 증거·설계 결정이 갖춰진 뒤 완
 | M1-05 VM·캐시 | 완료 | [일반 VM](reports/m1/runtime-performance.json)은 Java API 대비 약 1.27배 느림. [정수 특수화](reports/m1/runtime-specialized.json)는 약 0.46배, 일반 Rust 대비 약 2.75배 개선. M2의 제한된 기반으로 특수화 bytecode를 선택하며, Java target 컴파일 실패와 전체 성능 gate는 미해결입니다. |
 | M1-06 Host·수명주기 | 완료 | 같은 VM·heap·성공 member cache를 공유하는 중첩 context를 구현했습니다. [재진입 protocol](reports/m1/lifecycle.json) 바이트가 Java와 일치하며 Host 회귀 15개가 root·token·deadline·종료를 검증합니다. 실제 JS에서 진행 중인 단일·중첩 Host 작업의 abort·Promise 종료·timer/listener/map 해제를 확인했습니다. |
 | M1-07 브라우저·Node | 완료 | [마감 플랫폼 결과](reports/m1/platform-closing.json): Native·Node·Chromium의 6,078개 primitive 바이트 모두 동일, Node·브라우저 각각 필수 시나리오 14개 통과. Java 비교는 각 6,076개 일치·동일한 정규식 실패 2개입니다. |
-| M1-08 통합·기록 | 보완 중 | 기존 코드의 [CI 5개 작업](https://github.com/luuvish/pkl-rs/actions/runs/39373077181)은 성공했습니다. 보완 구현의 차등 테스트·플랫폼 실행·새 CI와 원시 artifact를 다시 검증하고 별도 증거로 보관합니다. 기존 [CI 기록](reports/m1/ci-summary.json)·[증거](reports/m1/ci-evidence.tar.gz)는 유지합니다. |
+| M1-08 통합·기록 | 완료 | 보완 코드 `6a5e4b5`를 푸시했고 [마감 CI 5개 작업](https://github.com/luuvish/pkl-rs/actions/runs/39374668362)이 모두 성공했습니다. 원격 artifact의 SHA-256·커밋 소스·원시 결과를 재검증했습니다. [마감 CI 기록](reports/m1/ci-closing-summary.json)·[증거](reports/m1/ci-closing-evidence.tar.gz), [로컬 검사 13개·Python 124개](reports/m1/validation-closing.json)를 보관했습니다. 기존 증거는 유지합니다. |
 
 구문·이름 해석과 VM·heap은 각각 `gpt-6.1-sol / high`, 숫자·정규식 실험은 `gpt-6-astra / high` 에이전트가 담당합니다. 주 에이전트는 Host·플랫폼 연결·통합 검증을 담당하며 공유 인터페이스와 Cargo 설정을 관리합니다. 기능 검증은 병행하고 성능 측정은 호스트를 비운 상태에서 순차 실행합니다.
 
 마감 보완은 공유 VM·Host 구현에 `gpt-6-astra / high`, Java 차등 검증과 Node·브라우저 검증에 각각 `gpt-6.1-sol / high`를 배정합니다. 주 에이전트는 코드 검토·증거 보관·문서·CI 통합을 담당합니다. 구현과 검증 통합, 최종 CI 증거 보관을 단계별로 커밋·푸시합니다. M1-04와 M1-06의 미달 항목이 닫히기 전에는 M1 전체를 완료로 보고하지 않습니다.
+
+마감 보완과 `gpt-6-astra / high`의 독립 코드 검토, 로컬·원격 증거 검증을 완료했습니다. M1은 제한된 핵심 구조 실험 범위에서 종료합니다. 전체 언어/API 호환성과 성능 목표는 아래 후속 조건 및 M2 이후의 완료 기준으로 남습니다.
 
 | 실험 | 확인할 내용 | 설계 결정에 필요한 증거 |
 | --- | --- | --- |

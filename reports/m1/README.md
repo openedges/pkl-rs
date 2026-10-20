@@ -7,13 +7,17 @@ contracts and records rejected candidates. It does not establish full Pkl
 
 An independent completion review reopened M1-04 and M1-06. The closing changes
 now recover failed lazy members, implement nested contexts in one VM and heap,
-and propagate terminal cancellation to live platform operations. Local closing
-evidence passes; final remote CI evidence is pending. The earlier green CI below
+and propagate terminal cancellation to live platform operations. M1 architecture
+verification is complete after these changes. Closing code `6a5e4b5` passed all
+five jobs in [run 39374668362](https://github.com/luuvish/pkl-rs/actions/runs/39374668362).
+Its downloaded artifact digest, exact committed source snapshots and raw results
+were independently reverified. See the [closing CI summary](ci-closing-summary.json)
+and [retained evidence](ci-closing-evidence.tar.gz). The earlier green CI below
 did not cover these missing contracts.
 
 The initial implementation is committed as
 `ce99720` and experiment/CI integration as `e9ee8d5`. All five jobs in
-[the final code CI run](https://github.com/luuvish/pkl-rs/actions/runs/39372369602)
+[the initial code CI run](https://github.com/luuvish/pkl-rs/actions/runs/39372369602)
 succeeded. The downloaded artifact digest, exact source snapshots and raw
 comparison results were independently verified; see the [CI summary](ci-summary.json)
 and [471-file retained evidence](ci-evidence.tar.gz). Known compatibility and
