@@ -124,6 +124,7 @@ jobs:
           python3 tools/m1_semantics.py --check
           python3 -m unittest discover -s tools/tests -p 'test_m1_*.py' -v
       - name: Verify retained Graal compilation evidence (no JDK acquisition)
+        shell: bash
         run: |
           python3 tools/evidence.py verify reports/m1/graal-evidence.tar.gz
           python3 tools/evidence.py verify reports/m1/graal-cause-evidence.tar.gz

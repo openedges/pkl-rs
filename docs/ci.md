@@ -32,6 +32,10 @@ macOS arm64 acquisition, not a fresh Linux Graal execution or a benchmark.
 Missing target compilation, changed bytes, and incomplete cases fail the check.
 The separate diagnostic class override remains outside the oracle baseline.
 See the [compilation investigation](m1-graal.md) for acquisition commands.
+The step explicitly selects Bash so a verifier failure propagates through `tee`;
+GitHub's unspecified default shell does not enable `pipefail`.
+See the [GitHub shell contract](https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-syntax#jobsjob_idstepsshell)
+and [recorded positive and negative shell controls](../reports/m1/graal-ci-shell-evidence.tar.gz).
 
 The Java job pins Python 3.12, Temurin `21.0.12.1+1`, and action revisions. Oracle
 verification also checks the actual JDK vendor/build and Pkl artifact identity. A
