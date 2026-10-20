@@ -1,0 +1,5 @@
+f = (x) -> x
+a = f
+b = f
+m = new Mapping { [a] = 1; [b] = 2 }
+result = m.length

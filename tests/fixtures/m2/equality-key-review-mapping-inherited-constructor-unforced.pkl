@@ -1,0 +1,1 @@
+p=new Mapping {[new Dynamic {x=throw("parent")}]=0};c=(p){[new Dynamic {x=throw("child")}]=1};result=let(m=c) 1

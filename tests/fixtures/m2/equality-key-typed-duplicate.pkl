@@ -1,0 +1,5 @@
+class C { x = 1 }
+a = new C {}
+b = new C {}
+m = new Mapping { [a] = 1; [b] = 2 }
+result = m.length

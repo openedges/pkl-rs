@@ -1,0 +1,5 @@
+class C {}
+class D {}
+a = C
+b = D
+result = a == b

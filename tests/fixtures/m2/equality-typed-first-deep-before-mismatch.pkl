@@ -1,0 +1,4 @@
+class C { x: Any = 1; y: Any = 2 }
+a = new C { x = 1; y = new Dynamic { z = missing } }
+b = new C { x = 2 }
+result = a == b

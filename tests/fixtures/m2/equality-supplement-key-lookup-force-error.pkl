@@ -1,0 +1,2 @@
+values = new Mapping {}
+result = values[new Dynamic { x = throw("lookup key") }]

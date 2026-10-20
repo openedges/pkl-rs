@@ -1,0 +1,3 @@
+a = new Mapping { ["x"] = missing }
+b = new Mapping {}
+result = a == b

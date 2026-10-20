@@ -40,6 +40,9 @@ REQUIRED_SCENARIOS = {
     'm2-member-predicate-values',
     'm2-member-predicate-owner-cache',
     'm2-member-predicate-diagnostics',
+    'm2-structural-equality',
+    'm2-structural-keys',
+    'm2-structural-equality-diagnostics',
 }
 
 

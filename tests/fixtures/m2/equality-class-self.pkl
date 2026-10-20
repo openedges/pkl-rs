@@ -1,0 +1,4 @@
+class C {}
+a = C
+b = C
+result = a == b

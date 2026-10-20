@@ -9,6 +9,7 @@ use crate::heap::{
 use crate::source::Span;
 use crate::value::{ErrorKind, ObjectId, RuntimeError, RuntimeFrame, Value};
 pub mod collections;
+pub(crate) mod equality;
 mod typecheck;
 use typecheck::{TypeDestination, TypeRun};
 
@@ -347,6 +348,7 @@ impl TypeCheck {
 /// Source metadata is parallel to bytecode, so diagnostics add no VM dispatches.
 #[derive(Clone, Debug, Default)]
 pub struct BlockMetadata {
+    pub hidden: bool,
     pub spans: Vec<Option<Span>>,
     pub member: Arc<str>,
     pub declaration: Option<Span>,
@@ -411,6 +413,8 @@ struct Frame {
     force: Option<Force>,
     lambda: bool,
     type_run: Option<TypeRun>,
+    equality_run: Option<equality::EqualityRun>,
+    key_search: Option<equality::KeySearch>,
     return_to_type: bool,
     diagnostic_member: Option<Arc<str>>,
     callsite_hidden: bool,
@@ -515,6 +519,8 @@ impl Vm {
             force: None,
             lambda: false,
             type_run: None,
+            equality_run: None,
+            key_search: None,
             return_to_type: false,
             diagnostic_member: None,
             callsite_hidden: false,
@@ -748,6 +754,12 @@ impl Vm {
                 roots.extend(frame.environment.this_value.iter().cloned());
                 roots.extend(frame.environment.outer_value.iter().cloned());
                 roots.extend(frame.environment.custom_this.iter().cloned());
+                if let Some(run) = &frame.key_search {
+                    run.roots(&mut roots);
+                }
+                if let Some(run) = &frame.equality_run {
+                    run.roots(&mut roots);
+                }
                 if let Some(run) = &frame.type_run {
                     run.roots(&mut roots);
                 }
@@ -1156,6 +1168,8 @@ impl Vm {
             environment,
             lambda: false,
             type_run: None,
+            equality_run: None,
+            key_search: None,
             return_to_type: false,
             diagnostic_member: None,
             callsite_hidden: false,
@@ -1392,6 +1406,8 @@ impl Vm {
             force: None,
             lambda: !function.method,
             type_run: None,
+            equality_run: None,
+            key_search: None,
             return_to_type: false,
             diagnostic_member: None,
             callsite_hidden: false,
@@ -1401,6 +1417,9 @@ impl Vm {
     }
 
     fn step(&mut self) -> Result<(), RuntimeError> {
+        if self.frames.last().is_some_and(|f| f.equality_run.is_some()) {
+            return self.step_equality();
+        }
         if self
             .frames
             .last()
@@ -1789,6 +1808,10 @@ impl Vm {
                     .ok_or_else(|| invalid("invalid instance template"))?
                     .clone();
                 self.validate_object_members(parent, &members)?;
+                if members.is_empty() {
+                    self.stack.push(Value::Object(parent));
+                    return Ok(());
+                }
                 let environment = self
                     .frames
                     .last()
@@ -1841,6 +1864,10 @@ impl Vm {
                     .clone();
                 if let Some(parent) = parent {
                     self.validate_object_members(parent, &members)?;
+                    if members.is_empty() {
+                        self.stack.push(Value::Object(parent));
+                        return Ok(());
+                    }
                 }
                 let environment = self
                     .frames
@@ -2025,6 +2052,15 @@ impl Vm {
                 };
                 self.stack.push(value);
             }
+            Instruction::Equal | Instruction::NotEqual => {
+                let right = self.pop()?;
+                let left = self.pop()?;
+                if matches!((&left, &right), (Value::Object(_), Value::Object(_))) {
+                    self.begin_equality(left, right, matches!(instruction, Instruction::NotEqual));
+                } else {
+                    self.stack.push(binary(&instruction, left, right)?);
+                }
+            }
             Instruction::Add
             | Instruction::Subtract
             | Instruction::Multiply
@@ -2033,8 +2069,6 @@ impl Vm {
             | Instruction::LessEqual
             | Instruction::Greater
             | Instruction::GreaterEqual
-            | Instruction::Equal
-            | Instruction::NotEqual
             | Instruction::IntegerDivide
             | Instruction::Remainder
             | Instruction::Power => {
@@ -2515,6 +2549,10 @@ impl Compiler<'_> {
                     .map_or(member.name_span.end, |ty| ty.span.end),
             );
             self.block(instructions, Some(header_span));
+            self.program.metadata[code].hidden = member
+                .modifiers
+                .iter()
+                .any(|m| m.kind == crate::syntax::ModifierKind::Hidden);
             self.program.metadata[code].value_span = Some(member.expr.span);
             self.program.metadata[code].property_typecheck = property_typecheck;
             self.member = previous_member;
@@ -2552,6 +2590,7 @@ impl Compiler<'_> {
         let index = self.program.blocks.len();
         self.program.blocks.push(code.instructions);
         self.program.metadata.push(BlockMetadata {
+            hidden: false,
             spans: code.spans,
             member: Arc::from(self.member.as_str()),
             declaration,
@@ -3770,7 +3809,7 @@ impl Compiler<'_> {
         use crate::syntax::{ExprKind, ModifierKind};
         for modifier in &member.modifiers {
             let supported = match modifier.kind {
-                ModifierKind::Local | ModifierKind::Const => true,
+                ModifierKind::Local | ModifierKind::Const | ModifierKind::Hidden => true,
                 ModifierKind::Abstract => true,
                 ModifierKind::Open => matches!(member.expr.kind, ExprKind::Class { .. }),
                 _ => false,
@@ -3783,11 +3822,7 @@ impl Compiler<'_> {
             }
         }
         let flags = crate::syntax::modifier_flags(&member.modifiers);
-        for kind in [
-            ModifierKind::Hidden,
-            ModifierKind::External,
-            ModifierKind::Fixed,
-        ] {
+        for kind in [ModifierKind::External, ModifierKind::Fixed] {
             if flags & kind.flag() != 0 {
                 return Err(
                     unsupported_type(&format!("{} modifiers", kind.spelling())).at(member.span)

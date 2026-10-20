@@ -1,0 +1,3 @@
+a = new Listing { new { x = missing } }
+m = new Mapping { [a] = 1 }
+result = m.length

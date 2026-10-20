@@ -1,0 +1,1 @@
+result=new Mapping {[new Dynamic {x=throw("key")}]=0}.length

@@ -1,0 +1,1 @@
+p=new Dynamic {x=throw("ancestor")};c=(p){y=new Dynamic {z=throw("child nested")}}; result=c==new Dynamic {}

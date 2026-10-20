@@ -1,0 +1,5 @@
+class C { x = 1 }
+a = new C {}
+b = new C {}
+m = new Mapping { [a] = 42 }
+result = m[b]

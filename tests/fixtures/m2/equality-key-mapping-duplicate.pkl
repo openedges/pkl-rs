@@ -1,0 +1,4 @@
+a = new Mapping { ["a"] = 1 }
+b = new Mapping { ["a"] = 1 }
+m = new Mapping { [a] = 1; [b] = 2 }
+result = m.length

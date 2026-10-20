@@ -1,0 +1,4 @@
+class C { hidden hiddenValue = 1; x = 2 }
+a = new C { hiddenValue = 9 }
+b = new C {}
+result = a == b

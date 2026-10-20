@@ -1,0 +1,1 @@
+p=new Mapping {[new Dynamic {x=throw("ancestor key")}]=throw("parent body")};c=(p){[new Dynamic {x=throw("child key")}]=throw("child value")};result=c==new Mapping {}

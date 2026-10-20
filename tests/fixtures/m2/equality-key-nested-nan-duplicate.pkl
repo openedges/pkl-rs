@@ -1,0 +1,2 @@
+m = new Mapping { [List(NaN)] = 1; [List(NaN)] = 2 }
+result = m.length

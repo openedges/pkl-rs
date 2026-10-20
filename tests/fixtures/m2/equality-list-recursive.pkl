@@ -1,0 +1,3 @@
+a = List(new Listing { new Dynamic { v = 1 } })
+b = List(new Listing { new Dynamic { v = 1 } })
+result = a == b

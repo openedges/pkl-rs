@@ -1,0 +1,3 @@
+a = List(new Dynamic { x = missing })
+b = List()
+result = a == b

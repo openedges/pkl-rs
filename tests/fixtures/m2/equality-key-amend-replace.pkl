@@ -1,0 +1,4 @@
+a = new Dynamic { x = 1 }
+p = new Mapping { [a] = 1 }
+m = (p) { [new Dynamic { x = 1 }] = 42 }
+result = m[a]

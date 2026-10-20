@@ -1,0 +1,5 @@
+f = (x) -> x
+a = f
+b = f
+m = new Mapping { [a] = 42 }
+result = m[b]

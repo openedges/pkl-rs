@@ -1,0 +1,3 @@
+a = new Mapping { ["x"] = 1; ["y"] = 2 }
+b = new Mapping { ["y"] = 2; ["x"] = 1 }
+result = a == b

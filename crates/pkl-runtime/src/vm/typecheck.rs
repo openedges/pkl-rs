@@ -356,6 +356,8 @@ impl Vm {
             force: None,
             lambda: false,
             type_run: None,
+            equality_run: None,
+            key_search: None,
             return_to_type: true,
             diagnostic_member: Some(member),
             callsite_hidden: false,

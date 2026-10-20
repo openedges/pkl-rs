@@ -1,0 +1,3 @@
+class C { x = missing }
+a = new C {}
+result = a == a

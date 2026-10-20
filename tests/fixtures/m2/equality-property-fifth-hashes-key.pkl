@@ -1,0 +1,1 @@
+result=let (m=new Dynamic { [new Dynamic { x=throw("key") }]=1; ["a"]=2; ["b"]=3; ["c"]=4; when (true) { p=5 } }) 1

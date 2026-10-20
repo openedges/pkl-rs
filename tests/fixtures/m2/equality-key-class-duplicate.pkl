@@ -1,0 +1,5 @@
+class C {}
+a = C
+b = C
+m = new Mapping { [a] = 1; [b] = 2 }
+result = m.length

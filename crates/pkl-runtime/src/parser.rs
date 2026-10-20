@@ -25,11 +25,11 @@ fn identifier_contains(ranges: &[(u32, u32)], character: char) -> bool {
         .is_ok()
 }
 
-fn is_identifier_start(character: char) -> bool {
+pub(crate) fn is_identifier_start(character: char) -> bool {
     identifier_contains(unicode_identifier::START_RANGES, character)
 }
 
-fn is_identifier_part(character: char) -> bool {
+pub(crate) fn is_identifier_part(character: char) -> bool {
     identifier_contains(unicode_identifier::PART_RANGES, character)
 }
 
@@ -549,6 +549,7 @@ struct Parser<'a> {
     expressions: usize,
     pending: Vec<Diagnostic>,
     member_path: Vec<String>,
+    folded_integer_spans: std::collections::BTreeMap<Span, Span>,
 }
 
 impl<'a> Parser<'a> {
@@ -568,6 +569,7 @@ impl<'a> Parser<'a> {
             expressions: 0,
             pending: Vec::new(),
             member_path: Vec::new(),
+            folded_integer_spans: std::collections::BTreeMap::new(),
         })
     }
 
@@ -587,6 +589,7 @@ impl<'a> Parser<'a> {
             expressions: 0,
             pending: Vec::new(),
             member_path: Vec::new(),
+            folded_integer_spans: std::collections::BTreeMap::new(),
         })
     }
 
@@ -1554,6 +1557,8 @@ impl<'a> Parser<'a> {
                             let expression = parser.expression_expected(0, Some(')'))?;
                             parser.expect(')')?;
                             self.pending.append(&mut parser.pending);
+                            self.folded_integer_spans
+                                .append(&mut parser.folded_integer_spans);
                             expressions.push(expression);
                         }
                         _ => unreachable!("string lexer returns rendered parts"),
@@ -1732,8 +1737,11 @@ impl<'a> Parser<'a> {
                         && !following.is_operator("!!")
                         && !following.is_symbol('[')
                     {
-                        let value = self.integer_literal(&text, true, self.token.span);
+                        let token_span = self.token.span;
+                        let value = self.integer_literal(&text, true, token_span);
                         let end = self.advance()?.span.end;
+                        self.folded_integer_spans
+                            .insert(Span::new(span.start, end), token_span);
                         return Ok(Expr {
                             kind: ExprKind::Int(value),
                             span: Span::new(span.start, end),
@@ -1866,6 +1874,7 @@ pub fn parse_module(source: &str) -> Result<Module, Diagnostic> {
     Ok(Module {
         declaration,
         members,
+        folded_integer_spans: parser.folded_integer_spans,
     })
 }
 

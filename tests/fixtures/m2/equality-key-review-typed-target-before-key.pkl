@@ -1,0 +1,1 @@
+class C {}; result=let(m=new C {[new Dynamic {x=throw("key")}]=0}) 1

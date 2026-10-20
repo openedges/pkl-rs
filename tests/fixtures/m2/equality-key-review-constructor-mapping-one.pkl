@@ -1,0 +1,1 @@
+result=let(m=new Mapping {[new Dynamic {x=throw("key")}]=0}) 1

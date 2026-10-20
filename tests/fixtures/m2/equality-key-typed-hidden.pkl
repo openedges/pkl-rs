@@ -1,0 +1,5 @@
+class C { x = 1; hidden h = missing }
+a = new C {}
+b = new C { h = 1 ~/ 0 }
+m = new Mapping { [a] = 42 }
+result = m[b]

@@ -1,0 +1,1 @@
+p=new Dynamic {[new Dynamic {x=throw("parent")}]=0};c=(p){[new Dynamic {x=1}]=7};result=c[new Dynamic {x=1}]

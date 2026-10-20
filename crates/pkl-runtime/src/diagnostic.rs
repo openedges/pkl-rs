@@ -1,4 +1,6 @@
 //! Structured diagnostics before product-specific rendering.
+mod highlight;
+
 use crate::source::{Source, SourceId, Span};
 use std::fmt;
 
@@ -267,7 +269,7 @@ fn render_frame(output: &mut String, frame: &RenderFrame<'_>) {
         end.max(1)
     });
     let prefix = format!("{} | ", position.line);
-    writeln!(output, "{prefix}{stripped}").unwrap();
+    writeln!(output, "{prefix}{}", highlight::uncolored(stripped)).unwrap();
     writeln!(
         output,
         "{}{}",

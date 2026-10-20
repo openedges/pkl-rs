@@ -1,0 +1,3 @@
+a = new Listing { NaN }
+b = new Listing { NaN }
+result = a == b

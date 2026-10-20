@@ -1,0 +1,1 @@
+result=let(m=new Dynamic {[new Listing {throw("first")}]=0;[new Dynamic {x=throw("second")}]=1;["b"]=2;["c"]=3;["d"]=4}) 1

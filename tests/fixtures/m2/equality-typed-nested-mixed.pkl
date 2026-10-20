@@ -1,0 +1,4 @@
+class C { x: Any = 1 }
+a = new C { x = 1.0 }
+b = new C {}
+result = a == b

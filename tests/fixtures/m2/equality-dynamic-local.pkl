@@ -1,0 +1,3 @@
+a = new Dynamic { local x = missing; y = 1 }
+b = new Dynamic { y = 1 }
+result = a == b

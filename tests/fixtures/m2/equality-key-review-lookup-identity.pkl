@@ -1,0 +1,1 @@
+key=new Dynamic {x=throw("unforced")}; result=new Dynamic {[key]=7}[key]

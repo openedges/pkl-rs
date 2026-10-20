@@ -1,0 +1,2 @@
+m = new Mapping { for (i in List(1, 1)) { [new Dynamic { x = i }] = i } }
+result = m.length

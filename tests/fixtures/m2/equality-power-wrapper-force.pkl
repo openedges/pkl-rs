@@ -1,0 +1,3 @@
+a: Listing<Int> = new Listing { "bad" }
+b = new Listing { 1 }
+result = a == b

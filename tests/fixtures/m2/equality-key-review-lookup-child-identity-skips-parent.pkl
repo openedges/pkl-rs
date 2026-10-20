@@ -1,0 +1,1 @@
+key=new Dynamic {x=throw("child identity")};p=new Dynamic {[new Dynamic {x=throw("parent")}]=0};c=(p){[key]=7};result=c[key]

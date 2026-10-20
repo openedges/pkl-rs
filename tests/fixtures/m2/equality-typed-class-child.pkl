@@ -1,0 +1,5 @@
+open class C { x = 1 }
+class D extends C {}
+a = new C {}
+b = new D {}
+result = a == b

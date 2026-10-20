@@ -1,0 +1,4 @@
+class C { x = 1 }
+a = new C { x = 9 }
+b = new C {}
+result = a == b

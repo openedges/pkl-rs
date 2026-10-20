@@ -1,0 +1,4 @@
+class C { x: Any }
+a = new C { x = new Listing { new Dynamic { v = 1 } } }
+b = new C { x = new Listing { new Dynamic { v = 1 } } }
+result = a == b

@@ -1,0 +1,3 @@
+a = new Listing { default = missing; 1 }
+b = new Listing { 1 }
+result = a == b

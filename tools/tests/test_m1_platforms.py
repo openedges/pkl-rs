@@ -50,6 +50,9 @@ class PlatformEvidenceTests(unittest.TestCase):
             'm2-member-predicate-values',
             'm2-member-predicate-owner-cache',
             'm2-member-predicate-diagnostics',
+            'm2-structural-equality',
+            'm2-structural-keys',
+            'm2-structural-equality-diagnostics',
         }
         names = sorted(m1_platforms.REQUIRED_SCENARIOS)
         valid = {'nodeChecks': names, 'browserChecks': names, 'browserErrors': [],

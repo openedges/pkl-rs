@@ -5,6 +5,9 @@ use crate::source::Span;
 pub struct Module {
     pub declaration: Option<ModuleDeclaration>,
     pub members: Vec<Member>,
+    /// Numeric token locations for signed integers folded by the parser.
+    /// The expression span still includes the unary minus and intervening trivia.
+    pub folded_integer_spans: std::collections::BTreeMap<Span, Span>,
 }
 
 #[derive(Clone, Debug, PartialEq)]

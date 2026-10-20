@@ -1,0 +1,1 @@
+old=new Dynamic {x=throw("old")};query=new Dynamic {x=throw("query")}; result=let(m=new Dynamic {[old]=0;[query]=1}) 1

@@ -1,0 +1,4 @@
+class Item {}
+class Other {}
+values = new Mapping { [Item] = 42 }
+result = values[Other]

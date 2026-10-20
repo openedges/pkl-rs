@@ -1,0 +1,3 @@
+a = new Dynamic { 1 }
+b = new Dynamic { [0] = 1 }
+result = a == b

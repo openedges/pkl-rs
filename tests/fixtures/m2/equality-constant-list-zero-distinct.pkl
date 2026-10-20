@@ -1,0 +1,2 @@
+m = new Mapping { [List(0.0)] = 1; [List(-0.0)] = 2 }
+result = m.length

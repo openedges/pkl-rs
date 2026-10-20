@@ -1,0 +1,4 @@
+class Item { x = 1; hidden ignored = 0 }
+a = new Item { ignored = 1 }
+b = new Item { ignored = 2 }
+result = let (unused = a.ignored + b.ignored) a == b

@@ -112,6 +112,22 @@ and complete diagnostics. Dedicated lifecycle tests retain the parent cursor,
 prior custom receiver, and unpublished target across Host suspension, nested
 evaluation, GC, retry, cancellation, close, and timeouts.
 
+Structural equality regressions distinguish scalar numeric comparisons from
+boxed nested values and keys, including NaN and signed zero. They cover object
+kind and class identity, empty-body identity, deep forcing order, inherited
+overrides, wrapper checks, and strict List shortcuts. Key cases include lazy
+small maps, the fifth-member hash transition, ancestor lookup, Mapping length,
+and complete duplicate/missing-key diagnostics. Constant List keys are checked
+before evaluation only when every key in a specialized body is constant;
+dynamic keys, generators, and shadowed constructors retain runtime behavior.
+Signed literal token spans are preserved separately from expression spans.
+Source-line rendering retains the pinned highlighter's interpolation whitespace
+behavior and whole-line fallback on lexical errors; underlines still use
+authored UTF-16 positions.
+Lifecycle tests exercise temporary operands and keys through Host suspension,
+GC, reentry, retry, and terminal cleanup. Cyclic keys and complete Java
+hash-bucket/cache behavior remain outside the verified selection.
+
 M1 experiments have narrower, explicit contracts:
 
 ```sh

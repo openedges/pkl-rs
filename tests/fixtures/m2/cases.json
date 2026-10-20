@@ -8358,6 +8358,2712 @@
         "semantic:name-resolution"
       ],
       "expected_outcome": "success"
+    },
+    {
+      "id": "equality-dynamic-equal",
+      "input": "tests/fixtures/m2/equality-dynamic-equal.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-dynamic-nested-mixed",
+      "input": "tests/fixtures/m2/equality-dynamic-nested-mixed.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-dynamic-unequal",
+      "input": "tests/fixtures/m2/equality-dynamic-unequal.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-dynamic-identity",
+      "input": "tests/fixtures/m2/equality-dynamic-identity.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-listing-equal",
+      "input": "tests/fixtures/m2/equality-listing-equal.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-listing-nested-mixed",
+      "input": "tests/fixtures/m2/equality-listing-nested-mixed.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-listing-unequal",
+      "input": "tests/fixtures/m2/equality-listing-unequal.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-listing-identity",
+      "input": "tests/fixtures/m2/equality-listing-identity.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-mapping-equal",
+      "input": "tests/fixtures/m2/equality-mapping-equal.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-mapping-nested-mixed",
+      "input": "tests/fixtures/m2/equality-mapping-nested-mixed.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-mapping-unequal",
+      "input": "tests/fixtures/m2/equality-mapping-unequal.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-mapping-identity",
+      "input": "tests/fixtures/m2/equality-mapping-identity.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-list-equal",
+      "input": "tests/fixtures/m2/equality-list-equal.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-list-nested-mixed",
+      "input": "tests/fixtures/m2/equality-list-nested-mixed.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-list-unequal",
+      "input": "tests/fixtures/m2/equality-list-unequal.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-list-identity",
+      "input": "tests/fixtures/m2/equality-list-identity.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-typed-equal",
+      "input": "tests/fixtures/m2/equality-typed-equal.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:classes"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-typed-nested-mixed",
+      "input": "tests/fixtures/m2/equality-typed-nested-mixed.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:classes",
+        "semantic:numeric-literals"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-typed-unequal",
+      "input": "tests/fixtures/m2/equality-typed-unequal.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:classes"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-typed-identity",
+      "input": "tests/fixtures/m2/equality-typed-identity.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:classes"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-dynamic-nan",
+      "input": "tests/fixtures/m2/equality-dynamic-nan.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:numeric-literals"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-dynamic-signed-zero",
+      "input": "tests/fixtures/m2/equality-dynamic-signed-zero.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:numeric-literals"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-dynamic-recursive",
+      "input": "tests/fixtures/m2/equality-dynamic-recursive.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-listing-nan",
+      "input": "tests/fixtures/m2/equality-listing-nan.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:numeric-literals"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-listing-signed-zero",
+      "input": "tests/fixtures/m2/equality-listing-signed-zero.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:numeric-literals"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-listing-recursive",
+      "input": "tests/fixtures/m2/equality-listing-recursive.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-mapping-nan",
+      "input": "tests/fixtures/m2/equality-mapping-nan.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:numeric-literals"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-mapping-signed-zero",
+      "input": "tests/fixtures/m2/equality-mapping-signed-zero.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:numeric-literals"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-mapping-recursive",
+      "input": "tests/fixtures/m2/equality-mapping-recursive.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-list-nan",
+      "input": "tests/fixtures/m2/equality-list-nan.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:numeric-literals"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-list-signed-zero",
+      "input": "tests/fixtures/m2/equality-list-signed-zero.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:numeric-literals"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-list-recursive",
+      "input": "tests/fixtures/m2/equality-list-recursive.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-typed-nan",
+      "input": "tests/fixtures/m2/equality-typed-nan.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:classes",
+        "semantic:numeric-literals"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-typed-signed-zero",
+      "input": "tests/fixtures/m2/equality-typed-signed-zero.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:classes",
+        "semantic:numeric-literals"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-typed-recursive",
+      "input": "tests/fixtures/m2/equality-typed-recursive.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:classes"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-semantic-number-mixed",
+      "input": "tests/fixtures/m2/equality-semantic-number-mixed.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:numeric-literals"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-semantic-number-nan",
+      "input": "tests/fixtures/m2/equality-semantic-number-nan.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:numeric-literals"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-semantic-number-signed-zero",
+      "input": "tests/fixtures/m2/equality-semantic-number-signed-zero.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:numeric-literals"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-kind-dynamic-listing",
+      "input": "tests/fixtures/m2/equality-kind-dynamic-listing.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-kind-dynamic-mapping",
+      "input": "tests/fixtures/m2/equality-kind-dynamic-mapping.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-kind-listing-list",
+      "input": "tests/fixtures/m2/equality-kind-listing-list.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-kind-dynamic-typed",
+      "input": "tests/fixtures/m2/equality-kind-dynamic-typed.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:classes"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-dynamic-property-entry",
+      "input": "tests/fixtures/m2/equality-dynamic-property-entry.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-dynamic-element-entry",
+      "input": "tests/fixtures/m2/equality-dynamic-element-entry.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-dynamic-local",
+      "input": "tests/fixtures/m2/equality-dynamic-local.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:modifiers"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-dynamic-method",
+      "input": "tests/fixtures/m2/equality-dynamic-method.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:functions",
+        "semantic:closures",
+        "semantic:modifiers"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-listing-default",
+      "input": "tests/fixtures/m2/equality-listing-default.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:modifiers"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-mapping-default",
+      "input": "tests/fixtures/m2/equality-mapping-default.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:modifiers"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-typed-hidden",
+      "input": "tests/fixtures/m2/equality-typed-hidden.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:classes",
+        "semantic:modifiers"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-typed-class-distinct",
+      "input": "tests/fixtures/m2/equality-typed-class-distinct.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:classes"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-typed-class-child",
+      "input": "tests/fixtures/m2/equality-typed-class-child.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:classes"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-class-self",
+      "input": "tests/fixtures/m2/equality-class-self.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:classes"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-class-distinct",
+      "input": "tests/fixtures/m2/equality-class-distinct.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:classes"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-function-distinct",
+      "input": "tests/fixtures/m2/equality-function-distinct.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:functions",
+        "semantic:closures"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-function-same",
+      "input": "tests/fixtures/m2/equality-function-same.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:functions",
+        "semantic:closures"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-dynamic-self-unforced",
+      "input": "tests/fixtures/m2/equality-dynamic-self-unforced.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-dynamic-other-kind-unforced",
+      "input": "tests/fixtures/m2/equality-dynamic-other-kind-unforced.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-dynamic-length-before-force",
+      "input": "tests/fixtures/m2/equality-dynamic-length-before-force.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "equality-dynamic-deep-before-mismatch",
+      "input": "tests/fixtures/m2/equality-dynamic-deep-before-mismatch.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "equality-dynamic-left-before-right",
+      "input": "tests/fixtures/m2/equality-dynamic-left-before-right.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "equality-listing-self-unforced",
+      "input": "tests/fixtures/m2/equality-listing-self-unforced.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-listing-other-kind-unforced",
+      "input": "tests/fixtures/m2/equality-listing-other-kind-unforced.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-listing-length-before-force",
+      "input": "tests/fixtures/m2/equality-listing-length-before-force.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-listing-deep-before-mismatch",
+      "input": "tests/fixtures/m2/equality-listing-deep-before-mismatch.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "equality-listing-left-before-right",
+      "input": "tests/fixtures/m2/equality-listing-left-before-right.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "equality-mapping-self-unforced",
+      "input": "tests/fixtures/m2/equality-mapping-self-unforced.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-mapping-other-kind-unforced",
+      "input": "tests/fixtures/m2/equality-mapping-other-kind-unforced.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-mapping-length-before-force",
+      "input": "tests/fixtures/m2/equality-mapping-length-before-force.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "equality-mapping-deep-before-mismatch",
+      "input": "tests/fixtures/m2/equality-mapping-deep-before-mismatch.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "equality-mapping-left-before-right",
+      "input": "tests/fixtures/m2/equality-mapping-left-before-right.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "equality-dynamic-inherited",
+      "input": "tests/fixtures/m2/equality-dynamic-inherited.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:amendment",
+        "semantic:name-resolution",
+        "semantic:generated-verification"
+      ],
+      "expected_outcome": "success",
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "equality-dynamic-inherited",
+          "equality-dynamic-inherited-direct"
+        ],
+        "domain": "Overriding inherited x=missing with x=2 and retaining y=3 equals constructing fixed Dynamic { x=2; y=3 }."
+      }
+    },
+    {
+      "id": "equality-listing-inherited",
+      "input": "tests/fixtures/m2/equality-listing-inherited.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:amendment",
+        "semantic:name-resolution"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-mapping-inherited",
+      "input": "tests/fixtures/m2/equality-mapping-inherited.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:amendment",
+        "semantic:name-resolution"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-key-dynamic-lookup",
+      "input": "tests/fixtures/m2/equality-key-dynamic-lookup.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-key-dynamic-duplicate",
+      "input": "tests/fixtures/m2/equality-key-dynamic-duplicate.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "equality-key-listing-lookup",
+      "input": "tests/fixtures/m2/equality-key-listing-lookup.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-key-listing-duplicate",
+      "input": "tests/fixtures/m2/equality-key-listing-duplicate.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "equality-key-mapping-lookup",
+      "input": "tests/fixtures/m2/equality-key-mapping-lookup.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-key-mapping-duplicate",
+      "input": "tests/fixtures/m2/equality-key-mapping-duplicate.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "equality-key-list-lookup",
+      "input": "tests/fixtures/m2/equality-key-list-lookup.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-key-list-duplicate",
+      "input": "tests/fixtures/m2/equality-key-list-duplicate.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "equality-key-typed-lookup",
+      "input": "tests/fixtures/m2/equality-key-typed-lookup.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:classes"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-key-typed-duplicate",
+      "input": "tests/fixtures/m2/equality-key-typed-duplicate.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:classes",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "equality-key-function-lookup",
+      "input": "tests/fixtures/m2/equality-key-function-lookup.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:functions",
+        "semantic:closures"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-key-function-duplicate",
+      "input": "tests/fixtures/m2/equality-key-function-duplicate.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:functions",
+        "semantic:closures",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "equality-key-class-lookup",
+      "input": "tests/fixtures/m2/equality-key-class-lookup.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:classes"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-key-class-duplicate",
+      "input": "tests/fixtures/m2/equality-key-class-duplicate.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:classes",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "equality-key-nested-nan",
+      "input": "tests/fixtures/m2/equality-key-nested-nan.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-key-nested-mixed-distinct",
+      "input": "tests/fixtures/m2/equality-key-nested-mixed-distinct.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-key-nested-zero-distinct",
+      "input": "tests/fixtures/m2/equality-key-nested-zero-distinct.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-key-dynamic-property-entry-distinct",
+      "input": "tests/fixtures/m2/equality-key-dynamic-property-entry-distinct.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-key-order-independent",
+      "input": "tests/fixtures/m2/equality-key-order-independent.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-key-forces-deep",
+      "input": "tests/fixtures/m2/equality-key-forces-deep.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "equality-key-before-value",
+      "input": "tests/fixtures/m2/equality-key-before-value.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "equality-key-amend-replace",
+      "input": "tests/fixtures/m2/equality-key-amend-replace.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:amendment",
+        "semantic:name-resolution",
+        "semantic:generated-verification"
+      ],
+      "expected_outcome": "success",
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "equality-key-amend-replace",
+          "equality-key-amend-replace-direct"
+        ],
+        "domain": "Replacing an inherited entry keyed by fixed Dynamic { x = 1 } equals constructing that entry with value 42."
+      }
+    },
+    {
+      "id": "equality-key-amend-body",
+      "input": "tests/fixtures/m2/equality-key-amend-body.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:amendment",
+        "semantic:name-resolution"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-key-generator-duplicate",
+      "input": "tests/fixtures/m2/equality-key-generator-duplicate.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:generators",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "equality-key-spread-duplicate",
+      "input": "tests/fixtures/m2/equality-key-spread-duplicate.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:generators",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "equality-key-predicate-replace",
+      "input": "tests/fixtures/m2/equality-key-predicate-replace.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:amendment",
+        "semantic:name-resolution",
+        "semantic:generators",
+        "semantic:generated-verification"
+      ],
+      "expected_outcome": "success",
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "equality-key-predicate-replace",
+          "equality-key-predicate-replace-direct"
+        ],
+        "domain": "Selecting the one inherited value 1 and replacing it with 42 preserves lookup by structural List(1)."
+      }
+    },
+    {
+      "id": "equality-key-function-distinct",
+      "input": "tests/fixtures/m2/equality-key-function-distinct.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:functions",
+        "semantic:closures"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-key-class-distinct",
+      "input": "tests/fixtures/m2/equality-key-class-distinct.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:classes"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-listing-wrapper-equal",
+      "input": "tests/fixtures/m2/equality-listing-wrapper-equal.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:types",
+        "semantic:generics"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-listing-wrapper-force-bad",
+      "input": "tests/fixtures/m2/equality-listing-wrapper-force-bad.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "equality-mapping-wrapper-equal",
+      "input": "tests/fixtures/m2/equality-mapping-wrapper-equal.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:types",
+        "semantic:generics"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-key-wrapper-listing",
+      "input": "tests/fixtures/m2/equality-key-wrapper-listing.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:types",
+        "semantic:generics"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-key-wrapper-listing-bad",
+      "input": "tests/fixtures/m2/equality-key-wrapper-listing-bad.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "equality-power-equal-false",
+      "input": "tests/fixtures/m2/equality-power-equal-false.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:constraints",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure",
+      "power_assertions": true
+    },
+    {
+      "id": "equality-power-equal-object-false",
+      "input": "tests/fixtures/m2/equality-power-equal-object-false.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:constraints",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure",
+      "power_assertions": true
+    },
+    {
+      "id": "equality-power-key-missing",
+      "input": "tests/fixtures/m2/equality-power-key-missing.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:constraints",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure",
+      "power_assertions": true
+    },
+    {
+      "id": "equality-dynamic-default-throws",
+      "input": "tests/fixtures/m2/equality-dynamic-default-throws.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-dynamic-key-default-throws",
+      "input": "tests/fixtures/m2/equality-dynamic-key-default-throws.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-listing-default-throws",
+      "input": "tests/fixtures/m2/equality-listing-default-throws.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-listing-key-default-throws",
+      "input": "tests/fixtures/m2/equality-listing-key-default-throws.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-mapping-default-throws",
+      "input": "tests/fixtures/m2/equality-mapping-default-throws.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-mapping-key-default-throws",
+      "input": "tests/fixtures/m2/equality-mapping-key-default-throws.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-typed-hidden-override",
+      "input": "tests/fixtures/m2/equality-typed-hidden-override.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:classes",
+        "semantic:modifiers"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-list-skips-unmatched-tail",
+      "input": "tests/fixtures/m2/equality-list-skips-unmatched-tail.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-list-length-before-force",
+      "input": "tests/fixtures/m2/equality-list-length-before-force.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-typed-self-unforced",
+      "input": "tests/fixtures/m2/equality-typed-self-unforced.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:classes"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-typed-first-deep-before-mismatch",
+      "input": "tests/fixtures/m2/equality-typed-first-deep-before-mismatch.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:classes",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "equality-dynamic-right-before-count",
+      "input": "tests/fixtures/m2/equality-dynamic-right-before-count.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "equality-mapping-right-before-count",
+      "input": "tests/fixtures/m2/equality-mapping-right-before-count.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "equality-dynamic-right-before-mismatch",
+      "input": "tests/fixtures/m2/equality-dynamic-right-before-mismatch.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "equality-mapping-right-before-mismatch",
+      "input": "tests/fixtures/m2/equality-mapping-right-before-mismatch.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "equality-typed-inherited-properties",
+      "input": "tests/fixtures/m2/equality-typed-inherited-properties.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:classes",
+        "semantic:amendment",
+        "semantic:name-resolution"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-key-dynamic-local",
+      "input": "tests/fixtures/m2/equality-key-dynamic-local.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:modifiers"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-key-typed-hidden",
+      "input": "tests/fixtures/m2/equality-key-typed-hidden.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:classes",
+        "semantic:modifiers"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-key-mapping-wrapper",
+      "input": "tests/fixtures/m2/equality-key-mapping-wrapper.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:types",
+        "semantic:generics"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-key-mapping-wrapper-bad",
+      "input": "tests/fixtures/m2/equality-key-mapping-wrapper-bad.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "equality-key-dynamic-container",
+      "input": "tests/fixtures/m2/equality-key-dynamic-container.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-key-dynamic-container-duplicate",
+      "input": "tests/fixtures/m2/equality-key-dynamic-container-duplicate.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "equality-key-typed-class-distinct",
+      "input": "tests/fixtures/m2/equality-key-typed-class-distinct.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:classes"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-key-nested-nan-duplicate",
+      "input": "tests/fixtures/m2/equality-key-nested-nan-duplicate.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "equality-key-hash-reordered-typed",
+      "input": "tests/fixtures/m2/equality-key-hash-reordered-typed.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:classes"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-power-key-duplicate",
+      "input": "tests/fixtures/m2/equality-power-key-duplicate.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:constraints",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure",
+      "power_assertions": true
+    },
+    {
+      "id": "equality-power-wrapper-force",
+      "input": "tests/fixtures/m2/equality-power-wrapper-force.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:constraints",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure",
+      "power_assertions": true
+    },
+    {
+      "id": "equality-key-amend-replace-direct",
+      "input": "tests/fixtures/m2/equality-key-amend-replace-direct.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:amendment",
+        "semantic:name-resolution",
+        "semantic:generated-verification"
+      ],
+      "expected_outcome": "success",
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "equality-key-amend-replace",
+          "equality-key-amend-replace-direct"
+        ],
+        "domain": "Replacing an inherited entry keyed by fixed Dynamic { x = 1 } equals constructing that entry with value 42."
+      }
+    },
+    {
+      "id": "equality-key-predicate-replace-direct",
+      "input": "tests/fixtures/m2/equality-key-predicate-replace-direct.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:amendment",
+        "semantic:name-resolution",
+        "semantic:generators",
+        "semantic:generated-verification"
+      ],
+      "expected_outcome": "success",
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "equality-key-predicate-replace",
+          "equality-key-predicate-replace-direct"
+        ],
+        "domain": "Selecting the one inherited value 1 and replacing it with 42 preserves lookup by structural List(1)."
+      }
+    },
+    {
+      "id": "equality-dynamic-inherited-direct",
+      "input": "tests/fixtures/m2/equality-dynamic-inherited-direct.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:generated-verification"
+      ],
+      "expected_outcome": "success",
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "equality-dynamic-inherited",
+          "equality-dynamic-inherited-direct"
+        ],
+        "domain": "Overriding inherited x=missing with x=2 and retaining y=3 equals constructing fixed Dynamic { x=2; y=3 }."
+      }
+    },
+    {
+      "id": "equality-supplement-key-missing-dynamic",
+      "input": "tests/fixtures/m2/equality-supplement-key-missing-dynamic.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "equality-supplement-key-missing-class",
+      "input": "tests/fixtures/m2/equality-supplement-key-missing-class.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:classes",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "equality-supplement-key-listing-reject-object",
+      "input": "tests/fixtures/m2/equality-supplement-key-listing-reject-object.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "equality-supplement-key-duplicate-long",
+      "input": "tests/fixtures/m2/equality-supplement-key-duplicate-long.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "equality-supplement-key-lookup-force-error",
+      "input": "tests/fixtures/m2/equality-supplement-key-lookup-force-error.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "equality-supplement-key-rejected-typed-force-order",
+      "input": "tests/fixtures/m2/equality-supplement-key-rejected-typed-force-order.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:classes",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "equality-supplement-equality-hidden-cache",
+      "input": "tests/fixtures/m2/equality-supplement-equality-hidden-cache.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:classes",
+        "semantic:modifiers"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-supplement-cycle-identity-skip",
+      "input": "tests/fixtures/m2/equality-supplement-cycle-identity-skip.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-supplement-wrapper-identity-skip",
+      "input": "tests/fixtures/m2/equality-supplement-wrapper-identity-skip.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:types",
+        "semantic:generics"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-supplement-wrapper-length-skip",
+      "input": "tests/fixtures/m2/equality-supplement-wrapper-length-skip.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:types",
+        "semantic:generics"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-supplement-nested-order-child-first",
+      "input": "tests/fixtures/m2/equality-supplement-nested-order-child-first.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:amendment",
+        "semantic:name-resolution",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "equality-key-review-constructor-one",
+      "input": "tests/fixtures/m2/equality-key-review-constructor-one.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-key-review-constructor-mapping-one",
+      "input": "tests/fixtures/m2/equality-key-review-constructor-mapping-one.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-key-review-constructor-four",
+      "input": "tests/fixtures/m2/equality-key-review-constructor-four.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-key-review-constructor-five",
+      "input": "tests/fixtures/m2/equality-key-review-constructor-five.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "equality-key-review-constructor-generated-four",
+      "input": "tests/fixtures/m2/equality-key-review-constructor-generated-four.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:generators"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-key-review-constructor-generated-five",
+      "input": "tests/fixtures/m2/equality-key-review-constructor-generated-five.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:generators",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "equality-key-review-constructor-five-hash-order",
+      "input": "tests/fixtures/m2/equality-key-review-constructor-five-hash-order.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "equality-key-review-identity-duplicate",
+      "input": "tests/fixtures/m2/equality-key-review-identity-duplicate.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "equality-key-review-lookup-identity",
+      "input": "tests/fixtures/m2/equality-key-review-lookup-identity.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-key-review-lookup-query-left",
+      "input": "tests/fixtures/m2/equality-key-review-lookup-query-left.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "equality-key-review-insert-query-left",
+      "input": "tests/fixtures/m2/equality-key-review-insert-query-left.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "equality-key-review-constructor-listing-size-skip",
+      "input": "tests/fixtures/m2/equality-key-review-constructor-listing-size-skip.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-key-review-constructor-kind-skip",
+      "input": "tests/fixtures/m2/equality-key-review-constructor-kind-skip.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-key-review-mapping-length-hash",
+      "input": "tests/fixtures/m2/equality-key-review-mapping-length-hash.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "equality-key-review-mapping-parent-first-hash",
+      "input": "tests/fixtures/m2/equality-key-review-mapping-parent-first-hash.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:amendment",
+        "semantic:name-resolution",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "equality-key-review-mapping-parent-identity-key",
+      "input": "tests/fixtures/m2/equality-key-review-mapping-parent-identity-key.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:amendment",
+        "semantic:name-resolution"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-key-review-typed-target-before-key",
+      "input": "tests/fixtures/m2/equality-key-review-typed-target-before-key.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:classes",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "equality-key-review-mapping-inherited-constructor-unforced",
+      "input": "tests/fixtures/m2/equality-key-review-mapping-inherited-constructor-unforced.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:amendment",
+        "semantic:name-resolution"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-key-review-dynamic-inherited-constructor-unforced",
+      "input": "tests/fixtures/m2/equality-key-review-dynamic-inherited-constructor-unforced.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:amendment",
+        "semantic:name-resolution"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-key-review-dynamic-inherited-identity-lookup-unforced",
+      "input": "tests/fixtures/m2/equality-key-review-dynamic-inherited-identity-lookup-unforced.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:amendment",
+        "semantic:name-resolution"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-key-review-mapping-inherited-structural-override",
+      "input": "tests/fixtures/m2/equality-key-review-mapping-inherited-structural-override.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:amendment",
+        "semantic:name-resolution"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-key-review-mapping-inherited-structural-override-length",
+      "input": "tests/fixtures/m2/equality-key-review-mapping-inherited-structural-override-length.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:amendment",
+        "semantic:name-resolution"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-key-review-lookup-child-identity-skips-parent",
+      "input": "tests/fixtures/m2/equality-key-review-lookup-child-identity-skips-parent.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:amendment",
+        "semantic:name-resolution"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-key-review-lookup-child-structural-skips-parent",
+      "input": "tests/fixtures/m2/equality-key-review-lookup-child-structural-skips-parent.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:amendment",
+        "semantic:name-resolution"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-key-review-mapping-equal-key-override-deep-force",
+      "input": "tests/fixtures/m2/equality-key-review-mapping-equal-key-override-deep-force.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:amendment",
+        "semantic:name-resolution"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-key-review-dynamic-equal-key-override-deep-force",
+      "input": "tests/fixtures/m2/equality-key-review-dynamic-equal-key-override-deep-force.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:amendment",
+        "semantic:name-resolution"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-key-review-mapping-equal-key-override-spread",
+      "input": "tests/fixtures/m2/equality-key-review-mapping-equal-key-override-spread.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:amendment",
+        "semantic:name-resolution",
+        "semantic:generators"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-key-review-mapping-equal-key-override-loop",
+      "input": "tests/fixtures/m2/equality-key-review-mapping-equal-key-override-loop.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:amendment",
+        "semantic:name-resolution",
+        "semantic:generators"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-key-review-mapping-override-key-force-order",
+      "input": "tests/fixtures/m2/equality-key-review-mapping-override-key-force-order.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:amendment",
+        "semantic:name-resolution"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "equality-key-review-dynamic-override-key-force-order",
+      "input": "tests/fixtures/m2/equality-key-review-dynamic-override-key-force-order.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:amendment",
+        "semantic:name-resolution"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "equality-key-review-mapping-override-value-before-key",
+      "input": "tests/fixtures/m2/equality-key-review-mapping-override-value-before-key.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:amendment",
+        "semantic:name-resolution"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "equality-constant-duplicate-unused",
+      "input": "tests/fixtures/m2/equality-constant-duplicate-unused.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "equality-constant-nested-list-duplicate",
+      "input": "tests/fixtures/m2/equality-constant-nested-list-duplicate.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "equality-constant-list-boxed-distinct",
+      "input": "tests/fixtures/m2/equality-constant-list-boxed-distinct.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-constant-list-zero-distinct",
+      "input": "tests/fixtures/m2/equality-constant-list-zero-distinct.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-dynamic-key-defers-duplicates",
+      "input": "tests/fixtures/m2/equality-dynamic-key-defers-duplicates.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "equality-generator-defers-duplicates",
+      "input": "tests/fixtures/m2/equality-generator-defers-duplicates.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:generators"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "equality-shadowed-list-constructor",
+      "input": "tests/fixtures/m2/equality-shadowed-list-constructor.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:functions",
+        "semantic:name-resolution"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "equality-constant-parenthesized-span",
+      "input": "tests/fixtures/m2/equality-constant-parenthesized-span.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "equality-constant-duplicate-negative",
+      "input": "tests/fixtures/m2/equality-constant-duplicate-negative.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "equality-constant-duplicate-long",
+      "input": "tests/fixtures/m2/equality-constant-duplicate-long.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "equality-element-fifth-hashes-key",
+      "input": "tests/fixtures/m2/equality-element-fifth-hashes-key.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:generators"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "equality-property-fifth-hashes-key",
+      "input": "tests/fixtures/m2/equality-property-fifth-hashes-key.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:generators"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "equality-spread-property-fifth-hashes-key",
+      "input": "tests/fixtures/m2/equality-spread-property-fifth-hashes-key.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:generators"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "equality-mapping-equality-hashes-before-length",
+      "input": "tests/fixtures/m2/equality-mapping-equality-hashes-before-length.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "equality-constant-negative-scalar-span",
+      "input": "tests/fixtures/m2/equality-constant-negative-scalar-span.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:lexing"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "equality-constant-negative-float-span",
+      "input": "tests/fixtures/m2/equality-constant-negative-float-span.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:lexing"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "equality-constant-parenthesized-scalar-span",
+      "input": "tests/fixtures/m2/equality-constant-parenthesized-scalar-span.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:lexing"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "equality-constant-negative-space-span",
+      "input": "tests/fixtures/m2/equality-constant-negative-space-span.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:lexing"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "equality-constant-negative-zero-span",
+      "input": "tests/fixtures/m2/equality-constant-negative-zero-span.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:lexing"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "equality-constant-negative-interpolation-span",
+      "input": "tests/fixtures/m2/equality-constant-negative-interpolation-span.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:lexing",
+        "semantic:strings"
+      ],
+      "expected_outcome": "failure"
     }
   ]
 }

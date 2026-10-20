@@ -10,6 +10,7 @@ use crate::syntax::{
     Parameter, Type, TypeKind, TypeParameter, modifier_flags,
 };
 use std::collections::BTreeMap;
+mod constant_keys;
 
 // Nonlocal properties/classes/type aliases in the pinned stdlib/base.pkl,
 // following BaseModuleMembersGenerator. Base semantics are outside this prototype.
@@ -172,6 +173,7 @@ enum ConstLevel {
 
 struct Resolver<'a> {
     scopes: Vec<Scope<'a>>,
+    folded_integer_spans: &'a BTreeMap<Span, Span>,
     names: BTreeMap<Span, Binding>,
     const_names: std::collections::BTreeSet<Span>,
     custom_this: std::collections::BTreeSet<Span>,
@@ -372,10 +374,52 @@ impl<'a> Resolver<'a> {
         let previous_lambda = std::mem::replace(&mut self.receiver_is_lambda, false);
         self.object_receiver_lambdas.push(previous_lambda);
         self.object_body(members, None)?;
+        self.constant_entries(members)?;
         self.object_receiver_lambdas.pop();
         self.receiver_is_lambda = previous_lambda;
         self.object_levels.pop();
         self.scopes.pop();
+        Ok(())
+    }
+
+    /// The pinned AST builder installs entries before evaluation only when the
+    /// whole specialized body has constant keys. A generator or dynamic key
+    /// leaves duplicate detection to the runtime.
+    fn constant_entries(&self, members: &[ObjectMember]) -> Result<(), Diagnostic> {
+        let mut keys = Vec::new();
+        for member in members {
+            match member {
+                ObjectMember::Property(_) | ObjectMember::Element { .. } => {}
+                ObjectMember::Entry { key, .. } => {
+                    let Some(value) = constant_keys::resolve(key, &self.names) else {
+                        return Ok(());
+                    };
+                    keys.push((key, value));
+                }
+                _ => return Ok(()),
+            }
+        }
+        for (index, (key, value)) in keys.iter().enumerate() {
+            if keys[..index].iter().any(|(_, previous)| previous == value) {
+                let mut error = self.const_error(
+                    key.unparenthesized(),
+                    format!("Duplicate definition of member `{}`.", value.render()),
+                );
+                let key = key.unparenthesized();
+                if let Some(span) = self.folded_integer_spans.get(&key.span) {
+                    error.span = *span;
+                } else if let ExprKind::Unary {
+                    op: crate::syntax::UnaryOp::Negate,
+                    operand,
+                } = &key.kind
+                    && matches!(operand.kind, ExprKind::Float(_))
+                {
+                    error.span = operand.span;
+                }
+                error.kind = DiagnosticKind::DuplicateMember;
+                return Err(error);
+            }
+        }
         Ok(())
     }
 
@@ -1119,6 +1163,7 @@ fn validate_modifiers(
 pub fn resolve_module(module: &Module) -> Result<ResolvedModule, Diagnostic> {
     let mut resolver = Resolver {
         scopes: Vec::new(),
+        folded_integer_spans: &module.folded_integer_spans,
         names: BTreeMap::new(),
         const_names: std::collections::BTreeSet::new(),
         custom_this: std::collections::BTreeSet::new(),

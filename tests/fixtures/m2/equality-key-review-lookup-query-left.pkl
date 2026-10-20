@@ -1,0 +1,1 @@
+old=new Dynamic {x=throw("old")};query=new Dynamic {x=throw("query")}; result=new Dynamic {[old]=7}[query]

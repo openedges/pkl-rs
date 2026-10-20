@@ -1,0 +1,2 @@
+m = new Dynamic { [List(1)] = 42 }
+result = m[List(1)]

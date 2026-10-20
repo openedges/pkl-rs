@@ -120,6 +120,8 @@ pub struct CollectionCast {
 
 #[derive(Clone, Debug, Default)]
 pub struct Object {
+    /// Evaluator-owned canonical identity, populated only after key hashing succeeds.
+    pub structural_key: Option<u64>,
     pub function: Option<Function>,
     pub is_module: bool,
     pub class_definition: Option<Class>,
@@ -159,6 +161,9 @@ pub struct Heap {
     slots: Vec<Slot>,
     free: Vec<usize>,
     stats: HeapStats,
+    pub(crate) structural_keys: BTreeMap<crate::vm::equality::StructuralKey, u64>,
+    pub(crate) next_structural_key: u64,
+    pub(crate) key_equalities: std::collections::BTreeSet<(ObjectId, ObjectId)>,
 }
 
 impl Default for Heap {
@@ -174,6 +179,9 @@ impl Heap {
             slots: Vec::new(),
             free: Vec::new(),
             stats: HeapStats::default(),
+            structural_keys: BTreeMap::new(),
+            next_structural_key: 1,
+            key_equalities: std::collections::BTreeSet::new(),
         }
     }
 
@@ -308,6 +316,41 @@ impl Heap {
                 }
             }
         }
+        let live: std::collections::BTreeSet<_> = self
+            .slots
+            .iter()
+            .enumerate()
+            .filter_map(|(index, slot)| {
+                slot.object.as_ref().map(|_| ObjectId {
+                    heap: self.identity,
+                    index,
+                    generation: slot.generation,
+                })
+            })
+            .collect();
+        self.key_equalities
+            .retain(|(a, b)| live.contains(a) && live.contains(b));
+        // Canonical keys are metadata, not roots. Retain only keys referenced by
+        // live objects and their structural components.
+        let by_id: BTreeMap<_, _> = self
+            .structural_keys
+            .iter()
+            .map(|(key, id)| (*id, key))
+            .collect();
+        let mut pending: Vec<_> = self
+            .slots
+            .iter()
+            .filter_map(|slot| slot.object.as_ref().and_then(|o| o.structural_key))
+            .collect();
+        let mut retained = std::collections::BTreeSet::new();
+        while let Some(id) = pending.pop() {
+            if retained.insert(id)
+                && let Some(key) = by_id.get(&id)
+            {
+                pending.extend(key.children());
+            }
+        }
+        self.structural_keys.retain(|_, id| retained.contains(id));
         self.stats.collections += 1;
         self.stats
     }
@@ -324,6 +367,8 @@ impl Heap {
         self.stats.collections += 1;
         self.slots = Vec::new();
         self.free = Vec::new();
+        self.structural_keys = BTreeMap::new();
+        self.key_equalities.clear();
         self.identity = NEXT_HEAP.fetch_add(1, Ordering::Relaxed);
     }
 }

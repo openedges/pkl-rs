@@ -1,0 +1,4 @@
+a = List(1, 2)
+b = List(1, 2)
+m = new Mapping { [a] = 42 }
+result = m[b]

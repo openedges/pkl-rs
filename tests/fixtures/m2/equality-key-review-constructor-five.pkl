@@ -1,0 +1,1 @@
+result=let(m=new Dynamic {[new Dynamic {x=throw("key")}]=0;["a"]=1;["b"]=2;["c"]=3;["d"]=4}) 1

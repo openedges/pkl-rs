@@ -1,0 +1,4 @@
+a = List(1)
+p = new Mapping { [a] = new { x = 1 } }
+m = (p) { [List(1)] { x = super.x + 1 } }
+result = m[a].x

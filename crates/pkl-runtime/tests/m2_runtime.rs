@@ -935,17 +935,26 @@ fn constraint_host_reentry_roots_both_continuations() {
         .start(outer_entry, vec![object.clone()], 0, None)
         .unwrap();
     let outer = match session.poll(0, 1000) {
-        HostPoll::Read { token, .. } => token,
+        HostPoll::Read { token, uri } => {
+            assert_eq!(&*uri, "mem:outer");
+            token
+        }
         other => panic!("{other:?}"),
     };
     session
         .reenter(&outer, inner_entry, vec![object], 0, None)
         .unwrap();
     let inner = match session.poll(0, 1000) {
-        HostPoll::Read { token, .. } => token,
+        HostPoll::Read { token, uri } => {
+            assert_eq!(&*uri, "mem:inner");
+            token
+        }
         other => panic!("{other:?}"),
     };
-    assert!(session.collect(&[]).live >= 4);
+    assert_eq!(session.context_depth(), 2);
+    // Empty typed construction may return the class prototype. Successful
+    // reads after collection prove retention without assuming an allocation.
+    session.collect(&[]);
     session.resume(&inner, Ok(Value::string("ok")), 0).unwrap();
     assert_eq!(session.poll(0, 1000), HostPoll::Ready(Ok(Value::Int(7))));
     session.collect(&[]);
@@ -971,7 +980,10 @@ fn power_constraint_replay_resumes_and_gc_traces_observed_values() {
             VmPoll::Pending(request) => request,
             other => panic!("{other:?}"),
         };
-        assert!(vm.collect(&[]).live >= 3);
+        assert_eq!(&*request.uri, "mem:check");
+        // The retained receiver may be its class prototype; the observations
+        // below must still render that receiver after each collection.
+        vm.collect(&[]);
         vm.resume(request.id, Ok(Value::string("ok"))).unwrap();
     }
     let error = done(&mut vm).unwrap_err();

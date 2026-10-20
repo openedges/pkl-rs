@@ -38,6 +38,13 @@ fn object_name(id: ObjectId, heap: &Heap) -> Result<String, RuntimeError> {
     })
 }
 
+fn function_name(id: ObjectId, heap: &Heap) -> Result<String, RuntimeError> {
+    let function = heap.get(id)?.function.as_ref().ok_or_else(|| {
+        RuntimeError::new(ErrorKind::InvalidBytecode, "function has no definition")
+    })?;
+    Ok(format!("Function{}", function.arity))
+}
+
 pub(crate) fn type_name(value: &Value, heap: &Heap, module: &str) -> Result<String, RuntimeError> {
     Ok(match value {
         Value::Null => "Null".into(),
@@ -46,7 +53,7 @@ pub(crate) fn type_name(value: &Value, heap: &Heap, module: &str) -> Result<Stri
         Value::Float(_) => "Float".into(),
         Value::String(_) => "String".into(),
         Value::Bytes(_) => "Bytes".into(),
-        Value::Function(_) => "Function".into(),
+        Value::Function(id) => function_name(*id, heap)?,
         Value::Class(_) => "Class".into(),
         Value::Object(id) => {
             if heap.get(*id)?.is_module {
@@ -171,9 +178,11 @@ impl Renderer<'_> {
                 self.append(")");
             }
             Value::Function(id) => {
-                self.heap.get(*id)?;
+                let name = function_name(*id, self.heap)?;
                 if !implicit {
-                    self.append("new Function ");
+                    self.append("new ");
+                    self.append(&name);
+                    self.append(" ");
                 }
                 self.append("{}");
             }

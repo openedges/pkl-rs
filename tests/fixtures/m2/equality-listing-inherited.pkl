@@ -1,0 +1,4 @@
+p = new Listing { missing; 3 }
+a = (p) { [0] = 2 }
+b = new Listing { 2; 3 }
+result = a == b

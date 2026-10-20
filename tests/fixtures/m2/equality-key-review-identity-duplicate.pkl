@@ -1,0 +1,1 @@
+key=new Dynamic {x=throw("unforced")}; result=let(m=new Dynamic {[key]=0;[key]=1}) 1

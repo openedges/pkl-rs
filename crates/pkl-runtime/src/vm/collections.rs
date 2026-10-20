@@ -21,18 +21,11 @@ pub(super) fn typed_class(heap: &Heap, mut id: ObjectId) -> Result<Option<Class>
     }
 }
 
-fn same_key(left: &Value, right: &Value) -> bool {
-    match (left, right) {
-        (Value::Float(a), Value::Float(b)) => {
-            a.to_bits() == b.to_bits() || (a.is_nan() && b.is_nan())
-        }
-        _ => left == right,
-    }
-}
+use super::equality::same_key;
 
-fn same_member(left: &CollectionMember, right: &CollectionMember) -> bool {
+fn same_member(heap: &Heap, left: &CollectionMember, right: &CollectionMember) -> bool {
     (left.kind == CollectionMemberKind::Property) == (right.kind == CollectionMemberKind::Property)
-        && same_key(&left.key, &right.key)
+        && same_key(heap, &left.key, &right.key)
 }
 
 /// Read declaration order without forcing member values. Overrides retain their
@@ -74,7 +67,7 @@ pub fn ordered_members(
             if member.kind == CollectionMemberKind::Property && member.name.as_ref() == "default" {
                 continue;
             }
-            if let Some(old) = result.iter_mut().find(|old| same_member(old, member)) {
+            if let Some(old) = result.iter_mut().find(|old| same_member(heap, old, member)) {
                 *old = member.clone();
             } else {
                 result.push(member.clone());
@@ -84,7 +77,10 @@ pub fn ordered_members(
     Ok(result)
 }
 
-fn forcing_members(heap: &Heap, receiver: ObjectId) -> Result<Vec<CollectionMember>, RuntimeError> {
+pub(super) fn forcing_members(
+    heap: &Heap,
+    receiver: ObjectId,
+) -> Result<Vec<CollectionMember>, RuntimeError> {
     let effective = ordered_members(heap, receiver)?;
     let mut result = Vec::new();
     let mut next = Some(receiver);
@@ -100,7 +96,7 @@ fn forcing_members(heap: &Heap, receiver: ObjectId) -> Result<Vec<CollectionMemb
             }
             if let Some(descriptor) = effective.iter().find(|d| {
                 d.name == member.name && (d.kind != CollectionMemberKind::Property) == member.entry
-            }) && !result.iter().any(|old| same_member(old, descriptor))
+            }) && !result.iter().any(|old| same_member(heap, old, descriptor))
             {
                 result.push(descriptor.clone());
             }
@@ -127,7 +123,7 @@ fn predicate_members(
         }
         let object = heap.get(owner)?;
         for descriptor in &object.collection_members {
-            if seen.iter().any(|old| same_member(old, descriptor)) {
+            if seen.iter().any(|old| same_member(heap, old, descriptor)) {
                 continue;
             }
             seen.push(descriptor.clone());
@@ -167,6 +163,46 @@ impl Vm {
         if object.collection_kind == CollectionKind::Dynamic || object.is_module {
             return Ok(false);
         }
+        if object.collection_kind == CollectionKind::Mapping && matches!(name, "length" | "isEmpty")
+        {
+            let mut chain = Vec::new();
+            let mut owner = Some(receiver);
+            while let Some(id) = owner {
+                chain.push(id);
+                owner = self.heap.get(id)?.parent;
+            }
+            let mut keys = Vec::new();
+            for id in chain.into_iter().rev() {
+                keys.extend(
+                    self.heap
+                        .get(id)?
+                        .collection_members
+                        .iter()
+                        .map(|m| m.key.clone()),
+                );
+            }
+            if self.prepare_keys(keys)? {
+                self.frames
+                    .last_mut()
+                    .expect("active frame")
+                    .equality_run
+                    .as_mut()
+                    .expect("key hash")
+                    .hide_callsite = false;
+                let frame = self.frames.last().expect("active frame");
+                if matches!(
+                    self.program
+                        .blocks
+                        .get(frame.block)
+                        .and_then(|b| b.get(frame.pc - 1)),
+                    Some(Instruction::GetMember(_) | Instruction::GetConstMember(_))
+                ) {
+                    self.stack.push(Value::Object(receiver));
+                }
+                return Ok(true);
+            }
+        }
+        let object = self.heap.get(receiver)?;
         let length = if object.collection_kind == CollectionKind::Mapping {
             ordered_members(&self.heap, receiver)?
                 .iter()
@@ -184,6 +220,30 @@ impl Vm {
         Ok(true)
     }
 
+    fn prepare_insertion(
+        &mut self,
+        key: &Value,
+        kind: CollectionMemberKind,
+    ) -> Result<bool, RuntimeError> {
+        let object = self.heap.get(self.builder()?)?;
+        if object.members.len() < 4
+            || object.collection_members.iter().any(|member| {
+                (member.kind == CollectionMemberKind::Property)
+                    == (kind == CollectionMemberKind::Property)
+                    && same_key(&self.heap, &member.key, key)
+            })
+        {
+            return Ok(false);
+        }
+        let mut keys: Vec<_> = object
+            .collection_members
+            .iter()
+            .map(|member| member.key.clone())
+            .collect();
+        keys.push(key.clone());
+        self.prepare_keys(keys)
+    }
+
     fn add_collection_member(
         &mut self,
         mut member: Member,
@@ -197,11 +257,6 @@ impl Vm {
         let parent = object.parent;
         let length = object.length;
         let key = key.unwrap_or(Value::Int(length as i64));
-        if key.heap_id().is_some() {
-            return Err(unsupported_type(
-                "object, function and class collection keys",
-            ));
-        }
         if kind != CollectionMemberKind::Property
             && let Some(class) = typed_class(&self.heap, target)?
         {
@@ -292,7 +347,7 @@ impl Vm {
         let replacing = object
             .collection_members
             .iter()
-            .position(|old| same_member(old, &descriptor));
+            .position(|old| same_member(&self.heap, old, &descriptor));
         if replacing.is_some_and(|index| {
             !(object.specialized_literal
                 && kind == CollectionMemberKind::Element
@@ -302,7 +357,12 @@ impl Vm {
                 ErrorKind::Type,
                 format!(
                     "Duplicate definition of member `{}`.",
-                    display_value(&descriptor.key)
+                    crate::diagnostic_values::render(
+                        &descriptor.key,
+                        &self.heap,
+                        &self.program.module_name,
+                        80
+                    )?
                 ),
             ));
         }
@@ -315,7 +375,7 @@ impl Vm {
                         .and_then(|members| {
                             members
                                 .into_iter()
-                                .find(|old| same_member(old, &descriptor))
+                                .find(|old| same_member(&self.heap, old, &descriptor))
                         })
                         .map(|old| old.name)
                 })
@@ -497,10 +557,19 @@ impl Vm {
                     .builders
                     .pop()
                     .ok_or_else(|| invalid("missing collection builder"))?;
-                self.stack.push(Value::Object(id));
+                let object = self.heap.get(id)?;
+                let result = if object.specialized_literal && object.members.is_empty() {
+                    object.parent.unwrap_or(id)
+                } else {
+                    id
+                };
+                self.stack.push(Value::Object(result));
             }
             Instruction::AddCollectionProperty(member) => {
                 let key = Value::String(member.name.clone());
+                if self.prepare_insertion(&key, CollectionMemberKind::Property)? {
+                    return Ok(());
+                }
                 self.add_collection_member(
                     member,
                     Some(key),
@@ -509,6 +578,15 @@ impl Vm {
                 )?;
             }
             Instruction::AddCollectionElement(member) => {
+                let object = self.heap.get(self.builder()?)?;
+                if object.collection_kind != CollectionKind::Mapping
+                    && typed_class(&self.heap, self.builder()?)?.is_none()
+                {
+                    let key = Value::Int(object.length as i64);
+                    if self.prepare_insertion(&key, CollectionMemberKind::Element)? {
+                        return Ok(());
+                    }
+                }
                 self.add_collection_member(member, None, CollectionMemberKind::Element, None)?
             }
             Instruction::AddCollectionEntry {
@@ -517,6 +595,25 @@ impl Vm {
                 span,
             } => {
                 let key = self.pop()?;
+                let target = self.builder()?;
+                if typed_class(&self.heap, target)?.is_none() && !check_index {
+                    let candidates = self
+                        .heap
+                        .get(target)?
+                        .collection_members
+                        .iter()
+                        .filter(|m| m.kind != CollectionMemberKind::Property)
+                        .map(|m| m.key.clone())
+                        .collect();
+                    if self.search_key(&key, candidates)? {
+                        self.stack.push(key);
+                        return Ok(());
+                    }
+                    if self.prepare_insertion(&key, CollectionMemberKind::Entry)? {
+                        self.stack.push(key);
+                        return Ok(());
+                    }
+                }
                 if check_index {
                     let parent = self.heap.get(self.builder()?)?.parent;
                     let length = parent
@@ -569,10 +666,26 @@ impl Vm {
                 } else {
                     receiver
                 };
-                if key.heap_id().is_some() {
-                    return Err(unsupported_type(
-                        "object, function and class collection keys",
-                    ));
+                if self.heap.get(owner)?.members.len() > 4
+                    && self.prepare_keys(vec![key.clone()])?
+                {
+                    if !is_super {
+                        self.stack.push(Value::Object(receiver));
+                    }
+                    self.stack.push(key);
+                    return Ok(());
+                }
+                let candidates = forcing_members(&self.heap, owner)?
+                    .into_iter()
+                    .filter(|m| m.kind != CollectionMemberKind::Property)
+                    .map(|m| m.key)
+                    .collect();
+                if self.search_key(&key, candidates)? {
+                    if !is_super {
+                        self.stack.push(Value::Object(receiver));
+                    }
+                    self.stack.push(key);
+                    return Ok(());
                 }
                 let object = self.heap.get(receiver)?;
                 if matches!(
@@ -592,7 +705,12 @@ impl Vm {
                                     &self.program.module_name,
                                     80
                                 )?,
-                                display_value(&key)
+                                crate::diagnostic_values::render(
+                                    &key,
+                                    &self.heap,
+                                    &self.program.module_name,
+                                    80
+                                )?
                             ),
                         ));
                     };
@@ -608,13 +726,33 @@ impl Vm {
                 }
                 let member = ordered_members(&self.heap, owner)?
                     .into_iter()
-                    .find(|m| m.kind != CollectionMemberKind::Property && same_key(&m.key, &key))
-                    .ok_or_else(|| {
-                        RuntimeError::new(
-                            ErrorKind::MissingMember,
-                            format!("Cannot find key `{}`.", display_value(&key)),
-                        )
-                    })?;
+                    .rev()
+                    .find(|m| {
+                        m.kind != CollectionMemberKind::Property
+                            && same_key(&self.heap, &m.key, &key)
+                    });
+                if member.is_none() && self.prepare_keys(vec![key.clone()])? {
+                    if !is_super {
+                        self.stack.push(Value::Object(receiver));
+                    }
+                    self.stack.push(key);
+                    return Ok(());
+                }
+                let member = member.ok_or_else(|| {
+                    RuntimeError::new(
+                        ErrorKind::MissingMember,
+                        format!(
+                            "Cannot find key `{}`.",
+                            crate::diagnostic_values::render(
+                                &key,
+                                &self.heap,
+                                &self.program.module_name,
+                                80
+                            )
+                            .unwrap_or_else(|_| display_value(&key))
+                        ),
+                    )
+                })?;
                 self.force_key(receiver, owner, member.name, false, !is_super, false, true)?;
             }
             Instruction::EntryParent => {
@@ -625,15 +763,40 @@ impl Vm {
                     .cloned()
                     .ok_or_else(|| invalid("entry parent outside member"))?;
                 let parent = self.heap.get(force.owner)?.parent;
-                if let Some(parent) = parent
-                    && ordered_members(&self.heap, parent)?.iter().any(|member| {
-                        member.name == force.name && member.kind != CollectionMemberKind::Property
-                    })
-                {
+                let key = self
+                    .heap
+                    .get(force.owner)?
+                    .collection_members
+                    .iter()
+                    .find(|m| m.name == force.name)
+                    .map(|m| m.key.clone());
+                if let (Some(parent), Some(key)) = (parent, &key) {
+                    let candidates = forcing_members(&self.heap, parent)?
+                        .into_iter()
+                        .filter(|m| m.kind != CollectionMemberKind::Property)
+                        .map(|m| m.key)
+                        .collect();
+                    if self.search_key(key, candidates)? {
+                        return Ok(());
+                    }
+                }
+                let inherited = parent
+                    .map(|parent| ordered_members(&self.heap, parent))
+                    .transpose()?
+                    .unwrap_or_default()
+                    .into_iter()
+                    .find(|member| {
+                        member.kind != CollectionMemberKind::Property
+                            && (member.name == force.name
+                                || key
+                                    .as_ref()
+                                    .is_some_and(|key| same_key(&self.heap, &member.key, key)))
+                    });
+                if let (Some(parent), Some(member)) = (parent, inherited) {
                     self.force_key(
                         force.receiver,
                         parent,
-                        force.name,
+                        member.name,
                         false,
                         false,
                         false,
@@ -799,20 +962,26 @@ impl Vm {
                 if let Some((source, member)) = forcing {
                     let caller = self.frames.len() - 1;
                     self.frames[caller].pc -= 1;
-                    self.force_key(
-                        source,
-                        source,
-                        member.name,
-                        false,
-                        true,
-                        false,
-                        member.kind != CollectionMemberKind::Property,
-                    )?;
+                    self.force_collection_member(source, member)?;
                     if self.frames.len() > caller + 1 {
                         self.frames[caller].callsite_hidden = true;
                     }
                     return Ok(());
                 }
+                let source = self
+                    .heap
+                    .get(id)?
+                    .iterator
+                    .as_ref()
+                    .expect("active iterator")
+                    .source;
+                let effective = ordered_members(&self.heap, source)?;
+                self.heap
+                    .get_mut(id)?
+                    .iterator
+                    .as_mut()
+                    .expect("active iterator")
+                    .members = effective;
                 let next = self
                     .heap
                     .get_mut(id)?
@@ -824,17 +993,9 @@ impl Vm {
                         Some((iterator.source, member))
                     });
                 if let Some((source, member)) = next {
-                    self.stack.push(member.key);
+                    self.stack.push(member.key.clone());
                     let caller = self.frames.len() - 1;
-                    self.force_key(
-                        source,
-                        source,
-                        member.name,
-                        false,
-                        true,
-                        false,
-                        member.kind != CollectionMemberKind::Property,
-                    )?;
+                    self.force_collection_member(source, member)?;
                     if self.frames.len() > caller + 1 {
                         self.frames[caller].callsite_hidden = true;
                     }
@@ -887,11 +1048,37 @@ impl Vm {
                     );
                     return Err(self.spread_error(format!("Cannot spread object containing {kind} into object of type `{type_label}`."), &member));
                 }
+                if source_member.kind == CollectionMemberKind::Entry {
+                    let candidates = self
+                        .heap
+                        .get(target)?
+                        .collection_members
+                        .iter()
+                        .filter(|m| m.kind != CollectionMemberKind::Property)
+                        .map(|m| m.key.clone())
+                        .collect();
+                    if self.search_key(&key, candidates)? {
+                        self.stack.push(key);
+                        self.stack.push(value);
+                        return Ok(());
+                    }
+                }
+                let insertion_key = if source_member.kind == CollectionMemberKind::Element {
+                    Value::Int(self.heap.get(target)?.length as i64)
+                } else {
+                    key.clone()
+                };
+                if self.prepare_insertion(&insertion_key, source_member.kind)? {
+                    self.stack.push(key);
+                    self.stack.push(value);
+                    return Ok(());
+                }
+                let object = self.heap.get(target)?;
                 if source_member.kind != CollectionMemberKind::Element
                     && object
                         .collection_members
                         .iter()
-                        .any(|m| same_member(m, &source_member))
+                        .any(|m| same_member(&self.heap, m, &source_member))
                 {
                     let label = if source_member.kind == CollectionMemberKind::Property {
                         "property"

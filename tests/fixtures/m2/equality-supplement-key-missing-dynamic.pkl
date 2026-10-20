@@ -1,0 +1,2 @@
+values = new Mapping { [new Dynamic { x = 1 }] = 42 }
+result = values[new Dynamic { x = 2 }]

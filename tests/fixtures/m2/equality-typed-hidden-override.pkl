@@ -1,0 +1,4 @@
+open class C { x = 1; hidden h = missing }
+a = new C { h = 1 ~/ 0 }
+b = new C {}
+result = a == b

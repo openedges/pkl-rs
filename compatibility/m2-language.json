@@ -13076,6 +13076,4119 @@
       ]
     },
     {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-dynamic-equal",
+      "input": "tests/fixtures/m2/equality-dynamic-equal.pkl",
+      "input_sha256": "4ae33c0be9cf4d331406f8ad1ee0c7fbd62352778b9a9535b1cdb436c0f4c08a",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-dynamic-nested-mixed",
+      "input": "tests/fixtures/m2/equality-dynamic-nested-mixed.pkl",
+      "input_sha256": "b0b1eb095d7f479e7334477786b38a216670f194127a09c0c1b55490e2d2324d",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-dynamic-unequal",
+      "input": "tests/fixtures/m2/equality-dynamic-unequal.pkl",
+      "input_sha256": "fef587c9235e1a69a43992bf6a0c2d887ed14bb6cb70d0c55ffa5f7b481f7e3e",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-dynamic-identity",
+      "input": "tests/fixtures/m2/equality-dynamic-identity.pkl",
+      "input_sha256": "2bb54c5379f7de05d9320f5aa9fbc599b7e548384b24cd2009fabf5a9783c16c",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-listing-equal",
+      "input": "tests/fixtures/m2/equality-listing-equal.pkl",
+      "input_sha256": "a2a974f5f01e20e484dfbfc67f33308d13e5ae44209ec1186f81b38f1dc0a775",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-listing-nested-mixed",
+      "input": "tests/fixtures/m2/equality-listing-nested-mixed.pkl",
+      "input_sha256": "ba4827d8603304834b9f4115a0f2122f81253d2c632030905c57721f574ebf0f",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-listing-unequal",
+      "input": "tests/fixtures/m2/equality-listing-unequal.pkl",
+      "input_sha256": "21803fe385fa08fddf3d1a29749caee0d4a7e149c86c94e0b198d669681f4ecc",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-listing-identity",
+      "input": "tests/fixtures/m2/equality-listing-identity.pkl",
+      "input_sha256": "9268de39d5d6293ccf30822de40c75fadac1cd3ff7be7c92f1d167ceeab41171",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-mapping-equal",
+      "input": "tests/fixtures/m2/equality-mapping-equal.pkl",
+      "input_sha256": "ee8bb1e06ed37c6a331a309c092f0874fe7a95d5787a654a636da30e5ff1aa47",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-mapping-nested-mixed",
+      "input": "tests/fixtures/m2/equality-mapping-nested-mixed.pkl",
+      "input_sha256": "839ffd6f1f0e0e078d376ddfc6d596ae6eef3ad39bffd8e702dd72ea1f06725c",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-mapping-unequal",
+      "input": "tests/fixtures/m2/equality-mapping-unequal.pkl",
+      "input_sha256": "f07e34fc30f218e94384b7d2ee6cfec396a6dfeeb05b66c2d30eb47a0fcf83d7",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-mapping-identity",
+      "input": "tests/fixtures/m2/equality-mapping-identity.pkl",
+      "input_sha256": "6386308327d8e5cc67e47a21ce54347a7f910876fc9dbbd3232cbc234f3b0dc9",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-list-equal",
+      "input": "tests/fixtures/m2/equality-list-equal.pkl",
+      "input_sha256": "c353a038880489e4394ae893eaf1cf9c1aece34ce6718c5a796052db6c16b616",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-list-nested-mixed",
+      "input": "tests/fixtures/m2/equality-list-nested-mixed.pkl",
+      "input_sha256": "e984261bab551c26039168b173b8089ef1fce7e78a3a8fd2f7b80a07c6abc387",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-list-unequal",
+      "input": "tests/fixtures/m2/equality-list-unequal.pkl",
+      "input_sha256": "22d0462526e28bd9ff985ff3e50e564665af0a08f3dd0c0a2ffccd0f9ffb6288",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-list-identity",
+      "input": "tests/fixtures/m2/equality-list-identity.pkl",
+      "input_sha256": "850d63ba0f1bac90bd1247309caaeda691bcbe9ed5b1a32746c3607bb7b4817e",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-typed-equal",
+      "input": "tests/fixtures/m2/equality-typed-equal.pkl",
+      "input_sha256": "84efd95e8422fe1571a6c67f80a0953332a15156a8f4564c61242f8d9f4eed4f",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:classes"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-typed-nested-mixed",
+      "input": "tests/fixtures/m2/equality-typed-nested-mixed.pkl",
+      "input_sha256": "82ff2e1f6a8a55b2fc4a081053f495b4d717677a5cdf8605facb19ab7eebb3f0",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:classes",
+        "semantic:numeric-literals"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-typed-unequal",
+      "input": "tests/fixtures/m2/equality-typed-unequal.pkl",
+      "input_sha256": "039b280f8e3e704251940261af7dc30632bba36fd0327e6bf0a680d1f6bbeebb",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:classes"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-typed-identity",
+      "input": "tests/fixtures/m2/equality-typed-identity.pkl",
+      "input_sha256": "264264cfb1b98239a38667be5999c35736f5521e31f989e7ef9f8d9f9bbe118e",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:classes"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-dynamic-nan",
+      "input": "tests/fixtures/m2/equality-dynamic-nan.pkl",
+      "input_sha256": "54dba050afd62cd33107199dbf5d51d396fe28c8bbaafe3b8a2d027da8edb0c8",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:numeric-literals"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-dynamic-signed-zero",
+      "input": "tests/fixtures/m2/equality-dynamic-signed-zero.pkl",
+      "input_sha256": "40f1c8f941f75273af426ff6d5144cb539438377caaf0a54f880fffa28a6d271",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:numeric-literals"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-dynamic-recursive",
+      "input": "tests/fixtures/m2/equality-dynamic-recursive.pkl",
+      "input_sha256": "885a788f5d3b25b0c6e5d6e9605300fae22067a2a67704ed5dba1a2401b32b2a",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-listing-nan",
+      "input": "tests/fixtures/m2/equality-listing-nan.pkl",
+      "input_sha256": "4f27f2dcb16c8e81fe42890528e55eb49c027208017b24bb31b45855b1aaa631",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:numeric-literals"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-listing-signed-zero",
+      "input": "tests/fixtures/m2/equality-listing-signed-zero.pkl",
+      "input_sha256": "0605ed123732a464d7ec022d905eb1a1769d658de75d731f2eecd2211cd4a837",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:numeric-literals"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-listing-recursive",
+      "input": "tests/fixtures/m2/equality-listing-recursive.pkl",
+      "input_sha256": "8bd6d8b2a4fb6659cbcaba3983bf80db0780de48bac8725e084f10b6808ca279",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-mapping-nan",
+      "input": "tests/fixtures/m2/equality-mapping-nan.pkl",
+      "input_sha256": "3914d300821cdacb36444a89dbb12f3e8de55cbc9e29a75eedb61d627a8d9107",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:numeric-literals"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-mapping-signed-zero",
+      "input": "tests/fixtures/m2/equality-mapping-signed-zero.pkl",
+      "input_sha256": "9b3522385ca67e9fb63665e04335d1a9c9a266556f26ee4028d2f4a75e40d31f",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:numeric-literals"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-mapping-recursive",
+      "input": "tests/fixtures/m2/equality-mapping-recursive.pkl",
+      "input_sha256": "8539d51fc3f4b6addad8034009878d1dd1578b76f1bf9fbd521eccf6d1967782",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-list-nan",
+      "input": "tests/fixtures/m2/equality-list-nan.pkl",
+      "input_sha256": "c5ea0303123009a1d8cc742d169a5cfec041c6ff00e69a5c51d654636ace8fb1",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:numeric-literals"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-list-signed-zero",
+      "input": "tests/fixtures/m2/equality-list-signed-zero.pkl",
+      "input_sha256": "5f7ad827e0e30ca4a3570d232ca25032b810b89c6e6610001a923f82eb044254",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:numeric-literals"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-list-recursive",
+      "input": "tests/fixtures/m2/equality-list-recursive.pkl",
+      "input_sha256": "b564305a2f9c5ac758e6d0a7fc21ea6a12c6959251910820b0e30c9bc6e33c91",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-typed-nan",
+      "input": "tests/fixtures/m2/equality-typed-nan.pkl",
+      "input_sha256": "dddbd1bff0d160206233fc44d9b1ba38ba6f14a502f2f207295db2cdb39bf59f",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:classes",
+        "semantic:numeric-literals"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-typed-signed-zero",
+      "input": "tests/fixtures/m2/equality-typed-signed-zero.pkl",
+      "input_sha256": "5afd8d1578b86cf5cfe7fb4cb1aa778654eb3456d5277a97ec60cf7e03c8549d",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:classes",
+        "semantic:numeric-literals"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-typed-recursive",
+      "input": "tests/fixtures/m2/equality-typed-recursive.pkl",
+      "input_sha256": "caad227baf157879c146a2e22a701ccad2b152d9e389ef499234e3c58446bc2b",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:classes"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-semantic-number-mixed",
+      "input": "tests/fixtures/m2/equality-semantic-number-mixed.pkl",
+      "input_sha256": "1f8bbc3118c0802f57d9bb52d848eaec41d959c9355d2512386f35eb31d66d25",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:numeric-literals"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-semantic-number-nan",
+      "input": "tests/fixtures/m2/equality-semantic-number-nan.pkl",
+      "input_sha256": "24f8fc083a76d8d6990d313579be502eac5ce430ce13d17a9bb9d9d403260f34",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:numeric-literals"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-semantic-number-signed-zero",
+      "input": "tests/fixtures/m2/equality-semantic-number-signed-zero.pkl",
+      "input_sha256": "71853ceca470073467ee76dd4ce88a7d6f0ae3bcfc1a6faeb6da1a9b92e22853",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:numeric-literals"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-kind-dynamic-listing",
+      "input": "tests/fixtures/m2/equality-kind-dynamic-listing.pkl",
+      "input_sha256": "373189f9ff2fec7e4d8bcab2f73d7e699de8a3a880af0126a441649bc17089c4",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-kind-dynamic-mapping",
+      "input": "tests/fixtures/m2/equality-kind-dynamic-mapping.pkl",
+      "input_sha256": "b692abe3ceeb86ba4d01ddf5ff514dd7eade307be5794720fe90fcffa5e53661",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-kind-listing-list",
+      "input": "tests/fixtures/m2/equality-kind-listing-list.pkl",
+      "input_sha256": "fa0a96310b79a215b86e2b7e51e5cdd880b56d48c8b657fdbe87d594cf87e4f1",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-kind-dynamic-typed",
+      "input": "tests/fixtures/m2/equality-kind-dynamic-typed.pkl",
+      "input_sha256": "aeffe82b9e3b2d58819ab8f98dc5887e468d13e5c0294a3bfbe72b7ec375d580",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:classes"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-dynamic-property-entry",
+      "input": "tests/fixtures/m2/equality-dynamic-property-entry.pkl",
+      "input_sha256": "a6d9d9cd3646378e29d5478e089f5997105238aa03db70dd3e76e3e280ddd835",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-dynamic-element-entry",
+      "input": "tests/fixtures/m2/equality-dynamic-element-entry.pkl",
+      "input_sha256": "aee40ea5e2ab6c3546696f38677e9168fff8ad3635872b3941f71b696de8c949",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-dynamic-local",
+      "input": "tests/fixtures/m2/equality-dynamic-local.pkl",
+      "input_sha256": "d816d5e0990eba8edb4c65b7118c6ff6735f6d1f37e2f85cf5fbd1e9cde442a6",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:modifiers"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-dynamic-method",
+      "input": "tests/fixtures/m2/equality-dynamic-method.pkl",
+      "input_sha256": "05ca3033608dc4677f69d76ec19a95753f8903fc474a1614ac539930c7764db7",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:functions",
+        "semantic:closures",
+        "semantic:modifiers"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-listing-default",
+      "input": "tests/fixtures/m2/equality-listing-default.pkl",
+      "input_sha256": "0fbe73d96e9a542c4f7307fcb30c6d684453447d23ef238a3b53ebce95be848f",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:modifiers"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-mapping-default",
+      "input": "tests/fixtures/m2/equality-mapping-default.pkl",
+      "input_sha256": "76a87a577f62a46ce6b4ef03dd23cf78a9b625049533c7c39328b6d0f3e1008a",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:modifiers"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-typed-hidden",
+      "input": "tests/fixtures/m2/equality-typed-hidden.pkl",
+      "input_sha256": "83ef1b5d4fde0ea1d42291ae1870a479ac1ea916f59cb332b0fa5563a0f52a6e",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:classes",
+        "semantic:modifiers"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-typed-class-distinct",
+      "input": "tests/fixtures/m2/equality-typed-class-distinct.pkl",
+      "input_sha256": "d547f1474b2b721becedb6e5db1dab4692212cc64649435d37c42ec8039de3a8",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:classes"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-typed-class-child",
+      "input": "tests/fixtures/m2/equality-typed-class-child.pkl",
+      "input_sha256": "7eefa1b324cbcb7782852f72d6911133f6e0a3a8a14a21f2898951a7dcec995e",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:classes"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-class-self",
+      "input": "tests/fixtures/m2/equality-class-self.pkl",
+      "input_sha256": "893941139845d60f055304dedcc85c0e92f34aee2333f3d5b6cdf884cd5b0e32",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:classes"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-class-distinct",
+      "input": "tests/fixtures/m2/equality-class-distinct.pkl",
+      "input_sha256": "16444c1f83f66928f3620f543fb9cd36fe2ce0eb25b534ffba5d07d2750ca05f",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:classes"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-function-distinct",
+      "input": "tests/fixtures/m2/equality-function-distinct.pkl",
+      "input_sha256": "7220828a0aa96a9ced58cf50124a1639c3f3e48dded0f8baefb188be8280a9fe",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:functions",
+        "semantic:closures"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-function-same",
+      "input": "tests/fixtures/m2/equality-function-same.pkl",
+      "input_sha256": "77458a4d9726b57b32f62d0bf603734032b0fca430481b5ba57bedc66e80db4d",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:functions",
+        "semantic:closures"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-dynamic-self-unforced",
+      "input": "tests/fixtures/m2/equality-dynamic-self-unforced.pkl",
+      "input_sha256": "fc51a0e93213dbad13bee44a67696b147eb08001f3d5a5faa4b6bb875e286e61",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-dynamic-other-kind-unforced",
+      "input": "tests/fixtures/m2/equality-dynamic-other-kind-unforced.pkl",
+      "input_sha256": "ac4872a509713e89ed8f57a7e7b79836579d06f450ab0ac9907bfb19d1cb3efe",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "equality-dynamic-length-before-force",
+      "input": "tests/fixtures/m2/equality-dynamic-length-before-force.pkl",
+      "input_sha256": "352183054a57e2a073f3f98bb82169ddc6d29dd5d319122ffb8dd992254e2277",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "equality-dynamic-deep-before-mismatch",
+      "input": "tests/fixtures/m2/equality-dynamic-deep-before-mismatch.pkl",
+      "input_sha256": "bf9a6d148f3fca3e187326ab18ac0a3fd8459f4303de712d2039ccef74e04e03",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "equality-dynamic-left-before-right",
+      "input": "tests/fixtures/m2/equality-dynamic-left-before-right.pkl",
+      "input_sha256": "93f2f09f16286cf0e0daaf28ab4b21d9a473c0c690a9e6537af3c4c0430b715c",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-listing-self-unforced",
+      "input": "tests/fixtures/m2/equality-listing-self-unforced.pkl",
+      "input_sha256": "bb98ca1888e9f1dd82370cf76ed91b6c00cc6e3c36a5d293a6f6301fc013ffdb",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-listing-other-kind-unforced",
+      "input": "tests/fixtures/m2/equality-listing-other-kind-unforced.pkl",
+      "input_sha256": "0c61278468893a4cb54ce7417da000b5aabbcf00ab1b09f9df40ec92380cd77b",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-listing-length-before-force",
+      "input": "tests/fixtures/m2/equality-listing-length-before-force.pkl",
+      "input_sha256": "2d6d6e1f1939a0c0488c86d6eb1d3e049b892d01eca34b96a15f1bce994d4a83",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "equality-listing-deep-before-mismatch",
+      "input": "tests/fixtures/m2/equality-listing-deep-before-mismatch.pkl",
+      "input_sha256": "12314168ceec6271cb70127efc2a432ef9be716b3bcebe9a8920ea69bfd97287",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "equality-listing-left-before-right",
+      "input": "tests/fixtures/m2/equality-listing-left-before-right.pkl",
+      "input_sha256": "f544b9872a486165bec5aef9af0f76ed422de10a79feda0528054661e188a5db",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-mapping-self-unforced",
+      "input": "tests/fixtures/m2/equality-mapping-self-unforced.pkl",
+      "input_sha256": "d22e18f0b1f30daeb55a01a8cbbcbdfbab48887f134f2e0ad91d459666c9f8da",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-mapping-other-kind-unforced",
+      "input": "tests/fixtures/m2/equality-mapping-other-kind-unforced.pkl",
+      "input_sha256": "1c2bac875a88c8aeb17a881634995325e16650f2daacfc72b30d79d69b162b7b",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "equality-mapping-length-before-force",
+      "input": "tests/fixtures/m2/equality-mapping-length-before-force.pkl",
+      "input_sha256": "271ca68df57d3a00d48ec008692782b5a2f54ea1d1bbff210d5412f45c723c3e",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "equality-mapping-deep-before-mismatch",
+      "input": "tests/fixtures/m2/equality-mapping-deep-before-mismatch.pkl",
+      "input_sha256": "6442e4c9e471a53af7ddd096676b43e6ca942ebda0bc88465dce37b94ea1de9b",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "equality-mapping-left-before-right",
+      "input": "tests/fixtures/m2/equality-mapping-left-before-right.pkl",
+      "input_sha256": "ee2aac3623381e631d61b232be4116efe94e87890d63060af1353482f32e1439",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-dynamic-inherited",
+      "input": "tests/fixtures/m2/equality-dynamic-inherited.pkl",
+      "input_sha256": "a4271a7272b1ae7aacd2415acb436a7262f93c3986d2fc6893f16163b0329412",
+      "metamorphic_relation": {
+        "case_ids": [
+          "equality-dynamic-inherited",
+          "equality-dynamic-inherited-direct"
+        ],
+        "domain": "Overriding inherited x=missing with x=2 and retaining y=3 equals constructing fixed Dynamic { x=2; y=3 }.",
+        "kind": "equal-stdout"
+      },
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:amendment",
+        "semantic:name-resolution",
+        "semantic:generated-verification"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-listing-inherited",
+      "input": "tests/fixtures/m2/equality-listing-inherited.pkl",
+      "input_sha256": "6a6111a526c847e19069daf872facabe1cbe54ccb965f3d5c3593d183871460d",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:amendment",
+        "semantic:name-resolution"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-mapping-inherited",
+      "input": "tests/fixtures/m2/equality-mapping-inherited.pkl",
+      "input_sha256": "a2f9f95470f8f18d74e11ad0efc817e23502b36db5e393af31c769a60d2d2816",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:amendment",
+        "semantic:name-resolution"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-key-dynamic-lookup",
+      "input": "tests/fixtures/m2/equality-key-dynamic-lookup.pkl",
+      "input_sha256": "06f552265efcf6debbc9ea51d617c739c857bcc13b6942d6ad171975dd1987ae",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "equality-key-dynamic-duplicate",
+      "input": "tests/fixtures/m2/equality-key-dynamic-duplicate.pkl",
+      "input_sha256": "f6254c7604ac1d5729330425900abc70d08439d3269dc000f3bee40d0afdd3a0",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-key-listing-lookup",
+      "input": "tests/fixtures/m2/equality-key-listing-lookup.pkl",
+      "input_sha256": "1a13091b639705402e25e643cac1a377b4d159c382a9ab3119254620d4330753",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "equality-key-listing-duplicate",
+      "input": "tests/fixtures/m2/equality-key-listing-duplicate.pkl",
+      "input_sha256": "9edba33b619264844927f6f995c067989fca8e29fc5d47fcc205781176a780ab",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-key-mapping-lookup",
+      "input": "tests/fixtures/m2/equality-key-mapping-lookup.pkl",
+      "input_sha256": "037603e4a449861a334d5ecccd00b8a585d4fe187840086ea2aab05915e3316b",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "equality-key-mapping-duplicate",
+      "input": "tests/fixtures/m2/equality-key-mapping-duplicate.pkl",
+      "input_sha256": "18dca927c3a369e4c97943ae710ec5a2061fc711e1b34242834ef35132c143c3",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-key-list-lookup",
+      "input": "tests/fixtures/m2/equality-key-list-lookup.pkl",
+      "input_sha256": "667298efbbbea5b19162d048e45523921eef5078a3a438d4c1087e2e249eb689",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "equality-key-list-duplicate",
+      "input": "tests/fixtures/m2/equality-key-list-duplicate.pkl",
+      "input_sha256": "f59818672424f8b9ce3bb43d6bdaedb447a31d07fa680d213ff4528550e15c37",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-key-typed-lookup",
+      "input": "tests/fixtures/m2/equality-key-typed-lookup.pkl",
+      "input_sha256": "1634c7a99b1d20fc2ba481a200f2ff24a518281f67dc9de4acb0a4afe7684c08",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:classes"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "equality-key-typed-duplicate",
+      "input": "tests/fixtures/m2/equality-key-typed-duplicate.pkl",
+      "input_sha256": "99a791aa8e1d880a7668dbd72a46baa675a6024e8a2d28a7fda11b3c1fe8f4d0",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:classes",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-key-function-lookup",
+      "input": "tests/fixtures/m2/equality-key-function-lookup.pkl",
+      "input_sha256": "96cd6e22d27aa4164208f9a69c8b32d190615441de17b76485e75649005e0bc1",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:functions",
+        "semantic:closures"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "equality-key-function-duplicate",
+      "input": "tests/fixtures/m2/equality-key-function-duplicate.pkl",
+      "input_sha256": "0f0d219f6c5d92287030ed064ccb2cb6ab5e6c5311dde2010d94c573ed9d7cf5",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:functions",
+        "semantic:closures",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-key-class-lookup",
+      "input": "tests/fixtures/m2/equality-key-class-lookup.pkl",
+      "input_sha256": "7563929677b4bcee7b52437b6e1f75d57bcc54eb38cf39b6ed1ece79696a3e03",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:classes"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "equality-key-class-duplicate",
+      "input": "tests/fixtures/m2/equality-key-class-duplicate.pkl",
+      "input_sha256": "397882d81fce13ac429fc558fa5e863a6cb797fe8ab2edd442c29a6b1c1756a3",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:classes",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-key-nested-nan",
+      "input": "tests/fixtures/m2/equality-key-nested-nan.pkl",
+      "input_sha256": "1ccd9f935256f97f81c4a9445447fd76045d1d779346d539c6873063e9af94e6",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-key-nested-mixed-distinct",
+      "input": "tests/fixtures/m2/equality-key-nested-mixed-distinct.pkl",
+      "input_sha256": "e6101e0d0581a287c70573cd347719a3281c4cc4cd4015aefd8f558d33c84980",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-key-nested-zero-distinct",
+      "input": "tests/fixtures/m2/equality-key-nested-zero-distinct.pkl",
+      "input_sha256": "5028a73da80b12171d7e55bb1defac00ea2112c897314f00fa5386ba8767174e",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-key-dynamic-property-entry-distinct",
+      "input": "tests/fixtures/m2/equality-key-dynamic-property-entry-distinct.pkl",
+      "input_sha256": "af0d1f4238d0fbaee138ef0940e9751b62d466604be88497cee1058124a20fed",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-key-order-independent",
+      "input": "tests/fixtures/m2/equality-key-order-independent.pkl",
+      "input_sha256": "966b022c49109afa7a64dcadaee82ce93b8313ca0ede11650f6a367d32ba91ad",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "equality-key-forces-deep",
+      "input": "tests/fixtures/m2/equality-key-forces-deep.pkl",
+      "input_sha256": "c8737e0748fa86b85e116d8878597f7800c84bfa929abaf2f5efddf5b7816bde",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "equality-key-before-value",
+      "input": "tests/fixtures/m2/equality-key-before-value.pkl",
+      "input_sha256": "562eb534d16a69873d29315b036e8e80be2cbca71853c39d36f373f5feccf6b7",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-key-amend-replace",
+      "input": "tests/fixtures/m2/equality-key-amend-replace.pkl",
+      "input_sha256": "8502d6ef6d0ad52ab86922b379bf1bc3f4d4479e33229878c27dd4daa922839f",
+      "metamorphic_relation": {
+        "case_ids": [
+          "equality-key-amend-replace",
+          "equality-key-amend-replace-direct"
+        ],
+        "domain": "Replacing an inherited entry keyed by fixed Dynamic { x = 1 } equals constructing that entry with value 42.",
+        "kind": "equal-stdout"
+      },
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:amendment",
+        "semantic:name-resolution",
+        "semantic:generated-verification"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-key-amend-body",
+      "input": "tests/fixtures/m2/equality-key-amend-body.pkl",
+      "input_sha256": "6a6347913ba342d780caba64c596ab66b12ad29fe3c063507558dbeaca9ba1f5",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:amendment",
+        "semantic:name-resolution"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "equality-key-generator-duplicate",
+      "input": "tests/fixtures/m2/equality-key-generator-duplicate.pkl",
+      "input_sha256": "bc5d78ccb7259e3cfb3606552cf897a917d1b70047596801be33d62a1e9dd15d",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:generators",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "equality-key-spread-duplicate",
+      "input": "tests/fixtures/m2/equality-key-spread-duplicate.pkl",
+      "input_sha256": "12250e2d89fb5403de42e0434c4e084546d71a9727bb3b75d8fdd0a6b0c76dda",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:generators",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-key-predicate-replace",
+      "input": "tests/fixtures/m2/equality-key-predicate-replace.pkl",
+      "input_sha256": "07c0403374999fe67efe8d06f3448d36199b85a1e2e388d91de178558a4a0675",
+      "metamorphic_relation": {
+        "case_ids": [
+          "equality-key-predicate-replace",
+          "equality-key-predicate-replace-direct"
+        ],
+        "domain": "Selecting the one inherited value 1 and replacing it with 42 preserves lookup by structural List(1).",
+        "kind": "equal-stdout"
+      },
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:amendment",
+        "semantic:name-resolution",
+        "semantic:generators",
+        "semantic:generated-verification"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-key-function-distinct",
+      "input": "tests/fixtures/m2/equality-key-function-distinct.pkl",
+      "input_sha256": "a60cc7e55f15d652d2f9181182744d6f69f97c0e2088c3c6390afbf7a00d01d2",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:functions",
+        "semantic:closures"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-key-class-distinct",
+      "input": "tests/fixtures/m2/equality-key-class-distinct.pkl",
+      "input_sha256": "8c06ab7247bb35154b963854368fb274073b05fd08efe857727a78abf28d0cc3",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:classes"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-listing-wrapper-equal",
+      "input": "tests/fixtures/m2/equality-listing-wrapper-equal.pkl",
+      "input_sha256": "e72b5bd1d93daee42bd9abba9e82dae892f0095b7ad5c1b374ea58e24600fa6e",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:types",
+        "semantic:generics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "equality-listing-wrapper-force-bad",
+      "input": "tests/fixtures/m2/equality-listing-wrapper-force-bad.pkl",
+      "input_sha256": "041ddf1ce52ef454e08f9ee9a90806032cda75c2362f75007ba1d7e78941ba32",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-mapping-wrapper-equal",
+      "input": "tests/fixtures/m2/equality-mapping-wrapper-equal.pkl",
+      "input_sha256": "a027eeb9430ecd76e49edd6cf016fb2b3d5da11f9ba126b5f1c4225b8b37b070",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:types",
+        "semantic:generics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-key-wrapper-listing",
+      "input": "tests/fixtures/m2/equality-key-wrapper-listing.pkl",
+      "input_sha256": "1d4dc599b22893b19de9ceceae59fd723d78d4e51af6d828decc37d7f1d33b2c",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:types",
+        "semantic:generics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "equality-key-wrapper-listing-bad",
+      "input": "tests/fixtures/m2/equality-key-wrapper-listing-bad.pkl",
+      "input_sha256": "39fca1989214e006cdf376a00d34e2e373d1df03bc7d2c8e05200cb375714f74",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "equality-power-equal-false",
+      "input": "tests/fixtures/m2/equality-power-equal-false.pkl",
+      "input_sha256": "82f1d3981e589a4ce2969ef25a8c7ae191b615f7a78a39228497eb670a635937",
+      "power_assertions": true,
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:constraints",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "equality-power-equal-object-false",
+      "input": "tests/fixtures/m2/equality-power-equal-object-false.pkl",
+      "input_sha256": "7777c039322230691798c2ee2587d32bc58bf6aee0a7fe82754641871be6e497",
+      "power_assertions": true,
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:constraints",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "equality-power-key-missing",
+      "input": "tests/fixtures/m2/equality-power-key-missing.pkl",
+      "input_sha256": "95b8a2d9a15158254efd2455445673f053ff3c236f9727776c3767575b12ca38",
+      "power_assertions": true,
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:constraints",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-dynamic-default-throws",
+      "input": "tests/fixtures/m2/equality-dynamic-default-throws.pkl",
+      "input_sha256": "8c84e383a24ca66e2aab75292896ec34371965b933ad3061ea893260129ea438",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-dynamic-key-default-throws",
+      "input": "tests/fixtures/m2/equality-dynamic-key-default-throws.pkl",
+      "input_sha256": "ad40a5aecffcb9d2cc8523a125a03964e73221df22e17864aaea7ee354acf6d1",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-listing-default-throws",
+      "input": "tests/fixtures/m2/equality-listing-default-throws.pkl",
+      "input_sha256": "2f6463df2388f670d85c737c49ea687df286f53afa898dc89f57702d48a16564",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-listing-key-default-throws",
+      "input": "tests/fixtures/m2/equality-listing-key-default-throws.pkl",
+      "input_sha256": "249f1e117ccd4ccf094111d9069a3cad30f307026a07b638bb242a4da5197a3b",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-mapping-default-throws",
+      "input": "tests/fixtures/m2/equality-mapping-default-throws.pkl",
+      "input_sha256": "03ef24347e25ee84b0d8e000b3f663881557c6d471277fc5bffa7fa42b6bd402",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-mapping-key-default-throws",
+      "input": "tests/fixtures/m2/equality-mapping-key-default-throws.pkl",
+      "input_sha256": "035acc9b14fad6ee3f4f47fe11ea05d3a9f199cc857120a765cd400383d3a38c",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-typed-hidden-override",
+      "input": "tests/fixtures/m2/equality-typed-hidden-override.pkl",
+      "input_sha256": "305a6debceb87788fd19299ab9c5a0e5b9df819b598198c3e4ef98b571271d75",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:classes",
+        "semantic:modifiers"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-list-skips-unmatched-tail",
+      "input": "tests/fixtures/m2/equality-list-skips-unmatched-tail.pkl",
+      "input_sha256": "6832cfdea21c3c54596ed524f3cded33a63dcb4c88b1fd011bc7fe9871b3d8ca",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-list-length-before-force",
+      "input": "tests/fixtures/m2/equality-list-length-before-force.pkl",
+      "input_sha256": "50d554b15f0b4d288707ac609b861739f47eb3bfbf99ee8fb3ffbf2827c3b0b3",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-typed-self-unforced",
+      "input": "tests/fixtures/m2/equality-typed-self-unforced.pkl",
+      "input_sha256": "d440b18d0b0833c6877efbb409157f7fe9dacdcd859a50bfcfce7c7dd9024709",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:classes"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "equality-typed-first-deep-before-mismatch",
+      "input": "tests/fixtures/m2/equality-typed-first-deep-before-mismatch.pkl",
+      "input_sha256": "87e4dfe586411bbe84dcabb2fd21291e4a17e9c0e9e589178ba14749f1b83eae",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:classes",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "equality-dynamic-right-before-count",
+      "input": "tests/fixtures/m2/equality-dynamic-right-before-count.pkl",
+      "input_sha256": "ea1388e4159c49f306e5974830006f8f53efa14375dd57b76734e9e56978a0c2",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "equality-mapping-right-before-count",
+      "input": "tests/fixtures/m2/equality-mapping-right-before-count.pkl",
+      "input_sha256": "5ca6fee63a84caeb7de31b7696232a0b1ae0d481754f558f3286498e20392695",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "equality-dynamic-right-before-mismatch",
+      "input": "tests/fixtures/m2/equality-dynamic-right-before-mismatch.pkl",
+      "input_sha256": "b981b094e4d0864463fd563f1ea936c7783d4823ef079464ef908ac0167c2bbc",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "equality-mapping-right-before-mismatch",
+      "input": "tests/fixtures/m2/equality-mapping-right-before-mismatch.pkl",
+      "input_sha256": "1ebd93d4a690451fc7259d9a83e46d58a5de769421c89c8cef7391c3032b90fe",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-typed-inherited-properties",
+      "input": "tests/fixtures/m2/equality-typed-inherited-properties.pkl",
+      "input_sha256": "e8103b08c36b98587a199e10afef09b98e811edfa5688aab2ab0b4fdd1dac646",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:classes",
+        "semantic:amendment",
+        "semantic:name-resolution"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-key-dynamic-local",
+      "input": "tests/fixtures/m2/equality-key-dynamic-local.pkl",
+      "input_sha256": "3b20e729b61d20c173748922bac5436b5d58bf94c2f8c3eca4da9fb761145804",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:modifiers"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-key-typed-hidden",
+      "input": "tests/fixtures/m2/equality-key-typed-hidden.pkl",
+      "input_sha256": "1ec3c5f542f80c8832d015d9d5a03a424d780e93afb139c8a62de916347433b0",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:classes",
+        "semantic:modifiers"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-key-mapping-wrapper",
+      "input": "tests/fixtures/m2/equality-key-mapping-wrapper.pkl",
+      "input_sha256": "7890ca778c28566718b1d71cbf76aa96602ad5c50602ca5deba1ecc549a08542",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:types",
+        "semantic:generics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "equality-key-mapping-wrapper-bad",
+      "input": "tests/fixtures/m2/equality-key-mapping-wrapper-bad.pkl",
+      "input_sha256": "45a0cca2addc16defcf065bfd766d3ba0c51abd00be822feead5d2ab8a786522",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-key-dynamic-container",
+      "input": "tests/fixtures/m2/equality-key-dynamic-container.pkl",
+      "input_sha256": "16a72f089f6240bfca04202713e689c22ae3c7e354d02994ee4cf881a6820e45",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "equality-key-dynamic-container-duplicate",
+      "input": "tests/fixtures/m2/equality-key-dynamic-container-duplicate.pkl",
+      "input_sha256": "e0d2a78fd04d9a89513e423a897206e9684dde13f1362baf35e2607651d0c691",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-key-typed-class-distinct",
+      "input": "tests/fixtures/m2/equality-key-typed-class-distinct.pkl",
+      "input_sha256": "79180997a4fd493eedb592d2de3a1050ab8dc8b439897efc94e9f1337d0473a8",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:classes"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "equality-key-nested-nan-duplicate",
+      "input": "tests/fixtures/m2/equality-key-nested-nan-duplicate.pkl",
+      "input_sha256": "c8cb6fbcdb9030a6d7f737ef71c1b3571d45d6949a05aaaeb39b50933b51de39",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-key-hash-reordered-typed",
+      "input": "tests/fixtures/m2/equality-key-hash-reordered-typed.pkl",
+      "input_sha256": "3061aec8a6f5ce2a82e51149df8f4be9659906a8f2fbbaa6267dcff6ebcb901f",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:classes"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "equality-power-key-duplicate",
+      "input": "tests/fixtures/m2/equality-power-key-duplicate.pkl",
+      "input_sha256": "5774a4d43099f2e4b9022c8269b0e09dcae178296aba19926832afff1e3b203e",
+      "power_assertions": true,
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:constraints",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "equality-power-wrapper-force",
+      "input": "tests/fixtures/m2/equality-power-wrapper-force.pkl",
+      "input_sha256": "041ddf1ce52ef454e08f9ee9a90806032cda75c2362f75007ba1d7e78941ba32",
+      "power_assertions": true,
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:constraints",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-key-amend-replace-direct",
+      "input": "tests/fixtures/m2/equality-key-amend-replace-direct.pkl",
+      "input_sha256": "b3dbd592f2de51642d5b8b98c34319066ef5752d608232c2f5da2431540eaeca",
+      "metamorphic_relation": {
+        "case_ids": [
+          "equality-key-amend-replace",
+          "equality-key-amend-replace-direct"
+        ],
+        "domain": "Replacing an inherited entry keyed by fixed Dynamic { x = 1 } equals constructing that entry with value 42.",
+        "kind": "equal-stdout"
+      },
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:amendment",
+        "semantic:name-resolution",
+        "semantic:generated-verification"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-key-predicate-replace-direct",
+      "input": "tests/fixtures/m2/equality-key-predicate-replace-direct.pkl",
+      "input_sha256": "3a971661765861ef1c0a9de1fce28d34426ca959c3725026c773e316da8af91f",
+      "metamorphic_relation": {
+        "case_ids": [
+          "equality-key-predicate-replace",
+          "equality-key-predicate-replace-direct"
+        ],
+        "domain": "Selecting the one inherited value 1 and replacing it with 42 preserves lookup by structural List(1).",
+        "kind": "equal-stdout"
+      },
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:amendment",
+        "semantic:name-resolution",
+        "semantic:generators",
+        "semantic:generated-verification"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-dynamic-inherited-direct",
+      "input": "tests/fixtures/m2/equality-dynamic-inherited-direct.pkl",
+      "input_sha256": "73306faf1525166a43a42e8576524bc585f0ae2ccb57f765a5c77196058fdb85",
+      "metamorphic_relation": {
+        "case_ids": [
+          "equality-dynamic-inherited",
+          "equality-dynamic-inherited-direct"
+        ],
+        "domain": "Overriding inherited x=missing with x=2 and retaining y=3 equals constructing fixed Dynamic { x=2; y=3 }.",
+        "kind": "equal-stdout"
+      },
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:generated-verification"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "equality-supplement-key-missing-dynamic",
+      "input": "tests/fixtures/m2/equality-supplement-key-missing-dynamic.pkl",
+      "input_sha256": "466f4bb5161a035e8ce028a0ed3bfb7ab7c0be119cab18b8c68a32ee7eca8d58",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "equality-supplement-key-missing-class",
+      "input": "tests/fixtures/m2/equality-supplement-key-missing-class.pkl",
+      "input_sha256": "626015decf00af748c9bc19326af06c8e088c04198973a7deb20ac06adc471e1",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:classes",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "equality-supplement-key-listing-reject-object",
+      "input": "tests/fixtures/m2/equality-supplement-key-listing-reject-object.pkl",
+      "input_sha256": "5aab99ad2275bcc8a35f31e1e3d2e53ed02fa64ab75b199b3fbee567a252262d",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "equality-supplement-key-duplicate-long",
+      "input": "tests/fixtures/m2/equality-supplement-key-duplicate-long.pkl",
+      "input_sha256": "ae3ecf45b0853b0ed46ea336cb41e582420b288e2a96dbf84d32f62053429f8f",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "equality-supplement-key-lookup-force-error",
+      "input": "tests/fixtures/m2/equality-supplement-key-lookup-force-error.pkl",
+      "input_sha256": "bb629d5f8375c130e9d3565ce7b4daacbe348279e9d2096df23f0903381ff318",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "equality-supplement-key-rejected-typed-force-order",
+      "input": "tests/fixtures/m2/equality-supplement-key-rejected-typed-force-order.pkl",
+      "input_sha256": "de3cd98bb6ec0bcbbdf06e11c94949cb00f89723de8f07b7f39c308b53e7a021",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:classes",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-supplement-equality-hidden-cache",
+      "input": "tests/fixtures/m2/equality-supplement-equality-hidden-cache.pkl",
+      "input_sha256": "0df624c2985e441c608eb712bb44402b295f1107b7aebe63d645c2d8c2b3ed2a",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:classes",
+        "semantic:modifiers"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-supplement-cycle-identity-skip",
+      "input": "tests/fixtures/m2/equality-supplement-cycle-identity-skip.pkl",
+      "input_sha256": "477696ec85e606857e5b899571b583d3f9c6a016b768bcaf0de9c2e21f8da409",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-supplement-wrapper-identity-skip",
+      "input": "tests/fixtures/m2/equality-supplement-wrapper-identity-skip.pkl",
+      "input_sha256": "db39bcefac2e08d50fd7a21d716d6567c54a2a76b5f679215d6069aa4bd2ca85",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:types",
+        "semantic:generics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-supplement-wrapper-length-skip",
+      "input": "tests/fixtures/m2/equality-supplement-wrapper-length-skip.pkl",
+      "input_sha256": "0b37ce677d6b5aa08b05546a6d5cfbba7f16c3c82dd982ba93df001c21945d18",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:types",
+        "semantic:generics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "equality-supplement-nested-order-child-first",
+      "input": "tests/fixtures/m2/equality-supplement-nested-order-child-first.pkl",
+      "input_sha256": "4a0e5fc8c9773048bd7ca1db4fbf2ac2483fa0c308314f9cfc94b4a154fac0b4",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:amendment",
+        "semantic:name-resolution",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-key-review-constructor-one",
+      "input": "tests/fixtures/m2/equality-key-review-constructor-one.pkl",
+      "input_sha256": "11641a7aefa030dadf5aecaf5ceb09560c4602d31e696567ae7ad97e2500692a",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-key-review-constructor-mapping-one",
+      "input": "tests/fixtures/m2/equality-key-review-constructor-mapping-one.pkl",
+      "input_sha256": "474e73df70912ee91c0ecb3b46afedec27e99c4e7a16ce4b9f577ca700a4dbb0",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-key-review-constructor-four",
+      "input": "tests/fixtures/m2/equality-key-review-constructor-four.pkl",
+      "input_sha256": "693dd94fbe3bac89dee94a406fbb53b8e826d9e028e83fd0662d507cbfe941fb",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "equality-key-review-constructor-five",
+      "input": "tests/fixtures/m2/equality-key-review-constructor-five.pkl",
+      "input_sha256": "ae8e190dbe4715693bcf2ecce1318b89c3dd0b41519d854c5196136e7535b66d",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-key-review-constructor-generated-four",
+      "input": "tests/fixtures/m2/equality-key-review-constructor-generated-four.pkl",
+      "input_sha256": "34aae679fa629682246ed67aa917837fc3105ba6f6f2a8e71fdb48273f3580df",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:generators"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "equality-key-review-constructor-generated-five",
+      "input": "tests/fixtures/m2/equality-key-review-constructor-generated-five.pkl",
+      "input_sha256": "43bcf09c22210f021eb2b23cb4632aa7aa54e4ccd7d77b6a4d9cd8337646c96a",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:generators",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "equality-key-review-constructor-five-hash-order",
+      "input": "tests/fixtures/m2/equality-key-review-constructor-five-hash-order.pkl",
+      "input_sha256": "cbaa920a0e9abcfda6eea980613c7692b9a12c86ec24494edf3f458f75660c5a",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "equality-key-review-identity-duplicate",
+      "input": "tests/fixtures/m2/equality-key-review-identity-duplicate.pkl",
+      "input_sha256": "f65b4d3c57b9616678785bc148d5b4f12cd646d0a2f53f94ccc98a945140e93f",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-key-review-lookup-identity",
+      "input": "tests/fixtures/m2/equality-key-review-lookup-identity.pkl",
+      "input_sha256": "27eb0ce998f6e0d5db2f2cce7e2aa3a1a8d1d178fa945fcc0fd1f214324b1714",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "equality-key-review-lookup-query-left",
+      "input": "tests/fixtures/m2/equality-key-review-lookup-query-left.pkl",
+      "input_sha256": "bf7bb91cf47c4f771a3c0d220eff4215f25870c1df26cc973e2373dcbc75b09d",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "equality-key-review-insert-query-left",
+      "input": "tests/fixtures/m2/equality-key-review-insert-query-left.pkl",
+      "input_sha256": "aae315a367ea13971db72a0581111db8d09f90b0532d25d6bf5f0c618e9f30f1",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-key-review-constructor-listing-size-skip",
+      "input": "tests/fixtures/m2/equality-key-review-constructor-listing-size-skip.pkl",
+      "input_sha256": "a59a51ddc15e03879983a9e2884abd1ca0897b3c125f0eb1dda43a3ef032d1c2",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-key-review-constructor-kind-skip",
+      "input": "tests/fixtures/m2/equality-key-review-constructor-kind-skip.pkl",
+      "input_sha256": "f971b96e39fd3995eca3e8b88a019b629f2ca1639ec586f9bece0da3f08aeafb",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "equality-key-review-mapping-length-hash",
+      "input": "tests/fixtures/m2/equality-key-review-mapping-length-hash.pkl",
+      "input_sha256": "7185b599a9171a62b11a9fde08e3d58179c55ec72e4c07f2e888f1510cad1dbb",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "equality-key-review-mapping-parent-first-hash",
+      "input": "tests/fixtures/m2/equality-key-review-mapping-parent-first-hash.pkl",
+      "input_sha256": "e1726a06b6d637563f5016cde26dbeee57b672d3d1bcfe179def0fdc33a16777",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:amendment",
+        "semantic:name-resolution",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-key-review-mapping-parent-identity-key",
+      "input": "tests/fixtures/m2/equality-key-review-mapping-parent-identity-key.pkl",
+      "input_sha256": "b840d9c5094876426b12d7784178134fd5eca423b3881d0982514cac8f12f636",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:amendment",
+        "semantic:name-resolution"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "equality-key-review-typed-target-before-key",
+      "input": "tests/fixtures/m2/equality-key-review-typed-target-before-key.pkl",
+      "input_sha256": "f889c1f441bf69b30673cbfb7b26f58dfac8b325f361b9c74a9243d844601584",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:classes",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-key-review-mapping-inherited-constructor-unforced",
+      "input": "tests/fixtures/m2/equality-key-review-mapping-inherited-constructor-unforced.pkl",
+      "input_sha256": "00ef3ecffb72410318900af698a8ccca6ee88066448b58f72a28524ca9d1dd95",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:amendment",
+        "semantic:name-resolution"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-key-review-dynamic-inherited-constructor-unforced",
+      "input": "tests/fixtures/m2/equality-key-review-dynamic-inherited-constructor-unforced.pkl",
+      "input_sha256": "0f5ca6c7eb7abacf932398502dc50e4b2ca3086be071e754eabab8efdd1f3d35",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:amendment",
+        "semantic:name-resolution"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-key-review-dynamic-inherited-identity-lookup-unforced",
+      "input": "tests/fixtures/m2/equality-key-review-dynamic-inherited-identity-lookup-unforced.pkl",
+      "input_sha256": "0e1a7e1f2b87ac30e6e4d48034c9e7968ecd45063d896aa4d3fdd6c8cd00da9e",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:amendment",
+        "semantic:name-resolution"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-key-review-mapping-inherited-structural-override",
+      "input": "tests/fixtures/m2/equality-key-review-mapping-inherited-structural-override.pkl",
+      "input_sha256": "39c4f8d3e87103b34592af1eb614fc35bfb4d44dcc3d78c1175271dbe0754cf4",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:amendment",
+        "semantic:name-resolution"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-key-review-mapping-inherited-structural-override-length",
+      "input": "tests/fixtures/m2/equality-key-review-mapping-inherited-structural-override-length.pkl",
+      "input_sha256": "906b8905bc1b6ad5ba6aedddd7780b452cc73974b4724ddb42d6a1537b89852f",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:amendment",
+        "semantic:name-resolution"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-key-review-lookup-child-identity-skips-parent",
+      "input": "tests/fixtures/m2/equality-key-review-lookup-child-identity-skips-parent.pkl",
+      "input_sha256": "ae66258e7ab9b9ff3d83d6ab62283a6dfab4c01bac738efe04d8090e78e08795",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:amendment",
+        "semantic:name-resolution"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-key-review-lookup-child-structural-skips-parent",
+      "input": "tests/fixtures/m2/equality-key-review-lookup-child-structural-skips-parent.pkl",
+      "input_sha256": "046d5316170c0ac5ef44631b13cb9c8fc719e540ab1ddeeb208986c620df2b38",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:amendment",
+        "semantic:name-resolution"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-key-review-mapping-equal-key-override-deep-force",
+      "input": "tests/fixtures/m2/equality-key-review-mapping-equal-key-override-deep-force.pkl",
+      "input_sha256": "302e8fc0ed7acdce5e9e228effb6a3a19f894e38ad57e89de48f0e0e448e18b2",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:amendment",
+        "semantic:name-resolution"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-key-review-dynamic-equal-key-override-deep-force",
+      "input": "tests/fixtures/m2/equality-key-review-dynamic-equal-key-override-deep-force.pkl",
+      "input_sha256": "4384a9a07805e9c6d3f71c984c83a1f89c6a4cdb4c8e1b6c874f2d8001b71e9c",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:amendment",
+        "semantic:name-resolution"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-key-review-mapping-equal-key-override-spread",
+      "input": "tests/fixtures/m2/equality-key-review-mapping-equal-key-override-spread.pkl",
+      "input_sha256": "fc895ff956f40d126bc2dacaf9f32adf1cee47be1dd11d738736be44fb479ed8",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:amendment",
+        "semantic:name-resolution",
+        "semantic:generators"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-key-review-mapping-equal-key-override-loop",
+      "input": "tests/fixtures/m2/equality-key-review-mapping-equal-key-override-loop.pkl",
+      "input_sha256": "c87012cdc188090f7035c2ef2b2c2cf0853c7288c4de310d27b6ac1a43b4012b",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:amendment",
+        "semantic:name-resolution",
+        "semantic:generators"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "equality-key-review-mapping-override-key-force-order",
+      "input": "tests/fixtures/m2/equality-key-review-mapping-override-key-force-order.pkl",
+      "input_sha256": "f2dd12d64d5346e1b8b5baf650b146766ba62a24494841f391eabdc19d43a358",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:amendment",
+        "semantic:name-resolution"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "equality-key-review-dynamic-override-key-force-order",
+      "input": "tests/fixtures/m2/equality-key-review-dynamic-override-key-force-order.pkl",
+      "input_sha256": "a7650457ec7e9a04b7c7be88c5a28cc97110fe0f31e0973e7275b1f619389a3a",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:amendment",
+        "semantic:name-resolution"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "equality-key-review-mapping-override-value-before-key",
+      "input": "tests/fixtures/m2/equality-key-review-mapping-override-value-before-key.pkl",
+      "input_sha256": "d27c5ff19cbea1f2a71e2d2c5bcaad7d1a69c6e4b328c1cad3f761f826f020ba",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:amendment",
+        "semantic:name-resolution"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "equality-constant-duplicate-unused",
+      "input": "tests/fixtures/m2/equality-constant-duplicate-unused.pkl",
+      "input_sha256": "2271280645f0bb3b8bbd0e56686e101130ce47ec655e219dec6e7d3b9a870ae6",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "equality-constant-nested-list-duplicate",
+      "input": "tests/fixtures/m2/equality-constant-nested-list-duplicate.pkl",
+      "input_sha256": "23988ba428df26a96effefd04831906507ebb473ffbd0b4ab22c86f77555e08e",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-constant-list-boxed-distinct",
+      "input": "tests/fixtures/m2/equality-constant-list-boxed-distinct.pkl",
+      "input_sha256": "df48f016627556f2c83af102f6dfa197383e62b17444a74c84108e1e2834d7ca",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-constant-list-zero-distinct",
+      "input": "tests/fixtures/m2/equality-constant-list-zero-distinct.pkl",
+      "input_sha256": "cc864724c55ee6e8b2189e0adca7909c133b284c01572ebf998f6abf2dd20430",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "equality-dynamic-key-defers-duplicates",
+      "input": "tests/fixtures/m2/equality-dynamic-key-defers-duplicates.pkl",
+      "input_sha256": "c22d7bf534c9f4a428506fd2fa73f9840b198f1197060fb424439a21ab7dabe8",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "equality-generator-defers-duplicates",
+      "input": "tests/fixtures/m2/equality-generator-defers-duplicates.pkl",
+      "input_sha256": "f0b0150a641c16d5369de7baa4fda8942a8c5c38da8e24f30e78891ebfbd3c72",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:generators"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "equality-shadowed-list-constructor",
+      "input": "tests/fixtures/m2/equality-shadowed-list-constructor.pkl",
+      "input_sha256": "8250b414a14b38e52c3efb3e9f2a0139df9cf4a1dca16d439b89037548156797",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:functions",
+        "semantic:name-resolution"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "equality-constant-parenthesized-span",
+      "input": "tests/fixtures/m2/equality-constant-parenthesized-span.pkl",
+      "input_sha256": "64da986c38c2de6a1015445283fef7d5a42b05e88e021a8d2dabb58c27511b84",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "equality-constant-duplicate-negative",
+      "input": "tests/fixtures/m2/equality-constant-duplicate-negative.pkl",
+      "input_sha256": "eeae4583714f822e393c9bdc06e2ef91aa7c70ade1e48397148b13f74508c01a",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "equality-constant-duplicate-long",
+      "input": "tests/fixtures/m2/equality-constant-duplicate-long.pkl",
+      "input_sha256": "4c9624e85730fad63f8ca8c07d89d3672b07b17e25a7bbf2710bae26774242c2",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "equality-element-fifth-hashes-key",
+      "input": "tests/fixtures/m2/equality-element-fifth-hashes-key.pkl",
+      "input_sha256": "2a2033bb3d972d0ea8a2dba587a1119be108d81af99c780d9816e5b21cb5878a",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:generators"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "equality-property-fifth-hashes-key",
+      "input": "tests/fixtures/m2/equality-property-fifth-hashes-key.pkl",
+      "input_sha256": "50f8351c84b40e6fb346ca0a2a6861f84e639df71f53c41d4ff224ea0b3c773d",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:generators"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "equality-spread-property-fifth-hashes-key",
+      "input": "tests/fixtures/m2/equality-spread-property-fifth-hashes-key.pkl",
+      "input_sha256": "7b2e03122ad53380255cba84bcfdeb25afb1d1c398e58c0d385dfbbf63fb13e9",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:generators"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "equality-mapping-equality-hashes-before-length",
+      "input": "tests/fixtures/m2/equality-mapping-equality-hashes-before-length.pkl",
+      "input_sha256": "2b3983839322d427e7adf08544e1847d4153e1fbc063614ab0b84b7690433dbc",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "equality-constant-negative-scalar-span",
+      "input": "tests/fixtures/m2/equality-constant-negative-scalar-span.pkl",
+      "input_sha256": "3809596f2beacb502e6022078e15b185b4363da3cc99e58423193131d8aa7b91",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:lexing"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "equality-constant-negative-float-span",
+      "input": "tests/fixtures/m2/equality-constant-negative-float-span.pkl",
+      "input_sha256": "0bc79620414560ad7214bc9229c15eebdc40ba8798148a7700171cac542ad465",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:lexing"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "equality-constant-parenthesized-scalar-span",
+      "input": "tests/fixtures/m2/equality-constant-parenthesized-scalar-span.pkl",
+      "input_sha256": "1a0d3c2911a908035ee1b3765d6236e523a66f5e69f9cfb8bd199c7699af2df4",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:lexing"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "equality-constant-negative-space-span",
+      "input": "tests/fixtures/m2/equality-constant-negative-space-span.pkl",
+      "input_sha256": "797e3635bf9e1684091266787088fafc1ebed21339cbba127bc2c1c1b4f743bd",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:lexing"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "equality-constant-negative-zero-span",
+      "input": "tests/fixtures/m2/equality-constant-negative-zero-span.pkl",
+      "input_sha256": "3c9874413255baf34696eed94ba3397bc74364606cefd861d2063da39a3b790d",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:lexing"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "equality-constant-negative-interpolation-span",
+      "input": "tests/fixtures/m2/equality-constant-negative-interpolation-span.pkl",
+      "input_sha256": "49868f8d252b48472dfee42b612b2aa6b326c386e592718907ece9f7adc31bf8",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:lexing",
+        "semantic:strings"
+      ]
+    },
+    {
       "adapter": null,
       "execution": {
         "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
@@ -104488,9 +108601,9 @@
   "comparison_boundary": "evaluateExpressionString(ModuleSource.path(same absolute URI), expression) UTF-8 stdout; whole PklException.getMessage() UTF-8 stderr and exit 1; no trimming. Power assertions default to disabled; an explicit per-case power_assertions boolean enables the same option in both probes. Stringification alone is not typed value/API compatibility.",
   "completion": "Every required semantic/source requirement needs implementation/test mappings and complete passing execution. Pending/unmapped/unimplemented/mismatch remains a full-gate failure.",
   "counts": {
-    "cases": 1673,
+    "cases": 1874,
     "cases_by_execution": {
-      "ready": 673,
+      "ready": 874,
       "unimplemented": 960,
       "unmapped": 40
     },
@@ -104522,7 +108635,13 @@
           "identifier-dollar",
           "error-keyword-property",
           "collection-property-nul",
-          "collection-nul-internal-collision"
+          "collection-nul-internal-collision",
+          "equality-constant-negative-scalar-span",
+          "equality-constant-negative-float-span",
+          "equality-constant-parenthesized-scalar-span",
+          "equality-constant-negative-space-span",
+          "equality-constant-negative-zero-span",
+          "equality-constant-negative-interpolation-span"
         ],
         "state": "partial"
       }
@@ -104549,7 +108668,21 @@
           "int-min",
           "float-decimal",
           "float-exponent",
-          "float-negative-zero"
+          "float-negative-zero",
+          "equality-typed-nested-mixed",
+          "equality-dynamic-nan",
+          "equality-dynamic-signed-zero",
+          "equality-listing-nan",
+          "equality-listing-signed-zero",
+          "equality-mapping-nan",
+          "equality-mapping-signed-zero",
+          "equality-list-nan",
+          "equality-list-signed-zero",
+          "equality-typed-nan",
+          "equality-typed-signed-zero",
+          "equality-semantic-number-mixed",
+          "equality-semantic-number-nan",
+          "equality-semantic-number-signed-zero"
         ],
         "state": "partial"
       }
@@ -104594,7 +108727,8 @@
           "string-continuation",
           "error-interpolation-empty",
           "error-interpolation-first",
-          "power-constraint-string-surrogate-boundary"
+          "power-constraint-string-surrogate-boundary",
+          "equality-constant-negative-interpolation-span"
         ],
         "state": "partial"
       }
@@ -104667,7 +108801,208 @@
           "pipe-right-before-arity",
           "pipe-function-body-error",
           "pipe-dynamic-rhs",
-          "pipe-class-rhs"
+          "pipe-class-rhs",
+          "equality-dynamic-equal",
+          "equality-dynamic-nested-mixed",
+          "equality-dynamic-unequal",
+          "equality-dynamic-identity",
+          "equality-listing-equal",
+          "equality-listing-nested-mixed",
+          "equality-listing-unequal",
+          "equality-listing-identity",
+          "equality-mapping-equal",
+          "equality-mapping-nested-mixed",
+          "equality-mapping-unequal",
+          "equality-mapping-identity",
+          "equality-list-equal",
+          "equality-list-nested-mixed",
+          "equality-list-unequal",
+          "equality-list-identity",
+          "equality-typed-equal",
+          "equality-typed-nested-mixed",
+          "equality-typed-unequal",
+          "equality-typed-identity",
+          "equality-dynamic-nan",
+          "equality-dynamic-signed-zero",
+          "equality-dynamic-recursive",
+          "equality-listing-nan",
+          "equality-listing-signed-zero",
+          "equality-listing-recursive",
+          "equality-mapping-nan",
+          "equality-mapping-signed-zero",
+          "equality-mapping-recursive",
+          "equality-list-nan",
+          "equality-list-signed-zero",
+          "equality-list-recursive",
+          "equality-typed-nan",
+          "equality-typed-signed-zero",
+          "equality-typed-recursive",
+          "equality-semantic-number-mixed",
+          "equality-semantic-number-nan",
+          "equality-semantic-number-signed-zero",
+          "equality-kind-dynamic-listing",
+          "equality-kind-dynamic-mapping",
+          "equality-kind-listing-list",
+          "equality-kind-dynamic-typed",
+          "equality-dynamic-property-entry",
+          "equality-dynamic-element-entry",
+          "equality-dynamic-local",
+          "equality-dynamic-method",
+          "equality-listing-default",
+          "equality-mapping-default",
+          "equality-typed-hidden",
+          "equality-typed-class-distinct",
+          "equality-typed-class-child",
+          "equality-class-self",
+          "equality-class-distinct",
+          "equality-function-distinct",
+          "equality-function-same",
+          "equality-dynamic-self-unforced",
+          "equality-dynamic-other-kind-unforced",
+          "equality-dynamic-length-before-force",
+          "equality-dynamic-deep-before-mismatch",
+          "equality-dynamic-left-before-right",
+          "equality-listing-self-unforced",
+          "equality-listing-other-kind-unforced",
+          "equality-listing-length-before-force",
+          "equality-listing-deep-before-mismatch",
+          "equality-listing-left-before-right",
+          "equality-mapping-self-unforced",
+          "equality-mapping-other-kind-unforced",
+          "equality-mapping-length-before-force",
+          "equality-mapping-deep-before-mismatch",
+          "equality-mapping-left-before-right",
+          "equality-dynamic-inherited",
+          "equality-listing-inherited",
+          "equality-mapping-inherited",
+          "equality-key-dynamic-lookup",
+          "equality-key-dynamic-duplicate",
+          "equality-key-listing-lookup",
+          "equality-key-listing-duplicate",
+          "equality-key-mapping-lookup",
+          "equality-key-mapping-duplicate",
+          "equality-key-list-lookup",
+          "equality-key-list-duplicate",
+          "equality-key-typed-lookup",
+          "equality-key-typed-duplicate",
+          "equality-key-function-lookup",
+          "equality-key-function-duplicate",
+          "equality-key-class-lookup",
+          "equality-key-class-duplicate",
+          "equality-key-nested-nan",
+          "equality-key-nested-mixed-distinct",
+          "equality-key-nested-zero-distinct",
+          "equality-key-dynamic-property-entry-distinct",
+          "equality-key-order-independent",
+          "equality-key-forces-deep",
+          "equality-key-before-value",
+          "equality-key-amend-replace",
+          "equality-key-amend-body",
+          "equality-key-generator-duplicate",
+          "equality-key-spread-duplicate",
+          "equality-key-predicate-replace",
+          "equality-key-function-distinct",
+          "equality-key-class-distinct",
+          "equality-listing-wrapper-equal",
+          "equality-listing-wrapper-force-bad",
+          "equality-mapping-wrapper-equal",
+          "equality-key-wrapper-listing",
+          "equality-key-wrapper-listing-bad",
+          "equality-power-equal-false",
+          "equality-power-equal-object-false",
+          "equality-power-key-missing",
+          "equality-dynamic-default-throws",
+          "equality-dynamic-key-default-throws",
+          "equality-listing-default-throws",
+          "equality-listing-key-default-throws",
+          "equality-mapping-default-throws",
+          "equality-mapping-key-default-throws",
+          "equality-typed-hidden-override",
+          "equality-list-skips-unmatched-tail",
+          "equality-list-length-before-force",
+          "equality-typed-self-unforced",
+          "equality-typed-first-deep-before-mismatch",
+          "equality-dynamic-right-before-count",
+          "equality-mapping-right-before-count",
+          "equality-dynamic-right-before-mismatch",
+          "equality-mapping-right-before-mismatch",
+          "equality-typed-inherited-properties",
+          "equality-key-dynamic-local",
+          "equality-key-typed-hidden",
+          "equality-key-mapping-wrapper",
+          "equality-key-mapping-wrapper-bad",
+          "equality-key-dynamic-container",
+          "equality-key-dynamic-container-duplicate",
+          "equality-key-typed-class-distinct",
+          "equality-key-nested-nan-duplicate",
+          "equality-key-hash-reordered-typed",
+          "equality-power-key-duplicate",
+          "equality-power-wrapper-force",
+          "equality-key-amend-replace-direct",
+          "equality-key-predicate-replace-direct",
+          "equality-dynamic-inherited-direct",
+          "equality-supplement-key-missing-dynamic",
+          "equality-supplement-key-missing-class",
+          "equality-supplement-key-listing-reject-object",
+          "equality-supplement-key-duplicate-long",
+          "equality-supplement-key-lookup-force-error",
+          "equality-supplement-key-rejected-typed-force-order",
+          "equality-supplement-equality-hidden-cache",
+          "equality-supplement-cycle-identity-skip",
+          "equality-supplement-wrapper-identity-skip",
+          "equality-supplement-wrapper-length-skip",
+          "equality-supplement-nested-order-child-first",
+          "equality-key-review-constructor-one",
+          "equality-key-review-constructor-mapping-one",
+          "equality-key-review-constructor-four",
+          "equality-key-review-constructor-five",
+          "equality-key-review-constructor-generated-four",
+          "equality-key-review-constructor-generated-five",
+          "equality-key-review-constructor-five-hash-order",
+          "equality-key-review-identity-duplicate",
+          "equality-key-review-lookup-identity",
+          "equality-key-review-lookup-query-left",
+          "equality-key-review-insert-query-left",
+          "equality-key-review-constructor-listing-size-skip",
+          "equality-key-review-constructor-kind-skip",
+          "equality-key-review-mapping-length-hash",
+          "equality-key-review-mapping-parent-first-hash",
+          "equality-key-review-mapping-parent-identity-key",
+          "equality-key-review-typed-target-before-key",
+          "equality-key-review-mapping-inherited-constructor-unforced",
+          "equality-key-review-dynamic-inherited-constructor-unforced",
+          "equality-key-review-dynamic-inherited-identity-lookup-unforced",
+          "equality-key-review-mapping-inherited-structural-override",
+          "equality-key-review-mapping-inherited-structural-override-length",
+          "equality-key-review-lookup-child-identity-skips-parent",
+          "equality-key-review-lookup-child-structural-skips-parent",
+          "equality-key-review-mapping-equal-key-override-deep-force",
+          "equality-key-review-dynamic-equal-key-override-deep-force",
+          "equality-key-review-mapping-equal-key-override-spread",
+          "equality-key-review-mapping-equal-key-override-loop",
+          "equality-key-review-mapping-override-key-force-order",
+          "equality-key-review-dynamic-override-key-force-order",
+          "equality-key-review-mapping-override-value-before-key",
+          "equality-constant-duplicate-unused",
+          "equality-constant-nested-list-duplicate",
+          "equality-constant-list-boxed-distinct",
+          "equality-constant-list-zero-distinct",
+          "equality-dynamic-key-defers-duplicates",
+          "equality-generator-defers-duplicates",
+          "equality-shadowed-list-constructor",
+          "equality-constant-parenthesized-span",
+          "equality-constant-duplicate-negative",
+          "equality-constant-duplicate-long",
+          "equality-element-fifth-hashes-key",
+          "equality-property-fifth-hashes-key",
+          "equality-spread-property-fifth-hashes-key",
+          "equality-mapping-equality-hashes-before-length",
+          "equality-constant-negative-scalar-span",
+          "equality-constant-negative-float-span",
+          "equality-constant-parenthesized-scalar-span",
+          "equality-constant-negative-space-span",
+          "equality-constant-negative-zero-span",
+          "equality-constant-negative-interpolation-span"
         ],
         "state": "partial"
       }
@@ -104839,7 +109174,34 @@
           "member-predicate-predicate-owner-cache-condition",
           "member-predicate-predicate-owner-cache-two-conditions",
           "member-predicate-predicate-owner-cache-no-parent-force",
-          "member-predicate-predicate-replacement-lexical-environment"
+          "member-predicate-predicate-replacement-lexical-environment",
+          "equality-dynamic-inherited",
+          "equality-listing-inherited",
+          "equality-mapping-inherited",
+          "equality-key-amend-replace",
+          "equality-key-amend-body",
+          "equality-key-predicate-replace",
+          "equality-typed-inherited-properties",
+          "equality-key-amend-replace-direct",
+          "equality-key-predicate-replace-direct",
+          "equality-supplement-nested-order-child-first",
+          "equality-key-review-mapping-parent-first-hash",
+          "equality-key-review-mapping-parent-identity-key",
+          "equality-key-review-mapping-inherited-constructor-unforced",
+          "equality-key-review-dynamic-inherited-constructor-unforced",
+          "equality-key-review-dynamic-inherited-identity-lookup-unforced",
+          "equality-key-review-mapping-inherited-structural-override",
+          "equality-key-review-mapping-inherited-structural-override-length",
+          "equality-key-review-lookup-child-identity-skips-parent",
+          "equality-key-review-lookup-child-structural-skips-parent",
+          "equality-key-review-mapping-equal-key-override-deep-force",
+          "equality-key-review-dynamic-equal-key-override-deep-force",
+          "equality-key-review-mapping-equal-key-override-spread",
+          "equality-key-review-mapping-equal-key-override-loop",
+          "equality-key-review-mapping-override-key-force-order",
+          "equality-key-review-dynamic-override-key-force-order",
+          "equality-key-review-mapping-override-value-before-key",
+          "equality-shadowed-list-constructor"
         ],
         "state": "partial"
       }
@@ -105150,7 +109512,208 @@
           "member-predicate-predicate-owner-cache-condition",
           "member-predicate-predicate-owner-cache-two-conditions",
           "member-predicate-predicate-owner-cache-no-parent-force",
-          "member-predicate-predicate-replacement-lexical-environment"
+          "member-predicate-predicate-replacement-lexical-environment",
+          "equality-dynamic-equal",
+          "equality-dynamic-nested-mixed",
+          "equality-dynamic-unequal",
+          "equality-dynamic-identity",
+          "equality-listing-equal",
+          "equality-listing-nested-mixed",
+          "equality-listing-unequal",
+          "equality-listing-identity",
+          "equality-mapping-equal",
+          "equality-mapping-nested-mixed",
+          "equality-mapping-unequal",
+          "equality-mapping-identity",
+          "equality-list-equal",
+          "equality-list-nested-mixed",
+          "equality-list-unequal",
+          "equality-list-identity",
+          "equality-typed-equal",
+          "equality-typed-nested-mixed",
+          "equality-typed-unequal",
+          "equality-typed-identity",
+          "equality-dynamic-nan",
+          "equality-dynamic-signed-zero",
+          "equality-dynamic-recursive",
+          "equality-listing-nan",
+          "equality-listing-signed-zero",
+          "equality-listing-recursive",
+          "equality-mapping-nan",
+          "equality-mapping-signed-zero",
+          "equality-mapping-recursive",
+          "equality-list-nan",
+          "equality-list-signed-zero",
+          "equality-list-recursive",
+          "equality-typed-nan",
+          "equality-typed-signed-zero",
+          "equality-typed-recursive",
+          "equality-semantic-number-mixed",
+          "equality-semantic-number-nan",
+          "equality-semantic-number-signed-zero",
+          "equality-kind-dynamic-listing",
+          "equality-kind-dynamic-mapping",
+          "equality-kind-listing-list",
+          "equality-kind-dynamic-typed",
+          "equality-dynamic-property-entry",
+          "equality-dynamic-element-entry",
+          "equality-dynamic-local",
+          "equality-dynamic-method",
+          "equality-listing-default",
+          "equality-mapping-default",
+          "equality-typed-hidden",
+          "equality-typed-class-distinct",
+          "equality-typed-class-child",
+          "equality-class-self",
+          "equality-class-distinct",
+          "equality-function-distinct",
+          "equality-function-same",
+          "equality-dynamic-self-unforced",
+          "equality-dynamic-other-kind-unforced",
+          "equality-dynamic-length-before-force",
+          "equality-dynamic-deep-before-mismatch",
+          "equality-dynamic-left-before-right",
+          "equality-listing-self-unforced",
+          "equality-listing-other-kind-unforced",
+          "equality-listing-length-before-force",
+          "equality-listing-deep-before-mismatch",
+          "equality-listing-left-before-right",
+          "equality-mapping-self-unforced",
+          "equality-mapping-other-kind-unforced",
+          "equality-mapping-length-before-force",
+          "equality-mapping-deep-before-mismatch",
+          "equality-mapping-left-before-right",
+          "equality-dynamic-inherited",
+          "equality-listing-inherited",
+          "equality-mapping-inherited",
+          "equality-key-dynamic-lookup",
+          "equality-key-dynamic-duplicate",
+          "equality-key-listing-lookup",
+          "equality-key-listing-duplicate",
+          "equality-key-mapping-lookup",
+          "equality-key-mapping-duplicate",
+          "equality-key-list-lookup",
+          "equality-key-list-duplicate",
+          "equality-key-typed-lookup",
+          "equality-key-typed-duplicate",
+          "equality-key-function-lookup",
+          "equality-key-function-duplicate",
+          "equality-key-class-lookup",
+          "equality-key-class-duplicate",
+          "equality-key-nested-nan",
+          "equality-key-nested-mixed-distinct",
+          "equality-key-nested-zero-distinct",
+          "equality-key-dynamic-property-entry-distinct",
+          "equality-key-order-independent",
+          "equality-key-forces-deep",
+          "equality-key-before-value",
+          "equality-key-amend-replace",
+          "equality-key-amend-body",
+          "equality-key-generator-duplicate",
+          "equality-key-spread-duplicate",
+          "equality-key-predicate-replace",
+          "equality-key-function-distinct",
+          "equality-key-class-distinct",
+          "equality-listing-wrapper-equal",
+          "equality-listing-wrapper-force-bad",
+          "equality-mapping-wrapper-equal",
+          "equality-key-wrapper-listing",
+          "equality-key-wrapper-listing-bad",
+          "equality-power-equal-false",
+          "equality-power-equal-object-false",
+          "equality-power-key-missing",
+          "equality-dynamic-default-throws",
+          "equality-dynamic-key-default-throws",
+          "equality-listing-default-throws",
+          "equality-listing-key-default-throws",
+          "equality-mapping-default-throws",
+          "equality-mapping-key-default-throws",
+          "equality-typed-hidden-override",
+          "equality-list-skips-unmatched-tail",
+          "equality-list-length-before-force",
+          "equality-typed-self-unforced",
+          "equality-typed-first-deep-before-mismatch",
+          "equality-dynamic-right-before-count",
+          "equality-mapping-right-before-count",
+          "equality-dynamic-right-before-mismatch",
+          "equality-mapping-right-before-mismatch",
+          "equality-typed-inherited-properties",
+          "equality-key-dynamic-local",
+          "equality-key-typed-hidden",
+          "equality-key-mapping-wrapper",
+          "equality-key-mapping-wrapper-bad",
+          "equality-key-dynamic-container",
+          "equality-key-dynamic-container-duplicate",
+          "equality-key-typed-class-distinct",
+          "equality-key-nested-nan-duplicate",
+          "equality-key-hash-reordered-typed",
+          "equality-power-key-duplicate",
+          "equality-power-wrapper-force",
+          "equality-key-amend-replace-direct",
+          "equality-key-predicate-replace-direct",
+          "equality-dynamic-inherited-direct",
+          "equality-supplement-key-missing-dynamic",
+          "equality-supplement-key-missing-class",
+          "equality-supplement-key-listing-reject-object",
+          "equality-supplement-key-duplicate-long",
+          "equality-supplement-key-lookup-force-error",
+          "equality-supplement-key-rejected-typed-force-order",
+          "equality-supplement-equality-hidden-cache",
+          "equality-supplement-cycle-identity-skip",
+          "equality-supplement-wrapper-identity-skip",
+          "equality-supplement-wrapper-length-skip",
+          "equality-supplement-nested-order-child-first",
+          "equality-key-review-constructor-one",
+          "equality-key-review-constructor-mapping-one",
+          "equality-key-review-constructor-four",
+          "equality-key-review-constructor-five",
+          "equality-key-review-constructor-generated-four",
+          "equality-key-review-constructor-generated-five",
+          "equality-key-review-constructor-five-hash-order",
+          "equality-key-review-identity-duplicate",
+          "equality-key-review-lookup-identity",
+          "equality-key-review-lookup-query-left",
+          "equality-key-review-insert-query-left",
+          "equality-key-review-constructor-listing-size-skip",
+          "equality-key-review-constructor-kind-skip",
+          "equality-key-review-mapping-length-hash",
+          "equality-key-review-mapping-parent-first-hash",
+          "equality-key-review-mapping-parent-identity-key",
+          "equality-key-review-typed-target-before-key",
+          "equality-key-review-mapping-inherited-constructor-unforced",
+          "equality-key-review-dynamic-inherited-constructor-unforced",
+          "equality-key-review-dynamic-inherited-identity-lookup-unforced",
+          "equality-key-review-mapping-inherited-structural-override",
+          "equality-key-review-mapping-inherited-structural-override-length",
+          "equality-key-review-lookup-child-identity-skips-parent",
+          "equality-key-review-lookup-child-structural-skips-parent",
+          "equality-key-review-mapping-equal-key-override-deep-force",
+          "equality-key-review-dynamic-equal-key-override-deep-force",
+          "equality-key-review-mapping-equal-key-override-spread",
+          "equality-key-review-mapping-equal-key-override-loop",
+          "equality-key-review-mapping-override-key-force-order",
+          "equality-key-review-dynamic-override-key-force-order",
+          "equality-key-review-mapping-override-value-before-key",
+          "equality-constant-duplicate-unused",
+          "equality-constant-nested-list-duplicate",
+          "equality-constant-list-boxed-distinct",
+          "equality-constant-list-zero-distinct",
+          "equality-dynamic-key-defers-duplicates",
+          "equality-generator-defers-duplicates",
+          "equality-shadowed-list-constructor",
+          "equality-constant-parenthesized-span",
+          "equality-constant-duplicate-negative",
+          "equality-constant-duplicate-long",
+          "equality-element-fifth-hashes-key",
+          "equality-property-fifth-hashes-key",
+          "equality-spread-property-fifth-hashes-key",
+          "equality-mapping-equality-hashes-before-length",
+          "equality-constant-negative-scalar-span",
+          "equality-constant-negative-float-span",
+          "equality-constant-parenthesized-scalar-span",
+          "equality-constant-negative-space-span",
+          "equality-constant-negative-zero-span",
+          "equality-constant-negative-interpolation-span"
         ],
         "state": "partial"
       }
@@ -105402,7 +109965,208 @@
           "member-predicate-predicate-owner-cache-condition",
           "member-predicate-predicate-owner-cache-two-conditions",
           "member-predicate-predicate-owner-cache-no-parent-force",
-          "member-predicate-predicate-replacement-lexical-environment"
+          "member-predicate-predicate-replacement-lexical-environment",
+          "equality-dynamic-equal",
+          "equality-dynamic-nested-mixed",
+          "equality-dynamic-unequal",
+          "equality-dynamic-identity",
+          "equality-listing-equal",
+          "equality-listing-nested-mixed",
+          "equality-listing-unequal",
+          "equality-listing-identity",
+          "equality-mapping-equal",
+          "equality-mapping-nested-mixed",
+          "equality-mapping-unequal",
+          "equality-mapping-identity",
+          "equality-list-equal",
+          "equality-list-nested-mixed",
+          "equality-list-unequal",
+          "equality-list-identity",
+          "equality-typed-equal",
+          "equality-typed-nested-mixed",
+          "equality-typed-unequal",
+          "equality-typed-identity",
+          "equality-dynamic-nan",
+          "equality-dynamic-signed-zero",
+          "equality-dynamic-recursive",
+          "equality-listing-nan",
+          "equality-listing-signed-zero",
+          "equality-listing-recursive",
+          "equality-mapping-nan",
+          "equality-mapping-signed-zero",
+          "equality-mapping-recursive",
+          "equality-list-nan",
+          "equality-list-signed-zero",
+          "equality-list-recursive",
+          "equality-typed-nan",
+          "equality-typed-signed-zero",
+          "equality-typed-recursive",
+          "equality-semantic-number-mixed",
+          "equality-semantic-number-nan",
+          "equality-semantic-number-signed-zero",
+          "equality-kind-dynamic-listing",
+          "equality-kind-dynamic-mapping",
+          "equality-kind-listing-list",
+          "equality-kind-dynamic-typed",
+          "equality-dynamic-property-entry",
+          "equality-dynamic-element-entry",
+          "equality-dynamic-local",
+          "equality-dynamic-method",
+          "equality-listing-default",
+          "equality-mapping-default",
+          "equality-typed-hidden",
+          "equality-typed-class-distinct",
+          "equality-typed-class-child",
+          "equality-class-self",
+          "equality-class-distinct",
+          "equality-function-distinct",
+          "equality-function-same",
+          "equality-dynamic-self-unforced",
+          "equality-dynamic-other-kind-unforced",
+          "equality-dynamic-length-before-force",
+          "equality-dynamic-deep-before-mismatch",
+          "equality-dynamic-left-before-right",
+          "equality-listing-self-unforced",
+          "equality-listing-other-kind-unforced",
+          "equality-listing-length-before-force",
+          "equality-listing-deep-before-mismatch",
+          "equality-listing-left-before-right",
+          "equality-mapping-self-unforced",
+          "equality-mapping-other-kind-unforced",
+          "equality-mapping-length-before-force",
+          "equality-mapping-deep-before-mismatch",
+          "equality-mapping-left-before-right",
+          "equality-dynamic-inherited",
+          "equality-listing-inherited",
+          "equality-mapping-inherited",
+          "equality-key-dynamic-lookup",
+          "equality-key-dynamic-duplicate",
+          "equality-key-listing-lookup",
+          "equality-key-listing-duplicate",
+          "equality-key-mapping-lookup",
+          "equality-key-mapping-duplicate",
+          "equality-key-list-lookup",
+          "equality-key-list-duplicate",
+          "equality-key-typed-lookup",
+          "equality-key-typed-duplicate",
+          "equality-key-function-lookup",
+          "equality-key-function-duplicate",
+          "equality-key-class-lookup",
+          "equality-key-class-duplicate",
+          "equality-key-nested-nan",
+          "equality-key-nested-mixed-distinct",
+          "equality-key-nested-zero-distinct",
+          "equality-key-dynamic-property-entry-distinct",
+          "equality-key-order-independent",
+          "equality-key-forces-deep",
+          "equality-key-before-value",
+          "equality-key-amend-replace",
+          "equality-key-amend-body",
+          "equality-key-generator-duplicate",
+          "equality-key-spread-duplicate",
+          "equality-key-predicate-replace",
+          "equality-key-function-distinct",
+          "equality-key-class-distinct",
+          "equality-listing-wrapper-equal",
+          "equality-listing-wrapper-force-bad",
+          "equality-mapping-wrapper-equal",
+          "equality-key-wrapper-listing",
+          "equality-key-wrapper-listing-bad",
+          "equality-power-equal-false",
+          "equality-power-equal-object-false",
+          "equality-power-key-missing",
+          "equality-dynamic-default-throws",
+          "equality-dynamic-key-default-throws",
+          "equality-listing-default-throws",
+          "equality-listing-key-default-throws",
+          "equality-mapping-default-throws",
+          "equality-mapping-key-default-throws",
+          "equality-typed-hidden-override",
+          "equality-list-skips-unmatched-tail",
+          "equality-list-length-before-force",
+          "equality-typed-self-unforced",
+          "equality-typed-first-deep-before-mismatch",
+          "equality-dynamic-right-before-count",
+          "equality-mapping-right-before-count",
+          "equality-dynamic-right-before-mismatch",
+          "equality-mapping-right-before-mismatch",
+          "equality-typed-inherited-properties",
+          "equality-key-dynamic-local",
+          "equality-key-typed-hidden",
+          "equality-key-mapping-wrapper",
+          "equality-key-mapping-wrapper-bad",
+          "equality-key-dynamic-container",
+          "equality-key-dynamic-container-duplicate",
+          "equality-key-typed-class-distinct",
+          "equality-key-nested-nan-duplicate",
+          "equality-key-hash-reordered-typed",
+          "equality-power-key-duplicate",
+          "equality-power-wrapper-force",
+          "equality-key-amend-replace-direct",
+          "equality-key-predicate-replace-direct",
+          "equality-dynamic-inherited-direct",
+          "equality-supplement-key-missing-dynamic",
+          "equality-supplement-key-missing-class",
+          "equality-supplement-key-listing-reject-object",
+          "equality-supplement-key-duplicate-long",
+          "equality-supplement-key-lookup-force-error",
+          "equality-supplement-key-rejected-typed-force-order",
+          "equality-supplement-equality-hidden-cache",
+          "equality-supplement-cycle-identity-skip",
+          "equality-supplement-wrapper-identity-skip",
+          "equality-supplement-wrapper-length-skip",
+          "equality-supplement-nested-order-child-first",
+          "equality-key-review-constructor-one",
+          "equality-key-review-constructor-mapping-one",
+          "equality-key-review-constructor-four",
+          "equality-key-review-constructor-five",
+          "equality-key-review-constructor-generated-four",
+          "equality-key-review-constructor-generated-five",
+          "equality-key-review-constructor-five-hash-order",
+          "equality-key-review-identity-duplicate",
+          "equality-key-review-lookup-identity",
+          "equality-key-review-lookup-query-left",
+          "equality-key-review-insert-query-left",
+          "equality-key-review-constructor-listing-size-skip",
+          "equality-key-review-constructor-kind-skip",
+          "equality-key-review-mapping-length-hash",
+          "equality-key-review-mapping-parent-first-hash",
+          "equality-key-review-mapping-parent-identity-key",
+          "equality-key-review-typed-target-before-key",
+          "equality-key-review-mapping-inherited-constructor-unforced",
+          "equality-key-review-dynamic-inherited-constructor-unforced",
+          "equality-key-review-dynamic-inherited-identity-lookup-unforced",
+          "equality-key-review-mapping-inherited-structural-override",
+          "equality-key-review-mapping-inherited-structural-override-length",
+          "equality-key-review-lookup-child-identity-skips-parent",
+          "equality-key-review-lookup-child-structural-skips-parent",
+          "equality-key-review-mapping-equal-key-override-deep-force",
+          "equality-key-review-dynamic-equal-key-override-deep-force",
+          "equality-key-review-mapping-equal-key-override-spread",
+          "equality-key-review-mapping-equal-key-override-loop",
+          "equality-key-review-mapping-override-key-force-order",
+          "equality-key-review-dynamic-override-key-force-order",
+          "equality-key-review-mapping-override-value-before-key",
+          "equality-constant-duplicate-unused",
+          "equality-constant-nested-list-duplicate",
+          "equality-constant-list-boxed-distinct",
+          "equality-constant-list-zero-distinct",
+          "equality-dynamic-key-defers-duplicates",
+          "equality-generator-defers-duplicates",
+          "equality-shadowed-list-constructor",
+          "equality-constant-parenthesized-span",
+          "equality-constant-duplicate-negative",
+          "equality-constant-duplicate-long",
+          "equality-element-fifth-hashes-key",
+          "equality-property-fifth-hashes-key",
+          "equality-spread-property-fifth-hashes-key",
+          "equality-mapping-equality-hashes-before-length",
+          "equality-constant-negative-scalar-span",
+          "equality-constant-negative-float-span",
+          "equality-constant-parenthesized-scalar-span",
+          "equality-constant-negative-space-span",
+          "equality-constant-negative-zero-span",
+          "equality-constant-negative-interpolation-span"
         ],
         "state": "partial"
       }
@@ -105465,7 +110229,33 @@
           "member-predicate-dynamic-entries-amendment",
           "member-predicate-dynamic-entries-same-block-excluded",
           "member-predicate-dynamic-entries-later-inherited",
-          "member-predicate-inherited-override-dedup"
+          "member-predicate-inherited-override-dedup",
+          "equality-dynamic-inherited",
+          "equality-listing-inherited",
+          "equality-mapping-inherited",
+          "equality-key-amend-replace",
+          "equality-key-amend-body",
+          "equality-key-predicate-replace",
+          "equality-typed-inherited-properties",
+          "equality-key-amend-replace-direct",
+          "equality-key-predicate-replace-direct",
+          "equality-supplement-nested-order-child-first",
+          "equality-key-review-mapping-parent-first-hash",
+          "equality-key-review-mapping-parent-identity-key",
+          "equality-key-review-mapping-inherited-constructor-unforced",
+          "equality-key-review-dynamic-inherited-constructor-unforced",
+          "equality-key-review-dynamic-inherited-identity-lookup-unforced",
+          "equality-key-review-mapping-inherited-structural-override",
+          "equality-key-review-mapping-inherited-structural-override-length",
+          "equality-key-review-lookup-child-identity-skips-parent",
+          "equality-key-review-lookup-child-structural-skips-parent",
+          "equality-key-review-mapping-equal-key-override-deep-force",
+          "equality-key-review-dynamic-equal-key-override-deep-force",
+          "equality-key-review-mapping-equal-key-override-spread",
+          "equality-key-review-mapping-equal-key-override-loop",
+          "equality-key-review-mapping-override-key-force-order",
+          "equality-key-review-dynamic-override-key-force-order",
+          "equality-key-review-mapping-override-value-before-key"
         ],
         "state": "partial"
       }
@@ -105508,7 +110298,36 @@
           "collection-type-listing-default-element",
           "collection-type-mapping-default-element",
           "collection-type-listing-default-value-referent",
-          "collection-type-mapping-default-value-referent"
+          "collection-type-mapping-default-value-referent",
+          "equality-typed-equal",
+          "equality-typed-nested-mixed",
+          "equality-typed-unequal",
+          "equality-typed-identity",
+          "equality-typed-nan",
+          "equality-typed-signed-zero",
+          "equality-typed-recursive",
+          "equality-kind-dynamic-typed",
+          "equality-typed-hidden",
+          "equality-typed-class-distinct",
+          "equality-typed-class-child",
+          "equality-class-self",
+          "equality-class-distinct",
+          "equality-key-typed-lookup",
+          "equality-key-typed-duplicate",
+          "equality-key-class-lookup",
+          "equality-key-class-duplicate",
+          "equality-key-class-distinct",
+          "equality-typed-hidden-override",
+          "equality-typed-self-unforced",
+          "equality-typed-first-deep-before-mismatch",
+          "equality-typed-inherited-properties",
+          "equality-key-typed-hidden",
+          "equality-key-typed-class-distinct",
+          "equality-key-hash-reordered-typed",
+          "equality-supplement-key-missing-class",
+          "equality-supplement-key-rejected-typed-force-order",
+          "equality-supplement-equality-hidden-cache",
+          "equality-key-review-typed-target-before-key"
         ],
         "state": "partial"
       }
@@ -105539,7 +110358,16 @@
           "member-predicate-mapping-default-omitted",
           "member-predicate-listing-local-omitted",
           "member-predicate-const-eager-lexical",
-          "member-predicate-const-eager-lambda-lexical"
+          "member-predicate-const-eager-lambda-lexical",
+          "equality-dynamic-local",
+          "equality-dynamic-method",
+          "equality-listing-default",
+          "equality-mapping-default",
+          "equality-typed-hidden",
+          "equality-typed-hidden-override",
+          "equality-key-dynamic-local",
+          "equality-key-typed-hidden",
+          "equality-supplement-equality-hidden-cache"
         ],
         "state": "partial"
       }
@@ -105603,7 +110431,14 @@
           "collection-type-listing-lambda-return-force",
           "collection-type-listing-method-local-cast",
           "collection-type-cast-same-site-different-receiver",
-          "collection-type-cast-different-sites"
+          "collection-type-cast-different-sites",
+          "equality-dynamic-method",
+          "equality-function-distinct",
+          "equality-function-same",
+          "equality-key-function-lookup",
+          "equality-key-function-duplicate",
+          "equality-key-function-distinct",
+          "equality-shadowed-list-constructor"
         ],
         "state": "partial"
       }
@@ -105631,7 +110466,13 @@
           "collection-listing-for-closure",
           "collection-listing-nested-generator-closure",
           "collection-meta-for-alpha-left",
-          "collection-meta-for-alpha-right"
+          "collection-meta-for-alpha-right",
+          "equality-dynamic-method",
+          "equality-function-distinct",
+          "equality-function-same",
+          "equality-key-function-lookup",
+          "equality-key-function-duplicate",
+          "equality-key-function-distinct"
         ],
         "state": "partial"
       }
@@ -105821,7 +110662,19 @@
           "member-predicate-predicate-owner-cache-condition",
           "member-predicate-predicate-owner-cache-two-conditions",
           "member-predicate-predicate-owner-cache-no-parent-force",
-          "member-predicate-predicate-replacement-lexical-environment"
+          "member-predicate-predicate-replacement-lexical-environment",
+          "equality-key-generator-duplicate",
+          "equality-key-spread-duplicate",
+          "equality-key-predicate-replace",
+          "equality-key-predicate-replace-direct",
+          "equality-key-review-constructor-generated-four",
+          "equality-key-review-constructor-generated-five",
+          "equality-key-review-mapping-equal-key-override-spread",
+          "equality-key-review-mapping-equal-key-override-loop",
+          "equality-generator-defers-duplicates",
+          "equality-element-fifth-hashes-key",
+          "equality-property-fifth-hashes-key",
+          "equality-spread-property-fifth-hashes-key"
         ],
         "state": "partial"
       }
@@ -106211,7 +111064,208 @@
           "member-predicate-predicate-owner-cache-condition",
           "member-predicate-predicate-owner-cache-two-conditions",
           "member-predicate-predicate-owner-cache-no-parent-force",
-          "member-predicate-predicate-replacement-lexical-environment"
+          "member-predicate-predicate-replacement-lexical-environment",
+          "equality-dynamic-equal",
+          "equality-dynamic-nested-mixed",
+          "equality-dynamic-unequal",
+          "equality-dynamic-identity",
+          "equality-listing-equal",
+          "equality-listing-nested-mixed",
+          "equality-listing-unequal",
+          "equality-listing-identity",
+          "equality-mapping-equal",
+          "equality-mapping-nested-mixed",
+          "equality-mapping-unequal",
+          "equality-mapping-identity",
+          "equality-list-equal",
+          "equality-list-nested-mixed",
+          "equality-list-unequal",
+          "equality-list-identity",
+          "equality-typed-equal",
+          "equality-typed-nested-mixed",
+          "equality-typed-unequal",
+          "equality-typed-identity",
+          "equality-dynamic-nan",
+          "equality-dynamic-signed-zero",
+          "equality-dynamic-recursive",
+          "equality-listing-nan",
+          "equality-listing-signed-zero",
+          "equality-listing-recursive",
+          "equality-mapping-nan",
+          "equality-mapping-signed-zero",
+          "equality-mapping-recursive",
+          "equality-list-nan",
+          "equality-list-signed-zero",
+          "equality-list-recursive",
+          "equality-typed-nan",
+          "equality-typed-signed-zero",
+          "equality-typed-recursive",
+          "equality-semantic-number-mixed",
+          "equality-semantic-number-nan",
+          "equality-semantic-number-signed-zero",
+          "equality-kind-dynamic-listing",
+          "equality-kind-dynamic-mapping",
+          "equality-kind-listing-list",
+          "equality-kind-dynamic-typed",
+          "equality-dynamic-property-entry",
+          "equality-dynamic-element-entry",
+          "equality-dynamic-local",
+          "equality-dynamic-method",
+          "equality-listing-default",
+          "equality-mapping-default",
+          "equality-typed-hidden",
+          "equality-typed-class-distinct",
+          "equality-typed-class-child",
+          "equality-class-self",
+          "equality-class-distinct",
+          "equality-function-distinct",
+          "equality-function-same",
+          "equality-dynamic-self-unforced",
+          "equality-dynamic-other-kind-unforced",
+          "equality-dynamic-length-before-force",
+          "equality-dynamic-deep-before-mismatch",
+          "equality-dynamic-left-before-right",
+          "equality-listing-self-unforced",
+          "equality-listing-other-kind-unforced",
+          "equality-listing-length-before-force",
+          "equality-listing-deep-before-mismatch",
+          "equality-listing-left-before-right",
+          "equality-mapping-self-unforced",
+          "equality-mapping-other-kind-unforced",
+          "equality-mapping-length-before-force",
+          "equality-mapping-deep-before-mismatch",
+          "equality-mapping-left-before-right",
+          "equality-dynamic-inherited",
+          "equality-listing-inherited",
+          "equality-mapping-inherited",
+          "equality-key-dynamic-lookup",
+          "equality-key-dynamic-duplicate",
+          "equality-key-listing-lookup",
+          "equality-key-listing-duplicate",
+          "equality-key-mapping-lookup",
+          "equality-key-mapping-duplicate",
+          "equality-key-list-lookup",
+          "equality-key-list-duplicate",
+          "equality-key-typed-lookup",
+          "equality-key-typed-duplicate",
+          "equality-key-function-lookup",
+          "equality-key-function-duplicate",
+          "equality-key-class-lookup",
+          "equality-key-class-duplicate",
+          "equality-key-nested-nan",
+          "equality-key-nested-mixed-distinct",
+          "equality-key-nested-zero-distinct",
+          "equality-key-dynamic-property-entry-distinct",
+          "equality-key-order-independent",
+          "equality-key-forces-deep",
+          "equality-key-before-value",
+          "equality-key-amend-replace",
+          "equality-key-amend-body",
+          "equality-key-generator-duplicate",
+          "equality-key-spread-duplicate",
+          "equality-key-predicate-replace",
+          "equality-key-function-distinct",
+          "equality-key-class-distinct",
+          "equality-listing-wrapper-equal",
+          "equality-listing-wrapper-force-bad",
+          "equality-mapping-wrapper-equal",
+          "equality-key-wrapper-listing",
+          "equality-key-wrapper-listing-bad",
+          "equality-power-equal-false",
+          "equality-power-equal-object-false",
+          "equality-power-key-missing",
+          "equality-dynamic-default-throws",
+          "equality-dynamic-key-default-throws",
+          "equality-listing-default-throws",
+          "equality-listing-key-default-throws",
+          "equality-mapping-default-throws",
+          "equality-mapping-key-default-throws",
+          "equality-typed-hidden-override",
+          "equality-list-skips-unmatched-tail",
+          "equality-list-length-before-force",
+          "equality-typed-self-unforced",
+          "equality-typed-first-deep-before-mismatch",
+          "equality-dynamic-right-before-count",
+          "equality-mapping-right-before-count",
+          "equality-dynamic-right-before-mismatch",
+          "equality-mapping-right-before-mismatch",
+          "equality-typed-inherited-properties",
+          "equality-key-dynamic-local",
+          "equality-key-typed-hidden",
+          "equality-key-mapping-wrapper",
+          "equality-key-mapping-wrapper-bad",
+          "equality-key-dynamic-container",
+          "equality-key-dynamic-container-duplicate",
+          "equality-key-typed-class-distinct",
+          "equality-key-nested-nan-duplicate",
+          "equality-key-hash-reordered-typed",
+          "equality-power-key-duplicate",
+          "equality-power-wrapper-force",
+          "equality-key-amend-replace-direct",
+          "equality-key-predicate-replace-direct",
+          "equality-dynamic-inherited-direct",
+          "equality-supplement-key-missing-dynamic",
+          "equality-supplement-key-missing-class",
+          "equality-supplement-key-listing-reject-object",
+          "equality-supplement-key-duplicate-long",
+          "equality-supplement-key-lookup-force-error",
+          "equality-supplement-key-rejected-typed-force-order",
+          "equality-supplement-equality-hidden-cache",
+          "equality-supplement-cycle-identity-skip",
+          "equality-supplement-wrapper-identity-skip",
+          "equality-supplement-wrapper-length-skip",
+          "equality-supplement-nested-order-child-first",
+          "equality-key-review-constructor-one",
+          "equality-key-review-constructor-mapping-one",
+          "equality-key-review-constructor-four",
+          "equality-key-review-constructor-five",
+          "equality-key-review-constructor-generated-four",
+          "equality-key-review-constructor-generated-five",
+          "equality-key-review-constructor-five-hash-order",
+          "equality-key-review-identity-duplicate",
+          "equality-key-review-lookup-identity",
+          "equality-key-review-lookup-query-left",
+          "equality-key-review-insert-query-left",
+          "equality-key-review-constructor-listing-size-skip",
+          "equality-key-review-constructor-kind-skip",
+          "equality-key-review-mapping-length-hash",
+          "equality-key-review-mapping-parent-first-hash",
+          "equality-key-review-mapping-parent-identity-key",
+          "equality-key-review-typed-target-before-key",
+          "equality-key-review-mapping-inherited-constructor-unforced",
+          "equality-key-review-dynamic-inherited-constructor-unforced",
+          "equality-key-review-dynamic-inherited-identity-lookup-unforced",
+          "equality-key-review-mapping-inherited-structural-override",
+          "equality-key-review-mapping-inherited-structural-override-length",
+          "equality-key-review-lookup-child-identity-skips-parent",
+          "equality-key-review-lookup-child-structural-skips-parent",
+          "equality-key-review-mapping-equal-key-override-deep-force",
+          "equality-key-review-dynamic-equal-key-override-deep-force",
+          "equality-key-review-mapping-equal-key-override-spread",
+          "equality-key-review-mapping-equal-key-override-loop",
+          "equality-key-review-mapping-override-key-force-order",
+          "equality-key-review-dynamic-override-key-force-order",
+          "equality-key-review-mapping-override-value-before-key",
+          "equality-constant-duplicate-unused",
+          "equality-constant-nested-list-duplicate",
+          "equality-constant-list-boxed-distinct",
+          "equality-constant-list-zero-distinct",
+          "equality-dynamic-key-defers-duplicates",
+          "equality-generator-defers-duplicates",
+          "equality-shadowed-list-constructor",
+          "equality-constant-parenthesized-span",
+          "equality-constant-duplicate-negative",
+          "equality-constant-duplicate-long",
+          "equality-element-fifth-hashes-key",
+          "equality-property-fifth-hashes-key",
+          "equality-spread-property-fifth-hashes-key",
+          "equality-mapping-equality-hashes-before-length",
+          "equality-constant-negative-scalar-span",
+          "equality-constant-negative-float-span",
+          "equality-constant-parenthesized-scalar-span",
+          "equality-constant-negative-space-span",
+          "equality-constant-negative-zero-span",
+          "equality-constant-negative-interpolation-span"
         ],
         "state": "partial"
       }
@@ -106452,7 +111506,17 @@
           "member-predicate-typed-mapping-key",
           "member-predicate-typed-listing-override",
           "member-predicate-predicate-type-test-plain",
-          "member-predicate-predicate-type-test-power"
+          "member-predicate-predicate-type-test-power",
+          "equality-listing-wrapper-equal",
+          "equality-listing-wrapper-force-bad",
+          "equality-mapping-wrapper-equal",
+          "equality-key-wrapper-listing",
+          "equality-key-wrapper-listing-bad",
+          "equality-key-mapping-wrapper",
+          "equality-key-mapping-wrapper-bad",
+          "equality-power-wrapper-force",
+          "equality-supplement-wrapper-identity-skip",
+          "equality-supplement-wrapper-length-skip"
         ],
         "state": "partial"
       }
@@ -106635,7 +111699,12 @@
           "collection-type-constraint-alias-node-identity",
           "collection-type-union-constraint-alias",
           "member-predicate-predicate-cached-result-power",
-          "member-predicate-predicate-type-test-power"
+          "member-predicate-predicate-type-test-power",
+          "equality-power-equal-false",
+          "equality-power-equal-object-false",
+          "equality-power-key-missing",
+          "equality-power-key-duplicate",
+          "equality-power-wrapper-force"
         ],
         "state": "partial"
       }
@@ -106802,7 +111871,17 @@
           "member-predicate-typed-mapping-key",
           "member-predicate-typed-listing-override",
           "member-predicate-predicate-type-test-plain",
-          "member-predicate-predicate-type-test-power"
+          "member-predicate-predicate-type-test-power",
+          "equality-listing-wrapper-equal",
+          "equality-listing-wrapper-force-bad",
+          "equality-mapping-wrapper-equal",
+          "equality-key-wrapper-listing",
+          "equality-key-wrapper-listing-bad",
+          "equality-key-mapping-wrapper",
+          "equality-key-mapping-wrapper-bad",
+          "equality-power-wrapper-force",
+          "equality-supplement-wrapper-identity-skip",
+          "equality-supplement-wrapper-length-skip"
         ],
         "state": "partial"
       }
@@ -107245,7 +112324,80 @@
           "member-predicate-predicate-cached-result-plain",
           "member-predicate-predicate-type-test-plain",
           "member-predicate-predicate-cached-result-power",
-          "member-predicate-predicate-type-test-power"
+          "member-predicate-predicate-type-test-power",
+          "equality-dynamic-length-before-force",
+          "equality-dynamic-deep-before-mismatch",
+          "equality-dynamic-left-before-right",
+          "equality-listing-deep-before-mismatch",
+          "equality-listing-left-before-right",
+          "equality-mapping-length-before-force",
+          "equality-mapping-deep-before-mismatch",
+          "equality-mapping-left-before-right",
+          "equality-key-dynamic-duplicate",
+          "equality-key-listing-duplicate",
+          "equality-key-mapping-duplicate",
+          "equality-key-list-duplicate",
+          "equality-key-typed-duplicate",
+          "equality-key-function-duplicate",
+          "equality-key-class-duplicate",
+          "equality-key-forces-deep",
+          "equality-key-before-value",
+          "equality-key-generator-duplicate",
+          "equality-key-spread-duplicate",
+          "equality-listing-wrapper-force-bad",
+          "equality-key-wrapper-listing-bad",
+          "equality-power-equal-false",
+          "equality-power-equal-object-false",
+          "equality-power-key-missing",
+          "equality-typed-first-deep-before-mismatch",
+          "equality-dynamic-right-before-count",
+          "equality-mapping-right-before-count",
+          "equality-dynamic-right-before-mismatch",
+          "equality-mapping-right-before-mismatch",
+          "equality-key-mapping-wrapper-bad",
+          "equality-key-dynamic-container-duplicate",
+          "equality-key-nested-nan-duplicate",
+          "equality-power-key-duplicate",
+          "equality-power-wrapper-force",
+          "equality-supplement-key-missing-dynamic",
+          "equality-supplement-key-missing-class",
+          "equality-supplement-key-listing-reject-object",
+          "equality-supplement-key-duplicate-long",
+          "equality-supplement-key-lookup-force-error",
+          "equality-supplement-key-rejected-typed-force-order",
+          "equality-supplement-nested-order-child-first",
+          "equality-key-review-constructor-five",
+          "equality-key-review-constructor-generated-five",
+          "equality-key-review-constructor-five-hash-order",
+          "equality-key-review-identity-duplicate",
+          "equality-key-review-lookup-query-left",
+          "equality-key-review-insert-query-left",
+          "equality-key-review-mapping-length-hash",
+          "equality-key-review-mapping-parent-first-hash",
+          "equality-key-review-typed-target-before-key",
+          "equality-key-review-mapping-override-key-force-order",
+          "equality-key-review-dynamic-override-key-force-order",
+          "equality-key-review-mapping-override-value-before-key",
+          "equality-constant-duplicate-unused",
+          "equality-constant-nested-list-duplicate",
+          "equality-constant-list-boxed-distinct",
+          "equality-constant-list-zero-distinct",
+          "equality-dynamic-key-defers-duplicates",
+          "equality-generator-defers-duplicates",
+          "equality-shadowed-list-constructor",
+          "equality-constant-parenthesized-span",
+          "equality-constant-duplicate-negative",
+          "equality-constant-duplicate-long",
+          "equality-element-fifth-hashes-key",
+          "equality-property-fifth-hashes-key",
+          "equality-spread-property-fifth-hashes-key",
+          "equality-mapping-equality-hashes-before-length",
+          "equality-constant-negative-scalar-span",
+          "equality-constant-negative-float-span",
+          "equality-constant-parenthesized-scalar-span",
+          "equality-constant-negative-space-span",
+          "equality-constant-negative-zero-span",
+          "equality-constant-negative-interpolation-span"
         ],
         "state": "partial"
       }
@@ -107330,7 +112482,13 @@
           "member-predicate-listing-for",
           "member-predicate-listing-select-direct",
           "member-predicate-listing-none-direct",
-          "member-predicate-listing-for-direct"
+          "member-predicate-listing-for-direct",
+          "equality-dynamic-inherited",
+          "equality-key-amend-replace",
+          "equality-key-predicate-replace",
+          "equality-key-amend-replace-direct",
+          "equality-key-predicate-replace-direct",
+          "equality-dynamic-inherited-direct"
         ],
         "state": "partial"
       }
@@ -115780,6 +120938,6 @@
     "compatibility/regressions.json": "09c064f65730d30f72bf87a45c88d47ecc0844e57966a999dc8e759f083af3da",
     "compatibility/rev1-inventory.json": "6061f202ba3f04565efed3617ac69d3c2fadc54eec1f562b67a4758b3d0a8ab5",
     "references.lock": "278f48fd7697459281aa78a706c9ca57222f36a8c0785d838a6449fbaf26d30b",
-    "tests/fixtures/m2/cases.json": "9b1705899b6cd1b3532d6ee04473f3ee9aa3b87dac6ab2e90f0cca650a60053d"
+    "tests/fixtures/m2/cases.json": "088b48b3bea3b748e0e95ccea065d5fb8d5e28c4fa3d2da444aa13032ceb2140"
   }
 }

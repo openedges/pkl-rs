@@ -1,0 +1,1 @@
+result=let (m=new Dynamic { [new Dynamic { x=throw("key") }]=1; for (i in List(1,2,3,4)) { i } }) 1

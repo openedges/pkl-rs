@@ -1,0 +1,1 @@
+result=let(m=new Dynamic {[new Listing {throw("old")}]=0;[new Listing {}]=1}) 1

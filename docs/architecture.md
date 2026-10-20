@@ -218,7 +218,7 @@ Selected inferred constructors and class-valued collection defaults use the
 same metadata and prototype paths as explicitly constructed objects.
 
 This remains a bounded implementation. Full custom default functions, structural
-types and keys, and the remaining constructor rules are open.
+types, complete key semantics, and the remaining constructor rules are open.
 The pinned Java diagnostic formatter can steal parent caches and execute a
 wrapper cast while displaying values; that can itself fail or invoke a
 constraint. The Rust formatter currently reads completed caches only. Supporting
@@ -253,3 +253,44 @@ the body. A reached predicate rejects an ineligible typed parent, while an
 inactive branch leaves it untouched. Null amendments create an empty Dynamic
 parent. These paths are covered by selected probes; complete constructor,
 modifier, and standard-library behavior remains open.
+
+### Structural comparisons and keys
+
+Object comparisons run on the ordinary VM scheduler. A continuation retains
+pending comparisons, deep-force work, key searches, and their heap roots.
+Identity and type checks precede forcing. Listing length differences skip
+forcing; Dynamic and Mapping compare sizes after forcing both operands. Typed
+objects require the same class prototype. Strict List comparisons stop at the
+first unequal element. Nested values use boxed equality: integers and floats
+remain distinct, NaNs compare equal, and signed zeros differ. Scalar operators
+retain their separate numeric rules and direct execution path.
+
+Deep forcing visits child declarations before ancestors and recursively visits
+each value before the next member. Structural key lookup preserves query-first
+comparison and inherited override behavior. Small declaration maps compare keys
+without eagerly hashing every object. Adding a fifth distinct member prepares
+hashes in declaration order, including generated properties, elements, and
+spread. Mapping length prepares keys in ancestor order; equality performs this
+after deep forcing. Prepared structural identities and successful key-equality
+pairs are heap metadata, pruned when their objects are reclaimed.
+
+An empty object body preserves the parent's identity; empty typed construction
+uses the class prototype. Compile-time constant entry validation recognizes
+scalar and nested List literals after name resolution. It runs only for
+specialized bodies whose keys are all constant. Folded signed integers retain
+their numeric token locations so diagnostic underlines exclude the unary
+operator without changing expression spans.
+
+Uncolored diagnostic frames replay the pinned source highlighter's token
+traversal. Its interpolation handling can omit whitespace after an inner
+closing parenthesis; rendering preserves that behavior while underlines use
+the original source positions. A lexical error restores the complete source
+line. This display path does not rewrite source inputs or comparison evidence.
+
+The selected cases do not establish complete Java map behavior. Cached-member
+hash-table transitions, all hash-bucket collision orders, typed properties named
+`default`, and cyclic structural hashes remain open. Cyclic key preparation
+currently reports a Rust cycle error;
+the observed Java cases fail inside the JVM. Full format-time wrapper checks,
+function/class amendments, and the remaining types and metadata also remain
+unimplemented or unverified. No new speed or memory parity claim is made.

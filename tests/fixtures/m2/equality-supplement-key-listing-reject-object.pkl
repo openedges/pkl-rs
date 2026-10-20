@@ -1,0 +1,2 @@
+values = new Listing { 1 }
+result = values[new Dynamic { x = throw("should stay lazy") }]

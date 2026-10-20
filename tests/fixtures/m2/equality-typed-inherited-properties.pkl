@@ -1,0 +1,5 @@
+open class C { x = missing; y = 2 }
+class D extends C { x = 1 }
+a = new D {}
+b = new D { y = 2 }
+result = a == b

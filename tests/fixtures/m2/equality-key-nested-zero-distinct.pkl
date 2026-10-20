@@ -1,0 +1,2 @@
+m = new Mapping { [List(0.0)] = 10; [List(-0.0)] = 20 }
+result = m[List(0.0)] + m[List(-0.0)]

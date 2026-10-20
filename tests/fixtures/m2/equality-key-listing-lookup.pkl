@@ -1,0 +1,4 @@
+a = new Listing { 1; 2 }
+b = new Listing { 1; 2 }
+m = new Mapping { [a] = 42 }
+result = m[b]

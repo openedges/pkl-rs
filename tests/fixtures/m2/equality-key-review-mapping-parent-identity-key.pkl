@@ -1,0 +1,1 @@
+key=new Dynamic {x=throw("key")};p=new Mapping {[key]=0};c=(p){[key]=1};result=let(m=c) 1

@@ -1,0 +1,4 @@
+p = new Mapping { ["x"] = missing; ["y"] = 3 }
+a = (p) { ["x"] = 2 }
+b = new Mapping { ["x"] = 2; ["y"] = 3 }
+result = a == b
