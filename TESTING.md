@@ -34,6 +34,15 @@ python3 -m unittest discover -s tools/tests -p 'test_inventory.py'
 
 Source declaration counts and builtin registration matches are not semantic coverage or proof of compiled JVM API compatibility. Implementation and behavioral test mappings remain explicit unimplemented/unmapped records.
 
+The [corpus contract](docs/corpus.md) accounts for reference files, resources, runnable command cases, and suites requiring additional adapters:
+
+```sh
+python3 tools/discover.py --check
+python3 -m unittest discover -s tools/tests -p 'test_discover.py'
+```
+
+Ready commands have not necessarily run. Blocked suites and cases with an outcome requiring observation remain visible; file counts are not assertion counts. Historical rev1 inputs are inventoried separately and require selection and fresh Java results before use.
+
 ## Compatibility Comparisons
 
 Run the pinned Java 0.32.0 oracle and Rust with identical inputs and environments. Compare:
