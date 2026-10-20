@@ -1,0 +1,3 @@
+base = new { x = 1 value = x }
+derived = (base) { x = 2 fromSuper = super.x fromThis = this.x }
+result = derived.value + derived.fromSuper + derived.fromThis

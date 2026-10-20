@@ -1,0 +1,26 @@
+[package]
+name = "pkl-napi"
+description = "M1 Node adapter for the shared Pkl runtime"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+publish.workspace = true
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+test = false
+doctest = false
+
+[dependencies]
+pkl-runtime = { path = "../pkl-runtime" }
+napi = { version = "=3.4.0", default-features = false, features = ["dyn-symbols", "napi8"] }
+napi-derive = "=3.3.0"
+napi-derive-backend = "=3.0.0"
+napi-sys = "=3.0.1"
+
+[build-dependencies]
+napi-build = "=2.2.4"
+
+[lints]
+workspace = true

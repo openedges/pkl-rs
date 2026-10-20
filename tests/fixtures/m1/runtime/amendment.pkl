@@ -1,0 +1,12 @@
+base = new {
+  x = 1
+  y = this.x + 1
+  local secret = 40
+  fromLocal = secret
+}
+child = (base) {
+  x = 2
+  y = super.y + 10
+  local secret = 99
+}
+result = child.y + child.fromLocal

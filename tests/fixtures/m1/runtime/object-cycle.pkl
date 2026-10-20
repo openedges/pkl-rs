@@ -1,0 +1,5 @@
+node = new {
+  self = this
+  answer = 42
+}
+result = node.self.self.answer

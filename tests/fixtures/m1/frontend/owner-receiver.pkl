@@ -1,0 +1,4 @@
+x = 1
+local privateValue = 7
+base = new { result = x secret = privateValue own = this.x }
+derived = (base) { x = 2 }

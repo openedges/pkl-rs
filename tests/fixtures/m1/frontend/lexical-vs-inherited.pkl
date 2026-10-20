@@ -1,0 +1,4 @@
+x = 1
+base = new { result = x }
+derived = (base) { x = 2 }
+result = derived.result

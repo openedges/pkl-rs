@@ -1,0 +1,4 @@
+empty = new {}
+result = let (x = 7) let (y = x + 1) (empty) {
+  nested = new { value = x + y }
+}.nested.value

@@ -1,0 +1,6 @@
+base = new {
+  x = 1
+  nested = new { value = x }
+}
+child = (base) { x = 2 }
+result = child.nested.value
