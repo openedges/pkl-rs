@@ -1,0 +1,12 @@
+class Child { function before(): Int = 7; function bad(): Missing = 8; function after(): Int = 9 }
+trigger = Child == Child
+inherited = new Child {}.value
+early = new Child {}.early
+later = new Child {}.later
+assigned = new Child { value = 1 }.value
+freshAssigned = new Child { fresh = 77 }.fresh
+tailAssigned = new Child { later = 88 }.later
+identity = Child == Child
+ordinary = throw("ordinary failure")
+before = new Child {}.before()
+after = new Child {}.after()

@@ -141,6 +141,12 @@ pub struct Object {
     pub ref_module: bool,
     pub is_module: bool,
     pub class_definition: Option<Class>,
+    /// Published class whose initialization has not completed (including failure).
+    /// Such classes accept new property names, but expose only published metadata.
+    pub class_initializing: bool,
+    /// Includes successful resolution of the implicit Typed superclass, which
+    /// has no arena prototype in the bounded runtime.
+    pub class_superclass_initialized: bool,
     pub parent: Option<ObjectId>,
     pub members: Vec<Member>,
     pub environment: Environment,

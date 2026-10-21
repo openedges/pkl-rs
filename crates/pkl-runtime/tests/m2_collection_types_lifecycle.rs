@@ -242,7 +242,13 @@ fn nested_wrappers_keep_temporary_check_receivers_across_gc_and_reentry() {
         .unwrap();
     assert_eq!(ready(&mut session, 4), Ok(Value::string("outer")));
     assert_eq!(session.context_depth(), 0);
-    assert_eq!(session.collect(&[]).live, 0);
+    // Only Check and its captured module survive. Temporary receivers,
+    // Listings, Mappings and wrappers must all have been reclaimed.
+    assert_eq!(session.collect(&[]).live, 2);
+    assert_eq!(session.collect(&[]).live, 2);
+    session.close();
+    assert_eq!(session.heap_stats().live, 0);
+    assert_eq!(session.heap_stats().slots, 0);
     assert!(session.drain_cancelled_reads().is_empty());
 }
 
@@ -286,7 +292,13 @@ fn failed_wrapper_predicate_retries_without_publishing_a_successful_member() {
         .resume(&outer, Ok(Value::string("outer")), 4)
         .unwrap();
     assert_eq!(ready(&mut session, 4), Ok(Value::string("outer")));
-    assert_eq!(session.collect(&[]).live, 0);
+    // Only Check and its captured module survive. Temporary receivers,
+    // Listings, Mappings and wrappers must all have been reclaimed.
+    assert_eq!(session.collect(&[]).live, 2);
+    assert_eq!(session.collect(&[]).live, 2);
+    session.close();
+    assert_eq!(session.heap_stats().live, 0);
+    assert_eq!(session.heap_stats().slots, 0);
 }
 
 #[derive(Clone, Copy, Debug)]

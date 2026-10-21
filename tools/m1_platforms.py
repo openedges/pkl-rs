@@ -56,6 +56,7 @@ REQUIRED_SCENARIOS = {
     'm2-fixed-inheritance-and-virtual-receivers',
     'm2-fixed-reference-declaration-metadata',
     'm2-fixed-property-diagnostics',
+    'm2-class-publication-sequences',
 }
 
 

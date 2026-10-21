@@ -120,7 +120,14 @@ fn inherited_fixed_values_keep_the_amended_receiver_across_gc_reentry_and_retry(
     assert_eq!(ready(&mut session, 5), Ok(Value::string("prefix/amended")));
     session.resume(&outer, Ok(Value::Null), 6).unwrap();
     assert_eq!(ready(&mut session, 6), Ok(Value::Null));
-    assert_eq!(session.collect(&[]).live, 0);
+    // Published classes retain their captured module and its completed caches.
+    // Reference path temporaries have been collected; this is the exact steady
+    // retained closure for this source, not a general nonzero allowance.
+    assert_eq!(session.collect(&[]).live, 11);
+    assert_eq!(session.collect(&[]).live, 11);
+    session.close();
+    assert_eq!(session.heap_stats().live, 0);
+    assert_eq!(session.heap_stats().slots, 0);
     assert!(session.drain_cancelled_reads().is_empty());
 }
 
@@ -155,7 +162,14 @@ fn inherited_hidden_fixed_reference_metadata_stays_deferred_during_render_retry(
     assert_eq!(ready(&mut session, 4), Ok(Value::string("path/secret")));
     session.resume(&outer, Ok(Value::Null), 5).unwrap();
     assert_eq!(ready(&mut session, 5), Ok(Value::Null));
-    assert_eq!(session.collect(&[]).live, 0);
+    // Published classes retain their captured module and its completed caches.
+    // Reference path temporaries have been collected; this is the exact steady
+    // retained closure for this source, not a general nonzero allowance.
+    assert_eq!(session.collect(&[]).live, 11);
+    assert_eq!(session.collect(&[]).live, 11);
+    session.close();
+    assert_eq!(session.heap_stats().live, 0);
+    assert_eq!(session.heap_stats().slots, 0);
 }
 
 #[test]

@@ -62,6 +62,33 @@ pub fn evaluate_language(
     )
     .map_err(error)
 }
+/// Development-only ordered calls on one evaluator, retaining failures as data.
+#[napi]
+pub fn evaluate_language_sequence(
+    source: Utf16String,
+    uri: Utf16String,
+    module_name: Utf16String,
+    expressions: Vec<Utf16String>,
+    power_assertions: Option<bool>,
+) -> Result<Vec<String>> {
+    let expressions = expressions.iter().map(string).collect::<Result<Vec<_>>>()?;
+    Ok(pkl_runtime::evaluation::scalar_expressions_with_options(
+        &string(&source)?,
+        &string(&uri)?,
+        &string(&module_name)?,
+        &expressions,
+        pkl_runtime::evaluation::EvaluationOptions {
+            power_assertions: power_assertions.unwrap_or(false),
+        },
+    )
+    .map_err(error)?
+    .into_iter()
+    .map(|result| match result {
+        Ok(value) => format!("value\t{value}"),
+        Err(error) => format!("error\t{error}"),
+    })
+    .collect())
+}
 #[napi]
 pub fn roundtrip_string(input: Utf16String) -> Result<String> {
     match probe::identity(Value::string(string(&input)?)).map_err(error)? {

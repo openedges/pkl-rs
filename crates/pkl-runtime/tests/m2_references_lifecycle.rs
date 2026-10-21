@@ -134,7 +134,13 @@ fn suspended_rendering_preserves_reference_metadata_during_reentry_gc_and_retry(
     );
     session.resume(&outer, Ok(Value::Null), 5).unwrap();
     assert_eq!(ready(&mut session, 5), Ok(Value::Null));
-    assert_eq!(session.collect(&[]).live, 0);
+    // Evaluator-owned class roots retain the captured module's completed cache
+    // closure. Repeated GC must settle at this exact source-specific size.
+    assert_eq!(session.collect(&[]).live, 10);
+    assert_eq!(session.collect(&[]).live, 10);
+    session.close();
+    assert_eq!(session.heap_stats().live, 0);
+    assert_eq!(session.heap_stats().slots, 0);
     assert!(session.drain_cancelled_reads().is_empty());
 }
 
@@ -163,7 +169,13 @@ fn domain_constraint_continuations_keep_reference_and_custom_this_through_gc() {
     assert_eq!(ready(&mut session, 3), Ok(Value::string("payload/")));
     session.resume(&outer, Ok(Value::Null), 4).unwrap();
     assert_eq!(ready(&mut session, 4), Ok(Value::Null));
-    assert_eq!(session.collect(&[]).live, 0);
+    // Evaluator-owned class roots retain the captured module's completed cache
+    // closure. Repeated GC must settle at this exact source-specific size.
+    assert_eq!(session.collect(&[]).live, 9);
+    assert_eq!(session.collect(&[]).live, 9);
+    session.close();
+    assert_eq!(session.heap_stats().live, 0);
+    assert_eq!(session.heap_stats().slots, 0);
 }
 
 #[test]
@@ -269,5 +281,11 @@ fn equality_retains_pending_domain_and_data_comparisons_and_retries_only_failed_
     assert_eq!(ready(&mut session, 4), Ok(Value::Bool(true)));
     session.resume(&outer, Ok(Value::Null), 5).unwrap();
     assert_eq!(ready(&mut session, 5), Ok(Value::Null));
-    assert_eq!(session.collect(&[]).live, 0);
+    // Evaluator-owned class roots retain the captured module's completed cache
+    // closure. Repeated GC must settle at this exact source-specific size.
+    assert_eq!(session.collect(&[]).live, 14);
+    assert_eq!(session.collect(&[]).live, 14);
+    session.close();
+    assert_eq!(session.heap_stats().live, 0);
+    assert_eq!(session.heap_stats().slots, 0);
 }

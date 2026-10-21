@@ -37,6 +37,23 @@ pub fn scalar_expression_with_options(
     expression: &str,
     options: EvaluationOptions,
 ) -> Result<String, String> {
+    scalar_expressions_with_options(source_text, uri, name, &[expression.to_owned()], options)?
+        .pop()
+        .expect("one expression supplied")
+}
+
+/// Bounded development sequence boundary. Setup errors abort the sequence; call
+/// errors leave the same VM and module available to subsequent property paths.
+/// The module is retained across a GC after every call, and the VM is closed at
+/// the end. This is not the complete public evaluator or module-cache API.
+pub fn scalar_expressions_with_options(
+    source_text: &str,
+    uri: &str,
+    name: &str,
+    expressions: &[String],
+    options: EvaluationOptions,
+) -> Result<Vec<Result<String, String>>, String> {
+    let expression = expressions.first().map_or("", String::as_str);
     let mut sources = SourceMap::default();
     let source_id = sources.add(uri, source_text);
     let source = sources.get(source_id).expect("source inserted");
@@ -101,43 +118,57 @@ pub fn scalar_expression_with_options(
     let entry = program.entry;
     let mut vm = Vm::new(program);
     vm.set_power_assertions(options.power_assertions);
-    let mut evaluate = || -> Result<Value, RuntimeError> {
-        vm.start(entry, vec![])?;
-        let mut value = poll(&mut vm)?;
-        // This initial boundary accepts property paths; the full expression API
-        // remains an explicit adapter requirement in the M2 inventory.
-        for member in expression.split('.') {
-            if member.is_empty() || !member.chars().all(|ch| ch.is_alphanumeric() || ch == '_') {
-                return Err(RuntimeError::new(
-                    ErrorKind::Unsupported,
-                    "the M2 probe currently accepts property paths only",
-                ));
+    vm.start(entry, vec![])
+        .map_err(|error| runtime_error(source, uri, name, expression, error, false))?;
+    let module_value = poll(&mut vm)
+        .map_err(|error| runtime_error(source, uri, name, expression, error, false))?;
+    let mut results = Vec::with_capacity(expressions.len());
+    for expression in expressions {
+        let mut evaluate = || -> Result<Value, RuntimeError> {
+            let mut value = module_value.clone();
+            // The bounded adapter accepts property paths, not arbitrary REPL expressions.
+            for member in expression.split('.') {
+                if member.is_empty() || !member.chars().all(|ch| ch.is_alphanumeric() || ch == '_')
+                {
+                    return Err(RuntimeError::new(
+                        ErrorKind::Unsupported,
+                        "the M2 probe currently accepts property paths only",
+                    ));
+                }
+                vm.start_member(value.as_object()?, member)?;
+                value = poll(&mut vm)?;
             }
-            vm.start_member(value.as_object()?, member)?;
-            value = poll(&mut vm)?;
-        }
-        Ok(value)
-    };
-    let mut value =
-        evaluate().map_err(|error| runtime_error(source, uri, name, expression, error, true))?;
-    if vm.is_reference(&value) {
-        value = vm
-            .start(stringify, vec![value])
-            .and_then(|()| poll(&mut vm))
-            .map_err(|error| runtime_error(source, uri, name, expression, error, false))?;
+            Ok(value)
+        };
+        let result = evaluate()
+            .map_err(|error| runtime_error(source, uri, name, expression, error, true))
+            .and_then(|mut value| {
+                if vm.is_reference(&value) {
+                    value = vm
+                        .start(stringify, vec![value])
+                        .and_then(|()| poll(&mut vm))
+                        .map_err(|error| {
+                            runtime_error(source, uri, name, expression, error, false)
+                        })?;
+                }
+                match value {
+                    Value::Null => Ok("null".into()),
+                    Value::Bool(value) => Ok(value.to_string()),
+                    Value::Int(value) => Ok(value.to_string()),
+                    Value::Float(value) => Ok(crate::numeric::double_to_string(value)),
+                    Value::String(value) => Ok(value.to_string()),
+                    _ => Err(render_error(
+                        "the M2 probe does not yet stringify compound values",
+                        &[],
+                        None,
+                    )),
+                }
+            });
+        results.push(result);
+        vm.collect(std::slice::from_ref(&module_value));
     }
-    match value {
-        Value::Null => Ok("null".into()),
-        Value::Bool(value) => Ok(value.to_string()),
-        Value::Int(value) => Ok(value.to_string()),
-        Value::Float(value) => Ok(crate::numeric::double_to_string(value)),
-        Value::String(value) => Ok(value.to_string()),
-        _ => Err(render_error(
-            "the M2 probe does not yet stringify compound values",
-            &[],
-            None,
-        )),
-    }
+    vm.close();
+    Ok(results)
 }
 
 fn poll(vm: &mut Vm) -> Result<Value, RuntimeError> {
@@ -145,6 +176,7 @@ fn poll(vm: &mut Vm) -> Result<Value, RuntimeError> {
         match vm.poll(1024) {
             VmPoll::Ready(result) => return result,
             VmPoll::Pending(_) => {
+                vm.cancel();
                 return Err(RuntimeError::new(
                     ErrorKind::Unsupported,
                     "the M2 probe does not supply a Host",
@@ -153,6 +185,7 @@ fn poll(vm: &mut Vm) -> Result<Value, RuntimeError> {
             VmPoll::Yielded => {}
         }
     }
+    vm.cancel();
     Err(RuntimeError::new(
         ErrorKind::Unsupported,
         "M2 probe instruction budget exceeded",

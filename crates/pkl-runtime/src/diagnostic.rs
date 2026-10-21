@@ -321,6 +321,47 @@ pub(crate) fn property_suggestions(
     })
 }
 
+/// Match MemberLookupSuggestions across property and method namespaces.
+pub(crate) fn member_suggestions(
+    name: &str,
+    arity: isize,
+    properties: &[String],
+    methods: &[(String, String, usize)],
+) -> Option<String> {
+    let mut seen = std::collections::BTreeSet::new();
+    let candidates = properties.iter().map(|name| (name, name, -1)).chain(
+        methods
+            .iter()
+            .map(|(name, signature, count)| (name, signature, *count as isize)),
+    );
+    let mut ranked = Vec::new();
+    for (candidate, signature, count) in candidates {
+        let similarity = string_similarity(candidate, name);
+        if similarity < 0.77 || !seen.insert((count >= 0, candidate)) {
+            continue;
+        }
+        let signature = if similarity < 1.0 || arity == 0 {
+            signature.clone()
+        } else if arity >= 0 {
+            format!("{signature}.apply(...)")
+        } else {
+            continue;
+        };
+        ranked.push((signature, similarity, (count - arity).abs()));
+    }
+    ranked.sort_by(|a, b| b.1.total_cmp(&a.1).then(a.2.cmp(&b.2)));
+    (!ranked.is_empty()).then(|| {
+        format!(
+            "Did you mean any of the following?\n{}",
+            ranked
+                .into_iter()
+                .map(|(signature, _, _)| signature)
+                .collect::<Vec<_>>()
+                .join("\n")
+        )
+    })
+}
+
 // Jaro-Winkler using UTF-16 units and the pinned StringSimilarity's integer
 // transposition count and uncapped prefix rule.
 fn string_similarity(first: &str, second: &str) -> f64 {

@@ -38,7 +38,7 @@ const server = createServer(async (request, response) => {
     const url = new URL(request.url, 'http://127.0.0.1');
     if (url.pathname === '/') { response.writeHead(200, { 'Content-Type': 'text/html' }); response.end('<!doctype html><title>M1 Wasm verification</title>'); return; }
     let path;
-    if (['/scenarios.mjs', '/host-adapter.mjs'].includes(url.pathname)) path = new URL('.' + url.pathname, import.meta.url);
+    if (['/scenarios.mjs', '/host-adapter.mjs', '/class-publication-cases.mjs'].includes(url.pathname)) path = new URL('.' + url.pathname, import.meta.url);
     else {
       path = resolve(wasm, '.' + decodeURIComponent(url.pathname));
       if (!path.startsWith(wasm + sep)) throw new Error('invalid path');

@@ -215,7 +215,11 @@ fn subtype(a: &TypeCheck, b: &TypeCheck, heap: &Heap) -> bool {
         (TypeCheck::Int | TypeCheck::Float, TypeCheck::Number) => true,
         (TypeCheck::Class { id, .. }, TypeCheck::Class { id: other, .. }) => {
             let mut current = heap.find_class(*id);
+            let mut visited = BTreeSet::new();
             while let Some(id) = current {
+                if !visited.insert(id) {
+                    return false;
+                }
                 let Ok(object) = heap.get(id) else {
                     return false;
                 };
@@ -778,7 +782,11 @@ impl Vm {
                 let name = property.expect("property access");
                 let mut current = self.heap.find_class(*id);
                 let mut found = false;
+                let mut visited = BTreeSet::new();
                 while let Some(id) = current {
+                    if !visited.insert(id) {
+                        return Err(RuntimeError::new(ErrorKind::Cycle, "cyclic parent chain"));
+                    }
                     let object = self.heap.get(id)?;
                     if let Some(member) = object
                         .members

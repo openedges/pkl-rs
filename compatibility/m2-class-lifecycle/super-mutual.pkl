@@ -1,0 +1,5 @@
+open class A extends B {}
+open class B extends A {}
+isA = A == A
+isB = B == B
+construct = new A {}.missing

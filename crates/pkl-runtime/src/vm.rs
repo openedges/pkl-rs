@@ -126,14 +126,19 @@ pub enum Instruction {
         or: bool,
     },
     JumpIfNotNull(usize),
-    MakeClass {
+    /// Publish the evaluator-owned singleton before any initialization can fail.
+    BeginClass {
         template: usize,
         class: Class,
-        has_parent: bool,
+        end: usize,
     },
-    ValidateClassMember {
+    SetClassParent,
+    SetDefaultClassParent,
+    PublishClassMember {
+        template: usize,
         index: usize,
     },
+    FinishClass,
     MakeInstance {
         template: usize,
     },
@@ -402,6 +407,8 @@ pub struct BlockMetadata {
     pub(crate) fixed_span: Option<Span>,
     pub(crate) const_span: Option<Span>,
     pub(crate) initialization_error: Option<RuntimeError>,
+    pub(crate) method_signature: Option<(String, usize)>,
+    pub(crate) method_arities: BTreeMap<usize, usize>,
     pub(crate) let_scopes: Vec<LetScope>,
     pub(crate) constraint_root: Option<Span>,
     pub(crate) inline_constraint: bool,
@@ -552,6 +559,9 @@ pub struct Vm {
     member_evaluations: u64,
     code_validation: Result<(), RuntimeError>,
     power_assertions: bool,
+    /// Keys belong to this immutable Program; values belong only to this evaluator.
+    /// Reentering or restarting a declaration retains its first captured environment.
+    class_singletons: BTreeMap<usize, ObjectId>,
 }
 
 impl Vm {
@@ -583,6 +593,7 @@ impl Vm {
             member_evaluations: 0,
             code_validation,
             power_assertions: false,
+            class_singletons: BTreeMap::new(),
         }
     }
 
@@ -793,6 +804,7 @@ impl Vm {
         self.stack = Vec::new();
         self.inputs = Vec::new();
         self.state = State::Closed;
+        self.class_singletons.clear();
         self.heap.release();
         self.program = Arc::new(Program::new(Vec::new()));
     }
@@ -833,6 +845,7 @@ impl Vm {
     /// Safepoint collection includes suspended frames and externally pinned results.
     pub fn collect(&mut self, external_roots: &[Value]) -> HeapStats {
         let mut roots = external_roots.to_vec();
+        roots.extend(self.class_singletons.values().copied().map(Value::Class));
         for (stack, inputs, frames, state) in self
             .suspended
             .iter()
@@ -1189,17 +1202,9 @@ impl Vm {
             name: name.clone(),
             method,
         };
-        if memoize {
-            if let Some(value) = self.cached_slot(receiver, &key)? {
-                self.stack.push(value);
-                return Ok(());
-            }
-            if let Some(LazyState::Evaluating) = self.heap.get(receiver)?.cache.get(&key) {
-                return Err(RuntimeError::new(
-                    ErrorKind::Cycle,
-                    format!("cyclic forcing of {name}"),
-                ));
-            }
+        if memoize && let Some(value) = self.cached_slot(receiver, &key)? {
+            self.stack.push(value);
+            return Ok(());
         }
         let mut owner = initial_owner;
         let mut visited = BTreeSet::new();
@@ -1222,21 +1227,15 @@ impl Vm {
                     format!("missing local member {name}"),
                 ));
             }
-            owner = object.parent.ok_or_else(|| {
-                RuntimeError::new(ErrorKind::MissingMember, format!("missing member {name}"))
-            })?;
+            owner = match object.parent {
+                Some(parent) => parent,
+                None => return Err(self.missing_member(receiver, &name, method)?),
+            };
         };
-        if local
-            && self.program.blocks.get(member.code).is_some_and(|block| {
-                matches!(
-                    block.as_slice(),
-                    [Instruction::Constant(_), Instruction::Return]
-                )
-            })
-        {
-            memoize = false;
-        }
-        if self
+        // Only direct class declaration call targets bypass ordinary lazy cycles.
+        // Other reads execute BeginClass, whose early return still publishes the
+        // successful ordinary member cache through the normal return machinery.
+        let active = self
             .frames
             .iter()
             .chain(self.suspended.iter().flat_map(|context| &context.frames))
@@ -1248,8 +1247,40 @@ impl Vm {
                         && force.name == name
                         && force.method == method
                 })
+            });
+        if active
+            && let Some(Instruction::BeginClass { template, .. }) = self
+                .program
+                .blocks
+                .get(member.code)
+                .and_then(|block| block.first())
+            && let Some(id) = self.class_singletons.get(template).copied()
+        {
+            self.stack.push(Value::Class(id));
+            return Ok(());
+        }
+        if memoize
+            && matches!(
+                self.heap.get(receiver)?.cache.get(&key),
+                Some(LazyState::Evaluating)
+            )
+        {
+            return Err(RuntimeError::new(
+                ErrorKind::Cycle,
+                format!("cyclic forcing of {name}"),
+            ));
+        }
+        if local
+            && self.program.blocks.get(member.code).is_some_and(|block| {
+                matches!(
+                    block.as_slice(),
+                    [Instruction::Constant(_), Instruction::Return]
+                )
             })
         {
+            memoize = false;
+        }
+        if active {
             return Err(RuntimeError::new(
                 ErrorKind::Cycle,
                 format!("cyclic forcing of {name}"),
@@ -1461,6 +1492,126 @@ impl Vm {
         Ok(())
     }
 
+    /// VmExceptionBuilder enumerates the live prototype, never the full template.
+    fn missing_member(
+        &self,
+        receiver: ObjectId,
+        name: &str,
+        method: bool,
+    ) -> Result<RuntimeError, RuntimeError> {
+        let Some(class) = collections::typed_class(&self.heap, receiver)? else {
+            return Ok(RuntimeError::new(
+                ErrorKind::MissingMember,
+                format!("missing member {name}"),
+            ));
+        };
+        let mut properties = Vec::new();
+        let mut method_groups = Vec::new();
+        let mut current = Some(receiver);
+        let mut visited = BTreeSet::new();
+        while let Some(id) = current {
+            if !visited.insert(id) {
+                return Err(RuntimeError::new(ErrorKind::Cycle, "cyclic parent chain"));
+            }
+            let object = self.heap.get(id)?;
+            let mut methods = Vec::new();
+            for member in object.members.iter().filter(|m| !m.local && !m.entry) {
+                if member.method {
+                    if let Some(signature) = self
+                        .program
+                        .metadata
+                        .get(member.code)
+                        .and_then(|m| m.method_signature.clone())
+                    {
+                        methods.push((member.name.to_string(), signature.0, signature.1));
+                    }
+                } else {
+                    properties.push(member.name.to_string());
+                }
+            }
+            method_groups.push(methods);
+            // A failed superclass resolution has no Typed/Any ancestry yet.
+            if object.class_definition.is_some()
+                && object.class_superclass_initialized
+                && object.parent.is_none()
+            {
+                method_groups.push(
+                    crate::diagnostic_names::TYPED_METHODS
+                        .iter()
+                        .map(|(name, signature, arity)| {
+                            ((*name).to_owned(), (*signature).to_owned(), *arity)
+                        })
+                        .collect(),
+                );
+            }
+            current = object.parent;
+        }
+        // VmClass.getAllMethods merges ancestors first; overriding a method
+        // replaces its definition without moving its insertion position.
+        let mut methods: Vec<(String, String, usize)> = Vec::new();
+        for candidate in method_groups.into_iter().rev().flatten() {
+            if let Some(existing) = methods.iter_mut().find(|m| m.0 == candidate.0) {
+                *existing = candidate;
+            } else {
+                methods.push(candidate);
+            }
+        }
+        let arity = if method {
+            self.frames
+                .last()
+                .and_then(|frame| {
+                    self.program.metadata.get(frame.block).and_then(|metadata| {
+                        metadata.method_arities.get(&frame.pc.saturating_sub(1))
+                    })
+                })
+                .copied()
+                .map_or(0, |n| n as isize)
+        } else {
+            -1
+        };
+        let class_name = reference::type_name(
+            &TypeCheck::Class {
+                id: class.id,
+                name: class.name,
+            },
+            &self.program.module_name,
+        );
+        let mut error = RuntimeError::new(
+            ErrorKind::MissingMember,
+            if method {
+                format!("Cannot find method `{name}` in class `{class_name}`.")
+            } else {
+                format!("Cannot find property `{name}` in object of type `{class_name}`.")
+            },
+        );
+        error.hint = crate::diagnostic::member_suggestions(name, arity, &properties, &methods)
+            .or_else(|| {
+                let mut names = if method {
+                    methods.into_iter().map(|m| m.0).collect()
+                } else {
+                    properties
+                };
+                names.sort_by(|a, b| a.encode_utf16().cmp(b.encode_utf16()));
+                names.dedup();
+                Some(if method {
+                    format!(
+                        "Available methods in class `{class_name}`:\n{}",
+                        names.join("\n")
+                    )
+                } else {
+                    format!(
+                        "Available properties:\n{}",
+                        if names.is_empty() {
+                            "(none)".to_owned()
+                        } else {
+                            names.join("\n")
+                        }
+                    )
+                })
+            });
+        Ok(error)
+    }
+
     /// Find an inherited declaration without forcing its initializer. Typed object
     /// validation starts at the class prototype, not an instance's cached value.
     fn inherited_member(
@@ -1470,6 +1621,7 @@ impl Vm {
     ) -> Result<Option<&Member>, RuntimeError> {
         let mut current = Some(parent);
         let mut visited = BTreeSet::new();
+        let mut definition = None;
         while let Some(id) = current {
             if !visited.insert(id) {
                 return Err(RuntimeError::new(ErrorKind::Cycle, "cyclic parent chain"));
@@ -1481,11 +1633,17 @@ impl Vm {
                     && inherited.method == member.method
                     && inherited.name == member.name
             }) {
-                return Ok(Some(inherited));
+                // VmClass.collectAllProperties keeps an inherited declaration
+                // when a prototype override has no type annotation. Value dispatch
+                // still uses that closest override in force_key_mode_prepared.
+                if inherited.method || inherited.ty.is_some() {
+                    return Ok(Some(inherited));
+                }
+                definition = Some(inherited);
             }
             current = object.parent;
         }
-        Ok(None)
+        Ok(definition)
     }
 
     fn validate_class_override(
@@ -1616,6 +1774,7 @@ impl Vm {
         let mut property_names = Vec::new();
         let mut class_name = None;
         let mut class_parent = None;
+        let mut class_initializing = false;
         let mut visited = BTreeSet::new();
         while let Some(id) = ancestor {
             if !visited.insert(id) {
@@ -1625,6 +1784,7 @@ impl Vm {
             if class_name.is_none() {
                 if object.class_definition.is_some() {
                     class_parent = Some(id);
+                    class_initializing = object.class_initializing;
                 }
                 class_name = object
                     .class_definition
@@ -1649,7 +1809,9 @@ impl Vm {
         }
         if let Some(class_name) = class_name {
             for member in members.iter().filter(|member| !member.local) {
-                if !declared.contains(&(member.name.clone(), member.method)) {
+                if !(declared.contains(&(member.name.clone(), member.method))
+                    || class_initializing && !member.method)
+                {
                     let mut error = RuntimeError::new(
                         ErrorKind::MissingMember,
                         format!(
@@ -2096,17 +2258,7 @@ impl Vm {
                         .ok_or_else(|| invalid("missing module for type resolution"))?
                         .as_object()?,
                 };
-                // ClassNode publishes a partially initialized singleton before resolving
-                // property types. A type-only back edge is therefore valid.
-                if self.frames.iter().any(|frame| {
-                    frame.force.as_ref().is_some_and(|force| {
-                        force.receiver == module && force.name == name && !force.method
-                    })
-                }) {
-                    self.stack.push(Value::Null);
-                } else {
-                    self.force(module, module, name, local, true, false)?;
-                }
+                self.force(module, module, name, local, true, false)?;
             }
             Instruction::Undefined(name) => {
                 return Err(RuntimeError::new(
@@ -2127,72 +2279,99 @@ impl Vm {
             Instruction::Unsupported(message) => {
                 return Err(RuntimeError::new(ErrorKind::Unsupported, message.as_ref()));
             }
-            Instruction::MakeClass {
+            Instruction::BeginClass {
                 template,
                 class,
-                has_parent,
+                end,
             } => {
-                let parent = if has_parent {
-                    let Value::Class(id) = self.pop()? else {
-                        return Err(RuntimeError::new(
-                            ErrorKind::Type,
-                            "Superclass must be a class.",
-                        ));
-                    };
-                    let parent_class = self
-                        .heap
-                        .get(id)?
-                        .class_definition
-                        .as_ref()
-                        .ok_or_else(|| invalid("invalid class handle"))?;
-                    if !parent_class.open && !parent_class.abstract_ {
-                        let mut error = RuntimeError::new(
-                            ErrorKind::Type,
-                            format!(
-                                "Cannot extend non-open class `{}#{}`.",
-                                self.program.module_name, parent_class.name
-                            ),
-                        );
-                        error.hint = Some("By default, classes are closed for extension.\nTo make a class extensible, add an `open` modifier: `open class MyClass { ... }`".into());
-                        return Err(error);
-                    }
-                    Some(id)
+                if let Some(id) = self.class_singletons.get(&template).copied() {
+                    self.stack.push(Value::Class(id));
+                    self.frames.last_mut().expect("active frame").pc = end;
                 } else {
-                    None
+                    let environment = self
+                        .frames
+                        .last()
+                        .expect("active frame")
+                        .environment
+                        .clone();
+                    let id = self.heap.allocate(Object {
+                        class_definition: Some(class),
+                        class_initializing: true,
+                        environment,
+                        ..Object::default()
+                    });
+                    self.class_singletons.insert(template, id);
+                    self.stack.push(Value::Class(id));
+                }
+            }
+            Instruction::SetClassParent => {
+                let Value::Class(parent) = self.pop()? else {
+                    return Err(RuntimeError::new(
+                        ErrorKind::Type,
+                        "Superclass must be a class.",
+                    ));
                 };
-                let members = self
+                let Some(Value::Class(id)) = self.stack.last().cloned() else {
+                    return Err(invalid("missing class initialization target"));
+                };
+                let parent_class = self
+                    .heap
+                    .get(parent)?
+                    .class_definition
+                    .as_ref()
+                    .ok_or_else(|| invalid("invalid class handle"))?;
+                if id == parent {
+                    return Err(RuntimeError::new(
+                        ErrorKind::Type,
+                        format!(
+                            "Class `{}#{}` cannot extend itself.",
+                            self.program.module_name, parent_class.name
+                        ),
+                    ));
+                }
+                if !parent_class.open && !parent_class.abstract_ {
+                    let mut error = RuntimeError::new(
+                        ErrorKind::Type,
+                        format!(
+                            "Cannot extend non-open class `{}#{}`.",
+                            self.program.module_name, parent_class.name
+                        ),
+                    );
+                    error.hint = Some("By default, classes are closed for extension.\nTo make a class extensible, add an `open` modifier: `open class MyClass { ... }`".into());
+                    return Err(error);
+                }
+                let object = self.heap.get_mut(id)?;
+                object.parent = Some(parent);
+                object.class_superclass_initialized = true;
+            }
+            Instruction::SetDefaultClassParent => {
+                let Some(Value::Class(id)) = self.stack.last().cloned() else {
+                    return Err(invalid("missing class initialization target"));
+                };
+                // Typed/Any are implicit in the bounded heap representation.
+                self.heap.get_mut(id)?.class_superclass_initialized = true;
+            }
+            Instruction::PublishClassMember { template, index } => {
+                let Some(Value::Class(id)) = self.stack.last().cloned() else {
+                    return Err(invalid("missing class initialization target"));
+                };
+                let member = self
                     .program
                     .objects
                     .get(template)
-                    .ok_or_else(|| invalid("invalid class template"))?
+                    .and_then(|members| members.get(index))
+                    .ok_or_else(|| invalid("missing class member"))?
                     .clone();
-                let environment = self
-                    .frames
-                    .last()
-                    .expect("active frame")
-                    .environment
-                    .clone();
-                let id = self.heap.allocate(Object {
-                    class_definition: Some(class),
-                    parent,
-                    members,
-                    environment,
-                    ..Object::default()
-                });
-                self.stack.push(Value::Class(id));
+                if let Some(parent) = self.heap.get(id)?.parent {
+                    self.validate_class_override(parent, &member)?;
+                }
+                self.heap.get_mut(id)?.members.push(member);
             }
-            Instruction::ValidateClassMember { index } => {
-                let Some(Value::Class(id)) = self.stack.last() else {
+            Instruction::FinishClass => {
+                let Some(Value::Class(id)) = self.stack.last().cloned() else {
                     return Err(invalid("missing class initialization target"));
                 };
-                let object = self.heap.get(*id)?;
-                if let Some(parent) = object.parent {
-                    let member = object
-                        .members
-                        .get(index)
-                        .ok_or_else(|| invalid("missing class member"))?;
-                    self.validate_class_override(parent, member)?;
-                }
+                self.heap.get_mut(id)?.class_initializing = false;
             }
             Instruction::MakeInstance { template } => {
                 let Value::Class(parent) = self.pop()? else {
@@ -2904,6 +3083,7 @@ struct Code {
     spans: Vec<Option<Span>>,
     let_scopes: Vec<LetScope>,
     type_casts: Vec<usize>,
+    method_arities: BTreeMap<usize, usize>,
 }
 impl Code {
     fn push(&mut self, instruction: Instruction) {
@@ -3115,6 +3295,25 @@ impl Compiler<'_> {
         self.program.metadata[code].amendment = member.is_amendment();
         self.program.metadata[code].fixed_span = member.override_fixed_span;
         self.program.metadata[code].const_span = member.override_const_span;
+        if let crate::syntax::ExprKind::Function {
+            parameters,
+            method: true,
+            ..
+        } = &member.expr.kind
+        {
+            self.program.metadata[code].method_signature = Some((
+                format!(
+                    "{}({})",
+                    member.name,
+                    parameters
+                        .iter()
+                        .map(|p| p.name.as_str())
+                        .collect::<Vec<_>>()
+                        .join(", ")
+                ),
+                parameters.len(),
+            ));
+        }
         self.member = previous_member;
         self.modifiers = previous_modifiers;
         Ok(Member {
@@ -3159,6 +3358,8 @@ impl Compiler<'_> {
             fixed_span: None,
             const_span: None,
             initialization_error: None,
+            method_signature: None,
+            method_arities: code.method_arities,
             let_scopes: code.let_scopes,
             constraint_root: None,
             inline_constraint: false,
@@ -3214,17 +3415,6 @@ impl Compiler<'_> {
                 if !type_parameters.is_empty() {
                     return Err(unsupported_type("generic classes"));
                 }
-                if let Some(parent) = superclass
-                    && let Err(error) = self.class_expression(
-                        parent,
-                        output,
-                        self.type_scopes.len(),
-                        &mut BTreeSet::new(),
-                    )
-                {
-                    output.push_at(Instruction::Fail(error.at(parent.span)), parent.span);
-                    return Ok(());
-                }
                 let class = Class {
                     id: expression.span.start,
                     name: Arc::from(self.member.trim_start_matches('#')),
@@ -3258,14 +3448,29 @@ impl Compiler<'_> {
                         return Ok(());
                     }
                 };
+                let begin = output.len();
                 output.push_at(
-                    Instruction::MakeClass {
+                    Instruction::BeginClass {
                         template,
                         class,
-                        has_parent: superclass.is_some(),
+                        end: 0,
                     },
-                    superclass.as_ref().map_or(expression.span, |ty| ty.span),
+                    expression.span,
                 );
+                if let Some(parent) = superclass {
+                    if let Err(error) = self.class_expression(
+                        parent,
+                        output,
+                        self.type_scopes.len(),
+                        &mut BTreeSet::new(),
+                    ) {
+                        output.push_at(Instruction::Fail(error.at(parent.span)), parent.span);
+                    } else {
+                        output.push_at(Instruction::SetClassParent, parent.span);
+                    }
+                } else {
+                    output.push(Instruction::SetDefaultClassParent);
+                }
                 self.type_scopes.push(members.to_vec());
                 // ClassNode initializes properties in declaration order, then methods.
                 let compiled = self.program.objects[template].clone();
@@ -3285,11 +3490,18 @@ impl Compiler<'_> {
                             continue;
                         }
                         self.initialize_member_types(std::slice::from_ref(member), output)?;
-                        output
-                            .push_at(Instruction::ValidateClassMember { index }, member.name_span);
+                        output.push_at(
+                            Instruction::PublishClassMember { template, index },
+                            member.name_span,
+                        );
                     }
                 }
                 self.type_scopes.pop();
+                output.push(Instruction::FinishClass);
+                let end = output.len();
+                if let Instruction::BeginClass { end: target, .. } = &mut output[begin] {
+                    *target = end;
+                }
             }
             ExprKind::TypeAlias { .. } => {
                 // Declarations are lazy. Expand only when a type annotation or constructor uses the alias.
@@ -3627,6 +3839,7 @@ impl Compiler<'_> {
                     return Ok(());
                 }
                 let mut nullable_branch = None;
+                let lookup_start = output.len();
                 let method = if let ExprKind::NullableMember(receiver, name) = &callee.kind {
                     self.expression(receiver, output)?;
                     output.push(Instruction::Duplicate);
@@ -3658,6 +3871,24 @@ impl Compiler<'_> {
                     self.expression(callee, output)?;
                     true
                 };
+                if matches!(
+                    callee.kind,
+                    ExprKind::Name(_) | ExprKind::Member(..) | ExprKind::NullableMember(..)
+                ) && let Some(lookup) = output[lookup_start..].iter().rposition(|instruction| {
+                    matches!(
+                        instruction,
+                        Instruction::GetMethod(_)
+                            | Instruction::GetConstMethod(_)
+                            | Instruction::GetSuperMethod(_)
+                            | Instruction::GetConstSuperMethod(_)
+                            | Instruction::GetMethodProperty { .. }
+                            | Instruction::GetImplicitMethod(_)
+                    )
+                }) {
+                    output
+                        .method_arities
+                        .insert(lookup_start + lookup, arguments.len());
+                }
                 for argument in arguments {
                     self.expression(argument, output)?;
                 }

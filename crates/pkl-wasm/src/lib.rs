@@ -58,6 +58,38 @@ pub fn evaluate_language(
     )
     .map_err(error)
 }
+/// Development-only ordered calls on one evaluator, retaining failures as data.
+#[wasm_bindgen(js_name = evaluateLanguageSequence)]
+pub fn evaluate_language_sequence(
+    source: JsString,
+    uri: JsString,
+    module_name: JsString,
+    expressions: js_sys::Array,
+    power_assertions: Option<bool>,
+) -> Result<js_sys::Array, JsValue> {
+    let expressions = expressions
+        .iter()
+        .map(|value| string(&JsString::from(value)))
+        .collect::<Result<Vec<_>, _>>()?;
+    Ok(pkl_runtime::evaluation::scalar_expressions_with_options(
+        &string(&source)?,
+        &string(&uri)?,
+        &string(&module_name)?,
+        &expressions,
+        pkl_runtime::evaluation::EvaluationOptions {
+            power_assertions: power_assertions.unwrap_or(false),
+        },
+    )
+    .map_err(error)?
+    .into_iter()
+    .map(|result| {
+        JsValue::from_str(&match result {
+            Ok(value) => format!("value\t{value}"),
+            Err(error) => format!("error\t{error}"),
+        })
+    })
+    .collect())
+}
 #[wasm_bindgen(js_name = roundtripString)]
 pub fn roundtrip_string(input: JsString) -> Result<String, JsValue> {
     match probe::identity(Value::string(string(&input)?)).map_err(error)? {

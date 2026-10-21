@@ -35,7 +35,12 @@ differences fail the job. The full inventory remains incomplete and its strict
 gate runs additionally on manual full-corpus dispatch. A green M2 development
 job does not mean the language milestone is complete. The job also regenerates
 the identifier intervals against the pinned Java lexer/JDK and checks the exact
-Rust table bytes. Both evidence directories are retained in its artifact.
+Rust table bytes. A separate same-evaluator class sequence acquisition verifies
+initialization failure, subsequent access, and the declarations published before
+failure. Its bounded contract requires every selected call to match, with no new
+failure exception. Sequence results remain separate from the independent
+expression count and the full M2 gate. All evidence directories are retained in
+the M2 artifact, including failed acquisitions.
 The job has a 40-minute scheduling budget for the expanded Reference corpus;
 the preceding 1,059-case workload already took roughly 24 minutes in CI.
 Per-case timeouts, raw comparisons, and the two development exceptions are

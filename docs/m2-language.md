@@ -29,9 +29,10 @@ mapping labels still require all linked cases to execute and pass. Linking an
 original upstream ID does not change its input, adapter, execution state, or
 output boundary. Selected reproductions therefore cannot silently replace the
 original snippet contract. Missing IDs, duplicate links, source drift, wrong
-baselines, and contradictory scope claims fail validation. Six reviewed entries
-link the bounded Reference, import, metadata, and diagnostic implementation to
-selected cases. Every entry remains partial and records its remaining scope.
+baselines, and contradictory scope claims fail validation. The reviewed entries
+link bounded Reference, modifier, class, import, metadata, and diagnostic
+implementations to selected cases. Every entry remains partial and records its
+remaining scope.
 
 ```sh
 python3 tools/m2_manifest.py --check
@@ -128,6 +129,43 @@ the generated Rust bytes. CI repeats this check against the pinned JDK.
 M1's platform and Host contracts remain regression requirements. New language
 features must retain captured values across VM suspension and collection and use
 the same engine in native Rust, browser Wasm, and Node N-API.
+
+## Persistent class initialization sequences
+
+Independent expression processes cannot verify state retained after an error.
+The separate [sequence manifest](../compatibility/m2-class-lifecycle/manifest.json)
+declares ordered property-path calls within one evaluator and module. Each
+sequence starts with a fresh evaluator and repeats in a second fresh evaluator;
+errors within a sequence do not reset its evaluator. Fixture helper properties
+contain the expressions being observed. The Java and Rust adapters use the same
+source bytes, fixed `file:///m2-platform.pkl` URI, and disabled power assertions.
+
+```sh
+python3 tools/m2_class_lifecycle.py --output target/m2/class-lifecycle-new --record-only
+python3 tools/m2_class_lifecycle.py --verify-report target/m2/class-lifecycle-new
+python3 tools/m2_class_lifecycle.py --verify-contract target/m2/class-lifecycle-new
+```
+
+The runner retains source snapshots, the recorded Rust build and frozen
+executable, Java classes and oracle identity, ordered process markers, and each
+call's complete status/stdout/stderr bytes. Java exception class names are
+provenance metadata; they are not compared to Rust implementation type names.
+The report verifier recomputes comparisons from the captured bytes. The bounded
+contract requires every selected call to match, with no mismatch allowance.
+`--java-only` acquires exploratory oracle observations and cannot pass that
+contract. Unexecuted groups and nonterminating oracle observations remain
+explicit gaps. Sequence executions and call comparisons have their own counts;
+they are not added to the independent-expression selection or treated as full
+language coverage.
+
+The shared `evaluateLanguageSequence` development binding returns ordered
+`value\t...` or `error\t...` strings in Node and Wasm, preserving complete value
+and diagnostic payloads. Native acquisition uses the same runtime boundary.
+Rust collects between calls while retaining the module root. Dedicated native
+tests separately verify evaluator-owned class roots, disposable object
+reclamation, isolated heaps, ordinary failed-property retries, and terminal
+cleanup. Internal bytecode suspension tests establish scheduler behavior;
+they do not establish that the same suspension path is available in Pkl source.
 
 The collection-type selection compares lazy and eager checking, wrapper
 composition, aliases, defaults, constraint identity, cache reuse, and complete

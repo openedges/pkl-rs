@@ -66,6 +66,7 @@ class PlatformEvidenceTests(unittest.TestCase):
             'm2-fixed-inheritance-and-virtual-receivers',
             'm2-fixed-reference-declaration-metadata',
             'm2-fixed-property-diagnostics',
+            'm2-class-publication-sequences',
         }
         names = sorted(m1_platforms.REQUIRED_SCENARIOS)
         valid = {'nodeChecks': names, 'browserChecks': names, 'browserErrors': [],

@@ -1,4 +1,5 @@
 import { FakeHostOperations, waitingEvaluation } from './host-adapter.mjs';
+import { classPublicationCases } from './class-publication-cases.mjs';
 
 // Identical assertions execute inside Node and an actual Chromium page.
 export async function scenarios(api) {
@@ -44,6 +45,20 @@ export async function scenarios(api) {
     throws(() => api.evaluateLanguage(source, uri, 'm2-platform', 'result'),
       '–– Pkl Error ––\nDivision by zero.\n\n1 | result = 1 ~/ 0\n             ^^^^^^\nat m2-platform#result (file:///m2-platform.pkl)\n\n1 | result\n    ^^^^^^\nat  (repl:text)\n');
     eq(api.evaluateLanguage('result = "한글🙂"', uri, 'm2-platform', 'result'), '한글🙂');
+  });
+  await check('m2-class-publication-sequences', () => {
+    for (const fixture of classPublicationCases) {
+      // Run each list twice on fresh evaluators. Within a list, every failure
+      // and retry shares one evaluator/module and the original call ordering.
+      for (let repetition = 0; repetition < 2; repetition++) {
+        const actual = api.evaluateLanguageSequence(fixture.source,
+          'file:///m2-platform.pkl', 'm2-platform', fixture.expressions, false);
+        eq(actual.length, fixture.expected.length);
+        for (let index = 0; index < actual.length; index++) {
+          eq(actual[index], fixture.expected[index]);
+        }
+      }
+    }
   });
   await check('m2-class-method-and-type-alias', () => {
     const source = 'typealias Count = Int\nclass Box { value: Count = 40; function add(n: Count): Count = value + n }\nbox = new Box {}\nresult = box.add(2)';

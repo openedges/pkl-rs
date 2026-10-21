@@ -1,0 +1,10 @@
+import "pkl:ref"
+class D extends ref.Domain { function renderReference(r): String = "ok" }
+local d = new D {}
+open class Base { fixed value: String = throw("inherited body") }
+class Child extends Base { early: Int = throw("early body"); hidden secret: Int = throw("hidden body"); value: String = "bad"; later: Boolean = throw("tail body") }
+trigger = Child == Child
+inheritedType = ref.Reference(d, Child, null).value is ref.Reference<D, String>
+earlyType = ref.Reference(d, Child, null).early is ref.Reference<D, Int>
+hiddenType = ref.Reference(d, Child, null).secret is ref.Reference<D, Int>
+laterType = ref.Reference(d, Child, null).later is ref.Reference<D, Boolean>

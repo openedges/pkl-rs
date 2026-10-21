@@ -1,0 +1,160 @@
+{
+  "schema": 1,
+  "uri": "file:///m2-platform.pkl",
+  "module_name": "m2-platform",
+  "power_assertions": false,
+  "sequences": [
+    {
+      "id": "prefix",
+      "group": "P01",
+      "source": "prefix.pkl",
+      "expressions": "prefix.expressions",
+      "note": "",
+      "additional_groups": [
+        "P06",
+        "P13"
+      ]
+    },
+    {
+      "id": "position-first",
+      "group": "P02",
+      "source": "position-first.pkl",
+      "expressions": "position-first.expressions",
+      "note": ""
+    },
+    {
+      "id": "position-middle",
+      "group": "P02",
+      "source": "position-middle.pkl",
+      "expressions": "position-middle.expressions",
+      "note": ""
+    },
+    {
+      "id": "position-last",
+      "group": "P02",
+      "source": "position-last.pkl",
+      "expressions": "position-last.expressions",
+      "note": ""
+    },
+    {
+      "id": "property-type",
+      "group": "P03",
+      "source": "property-type.pkl",
+      "expressions": "property-type.expressions",
+      "note": ""
+    },
+    {
+      "id": "type-before-modifier",
+      "group": "P03",
+      "source": "type-before-modifier.pkl",
+      "expressions": "type-before-modifier.expressions",
+      "note": ""
+    },
+    {
+      "id": "lazy-body",
+      "group": "P03",
+      "source": "lazy-body.pkl",
+      "expressions": "lazy-body.expressions",
+      "note": ""
+    },
+    {
+      "id": "method-prefix",
+      "group": "P04",
+      "source": "method-prefix.pkl",
+      "expressions": "method-prefix.expressions",
+      "note": ""
+    },
+    {
+      "id": "method-return",
+      "group": "P04",
+      "source": "method-return.pkl",
+      "expressions": "method-return.expressions",
+      "note": ""
+    },
+    {
+      "id": "super-closed",
+      "group": "P05",
+      "source": "super-closed.pkl",
+      "expressions": "super-closed.expressions",
+      "note": ""
+    },
+    {
+      "id": "super-missing",
+      "group": "P05",
+      "source": "super-missing.pkl",
+      "expressions": "super-missing.expressions",
+      "note": ""
+    },
+    {
+      "id": "super-self",
+      "group": "P05",
+      "source": "super-self.pkl",
+      "expressions": "super-self.expressions",
+      "note": ""
+    },
+    {
+      "id": "recursive-type",
+      "group": "P08",
+      "source": "recursive-type.pkl",
+      "expressions": "recursive-type.expressions",
+      "note": ""
+    },
+    {
+      "id": "mutual-type",
+      "group": "P08",
+      "source": "mutual-type.pkl",
+      "expressions": "mutual-type.expressions",
+      "note": ""
+    },
+    {
+      "id": "wrapper-retry",
+      "group": "P13",
+      "source": "wrapper-retry.pkl",
+      "expressions": "wrapper-retry.expressions",
+      "note": ""
+    },
+    {
+      "id": "super-mutual",
+      "group": "P05",
+      "source": "super-mutual.pkl",
+      "expressions": "super-mutual.expressions",
+      "note": "Potential cyclic hierarchy; oracle internal errors remain distinct."
+    },
+    {
+      "id": "inherited-metadata",
+      "group": "P08",
+      "source": "inherited-metadata.pkl",
+      "expressions": "inherited-metadata.expressions",
+      "note": "Class metadata and value initializer dispatch may select different declarations during recursive initialization."
+    },
+    {
+      "id": "partial-reference",
+      "group": "P07",
+      "source": "partial-reference.pkl",
+      "expressions": "partial-reference.expressions",
+      "note": "Partial Reference metadata must not run inherited/early/hidden/tail initializer bodies."
+    }
+  ],
+  "unexecuted_groups": [
+    {
+      "group": "P09",
+      "reason": "Java-only module-cache probe stage12-java-module-identity-01 observes same URI/source identity retained, changed source at same URI ignored (marker remains1), distinct URI/evaluator identity separated. Rust multi-source module-cache parity is unimplemented; same-module identity is compared."
+    },
+    {
+      "group": "P10",
+      "reason": "Java observable sequence comparisons do not expose heap counts; Rust architectural GC coverage is separate."
+    },
+    {
+      "group": "P11",
+      "reason": "Real Java class-initialization read observed via @Deprecated { ...(read(\"life:class\")) } in stage12-java-host-path-01; Rust annotation frontend unsupported, so actual Host-in-class cross-language reentry remains unexecuted. Internal scheduler tests are separate."
+    },
+    {
+      "group": "P12",
+      "reason": "Terminal context/token/heap cleanup is covered by separate Rust lifecycle tests, not Java raw-byte equivalence."
+    },
+    {
+      "group": "P05",
+      "reason": "Indirect cyclic hierarchy property traversal new A {}.missing timed out after successful class identity calls in stage12-java-observations-03; traversal is observed oracle-timeout, not a compatibility pass."
+    }
+  ]
+}

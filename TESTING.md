@@ -92,6 +92,23 @@ The full gate must fail while required language implementations, mappings,
 adapters, or passing executions are missing. It cannot be replaced with the
 selected-case gate.
 
+Class initialization also has a separate persistent-evaluator contract:
+
+```sh
+python3 tools/m2_class_lifecycle.py --output target/m2/class-lifecycle-new --record-only
+python3 tools/m2_class_lifecycle.py --verify-report target/m2/class-lifecycle-new
+python3 tools/m2_class_lifecycle.py --verify-contract target/m2/class-lifecycle-new
+```
+
+Each sequence retains one module and evaluator across ordered calls, including
+errors, and repeats with a fresh evaluator. Every selected call must match its
+raw Java status, stdout, and stderr without exceptions. These sequences have
+separate execution/call counts and do not close the full language gate. Native
+GC and Host lifecycle tests separately check class roots, temporary reclamation,
+ordinary lazy retries, and terminal release. See the
+[sequence contract](docs/m2-language.md#persistent-class-initialization-sequences)
+for source/build provenance, adapters, and remaining scope.
+
 Collection regressions cover lazy bodies, eager keys and source forcing,
 inheritance order, primitive key equality, generator captures, spread, and
 complete subscript diagnostics. Native lifecycle tests also force collection

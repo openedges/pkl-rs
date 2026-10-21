@@ -399,9 +399,47 @@ abstract body errors use the declaration frame and header range. Class override
 modifier locations follow the pinned header substring lookup, including comments
 and repeated modifier flag carries.
 
-Persistent retry after failed class initialization remains a known lifecycle gap.
-The pinned Java class node retains its partially initialized singleton after an
-initialization exception, allowing a later evaluation in the same evaluator to
-return that class. The current Rust scheduler retries initialization and reports
-the error again. Successful Host read retries do not establish compatibility with
-this separate class publication behavior.
+### Class publication and evaluator ownership
+
+Class declarations have an evaluator-owned singleton cache keyed by the compiled
+declaration template. `BeginClass` publishes an empty prototype before resolving
+the superclass. Successful property declarations publish in order, followed by
+methods; only `FinishClass` marks initialization complete. A failure preserves
+the singleton, its parent if already resolved, and the successful declaration
+prefix. Later access returns that same partial class without resuming its
+initialization. The immutable shared `Program` never owns heap handles.
+
+This cache is separate from ordinary member caches. Failed lazy properties still
+become unevaluated and retry normally. Only an active direct class declaration
+can return its published singleton before the ordinary forcing-cycle check;
+arbitrary properties and functions keep their cycle detection. Recursive class
+types resolve a real class handle instead of a placeholder null value.
+
+An unfinished class allows property assignments even when a declaration has not
+been published. Fixed/const checks and Reference metadata lookup use the actual
+published and inherited definitions. Untyped prototype overrides preserve the
+inherited class property definition while value lookup uses the overriding
+initializer. Hidden declarations and unpublished tails therefore have distinct
+metadata and value lookup behavior.
+
+Singletons are strong GC roots for the lifetime of their VM. Their captured
+environment and already cached values remain reachable; unrelated temporary
+instances and failed builders remain collectible. Nonterminal VM cancellation
+unwinds the active evaluation while preserving published classes. Host session
+cancel, timeout, and close are terminal and release the singleton cache with the
+heap. Tests distinguish retained declaration graphs from temporary allocations
+and require terminal heap release, rather than weakening collection assertions.
+
+The same compiled declaration retains its first captured environment in one VM.
+Separate VMs sharing a Program have separate singletons and reject foreign heap
+handles. This is not a complete module loader/cache or source-replacement policy.
+The persistent scalar sequence adapter keeps one module across calls; full module
+URI/source identity remains a later integration requirement.
+
+Indirect cyclic superclass declarations can preserve class identity. Java
+property traversal of an observed cyclic hierarchy did not terminate; Rust's
+visited-set guards avoid an unbounded traversal. Those traversal results remain
+outside verified compatibility. Java can also suspend class initialization while
+evaluating an annotation containing a resource read. Annotation syntax is not yet
+supported by the Rust frontend. Internal instruction suspension tests verify VM
+reentry and cleanup separately from that unimplemented source-language path.

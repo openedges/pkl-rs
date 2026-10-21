@@ -76,3 +76,16 @@ pub(crate) const BASE_PROPERTIES: &[&str] = &[
     "NaN",
     "Infinity",
 ];
+
+/// Inherited signatures from pinned base.pkl Any and Typed, in declaration
+/// lookup order. Listing a diagnostic candidate does not implement its body.
+pub(crate) const TYPED_METHODS: &[(&str, &str, usize)] = &[
+    ("getClass", "getClass()", 0),
+    ("toString", "toString()", 0),
+    ("ifNonNull", "ifNonNull(transform)", 1),
+    ("hasProperty", "hasProperty(name)", 1),
+    ("getProperty", "getProperty(name)", 1),
+    ("getPropertyOrNull", "getPropertyOrNull(name)", 1),
+    ("toDynamic", "toDynamic()", 0),
+    ("toMap", "toMap()", 0),
+];

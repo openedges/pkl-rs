@@ -1,0 +1,5 @@
+open class A { b: B? = null; fixed p = 42 }
+class B extends A { p = 2 }
+trigger = A == A
+readValue = new B {}.p
+assigned = new B { p = 3 }.p

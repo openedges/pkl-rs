@@ -205,6 +205,10 @@ jobs:
         run: python3 tools/oracle.py fetch
       - name: Record raw language comparisons including failures
         run: python3 tools/m2_language.py --output target/m2/ci-language --record-only
+      - name: Record same-evaluator class initialization sequences
+        run: python3 tools/m2_class_lifecycle.py --output target/m2/ci-class-lifecycle --record-only
+      - name: Verify bounded class publication and retry contract
+        run: python3 tools/m2_class_lifecycle.py --verify-contract target/m2/ci-class-lifecycle
       - name: Verify generated identifier predicates against pinned Java
         run: python3 tools/m2_identifier_tables.py --output target/m2/ci-identifier
       - name: Verify selected development contract with recorded oracle exceptions
@@ -220,7 +224,9 @@ jobs:
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: m2-language-evidence
-          path: target/m2/ci-*
+          path: |
+            target/m2/ci-*
+            !target/m2/ci-*/build/**
           if-no-files-found: error
           include-hidden-files: true
           retention-days: 14
