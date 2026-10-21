@@ -1,0 +1,138 @@
+{
+  "implementation_commit": "c4e2a41e8391fe5ef031fc6fd5880cf46112c66e",
+  "scope": "Required local development checks for M2 Stage20. Full language, API, release-platform and performance gates remain separate.",
+  "source_stability": true,
+  "source_snapshot_count": 2331,
+  "source_manifest_report_sha256": "64aeea0394b1a03c63d9d786ebdd4900c85ecb42abba50f8586b4289411d3ccb",
+  "raw_report": "validation-stage20-final-evidence.tar.gz:report.json",
+  "rust_passed": 400,
+  "rust_failed": 0,
+  "rust_ignored": 1,
+  "python_passed": 194,
+  "checks": [
+    {
+      "command": [
+        "cargo",
+        "xtask",
+        "verify"
+      ],
+      "exit_code": 0,
+      "stdout_sha256": "900802c9cf4f23bd9dbc0e79f58d3e21493ec0c990782bc5b690a7432148e9eb",
+      "stderr_sha256": "e6c3a4cfad0664004934e2751b4dc165a7c383463db11b6a2a02a3020e7300ed"
+    },
+    {
+      "command": [
+        "cargo",
+        "fmt",
+        "--all",
+        "--",
+        "--check"
+      ],
+      "exit_code": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "cargo",
+        "clippy",
+        "--workspace",
+        "--all-targets",
+        "--locked",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "exit_code": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "e7cadcf7a432bcf6f51bc5c7d3beacca5e5e3f7480fd3d9cdc4dad68e09d2493"
+    },
+    {
+      "command": [
+        "cargo",
+        "test",
+        "--workspace",
+        "--locked"
+      ],
+      "exit_code": 0,
+      "stdout_sha256": "56acb0b783e0eace638eada07e161cd94f1465916b260ddde35aeac13e79dbca",
+      "stderr_sha256": "918e0e10d7f359fd9260060dde4390173d9a762b95fc313e20ddb3cc0080e08e"
+    },
+    {
+      "command": [
+        "cargo",
+        "check",
+        "-p",
+        "pkl-runtime",
+        "--target",
+        "wasm32-unknown-unknown",
+        "--locked"
+      ],
+      "exit_code": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "a98cafd6883f5543f120c76b06e4b06f26cc795a4bfcaad0d9dc41429c5246be"
+    },
+    {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools/tests",
+        "-v"
+      ],
+      "exit_code": 0,
+      "stdout_sha256": "8bf2c2e6bec970b282f099eb9979dbc912309bbdb3f82ebc4065b9e5100169a9",
+      "stderr_sha256": "ef1860a674c759e6acb77f1bad345b6b41f829e202354770ece1d59462074638"
+    },
+    {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/m2_manifest.py",
+        "--check"
+      ],
+      "exit_code": 0,
+      "stdout_sha256": "c1d2363a6463abf4d3eb15584ba91375702c52366ea2c57d48613a677a50bba9",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "identities": {
+    "rustc": {
+      "command": [
+        "rustc",
+        "-vV"
+      ],
+      "exit_code": 0,
+      "stdout_sha256": "e2211d4c0760a2a3b03eab88e42f8848952b7aa2ed649277a8fdbf3ce1838fd4",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "cargo": {
+      "command": [
+        "cargo",
+        "--version"
+      ],
+      "exit_code": 0,
+      "stdout_sha256": "9950bbb2d5c3417b1a068f0e81f6d3cac991a363193bdf2a22d447f5acf8b503",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "host": {
+      "command": [
+        "uname",
+        "-a"
+      ],
+      "exit_code": 0,
+      "stdout_sha256": "f6f3a39d4ac7a955e9c3604f1add32429776f61de1ee3e0f3c19bf3af5c78f73",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "python": {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "--version"
+      ],
+      "exit_code": 0,
+      "stdout_sha256": "f615dc9512de8b165e2b595e5cdc608a3ba7927ae92f959c5b42ec3d58e2ffa8",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  }
+}

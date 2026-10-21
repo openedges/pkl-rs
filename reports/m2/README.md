@@ -26,8 +26,100 @@ const-method lexical scope corrections. Stage 18 adds finite recursive generic
 argument environments, shared generic let roots, selected collection defaults
 and Reference validation, and let/for const-scope boundaries. Stage 19 shares
 runtime generic argument graphs, reclaims them iteratively, schedules nested
-defaults, and makes deep Reference metadata traversal stack safe.
+defaults, and makes deep Reference metadata traversal stack safe. Stage 20
+preserves nullable defaults through amendments and evaluator lifecycles.
 These checkpoints do not complete the language milestone.
+
+## Stage 20 local verification checkpoint
+
+Implementation `c4e2a41e8391fe5ef031fc6fd5880cf46112c66e` is committed and pushed.
+Runtime implementation used `gpt-6-astra / high`; Java comparisons and independent
+lifecycle/platform review used `gpt-6.1-sol / high`. The root independently
+reviewed the production changes and coordinated local macOS verification.
+Author self-review, independent source review, and evidence review retain their
+separate scopes.
+
+Defaults of nullable types now preserve their inner defaults in the evaluator-owned tracing
+heap. Empty amendments expose one attached default; amendments with members
+unwrap nested defaults before selecting their parent. Null equality, hashing,
+type checks, rendering, and coalescing remain independent of the attachment.
+Null-propagating member and method calls discard it. Static and generic default
+construction retain class and collection defaults, including the absence of an
+abstract class default. Generic construction uses the existing scheduler and GC
+roots.
+
+Independent review found that VM inputs and Host completions incorrectly treated
+the new internal null slot as an ordinary object. Typed value validation now
+accepts a live slot from the same evaluator and rejects foreign or stale slots.
+The first full workspace run then exposed a stack regression missed in initial
+review: empty amendments recursively entered the large collection dispatcher.
+The corrected implementation uses nonrecursive dispatch and a small finalization
+helper. All four unchanged Stage 19 metadata tests pass with their original
+256 KiB stack and workload limits. The failing SIGABRT, interrupted acquisitions,
+completed superseded runs, and initial review records remain in the
+[superseded evidence](exploration-stage20-superseded-evidence.tar.gz).
+
+The [final summary](stage20-final-summary.json) records **1,860 independent
+expressions: 1,858 raw matches and the original cycle oracle error and
+integer `% 0` diagnostic mismatch**. All 39 additions match, comprising 34
+successes and five expected errors. All 69 metamorphic relations pass.
+The [persistent suite](class-lifecycle-stage20-final-evidence.tar.gz) runs 118
+sequences twice, with **1,936 matching calls**. Existing 1,821 case definitions,
+66 relations, 115 sequences, 1,870 calls, and 17 lifecycle test files remain
+preserved. No new development exception was added.
+
+The [required local checks](validation-stage20-final.json) pass all seven
+commands: **400 Rust tests and 194 Python tests**, formatting, Clippy, Wasm
+compilation, reference pins, and manifest freshness. One existing ignored Rust
+probe remains excluded. Two new heap tests cover null-slot isolation and
+20,000-level tracing/release on a 256 KiB thread. Six new
+[native lifecycle tests](native-defaults-stage20-final-evidence.tar.gz) cover
+nested defaults, captured closures, Host child failure/retry, 24 cancellations,
+separate evaluators, stale/foreign value boundaries, and all three terminal
+transitions. These six use ordinary test-thread stacks and do not inherit the
+small-stack claim from the separate stress tests.
+
+[Actual Node and Chromium](platforms-stage20-final-evidence.tar.gz) each pass
+74 development scenarios. Shared primitive results match across 6,078 cases;
+each target matches Java in 6,076 cases, retaining the two known regex failures.
+The architecture contract passes while strict primitive compatibility fails.
+M1 frontend, runtime, and lifecycle regressions retain their previous successful
+comparisons and known cycle/complete-diagnostic differences. No new hosted CI,
+Linux, or Windows result is claimed.
+
+The [exploration archive](exploration-stage20-evidence.tar.gz) retains fresh Java
+captures for 62 exploratory attempts and 39 final fixture-URI cases; these
+include repeated hypotheses and are not an additional coverage denominator.
+Corrected final artifacts also match six exact historical nullable inputs at
+their original URIs and 33 new ordered calls. Invalid syntax attempts, unsupported
+Map construction, direct `new T`, and an abstract-default missing-property
+diagnostic remain recorded separately. One supplemental lifecycle-tool unittest
+command timed out; the final complete 194-test Python run passes independently.
+The two exploration archives preserve 16,744 original paths with 178 explicit
+disposable Cargo-cache exclusions. Their independent audit verifies all 16,752
+inventory payload records and the historical reference identities without
+executing retained artifacts.
+
+The [source and gate audit](source-stage20-final-evidence.tar.gz) binds
+**4,951 captured project-source copies across 2,331 unique
+paths** to the exact implementation commit. Upstream source copies are absent;
+reference pins and oracle provenance are verified separately. All 474
+requirements and 16 partial mappings remain. The 2,860 overlapping accounting
+rows contain 1,860 ready, 960 unimplemented, and 40 unmapped entries. Integrity
+and development gates pass; strict selected and full gates fail, retaining
+1,950 full-gate failure reasons. These counts are not completion
+percentages.
+
+The [post-seal audit](stage20-post-seal-audit.json) independently verifies the
+11 final archives, source bindings, review records, six gate outcomes, immutable
+packaging helper, and historical reference identities. It executes no retained
+artifacts.
+
+**Stage 20 closes only the bounded nullable-default development contract.**
+Direct generic constructors, remaining shared-let/Reference/default diagnostics,
+Java stack-error bytes, synchronous metadata and parent-unwrapping cancellation
+latency, complete language/API/platform coverage, and execution-time/peak-RSS
+parity remain open.
 
 ## Stage 19 local verification checkpoint
 

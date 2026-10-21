@@ -325,7 +325,15 @@ Stage 15의 원래 입력·URI 그대로 재비교하여 shared-slot 실패 3개
 
 스무 번째 단계는 nullable 타입의 내부 기본값 보존을 구현합니다. Java의 `VmNull`과 nullable 타입·객체 literal 소스를 기준으로, 일반 `null`과 같은 출력·타입·동등성·해시를 유지하면서 amendment에 필요한 기본값을 evaluator 소유 heap entry로 보존합니다. 빈 amendment는 내부 기본값 한 단계를 반환하고, 멤버가 있는 amendment는 중첩 기본값을 풀어 부모를 선택합니다. null-propagation은 기본값을 제거한 일반 `null`을 반환합니다. generic collection의 기본값 생성은 기존 continuation·VM fuel·GC root를 사용합니다.
 
-핵심 구현은 `gpt-6-astra / high`, Java 비교와 독립 수명주기·플랫폼 검증은 `gpt-6.1-sol / high`로 분담했습니다. 원본 nullable 실패 입력과 새 성공·오류 사례, persistent 호출, 캡처된 closure, Host 실패·재시도·취소·evaluator 분리·terminal 해제를 검증합니다. 독립 검토에서 찾은 Host 입력·응답의 내부 null slot 검증 문제도 회귀 검사에 포함합니다. 첫 전체 검사에서는 기존 256 KiB 스택 테스트가 실패했습니다. 빈 amendment가 큰 instruction dispatcher를 재귀 호출하던 경로를 제거했고 기존 조건 그대로 재검사를 통과했습니다. 최초 검토가 놓친 이 회귀와 원시 실패·중단 기록을 보존하며 수정 후 새 디렉터리에서 최종 검증합니다. 최종 로컬 결과와 구현 커밋은 검증 완료 후 기록합니다. 직접 `new T`, shared-let·Reference·일부 기본값 진단과 동기 metadata의 취소 지연은 계속 별도 과제입니다.
+핵심 구현은 `gpt-6-astra / high`, Java 비교와 독립 수명주기·플랫폼 검증은 `gpt-6.1-sol / high`로 분담했습니다. 원본 nullable 실패 입력과 새 성공·오류 사례, persistent 호출, 캡처된 closure, Host 실패·재시도·취소·evaluator 분리·terminal 해제를 검증합니다. 독립 검토에서 찾은 Host 입력·응답의 내부 null slot 검증 문제도 회귀 검사에 포함합니다. 첫 전체 검사에서는 기존 256 KiB 스택 테스트가 실패했습니다. 빈 amendment가 큰 instruction dispatcher를 재귀 호출하던 경로를 제거했고 기존 조건 그대로 재검사를 통과했습니다. 최초 검토가 놓친 이 회귀와 원시 실패·중단 기록을 보존하며 수정 후 새 디렉터리에서 최종 검증합니다. 직접 `new T`, shared-let·Reference·일부 기본값 진단과 동기 metadata의 취소 지연은 계속 별도 과제입니다.
+
+구현 커밋 `c4e2a41e8391fe5ef031fc6fd5880cf46112c66e`를 푸시했습니다. [최종 로컬 요약](reports/m2/stage20-final-summary.json)은 1,860개 독립 식 중 1,858개 원시 바이트 일치와 기존 순환 oracle 오류·정수 `% 0` 진단 불일치를 기록합니다. 새 39개는 성공 34개·예상 오류 5개이며 모두 일치하고 변형 관계 69개도 통과했습니다. 기존 1,821개 정의·66개 관계·115개 순차 목록과 수명주기 테스트 파일 17개를 보존했으며 새 개발 예외는 추가하지 않았습니다.
+
+별도 persistent 계약은 118개 목록을 두 번 실행한 236회·1,936개 호출이 모두 일치합니다. [필수 로컬 검사 7종](reports/m2/validation-stage20-final.json)이 통과했고 Rust 400개·Python 194개 성공과 기존 ignored probe 1개를 구분합니다. 새 heap 테스트 2개는 256 KiB 스택에서 20,000단계 nullable 연결의 tracing·해제를 검증합니다. 새 수명주기 테스트 6개는 기본 thread stack에서 캡처된 closure·Host 재진입·실패 재시도·24회 취소·외부/해제된 handle·evaluator 분리·terminal 해제를 검증합니다. 실제 Node·Chromium 각각 74개 개발 시나리오와 공통 primitive 6,078개 일치·target별 Java 일치 6,076개·기존 regex 실패 2개를 구분합니다.
+
+[탐색 증거](reports/m2/exploration-stage20-evidence.tar.gz)와 [수정 전 증거](reports/m2/exploration-stage20-superseded-evidence.tar.gz)는 원본 경로 16,744개와 명시적으로 제외한 Cargo cache 파일 178개를 기록합니다. 독립 검토가 archive payload 16,752개의 무결성과 원본 경로·바이트·크기 및 과거 증거 연결을 확인했습니다. 수정된 최종 artifact로 새 39개·과거 원본 URI 6개·새 순차 호출 33개를 별도로 재비교했습니다. 전체 Python 검사와 별개인 보조 수명주기 도구 검사 한 건의 timeout, invalid syntax 가설, 직접 `new T`, Map constructor, abstract 기본값의 missing-property 진단 차이를 보존합니다.
+
+[소스·gate 증거](reports/m2/source-stage20-final-evidence.tar.gz)는 소스 사본 4,951개·고유 경로 2,331개를 정확한 구현 커밋과 연결합니다. upstream 소스 사본은 0개이며 참조 pin·oracle 출처는 별도 검증했습니다. 요구사항 474개·부분 연결 16개와 2,860개 accounting row 중 ready 1,860개·미구현 960개·미연결 40개를 유지합니다. 엄격한 전체 gate는 기존 실패 이유 1,950개를 유지하며 목록 수치를 완료율로 계산하지 않습니다. **Stage 20의 제한된 nullable-default 개발 계약만 마감했으며 M2 전체·제품 API·성능·메모리·릴리스 플랫폼 조건은 미완료입니다.**
 
 다음 구현은 남은 탐색 불일치의 의존성을 기준으로 진행합니다.
 
@@ -334,7 +342,7 @@ Stage 15의 원래 입력·URI 그대로 재비교하여 shared-slot 실패 3개
 3. annotation과 남은 클래스 초기화·modifier·재귀 타입·reflection 규칙을 확장합니다. 실제 source의 초기화 중 Host 중단·재진입, 미게시 local 선언의 Java 내부 오류와 순환 계층의 비종료 관찰은 원래 실패·미실행 상태를 보존하며 별도로 검증합니다.
 4. 모듈 클래스 상속·선언 출처·ModuleOutput override를 M2 의미론에 연결하고 실제 모듈 로딩·URI/source cache identity·Host는 M4 경로와 통합합니다. primitive missing-method 진단도 실제 멤버 목록을 사용하도록 보완합니다.
 
-다음 기능도 한 evaluator의 상태·오류 순서·GC root·Host 재진입·terminal 해제를 함께 검증해야 합니다. 현재 선택된 1,821개 독립 식과 66개 변형 관계, 별도 클래스·별칭 순차 계약 1,870개 호출을 회귀 기준으로 유지하고 Java 원시 결과를 Rust 출력으로 대체하지 않습니다. 순차 계약의 성공은 전체 클래스·module API나 M2 완료, 메모리 목표 달성을 뜻하지 않습니다.
+다음 기능도 한 evaluator의 상태·오류 순서·GC root·Host 재진입·terminal 해제를 함께 검증해야 합니다. 현재 선택된 1,860개 독립 식과 69개 변형 관계, 별도 클래스·별칭 순차 계약 1,936개 호출을 회귀 기준으로 유지하고 Java 원시 결과를 Rust 출력으로 대체하지 않습니다. 순차 계약의 성공은 전체 클래스·module API나 M2 완료, 메모리 목표 달성을 뜻하지 않습니다.
 
 [원본 API 사례](external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/api/reference.pkl)는 `fixed` 이후에도 Map·`map`/`join`·`pkl:math`·renderer converter를 요구하며, [원본 basic 사례](external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/basic/reference.pkl)는 module amendment·`pkl:test`·PCF 출력에 의존합니다. 이 M3·M4 연결을 별도 작업으로 추적하며 원래 snippet/API 실행 조건을 유지합니다. Stage 13의 Reference 탐색 재비교에서는 이전 불일치 4개가 해결되어 191개 중 173개 일치·18개 불일치가 남았습니다. 남은 불일치를 삭제하거나 개발 예외로 바꾸지 않고 단계별로 재검증합니다. 이는 Stage 12에서 수정한 순차 클래스 진단 불일치 22개와 별도 집계입니다.
 

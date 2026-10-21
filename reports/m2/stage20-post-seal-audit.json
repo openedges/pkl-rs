@@ -1,0 +1,462 @@
+{
+  "schema": 1,
+  "utc": "2026-10-21T12:46:13.888549+00:00",
+  "status": "pass",
+  "implementation_commit": "c4e2a41e8391fe5ef031fc6fd5880cf46112c66e",
+  "scope": "Independent read-only archive/source/Git/gate/helper provenance audit. The auditor authored six native tests and three platform scenarios, but this check does not rerun those tests or independently establish semantic compatibility.",
+  "host": "macOS-27.0-arm64-arm-64bit-Mach-O",
+  "summary": {
+    "path": "reports/m2/stage20-final-summary.json",
+    "sha256": "e68afa30ba397c211a78ac1ef4aaabe955b2ad8875e926f40977c871fcc7865c",
+    "bytes": 35066
+  },
+  "packaging_process": {
+    "path": "target/m2/stage20-package-captured-final-02/process.json",
+    "sha256": "9df67449ea05076ca9ac340af34ce5f38a5148876a6b0fd15914784cde02d37f",
+    "exit_code": 0,
+    "helper_stable": true,
+    "preflight_verified": true
+  },
+  "archives": [
+    {
+      "name": "class-lifecycle",
+      "path": "reports/m2/class-lifecycle-stage20-final-evidence.tar.gz",
+      "sha256": "97fdfbb8a1d104b9379a29999b16f14573a2511da3788b0fba56258e2d35d95a",
+      "bytes": 1856440,
+      "inventory_files": 17258,
+      "hash_size_inventory_verified": true
+    },
+    {
+      "name": "exploration",
+      "path": "reports/m2/exploration-stage20-evidence.tar.gz",
+      "sha256": "1b50d34afc2a1e4fcd78c5110d2d75f0506de4117eec9a079bcd31b5bc661be3",
+      "bytes": 31739779,
+      "inventory_files": 3670,
+      "hash_size_inventory_verified": true
+    },
+    {
+      "name": "exploration-support-1",
+      "path": "reports/m2/exploration-stage20-superseded-evidence.tar.gz",
+      "sha256": "554cd772ca835e4e2c01d6c3de5f2115137c6a202ac30fcf71f4f001c935b18e",
+      "bytes": 15640533,
+      "inventory_files": 13082,
+      "hash_size_inventory_verified": true
+    },
+    {
+      "name": "frontend",
+      "path": "reports/m2/frontend-stage20-final-evidence.tar.gz",
+      "sha256": "f913d311d3fffcbf160973100288c7d168db1bf1f5cb8539087f8b229c37a4ad",
+      "bytes": 194013,
+      "inventory_files": 132,
+      "hash_size_inventory_verified": true
+    },
+    {
+      "name": "language",
+      "path": "reports/m2/language-stage20-final-evidence.tar.gz",
+      "sha256": "1638a56a67a4fb1ebadeb0abaacf6d0e49537b50720c4d2969889e46ff694cf8",
+      "bytes": 4168452,
+      "inventory_files": 16868,
+      "hash_size_inventory_verified": true
+    },
+    {
+      "name": "lifecycle",
+      "path": "reports/m2/lifecycle-stage20-final-evidence.tar.gz",
+      "sha256": "a64f3adb801b5a475ffd6b2582f4d87011b9aa80e79dcd34abdf63a6722df173",
+      "bytes": 954224,
+      "inventory_files": 155,
+      "hash_size_inventory_verified": true
+    },
+    {
+      "name": "native-defaults",
+      "path": "reports/m2/native-defaults-stage20-final-evidence.tar.gz",
+      "sha256": "0cc9705780529c94e59c3fda9784cf100f13249628fc1c4a3eac6ee632a86e12",
+      "bytes": 2348247,
+      "inventory_files": 51,
+      "hash_size_inventory_verified": true
+    },
+    {
+      "name": "platforms",
+      "path": "reports/m2/platforms-stage20-final-evidence.tar.gz",
+      "sha256": "6850492399889be64afe85b5abc4fd098c15e85e6845d82f6d4d47b6399463e3",
+      "bytes": 3505628,
+      "inventory_files": 110,
+      "hash_size_inventory_verified": true
+    },
+    {
+      "name": "runtime",
+      "path": "reports/m2/runtime-stage20-final-evidence.tar.gz",
+      "sha256": "e041ba7d098e05a55ebce66079efaff397b174c527a4fb5256d829949eb9a539",
+      "bytes": 1647848,
+      "inventory_files": 128,
+      "hash_size_inventory_verified": true
+    },
+    {
+      "name": "source",
+      "path": "reports/m2/source-stage20-final-evidence.tar.gz",
+      "sha256": "6bbf63cfd882075bce1335f5c41a0689f58d5ecbf6276d93c4cede68edaacad3",
+      "bytes": 5137505,
+      "inventory_files": 2376,
+      "hash_size_inventory_verified": true
+    },
+    {
+      "name": "validation",
+      "path": "reports/m2/validation-stage20-final-evidence.tar.gz",
+      "sha256": "eb3ad807c6b82eb912343faeff50876bcd0d129ff88c6cfbc6f4bd4fbf595b5c",
+      "bytes": 2387186,
+      "inventory_files": 2355,
+      "hash_size_inventory_verified": true
+    }
+  ],
+  "new_archive_count": 11,
+  "historical_dependencies": [
+    {
+      "path": "reports/m2/class-lifecycle-stage19-final-evidence.tar.gz",
+      "sha256": "59c2307e382115467653f93c724bae058a453a0ef257a52b3021c5d9be0f2217",
+      "bytes": 1826768
+    },
+    {
+      "path": "reports/m2/exploration-stage19-evidence.tar.gz",
+      "sha256": "5aea00bbddf3d5a18a3b610de7fe447d34c36d7963525cfa1e70006fa650ec77",
+      "bytes": 448580
+    },
+    {
+      "path": "reports/m2/exploration-stage19-support-01-evidence.tar.gz",
+      "sha256": "c27e29bc0a8092bf9803a868b9b2e2e1da6782fdf1722648512c927b41bad9c8",
+      "bytes": 7431252
+    },
+    {
+      "path": "reports/m2/frontend-stage19-final-evidence.tar.gz",
+      "sha256": "b233f996c77b0afade6fd2042fd172b8a5ac642d1622daaad87e930e2aba7267",
+      "bytes": 192767
+    },
+    {
+      "path": "reports/m2/language-stage19-final-evidence.tar.gz",
+      "sha256": "2c2e3b2d082ab21414bf08f1eb36230dd4142fcc2a8ee8d465b8747f45fa7ab9",
+      "bytes": 4125872
+    },
+    {
+      "path": "reports/m2/lifecycle-stage19-final-evidence.tar.gz",
+      "sha256": "469c0d707e8a0964831c696d4015c5171323b35342e5748a7e78b3c24837cd1d",
+      "bytes": 951385
+    },
+    {
+      "path": "reports/m2/native-generics-stage19-final-evidence.tar.gz",
+      "sha256": "e317d548e64e4535dacc5c88cf1d6d7aa37b9ebf89d8cd53ed455e9196a2e1f3",
+      "bytes": 2422874
+    },
+    {
+      "path": "reports/m2/platforms-stage19-final-evidence.tar.gz",
+      "sha256": "255797a2361f1292758cdbb78c8bdf8c20c89704858dbcabba49d93143b1bfc5",
+      "bytes": 3497456
+    },
+    {
+      "path": "reports/m2/prior-selection-stage19-final-evidence.tar.gz",
+      "sha256": "c3b6c9f7efbb8f9d60d0aa3477727eaec6b0895a356b523d502eab398007351b",
+      "bytes": 2004187
+    },
+    {
+      "path": "reports/m2/release-build-stage19-final-evidence.tar.gz",
+      "sha256": "6d24016af93366319fb5242f8c9f80a57da6332198274a427bbae423b1f10dc0",
+      "bytes": 1959564
+    },
+    {
+      "path": "reports/m2/runtime-stage19-final-evidence.tar.gz",
+      "sha256": "f94ee9c288fbd5157c16c0d987f85763d02b788dfabe350b161613279a3a79ce",
+      "bytes": 1646051
+    },
+    {
+      "path": "reports/m2/source-stage19-final-evidence.tar.gz",
+      "sha256": "512117386589bee1b68ed1355dc8d0525775abae6324cceab54dd1e69b10da61",
+      "bytes": 5034776
+    },
+    {
+      "path": "reports/m2/validation-stage19-final-evidence.tar.gz",
+      "sha256": "eb7395ff6e4e2b4dbacaab6329fa7d4257f7bca33bb2b1322b62c8c6f4615dca",
+      "bytes": 2369149
+    },
+    {
+      "path": "reports/m2/class-lifecycle-stage18-final-evidence.tar.gz",
+      "sha256": "50c67d1a47083956d08d5c5444ebdf54bcf5e6b4ac0be010641f2ea7efdeb6de",
+      "bytes": 1752505
+    },
+    {
+      "path": "reports/m2/exploration-stage18-evidence.tar.gz",
+      "sha256": "9e226b18304278a74db30bbb0462a87054121ae93cfc224fbfc90fc7385cff5c",
+      "bytes": 1814949
+    },
+    {
+      "path": "reports/m2/exploration-stage18-support-01-evidence.tar.gz",
+      "sha256": "c85deece0cc11e9b2d85fa9fe911e581d73990623b7b12985fac363d64101780",
+      "bytes": 46292188
+    },
+    {
+      "path": "reports/m2/exploration-stage18-support-02-evidence.tar.gz",
+      "sha256": "9a3f4eed701edc76430de2e779738e3c3dada3aa85e3d3af81cb68dafcad6f17",
+      "bytes": 45885557
+    },
+    {
+      "path": "reports/m2/exploration-stage18-support-03-evidence.tar.gz",
+      "sha256": "b20759c38d2f6e92c9ef213b02fb11ec64e1982c3247cacd8f6251552b834253",
+      "bytes": 21104951
+    },
+    {
+      "path": "reports/m2/frontend-stage18-final-evidence.tar.gz",
+      "sha256": "cb4fd2efe0baebf59bd04bdadcf129665f91cc3cf1b98c1f750c1c954ec414a1",
+      "bytes": 185701
+    },
+    {
+      "path": "reports/m2/language-stage18-final-evidence.tar.gz",
+      "sha256": "841bde3b331b3782c9e8daa721396663cc09411b35b60ca2647b1bf6209eb54c",
+      "bytes": 4056803
+    },
+    {
+      "path": "reports/m2/lifecycle-stage18-final-evidence.tar.gz",
+      "sha256": "2822ab537ed13bd8a7336c2be84a48ca579159bdc7c3a609b1073c3acefe5df5",
+      "bytes": 904626
+    },
+    {
+      "path": "reports/m2/native-generics-stage18-final-evidence.tar.gz",
+      "sha256": "13f3a3c497a4c626435e15218e1a7017be1fe141da469ae27c5490b3d6e9bc65",
+      "bytes": 2316514
+    },
+    {
+      "path": "reports/m2/platforms-stage18-final-evidence.tar.gz",
+      "sha256": "129649a7dff6a54ca417ddccba0e4290779c621193e75649be2a879797446adc",
+      "bytes": 3425421
+    },
+    {
+      "path": "reports/m2/prior-selection-stage18-final-evidence.tar.gz",
+      "sha256": "d2c7cf51991bad4154bbe12e864b561f07a9caa5251b25387ad07865e0416332",
+      "bytes": 1893909
+    },
+    {
+      "path": "reports/m2/release-build-stage18-final-evidence.tar.gz",
+      "sha256": "0231e85476567f430a7a27abab614f456360d19b7b9f536eb27851443af00298",
+      "bytes": 1878992
+    },
+    {
+      "path": "reports/m2/runtime-stage18-final-evidence.tar.gz",
+      "sha256": "f9a402ed01e6d42f6809933bff22a44c1aeb318065dc82892603edf086a769e6",
+      "bytes": 1568345
+    },
+    {
+      "path": "reports/m2/source-stage18-final-evidence.tar.gz",
+      "sha256": "f1b9400694d2d583eed1f413321b6f3223c7535d7b313f55aa503b01a407141c",
+      "bytes": 5495125
+    },
+    {
+      "path": "reports/m2/validation-stage18-final-evidence.tar.gz",
+      "sha256": "72b4913fb9bfa6b537e060e8f544b75fbaf8ef302d46cad6c307616653a701c5",
+      "bytes": 2344824
+    },
+    {
+      "path": "reports/m2/class-lifecycle-stage17-final-evidence.tar.gz",
+      "sha256": "afe409da39467d8e7209d225a04a6c5dbf47c0f8fd560a15bddf67f48de52a22",
+      "bytes": 1471054
+    },
+    {
+      "path": "reports/m2/exploration-stage17-evidence.tar.gz",
+      "sha256": "0bac7fcf0f4860d7463913671e35270e08355888c31d0df15979fae8a8defdd9",
+      "bytes": 40915589
+    },
+    {
+      "path": "reports/m2/exploration-stage17-history-01-evidence.tar.gz",
+      "sha256": "792963ccfdb64df3d7683340a91f53f6333144ca4e3d160bf1fed3f17f915113",
+      "bytes": 38356107
+    },
+    {
+      "path": "reports/m2/exploration-stage17-history-02-evidence.tar.gz",
+      "sha256": "6915d3724c2a96ab272039c3b334eec4f872d647ae3c7206e436f4a3b1fa9285",
+      "bytes": 38961690
+    },
+    {
+      "path": "reports/m2/exploration-stage17-history-03-evidence.tar.gz",
+      "sha256": "e42ec9e4655531eb82207a66c5ae728ab99dc934e04ad6156ca9bdf542811229",
+      "bytes": 32294731
+    },
+    {
+      "path": "reports/m2/exploration-stage17-history-04-evidence.tar.gz",
+      "sha256": "5e6a4ea6172ff5ba1a68660b2a82ddd25f0b03c1d72bd399e50c553767edb7dd",
+      "bytes": 35794996
+    },
+    {
+      "path": "reports/m2/gates-stage17-final-evidence.tar.gz",
+      "sha256": "f4307bf3ec4ae777ae4c935774a5c07f6b6c1e3ff2eab4a10cf547f9d469c6a4",
+      "bytes": 938
+    },
+    {
+      "path": "reports/m2/language-stage17-final-evidence.tar.gz",
+      "sha256": "0b9f25ccec620ff0bc1cb216e053aabc863858265c0229d01b8012f41a6a05b6",
+      "bytes": 3883852
+    },
+    {
+      "path": "reports/m2/platforms-stage17-final-evidence.tar.gz",
+      "sha256": "6ead24db1a84e03970d7c5fe47b5664c8ae4fd1b949f4484bedc036014710f10",
+      "bytes": 3367449
+    },
+    {
+      "path": "reports/m2/regressions-stage17-final-evidence.tar.gz",
+      "sha256": "f0709e8fd8d44d2b73903e238c0f0c665c62fc84b62fc4ada348b578caf75e22",
+      "bytes": 21456570
+    },
+    {
+      "path": "reports/m2/source-stage17-final-evidence.tar.gz",
+      "sha256": "a012d2be480a070f5c67c4743702fe4529c8f7cf9617e2e2fff00cc8a115fc4d",
+      "bytes": 4103478
+    },
+    {
+      "path": "reports/m2/validation-stage17-final-evidence.tar.gz",
+      "sha256": "92069c17bc7451a4e092808b7f557b4ba5e0ae50078e85e6b4cc63e1b8c14a62",
+      "bytes": 16967
+    },
+    {
+      "path": "reports/m2/stage19-final-summary.json",
+      "sha256": "2714acf295b74dd5a69dd750f91d8b48f53d26a0926798762177a727dee60e66",
+      "bytes": 42864
+    }
+  ],
+  "historical_summary_hashes": {
+    "reports/m2/stage19-final-summary.json": "2714acf295b74dd5a69dd750f91d8b48f53d26a0926798762177a727dee60e66",
+    "reports/m2/stage18-final-summary.json": "e480344e27cb62c48497846ca72541c23b4630ce39f8203da95099bc3de94405",
+    "reports/m2/stage17-final-summary.json": "387089a325531d3c63b34405d883861ead0cdeb3ace6b186dc8a0c3a13083c22"
+  },
+  "source_binding": {
+    "source_snapshot_copies": 4951,
+    "unique_source_files": 2331,
+    "helper_snapshot_copies": 0,
+    "upstream_source_snapshot_copies": 0,
+    "all_raw_git_objects_verified": true,
+    "all_implementation_and_suite_source_payloads_verified": true
+  },
+  "reviews": {
+    "stage20-lifecycle-review-final-02.json": {
+      "implementation_commit": "c4e2a41e8391fe5ef031fc6fd5880cf46112c66e",
+      "path": "target/m2/stage20-lifecycle-review-final-02.json",
+      "scope": "Independent review of the current nullable-default production change and platform consumer coverage; the reviewer authored the six native lifecycle tests and the three platform scenarios, so their authorship is not independent test development.",
+      "sha256": "f5902cab9d26061a65c868c4e2d161a0dc7436bf917c8fd686990baa4386c0da",
+      "source_count": 18
+    },
+    "stage20-root-review-final-02.json": {
+      "implementation_commit": "c4e2a41e8391fe5ef031fc6fd5880cf46112c66e",
+      "path": "target/m2/stage20-root-review-final-02.json",
+      "scope": "Root independent source review of nullable runtime changes, crosscutting value consumers and the new focused/lifecycle assertions; root authored documentation and orchestration only.",
+      "sha256": "776e7ebd31c9fbda8971afe1f348ae77813e4e92452f51a500744936c26a665d",
+      "source_count": 12
+    },
+    "stage20-runtime-review-final-02.json": {
+      "implementation_commit": "c4e2a41e8391fe5ef031fc6fd5880cf46112c66e",
+      "path": "target/m2/stage20-runtime-review-final-02.json",
+      "scope": "Author self-review of bounded Stage20 nullable-default implementation after correction of native-stack dispatch regression; not independent review or full language compatibility.",
+      "sha256": "8914d6c1c576c5e7961dd79dbafb387bb9be7e61f9ac23b1ca33ecc8a9f438d7",
+      "source_count": 11
+    }
+  },
+  "evidence_review": {
+    "binding_scope": "Focused raw-comparison review and final artifact/source identities; not an independent production source review.",
+    "path": "target/m2/stage20-evidence-review-final-02.json",
+    "scope": "39 new selected case URIs, six exact original Stage18/19 nullable URIs and three persistent sequences against root final-02 recorded build artifacts; root full language/platform reports remain independent.",
+    "sha256": "e446dd766e684948119a4202351403b3f2db5470f4930b49022682065f154e6e"
+  },
+  "exploration_independent_audit": {
+    "excluded_cache_files": 178,
+    "inventory_files": 16752,
+    "original_paths": 16744,
+    "path": "target/m2/stage20-exploration-independent-audit.json",
+    "scope": "Independent read-only audit of two sealed Stage20 exploration archives, their full evidence/original inventories, explicit cache exclusions, helper/config provenance, and three historical dependency identities. The auditor authored the six new native lifecycle tests and three platform scenarios, but did not author the exploration sealer or selected Java evidence.",
+    "sha256": "0386b159b26a8d556aa6daabc66fe18302b8e4fd2c6c15e5ff3c9dc0587120aa"
+  },
+  "gates": [
+    {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/m2_language.py",
+        "--verify-report",
+        "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/language-stage20-final-02"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "gate": "report",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "d0ef7808084032978f65f9d15fe7483db66654e7989a5556ae75ee5cc2978fdf"
+    },
+    {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/m2_language.py",
+        "--verify-development",
+        "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/language-stage20-final-02"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "gate": "development",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "d0ef7808084032978f65f9d15fe7483db66654e7989a5556ae75ee5cc2978fdf"
+    },
+    {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/m2_language.py",
+        "--verify-subset",
+        "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/language-stage20-final-02"
+      ],
+      "exit_code": 1,
+      "expected_exit_code": 1,
+      "gate": "subset",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "d0ef7808084032978f65f9d15fe7483db66654e7989a5556ae75ee5cc2978fdf"
+    },
+    {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/m2_language.py",
+        "--verify-full",
+        "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/language-stage20-final-02"
+      ],
+      "exit_code": 1,
+      "expected_exit_code": 1,
+      "gate": "full",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "d0ef7808084032978f65f9d15fe7483db66654e7989a5556ae75ee5cc2978fdf"
+    },
+    {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/m2_class_lifecycle.py",
+        "--verify-report",
+        "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/class-lifecycle-stage20-final-02"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "gate": "class-report",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "094e27d171ab9f7ae8067d22ebc5e3aeac430951a1b45cac01e099ef12af1472"
+    },
+    {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/m2_class_lifecycle.py",
+        "--verify-contract",
+        "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/class-lifecycle-stage20-final-02"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "gate": "class-contract",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "094e27d171ab9f7ae8067d22ebc5e3aeac430951a1b45cac01e099ef12af1472"
+    }
+  ],
+  "retained_binaries_executed": false,
+  "retained_helpers_executed": false,
+  "compatibility_complete": false,
+  "performance_targets_established": false,
+  "limitations": [
+    "Historical dependencies were verified by exact sizes/hashes without recursively re-executing or re-auditing their internal inventories.",
+    "Raw gate output and exact source provenance are checked; recorded semantic outcomes are not recomputed."
+  ],
+  "audit_helper": {
+    "path": "target/m2/stage20_post_seal_audit.py",
+    "sha256": "3355fe8acf2babb3cf153d5f3a64c0de1d74a92b5b0e23fbb53f92bca7ac1356",
+    "bytes": 14642,
+    "source_utf8": "\"\"\"Read-only post-seal Stage20 byte/provenance audit; never run retained artifacts.\"\"\"\nfrom pathlib import Path\nimport datetime,hashlib,json,platform,subprocess,sys,tarfile\nROOT=Path.cwd();COMMIT='c4e2a41e8391fe5ef031fc6fd5880cf46112c66e'\ndef need(condition,message):\n if not condition:raise AssertionError(message)\ndef sha_bytes(data):return hashlib.sha256(data).hexdigest()\ndef sha(path):\n h=hashlib.sha256()\n with path.open('rb') as stream:\n  for data in iter(lambda:stream.read(1024*1024),b''):h.update(data)\n return h.hexdigest()\ndef read(path):return json.loads(path.read_bytes())\ndef identity(row):\n p=ROOT/row['path'];need(p.is_file() and not p.is_symlink(),'missing/linked file '+row['path']);need(sha(p)==row['sha256'],'file hash '+row['path'])\n if 'bytes'in row:need(p.stat().st_size==row['bytes'],'file size '+row['path'])\n return dict(path=row['path'],sha256=row['sha256'],bytes=p.stat().st_size)\ndef git(command,data=None):\n p=subprocess.run(['git',*command],cwd=ROOT,input=data,capture_output=True);need(p.returncode==0,'read-only Git command failed');return p\nsummary_path=ROOT/'reports/m2/stage20-final-summary.json';summary=read(summary_path)\nneed(summary['implementation_commit']==COMMIT,'wrong implementation commit')\nneed(summary['status']=='ready' and not summary['missing_or_running_suites'],'incomplete final summary')\nneed(not summary['compatibility_complete'] and not summary['performance_targets_established'] and not summary['captured_binaries_executed_by_packaging'],'scope flag changed')\nrecords=summary['archives'];need(len(records)==11 and len({r['path'] for r in records.values()})==11,'new archives missing or double-counted')\nneed(set(records)=={'language','validation','platforms','frontend','runtime','lifecycle','class-lifecycle','native-defaults','source','exploration','exploration-support-1'},'new archive inventory differs')\narchives=[];inventories={};source={}\nfor name,row in records.items():\n identity(row)\n with tarfile.open(ROOT/row['path'],'r:gz') as archive:\n  members=archive.getmembers();names=[x.name for x in members]\n  need(len(names)==len(set(names)) and 'EVIDENCE.json'in names,'missing/duplicate inventory '+name)\n  need(all(x.isfile() and not Path(x.name).is_absolute() and '..'not in Path(x.name).parts for x in members),'unsafe archive member '+name)\n  inventory=json.load(archive.extractfile('EVIDENCE.json'));rows=inventory['files'];mapping={r['path']:r for r in rows}\n  need(len(rows)==len(mapping) and set(mapping)==set(names)-{'EVIDENCE.json'},'incomplete inventory '+name)\n  for record in rows:\n   data=archive.extractfile(record['path']).read();need(len(data)==record['bytes'] and sha_bytes(data)==record['sha256'],'archive payload '+name+':'+record['path'])\n   if name=='source' and not record['path'].startswith('implementation-sources/') and not record['path'].startswith('helper-history/'):source[record['path']]=data\n  if 'files_including_inventory'in row:need(len(members)==row['files_including_inventory'],'archive file count '+name)\n  inventories[name]=mapping;archives.append(dict(name=name,**identity(row),inventory_files=len(rows),hash_size_inventory_verified=True))\nbinding=json.loads(source['source-verification.json']);need(binding['implementation_commit']==COMMIT,'source binding commit')\nneed(binding['upstream_source_snapshot_copies']==0 and not binding['upstream_blob_proof_claimed'],'unproven upstream source claim')\nrequest=source['git-proof/request.bin'];response=source['git-proof/stdout.bin'];stderr=source['git-proof/stderr.bin']\nneed(sha_bytes(request)==binding['git_request_sha256'] and sha_bytes(response)==binding['git_response_sha256'],'raw Git proof identity')\nproof=json.loads(source['git-proof/process.json']);need(proof['command']==['git','cat-file','--batch'] and proof['exit_code']==0,'raw Git process contract')\nfor field,raw in [('request',request),('stdout',response),('stderr',stderr)]:need(sha_bytes(raw)==proof['sha256'][field],'raw Git process channel '+field)\ncurrent_git=git(['cat-file','--batch'],request);need(current_git.stdout==response and current_git.stderr==stderr,'raw source proof differs from immutable current Git objects')\nrequested=request.decode().splitlines();need(request.endswith(b'\\n'),'Git proof request truncated');names=[s.removeprefix(COMMIT+':')for s in requested]\nneed(all(s.startswith(COMMIT+':')for s in requested) and names==sorted(set(names)),'Git proof request closure/order')\nposition=0;blobs={}\nfor name in names:\n end=response.index(b'\\n',position);fields=response[position:end].split();need(len(fields)==3 and fields[1]==b'blob','Git blob header '+name);size=int(fields[2]);data=response[end+1:end+1+size];position=end+size+2\n need(response[position-1:position]==b'\\n' and len(data)==size,'Git blob truncation '+name)\n oid=hashlib.sha1(b'blob '+str(size).encode()+b'\\0'+data).hexdigest();need(oid==fields[0].decode(),'Git object hash '+name)\n blobs[name]=dict(git_blob=oid,sha256=sha_bytes(data),bytes=size)\nneed(position==len(response),'extra Git proof bytes')\ncommit=source['git-proof/commit.stdout.bin'];commit_process=json.loads(source['git-proof/commit.process.json'])\nneed(commit_process['command']==['git','cat-file','-p',COMMIT]and commit_process['exit_code']==0,'commit proof process')\nneed(sha_bytes(commit)==commit_process['stdout_sha256']and sha_bytes(source['git-proof/commit.stderr.bin'])==commit_process['stderr_sha256'],'commit proof channels')\nneed(hashlib.sha1(b'commit '+str(len(commit)).encode()+b'\\0'+commit).hexdigest()==COMMIT,'commit object hash')\nneed(git(['cat-file','-p',COMMIT]).stdout==commit,'commit proof differs from current Git')\ncopy_paths=set()\nfor row in binding['copies']:\n name=row['path'];copy_paths.add(name);expected=blobs[name]\n need(all(row[k]==expected[k]for k in ['git_blob','sha256','bytes']),'source copy Git identity '+name)\n member='implementation-sources/'+name;need(inventories['source'][member]['sha256']==row['sha256']and inventories['source'][member]['bytes']==row['bytes'],'implementation source copy '+name)\n prefix='target/m2/'+row['suite']+'-stage20-final-02/';need(row['snapshot'].startswith(prefix),'unexpected suite source snapshot path '+row['snapshot']);member=row['snapshot'][len(prefix):]\n need(inventories[row['suite']][member]['sha256']==row['sha256']and inventories[row['suite']][member]['bytes']==row['bytes'],'archived suite source copy '+row['snapshot'])\n identity(dict(path=row['snapshot'],sha256=row['sha256'],bytes=row['bytes']))\nneed(copy_paths==set(blobs)and len(copy_paths)==binding['unique_source_files']and len(binding['copies'])==binding['source_snapshot_copies'],'source closure counts')\nfor row in binding['untracked_helpers_with_separate_hashes']:\n identity(dict(path=row['snapshot'],sha256=row['sha256'],bytes=row['bytes']));prefix='target/m2/'+row['suite']+'-stage20-final-02/';need(row['snapshot'].startswith(prefix),'helper snapshot prefix');member=row['snapshot'][len(prefix):];need(inventories[row['suite']][member]['sha256']==row['sha256'],'archived helper snapshot identity')\nsummary_binding={k:v for k,v in binding.items()if k not in ['copies','untracked_helpers_with_separate_hashes']};summary_binding['helper_snapshot_copies']=len(binding['untracked_helpers_with_separate_hashes']);need(summary['source_binding']==summary_binding,'summary source binding differs')\nhelper=summary['packaging_helper'];executed=ROOT/helper['executed_path'];need(sha(executed)==helper['sha256']==sha_bytes(source['package_stage20_final.py']),'executed/copied packaging helper bytes')\nneed(executed.stat().st_mode&0o222==0,'executed helper not read-only')\nexecution=executed.parent.parent;process_path=execution/'process.json';process=read(process_path);invocation=read(execution/'invocation.json')\nneed(process['exit_code']==0 and not process['timed_out']and process['helper']['stable'],'final packaging process did not complete stably')\nneed(process['helper']['sha256_before']==helper['sha256']==process['helper']['sha256_after']==invocation['helper']['sha256'],'immutable packaging helper hashes')\nneed(process['helper']['bytes']==executed.stat().st_size==invocation['helper']['bytes'],'immutable packaging helper size')\nneed(process['command']==invocation['command']and process['command'][1:]==helper['invocation'],'immutable invocation command')\nneed(source['packaging-execution-preflight/invocation.json']==(execution/'invocation.json').read_bytes(),'archived preflight identity')\nneed(source['packaging-execution-preflight/runner.py']==(execution/'runner.py').read_bytes(),'archived immutable runner identity')\nneed(process['python_sha256']==invocation['python_sha256']==sha(Path(process['python'])),'packaging Python identity')\nfor channel in ['stdout','stderr']:\n raw=(execution/(channel+'.bin')).read_bytes();need(sha_bytes(raw)==process[channel+'_sha256']and len(raw)==process[channel+'_bytes'],'packaging raw '+channel)\nsealed=json.loads((execution/'stdout.bin').read_bytes().splitlines()[-1]);need(sealed['status']=='sealed'and sealed['implementation_commit']==COMMIT and sealed['archives']==records,'packaging stdout sealed record')\nreviews=summary['reviews'];need(len(reviews)==3,'review closure')\nfor name,row in reviews.items():\n identity(row);raw=source[Path(row['path']).name];need(sha_bytes(raw)==row['sha256'],'archived production review '+name);data=json.loads(raw);need(data['status']=='pass'and row['implementation_commit']==COMMIT and row['scope']==data['scope'],'review status/scope '+name)\n need(row['source_count']==len(data['source_sha256']),'review source count '+name)\n for path,digest in data['source_sha256'].items():need(blobs[path]['sha256']==digest,'review source binding '+path)\nfor key in ['evidence_review','exploration_independent_audit']:\n row=summary[key];identity(row);raw=source[Path(row['path']).name];need(sha_bytes(raw)==row['sha256'],'archived '+key);data=json.loads(raw);need(row['scope']==data['scope'],'review/audit scope differs '+key)\n if key=='evidence_review':need(data['status']=='pass-for-focused-final-artifact-replays','focused evidence status')\n else:need(data['status']=='pass'and not data['captured_artifacts_executed'],'independent exploration status')\ngates=json.loads(source['gates/report.json']);need(gates==summary['gates'],'raw gate record differs')\nneed([(r['gate'],r['expected_exit_code'])for r in gates]==[('report',0),('development',0),('subset',1),('full',1),('class-report',0),('class-contract',0)],'gate inventory/expected statuses')\nfor row in gates:\n need(row['exit_code']==row['expected_exit_code'],'recorded gate outcome '+row['gate'])\n for channel in ['stdout','stderr']:need(sha_bytes(source['gates/'+row['gate']+'.'+channel+'.bin'])==row[channel+'_sha256'],'raw gate channel '+row['gate'])\n if row['gate']in ['report','development','subset','full']:\n  output=json.loads(source['gates/'+row['gate']+'.stdout.bin']);need(output['selected']==summary['completed_suites']['language']['status_counts']and output['full_gate_failures']==summary['completed_suites']['language']['full_gate_failure_count'],'raw language gate accounting')\nneed(json.loads(source['immutable-lifecycle-baseline.json'])==summary['preservation'],'immutable baseline preservation record')\nexploration=summary['exploration'];need(sha(ROOT/exploration['index_path'])==exploration['index_sha256'],'exploration index identity')\nneed(records['exploration']['sha256']==exploration['main']['sha256']and records['exploration-support-1']['sha256']==exploration['additional_archives'][0]['sha256'],'exploration archive aliases')\nhistory_rows={};history_summaries={}\ndef collect(value):\n if isinstance(value,dict):\n  if all(k in value for k in ['path','sha256','bytes']):\n   identity_row={k:value[k]for k in ['path','sha256','bytes']};prior=history_rows.setdefault(value['path'],identity_row);need(prior==identity_row,'conflicting historical identity '+value['path'])\n  if 'summary_path'in value and 'summary_sha256'in value:\n   prior=history_summaries.setdefault(value['summary_path'],value['summary_sha256']);need(prior==value['summary_sha256'],'conflicting historical summary')\n  for child in value.values():collect(child)\n elif isinstance(value,list):\n  for child in value:collect(child)\ncollect(summary['historical_dependencies']);collect(exploration.get('history_dependencies',[]))\nhistorical=[identity(row)for row in history_rows.values()]\nfor path,digest in history_summaries.items():need(sha(ROOT/path)==digest,'historical summary identity '+path)\ncode=Path(__file__).read_bytes();report=dict(schema=1,utc=datetime.datetime.now(datetime.timezone.utc).isoformat(),status='pass',implementation_commit=COMMIT,scope='Independent read-only archive/source/Git/gate/helper provenance audit. The auditor authored six native tests and three platform scenarios, but this check does not rerun those tests or independently establish semantic compatibility.',host=platform.platform(),summary=dict(path=str(summary_path.relative_to(ROOT)),sha256=sha(summary_path),bytes=summary_path.stat().st_size),packaging_process=dict(path=str(process_path.relative_to(ROOT)),sha256=sha(process_path),exit_code=process['exit_code'],helper_stable=True,preflight_verified=True),archives=archives,new_archive_count=len(archives),historical_dependencies=historical,historical_summary_hashes=history_summaries,source_binding=dict(source_snapshot_copies=len(binding['copies']),unique_source_files=len(blobs),helper_snapshot_copies=len(binding['untracked_helpers_with_separate_hashes']),upstream_source_snapshot_copies=0,all_raw_git_objects_verified=True,all_implementation_and_suite_source_payloads_verified=True),reviews=reviews,evidence_review=summary['evidence_review'],exploration_independent_audit=summary['exploration_independent_audit'],gates=gates,retained_binaries_executed=False,retained_helpers_executed=False,compatibility_complete=False,performance_targets_established=False,limitations=['Historical dependencies were verified by exact sizes/hashes without recursively re-executing or re-auditing their internal inventories.','Raw gate output and exact source provenance are checked; recorded semantic outcomes are not recomputed.'],audit_helper=dict(path=str(Path(__file__).resolve().relative_to(ROOT)),sha256=sha_bytes(code),bytes=len(code),source_utf8=code.decode()))\noutput=ROOT/'reports/m2/stage20-post-seal-audit.json'\nwith output.open('x')as stream:json.dump(report,stream,indent=2);stream.write('\\n')\nprint(json.dumps(dict(status='pass',new_archives=len(archives),historical_identities=len(historical),historical_summaries=len(history_summaries),source_snapshot_copies=len(binding['copies']),unique_source_files=len(blobs),output=str(output.relative_to(ROOT)),sha256=sha(output)),indent=2))\n"
+  }
+}
