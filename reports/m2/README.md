@@ -11,7 +11,90 @@ nonprimitive keys, and related diagnostics. Stage 8 corrects typed defaults,
 cache-sensitive comparison order, and deep-force/hash preparation order.
 Stage 9 adds stable hashes,
 partial map publication and retries, HashSet length counting, and let diagnostic
-scopes. These checkpoints do not complete the language milestone.
+scopes. Stage 10 adds deferred References, declaration/type metadata, and
+standard-library source frames. These checkpoints do not complete the language
+milestone.
+
+## Stage 10 checkpoint
+
+The [stage 10 summary](stage10-final-summary.json) records **1,202 selected
+comparisons: 1,200 raw-byte matches, one remainder-zero mismatch, and one cycle
+oracle failure**. All 44 metamorphic relations pass. The 143 additions and three
+new relations preserve every original 1,059 definition and input byte.
+Implementation `adcfc44` is pushed. The
+[language archive](language-stage10-final-evidence.tar.gz) retains a recorded
+release build, 1,286 source snapshots, actual fixture URIs, pinned Java identity,
+outcome sidecars, and complete output channels. Source and artifact identities
+remained stable during acquisition, and every source snapshot matches `adcfc44`.
+
+The shared engine recognizes `pkl:ref` imports and aliases, qualified types, and
+class values separately from the `NonNull` type alias. Reference values retain
+their domain, data, normalized referent type, and access path. Synthetic property
+and subscript access consult inherited declaration metadata without evaluating
+referent bodies. Selected cases cover alias and constraint erasure, preserved
+integer aliases, nullable unions, domain/referent checks, equality, and structural
+keys. General module loading and complete builtin metadata remain unfinished.
+
+Diagnostics retain authored name and interpolation spans, alias validation
+frames, and source identity for constructor, Access, and rendering errors. The
+pinned `ref.pkl` source is bundled unchanged and included in source snapshots.
+Four native Reference lifecycle tests cover domain rendering and constraints,
+domain/data equality, Host suspension, nested evaluation, GC, failed reads and
+retries, stale completions, cancellation, close, and timeout.
+
+The [validation record](validation-stage10-final.json) and
+[raw checks](validation-stage10-final-evidence.tar.gz) retain reference pin checks,
+formatting, workspace Clippy, **236 Rust tests and 179 Python tests**, Wasm
+compilation, and inventory freshness. One existing differential probe remains
+intentionally ignored by ordinary unit tests. The
+[platform archive](platforms-stage10-final-evidence.tar.gz) records **42 scenarios
+in each of actual Node and Chromium**, including three new Reference scenarios.
+Their value and complete diagnostic expectations come from fresh pinned Java
+captures at the exact adapter URI. All 6,078 primitive results agree across Rust
+targets; each target matches Java on 6,076, retaining the same two regex failures.
+
+The [regression archive](regressions-stage10-final-evidence.tar.gz) retains the
+1,059 unchanged-input replays and fresh pre-push comparisons of all 143 additions.
+Those exploratory frozen candidates are separate from the recorded-build full
+acquisition above. Existing bounded regressions retain 15 frontend matches, six
+runtime value matches, two runtime diagnostic matches, one cycle diagnostic
+mismatch, two matching lifecycle protocols, and four full lifecycle diagnostic
+mismatches.
+
+The [initial exploration archive](exploration-stage10-evidence.tar.gz) preserves
+158 Java calls. The [supplemental archive](exploration-stage10-followup-evidence.tar.gz)
+retains all 191 calls, earlier failures, invalid drafts, fixes, and provisional
+replays. The final exploratory
+candidate matches 168 of 191 observations and retains **23 nonselected
+mismatches** in remaining language, type, and diagnostic scope. Some early debug
+replays lack a retained candidate identity or complete source binding; they remain
+provisional observations. Executing original `basic/reference.pkl`,
+`errors/reference1..27.pkl`, or `api/reference.pkl` through selected API
+expressions does not execute their original renderer or snippet-suite contracts.
+
+Six [reviewed mappings](../../compatibility/m2-mappings.json) link partial
+implementation and test scope to Rust symbols and selected cases. They preserve
+all original case contracts and do not claim complete requirements. The inventory
+has 474 requirement records and 2,202 overlapping accounting rows: 1,202 executable
+selections, 960 unimplemented rows, and 40 unmapped rows. These are not distinct
+feature counts or a completion percentage. The
+[gate captures](gates-stage10-final-evidence.tar.gz) retain integrity and
+development success, strict selected/full compatibility failure, and 1,950 full
+gate failure reasons. General imports and module inheritance, remaining
+collection/type rules, fixed-member and alias diagnostics, reflection, and the
+original upstream contracts remain open. No new speed or memory parity
+measurement was made. **M2 remains in progress.**
+
+All six jobs in the [implementation CI run](https://github.com/luuvish/pkl-rs/actions/runs/39538489442)
+for `adcfc44` succeeded. The [independent CI verification](ci-stage10-summary.json)
+checks the original GitHub ZIP digests and 1,520 source snapshot copies (1,326
+unique paths) against that exact commit. Remote results also retain 1,200
+matches, the two original failures, 44 relations, and 42 scenarios on each
+platform. The [CI evidence](ci-stage10-evidence.tar.gz) preserves those original
+ZIPs, terminal job outcomes, and the first offline verification. A
+[second offline replay](ci-stage10-offline-evidence.tar.gz) passed against the
+sealed package without changing any package bytes. Strict selected/full gates
+and the performance goals remain incomplete.
 
 ## Stage 9 checkpoint
 

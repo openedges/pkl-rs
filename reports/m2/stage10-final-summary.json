@@ -1,0 +1,216 @@
+{
+  "scope": "M2 stage 10 pkl:ref imports, deferred References, declaration/type metadata, shared rendering and foreign-source diagnostics, including GC/Host lifecycle verification and partial reviewed implementation/test mappings. Full language milestone remains incomplete.",
+  "language": {
+    "selected_count": 1202,
+    "status_counts": {
+      "mismatch": 1,
+      "oracle-error": 1,
+      "pass": 1200
+    },
+    "source_stability": true,
+    "artifact_stability": true,
+    "candidate": {
+      "build": {
+        "command": [
+          "cargo",
+          "build",
+          "-p",
+          "pkl-runtime",
+          "--example",
+          "language_probe",
+          "--locked",
+          "--release",
+          "--target-dir",
+          "/Users/cody.ij.hwang/Projects/pkl-rs/target"
+        ],
+        "exit_code": 0,
+        "stderr_sha256": "a50f4a953f17e887d3844be51c0df233623b83d4462c96d5392c2671458d7fef",
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "timed_out": false
+      },
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/release/examples/language_probe",
+      "sha256": "1b84eb91dc410252cc825de5241e3352772b366adf000fd5fc01390ea4a60faa",
+      "source_binding": "recorded-build"
+    },
+    "inventory_counts": {
+      "cases": 2202,
+      "cases_by_execution": {
+        "ready": 1202,
+        "unimplemented": 960,
+        "unmapped": 40
+      },
+      "requirements": 474,
+      "requirements_by_kind": {
+        "language_parser": 137,
+        "language_token": 109,
+        "semantic-family": 30,
+        "specification": 198
+      }
+    },
+    "metamorphic_relations": 44,
+    "metamorphic_statuses": [
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass"
+    ],
+    "full_gate_failure_reasons": 1950,
+    "known_failures": [
+      {
+        "id": "error-cycle",
+        "status": "oracle-error"
+      },
+      {
+        "id": "error-remainder-zero",
+        "status": "mismatch"
+      }
+    ],
+    "power_assertion_profiles": 44,
+    "source_snapshot_count": 1286
+  },
+  "platforms": {
+    "total": 6078,
+    "oracle_passed": {
+      "rust": 6076,
+      "node": 6076,
+      "browser": 6076
+    },
+    "shared_engine_passed": 6078,
+    "compatibility_status": "fail",
+    "known_gaps": [
+      "regex-unicode-15-vs-16",
+      "regex-zero-width-supplementary"
+    ],
+    "experiment_contract_status": "pass",
+    "source_stability": true,
+    "node_scenarios": 42,
+    "browser_scenarios": 42
+  },
+  "regressions": {
+    "frontend_raw_matches": 15,
+    "runtime_value_matches": 6,
+    "runtime_diagnostic_matches": 2,
+    "runtime_diagnostic_mismatches": 1,
+    "lifecycle_protocol_matches": 2,
+    "lifecycle_full_diagnostic_mismatches": 4
+  },
+  "validation": {
+    "rust_passed": 236,
+    "rust_intentionally_ignored": 1,
+    "python_passed": 179
+  },
+  "performance": "No new speed or memory parity measurement; original full performance gates remain open.",
+  "gates": {
+    "scope": "Integrity/development checks and strict selected/full compatibility gates; failures retained.",
+    "rows": [
+      {
+        "command": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "tools/m2_language.py",
+          "--verify-report",
+          "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/language-stage10-final"
+        ],
+        "exit_code": 0,
+        "stdout_sha256": "9fba3d27c98b653f550c6e8862ed4786360c55febc1279d745d1721883d4c882",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "command": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "tools/m2_language.py",
+          "--verify-development",
+          "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/language-stage10-final"
+        ],
+        "exit_code": 0,
+        "stdout_sha256": "9fba3d27c98b653f550c6e8862ed4786360c55febc1279d745d1721883d4c882",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "command": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "tools/m2_language.py",
+          "--verify-subset",
+          "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/language-stage10-final"
+        ],
+        "exit_code": 1,
+        "stdout_sha256": "9fba3d27c98b653f550c6e8862ed4786360c55febc1279d745d1721883d4c882",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "command": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "tools/m2_language.py",
+          "--verify-full",
+          "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/language-stage10-final"
+        ],
+        "exit_code": 1,
+        "stdout_sha256": "9fba3d27c98b653f550c6e8862ed4786360c55febc1279d745d1721883d4c882",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    ]
+  },
+  "prior_selection_replay": {
+    "count": 1059,
+    "status_counts": {
+      "mismatch": 1,
+      "oracle-error": 1,
+      "pass": 1057
+    },
+    "scope": "Unchanged 1059 prior inputs against preserved stage 9 Java bytes with an exploratory frozen candidate; fresh recorded-build full Java acquisition is recorded separately."
+  },
+  "new_selection_prepush": {
+    "count": 143,
+    "scope": "Fresh Java and frozen exploratory candidate at actual fixture URIs before implementation push; recorded-build full acquisition recorded separately.",
+    "report": "regressions-stage10-final-evidence.tar.gz/new-selection-prepush/results.json"
+  },
+  "reviewed_mappings": {
+    "count": 6,
+    "scope": "Partial implementation and test links only; original upstream execution contracts and strict full-gate failures preserved."
+  },
+  "implementation_commit": "adcfc44d23ebdb51a99e01dce17a68e9b9c47c7e",
+  "implementation_source_verification": {
+    "source_snapshots_verified": 1286,
+    "matched_exact_git_commit": true,
+    "method": "SHA-256 of git show <implementation-commit>:<recorded-source-path> equals every language source_sha256 entry."
+  }
+}
