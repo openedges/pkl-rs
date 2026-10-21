@@ -192,7 +192,16 @@ M1의 공통 VM을 확장합니다. VM·heap·호출 의미론은 `gpt-6-astra /
 
 아홉 번째 단계는 구조 동등성 ID와 Java 정수 해시를 분리하고, 안정적인 해시의 선언 버킷과 캐시의 부분 게시·재해시·실패 재시도를 구현했습니다. 런타임 continuation은 `gpt-6-astra / high`, 고정 Java 관찰·차등 입력과 독립 map·수명주기 검토는 각각 `gpt-6.1-sol / high`에 배정했습니다. 다섯 번째 캐시 값의 선행 게시, 실패 뒤 숨겨진 슬롯과 중복 값, local 캐시의 비대칭 비교, zero-hash 재계산을 검증합니다. Mapping 길이는 별도의 HashSet 규칙으로 조상부터 키를 순차 처리하고 성공한 길이만 게시합니다. 중첩 `let`·타입 제약·wildcard·명시적 cast의 오류 프레임은 소스 메타데이터로 복원합니다.
 
-기존 907개 정의·입력 바이트를 유지하며 152개 사례와 9개 변형 관계를 추가했습니다. 구현 후보의 기존 907개 재실행은 905개 일치·기존 실패 2개이며, 실제 fixture URI에서 새 152개가 모두 Java와 원시 바이트로 일치했습니다. Rust 221개·Python 171개 검사, Wasm 빌드와 실제 Node·Chromium 각 39개 시나리오의 개발 계약이 통과했습니다. 마감 회귀 검사에서 발견한 상속 Mapping 길이 차이와 수정 전 수집 중단 기록을 보존하고, 수정된 후보로 전체 1,059개·41개 관계의 최종 수집과 원격 CI를 진행합니다. JVM identity hash, 같은 캐시의 순환 재진입·순환 키, 재귀 진단 압축과 나머지 M2 언어·타입·Reference·메타데이터 범위는 남아 있으며 성능 목표 달성을 주장하지 않습니다.
+기존 907개 정의·입력 바이트를 유지하며 152개 사례와 9개 변형 관계를 추가했습니다. 구현 커밋 `2a69a63`을 푸시했고 [최종 로컬 검증](reports/m2/stage9-final-summary.json)에서 1,059개 중 1,057개가 Java와 원시 바이트로 일치했습니다. 기존 정수 `% 0` 차이와 순환 참조 oracle 오류는 유지했습니다. 관계 41개, Rust 221개·Python 171개 검사, Wasm 빌드와 실제 Node·Chromium 각 39개 시나리오의 개발 계약이 통과했습니다. 최종 소스 스냅샷 1,137개를 구현 커밋과 대조했습니다. 마감 회귀 검사에서 발견한 상속 Mapping 길이 차이와 중단된 수집·수정 전 검사 결과를 별도 보존했고 수정된 후보로 전체 검증을 다시 수행했습니다. 기존 탐색 증거를 덮어쓰거나 개발 예외를 추가하지 않았습니다.
+
+[원격 CI](https://github.com/luuvish/pkl-rs/actions/runs/39529055834) 작업 6개가 모두 성공했습니다. [CI 증거 검증](reports/m2/ci-stage9-summary.json)은 원본 ZIP 해시와 소스 스냅샷 1,357개(고유 경로 1,177개)를 정확한 구현 커밋에 대조했습니다. 두 차례 오프라인 검증이 통과했고 최종 봉인 패키지는 바뀌지 않았습니다. JVM identity hash·같은 캐시의 순환 재진입·순환 키·재귀 진단 압축과 나머지 M2 언어·타입·Reference·메타데이터 범위가 남아 있으므로 **M2 전체는 진행 중**입니다. 전체 gate의 1,950개 실패 이유와 성능·메모리 목표도 계속 열려 있습니다.
+
+다음 구현은 [`pkl:ref`](external/pkl/stdlib/ref.pkl)의 최소 실행 경로와 공통 선언·타입 메타데이터를 우선 연결합니다. 읽기 전용 의존성 조사만 완료했으며 아래 기능의 구현·검증은 아직 수행하지 않았습니다.
+
+1. `import "pkl:ref"` namespace와 qualified 이름 해석, 선언 identity·module owner·상속 property 타입을 보존하는 메타데이터를 연결합니다.
+2. Reference의 domain·data·path·referent type과 합성 property/subscript 접근을 구현합니다. 접근 중 실제 referent 본문이 실행되지 않는지 확인합니다.
+3. 타입 정규화와 domain/referent 타입 검사를 구분하고, 렌더링·동등성·해시를 공통 VM·GC·Host 수명주기에 연결합니다.
+4. upstream `basic/reference.pkl`, `errors/reference1..27.pkl`, `api/reference.pkl`과 최소화한 Java 원시 비교를 연결합니다. 전체 reflection API 및 남은 언어 코퍼스의 완료 조건은 계속 유지합니다.
 
 - 전체 문법, 이름 해석, IR·compiler, lazy evaluation, 객체·amendment·상속, closure, generator를 구현합니다.
 - 타입·제약·generic·union, `Reference<Domain, Type>`, reflection에 필요한 런타임 메타데이터를 구현합니다. 다중 행 문자열의 continuation 등 0.32 기능을 목록에 연결합니다.

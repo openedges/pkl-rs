@@ -8,8 +8,96 @@ assertions. Stage 4 adds ordered collections and resumable generators. Stage 5
 adds generic collection checks and lazy wrappers. Stage 6 adds member predicates
 and their scope, cache, and lifecycle behavior. Stage 7 adds structural equality,
 nonprimitive keys, and related diagnostics. Stage 8 corrects typed defaults,
-cache-sensitive comparison order, and deep-force/hash preparation order. These
-checkpoints do not complete the language milestone.
+cache-sensitive comparison order, and deep-force/hash preparation order.
+Stage 9 adds stable hashes,
+partial map publication and retries, HashSet length counting, and let diagnostic
+scopes. These checkpoints do not complete the language milestone.
+
+## Stage 9 checkpoint
+
+The [stage 9 summary](stage9-final-summary.json) records **1,059 selected
+comparisons: 1,057 raw-byte matches, one remainder-zero mismatch, and one cycle
+oracle failure**. All 41 metamorphic relations pass. The 152 additions and nine
+new relations preserve every original 907 definition and input byte. The
+[language archive](language-stage9-final-evidence.tar.gz) retains the recorded
+release build, 1,137 source snapshots, exact fixture URIs, pinned Java
+identity, outcome sidecars, and complete output channels. Source and artifact
+identities stayed stable, and every snapshot matches implementation `2a69a63`.
+
+Stable Java hashes are separate from structural value identities. Declaration
+maps retain insertion buckets; cached members retain insertion slots and partial
+rehash state. A fifth cached value is published before its keys are hashed.
+Failed rebuilding can hide a published slot, and retry can append another value
+for its key. Both values remain visible to cursor comparisons and GC. Local
+cache comparisons preserve direction; zero hashes are recomputed while nonzero
+hashes remain cached. Mapping length separately uses ancestor-first HashSet
+counting, including full-hash filtering, query-first equality, and success-only
+publication of the count.
+
+Let diagnostics use source metadata without adding dispatch instructions.
+Selected cases cover nested scopes, captured objects/functions, initializer and
+typed binding failures, explicit casts, and constraints with separate or inline
+logical roots, including wildcard bindings. All ten held Stage 8 cases now
+match, while repeated recursive frame compression remains a recorded gap.
+
+The [validation record](validation-stage9-final.json) and
+[raw checks](validation-stage9-final-evidence.tar.gz) retain reference pin checks,
+formatting, workspace Clippy, **221 Rust tests and 171 Python tests**, Wasm
+compilation, and inventory freshness. One existing differential probe remains
+intentionally ignored by ordinary unit tests. Five map-index tests use pinned
+JAR observations; four new Host lifecycle tests cover partial publication,
+duplicate cursor values, zero hashes, generic checks, length counting, nested
+evaluation, GC, failure/retry, stale completions, and terminal transitions.
+
+The [platform archive](platforms-stage9-final-evidence.tar.gz) records **39
+scenarios in each of actual Node and Chromium**. Twenty-five new Java captures
+at the identical adapter URI supply values and complete diagnostic expectations.
+All 6,078 primitive results agree across Rust targets; each target matches Java
+on 6,076, retaining the same two regex failures. The
+[regression archive](regressions-stage9-final-evidence.tar.gz) includes the final
+907 unchanged-input replays and fresh pre-push comparison of all 152 additions.
+It also retains 15 frontend matches, six runtime value matches, two runtime
+diagnostic matches, one cycle diagnostic mismatch, two matching lifecycle
+protocols, and four full lifecycle diagnostic mismatches.
+
+The initial [exploration archive](exploration-stage9-evidence.tar.gz) preserves
+185 language observations, internal pinned-JAR map/VM/class observations,
+provisional replays, invalid drafts, and the first 137 promotions. Its final
+provisional replay records 158 matches and 27 nonselected mismatches. Of the
+158 matches, 21 are redundant controls. These observation and rerun
+counts are not distinct language requirements.
+
+The [correction archive](correction-stage9-evidence.tar.gz) preserves the
+subsequent inherited Mapping length regression, including Java `1` versus Rust
+`2`, 257 complete pairs and one interrupted case without a full report, and
+superseded validation/platform captures. It adds the corrected Java/Rust `1`
+result, 15 focused HashSet controls,
+the final 200-row exploratory replay, and unchanged-input replay after the fix.
+The final exploration has 173 matches and the same 27 nonselected mismatches;
+all 152 promoted cases pass. The original archive remains immutable. Partial
+captures and failed drafts are never counted as final compatibility passes.
+
+The [gate captures](gates-stage9-final-evidence.tar.gz) retain integrity and
+development success, with strict selected and full compatibility failure.
+The inventory has 474 requirement records and 2,059 overlapping accounting rows:
+1,059 executable selections, 960 unimplemented rows, and 40 unmapped rows.
+These are not distinct feature counts or a completion percentage. The full gate
+still reports 1,950 failure reasons. JVM identity-dependent bucket assignments,
+same-cache cyclic reentry, cyclic keys, remaining types and amendments,
+`Reference`, metadata, repeated-frame compression, and the full language corpus
+remain open. No new speed or memory parity measurement was made.
+**M2 remains in progress.**
+
+All six jobs of the [implementation CI run](https://github.com/luuvish/pkl-rs/actions/runs/39529055834)
+passed for `2a69a63`. The [independent verification](ci-stage9-summary.json)
+and [CI package](ci-stage9-evidence.tar.gz) retain both original artifact ZIPs
+and verify their GitHub SHA-256 digests. Verification matches
+1,357 snapshot copies covering 1,177 distinct paths to the exact
+implementation commit. Remote results retain all 1,059 comparisons, the same
+two known failures, all 41 relations, all four identifier tables, and 39
+scenarios per JS target. Two offline checks pass; the final
+[sealed replay](ci-stage9-offline-evidence.tar.gz) reproduces outcomes and verifier
+identities while the packaged contents remain unchanged.
 
 ## Stage 8 checkpoint
 
