@@ -19,7 +19,7 @@ M0의 참조 소스·Java oracle 고정, 기능·코퍼스 목록, 원시 차등
 | 초기 구성 | 구축됨 | 없음 | Git·Rust workspace·참조 submodule·개발 문서와 초기 구성 검증 |
 | M0 기준선 | 완료: 로컬 기준선·원격 CI 검증 확인 | 초기 구성 | oracle·목록·원시 비교 도구·Java 초기 측정과 전체 처리 상태 확보; 판정 보류와 미구현 범위 보존 |
 | M1 구조 검증 | 완료: 구조·Graal 조사·원격 CI 증거 확인 | M0의 oracle·실행 계약·초기 기준선 | 제한된 공통 엔진·실제 Node/브라우저·원시 비교와 비용 측정 완료. 후보 기각과 알려진 호환성·성능 실패는 후속 필수 조건으로 보존 |
-| M2 언어 런타임 | 진행 중: type-use 소유권·const 재시도 보완; 전체 gate 미완료 | M1의 이름 해석·값·heap·진단 설계 결정 | 객체·lazy 평가·상속·closure·타입·Reference 구현; 언어 코퍼스의 결과·오류 바이트 일치 |
+| M2 언어 런타임 | 진행 중: 유한 recursive generic·const 범위 보완; 전체 gate 미완료 | M1의 이름 해석·값·heap·진단 설계 결정 | 객체·lazy 평가·상속·closure·타입·Reference 구현; 언어 코퍼스의 결과·오류 바이트 일치 |
 | M3 표준 라이브러리·출력 | 계획됨 | M2의 해당 언어 기능 | 전체 builtin·renderer·reflection·Pkl Binary 구현; 공개 멤버 누락 0, 출력·오류 일치 |
 | M4 외부 기능 | 계획됨 | M1 Host 계약과 M2·M3의 해당 기능 | module/resource Host·HTTP·프로젝트·패키지·external reader 구현; 실제 I/O·패키지 코퍼스 통과 |
 | M5 제품 API | 계획됨 | M2·M3·M4의 해당 기능 | CLI·REPL·server·Rust API·formatter·문서 생성·코드 생성·JVM adapter 구현; 기존 호출·client·수명주기 호환 |
@@ -303,7 +303,13 @@ Stage 15의 원래 입력·URI 그대로 재비교하여 shared-slot 실패 3개
 
 독립 검토에서 실제 인자가 정해지기 전 컬렉션 기본값을 생략하는 회귀와 `Reference<D,T>`의 constrained referent 검사를 빠뜨리는 회귀를 발견하여 수정했습니다. 원래 Java·Stage 17 성공 입력을 그대로 보존하고, 기본값은 대입 후 기존 class 선언을 사용하며 Reference 검사는 authored resolution 위치에서 수행합니다. constraint body의 short-circuit는 유지합니다. 수정 전 검사·중단된 수집과 실패 관찰은 별도 증거로 남깁니다.
 
-현재 선택은 새 139개를 포함한 1,798개 독립 식·63개 변형 관계이며, 별도 persistent 계약은 108개 목록·두 번 실행한 1,782개 호출입니다. 최종 소스를 고정하고 필수 로컬 검사 7종·새 전체 Java 수집·실제 Node/Chromium 검증을 진행 중입니다. 기존 1,659개 재비교는 1,657개 일치와 원래 두 실패를 유지했습니다. `this is A<List<T>>`의 무한 타입 인자 증가는 native stack을 넘칠 수 있으며 실제 SIGABRT를 보존합니다. 제한된 yield/cancel 검사로 이 실패를 성공 처리하지 않습니다. **전체 M2와 성능·메모리·제품 API 조건은 미완료입니다.**
+구현 커밋 `e918efdf718f0bebe1b5184e10421b1b1ffaa730`를 푸시했습니다. [최종 로컬 요약](reports/m2/stage18-final-summary.json)은 1,798개 독립 식 중 1,796개 원시 바이트 일치와 기존 순환 oracle 오류·정수 `% 0` 진단 불일치를 기록합니다. 추가 139개는 성공 85개·예상 오류 54개이며 모두 일치하고, 변형 관계 63개도 통과했습니다. 기존 1,659개 정의·입력·56개 관계는 유지하며 별도 이전 선택 재비교도 1,657개 일치와 원래 두 실패를 유지했습니다. 새 개발 예외는 추가하지 않았습니다.
+
+별도 persistent 계약은 108개 목록을 두 번 실행한 216회·1,782개 호출이 모두 일치합니다. 기존 67개 목록과 Java/Rust 원시 결과 파일 6,312개를 바이트 그대로 보존했습니다. [필수 로컬 검사 7종](reports/m2/validation-stage18-final.json)이 통과했고 Rust 382개·Python 194개 성공과 기존 ignored probe 1개를 구분합니다. 실제 Node·Chromium 각각 68개 개발 시나리오가 통과했으며 공통 primitive 6,078개의 엔진 일치와 target별 Java 일치 6,076개·기존 regex 실패 2개를 유지합니다. Host 중단·재진입·GC·취소·서로 다른 evaluator의 분리·terminal 해제는 기존 값 수치와 별도 executable 수치로 검증했습니다.
+
+[탐색 증거](reports/m2/exploration-stage18-evidence.tar.gz)와 연결된 지원 archive 3개는 수정 전 실패·중단된 수집을 포함하여 원본 경로 74,806개를 고유 내용 10,671개로 보존하며 모든 바이트·크기·mode 복원을 검증했습니다. 더 넓은 탐색의 독립 관찰 166개 중 25개 불일치와 중복되는 호출 관찰 598개 중 69개 불일치는 선택 계약과 분리합니다. [소스 대조와 gate 증거](reports/m2/source-stage18-final-evidence.tar.gz)는 소스 사본 4,996개·고유 경로 2,244개를 정확한 구현 커밋과 연결합니다. upstream 소스 사본은 0개이며 참조 pin·oracle 출처는 별도 검증했습니다. 무결성·개발 gate는 통과하고 엄격한 전체 gate는 기존 실패 이유 1,950개를 유지합니다. 요구사항 474개·부분 연결표 16개와 미구현 960개·미연결 40개 accounting row를 완료율로 계산하지 않습니다.
+
+`this is A<List<T>>`의 무한 타입 인자 증가는 native stack을 넘칠 수 있으며 실제 SIGABRT를 보존합니다. 제한된 yield/cancel 검사로 이 실패를 성공 처리하지 않습니다. **Stage 18의 제한된 로컬 개발 계약만 마감했으며 전체 M2와 성능·메모리·제품 API·릴리스 플랫폼 조건은 미완료입니다.**
 
 다음 구현은 남은 탐색 불일치의 의존성을 기준으로 진행합니다.
 

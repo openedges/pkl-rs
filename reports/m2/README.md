@@ -22,8 +22,86 @@ constraint graphs and erased `Class<T>` arguments. Stage 16 adds shared constrai
 receiver slots, creation-time lambda captures, selected alias const boundaries
 and recursive diagnostic compression. Stage 17 adds persistent evaluator-local
 executable/type-use ownership, selected local const-property retries, and
-const-method lexical scope corrections.
+const-method lexical scope corrections. Stage 18 adds finite recursive generic
+argument environments, shared generic let roots, selected collection defaults
+and Reference validation, and let/for const-scope boundaries.
 These checkpoints do not complete the language milestone.
+
+## Stage 18 local verification checkpoint
+
+Implementation `e918efdf718f0bebe1b5184e10421b1b1ffaa730` is committed and pushed.
+Runtime implementation and independent type-consumer review used
+`gpt-6-astra / high`; Java comparisons, lifecycle tests, actual platform execution,
+and evidence auditing used `gpt-6.1-sol / high`. All final checks ran locally on
+macOS. M2 remains in progress.
+
+Constraint bytecode now carries symbolic parameters and receives actual type
+arguments at runtime. Recursive back edges reuse active templates, allowing
+finite recursion with changing arguments such as `A<List<T>>`. Inline and lambda
+constraints capture their actual arguments; generic let roots share Java's
+declaration call target and retain its `unknown` parameter behavior. Let and for
+bodies enforce their inherited const boundary while annotations, initializers,
+iterables, and lambda lookup retain their respective evaluation scopes.
+
+Independent review found and corrected two regressions before the final build:
+symbolic collection element types lost their defaults, and deferred generic
+`Reference<D,T>` uses skipped constrained-referent validation. Defaults now use
+the resolved element class after substitution; Reference validation occurs at
+the authored type-resolution point and preserves short-circuited constraint
+bodies. Original Java and Stage 17 outcomes, superseded builds, interrupted
+acquisitions, and pre-fix failures remain in exploratory evidence.
+
+The [final summary](stage18-final-summary.json) records **1,798 independent cases,
+1,796 raw matches, and the same two failures**, with **63 passing metamorphic
+relations**. All 139 additions match: 85 successful values and 54 expected
+errors. Original 1,659 case definitions, input bytes, and 56 relations are
+preserved. `error-cycle` remains an oracle error and `error-remainder-zero`
+remains a raw diagnostic mismatch. No new development exception was added.
+The separate prior-selection replay retains 1,657 matches and those two failures.
+
+The [persistent contract](class-lifecycle-stage18-final-evidence.tar.gz) passes
+**1,782 calls across 216 executions of 108 sequences**. The original 67
+sequences and their 6,312 Java/Rust status, stdout, and stderr files remain
+byte-identical. Native tests cover argument capture, Host suspension and reentry,
+GC, evaluator isolation, cancellation, retries, and terminal cleanup. Historical
+value-count assertions remain intact, executable entries are counted separately,
+and terminal cleanup requires zero total heap entries.
+
+All [seven required checks](validation-stage18-final.json) pass, including
+**382 Rust tests and 194 Python tests**. One existing ignored Rust probe is
+excluded. Actual [Node and Chromium execution](platforms-stage18-final-evidence.tar.gz)
+passes **68 development scenarios per target**. The shared primitive corpus
+retains 6,078 engine matches and 6,076 Java matches per target, with the original
+two regex failures. M1 regressions retain 15 frontend matches, six runtime value
+and two diagnostic matches, the runtime cycle difference, two Host protocol
+matches, and the historical full-diagnostic/upstream failures.
+
+The [exploration archive](exploration-stage18-evidence.tar.gz) requires all three
+support archives for offline review: [1](exploration-stage18-support-01-evidence.tar.gz),
+[2](exploration-stage18-support-02-evidence.tar.gz), and
+[3](exploration-stage18-support-03-evidence.tar.gz). Their inventories and complete
+rehydration verify **74,806 original paths** against **10,671 unique payload
+blobs**, preserving every original byte, size, and mode. Broader exploration
+retains 141 matches and 25 mismatches across 166 single-case observations, plus
+529 matches and 69 mismatches across 598 overlapping exploratory calls. These
+counts are separate from the selected and persistent contracts.
+
+The [source audit and captured gates](source-stage18-final-evidence.tar.gz) bind
+**4,996 captured project source copies across 2,244 unique paths** to the exact
+implementation commit. This count includes no upstream source copies; reference
+pins and oracle provenance are verified separately. The inventory retains all 474
+requirements and 16 partial mappings; 2,798 overlapping accounting rows contain
+1,798 ready, 960 unimplemented, and 40 unmapped entries. Integrity and development
+gates pass. Strict selected and full gates retain their failures, including
+1,950 full-gate failure reasons. These counts are not a completion percentage.
+
+Unbounded growth of owned type-argument metadata can still exhaust the native
+stack. The original `this is A<List<T>>` SIGABRT is preserved; bounded yielding
+and cancellation tests do not establish safe unbounded execution. Remaining
+type/default/Reference and scope diagnostics, strict Map/Set, annotations,
+module/cache behavior, original upstream adapters, product APIs, and release
+platforms remain open. No execution-time or peak-RSS parity is claimed.
+**Stage 18 closes only its bounded local development contract.**
 
 ## Stage 17 local verification checkpoint
 

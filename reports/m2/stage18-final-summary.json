@@ -1,0 +1,634 @@
+{
+  "archives": {
+    "class-lifecycle": {
+      "bytes": 1752505,
+      "files_including_inventory": 15884,
+      "inventory_verified": true,
+      "path": "reports/m2/class-lifecycle-stage18-final-evidence.tar.gz",
+      "sha256": "50c67d1a47083956d08d5c5444ebdf54bcf5e6b4ac0be010641f2ea7efdeb6de"
+    },
+    "exploration": {
+      "bytes": 1814949,
+      "inventory_verified": true,
+      "path": "reports/m2/exploration-stage18-evidence.tar.gz",
+      "sha256": "9e226b18304278a74db30bbb0462a87054121ae93cfc224fbfc90fc7385cff5c"
+    },
+    "frontend": {
+      "bytes": 185701,
+      "files_including_inventory": 132,
+      "inventory_verified": true,
+      "path": "reports/m2/frontend-stage18-final-evidence.tar.gz",
+      "sha256": "cb4fd2efe0baebf59bd04bdadcf129665f91cc3cf1b98c1f750c1c954ec414a1"
+    },
+    "language": {
+      "bytes": 4056803,
+      "files_including_inventory": 16308,
+      "inventory_verified": true,
+      "path": "reports/m2/language-stage18-final-evidence.tar.gz",
+      "sha256": "841bde3b331b3782c9e8daa721396663cc09411b35b60ca2647b1bf6209eb54c"
+    },
+    "lifecycle": {
+      "bytes": 904626,
+      "files_including_inventory": 153,
+      "inventory_verified": true,
+      "path": "reports/m2/lifecycle-stage18-final-evidence.tar.gz",
+      "sha256": "2822ab537ed13bd8a7336c2be84a48ca579159bdc7c3a609b1073c3acefe5df5"
+    },
+    "native-generics": {
+      "bytes": 2316514,
+      "files_including_inventory": 92,
+      "inventory_verified": true,
+      "path": "reports/m2/native-generics-stage18-final-evidence.tar.gz",
+      "sha256": "13f3a3c497a4c626435e15218e1a7017be1fe141da469ae27c5490b3d6e9bc65"
+    },
+    "platforms": {
+      "bytes": 3425421,
+      "files_including_inventory": 108,
+      "inventory_verified": true,
+      "path": "reports/m2/platforms-stage18-final-evidence.tar.gz",
+      "sha256": "129649a7dff6a54ca417ddccba0e4290779c621193e75649be2a879797446adc"
+    },
+    "prior-selection": {
+      "bytes": 1893909,
+      "files_including_inventory": 6733,
+      "inventory_verified": true,
+      "path": "reports/m2/prior-selection-stage18-final-evidence.tar.gz",
+      "sha256": "d2c7cf51991bad4154bbe12e864b561f07a9caa5251b25387ad07865e0416332"
+    },
+    "release-build": {
+      "bytes": 1878992,
+      "files_including_inventory": 111,
+      "inventory_verified": true,
+      "path": "reports/m2/release-build-stage18-final-evidence.tar.gz",
+      "sha256": "0231e85476567f430a7a27abab614f456360d19b7b9f536eb27851443af00298"
+    },
+    "runtime": {
+      "bytes": 1568345,
+      "files_including_inventory": 128,
+      "inventory_verified": true,
+      "path": "reports/m2/runtime-stage18-final-evidence.tar.gz",
+      "sha256": "f9a402ed01e6d42f6809933bff22a44c1aeb318065dc82892603edf086a769e6"
+    },
+    "source": {
+      "bytes": 5495125,
+      "files_including_inventory": 2311,
+      "inventory_verified": true,
+      "path": "reports/m2/source-stage18-final-evidence.tar.gz",
+      "sha256": "f1b9400694d2d583eed1f413321b6f3223c7535d7b313f55aa503b01a407141c"
+    },
+    "validation": {
+      "bytes": 2344824,
+      "files_including_inventory": 2269,
+      "inventory_verified": true,
+      "path": "reports/m2/validation-stage18-final-evidence.tar.gz",
+      "sha256": "72b4913fb9bfa6b537e060e8f544b75fbaf8ef302d46cad6c307616653a701c5"
+    }
+  },
+  "captured_binaries_executed_by_packaging": false,
+  "compatibility_complete": false,
+  "completed_suites": {
+    "class-lifecycle": {
+      "comparisons": 1782,
+      "executions": 216,
+      "unexecuted_groups": [
+        {
+          "group": "P09",
+          "reason": "Java-only module-cache probe stage12-java-module-identity-01 observes same URI/source identity retained, changed source at same URI ignored (marker remains1), distinct URI/evaluator identity separated. Rust multi-source module-cache parity is unimplemented; same-module identity is compared."
+        },
+        {
+          "group": "P10",
+          "reason": "Java observable sequence comparisons do not expose heap counts; Rust architectural GC coverage is separate."
+        },
+        {
+          "group": "P11",
+          "reason": "Real Java class-initialization read observed via @Deprecated { ...(read(\"life:class\")) } in stage12-java-host-path-01; Rust annotation frontend unsupported, so actual Host-in-class cross-language reentry remains unexecuted. Internal scheduler tests are separate."
+        },
+        {
+          "group": "P12",
+          "reason": "Terminal context/token/heap cleanup is covered by separate Rust lifecycle tests, not Java raw-byte equivalence."
+        },
+        {
+          "group": "P05",
+          "reason": "Indirect cyclic hierarchy property traversal new A {}.missing timed out after successful class identity calls in stage12-java-observations-03; traversal is observed oracle-timeout, not a compatibility pass."
+        }
+      ],
+      "unique_sequences": 108
+    },
+    "frontend": {
+      "cases": 15,
+      "passed": 15
+    },
+    "language": {
+      "candidate": {
+        "build": {
+          "command": [
+            "cargo",
+            "build",
+            "-p",
+            "pkl-runtime",
+            "--example",
+            "language_probe",
+            "--locked",
+            "--release",
+            "--target-dir",
+            "/Users/cody.ij.hwang/Projects/pkl-rs/target"
+          ],
+          "exit_code": 0,
+          "stderr_sha256": "bb643517ab638b155e433e570b3d67a2d0078a779b537f8717346438b773e383",
+          "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "timed_out": false
+        },
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/release/examples/language_probe",
+        "sha256": "f7df17e2588d346ca17913595404089bea813f468d825761bb601037de6c9a82",
+        "source_binding": "recorded-build"
+      },
+      "full_gate_failure_count": 1950,
+      "inventory_counts": {
+        "cases": 2798,
+        "cases_by_execution": {
+          "ready": 1798,
+          "unimplemented": 960,
+          "unmapped": 40
+        },
+        "requirements": 474,
+        "requirements_by_kind": {
+          "language_parser": 137,
+          "language_token": 109,
+          "semantic-family": 30,
+          "specification": 198
+        }
+      },
+      "metamorphic_passed": 63,
+      "metamorphic_relations": 63,
+      "selected_count": 1798,
+      "status_counts": {
+        "mismatch": 1,
+        "oracle-error": 1,
+        "pass": 1796
+      }
+    },
+    "lifecycle": {
+      "cases": 2,
+      "compatibility_complete": false,
+      "limitations": [
+        "protocol bytes are not full Java diagnostics or public API compatibility",
+        "Java parses the Pkl fixtures; Rust uses explicit bytecode translations checked against exact fixture bytes, not frontend read(...) lowering",
+        "reentry uses a prewarmed resource: a new nested Java resource read inside an outer read can raise ConcurrentModificationException; that unsupported upstream edge is outside this successful protocol",
+        "native bounded VM/Host only; not browser/Node lifecycle parity",
+        "no performance or long-session memory claim"
+      ]
+    },
+    "native-generics": {
+      "passed": 8,
+      "source_stability": true
+    },
+    "platforms": {
+      "browser_scenarios": 68,
+      "known_gaps": [
+        "regex-unicode-15-vs-16",
+        "regex-zero-width-supplementary"
+      ],
+      "node_scenarios": 68,
+      "oracle_passed": {
+        "browser": 6076,
+        "node": 6076,
+        "rust": 6076
+      },
+      "shared_engine_passed": 6078,
+      "total": 6078
+    },
+    "prior-selection": {
+      "count": 1659,
+      "java_dependency": {
+        "bytes": 3883852,
+        "files_including_inventory": 15053,
+        "inventory_verified": true,
+        "path": "reports/m2/language-stage17-final-evidence.tar.gz",
+        "sha256": "0b9f25ccec620ff0bc1cb216e053aabc863858265c0229d01b8012f41a6a05b6"
+      },
+      "status_counts": {
+        "mismatch": 1,
+        "oracle-error": 1,
+        "pass": 1657
+      }
+    },
+    "release-build": {
+      "artifacts": {
+        "class_lifecycle_probe": {
+          "candidate_path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/release/examples/class_lifecycle_probe",
+          "candidate_sha256": "f310bcf98823917cbf3aabcddfa92ad2b87ff252f35b95ada1dac4d795548fae",
+          "frozen_path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage18-release-probe-build-final-03/artifacts/class_lifecycle_probe",
+          "frozen_sha256": "f310bcf98823917cbf3aabcddfa92ad2b87ff252f35b95ada1dac4d795548fae"
+        },
+        "language_probe": {
+          "candidate_path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/release/examples/language_probe",
+          "candidate_sha256": "f7df17e2588d346ca17913595404089bea813f468d825761bb601037de6c9a82",
+          "frozen_path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage18-release-probe-build-final-03/artifacts/language_probe",
+          "frozen_sha256": "f7df17e2588d346ca17913595404089bea813f468d825761bb601037de6c9a82"
+        }
+      },
+      "source_stability": true
+    },
+    "runtime": {
+      "compatibility_complete": false,
+      "status_counts": {
+        "bounded-value-bytes-match": 6,
+        "diagnostic-byte-mismatch": 1,
+        "diagnostic-bytes-match": 2
+      }
+    },
+    "validation": {
+      "python_passed": 194,
+      "required_commands": 7,
+      "rust_intentionally_ignored": 1,
+      "rust_passed": 382
+    }
+  },
+  "exploration": {
+    "exact_original_payload_hash_and_size_conservation": true,
+    "index_path": "target/m2/stage18-exploration-sealed-index.json",
+    "index_sha256": "d33370f027787f917aed270118761d6c5613a789849fadf79a489a37b6457777",
+    "main": {
+      "bytes": 1814949,
+      "inventory_verified": true,
+      "path": "reports/m2/exploration-stage18-evidence.tar.gz",
+      "sha256": "9e226b18304278a74db30bbb0462a87054121ae93cfc224fbfc90fc7385cff5c"
+    },
+    "offline_requirement": "Acquire main and every listed support archive, verify each, extract their non-EVIDENCE members into one new directory, and run the retained rehydrate.py into a second new directory.",
+    "original_bytes": 737868464,
+    "original_files": 74806,
+    "support_archives": [
+      {
+        "blob_count": 4069,
+        "bytes": 46292188,
+        "inventory_verified": true,
+        "path": "reports/m2/exploration-stage18-support-01-evidence.tar.gz",
+        "sha256": "c85deece0cc11e9b2d85fa9fe911e581d73990623b7b12985fac363d64101780",
+        "uncompressed_unique_bytes": 198468748
+      },
+      {
+        "blob_count": 5238,
+        "bytes": 45885557,
+        "inventory_verified": true,
+        "path": "reports/m2/exploration-stage18-support-02-evidence.tar.gz",
+        "sha256": "9a3f4eed701edc76430de2e779738e3c3dada3aa85e3d3af81cb68dafcad6f17",
+        "uncompressed_unique_bytes": 188205680
+      },
+      {
+        "blob_count": 1364,
+        "bytes": 21104951,
+        "inventory_verified": true,
+        "path": "reports/m2/exploration-stage18-support-03-evidence.tar.gz",
+        "sha256": "b20759c38d2f6e92c9ef213b02fb11ec64e1982c3247cacd8f6251552b834253",
+        "uncompressed_unique_bytes": 89030696
+      }
+    ],
+    "unique_bytes": 475705124,
+    "unique_payloads": 10671
+  },
+  "gates": [
+    {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/m2_language.py",
+        "--verify-report",
+        "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/language-stage18-final-03"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "gate": "report",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "6180e0c3999c8ae37bd4a92759a9d70fbea4ccb937641b9fb7ad4fac234b28e2"
+    },
+    {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/m2_language.py",
+        "--verify-development",
+        "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/language-stage18-final-03"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "gate": "development",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "6180e0c3999c8ae37bd4a92759a9d70fbea4ccb937641b9fb7ad4fac234b28e2"
+    },
+    {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/m2_language.py",
+        "--verify-subset",
+        "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/language-stage18-final-03"
+      ],
+      "exit_code": 1,
+      "expected_exit_code": 1,
+      "gate": "subset",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "6180e0c3999c8ae37bd4a92759a9d70fbea4ccb937641b9fb7ad4fac234b28e2"
+    },
+    {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/m2_language.py",
+        "--verify-full",
+        "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/language-stage18-final-03"
+      ],
+      "exit_code": 1,
+      "expected_exit_code": 1,
+      "gate": "full",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "6180e0c3999c8ae37bd4a92759a9d70fbea4ccb937641b9fb7ad4fac234b28e2"
+    },
+    {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/m2_class_lifecycle.py",
+        "--verify-report",
+        "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/class-lifecycle-stage18-final-03"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "gate": "class-report",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "3cff31ada034d79720955b6abffd4c28bc54a9920f27d17140ec34ca04dc46fb"
+    },
+    {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/m2_class_lifecycle.py",
+        "--verify-contract",
+        "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/class-lifecycle-stage18-final-03"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "gate": "class-contract",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "3cff31ada034d79720955b6abffd4c28bc54a9920f27d17140ec34ca04dc46fb"
+    }
+  ],
+  "historical_dependencies": {
+    "archives": {
+      "class-lifecycle": {
+        "bytes": 1471054,
+        "files_including_inventory": 9466,
+        "inventory_verified": true,
+        "path": "reports/m2/class-lifecycle-stage17-final-evidence.tar.gz",
+        "sha256": "afe409da39467d8e7209d225a04a6c5dbf47c0f8fd560a15bddf67f48de52a22"
+      },
+      "exploration": {
+        "bytes": 40915589,
+        "path": "reports/m2/exploration-stage17-evidence.tar.gz",
+        "sha256": "0bac7fcf0f4860d7463913671e35270e08355888c31d0df15979fae8a8defdd9"
+      },
+      "exploration-history-1": {
+        "bytes": 38356107,
+        "files_count": 22942,
+        "inventory_verified": true,
+        "partition_key": "reports/m2/exploration-stage17-history-01-evidence.tar.gz",
+        "path": "reports/m2/exploration-stage17-history-01-evidence.tar.gz",
+        "scope": "Complete superseded and exploratory supporting histories; paths and raw identities are conserved by the partition index.",
+        "sha256": "792963ccfdb64df3d7683340a91f53f6333144ca4e3d160bf1fed3f17f915113",
+        "uncompressed_payload_bytes": 172985250
+      },
+      "exploration-history-2": {
+        "bytes": 38961690,
+        "files_count": 22408,
+        "inventory_verified": true,
+        "partition_key": "reports/m2/exploration-stage17-history-02-evidence.tar.gz",
+        "path": "reports/m2/exploration-stage17-history-02-evidence.tar.gz",
+        "scope": "Complete superseded and exploratory supporting histories; paths and raw identities are conserved by the partition index.",
+        "sha256": "6915d3724c2a96ab272039c3b334eec4f872d647ae3c7206e436f4a3b1fa9285",
+        "uncompressed_payload_bytes": 171245491
+      },
+      "exploration-history-3": {
+        "bytes": 32294731,
+        "files_count": 164,
+        "inventory_verified": true,
+        "partition_key": "reports/m2/exploration-stage17-history-03-evidence.tar.gz",
+        "path": "reports/m2/exploration-stage17-history-03-evidence.tar.gz",
+        "scope": "Complete superseded and exploratory supporting histories; paths and raw identities are conserved by the partition index.",
+        "sha256": "e42ec9e4655531eb82207a66c5ae728ab99dc934e04ad6156ca9bdf542811229",
+        "uncompressed_payload_bytes": 136711625
+      },
+      "exploration-history-4": {
+        "bytes": 35794996,
+        "files_count": 3517,
+        "inventory_verified": true,
+        "partition_key": "reports/m2/exploration-stage17-history-04-evidence.tar.gz",
+        "path": "reports/m2/exploration-stage17-history-04-evidence.tar.gz",
+        "scope": "Complete superseded and exploratory supporting histories; paths and raw identities are conserved by the partition index.",
+        "sha256": "5e6a4ea6172ff5ba1a68660b2a82ddd25f0b03c1d72bd399e50c553767edb7dd",
+        "uncompressed_payload_bytes": 151211498
+      },
+      "gates": {
+        "bytes": 938,
+        "files_including_inventory": 10,
+        "inventory_verified": true,
+        "path": "reports/m2/gates-stage17-final-evidence.tar.gz",
+        "sha256": "f4307bf3ec4ae777ae4c935774a5c07f6b6c1e3ff2eab4a10cf547f9d469c6a4"
+      },
+      "language": {
+        "bytes": 3883852,
+        "files_including_inventory": 15053,
+        "inventory_verified": true,
+        "path": "reports/m2/language-stage17-final-evidence.tar.gz",
+        "sha256": "0b9f25ccec620ff0bc1cb216e053aabc863858265c0229d01b8012f41a6a05b6"
+      },
+      "platforms": {
+        "bytes": 3367449,
+        "files_including_inventory": 106,
+        "inventory_verified": true,
+        "path": "reports/m2/platforms-stage17-final-evidence.tar.gz",
+        "sha256": "6ead24db1a84e03970d7c5fe47b5664c8ae4fd1b949f4484bedc036014710f10"
+      },
+      "regressions": {
+        "bytes": 21456570,
+        "files_including_inventory": 8679,
+        "inventory_verified": true,
+        "path": "reports/m2/regressions-stage17-final-evidence.tar.gz",
+        "sha256": "f0709e8fd8d44d2b73903e238c0f0c665c62fc84b62fc4ada348b578caf75e22"
+      },
+      "source": {
+        "bytes": 4103478,
+        "files_including_inventory": 2019,
+        "inventory_verified": true,
+        "path": "reports/m2/source-stage17-final-evidence.tar.gz",
+        "sha256": "a012d2be480a070f5c67c4743702fe4529c8f7cf9617e2e2fff00cc8a115fc4d"
+      },
+      "validation": {
+        "bytes": 16967,
+        "files_including_inventory": 16,
+        "inventory_verified": true,
+        "path": "reports/m2/validation-stage17-final-evidence.tar.gz",
+        "sha256": "92069c17bc7451a4e092808b7f557b4ba5e0ae50078e85e6b4cc63e1b8c14a62"
+      }
+    },
+    "scope": "Immutable Stage17 archives remain external dependencies; no historical payload is rewritten or duplicated.",
+    "summary_path": "reports/m2/stage17-final-summary.json",
+    "summary_sha256": "387089a325531d3c63b34405d883861ead0cdeb3ace6b186dc8a0c3a13083c22"
+  },
+  "implementation_commit": "e918efdf718f0bebe1b5184e10421b1b1ffaa730",
+  "independent_reviews": {
+    "stage18-final-source-review.json": {
+      "implementation_commit": "e918efdf718f0bebe1b5184e10421b1b1ffaa730",
+      "path": "target/m2/stage18-final-source-review.json",
+      "sha256": "1d0c2fd1df4b40f477afdf47726ece7f7ab7a4d3ab34df6e3aaad700f2e06baf",
+      "source_count": 7,
+      "source_hashes_bound_to_exact_commit": true
+    },
+    "stage18-generic-design-review-final.json": {
+      "implementation_commit": "e918efdf718f0bebe1b5184e10421b1b1ffaa730",
+      "path": "target/m2/stage18-generic-design-review-final.json",
+      "sha256": "9c7e9cae6bb7fc74b3a91dc7754e730174305c4c83d93f2691e6e697bb2cf8d1",
+      "source_count": 7,
+      "source_hashes_bound_to_exact_commit": true
+    },
+    "stage18-runtime-final-review.json": {
+      "implementation_commit": "e918efdf718f0bebe1b5184e10421b1b1ffaa730",
+      "path": "target/m2/stage18-runtime-final-review.json",
+      "sha256": "379c245a933b4f5c489122b52f771d07c4dfc17af6b978d5e03d9b6bb4338ee2",
+      "source_count": 10,
+      "source_hashes_bound_to_exact_commit": true
+    },
+    "stage18-type-consumer-audit-final.json": {
+      "implementation_commit": "e918efdf718f0bebe1b5184e10421b1b1ffaa730",
+      "path": "target/m2/stage18-type-consumer-audit-final.json",
+      "sha256": "27bdf7c06ef5b6760f78249cb5ab099e30b8bc6fd00a1b1a0c5f77110ced2692",
+      "source_count": 7,
+      "source_hashes_bound_to_exact_commit": true
+    }
+  },
+  "known_unverified_scope": [
+    "Unbounded recursively growing generic argument metadata is represented by value; sufficiently deep clone/drop recursion can overflow the native stack. Finite-depth cancellation and bounded recursive comparisons do not establish general unbounded safety.",
+    "Whole-language, complete API, Linux/Windows release execution and every-workload performance/memory gates remain open."
+  ],
+  "missing_or_running_suites": [],
+  "performance_targets_established": false,
+  "preservation": {
+    "added_selected": 139,
+    "added_selected_outcomes": {
+      "failure": 54,
+      "success": 85
+    },
+    "commit": "07fc503314201a2b42838d4b21ae891a0a171bb2",
+    "current_platform_scenarios": 68,
+    "current_selected": 1798,
+    "current_sequences": 108,
+    "historical_lifecycle_files_unchanged": 15,
+    "inventories": {
+      "compatibility/m2-language.json": {
+        "current_requirements": 474,
+        "original_ids_states_definitions_and_links_preserved": true,
+        "original_requirements": 474
+      },
+      "compatibility/m2-mappings.json": {
+        "current_requirements": 16,
+        "original_ids_states_definitions_and_links_preserved": true,
+        "original_requirements": 16
+      }
+    },
+    "original_platform_scenarios": 61,
+    "original_selected": 1659,
+    "original_sequences": 67,
+    "reviewed_remaining_updates": [
+      {
+        "current": "Selected non-generic and finite generic const-read retries, shared generic let roots and let/for lexical barriers are covered; complete lexical-scope, general lazy generic resolution and runtime type-node identity still retain gaps.",
+        "original": "Selected non-generic local const-read retries and const-method lexical barriers are covered; recursive generic instantiation, generic let-root sharing, and the complete lexical-scope corpus retain gaps.",
+        "requirement": "semantic:lazy-evaluation",
+        "scope": "Selected finite generic substitution/root sharing and lexical barriers only; whole-language, generic identity, original adapters and unbounded safety remain open."
+      },
+      {
+        "current": "Selected non-generic and finite generic const-read retries, shared generic let roots and let/for lexical barriers are covered; complete lexical-scope, general lazy generic resolution and runtime type-node identity still retain gaps.",
+        "original": "Selected non-generic local const-read retries and const-method lexical barriers are covered; recursive generic instantiation, generic let-root sharing, and the complete lexical-scope corpus retain gaps.",
+        "requirement": "semantic:modifiers",
+        "scope": "Selected finite generic substitution/root sharing and lexical barriers only; whole-language, generic identity, original adapters and unbounded safety remain open."
+      },
+      {
+        "current": "A full runtime type-node resolution model and mixed unresolved-name/dependency error ordering remain unverified; Stage 18 covers selected recursive generic-parameter shadowing and alias-root chains.",
+        "original": "A full runtime type-node resolution model, mixed unresolved-name/dependency error ordering, and failures involving generic-parameter shadowing remain unverified.",
+        "requirement": "semantic:type-aliases",
+        "scope": "Selected finite generic substitution/root sharing and lexical barriers only; whole-language, generic identity, original adapters and unbounded safety remain open."
+      },
+      {
+        "current": "Selected non-generic and finite generic const-read retries, shared generic let roots and let/for lexical barriers are covered; complete lexical-scope, general lazy generic resolution and runtime type-node identity still retain gaps.",
+        "original": "Selected non-generic local const-read retries and const-method lexical barriers are covered; recursive generic instantiation, generic let-root sharing, and the complete lexical-scope corpus retain gaps.",
+        "requirement": "semantic:type-aliases",
+        "scope": "Selected finite generic substitution/root sharing and lexical barriers only; whole-language, generic identity, original adapters and unbounded safety remain open."
+      },
+      {
+        "current": "The complete original constraint suites, imported constraints and full runtime type-node identity semantics remain unimplemented or unverified.",
+        "original": "The complete original constraint suites, imported constraints, recursive generic instantiation and full runtime type-node identity semantics remain unimplemented or unverified.",
+        "requirement": "semantic:constraints",
+        "scope": "Selected finite generic substitution/root sharing and lexical barriers only; whole-language, generic identity, original adapters and unbounded safety remain open."
+      },
+      {
+        "current": "Selected generic let-root and finite recursive checks now match retained raw comparisons. The original exploratory outcomes, unbounded recursion abort, other known mismatches and complete language/performance gates remain separately accounted.",
+        "original": "Generic let-root sharing and recursive generic instantiation retain recorded mismatches; bounded non-generic lifecycle and selected-byte agreement do not establish full language or performance completion.",
+        "requirement": "semantic:constraints",
+        "scope": "Selected finite generic substitution/root sharing and lexical barriers only; whole-language, generic identity, original adapters and unbounded safety remain open."
+      },
+      {
+        "current": "Complete generic classes, variance, imported generic declarations and the original generic suite contracts remain unimplemented or unverified.",
+        "original": "Complete generic classes, variance, imported generic declarations, recursive expansion and the original generic suite contracts remain unimplemented or unverified.",
+        "requirement": "semantic:generics",
+        "scope": "Selected finite generic substitution/root sharing and lexical barriers only; whole-language, generic identity, original adapters and unbounded safety remain open."
+      },
+      {
+        "current": "Selected non-generic and finite generic const-read retries, shared generic let roots and let/for lexical barriers are covered; complete lexical-scope, general lazy generic resolution and runtime type-node identity still retain gaps.",
+        "original": "Selected non-generic local const-read retries and const-method lexical barriers are covered; recursive generic instantiation, generic let-root sharing, and the complete lexical-scope corpus retain gaps.",
+        "requirement": "semantic:modifiers",
+        "scope": "Selected finite generic substitution/root sharing and lexical barriers only; whole-language, generic identity, original adapters and unbounded safety remain open."
+      },
+      {
+        "current": "Selected non-generic and finite generic const-read retries, shared generic let roots and let/for lexical barriers are covered; complete lexical-scope, general lazy generic resolution and runtime type-node identity still retain gaps.",
+        "original": "Selected non-generic local const-read retries and const-method lexical barriers are covered; recursive generic instantiation, generic let-root sharing, and the complete lexical-scope corpus retain gaps.",
+        "requirement": "semantic:lazy-evaluation",
+        "scope": "Selected finite generic substitution/root sharing and lexical barriers only; whole-language, generic identity, original adapters and unbounded safety remain open."
+      },
+      {
+        "current": "A full runtime type-node resolution model and mixed unresolved-name/dependency error ordering remain unverified; Stage 18 covers selected recursive generic-parameter shadowing and alias-root chains.",
+        "original": "A full runtime type-node resolution model, mixed unresolved-name/dependency error ordering, and failures involving generic-parameter shadowing remain unverified.",
+        "requirement": "semantic:type-aliases",
+        "scope": "Selected finite generic substitution/root sharing and lexical barriers only; whole-language, generic identity, original adapters and unbounded safety remain open."
+      },
+      {
+        "current": "Selected non-generic and finite generic const-read retries, shared generic let roots and let/for lexical barriers are covered; complete lexical-scope, general lazy generic resolution and runtime type-node identity still retain gaps.",
+        "original": "Selected non-generic local const-read retries and const-method lexical barriers are covered; recursive generic instantiation, generic let-root sharing, and the complete lexical-scope corpus retain gaps.",
+        "requirement": "semantic:type-aliases",
+        "scope": "Selected finite generic substitution/root sharing and lexical barriers only; whole-language, generic identity, original adapters and unbounded safety remain open."
+      },
+      {
+        "current": "Complete generic classes, variance, imported generic declarations and the original generic suite contracts remain unimplemented or unverified.",
+        "original": "Complete generic classes, variance, imported generic declarations, recursive expansion and the original generic suite contracts remain unimplemented or unverified.",
+        "requirement": "semantic:generics",
+        "scope": "Selected finite generic substitution/root sharing and lexical barriers only; whole-language, generic identity, original adapters and unbounded safety remain open."
+      },
+      {
+        "current": "The complete original constraint suites, imported constraints and full runtime type-node identity semantics remain unimplemented or unverified.",
+        "original": "The complete original constraint suites, imported constraints, recursive generic instantiation and full runtime type-node identity semantics remain unimplemented or unverified.",
+        "requirement": "semantic:constraints",
+        "scope": "Selected finite generic substitution/root sharing and lexical barriers only; whole-language, generic identity, original adapters and unbounded safety remain open."
+      },
+      {
+        "current": "Selected generic let-root and finite recursive checks now match retained raw comparisons. The original exploratory outcomes, unbounded recursion abort, other known mismatches and complete language/performance gates remain separately accounted.",
+        "original": "Generic let-root sharing and recursive generic instantiation retain recorded mismatches; bounded non-generic lifecycle and selected-byte agreement do not establish full language or performance completion.",
+        "requirement": "semantic:constraints",
+        "scope": "Selected finite generic substitution/root sharing and lexical barriers only; whole-language, generic identity, original adapters and unbounded safety remain open."
+      }
+    ]
+  },
+  "schema": 1,
+  "source_binding": {
+    "git_request_sha256": "08392d68b54d90bcb1080e97857fe30a60df0a70d68b1d0145e2d44315e8778b",
+    "git_response_sha256": "31f8ab9d1af83c9e018050f4808756465e5addacec0a5ebde036f70258316831",
+    "helper_snapshot_copies": 1,
+    "implementation_commit": "e918efdf718f0bebe1b5184e10421b1b1ffaa730",
+    "scope": "Only final project source copies enumerated here equal exact implementation Git bytes. Historical focused/exploratory sources retain separate provenance.",
+    "source_snapshot_copies": 4996,
+    "unique_source_files": 2244,
+    "upstream_blob_proof_claimed": false,
+    "upstream_source_snapshot_copies": 0
+  },
+  "status": "ready",
+  "utc": "2026-10-21T11:05:42.154243+00:00"
+}
