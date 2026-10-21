@@ -15,7 +15,116 @@ scopes. Stage 10 adds deferred References, declaration/type metadata, and
 standard-library source frames. Stage 11 adds fixed declarations, ordered
 override checks, and inherited modifier metadata. Stage 12 adds evaluator-owned
 class publication, retained partial classes, and persistent sequence comparisons.
+Stage 13 adds type-alias identity and publication, function metadata and arity checks,
+and exported arrow metadata equality.
 These checkpoints do not complete the language milestone.
+
+## Stage 13 checkpoint
+
+Implementation `f90d7b09124bb5a7d73dd5b2bfcddf2a90d2761f` is pushed. Stage 13 adds
+evaluator-owned type-alias declaration values, qualified diagnostic names, and function
+parameter/result metadata to the shared engine. Alias values preserve declaration
+identity independently of their expanded checks. A failed definition can retain its
+published singleton; later value reads and type uses have different observable outcomes.
+The selected repairs preserve those outcomes, including cyclic-alias errors at the later
+authored use and partial class publication after a failed typed member.
+
+Runtime and type-resolution work used `gpt-6-astra / high`; Java differential evidence,
+lifecycle tests, and independent review used `gpt-6.1-sol / high`.
+
+Arrow and FunctionN annotations check runtime function arity while retaining argument
+and result types as metadata. They do not introduce parameter/result wrappers around an
+existing function; the function's own declared checks still apply when called. Exported
+arrow metadata preserves nested alias identity and exact constraint source text.
+Equality and referent subtyping remain separate operations: identical arrow metadata can
+compare equal while its Reference subtype check returns false. The selected bare
+Function/FunctionN variance and argument-count cases reproduce the pinned Java behavior.
+
+The independent selection contains **1,380 cases and 48 metamorphic relations**. The 89
+additions comprise 61 successful values and 28 expected diagnostics; two new relations
+cover alias expansion and function-result annotations. All **1,291 original case
+definitions and input bytes**, and all 46 previous relations, remain preserved. Focused
+execution of the additions matches all 89 complete Java outcomes. These comparisons use
+the pinned Pkl 0.32.0 oracle without trimming, sorting, or reserialization.
+
+The recorded-build declaration lifecycle capture retains **27 sequences, 54
+fresh-evaluator sequence executions, and 302 matching raw calls**. Its subtotal is **194
+original class comparisons plus 108 new alias/function comparisons**. A sequence retains
+its evaluator and module across errors, repeats in a fresh evaluator, and compares
+status, stdout, and stderr. New calls exercise failed alias reuse followed by class
+property checks, `is`, `as`, typed lets and lambdas, construction, and superclass
+resolution. Original class fixtures and unexecuted-group records remain unchanged. The
+[verified lifecycle archive](class-lifecycle-stage13-final-evidence.tar.gz) retains the
+original raw calls, recorded build, and source snapshots.
+
+The [required checks](validation-stage13-final.json) record **288 passing Rust tests and
+194 Python tooling tests**; one existing ignored differential probe remains separate.
+The 18 new Rust regressions comprise 12 core tests and six GC/Host lifecycle tests.
+Actual Node and Chromium each pass **49 development scenarios**; the two existing Java
+regex differences remain failed compatibility cases. Native GC, Host, reentry, and
+terminal-cleanup assertions retain their separate architectural denominator.
+
+The original 191-case Reference exploration now has **173 matches and 18 remaining
+mismatches**, closing four previous failures without deleting cases. Remaining
+observations require strict Map/Set support, Duration metadata, module
+inheritance/loading and ModuleOutput integration, additional library operations, or
+complete primitive missing-method diagnostics. This exploration does not replace the
+original upstream suite contracts.
+
+The [verified exploration archive](exploration-stage13-provisional-evidence.tar.gz)
+preserves 14,770 files, including draft parser failures, the malformed first lifecycle
+inventory, source drift, and pre-fix diagnostic differences. Its SHA-256 is
+`b506dbbf333d67ea1a0e9243495e78d354477f7235a8b964cdb8b98c0b6053ea`. The final focused
+replays use frozen candidate SHA-256
+`3e9cca27b862f2e228db4c643a7abd89559d1b16a8646e069a3f1230cabffa94`, identical to the
+retained recorded release build with stable before/after source hashes. Earlier
+caller-supplied artifact labels remain explicit.
+
+The [final local summary](stage13-final-summary.json) links the [fresh Java
+acquisition](language-stage13-final-evidence.tar.gz): **1,378 of 1,380 expressions
+match**, with the existing `error-cycle` oracle error and `error-remainder-zero`
+mismatch retained. All **48 relations pass**. Recorded-build candidate and source
+identities remain stable throughout acquisition. The language capture retains **1,473
+source snapshots**; **1,852 copies spanning 1,572 unique paths** across seven final
+evidence suites match exact implementation commit bytes. The [source
+proof](source-stage13-final-evidence.tar.gz) retains this audit and the original
+packaging failure: its first helper expected relation appearance order instead of the
+language harness's canonical case-ID tuple order. The correction changes no raw outcome
+or implementation source.
+
+The [regression archive](regressions-stage13-final-evidence.tar.gz) preserves the
+previous 1,291-case replay (1,289 matches and the same two failures), 15 frontend
+matches, six runtime value and two full diagnostic matches, one runtime cycle diagnostic
+mismatch, two lifecycle protocol matches, and four full lifecycle diagnostic mismatches.
+The [platform archive](platforms-stage13-final-evidence.tar.gz) retains all 6,078
+shared-engine primitive matches, 6,076 Java matches per platform, and the two existing
+regex gaps.
+
+The [gate archive](gates-stage13-final-evidence.tar.gz) separates passing
+integrity/development checks from failing strict subset/full gates. Fifteen reviewed
+mappings remain partial. The inventory retains 474 requirements and 2,380 overlapping
+accounting rows: 1,380 ready, 960 unimplemented, and 40 unmapped. These counts are not
+independent feature counts or completion percentages. The full gate retains **1,950
+failure reasons**, with no new development exceptions.
+
+The [implementation CI](https://github.com/luuvish/pkl-rs/actions/runs/39554130320)
+completed all six jobs successfully. [Independent verification](ci-stage13-summary.json)
+checked both original GitHub ZIP digests and **1,860 source copies spanning 1,575 unique
+paths** against the exact implementation commit. Remote results retain 1,378 matching
+expressions, the same two known failures, 48 relations, 302 separate ordered calls, and
+49 Node/Chromium scenarios each. The [original CI package](ci-stage13-evidence.tar.gz)
+and [two offline replays](ci-stage13-offline-evidence.tar.gz) pass without executing
+captured binaries; the sealed 182-file package remains unchanged. Artifact download
+required retries after timeout/TLS failures. The evidence preserves sanitized transport
+records and original capture hashes; the downloaded ZIPs remain byte-identical to
+GitHub's recorded digests.
+
+**M2 remains in progress.** Complete runtime type resolution, mixed missing-name/type
+error ordering, and generic parameter shadowing failures remain open, alongside
+annotations, module caching, broader reflection, and the remaining required language
+corpus. Selected deferred checks do not establish universally lazy type resolution.
+Strict full completion and product API, performance, and memory targets remain
+unachieved.
 
 ## Stage 12 checkpoint
 

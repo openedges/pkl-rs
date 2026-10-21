@@ -1,0 +1,494 @@
+{
+  "archives": {
+    "class-lifecycle": {
+      "bytes": 1149282,
+      "files_including_inventory": 2895,
+      "inventory_verified": true,
+      "path": "reports/m2/class-lifecycle-stage13-final-evidence.tar.gz",
+      "sha256": "04b80cb964dc067bd8df171c36d42f64735844a5260090c1a7348144ce3b9bff"
+    },
+    "gates": {
+      "bytes": 952,
+      "files_including_inventory": 10,
+      "inventory_verified": true,
+      "path": "reports/m2/gates-stage13-final-evidence.tar.gz",
+      "sha256": "d450d164292da0a576f5891e7df35c76f029356c4cef63b398dde275608fad3f"
+    },
+    "language": {
+      "bytes": 3560022,
+      "files_including_inventory": 12531,
+      "inventory_verified": true,
+      "path": "reports/m2/language-stage13-final-evidence.tar.gz",
+      "sha256": "078846d4a92cd7b619e87dc52853cabeb5db163418eb5926d23f87738f8b3327"
+    },
+    "platforms": {
+      "bytes": 3297340,
+      "files_including_inventory": 101,
+      "inventory_verified": true,
+      "path": "reports/m2/platforms-stage13-final-evidence.tar.gz",
+      "sha256": "f5d8d229a01fe3dc2650898e597161dc886c263fb4cd55543d2cd2af7e73add6"
+    },
+    "regressions": {
+      "bytes": 4174796,
+      "files_including_inventory": 5643,
+      "inventory_verified": true,
+      "path": "reports/m2/regressions-stage13-final-evidence.tar.gz",
+      "sha256": "48fcad2eaacfa97fbe1227aba3bbce30080d4e3c06bd752b3aec06f853dc93fc"
+    },
+    "validation": {
+      "bytes": 15140,
+      "files_including_inventory": 16,
+      "inventory_verified": true,
+      "path": "reports/m2/validation-stage13-final-evidence.tar.gz",
+      "sha256": "54c65f0b23f6ddec2a5ce294deed2ccd68d25f70467e5bd814bd8b992102850a"
+    }
+  },
+  "class_lifecycle": {
+    "added_call_comparisons": 108,
+    "added_sequences": 9,
+    "call_comparisons": 302,
+    "compatibility_complete": false,
+    "evidence": {
+      "bytes": 1149282,
+      "files_including_inventory": 2895,
+      "inventory_verified": true,
+      "path": "reports/m2/class-lifecycle-stage13-final-evidence.tar.gz",
+      "sha256": "04b80cb964dc067bd8df171c36d42f64735844a5260090c1a7348144ce3b9bff"
+    },
+    "frozen_manifest_sha256": "75c8dfc90f877a92799c2cf9e51ec38b21ed61e8d5b1641d5acdcc5528626eca",
+    "original_call_comparisons": 194,
+    "original_definitions_order_and_raw_bytes_preserved": true,
+    "original_sequences": 18,
+    "passing_calls": 302,
+    "previous_report_sha256": "34beeebd9050787d22de7ba5ae680400e95b36de33f690b4bfacc6f4e6d6c68a",
+    "scope": "Ordered calls share one evaluator/module, including failures and retries; separate from independent selected expressions.",
+    "sequence_executions": 54,
+    "unexecuted_groups": [
+      {
+        "group": "P09",
+        "reason": "Java-only module-cache probe stage12-java-module-identity-01 observes same URI/source identity retained, changed source at same URI ignored (marker remains1), distinct URI/evaluator identity separated. Rust multi-source module-cache parity is unimplemented; same-module identity is compared."
+      },
+      {
+        "group": "P10",
+        "reason": "Java observable sequence comparisons do not expose heap counts; Rust architectural GC coverage is separate."
+      },
+      {
+        "group": "P11",
+        "reason": "Real Java class-initialization read observed via @Deprecated { ...(read(\"life:class\")) } in stage12-java-host-path-01; Rust annotation frontend unsupported, so actual Host-in-class cross-language reentry remains unexecuted. Internal scheduler tests are separate."
+      },
+      {
+        "group": "P12",
+        "reason": "Terminal context/token/heap cleanup is covered by separate Rust lifecycle tests, not Java raw-byte equivalence."
+      },
+      {
+        "group": "P05",
+        "reason": "Indirect cyclic hierarchy property traversal new A {}.missing timed out after successful class identity calls in stage12-java-observations-03; traversal is observed oracle-timeout, not a compatibility pass."
+      }
+    ],
+    "unique_sequences": 27
+  },
+  "exploration_evidence": {
+    "bytes": 40998093,
+    "content_files": 14770,
+    "inventory_verified": true,
+    "path": "reports/m2/exploration-stage13-provisional-evidence.tar.gz",
+    "preserved_failures": {
+      "stage13-alias-lifecycle-java-01": "Draft manifest appended six sequence rows to unexecuted_groups while retaining old18 executed sequences; preserved as malformed proposed inventory, corrected separately in -02.",
+      "stage13-explore-java-01": "Initial function draft used reserved keyword in module name; exact parser failures remain, corrected separately in stage13-function-java-02.",
+      "stage13-function-boundary-java-01": "Six-argument function literal is rejected with a handled PklException before type metadata observation; outside selected cases.",
+      "stage13-prior191-reference-replay-01": "Source changed during execution; source_stability=false remains explicit, not a final source-bound success.",
+      "stage13-sequences-typed-candidate-01": "Two ordinary error diagnostic mismatches after failed alias publication; fixed later and the complete original bytes retained."
+    },
+    "prior_reference_replay": {
+      "closed_prior_mismatches": [
+        "member-union-call-invalid",
+        "upstream-error-27",
+        "upstream-error-4",
+        "constructor-referent-alias-invalid"
+      ],
+      "path": "target/m2/stage13-prior191-reference-release-final",
+      "remaining_mismatches": [
+        "subscript-bare-map",
+        "subscript-typed-map",
+        "subscript-keytype-map",
+        "hash-set",
+        "hash-map",
+        "external-int-duration",
+        "hash-data-forced",
+        "module-output-override-forbidden",
+        "namespace-parameter-qualified",
+        "upstream-error-16",
+        "upstream-error-17",
+        "upstream-error-18",
+        "upstream-error-25",
+        "upstream-basic-facts",
+        "upstream-api-interpolation",
+        "upstream-api-joined",
+        "upstream-api-union-typeargs",
+        "union-subscript-invalid"
+      ],
+      "selected_count": 191,
+      "status_counts": {
+        "mismatch": 18,
+        "pass": 173
+      }
+    },
+    "release_build": {
+      "candidate_sha256": "3e9cca27b862f2e228db4c643a7abd89559d1b16a8646e069a3f1230cabffa94",
+      "identity_sha256": "07f5f32b50604f1c193f3da4b84215b23bcb91cb8faeda316f71ce5e86dd04ee",
+      "path": "target/m2/stage13-release-language-build-final",
+      "replay_artifact_binding": "Both replay frozen artifacts have exactly this SHA-256; their helper metadata retains the explicit caller-supplied binding rather than silently relabeling it.",
+      "source_binding": "recorded-build",
+      "source_stability": true
+    },
+    "scope": "Bounded Stage13 oracle exploration, failed development iterations, and focused release replays; not full language, API, or performance completion.",
+    "selected_release_replay": {
+      "path": "target/m2/stage13-selected-release-final",
+      "status_counts": {
+        "pass": 89
+      }
+    },
+    "sha256": "b506dbbf333d67ea1a0e9243495e78d354477f7235a8b964cdb8b98c0b6053ea"
+  },
+  "final_claims_audit": {
+    "captured_binaries_executed": false,
+    "new_compatibility_test_count": 0,
+    "original_evidence": {
+      "bytes": 4174796,
+      "files_including_inventory": 5643,
+      "inventory_verified": true,
+      "path": "reports/m2/regressions-stage13-final-evidence.tar.gz",
+      "sha256": "48fcad2eaacfa97fbe1227aba3bbce30080d4e3c06bd752b3aec06f853dc93fc"
+    },
+    "platforms": {
+      "browser_scenarios": 49,
+      "comparisons_recomputed_from_raw": true,
+      "node_scenarios": 49,
+      "oracle_mismatch_ids": {
+        "browser": [
+          "regex-unicode-15-vs-16",
+          "regex-zero-width-supplementary"
+        ],
+        "node": [
+          "regex-unicode-15-vs-16",
+          "regex-zero-width-supplementary"
+        ],
+        "rust": [
+          "regex-unicode-15-vs-16",
+          "regex-zero-width-supplementary"
+        ]
+      },
+      "oracle_passed": {
+        "browser": 6076,
+        "node": 6076,
+        "rust": 6076
+      },
+      "report_execution_equals_retained": true,
+      "scenario_lists_equal_retained": true,
+      "shared_engine_passed": 6078,
+      "total": 6078
+    },
+    "report_sha256": "8fa894afd6907d8cc0730fb2767d403626379e94cea72743b994a1c22cbb458a",
+    "selection": {
+      "added_selected": 89,
+      "baseline_metadata_sha256": "c64930fb896e26463ebe95ceb64dda1724a3bd556d735b8b7ccfc202d322f2a1",
+      "exact_result_order": true,
+      "frozen_selection_sha256": "330b6ea892d8c03aaf8ca1e32f044cd09835026671f7e581098bde29323f50be",
+      "original_definitions_preserved": true,
+      "original_input_bytes_preserved": true,
+      "original_selected": 1291,
+      "relations": 48,
+      "selected": 1380
+    },
+    "source_evidence_path": "raw-claims-audit.json",
+    "status": "pass"
+  },
+  "full_m2_complete": false,
+  "gates": [
+    {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/m2_language.py",
+        "--verify-report",
+        "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/language-stage13-final"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "gate": "report",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "538e2c72304f010c513c2cbd3ccbe003844dc93a1d43822178534691453bb176"
+    },
+    {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/m2_language.py",
+        "--verify-development",
+        "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/language-stage13-final"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "gate": "development",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "538e2c72304f010c513c2cbd3ccbe003844dc93a1d43822178534691453bb176"
+    },
+    {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/m2_language.py",
+        "--verify-subset",
+        "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/language-stage13-final"
+      ],
+      "exit_code": 1,
+      "expected_exit_code": 1,
+      "gate": "subset",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "538e2c72304f010c513c2cbd3ccbe003844dc93a1d43822178534691453bb176"
+    },
+    {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/m2_language.py",
+        "--verify-full",
+        "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/language-stage13-final"
+      ],
+      "exit_code": 1,
+      "expected_exit_code": 1,
+      "gate": "full",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "538e2c72304f010c513c2cbd3ccbe003844dc93a1d43822178534691453bb176"
+    }
+  ],
+  "implementation_commit": "f90d7b09124bb5a7d73dd5b2bfcddf2a90d2761f",
+  "implementation_source_verification": {
+    "evidence": {
+      "bytes": 2215996,
+      "files_including_inventory": 1874,
+      "inventory_verified": true,
+      "path": "reports/m2/source-stage13-final-evidence.tar.gz",
+      "sha256": "a91027c7c4b0cc20945e08e8bf4712bd30c71b260f6d29f8750a2de7e8793fd4"
+    },
+    "matched_exact_git_commit": true,
+    "method": "Each captured full source byte string matches git show at the exact implementation commit, resolving external sources through that commit's pinned gitlinks. The proof also retains deduplicated exact source copies.",
+    "report_sha256": "3811346bc0a4e445938d2c5f331fb380f7f293df8a1d2f921bb6923a5abff94b",
+    "source_snapshot_copies": 1852,
+    "unique_source_files": 1572
+  },
+  "language": {
+    "added_selected": 89,
+    "artifact_stability": true,
+    "baseline_metadata_sha256": "c64930fb896e26463ebe95ceb64dda1724a3bd556d735b8b7ccfc202d322f2a1",
+    "candidate": {
+      "build": {
+        "command": [
+          "cargo",
+          "build",
+          "-p",
+          "pkl-runtime",
+          "--example",
+          "language_probe",
+          "--locked",
+          "--release",
+          "--target-dir",
+          "/Users/cody.ij.hwang/Projects/pkl-rs/target"
+        ],
+        "exit_code": 0,
+        "stderr_sha256": "c26789280a9366cc69c300bdfaff7ca12e3b6aecd76f2e2da84e83961f4a199d",
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "timed_out": false
+      },
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/release/examples/language_probe",
+      "sha256": "3e9cca27b862f2e228db4c643a7abd89559d1b16a8646e069a3f1230cabffa94",
+      "source_binding": "recorded-build"
+    },
+    "exact_result_order": true,
+    "frozen_selection_sha256": "330b6ea892d8c03aaf8ca1e32f044cd09835026671f7e581098bde29323f50be",
+    "full_gate_failure_reasons": 1950,
+    "inventory_counts": {
+      "cases": 2380,
+      "cases_by_execution": {
+        "ready": 1380,
+        "unimplemented": 960,
+        "unmapped": 40
+      },
+      "requirements": 474,
+      "requirements_by_kind": {
+        "language_parser": 137,
+        "language_token": 109,
+        "semantic-family": 30,
+        "specification": 198
+      }
+    },
+    "known_failures": [
+      {
+        "id": "error-cycle",
+        "status": "oracle-error"
+      },
+      {
+        "id": "error-remainder-zero",
+        "status": "mismatch"
+      }
+    ],
+    "metamorphic_relations": 48,
+    "metamorphic_statuses": [
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass"
+    ],
+    "original_definitions_preserved": true,
+    "original_input_bytes_preserved": true,
+    "original_selected": 1291,
+    "power_assertion_profiles": 44,
+    "relations": 48,
+    "selected": 1380,
+    "selected_count": 1380,
+    "source_snapshot_count": 1473,
+    "source_stability": true,
+    "status_counts": {
+      "mismatch": 1,
+      "oracle-error": 1,
+      "pass": 1378
+    }
+  },
+  "platforms": {
+    "browser_scenarios": 49,
+    "compatibility_status": "fail",
+    "experiment_contract_status": "pass",
+    "known_gaps": [
+      "regex-unicode-15-vs-16",
+      "regex-zero-width-supplementary"
+    ],
+    "node_scenarios": 49,
+    "oracle_passed": {
+      "browser": 6076,
+      "node": 6076,
+      "rust": 6076
+    },
+    "shared_engine_passed": 6078,
+    "source_stability": true,
+    "total": 6078
+  },
+  "prior_selection_replay": {
+    "count": 1291,
+    "exact_original_ids_order_and_input_bytes": true,
+    "scope": "Original selected prefix against retained Stage 12 complete Java bytes with the frozen preflight candidate; final fresh Java acquisition remains separate.",
+    "status_counts": {
+      "mismatch": 1,
+      "oracle-error": 1,
+      "pass": 1289
+    }
+  },
+  "regressions": {
+    "frontend_raw_matches": 15,
+    "lifecycle_full_diagnostic_mismatches": 4,
+    "lifecycle_protocol_matches": 2,
+    "runtime_diagnostic_matches": 2,
+    "runtime_diagnostic_mismatches": 1,
+    "runtime_known_diagnostic_mismatch_ids": [
+      "forcing-cycle"
+    ],
+    "runtime_value_matches": 6
+  },
+  "remote_ci": {
+    "all_six_jobs_succeeded": true,
+    "implementation_commit": "f90d7b09124bb5a7d73dd5b2bfcddf2a90d2761f",
+    "offline_replays_passed": 2,
+    "path": "reports/m2/ci-stage13-summary.json",
+    "run_id": 39554130320,
+    "scope": "Exact implementation CI and original artifact verification. Transport retries preserve original ZIP bytes and failed acquisition history; full M2 and performance targets remain incomplete.",
+    "sealed_package_unchanged": true,
+    "sha256": "02c2b1918a29895d81a3166f118321701e545661c61b2fea131e62fd589f59db",
+    "source_snapshot_copies": 1860,
+    "unique_source_files": 1575
+  },
+  "reviewed_mappings": {
+    "count": 15,
+    "scope": "Partial reviewed mappings; strict full-gate failures remain open."
+  },
+  "schema_version": 1,
+  "scope": "Stage 13 bounded evaluator-owned TypeAlias values, named alias metadata, function type metadata and arity checks. Full M2 language/API compatibility and performance targets remain incomplete.",
+  "source_report_identities": {
+    "classes": {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage13-declaration-lifecycle-final/report.json",
+      "sha256": "6f4769d394c38a1a91bbef38dbe3f04cf4a03869f891b939bac0df11ea3f6524"
+    },
+    "frontend": {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/frontend-stage13-final/report.json",
+      "sha256": "baf73ad563b8f840e911ef1cf376e98187aa54e40d2b93c77858a0dfedb7a1b9"
+    },
+    "language": {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/language-stage13-final/report.json",
+      "sha256": "fa9f8cda45588fc0fb66be6d791b077ca73793a919af76b099844d9e9b4dbfd4"
+    },
+    "lifecycle": {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/lifecycle-stage13-final/report.json",
+      "sha256": "e348b066b159d5ba41a7c718cfc34db191bc3283dd33bcebe831fdde485b683c"
+    },
+    "platforms": {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/platforms-stage13-final/report.json",
+      "sha256": "adf2ecc0ef8aa10798454b4dd3f4ef823cb8350a2c900f3334b9a88c452e6805"
+    },
+    "prior": {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/prior-selection-stage13-preflight-01/report.json",
+      "sha256": "4b74b6b31075a535095c16eecd5773398642615efc6d00b939171aed01a152ed"
+    },
+    "runtime": {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/runtime-stage13-final/report.json",
+      "sha256": "d50c31c66783719aad8ff2652857bffbe4a93ef7544bf413a611e40a74b5bc54"
+    },
+    "validation": {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/validation-stage13-final/report.json",
+      "sha256": "e4faf7fb9140148e3dd67d0cb5c2d7d34957a5f0dbb03ef5f81cddbf4f89604e"
+    }
+  },
+  "source_to_commit_binding": "All final captured source copies match exact Git implementation bytes; retained raw suites and recorded-build identities remain separate evidence.",
+  "validation": {
+    "python_passed": 194,
+    "rust_intentionally_ignored": 1,
+    "rust_passed": 288
+  }
+}

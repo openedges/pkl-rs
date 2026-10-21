@@ -1,0 +1,1196 @@
+{
+  "all_six_jobs_succeeded": true,
+  "artifact_payloads": {
+    "m1": {
+      "files": 656,
+      "uncompressed_bytes": 76054317,
+      "zip_bytes": 21389126,
+      "zip_sha256": "810d3124c7ef76c6f670585afe221c806cac25f6f654ed7e2a3b0c5a88eb084b"
+    },
+    "m2": {
+      "files": 15435,
+      "uncompressed_bytes": 36280546,
+      "zip_bytes": 9575067,
+      "zip_sha256": "d9812634c9bd5466ab881cbbe9183111a369a3d2e68f4f570ffdc2636dd3e43a"
+    }
+  },
+  "artifacts": {
+    "m1": {
+      "github_digest_verified": true,
+      "id": 12324753329,
+      "name": "m1-experiment-evidence",
+      "sha256": "810d3124c7ef76c6f670585afe221c806cac25f6f654ed7e2a3b0c5a88eb084b"
+    },
+    "m2": {
+      "github_digest_verified": true,
+      "id": 12326325275,
+      "name": "m2-language-evidence",
+      "sha256": "d9812634c9bd5466ab881cbbe9183111a369a3d2e68f4f570ffdc2636dd3e43a"
+    }
+  },
+  "captured_processes": {
+    "acquire": {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/ci-stage13-review-02/verify.py",
+        "acquire",
+        "--repository-root",
+        "/Users/cody.ij.hwang/Projects/pkl-rs",
+        "--repo",
+        "luuvish/pkl-rs",
+        "--commit",
+        "f90d7b09124bb5a7d73dd5b2bfcddf2a90d2761f",
+        "--run",
+        "39554130320",
+        "--output",
+        "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/ci-stage13-acquired",
+        "--wait"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs",
+      "elapsed_ns": 1325955494792,
+      "exit_code": 1,
+      "python": "/opt/homebrew/opt/python@3.14/bin/python3.14",
+      "stderr_bytes": 2187,
+      "stderr_sha256": "baf9fbf143b5eeedfdaf5644056f5a2dbd41d7ebdf0a20b8485a012e97d664f7",
+      "stdout_bytes": 2473,
+      "stdout_sha256": "7035b18cdc8e74fd5e89fd0d0f7bfe595dd1df414797fc8e3bc0ea8a97d4fc7b",
+      "timed_out": false
+    },
+    "acquire-retry02": {
+      "command": [
+        "python3",
+        "target/m2/stage13_retry_ci_downloads.py"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs",
+      "elapsed_ns": 10943236625,
+      "exit_code": 1,
+      "python": "/opt/homebrew/opt/python@3.14/bin/python3.14",
+      "stderr_bytes": 320,
+      "stderr_sha256": "0bcab67adac1a8d55dca3d7252955964807c61c75e52fec1a6e6de6d07d67ff5",
+      "stdout_bytes": 108,
+      "stdout_sha256": "d89f0f767d2df7367861420048390f5c9511717a247b6228a848fdb7ed23e039",
+      "timed_out": false
+    },
+    "acquire-retry03": {
+      "command": [
+        "python3",
+        "target/m2/stage13_retry_ci_downloads03.py"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs",
+      "elapsed_ns": 35273541625,
+      "exit_code": 1,
+      "python": "/opt/homebrew/opt/python@3.14/bin/python3.14",
+      "stderr_bytes": 323,
+      "stderr_sha256": "4d6184b575fd61bfa556895194b1762cc228f923ec4ac7c369c6ac3e931279a0",
+      "stdout_bytes": 131,
+      "stdout_sha256": "895ba75fb6dc8bd49d1a17e6d76aebed0ff18f3479adb0221cf9583779e9319f",
+      "timed_out": false
+    },
+    "acquire-retry04": {
+      "command": [
+        "python3",
+        "target/m2/stage13_retry_ci_downloads04.py"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs",
+      "elapsed_ns": 238490360292,
+      "exit_code": 0,
+      "python": "/opt/homebrew/opt/python@3.14/bin/python3.14",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_bytes": 8983,
+      "stdout_sha256": "ee676c3f2544b8d3dcf2c3fd55f3b998327cd5576014e6968b29673e147e9c82",
+      "timed_out": false
+    },
+    "offline-initial": {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/ci-stage13-final-evidence-retry04/package/verification/unpack_and_verify.py",
+        "--repository-root",
+        "/Users/cody.ij.hwang/Projects/pkl-rs",
+        "--output",
+        "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/ci-stage13-offline-initial"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs",
+      "elapsed_ns": 31307829000,
+      "exit_code": 0,
+      "python": "/opt/homebrew/opt/python@3.14/bin/python3.14",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_bytes": 6349,
+      "stdout_sha256": "0de7f83e5aed0c48d9f481750f5f4ba9b5ece1d7fd99e7425375e5d00e6f4115",
+      "timed_out": false
+    },
+    "offline-sealed": {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/ci-stage13-final-evidence-retry04/package/verification/unpack_and_verify.py",
+        "--repository-root",
+        "/Users/cody.ij.hwang/Projects/pkl-rs",
+        "--output",
+        "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/ci-stage13-offline-sealed"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs",
+      "elapsed_ns": 31238732042,
+      "exit_code": 0,
+      "python": "/opt/homebrew/opt/python@3.14/bin/python3.14",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_bytes": 6341,
+      "stdout_sha256": "7ec9c3fbddbd99af2226958830f5e3b812a575ffab3d2307e7cc125a1d85d07d",
+      "timed_out": false
+    },
+    "package": {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/ci-stage13-review-02/package.py",
+        "--acquired",
+        "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/ci-stage13-acquired-retry04",
+        "--output",
+        "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/ci-stage13-final-evidence-retry04/package"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs",
+      "elapsed_ns": 270815500,
+      "exit_code": 0,
+      "python": "/opt/homebrew/opt/python@3.14/bin/python3.14",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_bytes": 586,
+      "stdout_sha256": "faf0803594969b74f0edd9bfd9bc5ce99a8d8d3a02231fefa51acd134f681a89",
+      "timed_out": false
+    },
+    "terminal-status": {
+      "command": [
+        "python3",
+        "target/m2/stage13_terminal_from_acquired.py",
+        "--acquired",
+        "target/m2/ci-stage13-acquired-retry04",
+        "--commit",
+        "f90d7b09124bb5a7d73dd5b2bfcddf2a90d2761f",
+        "--run",
+        "39554130320",
+        "--output",
+        "target/m2/ci-stage13-terminal-status"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs",
+      "elapsed_ns": 70149000,
+      "exit_code": 0,
+      "python": "/opt/homebrew/opt/python@3.14/bin/python3.14",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_bytes": 1228,
+      "stdout_sha256": "8552169ce5fac5f224ea66748439a083e4de990b0a445c26c01e84896f683381",
+      "timed_out": false
+    }
+  },
+  "commit": "f90d7b09124bb5a7d73dd5b2bfcddf2a90d2761f",
+  "evidence_archives": {
+    "main": {
+      "bytes": 26670738,
+      "files_including_inventory": 189,
+      "inventory_verified": true,
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/ci-stage13-evidence.tar.gz",
+      "report_digest_verified": true,
+      "report_path": "reports/m2/ci-stage13-evidence.tar.gz",
+      "sha256": "5c6ff22032a6bd516fc433bb2b9a5582a949d7812a42f4fb762e1f876b509e19"
+    },
+    "offline": {
+      "bytes": 4432,
+      "files_including_inventory": 6,
+      "inventory_verified": true,
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/ci-stage13-offline-evidence.tar.gz",
+      "report_digest_verified": true,
+      "report_path": "reports/m2/ci-stage13-offline-evidence.tar.gz",
+      "sha256": "3635b8336b28a3cc2f342833bd012ee1fc1c25ae7bf18d2dd115c6e8e70d3c30"
+    }
+  },
+  "exact_source_snapshot_copies": 1860,
+  "frozen_verifiers": {
+    "m1_frontend": {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/ci-stage13-acquired-retry04/verification/verified-sources/tools/m1_frontend.py",
+      "sha256": "1b9147399b220da46747b0d8db597aa63edb8825f32061f7806305509d4e4217"
+    },
+    "m1_host": {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/ci-stage13-acquired-retry04/verification/verified-sources/tools/m1_host.py",
+      "sha256": "bfb6fa918936e609760ac83bc762e6c304cb07edd000b124898020ab5354bbdf"
+    },
+    "m1_lifecycle": {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/ci-stage13-acquired-retry04/verification/verified-sources/tools/m1_lifecycle.py",
+      "sha256": "c4ae56541dade02a0b2586484b25d92de612fde4b81c08d6c9b223f5f5254c55"
+    },
+    "m1_platforms": {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/ci-stage13-acquired-retry04/verification/verified-sources/tools/m1_platforms.py",
+      "sha256": "1492f5c9e844333afefcb701fef4c3ee7041ab65174e99824ed206649f7e6528"
+    },
+    "m1_runtime": {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/ci-stage13-acquired-retry04/verification/verified-sources/tools/m1_runtime.py",
+      "sha256": "781d89cc5c54c5138c68f241d32013af56779a62f33368a3e94f7b9ad78360ed"
+    },
+    "m2_class_lifecycle": {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/ci-stage13-acquired-retry04/verification/verified-sources/tools/m2_class_lifecycle.py",
+      "sha256": "8d146f4a1eab3c40dc86cb8523cb56ffe6e2fae5075091bbe11dcfbb3a3f2381"
+    },
+    "m2_identifier_tables": {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/ci-stage13-acquired-retry04/verification/verified-sources/tools/m2_identifier_tables.py",
+      "sha256": "7aedef36d2fca482f2d7ec3675155bddfa549bdbc8cce4f8eda21796c200c536"
+    },
+    "m2_language": {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/ci-stage13-acquired-retry04/verification/verified-sources/tools/m2_language.py",
+      "sha256": "217453888d3db68f7e1d86a50e804cc330fc05f5b64f1594b58f92213a708f74"
+    }
+  },
+  "jobs": [
+    {
+      "conclusion": "success",
+      "name": "Compatibility tooling and Java replay"
+    },
+    {
+      "conclusion": "success",
+      "name": "Workspace (ubuntu-latest)"
+    },
+    {
+      "conclusion": "success",
+      "name": "Workspace (macos-latest)"
+    },
+    {
+      "conclusion": "success",
+      "name": "M1 architecture experiments (known gaps recorded)"
+    },
+    {
+      "conclusion": "success",
+      "name": "Workspace (windows-latest)"
+    },
+    {
+      "conclusion": "success",
+      "name": "M2 language development (full gate incomplete)"
+    }
+  ],
+  "m1": {
+    "committed_snapshot_copies_checked": 240,
+    "frontend": {
+      "exact_comparisons": 15,
+      "source_stability": true
+    },
+    "java_host": {
+      "observation_suites": 5,
+      "rust_byte_comparisons": 0,
+      "source_stability": true
+    },
+    "lifecycle": {
+      "exact_protocol_comparisons": 2,
+      "full_diagnostic_byte_mismatches": 4,
+      "java_negative_observation": {
+        "cause": "java.util.ConcurrentModificationException",
+        "compatibility_pass": false,
+        "error_class": "org.pkl.core.PklBugException",
+        "rust_comparison": false,
+        "status": "observed-upstream-failure"
+      },
+      "source_stability_after_execution": true,
+      "source_stability_before_execution": true
+    },
+    "platform": {
+      "all_shared_engine_matches": 6078,
+      "compatibility_status": "fail",
+      "experiment_contract_status": "pass",
+      "java_matches_each_target": 6076,
+      "known_gaps": [
+        "regex-unicode-15-vs-16",
+        "regex-zero-width-supplementary"
+      ],
+      "scenarios_each_target": 49,
+      "total": 6078
+    },
+    "retained_graal_evidence": {
+      "performance_evidence": false,
+      "verified_diagnostic_cases": 9
+    },
+    "runtime": {
+      "exact_value_cases": [
+        "amendment",
+        "captured-receiver",
+        "lexical-let",
+        "object-cycle",
+        "lazy-unused",
+        "mixed-numeric"
+      ],
+      "exact_whole_diagnostic_cases": [
+        "first-error",
+        "overflow-first"
+      ],
+      "known_diagnostic_byte_mismatches": [
+        "forcing-cycle"
+      ]
+    },
+    "unique_committed_source_files": 121
+  },
+  "m2": {
+    "class_lifecycle": {
+      "call_comparisons": 302,
+      "compatibility_complete": false,
+      "passing_calls": 302,
+      "repetitions": 2,
+      "selected_contract_passes": true,
+      "sequence_executions": 54,
+      "unexecuted_groups": [
+        {
+          "group": "P09",
+          "reason": "Java-only module-cache probe stage12-java-module-identity-01 observes same URI/source identity retained, changed source at same URI ignored (marker remains1), distinct URI/evaluator identity separated. Rust multi-source module-cache parity is unimplemented; same-module identity is compared."
+        },
+        {
+          "group": "P10",
+          "reason": "Java observable sequence comparisons do not expose heap counts; Rust architectural GC coverage is separate."
+        },
+        {
+          "group": "P11",
+          "reason": "Real Java class-initialization read observed via @Deprecated { ...(read(\"life:class\")) } in stage12-java-host-path-01; Rust annotation frontend unsupported, so actual Host-in-class cross-language reentry remains unexecuted. Internal scheduler tests are separate."
+        },
+        {
+          "group": "P12",
+          "reason": "Terminal context/token/heap cleanup is covered by separate Rust lifecycle tests, not Java raw-byte equivalence."
+        },
+        {
+          "group": "P05",
+          "reason": "Indirect cyclic hierarchy property traversal new A {}.missing timed out after successful class identity calls in stage12-java-observations-03; traversal is observed oracle-timeout, not a compatibility pass."
+        }
+      ],
+      "unique_sequences": 27
+    },
+    "development_contract": true,
+    "full_gate_failures": 1950,
+    "full_m2_complete": false,
+    "identifier_evidence_files": 10,
+    "identifier_intervals": {
+      "part": 441,
+      "regular_part": 784,
+      "regular_start": 662,
+      "start": 381
+    },
+    "language_evidence_files": 12529,
+    "metamorphic_relations": 48,
+    "original_ci_root": "/home/runner/work/pkl-rs/pkl-rs",
+    "power_profiles": 44,
+    "raw_comparisons": {
+      "mismatch": 1,
+      "oracle-error": 1,
+      "pass": 1378
+    },
+    "selected_count": 1380,
+    "strict_subset_complete": false
+  },
+  "package": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/ci-stage13-final-evidence-retry04/package",
+  "portable_recheck": {
+    "capture_rounds": "Initial replay capture was integrated, then the final sealed package was replayed without further package mutation.",
+    "commit": "f90d7b09124bb5a7d73dd5b2bfcddf2a90d2761f",
+    "compared_result_fields": [
+      "artifacts",
+      "commit",
+      "exact_source_snapshot_copies",
+      "jobs",
+      "m1",
+      "m2",
+      "repository",
+      "run_id",
+      "schema_version",
+      "scope",
+      "unique_source_files",
+      "verifiers"
+    ],
+    "complete_result_fields_equal": true,
+    "frozen_verifier_hashes_equal": true,
+    "offline_exit_code": 0,
+    "original_package": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/ci-stage13-final-evidence-retry04/package",
+    "package_files": 182,
+    "package_manifest_sha256": "6532456c580fcba63f16b7ad135440e09cde39b807950c65da82774b529f9f6b",
+    "package_unchanged": true,
+    "packaged_initial_offline_capture": "verification/captured-processes/offline-initial",
+    "packaged_initial_offline_result": "verification/portable-recheck.json",
+    "run_id": 39554130320,
+    "source_snapshot_copies": 1860,
+    "status": "pass",
+    "unique_source_files": 1575,
+    "unpacked_replay": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/ci-stage13-offline-sealed",
+    "verification_sha256": "68329b3073e9f6c3787e69fb93b59d94d3af505cc2852f2f21e5d109594b2e80"
+  },
+  "portable_recheck_process": {
+    "command": [
+      "/opt/homebrew/opt/python@3.14/bin/python3.14",
+      "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/ci-stage13-final-evidence-retry04/package/verification/unpack_and_verify.py",
+      "--repository-root",
+      "/Users/cody.ij.hwang/Projects/pkl-rs",
+      "--output",
+      "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/ci-stage13-offline-sealed"
+    ],
+    "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs",
+    "elapsed_ns": 31238732042,
+    "exit_code": 0,
+    "python": "/opt/homebrew/opt/python@3.14/bin/python3.14",
+    "stderr_bytes": 0,
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_bytes": 6341,
+    "stdout_sha256": "7ec9c3fbddbd99af2226958830f5e3b812a575ffab3d2307e7cc125a1d85d07d",
+    "timed_out": false
+  },
+  "repository": "luuvish/pkl-rs",
+  "run_id": 39554130320,
+  "schema_version": 1,
+  "scope": "Independent exact-commit CI raw evidence verification; remaining language/API/performance scope and recorded mismatches remain incomplete.",
+  "source_count_contract": "exact_source_snapshot_copies counts each checked path in each captured source snapshot; unique_source_files counts distinct repository source paths across those snapshots.",
+  "transport_acquisition": {
+    "intermediate_attempts": {
+      "retry02": {
+        "download": {
+          "command": [
+            "gh",
+            "api",
+            "repos/luuvish/pkl-rs/actions/artifacts/12324753329/zip"
+          ],
+          "elapsed_ns": 10755082542,
+          "exit_code": 1,
+          "stderr_sha256": "7e43d7425acf0117af11a9bfbb2e22f94fda79791d1205d3d92582621040796a",
+          "stdout_bytes": 0,
+          "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "timed_out": false
+        },
+        "process": {
+          "command": [
+            "python3",
+            "target/m2/stage13_retry_ci_downloads.py"
+          ],
+          "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs",
+          "elapsed_ns": 10943236625,
+          "exit_code": 1,
+          "python": "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "stderr_bytes": 320,
+          "stderr_sha256": "0bcab67adac1a8d55dca3d7252955964807c61c75e52fec1a6e6de6d07d67ff5",
+          "stdout_bytes": 108,
+          "stdout_sha256": "d89f0f767d2df7367861420048390f5c9511717a247b6228a848fdb7ed23e039",
+          "timed_out": false
+        },
+        "raw_signed_redirects": "Omitted from published evidence; original local records and hashes preserved."
+      },
+      "retry03": {
+        "download": {
+          "command": [
+            "curl",
+            "--ipv4",
+            "--fail",
+            "--location",
+            "--retry",
+            "2",
+            "--retry-all-errors",
+            "--retry-delay",
+            "1",
+            "--connect-timeout",
+            "30",
+            "--max-time",
+            "180",
+            "<signed artifact redirect retained in redirect.response.json>"
+          ],
+          "elapsed_ns": 34312133792,
+          "exit_code": -15,
+          "redirect_url_sha256": "e3568cbbc92fca24af92c729cac1fecee7c88838275e271056b500765a7396b6",
+          "stderr_sha256": "9c460f4869dc2da7797135b16c2c72fc7dd056420b1a46921f42bee159c68bb3",
+          "stdout_bytes": 634880,
+          "stdout_sha256": "58e2e8a44e16a616f2ed776afa596cfdf20811ddf00ca431a454b19d2c96e07d",
+          "timed_out": false
+        },
+        "process": {
+          "command": [
+            "python3",
+            "target/m2/stage13_retry_ci_downloads03.py"
+          ],
+          "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs",
+          "elapsed_ns": 35273541625,
+          "exit_code": 1,
+          "python": "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "stderr_bytes": 323,
+          "stderr_sha256": "4d6184b575fd61bfa556895194b1762cc228f923ec4ac7c369c6ac3e931279a0",
+          "stdout_bytes": 131,
+          "stdout_sha256": "895ba75fb6dc8bd49d1a17e6d76aebed0ff18f3479adb0221cf9583779e9319f",
+          "timed_out": false
+        },
+        "raw_signed_redirects": "Omitted from published evidence; original local records and hashes preserved."
+      }
+    },
+    "original_attempt": {
+      "partial_payload_retention": "The original buffered helper did not publish a partial ZIP; its complete timeout traceback/process capture and terminal metadata are retained.",
+      "process": {
+        "command": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/ci-stage13-review-02/verify.py",
+          "acquire",
+          "--repository-root",
+          "/Users/cody.ij.hwang/Projects/pkl-rs",
+          "--repo",
+          "luuvish/pkl-rs",
+          "--commit",
+          "f90d7b09124bb5a7d73dd5b2bfcddf2a90d2761f",
+          "--run",
+          "39554130320",
+          "--output",
+          "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/ci-stage13-acquired",
+          "--wait"
+        ],
+        "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs",
+        "elapsed_ns": 1325955494792,
+        "exit_code": 1,
+        "python": "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "stderr_bytes": 2187,
+        "stderr_sha256": "baf9fbf143b5eeedfdaf5644056f5a2dbd41d7ebdf0a20b8485a012e97d664f7",
+        "stdout_bytes": 2473,
+        "stdout_sha256": "7035b18cdc8e74fd5e89fd0d0f7bfe595dd1df414797fc8e3bc0ea8a97d4fc7b",
+        "timed_out": false
+      },
+      "status": "failed-artifact-download-timeout",
+      "timeout_seconds": 180
+    },
+    "retry_attempt": {
+      "additional_status_api_calls": 0,
+      "downloads": {
+        "m1": {
+          "api_endpoint": "https://api.github.com/repos/luuvish/pkl-rs/actions/artifacts/12324753329/zip",
+          "command": "see ranges; private config contains omitted signed redirect only",
+          "exit_code": 0,
+          "ranges": [
+            {
+              "bytes": 2673640,
+              "command": [
+                "curl",
+                "--config",
+                "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/ci-stage13-acquired-retry04/m1/private-curl.conf",
+                "--ipv4",
+                "--fail",
+                "--location",
+                "--retry",
+                "2",
+                "--retry-all-errors",
+                "--retry-delay",
+                "1",
+                "--connect-timeout",
+                "30",
+                "--max-time",
+                "180",
+                "--range",
+                "0-2673639",
+                "--output",
+                "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/ci-stage13-acquired-retry04/m1/parts/0.bin",
+                "--write-out",
+                "%{http_code}"
+              ],
+              "elapsed_ns": 142321707250,
+              "exit_code": 0,
+              "http_status": "206",
+              "index": 0,
+              "range": [
+                0,
+                2673639
+              ],
+              "sha256": "f1b6cacbe568bf549e71571fafe050c0c3a549633a7b8ba6d59e388d89f43b0d",
+              "stderr_sha256": "dba62d7cd4b87b552188adfc537ab41e2a798419522d22aac0b2abc4d5677185",
+              "timed_out": false
+            },
+            {
+              "bytes": 2673641,
+              "command": [
+                "curl",
+                "--config",
+                "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/ci-stage13-acquired-retry04/m1/private-curl.conf",
+                "--ipv4",
+                "--fail",
+                "--location",
+                "--retry",
+                "2",
+                "--retry-all-errors",
+                "--retry-delay",
+                "1",
+                "--connect-timeout",
+                "30",
+                "--max-time",
+                "180",
+                "--range",
+                "2673640-5347280",
+                "--output",
+                "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/ci-stage13-acquired-retry04/m1/parts/1.bin",
+                "--write-out",
+                "%{http_code}"
+              ],
+              "elapsed_ns": 132072040250,
+              "exit_code": 0,
+              "http_status": "206",
+              "index": 1,
+              "range": [
+                2673640,
+                5347280
+              ],
+              "sha256": "f2a97b2fd17918921a9f9553313d11d258b7921a233ddd7c5b0677801d280d7d",
+              "stderr_sha256": "9ee8a890eb0f5242b0af272e701de2238b4eed528de27b29e5f3bd8bb75750ce",
+              "timed_out": false
+            },
+            {
+              "bytes": 2673641,
+              "command": [
+                "curl",
+                "--config",
+                "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/ci-stage13-acquired-retry04/m1/private-curl.conf",
+                "--ipv4",
+                "--fail",
+                "--location",
+                "--retry",
+                "2",
+                "--retry-all-errors",
+                "--retry-delay",
+                "1",
+                "--connect-timeout",
+                "30",
+                "--max-time",
+                "180",
+                "--range",
+                "5347281-8020921",
+                "--output",
+                "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/ci-stage13-acquired-retry04/m1/parts/2.bin",
+                "--write-out",
+                "%{http_code}"
+              ],
+              "elapsed_ns": 56402043708,
+              "exit_code": 0,
+              "http_status": "206",
+              "index": 2,
+              "range": [
+                5347281,
+                8020921
+              ],
+              "sha256": "97271371e6f0a5c8bb8f20bcf43f7bfe28401fc8565321bbac179754e11fbfe8",
+              "stderr_sha256": "f16cd63bd370ac38b0861649530e63dc91e477b4afe3274b8ab86102729b53c7",
+              "timed_out": false
+            },
+            {
+              "bytes": 2673641,
+              "command": [
+                "curl",
+                "--config",
+                "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/ci-stage13-acquired-retry04/m1/private-curl.conf",
+                "--ipv4",
+                "--fail",
+                "--location",
+                "--retry",
+                "2",
+                "--retry-all-errors",
+                "--retry-delay",
+                "1",
+                "--connect-timeout",
+                "30",
+                "--max-time",
+                "180",
+                "--range",
+                "8020922-10694562",
+                "--output",
+                "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/ci-stage13-acquired-retry04/m1/parts/3.bin",
+                "--write-out",
+                "%{http_code}"
+              ],
+              "elapsed_ns": 121804326375,
+              "exit_code": 0,
+              "http_status": "206",
+              "index": 3,
+              "range": [
+                8020922,
+                10694562
+              ],
+              "sha256": "f202f5f7c7e6e940a1e69b8bc00858393cd2c8156d62fb7d94e6860de98dc641",
+              "stderr_sha256": "877653fe5c171c091c39c14fc3a2125771f7c5817ed2c360e582af00c5616898",
+              "timed_out": false
+            },
+            {
+              "bytes": 2673640,
+              "command": [
+                "curl",
+                "--config",
+                "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/ci-stage13-acquired-retry04/m1/private-curl.conf",
+                "--ipv4",
+                "--fail",
+                "--location",
+                "--retry",
+                "2",
+                "--retry-all-errors",
+                "--retry-delay",
+                "1",
+                "--connect-timeout",
+                "30",
+                "--max-time",
+                "180",
+                "--range",
+                "10694563-13368202",
+                "--output",
+                "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/ci-stage13-acquired-retry04/m1/parts/4.bin",
+                "--write-out",
+                "%{http_code}"
+              ],
+              "elapsed_ns": 147278734542,
+              "exit_code": 0,
+              "http_status": "206",
+              "index": 4,
+              "range": [
+                10694563,
+                13368202
+              ],
+              "sha256": "cd827e2ec690b0e102cb4387c5d8f3d56c0144f3f05714add3e9b5c378ec4665",
+              "stderr_sha256": "d8adfd51d89066d4cc1de31cc035ed63f450cb0def84ce1eca9b7537c3313982",
+              "timed_out": false
+            },
+            {
+              "bytes": 2673641,
+              "command": [
+                "curl",
+                "--config",
+                "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/ci-stage13-acquired-retry04/m1/private-curl.conf",
+                "--ipv4",
+                "--fail",
+                "--location",
+                "--retry",
+                "2",
+                "--retry-all-errors",
+                "--retry-delay",
+                "1",
+                "--connect-timeout",
+                "30",
+                "--max-time",
+                "180",
+                "--range",
+                "13368203-16041843",
+                "--output",
+                "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/ci-stage13-acquired-retry04/m1/parts/5.bin",
+                "--write-out",
+                "%{http_code}"
+              ],
+              "elapsed_ns": 133046165041,
+              "exit_code": 0,
+              "http_status": "206",
+              "index": 5,
+              "range": [
+                13368203,
+                16041843
+              ],
+              "sha256": "32198e0badd6b5a63950cf8b2731be2b9a6f65871321e56f06a2ccfd1ea298d5",
+              "stderr_sha256": "e91a3413a5051deffb48ed2a59abc330f9809f44cccef804ab66aa056c04be00",
+              "timed_out": false
+            },
+            {
+              "bytes": 2673641,
+              "command": [
+                "curl",
+                "--config",
+                "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/ci-stage13-acquired-retry04/m1/private-curl.conf",
+                "--ipv4",
+                "--fail",
+                "--location",
+                "--retry",
+                "2",
+                "--retry-all-errors",
+                "--retry-delay",
+                "1",
+                "--connect-timeout",
+                "30",
+                "--max-time",
+                "180",
+                "--range",
+                "16041844-18715484",
+                "--output",
+                "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/ci-stage13-acquired-retry04/m1/parts/6.bin",
+                "--write-out",
+                "%{http_code}"
+              ],
+              "elapsed_ns": 147279035583,
+              "exit_code": 0,
+              "http_status": "206",
+              "index": 6,
+              "range": [
+                16041844,
+                18715484
+              ],
+              "sha256": "479e061f084c13cce7eb95b5f386d127e14e0d3c8f7256e7cbfc0d9fb811d11b",
+              "stderr_sha256": "559a1de30157d4be09e913b65b5a4d65d6ebc34f9f42536fd1591791189bf9e9",
+              "timed_out": false
+            },
+            {
+              "bytes": 2673641,
+              "command": [
+                "curl",
+                "--config",
+                "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/ci-stage13-acquired-retry04/m1/private-curl.conf",
+                "--ipv4",
+                "--fail",
+                "--location",
+                "--retry",
+                "2",
+                "--retry-all-errors",
+                "--retry-delay",
+                "1",
+                "--connect-timeout",
+                "30",
+                "--max-time",
+                "180",
+                "--range",
+                "18715485-21389125",
+                "--output",
+                "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/ci-stage13-acquired-retry04/m1/parts/7.bin",
+                "--write-out",
+                "%{http_code}"
+              ],
+              "elapsed_ns": 133589485792,
+              "exit_code": 0,
+              "http_status": "206",
+              "index": 7,
+              "range": [
+                18715485,
+                21389125
+              ],
+              "sha256": "9445412e2db1f8bd4e2d4bbb50d5db589ef038fe7a38518f81d362e60f11d279",
+              "stderr_sha256": "8b0890709c211b696acfbd47198028c3789643357a80a767ecc1bf21725f65a8",
+              "timed_out": false
+            }
+          ],
+          "redirect_url_sha256": "e3568cbbc92fca24af92c729cac1fecee7c88838275e271056b500765a7396b6",
+          "signed_url_omitted": true,
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stdout_bytes": 21389126,
+          "stdout_sha256": "810d3124c7ef76c6f670585afe221c806cac25f6f654ed7e2a3b0c5a88eb084b",
+          "timed_out": false,
+          "transport": "curl IPv4 byte ranges, concatenated in original byte order"
+        },
+        "m2": {
+          "api_endpoint": "https://api.github.com/repos/luuvish/pkl-rs/actions/artifacts/12326325275/zip",
+          "command": "see ranges; private config contains omitted signed redirect only",
+          "exit_code": 0,
+          "ranges": [
+            {
+              "bytes": 1196883,
+              "command": [
+                "curl",
+                "--config",
+                "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/ci-stage13-acquired-retry04/m2/private-curl.conf",
+                "--ipv4",
+                "--fail",
+                "--location",
+                "--retry",
+                "2",
+                "--retry-all-errors",
+                "--retry-delay",
+                "1",
+                "--connect-timeout",
+                "30",
+                "--max-time",
+                "180",
+                "--range",
+                "0-1196882",
+                "--output",
+                "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/ci-stage13-acquired-retry04/m2/parts/0.bin",
+                "--write-out",
+                "%{http_code}"
+              ],
+              "elapsed_ns": 53356046666,
+              "exit_code": 0,
+              "http_status": "206",
+              "index": 0,
+              "range": [
+                0,
+                1196882
+              ],
+              "sha256": "2f4de16574719e254fa4d44094151e572d37217a6736b189d2dbd3b2426a6f09",
+              "stderr_sha256": "b99bef7b147f2ed36b37d0346866dc41bd07408ad4ede70f98e2e86e172c6778",
+              "timed_out": false
+            },
+            {
+              "bytes": 1196883,
+              "command": [
+                "curl",
+                "--config",
+                "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/ci-stage13-acquired-retry04/m2/private-curl.conf",
+                "--ipv4",
+                "--fail",
+                "--location",
+                "--retry",
+                "2",
+                "--retry-all-errors",
+                "--retry-delay",
+                "1",
+                "--connect-timeout",
+                "30",
+                "--max-time",
+                "180",
+                "--range",
+                "1196883-2393765",
+                "--output",
+                "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/ci-stage13-acquired-retry04/m2/parts/1.bin",
+                "--write-out",
+                "%{http_code}"
+              ],
+              "elapsed_ns": 33066706042,
+              "exit_code": 0,
+              "http_status": "206",
+              "index": 1,
+              "range": [
+                1196883,
+                2393765
+              ],
+              "sha256": "9746b48b83511855c86e996402180f4d2de9ab0d5e948719f502ec5ec1b78c3a",
+              "stderr_sha256": "e78fd77c58544dab54ad727d0368e089b791f78d5827c3c8d8d5bf957dfdfbeb",
+              "timed_out": false
+            },
+            {
+              "bytes": 1196884,
+              "command": [
+                "curl",
+                "--config",
+                "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/ci-stage13-acquired-retry04/m2/private-curl.conf",
+                "--ipv4",
+                "--fail",
+                "--location",
+                "--retry",
+                "2",
+                "--retry-all-errors",
+                "--retry-delay",
+                "1",
+                "--connect-timeout",
+                "30",
+                "--max-time",
+                "180",
+                "--range",
+                "2393766-3590649",
+                "--output",
+                "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/ci-stage13-acquired-retry04/m2/parts/2.bin",
+                "--write-out",
+                "%{http_code}"
+              ],
+              "elapsed_ns": 22238381625,
+              "exit_code": 0,
+              "http_status": "206",
+              "index": 2,
+              "range": [
+                2393766,
+                3590649
+              ],
+              "sha256": "8f95274d435a929ac20ff4984d4eacfd6b46762862c9f39d73e435c28dac1909",
+              "stderr_sha256": "0b9625b1f590490bc2fb6f47e50dd0a7492f812b46a7ed83dd12de8a1ab513a7",
+              "timed_out": false
+            },
+            {
+              "bytes": 1196883,
+              "command": [
+                "curl",
+                "--config",
+                "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/ci-stage13-acquired-retry04/m2/private-curl.conf",
+                "--ipv4",
+                "--fail",
+                "--location",
+                "--retry",
+                "2",
+                "--retry-all-errors",
+                "--retry-delay",
+                "1",
+                "--connect-timeout",
+                "30",
+                "--max-time",
+                "180",
+                "--range",
+                "3590650-4787532",
+                "--output",
+                "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/ci-stage13-acquired-retry04/m2/parts/3.bin",
+                "--write-out",
+                "%{http_code}"
+              ],
+              "elapsed_ns": 15175099000,
+              "exit_code": 0,
+              "http_status": "206",
+              "index": 3,
+              "range": [
+                3590650,
+                4787532
+              ],
+              "sha256": "fe0df64700c16ffa89a9189107288d5593b0ddbdb6dd3ac1dc53e2989f38ddbe",
+              "stderr_sha256": "acc41e148e59de97a2dc93619fc3342cff2dd788f4e5f8de1700c08eccb8e3cb",
+              "timed_out": false
+            },
+            {
+              "bytes": 1196883,
+              "command": [
+                "curl",
+                "--config",
+                "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/ci-stage13-acquired-retry04/m2/private-curl.conf",
+                "--ipv4",
+                "--fail",
+                "--location",
+                "--retry",
+                "2",
+                "--retry-all-errors",
+                "--retry-delay",
+                "1",
+                "--connect-timeout",
+                "30",
+                "--max-time",
+                "180",
+                "--range",
+                "4787533-5984415",
+                "--output",
+                "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/ci-stage13-acquired-retry04/m2/parts/4.bin",
+                "--write-out",
+                "%{http_code}"
+              ],
+              "elapsed_ns": 58619111000,
+              "exit_code": 0,
+              "http_status": "206",
+              "index": 4,
+              "range": [
+                4787533,
+                5984415
+              ],
+              "sha256": "cb2650470c5a6ba4ac24629a17ce6be6d53393db600bcc14310785a7357cdee3",
+              "stderr_sha256": "64507ce80f97ea9765948722c723633aaad85ddaa299e364e96a32da65f298eb",
+              "timed_out": false
+            },
+            {
+              "bytes": 1196884,
+              "command": [
+                "curl",
+                "--config",
+                "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/ci-stage13-acquired-retry04/m2/private-curl.conf",
+                "--ipv4",
+                "--fail",
+                "--location",
+                "--retry",
+                "2",
+                "--retry-all-errors",
+                "--retry-delay",
+                "1",
+                "--connect-timeout",
+                "30",
+                "--max-time",
+                "180",
+                "--range",
+                "5984416-7181299",
+                "--output",
+                "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/ci-stage13-acquired-retry04/m2/parts/5.bin",
+                "--write-out",
+                "%{http_code}"
+              ],
+              "elapsed_ns": 24770815417,
+              "exit_code": 0,
+              "http_status": "206",
+              "index": 5,
+              "range": [
+                5984416,
+                7181299
+              ],
+              "sha256": "2ddab8f3bca23ac32f621716ca7cb87bdad56adb3034ccfb9b0a8a162cca7b3a",
+              "stderr_sha256": "c802e0ac0a36ef4b03188eba5c640312d2c2205bf3fa3b94e20ea417ee810742",
+              "timed_out": false
+            },
+            {
+              "bytes": 1196883,
+              "command": [
+                "curl",
+                "--config",
+                "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/ci-stage13-acquired-retry04/m2/private-curl.conf",
+                "--ipv4",
+                "--fail",
+                "--location",
+                "--retry",
+                "2",
+                "--retry-all-errors",
+                "--retry-delay",
+                "1",
+                "--connect-timeout",
+                "30",
+                "--max-time",
+                "180",
+                "--range",
+                "7181300-8378182",
+                "--output",
+                "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/ci-stage13-acquired-retry04/m2/parts/6.bin",
+                "--write-out",
+                "%{http_code}"
+              ],
+              "elapsed_ns": 35184535000,
+              "exit_code": 0,
+              "http_status": "206",
+              "index": 6,
+              "range": [
+                7181300,
+                8378182
+              ],
+              "sha256": "c869b2914369a6de448047805a02b988de67471ffe51deac17c699ee94bb6841",
+              "stderr_sha256": "71046d9d3e65f954975b63d7d061b64e6f61a1bbde8b8f1969676c0c605ee675",
+              "timed_out": false
+            },
+            {
+              "bytes": 1196884,
+              "command": [
+                "curl",
+                "--config",
+                "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/ci-stage13-acquired-retry04/m2/private-curl.conf",
+                "--ipv4",
+                "--fail",
+                "--location",
+                "--retry",
+                "2",
+                "--retry-all-errors",
+                "--retry-delay",
+                "1",
+                "--connect-timeout",
+                "30",
+                "--max-time",
+                "180",
+                "--range",
+                "8378183-9575066",
+                "--output",
+                "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/ci-stage13-acquired-retry04/m2/parts/7.bin",
+                "--write-out",
+                "%{http_code}"
+              ],
+              "elapsed_ns": 35856946458,
+              "exit_code": 0,
+              "http_status": "206",
+              "index": 7,
+              "range": [
+                8378183,
+                9575066
+              ],
+              "sha256": "d05a296539535660bb59ff67dd00e4a182a20b4180e350733fedc72a43c2c90a",
+              "stderr_sha256": "53886e0cab0d2355279fdd1a89dfbbc3b12e04666edc3eea25bc83c797dbd056",
+              "timed_out": false
+            }
+          ],
+          "redirect_url_sha256": "b14abd64ae3f8a37b3b38a57284033a3422b9b4ce873ed5799ba89fa4ba022bd",
+          "signed_url_omitted": true,
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stdout_bytes": 9575067,
+          "stdout_sha256": "d9812634c9bd5466ab881cbbe9183111a369a3d2e68f4f570ffdc2636dd3e43a",
+          "timed_out": false,
+          "transport": "curl IPv4 byte ranges, concatenated in original byte order"
+        }
+      },
+      "process": {
+        "command": [
+          "python3",
+          "target/m2/stage13_retry_ci_downloads04.py"
+        ],
+        "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs",
+        "elapsed_ns": 238490360292,
+        "exit_code": 0,
+        "python": "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "stderr_bytes": 0,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_bytes": 8983,
+        "stdout_sha256": "ee676c3f2544b8d3dcf2c3fd55f3b998327cd5576014e6968b29673e147e9c82",
+        "timed_out": false
+      },
+      "reused_terminal_metadata": true,
+      "signed_redirect_credentials_published": false,
+      "status": "pass"
+    }
+  },
+  "unique_source_files": 1575,
+  "verifiers": {
+    "m1_checks.py": "1b7047c0f03f41ed924184518947fa44f5633c289f5eab50c84a7e3da4985acc",
+    "verify.py": "546719789f5cf8967ec87096be0064ccd62523bb5356d7705336fec8fd7bff61"
+  }
+}

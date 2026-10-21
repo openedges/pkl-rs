@@ -10,7 +10,8 @@ classes, inheritance, generic type aliases, resumable type constraints, pipeline
 ordered collection members, `for`/`when` generators, spread, member predicates,
 generic collection checks and lazy wrappers, structural equality and object keys,
 typed default properties and cache-sensitive comparison order, deferred
-References through `pkl:ref`, and structured source diagnostics with optional
+References through `pkl:ref`, evaluator-owned class and type-alias identity,
+function type metadata and arity checks, and structured source diagnostics with optional
 power assertions and standard-library frames.
 The [M2 verification contract](docs/m2-language.md)
 keeps the complete language inventory separate from selected executable probes.
