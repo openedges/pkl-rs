@@ -1,0 +1,3 @@
+module stage15.types
+typealias Recursive = Int(throw("constraint") || this is Recursive)
+result: Recursive = 1

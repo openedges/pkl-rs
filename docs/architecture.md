@@ -502,3 +502,27 @@ plans do not establish a complete lazy runtime type-node model. General imported
 types, annotation syntax, full module initialization/caching, structural types,
 reflection, and the original upstream type/function suites remain unverified or
 unimplemented. Unsupported builtin generic types remain explicit gaps.
+
+
+### Recursive constraint compilation
+
+Constraint bytecode can contain a back edge to an active constraint block. The
+compiler reserves a block before compiling its expression and reuses that block
+for recursive non-generic type uses. Type-check metadata remains finite because
+constraint bodies refer to block IDs. Unused and short-circuited recursive checks
+therefore do not expand indefinitely during compilation. Constraint type names
+retain the alias declaration's lexical scope even when instantiated in a nested
+owner. Existing instruction metadata, Host scheduling, heap roots, and terminal
+cleanup continue to apply to the resulting graph.
+
+Builtin `Class<T>` validates its argument count and erases the argument without
+resolving its names, aliases, or constraints. User declarations named `Class` and
+arguments supplied to an enclosing alias retain their own resolution policy.
+
+This graph representation does not implement recursive generic instantiation.
+Reaching such an inner type use produces an explicit unsupported result; unused
+or short-circuited branches remain deferred. Java's mutable auxiliary `this` slot
+can also affect values read after a recursive check, including failure diagnostics;
+the current copied environment does not reproduce all of those observations.
+Non-const alias lexical access remains another known gap. Selected terminating
+recursive forms do not establish complete recursive-type or constraint behavior.

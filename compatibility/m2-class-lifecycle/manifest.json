@@ -1,201 +1,200 @@
 {
-  "schema": 1,
-  "uri": "file:///m2-platform.pkl",
   "module_name": "m2-platform",
   "power_assertions": false,
+  "schema": 1,
   "sequences": [
     {
-      "id": "prefix",
-      "group": "P01",
-      "source": "prefix.pkl",
-      "expressions": "prefix.expressions",
-      "note": "",
       "additional_groups": [
         "P06",
         "P13"
-      ]
+      ],
+      "expressions": "prefix.expressions",
+      "group": "P01",
+      "id": "prefix",
+      "note": "",
+      "source": "prefix.pkl"
     },
     {
-      "id": "position-first",
-      "group": "P02",
-      "source": "position-first.pkl",
       "expressions": "position-first.expressions",
-      "note": ""
+      "group": "P02",
+      "id": "position-first",
+      "note": "",
+      "source": "position-first.pkl"
     },
     {
-      "id": "position-middle",
-      "group": "P02",
-      "source": "position-middle.pkl",
       "expressions": "position-middle.expressions",
-      "note": ""
-    },
-    {
-      "id": "position-last",
       "group": "P02",
-      "source": "position-last.pkl",
+      "id": "position-middle",
+      "note": "",
+      "source": "position-middle.pkl"
+    },
+    {
       "expressions": "position-last.expressions",
-      "note": ""
+      "group": "P02",
+      "id": "position-last",
+      "note": "",
+      "source": "position-last.pkl"
     },
     {
-      "id": "property-type",
-      "group": "P03",
-      "source": "property-type.pkl",
       "expressions": "property-type.expressions",
-      "note": ""
+      "group": "P03",
+      "id": "property-type",
+      "note": "",
+      "source": "property-type.pkl"
     },
     {
-      "id": "type-before-modifier",
-      "group": "P03",
-      "source": "type-before-modifier.pkl",
       "expressions": "type-before-modifier.expressions",
-      "note": ""
-    },
-    {
-      "id": "lazy-body",
       "group": "P03",
-      "source": "lazy-body.pkl",
+      "id": "type-before-modifier",
+      "note": "",
+      "source": "type-before-modifier.pkl"
+    },
+    {
       "expressions": "lazy-body.expressions",
-      "note": ""
+      "group": "P03",
+      "id": "lazy-body",
+      "note": "",
+      "source": "lazy-body.pkl"
     },
     {
-      "id": "method-prefix",
-      "group": "P04",
-      "source": "method-prefix.pkl",
       "expressions": "method-prefix.expressions",
-      "note": ""
-    },
-    {
-      "id": "method-return",
       "group": "P04",
-      "source": "method-return.pkl",
+      "id": "method-prefix",
+      "note": "",
+      "source": "method-prefix.pkl"
+    },
+    {
       "expressions": "method-return.expressions",
-      "note": ""
+      "group": "P04",
+      "id": "method-return",
+      "note": "",
+      "source": "method-return.pkl"
     },
     {
-      "id": "super-closed",
-      "group": "P05",
-      "source": "super-closed.pkl",
       "expressions": "super-closed.expressions",
-      "note": ""
+      "group": "P05",
+      "id": "super-closed",
+      "note": "",
+      "source": "super-closed.pkl"
     },
     {
-      "id": "super-missing",
-      "group": "P05",
-      "source": "super-missing.pkl",
       "expressions": "super-missing.expressions",
-      "note": ""
+      "group": "P05",
+      "id": "super-missing",
+      "note": "",
+      "source": "super-missing.pkl"
     },
     {
-      "id": "super-self",
-      "group": "P05",
-      "source": "super-self.pkl",
       "expressions": "super-self.expressions",
-      "note": ""
-    },
-    {
-      "id": "recursive-type",
-      "group": "P08",
-      "source": "recursive-type.pkl",
-      "expressions": "recursive-type.expressions",
-      "note": ""
-    },
-    {
-      "id": "mutual-type",
-      "group": "P08",
-      "source": "mutual-type.pkl",
-      "expressions": "mutual-type.expressions",
-      "note": ""
-    },
-    {
-      "id": "wrapper-retry",
-      "group": "P13",
-      "source": "wrapper-retry.pkl",
-      "expressions": "wrapper-retry.expressions",
-      "note": ""
-    },
-    {
-      "id": "super-mutual",
       "group": "P05",
-      "source": "super-mutual.pkl",
-      "expressions": "super-mutual.expressions",
-      "note": "Potential cyclic hierarchy; oracle internal errors remain distinct."
+      "id": "super-self",
+      "note": "",
+      "source": "super-self.pkl"
     },
     {
-      "id": "inherited-metadata",
+      "expressions": "recursive-type.expressions",
       "group": "P08",
-      "source": "inherited-metadata.pkl",
+      "id": "recursive-type",
+      "note": "",
+      "source": "recursive-type.pkl"
+    },
+    {
+      "expressions": "mutual-type.expressions",
+      "group": "P08",
+      "id": "mutual-type",
+      "note": "",
+      "source": "mutual-type.pkl"
+    },
+    {
+      "expressions": "wrapper-retry.expressions",
+      "group": "P13",
+      "id": "wrapper-retry",
+      "note": "",
+      "source": "wrapper-retry.pkl"
+    },
+    {
+      "expressions": "super-mutual.expressions",
+      "group": "P05",
+      "id": "super-mutual",
+      "note": "Potential cyclic hierarchy; oracle internal errors remain distinct.",
+      "source": "super-mutual.pkl"
+    },
+    {
       "expressions": "inherited-metadata.expressions",
-      "note": "Class metadata and value initializer dispatch may select different declarations during recursive initialization."
+      "group": "P08",
+      "id": "inherited-metadata",
+      "note": "Class metadata and value initializer dispatch may select different declarations during recursive initialization.",
+      "source": "inherited-metadata.pkl"
     },
     {
-      "id": "partial-reference",
-      "group": "P07",
-      "source": "partial-reference.pkl",
       "expressions": "partial-reference.expressions",
-      "note": "Partial Reference metadata must not run inherited/early/hidden/tail initializer bodies."
+      "group": "P07",
+      "id": "partial-reference",
+      "note": "Partial Reference metadata must not run inherited/early/hidden/tail initializer bodies.",
+      "source": "partial-reference.pkl"
     },
     {
-      "id": "types-stage13-alias-missing",
-      "group": "T13",
-      "source": "types-stage13-alias-missing.pkl",
       "expressions": "types-stage13-alias-missing.expressions",
-      "note": "Ordered type declaration publication, identity, and failure recovery; additional to original class sequence subtotal."
+      "group": "T13",
+      "id": "types-stage13-alias-missing",
+      "note": "Ordered type declaration publication, identity, and failure recovery; additional to original class sequence subtotal.",
+      "source": "types-stage13-alias-missing.pkl"
     },
     {
-      "id": "types-stage13-alias-cycle",
-      "group": "T13",
-      "source": "types-stage13-alias-cycle.pkl",
       "expressions": "types-stage13-alias-cycle.expressions",
-      "note": "Ordered type declaration publication, identity, and failure recovery; additional to original class sequence subtotal."
+      "group": "T13",
+      "id": "types-stage13-alias-cycle",
+      "note": "Ordered type declaration publication, identity, and failure recovery; additional to original class sequence subtotal.",
+      "source": "types-stage13-alias-cycle.pkl"
     },
     {
-      "id": "types-stage13-alias-mutual",
-      "group": "T13",
-      "source": "types-stage13-alias-mutual.pkl",
       "expressions": "types-stage13-alias-mutual.expressions",
-      "note": "Ordered type declaration publication, identity, and failure recovery; additional to original class sequence subtotal."
+      "group": "T13",
+      "id": "types-stage13-alias-mutual",
+      "note": "Ordered type declaration publication, identity, and failure recovery; additional to original class sequence subtotal.",
+      "source": "types-stage13-alias-mutual.pkl"
     },
     {
-      "id": "types-stage13-alias-generic",
-      "group": "T13",
-      "source": "types-stage13-alias-generic.pkl",
       "expressions": "types-stage13-alias-generic.expressions",
-      "note": "Ordered type declaration publication, identity, and failure recovery; additional to original class sequence subtotal."
+      "group": "T13",
+      "id": "types-stage13-alias-generic",
+      "note": "Ordered type declaration publication, identity, and failure recovery; additional to original class sequence subtotal.",
+      "source": "types-stage13-alias-generic.pkl"
     },
     {
-      "id": "types-stage13-alias-values",
-      "group": "T13",
-      "source": "types-stage13-alias-values.pkl",
       "expressions": "types-stage13-alias-values.expressions",
-      "note": "Ordered type declaration publication, identity, and failure recovery; additional to original class sequence subtotal."
+      "group": "T13",
+      "id": "types-stage13-alias-values",
+      "note": "Ordered type declaration publication, identity, and failure recovery; additional to original class sequence subtotal.",
+      "source": "types-stage13-alias-values.pkl"
     },
     {
-      "id": "types-stage13-function-metadata",
-      "group": "T13",
-      "source": "types-stage13-function-metadata.pkl",
       "expressions": "types-stage13-function-metadata.expressions",
-      "note": "Ordered type declaration publication, identity, and failure recovery; additional to original class sequence subtotal."
+      "group": "T13",
+      "id": "types-stage13-function-metadata",
+      "note": "Ordered type declaration publication, identity, and failure recovery; additional to original class sequence subtotal.",
+      "source": "types-stage13-function-metadata.pkl"
     },
     {
-      "id": "types-stage13-alias-missing-typed",
-      "group": "T13",
-      "source": "types-stage13-alias-missing-typed.pkl",
       "expressions": "types-stage13-alias-missing-typed.expressions",
-      "note": "Failed alias publication followed by typed class, deferred type, construction, and superclass uses; complete errors and retry order retained."
+      "group": "T13",
+      "id": "types-stage13-alias-missing-typed",
+      "note": "Failed alias publication followed by typed class, deferred type, construction, and superclass uses; complete errors and retry order retained.",
+      "source": "types-stage13-alias-missing-typed.pkl"
     },
     {
-      "id": "types-stage13-alias-cycle-typed",
-      "group": "T13",
-      "source": "types-stage13-alias-cycle-typed.pkl",
       "expressions": "types-stage13-alias-cycle-typed.expressions",
-      "note": "Failed alias publication followed by typed class, deferred type, construction, and superclass uses; complete errors and retry order retained."
+      "group": "T13",
+      "id": "types-stage13-alias-cycle-typed",
+      "note": "Failed alias publication followed by typed class, deferred type, construction, and superclass uses; complete errors and retry order retained.",
+      "source": "types-stage13-alias-cycle-typed.pkl"
     },
     {
-      "id": "types-stage13-alias-deferred-combined",
-      "group": "T13",
-      "source": "types-stage13-alias-deferred-combined.pkl",
       "expressions": "types-stage13-alias-deferred-combined.expressions",
-      "note": "Failed alias publication followed by typed class, deferred type, construction, and superclass uses; complete errors and retry order retained."
+      "group": "T13",
+      "id": "types-stage13-alias-deferred-combined",
+      "note": "Failed alias publication followed by typed class, deferred type, construction, and superclass uses; complete errors and retry order retained.",
+      "source": "types-stage13-alias-deferred-combined.pkl"
     },
     {
       "expressions": "types-stage14-ordering-missing-first.expressions",
@@ -231,6 +230,20 @@
       "id": "types-stage14-unfinished-arguments",
       "note": "Ordered type resolution, generic scope, incomplete publication, and deferred uses share one evaluator; separate from original class and Stage13 alias subtotals.",
       "source": "types-stage14-unfinished-arguments.pkl"
+    },
+    {
+      "expressions": "types-stage15-recursive-constraint-retry.expressions",
+      "group": "T15",
+      "id": "types-stage15-recursive-constraint-retry",
+      "note": "Non-generic recursive constraint checks and erased Class arguments share ordered retries; known shared-this and generic recursion gaps remain separate exploratory failures.",
+      "source": "types-stage15-recursive-constraint-retry.pkl"
+    },
+    {
+      "expressions": "types-stage15-class-erased-after-alias-failure.expressions",
+      "group": "T15",
+      "id": "types-stage15-class-erased-after-alias-failure",
+      "note": "Non-generic recursive constraint checks and erased Class arguments share ordered retries; known shared-this and generic recursion gaps remain separate exploratory failures.",
+      "source": "types-stage15-class-erased-after-alias-failure.pkl"
     }
   ],
   "unexecuted_groups": [
@@ -254,5 +267,6 @@
       "group": "P05",
       "reason": "Indirect cyclic hierarchy property traversal new A {}.missing timed out after successful class identity calls in stage12-java-observations-03; traversal is observed oracle-timeout, not a compatibility pass."
     }
-  ]
+  ],
+  "uri": "file:///m2-platform.pkl"
 }

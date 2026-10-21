@@ -134,6 +134,14 @@ exercise nested generic constraints, suspended values, heap isolation, temporary
 reclamation, nonterminal cancellation, and terminal cleanup. Node and browser
 sequence scenarios retain the same Java-derived complete payloads.
 
+Recursive constraint regressions distinguish unused declarations, short-circuiting,
+finite direct/mutual recursion, lexical type scope, power assertions, and known
+shared-receiver or generic gaps. Separate Host tests force collection during every
+yield, nested reentry and failure retry, stale completion rejection, nonterminal
+cancellation, and complete terminal release. `Class<T>` cases verify erased
+arguments without publishing broken declarations, while preserving alias argument
+resolution and wrong-arity errors.
+
 Collection regressions cover lazy bodies, eager keys and source forcing,
 inheritance order, primitive key equality, generator captures, spread, and
 complete subscript diagnostics. Native lifecycle tests also force collection

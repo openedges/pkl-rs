@@ -1,0 +1,3 @@
+module stage15.types
+typealias Recursive = Int(this < 0 || (this - 1) is Recursive)
+result = 3 as Recursive

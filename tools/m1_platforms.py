@@ -63,6 +63,8 @@ REQUIRED_SCENARIOS = {
     'm2-type-resolution-error-order',
     'm2-type-parameter-shadowing',
     'm2-unfinished-alias-arguments',
+    'm2-recursive-constraint-sequences',
+    'm2-erased-class-argument-sequences',
 }
 
 

@@ -1,0 +1,3 @@
+module stage15.types
+typealias A = Int(this < 0 || this is A)
+result: A = -1

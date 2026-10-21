@@ -2,6 +2,7 @@ import { FakeHostOperations, waitingEvaluation } from './host-adapter.mjs';
 import { classPublicationCases } from './class-publication-cases.mjs';
 import { typeMetadataCases, typeMetadataOracle } from './type-metadata-cases.mjs';
 import { typeResolutionCases, typeResolutionOracle } from './type-resolution-cases.mjs';
+import { recursiveTypesCases, recursiveTypesOracle } from './recursive-types-cases.mjs';
 
 // Identical assertions execute inside Node and an actual Chromium page.
 export async function scenarios(api) {
@@ -81,6 +82,19 @@ export async function scenarios(api) {
         const actual = api.evaluateLanguageSequence(fixture.source,
           typeResolutionOracle.uri, typeResolutionOracle.moduleName,
           fixture.expressions, typeResolutionOracle.powerAssertions);
+        eq(actual.length, fixture.expected.length);
+        for (let index = 0; index < actual.length; index++) {
+          eq(actual[index], fixture.expected[index]);
+        }
+      }
+    });
+  }
+  for (const fixture of recursiveTypesCases) {
+    await check(fixture.scenario, () => {
+      for (let repetition = 0; repetition < 2; repetition++) {
+        const actual = api.evaluateLanguageSequence(fixture.source,
+          recursiveTypesOracle.uri, recursiveTypesOracle.moduleName,
+          fixture.expressions, recursiveTypesOracle.powerAssertions);
         eq(actual.length, fixture.expected.length);
         for (let index = 0; index < actual.length; index++) {
           eq(actual[index], fixture.expected[index]);

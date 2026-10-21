@@ -622,10 +622,18 @@
           "types-stage14-class-arity-missing",
           "types-stage14-class-body-before-arity",
           "types-stage14-class-arity-valid",
-          "types-stage14-shadow-applied-union-diagnostic"
+          "types-stage14-shadow-applied-union-diagnostic",
+          "types-stage15-recursive-base-mismatch",
+          "types-stage15-recursive-failure-before-recursion",
+          "types-stage15-class-arity-before-child",
+          "types-stage15-class-erased-value-mismatch",
+          "types-stage15-class-bare-value-mismatch",
+          "types-stage15-class-generic-erased",
+          "types-stage15-class-generic-name-shadow",
+          "types-stage15-class-named-alias-shadow"
         ]
       },
-      "scope": "Reference constructor, access, constraint and rendering errors retain complete message, authored frame, foreign standard-library source and URI bytes in selected comparisons. Stage11 adds selected fixed declaration, inherited metadata and complete raw diagnostics through the shared VM. Stage 13 adds selected alias/function metadata, exported-type equality and complete raw diagnostic comparisons; original suite execution and remaining scope stay open. Stage 14 adds selected authored type-resolution order, generic parameter scope and nested substitution, class/alias arity ordering, and owner signature diagnostics; persistent failed-declaration state has a separate sequence contract.",
+      "scope": "Reference constructor, access, constraint and rendering errors retain complete message, authored frame, foreign standard-library source and URI bytes in selected comparisons. Stage11 adds selected fixed declaration, inherited metadata and complete raw diagnostics through the shared VM. Stage 13 adds selected alias/function metadata, exported-type equality and complete raw diagnostic comparisons; original suite execution and remaining scope stay open. Stage 14 adds selected authored type-resolution order, generic parameter scope and nested substitution, class/alias arity ordering, and owner signature diagnostics; persistent failed-declaration state has a separate sequence contract. Stage 15 adds selected non-generic recursive constraint block graphs and declaration type scope, plus builtin Class argument erasure and arity ordering. Recursive generic constraints and shared custom-this slot behavior remain open.",
       "remaining": [
         "Recursive frame compression, general imported source stacks, first-error combinations and the complete parser/resolver/runtime diagnostic corpus remain open.",
         "Original selected cycle and remainder-zero failures remain failed."
@@ -1092,10 +1100,31 @@
           "types-stage14-class-arity-broken",
           "types-stage14-class-arity-missing",
           "types-stage14-class-body-before-arity",
-          "types-stage14-class-arity-valid"
+          "types-stage14-class-arity-valid",
+          "types-stage15-class-erased-missing",
+          "types-stage15-class-erased-broken",
+          "types-stage15-class-erased-cycle",
+          "types-stage15-class-erased-constraint",
+          "types-stage15-class-erased-nested",
+          "types-stage15-class-erased-class-signature",
+          "types-stage15-class-arity-before-child",
+          "types-stage15-class-erased-value-mismatch",
+          "types-stage15-class-bare-value-mismatch",
+          "types-stage15-class-erased-nullable",
+          "types-stage15-class-erased-union",
+          "types-stage15-class-erased-function",
+          "types-stage15-class-is-erased",
+          "types-stage15-class-as-erased",
+          "types-stage15-class-alias-erased",
+          "types-stage15-class-generic-erased",
+          "types-stage15-class-generic-name-shadow",
+          "types-stage15-class-named-alias-shadow",
+          "types-stage15-relation-erased-class-left",
+          "types-stage15-relation-erased-class-right",
+          "types-stage15-recursive-lexical-type-shadow"
         ]
       },
-      "scope": "Selected class fixed properties preserve declaration fixedness through inheritance, reject instance assignment and amendment before forcing bodies, and retain member/type initialization error order. Raw comparisons cover only the linked fixtures at their actual URIs. Stage 14 adds selected authored type-resolution order, generic parameter scope and nested substitution, class/alias arity ordering, and owner signature diagnostics; persistent failed-declaration state has a separate sequence contract.",
+      "scope": "Selected class fixed properties preserve declaration fixedness through inheritance, reject instance assignment and amendment before forcing bodies, and retain member/type initialization error order. Raw comparisons cover only the linked fixtures at their actual URIs. Stage 14 adds selected authored type-resolution order, generic parameter scope and nested substitution, class/alias arity ordering, and owner signature diagnostics; persistent failed-declaration state has a separate sequence contract. Stage 15 adds selected non-generic recursive constraint block graphs and declaration type scope, plus builtin Class argument erasure and arity ordering. Recursive generic constraints and shared custom-this slot behavior remain open.",
       "remaining": [
         "Module extends/amends and the original upstream fixed-property snippet suite contracts remain unimplemented or unexecuted.",
         "Full modifier combinations, annotation metadata, generic class inheritance and the complete class/member error corpus remain outside this bounded selection.",
@@ -1335,6 +1364,10 @@
           {
             "path": "crates/pkl-runtime/src/vm.rs",
             "symbol": "initialize_type_resolution"
+          },
+          {
+            "path": "crates/pkl-runtime/src/vm.rs",
+            "symbol": "active_constraints"
           }
         ]
       },
@@ -1479,10 +1512,51 @@
           "types-stage14-class-arity-missing",
           "types-stage14-class-body-before-arity",
           "types-stage14-class-arity-valid",
-          "types-stage14-shadow-applied-union-diagnostic"
+          "types-stage14-shadow-applied-union-diagnostic",
+          "types-stage15-recursive-unused",
+          "types-stage15-recursive-identity",
+          "types-stage15-recursive-shortcircuit",
+          "types-stage15-recursive-finite",
+          "types-stage15-recursive-is",
+          "types-stage15-recursive-as",
+          "types-stage15-recursive-base-mismatch",
+          "types-stage15-recursive-failure-before-recursion",
+          "types-stage15-mutual-unused",
+          "types-stage15-mutual-identity",
+          "types-stage15-mutual-finite",
+          "types-stage15-recursive-two-constraints",
+          "types-stage15-recursive-function-parameter",
+          "types-stage15-recursive-function-result",
+          "types-stage15-recursive-nested-collection",
+          "types-stage15-class-erased-missing",
+          "types-stage15-class-erased-broken",
+          "types-stage15-class-erased-cycle",
+          "types-stage15-class-erased-constraint",
+          "types-stage15-class-erased-nested",
+          "types-stage15-class-erased-class-signature",
+          "types-stage15-class-arity-before-child",
+          "types-stage15-class-erased-value-mismatch",
+          "types-stage15-class-bare-value-mismatch",
+          "types-stage15-class-erased-nullable",
+          "types-stage15-class-erased-union",
+          "types-stage15-class-erased-function",
+          "types-stage15-class-is-erased",
+          "types-stage15-class-as-erased",
+          "types-stage15-class-alias-erased",
+          "types-stage15-class-generic-erased",
+          "types-stage15-class-generic-name-shadow",
+          "types-stage15-class-named-alias-shadow",
+          "types-stage15-class-parameter-shadow",
+          "types-stage15-class-erased-alias-identity",
+          "types-stage15-recursive-const-capture",
+          "types-stage15-relation-erased-class-left",
+          "types-stage15-relation-erased-class-right",
+          "types-stage15-relation-recursive-shortcircuit-left",
+          "types-stage15-relation-recursive-shortcircuit-right",
+          "types-stage15-recursive-lexical-type-shadow"
         ]
       },
-      "scope": "Selected user alias values preserve declaration identity, qualified display, lazy initialization, published failure state, and expanded validation. Independent expressions cover alias values, cycles, generic arguments, Mapping keys and complete diagnostics; persistent failure/reaccess sequences and GC/Host tests have separate contracts. Stage 14 adds selected authored type-resolution order, generic parameter scope and nested substitution, class/alias arity ordering, and owner signature diagnostics; persistent failed-declaration state has a separate sequence contract.",
+      "scope": "Selected user alias values preserve declaration identity, qualified display, lazy initialization, published failure state, and expanded validation. Independent expressions cover alias values, cycles, generic arguments, Mapping keys and complete diagnostics; persistent failure/reaccess sequences and GC/Host tests have separate contracts. Stage 14 adds selected authored type-resolution order, generic parameter scope and nested substitution, class/alias arity ordering, and owner signature diagnostics; persistent failed-declaration state has a separate sequence contract. Stage 15 adds selected non-generic recursive constraint block graphs and declaration type scope, plus builtin Class argument erasure and arity ordering. Recursive generic constraints and shared custom-this slot behavior remain open.",
       "remaining": [
         "Complete imported/module-scoped alias behavior, annotation initialization, full reflection and the original upstream alias suites remain unimplemented or unexecuted.",
         "Exploratory mismatches and upstream internal errors retain their original outcomes; these selected mappings do not grant completion.",
@@ -1572,10 +1646,12 @@
           "types-stage14-two-parameters",
           "types-stage14-lambda-union",
           "types-stage14-lambda-function",
-          "types-stage14-nested-function-order"
+          "types-stage14-nested-function-order",
+          "types-stage15-recursive-function-parameter",
+          "types-stage15-recursive-function-result"
         ]
       },
-      "scope": "Function and Function0..5 class types and arrow annotations retain parameter/result metadata while selected runtime value checks use arity. Comparisons distinguish annotation checks from a lambda declaration's own argument checks and distinguish Reference type tests from exported-type equality. Stage 14 adds selected authored type-resolution order, generic parameter scope and nested substitution, class/alias arity ordering, and owner signature diagnostics; persistent failed-declaration state has a separate sequence contract.",
+      "scope": "Function and Function0..5 class types and arrow annotations retain parameter/result metadata while selected runtime value checks use arity. Comparisons distinguish annotation checks from a lambda declaration's own argument checks and distinguish Reference type tests from exported-type equality. Stage 14 adds selected authored type-resolution order, generic parameter scope and nested substitution, class/alias arity ordering, and owner signature diagnostics; persistent failed-declaration state has a separate sequence contract. Stage 15 adds selected non-generic recursive constraint block graphs and declaration type scope, plus builtin Class argument erasure and arity ordering. Recursive generic constraints and shared custom-this slot behavior remain open.",
       "remaining": [
         "Function amendments, full callable/builtin behavior, imports and the original function suite contracts remain outside this bounded selection.",
         "The broader function, closure, diagnostic and reflection inventories are not completed by metadata comparisons."
@@ -1601,6 +1677,10 @@
           {
             "path": "crates/pkl-runtime/src/vm.rs",
             "symbol": "type_resolution_plan"
+          },
+          {
+            "path": "crates/pkl-runtime/src/vm.rs",
+            "symbol": "active_constraints"
           }
         ]
       },
@@ -1787,10 +1867,51 @@
           "types-stage14-class-arity-missing",
           "types-stage14-class-body-before-arity",
           "types-stage14-class-arity-valid",
-          "types-stage14-shadow-applied-union-diagnostic"
+          "types-stage14-shadow-applied-union-diagnostic",
+          "types-stage15-recursive-unused",
+          "types-stage15-recursive-identity",
+          "types-stage15-recursive-shortcircuit",
+          "types-stage15-recursive-finite",
+          "types-stage15-recursive-is",
+          "types-stage15-recursive-as",
+          "types-stage15-recursive-base-mismatch",
+          "types-stage15-recursive-failure-before-recursion",
+          "types-stage15-mutual-unused",
+          "types-stage15-mutual-identity",
+          "types-stage15-mutual-finite",
+          "types-stage15-recursive-two-constraints",
+          "types-stage15-recursive-function-parameter",
+          "types-stage15-recursive-function-result",
+          "types-stage15-recursive-nested-collection",
+          "types-stage15-class-erased-missing",
+          "types-stage15-class-erased-broken",
+          "types-stage15-class-erased-cycle",
+          "types-stage15-class-erased-constraint",
+          "types-stage15-class-erased-nested",
+          "types-stage15-class-erased-class-signature",
+          "types-stage15-class-arity-before-child",
+          "types-stage15-class-erased-value-mismatch",
+          "types-stage15-class-bare-value-mismatch",
+          "types-stage15-class-erased-nullable",
+          "types-stage15-class-erased-union",
+          "types-stage15-class-erased-function",
+          "types-stage15-class-is-erased",
+          "types-stage15-class-as-erased",
+          "types-stage15-class-alias-erased",
+          "types-stage15-class-generic-erased",
+          "types-stage15-class-generic-name-shadow",
+          "types-stage15-class-named-alias-shadow",
+          "types-stage15-class-parameter-shadow",
+          "types-stage15-class-erased-alias-identity",
+          "types-stage15-recursive-const-capture",
+          "types-stage15-relation-erased-class-left",
+          "types-stage15-relation-erased-class-right",
+          "types-stage15-relation-recursive-shortcircuit-left",
+          "types-stage15-relation-recursive-shortcircuit-right",
+          "types-stage15-recursive-lexical-type-shadow"
         ]
       },
-      "scope": "The Stage 13 selection links named alias expansion, meta-class checks, function arity and exported type metadata to the shared VM. Existing upstream case definitions, adapters and execution states remain unchanged. Stage 14 adds selected authored type-resolution order, generic parameter scope and nested substitution, class/alias arity ordering, and owner signature diagnostics; persistent failed-declaration state has a separate sequence contract.",
+      "scope": "The Stage 13 selection links named alias expansion, meta-class checks, function arity and exported type metadata to the shared VM. Existing upstream case definitions, adapters and execution states remain unchanged. Stage 14 adds selected authored type-resolution order, generic parameter scope and nested substitution, class/alias arity ordering, and owner signature diagnostics; persistent failed-declaration state has a separate sequence contract. Stage 15 adds selected non-generic recursive constraint block graphs and declaration type scope, plus builtin Class argument erasure and arity ordering. Recursive generic constraints and shared custom-this slot behavior remain open.",
       "remaining": [
         "The complete type, structural/generic class, constraint, recursive and imported-type corpus still requires implementation and original-adapter execution."
       ]
@@ -1897,10 +2018,12 @@
           "types-stage14-relation-generic-alias-expansion-left",
           "types-stage14-relation-generic-alias-expansion-right",
           "types-stage14-shadow-parameterized-module-success",
-          "types-stage14-shadow-applied-union-diagnostic"
+          "types-stage14-shadow-applied-union-diagnostic",
+          "types-stage15-class-generic-erased",
+          "types-stage15-class-named-alias-shadow"
         ]
       },
-      "scope": "Selected generic aliases retain declaration identity and metadata arguments independently of expanded checks, use unknown for omitted arguments, and preserve argument-count and expanded-value diagnostics. Stage 14 adds selected authored type-resolution order, generic parameter scope and nested substitution, class/alias arity ordering, and owner signature diagnostics; persistent failed-declaration state has a separate sequence contract.",
+      "scope": "Selected generic aliases retain declaration identity and metadata arguments independently of expanded checks, use unknown for omitted arguments, and preserve argument-count and expanded-value diagnostics. Stage 14 adds selected authored type-resolution order, generic parameter scope and nested substitution, class/alias arity ordering, and owner signature diagnostics; persistent failed-declaration state has a separate sequence contract. Stage 15 adds selected non-generic recursive constraint block graphs and declaration type scope, plus builtin Class argument erasure and arity ordering. Recursive generic constraints and shared custom-this slot behavior remain open.",
       "remaining": [
         "Complete generic classes, variance, imported generic declarations, recursive expansion and the original generic suite contracts remain unimplemented or unverified."
       ]

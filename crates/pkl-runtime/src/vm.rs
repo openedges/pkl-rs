@@ -3193,6 +3193,7 @@ fn compile_module_configured(
         constraint_module: false,
         alias_frames: Vec::new(),
         constraint_origins: BTreeMap::new(),
+        active_constraints: BTreeMap::new(),
         active_type_parameters: BTreeMap::new(),
         parameter_spans: BTreeMap::new(),
         function_counts: BTreeMap::new(),
@@ -3266,6 +3267,9 @@ struct Compiler<'a> {
     /// Alias use sites retained separately from executable constraint blocks.
     alias_frames: Vec<RuntimeFrame>,
     constraint_origins: BTreeMap<usize, (Vec<RuntimeFrame>, Vec<RuntimeFrame>)>,
+    /// Constraint bytecode is a graph: a recursive type use can point back to
+    /// a reserved block without recursively compiling that expression again.
+    active_constraints: BTreeMap<Span, (usize, bool)>,
     active_type_parameters: BTreeMap<String, TypeCheck>,
     parameter_spans: BTreeMap<String, Span>,
     function_counts: BTreeMap<String, usize>,
@@ -4554,8 +4558,14 @@ impl Compiler<'_> {
                     )
                     .map_err(|error| Box::new((error, ty.span)))?;
                 }
-                for argument in arguments {
-                    self.type_resolution_plan(argument, parameters, output)?;
+                // The builtin Class erases its argument without resolving it.
+                // A declaration or type parameter named Class retains its own policy.
+                let erases_arguments =
+                    !parameter && declaration.is_none() && path.len() == 1 && path[0] == "Class";
+                if !erases_arguments {
+                    for argument in arguments {
+                        self.type_resolution_plan(argument, parameters, output)?;
+                    }
                 }
                 if alias {
                     output.push_at(Instruction::CheckTypeAliasInitialized, ty.span);
@@ -4732,18 +4742,49 @@ impl Compiler<'_> {
                         &self.resolved.module.source[expression.span.start..expression.span.end],
                     );
                     let expression = expression.unparenthesized();
+                    if let Some(&(block, generic)) = self.active_constraints.get(&expression.span) {
+                        if generic || !parameters.is_empty() {
+                            // A changing substitution can generate infinitely many distinct
+                            // checks. It needs runtime type parameters, not a depth limit or
+                            // an unsound reuse of another instantiation's bytecode.
+                            return Err(unsupported_type("recursive generic constraints")
+                                .at(expression.span));
+                        }
+                        compiled.push(ConstraintCode {
+                            block,
+                            span: expression.span,
+                            module_environment: self.constraint_module,
+                            source,
+                        });
+                        continue;
+                    }
+                    let block = self.block(Code::default(), Some(expression.span));
+                    self.active_constraints
+                        .insert(expression.span, (block, !parameters.is_empty()));
                     let previous =
                         std::mem::replace(&mut self.active_type_parameters, parameters.clone());
                     let mut code = Code::default();
                     // CustomThisScope interrupts consecutive let qualification.
                     let enclosing_lets = std::mem::take(&mut self.let_members);
+                    // Types inside a constraint retain the declaration's lexical scope,
+                    // including when its alias is instantiated inside another owner.
+                    let inner_scopes = self.type_scopes.split_off(limit);
                     let result = self.expression(expression, &mut code);
+                    self.type_scopes.extend(inner_scopes);
                     self.let_members = enclosing_lets;
                     self.active_type_parameters = previous;
+                    self.active_constraints.remove(&expression.span);
                     result?;
                     let writes_slots = code.let_scopes.iter().any(|scope| scope.writes_slot);
                     code.push(Instruction::Return);
-                    let block = self.block(code, Some(expression.span));
+                    self.program.blocks[block] = code.instructions;
+                    let metadata = &mut self.program.metadata[block];
+                    metadata.spans = code.spans;
+                    metadata.let_scopes = code.let_scopes;
+                    metadata.type_casts = code.type_casts;
+                    metadata.method_arities = code.method_arities;
+                    metadata.constraint_root = writes_slots.then_some(expression.span);
+                    metadata.inline_constraint = !writes_slots;
                     let mut origin = vec![RuntimeFrame {
                         span: ty.span,
                         member: Arc::from(self.member.as_str()),
@@ -4752,9 +4793,6 @@ impl Compiler<'_> {
                     origin.extend(self.alias_frames.iter().rev().cloned());
                     self.constraint_origins
                         .insert(block, (origin, self.alias_frames.clone()));
-                    self.program.metadata[block].constraint_root =
-                        writes_slots.then_some(expression.span);
-                    self.program.metadata[block].inline_constraint = !writes_slots;
                     compiled.push(ConstraintCode {
                         block,
                         span: expression.span,
@@ -5020,6 +5058,16 @@ impl Compiler<'_> {
                         }
                     }
                 } else {
+                    if path[0] == "Class" {
+                        if arguments.len() > 1 {
+                            return Err(RuntimeError::new(
+                                ErrorKind::Type,
+                                format!("Expected 1 type argument(s) but got {}.", arguments.len()),
+                            ));
+                        }
+                        // Pkl 0.32.0 erases Class<T> before resolving T.
+                        return Ok(TypeCheck::MetaClass(Arc::from("Class")));
+                    }
                     if path[0] == "Function"
                         || path[0]
                             .strip_prefix("Function")

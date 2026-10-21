@@ -261,6 +261,8 @@ Stage 13 시점에는 완전한 지연 타입 해석 모델, 미해결 이름과
 
 [구현 CI](https://github.com/luuvish/pkl-rs/actions/runs/39561429923)는 GitHub 계정의 결제 실패 또는 사용 한도 문제로 작업 6개가 모두 시작되지 않았습니다. [차단 요약](reports/m2/ci-stage14-summary.json)과 [원시 증거](reports/m2/ci-stage14-blocked-evidence.tar.gz)에 원인·실행하지 못한 검사·artifact 0개를 기록했습니다. 원격 테스트, 원본 ZIP 해시·소스 대조, 두 차례 오프라인 재검증은 미실행입니다. 이 기록은 원격 실행의 실패·미실행 증거로 유지하며 직전 보고서 커밋의 별도 CI 6개 작업 성공과 구분합니다. 이후 사용자가 로컬 검증으로 진행하도록 승인했습니다. [독립 로컬 수용 검사](reports/m2/local-acceptance-stage14.json)와 [봉인된 증거](reports/m2/local-acceptance-stage14-evidence.tar.gz)에서 기존 archive·정확한 구현 소스·원시 결과를 다시 검증했고 필요한 Java 식별자 테이블 검사도 새로 실행해 일치했습니다. 따라서 **Stage 14의 제한된 개발 계약은 로컬 검증으로 마감했으며 M2 전체는 계속 진행 중**입니다. Linux·Windows 실행은 미검증으로 유지하며 존재하지 않는 CI ZIP을 요구하거나 로컬 증거를 원격 실행으로 표시하지 않습니다.
 
+열다섯 번째 단계는 non-generic 재귀 제약의 컴파일 무한 확장을 유한 bytecode graph로 바꾸고 `Class<T>`의 인자 소거 규칙을 연결합니다. 런타임은 `gpt-6-astra / high`, Java 증거·플랫폼·독립 검증은 `gpt-6.1-sol / high`로 분담합니다. 미사용·단락 평가·유한 직접/상호 재귀·선언 위치 타입 범위와 Host/GC 수명주기를 검증하며 recursive generic과 Java의 공유 custom-this slot, non-const alias capture 차이는 별도 미해결 관찰로 유지합니다. 검증은 위 로컬 수용 규칙에 따라 진행하며 전체 M2 완료 조건은 유지합니다.
+
 다음 구현은 남은 탐색 불일치의 의존성을 기준으로 진행합니다.
 
 1. 재귀 제약 안의 타입 사용이 정적 확장을 무한 반복하지 않도록 실제 지연 해석 경계를 우선 조사·구현합니다. 사용하지 않거나 단락 평가로 건너뛴 제약의 비실행, 실제 진입 때의 순환·진단·GC를 Java와 검증합니다. `Class<T>`의 인자 개수 검사 후 T를 해석하지 않는 erased-argument 규칙을 함께 연결하고 나머지 타입·제약은 계속 추적합니다.

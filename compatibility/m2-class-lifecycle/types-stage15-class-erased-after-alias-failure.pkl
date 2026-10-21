@@ -1,0 +1,13 @@
+class C {}
+typealias Broken = BrokenMissing
+broken = Broken
+identity = C.toString()
+erasedValue: Class<Broken> = C
+erased = erasedValue == C
+missingValue: Class<Missing> = C
+missing = missingValue == C
+bad: Class<Missing> = 1
+arity = C is Class<Missing, Broken>
+plainValue: Class = C
+plain = plainValue == C
+stable = 42

@@ -1,0 +1,4 @@
+module stage15.types
+typealias A = Int(this < 0 || (this - 1) is B)
+typealias B = Int(this < 0 || (this - 1) is A)
+result: A = 4

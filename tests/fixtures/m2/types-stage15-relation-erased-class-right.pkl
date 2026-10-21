@@ -1,0 +1,4 @@
+module stage15.types
+class C {}
+p: Class = C
+result = p == C

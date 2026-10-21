@@ -1,0 +1,5 @@
+module stage15.types
+class C {}
+typealias Class<T> = Int
+p: Class<Missing> = 1
+result = p

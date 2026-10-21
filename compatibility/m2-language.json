@@ -29434,6 +29434,770 @@
       ]
     },
     {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage15-recursive-unused",
+      "input": "tests/fixtures/m2/types-stage15-recursive-unused.pkl",
+      "input_sha256": "662b855bf71c8d4d2b351bf829f50008f6c8c8e85b143203cc22ee392c219142",
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage15-recursive-identity",
+      "input": "tests/fixtures/m2/types-stage15-recursive-identity.pkl",
+      "input_sha256": "eaa7feeffc476bd939ab73f0781e6961db1bc2a1d70d6ba8dfa37c4376c3bc6c",
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage15-recursive-shortcircuit",
+      "input": "tests/fixtures/m2/types-stage15-recursive-shortcircuit.pkl",
+      "input_sha256": "38a9d8b4864706fe4906e9333839673b14bbcbb4e544882455a4b308028e8bac",
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage15-recursive-finite",
+      "input": "tests/fixtures/m2/types-stage15-recursive-finite.pkl",
+      "input_sha256": "a4fabeec2c5af4277f4e38cf61310bf1e97dd43d4c6bae4f9a661be113899d18",
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage15-recursive-is",
+      "input": "tests/fixtures/m2/types-stage15-recursive-is.pkl",
+      "input_sha256": "ca829276756fbd02fb953ff0f1ec06a3d84902806312ce977ae6b7b77e11753d",
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage15-recursive-as",
+      "input": "tests/fixtures/m2/types-stage15-recursive-as.pkl",
+      "input_sha256": "7171c967a613a7c9ecbcc216df38340fee4dc4715ba3f370c38db80da7f9d97b",
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage15-recursive-base-mismatch",
+      "input": "tests/fixtures/m2/types-stage15-recursive-base-mismatch.pkl",
+      "input_sha256": "ed8a61868e42e0ef4dfd9bff34270aaf2cd8d74e53260395e4822f6733dc54a0",
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage15-recursive-failure-before-recursion",
+      "input": "tests/fixtures/m2/types-stage15-recursive-failure-before-recursion.pkl",
+      "input_sha256": "b82a8f7dbad50d64bb7d532d6a3405b71b253a8a80cc292ed16daab21e104b02",
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage15-mutual-unused",
+      "input": "tests/fixtures/m2/types-stage15-mutual-unused.pkl",
+      "input_sha256": "a77b56d69e3d5eee88cb448bce4d9711b92f29dc01aeae00117f1b6d3d844957",
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage15-mutual-identity",
+      "input": "tests/fixtures/m2/types-stage15-mutual-identity.pkl",
+      "input_sha256": "cfcb624469baec9e1a572b697bfe3e3c8724b060dd0ea1cdcb25c93f2bc5958f",
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage15-mutual-finite",
+      "input": "tests/fixtures/m2/types-stage15-mutual-finite.pkl",
+      "input_sha256": "7849bb25af4bfaba8b07423c5abc564cd48d122c94e5c21dbc101c8b3ae88242",
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage15-recursive-two-constraints",
+      "input": "tests/fixtures/m2/types-stage15-recursive-two-constraints.pkl",
+      "input_sha256": "7ebeec260a1a25792c37d7813caa1c83aba6e3c2168eb506fa3544edcbc69f29",
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage15-recursive-function-parameter",
+      "input": "tests/fixtures/m2/types-stage15-recursive-function-parameter.pkl",
+      "input_sha256": "9a538281a1cd333ad24900d2074e3f8cf708dbf95716fd16529b2feadc0d5eba",
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:functions"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage15-recursive-function-result",
+      "input": "tests/fixtures/m2/types-stage15-recursive-function-result.pkl",
+      "input_sha256": "ba089a1fa681b7568234e99cd22d0e0150027cf2aff15692431438605944b3ca",
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:functions"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage15-recursive-nested-collection",
+      "input": "tests/fixtures/m2/types-stage15-recursive-nested-collection.pkl",
+      "input_sha256": "6db6c6cce9b64d7aaa35fe025907e505514c890c04141950dcdfb38b3218deeb",
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:collections"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage15-class-erased-missing",
+      "input": "tests/fixtures/m2/types-stage15-class-erased-missing.pkl",
+      "input_sha256": "faac332310acbf7e58cab0426855fb3a3b0a12d2863aeba74a723971441ac07e",
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:classes"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage15-class-erased-broken",
+      "input": "tests/fixtures/m2/types-stage15-class-erased-broken.pkl",
+      "input_sha256": "c76fce39683976c17fd15d5ff4682dbeef32a25692de30e2a60f49ce9859f865",
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:classes"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage15-class-erased-cycle",
+      "input": "tests/fixtures/m2/types-stage15-class-erased-cycle.pkl",
+      "input_sha256": "f2941e2f8370909cd035603a2d9b6577a2fb63a8ae6163db975ac2a57c45d7c4",
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:classes"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage15-class-erased-constraint",
+      "input": "tests/fixtures/m2/types-stage15-class-erased-constraint.pkl",
+      "input_sha256": "b4c05e09b3b71aaa744fe2164f20f6ad70e36a2851e43cdf59148898bf53c9bc",
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:classes"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage15-class-erased-nested",
+      "input": "tests/fixtures/m2/types-stage15-class-erased-nested.pkl",
+      "input_sha256": "52d833e2891ea4999ca41637d648a0c5fa8d1cc2cd9ca15698aa324a9218d94e",
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:classes",
+        "semantic:collections"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage15-class-erased-class-signature",
+      "input": "tests/fixtures/m2/types-stage15-class-erased-class-signature.pkl",
+      "input_sha256": "78458c7bbba5db5a1277ed3f30789d285fa9e0fa000b20789c8798b70aa4db17",
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:classes"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage15-class-arity-before-child",
+      "input": "tests/fixtures/m2/types-stage15-class-arity-before-child.pkl",
+      "input_sha256": "01aedfe6c04720f2c34acd44adff185d7da68de09bc2776176325ab641a8f76d",
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:classes",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage15-class-erased-value-mismatch",
+      "input": "tests/fixtures/m2/types-stage15-class-erased-value-mismatch.pkl",
+      "input_sha256": "403821cbfa98f82cef96e1a8e6e7dd30d214cd08583f0323da6205bc0e1d5e84",
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:classes",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage15-class-bare-value-mismatch",
+      "input": "tests/fixtures/m2/types-stage15-class-bare-value-mismatch.pkl",
+      "input_sha256": "bab8aed8187b2aa23de8a87dc0b925834d161a3ce6c9dd95667dcbfd905f4c0d",
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:classes",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage15-class-erased-nullable",
+      "input": "tests/fixtures/m2/types-stage15-class-erased-nullable.pkl",
+      "input_sha256": "a09ed8246941ca9c88a4f848e9b9c5063e165d099759ca4e438376752c2c7c10",
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:classes"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage15-class-erased-union",
+      "input": "tests/fixtures/m2/types-stage15-class-erased-union.pkl",
+      "input_sha256": "3083f9dbd5d05833e9ac773a4eaa22dd647a79f87ed80e4e0b91f608c5fff35c",
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:classes"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage15-class-erased-function",
+      "input": "tests/fixtures/m2/types-stage15-class-erased-function.pkl",
+      "input_sha256": "5eb89a98ec2f06adafc05f0d83f193ed6fe7f77f22625fda66b7cc55e885621b",
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:classes"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage15-class-is-erased",
+      "input": "tests/fixtures/m2/types-stage15-class-is-erased.pkl",
+      "input_sha256": "2785f07f7ff8abe3300cc6b669b9a178b3007c19db263c4a5b467ec6be87ce54",
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:classes"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage15-class-as-erased",
+      "input": "tests/fixtures/m2/types-stage15-class-as-erased.pkl",
+      "input_sha256": "ec0aaf5ed87bd201a576068a93d8a5b7872273cad3f061b2a053ea7203f82625",
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:classes"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage15-class-alias-erased",
+      "input": "tests/fixtures/m2/types-stage15-class-alias-erased.pkl",
+      "input_sha256": "7673ae0f7d75b219c67691c525ac59c764f04d054d85eb10576164cf5c2afe58",
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:classes"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage15-class-generic-erased",
+      "input": "tests/fixtures/m2/types-stage15-class-generic-erased.pkl",
+      "input_sha256": "d39ca094cae8e989cb48fa85fb9d93bb1ac8de9b49e829c57ed373a57152474a",
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:classes",
+        "semantic:generics",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage15-class-generic-name-shadow",
+      "input": "tests/fixtures/m2/types-stage15-class-generic-name-shadow.pkl",
+      "input_sha256": "299957646937c55e1682c23972a98e49c7fa5156bd17f05c23ab694fab508bba",
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:classes",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage15-class-named-alias-shadow",
+      "input": "tests/fixtures/m2/types-stage15-class-named-alias-shadow.pkl",
+      "input_sha256": "f48744397a7dd492c6aa846c9414ca7e33364c3cbd00909bd4ce1b760326f5e9",
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:classes",
+        "semantic:generics",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage15-class-parameter-shadow",
+      "input": "tests/fixtures/m2/types-stage15-class-parameter-shadow.pkl",
+      "input_sha256": "9a203e04e7933ad62fede69178823de56ccdd79809b4897a3f43717a0adc7195",
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage15-class-erased-alias-identity",
+      "input": "tests/fixtures/m2/types-stage15-class-erased-alias-identity.pkl",
+      "input_sha256": "8b997b5e3136f9eb9a675524ca5b01bd6cf3ef8c2dd4b5d68dad21a3db6e93c1",
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage15-recursive-const-capture",
+      "input": "tests/fixtures/m2/types-stage15-recursive-const-capture.pkl",
+      "input_sha256": "da689a862992b28458e74a90a58ba1f31bd0408d64eb03c14b0c76790750740b",
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage15-relation-erased-class-left",
+      "input": "tests/fixtures/m2/types-stage15-relation-erased-class-left.pkl",
+      "input_sha256": "45021a999f13f32ce33367cf86a3f851c0b6ac699e8237a09330d39a3d0842dc",
+      "metamorphic_relation": {
+        "case_ids": [
+          "types-stage15-relation-erased-class-left",
+          "types-stage15-relation-erased-class-right"
+        ],
+        "domain": "Class type argument erasure preserves class identity.",
+        "kind": "equal-stdout"
+      },
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:classes"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage15-relation-erased-class-right",
+      "input": "tests/fixtures/m2/types-stage15-relation-erased-class-right.pkl",
+      "input_sha256": "22c73fd29e48e48893a2f3377850e2ed0546d608bc3736da10b586be9f72c7b0",
+      "metamorphic_relation": {
+        "case_ids": [
+          "types-stage15-relation-erased-class-left",
+          "types-stage15-relation-erased-class-right"
+        ],
+        "domain": "Class type argument erasure preserves class identity.",
+        "kind": "equal-stdout"
+      },
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:classes"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage15-relation-recursive-shortcircuit-left",
+      "input": "tests/fixtures/m2/types-stage15-relation-recursive-shortcircuit-left.pkl",
+      "input_sha256": "91b43264f4dabe5a8f21f460f879a6f1d2bf82635f3e458c442d019c278532a6",
+      "metamorphic_relation": {
+        "case_ids": [
+          "types-stage15-relation-recursive-shortcircuit-left",
+          "types-stage15-relation-recursive-shortcircuit-right"
+        ],
+        "domain": "A satisfied first constraint branch preserves the scalar result while skipping a recursive type test.",
+        "kind": "equal-stdout"
+      },
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage15-relation-recursive-shortcircuit-right",
+      "input": "tests/fixtures/m2/types-stage15-relation-recursive-shortcircuit-right.pkl",
+      "input_sha256": "90d64f5285255ba639a41d3cdac0952a88f582ef60955871232a875e435d647a",
+      "metamorphic_relation": {
+        "case_ids": [
+          "types-stage15-relation-recursive-shortcircuit-left",
+          "types-stage15-relation-recursive-shortcircuit-right"
+        ],
+        "domain": "A satisfied first constraint branch preserves the scalar result while skipping a recursive type test.",
+        "kind": "equal-stdout"
+      },
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage15-recursive-lexical-type-shadow",
+      "input": "tests/fixtures/m2/types-stage15-recursive-lexical-type-shadow.pkl",
+      "input_sha256": "7652aa9b40dc00d3007e84a2e701c5d8274a5d64cdcb56cc111dfdb3abf927d2",
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:classes"
+      ]
+    },
+    {
       "adapter": null,
       "execution": {
         "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
@@ -120846,9 +121610,9 @@
   "comparison_boundary": "evaluateExpressionString(ModuleSource.path(same absolute URI), expression) UTF-8 stdout; whole PklException.getMessage() UTF-8 stderr and exit 1; no trimming. Power assertions default to disabled; an explicit per-case power_assertions boolean enables the same option in both probes. Stringification alone is not typed value/API compatibility.",
   "completion": "Every required semantic/source requirement needs implementation/test mappings and complete passing execution. Pending/unmapped/unimplemented/mismatch remains a full-gate failure.",
   "counts": {
-    "cases": 2472,
+    "cases": 2513,
     "cases_by_execution": {
-      "ready": 1472,
+      "ready": 1513,
       "unimplemented": 960,
       "unmapped": 40
     },
@@ -121658,12 +122422,12 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "c93986515f2ecf28801b17b65bbae765572af00704638a8122c68e1292431ba8",
+            "sha256": "c4a43a34fced2279cfcd5af7ad371358104d4d078ddadc9938ea9d0d31c37ecd",
             "symbol": "initialize_member_types"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "c93986515f2ecf28801b17b65bbae765572af00704638a8122c68e1292431ba8",
+            "sha256": "c4a43a34fced2279cfcd5af7ad371358104d4d078ddadc9938ea9d0d31c37ecd",
             "symbol": "validate_class_override"
           },
           {
@@ -123036,12 +123800,12 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "c93986515f2ecf28801b17b65bbae765572af00704638a8122c68e1292431ba8",
+            "sha256": "c4a43a34fced2279cfcd5af7ad371358104d4d078ddadc9938ea9d0d31c37ecd",
             "symbol": "validate_object_override"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "c93986515f2ecf28801b17b65bbae765572af00704638a8122c68e1292431ba8",
+            "sha256": "c4a43a34fced2279cfcd5af7ad371358104d4d078ddadc9938ea9d0d31c37ecd",
             "symbol": "inherited_member"
           }
         ],
@@ -123198,17 +123962,17 @@
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "c93986515f2ecf28801b17b65bbae765572af00704638a8122c68e1292431ba8",
+            "sha256": "c4a43a34fced2279cfcd5af7ad371358104d4d078ddadc9938ea9d0d31c37ecd",
             "symbol": "validate_class_override"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "c93986515f2ecf28801b17b65bbae765572af00704638a8122c68e1292431ba8",
+            "sha256": "c4a43a34fced2279cfcd5af7ad371358104d4d078ddadc9938ea9d0d31c37ecd",
             "symbol": "validate_object_override"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "c93986515f2ecf28801b17b65bbae765572af00704638a8122c68e1292431ba8",
+            "sha256": "c4a43a34fced2279cfcd5af7ad371358104d4d078ddadc9938ea9d0d31c37ecd",
             "symbol": "initialize_member_types"
           }
         ],
@@ -123223,7 +123987,7 @@
           "Full modifier combinations, annotation metadata, generic class inheritance and the complete class/member error corpus remain outside this bounded selection.",
           "Caught upstream PklBugException duplicate hidden/local outputs and any recorded exploratory mismatches remain separate failures, without development exceptions."
         ],
-        "scope": "Selected class fixed properties preserve declaration fixedness through inheritance, reject instance assignment and amendment before forcing bodies, and retain member/type initialization error order. Raw comparisons cover only the linked fixtures at their actual URIs. Stage 14 adds selected authored type-resolution order, generic parameter scope and nested substitution, class/alias arity ordering, and owner signature diagnostics; persistent failed-declaration state has a separate sequence contract.",
+        "scope": "Selected class fixed properties preserve declaration fixedness through inheritance, reject instance assignment and amendment before forcing bodies, and retain member/type initialization error order. Raw comparisons cover only the linked fixtures at their actual URIs. Stage 14 adds selected authored type-resolution order, generic parameter scope and nested substitution, class/alias arity ordering, and owner signature diagnostics; persistent failed-declaration state has a separate sequence contract. Stage 15 adds selected non-generic recursive constraint block graphs and declaration type scope, plus builtin Class argument erasure and arity ordering. Recursive generic constraints and shared custom-this slot behavior remain open.",
         "source": "compatibility/m2-mappings.json"
       },
       "tests": {
@@ -123399,7 +124163,28 @@
           "types-stage14-class-arity-broken",
           "types-stage14-class-arity-missing",
           "types-stage14-class-body-before-arity",
-          "types-stage14-class-arity-valid"
+          "types-stage14-class-arity-valid",
+          "types-stage15-class-erased-missing",
+          "types-stage15-class-erased-broken",
+          "types-stage15-class-erased-cycle",
+          "types-stage15-class-erased-constraint",
+          "types-stage15-class-erased-nested",
+          "types-stage15-class-erased-class-signature",
+          "types-stage15-class-arity-before-child",
+          "types-stage15-class-erased-value-mismatch",
+          "types-stage15-class-bare-value-mismatch",
+          "types-stage15-class-erased-nullable",
+          "types-stage15-class-erased-union",
+          "types-stage15-class-erased-function",
+          "types-stage15-class-is-erased",
+          "types-stage15-class-as-erased",
+          "types-stage15-class-alias-erased",
+          "types-stage15-class-generic-erased",
+          "types-stage15-class-generic-name-shadow",
+          "types-stage15-class-named-alias-shadow",
+          "types-stage15-relation-erased-class-left",
+          "types-stage15-relation-erased-class-right",
+          "types-stage15-recursive-lexical-type-shadow"
         ],
         "state": "partial"
       }
@@ -123416,17 +124201,17 @@
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "c93986515f2ecf28801b17b65bbae765572af00704638a8122c68e1292431ba8",
+            "sha256": "c4a43a34fced2279cfcd5af7ad371358104d4d078ddadc9938ea9d0d31c37ecd",
             "symbol": "validate_class_override"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "c93986515f2ecf28801b17b65bbae765572af00704638a8122c68e1292431ba8",
+            "sha256": "c4a43a34fced2279cfcd5af7ad371358104d4d078ddadc9938ea9d0d31c37ecd",
             "symbol": "validate_object_override"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "c93986515f2ecf28801b17b65bbae765572af00704638a8122c68e1292431ba8",
+            "sha256": "c4a43a34fced2279cfcd5af7ad371358104d4d078ddadc9938ea9d0d31c37ecd",
             "symbol": "initialize_member_types"
           },
           {
@@ -123594,12 +124379,12 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "c93986515f2ecf28801b17b65bbae765572af00704638a8122c68e1292431ba8",
+            "sha256": "c4a43a34fced2279cfcd5af7ad371358104d4d078ddadc9938ea9d0d31c37ecd",
             "symbol": "TypeCheck"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "c93986515f2ecf28801b17b65bbae765572af00704638a8122c68e1292431ba8",
+            "sha256": "c4a43a34fced2279cfcd5af7ad371358104d4d078ddadc9938ea9d0d31c37ecd",
             "symbol": "compile_type_at"
           },
           {
@@ -123618,7 +124403,7 @@
           "Function amendments, full callable/builtin behavior, imports and the original function suite contracts remain outside this bounded selection.",
           "The broader function, closure, diagnostic and reflection inventories are not completed by metadata comparisons."
         ],
-        "scope": "Function and Function0..5 class types and arrow annotations retain parameter/result metadata while selected runtime value checks use arity. Comparisons distinguish annotation checks from a lambda declaration's own argument checks and distinguish Reference type tests from exported-type equality. Stage 14 adds selected authored type-resolution order, generic parameter scope and nested substitution, class/alias arity ordering, and owner signature diagnostics; persistent failed-declaration state has a separate sequence contract.",
+        "scope": "Function and Function0..5 class types and arrow annotations retain parameter/result metadata while selected runtime value checks use arity. Comparisons distinguish annotation checks from a lambda declaration's own argument checks and distinguish Reference type tests from exported-type equality. Stage 14 adds selected authored type-resolution order, generic parameter scope and nested substitution, class/alias arity ordering, and owner signature diagnostics; persistent failed-declaration state has a separate sequence contract. Stage 15 adds selected non-generic recursive constraint block graphs and declaration type scope, plus builtin Class argument erasure and arity ordering. Recursive generic constraints and shared custom-this slot behavior remain open.",
         "source": "compatibility/m2-mappings.json"
       },
       "tests": {
@@ -123752,7 +124537,9 @@
           "types-stage14-two-parameters",
           "types-stage14-lambda-union",
           "types-stage14-lambda-function",
-          "types-stage14-nested-function-order"
+          "types-stage14-nested-function-order",
+          "types-stage15-recursive-function-parameter",
+          "types-stage15-recursive-function-result"
         ],
         "state": "partial"
       }
@@ -124788,7 +125575,9 @@
           "types-stage14-nested-alias-arguments",
           "types-stage14-nested-alias-argument-first",
           "types-stage14-relation-generic-alias-expansion-left",
-          "types-stage14-relation-generic-alias-expansion-right"
+          "types-stage14-relation-generic-alias-expansion-right",
+          "types-stage15-recursive-nested-collection",
+          "types-stage15-class-erased-nested"
         ],
         "state": "partial"
       }
@@ -124800,12 +125589,12 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "c93986515f2ecf28801b17b65bbae765572af00704638a8122c68e1292431ba8",
+            "sha256": "c4a43a34fced2279cfcd5af7ad371358104d4d078ddadc9938ea9d0d31c37ecd",
             "symbol": "TypeCheck"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "c93986515f2ecf28801b17b65bbae765572af00704638a8122c68e1292431ba8",
+            "sha256": "c4a43a34fced2279cfcd5af7ad371358104d4d078ddadc9938ea9d0d31c37ecd",
             "symbol": "initialize_type_resolution"
           },
           {
@@ -124815,8 +125604,13 @@
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "c93986515f2ecf28801b17b65bbae765572af00704638a8122c68e1292431ba8",
+            "sha256": "c4a43a34fced2279cfcd5af7ad371358104d4d078ddadc9938ea9d0d31c37ecd",
             "symbol": "type_resolution_plan"
+          },
+          {
+            "path": "crates/pkl-runtime/src/vm.rs",
+            "sha256": "c4a43a34fced2279cfcd5af7ad371358104d4d078ddadc9938ea9d0d31c37ecd",
+            "symbol": "active_constraints"
           }
         ],
         "state": "partial"
@@ -124828,7 +125622,7 @@
         "remaining": [
           "The complete type, structural/generic class, constraint, recursive and imported-type corpus still requires implementation and original-adapter execution."
         ],
-        "scope": "The Stage 13 selection links named alias expansion, meta-class checks, function arity and exported type metadata to the shared VM. Existing upstream case definitions, adapters and execution states remain unchanged. Stage 14 adds selected authored type-resolution order, generic parameter scope and nested substitution, class/alias arity ordering, and owner signature diagnostics; persistent failed-declaration state has a separate sequence contract.",
+        "scope": "The Stage 13 selection links named alias expansion, meta-class checks, function arity and exported type metadata to the shared VM. Existing upstream case definitions, adapters and execution states remain unchanged. Stage 14 adds selected authored type-resolution order, generic parameter scope and nested substitution, class/alias arity ordering, and owner signature diagnostics; persistent failed-declaration state has a separate sequence contract. Stage 15 adds selected non-generic recursive constraint block graphs and declaration type scope, plus builtin Class argument erasure and arity ordering. Recursive generic constraints and shared custom-this slot behavior remain open.",
         "source": "compatibility/m2-mappings.json"
       },
       "tests": {
@@ -125271,6 +126065,47 @@
           "types-stage14-class-body-before-arity",
           "types-stage14-class-arity-valid",
           "types-stage14-shadow-applied-union-diagnostic",
+          "types-stage15-recursive-unused",
+          "types-stage15-recursive-identity",
+          "types-stage15-recursive-shortcircuit",
+          "types-stage15-recursive-finite",
+          "types-stage15-recursive-is",
+          "types-stage15-recursive-as",
+          "types-stage15-recursive-base-mismatch",
+          "types-stage15-recursive-failure-before-recursion",
+          "types-stage15-mutual-unused",
+          "types-stage15-mutual-identity",
+          "types-stage15-mutual-finite",
+          "types-stage15-recursive-two-constraints",
+          "types-stage15-recursive-function-parameter",
+          "types-stage15-recursive-function-result",
+          "types-stage15-recursive-nested-collection",
+          "types-stage15-class-erased-missing",
+          "types-stage15-class-erased-broken",
+          "types-stage15-class-erased-cycle",
+          "types-stage15-class-erased-constraint",
+          "types-stage15-class-erased-nested",
+          "types-stage15-class-erased-class-signature",
+          "types-stage15-class-arity-before-child",
+          "types-stage15-class-erased-value-mismatch",
+          "types-stage15-class-bare-value-mismatch",
+          "types-stage15-class-erased-nullable",
+          "types-stage15-class-erased-union",
+          "types-stage15-class-erased-function",
+          "types-stage15-class-is-erased",
+          "types-stage15-class-as-erased",
+          "types-stage15-class-alias-erased",
+          "types-stage15-class-generic-erased",
+          "types-stage15-class-generic-name-shadow",
+          "types-stage15-class-named-alias-shadow",
+          "types-stage15-class-parameter-shadow",
+          "types-stage15-class-erased-alias-identity",
+          "types-stage15-recursive-const-capture",
+          "types-stage15-relation-erased-class-left",
+          "types-stage15-relation-erased-class-right",
+          "types-stage15-relation-recursive-shortcircuit-left",
+          "types-stage15-relation-recursive-shortcircuit-right",
+          "types-stage15-recursive-lexical-type-shadow",
           "types-stage13-alias-value",
           "types-stage13-alias-self-equal",
           "types-stage13-alias-distinct-equal",
@@ -125367,28 +126202,33 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "c93986515f2ecf28801b17b65bbae765572af00704638a8122c68e1292431ba8",
+            "sha256": "c4a43a34fced2279cfcd5af7ad371358104d4d078ddadc9938ea9d0d31c37ecd",
             "symbol": "BeginTypeAlias"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "c93986515f2ecf28801b17b65bbae765572af00704638a8122c68e1292431ba8",
+            "sha256": "c4a43a34fced2279cfcd5af7ad371358104d4d078ddadc9938ea9d0d31c37ecd",
             "symbol": "NamedAlias"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "c93986515f2ecf28801b17b65bbae765572af00704638a8122c68e1292431ba8",
+            "sha256": "c4a43a34fced2279cfcd5af7ad371358104d4d078ddadc9938ea9d0d31c37ecd",
             "symbol": "compile_type_at"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "c93986515f2ecf28801b17b65bbae765572af00704638a8122c68e1292431ba8",
+            "sha256": "c4a43a34fced2279cfcd5af7ad371358104d4d078ddadc9938ea9d0d31c37ecd",
             "symbol": "type_resolution_plan"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "c93986515f2ecf28801b17b65bbae765572af00704638a8122c68e1292431ba8",
+            "sha256": "c4a43a34fced2279cfcd5af7ad371358104d4d078ddadc9938ea9d0d31c37ecd",
             "symbol": "initialize_type_resolution"
+          },
+          {
+            "path": "crates/pkl-runtime/src/vm.rs",
+            "sha256": "c4a43a34fced2279cfcd5af7ad371358104d4d078ddadc9938ea9d0d31c37ecd",
+            "symbol": "active_constraints"
           }
         ],
         "state": "partial"
@@ -125402,7 +126242,7 @@
           "Exploratory mismatches and upstream internal errors retain their original outcomes; these selected mappings do not grant completion.",
           "A full runtime type-node resolution model, mixed unresolved-name/dependency error ordering, and failures involving generic-parameter shadowing remain unverified."
         ],
-        "scope": "Selected user alias values preserve declaration identity, qualified display, lazy initialization, published failure state, and expanded validation. Independent expressions cover alias values, cycles, generic arguments, Mapping keys and complete diagnostics; persistent failure/reaccess sequences and GC/Host tests have separate contracts. Stage 14 adds selected authored type-resolution order, generic parameter scope and nested substitution, class/alias arity ordering, and owner signature diagnostics; persistent failed-declaration state has a separate sequence contract.",
+        "scope": "Selected user alias values preserve declaration identity, qualified display, lazy initialization, published failure state, and expanded validation. Independent expressions cover alias values, cycles, generic arguments, Mapping keys and complete diagnostics; persistent failure/reaccess sequences and GC/Host tests have separate contracts. Stage 14 adds selected authored type-resolution order, generic parameter scope and nested substitution, class/alias arity ordering, and owner signature diagnostics; persistent failed-declaration state has a separate sequence contract. Stage 15 adds selected non-generic recursive constraint block graphs and declaration type scope, plus builtin Class argument erasure and arity ordering. Recursive generic constraints and shared custom-this slot behavior remain open.",
         "source": "compatibility/m2-mappings.json"
       },
       "tests": {
@@ -125587,7 +126427,48 @@
           "types-stage14-class-arity-missing",
           "types-stage14-class-body-before-arity",
           "types-stage14-class-arity-valid",
-          "types-stage14-shadow-applied-union-diagnostic"
+          "types-stage14-shadow-applied-union-diagnostic",
+          "types-stage15-recursive-unused",
+          "types-stage15-recursive-identity",
+          "types-stage15-recursive-shortcircuit",
+          "types-stage15-recursive-finite",
+          "types-stage15-recursive-is",
+          "types-stage15-recursive-as",
+          "types-stage15-recursive-base-mismatch",
+          "types-stage15-recursive-failure-before-recursion",
+          "types-stage15-mutual-unused",
+          "types-stage15-mutual-identity",
+          "types-stage15-mutual-finite",
+          "types-stage15-recursive-two-constraints",
+          "types-stage15-recursive-function-parameter",
+          "types-stage15-recursive-function-result",
+          "types-stage15-recursive-nested-collection",
+          "types-stage15-class-erased-missing",
+          "types-stage15-class-erased-broken",
+          "types-stage15-class-erased-cycle",
+          "types-stage15-class-erased-constraint",
+          "types-stage15-class-erased-nested",
+          "types-stage15-class-erased-class-signature",
+          "types-stage15-class-arity-before-child",
+          "types-stage15-class-erased-value-mismatch",
+          "types-stage15-class-bare-value-mismatch",
+          "types-stage15-class-erased-nullable",
+          "types-stage15-class-erased-union",
+          "types-stage15-class-erased-function",
+          "types-stage15-class-is-erased",
+          "types-stage15-class-as-erased",
+          "types-stage15-class-alias-erased",
+          "types-stage15-class-generic-erased",
+          "types-stage15-class-generic-name-shadow",
+          "types-stage15-class-named-alias-shadow",
+          "types-stage15-class-parameter-shadow",
+          "types-stage15-class-erased-alias-identity",
+          "types-stage15-recursive-const-capture",
+          "types-stage15-relation-erased-class-left",
+          "types-stage15-relation-erased-class-right",
+          "types-stage15-relation-recursive-shortcircuit-left",
+          "types-stage15-relation-recursive-shortcircuit-right",
+          "types-stage15-recursive-lexical-type-shadow"
         ],
         "state": "partial"
       }
@@ -125858,12 +126739,12 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "c93986515f2ecf28801b17b65bbae765572af00704638a8122c68e1292431ba8",
+            "sha256": "c4a43a34fced2279cfcd5af7ad371358104d4d078ddadc9938ea9d0d31c37ecd",
             "symbol": "NamedAlias"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "c93986515f2ecf28801b17b65bbae765572af00704638a8122c68e1292431ba8",
+            "sha256": "c4a43a34fced2279cfcd5af7ad371358104d4d078ddadc9938ea9d0d31c37ecd",
             "symbol": "compile_type_at"
           },
           {
@@ -125873,12 +126754,12 @@
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "c93986515f2ecf28801b17b65bbae765572af00704638a8122c68e1292431ba8",
+            "sha256": "c4a43a34fced2279cfcd5af7ad371358104d4d078ddadc9938ea9d0d31c37ecd",
             "symbol": "type_resolution_plan"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "c93986515f2ecf28801b17b65bbae765572af00704638a8122c68e1292431ba8",
+            "sha256": "c4a43a34fced2279cfcd5af7ad371358104d4d078ddadc9938ea9d0d31c37ecd",
             "symbol": "initialize_type_resolution"
           }
         ],
@@ -125891,7 +126772,7 @@
         "remaining": [
           "Complete generic classes, variance, imported generic declarations, recursive expansion and the original generic suite contracts remain unimplemented or unverified."
         ],
-        "scope": "Selected generic aliases retain declaration identity and metadata arguments independently of expanded checks, use unknown for omitted arguments, and preserve argument-count and expanded-value diagnostics. Stage 14 adds selected authored type-resolution order, generic parameter scope and nested substitution, class/alias arity ordering, and owner signature diagnostics; persistent failed-declaration state has a separate sequence contract.",
+        "scope": "Selected generic aliases retain declaration identity and metadata arguments independently of expanded checks, use unknown for omitted arguments, and preserve argument-count and expanded-value diagnostics. Stage 14 adds selected authored type-resolution order, generic parameter scope and nested substitution, class/alias arity ordering, and owner signature diagnostics; persistent failed-declaration state has a separate sequence contract. Stage 15 adds selected non-generic recursive constraint block graphs and declaration type scope, plus builtin Class argument erasure and arity ordering. Recursive generic constraints and shared custom-this slot behavior remain open.",
         "source": "compatibility/m2-mappings.json"
       },
       "tests": {
@@ -126131,7 +127012,9 @@
           "types-stage14-relation-generic-alias-expansion-left",
           "types-stage14-relation-generic-alias-expansion-right",
           "types-stage14-shadow-parameterized-module-success",
-          "types-stage14-shadow-applied-union-diagnostic"
+          "types-stage14-shadow-applied-union-diagnostic",
+          "types-stage15-class-generic-erased",
+          "types-stage15-class-named-alias-shadow"
         ],
         "state": "partial"
       }
@@ -126570,7 +127453,7 @@
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "c93986515f2ecf28801b17b65bbae765572af00704638a8122c68e1292431ba8",
+            "sha256": "c4a43a34fced2279cfcd5af7ad371358104d4d078ddadc9938ea9d0d31c37ecd",
             "symbol": "initialize_member_types"
           },
           {
@@ -126736,7 +127619,7 @@
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "c93986515f2ecf28801b17b65bbae765572af00704638a8122c68e1292431ba8",
+            "sha256": "c4a43a34fced2279cfcd5af7ad371358104d4d078ddadc9938ea9d0d31c37ecd",
             "symbol": "compile_type_at"
           }
         ],
@@ -126800,7 +127683,7 @@
           "Recursive frame compression, general imported source stacks, first-error combinations and the complete parser/resolver/runtime diagnostic corpus remain open.",
           "Original selected cycle and remainder-zero failures remain failed."
         ],
-        "scope": "Reference constructor, access, constraint and rendering errors retain complete message, authored frame, foreign standard-library source and URI bytes in selected comparisons. Stage11 adds selected fixed declaration, inherited metadata and complete raw diagnostics through the shared VM. Stage 13 adds selected alias/function metadata, exported-type equality and complete raw diagnostic comparisons; original suite execution and remaining scope stay open. Stage 14 adds selected authored type-resolution order, generic parameter scope and nested substitution, class/alias arity ordering, and owner signature diagnostics; persistent failed-declaration state has a separate sequence contract.",
+        "scope": "Reference constructor, access, constraint and rendering errors retain complete message, authored frame, foreign standard-library source and URI bytes in selected comparisons. Stage11 adds selected fixed declaration, inherited metadata and complete raw diagnostics through the shared VM. Stage 13 adds selected alias/function metadata, exported-type equality and complete raw diagnostic comparisons; original suite execution and remaining scope stay open. Stage 14 adds selected authored type-resolution order, generic parameter scope and nested substitution, class/alias arity ordering, and owner signature diagnostics; persistent failed-declaration state has a separate sequence contract. Stage 15 adds selected non-generic recursive constraint block graphs and declaration type scope, plus builtin Class argument erasure and arity ordering. Recursive generic constraints and shared custom-this slot behavior remain open.",
         "source": "compatibility/m2-mappings.json"
       },
       "tests": {
@@ -127524,7 +128407,15 @@
           "types-stage14-class-arity-missing",
           "types-stage14-class-body-before-arity",
           "types-stage14-class-arity-valid",
-          "types-stage14-shadow-applied-union-diagnostic"
+          "types-stage14-shadow-applied-union-diagnostic",
+          "types-stage15-recursive-base-mismatch",
+          "types-stage15-recursive-failure-before-recursion",
+          "types-stage15-class-arity-before-child",
+          "types-stage15-class-erased-value-mismatch",
+          "types-stage15-class-bare-value-mismatch",
+          "types-stage15-class-generic-erased",
+          "types-stage15-class-generic-name-shadow",
+          "types-stage15-class-named-alias-shadow"
         ],
         "state": "partial"
       }
@@ -133520,17 +134411,17 @@
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "c93986515f2ecf28801b17b65bbae765572af00704638a8122c68e1292431ba8",
+            "sha256": "c4a43a34fced2279cfcd5af7ad371358104d4d078ddadc9938ea9d0d31c37ecd",
             "symbol": "validate_class_override"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "c93986515f2ecf28801b17b65bbae765572af00704638a8122c68e1292431ba8",
+            "sha256": "c4a43a34fced2279cfcd5af7ad371358104d4d078ddadc9938ea9d0d31c37ecd",
             "symbol": "validate_object_override"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "c93986515f2ecf28801b17b65bbae765572af00704638a8122c68e1292431ba8",
+            "sha256": "c4a43a34fced2279cfcd5af7ad371358104d4d078ddadc9938ea9d0d31c37ecd",
             "symbol": "initialize_member_types"
           }
         ],
@@ -133968,7 +134859,7 @@
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "c93986515f2ecf28801b17b65bbae765572af00704638a8122c68e1292431ba8",
+            "sha256": "c4a43a34fced2279cfcd5af7ad371358104d4d078ddadc9938ea9d0d31c37ecd",
             "symbol": "compile_type_at"
           }
         ],
@@ -136422,10 +137313,10 @@
   "sources": {
     "compatibility/corpus.json": "0e95da22f965dede398f1a1f136703ba913d588aa51c1fb871cd97a11c84a0dd",
     "compatibility/inventory.json": "a9b21752adad9a269a54854c0dd298256757be88ad95c1388e30d7c78e407070",
-    "compatibility/m2-mappings.json": "7f08d77ff274d4c9840fd5c5b265f4ed1171d87365874e20012328d93a6dc7ec",
+    "compatibility/m2-mappings.json": "44f05dda12b103a005645db00085ee3ab65ff36e52a8c6163b0d456afffa6143",
     "compatibility/regressions.json": "09c064f65730d30f72bf87a45c88d47ecc0844e57966a999dc8e759f083af3da",
     "compatibility/rev1-inventory.json": "6061f202ba3f04565efed3617ac69d3c2fadc54eec1f562b67a4758b3d0a8ab5",
     "references.lock": "278f48fd7697459281aa78a706c9ca57222f36a8c0785d838a6449fbaf26d30b",
-    "tests/fixtures/m2/cases.json": "0a5b77f004ffa17ff74347648b5c4bd1bcb9f24b2db24cbc034622d4ab16d74e"
+    "tests/fixtures/m2/cases.json": "0205ea5258a22ffcddb544e23141f203e9373469c22fc3f358aaa196ffee9f69"
   }
 }

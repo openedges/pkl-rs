@@ -1,0 +1,4 @@
+module stage15.types
+typealias Broken = Missing
+typealias A = Class<Broken>
+result = A.toString()

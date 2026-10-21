@@ -1,0 +1,10 @@
+typealias A = Int(this < 0 || (this - 1) is A)
+typealias Rejected = Int(this < 0 && this is Rejected)
+identity = A.toString()
+shortValue: A = -1
+finite: A = 3
+mismatch: A = "bad"
+rejected: Rejected = 2
+checked = 2 is A
+cast = 2 as A
+stable = 42

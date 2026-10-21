@@ -1,0 +1,4 @@
+module stage15.types
+class C {}
+p: Class<Missing> = C
+result = p == C

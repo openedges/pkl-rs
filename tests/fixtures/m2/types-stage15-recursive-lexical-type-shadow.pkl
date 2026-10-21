@@ -1,0 +1,5 @@
+module stage15.types
+typealias A = Int(this < 0 || (this - 1) is A)
+typealias B = A
+class Holder { local A = 42; value: B = 2 }
+result = new Holder {}.value

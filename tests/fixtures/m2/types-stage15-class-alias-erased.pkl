@@ -1,0 +1,5 @@
+module stage15.types
+class C {}
+typealias A = Class<Missing>
+p: A = C
+result = p == C

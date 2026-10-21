@@ -1,0 +1,4 @@
+module stage15.types
+typealias A<Class> = Class
+p: A<Int> = 1
+result = p

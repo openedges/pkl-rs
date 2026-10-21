@@ -1,0 +1,7 @@
+module stage15.types
+class C {}
+class Invalid { x: InvalidMissing }
+typealias Broken = BrokenMissing
+typealias Cycle = Cycle
+p: Class<Broken> = C
+result = p == C

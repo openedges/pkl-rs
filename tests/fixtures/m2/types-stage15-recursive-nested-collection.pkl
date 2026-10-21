@@ -1,0 +1,4 @@
+module stage15.types
+typealias Recursive = Int(this < 0 || (this - 1) is Recursive)
+p: List<Recursive> = List(1, 2)
+result = p[1]
