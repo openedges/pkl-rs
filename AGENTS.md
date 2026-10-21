@@ -25,6 +25,7 @@ These instructions apply to agents making changes in this repository. Explicit u
 
 ## Changes and verification
 
+- Recorded local verification is an accepted path for development checkpoints. Do not block implementation or checkpoint closeout solely on hosted CI availability, billing, or artifact transport. Run the applicable checks locally and record the actual host, toolchain, sources, artifacts, raw outcomes, and remaining platform gaps. A hosted CI result and local evidence are distinct provenance; never relabel one as the other. Release platform, compatibility, and performance requirements still apply.
 - Do not modify reference checkouts or gitlinks under `external/` unless the task requests a reference version update. Consult the reference sources for evidence, then make implementation changes in this project.
 - When updating reference versions, update the gitlinks, `references.lock`, documentation, and verification criteria together.
 - Implement only the changes needed for the task. Document features and commands as available only after they are implemented.

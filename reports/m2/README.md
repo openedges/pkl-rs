@@ -20,7 +20,7 @@ and exported arrow metadata equality. Stage 14 adds ordered type resolution, gen
 parameter scopes, and owner signature initialization.
 These checkpoints do not complete the language milestone.
 
-## Stage 14 local checkpoint; remote CI blocked
+## Stage 14 checkpoint accepted with local verification
 
 Implementation `4b27b7ecf2c6133e363ed228606b289e85c2e627` is committed and pushed.
 Runtime and type-resolution work used `gpt-6-astra / high`; Java evidence,
@@ -95,11 +95,19 @@ a spending limit requiring adjustment. The [CI summary](ci-stage14-summary.json)
 and [raw blocked-run evidence](ci-stage14-blocked-evidence.tar.gz) retain all six
 not-started jobs and their annotations; zero artifacts were produced. No CI tests,
 original ZIP digest checks, remote source checks, or offline artifact replays passed
-or executed. Local success does not replace these outstanding remote checks. The
-account setting must be corrected before rerunning this exact implementation commit.
-The preceding report-only commit's separate CI completed all six jobs successfully.
+or executed. This blocked run remains a historical CI failure. The preceding
+report-only commit's separate CI completed all six jobs successfully.
 
-**M2 remains in progress, and Stage 14 remote closeout is pending.** Recursive
+The user subsequently authorized local verification as the development acceptance
+path. The [independent local acceptance report](local-acceptance-stage14.json) and
+[sealed audit](local-acceptance-stage14-evidence.tar.gz) verify the original archives,
+exact implementation sources, and raw outcomes without executing captured binaries.
+A fresh pinned Java identifier probe also matches the committed Rust table bytes.
+Unchanged baseline tooling is distinguished from fresh checks; Linux and Windows
+execution remains unverified for this implementation. No hosted ZIP is required
+when none exists. **Stage 14 is closed within its bounded local development contract.**
+
+**M2 remains in progress.** Recursive
 constraint/type resolution, erased `Class<T>` arguments, strict Map/Set, annotation
 syntax, general module loading/cache behavior, full reflection, and the remaining
 upstream corpus still require work. Full language/API compatibility and speed/memory

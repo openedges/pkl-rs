@@ -1,0 +1,589 @@
+{
+  "acceptance": "Local evidence accepted for continued M2 development by explicit user instruction; remote CI is not a prerequisite for this continuation.",
+  "actual_retained_counts": {
+    "class_call_comparisons": 406,
+    "class_passing_calls": 406,
+    "class_sequence_executions": 64,
+    "class_unexecuted_groups": [
+      {
+        "group": "P09",
+        "reason": "Java-only module-cache probe stage12-java-module-identity-01 observes same URI/source identity retained, changed source at same URI ignored (marker remains1), distinct URI/evaluator identity separated. Rust multi-source module-cache parity is unimplemented; same-module identity is compared."
+      },
+      {
+        "group": "P10",
+        "reason": "Java observable sequence comparisons do not expose heap counts; Rust architectural GC coverage is separate."
+      },
+      {
+        "group": "P11",
+        "reason": "Real Java class-initialization read observed via @Deprecated { ...(read(\"life:class\")) } in stage12-java-host-path-01; Rust annotation frontend unsupported, so actual Host-in-class cross-language reentry remains unexecuted. Internal scheduler tests are separate."
+      },
+      {
+        "group": "P12",
+        "reason": "Terminal context/token/heap cleanup is covered by separate Rust lifecycle tests, not Java raw-byte equivalence."
+      },
+      {
+        "group": "P05",
+        "reason": "Indirect cyclic hierarchy property traversal new A {}.missing timed out after successful class identity calls in stage12-java-observations-03; traversal is observed oracle-timeout, not a compatibility pass."
+      }
+    ],
+    "class_unique_sequences": 32,
+    "development_contract_passes": true,
+    "frontend_raw_matches": 15,
+    "full_gate_failure_reasons": 1950,
+    "full_m2_complete": false,
+    "language_status_counts": {
+      "mismatch": 1,
+      "oracle-error": 1,
+      "pass": 1470
+    },
+    "lifecycle_full_diagnostic_mismatches": 4,
+    "lifecycle_protocol_matches": 2,
+    "metamorphic_relations": 50,
+    "platforms": {
+      "browser_scenarios": 52,
+      "comparisons_recomputed_from_raw": true,
+      "node_scenarios": 52,
+      "oracle_mismatch_ids": {
+        "browser": [
+          "regex-unicode-15-vs-16",
+          "regex-zero-width-supplementary"
+        ],
+        "node": [
+          "regex-unicode-15-vs-16",
+          "regex-zero-width-supplementary"
+        ],
+        "rust": [
+          "regex-unicode-15-vs-16",
+          "regex-zero-width-supplementary"
+        ]
+      },
+      "oracle_passed": {
+        "browser": 6076,
+        "node": 6076,
+        "rust": 6076
+      },
+      "report_execution_equals_retained": true,
+      "scenario_lists_equal_retained": true,
+      "shared_engine_passed": 6078,
+      "total": 6078
+    },
+    "runtime_raw_outcomes": [
+      {
+        "id": "amendment",
+        "raw_equal": true
+      },
+      {
+        "id": "captured-receiver",
+        "raw_equal": true
+      },
+      {
+        "id": "lexical-let",
+        "raw_equal": true
+      },
+      {
+        "id": "object-cycle",
+        "raw_equal": true
+      },
+      {
+        "id": "lazy-unused",
+        "raw_equal": true
+      },
+      {
+        "id": "mixed-numeric",
+        "raw_equal": true
+      },
+      {
+        "id": "first-error",
+        "raw_equal": true
+      },
+      {
+        "id": "forcing-cycle",
+        "raw_equal": false
+      },
+      {
+        "id": "overflow-first",
+        "raw_equal": true
+      }
+    ],
+    "selected": 1472,
+    "strict_subset_passes": false,
+    "validation": {
+      "python_passed": 194,
+      "rust_intentionally_ignored": 1,
+      "rust_passed": 303
+    }
+  },
+  "audit_process": {
+    "command": [
+      "/opt/homebrew/opt/python@3.14/bin/python3.14",
+      "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/local-acceptance-stage14/audit.py"
+    ],
+    "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs",
+    "exit_code": 0,
+    "helper_sha256": "ebaa292bbb9a5fa42113afd5604cfa55aee421d477de290435762ddacc92eb9b",
+    "python": "3.14.8 (main, Sep 30 2026, 17:55:09) [Clang 21.0.0 (clang-2100.3.34.2)]",
+    "python_executable": "/opt/homebrew/opt/python@3.14/bin/python3.14",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_sha256": "982e948690ffd7d2ca5a8fe426f788759024b3b88e8ce2bff58e6d8451dbceae"
+  },
+  "captured_binaries_executed": false,
+  "created_utc": "2026-10-21T07:41:43.905301+00:00",
+  "evidence_archive": {
+    "bytes": 62132,
+    "exclusions": [
+      "relocated-sealed-evidence/*",
+      "verified-implementation/*",
+      "attempt-*/relocated-sealed-evidence/*",
+      "attempt-*/verified-implementation/*"
+    ],
+    "inventory_verified": true,
+    "path": "reports/m2/local-acceptance-stage14-evidence.tar.gz",
+    "scope": "Audit helpers, process captures, computed outcomes and fresh Java identifier evidence. Unchanged original sealed suites remain separate dependencies.",
+    "sha256": "aabf0551570861e07df293ff15f5ee771c7dedea73b2c9d294706bed8999118b"
+  },
+  "fresh_selected_java_rerun": false,
+  "full_m2_complete": false,
+  "github_ci": {
+    "original_report": "reports/m2/ci-stage14-summary.json",
+    "retry_requested": false,
+    "run_id": 39561429923,
+    "scope": "No hosted artifacts were created; no local evidence is relabeled as CI output.",
+    "started_jobs": 0,
+    "status": "blocked-before-runner-start",
+    "test_passes": 0
+  },
+  "helper_preparation_failures": [
+    {
+      "attempt": "attempt-01",
+      "reason": "Frozen verifier overlay omitted a committed M1 frontend support fixture; no implementation test failed."
+    },
+    {
+      "attempt": "attempt-02",
+      "reason": "Frozen Java identifier overlay omitted the pinned upstream Lexer.java support blob; Java predicate probe had not started."
+    }
+  ],
+  "host": "macOS-27.0-arm64-arm-64bit-Mach-O",
+  "implementation_commit": "4b27b7ecf2c6133e363ed228606b289e85c2e627",
+  "limitations": [
+    "Selected language has 1470 passes, error-cycle oracle-error, and error-remainder-zero mismatch.",
+    "Primitive oracle comparison retains regex-unicode-15-vs-16 and regex-zero-width-supplementary failures on all three targets.",
+    "Runtime forcing-cycle diagnostic mismatch and four lifecycle full diagnostic mismatches remain failures.",
+    "Class lifecycle unexecuted groups, 960 unimplemented cases, 40 unmapped cases and full M2 gate failures remain open.",
+    "No full language/API compatibility or performance target completion is claimed."
+  ],
+  "new_local_java_identifier_check": {
+    "exit_code": 0,
+    "generated_table_matches_implementation_commit": true,
+    "interval_counts": {
+      "part": 441,
+      "regular_part": 784,
+      "regular_start": 662,
+      "start": 381
+    },
+    "method": "Frozen generator/probe/table inputs; existing pinned checkout/JAR/JDK verified by frozen oracle.ensure_oracle(REPO); metadata supplied to frozen generator wrapper.",
+    "oracle": {
+      "artifact": "/Users/cody.ij.hwang/Projects/pkl-rs/.cache/oracle/pkl-tools-0.32.0.jar",
+      "artifact_sha256": "c3b6f6215a08b31453b0fb0edd8c9da0aee31233f65abb8ab07f9c945151e059",
+      "artifact_url": "https://repo.maven.apache.org/maven2/org/pkl-lang/pkl-tools/0.32.0/pkl-tools-0.32.0.jar",
+      "command": [
+        "/usr/bin/java",
+        "-Xms64m",
+        "-Xmx512m",
+        "-Dfile.encoding=UTF-8",
+        "-Dstdout.encoding=UTF-8",
+        "-Dstderr.encoding=UTF-8",
+        "-Duser.language=en",
+        "-Duser.country=US",
+        "-Duser.timezone=UTC",
+        "-Djava.awt.headless=true",
+        "-Duser.name=oracle",
+        "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs/.cache/oracle/home",
+        "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs/.cache/oracle/tmp",
+        "-cp",
+        "/Users/cody.ij.hwang/Projects/pkl-rs/.cache/oracle/pkl-tools-0.32.0.jar",
+        "org.pkl.cli.Main"
+      ],
+      "environment": {
+        "COLUMNS": "80",
+        "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs/.cache/oracle/home",
+        "LANG": "C",
+        "LC_ALL": "C",
+        "NO_COLOR": "1",
+        "PATH": "/bin:/usr/bin",
+        "TEMP": "/Users/cody.ij.hwang/Projects/pkl-rs/.cache/oracle/tmp",
+        "TERM": "dumb",
+        "TMP": "/Users/cody.ij.hwang/Projects/pkl-rs/.cache/oracle/tmp",
+        "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs/.cache/oracle/tmp",
+        "TZ": "UTC"
+      },
+      "java": "/usr/bin/java",
+      "jdk": {
+        "executable": "/usr/bin/java",
+        "executable_sha256": "51ec0764f7225b40d5b286b01401aa6b3990d0d171b446d7dc81ca7542b45552",
+        "properties": {
+          "java.home": "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home",
+          "java.runtime.version": "21.0.12.1+1-LTS",
+          "java.vendor": "Eclipse Adoptium",
+          "java.version": "21.0.12.1",
+          "java.vm.name": "OpenJDK 64-Bit Server VM",
+          "java.vm.version": "21.0.12.1+1-LTS",
+          "os.arch": "aarch64",
+          "os.name": "Mac OS X",
+          "os.version": "27.0"
+        },
+        "release_sha256": "ab66b8afeea98b25f1869fbe7c0dde368d448e7cc0f7bab0359b322ade134fe1",
+        "runtime_modules_sha256": "40fcf7a32bada7e299e3513939a4472d27f8f61eb81cdd1675ea00648de7e7cf",
+        "version_stderr_hex": "50726f70657274792073657474696e67733a0a2020202066696c652e656e636f64696e67203d205554462d380a2020202066696c652e736570617261746f72203d202f0a202020206674702e6e6f6e50726f7879486f737473203d206c6f63616c7c2a2e6c6f63616c7c3136392e3235342f31367c2a2e3136392e3235342f31360a20202020687474702e6e6f6e50726f7879486f737473203d206c6f63616c7c2a2e6c6f63616c7c3136392e3235342f31367c2a2e3136392e3235342f31360a202020206a6176612e636c6173732e70617468203d200a202020206a6176612e636c6173732e76657273696f6e203d2036352e300a202020206a6176612e686f6d65203d202f4c6962726172792f4a6176612f4a6176615669727475616c4d616368696e65732f74656d7572696e2d32312e6a646b2f436f6e74656e74732f486f6d650a202020206a6176612e696f2e746d70646972203d202f7661722f666f6c646572732f5f712f733936397a686b783671643870333276326e6438377967683030303067702f542f0a202020206a6176612e6c6962726172792e70617468203d202f55736572732f636f64792e696a2e6877616e672f50726f6a656374732f706b6c2d72732f2e63616368652f6f7261636c652f686f6d652f4c6962726172792f4a6176612f457874656e73696f6e730a20202020202020202f4c6962726172792f4a6176612f457874656e73696f6e730a20202020202020202f4e6574776f726b2f4c6962726172792f4a6176612f457874656e73696f6e730a20202020202020202f53797374656d2f4c6962726172792f4a6176612f457874656e73696f6e730a20202020202020202f7573722f6c69622f6a6176610a20202020202020202e0a202020206a6176612e72756e74696d652e6e616d65203d204f70656e4a444b2052756e74696d6520456e7669726f6e6d656e740a202020206a6176612e72756e74696d652e76657273696f6e203d2032312e302e31322e312b312d4c54530a202020206a6176612e73706563696669636174696f6e2e6e616d65203d204a61766120506c6174666f726d204150492053706563696669636174696f6e0a202020206a6176612e73706563696669636174696f6e2e76656e646f72203d204f7261636c6520436f72706f726174696f6e0a202020206a6176612e73706563696669636174696f6e2e76657273696f6e203d2032310a202020206a6176612e76656e646f72203d2045636c697073652041646f707469756d0a202020206a6176612e76656e646f722e75726c203d2068747470733a2f2f61646f707469756d2e6e65742f0a202020206a6176612e76656e646f722e75726c2e627567203d2068747470733a2f2f6769746875622e636f6d2f61646f707469756d2f61646f707469756d2d737570706f72742f6973737565730a202020206a6176612e76656e646f722e76657273696f6e203d2054656d7572696e2d32312e302e31322e312b310a202020206a6176612e76657273696f6e203d2032312e302e31322e310a202020206a6176612e76657273696f6e2e64617465203d20323032362d30382d31380a202020206a6176612e766d2e636f6d707265737365644f6f70734d6f6465203d204e6f6e2d7a65726f206469736a6f696e7420626173650a202020206a6176612e766d2e696e666f203d206d69786564206d6f64652c2073686172696e670a202020206a6176612e766d2e6e616d65203d204f70656e4a444b2036342d4269742053657276657220564d0a202020206a6176612e766d2e73706563696669636174696f6e2e6e616d65203d204a617661205669727475616c204d616368696e652053706563696669636174696f6e0a202020206a6176612e766d2e73706563696669636174696f6e2e76656e646f72203d204f7261636c6520436f72706f726174696f6e0a202020206a6176612e766d2e73706563696669636174696f6e2e76657273696f6e203d2032310a202020206a6176612e766d2e76656e646f72203d2045636c697073652041646f707469756d0a202020206a6176612e766d2e76657273696f6e203d2032312e302e31322e312b312d4c54530a202020206a646b2e6465627567203d2072656c656173650a202020206c696e652e736570617261746f72203d205c6e200a202020206e61746976652e656e636f64696e67203d2055532d41534349490a202020206f732e61726368203d20616172636836340a202020206f732e6e616d65203d204d6163204f5320580a202020206f732e76657273696f6e203d2032372e300a20202020706174682e736570617261746f72203d203a0a20202020736f636b734e6f6e50726f7879486f737473203d206c6f63616c7c2a2e6c6f63616c7c3136392e3235342f31367c2a2e3136392e3235342f31360a202020207374646572722e656e636f64696e67203d2055532d41534349490a202020207374646f75742e656e636f64696e67203d2055532d41534349490a2020202073756e2e617263682e646174612e6d6f64656c203d2036340a2020202073756e2e626f6f742e6c6962726172792e70617468203d202f4c6962726172792f4a6176612f4a6176615669727475616c4d616368696e65732f74656d7572696e2d32312e6a646b2f436f6e74656e74732f486f6d652f6c69620a2020202073756e2e6370752e656e6469616e203d206c6974746c650a2020202073756e2e696f2e756e69636f64652e656e636f64696e67203d20556e69636f64654269670a2020202073756e2e6a6176612e6c61756e63686572203d2053554e5f5354414e444152440a2020202073756e2e6a6e752e656e636f64696e67203d205554462d380a2020202073756e2e6d616e6167656d656e742e636f6d70696c6572203d20486f7453706f742036342d4269742054696572656420436f6d70696c6572730a20202020757365722e636f756e747279203d204b520a20202020757365722e646972203d202f55736572732f636f64792e696a2e6877616e672f50726f6a656374732f706b6c2d72730a20202020757365722e686f6d65203d202f55736572732f636f64792e696a2e6877616e670a20202020757365722e6c616e6775616765203d206b6f0a20202020757365722e6e616d65203d20636f64792e696a2e6877616e670a0a6f70656e6a646b2076657273696f6e202232312e302e31322e312220323032362d30382d3138204c54530a4f70656e4a444b2052756e74696d6520456e7669726f6e6d656e742054656d7572696e2d32312e302e31322e312b3120286275696c642032312e302e31322e312b312d4c5453290a4f70656e4a444b2036342d4269742053657276657220564d2054656d7572696e2d32312e302e31322e312b3120286275696c642032312e302e31322e312b312d4c54532c206d69786564206d6f64652c2073686172696e67290a",
+        "version_stdout_hex": ""
+      },
+      "lock_sha256": "7b77395ff5b64f7a220db74975e4c3858a36b19c5c0f5bca92681e3b1bc6504b",
+      "platform": "macOS-27.0-arm64-arm-64bit-Mach-O",
+      "profile": "reference",
+      "release": {
+        "commitId": "e51fb2f",
+        "stdlibModules": "pkl:analyze,pkl:base,pkl:Benchmark,pkl:Command,pkl:DocPackageInfo,pkl:DocsiteInfo,pkl:EvaluatorSettings,pkl:json,pkl:jsonnet,pkl:math,pkl:pklbinary,pkl:platform,pkl:Project,pkl:protobuf,pkl:ref,pkl:reflect,pkl:release,pkl:semver,pkl:settings,pkl:shell,pkl:test,pkl:xml,pkl:yaml",
+        "version": "0.32.0"
+      },
+      "schema": 1,
+      "source": {
+        "metadata_sha256": {
+          "LICENSE.txt": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+          "NOTICE.txt": "d03b8db1a0d36ba65550ba30a51c7897f4b48b0eae7582d3f0576ea41e23d48e",
+          "THIRD-PARTY-NOTICES.txt": "8ac4f6b18b00227f8dbc5222c6259f6cb5084ad0053ebcebf83d5147cea31aaf",
+          "build-logic/src/main/kotlin/BuildInfo.kt": "a082b8aa717d9fb6f15fee6f4c74c62089b5cae1d1666d55cbb0d70318920ba6",
+          "gradle.properties": "1d76fc163cba8cabc502948a7dbc05cf7b7afc4a5e8efe35b3a746a89829be13",
+          "gradle/libs.versions.toml": "f2c818bfff6f30a096bcca18256ea9aae967a21707babae8c2b34a77a225b046",
+          "pkl-tools/pkl-tools.gradle.kts": "c32aca46fa3fb845b205ecdf5b75d037e0b1f4ac6b6cd8cb9d1359667a06aa80"
+        },
+        "path": "external/pkl",
+        "revision": "e51fb2f91774265666f94980ec630db794a4db2d",
+        "url": "https://github.com/apple/pkl.git"
+      },
+      "version": "0.32.0",
+      "version_stderr_hex": "",
+      "version_stdout_hex": "506b6c20302e33322e3020286d61634f532032372e302c204a6176612032312e302e31322e31290a"
+    },
+    "report_sha256": "9726a6b0694ee49ef0f5cc1c51f289d71ef28ff7ee39dfe079a394bf21061806"
+  },
+  "original_archives": {
+    "blocked-ci": {
+      "bytes": 38476,
+      "extracted_without_inventory": true,
+      "inventory_verified": true,
+      "inventory_verified_now": true,
+      "path": "reports/m2/ci-stage14-blocked-evidence.tar.gz",
+      "relocated_directory": "relocated-sealed-evidence/blocked-ci",
+      "sha256": "dcef2033a2b906719acfd952594ca912f8ad020902cb8468a65f36f14daf0194"
+    },
+    "class-lifecycle": {
+      "bytes": 1195548,
+      "extracted_without_inventory": true,
+      "files_including_inventory": 3799,
+      "inventory_verified": true,
+      "inventory_verified_now": true,
+      "path": "reports/m2/class-lifecycle-stage14-final-evidence.tar.gz",
+      "relocated_directory": "relocated-sealed-evidence/class-lifecycle",
+      "sha256": "1db29009ef9548b9022590632c46ead108b840cb7f4b1a7c73b59df9ae44a1a9"
+    },
+    "gates": {
+      "bytes": 958,
+      "extracted_without_inventory": true,
+      "files_including_inventory": 10,
+      "inventory_verified": true,
+      "inventory_verified_now": true,
+      "path": "reports/m2/gates-stage14-final-evidence.tar.gz",
+      "relocated_directory": "relocated-sealed-evidence/gates",
+      "sha256": "9b22ad40e22724b5fdc8f691773f9d8e3bdf14fb051f5c881d144f70d69f947f"
+    },
+    "language": {
+      "bytes": 3656209,
+      "extracted_without_inventory": true,
+      "files_including_inventory": 13361,
+      "inventory_verified": true,
+      "inventory_verified_now": true,
+      "path": "reports/m2/language-stage14-final-evidence.tar.gz",
+      "relocated_directory": "relocated-sealed-evidence/language",
+      "sha256": "d9321f303cf507442922f53823345372d9b50197fa3ef83c7839be26156eb1c8"
+    },
+    "platforms": {
+      "bytes": 3302272,
+      "extracted_without_inventory": true,
+      "files_including_inventory": 102,
+      "inventory_verified": true,
+      "inventory_verified_now": true,
+      "path": "reports/m2/platforms-stage14-final-evidence.tar.gz",
+      "relocated_directory": "relocated-sealed-evidence/platforms",
+      "sha256": "1d0c37fbf9552415eba5cf590b0c04b06c67a224d6fbdcdc370925cb112125ea"
+    },
+    "regressions": {
+      "bytes": 4232675,
+      "extracted_without_inventory": true,
+      "files_including_inventory": 6003,
+      "inventory_verified": true,
+      "inventory_verified_now": true,
+      "path": "reports/m2/regressions-stage14-final-evidence.tar.gz",
+      "relocated_directory": "relocated-sealed-evidence/regressions",
+      "sha256": "9077cd10cb13e4dcb8c322740dcb8de49e1ade553b49d0f747ee5c03a4db42b2"
+    },
+    "source": {
+      "bytes": 2269663,
+      "extracted_without_inventory": true,
+      "files_including_inventory": 2049,
+      "inventory_verified": true,
+      "inventory_verified_now": true,
+      "path": "reports/m2/source-stage14-final-evidence.tar.gz",
+      "relocated_directory": "relocated-sealed-evidence/source",
+      "sha256": "ab637fcf5393ab88f0504a79fd470fef966091c15b22f093c7399f7d817d3d7b"
+    },
+    "validation": {
+      "bytes": 15446,
+      "extracted_without_inventory": true,
+      "files_including_inventory": 16,
+      "inventory_verified": true,
+      "inventory_verified_now": true,
+      "path": "reports/m2/validation-stage14-final-evidence.tar.gz",
+      "relocated_directory": "relocated-sealed-evidence/validation",
+      "sha256": "8aeed3e03ab3e9b6304c4d9ef5b656744c46d81b37919e02a7712e104030b25d"
+    }
+  },
+  "original_archives_unchanged": true,
+  "original_report_commit": "8e47cfd8be3d31c834104417190cd1f1359506b4",
+  "reproduction": "Copy archived audit.py into a fresh target/m2/<new-directory>/audit.py in the original repository workspace, then run it with the unchanged original Stage14 archives available. Do not rerun inside the extracted audit package because it already contains identifier-java output. Captured commands retain the original absolute workspace paths. The helper refuses existing relocated proof directories. The identifier probe requires the pinned existing JDK/JAR; offline report proof executes no captured binaries.",
+  "retained_execution_scope": [
+    "macOS arm64 native workspace",
+    "Wasm compilation",
+    "Node N-API execution",
+    "Chromium Wasm execution"
+  ],
+  "retained_runtimes": {
+    "chromium": "156.0.8078.4",
+    "node": "v26.10.0",
+    "playwright": "1.64.1",
+    "rustc": "rustc 1.98.1 (48a229cea 2026-09-01)\nbinary: rustc\ncommit-hash: 48a229ceaefd4985c50990b14116b6d856af0985\ncommit-date: 2026-09-01\nhost: aarch64-apple-darwin\nrelease: 1.98.1\nLLVM version: 22.1.8\n"
+  },
+  "schema_version": 1,
+  "source_verification": {
+    "exact_git_bytes_verified_now": true,
+    "implementation_commit": "4b27b7ecf2c6133e363ed228606b289e85c2e627",
+    "pinned_submodule_blobs": true,
+    "source_proof_report_sha256": "0ffd2d3c9bc2ac55927f3c70f36c26c6d5b5e6197f3d2370f9ce99c8cbea076f",
+    "source_snapshot_copies": 1961,
+    "unique_source_files": 1677
+  },
+  "status": "pass-local-development-contract",
+  "unavailable_platform_execution": [
+    "Linux",
+    "Windows"
+  ],
+  "unchanged_baseline": {
+    "changed_paths": [],
+    "command": [
+      "git",
+      "diff",
+      "--name-only",
+      "f90d7b09124bb5a7d73dd5b2bfcddf2a90d2761f",
+      "4b27b7ecf2c6133e363ed228606b289e85c2e627",
+      "--",
+      ".github/workflows/ci.yml",
+      "references.lock",
+      "oracle.lock.json",
+      "external/pkl",
+      "external/pkl-pantry",
+      "tools/inventory.py",
+      "tools/discover.py",
+      "tools/smoke_manifest.py",
+      "tools/regression_manifest.py",
+      "tools/benchmark.py",
+      "tools/oracle.py",
+      "tools/compat.py",
+      "tools/m1_frontend.py",
+      "tools/m1_semantics.py",
+      "tools/m1_host.py",
+      "tools/m1_graal.py",
+      "tools/java",
+      "compatibility/inventory.json",
+      "compatibility/corpus.json",
+      "compatibility/rev1-inventory.json",
+      "compatibility/smoke.json",
+      "compatibility/regressions.json",
+      "tests/fixtures/m0",
+      "tests/fixtures/rev1",
+      "tests/fixtures/m1",
+      "benchmarks"
+    ],
+    "compared_paths": [
+      ".github/workflows/ci.yml",
+      "references.lock",
+      "oracle.lock.json",
+      "external/pkl",
+      "external/pkl-pantry",
+      "tools/inventory.py",
+      "tools/discover.py",
+      "tools/smoke_manifest.py",
+      "tools/regression_manifest.py",
+      "tools/benchmark.py",
+      "tools/oracle.py",
+      "tools/compat.py",
+      "tools/m1_frontend.py",
+      "tools/m1_semantics.py",
+      "tools/m1_host.py",
+      "tools/m1_graal.py",
+      "tools/java",
+      "compatibility/inventory.json",
+      "compatibility/corpus.json",
+      "compatibility/rev1-inventory.json",
+      "compatibility/smoke.json",
+      "compatibility/regressions.json",
+      "tests/fixtures/m0",
+      "tests/fixtures/rev1",
+      "tests/fixtures/m1",
+      "benchmarks"
+    ],
+    "current_commit": "4b27b7ecf2c6133e363ed228606b289e85c2e627",
+    "exit_code": 0,
+    "prior_commit": "f90d7b09124bb5a7d73dd5b2bfcddf2a90d2761f",
+    "scope": "Inherited baseline inventory/oracle-only checks retain prior evidence; no new Stage14 execution or Linux/Windows result is claimed."
+  },
+  "workflow_check_map": [
+    {
+      "checks": [
+        "cargo xtask verify",
+        "cargo fmt --all -- --check",
+        "cargo clippy --workspace --all-targets --locked -- -D warnings",
+        "cargo test --workspace --locked",
+        "cargo check -p pkl-runtime --target wasm32-unknown-unknown --locked"
+      ],
+      "evidence": "validation-stage14-final-evidence.tar.gz",
+      "job": "workspace",
+      "raw_counts": {
+        "rust_ignored": 1,
+        "rust_passed": 303
+      },
+      "status": "retained-local-macos-pass",
+      "unavailable": [
+        "Linux",
+        "Windows"
+      ]
+    },
+    {
+      "checks": [
+        "inventory.py --check",
+        "discover.py --check",
+        "smoke_manifest.py --check",
+        "regression_manifest.py --check",
+        "benchmark.py --check-contract"
+      ],
+      "evidence": "unchanged-baseline.json and reports/m2/ci-stage13-summary.json",
+      "job": "compatibility-tooling",
+      "status": "unchanged-baseline-inherited"
+    },
+    {
+      "checks": [
+        "python3 -m unittest discover -s tools/tests -v"
+      ],
+      "evidence": "validation-stage14-final-evidence.tar.gz",
+      "job": "compatibility-tooling",
+      "python_passed": 194,
+      "status": "retained-local-macos-pass"
+    },
+    {
+      "checks": [
+        "oracle.py fetch",
+        "oracle.py smoke",
+        "compat.py record/check/compare smoke",
+        "compat.py record/check selected historical regressions"
+      ],
+      "evidence": "unchanged-baseline.json, identifier-java/report.json, reports/m2/ci-stage13-summary.json",
+      "fresh_check": "Pinned artifact, JDK and clean reference source identities reverified for the identifier probe; no network fetch needed.",
+      "job": "compatibility-tooling",
+      "status": "unchanged-oracle-only-baseline-inherited"
+    },
+    {
+      "checks": [
+        "m1_frontend.py --check-contract",
+        "m1_semantics.py --check",
+        "test_m1_*.py"
+      ],
+      "evidence": "Full Python tests retained; frozen frontend contract and generated semantic cases rechecked against raw evidence.",
+      "job": "m1-experiments",
+      "status": "retained-plus-offline-contract-pass"
+    },
+    {
+      "checks": [
+        "m1_graal.py --check-report retained evidence",
+        "m1_host.py Java Host observations"
+      ],
+      "evidence": "unchanged-baseline.json and reports/m2/ci-stage13-summary.json",
+      "job": "m1-experiments",
+      "scope": "Graal and Java-only Host acquisition are unaffected by Stage14 Rust changes. Current Rust Host behavior is separately exercised by retained lifecycle and platform scenarios.",
+      "status": "unchanged-java-only-baseline-inherited"
+    },
+    {
+      "checks": [
+        "m1_frontend.py",
+        "m1_runtime.py",
+        "m1_lifecycle.py",
+        "m1_platforms.py --verify-contract"
+      ],
+      "evidence": [
+        "regressions-stage14-final-evidence.tar.gz",
+        "platforms-stage14-final-evidence.tar.gz",
+        "offline-verification.json"
+      ],
+      "job": "m1-experiments",
+      "status": "retained-plus-relocated-offline-pass-with-known-failures"
+    },
+    {
+      "checks": [
+        "m2_manifest.py --check",
+        "test_m2_*.py"
+      ],
+      "evidence": "validation-stage14-final-evidence.tar.gz and frozen m2_language.check_report",
+      "job": "m2-language",
+      "status": "retained-plus-frozen-inventory-pass"
+    },
+    {
+      "checks": [
+        "m2_language.py --record-only",
+        "m2_language.py --verify-development",
+        "m2_class_lifecycle.py --record-only",
+        "m2_class_lifecycle.py --verify-contract"
+      ],
+      "evidence": [
+        "language-stage14-final-evidence.tar.gz",
+        "class-lifecycle-stage14-final-evidence.tar.gz",
+        "offline-verification.json"
+      ],
+      "job": "m2-language",
+      "status": "retained-plus-relocated-offline-development-pass"
+    },
+    {
+      "checks": [
+        "m2_identifier_tables.py --output <fresh>"
+      ],
+      "evidence": "identifier-java/report.json",
+      "job": "m2-language",
+      "scope": "Full predicate interval transport regenerated by pinned Java and exact generated Rust bytes checked against implementation commit.",
+      "status": "new-local-pinned-java-pass"
+    },
+    {
+      "checks": [
+        "M0 full discovered corpus",
+        "m2_language.py --verify-full"
+      ],
+      "job": "manual-full-gates",
+      "scope": "No fresh full-corpus run. Frozen M2 full gate remains failed with 1950 reasons; selected subset retains two known nonpasses.",
+      "status": "incomplete"
+    },
+    {
+      "checks": [
+        "GitHub runner setup",
+        "actions/upload-artifact",
+        "hosted artifact ZIP verification"
+      ],
+      "job": "hosted-setup-and-upload",
+      "scope": "All six Stage14 GitHub jobs failed before runner startup because of billing. Original blocked CI evidence is preserved; local tar inventories and relocatable raw verification provide local evidence only.",
+      "status": "unavailable-not-applicable-to-local-artifacts"
+    }
+  ]
+}

@@ -14,7 +14,8 @@ References through `pkl:ref`, evaluator-owned class and type-alias identity,
 function type metadata and arity checks, ordered type resolution and generic
 parameter scopes, and structured source diagnostics with optional power assertions
 and standard-library frames. The [latest checkpoint](reports/m2/README.md)
-separates completed local comparisons from outstanding remote verification.
+records the accepted local verification scope, known failures, and unexecuted
+environments.
 The [M2 verification contract](docs/m2-language.md)
 keeps the complete language inventory separate from selected executable probes.
 Complete modifier and type semantics, remaining collection and Reference rules,

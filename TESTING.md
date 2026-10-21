@@ -2,6 +2,23 @@
 
 The goals are behavioral and byte compatibility with the Java implementation of Pkl 0.32.0, with execution time and memory usage at least as good as Java for every required workload. Source verification, inventories, a pinned Java oracle, and raw comparison tooling are available. M1 adds bounded Rust/Java architecture comparisons and actual browser/Node execution; complete language and product performance gates remain open.
 
+## Execution environment
+
+Development checkpoints may be verified locally. GitHub Actions automates the
+checks and adds independent operating-system coverage; its availability is not a
+prerequisite for continuing implementation or accepting a bounded checkpoint.
+When local evidence is used, record the host, pinned toolchain and oracle, exact
+implementation sources, build artifacts, commands, complete raw outcomes, and
+unexecuted environments. Reuse unchanged verified evidence and run the checks
+needed for changed behavior or unresolved concerns.
+
+Local macOS execution does not establish Linux or Windows execution. Wasm
+compilation remains separate from real browser execution. Hosted artifact-download
+checks are applicable only when hosted artifacts exist; locally sealed evidence
+must instead have its own integrity and source provenance checks. Preserve prior
+CI failures as historical records. This execution choice changes neither raw byte
+comparison requirements nor the full language, platform, or performance gates.
+
 ## Current Checks
 
 ```sh

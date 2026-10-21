@@ -73,6 +73,25 @@ push and pull-request runs use the explicitly limited smoke/regression scope; a 
 smoke run cannot establish full-corpus completion. The separate Pantry investigation
 and host-sensitive performance runs are documented local commands, not CI jobs.
 
+## Local checkpoint acceptance
+
+Hosted CI is an automation and additional environment check, not a required
+transport for development evidence. A checkpoint can close with recorded local
+verification of its applicable development contract. Identify the exact commit,
+source/build identities, oracle settings, commands, host and runtime versions,
+raw results, known failures, and unexecuted platform coverage. Audit sealed local
+archives independently when accepting retained results. Do not repeat unchanged
+full acquisitions merely to imitate a hosted workflow.
+
+If CI never starts or produces no artifact, retain that failure and mark remote
+checks unexecuted. GitHub ZIP download/digest checks cannot apply to a nonexistent
+artifact; do not manufacture a local ZIP and call it CI evidence. Local archive
+integrity and exact-commit source checks provide their own provenance. Missing
+Linux or Windows execution remains a platform gap and does not block unrelated
+M2 development; all required target environments still need execution before a
+release claim. The existing workflow remains available without making its billing
+or service availability a development checkpoint gate.
+
 ## Reproduction
 
 Initialize the pinned submodules as described in [README.md](../README.md). Run the
