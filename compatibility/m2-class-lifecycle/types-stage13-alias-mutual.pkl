@@ -1,0 +1,4 @@
+typealias A = B
+typealias B = A
+aeq = A == A
+beq = B == B

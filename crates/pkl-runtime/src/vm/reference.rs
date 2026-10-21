@@ -23,6 +23,16 @@ pub struct NativeFunction {
 
 pub(crate) fn base_type(name: &str) -> Option<TypeCheck> {
     Some(match name {
+        "Class" | "TypeAlias" => TypeCheck::MetaClass(Arc::from(name)),
+        "Function" | "Function0" | "Function1" | "Function2" | "Function3" | "Function4"
+        | "Function5" => TypeCheck::Function {
+            parameters: name
+                .strip_prefix("Function")
+                .and_then(|n| n.parse::<usize>().ok())
+                .map(|n| vec![TypeCheck::Unknown; n]),
+            result: Box::new(TypeCheck::Unknown),
+            syntax: false,
+        },
         "Any" => TypeCheck::Any,
         "Null" => TypeCheck::Null,
         "Boolean" => TypeCheck::Boolean,
@@ -42,6 +52,40 @@ pub(crate) fn base_type(name: &str) -> Option<TypeCheck> {
 pub(crate) fn type_name(ty: &TypeCheck, module: &str) -> String {
     match ty {
         TypeCheck::Unknown => "unknown".into(),
+        TypeCheck::NamedAlias {
+            name, arguments, ..
+        } => {
+            if arguments.is_empty() {
+                format!("{module}#{name}")
+            } else {
+                format!(
+                    "{module}#{name}<{}>",
+                    arguments
+                        .iter()
+                        .map(|ty| type_name(ty, module))
+                        .collect::<Vec<_>>()
+                        .join(", ")
+                )
+            }
+        }
+        TypeCheck::Function {
+            parameters,
+            result,
+            syntax,
+        } => {
+            let args = parameters
+                .iter()
+                .flatten()
+                .map(|ty| type_name(ty, module))
+                .collect::<Vec<_>>();
+            if *syntax {
+                format!("({}) -> {}", args.join(", "), type_name(result, module))
+            } else {
+                let mut args = args;
+                args.push(type_name(result, module));
+                format!("{}<{}>", super::type_name(ty, module), args.join(", "))
+            }
+        }
         TypeCheck::RefDomain => "pkl.ref#Domain".into(),
         TypeCheck::Reference { domain, referent } => format!(
             "pkl.ref#Reference<{}, {}>",
@@ -77,7 +121,10 @@ pub(crate) fn type_name(ty: &TypeCheck, module: &str) -> String {
 pub(crate) fn normalize(ty: &TypeCheck, module: &str) -> TypeCheck {
     match ty {
         TypeCheck::NonNull => TypeCheck::Any,
-        TypeCheck::Alias(inner)
+        TypeCheck::NamedAlias {
+            expanded: inner, ..
+        }
+        | TypeCheck::Alias(inner)
         | TypeCheck::GenericAlias(inner)
         | TypeCheck::Constrained { base: inner, .. } => normalize(inner, module),
         TypeCheck::Nullable(inner) => {
@@ -109,6 +156,17 @@ pub(crate) fn normalize(ty: &TypeCheck, module: &str) -> TypeCheck {
                     .collect(),
             }
         }
+        TypeCheck::Function {
+            parameters,
+            result,
+            syntax: false,
+        } => TypeCheck::Function {
+            parameters: parameters
+                .as_ref()
+                .map(|p| p.iter().map(|t| normalize(t, module)).collect()),
+            result: Box::new(normalize(result, module)),
+            syntax: false,
+        },
         TypeCheck::Reference { domain, referent } => TypeCheck::Reference {
             domain: Box::new(normalize(domain, module)),
             referent: Box::new(normalize(referent, module)),
@@ -136,7 +194,7 @@ fn union(types: Vec<TypeCheck>, module: &str) -> TypeCheck {
             .encode_utf16()
             .cmp(type_name(b, module).encode_utf16())
     });
-    result.dedup_by(|a, b| a.equivalent(b));
+    result.dedup_by(|a, b| metadata_key(a) == metadata_key(b));
     if result.len() == 1 {
         return result.remove(0);
     }
@@ -145,6 +203,61 @@ fn union(types: Vec<TypeCheck>, module: &str) -> TypeCheck {
         spans: Vec::new(),
         labels: Vec::new(),
         default: None,
+    }
+}
+
+/// Equality/hash identity of exported PType metadata, separate from checking
+/// equivalence. Arrow types retain nested aliases and exact constraint source.
+pub(crate) fn metadata_key(ty: &TypeCheck) -> String {
+    match ty {
+        TypeCheck::NamedAlias {
+            declaration,
+            arguments,
+            ..
+        } => format!(
+            "alias:{declaration}:{:?}",
+            arguments.iter().map(metadata_key).collect::<Vec<_>>()
+        ),
+        TypeCheck::Alias(inner) | TypeCheck::GenericAlias(inner) => metadata_key(inner),
+        TypeCheck::Function {
+            parameters,
+            result,
+            syntax,
+        } => format!(
+            "function:{syntax}:{:?}:{}",
+            parameters
+                .as_ref()
+                .map(|p| p.iter().map(metadata_key).collect::<Vec<_>>()),
+            metadata_key(result)
+        ),
+        TypeCheck::Constrained {
+            base, constraints, ..
+        } => format!(
+            "constraint:{}:{:?}",
+            metadata_key(base),
+            constraints
+                .iter()
+                .map(|c| c.source.as_ref())
+                .collect::<Vec<_>>()
+        ),
+        TypeCheck::Nullable(inner) => format!("nullable:{}", metadata_key(inner)),
+        TypeCheck::Union { types, .. } => format!(
+            "union:{:?}",
+            types.iter().map(metadata_key).collect::<Vec<_>>()
+        ),
+        TypeCheck::ParameterizedCollection { kind, arguments } => format!(
+            "collection:{kind:?}:{:?}",
+            arguments
+                .iter()
+                .map(|(ty, _)| metadata_key(ty))
+                .collect::<Vec<_>>()
+        ),
+        TypeCheck::Reference { domain, referent } => format!(
+            "reference:{}:{}",
+            metadata_key(domain),
+            metadata_key(referent)
+        ),
+        other => format!("{other:?}"),
     }
 }
 
@@ -157,8 +270,34 @@ pub(crate) fn is_subtype(a: &TypeCheck, b: &TypeCheck, heap: &Heap) -> bool {
     }
     subtype(a, b, heap)
 }
+fn contains_function_syntax(ty: &TypeCheck) -> bool {
+    match ty {
+        TypeCheck::Function { syntax: true, .. } => true,
+        TypeCheck::Function {
+            parameters, result, ..
+        } => {
+            parameters.iter().flatten().any(contains_function_syntax)
+                || contains_function_syntax(result)
+        }
+        TypeCheck::ParameterizedCollection { arguments, .. } => {
+            arguments.iter().any(|(ty, _)| contains_function_syntax(ty))
+        }
+        TypeCheck::Reference { domain, referent } => {
+            contains_function_syntax(domain) || contains_function_syntax(referent)
+        }
+        TypeCheck::Union { types, .. } => types.iter().any(contains_function_syntax),
+        _ => false,
+    }
+}
+
 fn subtype(a: &TypeCheck, b: &TypeCheck, heap: &Heap) -> bool {
-    if a.equivalent(b) {
+    // VmReference does not structurally compare exported function syntax types.
+    if matches!(a, TypeCheck::Function { syntax: true, .. })
+        || matches!(b, TypeCheck::Function { syntax: true, .. })
+    {
+        return false;
+    }
+    if a.equivalent(b) && !contains_function_syntax(a) && !contains_function_syntax(b) {
         return true;
     }
     match (a, b) {
@@ -211,6 +350,28 @@ fn subtype(a: &TypeCheck, b: &TypeCheck, heap: &Heap) -> bool {
                 referent: bt,
             },
         ) => subtype(ad, bd, heap) && subtype(at, bt, heap),
+        (
+            TypeCheck::Function {
+                parameters: a,
+                result: ar,
+                syntax: false,
+            },
+            TypeCheck::Function {
+                parameters: b,
+                result: br,
+                syntax: false,
+            },
+        ) => {
+            subtype(ar, br, heap)
+                && match (a, b) {
+                    (None, None) => true,
+                    (Some(a), None) => a.is_empty(),
+                    (Some(a), Some(b)) => {
+                        a.len() == b.len() && a.iter().zip(b).all(|(a, b)| subtype(b, a, heap))
+                    }
+                    _ => false,
+                }
+        }
         (TypeCheck::StringLiteral(_), TypeCheck::String) => true,
         (TypeCheck::Int | TypeCheck::Float, TypeCheck::Number) => true,
         (TypeCheck::Class { id, .. }, TypeCheck::Class { id: other, .. }) => {
@@ -270,6 +431,11 @@ impl Vm {
             _ => (
                 usize::MAX
                     - match ty {
+                        TypeCheck::MetaClass(ref name) if name.as_ref() == "Class" => 23,
+                        TypeCheck::MetaClass(_) => 24,
+                        TypeCheck::Function { ref parameters, .. } => {
+                            30 + parameters.as_ref().map_or(0, |p| p.len() + 1)
+                        }
                         TypeCheck::Any => 10,
                         TypeCheck::NonNull => 11,
                         TypeCheck::Null => 12,
@@ -394,8 +560,18 @@ impl Vm {
             return Ok(());
         }
         if native.name.as_ref() == "scalarToString" {
-            self.stack
-                .push(Value::string(scalar_string(&native.receiver)?));
+            let text = match &native.receiver {
+                Value::TypeAlias(_) | Value::Class(_) | Value::Function(_) => {
+                    crate::diagnostic_values::render(
+                        &native.receiver,
+                        &self.heap,
+                        &self.program.module_name,
+                        usize::MAX,
+                    )?
+                }
+                value => scalar_string(value)?,
+            };
+            self.stack.push(Value::string(text));
             return Ok(());
         }
         let value = if native.name.as_ref() == "Reference" {
@@ -485,6 +661,27 @@ impl Vm {
             Value::Float(_) => TypeCheck::Float,
             Value::String(_) => TypeCheck::String,
             Value::Bytes(_) => TypeCheck::Bytes,
+            Value::TypeAlias(_) => TypeCheck::MetaClass(Arc::from("TypeAlias")),
+            Value::Class(_) => TypeCheck::MetaClass(Arc::from("Class")),
+            Value::Function(id) => {
+                let object = self.heap.get(*id)?;
+                let arity = object
+                    .function
+                    .as_ref()
+                    .map(|f| f.arity)
+                    .or_else(|| {
+                        object
+                            .native_function
+                            .as_ref()
+                            .map(|f| if f.name.as_ref() == "Reference" { 3 } else { 0 })
+                    })
+                    .ok_or_else(|| invalid("function metadata missing"))?;
+                TypeCheck::Function {
+                    parameters: Some(vec![TypeCheck::Unknown; arity]),
+                    result: Box::new(TypeCheck::Unknown),
+                    syntax: false,
+                }
+            }
             Value::Object(id) => {
                 let object = self.heap.get(*id)?;
                 if object.reference.is_some() {
@@ -523,12 +720,6 @@ impl Vm {
                 } else {
                     TypeCheck::Collection(object.collection_kind)
                 }
-            }
-            _ => {
-                return Err(RuntimeError::new(
-                    ErrorKind::Unsupported,
-                    "getClass for class and function values is not implemented",
-                ));
             }
         };
         Ok(self.builtin_class(ty))
@@ -915,6 +1106,7 @@ pub(super) fn access_members(
             block: constraint,
             span: predicate_span,
             module_environment: false,
+            source: Arc::from("key == null"),
         }],
     }));
     let mut members = Vec::new();

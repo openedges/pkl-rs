@@ -1,0 +1,2 @@
+p: (Int) -> String = (x) -> 3
+result = p.apply(1)

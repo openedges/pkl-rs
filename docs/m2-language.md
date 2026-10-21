@@ -133,6 +133,8 @@ the same engine in native Rust, browser Wasm, and Node N-API.
 ## Persistent class initialization sequences
 
 Independent expression processes cannot verify state retained after an error.
+The same contract also covers type-alias publication and function metadata;
+the historical tool and directory names remain stable.
 The separate [sequence manifest](../compatibility/m2-class-lifecycle/manifest.json)
 declares ordered property-path calls within one evaluator and module. Each
 sequence starts with a fresh evaluator and repeats in a second fresh evaluator;
@@ -162,10 +164,17 @@ The shared `evaluateLanguageSequence` development binding returns ordered
 `value\t...` or `error\t...` strings in Node and Wasm, preserving complete value
 and diagnostic payloads. Native acquisition uses the same runtime boundary.
 Rust collects between calls while retaining the module root. Dedicated native
-tests separately verify evaluator-owned class roots, disposable object
+tests separately verify evaluator-owned class and alias roots, disposable object
 reclamation, isolated heaps, ordinary failed-property retries, and terminal
 cleanup. Internal bytecode suspension tests establish scheduler behavior;
 they do not establish that the same suspension path is available in Pkl source.
+
+Alias sequences cover value identity, generic metadata, failed definition reuse,
+and later type uses in properties, deferred annotations, constructors, and
+superclasses. They preserve the original class sequence definitions and raw
+call outcomes. Their counts remain separate from independent expressions and
+native GC/Host tests. A complete runtime type-resolution model, mixed missing-name
+error ordering, annotations, and module caching remain open requirements.
 
 The collection-type selection compares lazy and eager checking, wrapper
 composition, aliases, defaults, constraint identity, cache reuse, and complete

@@ -1,0 +1,6 @@
+module stage13.reference
+import "pkl:ref"
+class D extends ref.Domain { function renderReference(r): String = "ok" }
+local d = new D {}
+typealias A = String
+result = ref.Reference(d,A,null)

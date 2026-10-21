@@ -25992,6 +25992,1682 @@
       ]
     },
     {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage13-alias-value",
+      "input": "tests/fixtures/m2/types-stage13-alias-value.pkl",
+      "input_sha256": "553c28153e685723248157e7671f0718dd73aae77bed5d595e67cef041625382",
+      "required": true,
+      "requirements": [
+        "semantic:type-aliases",
+        "semantic:types"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage13-alias-self-equal",
+      "input": "tests/fixtures/m2/types-stage13-alias-self-equal.pkl",
+      "input_sha256": "c265b4a5ee6fe6bcb21ccf0857e65adcd29b23f6e4f2cb2370953120bdcb1177",
+      "required": true,
+      "requirements": [
+        "semantic:type-aliases",
+        "semantic:types"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage13-alias-distinct-equal",
+      "input": "tests/fixtures/m2/types-stage13-alias-distinct-equal.pkl",
+      "input_sha256": "0dd5ec120f6765b1704e78e01d4f0828d47bf36220c60a3071f0abd01a79e917",
+      "required": true,
+      "requirements": [
+        "semantic:type-aliases",
+        "semantic:types"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage13-alias-class",
+      "input": "tests/fixtures/m2/types-stage13-alias-class.pkl",
+      "input_sha256": "2ecfc4f8f7aec260cdcea99e8980b1a3438210cddabd1f92902526d4cedfeb8f",
+      "required": true,
+      "requirements": [
+        "semantic:type-aliases",
+        "semantic:types"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage13-alias-string",
+      "input": "tests/fixtures/m2/types-stage13-alias-string.pkl",
+      "input_sha256": "82335b0c9b65b08dc9495b59f6a75ce44eb6e80e9972eeba3866d036e30c1c96",
+      "required": true,
+      "requirements": [
+        "semantic:type-aliases",
+        "semantic:types"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage13-alias-unknown-unused",
+      "input": "tests/fixtures/m2/types-stage13-alias-unknown-unused.pkl",
+      "input_sha256": "95c63f0a5b1397fbd22460cc8c16132c4db61cf2460765ae87fdce8318513abb",
+      "required": true,
+      "requirements": [
+        "semantic:type-aliases",
+        "semantic:types"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage13-alias-unknown-value",
+      "input": "tests/fixtures/m2/types-stage13-alias-unknown-value.pkl",
+      "input_sha256": "67782ce80a74de861942778eb0d5bb731012866e259636f1eb668a939b3a6a5c",
+      "required": true,
+      "requirements": [
+        "semantic:type-aliases",
+        "semantic:diagnostics",
+        "semantic:types"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage13-alias-direct-cycle",
+      "input": "tests/fixtures/m2/types-stage13-alias-direct-cycle.pkl",
+      "input_sha256": "1dd46bb7496cb437e78f55deec9372fea15c9f5b8e2957126b802eab9d0d65cf",
+      "required": true,
+      "requirements": [
+        "semantic:type-aliases",
+        "semantic:diagnostics",
+        "semantic:types"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage13-alias-mutual-cycle",
+      "input": "tests/fixtures/m2/types-stage13-alias-mutual-cycle.pkl",
+      "input_sha256": "edc74f567b8e26b0303a76a47ecdfc74fd2edf325ee57e13c1dc02e3b9e1e0b0",
+      "required": true,
+      "requirements": [
+        "semantic:type-aliases",
+        "semantic:diagnostics",
+        "semantic:types"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage13-alias-recursive-nullable",
+      "input": "tests/fixtures/m2/types-stage13-alias-recursive-nullable.pkl",
+      "input_sha256": "4d6f5a1890f4c9990b4be2fcd7e539adc47ca89c30580b002407912c109ebcb7",
+      "required": true,
+      "requirements": [
+        "semantic:type-aliases",
+        "semantic:diagnostics",
+        "semantic:types"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage13-alias-recursive-list",
+      "input": "tests/fixtures/m2/types-stage13-alias-recursive-list.pkl",
+      "input_sha256": "4dea232df16a44fb29a4218bd7953c0420cfc12958b358f3e1eb897eeadfd241",
+      "required": true,
+      "requirements": [
+        "semantic:type-aliases",
+        "semantic:diagnostics",
+        "semantic:types"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage13-alias-constrained-no-force",
+      "input": "tests/fixtures/m2/types-stage13-alias-constrained-no-force.pkl",
+      "input_sha256": "d55890daabcd488afa116a85a8115bd4584e0fd2d6a99f7821fa733911a49d31",
+      "required": true,
+      "requirements": [
+        "semantic:type-aliases",
+        "semantic:types"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage13-alias-generic-value",
+      "input": "tests/fixtures/m2/types-stage13-alias-generic-value.pkl",
+      "input_sha256": "3fd720222676caef0b7df6338fe2cc6d4c3f00201bea5731f62b79fce75fd24c",
+      "required": true,
+      "requirements": [
+        "semantic:type-aliases",
+        "semantic:generics",
+        "semantic:types"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage13-alias-generic-omitted",
+      "input": "tests/fixtures/m2/types-stage13-alias-generic-omitted.pkl",
+      "input_sha256": "e2e1d4e99a9194bf9f2c5097d3addfb96dc7808c4ba0080bd1e76b97d511a615",
+      "required": true,
+      "requirements": [
+        "semantic:type-aliases",
+        "semantic:generics",
+        "semantic:types"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage13-alias-generic-bad-arity",
+      "input": "tests/fixtures/m2/types-stage13-alias-generic-bad-arity.pkl",
+      "input_sha256": "e99c14b189694669f77ab01720790694c1bf199303c82fc2da850c826fafeb51",
+      "required": true,
+      "requirements": [
+        "semantic:type-aliases",
+        "semantic:generics",
+        "semantic:diagnostics",
+        "semantic:types"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage13-alias-generic-mismatch",
+      "input": "tests/fixtures/m2/types-stage13-alias-generic-mismatch.pkl",
+      "input_sha256": "2ee539910d38798c74d5e7c6a76c979bfe7f956766418fd6323b78e443199164",
+      "required": true,
+      "requirements": [
+        "semantic:type-aliases",
+        "semantic:generics",
+        "semantic:diagnostics",
+        "semantic:types"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage13-alias-mismatch",
+      "input": "tests/fixtures/m2/types-stage13-alias-mismatch.pkl",
+      "input_sha256": "40f961712d1566c44650f6ad2fb98b4190d7ea6fa1eb8e8d72d1047ff7ab6b3b",
+      "required": true,
+      "requirements": [
+        "semantic:type-aliases",
+        "semantic:diagnostics",
+        "semantic:types"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage13-alias-nested-mismatch",
+      "input": "tests/fixtures/m2/types-stage13-alias-nested-mismatch.pkl",
+      "input_sha256": "edf5fd19c07336b5df5c33ba711bf2058e12916ce7a9c15ef405c0b752f1ac84",
+      "required": true,
+      "requirements": [
+        "semantic:type-aliases",
+        "semantic:diagnostics",
+        "semantic:types"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage13-alias-constraint-mismatch",
+      "input": "tests/fixtures/m2/types-stage13-alias-constraint-mismatch.pkl",
+      "input_sha256": "fd8e59a4a7550d1245cf8c0d56e5d0dae4db2ba9601c50da9ac687a061673d60",
+      "required": true,
+      "requirements": [
+        "semantic:type-aliases",
+        "semantic:diagnostics",
+        "semantic:types"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage13-alias-union-mismatch",
+      "input": "tests/fixtures/m2/types-stage13-alias-union-mismatch.pkl",
+      "input_sha256": "f21a41f6de4668a01b23de25a569a7aafdbe2d8e38cf781b65face4e776339d3",
+      "required": true,
+      "requirements": [
+        "semantic:type-aliases",
+        "semantic:diagnostics",
+        "semantic:types"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage13-reference-root-alias",
+      "input": "tests/fixtures/m2/types-stage13-reference-root-alias.pkl",
+      "input_sha256": "e949e604ff1a9af8297b6109d4e67c81c470b24f7c23ffa0004b9ceea38c2e28",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:type-aliases",
+        "semantic:reflection-metadata",
+        "semantic:diagnostics",
+        "semantic:types"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage13-reference-root-generic-alias",
+      "input": "tests/fixtures/m2/types-stage13-reference-root-generic-alias.pkl",
+      "input_sha256": "e151276da5ea2545977d0a738a92ccbdf1aaa9b1e861ed85f5cb8a818334804d",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:type-aliases",
+        "semantic:generics",
+        "semantic:reflection-metadata",
+        "semantic:diagnostics",
+        "semantic:types"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage13-reference-property-alias",
+      "input": "tests/fixtures/m2/types-stage13-reference-property-alias.pkl",
+      "input_sha256": "7c7894fabb503f197c9a33a762d4a9e1be0af9932df5f87f300dc78e5bc7874c",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:type-aliases",
+        "semantic:reflection-metadata",
+        "semantic:types"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage13-reference-function-equal",
+      "input": "tests/fixtures/m2/types-stage13-reference-function-equal.pkl",
+      "input_sha256": "1617e94245100410d3da6f61008040522ed6e500698c85f8c290768e90f9ee68",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:functions",
+        "semantic:types"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage13-reference-function-parameter-different",
+      "input": "tests/fixtures/m2/types-stage13-reference-function-parameter-different.pkl",
+      "input_sha256": "076b920ce0239ac7d8f70ed1a22933e31da49787efa18222be82778277dc8b98",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:functions",
+        "semantic:types"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage13-reference-function-result-different",
+      "input": "tests/fixtures/m2/types-stage13-reference-function-result-different.pkl",
+      "input_sha256": "3b4a937b33068fdfece50477a3ab67a98b3731e84aa6786c12be647db8a5eaaf",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:functions",
+        "semantic:types"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage13-reference-function-arity-different",
+      "input": "tests/fixtures/m2/types-stage13-reference-function-arity-different.pkl",
+      "input_sha256": "30ca7348725387a27b6666f70b440da40c2a2e9b74e2ec5e9a713f1d5fe3e2b8",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:functions",
+        "semantic:types"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage13-reference-function-alias-equivalent",
+      "input": "tests/fixtures/m2/types-stage13-reference-function-alias-equivalent.pkl",
+      "input_sha256": "77a46235a854c959ba8cd433f842745452666c66a9da4c5f475a34a6f5e4a49f",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:type-aliases",
+        "semantic:reflection-metadata",
+        "semantic:functions",
+        "semantic:types"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage13-reference-function-alias-diagnostic",
+      "input": "tests/fixtures/m2/types-stage13-reference-function-alias-diagnostic.pkl",
+      "input_sha256": "d6835f2882bc88753cfeb23dcbfae82437fd590a199beff932ae468d189375d8",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:type-aliases",
+        "semantic:reflection-metadata",
+        "semantic:functions",
+        "semantic:diagnostics",
+        "semantic:types"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage13-reference-function-variance",
+      "input": "tests/fixtures/m2/types-stage13-reference-function-variance.pkl",
+      "input_sha256": "14e95c906cbbba69de9534ec098af89f1e9efbf66a43cb6d1d55320df1ed2709",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:functions",
+        "semantic:types"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage13-function-accept-result-erased",
+      "input": "tests/fixtures/m2/types-stage13-function-accept-result-erased.pkl",
+      "input_sha256": "4b56d67ba4953ed9cf41d1525fe9fce133d0904ca5fd0415fbb5f21186a0551e",
+      "required": true,
+      "requirements": [
+        "semantic:functions",
+        "semantic:types"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage13-function-accept-arg-erased",
+      "input": "tests/fixtures/m2/types-stage13-function-accept-arg-erased.pkl",
+      "input_sha256": "4411bafd54b0fbc5db812f40701a5294b8bb18be4cc8542d93b53c05727582fc",
+      "required": true,
+      "requirements": [
+        "semantic:functions",
+        "semantic:types"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage13-function-arity-zero",
+      "input": "tests/fixtures/m2/types-stage13-function-arity-zero.pkl",
+      "input_sha256": "ff852cc535516a7761c665df6a1191fc20f6ff671f3b5d8ac5c812c4c6c238e2",
+      "required": true,
+      "requirements": [
+        "semantic:functions",
+        "semantic:diagnostics",
+        "semantic:types"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage13-function-arity-two",
+      "input": "tests/fixtures/m2/types-stage13-function-arity-two.pkl",
+      "input_sha256": "429d20dcafca70f0807ef130cde4293b233e97953194082835be31e1c7122dcc",
+      "required": true,
+      "requirements": [
+        "semantic:functions",
+        "semantic:diagnostics",
+        "semantic:types"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage13-function-is-result-erased",
+      "input": "tests/fixtures/m2/types-stage13-function-is-result-erased.pkl",
+      "input_sha256": "79ad28e7f6626f50e3eb1effb9fd121a17ac71d01c34685f439f813636b9d7d8",
+      "required": true,
+      "requirements": [
+        "semantic:functions",
+        "semantic:types"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage13-function-is-arity-false",
+      "input": "tests/fixtures/m2/types-stage13-function-is-arity-false.pkl",
+      "input_sha256": "93564785968bc261102cfd8fa6dafa008e94dc7315a7fc997f86ceefdea908f9",
+      "required": true,
+      "requirements": [
+        "semantic:functions",
+        "semantic:types"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage13-function-nonfunction",
+      "input": "tests/fixtures/m2/types-stage13-function-nonfunction.pkl",
+      "input_sha256": "9e50b16603ae0574dd36b1cd654be909e532d7b0af6ee18fdfde54232e8d610d",
+      "required": true,
+      "requirements": [
+        "semantic:functions",
+        "semantic:diagnostics",
+        "semantic:types"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage13-function-alias-mismatch",
+      "input": "tests/fixtures/m2/types-stage13-function-alias-mismatch.pkl",
+      "input_sha256": "9cf93989c7c16858ed25620e1dae14a3c50085370094d897602c24019a8120be",
+      "required": true,
+      "requirements": [
+        "semantic:functions",
+        "semantic:type-aliases",
+        "semantic:diagnostics",
+        "semantic:types"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage13-function-return-type-missing",
+      "input": "tests/fixtures/m2/types-stage13-function-return-type-missing.pkl",
+      "input_sha256": "a046dbe01752d583a7c662e1e7475e198f75ce309460d2abbbaf95ed8ff3809e",
+      "required": true,
+      "requirements": [
+        "semantic:functions",
+        "semantic:diagnostics",
+        "semantic:types"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage13-function-parameter-type-missing",
+      "input": "tests/fixtures/m2/types-stage13-function-parameter-type-missing.pkl",
+      "input_sha256": "8832123744d017cc93ab983bba7ff906e5b03eafbef0e95c863b014a42675de7",
+      "required": true,
+      "requirements": [
+        "semantic:functions",
+        "semantic:diagnostics",
+        "semantic:types"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage13-function-unused-type-missing",
+      "input": "tests/fixtures/m2/types-stage13-function-unused-type-missing.pkl",
+      "input_sha256": "f77b20c89fa8d69dcc8c7ee5a7df7d5d80b0ea5ca0524dcbdb56616347d2438c",
+      "required": true,
+      "requirements": [
+        "semantic:functions",
+        "semantic:diagnostics",
+        "semantic:types"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage13-function-default",
+      "input": "tests/fixtures/m2/types-stage13-function-default.pkl",
+      "input_sha256": "f5f3480a94433403c5a0a0d798f0c390554d5d86568f951019559105a83e5c9f",
+      "required": true,
+      "requirements": [
+        "semantic:functions",
+        "semantic:diagnostics",
+        "semantic:types"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage13-function-nullable-default",
+      "input": "tests/fixtures/m2/types-stage13-function-nullable-default.pkl",
+      "input_sha256": "f37d52c0a1334e12b1204a68dd41ce721537c2e41fa4c2c661207f7060a6fdde",
+      "required": true,
+      "requirements": [
+        "semantic:functions",
+        "semantic:types"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage13-function-union-arity",
+      "input": "tests/fixtures/m2/types-stage13-function-union-arity.pkl",
+      "input_sha256": "685e2b192df6b01172c607d8efe83b7eaab901436a0432ebb6d5b7db3fb29513",
+      "required": true,
+      "requirements": [
+        "semantic:functions",
+        "semantic:types"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage13-function-annotation-not-wrapper",
+      "input": "tests/fixtures/m2/types-stage13-function-annotation-not-wrapper.pkl",
+      "input_sha256": "73dcefa9624b6fb0b2bae9e3e8ad191c20580361a3d41fbb2acfd61b047969ba",
+      "required": true,
+      "requirements": [
+        "semantic:functions",
+        "semantic:types"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage13-function-declared-lambda-check",
+      "input": "tests/fixtures/m2/types-stage13-function-declared-lambda-check.pkl",
+      "input_sha256": "f0b8e0e7a4fe958c6acb29af1bf3f8dab9d60254686ca5c722307cc9fcd5b44f",
+      "required": true,
+      "requirements": [
+        "semantic:functions",
+        "semantic:diagnostics",
+        "semantic:types"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage13-alias-mapping-same",
+      "input": "tests/fixtures/m2/types-stage13-alias-mapping-same.pkl",
+      "input_sha256": "d23f8663860ae2d26af6ccf63ab142e74757adc2b7dcdde1cc7efff1c0853830",
+      "required": true,
+      "requirements": [
+        "semantic:type-aliases",
+        "semantic:collections",
+        "semantic:diagnostics",
+        "semantic:types"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage13-alias-mapping-distinct",
+      "input": "tests/fixtures/m2/types-stage13-alias-mapping-distinct.pkl",
+      "input_sha256": "ef4e33f4a026a509cb5278159c1beeb6f4988157b3771d42a4a0eec3b347262f",
+      "required": true,
+      "requirements": [
+        "semantic:type-aliases",
+        "semantic:collections",
+        "semantic:types"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage13-alias-mapping-alias-key",
+      "input": "tests/fixtures/m2/types-stage13-alias-mapping-alias-key.pkl",
+      "input_sha256": "d584716bd09e60d70935885c33933a9dac9377209a9410f09e0ae8ee62b932e0",
+      "required": true,
+      "requirements": [
+        "semantic:type-aliases",
+        "semantic:collections",
+        "semantic:types"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage13-alias-mapping-missing-key",
+      "input": "tests/fixtures/m2/types-stage13-alias-mapping-missing-key.pkl",
+      "input_sha256": "a23b0118e08414469ce599f722217ea3c614e63ddc0a209e102f429ad6f3e807",
+      "required": true,
+      "requirements": [
+        "semantic:type-aliases",
+        "semantic:collections",
+        "semantic:diagnostics",
+        "semantic:types"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage13-alias-mapping-generic-key",
+      "input": "tests/fixtures/m2/types-stage13-alias-mapping-generic-key.pkl",
+      "input_sha256": "5091d2e59d50d7b609c578f974e293239977cadb2de5b3deb2d7119458793cde",
+      "required": true,
+      "requirements": [
+        "semantic:type-aliases",
+        "semantic:collections",
+        "semantic:types"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage13-alias-mapping-value-equality",
+      "input": "tests/fixtures/m2/types-stage13-alias-mapping-value-equality.pkl",
+      "input_sha256": "d985e071233dd0798cdf2534d9a76d2a05b495b721669681f9f092a8d513b9cf",
+      "required": true,
+      "requirements": [
+        "semantic:type-aliases",
+        "semantic:collections",
+        "semantic:types"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage13-alias-mapping-value-self",
+      "input": "tests/fixtures/m2/types-stage13-alias-mapping-value-self.pkl",
+      "input_sha256": "dc2301495a8357b2587bfb0d45aef5c4e9ffb71c783ab13e4fbeaefab55c7295",
+      "required": true,
+      "requirements": [
+        "semantic:type-aliases",
+        "semantic:collections",
+        "semantic:types"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage13-alias-generic-declaration-identity",
+      "input": "tests/fixtures/m2/types-stage13-alias-generic-declaration-identity.pkl",
+      "input_sha256": "fef84a3233c70a178bec7fe2542bd2259fee0ad07569d74357b784cb85e0a580",
+      "required": true,
+      "requirements": [
+        "semantic:type-aliases",
+        "semantic:generics",
+        "semantic:types"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage13-function-zero-class",
+      "input": "tests/fixtures/m2/types-stage13-function-zero-class.pkl",
+      "input_sha256": "1454f34abe21c46959bf2d4c070479e87cb9cce54e7f4dfe9f28af3f6f3f85a0",
+      "required": true,
+      "requirements": [
+        "semantic:functions",
+        "semantic:types"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage13-function-one-class",
+      "input": "tests/fixtures/m2/types-stage13-function-one-class.pkl",
+      "input_sha256": "ba3ed0bef1e5f533f08b2b1c43e07090535d72b938b56dab277102c369fce93f",
+      "required": true,
+      "requirements": [
+        "semantic:functions",
+        "semantic:types"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage13-function-two-class",
+      "input": "tests/fixtures/m2/types-stage13-function-two-class.pkl",
+      "input_sha256": "665b6e39957ca6604e04b7d42b21cdb0626cdc9c1f17e280634928d290e387f0",
+      "required": true,
+      "requirements": [
+        "semantic:functions",
+        "semantic:types"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage13-function-string",
+      "input": "tests/fixtures/m2/types-stage13-function-string.pkl",
+      "input_sha256": "c794d1da2afbbed05df57690e96100d764e6857b3cd39735a53702b1aa13fa5f",
+      "required": true,
+      "requirements": [
+        "semantic:functions",
+        "semantic:types"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage13-function-function-result-erased",
+      "input": "tests/fixtures/m2/types-stage13-function-function-result-erased.pkl",
+      "input_sha256": "a8441691ace888a50a2056a5714d97847366b6023009a9d083e3b0034844a4bd",
+      "required": true,
+      "requirements": [
+        "semantic:functions",
+        "semantic:types"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage13-function-function1-generic-result",
+      "input": "tests/fixtures/m2/types-stage13-function-function1-generic-result.pkl",
+      "input_sha256": "f56209650865886f9b84cc4f6e27f3079f70854666da6c716999fa0602103914",
+      "required": true,
+      "requirements": [
+        "semantic:functions",
+        "semantic:types"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage13-function-function2-wrong-arity",
+      "input": "tests/fixtures/m2/types-stage13-function-function2-wrong-arity.pkl",
+      "input_sha256": "e0de4a35fb654450e3f15fdeb7a8e1c0c4116e79ae1a1e377e601e0339f80cc5",
+      "required": true,
+      "requirements": [
+        "semantic:functions",
+        "semantic:types"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage13-reference-function-bare",
+      "input": "tests/fixtures/m2/types-stage13-reference-function-bare.pkl",
+      "input_sha256": "437f30f153f6ff425c7f5983cca36d8fb6c0d03142d07f64936940d348612f99",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:functions",
+        "semantic:types"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage13-reference-function-one",
+      "input": "tests/fixtures/m2/types-stage13-reference-function-one.pkl",
+      "input_sha256": "7d43b95a6313d84e30b12e0be354b3d912352bb36d05812fe32a906cb185732c",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:functions",
+        "semantic:types"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage13-reference-function-any",
+      "input": "tests/fixtures/m2/types-stage13-reference-function-any.pkl",
+      "input_sha256": "e05cc4da02f4013c1309aa04b0f28e2efbe7876eca290fd5ad5babc837c3be5b",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:functions",
+        "semantic:types"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage13-reference-bare-equivalent",
+      "input": "tests/fixtures/m2/types-stage13-reference-bare-equivalent.pkl",
+      "input_sha256": "2061151dcf0669962e3b745078bb5335834a174aea922f54a286bdf5c2e053b8",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:types"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage13-reference-bare-to-arrow",
+      "input": "tests/fixtures/m2/types-stage13-reference-bare-to-arrow.pkl",
+      "input_sha256": "77289eefd5df16315487dd07001c30ea0ebd1b35c4ba8d8283c4c0b79e41d494",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:functions",
+        "semantic:types"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage13-reference-arrow-to-bare",
+      "input": "tests/fixtures/m2/types-stage13-reference-arrow-to-bare.pkl",
+      "input_sha256": "06e3f2abce496de6107bb8fb43bbe8a391e3a978a1df42bb904dc5b4fe3d36f7",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:functions",
+        "semantic:types"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage13-reference-arrow-constraint",
+      "input": "tests/fixtures/m2/types-stage13-reference-arrow-constraint.pkl",
+      "input_sha256": "c58ddd9e519677ba014bd00fdbf0b9e4d08985b8532ecc50c8f4ef192c2dd9e1",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:functions",
+        "semantic:types"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage13-reference-arrow-result-constraint",
+      "input": "tests/fixtures/m2/types-stage13-reference-arrow-result-constraint.pkl",
+      "input_sha256": "a36869b95fafcf5b7b42abf2d06b46014e4221ea79a7eafa18f21cbab0efef13",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:functions",
+        "semantic:types"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage13-relation-alias-expansion-left",
+      "input": "tests/fixtures/m2/types-stage13-relation-alias-expansion-left.pkl",
+      "input_sha256": "049adec8aa635df37e323e4ba857edb42dd8e75afc9720c18fc757e2b1d5ecb2",
+      "metamorphic_relation": {
+        "case_ids": [
+          "types-stage13-relation-alias-expansion-left",
+          "types-stage13-relation-alias-expansion-right"
+        ],
+        "domain": "Successful scalar alias expansion preserves the result.",
+        "kind": "equal-stdout"
+      },
+      "required": true,
+      "requirements": [
+        "semantic:type-aliases",
+        "semantic:types"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage13-relation-alias-expansion-right",
+      "input": "tests/fixtures/m2/types-stage13-relation-alias-expansion-right.pkl",
+      "input_sha256": "e5f70e7c41ab3b9610513bb20d9daa209265afc8f0ded57c702929b704fbd8dc",
+      "metamorphic_relation": {
+        "case_ids": [
+          "types-stage13-relation-alias-expansion-left",
+          "types-stage13-relation-alias-expansion-right"
+        ],
+        "domain": "Successful scalar alias expansion preserves the result.",
+        "kind": "equal-stdout"
+      },
+      "required": true,
+      "requirements": [
+        "semantic:type-aliases",
+        "semantic:types"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage13-relation-function-result-annotation-left",
+      "input": "tests/fixtures/m2/types-stage13-relation-function-result-annotation-left.pkl",
+      "input_sha256": "3afb7ab116a08c0e1ef21b0d3533828825cb82b830e7555bb8fa90f2866863bd",
+      "metamorphic_relation": {
+        "case_ids": [
+          "types-stage13-relation-function-result-annotation-left",
+          "types-stage13-relation-function-result-annotation-right"
+        ],
+        "domain": "Function type annotations enforce arity while argument/result types remain metadata at assignment.",
+        "kind": "equal-stdout"
+      },
+      "required": true,
+      "requirements": [
+        "semantic:functions",
+        "semantic:types"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage13-relation-function-result-annotation-right",
+      "input": "tests/fixtures/m2/types-stage13-relation-function-result-annotation-right.pkl",
+      "input_sha256": "1c340de1ce63923ff710a79ab8e110ab6f5a11f070ef9573bc47f43fbc83a252",
+      "metamorphic_relation": {
+        "case_ids": [
+          "types-stage13-relation-function-result-annotation-left",
+          "types-stage13-relation-function-result-annotation-right"
+        ],
+        "domain": "Function type annotations enforce arity while argument/result types remain metadata at assignment.",
+        "kind": "equal-stdout"
+      },
+      "required": true,
+      "requirements": [
+        "semantic:functions",
+        "semantic:types"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage13-quoted-alias-value",
+      "input": "tests/fixtures/m2/types-stage13-quoted-alias-value.pkl",
+      "input_sha256": "6fb217ac2b760df60330300d7af45b5819b0902558b36daf30ab0b6a0e2901ff",
+      "required": true,
+      "requirements": [
+        "semantic:type-aliases",
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:types"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage13-quoted-alias-reference",
+      "input": "tests/fixtures/m2/types-stage13-quoted-alias-reference.pkl",
+      "input_sha256": "09643653f18c18b698aa46c0a63d502024efaaaed2bd2e2f37863ef347bf3f62",
+      "required": true,
+      "requirements": [
+        "semantic:type-aliases",
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:diagnostics",
+        "semantic:types"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage13-generic-alias-reference",
+      "input": "tests/fixtures/m2/types-stage13-generic-alias-reference.pkl",
+      "input_sha256": "0cca39134b22c8b7c5c644aa8b5e9060b447d96ce80a3cc3c7a4c7ab9790bcf5",
+      "required": true,
+      "requirements": [
+        "semantic:type-aliases",
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:generics",
+        "semantic:diagnostics",
+        "semantic:types"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage13-alias-class-reference",
+      "input": "tests/fixtures/m2/types-stage13-alias-class-reference.pkl",
+      "input_sha256": "bb1d766d7748d107392e86eed63ab74f39bfee4a0d94714dc0f95fbad5c555b1",
+      "required": true,
+      "requirements": [
+        "semantic:type-aliases",
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:diagnostics",
+        "semantic:types"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage13-reference-function-equality-same",
+      "input": "tests/fixtures/m2/types-stage13-reference-function-equality-same.pkl",
+      "input_sha256": "2f293054c743c4ae72cdfca4903117d4532cb374e3b8df82657e092a54492cfa",
+      "required": true,
+      "requirements": [
+        "semantic:type-aliases",
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:functions",
+        "semantic:operators",
+        "semantic:types"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage13-reference-function-equality-alias-arg",
+      "input": "tests/fixtures/m2/types-stage13-reference-function-equality-alias-arg.pkl",
+      "input_sha256": "0abdbc17109998dcae78187496e7de9fb5057a40c56daf35b46514321a51c6ac",
+      "required": true,
+      "requirements": [
+        "semantic:type-aliases",
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:functions",
+        "semantic:operators",
+        "semantic:types"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage13-reference-function-equality-alias-result",
+      "input": "tests/fixtures/m2/types-stage13-reference-function-equality-alias-result.pkl",
+      "input_sha256": "85a22ff9f0c6ce6e06e266b55f5c52f288a69095dc11c65e8170e5422209c59d",
+      "required": true,
+      "requirements": [
+        "semantic:type-aliases",
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:functions",
+        "semantic:operators",
+        "semantic:types"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage13-reference-function-equality-same-constraint",
+      "input": "tests/fixtures/m2/types-stage13-reference-function-equality-same-constraint.pkl",
+      "input_sha256": "8b1422f9aab225a36abe9922bcb183112c3a3eb7e8b717c3f94e6ccd56ae7a5e",
+      "required": true,
+      "requirements": [
+        "semantic:type-aliases",
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:functions",
+        "semantic:operators",
+        "semantic:types"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage13-reference-function-equality-constraint-whitespace",
+      "input": "tests/fixtures/m2/types-stage13-reference-function-equality-constraint-whitespace.pkl",
+      "input_sha256": "1d76ef8befabe78a71c7437331489cc97e6c078ad349fc22cb6e6814620cfe62",
+      "required": true,
+      "requirements": [
+        "semantic:type-aliases",
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:functions",
+        "semantic:operators",
+        "semantic:types"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage13-reference-function-equality-nullable-alias",
+      "input": "tests/fixtures/m2/types-stage13-reference-function-equality-nullable-alias.pkl",
+      "input_sha256": "a9f0ad3200aac72f7c36752f25b85971bffd8a1179551d3383ebd3539099be86",
+      "required": true,
+      "requirements": [
+        "semantic:type-aliases",
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:functions",
+        "semantic:operators",
+        "semantic:types"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage13-reference-function-equality-list-alias",
+      "input": "tests/fixtures/m2/types-stage13-reference-function-equality-list-alias.pkl",
+      "input_sha256": "37565f367ee98ce725108324f20702146b2d233d5d57687bc035302564b916c6",
+      "required": true,
+      "requirements": [
+        "semantic:type-aliases",
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:functions",
+        "semantic:operators",
+        "semantic:types"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage13-reference-function1-to-function",
+      "input": "tests/fixtures/m2/types-stage13-reference-function1-to-function.pkl",
+      "input_sha256": "71877c866c22e7a330cdf7a4989d530a7cf491e49027e108e81e81a6d8b0aa2c",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:functions",
+        "semantic:generics",
+        "semantic:reflection-metadata",
+        "semantic:types"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage13-reference-function0-to-function",
+      "input": "tests/fixtures/m2/types-stage13-reference-function0-to-function.pkl",
+      "input_sha256": "270afea80e49d9616e267e783809174b754d698bf919c23bac86b92ebb43cc80",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:functions",
+        "semantic:generics",
+        "semantic:reflection-metadata",
+        "semantic:types"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage13-reference-nested-arrow",
+      "input": "tests/fixtures/m2/types-stage13-reference-nested-arrow.pkl",
+      "input_sha256": "85ba5a3977091dccadc28375661bcc5a46eb27318220cc86e9f11951aadb2520",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:functions",
+        "semantic:generics",
+        "semantic:reflection-metadata",
+        "semantic:types"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage13-reference-arg-variance",
+      "input": "tests/fixtures/m2/types-stage13-reference-arg-variance.pkl",
+      "input_sha256": "4332bc782e511de1759631958206cdd7d53f0558682cb7ea71e5fe28e3e4ea3c",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:functions",
+        "semantic:generics",
+        "semantic:reflection-metadata",
+        "semantic:types"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage13-reference-result-variance",
+      "input": "tests/fixtures/m2/types-stage13-reference-result-variance.pkl",
+      "input_sha256": "b8cdd5f9d81688780154e041497da683afaf9561631ea00946bef94d35c3d479",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:functions",
+        "semantic:generics",
+        "semantic:reflection-metadata",
+        "semantic:types"
+      ]
+    },
+    {
       "adapter": null,
       "execution": {
         "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
@@ -117404,9 +119080,9 @@
   "comparison_boundary": "evaluateExpressionString(ModuleSource.path(same absolute URI), expression) UTF-8 stdout; whole PklException.getMessage() UTF-8 stderr and exit 1; no trimming. Power assertions default to disabled; an explicit per-case power_assertions boolean enables the same option in both probes. Stringification alone is not typed value/API compatibility.",
   "completion": "Every required semantic/source requirement needs implementation/test mappings and complete passing execution. Pending/unmapped/unimplemented/mismatch remains a full-gate failure.",
   "counts": {
-    "cases": 2291,
+    "cases": 2380,
     "cases_by_execution": {
-      "ready": 1291,
+      "ready": 1380,
       "unimplemented": 960,
       "unmapped": 40
     },
@@ -117990,7 +119666,14 @@
           "equality-stage9-mapping-length-key-signed-zero",
           "equality-stage9-mapping-length-key-boxed-numeric",
           "equality-stage9-mapping-length-key-folded-int-collision",
-          "equality-stage9-mapping-length-key-entry-dynamic"
+          "equality-stage9-mapping-length-key-entry-dynamic",
+          "types-stage13-reference-function-equality-same",
+          "types-stage13-reference-function-equality-alias-arg",
+          "types-stage13-reference-function-equality-alias-result",
+          "types-stage13-reference-function-equality-same-constraint",
+          "types-stage13-reference-function-equality-constraint-whitespace",
+          "types-stage13-reference-function-equality-nullable-alias",
+          "types-stage13-reference-function-equality-list-alias"
         ],
         "state": "partial"
       }
@@ -118209,17 +119892,17 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "cc9b70050024031c1f15b3114778454ed82134ef8253e7c5db971c5e22053d61",
+            "sha256": "cb94a831895200c5f0a7ef4dde6c1bb1e6000c794a6fdeb6a89a4ca5c616b982",
             "symbol": "initialize_member_types"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "cc9b70050024031c1f15b3114778454ed82134ef8253e7c5db971c5e22053d61",
+            "sha256": "cb94a831895200c5f0a7ef4dde6c1bb1e6000c794a6fdeb6a89a4ca5c616b982",
             "symbol": "validate_class_override"
           },
           {
             "path": "crates/pkl-runtime/src/vm/reference.rs",
-            "sha256": "4f4dbdab51e78e71765cce3a6e86820a35b51affdb1a7f9e2830b88f7093066b",
+            "sha256": "549dac0c046c2dbf3845671cacb2703d44690919fbcc1ec3608be73164265af9",
             "symbol": "reference_candidate"
           }
         ],
@@ -119587,12 +121270,12 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "cc9b70050024031c1f15b3114778454ed82134ef8253e7c5db971c5e22053d61",
+            "sha256": "cb94a831895200c5f0a7ef4dde6c1bb1e6000c794a6fdeb6a89a4ca5c616b982",
             "symbol": "validate_object_override"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "cc9b70050024031c1f15b3114778454ed82134ef8253e7c5db971c5e22053d61",
+            "sha256": "cb94a831895200c5f0a7ef4dde6c1bb1e6000c794a6fdeb6a89a4ca5c616b982",
             "symbol": "inherited_member"
           }
         ],
@@ -119744,22 +121427,22 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/heap.rs",
-            "sha256": "3c35dd553bc37e5e8f5363e6c66d1d0cc74289a2f1d688da844c6ae105546334",
+            "sha256": "ffd14867249c625369595b23af2033ed3739c40c2f583edd7123a4bf50c3aff3",
             "symbol": "Member"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "cc9b70050024031c1f15b3114778454ed82134ef8253e7c5db971c5e22053d61",
+            "sha256": "cb94a831895200c5f0a7ef4dde6c1bb1e6000c794a6fdeb6a89a4ca5c616b982",
             "symbol": "validate_class_override"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "cc9b70050024031c1f15b3114778454ed82134ef8253e7c5db971c5e22053d61",
+            "sha256": "cb94a831895200c5f0a7ef4dde6c1bb1e6000c794a6fdeb6a89a4ca5c616b982",
             "symbol": "validate_object_override"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "cc9b70050024031c1f15b3114778454ed82134ef8253e7c5db971c5e22053d61",
+            "sha256": "cb94a831895200c5f0a7ef4dde6c1bb1e6000c794a6fdeb6a89a4ca5c616b982",
             "symbol": "initialize_member_types"
           }
         ],
@@ -119947,27 +121630,27 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/heap.rs",
-            "sha256": "3c35dd553bc37e5e8f5363e6c66d1d0cc74289a2f1d688da844c6ae105546334",
+            "sha256": "ffd14867249c625369595b23af2033ed3739c40c2f583edd7123a4bf50c3aff3",
             "symbol": "Member"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "cc9b70050024031c1f15b3114778454ed82134ef8253e7c5db971c5e22053d61",
+            "sha256": "cb94a831895200c5f0a7ef4dde6c1bb1e6000c794a6fdeb6a89a4ca5c616b982",
             "symbol": "validate_class_override"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "cc9b70050024031c1f15b3114778454ed82134ef8253e7c5db971c5e22053d61",
+            "sha256": "cb94a831895200c5f0a7ef4dde6c1bb1e6000c794a6fdeb6a89a4ca5c616b982",
             "symbol": "validate_object_override"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "cc9b70050024031c1f15b3114778454ed82134ef8253e7c5db971c5e22053d61",
+            "sha256": "cb94a831895200c5f0a7ef4dde6c1bb1e6000c794a6fdeb6a89a4ca5c616b982",
             "symbol": "initialize_member_types"
           },
           {
             "path": "crates/pkl-runtime/src/resolver.rs",
-            "sha256": "5ab702b97d8ab61b3c8e2cf4f49a00f52b076a6ce04a9cfd528f0fa91c757df1",
+            "sha256": "948492a5bb82920a5493f7d1532ec7ee8866f160a84a6b19c51f1c7dca872818",
             "symbol": "validate_modifiers"
           }
         ],
@@ -120127,12 +121810,36 @@
       "description": "Method declarations/calls, parameter and return checks, recursion and argument errors",
       "id": "semantic:functions",
       "implementation": {
-        "links": [],
+        "links": [
+          {
+            "path": "crates/pkl-runtime/src/vm.rs",
+            "sha256": "cb94a831895200c5f0a7ef4dde6c1bb1e6000c794a6fdeb6a89a4ca5c616b982",
+            "symbol": "TypeCheck"
+          },
+          {
+            "path": "crates/pkl-runtime/src/vm.rs",
+            "sha256": "cb94a831895200c5f0a7ef4dde6c1bb1e6000c794a6fdeb6a89a4ca5c616b982",
+            "symbol": "compile_type_at"
+          },
+          {
+            "path": "crates/pkl-runtime/src/vm/reference.rs",
+            "sha256": "549dac0c046c2dbf3845671cacb2703d44690919fbcc1ec3608be73164265af9",
+            "symbol": "subtype"
+          }
+        ],
         "state": "partial"
       },
       "kind": "semantic-family",
-      "reason": "A selected probe does not establish implementation or complete edge-case coverage.",
+      "reason": "Reviewed source/test links; completion still requires the full recorded scope and executions.",
       "required": true,
+      "reviewed_mapping": {
+        "remaining": [
+          "Function amendments, full callable/builtin behavior, imports and the original function suite contracts remain outside this bounded selection.",
+          "The broader function, closure, diagnostic and reflection inventories are not completed by metadata comparisons."
+        ],
+        "scope": "Function and Function0..5 class types and arrow annotations retain parameter/result metadata while selected runtime value checks use arity. Comparisons distinguish annotation checks from a lambda declaration's own argument checks and distinguish Reference type tests from exported-type equality.",
+        "source": "compatibility/m2-mappings.json"
+      },
       "tests": {
         "case_ids": [
           "method-basic",
@@ -120202,7 +121909,58 @@
           "diagnostics-stage9-let-returned-function-inner-let",
           "diagnostics-stage9-let-recursive-scope-single",
           "diagnostics-stage9-let-recursive-outer-scope-single",
-          "diagnostics-stage9-let-caller-typed-mismatch"
+          "diagnostics-stage9-let-caller-typed-mismatch",
+          "types-stage13-reference-function-equal",
+          "types-stage13-reference-function-parameter-different",
+          "types-stage13-reference-function-result-different",
+          "types-stage13-reference-function-arity-different",
+          "types-stage13-reference-function-alias-equivalent",
+          "types-stage13-reference-function-alias-diagnostic",
+          "types-stage13-reference-function-variance",
+          "types-stage13-function-accept-result-erased",
+          "types-stage13-function-accept-arg-erased",
+          "types-stage13-function-arity-zero",
+          "types-stage13-function-arity-two",
+          "types-stage13-function-is-result-erased",
+          "types-stage13-function-is-arity-false",
+          "types-stage13-function-nonfunction",
+          "types-stage13-function-alias-mismatch",
+          "types-stage13-function-return-type-missing",
+          "types-stage13-function-parameter-type-missing",
+          "types-stage13-function-unused-type-missing",
+          "types-stage13-function-default",
+          "types-stage13-function-nullable-default",
+          "types-stage13-function-union-arity",
+          "types-stage13-function-annotation-not-wrapper",
+          "types-stage13-function-declared-lambda-check",
+          "types-stage13-function-zero-class",
+          "types-stage13-function-one-class",
+          "types-stage13-function-two-class",
+          "types-stage13-function-string",
+          "types-stage13-function-function-result-erased",
+          "types-stage13-function-function1-generic-result",
+          "types-stage13-function-function2-wrong-arity",
+          "types-stage13-reference-function-bare",
+          "types-stage13-reference-function-one",
+          "types-stage13-reference-function-any",
+          "types-stage13-reference-bare-to-arrow",
+          "types-stage13-reference-arrow-to-bare",
+          "types-stage13-reference-arrow-constraint",
+          "types-stage13-reference-arrow-result-constraint",
+          "types-stage13-relation-function-result-annotation-left",
+          "types-stage13-relation-function-result-annotation-right",
+          "types-stage13-reference-function-equality-same",
+          "types-stage13-reference-function-equality-alias-arg",
+          "types-stage13-reference-function-equality-alias-result",
+          "types-stage13-reference-function-equality-same-constraint",
+          "types-stage13-reference-function-equality-constraint-whitespace",
+          "types-stage13-reference-function-equality-nullable-alias",
+          "types-stage13-reference-function-equality-list-alias",
+          "types-stage13-reference-function1-to-function",
+          "types-stage13-reference-function0-to-function",
+          "types-stage13-reference-nested-arrow",
+          "types-stage13-reference-arg-variance",
+          "types-stage13-reference-result-variance"
         ],
         "state": "partial"
       }
@@ -121209,7 +122967,14 @@
           "reference-stage10-mapping-key-type-nullable",
           "reference-stage10-equality-data-boxed-numeric",
           "reference-stage10-equality-data-signed-zero",
-          "reference-stage10-equality-data-nan"
+          "reference-stage10-equality-data-nan",
+          "types-stage13-alias-mapping-same",
+          "types-stage13-alias-mapping-distinct",
+          "types-stage13-alias-mapping-alias-key",
+          "types-stage13-alias-mapping-missing-key",
+          "types-stage13-alias-mapping-generic-key",
+          "types-stage13-alias-mapping-value-equality",
+          "types-stage13-alias-mapping-value-self"
         ],
         "state": "partial"
       }
@@ -121218,12 +122983,35 @@
       "description": "Primitive/class/module/function/string literal/unknown/nothing types and eager/lazy checks",
       "id": "semantic:types",
       "implementation": {
-        "links": [],
+        "links": [
+          {
+            "path": "crates/pkl-runtime/src/vm.rs",
+            "sha256": "cb94a831895200c5f0a7ef4dde6c1bb1e6000c794a6fdeb6a89a4ca5c616b982",
+            "symbol": "TypeCheck"
+          },
+          {
+            "path": "crates/pkl-runtime/src/vm.rs",
+            "sha256": "cb94a831895200c5f0a7ef4dde6c1bb1e6000c794a6fdeb6a89a4ca5c616b982",
+            "symbol": "initialize_type"
+          },
+          {
+            "path": "crates/pkl-runtime/src/vm/typecheck.rs",
+            "sha256": "e1d8241e9f13c71b84210bc00b86bb6d499ff0420cf0e62ed0112156850a6434",
+            "symbol": "step_type"
+          }
+        ],
         "state": "partial"
       },
       "kind": "semantic-family",
-      "reason": "A selected probe does not establish implementation or complete edge-case coverage.",
+      "reason": "Reviewed source/test links; completion still requires the full recorded scope and executions.",
       "required": true,
+      "reviewed_mapping": {
+        "remaining": [
+          "The complete type, structural/generic class, constraint, recursive and imported-type corpus still requires implementation and original-adapter execution."
+        ],
+        "scope": "The Stage 13 selection links named alias expansion, meta-class checks, function arity and exported type metadata to the shared VM. Existing upstream case definitions, adapters and execution states remain unchanged.",
+        "source": "compatibility/m2-mappings.json"
+      },
       "tests": {
         "case_ids": [
           "method-typed",
@@ -121567,7 +123355,96 @@
           "fixed-stage11-fixed-class-forces-bad-type",
           "fixed-stage11-inherit-type-before-fixed",
           "fixed-stage11-reference-metadata-unrelated-bad-type",
-          "fixed-stage11-class-type-before-const"
+          "fixed-stage11-class-type-before-const",
+          "types-stage13-relation-alias-expansion-left",
+          "types-stage13-relation-alias-expansion-right",
+          "types-stage13-relation-function-result-annotation-left",
+          "types-stage13-relation-function-result-annotation-right",
+          "types-stage13-alias-value",
+          "types-stage13-alias-self-equal",
+          "types-stage13-alias-distinct-equal",
+          "types-stage13-alias-class",
+          "types-stage13-alias-string",
+          "types-stage13-alias-unknown-unused",
+          "types-stage13-alias-unknown-value",
+          "types-stage13-alias-direct-cycle",
+          "types-stage13-alias-mutual-cycle",
+          "types-stage13-alias-recursive-nullable",
+          "types-stage13-alias-recursive-list",
+          "types-stage13-alias-constrained-no-force",
+          "types-stage13-alias-generic-value",
+          "types-stage13-alias-generic-omitted",
+          "types-stage13-alias-generic-bad-arity",
+          "types-stage13-alias-generic-mismatch",
+          "types-stage13-alias-mismatch",
+          "types-stage13-alias-nested-mismatch",
+          "types-stage13-alias-constraint-mismatch",
+          "types-stage13-alias-union-mismatch",
+          "types-stage13-reference-root-alias",
+          "types-stage13-reference-root-generic-alias",
+          "types-stage13-reference-property-alias",
+          "types-stage13-reference-function-equal",
+          "types-stage13-reference-function-parameter-different",
+          "types-stage13-reference-function-result-different",
+          "types-stage13-reference-function-arity-different",
+          "types-stage13-reference-function-alias-equivalent",
+          "types-stage13-reference-function-alias-diagnostic",
+          "types-stage13-reference-function-variance",
+          "types-stage13-function-accept-result-erased",
+          "types-stage13-function-accept-arg-erased",
+          "types-stage13-function-arity-zero",
+          "types-stage13-function-arity-two",
+          "types-stage13-function-is-result-erased",
+          "types-stage13-function-is-arity-false",
+          "types-stage13-function-nonfunction",
+          "types-stage13-function-alias-mismatch",
+          "types-stage13-function-return-type-missing",
+          "types-stage13-function-parameter-type-missing",
+          "types-stage13-function-unused-type-missing",
+          "types-stage13-function-default",
+          "types-stage13-function-nullable-default",
+          "types-stage13-function-union-arity",
+          "types-stage13-function-annotation-not-wrapper",
+          "types-stage13-function-declared-lambda-check",
+          "types-stage13-alias-mapping-same",
+          "types-stage13-alias-mapping-distinct",
+          "types-stage13-alias-mapping-alias-key",
+          "types-stage13-alias-mapping-missing-key",
+          "types-stage13-alias-mapping-generic-key",
+          "types-stage13-alias-mapping-value-equality",
+          "types-stage13-alias-mapping-value-self",
+          "types-stage13-alias-generic-declaration-identity",
+          "types-stage13-function-zero-class",
+          "types-stage13-function-one-class",
+          "types-stage13-function-two-class",
+          "types-stage13-function-string",
+          "types-stage13-function-function-result-erased",
+          "types-stage13-function-function1-generic-result",
+          "types-stage13-function-function2-wrong-arity",
+          "types-stage13-reference-function-bare",
+          "types-stage13-reference-function-one",
+          "types-stage13-reference-function-any",
+          "types-stage13-reference-bare-equivalent",
+          "types-stage13-reference-bare-to-arrow",
+          "types-stage13-reference-arrow-to-bare",
+          "types-stage13-reference-arrow-constraint",
+          "types-stage13-reference-arrow-result-constraint",
+          "types-stage13-quoted-alias-value",
+          "types-stage13-quoted-alias-reference",
+          "types-stage13-generic-alias-reference",
+          "types-stage13-alias-class-reference",
+          "types-stage13-reference-function-equality-same",
+          "types-stage13-reference-function-equality-alias-arg",
+          "types-stage13-reference-function-equality-alias-result",
+          "types-stage13-reference-function-equality-same-constraint",
+          "types-stage13-reference-function-equality-constraint-whitespace",
+          "types-stage13-reference-function-equality-nullable-alias",
+          "types-stage13-reference-function-equality-list-alias",
+          "types-stage13-reference-function1-to-function",
+          "types-stage13-reference-function0-to-function",
+          "types-stage13-reference-nested-arrow",
+          "types-stage13-reference-arg-variance",
+          "types-stage13-reference-result-variance"
         ],
         "state": "partial"
       }
@@ -121576,12 +123453,37 @@
       "description": "Type aliases, recursive aliases, type defaults and nominal identities",
       "id": "semantic:type-aliases",
       "implementation": {
-        "links": [],
+        "links": [
+          {
+            "path": "crates/pkl-runtime/src/vm.rs",
+            "sha256": "cb94a831895200c5f0a7ef4dde6c1bb1e6000c794a6fdeb6a89a4ca5c616b982",
+            "symbol": "BeginTypeAlias"
+          },
+          {
+            "path": "crates/pkl-runtime/src/vm.rs",
+            "sha256": "cb94a831895200c5f0a7ef4dde6c1bb1e6000c794a6fdeb6a89a4ca5c616b982",
+            "symbol": "NamedAlias"
+          },
+          {
+            "path": "crates/pkl-runtime/src/vm.rs",
+            "sha256": "cb94a831895200c5f0a7ef4dde6c1bb1e6000c794a6fdeb6a89a4ca5c616b982",
+            "symbol": "compile_type_at"
+          }
+        ],
         "state": "partial"
       },
       "kind": "semantic-family",
-      "reason": "A selected probe does not establish implementation or complete edge-case coverage.",
+      "reason": "Reviewed source/test links; completion still requires the full recorded scope and executions.",
       "required": true,
+      "reviewed_mapping": {
+        "remaining": [
+          "Complete imported/module-scoped alias behavior, annotation initialization, full reflection and the original upstream alias suites remain unimplemented or unexecuted.",
+          "Exploratory mismatches and upstream internal errors retain their original outcomes; these selected mappings do not grant completion.",
+          "A full runtime type-node resolution model, mixed unresolved-name/dependency error ordering, and failures involving generic-parameter shadowing remain unverified."
+        ],
+        "scope": "Selected user alias values preserve declaration identity, qualified display, lazy initialization, published failure state, and expanded validation. Independent expressions cover alias values, cycles, generic arguments, Mapping keys and complete diagnostics; persistent failure/reaccess sequences and GC/Host tests have separate contracts.",
+        "source": "compatibility/m2-mappings.json"
+      },
       "tests": {
         "case_ids": [
           "alias-primitive",
@@ -121625,7 +123527,54 @@
           "reference-stage10-reference-alias-constraint-forbidden",
           "reference-stage10-constructor-nonnull-alias",
           "reference-stage10-metadata-nonnull-erasure",
-          "reference-stage10-referent-nonnull-check"
+          "reference-stage10-referent-nonnull-check",
+          "types-stage13-alias-value",
+          "types-stage13-alias-self-equal",
+          "types-stage13-alias-distinct-equal",
+          "types-stage13-alias-class",
+          "types-stage13-alias-string",
+          "types-stage13-alias-unknown-unused",
+          "types-stage13-alias-unknown-value",
+          "types-stage13-alias-direct-cycle",
+          "types-stage13-alias-mutual-cycle",
+          "types-stage13-alias-recursive-nullable",
+          "types-stage13-alias-recursive-list",
+          "types-stage13-alias-constrained-no-force",
+          "types-stage13-alias-generic-value",
+          "types-stage13-alias-generic-omitted",
+          "types-stage13-alias-generic-bad-arity",
+          "types-stage13-alias-generic-mismatch",
+          "types-stage13-alias-mismatch",
+          "types-stage13-alias-nested-mismatch",
+          "types-stage13-alias-constraint-mismatch",
+          "types-stage13-alias-union-mismatch",
+          "types-stage13-reference-root-alias",
+          "types-stage13-reference-root-generic-alias",
+          "types-stage13-reference-property-alias",
+          "types-stage13-reference-function-alias-equivalent",
+          "types-stage13-reference-function-alias-diagnostic",
+          "types-stage13-function-alias-mismatch",
+          "types-stage13-alias-mapping-same",
+          "types-stage13-alias-mapping-distinct",
+          "types-stage13-alias-mapping-alias-key",
+          "types-stage13-alias-mapping-missing-key",
+          "types-stage13-alias-mapping-generic-key",
+          "types-stage13-alias-mapping-value-equality",
+          "types-stage13-alias-mapping-value-self",
+          "types-stage13-alias-generic-declaration-identity",
+          "types-stage13-relation-alias-expansion-left",
+          "types-stage13-relation-alias-expansion-right",
+          "types-stage13-quoted-alias-value",
+          "types-stage13-quoted-alias-reference",
+          "types-stage13-generic-alias-reference",
+          "types-stage13-alias-class-reference",
+          "types-stage13-reference-function-equality-same",
+          "types-stage13-reference-function-equality-alias-arg",
+          "types-stage13-reference-function-equality-alias-result",
+          "types-stage13-reference-function-equality-same-constraint",
+          "types-stage13-reference-function-equality-constraint-whitespace",
+          "types-stage13-reference-function-equality-nullable-alias",
+          "types-stage13-reference-function-equality-list-alias"
         ],
         "state": "partial"
       }
@@ -121893,12 +123842,35 @@
       "description": "Generic classes/type aliases, parameter variance, bounds and substitution",
       "id": "semantic:generics",
       "implementation": {
-        "links": [],
+        "links": [
+          {
+            "path": "crates/pkl-runtime/src/vm.rs",
+            "sha256": "cb94a831895200c5f0a7ef4dde6c1bb1e6000c794a6fdeb6a89a4ca5c616b982",
+            "symbol": "NamedAlias"
+          },
+          {
+            "path": "crates/pkl-runtime/src/vm.rs",
+            "sha256": "cb94a831895200c5f0a7ef4dde6c1bb1e6000c794a6fdeb6a89a4ca5c616b982",
+            "symbol": "compile_type_at"
+          },
+          {
+            "path": "crates/pkl-runtime/src/vm/typecheck.rs",
+            "sha256": "e1d8241e9f13c71b84210bc00b86bb6d499ff0420cf0e62ed0112156850a6434",
+            "symbol": "step_type"
+          }
+        ],
         "state": "partial"
       },
       "kind": "semantic-family",
-      "reason": "A selected probe does not establish implementation or complete edge-case coverage.",
+      "reason": "Reviewed source/test links; completion still requires the full recorded scope and executions.",
       "required": true,
+      "reviewed_mapping": {
+        "remaining": [
+          "Complete generic classes, variance, imported generic declarations, recursive expansion and the original generic suite contracts remain unimplemented or unverified."
+        ],
+        "scope": "Selected generic aliases retain declaration identity and metadata arguments independently of expanded checks, use unknown for omitted arguments, and preserve argument-count and expanded-value diagnostics.",
+        "source": "compatibility/m2-mappings.json"
+      },
       "tests": {
         "case_ids": [
           "alias-generic-nullable",
@@ -122063,7 +124035,19 @@
           "equality-supplement-wrapper-identity-skip",
           "equality-supplement-wrapper-length-skip",
           "equality-stage9-mapping-zero-listing-cache-type-check",
-          "reference-stage10-reference-generic-alias"
+          "reference-stage10-reference-generic-alias",
+          "types-stage13-alias-generic-value",
+          "types-stage13-alias-generic-omitted",
+          "types-stage13-alias-generic-bad-arity",
+          "types-stage13-alias-generic-mismatch",
+          "types-stage13-reference-root-generic-alias",
+          "types-stage13-alias-generic-declaration-identity",
+          "types-stage13-generic-alias-reference",
+          "types-stage13-reference-function1-to-function",
+          "types-stage13-reference-function0-to-function",
+          "types-stage13-reference-nested-arrow",
+          "types-stage13-reference-arg-variance",
+          "types-stage13-reference-result-variance"
         ],
         "state": "partial"
       }
@@ -122242,22 +124226,22 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/vm/reference.rs",
-            "sha256": "4f4dbdab51e78e71765cce3a6e86820a35b51affdb1a7f9e2830b88f7093066b",
+            "sha256": "549dac0c046c2dbf3845671cacb2703d44690919fbcc1ec3608be73164265af9",
             "symbol": "Reference"
           },
           {
             "path": "crates/pkl-runtime/src/vm/reference.rs",
-            "sha256": "4f4dbdab51e78e71765cce3a6e86820a35b51affdb1a7f9e2830b88f7093066b",
+            "sha256": "549dac0c046c2dbf3845671cacb2703d44690919fbcc1ec3608be73164265af9",
             "symbol": "reference_access"
           },
           {
             "path": "crates/pkl-runtime/src/vm/reference.rs",
-            "sha256": "4f4dbdab51e78e71765cce3a6e86820a35b51affdb1a7f9e2830b88f7093066b",
+            "sha256": "549dac0c046c2dbf3845671cacb2703d44690919fbcc1ec3608be73164265af9",
             "symbol": "invoke_reference_native"
           },
           {
             "path": "crates/pkl-runtime/src/vm/typecheck.rs",
-            "sha256": "3beaa553488a91144e237d7fe69d021385575f267062adef990ed1237d7fdab7",
+            "sha256": "e1d8241e9f13c71b84210bc00b86bb6d499ff0420cf0e62ed0112156850a6434",
             "symbol": "step_type"
           }
         ],
@@ -122272,7 +124256,7 @@
           "Complete referent metadata for all builtin types, generic classes and remaining collection types is not implemented or verified.",
           "Full reflection, compound-value renderers and cyclic or JVM identity-dependent key behavior remain open."
         ],
-        "scope": "The pkl:ref bridge supports selected constructor, normalized referent type, synthetic property/subscript path, domain rendering, equality and key behavior through the shared VM. Linked native cases compare complete Java 0.32.0 process output at their actual fixture URIs. Stage11 adds selected fixed declaration, inherited metadata and complete raw diagnostics through the shared VM.",
+        "scope": "The pkl:ref bridge supports selected constructor, normalized referent type, synthetic property/subscript path, domain rendering, equality and key behavior through the shared VM. Linked native cases compare complete Java 0.32.0 process output at their actual fixture URIs. Stage11 adds selected fixed declaration, inherited metadata and complete raw diagnostics through the shared VM. Stage 13 adds selected alias/function metadata, exported-type equality and complete raw diagnostic comparisons; original suite execution and remaining scope stay open.",
         "source": "compatibility/m2-mappings.json"
       },
       "tests": {
@@ -122431,7 +124415,41 @@
           "fixed-stage11-reference-metadata-local",
           "fixed-stage11-reference-metadata-constraint",
           "fixed-stage11-relation-reference-unforced-fixed-left",
-          "fixed-stage11-relation-reference-unforced-fixed-right"
+          "fixed-stage11-relation-reference-unforced-fixed-right",
+          "types-stage13-reference-root-alias",
+          "types-stage13-reference-root-generic-alias",
+          "types-stage13-reference-property-alias",
+          "types-stage13-reference-function-equal",
+          "types-stage13-reference-function-parameter-different",
+          "types-stage13-reference-function-result-different",
+          "types-stage13-reference-function-arity-different",
+          "types-stage13-reference-function-alias-equivalent",
+          "types-stage13-reference-function-alias-diagnostic",
+          "types-stage13-reference-function-variance",
+          "types-stage13-reference-function-bare",
+          "types-stage13-reference-function-one",
+          "types-stage13-reference-function-any",
+          "types-stage13-reference-bare-equivalent",
+          "types-stage13-reference-bare-to-arrow",
+          "types-stage13-reference-arrow-to-bare",
+          "types-stage13-reference-arrow-constraint",
+          "types-stage13-reference-arrow-result-constraint",
+          "types-stage13-quoted-alias-value",
+          "types-stage13-quoted-alias-reference",
+          "types-stage13-generic-alias-reference",
+          "types-stage13-alias-class-reference",
+          "types-stage13-reference-function-equality-same",
+          "types-stage13-reference-function-equality-alias-arg",
+          "types-stage13-reference-function-equality-alias-result",
+          "types-stage13-reference-function-equality-same-constraint",
+          "types-stage13-reference-function-equality-constraint-whitespace",
+          "types-stage13-reference-function-equality-nullable-alias",
+          "types-stage13-reference-function-equality-list-alias",
+          "types-stage13-reference-function1-to-function",
+          "types-stage13-reference-function0-to-function",
+          "types-stage13-reference-nested-arrow",
+          "types-stage13-reference-arg-variance",
+          "types-stage13-reference-result-variance"
         ],
         "state": "partial"
       }
@@ -122458,22 +124476,22 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/heap.rs",
-            "sha256": "3c35dd553bc37e5e8f5363e6c66d1d0cc74289a2f1d688da844c6ae105546334",
+            "sha256": "ffd14867249c625369595b23af2033ed3739c40c2f583edd7123a4bf50c3aff3",
             "symbol": "Member"
           },
           {
             "path": "crates/pkl-runtime/src/heap.rs",
-            "sha256": "3c35dd553bc37e5e8f5363e6c66d1d0cc74289a2f1d688da844c6ae105546334",
+            "sha256": "ffd14867249c625369595b23af2033ed3739c40c2f583edd7123a4bf50c3aff3",
             "symbol": "Object"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "cc9b70050024031c1f15b3114778454ed82134ef8253e7c5db971c5e22053d61",
+            "sha256": "cb94a831895200c5f0a7ef4dde6c1bb1e6000c794a6fdeb6a89a4ca5c616b982",
             "symbol": "initialize_member_types"
           },
           {
             "path": "crates/pkl-runtime/src/vm/reference.rs",
-            "sha256": "4f4dbdab51e78e71765cce3a6e86820a35b51affdb1a7f9e2830b88f7093066b",
+            "sha256": "549dac0c046c2dbf3845671cacb2703d44690919fbcc1ec3608be73164265af9",
             "symbol": "reference_candidate"
           }
         ],
@@ -122486,7 +124504,7 @@
         "remaining": [
           "The full reflection API, module/class/type metadata inventory, dynamic nested declaration identity and generic class metadata remain unimplemented or unverified."
         ],
-        "scope": "Selected class, inherited property and normalized type metadata are used for Reference access without forcing referent bodies. Stage11 adds selected fixed declaration, inherited metadata and complete raw diagnostics through the shared VM.",
+        "scope": "Selected class, inherited property and normalized type metadata are used for Reference access without forcing referent bodies. Stage11 adds selected fixed declaration, inherited metadata and complete raw diagnostics through the shared VM. Stage 13 adds selected alias/function metadata, exported-type equality and complete raw diagnostic comparisons; original suite execution and remaining scope stay open.",
         "source": "compatibility/m2-mappings.json"
       },
       "tests": {
@@ -122578,7 +124596,41 @@
           "fixed-stage11-reference-metadata-local",
           "fixed-stage11-reference-metadata-constraint",
           "fixed-stage11-relation-reference-unforced-fixed-left",
-          "fixed-stage11-relation-reference-unforced-fixed-right"
+          "fixed-stage11-relation-reference-unforced-fixed-right",
+          "types-stage13-reference-root-alias",
+          "types-stage13-reference-root-generic-alias",
+          "types-stage13-reference-property-alias",
+          "types-stage13-reference-function-equal",
+          "types-stage13-reference-function-parameter-different",
+          "types-stage13-reference-function-result-different",
+          "types-stage13-reference-function-arity-different",
+          "types-stage13-reference-function-alias-equivalent",
+          "types-stage13-reference-function-alias-diagnostic",
+          "types-stage13-reference-function-variance",
+          "types-stage13-reference-function-bare",
+          "types-stage13-reference-function-one",
+          "types-stage13-reference-function-any",
+          "types-stage13-reference-bare-equivalent",
+          "types-stage13-reference-bare-to-arrow",
+          "types-stage13-reference-arrow-to-bare",
+          "types-stage13-reference-arrow-constraint",
+          "types-stage13-reference-arrow-result-constraint",
+          "types-stage13-quoted-alias-value",
+          "types-stage13-quoted-alias-reference",
+          "types-stage13-generic-alias-reference",
+          "types-stage13-alias-class-reference",
+          "types-stage13-reference-function-equality-same",
+          "types-stage13-reference-function-equality-alias-arg",
+          "types-stage13-reference-function-equality-alias-result",
+          "types-stage13-reference-function-equality-same-constraint",
+          "types-stage13-reference-function-equality-constraint-whitespace",
+          "types-stage13-reference-function-equality-nullable-alias",
+          "types-stage13-reference-function-equality-list-alias",
+          "types-stage13-reference-function1-to-function",
+          "types-stage13-reference-function0-to-function",
+          "types-stage13-reference-nested-arrow",
+          "types-stage13-reference-arg-variance",
+          "types-stage13-reference-result-variance"
         ],
         "state": "partial"
       }
@@ -122590,17 +124642,17 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/parser.rs",
-            "sha256": "1d67f99b6f13ba21fedb754803fa8f484a59509e18aaed6f8a3fbcde629bd949",
+            "sha256": "11bc56270e04ce92abe23154b26b48df8b68976888263fa0a20f4e597048d58f",
             "symbol": "import"
           },
           {
             "path": "crates/pkl-runtime/src/resolver.rs",
-            "sha256": "5ab702b97d8ab61b3c8e2cf4f49a00f52b076a6ce04a9cfd528f0fa91c757df1",
+            "sha256": "948492a5bb82920a5493f7d1532ec7ee8866f160a84a6b19c51f1c7dca872818",
             "symbol": "type_expression"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "cc9b70050024031c1f15b3114778454ed82134ef8253e7c5db971c5e22053d61",
+            "sha256": "cb94a831895200c5f0a7ef4dde6c1bb1e6000c794a6fdeb6a89a4ca5c616b982",
             "symbol": "compile_type_at"
           }
         ],
@@ -122645,12 +124697,12 @@
           },
           {
             "path": "crates/pkl-runtime/src/evaluation.rs",
-            "sha256": "bcc30b4ae11ecd610acfad61922587f567230d77158c39f93c78a571f25f602e",
+            "sha256": "75110508206f041b94d1901b9fb47b428166555b96719b0c1ec4ef243f4b1bb0",
             "symbol": "runtime_error"
           },
           {
             "path": "crates/pkl-runtime/src/diagnostic_values.rs",
-            "sha256": "52fa51a865a0a8cd97745eba742a65b0b86af23b81891db521a6114af333b10b",
+            "sha256": "b75d639176445395fab9b0c935ad1362fa5f78245124ca013b52a82d82aeaa95",
             "symbol": "Renderer"
           }
         ],
@@ -122664,7 +124716,7 @@
           "Recursive frame compression, general imported source stacks, first-error combinations and the complete parser/resolver/runtime diagnostic corpus remain open.",
           "Original selected cycle and remainder-zero failures remain failed."
         ],
-        "scope": "Reference constructor, access, constraint and rendering errors retain complete message, authored frame, foreign standard-library source and URI bytes in selected comparisons. Stage11 adds selected fixed declaration, inherited metadata and complete raw diagnostics through the shared VM.",
+        "scope": "Reference constructor, access, constraint and rendering errors retain complete message, authored frame, foreign standard-library source and URI bytes in selected comparisons. Stage11 adds selected fixed declaration, inherited metadata and complete raw diagnostics through the shared VM. Stage 13 adds selected alias/function metadata, exported-type equality and complete raw diagnostic comparisons; original suite execution and remaining scope stay open.",
         "source": "compatibility/m2-mappings.json"
       },
       "tests": {
@@ -123299,7 +125351,35 @@
           "fixed-stage11-duplicate-fixed-override-fixed",
           "fixed-stage11-carry-const-in-identifier",
           "fixed-stage11-carry-const-in-comment",
-          "fixed-stage11-carry-const-multiline-backtick"
+          "fixed-stage11-carry-const-multiline-backtick",
+          "types-stage13-alias-unknown-value",
+          "types-stage13-alias-direct-cycle",
+          "types-stage13-alias-mutual-cycle",
+          "types-stage13-alias-recursive-nullable",
+          "types-stage13-alias-recursive-list",
+          "types-stage13-alias-generic-bad-arity",
+          "types-stage13-alias-generic-mismatch",
+          "types-stage13-alias-mismatch",
+          "types-stage13-alias-nested-mismatch",
+          "types-stage13-alias-constraint-mismatch",
+          "types-stage13-alias-union-mismatch",
+          "types-stage13-reference-root-alias",
+          "types-stage13-reference-root-generic-alias",
+          "types-stage13-reference-function-alias-diagnostic",
+          "types-stage13-function-arity-zero",
+          "types-stage13-function-arity-two",
+          "types-stage13-function-nonfunction",
+          "types-stage13-function-alias-mismatch",
+          "types-stage13-function-return-type-missing",
+          "types-stage13-function-parameter-type-missing",
+          "types-stage13-function-unused-type-missing",
+          "types-stage13-function-default",
+          "types-stage13-function-declared-lambda-check",
+          "types-stage13-alias-mapping-same",
+          "types-stage13-alias-mapping-missing-key",
+          "types-stage13-quoted-alias-reference",
+          "types-stage13-generic-alias-reference",
+          "types-stage13-alias-class-reference"
         ],
         "state": "partial"
       }
@@ -129290,22 +131370,22 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/heap.rs",
-            "sha256": "3c35dd553bc37e5e8f5363e6c66d1d0cc74289a2f1d688da844c6ae105546334",
+            "sha256": "ffd14867249c625369595b23af2033ed3739c40c2f583edd7123a4bf50c3aff3",
             "symbol": "Member"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "cc9b70050024031c1f15b3114778454ed82134ef8253e7c5db971c5e22053d61",
+            "sha256": "cb94a831895200c5f0a7ef4dde6c1bb1e6000c794a6fdeb6a89a4ca5c616b982",
             "symbol": "validate_class_override"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "cc9b70050024031c1f15b3114778454ed82134ef8253e7c5db971c5e22053d61",
+            "sha256": "cb94a831895200c5f0a7ef4dde6c1bb1e6000c794a6fdeb6a89a4ca5c616b982",
             "symbol": "validate_object_override"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "cc9b70050024031c1f15b3114778454ed82134ef8253e7c5db971c5e22053d61",
+            "sha256": "cb94a831895200c5f0a7ef4dde6c1bb1e6000c794a6fdeb6a89a4ca5c616b982",
             "symbol": "initialize_member_types"
           }
         ],
@@ -129733,17 +131813,17 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/parser.rs",
-            "sha256": "1d67f99b6f13ba21fedb754803fa8f484a59509e18aaed6f8a3fbcde629bd949",
+            "sha256": "11bc56270e04ce92abe23154b26b48df8b68976888263fa0a20f4e597048d58f",
             "symbol": "import"
           },
           {
             "path": "crates/pkl-runtime/src/resolver.rs",
-            "sha256": "5ab702b97d8ab61b3c8e2cf4f49a00f52b076a6ce04a9cfd528f0fa91c757df1",
+            "sha256": "948492a5bb82920a5493f7d1532ec7ee8866f160a84a6b19c51f1c7dca872818",
             "symbol": "type_expression"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "cc9b70050024031c1f15b3114778454ed82134ef8253e7c5db971c5e22053d61",
+            "sha256": "cb94a831895200c5f0a7ef4dde6c1bb1e6000c794a6fdeb6a89a4ca5c616b982",
             "symbol": "compile_type_at"
           }
         ],
@@ -130960,22 +133040,22 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/vm/reference.rs",
-            "sha256": "4f4dbdab51e78e71765cce3a6e86820a35b51affdb1a7f9e2830b88f7093066b",
+            "sha256": "549dac0c046c2dbf3845671cacb2703d44690919fbcc1ec3608be73164265af9",
             "symbol": "Reference"
           },
           {
             "path": "crates/pkl-runtime/src/vm/reference.rs",
-            "sha256": "4f4dbdab51e78e71765cce3a6e86820a35b51affdb1a7f9e2830b88f7093066b",
+            "sha256": "549dac0c046c2dbf3845671cacb2703d44690919fbcc1ec3608be73164265af9",
             "symbol": "reference_access"
           },
           {
             "path": "crates/pkl-runtime/src/vm/reference.rs",
-            "sha256": "4f4dbdab51e78e71765cce3a6e86820a35b51affdb1a7f9e2830b88f7093066b",
+            "sha256": "549dac0c046c2dbf3845671cacb2703d44690919fbcc1ec3608be73164265af9",
             "symbol": "invoke_reference_native"
           },
           {
             "path": "crates/pkl-runtime/src/vm/typecheck.rs",
-            "sha256": "3beaa553488a91144e237d7fe69d021385575f267062adef990ed1237d7fdab7",
+            "sha256": "e1d8241e9f13c71b84210bc00b86bb6d499ff0420cf0e62ed0112156850a6434",
             "symbol": "step_type"
           }
         ],
@@ -132197,10 +134277,10 @@
   "sources": {
     "compatibility/corpus.json": "0e95da22f965dede398f1a1f136703ba913d588aa51c1fb871cd97a11c84a0dd",
     "compatibility/inventory.json": "a9b21752adad9a269a54854c0dd298256757be88ad95c1388e30d7c78e407070",
-    "compatibility/m2-mappings.json": "c4aa07e4563b0f1ddfe138f297ff114a4231b78a4d2a32af6421e7bc82888bb8",
+    "compatibility/m2-mappings.json": "408070264c4360c39be25b9f512546bf2373692038f35e5e1cc204eac1f70999",
     "compatibility/regressions.json": "09c064f65730d30f72bf87a45c88d47ecc0844e57966a999dc8e759f083af3da",
     "compatibility/rev1-inventory.json": "6061f202ba3f04565efed3617ac69d3c2fadc54eec1f562b67a4758b3d0a8ab5",
     "references.lock": "278f48fd7697459281aa78a706c9ca57222f36a8c0785d838a6449fbaf26d30b",
-    "tests/fixtures/m2/cases.json": "b45a64ce91c457cbb16134a016defd5f45539303aae4bafbc90c48653468bf96"
+    "tests/fixtures/m2/cases.json": "330b6ea892d8c03aaf8ca1e32f044cd09835026671f7e581098bde29323f50be"
   }
 }

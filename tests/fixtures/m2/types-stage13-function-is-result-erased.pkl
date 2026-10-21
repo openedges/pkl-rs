@@ -1,0 +1,3 @@
+module stage13.func
+p = (x) -> 3
+result = p is (Int) -> String

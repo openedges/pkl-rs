@@ -143,7 +143,7 @@ pub fn scalar_expressions_with_options(
         let result = evaluate()
             .map_err(|error| runtime_error(source, uri, name, expression, error, true))
             .and_then(|mut value| {
-                if vm.is_reference(&value) {
+                if vm.is_reference(&value) || matches!(value, Value::TypeAlias(_)) {
                     value = vm
                         .start(stringify, vec![value])
                         .and_then(|()| poll(&mut vm))

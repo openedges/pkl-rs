@@ -358,9 +358,11 @@ unimplemented or unverified. No new speed or memory parity claim is made.
 Deferred Reference values retain the domain, data, normalized referent type,
 access path, and required class objects in the shared heap. Synthetic property
 and subscript access consult declaration metadata without evaluating referent
-member bodies. Exported type normalization erases user constraints and aliases,
-flattens nullable unions, and removes authored spans from parameterized type
-identity. Type checks and structural equality remain distinct operations.
+member bodies. Exported type normalization erases ordinary user constraints and
+aliases and flattens nullable unions. Arrow function metadata remains opaque:
+its parameter and result types preserve nested alias identity and authored
+constraint text, including whitespace. Type checks and exported metadata equality
+remain distinct operations.
 Reference forcing, hashing, and domain rendering use the existing VM scheduler
 and GC roots. Domain rendering runs ordinary method bytecode and can suspend for
 Host input, reenter, fail, retry, or terminate through the same lifecycle.
@@ -410,8 +412,8 @@ prefix. Later access returns that same partial class without resuming its
 initialization. The immutable shared `Program` never owns heap handles.
 
 This cache is separate from ordinary member caches. Failed lazy properties still
-become unevaluated and retry normally. Only an active direct class declaration
-can return its published singleton before the ordinary forcing-cycle check;
+become unevaluated and retry normally. Only active direct class or type-alias
+declarations can return their published singleton before the ordinary forcing-cycle check;
 arbitrary properties and functions keep their cycle detection. Recursive class
 types resolve a real class handle instead of a placeholder null value.
 
@@ -443,3 +445,39 @@ outside verified compatibility. Java can also suspend class initialization while
 evaluating an annotation containing a resource read. Annotation syntax is not yet
 supported by the Rust frontend. Internal instruction suspension tests verify VM
 reentry and cleanup separately from that unimplemented source-language path.
+
+### Type aliases and function metadata
+
+User type aliases have a separate evaluator-owned declaration cache. Initialization
+publishes the alias value before resolving its definition. A failed definition
+leaves the value available for later identity, name, class, and rendering queries;
+using that unfinished alias as a type reports the pinned cyclic-alias diagnostic.
+Ordinary lazy wrappers still retry. Supported deferred annotations, constructors,
+and superclass expressions consult the alias cache at their authored type use.
+Alias singletons retain their first captured environment, remain strong GC roots,
+and follow the same nonterminal preservation and terminal release rules as classes.
+Shared Programs contain declaration keys rather than evaluator heap handles.
+
+Named aliases retain declaration identity and generic arguments independently of
+their expanded validation type. Omitted generic arguments use unknown types;
+explicit argument counts are checked. Ordinary alias value mismatches report the
+expanded type; Reference expected-type diagnostics retain qualified alias names
+and type arguments. The scalar evaluation boundary renders alias values
+through the common engine in native, Node, and Wasm.
+
+Function annotations retain parameter and result metadata. Arrow and `FunctionN`
+annotations check arity; `Function` accepts any supported function arity. An
+annotation does not install argument or result wrappers around a lambda. A lambda's
+own declared parameter checks still run when it is called.
+The current class metadata recognizes `Function` and `Function0` through
+`Function5`. Reference subtype checks follow exported metadata rules separately
+from equality: arrow metadata is not structurally subtyped, while supported
+Function class metadata checks exact type-argument counts and parameter/result
+variance. Exported arrow metadata equality and hashing preserve nested alias
+declarations and exact constraint text. The parsed module retains its source text
+for these identities.
+
+These changes do not implement a fully lazy runtime type-node resolver. Mixed
+unresolved-name/dependency error ordering, failing generic-parameter shadowing,
+complete annotations, imported types, structural types, reflection, and the
+original upstream type/function suites remain unverified or unimplemented.

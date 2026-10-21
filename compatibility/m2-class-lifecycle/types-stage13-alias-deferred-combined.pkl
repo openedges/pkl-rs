@@ -1,0 +1,8 @@
+typealias A = Missing
+test = 1 is A
+cast = 1 as A
+localValue = let (x: A = 1) x
+lambda = (x: A) -> x
+construction = new A {}
+class Child extends A {}
+child = Child

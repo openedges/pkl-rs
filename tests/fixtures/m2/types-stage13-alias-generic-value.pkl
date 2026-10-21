@@ -1,0 +1,3 @@
+module stage13.alias
+typealias A<T> = List<T>
+result = A

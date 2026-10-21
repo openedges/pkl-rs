@@ -113,7 +113,16 @@ fn is_base_method(name: &str) -> bool {
 fn is_base_class(name: &str) -> bool {
     matches!(
         name,
-        "Any"
+        "Class"
+            | "TypeAlias"
+            | "Function"
+            | "Function0"
+            | "Function1"
+            | "Function2"
+            | "Function3"
+            | "Function4"
+            | "Function5"
+            | "Any"
             | "Null"
             | "Boolean"
             | "Int"

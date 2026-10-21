@@ -1,0 +1,4 @@
+module stage13.alias
+typealias A = String(length > 3)
+p: A = "x"
+result = p

@@ -1,0 +1,4 @@
+module stage13.func
+typealias F = (Int) -> String
+p: F = 2
+result = p

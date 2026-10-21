@@ -90,7 +90,14 @@ impl Vm {
             Value::Bytes(value) => Some(value.iter().fold(1i32, |hash, byte| {
                 hash.wrapping_mul(31).wrapping_add(i32::from(*byte as i8))
             })),
-            Value::Function(_) | Value::TypeAlias(_) => None,
+            Value::Function(_) => None,
+            Value::TypeAlias(id) => self.heap.get(*id)?.type_alias.as_ref().map(|name| {
+                if name.contains('#') {
+                    string_hash(name)
+                } else {
+                    string_hash(&format!("pkl.base#{name}"))
+                }
+            }),
             Value::Class(id) => {
                 self.heap.get(*id)?.class_definition.as_ref().map(|class| {
                     string_hash(&format!("{}#{}", self.program.module_name, class.name))
@@ -801,7 +808,8 @@ impl Vm {
                         if x.reference.is_some() || y.reference.is_some() {
                             match (&x.reference, &y.reference) {
                                 (Some(x), Some(y)) => {
-                                    if !x.referent.equivalent(&y.referent)
+                                    if reference::metadata_key(&x.referent)
+                                        != reference::metadata_key(&y.referent)
                                         || x.path.len() != y.path.len()
                                     {
                                         run.tasks.push(Task::Reject);
@@ -1118,7 +1126,7 @@ impl Vm {
                         (
                             false,
                             Atom::Int(2),
-                            Atom::ReferenceType(format!("{:?}", reference.referent)),
+                            Atom::ReferenceType(reference::metadata_key(&reference.referent)),
                         ),
                     ];
                     for (index, value) in reference.path.iter().enumerate() {

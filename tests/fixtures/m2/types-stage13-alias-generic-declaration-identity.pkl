@@ -1,0 +1,3 @@
+typealias A<T> = T
+typealias B<T> = T
+result = A == A && A != B

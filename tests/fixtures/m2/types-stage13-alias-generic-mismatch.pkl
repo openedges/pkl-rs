@@ -1,0 +1,4 @@
+module stage13.alias
+typealias A<T> = T
+p: A<String> = 2
+result = p

@@ -18,6 +18,13 @@ use typecheck::{TypeDestination, TypeRun};
 pub enum Instruction {
     LoadRefModule,
     BuiltinTypeAlias(Arc<str>),
+    BeginTypeAlias {
+        declaration: usize,
+        name: Arc<str>,
+        end: usize,
+    },
+    FinishTypeAlias,
+    CheckTypeAliasInitialized,
     BuiltinClass(TypeCheck),
     ReferenceRenderMethod,
     Constant(Value),
@@ -176,10 +183,24 @@ pub enum Instruction {
 }
 
 /// Type checks supported by the shared evaluator. Parametric collections use
-/// resumable checks and lazy wrappers; structural/function types remain unsupported.
+/// resumable checks and lazy wrappers; function types preserve metadata and check arity.
 #[derive(Clone, Debug)]
 pub enum TypeCheck {
     Unknown,
+    /// Declaration identity and arguments are retained independently of validation.
+    NamedAlias {
+        declaration: usize,
+        name: Arc<str>,
+        arguments: Vec<TypeCheck>,
+        expanded: Box<TypeCheck>,
+    },
+    /// Function annotations validate arity; their parameter/result types are metadata.
+    Function {
+        parameters: Option<Vec<TypeCheck>>,
+        result: Box<TypeCheck>,
+        syntax: bool,
+    },
+    MetaClass(Arc<str>),
     IntegerAlias {
         name: Arc<str>,
         min: i64,
@@ -232,12 +253,17 @@ pub struct ConstraintCode {
     block: usize,
     span: Span,
     module_environment: bool,
+    source: Arc<str>,
 }
 
 impl TypeCheck {
     fn unaliased(&self) -> &Self {
         match self {
-            Self::Alias(inner) | Self::GenericAlias(inner) => inner.unaliased(),
+            Self::Alias(inner)
+            | Self::GenericAlias(inner)
+            | Self::NamedAlias {
+                expanded: inner, ..
+            } => inner.unaliased(),
             _ => self,
         }
     }
@@ -245,6 +271,29 @@ impl TypeCheck {
         let left = self.unaliased();
         let right = other.unaliased();
         match (left, right) {
+            (Self::MetaClass(a), Self::MetaClass(b)) => a == b,
+            (
+                Self::Function {
+                    parameters: a,
+                    result: ar,
+                    syntax: as_,
+                },
+                Self::Function {
+                    parameters: b,
+                    result: br,
+                    syntax: bs,
+                },
+            ) => {
+                as_ == bs
+                    && ar.equivalent(br)
+                    && match (a, b) {
+                        (None, None) => true,
+                        (Some(a), Some(b)) => {
+                            a.len() == b.len() && a.iter().zip(b).all(|(a, b)| a.equivalent(b))
+                        }
+                        _ => false,
+                    }
+            }
             (
                 Self::Reference {
                     domain: ad,
@@ -323,7 +372,11 @@ impl TypeCheck {
     fn noop(&self) -> bool {
         match self {
             Self::Any | Self::Unknown => true,
-            Self::Alias(inner) | Self::GenericAlias(inner) => inner.noop(),
+            Self::Alias(inner)
+            | Self::GenericAlias(inner)
+            | Self::NamedAlias {
+                expanded: inner, ..
+            } => inner.noop(),
             Self::Union { types, .. } => types.iter().all(Self::noop),
             _ => false,
         }
@@ -331,6 +384,13 @@ impl TypeCheck {
     fn accepts(&self, value: &Value, heap: &Heap) -> bool {
         match self {
             Self::Any | Self::Unknown => true,
+            Self::MetaClass(name) => matches!(
+                (name.as_ref(), value),
+                ("TypeAlias", Value::TypeAlias(_)) | ("Class", Value::Class(_))
+            ),
+            Self::Function { parameters, .. } => {
+                matches!(value, Value::Function(id) if heap.get(*id).is_ok_and(|object| parameters.as_ref().is_none_or(|parameters| object.function.as_ref().is_some_and(|function| function.arity == parameters.len()) || object.native_function.as_ref().is_some_and(|function| parameters.len() == if function.name.as_ref() == "Reference" {3} else {0}))))
+            }
             Self::RefDomain => Self::Class {
                 id: reference::DOMAIN_ID,
                 name: Arc::from("Domain"),
@@ -386,7 +446,11 @@ impl TypeCheck {
                 matches!(value, Value::String(actual) if actual == expected)
             }
             Self::Nullable(inner) => matches!(value, Value::Null) || inner.accepts(value, heap),
-            Self::Alias(inner) | Self::GenericAlias(inner) => inner.accepts(value, heap),
+            Self::Alias(inner)
+            | Self::GenericAlias(inner)
+            | Self::NamedAlias {
+                expanded: inner, ..
+            } => inner.accepts(value, heap),
             Self::Union { types, .. } => types.iter().any(|ty| ty.accepts(value, heap)),
             Self::Constrained { .. } => false,
         }
@@ -562,6 +626,7 @@ pub struct Vm {
     /// Keys belong to this immutable Program; values belong only to this evaluator.
     /// Reentering or restarting a declaration retains its first captured environment.
     class_singletons: BTreeMap<usize, ObjectId>,
+    alias_singletons: BTreeMap<usize, ObjectId>,
 }
 
 impl Vm {
@@ -594,6 +659,7 @@ impl Vm {
             code_validation,
             power_assertions: false,
             class_singletons: BTreeMap::new(),
+            alias_singletons: BTreeMap::new(),
         }
     }
 
@@ -805,6 +871,7 @@ impl Vm {
         self.inputs = Vec::new();
         self.state = State::Closed;
         self.class_singletons.clear();
+        self.alias_singletons.clear();
         self.heap.release();
         self.program = Arc::new(Program::new(Vec::new()));
     }
@@ -846,6 +913,12 @@ impl Vm {
     pub fn collect(&mut self, external_roots: &[Value]) -> HeapStats {
         let mut roots = external_roots.to_vec();
         roots.extend(self.class_singletons.values().copied().map(Value::Class));
+        roots.extend(
+            self.alias_singletons
+                .values()
+                .copied()
+                .map(Value::TypeAlias),
+        );
         for (stack, inputs, frames, state) in self
             .suspended
             .iter()
@@ -1257,6 +1330,17 @@ impl Vm {
             && let Some(id) = self.class_singletons.get(template).copied()
         {
             self.stack.push(Value::Class(id));
+            return Ok(());
+        }
+        if active
+            && let Some(Instruction::BeginTypeAlias { declaration, .. }) = self
+                .program
+                .blocks
+                .get(member.code)
+                .and_then(|block| block.first())
+            && let Some(id) = self.alias_singletons.get(declaration).copied()
+        {
+            self.stack.push(Value::TypeAlias(id));
             return Ok(());
         }
         if memoize
@@ -1952,10 +2036,53 @@ impl Vm {
         };
         frame.pc += 1;
         match instruction {
+            Instruction::BeginTypeAlias {
+                declaration,
+                name,
+                end,
+            } => {
+                if let Some(id) = self.alias_singletons.get(&declaration).copied() {
+                    self.stack.push(Value::TypeAlias(id));
+                    self.frames.last_mut().expect("active frame").pc = end;
+                } else {
+                    let environment = self
+                        .frames
+                        .last()
+                        .expect("active frame")
+                        .environment
+                        .clone();
+                    let name = Arc::from(format!("{}{}", self.program.module_name, name));
+                    let id = self.heap.allocate(Object {
+                        type_alias: Some(name),
+                        environment,
+                        ..Object::default()
+                    });
+                    self.alias_singletons.insert(declaration, id);
+                    self.stack.push(Value::TypeAlias(id));
+                }
+            }
+            Instruction::FinishTypeAlias => {
+                let Some(Value::TypeAlias(id)) = self.stack.last().cloned() else {
+                    return Err(invalid("missing alias initialization target"));
+                };
+                self.heap.get_mut(id)?.type_alias_initialized = true;
+            }
+            Instruction::CheckTypeAliasInitialized => {
+                let Value::TypeAlias(id) = self.pop()? else {
+                    return Err(invalid("missing alias type"));
+                };
+                if !self.heap.get(id)?.type_alias_initialized {
+                    return Err(RuntimeError::new(
+                        ErrorKind::Cycle,
+                        "Type alias definitions must not be cyclic.",
+                    ));
+                }
+            }
             Instruction::BuiltinTypeAlias(name) => {
                 let id = self.heap.find_type_alias(&name).unwrap_or_else(|| {
                     self.heap.allocate(Object {
                         type_alias: Some(name),
+                        type_alias_initialized: true,
                         ..Object::default()
                     })
                 });
@@ -2123,6 +2250,17 @@ impl Vm {
                     && self.heap.get(id)?.reference.is_some()
                 {
                     self.render_reference(id)?;
+                } else if matches!(
+                    value,
+                    Value::TypeAlias(_) | Value::Class(_) | Value::Function(_)
+                ) {
+                    let text = crate::diagnostic_values::render(
+                        &value,
+                        &self.heap,
+                        &self.program.module_name,
+                        usize::MAX,
+                    )?;
+                    self.stack.push(Value::string(text));
                 } else {
                     self.stack.push(Value::string(scalar_string(&value)?));
                 }
@@ -2163,7 +2301,16 @@ impl Vm {
                     Instruction::GetConstMember(_) | Instruction::GetConstMethod(_)
                 );
                 let receiver = self.pop()?;
-                if method && name.as_ref() == "getClass" {
+                if !method
+                    && let Value::String(text) = &receiver
+                    && matches!(name.as_ref(), "length" | "isEmpty")
+                {
+                    self.stack.push(if name.as_ref() == "length" {
+                        Value::Int(text.chars().count() as i64)
+                    } else {
+                        Value::Bool(text.is_empty())
+                    });
+                } else if method && name.as_ref() == "getClass" {
                     let function = self.native_reference_method(receiver, "getClass");
                     self.stack.push(function);
                 } else if matches!(receiver, Value::Function(_))
@@ -3148,9 +3295,12 @@ fn authored_type_constraints(ty: &crate::syntax::Type) -> bool {
 fn reference_constrained_type(check: &TypeCheck) -> Option<&TypeCheck> {
     match check {
         TypeCheck::Constrained { .. } => Some(check),
-        TypeCheck::Nullable(inner) | TypeCheck::Alias(inner) | TypeCheck::GenericAlias(inner) => {
-            reference_constrained_type(inner)
-        }
+        TypeCheck::Nullable(inner)
+        | TypeCheck::Alias(inner)
+        | TypeCheck::GenericAlias(inner)
+        | TypeCheck::NamedAlias {
+            expanded: inner, ..
+        } => reference_constrained_type(inner),
         TypeCheck::ParameterizedCollection { arguments, .. } => arguments
             .iter()
             .find_map(|(ty, _)| reference_constrained_type(ty)),
@@ -3483,6 +3633,25 @@ impl Compiler<'_> {
                             .initialization_error
                             .clone()
                         {
+                            // Expansion failures still resolve declaration identities at
+                            // runtime, including a previously published partial alias.
+                            if let Some(ty) = &member.ty {
+                                self.initialize_alias_dependencies(ty, output);
+                            }
+                            if let ExprKind::Function {
+                                parameters,
+                                return_type,
+                                ..
+                            } = &member.expr.kind
+                            {
+                                for ty in parameters
+                                    .iter()
+                                    .filter_map(|p| p.ty.as_ref())
+                                    .chain(return_type.iter())
+                                {
+                                    self.initialize_alias_dependencies(ty, output);
+                                }
+                            }
                             output.push_at(
                                 Instruction::Fail(error.clone()),
                                 error.span.unwrap_or(member.span),
@@ -3503,21 +3672,64 @@ impl Compiler<'_> {
                     *target = end;
                 }
             }
-            ExprKind::TypeAlias { .. } => {
-                // Declarations are lazy. Expand only when a type annotation or constructor uses the alias.
-                output.push(Instruction::Unsupported(Arc::from(
-                    "type alias values and reflection are not implemented",
-                )));
+            ExprKind::TypeAlias {
+                type_parameters,
+                ty,
+            } => {
+                let begin = output.len();
+                let declaration_name = self
+                    .resolved
+                    .module
+                    .members
+                    .iter()
+                    .find(|member| member.expr.span == expression.span)
+                    .map(|member| {
+                        format!(
+                            "#{}",
+                            &self.resolved.module.source
+                                [member.name_span.start..member.name_span.end]
+                        )
+                    })
+                    .unwrap_or_else(|| self.member.clone());
+                output.push(Instruction::BeginTypeAlias {
+                    declaration: expression.span.start,
+                    name: Arc::from(declaration_name),
+                    end: 0,
+                });
+                let parameters = type_parameters
+                    .iter()
+                    .map(|parameter| (parameter.name.clone(), TypeCheck::Unknown))
+                    .collect();
+                match self.compile_type_at(
+                    ty,
+                    self.type_scopes.len(),
+                    &mut BTreeSet::new(),
+                    &parameters,
+                ) {
+                    Ok(check) => self.initialize_type(&check, ty.span, output),
+                    Err(error) => {
+                        self.initialize_alias_dependencies(ty, output);
+                        let span = error.span.unwrap_or(ty.span);
+                        output.push_at(Instruction::Fail(error), span);
+                    }
+                }
+                output.push(Instruction::FinishTypeAlias);
+                let end = output.len();
+                if let Instruction::BeginTypeAlias { end: target, .. } = &mut output[begin] {
+                    *target = end;
+                }
             }
             ExprKind::New { ty, members } => {
                 let check = match self.compile_type(ty) {
                     Ok(check) => check,
                     Err(error) => {
+                        self.initialize_alias_dependencies(ty, output);
                         let span = error.span.unwrap_or(ty.span);
                         output.push_at(Instruction::Fail(error), span);
                         return Ok(());
                     }
                 };
+                self.initialize_alias_dependencies(ty, output);
                 if let TypeCheck::Collection(kind)
                 | TypeCheck::ParameterizedCollection { kind, .. } = check.unaliased()
                 {
@@ -4083,6 +4295,11 @@ fn type_error_at_width(
 fn type_name(ty: &TypeCheck, module: &str) -> String {
     match ty {
         TypeCheck::Unknown => "unknown".into(),
+        TypeCheck::MetaClass(name) => name.to_string(),
+        TypeCheck::Function { parameters, .. } => parameters
+            .as_ref()
+            .map_or_else(|| "Function".into(), |p| format!("Function{}", p.len())),
+        TypeCheck::NamedAlias { expanded, .. } => type_name(expanded, module),
         TypeCheck::IntegerAlias { name, .. } => name.to_string(),
         TypeCheck::RefDomain => "pkl.ref#Domain".into(),
         TypeCheck::Reference { .. } => "pkl.ref#Reference".into(),
@@ -4222,8 +4439,92 @@ impl Compiler<'_> {
         Ok(())
     }
 
+    /// Preserve publication order even when static expansion discovers a cycle.
+    fn initialize_alias_dependencies(&mut self, ty: &crate::syntax::Type, output: &mut Code) {
+        use crate::syntax::TypeKind;
+        match &ty.kind {
+            TypeKind::Named {
+                path, arguments, ..
+            } => {
+                if path.len() == 1
+                    && let Some((member, _)) = self.find_type(&path[0], self.type_scopes.len())
+                    && matches!(member.expr.kind, crate::syntax::ExprKind::TypeAlias { .. })
+                {
+                    output.push_at(
+                        Instruction::ResolveClassType {
+                            name: Arc::from(member.name.as_str()),
+                            local: crate::syntax::modifier_flags(&member.modifiers)
+                                & crate::syntax::ModifierKind::Local.flag()
+                                != 0,
+                        },
+                        ty.span,
+                    );
+                    output.push_at(Instruction::CheckTypeAliasInitialized, ty.span);
+                }
+                for argument in arguments {
+                    self.initialize_alias_dependencies(argument, output);
+                }
+            }
+            TypeKind::Nullable(inner) | TypeKind::Constrained { base: inner, .. } => {
+                self.initialize_alias_dependencies(inner, output)
+            }
+            TypeKind::Union { types, .. } => {
+                for ty in types {
+                    self.initialize_alias_dependencies(ty, output);
+                }
+            }
+            TypeKind::Function {
+                parameters,
+                return_type,
+            } => {
+                for ty in parameters {
+                    self.initialize_alias_dependencies(ty, output);
+                }
+                self.initialize_alias_dependencies(return_type, output);
+            }
+            _ => {}
+        }
+    }
+
     fn initialize_type(&mut self, check: &TypeCheck, span: Span, output: &mut Code) {
         match check {
+            TypeCheck::NamedAlias {
+                declaration,
+                expanded,
+                arguments,
+                ..
+            } => {
+                if let Some(member) = self
+                    .resolved
+                    .module
+                    .members
+                    .iter()
+                    .find(|member| member.expr.span.start == *declaration)
+                {
+                    output.push_at(
+                        Instruction::ResolveClassType {
+                            name: Arc::from(member.name.as_str()),
+                            local: crate::syntax::modifier_flags(&member.modifiers)
+                                & crate::syntax::ModifierKind::Local.flag()
+                                != 0,
+                        },
+                        span,
+                    );
+                    output.push_at(Instruction::CheckTypeAliasInitialized, span);
+                }
+                for ty in arguments {
+                    self.initialize_type(ty, span, output);
+                }
+                self.initialize_type(expanded, span, output);
+            }
+            TypeCheck::Function {
+                parameters, result, ..
+            } => {
+                for ty in parameters.iter().flatten() {
+                    self.initialize_type(ty, span, output);
+                }
+                self.initialize_type(result, span, output);
+            }
             TypeCheck::Class { id, .. } => {
                 if let Some(member) = self
                     .resolved
@@ -4285,6 +4586,7 @@ impl Compiler<'_> {
                 Some(check)
             }
             Err(error) => {
+                self.initialize_alias_dependencies(ty, output);
                 output.push_at(Instruction::Fail(error.at(ty.span)), ty.span);
                 None
             }
@@ -4389,6 +4691,18 @@ impl Compiler<'_> {
         Ok(match &ty.kind {
             TypeKind::Unknown => TypeCheck::Unknown,
             TypeKind::Nothing => TypeCheck::Nothing,
+            TypeKind::Function {
+                parameters: args,
+                return_type,
+            } => TypeCheck::Function {
+                parameters: Some(
+                    args.iter()
+                        .map(|ty| self.compile_type_at(ty, limit, aliases, parameters))
+                        .collect::<Result<_, _>>()?,
+                ),
+                result: Box::new(self.compile_type_at(return_type, limit, aliases, parameters)?),
+                syntax: true,
+            },
             TypeKind::String(value) => TypeCheck::StringLiteral(Arc::from(value.as_str())),
             TypeKind::Nullable(inner) => TypeCheck::Nullable(Box::new(
                 self.compile_type_at(inner, limit, aliases, parameters)?,
@@ -4397,6 +4711,9 @@ impl Compiler<'_> {
                 let base_check = self.compile_type_at(base, limit, aliases, parameters)?;
                 let mut compiled = Vec::new();
                 for expression in constraints {
+                    let source: Arc<str> = Arc::from(
+                        &self.resolved.module.source[expression.span.start..expression.span.end],
+                    );
                     let expression = expression.unparenthesized();
                     let previous =
                         std::mem::replace(&mut self.active_type_parameters, parameters.clone());
@@ -4425,6 +4742,7 @@ impl Compiler<'_> {
                         block,
                         span: expression.span,
                         module_environment: self.constraint_module,
+                        source,
                     });
                 }
                 TypeCheck::Constrained {
@@ -4547,7 +4865,7 @@ impl Compiler<'_> {
                         return Err(RuntimeError::new(
                             ErrorKind::Type,
                             format!(
-                                "Expected {} type arguments but got {}.",
+                                "Expected {} type argument(s) but got {}.",
                                 if path[1] == "Reference" { 2 } else { 0 },
                                 arguments.len()
                             ),
@@ -4593,11 +4911,11 @@ impl Compiler<'_> {
                             type_parameters,
                             ty: aliased,
                         } => {
-                            if type_parameters.len() != arguments.len() {
+                            if !arguments.is_empty() && type_parameters.len() != arguments.len() {
                                 return Err(RuntimeError::new(
                                     ErrorKind::Type,
                                     format!(
-                                        "Expected {} type arguments but got {}.",
+                                        "Expected {} type argument(s) but got {}.",
                                         type_parameters.len(),
                                         arguments.len()
                                     ),
@@ -4610,6 +4928,12 @@ impl Compiler<'_> {
                                     self.compile_type_at(argument, limit, aliases, parameters)
                                 })
                                 .collect::<Result<Vec<_>, _>>()?;
+                            let metadata_arguments = actual.clone();
+                            let actual = if actual.is_empty() {
+                                vec![TypeCheck::Unknown; type_parameters.len()]
+                            } else {
+                                actual
+                            };
                             let substitutions = type_parameters
                                 .iter()
                                 .zip(actual)
@@ -4656,10 +4980,19 @@ impl Compiler<'_> {
                             self.parameter_spans = previous_spans;
                             let result = result?;
                             aliases.remove(&member.expr.span);
-                            if type_parameters.is_empty() {
-                                TypeCheck::Alias(Box::new(result))
-                            } else {
-                                TypeCheck::GenericAlias(Box::new(result))
+                            TypeCheck::NamedAlias {
+                                declaration: member.expr.span.start,
+                                name: Arc::from(
+                                    self.resolved.module.source
+                                        [member.name_span.start..member.name_span.end]
+                                        .to_owned(),
+                                ),
+                                arguments: metadata_arguments,
+                                expanded: Box::new(if arguments.is_empty() {
+                                    TypeCheck::Alias(Box::new(result))
+                                } else {
+                                    TypeCheck::GenericAlias(Box::new(result))
+                                }),
                             }
                         }
                         _ => {
@@ -4671,6 +5004,39 @@ impl Compiler<'_> {
                         }
                     }
                 } else {
+                    if path[0] == "Function"
+                        || path[0]
+                            .strip_prefix("Function")
+                            .is_some_and(|n| matches!(n, "0" | "1" | "2" | "3" | "4" | "5"))
+                    {
+                        let arity = path[0]
+                            .strip_prefix("Function")
+                            .and_then(|n| n.parse::<usize>().ok());
+                        let expected = arity.map_or(1, |n| n + 1);
+                        if !arguments.is_empty() && arguments.len() != expected {
+                            return Err(RuntimeError::new(
+                                ErrorKind::Type,
+                                format!(
+                                    "Expected {expected} type argument(s) but got {}.",
+                                    arguments.len()
+                                ),
+                            ));
+                        }
+                        let mut args = if arguments.is_empty() {
+                            vec![TypeCheck::Unknown; expected]
+                        } else {
+                            arguments
+                                .iter()
+                                .map(|ty| self.compile_type_at(ty, limit, aliases, parameters))
+                                .collect::<Result<Vec<_>, _>>()?
+                        };
+                        let result = Box::new(args.pop().expect("return type"));
+                        return Ok(TypeCheck::Function {
+                            parameters: arity.map(|_| args),
+                            result,
+                            syntax: false,
+                        });
+                    }
                     if !arguments.is_empty() {
                         let kind = match path[0].as_str() {
                             "Listing" => crate::heap::CollectionKind::Listing,
@@ -4687,7 +5053,7 @@ impl Compiler<'_> {
                             return Err(RuntimeError::new(
                                 ErrorKind::Type,
                                 format!(
-                                    "Expected {arity} type arguments but got {}.",
+                                    "Expected {arity} type argument(s) but got {}.",
                                     arguments.len()
                                 ),
                             ));
@@ -4704,6 +5070,7 @@ impl Compiler<'_> {
                         return Ok(TypeCheck::ParameterizedCollection { kind, arguments });
                     }
                     match path[0].as_str() {
+                        "Class" | "TypeAlias" => TypeCheck::MetaClass(Arc::from(path[0].as_str())),
                         "Any" => TypeCheck::Any,
                         "NonNull" => TypeCheck::NonNull,
                         "Null" => TypeCheck::Null,
@@ -4760,6 +5127,7 @@ impl Compiler<'_> {
         limit: usize,
         aliases: &mut BTreeSet<Span>,
     ) -> Result<(), RuntimeError> {
+        self.initialize_alias_dependencies(ty, output);
         let check = self
             .compile_type_at(ty, limit, aliases, &BTreeMap::new())
             .map_err(|error| error.at(ty.span))?;
@@ -4856,7 +5224,11 @@ impl Compiler<'_> {
                 ..
             } => return self.default_type(&types[*index], output, span),
             TypeCheck::Constrained { base, .. } => return self.default_type(base, output, span),
-            TypeCheck::Alias(inner) | TypeCheck::GenericAlias(inner) => {
+            TypeCheck::Alias(inner)
+            | TypeCheck::GenericAlias(inner)
+            | TypeCheck::NamedAlias {
+                expanded: inner, ..
+            } => {
                 return self.default_type(inner, output, span);
             }
             TypeCheck::Collection(kind) | TypeCheck::ParameterizedCollection { kind, .. } => {

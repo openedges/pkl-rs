@@ -185,10 +185,44 @@
           "fixed-stage11-reference-metadata-local",
           "fixed-stage11-reference-metadata-constraint",
           "fixed-stage11-relation-reference-unforced-fixed-left",
-          "fixed-stage11-relation-reference-unforced-fixed-right"
+          "fixed-stage11-relation-reference-unforced-fixed-right",
+          "types-stage13-reference-root-alias",
+          "types-stage13-reference-root-generic-alias",
+          "types-stage13-reference-property-alias",
+          "types-stage13-reference-function-equal",
+          "types-stage13-reference-function-parameter-different",
+          "types-stage13-reference-function-result-different",
+          "types-stage13-reference-function-arity-different",
+          "types-stage13-reference-function-alias-equivalent",
+          "types-stage13-reference-function-alias-diagnostic",
+          "types-stage13-reference-function-variance",
+          "types-stage13-reference-function-bare",
+          "types-stage13-reference-function-one",
+          "types-stage13-reference-function-any",
+          "types-stage13-reference-bare-equivalent",
+          "types-stage13-reference-bare-to-arrow",
+          "types-stage13-reference-arrow-to-bare",
+          "types-stage13-reference-arrow-constraint",
+          "types-stage13-reference-arrow-result-constraint",
+          "types-stage13-quoted-alias-value",
+          "types-stage13-quoted-alias-reference",
+          "types-stage13-generic-alias-reference",
+          "types-stage13-alias-class-reference",
+          "types-stage13-reference-function-equality-same",
+          "types-stage13-reference-function-equality-alias-arg",
+          "types-stage13-reference-function-equality-alias-result",
+          "types-stage13-reference-function-equality-same-constraint",
+          "types-stage13-reference-function-equality-constraint-whitespace",
+          "types-stage13-reference-function-equality-nullable-alias",
+          "types-stage13-reference-function-equality-list-alias",
+          "types-stage13-reference-function1-to-function",
+          "types-stage13-reference-function0-to-function",
+          "types-stage13-reference-nested-arrow",
+          "types-stage13-reference-arg-variance",
+          "types-stage13-reference-result-variance"
         ]
       },
-      "scope": "The pkl:ref bridge supports selected constructor, normalized referent type, synthetic property/subscript path, domain rendering, equality and key behavior through the shared VM. Linked native cases compare complete Java 0.32.0 process output at their actual fixture URIs. Stage11 adds selected fixed declaration, inherited metadata and complete raw diagnostics through the shared VM.",
+      "scope": "The pkl:ref bridge supports selected constructor, normalized referent type, synthetic property/subscript path, domain rendering, equality and key behavior through the shared VM. Linked native cases compare complete Java 0.32.0 process output at their actual fixture URIs. Stage11 adds selected fixed declaration, inherited metadata and complete raw diagnostics through the shared VM. Stage 13 adds selected alias/function metadata, exported-type equality and complete raw diagnostic comparisons; original suite execution and remaining scope stay open.",
       "remaining": [
         "Original upstream reference snippet and renderer/API suite contracts remain unexecuted; selected API-expression exploration is separate evidence.",
         "Complete referent metadata for all builtin types, generic classes and remaining collection types is not implemented or verified.",
@@ -308,10 +342,44 @@
           "fixed-stage11-reference-metadata-local",
           "fixed-stage11-reference-metadata-constraint",
           "fixed-stage11-relation-reference-unforced-fixed-left",
-          "fixed-stage11-relation-reference-unforced-fixed-right"
+          "fixed-stage11-relation-reference-unforced-fixed-right",
+          "types-stage13-reference-root-alias",
+          "types-stage13-reference-root-generic-alias",
+          "types-stage13-reference-property-alias",
+          "types-stage13-reference-function-equal",
+          "types-stage13-reference-function-parameter-different",
+          "types-stage13-reference-function-result-different",
+          "types-stage13-reference-function-arity-different",
+          "types-stage13-reference-function-alias-equivalent",
+          "types-stage13-reference-function-alias-diagnostic",
+          "types-stage13-reference-function-variance",
+          "types-stage13-reference-function-bare",
+          "types-stage13-reference-function-one",
+          "types-stage13-reference-function-any",
+          "types-stage13-reference-bare-equivalent",
+          "types-stage13-reference-bare-to-arrow",
+          "types-stage13-reference-arrow-to-bare",
+          "types-stage13-reference-arrow-constraint",
+          "types-stage13-reference-arrow-result-constraint",
+          "types-stage13-quoted-alias-value",
+          "types-stage13-quoted-alias-reference",
+          "types-stage13-generic-alias-reference",
+          "types-stage13-alias-class-reference",
+          "types-stage13-reference-function-equality-same",
+          "types-stage13-reference-function-equality-alias-arg",
+          "types-stage13-reference-function-equality-alias-result",
+          "types-stage13-reference-function-equality-same-constraint",
+          "types-stage13-reference-function-equality-constraint-whitespace",
+          "types-stage13-reference-function-equality-nullable-alias",
+          "types-stage13-reference-function-equality-list-alias",
+          "types-stage13-reference-function1-to-function",
+          "types-stage13-reference-function0-to-function",
+          "types-stage13-reference-nested-arrow",
+          "types-stage13-reference-arg-variance",
+          "types-stage13-reference-result-variance"
         ]
       },
-      "scope": "Selected class, inherited property and normalized type metadata are used for Reference access without forcing referent bodies. Stage11 adds selected fixed declaration, inherited metadata and complete raw diagnostics through the shared VM.",
+      "scope": "Selected class, inherited property and normalized type metadata are used for Reference access without forcing referent bodies. Stage11 adds selected fixed declaration, inherited metadata and complete raw diagnostics through the shared VM. Stage 13 adds selected alias/function metadata, exported-type equality and complete raw diagnostic comparisons; original suite execution and remaining scope stay open.",
       "remaining": [
         "The full reflection API, module/class/type metadata inventory, dynamic nested declaration identity and generic class metadata remain unimplemented or unverified."
       ]
@@ -465,10 +533,38 @@
           "fixed-stage11-duplicate-fixed-override-fixed",
           "fixed-stage11-carry-const-in-identifier",
           "fixed-stage11-carry-const-in-comment",
-          "fixed-stage11-carry-const-multiline-backtick"
+          "fixed-stage11-carry-const-multiline-backtick",
+          "types-stage13-alias-unknown-value",
+          "types-stage13-alias-direct-cycle",
+          "types-stage13-alias-mutual-cycle",
+          "types-stage13-alias-recursive-nullable",
+          "types-stage13-alias-recursive-list",
+          "types-stage13-alias-generic-bad-arity",
+          "types-stage13-alias-generic-mismatch",
+          "types-stage13-alias-mismatch",
+          "types-stage13-alias-nested-mismatch",
+          "types-stage13-alias-constraint-mismatch",
+          "types-stage13-alias-union-mismatch",
+          "types-stage13-reference-root-alias",
+          "types-stage13-reference-root-generic-alias",
+          "types-stage13-reference-function-alias-diagnostic",
+          "types-stage13-function-arity-zero",
+          "types-stage13-function-arity-two",
+          "types-stage13-function-nonfunction",
+          "types-stage13-function-alias-mismatch",
+          "types-stage13-function-return-type-missing",
+          "types-stage13-function-parameter-type-missing",
+          "types-stage13-function-unused-type-missing",
+          "types-stage13-function-default",
+          "types-stage13-function-declared-lambda-check",
+          "types-stage13-alias-mapping-same",
+          "types-stage13-alias-mapping-missing-key",
+          "types-stage13-quoted-alias-reference",
+          "types-stage13-generic-alias-reference",
+          "types-stage13-alias-class-reference"
         ]
       },
-      "scope": "Reference constructor, access, constraint and rendering errors retain complete message, authored frame, foreign standard-library source and URI bytes in selected comparisons. Stage11 adds selected fixed declaration, inherited metadata and complete raw diagnostics through the shared VM.",
+      "scope": "Reference constructor, access, constraint and rendering errors retain complete message, authored frame, foreign standard-library source and URI bytes in selected comparisons. Stage11 adds selected fixed declaration, inherited metadata and complete raw diagnostics through the shared VM. Stage 13 adds selected alias/function metadata, exported-type equality and complete raw diagnostic comparisons; original suite execution and remaining scope stay open.",
       "remaining": [
         "Recursive frame compression, general imported source stacks, first-error combinations and the complete parser/resolver/runtime diagnostic corpus remain open.",
         "Original selected cycle and remainder-zero failures remain failed."
@@ -1137,6 +1233,324 @@
         "Module extends/amends and the original upstream fixed-property snippet suite contracts remain unimplemented or unexecuted.",
         "Full modifier combinations, annotation metadata, generic class inheritance and the complete class/member error corpus remain outside this bounded selection.",
         "Caught upstream PklBugException duplicate hidden/local outputs and any recorded exploratory mismatches remain separate failures, without development exceptions."
+      ]
+    },
+    {
+      "requirement": "semantic:type-aliases",
+      "implementation": {
+        "state": "partial",
+        "links": [
+          {
+            "path": "crates/pkl-runtime/src/vm.rs",
+            "symbol": "BeginTypeAlias"
+          },
+          {
+            "path": "crates/pkl-runtime/src/vm.rs",
+            "symbol": "NamedAlias"
+          },
+          {
+            "path": "crates/pkl-runtime/src/vm.rs",
+            "symbol": "compile_type_at"
+          }
+        ]
+      },
+      "tests": {
+        "state": "partial",
+        "case_ids": [
+          "types-stage13-alias-value",
+          "types-stage13-alias-self-equal",
+          "types-stage13-alias-distinct-equal",
+          "types-stage13-alias-class",
+          "types-stage13-alias-string",
+          "types-stage13-alias-unknown-unused",
+          "types-stage13-alias-unknown-value",
+          "types-stage13-alias-direct-cycle",
+          "types-stage13-alias-mutual-cycle",
+          "types-stage13-alias-recursive-nullable",
+          "types-stage13-alias-recursive-list",
+          "types-stage13-alias-constrained-no-force",
+          "types-stage13-alias-generic-value",
+          "types-stage13-alias-generic-omitted",
+          "types-stage13-alias-generic-bad-arity",
+          "types-stage13-alias-generic-mismatch",
+          "types-stage13-alias-mismatch",
+          "types-stage13-alias-nested-mismatch",
+          "types-stage13-alias-constraint-mismatch",
+          "types-stage13-alias-union-mismatch",
+          "types-stage13-reference-root-alias",
+          "types-stage13-reference-root-generic-alias",
+          "types-stage13-reference-property-alias",
+          "types-stage13-reference-function-alias-equivalent",
+          "types-stage13-reference-function-alias-diagnostic",
+          "types-stage13-function-alias-mismatch",
+          "types-stage13-alias-mapping-same",
+          "types-stage13-alias-mapping-distinct",
+          "types-stage13-alias-mapping-alias-key",
+          "types-stage13-alias-mapping-missing-key",
+          "types-stage13-alias-mapping-generic-key",
+          "types-stage13-alias-mapping-value-equality",
+          "types-stage13-alias-mapping-value-self",
+          "types-stage13-alias-generic-declaration-identity",
+          "types-stage13-relation-alias-expansion-left",
+          "types-stage13-relation-alias-expansion-right",
+          "types-stage13-quoted-alias-value",
+          "types-stage13-quoted-alias-reference",
+          "types-stage13-generic-alias-reference",
+          "types-stage13-alias-class-reference",
+          "types-stage13-reference-function-equality-same",
+          "types-stage13-reference-function-equality-alias-arg",
+          "types-stage13-reference-function-equality-alias-result",
+          "types-stage13-reference-function-equality-same-constraint",
+          "types-stage13-reference-function-equality-constraint-whitespace",
+          "types-stage13-reference-function-equality-nullable-alias",
+          "types-stage13-reference-function-equality-list-alias"
+        ]
+      },
+      "scope": "Selected user alias values preserve declaration identity, qualified display, lazy initialization, published failure state, and expanded validation. Independent expressions cover alias values, cycles, generic arguments, Mapping keys and complete diagnostics; persistent failure/reaccess sequences and GC/Host tests have separate contracts.",
+      "remaining": [
+        "Complete imported/module-scoped alias behavior, annotation initialization, full reflection and the original upstream alias suites remain unimplemented or unexecuted.",
+        "Exploratory mismatches and upstream internal errors retain their original outcomes; these selected mappings do not grant completion.",
+        "A full runtime type-node resolution model, mixed unresolved-name/dependency error ordering, and failures involving generic-parameter shadowing remain unverified."
+      ]
+    },
+    {
+      "requirement": "semantic:functions",
+      "implementation": {
+        "state": "partial",
+        "links": [
+          {
+            "path": "crates/pkl-runtime/src/vm.rs",
+            "symbol": "TypeCheck"
+          },
+          {
+            "path": "crates/pkl-runtime/src/vm.rs",
+            "symbol": "compile_type_at"
+          },
+          {
+            "path": "crates/pkl-runtime/src/vm/reference.rs",
+            "symbol": "subtype"
+          }
+        ]
+      },
+      "tests": {
+        "state": "partial",
+        "case_ids": [
+          "types-stage13-reference-function-equal",
+          "types-stage13-reference-function-parameter-different",
+          "types-stage13-reference-function-result-different",
+          "types-stage13-reference-function-arity-different",
+          "types-stage13-reference-function-alias-equivalent",
+          "types-stage13-reference-function-alias-diagnostic",
+          "types-stage13-reference-function-variance",
+          "types-stage13-function-accept-result-erased",
+          "types-stage13-function-accept-arg-erased",
+          "types-stage13-function-arity-zero",
+          "types-stage13-function-arity-two",
+          "types-stage13-function-is-result-erased",
+          "types-stage13-function-is-arity-false",
+          "types-stage13-function-nonfunction",
+          "types-stage13-function-alias-mismatch",
+          "types-stage13-function-return-type-missing",
+          "types-stage13-function-parameter-type-missing",
+          "types-stage13-function-unused-type-missing",
+          "types-stage13-function-default",
+          "types-stage13-function-nullable-default",
+          "types-stage13-function-union-arity",
+          "types-stage13-function-annotation-not-wrapper",
+          "types-stage13-function-declared-lambda-check",
+          "types-stage13-function-zero-class",
+          "types-stage13-function-one-class",
+          "types-stage13-function-two-class",
+          "types-stage13-function-string",
+          "types-stage13-function-function-result-erased",
+          "types-stage13-function-function1-generic-result",
+          "types-stage13-function-function2-wrong-arity",
+          "types-stage13-reference-function-bare",
+          "types-stage13-reference-function-one",
+          "types-stage13-reference-function-any",
+          "types-stage13-reference-bare-to-arrow",
+          "types-stage13-reference-arrow-to-bare",
+          "types-stage13-reference-arrow-constraint",
+          "types-stage13-reference-arrow-result-constraint",
+          "types-stage13-relation-function-result-annotation-left",
+          "types-stage13-relation-function-result-annotation-right",
+          "types-stage13-reference-function-equality-same",
+          "types-stage13-reference-function-equality-alias-arg",
+          "types-stage13-reference-function-equality-alias-result",
+          "types-stage13-reference-function-equality-same-constraint",
+          "types-stage13-reference-function-equality-constraint-whitespace",
+          "types-stage13-reference-function-equality-nullable-alias",
+          "types-stage13-reference-function-equality-list-alias",
+          "types-stage13-reference-function1-to-function",
+          "types-stage13-reference-function0-to-function",
+          "types-stage13-reference-nested-arrow",
+          "types-stage13-reference-arg-variance",
+          "types-stage13-reference-result-variance"
+        ]
+      },
+      "scope": "Function and Function0..5 class types and arrow annotations retain parameter/result metadata while selected runtime value checks use arity. Comparisons distinguish annotation checks from a lambda declaration's own argument checks and distinguish Reference type tests from exported-type equality.",
+      "remaining": [
+        "Function amendments, full callable/builtin behavior, imports and the original function suite contracts remain outside this bounded selection.",
+        "The broader function, closure, diagnostic and reflection inventories are not completed by metadata comparisons."
+      ]
+    },
+    {
+      "requirement": "semantic:types",
+      "implementation": {
+        "state": "partial",
+        "links": [
+          {
+            "path": "crates/pkl-runtime/src/vm.rs",
+            "symbol": "TypeCheck"
+          },
+          {
+            "path": "crates/pkl-runtime/src/vm.rs",
+            "symbol": "initialize_type"
+          },
+          {
+            "path": "crates/pkl-runtime/src/vm/typecheck.rs",
+            "symbol": "step_type"
+          }
+        ]
+      },
+      "tests": {
+        "state": "partial",
+        "case_ids": [
+          "types-stage13-alias-value",
+          "types-stage13-alias-self-equal",
+          "types-stage13-alias-distinct-equal",
+          "types-stage13-alias-class",
+          "types-stage13-alias-string",
+          "types-stage13-alias-unknown-unused",
+          "types-stage13-alias-unknown-value",
+          "types-stage13-alias-direct-cycle",
+          "types-stage13-alias-mutual-cycle",
+          "types-stage13-alias-recursive-nullable",
+          "types-stage13-alias-recursive-list",
+          "types-stage13-alias-constrained-no-force",
+          "types-stage13-alias-generic-value",
+          "types-stage13-alias-generic-omitted",
+          "types-stage13-alias-generic-bad-arity",
+          "types-stage13-alias-generic-mismatch",
+          "types-stage13-alias-mismatch",
+          "types-stage13-alias-nested-mismatch",
+          "types-stage13-alias-constraint-mismatch",
+          "types-stage13-alias-union-mismatch",
+          "types-stage13-reference-root-alias",
+          "types-stage13-reference-root-generic-alias",
+          "types-stage13-reference-property-alias",
+          "types-stage13-reference-function-equal",
+          "types-stage13-reference-function-parameter-different",
+          "types-stage13-reference-function-result-different",
+          "types-stage13-reference-function-arity-different",
+          "types-stage13-reference-function-alias-equivalent",
+          "types-stage13-reference-function-alias-diagnostic",
+          "types-stage13-reference-function-variance",
+          "types-stage13-function-accept-result-erased",
+          "types-stage13-function-accept-arg-erased",
+          "types-stage13-function-arity-zero",
+          "types-stage13-function-arity-two",
+          "types-stage13-function-is-result-erased",
+          "types-stage13-function-is-arity-false",
+          "types-stage13-function-nonfunction",
+          "types-stage13-function-alias-mismatch",
+          "types-stage13-function-return-type-missing",
+          "types-stage13-function-parameter-type-missing",
+          "types-stage13-function-unused-type-missing",
+          "types-stage13-function-default",
+          "types-stage13-function-nullable-default",
+          "types-stage13-function-union-arity",
+          "types-stage13-function-annotation-not-wrapper",
+          "types-stage13-function-declared-lambda-check",
+          "types-stage13-alias-mapping-same",
+          "types-stage13-alias-mapping-distinct",
+          "types-stage13-alias-mapping-alias-key",
+          "types-stage13-alias-mapping-missing-key",
+          "types-stage13-alias-mapping-generic-key",
+          "types-stage13-alias-mapping-value-equality",
+          "types-stage13-alias-mapping-value-self",
+          "types-stage13-alias-generic-declaration-identity",
+          "types-stage13-function-zero-class",
+          "types-stage13-function-one-class",
+          "types-stage13-function-two-class",
+          "types-stage13-function-string",
+          "types-stage13-function-function-result-erased",
+          "types-stage13-function-function1-generic-result",
+          "types-stage13-function-function2-wrong-arity",
+          "types-stage13-reference-function-bare",
+          "types-stage13-reference-function-one",
+          "types-stage13-reference-function-any",
+          "types-stage13-reference-bare-equivalent",
+          "types-stage13-reference-bare-to-arrow",
+          "types-stage13-reference-arrow-to-bare",
+          "types-stage13-reference-arrow-constraint",
+          "types-stage13-reference-arrow-result-constraint",
+          "types-stage13-relation-alias-expansion-left",
+          "types-stage13-relation-alias-expansion-right",
+          "types-stage13-relation-function-result-annotation-left",
+          "types-stage13-relation-function-result-annotation-right",
+          "types-stage13-quoted-alias-value",
+          "types-stage13-quoted-alias-reference",
+          "types-stage13-generic-alias-reference",
+          "types-stage13-alias-class-reference",
+          "types-stage13-reference-function-equality-same",
+          "types-stage13-reference-function-equality-alias-arg",
+          "types-stage13-reference-function-equality-alias-result",
+          "types-stage13-reference-function-equality-same-constraint",
+          "types-stage13-reference-function-equality-constraint-whitespace",
+          "types-stage13-reference-function-equality-nullable-alias",
+          "types-stage13-reference-function-equality-list-alias",
+          "types-stage13-reference-function1-to-function",
+          "types-stage13-reference-function0-to-function",
+          "types-stage13-reference-nested-arrow",
+          "types-stage13-reference-arg-variance",
+          "types-stage13-reference-result-variance"
+        ]
+      },
+      "scope": "The Stage 13 selection links named alias expansion, meta-class checks, function arity and exported type metadata to the shared VM. Existing upstream case definitions, adapters and execution states remain unchanged.",
+      "remaining": [
+        "The complete type, structural/generic class, constraint, recursive and imported-type corpus still requires implementation and original-adapter execution."
+      ]
+    },
+    {
+      "requirement": "semantic:generics",
+      "implementation": {
+        "state": "partial",
+        "links": [
+          {
+            "path": "crates/pkl-runtime/src/vm.rs",
+            "symbol": "NamedAlias"
+          },
+          {
+            "path": "crates/pkl-runtime/src/vm.rs",
+            "symbol": "compile_type_at"
+          },
+          {
+            "path": "crates/pkl-runtime/src/vm/typecheck.rs",
+            "symbol": "step_type"
+          }
+        ]
+      },
+      "tests": {
+        "state": "partial",
+        "case_ids": [
+          "types-stage13-alias-generic-value",
+          "types-stage13-alias-generic-omitted",
+          "types-stage13-alias-generic-bad-arity",
+          "types-stage13-alias-generic-mismatch",
+          "types-stage13-reference-root-generic-alias",
+          "types-stage13-alias-generic-declaration-identity",
+          "types-stage13-generic-alias-reference",
+          "types-stage13-reference-function1-to-function",
+          "types-stage13-reference-function0-to-function",
+          "types-stage13-reference-nested-arrow",
+          "types-stage13-reference-arg-variance",
+          "types-stage13-reference-result-variance"
+        ]
+      },
+      "scope": "Selected generic aliases retain declaration identity and metadata arguments independently of expanded checks, use unknown for omitted arguments, and preserve argument-count and expanded-value diagnostics.",
+      "remaining": [
+        "Complete generic classes, variance, imported generic declarations, recursive expansion and the original generic suite contracts remain unimplemented or unverified."
       ]
     }
   ]

@@ -3,6 +3,8 @@ use crate::source::Span;
 
 #[derive(Clone, Debug, PartialEq)]
 pub struct Module {
+    /// Exact source retained for exported constraint metadata and declaration names.
+    pub source: std::sync::Arc<str>,
     pub declaration: Option<ModuleDeclaration>,
     pub members: Vec<Member>,
     /// Numeric token locations for signed integers folded by the parser.

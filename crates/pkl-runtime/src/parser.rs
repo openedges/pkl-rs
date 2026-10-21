@@ -1988,6 +1988,7 @@ pub fn parse_module(source: &str) -> Result<Module, Diagnostic> {
         return Err(error);
     }
     Ok(Module {
+        source: std::sync::Arc::from(source),
         declaration,
         members,
         folded_integer_spans: parser.folded_integer_spans,

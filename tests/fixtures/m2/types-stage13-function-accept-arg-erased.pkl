@@ -1,0 +1,3 @@
+module stage13.func
+p: (Int) -> String = (x: String) -> x
+result = p.apply("ok")

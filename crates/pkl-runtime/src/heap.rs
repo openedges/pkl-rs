@@ -137,6 +137,7 @@ pub struct Object {
     pub reference: Option<crate::vm::reference::Reference>,
     pub native_function: Option<crate::vm::reference::NativeFunction>,
     pub type_alias: Option<Arc<str>>,
+    pub type_alias_initialized: bool,
     pub builtin_type: Option<crate::vm::TypeCheck>,
     pub ref_module: bool,
     pub is_module: bool,

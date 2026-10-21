@@ -57,6 +57,9 @@ REQUIRED_SCENARIOS = {
     'm2-fixed-reference-declaration-metadata',
     'm2-fixed-property-diagnostics',
     'm2-class-publication-sequences',
+    'm2-type-alias-values',
+    'm2-function-type-metadata',
+    'm2-generic-alias-diagnostics',
 }
 
 

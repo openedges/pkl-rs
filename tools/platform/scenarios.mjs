@@ -1,5 +1,6 @@
 import { FakeHostOperations, waitingEvaluation } from './host-adapter.mjs';
 import { classPublicationCases } from './class-publication-cases.mjs';
+import { typeMetadataCases, typeMetadataOracle } from './type-metadata-cases.mjs';
 
 // Identical assertions execute inside Node and an actual Chromium page.
 export async function scenarios(api) {
@@ -60,6 +61,19 @@ export async function scenarios(api) {
       }
     }
   });
+  for (const fixture of typeMetadataCases) {
+    await check(fixture.scenario, () => {
+      for (let repetition = 0; repetition < 2; repetition++) {
+        const actual = api.evaluateLanguageSequence(fixture.source,
+          typeMetadataOracle.uri, typeMetadataOracle.moduleName,
+          fixture.expressions, typeMetadataOracle.powerAssertions);
+        eq(actual.length, fixture.expected.length);
+        for (let index = 0; index < actual.length; index++) {
+          eq(actual[index], fixture.expected[index]);
+        }
+      }
+    });
+  }
   await check('m2-class-method-and-type-alias', () => {
     const source = 'typealias Count = Int\nclass Box { value: Count = 40; function add(n: Count): Count = value + n }\nbox = new Box {}\nresult = box.add(2)';
     eq(api.evaluateLanguage(source, 'file:///m2-platform.pkl', 'm2-platform', 'result'), '42');

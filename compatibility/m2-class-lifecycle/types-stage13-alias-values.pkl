@@ -1,0 +1,7 @@
+typealias A = String
+typealias B = String
+identity = A == A
+distinct = A != B
+kind = A.getClass() == TypeAlias
+name = A.toString()
+union: A | Int = true

@@ -1,0 +1,4 @@
+module stage13.alias
+typealias A = B
+typealias B = A
+result = A

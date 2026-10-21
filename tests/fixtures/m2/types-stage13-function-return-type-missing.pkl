@@ -1,0 +1,3 @@
+module stage13.func
+p: (Int) -> Missing = (x) -> 3
+result = p

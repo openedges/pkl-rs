@@ -39,10 +39,24 @@ fn object_name(id: ObjectId, heap: &Heap) -> Result<String, RuntimeError> {
 }
 
 fn function_name(id: ObjectId, heap: &Heap) -> Result<String, RuntimeError> {
-    let function = heap.get(id)?.function.as_ref().ok_or_else(|| {
-        RuntimeError::new(ErrorKind::InvalidBytecode, "function has no definition")
-    })?;
-    Ok(format!("Function{}", function.arity))
+    let object = heap.get(id)?;
+    let arity = object
+        .function
+        .as_ref()
+        .map(|function| function.arity)
+        .or_else(|| {
+            object.native_function.as_ref().map(|function| {
+                if function.name.as_ref() == "Reference" {
+                    3
+                } else {
+                    0
+                }
+            })
+        })
+        .ok_or_else(|| {
+            RuntimeError::new(ErrorKind::InvalidBytecode, "function has no definition")
+        })?;
+    Ok(format!("Function{arity}"))
 }
 
 pub(crate) fn type_name(value: &Value, heap: &Heap, module: &str) -> Result<String, RuntimeError> {
@@ -215,6 +229,9 @@ impl Renderer<'_> {
                 if let Some(ty) = &self.heap.get(*id)?.builtin_type {
                     self.append(&match ty {
                         crate::vm::TypeCheck::Reference { .. } => "pkl.ref#Reference".into(),
+                        crate::vm::TypeCheck::Function { parameters, .. } => parameters
+                            .as_ref()
+                            .map_or_else(|| "Function".into(), |p| format!("Function{}", p.len())),
                         _ => crate::vm::reference::type_name(ty, self.module),
                     });
                     return Ok(());

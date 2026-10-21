@@ -1,0 +1,3 @@
+module stage13.alias
+typealias A = String(throw("constraint"))
+result = A

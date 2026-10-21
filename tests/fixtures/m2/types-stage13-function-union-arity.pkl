@@ -1,0 +1,3 @@
+module stage13.func
+p: ((Int) -> String) | ((Int,Int) -> Int) = (x,y) -> x+y
+result = p.apply(1,2)

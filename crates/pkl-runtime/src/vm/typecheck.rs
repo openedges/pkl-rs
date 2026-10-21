@@ -492,6 +492,10 @@ impl Vm {
                         .push(Task::ReferenceDomainResult { value, ty, span });
                     run.tasks.push(Task::Check { ty: domain, span });
                 }
+                TypeCheck::NamedAlias { expanded, .. } => run.tasks.push(Task::Check {
+                    ty: *expanded,
+                    span,
+                }),
                 TypeCheck::Alias(inner) | TypeCheck::GenericAlias(inner) => {
                     let environment = module_environment(&run.environment)?;
                     run.tasks.push(Task::RestoreEnvironment(std::mem::replace(
@@ -915,7 +919,11 @@ fn union_eager(types: &[TypeCheck]) -> bool {
                 }
                 visit(inner, kinds)
             }
-            TypeCheck::Alias(inner) | TypeCheck::Nullable(inner) => visit(inner, kinds),
+            TypeCheck::Alias(inner)
+            | TypeCheck::Nullable(inner)
+            | TypeCheck::NamedAlias {
+                expanded: inner, ..
+            } => visit(inner, kinds),
             TypeCheck::Constrained { base, .. } => visit(base, kinds),
             TypeCheck::Union { types, .. } => types.iter().any(|ty| visit(ty, kinds)),
             _ => false,

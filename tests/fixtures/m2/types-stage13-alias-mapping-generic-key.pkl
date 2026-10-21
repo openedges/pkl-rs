@@ -1,0 +1,4 @@
+module stage13.alias
+typealias A = String
+typealias B = String
+result = new Mapping<TypeAlias, Int> { [A] = 1 }[A]

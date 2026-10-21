@@ -1,0 +1,9 @@
+module custom.qualified
+import "pkl:ref"
+class D extends ref.Domain { function renderReference(r): String = "ok" }
+local d = new D {}
+class A
+typealias Alias = A
+class H { p: String }
+p: ref.Reference<D,Alias> = ref.Reference(d,H,null).p
+result = p

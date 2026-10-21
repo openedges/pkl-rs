@@ -1,0 +1,3 @@
+typealias A = Missing
+identity = A == A
+kind = A.getClass() == TypeAlias

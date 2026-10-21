@@ -1,0 +1,3 @@
+typealias A = A
+class Holder { typed: A = 1 }
+use = new Holder {}.typed

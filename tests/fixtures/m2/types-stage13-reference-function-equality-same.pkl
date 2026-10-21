@@ -1,0 +1,8 @@
+import "pkl:ref"
+class D extends ref.Domain { function renderReference(r): String = "ok" }
+local d = new D {}
+typealias Text = String
+typealias Count = Int
+class A { p: (String) -> Int }
+class B { p: (String) -> Int }
+result = ref.Reference(d,A,null).p == ref.Reference(d,B,null).p

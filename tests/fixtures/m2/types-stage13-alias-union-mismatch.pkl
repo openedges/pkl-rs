@@ -1,0 +1,4 @@
+module stage13.alias
+typealias A = String
+p: A | Int = true
+result = p

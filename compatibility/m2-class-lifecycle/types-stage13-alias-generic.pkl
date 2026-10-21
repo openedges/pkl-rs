@@ -1,0 +1,8 @@
+typealias Identity<T> = T
+typealias Text = String
+genericIdentity = Identity == Identity
+separate = Identity != Text
+kind = Identity.getClass() == TypeAlias
+untyped: Identity = 7
+valid: Identity<Text> = "ok"
+bad: Identity<Text> = 2

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Acquire ordered class-publication calls in one evaluator/module per sequence."""
+"""Acquire ordered class/type-alias declaration calls in one evaluator/module per sequence."""
 import argparse
 from datetime import datetime, timezone
 import json
@@ -241,7 +241,7 @@ def execute(output, java_only=False):
     output.mkdir(parents=True, exist_ok=False)
     languages = ['java'] if java_only else ['java', 'rust']
     report = {'schema': 1, 'timestamp_utc': datetime.now(timezone.utc).isoformat(),
-              'scope': 'bounded ordered class-publication calls; separate from M2 single-expression inventory',
+              'scope': 'bounded ordered class/type-alias declaration publication calls; separate from M2 single-expression inventory',
               'languages': languages, 'workspace': str(ROOT), 'output_directory': str(output), 'repetitions': REPETITIONS, 'cases': [], 'sources': [], 'artifacts': [],
               'compatibility_complete': False, 'acquisition_error': None,
               'session_contract': 'fresh evaluator per sequence/repetition; retained module and evaluator across all calls including errors; Rust collects with module root after each call, then closes',

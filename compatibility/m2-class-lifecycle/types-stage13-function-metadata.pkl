@@ -1,0 +1,8 @@
+typealias Fn = (Int) -> String
+local f: Fn = (x) -> 3
+value = f.apply(1)
+local bad: Fn = () -> "bad"
+arity = bad
+local wrong: Fn = 2
+wrongValue = wrong
+identity = Fn == Fn

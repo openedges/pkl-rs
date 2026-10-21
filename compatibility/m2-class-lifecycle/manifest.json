@@ -133,6 +133,69 @@
       "source": "partial-reference.pkl",
       "expressions": "partial-reference.expressions",
       "note": "Partial Reference metadata must not run inherited/early/hidden/tail initializer bodies."
+    },
+    {
+      "id": "types-stage13-alias-missing",
+      "group": "T13",
+      "source": "types-stage13-alias-missing.pkl",
+      "expressions": "types-stage13-alias-missing.expressions",
+      "note": "Ordered type declaration publication, identity, and failure recovery; additional to original class sequence subtotal."
+    },
+    {
+      "id": "types-stage13-alias-cycle",
+      "group": "T13",
+      "source": "types-stage13-alias-cycle.pkl",
+      "expressions": "types-stage13-alias-cycle.expressions",
+      "note": "Ordered type declaration publication, identity, and failure recovery; additional to original class sequence subtotal."
+    },
+    {
+      "id": "types-stage13-alias-mutual",
+      "group": "T13",
+      "source": "types-stage13-alias-mutual.pkl",
+      "expressions": "types-stage13-alias-mutual.expressions",
+      "note": "Ordered type declaration publication, identity, and failure recovery; additional to original class sequence subtotal."
+    },
+    {
+      "id": "types-stage13-alias-generic",
+      "group": "T13",
+      "source": "types-stage13-alias-generic.pkl",
+      "expressions": "types-stage13-alias-generic.expressions",
+      "note": "Ordered type declaration publication, identity, and failure recovery; additional to original class sequence subtotal."
+    },
+    {
+      "id": "types-stage13-alias-values",
+      "group": "T13",
+      "source": "types-stage13-alias-values.pkl",
+      "expressions": "types-stage13-alias-values.expressions",
+      "note": "Ordered type declaration publication, identity, and failure recovery; additional to original class sequence subtotal."
+    },
+    {
+      "id": "types-stage13-function-metadata",
+      "group": "T13",
+      "source": "types-stage13-function-metadata.pkl",
+      "expressions": "types-stage13-function-metadata.expressions",
+      "note": "Ordered type declaration publication, identity, and failure recovery; additional to original class sequence subtotal."
+    },
+    {
+      "id": "types-stage13-alias-missing-typed",
+      "group": "T13",
+      "source": "types-stage13-alias-missing-typed.pkl",
+      "expressions": "types-stage13-alias-missing-typed.expressions",
+      "note": "Failed alias publication followed by typed class, deferred type, construction, and superclass uses; complete errors and retry order retained."
+    },
+    {
+      "id": "types-stage13-alias-cycle-typed",
+      "group": "T13",
+      "source": "types-stage13-alias-cycle-typed.pkl",
+      "expressions": "types-stage13-alias-cycle-typed.expressions",
+      "note": "Failed alias publication followed by typed class, deferred type, construction, and superclass uses; complete errors and retry order retained."
+    },
+    {
+      "id": "types-stage13-alias-deferred-combined",
+      "group": "T13",
+      "source": "types-stage13-alias-deferred-combined.pkl",
+      "expressions": "types-stage13-alias-deferred-combined.expressions",
+      "note": "Failed alias publication followed by typed class, deferred type, construction, and superclass uses; complete errors and retry order retained."
     }
   ],
   "unexecuted_groups": [

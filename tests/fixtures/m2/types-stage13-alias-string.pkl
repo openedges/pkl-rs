@@ -1,0 +1,4 @@
+module stage13.alias
+typealias A = String
+typealias B = String
+result = A.toString()

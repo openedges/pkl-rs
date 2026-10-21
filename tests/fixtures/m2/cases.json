@@ -16711,6 +16711,974 @@
         "semantic:classes",
         "semantic:diagnostics"
       ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage13-alias-value",
+      "input": "tests/fixtures/m2/types-stage13-alias-value.pkl",
+      "requirements": [
+        "semantic:type-aliases"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage13-alias-self-equal",
+      "input": "tests/fixtures/m2/types-stage13-alias-self-equal.pkl",
+      "requirements": [
+        "semantic:type-aliases"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage13-alias-distinct-equal",
+      "input": "tests/fixtures/m2/types-stage13-alias-distinct-equal.pkl",
+      "requirements": [
+        "semantic:type-aliases"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage13-alias-class",
+      "input": "tests/fixtures/m2/types-stage13-alias-class.pkl",
+      "requirements": [
+        "semantic:type-aliases"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage13-alias-string",
+      "input": "tests/fixtures/m2/types-stage13-alias-string.pkl",
+      "requirements": [
+        "semantic:type-aliases"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage13-alias-unknown-unused",
+      "input": "tests/fixtures/m2/types-stage13-alias-unknown-unused.pkl",
+      "requirements": [
+        "semantic:type-aliases"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage13-alias-unknown-value",
+      "input": "tests/fixtures/m2/types-stage13-alias-unknown-value.pkl",
+      "requirements": [
+        "semantic:type-aliases",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage13-alias-direct-cycle",
+      "input": "tests/fixtures/m2/types-stage13-alias-direct-cycle.pkl",
+      "requirements": [
+        "semantic:type-aliases",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage13-alias-mutual-cycle",
+      "input": "tests/fixtures/m2/types-stage13-alias-mutual-cycle.pkl",
+      "requirements": [
+        "semantic:type-aliases",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage13-alias-recursive-nullable",
+      "input": "tests/fixtures/m2/types-stage13-alias-recursive-nullable.pkl",
+      "requirements": [
+        "semantic:type-aliases",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage13-alias-recursive-list",
+      "input": "tests/fixtures/m2/types-stage13-alias-recursive-list.pkl",
+      "requirements": [
+        "semantic:type-aliases",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage13-alias-constrained-no-force",
+      "input": "tests/fixtures/m2/types-stage13-alias-constrained-no-force.pkl",
+      "requirements": [
+        "semantic:type-aliases"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage13-alias-generic-value",
+      "input": "tests/fixtures/m2/types-stage13-alias-generic-value.pkl",
+      "requirements": [
+        "semantic:type-aliases",
+        "semantic:generics"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage13-alias-generic-omitted",
+      "input": "tests/fixtures/m2/types-stage13-alias-generic-omitted.pkl",
+      "requirements": [
+        "semantic:type-aliases",
+        "semantic:generics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage13-alias-generic-bad-arity",
+      "input": "tests/fixtures/m2/types-stage13-alias-generic-bad-arity.pkl",
+      "requirements": [
+        "semantic:type-aliases",
+        "semantic:generics",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage13-alias-generic-mismatch",
+      "input": "tests/fixtures/m2/types-stage13-alias-generic-mismatch.pkl",
+      "requirements": [
+        "semantic:type-aliases",
+        "semantic:generics",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage13-alias-mismatch",
+      "input": "tests/fixtures/m2/types-stage13-alias-mismatch.pkl",
+      "requirements": [
+        "semantic:type-aliases",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage13-alias-nested-mismatch",
+      "input": "tests/fixtures/m2/types-stage13-alias-nested-mismatch.pkl",
+      "requirements": [
+        "semantic:type-aliases",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage13-alias-constraint-mismatch",
+      "input": "tests/fixtures/m2/types-stage13-alias-constraint-mismatch.pkl",
+      "requirements": [
+        "semantic:type-aliases",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage13-alias-union-mismatch",
+      "input": "tests/fixtures/m2/types-stage13-alias-union-mismatch.pkl",
+      "requirements": [
+        "semantic:type-aliases",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage13-reference-root-alias",
+      "input": "tests/fixtures/m2/types-stage13-reference-root-alias.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:type-aliases",
+        "semantic:reflection-metadata",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage13-reference-root-generic-alias",
+      "input": "tests/fixtures/m2/types-stage13-reference-root-generic-alias.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:type-aliases",
+        "semantic:generics",
+        "semantic:reflection-metadata",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage13-reference-property-alias",
+      "input": "tests/fixtures/m2/types-stage13-reference-property-alias.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:type-aliases",
+        "semantic:reflection-metadata"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage13-reference-function-equal",
+      "input": "tests/fixtures/m2/types-stage13-reference-function-equal.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:functions"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage13-reference-function-parameter-different",
+      "input": "tests/fixtures/m2/types-stage13-reference-function-parameter-different.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:functions"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage13-reference-function-result-different",
+      "input": "tests/fixtures/m2/types-stage13-reference-function-result-different.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:functions"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage13-reference-function-arity-different",
+      "input": "tests/fixtures/m2/types-stage13-reference-function-arity-different.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:functions"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage13-reference-function-alias-equivalent",
+      "input": "tests/fixtures/m2/types-stage13-reference-function-alias-equivalent.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:type-aliases",
+        "semantic:reflection-metadata",
+        "semantic:functions"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage13-reference-function-alias-diagnostic",
+      "input": "tests/fixtures/m2/types-stage13-reference-function-alias-diagnostic.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:type-aliases",
+        "semantic:reflection-metadata",
+        "semantic:functions",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage13-reference-function-variance",
+      "input": "tests/fixtures/m2/types-stage13-reference-function-variance.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:functions"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage13-function-accept-result-erased",
+      "input": "tests/fixtures/m2/types-stage13-function-accept-result-erased.pkl",
+      "requirements": [
+        "semantic:functions"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage13-function-accept-arg-erased",
+      "input": "tests/fixtures/m2/types-stage13-function-accept-arg-erased.pkl",
+      "requirements": [
+        "semantic:functions"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage13-function-arity-zero",
+      "input": "tests/fixtures/m2/types-stage13-function-arity-zero.pkl",
+      "requirements": [
+        "semantic:functions",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage13-function-arity-two",
+      "input": "tests/fixtures/m2/types-stage13-function-arity-two.pkl",
+      "requirements": [
+        "semantic:functions",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage13-function-is-result-erased",
+      "input": "tests/fixtures/m2/types-stage13-function-is-result-erased.pkl",
+      "requirements": [
+        "semantic:functions"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage13-function-is-arity-false",
+      "input": "tests/fixtures/m2/types-stage13-function-is-arity-false.pkl",
+      "requirements": [
+        "semantic:functions"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage13-function-nonfunction",
+      "input": "tests/fixtures/m2/types-stage13-function-nonfunction.pkl",
+      "requirements": [
+        "semantic:functions",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage13-function-alias-mismatch",
+      "input": "tests/fixtures/m2/types-stage13-function-alias-mismatch.pkl",
+      "requirements": [
+        "semantic:functions",
+        "semantic:type-aliases",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage13-function-return-type-missing",
+      "input": "tests/fixtures/m2/types-stage13-function-return-type-missing.pkl",
+      "requirements": [
+        "semantic:functions",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage13-function-parameter-type-missing",
+      "input": "tests/fixtures/m2/types-stage13-function-parameter-type-missing.pkl",
+      "requirements": [
+        "semantic:functions",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage13-function-unused-type-missing",
+      "input": "tests/fixtures/m2/types-stage13-function-unused-type-missing.pkl",
+      "requirements": [
+        "semantic:functions",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage13-function-default",
+      "input": "tests/fixtures/m2/types-stage13-function-default.pkl",
+      "requirements": [
+        "semantic:functions",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage13-function-nullable-default",
+      "input": "tests/fixtures/m2/types-stage13-function-nullable-default.pkl",
+      "requirements": [
+        "semantic:functions"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage13-function-union-arity",
+      "input": "tests/fixtures/m2/types-stage13-function-union-arity.pkl",
+      "requirements": [
+        "semantic:functions"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage13-function-annotation-not-wrapper",
+      "input": "tests/fixtures/m2/types-stage13-function-annotation-not-wrapper.pkl",
+      "requirements": [
+        "semantic:functions"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage13-function-declared-lambda-check",
+      "input": "tests/fixtures/m2/types-stage13-function-declared-lambda-check.pkl",
+      "requirements": [
+        "semantic:functions",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage13-alias-mapping-same",
+      "input": "tests/fixtures/m2/types-stage13-alias-mapping-same.pkl",
+      "requirements": [
+        "semantic:type-aliases",
+        "semantic:collections",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage13-alias-mapping-distinct",
+      "input": "tests/fixtures/m2/types-stage13-alias-mapping-distinct.pkl",
+      "requirements": [
+        "semantic:type-aliases",
+        "semantic:collections"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage13-alias-mapping-alias-key",
+      "input": "tests/fixtures/m2/types-stage13-alias-mapping-alias-key.pkl",
+      "requirements": [
+        "semantic:type-aliases",
+        "semantic:collections"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage13-alias-mapping-missing-key",
+      "input": "tests/fixtures/m2/types-stage13-alias-mapping-missing-key.pkl",
+      "requirements": [
+        "semantic:type-aliases",
+        "semantic:collections",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage13-alias-mapping-generic-key",
+      "input": "tests/fixtures/m2/types-stage13-alias-mapping-generic-key.pkl",
+      "requirements": [
+        "semantic:type-aliases",
+        "semantic:collections"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage13-alias-mapping-value-equality",
+      "input": "tests/fixtures/m2/types-stage13-alias-mapping-value-equality.pkl",
+      "requirements": [
+        "semantic:type-aliases",
+        "semantic:collections"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage13-alias-mapping-value-self",
+      "input": "tests/fixtures/m2/types-stage13-alias-mapping-value-self.pkl",
+      "requirements": [
+        "semantic:type-aliases",
+        "semantic:collections"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage13-alias-generic-declaration-identity",
+      "input": "tests/fixtures/m2/types-stage13-alias-generic-declaration-identity.pkl",
+      "requirements": [
+        "semantic:type-aliases",
+        "semantic:generics"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage13-function-zero-class",
+      "input": "tests/fixtures/m2/types-stage13-function-zero-class.pkl",
+      "requirements": [
+        "semantic:functions"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage13-function-one-class",
+      "input": "tests/fixtures/m2/types-stage13-function-one-class.pkl",
+      "requirements": [
+        "semantic:functions"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage13-function-two-class",
+      "input": "tests/fixtures/m2/types-stage13-function-two-class.pkl",
+      "requirements": [
+        "semantic:functions"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage13-function-string",
+      "input": "tests/fixtures/m2/types-stage13-function-string.pkl",
+      "requirements": [
+        "semantic:functions"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage13-function-function-result-erased",
+      "input": "tests/fixtures/m2/types-stage13-function-function-result-erased.pkl",
+      "requirements": [
+        "semantic:functions"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage13-function-function1-generic-result",
+      "input": "tests/fixtures/m2/types-stage13-function-function1-generic-result.pkl",
+      "requirements": [
+        "semantic:functions"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage13-function-function2-wrong-arity",
+      "input": "tests/fixtures/m2/types-stage13-function-function2-wrong-arity.pkl",
+      "requirements": [
+        "semantic:functions"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage13-reference-function-bare",
+      "input": "tests/fixtures/m2/types-stage13-reference-function-bare.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:functions"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage13-reference-function-one",
+      "input": "tests/fixtures/m2/types-stage13-reference-function-one.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:functions"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage13-reference-function-any",
+      "input": "tests/fixtures/m2/types-stage13-reference-function-any.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:functions"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage13-reference-bare-equivalent",
+      "input": "tests/fixtures/m2/types-stage13-reference-bare-equivalent.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage13-reference-bare-to-arrow",
+      "input": "tests/fixtures/m2/types-stage13-reference-bare-to-arrow.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:functions"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage13-reference-arrow-to-bare",
+      "input": "tests/fixtures/m2/types-stage13-reference-arrow-to-bare.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:functions"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage13-reference-arrow-constraint",
+      "input": "tests/fixtures/m2/types-stage13-reference-arrow-constraint.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:functions"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage13-reference-arrow-result-constraint",
+      "input": "tests/fixtures/m2/types-stage13-reference-arrow-result-constraint.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:functions"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage13-relation-alias-expansion-left",
+      "input": "tests/fixtures/m2/types-stage13-relation-alias-expansion-left.pkl",
+      "metamorphic_relation": {
+        "case_ids": [
+          "types-stage13-relation-alias-expansion-left",
+          "types-stage13-relation-alias-expansion-right"
+        ],
+        "domain": "Successful scalar alias expansion preserves the result.",
+        "kind": "equal-stdout"
+      },
+      "requirements": [
+        "semantic:type-aliases",
+        "semantic:types"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage13-relation-alias-expansion-right",
+      "input": "tests/fixtures/m2/types-stage13-relation-alias-expansion-right.pkl",
+      "metamorphic_relation": {
+        "case_ids": [
+          "types-stage13-relation-alias-expansion-left",
+          "types-stage13-relation-alias-expansion-right"
+        ],
+        "domain": "Successful scalar alias expansion preserves the result.",
+        "kind": "equal-stdout"
+      },
+      "requirements": [
+        "semantic:type-aliases",
+        "semantic:types"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage13-relation-function-result-annotation-left",
+      "input": "tests/fixtures/m2/types-stage13-relation-function-result-annotation-left.pkl",
+      "metamorphic_relation": {
+        "case_ids": [
+          "types-stage13-relation-function-result-annotation-left",
+          "types-stage13-relation-function-result-annotation-right"
+        ],
+        "domain": "Function type annotations enforce arity while argument/result types remain metadata at assignment.",
+        "kind": "equal-stdout"
+      },
+      "requirements": [
+        "semantic:functions",
+        "semantic:types"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage13-relation-function-result-annotation-right",
+      "input": "tests/fixtures/m2/types-stage13-relation-function-result-annotation-right.pkl",
+      "metamorphic_relation": {
+        "case_ids": [
+          "types-stage13-relation-function-result-annotation-left",
+          "types-stage13-relation-function-result-annotation-right"
+        ],
+        "domain": "Function type annotations enforce arity while argument/result types remain metadata at assignment.",
+        "kind": "equal-stdout"
+      },
+      "requirements": [
+        "semantic:functions",
+        "semantic:types"
+      ]
+    },
+    {
+      "id": "types-stage13-quoted-alias-value",
+      "input": "tests/fixtures/m2/types-stage13-quoted-alias-value.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:type-aliases",
+        "semantic:reference",
+        "semantic:reflection-metadata"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "types-stage13-quoted-alias-reference",
+      "input": "tests/fixtures/m2/types-stage13-quoted-alias-reference.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:type-aliases",
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "types-stage13-generic-alias-reference",
+      "input": "tests/fixtures/m2/types-stage13-generic-alias-reference.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:type-aliases",
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:generics",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "types-stage13-alias-class-reference",
+      "input": "tests/fixtures/m2/types-stage13-alias-class-reference.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:type-aliases",
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "types-stage13-reference-function-equality-same",
+      "input": "tests/fixtures/m2/types-stage13-reference-function-equality-same.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:type-aliases",
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:functions",
+        "semantic:operators"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "types-stage13-reference-function-equality-alias-arg",
+      "input": "tests/fixtures/m2/types-stage13-reference-function-equality-alias-arg.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:type-aliases",
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:functions",
+        "semantic:operators"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "types-stage13-reference-function-equality-alias-result",
+      "input": "tests/fixtures/m2/types-stage13-reference-function-equality-alias-result.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:type-aliases",
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:functions",
+        "semantic:operators"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "types-stage13-reference-function-equality-same-constraint",
+      "input": "tests/fixtures/m2/types-stage13-reference-function-equality-same-constraint.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:type-aliases",
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:functions",
+        "semantic:operators"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "types-stage13-reference-function-equality-constraint-whitespace",
+      "input": "tests/fixtures/m2/types-stage13-reference-function-equality-constraint-whitespace.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:type-aliases",
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:functions",
+        "semantic:operators"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "types-stage13-reference-function-equality-nullable-alias",
+      "input": "tests/fixtures/m2/types-stage13-reference-function-equality-nullable-alias.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:type-aliases",
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:functions",
+        "semantic:operators"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "types-stage13-reference-function-equality-list-alias",
+      "input": "tests/fixtures/m2/types-stage13-reference-function-equality-list-alias.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:type-aliases",
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:functions",
+        "semantic:operators"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "types-stage13-reference-function1-to-function",
+      "input": "tests/fixtures/m2/types-stage13-reference-function1-to-function.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:reference",
+        "semantic:functions",
+        "semantic:generics",
+        "semantic:reflection-metadata"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "types-stage13-reference-function0-to-function",
+      "input": "tests/fixtures/m2/types-stage13-reference-function0-to-function.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:reference",
+        "semantic:functions",
+        "semantic:generics",
+        "semantic:reflection-metadata"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "types-stage13-reference-nested-arrow",
+      "input": "tests/fixtures/m2/types-stage13-reference-nested-arrow.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:reference",
+        "semantic:functions",
+        "semantic:generics",
+        "semantic:reflection-metadata"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "types-stage13-reference-arg-variance",
+      "input": "tests/fixtures/m2/types-stage13-reference-arg-variance.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:reference",
+        "semantic:functions",
+        "semantic:generics",
+        "semantic:reflection-metadata"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "types-stage13-reference-result-variance",
+      "input": "tests/fixtures/m2/types-stage13-reference-result-variance.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:reference",
+        "semantic:functions",
+        "semantic:generics",
+        "semantic:reflection-metadata"
+      ],
+      "expected_outcome": "success"
     }
   ]
 }
