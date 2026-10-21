@@ -32025,6 +32025,1498 @@
       ]
     },
     {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage17-inline-is-local",
+      "input": "tests/fixtures/m2/types-stage17-inline-is-local.pkl",
+      "input_sha256": "bb91875af68124753af97286620c8097977b145c1fc2cb80a6d90dde42658d30",
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:type-tests-casts",
+        "semantic:modifiers",
+        "semantic:name-resolution",
+        "semantic:diagnostics",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage17-inline-is-const",
+      "input": "tests/fixtures/m2/types-stage17-inline-is-const.pkl",
+      "input_sha256": "44599015471cd7f9dfe56c572ff9ae4276783cc58eb68f700048523673d3aeb1",
+      "metamorphic_relation": {
+        "case_ids": [
+          "types-stage17-inline-is-const",
+          "types-stage17-let-is-const",
+          "types-stage17-lambda-is-const"
+        ],
+        "domain": "Const local bounds preserve the same scalar is outcome across inline, let-root, and lambda constraints.",
+        "kind": "equal-stdout"
+      },
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:type-tests-casts",
+        "semantic:modifiers",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage17-inline-as-local",
+      "input": "tests/fixtures/m2/types-stage17-inline-as-local.pkl",
+      "input_sha256": "d245870ebe24fe237c1b0d87c07224c1d8459509fddaa72053cba75714fbd2bb",
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:type-tests-casts",
+        "semantic:modifiers",
+        "semantic:name-resolution",
+        "semantic:diagnostics",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage17-inline-as-const",
+      "input": "tests/fixtures/m2/types-stage17-inline-as-const.pkl",
+      "input_sha256": "03a870da8b063d9bb5ef57038e8c356abe271a8aa1c75c27995946ea16a946af",
+      "metamorphic_relation": {
+        "case_ids": [
+          "types-stage17-inline-as-const",
+          "types-stage17-let-as-const",
+          "types-stage17-lambda-as-const"
+        ],
+        "domain": "Const local bounds preserve the same scalar as outcome across inline, let-root, and lambda constraints.",
+        "kind": "equal-stdout"
+      },
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:type-tests-casts",
+        "semantic:modifiers",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage17-let-is-local",
+      "input": "tests/fixtures/m2/types-stage17-let-is-local.pkl",
+      "input_sha256": "cc8a0d0aed6050cf6ee7105bbd23512017a00fb307edfba6ec756c98483fc249",
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:type-tests-casts",
+        "semantic:modifiers",
+        "semantic:name-resolution",
+        "semantic:diagnostics",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage17-let-is-const",
+      "input": "tests/fixtures/m2/types-stage17-let-is-const.pkl",
+      "input_sha256": "68a31223f60729069362469a42f9f82c86a23ec6d5c92eb0fd2f6eab4b67f58c",
+      "metamorphic_relation": {
+        "case_ids": [
+          "types-stage17-inline-is-const",
+          "types-stage17-let-is-const",
+          "types-stage17-lambda-is-const"
+        ],
+        "domain": "Const local bounds preserve the same scalar is outcome across inline, let-root, and lambda constraints.",
+        "kind": "equal-stdout"
+      },
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:type-tests-casts",
+        "semantic:modifiers",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage17-let-as-local",
+      "input": "tests/fixtures/m2/types-stage17-let-as-local.pkl",
+      "input_sha256": "829e0005433fd9c75b1cf1f9895dba11735c8cd343eeaf400e5ffc798831cd13",
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:type-tests-casts",
+        "semantic:modifiers",
+        "semantic:name-resolution",
+        "semantic:diagnostics",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage17-let-as-const",
+      "input": "tests/fixtures/m2/types-stage17-let-as-const.pkl",
+      "input_sha256": "dfd0f5b271bbbdbf8c0264a87891c25d07594e23e75300c3e7e52b7f6e0ab224",
+      "metamorphic_relation": {
+        "case_ids": [
+          "types-stage17-inline-as-const",
+          "types-stage17-let-as-const",
+          "types-stage17-lambda-as-const"
+        ],
+        "domain": "Const local bounds preserve the same scalar as outcome across inline, let-root, and lambda constraints.",
+        "kind": "equal-stdout"
+      },
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:type-tests-casts",
+        "semantic:modifiers",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage17-lambda-is-local",
+      "input": "tests/fixtures/m2/types-stage17-lambda-is-local.pkl",
+      "input_sha256": "077089570e7d08e01b5d9cfdef14be0e8b8d282f2f5faf8ee43df1fb3f9dae13",
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:type-tests-casts",
+        "semantic:modifiers",
+        "semantic:name-resolution",
+        "semantic:functions",
+        "semantic:closures",
+        "semantic:diagnostics",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage17-lambda-is-const",
+      "input": "tests/fixtures/m2/types-stage17-lambda-is-const.pkl",
+      "input_sha256": "3959cf485bb1146d1c448123a50096a12bb6e8b49c8df02f10fa6bf9b5d9f553",
+      "metamorphic_relation": {
+        "case_ids": [
+          "types-stage17-inline-is-const",
+          "types-stage17-let-is-const",
+          "types-stage17-lambda-is-const"
+        ],
+        "domain": "Const local bounds preserve the same scalar is outcome across inline, let-root, and lambda constraints.",
+        "kind": "equal-stdout"
+      },
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:type-tests-casts",
+        "semantic:modifiers",
+        "semantic:name-resolution",
+        "semantic:functions",
+        "semantic:closures",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage17-lambda-as-local",
+      "input": "tests/fixtures/m2/types-stage17-lambda-as-local.pkl",
+      "input_sha256": "de97a7e73a22302f7fa73c31d7597aa6ed941915467a71f5de17ab733f914269",
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:type-tests-casts",
+        "semantic:modifiers",
+        "semantic:name-resolution",
+        "semantic:functions",
+        "semantic:closures",
+        "semantic:diagnostics",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage17-lambda-as-const",
+      "input": "tests/fixtures/m2/types-stage17-lambda-as-const.pkl",
+      "input_sha256": "214c0f878084141641b417f4f1c78f186ee1c4671703dee54f21d89461916a5d",
+      "metamorphic_relation": {
+        "case_ids": [
+          "types-stage17-inline-as-const",
+          "types-stage17-let-as-const",
+          "types-stage17-lambda-as-const"
+        ],
+        "domain": "Const local bounds preserve the same scalar as outcome across inline, let-root, and lambda constraints.",
+        "kind": "equal-stdout"
+      },
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:type-tests-casts",
+        "semantic:modifiers",
+        "semantic:name-resolution",
+        "semantic:functions",
+        "semantic:closures",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage17-recursive-depth-negative",
+      "input": "tests/fixtures/m2/types-stage17-recursive-depth-negative.pkl",
+      "input_sha256": "b3128415dfcb5e9a29711e876f8723f914f05c45b72c75c893613ca776cb9641",
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:type-tests-casts",
+        "semantic:modifiers",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage17-recursive-depth-0",
+      "input": "tests/fixtures/m2/types-stage17-recursive-depth-0.pkl",
+      "input_sha256": "0934f9788f6143ca19bc7755a8f06d29503f81bf0867cefee4673c68dd22dd6c",
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:type-tests-casts",
+        "semantic:modifiers",
+        "semantic:name-resolution",
+        "semantic:diagnostics",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage17-recursive-depth-1",
+      "input": "tests/fixtures/m2/types-stage17-recursive-depth-1.pkl",
+      "input_sha256": "5590b598d0c833946dbd2b43117a1d55f88f84bfd8d602cda530e389c922d5f7",
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:type-tests-casts",
+        "semantic:modifiers",
+        "semantic:name-resolution",
+        "semantic:diagnostics",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage17-recursive-depth-3",
+      "input": "tests/fixtures/m2/types-stage17-recursive-depth-3.pkl",
+      "input_sha256": "80d4091b7833b5a927a9d708719ba8680dd76eeeba776278c3fb9abc518281f4",
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:type-tests-casts",
+        "semantic:modifiers",
+        "semantic:name-resolution",
+        "semantic:diagnostics",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage17-const-method-local",
+      "input": "tests/fixtures/m2/types-stage17-const-method-local.pkl",
+      "input_sha256": "f8f3ac6123cd741597012915284e2cee69e909397d31bc00d897e41fbf00b766",
+      "required": true,
+      "requirements": [
+        "semantic:functions",
+        "semantic:diagnostics",
+        "semantic:modifiers",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:type-aliases",
+        "semantic:types",
+        "semantic:constraints"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage17-const-method-ordinary",
+      "input": "tests/fixtures/m2/types-stage17-const-method-ordinary.pkl",
+      "input_sha256": "1751ac5c3da2ac116be021be633f8bc9c3f081a2b919fc0e96f691194f587425",
+      "required": true,
+      "requirements": [
+        "semantic:functions",
+        "semantic:diagnostics",
+        "semantic:modifiers",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:type-aliases",
+        "semantic:types",
+        "semantic:constraints"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage17-const-method-this",
+      "input": "tests/fixtures/m2/types-stage17-const-method-this.pkl",
+      "input_sha256": "dced6fab24c623d6be9cdf91939423d85cd154bbdbf0fa583291d46b3be0ca0e",
+      "required": true,
+      "requirements": [
+        "semantic:functions",
+        "semantic:diagnostics",
+        "semantic:modifiers",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:type-aliases",
+        "semantic:types",
+        "semantic:constraints"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage17-const-method-module",
+      "input": "tests/fixtures/m2/types-stage17-const-method-module.pkl",
+      "input_sha256": "077b5b3af6050b8eef35af649273627beb9f28541520220808777b412e5c6141",
+      "required": true,
+      "requirements": [
+        "semantic:functions",
+        "semantic:diagnostics",
+        "semantic:modifiers",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:type-aliases",
+        "semantic:types",
+        "semantic:constraints"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage17-const-method-method",
+      "input": "tests/fixtures/m2/types-stage17-const-method-method.pkl",
+      "input_sha256": "4d62bb794775b4ae95c6225aab0e8f40c5ebd97cd52750b04b31961a4ec056b9",
+      "required": true,
+      "requirements": [
+        "semantic:functions",
+        "semantic:diagnostics",
+        "semantic:modifiers",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:type-aliases",
+        "semantic:types",
+        "semantic:constraints"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage17-const-method-lambda",
+      "input": "tests/fixtures/m2/types-stage17-const-method-lambda.pkl",
+      "input_sha256": "bc76dcc9360ca18a44474c8152cbc6777b1662182f3710264a8733cc10e19a06",
+      "required": true,
+      "requirements": [
+        "semantic:functions",
+        "semantic:diagnostics",
+        "semantic:modifiers",
+        "semantic:name-resolution",
+        "semantic:closures",
+        "semantic:lazy-evaluation",
+        "semantic:type-aliases",
+        "semantic:types",
+        "semantic:constraints"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage17-const-method-object",
+      "input": "tests/fixtures/m2/types-stage17-const-method-object.pkl",
+      "input_sha256": "626407e92df65cdbb954056f3d9d18daa040a7b70d2805c5aa933abbc1d5adc2",
+      "required": true,
+      "requirements": [
+        "semantic:functions",
+        "semantic:diagnostics",
+        "semantic:modifiers",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:type-aliases",
+        "semantic:types",
+        "semantic:constraints"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage17-const-method-object-lambda",
+      "input": "tests/fixtures/m2/types-stage17-const-method-object-lambda.pkl",
+      "input_sha256": "811b6f9129c48e9d70cf3a4ef1d5a1fdf5ed0a7a7aa7bef7c657bef93997837e",
+      "required": true,
+      "requirements": [
+        "semantic:functions",
+        "semantic:diagnostics",
+        "semantic:modifiers",
+        "semantic:name-resolution",
+        "semantic:closures",
+        "semantic:lazy-evaluation",
+        "semantic:type-aliases",
+        "semantic:types",
+        "semantic:constraints"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage17-const-method-let",
+      "input": "tests/fixtures/m2/types-stage17-const-method-let.pkl",
+      "input_sha256": "594b1898f263ec71432849472542d75c502f15f0933a9a294ecccb1ccbfd4afb",
+      "required": true,
+      "requirements": [
+        "semantic:functions",
+        "semantic:diagnostics",
+        "semantic:modifiers",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:type-aliases",
+        "semantic:types",
+        "semantic:constraints"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage17-const-method-local-method",
+      "input": "tests/fixtures/m2/types-stage17-const-method-local-method.pkl",
+      "input_sha256": "23a9dbba735c857de886da3e645d949bb7d397ef3f36dc5758278c45c7fb153d",
+      "required": true,
+      "requirements": [
+        "semantic:functions",
+        "semantic:diagnostics",
+        "semantic:modifiers",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:type-aliases",
+        "semantic:types",
+        "semantic:constraints"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage17-const-method-outer",
+      "input": "tests/fixtures/m2/types-stage17-const-method-outer.pkl",
+      "input_sha256": "c26f348f42adb5bfa2c70f8393cba5a934dbe01a972fbcd7263e7beccfe36d67",
+      "required": true,
+      "requirements": [
+        "semantic:functions",
+        "semantic:diagnostics",
+        "semantic:modifiers",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:type-aliases",
+        "semantic:types",
+        "semantic:constraints"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage17-const-property-control",
+      "input": "tests/fixtures/m2/types-stage17-const-property-control.pkl",
+      "input_sha256": "03098750287e3c5ccda42354891dcb79098e80222f18aae5044f99e1913b059e",
+      "required": true,
+      "requirements": [
+        "semantic:functions",
+        "semantic:diagnostics",
+        "semantic:modifiers",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:type-aliases",
+        "semantic:types",
+        "semantic:constraints"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage17-const-property-object-method",
+      "input": "tests/fixtures/m2/types-stage17-const-property-object-method.pkl",
+      "input_sha256": "b2bfef7c6977d78a2f2ac4babdeabfde37a3ffc8e0ed434214a023c4d1d96ee0",
+      "required": true,
+      "requirements": [
+        "semantic:functions",
+        "semantic:diagnostics",
+        "semantic:modifiers",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:type-aliases",
+        "semantic:types",
+        "semantic:constraints"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage17-const-method-parameter-constraint",
+      "input": "tests/fixtures/m2/types-stage17-const-method-parameter-constraint.pkl",
+      "input_sha256": "066dea7cc69920600c068d9da66e133d9a00d14634c8e560d644df37a31a2ad3",
+      "required": true,
+      "requirements": [
+        "semantic:functions",
+        "semantic:diagnostics",
+        "semantic:modifiers",
+        "semantic:name-resolution",
+        "semantic:types",
+        "semantic:constraints",
+        "semantic:lazy-evaluation",
+        "semantic:type-aliases"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage17-const-method-result-constraint",
+      "input": "tests/fixtures/m2/types-stage17-const-method-result-constraint.pkl",
+      "input_sha256": "25b0cdcc07a5f2d6be4d9de143ba3cb81011f918674d96579688536b91b4fbcd",
+      "required": true,
+      "requirements": [
+        "semantic:functions",
+        "semantic:diagnostics",
+        "semantic:modifiers",
+        "semantic:name-resolution",
+        "semantic:types",
+        "semantic:constraints",
+        "semantic:lazy-evaluation",
+        "semantic:type-aliases"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage17-const-class-method",
+      "input": "tests/fixtures/m2/types-stage17-const-class-method.pkl",
+      "input_sha256": "002f83979fcabcfc82d8b66fe953cd1574ac32f2ea7598d8c66464d7c64b2e5f",
+      "required": true,
+      "requirements": [
+        "semantic:functions",
+        "semantic:diagnostics",
+        "semantic:modifiers",
+        "semantic:name-resolution",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:type-aliases",
+        "semantic:types",
+        "semantic:constraints"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage17-const-class-method-module",
+      "input": "tests/fixtures/m2/types-stage17-const-class-method-module.pkl",
+      "input_sha256": "d3c5d09b8e553d06bbdee0956f4cc55bbcc4adf1a5d0ed5fbad8bb53e0f1ffcc",
+      "required": true,
+      "requirements": [
+        "semantic:functions",
+        "semantic:diagnostics",
+        "semantic:modifiers",
+        "semantic:name-resolution",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:type-aliases",
+        "semantic:types",
+        "semantic:constraints"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage17-grouped-call-top",
+      "input": "tests/fixtures/m2/types-stage17-grouped-call-top.pkl",
+      "input_sha256": "cd2d0ac0972b744b22b9f37b5ee272b97ce8cbf047b45e06c9098f06fa419ac5",
+      "required": true,
+      "requirements": [
+        "semantic:functions",
+        "semantic:diagnostics",
+        "semantic:modifiers",
+        "semantic:lazy-evaluation",
+        "semantic:type-aliases",
+        "semantic:types",
+        "semantic:constraints"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage17-grouped-call-argument",
+      "input": "tests/fixtures/m2/types-stage17-grouped-call-argument.pkl",
+      "input_sha256": "c916cf282a7a290a865097fa491a87c3de68a20d9907b3790a0c7326e8927218",
+      "required": true,
+      "requirements": [
+        "semantic:functions",
+        "semantic:diagnostics",
+        "semantic:modifiers",
+        "semantic:lazy-evaluation",
+        "semantic:type-aliases",
+        "semantic:types",
+        "semantic:constraints"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage17-grouped-call-constraint",
+      "input": "tests/fixtures/m2/types-stage17-grouped-call-constraint.pkl",
+      "input_sha256": "3c0622cec260421fbf87bf2a5b97937e0bcd89de4f023927017af74dcb1ca414",
+      "required": true,
+      "requirements": [
+        "semantic:functions",
+        "semantic:diagnostics",
+        "semantic:types",
+        "semantic:constraints",
+        "semantic:modifiers",
+        "semantic:lazy-evaluation",
+        "semantic:type-aliases"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage17-grouped-call-conditional",
+      "input": "tests/fixtures/m2/types-stage17-grouped-call-conditional.pkl",
+      "input_sha256": "1f5ae8ac333355f825d7f70f6f682af0202b63a5940a9915d97e042021a1c9af",
+      "required": true,
+      "requirements": [
+        "semantic:functions",
+        "semantic:diagnostics",
+        "semantic:modifiers",
+        "semantic:lazy-evaluation",
+        "semantic:type-aliases",
+        "semantic:types",
+        "semantic:constraints"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage17-grouped-call-list",
+      "input": "tests/fixtures/m2/types-stage17-grouped-call-list.pkl",
+      "input_sha256": "0f83b5d3139e2d9739a6f5a01dcdfb1dcc2ad10634e9677d48aff7914b080081",
+      "required": true,
+      "requirements": [
+        "semantic:functions",
+        "semantic:diagnostics",
+        "semantic:modifiers",
+        "semantic:lazy-evaluation",
+        "semantic:type-aliases",
+        "semantic:types",
+        "semantic:constraints"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage17-grouped-call-group",
+      "input": "tests/fixtures/m2/types-stage17-grouped-call-group.pkl",
+      "input_sha256": "862ae0184f43e51ba9ca7f1ec5df089b9d510710fc63b55330fd6b03a8297d65",
+      "required": true,
+      "requirements": [
+        "semantic:functions",
+        "semantic:diagnostics",
+        "semantic:modifiers",
+        "semantic:lazy-evaluation",
+        "semantic:type-aliases",
+        "semantic:types",
+        "semantic:constraints"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage17-grouped-call-interpolation",
+      "input": "tests/fixtures/m2/types-stage17-grouped-call-interpolation.pkl",
+      "input_sha256": "f1df026da32a8b7ccfc39a863e9302546c377d5cc5dd2beeb6ee03b27380cfb9",
+      "required": true,
+      "requirements": [
+        "semantic:functions",
+        "semantic:diagnostics",
+        "semantic:modifiers",
+        "semantic:lazy-evaluation",
+        "semantic:type-aliases",
+        "semantic:types",
+        "semantic:constraints"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage17-const-method-object-dynamic",
+      "input": "tests/fixtures/m2/types-stage17-const-method-object-dynamic.pkl",
+      "input_sha256": "ffffd138d9e34e4054bc1a50d1e52245f9122b341bb711d76eb919867c61e80d",
+      "required": true,
+      "requirements": [
+        "semantic:functions",
+        "semantic:diagnostics",
+        "semantic:modifiers",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:type-aliases",
+        "semantic:types",
+        "semantic:constraints"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage17-const-method-object-lambda-dynamic",
+      "input": "tests/fixtures/m2/types-stage17-const-method-object-lambda-dynamic.pkl",
+      "input_sha256": "2dc06dfb4ce1012da9a82f6223e5a757c69bc902b31b8e8f58b002c11e403d87",
+      "required": true,
+      "requirements": [
+        "semantic:functions",
+        "semantic:diagnostics",
+        "semantic:modifiers",
+        "semantic:name-resolution",
+        "semantic:closures",
+        "semantic:lazy-evaluation",
+        "semantic:type-aliases",
+        "semantic:types",
+        "semantic:constraints"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage17-const-method-lambda-object-dynamic",
+      "input": "tests/fixtures/m2/types-stage17-const-method-lambda-object-dynamic.pkl",
+      "input_sha256": "42cab42db9e7216aebf10c903da1a92ecbf358485fc78a11119858c867195ba6",
+      "required": true,
+      "requirements": [
+        "semantic:functions",
+        "semantic:diagnostics",
+        "semantic:modifiers",
+        "semantic:name-resolution",
+        "semantic:closures",
+        "semantic:lazy-evaluation",
+        "semantic:type-aliases",
+        "semantic:types",
+        "semantic:constraints"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage17-const-method-local-method-dynamic",
+      "input": "tests/fixtures/m2/types-stage17-const-method-local-method-dynamic.pkl",
+      "input_sha256": "430f8eea5f47682a41b9f9447403993622ff0991d21e4bde6f899bf0089cb749",
+      "required": true,
+      "requirements": [
+        "semantic:functions",
+        "semantic:diagnostics",
+        "semantic:modifiers",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:type-aliases",
+        "semantic:types",
+        "semantic:constraints"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage17-const-property-object-method-dynamic",
+      "input": "tests/fixtures/m2/types-stage17-const-property-object-method-dynamic.pkl",
+      "input_sha256": "9aa04684316921f765499f913a4147187a286a9da481eac235305a1dcdcb9b2d",
+      "required": true,
+      "requirements": [
+        "semantic:functions",
+        "semantic:diagnostics",
+        "semantic:modifiers",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:type-aliases",
+        "semantic:types",
+        "semantic:constraints"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage17-const-property-lambda-object-method-dynamic",
+      "input": "tests/fixtures/m2/types-stage17-const-property-lambda-object-method-dynamic.pkl",
+      "input_sha256": "8b96fe97db7141db7edfddb884aa480a79258a8cc2a3eca0ac535c5c1e655c77",
+      "required": true,
+      "requirements": [
+        "semantic:functions",
+        "semantic:diagnostics",
+        "semantic:modifiers",
+        "semantic:name-resolution",
+        "semantic:closures",
+        "semantic:lazy-evaluation",
+        "semantic:type-aliases",
+        "semantic:types",
+        "semantic:constraints"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage17-super-method",
+      "input": "tests/fixtures/m2/types-stage17-super-method.pkl",
+      "input_sha256": "83cb9e7740603f3753952993c65dc83143f758b96114d890cb16c2f2f360ea2c",
+      "required": true,
+      "requirements": [
+        "semantic:functions",
+        "semantic:diagnostics",
+        "semantic:modifiers",
+        "semantic:name-resolution",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:type-aliases",
+        "semantic:types",
+        "semantic:constraints"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage17-super-property",
+      "input": "tests/fixtures/m2/types-stage17-super-property.pkl",
+      "input_sha256": "0ca19a90f54d7155db3443114830caa0a44cbd4180712f726a6139424dc9a9ab",
+      "required": true,
+      "requirements": [
+        "semantic:functions",
+        "semantic:diagnostics",
+        "semantic:modifiers",
+        "semantic:name-resolution",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:type-aliases",
+        "semantic:types",
+        "semantic:constraints"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage17-super-property-in-method",
+      "input": "tests/fixtures/m2/types-stage17-super-property-in-method.pkl",
+      "input_sha256": "cda3c95b08144fb89483f46bcbd154a21a8dd15dcc0720b98703e68dccb05755",
+      "required": true,
+      "requirements": [
+        "semantic:functions",
+        "semantic:diagnostics",
+        "semantic:modifiers",
+        "semantic:name-resolution",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:type-aliases",
+        "semantic:types",
+        "semantic:constraints"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage17-const-method-grouped",
+      "input": "tests/fixtures/m2/types-stage17-const-method-grouped.pkl",
+      "input_sha256": "fdb7ae04a01f0292edf39764bb5b61be43140d30f5dc2cfe421813514987d433",
+      "required": true,
+      "requirements": [
+        "semantic:functions",
+        "semantic:diagnostics",
+        "semantic:modifiers",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:type-aliases",
+        "semantic:types",
+        "semantic:constraints"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage17-frames-const-hint-depth-1",
+      "input": "tests/fixtures/m2/types-stage17-frames-const-hint-depth-1.pkl",
+      "input_sha256": "f5e8bc4af72bba875db0710edb302f3bba67563e58d57232a9de25f83ad32d4a",
+      "required": true,
+      "requirements": [
+        "semantic:functions",
+        "semantic:diagnostics",
+        "semantic:modifiers",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:type-aliases",
+        "semantic:types",
+        "semantic:constraints"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage17-frames-const-hint-depth-1-power",
+      "input": "tests/fixtures/m2/types-stage17-frames-const-hint-depth-1-power.pkl",
+      "input_sha256": "f5e8bc4af72bba875db0710edb302f3bba67563e58d57232a9de25f83ad32d4a",
+      "power_assertions": true,
+      "required": true,
+      "requirements": [
+        "semantic:functions",
+        "semantic:diagnostics",
+        "semantic:modifiers",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:type-aliases",
+        "semantic:types",
+        "semantic:constraints"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage17-frames-const-hint-depth-2",
+      "input": "tests/fixtures/m2/types-stage17-frames-const-hint-depth-2.pkl",
+      "input_sha256": "23dc002c34902c58664a89fc3a8f81a34d3ef9b818312641c0655c75f156a478",
+      "required": true,
+      "requirements": [
+        "semantic:functions",
+        "semantic:diagnostics",
+        "semantic:modifiers",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:type-aliases",
+        "semantic:types",
+        "semantic:constraints"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage17-frames-const-hint-depth-2-power",
+      "input": "tests/fixtures/m2/types-stage17-frames-const-hint-depth-2-power.pkl",
+      "input_sha256": "23dc002c34902c58664a89fc3a8f81a34d3ef9b818312641c0655c75f156a478",
+      "power_assertions": true,
+      "required": true,
+      "requirements": [
+        "semantic:functions",
+        "semantic:diagnostics",
+        "semantic:modifiers",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:type-aliases",
+        "semantic:types",
+        "semantic:constraints"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage17-frames-const-hint-depth-3",
+      "input": "tests/fixtures/m2/types-stage17-frames-const-hint-depth-3.pkl",
+      "input_sha256": "8d1f73c123d6ca7eb508c2f94f26b1cf1fc32a0599b496dda53516c30b6f6504",
+      "required": true,
+      "requirements": [
+        "semantic:functions",
+        "semantic:diagnostics",
+        "semantic:modifiers",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:type-aliases",
+        "semantic:types",
+        "semantic:constraints"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage17-frames-const-hint-depth-3-power",
+      "input": "tests/fixtures/m2/types-stage17-frames-const-hint-depth-3-power.pkl",
+      "input_sha256": "8d1f73c123d6ca7eb508c2f94f26b1cf1fc32a0599b496dda53516c30b6f6504",
+      "power_assertions": true,
+      "required": true,
+      "requirements": [
+        "semantic:functions",
+        "semantic:diagnostics",
+        "semantic:modifiers",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:type-aliases",
+        "semantic:types",
+        "semantic:constraints"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage17-frames-const-hint-depth-4",
+      "input": "tests/fixtures/m2/types-stage17-frames-const-hint-depth-4.pkl",
+      "input_sha256": "ead044771c0848c127193398dfdbb92173543648c59395dbc291cc8bfb596f74",
+      "required": true,
+      "requirements": [
+        "semantic:functions",
+        "semantic:diagnostics",
+        "semantic:modifiers",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:type-aliases",
+        "semantic:types",
+        "semantic:constraints"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage17-frames-const-hint-depth-4-power",
+      "input": "tests/fixtures/m2/types-stage17-frames-const-hint-depth-4-power.pkl",
+      "input_sha256": "ead044771c0848c127193398dfdbb92173543648c59395dbc291cc8bfb596f74",
+      "power_assertions": true,
+      "required": true,
+      "requirements": [
+        "semantic:functions",
+        "semantic:diagnostics",
+        "semantic:modifiers",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:type-aliases",
+        "semantic:types",
+        "semantic:constraints"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage17-outer-method-lambda",
+      "input": "tests/fixtures/m2/types-stage17-outer-method-lambda.pkl",
+      "input_sha256": "1d3b662008c1453a396f03457f6b9f414d5cdf77a8b0886ef595ee87d89e3db7",
+      "required": true,
+      "requirements": [
+        "semantic:functions",
+        "semantic:closures",
+        "semantic:name-resolution",
+        "semantic:modifiers",
+        "semantic:diagnostics",
+        "semantic:lazy-evaluation",
+        "semantic:type-aliases",
+        "semantic:types",
+        "semantic:constraints"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage17-outer-method-lambda-value",
+      "input": "tests/fixtures/m2/types-stage17-outer-method-lambda-value.pkl",
+      "input_sha256": "4cdea15e5639d26ff7b600b22c7e68140ab31455595e9a14282e19d5cc2942db",
+      "required": true,
+      "requirements": [
+        "semantic:functions",
+        "semantic:closures",
+        "semantic:name-resolution",
+        "semantic:modifiers",
+        "semantic:diagnostics",
+        "semantic:lazy-evaluation",
+        "semantic:type-aliases",
+        "semantic:types",
+        "semantic:constraints"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage17-outer-property-lambda",
+      "input": "tests/fixtures/m2/types-stage17-outer-property-lambda.pkl",
+      "input_sha256": "720ed3cf5105b97ad72b28aa6fd6aa4e2ef5284597bcbc7b37a9a587eb8a81f7",
+      "required": true,
+      "requirements": [
+        "semantic:functions",
+        "semantic:closures",
+        "semantic:name-resolution",
+        "semantic:modifiers",
+        "semantic:diagnostics",
+        "semantic:lazy-evaluation",
+        "semantic:type-aliases",
+        "semantic:types",
+        "semantic:constraints"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage17-outer-method-object",
+      "input": "tests/fixtures/m2/types-stage17-outer-method-object.pkl",
+      "input_sha256": "2ac24bf2e332ac02686895c678b25c57b73b46ee0ba3d543500871891cbfce4d",
+      "required": true,
+      "requirements": [
+        "semantic:functions",
+        "semantic:closures",
+        "semantic:name-resolution",
+        "semantic:modifiers",
+        "semantic:diagnostics",
+        "semantic:lazy-evaluation",
+        "semantic:type-aliases",
+        "semantic:types",
+        "semantic:constraints"
+      ]
+    },
+    {
       "adapter": null,
       "execution": {
         "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
@@ -123437,9 +124929,9 @@
   "comparison_boundary": "evaluateExpressionString(ModuleSource.path(same absolute URI), expression) UTF-8 stdout; whole PklException.getMessage() UTF-8 stderr and exit 1; no trimming. Power assertions default to disabled; an explicit per-case power_assertions boolean enables the same option in both probes. Stringification alone is not typed value/API compatibility.",
   "completion": "Every required semantic/source requirement needs implementation/test mappings and complete passing execution. Pending/unmapped/unimplemented/mismatch remains a full-gate failure.",
   "counts": {
-    "cases": 2597,
+    "cases": 2659,
     "cases_by_execution": {
-      "ready": 1597,
+      "ready": 1659,
       "unimplemented": 960,
       "unmapped": 40
     },
@@ -124265,7 +125757,62 @@
           "types-stage16-frames-const-hint-depth-3",
           "types-stage16-frames-const-hint-depth-3-power",
           "types-stage16-frames-const-hint-depth-4",
-          "types-stage16-frames-const-hint-depth-4-power"
+          "types-stage16-frames-const-hint-depth-4-power",
+          "types-stage17-inline-is-local",
+          "types-stage17-inline-is-const",
+          "types-stage17-inline-as-local",
+          "types-stage17-inline-as-const",
+          "types-stage17-let-is-local",
+          "types-stage17-let-is-const",
+          "types-stage17-let-as-local",
+          "types-stage17-let-as-const",
+          "types-stage17-lambda-is-local",
+          "types-stage17-lambda-is-const",
+          "types-stage17-lambda-as-local",
+          "types-stage17-lambda-as-const",
+          "types-stage17-recursive-depth-negative",
+          "types-stage17-recursive-depth-0",
+          "types-stage17-recursive-depth-1",
+          "types-stage17-recursive-depth-3",
+          "types-stage17-const-method-local",
+          "types-stage17-const-method-ordinary",
+          "types-stage17-const-method-this",
+          "types-stage17-const-method-module",
+          "types-stage17-const-method-method",
+          "types-stage17-const-method-lambda",
+          "types-stage17-const-method-object",
+          "types-stage17-const-method-object-lambda",
+          "types-stage17-const-method-let",
+          "types-stage17-const-method-local-method",
+          "types-stage17-const-method-outer",
+          "types-stage17-const-property-control",
+          "types-stage17-const-property-object-method",
+          "types-stage17-const-method-parameter-constraint",
+          "types-stage17-const-method-result-constraint",
+          "types-stage17-const-class-method",
+          "types-stage17-const-class-method-module",
+          "types-stage17-const-method-object-dynamic",
+          "types-stage17-const-method-object-lambda-dynamic",
+          "types-stage17-const-method-lambda-object-dynamic",
+          "types-stage17-const-method-local-method-dynamic",
+          "types-stage17-const-property-object-method-dynamic",
+          "types-stage17-const-property-lambda-object-method-dynamic",
+          "types-stage17-super-method",
+          "types-stage17-super-property",
+          "types-stage17-super-property-in-method",
+          "types-stage17-const-method-grouped",
+          "types-stage17-frames-const-hint-depth-1",
+          "types-stage17-frames-const-hint-depth-1-power",
+          "types-stage17-frames-const-hint-depth-2",
+          "types-stage17-frames-const-hint-depth-2-power",
+          "types-stage17-frames-const-hint-depth-3",
+          "types-stage17-frames-const-hint-depth-3-power",
+          "types-stage17-frames-const-hint-depth-4",
+          "types-stage17-frames-const-hint-depth-4-power",
+          "types-stage17-outer-method-lambda",
+          "types-stage17-outer-method-lambda-value",
+          "types-stage17-outer-property-lambda",
+          "types-stage17-outer-method-object"
         ],
         "state": "partial"
       }
@@ -124277,12 +125824,12 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "adcb42e87523c04d0b6e20ca7d4e3fd3b6b3964d43178d0d01bba2d6be704a34",
+            "sha256": "008008a4f1a0fb6cff140c881e3b0217c3d52fd065af0f18af0e5b079c8db51f",
             "symbol": "initialize_member_types"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "adcb42e87523c04d0b6e20ca7d4e3fd3b6b3964d43178d0d01bba2d6be704a34",
+            "sha256": "008008a4f1a0fb6cff140c881e3b0217c3d52fd065af0f18af0e5b079c8db51f",
             "symbol": "validate_class_override"
           },
           {
@@ -124292,8 +125839,18 @@
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "adcb42e87523c04d0b6e20ca7d4e3fd3b6b3964d43178d0d01bba2d6be704a34",
+            "sha256": "008008a4f1a0fb6cff140c881e3b0217c3d52fd065af0f18af0e5b079c8db51f",
             "symbol": "force_key"
+          },
+          {
+            "path": "crates/pkl-runtime/src/heap.rs",
+            "sha256": "cc34077dded1fc675df7a93e5db92ed93095b0e85731125e9916a3378157caf7",
+            "symbol": "ExecutableState"
+          },
+          {
+            "path": "crates/pkl-runtime/src/vm/typecheck.rs",
+            "sha256": "67955a47c008c7e34e0f14099fd4ab9621b74e52373f40c7e4bf924fecc55725",
+            "symbol": "begin_type_node"
           }
         ],
         "state": "partial"
@@ -124304,9 +125861,9 @@
       "reviewed_mapping": {
         "remaining": [
           "Complete lazy error ordering, successful memoization, retry semantics, cycles and failure-path diagnostics require the original inventory and broader differential execution.",
-          "Local const-read retry cache ownership, recursive alias instantiation identity and const-function local reads retain recorded exploratory mismatches."
+          "Selected non-generic local const-read retries and const-method lexical barriers are covered; recursive generic instantiation, generic let-root sharing, and the complete lexical-scope corpus retain gaps."
         ],
-        "scope": "Selected probes preserve unforced fixed initializers, class type-before-modifier errors, fixed override checks before body forcing, and fixed Reference metadata without evaluating referent bodies. Stage 16: Selected lazy member calls isolate receiver slots and alias const checks remain deferred until a lexical read executes.",
+        "scope": "Selected probes preserve unforced fixed initializers, class type-before-modifier errors, fixed override checks before body forcing, and fixed Reference metadata without evaluating referent bodies. Stage 16: Selected lazy member calls isolate receiver slots and alias const checks remain deferred until a lexical read executes. Stage 17: Evaluator-owned executable and type-use nodes preserve selected non-generic local const-property resolution across retries, distinct inline/lambda uses, shared let roots, recursive depth, inherited annotations, and lazy collection members; per-call receiver slots remain separate.",
         "source": "compatibility/m2-mappings.json"
       },
       "tests": {
@@ -125037,7 +126594,69 @@
           "fixed-stage11-reference-metadata-local",
           "fixed-stage11-reference-metadata-constraint",
           "fixed-stage11-relation-reference-unforced-fixed-left",
-          "fixed-stage11-relation-reference-unforced-fixed-right"
+          "fixed-stage11-relation-reference-unforced-fixed-right",
+          "types-stage17-inline-is-local",
+          "types-stage17-inline-is-const",
+          "types-stage17-inline-as-local",
+          "types-stage17-inline-as-const",
+          "types-stage17-let-is-local",
+          "types-stage17-let-is-const",
+          "types-stage17-let-as-local",
+          "types-stage17-let-as-const",
+          "types-stage17-lambda-is-local",
+          "types-stage17-lambda-is-const",
+          "types-stage17-lambda-as-local",
+          "types-stage17-lambda-as-const",
+          "types-stage17-recursive-depth-negative",
+          "types-stage17-recursive-depth-0",
+          "types-stage17-recursive-depth-1",
+          "types-stage17-recursive-depth-3",
+          "types-stage17-const-method-local",
+          "types-stage17-const-method-ordinary",
+          "types-stage17-const-method-this",
+          "types-stage17-const-method-module",
+          "types-stage17-const-method-method",
+          "types-stage17-const-method-lambda",
+          "types-stage17-const-method-object",
+          "types-stage17-const-method-object-lambda",
+          "types-stage17-const-method-let",
+          "types-stage17-const-method-local-method",
+          "types-stage17-const-method-outer",
+          "types-stage17-const-property-control",
+          "types-stage17-const-property-object-method",
+          "types-stage17-const-method-parameter-constraint",
+          "types-stage17-const-method-result-constraint",
+          "types-stage17-const-class-method",
+          "types-stage17-const-class-method-module",
+          "types-stage17-grouped-call-top",
+          "types-stage17-grouped-call-argument",
+          "types-stage17-grouped-call-constraint",
+          "types-stage17-grouped-call-conditional",
+          "types-stage17-grouped-call-list",
+          "types-stage17-grouped-call-group",
+          "types-stage17-grouped-call-interpolation",
+          "types-stage17-const-method-object-dynamic",
+          "types-stage17-const-method-object-lambda-dynamic",
+          "types-stage17-const-method-lambda-object-dynamic",
+          "types-stage17-const-method-local-method-dynamic",
+          "types-stage17-const-property-object-method-dynamic",
+          "types-stage17-const-property-lambda-object-method-dynamic",
+          "types-stage17-super-method",
+          "types-stage17-super-property",
+          "types-stage17-super-property-in-method",
+          "types-stage17-const-method-grouped",
+          "types-stage17-frames-const-hint-depth-1",
+          "types-stage17-frames-const-hint-depth-1-power",
+          "types-stage17-frames-const-hint-depth-2",
+          "types-stage17-frames-const-hint-depth-2-power",
+          "types-stage17-frames-const-hint-depth-3",
+          "types-stage17-frames-const-hint-depth-3-power",
+          "types-stage17-frames-const-hint-depth-4",
+          "types-stage17-frames-const-hint-depth-4-power",
+          "types-stage17-outer-method-lambda",
+          "types-stage17-outer-method-lambda-value",
+          "types-stage17-outer-property-lambda",
+          "types-stage17-outer-method-object"
         ],
         "state": "partial"
       }
@@ -125661,12 +127280,12 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "adcb42e87523c04d0b6e20ca7d4e3fd3b6b3964d43178d0d01bba2d6be704a34",
+            "sha256": "008008a4f1a0fb6cff140c881e3b0217c3d52fd065af0f18af0e5b079c8db51f",
             "symbol": "validate_object_override"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "adcb42e87523c04d0b6e20ca7d4e3fd3b6b3964d43178d0d01bba2d6be704a34",
+            "sha256": "008008a4f1a0fb6cff140c881e3b0217c3d52fd065af0f18af0e5b079c8db51f",
             "symbol": "inherited_member"
           }
         ],
@@ -125818,22 +127437,22 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/heap.rs",
-            "sha256": "a7855219cf3cca13f353456729a05093bc1439f40b72b2da5cbda7cf624f63b4",
+            "sha256": "cc34077dded1fc675df7a93e5db92ed93095b0e85731125e9916a3378157caf7",
             "symbol": "Member"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "adcb42e87523c04d0b6e20ca7d4e3fd3b6b3964d43178d0d01bba2d6be704a34",
+            "sha256": "008008a4f1a0fb6cff140c881e3b0217c3d52fd065af0f18af0e5b079c8db51f",
             "symbol": "validate_class_override"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "adcb42e87523c04d0b6e20ca7d4e3fd3b6b3964d43178d0d01bba2d6be704a34",
+            "sha256": "008008a4f1a0fb6cff140c881e3b0217c3d52fd065af0f18af0e5b079c8db51f",
             "symbol": "validate_object_override"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "adcb42e87523c04d0b6e20ca7d4e3fd3b6b3964d43178d0d01bba2d6be704a34",
+            "sha256": "008008a4f1a0fb6cff140c881e3b0217c3d52fd065af0f18af0e5b079c8db51f",
             "symbol": "initialize_member_types"
           }
         ],
@@ -126045,7 +127664,12 @@
           "types-stage15-class-named-alias-shadow",
           "types-stage15-relation-erased-class-left",
           "types-stage15-relation-erased-class-right",
-          "types-stage15-recursive-lexical-type-shadow"
+          "types-stage15-recursive-lexical-type-shadow",
+          "types-stage17-const-class-method",
+          "types-stage17-const-class-method-module",
+          "types-stage17-super-method",
+          "types-stage17-super-property",
+          "types-stage17-super-property-in-method"
         ],
         "state": "partial"
       }
@@ -126057,33 +127681,43 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/heap.rs",
-            "sha256": "a7855219cf3cca13f353456729a05093bc1439f40b72b2da5cbda7cf624f63b4",
+            "sha256": "cc34077dded1fc675df7a93e5db92ed93095b0e85731125e9916a3378157caf7",
             "symbol": "Member"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "adcb42e87523c04d0b6e20ca7d4e3fd3b6b3964d43178d0d01bba2d6be704a34",
+            "sha256": "008008a4f1a0fb6cff140c881e3b0217c3d52fd065af0f18af0e5b079c8db51f",
             "symbol": "validate_class_override"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "adcb42e87523c04d0b6e20ca7d4e3fd3b6b3964d43178d0d01bba2d6be704a34",
+            "sha256": "008008a4f1a0fb6cff140c881e3b0217c3d52fd065af0f18af0e5b079c8db51f",
             "symbol": "validate_object_override"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "adcb42e87523c04d0b6e20ca7d4e3fd3b6b3964d43178d0d01bba2d6be704a34",
+            "sha256": "008008a4f1a0fb6cff140c881e3b0217c3d52fd065af0f18af0e5b079c8db51f",
             "symbol": "initialize_member_types"
           },
           {
             "path": "crates/pkl-runtime/src/resolver.rs",
-            "sha256": "f62fc274cf76d0c83e75c409755632aea018743d7360859f9fcd9df55cc34267",
+            "sha256": "4da174bf094814854e8fcf7757ee2aa8d2ee9c73a1dda811fec1f85b56687b4e",
             "symbol": "validate_modifiers"
           },
           {
             "path": "crates/pkl-runtime/src/resolver.rs",
-            "sha256": "f62fc274cf76d0c83e75c409755632aea018743d7360859f9fcd9df55cc34267",
+            "sha256": "4da174bf094814854e8fcf7757ee2aa8d2ee9c73a1dda811fec1f85b56687b4e",
             "symbol": "ConstLevel"
+          },
+          {
+            "path": "crates/pkl-runtime/src/resolver.rs",
+            "sha256": "4da174bf094814854e8fcf7757ee2aa8d2ee9c73a1dda811fec1f85b56687b4e",
+            "symbol": "ConstScope"
+          },
+          {
+            "path": "crates/pkl-runtime/src/parser.rs",
+            "sha256": "123165a5a75d1d48309c4fbca63e5e5e7d4748dacac50dfc386f6dbccc34de10",
+            "symbol": "arguments"
           }
         ],
         "state": "partial"
@@ -126096,9 +127730,9 @@
           "Module extends/amends and the original upstream fixed-property snippet suite contracts remain unimplemented or unexecuted.",
           "Full modifier combinations, annotation metadata, generic class inheritance and the complete class/member error corpus remain outside this bounded selection.",
           "Caught upstream PklBugException duplicate hidden/local outputs and any recorded exploratory mismatches remain separate failures, without development exceptions.",
-          "Local const-read retry cache ownership, recursive alias instantiation identity and const-function local reads retain recorded exploratory mismatches."
+          "Selected non-generic local const-read retries and const-method lexical barriers are covered; recursive generic instantiation, generic let-root sharing, and the complete lexical-scope corpus retain gaps."
         ],
-        "scope": "Selected class fixed properties preserve declaration fixedness through inheritance, reject instance assignment and amendment before forcing bodies, and retain member/type initialization error order. Raw comparisons cover only the linked fixtures at their actual URIs. Stage 16: Selected alias lexical property/method reads apply a deferred module const barrier, including unused and short-circuited reads.",
+        "scope": "Selected class fixed properties preserve declaration fixedness through inheritance, reject instance assignment and amendment before forcing bodies, and retain member/type initialization error order. Raw comparisons cover only the linked fixtures at their actual URIs. Stage 16: Selected alias lexical property/method reads apply a deferred module const barrier, including unused and short-circuited reads. Stage 17: Selected const-method barriers, lambda lookup depth, immediate outer lexical scope, and grouped-callee parser diagnostics follow the pinned Java behavior.",
         "source": "compatibility/m2-mappings.json"
       },
       "tests": {
@@ -126262,7 +127896,69 @@
           "types-stage16-frames-const-hint-depth-3",
           "types-stage16-frames-const-hint-depth-3-power",
           "types-stage16-frames-const-hint-depth-4",
-          "types-stage16-frames-const-hint-depth-4-power"
+          "types-stage16-frames-const-hint-depth-4-power",
+          "types-stage17-inline-is-local",
+          "types-stage17-inline-is-const",
+          "types-stage17-inline-as-local",
+          "types-stage17-inline-as-const",
+          "types-stage17-let-is-local",
+          "types-stage17-let-is-const",
+          "types-stage17-let-as-local",
+          "types-stage17-let-as-const",
+          "types-stage17-lambda-is-local",
+          "types-stage17-lambda-is-const",
+          "types-stage17-lambda-as-local",
+          "types-stage17-lambda-as-const",
+          "types-stage17-recursive-depth-negative",
+          "types-stage17-recursive-depth-0",
+          "types-stage17-recursive-depth-1",
+          "types-stage17-recursive-depth-3",
+          "types-stage17-const-method-local",
+          "types-stage17-const-method-ordinary",
+          "types-stage17-const-method-this",
+          "types-stage17-const-method-module",
+          "types-stage17-const-method-method",
+          "types-stage17-const-method-lambda",
+          "types-stage17-const-method-object",
+          "types-stage17-const-method-object-lambda",
+          "types-stage17-const-method-let",
+          "types-stage17-const-method-local-method",
+          "types-stage17-const-method-outer",
+          "types-stage17-const-property-control",
+          "types-stage17-const-property-object-method",
+          "types-stage17-const-method-parameter-constraint",
+          "types-stage17-const-method-result-constraint",
+          "types-stage17-const-class-method",
+          "types-stage17-const-class-method-module",
+          "types-stage17-const-method-object-dynamic",
+          "types-stage17-const-method-object-lambda-dynamic",
+          "types-stage17-const-method-lambda-object-dynamic",
+          "types-stage17-const-method-local-method-dynamic",
+          "types-stage17-const-property-object-method-dynamic",
+          "types-stage17-const-property-lambda-object-method-dynamic",
+          "types-stage17-super-method",
+          "types-stage17-super-property",
+          "types-stage17-super-property-in-method",
+          "types-stage17-const-method-grouped",
+          "types-stage17-frames-const-hint-depth-1",
+          "types-stage17-frames-const-hint-depth-1-power",
+          "types-stage17-frames-const-hint-depth-2",
+          "types-stage17-frames-const-hint-depth-2-power",
+          "types-stage17-frames-const-hint-depth-3",
+          "types-stage17-frames-const-hint-depth-3-power",
+          "types-stage17-frames-const-hint-depth-4",
+          "types-stage17-frames-const-hint-depth-4-power",
+          "types-stage17-outer-method-lambda",
+          "types-stage17-outer-method-lambda-value",
+          "types-stage17-outer-property-lambda",
+          "types-stage17-outer-method-object",
+          "types-stage17-grouped-call-top",
+          "types-stage17-grouped-call-argument",
+          "types-stage17-grouped-call-constraint",
+          "types-stage17-grouped-call-conditional",
+          "types-stage17-grouped-call-list",
+          "types-stage17-grouped-call-group",
+          "types-stage17-grouped-call-interpolation"
         ],
         "state": "partial"
       }
@@ -126274,12 +127970,12 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "adcb42e87523c04d0b6e20ca7d4e3fd3b6b3964d43178d0d01bba2d6be704a34",
+            "sha256": "008008a4f1a0fb6cff140c881e3b0217c3d52fd065af0f18af0e5b079c8db51f",
             "symbol": "TypeCheck"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "adcb42e87523c04d0b6e20ca7d4e3fd3b6b3964d43178d0d01bba2d6be704a34",
+            "sha256": "008008a4f1a0fb6cff140c881e3b0217c3d52fd065af0f18af0e5b079c8db51f",
             "symbol": "compile_type_at"
           },
           {
@@ -126289,13 +127985,23 @@
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "adcb42e87523c04d0b6e20ca7d4e3fd3b6b3964d43178d0d01bba2d6be704a34",
+            "sha256": "008008a4f1a0fb6cff140c881e3b0217c3d52fd065af0f18af0e5b079c8db51f",
             "symbol": "invoke_function"
           },
           {
             "path": "crates/pkl-runtime/src/heap.rs",
-            "sha256": "a7855219cf3cca13f353456729a05093bc1439f40b72b2da5cbda7cf624f63b4",
+            "sha256": "cc34077dded1fc675df7a93e5db92ed93095b0e85731125e9916a3378157caf7",
             "symbol": "Function"
+          },
+          {
+            "path": "crates/pkl-runtime/src/resolver.rs",
+            "sha256": "4da174bf094814854e8fcf7757ee2aa8d2ee9c73a1dda811fec1f85b56687b4e",
+            "symbol": "ConstScope"
+          },
+          {
+            "path": "crates/pkl-runtime/src/parser.rs",
+            "sha256": "123165a5a75d1d48309c4fbca63e5e5e7d4748dacac50dfc386f6dbccc34de10",
+            "symbol": "arguments"
           }
         ],
         "state": "partial"
@@ -126308,7 +128014,7 @@
           "Function amendments, full callable/builtin behavior, imports and the original function suite contracts remain outside this bounded selection.",
           "The broader function, closure, diagnostic and reflection inventories are not completed by metadata comparisons."
         ],
-        "scope": "Function and Function0..5 class types and arrow annotations retain parameter/result metadata while selected runtime value checks use arity. Comparisons distinguish annotation checks from a lambda declaration's own argument checks and distinguish Reference type tests from exported-type equality. Stage 14 adds selected authored type-resolution order, generic parameter scope and nested substitution, class/alias arity ordering, and owner signature diagnostics; persistent failed-declaration state has a separate sequence contract. Stage 15 adds selected non-generic recursive constraint block graphs and declaration type scope, plus builtin Class argument erasure and arity ordering. Recursive generic constraints remain open; Stage 16 adds bounded shared receiver-slot support. Stage 16: Selected lambdas snapshot the custom receiver at creation; function and local-writing let roots isolate subsequent receiver mutations.",
+        "scope": "Function and Function0..5 class types and arrow annotations retain parameter/result metadata while selected runtime value checks use arity. Comparisons distinguish annotation checks from a lambda declaration's own argument checks and distinguish Reference type tests from exported-type equality. Stage 14 adds selected authored type-resolution order, generic parameter scope and nested substitution, class/alias arity ordering, and owner signature diagnostics; persistent failed-declaration state has a separate sequence contract. Stage 15 adds selected non-generic recursive constraint block graphs and declaration type scope, plus builtin Class argument erasure and arity ordering. Recursive generic constraints remain open; Stage 16 adds bounded shared receiver-slot support. Stage 16: Selected lambdas snapshot the custom receiver at creation; function and local-writing let roots isolate subsequent receiver mutations. Stage 17: Selected const-method barriers, lambda lookup depth, immediate outer lexical scope, and grouped-callee parser diagnostics follow the pinned Java behavior.",
         "source": "compatibility/m2-mappings.json"
       },
       "tests": {
@@ -126490,7 +128196,57 @@
           "types-stage16-frames-const-hint-depth-3",
           "types-stage16-frames-const-hint-depth-3-power",
           "types-stage16-frames-const-hint-depth-4",
-          "types-stage16-frames-const-hint-depth-4-power"
+          "types-stage16-frames-const-hint-depth-4-power",
+          "types-stage17-lambda-is-local",
+          "types-stage17-lambda-is-const",
+          "types-stage17-lambda-as-local",
+          "types-stage17-lambda-as-const",
+          "types-stage17-const-method-local",
+          "types-stage17-const-method-ordinary",
+          "types-stage17-const-method-this",
+          "types-stage17-const-method-module",
+          "types-stage17-const-method-method",
+          "types-stage17-const-method-lambda",
+          "types-stage17-const-method-object",
+          "types-stage17-const-method-object-lambda",
+          "types-stage17-const-method-let",
+          "types-stage17-const-method-local-method",
+          "types-stage17-const-method-outer",
+          "types-stage17-const-property-control",
+          "types-stage17-const-property-object-method",
+          "types-stage17-const-method-parameter-constraint",
+          "types-stage17-const-method-result-constraint",
+          "types-stage17-const-class-method",
+          "types-stage17-const-class-method-module",
+          "types-stage17-grouped-call-top",
+          "types-stage17-grouped-call-argument",
+          "types-stage17-grouped-call-constraint",
+          "types-stage17-grouped-call-conditional",
+          "types-stage17-grouped-call-list",
+          "types-stage17-grouped-call-group",
+          "types-stage17-grouped-call-interpolation",
+          "types-stage17-const-method-object-dynamic",
+          "types-stage17-const-method-object-lambda-dynamic",
+          "types-stage17-const-method-lambda-object-dynamic",
+          "types-stage17-const-method-local-method-dynamic",
+          "types-stage17-const-property-object-method-dynamic",
+          "types-stage17-const-property-lambda-object-method-dynamic",
+          "types-stage17-super-method",
+          "types-stage17-super-property",
+          "types-stage17-super-property-in-method",
+          "types-stage17-const-method-grouped",
+          "types-stage17-frames-const-hint-depth-1",
+          "types-stage17-frames-const-hint-depth-1-power",
+          "types-stage17-frames-const-hint-depth-2",
+          "types-stage17-frames-const-hint-depth-2-power",
+          "types-stage17-frames-const-hint-depth-3",
+          "types-stage17-frames-const-hint-depth-3-power",
+          "types-stage17-frames-const-hint-depth-4",
+          "types-stage17-frames-const-hint-depth-4-power",
+          "types-stage17-outer-method-lambda",
+          "types-stage17-outer-method-lambda-value",
+          "types-stage17-outer-property-lambda",
+          "types-stage17-outer-method-object"
         ],
         "state": "partial"
       }
@@ -126549,7 +128305,20 @@
           "types-stage16-slot-object-predicate-error",
           "types-stage16-slot-nested-let-function",
           "types-stage16-const-nonconst-unused-method",
-          "types-stage16-const-nonconst-short-method"
+          "types-stage16-const-nonconst-short-method",
+          "types-stage17-lambda-is-local",
+          "types-stage17-lambda-is-const",
+          "types-stage17-lambda-as-local",
+          "types-stage17-lambda-as-const",
+          "types-stage17-const-method-lambda",
+          "types-stage17-const-method-object-lambda",
+          "types-stage17-const-method-object-lambda-dynamic",
+          "types-stage17-const-method-lambda-object-dynamic",
+          "types-stage17-const-property-lambda-object-method-dynamic",
+          "types-stage17-outer-method-lambda",
+          "types-stage17-outer-method-lambda-value",
+          "types-stage17-outer-property-lambda",
+          "types-stage17-outer-method-object"
         ],
         "state": "partial"
       }
@@ -127558,33 +129327,43 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "adcb42e87523c04d0b6e20ca7d4e3fd3b6b3964d43178d0d01bba2d6be704a34",
+            "sha256": "008008a4f1a0fb6cff140c881e3b0217c3d52fd065af0f18af0e5b079c8db51f",
             "symbol": "TypeCheck"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "adcb42e87523c04d0b6e20ca7d4e3fd3b6b3964d43178d0d01bba2d6be704a34",
+            "sha256": "008008a4f1a0fb6cff140c881e3b0217c3d52fd065af0f18af0e5b079c8db51f",
             "symbol": "initialize_type_resolution"
           },
           {
             "path": "crates/pkl-runtime/src/vm/typecheck.rs",
-            "sha256": "905bab38633430ef7f16ff6c36b926532bbe155278501c4035d65ea363765bc1",
+            "sha256": "67955a47c008c7e34e0f14099fd4ab9621b74e52373f40c7e4bf924fecc55725",
             "symbol": "step_type"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "adcb42e87523c04d0b6e20ca7d4e3fd3b6b3964d43178d0d01bba2d6be704a34",
+            "sha256": "008008a4f1a0fb6cff140c881e3b0217c3d52fd065af0f18af0e5b079c8db51f",
             "symbol": "type_resolution_plan"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "adcb42e87523c04d0b6e20ca7d4e3fd3b6b3964d43178d0d01bba2d6be704a34",
+            "sha256": "008008a4f1a0fb6cff140c881e3b0217c3d52fd065af0f18af0e5b079c8db51f",
             "symbol": "active_constraints"
           },
           {
             "path": "crates/pkl-runtime/src/heap.rs",
-            "sha256": "a7855219cf3cca13f353456729a05093bc1439f40b72b2da5cbda7cf624f63b4",
+            "sha256": "cc34077dded1fc675df7a93e5db92ed93095b0e85731125e9916a3378157caf7",
             "symbol": "CustomThisSlot"
+          },
+          {
+            "path": "crates/pkl-runtime/src/heap.rs",
+            "sha256": "cc34077dded1fc675df7a93e5db92ed93095b0e85731125e9916a3378157caf7",
+            "symbol": "ExecutableState"
+          },
+          {
+            "path": "crates/pkl-runtime/src/vm/typecheck.rs",
+            "sha256": "67955a47c008c7e34e0f14099fd4ab9621b74e52373f40c7e4bf924fecc55725",
+            "symbol": "begin_type_node"
           }
         ],
         "state": "partial"
@@ -127596,7 +129375,7 @@
         "remaining": [
           "The complete type, structural/generic class, constraint, recursive and imported-type corpus still requires implementation and original-adapter execution."
         ],
-        "scope": "The Stage 13 selection links named alias expansion, meta-class checks, function arity and exported type metadata to the shared VM. Existing upstream case definitions, adapters and execution states remain unchanged. Stage 14 adds selected authored type-resolution order, generic parameter scope and nested substitution, class/alias arity ordering, and owner signature diagnostics; persistent failed-declaration state has a separate sequence contract. Stage 15 adds selected non-generic recursive constraint block graphs and declaration type scope, plus builtin Class argument erasure and arity ordering. Recursive generic constraints remain open; Stage 16 adds bounded shared receiver-slot support. Stage 16: Selected nested is/as and recursive constraints retain receiver mutations, original successful values, predicate arguments and complete failure bytes.",
+        "scope": "The Stage 13 selection links named alias expansion, meta-class checks, function arity and exported type metadata to the shared VM. Existing upstream case definitions, adapters and execution states remain unchanged. Stage 14 adds selected authored type-resolution order, generic parameter scope and nested substitution, class/alias arity ordering, and owner signature diagnostics; persistent failed-declaration state has a separate sequence contract. Stage 15 adds selected non-generic recursive constraint block graphs and declaration type scope, plus builtin Class argument erasure and arity ordering. Recursive generic constraints remain open; Stage 16 adds bounded shared receiver-slot support. Stage 16: Selected nested is/as and recursive constraints retain receiver mutations, original successful values, predicate arguments and complete failure bytes. Stage 17: Evaluator-owned executable and type-use nodes preserve selected non-generic local const-property resolution across retries, distinct inline/lambda uses, shared let roots, recursive depth, inherited annotations, and lazy collection members; per-call receiver slots remain separate.",
         "source": "compatibility/m2-mappings.json"
       },
       "tests": {
@@ -128164,6 +129943,25 @@
           "types-stage16-frames-const-hint-depth-3-power",
           "types-stage16-frames-const-hint-depth-4",
           "types-stage16-frames-const-hint-depth-4-power",
+          "types-stage17-inline-is-local",
+          "types-stage17-inline-is-const",
+          "types-stage17-inline-as-local",
+          "types-stage17-inline-as-const",
+          "types-stage17-let-is-local",
+          "types-stage17-let-is-const",
+          "types-stage17-let-as-local",
+          "types-stage17-let-as-const",
+          "types-stage17-lambda-is-local",
+          "types-stage17-lambda-is-const",
+          "types-stage17-lambda-as-local",
+          "types-stage17-lambda-as-const",
+          "types-stage17-recursive-depth-negative",
+          "types-stage17-recursive-depth-0",
+          "types-stage17-recursive-depth-1",
+          "types-stage17-recursive-depth-3",
+          "types-stage17-const-method-parameter-constraint",
+          "types-stage17-const-method-result-constraint",
+          "types-stage17-grouped-call-constraint",
           "types-stage13-alias-value",
           "types-stage13-alias-self-equal",
           "types-stage13-alias-distinct-equal",
@@ -128248,7 +130046,50 @@
           "types-stage13-reference-function0-to-function",
           "types-stage13-reference-nested-arrow",
           "types-stage13-reference-arg-variance",
-          "types-stage13-reference-result-variance"
+          "types-stage13-reference-result-variance",
+          "types-stage17-const-method-local",
+          "types-stage17-const-method-ordinary",
+          "types-stage17-const-method-this",
+          "types-stage17-const-method-module",
+          "types-stage17-const-method-method",
+          "types-stage17-const-method-lambda",
+          "types-stage17-const-method-object",
+          "types-stage17-const-method-object-lambda",
+          "types-stage17-const-method-let",
+          "types-stage17-const-method-local-method",
+          "types-stage17-const-method-outer",
+          "types-stage17-const-property-control",
+          "types-stage17-const-property-object-method",
+          "types-stage17-const-class-method",
+          "types-stage17-const-class-method-module",
+          "types-stage17-grouped-call-top",
+          "types-stage17-grouped-call-argument",
+          "types-stage17-grouped-call-conditional",
+          "types-stage17-grouped-call-list",
+          "types-stage17-grouped-call-group",
+          "types-stage17-grouped-call-interpolation",
+          "types-stage17-const-method-object-dynamic",
+          "types-stage17-const-method-object-lambda-dynamic",
+          "types-stage17-const-method-lambda-object-dynamic",
+          "types-stage17-const-method-local-method-dynamic",
+          "types-stage17-const-property-object-method-dynamic",
+          "types-stage17-const-property-lambda-object-method-dynamic",
+          "types-stage17-super-method",
+          "types-stage17-super-property",
+          "types-stage17-super-property-in-method",
+          "types-stage17-const-method-grouped",
+          "types-stage17-frames-const-hint-depth-1",
+          "types-stage17-frames-const-hint-depth-1-power",
+          "types-stage17-frames-const-hint-depth-2",
+          "types-stage17-frames-const-hint-depth-2-power",
+          "types-stage17-frames-const-hint-depth-3",
+          "types-stage17-frames-const-hint-depth-3-power",
+          "types-stage17-frames-const-hint-depth-4",
+          "types-stage17-frames-const-hint-depth-4-power",
+          "types-stage17-outer-method-lambda",
+          "types-stage17-outer-method-lambda-value",
+          "types-stage17-outer-property-lambda",
+          "types-stage17-outer-method-object"
         ],
         "state": "partial"
       }
@@ -128260,43 +130101,53 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "adcb42e87523c04d0b6e20ca7d4e3fd3b6b3964d43178d0d01bba2d6be704a34",
+            "sha256": "008008a4f1a0fb6cff140c881e3b0217c3d52fd065af0f18af0e5b079c8db51f",
             "symbol": "BeginTypeAlias"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "adcb42e87523c04d0b6e20ca7d4e3fd3b6b3964d43178d0d01bba2d6be704a34",
+            "sha256": "008008a4f1a0fb6cff140c881e3b0217c3d52fd065af0f18af0e5b079c8db51f",
             "symbol": "NamedAlias"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "adcb42e87523c04d0b6e20ca7d4e3fd3b6b3964d43178d0d01bba2d6be704a34",
+            "sha256": "008008a4f1a0fb6cff140c881e3b0217c3d52fd065af0f18af0e5b079c8db51f",
             "symbol": "compile_type_at"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "adcb42e87523c04d0b6e20ca7d4e3fd3b6b3964d43178d0d01bba2d6be704a34",
+            "sha256": "008008a4f1a0fb6cff140c881e3b0217c3d52fd065af0f18af0e5b079c8db51f",
             "symbol": "type_resolution_plan"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "adcb42e87523c04d0b6e20ca7d4e3fd3b6b3964d43178d0d01bba2d6be704a34",
+            "sha256": "008008a4f1a0fb6cff140c881e3b0217c3d52fd065af0f18af0e5b079c8db51f",
             "symbol": "initialize_type_resolution"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "adcb42e87523c04d0b6e20ca7d4e3fd3b6b3964d43178d0d01bba2d6be704a34",
+            "sha256": "008008a4f1a0fb6cff140c881e3b0217c3d52fd065af0f18af0e5b079c8db51f",
             "symbol": "active_constraints"
           },
           {
             "path": "crates/pkl-runtime/src/vm/typecheck.rs",
-            "sha256": "905bab38633430ef7f16ff6c36b926532bbe155278501c4035d65ea363765bc1",
+            "sha256": "67955a47c008c7e34e0f14099fd4ab9621b74e52373f40c7e4bf924fecc55725",
             "symbol": "step_type"
           },
           {
             "path": "crates/pkl-runtime/src/heap.rs",
-            "sha256": "a7855219cf3cca13f353456729a05093bc1439f40b72b2da5cbda7cf624f63b4",
+            "sha256": "cc34077dded1fc675df7a93e5db92ed93095b0e85731125e9916a3378157caf7",
             "symbol": "CustomThisSlot"
+          },
+          {
+            "path": "crates/pkl-runtime/src/heap.rs",
+            "sha256": "cc34077dded1fc675df7a93e5db92ed93095b0e85731125e9916a3378157caf7",
+            "symbol": "ExecutableState"
+          },
+          {
+            "path": "crates/pkl-runtime/src/vm/typecheck.rs",
+            "sha256": "67955a47c008c7e34e0f14099fd4ab9621b74e52373f40c7e4bf924fecc55725",
+            "symbol": "begin_type_node"
           }
         ],
         "state": "partial"
@@ -128309,9 +130160,9 @@
           "Complete imported/module-scoped alias behavior, annotation initialization, full reflection and the original upstream alias suites remain unimplemented or unexecuted.",
           "Exploratory mismatches and upstream internal errors retain their original outcomes; these selected mappings do not grant completion.",
           "A full runtime type-node resolution model, mixed unresolved-name/dependency error ordering, and failures involving generic-parameter shadowing remain unverified.",
-          "Local const-read retry cache ownership, recursive alias instantiation identity and const-function local reads retain recorded exploratory mismatches."
+          "Selected non-generic local const-read retries and const-method lexical barriers are covered; recursive generic instantiation, generic let-root sharing, and the complete lexical-scope corpus retain gaps."
         ],
-        "scope": "Selected user alias values preserve declaration identity, qualified display, lazy initialization, published failure state, and expanded validation. Independent expressions cover alias values, cycles, generic arguments, Mapping keys and complete diagnostics; persistent failure/reaccess sequences and GC/Host tests have separate contracts. Stage 14 adds selected authored type-resolution order, generic parameter scope and nested substitution, class/alias arity ordering, and owner signature diagnostics; persistent failed-declaration state has a separate sequence contract. Stage 15 adds selected non-generic recursive constraint block graphs and declaration type scope, plus builtin Class argument erasure and arity ordering. Recursive generic constraints remain open; Stage 16 adds bounded shared receiver-slot support. Stage 16: Selected recursive and inline constraints share mutable auxiliary receiver slots within a logical call; alias lexical reads enforce the first-read const barrier.",
+        "scope": "Selected user alias values preserve declaration identity, qualified display, lazy initialization, published failure state, and expanded validation. Independent expressions cover alias values, cycles, generic arguments, Mapping keys and complete diagnostics; persistent failure/reaccess sequences and GC/Host tests have separate contracts. Stage 14 adds selected authored type-resolution order, generic parameter scope and nested substitution, class/alias arity ordering, and owner signature diagnostics; persistent failed-declaration state has a separate sequence contract. Stage 15 adds selected non-generic recursive constraint block graphs and declaration type scope, plus builtin Class argument erasure and arity ordering. Recursive generic constraints remain open; Stage 16 adds bounded shared receiver-slot support. Stage 16: Selected recursive and inline constraints share mutable auxiliary receiver slots within a logical call; alias lexical reads enforce the first-read const barrier. Stage 17: Evaluator-owned executable and type-use nodes preserve selected non-generic local const-property resolution across retries, distinct inline/lambda uses, shared let roots, recursive depth, inherited annotations, and lazy collection members; per-call receiver slots remain separate.",
         "source": "compatibility/m2-mappings.json"
       },
       "tests": {
@@ -128621,7 +130472,69 @@
           "types-stage16-frames-const-hint-depth-3",
           "types-stage16-frames-const-hint-depth-3-power",
           "types-stage16-frames-const-hint-depth-4",
-          "types-stage16-frames-const-hint-depth-4-power"
+          "types-stage16-frames-const-hint-depth-4-power",
+          "types-stage17-inline-is-local",
+          "types-stage17-inline-is-const",
+          "types-stage17-inline-as-local",
+          "types-stage17-inline-as-const",
+          "types-stage17-let-is-local",
+          "types-stage17-let-is-const",
+          "types-stage17-let-as-local",
+          "types-stage17-let-as-const",
+          "types-stage17-lambda-is-local",
+          "types-stage17-lambda-is-const",
+          "types-stage17-lambda-as-local",
+          "types-stage17-lambda-as-const",
+          "types-stage17-recursive-depth-negative",
+          "types-stage17-recursive-depth-0",
+          "types-stage17-recursive-depth-1",
+          "types-stage17-recursive-depth-3",
+          "types-stage17-const-method-local",
+          "types-stage17-const-method-ordinary",
+          "types-stage17-const-method-this",
+          "types-stage17-const-method-module",
+          "types-stage17-const-method-method",
+          "types-stage17-const-method-lambda",
+          "types-stage17-const-method-object",
+          "types-stage17-const-method-object-lambda",
+          "types-stage17-const-method-let",
+          "types-stage17-const-method-local-method",
+          "types-stage17-const-method-outer",
+          "types-stage17-const-property-control",
+          "types-stage17-const-property-object-method",
+          "types-stage17-const-method-parameter-constraint",
+          "types-stage17-const-method-result-constraint",
+          "types-stage17-const-class-method",
+          "types-stage17-const-class-method-module",
+          "types-stage17-grouped-call-top",
+          "types-stage17-grouped-call-argument",
+          "types-stage17-grouped-call-constraint",
+          "types-stage17-grouped-call-conditional",
+          "types-stage17-grouped-call-list",
+          "types-stage17-grouped-call-group",
+          "types-stage17-grouped-call-interpolation",
+          "types-stage17-const-method-object-dynamic",
+          "types-stage17-const-method-object-lambda-dynamic",
+          "types-stage17-const-method-lambda-object-dynamic",
+          "types-stage17-const-method-local-method-dynamic",
+          "types-stage17-const-property-object-method-dynamic",
+          "types-stage17-const-property-lambda-object-method-dynamic",
+          "types-stage17-super-method",
+          "types-stage17-super-property",
+          "types-stage17-super-property-in-method",
+          "types-stage17-const-method-grouped",
+          "types-stage17-frames-const-hint-depth-1",
+          "types-stage17-frames-const-hint-depth-1-power",
+          "types-stage17-frames-const-hint-depth-2",
+          "types-stage17-frames-const-hint-depth-2-power",
+          "types-stage17-frames-const-hint-depth-3",
+          "types-stage17-frames-const-hint-depth-3-power",
+          "types-stage17-frames-const-hint-depth-4",
+          "types-stage17-frames-const-hint-depth-4-power",
+          "types-stage17-outer-method-lambda",
+          "types-stage17-outer-method-lambda-value",
+          "types-stage17-outer-property-lambda",
+          "types-stage17-outer-method-object"
         ],
         "state": "partial"
       }
@@ -128633,23 +130546,33 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/heap.rs",
-            "sha256": "a7855219cf3cca13f353456729a05093bc1439f40b72b2da5cbda7cf624f63b4",
+            "sha256": "cc34077dded1fc675df7a93e5db92ed93095b0e85731125e9916a3378157caf7",
             "symbol": "CustomThisSlot"
           },
           {
             "path": "crates/pkl-runtime/src/vm/typecheck.rs",
-            "sha256": "905bab38633430ef7f16ff6c36b926532bbe155278501c4035d65ea363765bc1",
+            "sha256": "67955a47c008c7e34e0f14099fd4ab9621b74e52373f40c7e4bf924fecc55725",
             "symbol": "step_type"
           },
           {
             "path": "crates/pkl-runtime/src/vm/typecheck.rs",
-            "sha256": "905bab38633430ef7f16ff6c36b926532bbe155278501c4035d65ea363765bc1",
+            "sha256": "67955a47c008c7e34e0f14099fd4ab9621b74e52373f40c7e4bf924fecc55725",
             "symbol": "launch_constraint"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "adcb42e87523c04d0b6e20ca7d4e3fd3b6b3964d43178d0d01bba2d6be704a34",
+            "sha256": "008008a4f1a0fb6cff140c881e3b0217c3d52fd065af0f18af0e5b079c8db51f",
             "symbol": "invoke_function"
+          },
+          {
+            "path": "crates/pkl-runtime/src/heap.rs",
+            "sha256": "cc34077dded1fc675df7a93e5db92ed93095b0e85731125e9916a3378157caf7",
+            "symbol": "ExecutableState"
+          },
+          {
+            "path": "crates/pkl-runtime/src/vm/typecheck.rs",
+            "sha256": "67955a47c008c7e34e0f14099fd4ab9621b74e52373f40c7e4bf924fecc55725",
+            "symbol": "begin_type_node"
           }
         ],
         "state": "partial"
@@ -128660,9 +130583,9 @@
       "reviewed_mapping": {
         "remaining": [
           "The complete original constraint suites, imported constraints, recursive generic instantiation and full runtime type-node identity semantics remain unimplemented or unverified.",
-          "Recorded local const-read retry and const-function lexical-scope mismatches remain failures; lifecycle and selected-byte agreement do not establish full language or performance completion."
+          "Generic let-root sharing and recursive generic instantiation retain recorded mismatches; bounded non-generic lifecycle and selected-byte agreement do not establish full language or performance completion."
         ],
-        "scope": "Selected shared logical-call receiver slots, recursive and inline constraints, lambda snapshots, separate function/let/member roots, Boolean and predicate failures, union branches and power assertions compare complete Java bytes. Native Host/GC and persistent platform sequences provide separate lifecycle evidence.",
+        "scope": "Selected shared logical-call receiver slots, recursive and inline constraints, lambda snapshots, separate function/let/member roots, Boolean and predicate failures, union branches and power assertions compare complete Java bytes. Native Host/GC and persistent platform sequences provide separate lifecycle evidence. Stage 17: Evaluator-owned executable and type-use nodes preserve selected non-generic local const-property resolution across retries, distinct inline/lambda uses, shared let roots, recursive depth, inherited annotations, and lazy collection members; per-call receiver slots remain separate.",
         "source": "compatibility/m2-mappings.json"
       },
       "tests": {
@@ -128993,7 +130916,69 @@
           "types-stage16-frames-const-hint-depth-3",
           "types-stage16-frames-const-hint-depth-3-power",
           "types-stage16-frames-const-hint-depth-4",
-          "types-stage16-frames-const-hint-depth-4-power"
+          "types-stage16-frames-const-hint-depth-4-power",
+          "types-stage17-inline-is-local",
+          "types-stage17-inline-is-const",
+          "types-stage17-inline-as-local",
+          "types-stage17-inline-as-const",
+          "types-stage17-let-is-local",
+          "types-stage17-let-is-const",
+          "types-stage17-let-as-local",
+          "types-stage17-let-as-const",
+          "types-stage17-lambda-is-local",
+          "types-stage17-lambda-is-const",
+          "types-stage17-lambda-as-local",
+          "types-stage17-lambda-as-const",
+          "types-stage17-recursive-depth-negative",
+          "types-stage17-recursive-depth-0",
+          "types-stage17-recursive-depth-1",
+          "types-stage17-recursive-depth-3",
+          "types-stage17-const-method-parameter-constraint",
+          "types-stage17-const-method-result-constraint",
+          "types-stage17-grouped-call-constraint",
+          "types-stage17-const-method-local",
+          "types-stage17-const-method-ordinary",
+          "types-stage17-const-method-this",
+          "types-stage17-const-method-module",
+          "types-stage17-const-method-method",
+          "types-stage17-const-method-lambda",
+          "types-stage17-const-method-object",
+          "types-stage17-const-method-object-lambda",
+          "types-stage17-const-method-let",
+          "types-stage17-const-method-local-method",
+          "types-stage17-const-method-outer",
+          "types-stage17-const-property-control",
+          "types-stage17-const-property-object-method",
+          "types-stage17-const-class-method",
+          "types-stage17-const-class-method-module",
+          "types-stage17-grouped-call-top",
+          "types-stage17-grouped-call-argument",
+          "types-stage17-grouped-call-conditional",
+          "types-stage17-grouped-call-list",
+          "types-stage17-grouped-call-group",
+          "types-stage17-grouped-call-interpolation",
+          "types-stage17-const-method-object-dynamic",
+          "types-stage17-const-method-object-lambda-dynamic",
+          "types-stage17-const-method-lambda-object-dynamic",
+          "types-stage17-const-method-local-method-dynamic",
+          "types-stage17-const-property-object-method-dynamic",
+          "types-stage17-const-property-lambda-object-method-dynamic",
+          "types-stage17-super-method",
+          "types-stage17-super-property",
+          "types-stage17-super-property-in-method",
+          "types-stage17-const-method-grouped",
+          "types-stage17-frames-const-hint-depth-1",
+          "types-stage17-frames-const-hint-depth-1-power",
+          "types-stage17-frames-const-hint-depth-2",
+          "types-stage17-frames-const-hint-depth-2-power",
+          "types-stage17-frames-const-hint-depth-3",
+          "types-stage17-frames-const-hint-depth-3-power",
+          "types-stage17-frames-const-hint-depth-4",
+          "types-stage17-frames-const-hint-depth-4-power",
+          "types-stage17-outer-method-lambda",
+          "types-stage17-outer-method-lambda-value",
+          "types-stage17-outer-property-lambda",
+          "types-stage17-outer-method-object"
         ],
         "state": "partial"
       }
@@ -129005,27 +130990,27 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "adcb42e87523c04d0b6e20ca7d4e3fd3b6b3964d43178d0d01bba2d6be704a34",
+            "sha256": "008008a4f1a0fb6cff140c881e3b0217c3d52fd065af0f18af0e5b079c8db51f",
             "symbol": "NamedAlias"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "adcb42e87523c04d0b6e20ca7d4e3fd3b6b3964d43178d0d01bba2d6be704a34",
+            "sha256": "008008a4f1a0fb6cff140c881e3b0217c3d52fd065af0f18af0e5b079c8db51f",
             "symbol": "compile_type_at"
           },
           {
             "path": "crates/pkl-runtime/src/vm/typecheck.rs",
-            "sha256": "905bab38633430ef7f16ff6c36b926532bbe155278501c4035d65ea363765bc1",
+            "sha256": "67955a47c008c7e34e0f14099fd4ab9621b74e52373f40c7e4bf924fecc55725",
             "symbol": "step_type"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "adcb42e87523c04d0b6e20ca7d4e3fd3b6b3964d43178d0d01bba2d6be704a34",
+            "sha256": "008008a4f1a0fb6cff140c881e3b0217c3d52fd065af0f18af0e5b079c8db51f",
             "symbol": "type_resolution_plan"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "adcb42e87523c04d0b6e20ca7d4e3fd3b6b3964d43178d0d01bba2d6be704a34",
+            "sha256": "008008a4f1a0fb6cff140c881e3b0217c3d52fd065af0f18af0e5b079c8db51f",
             "symbol": "initialize_type_resolution"
           }
         ],
@@ -129531,7 +131516,23 @@
           "types-stage16-frames-const-hint-depth-3",
           "types-stage16-frames-const-hint-depth-3-power",
           "types-stage16-frames-const-hint-depth-4",
-          "types-stage16-frames-const-hint-depth-4-power"
+          "types-stage16-frames-const-hint-depth-4-power",
+          "types-stage17-inline-is-local",
+          "types-stage17-inline-is-const",
+          "types-stage17-inline-as-local",
+          "types-stage17-inline-as-const",
+          "types-stage17-let-is-local",
+          "types-stage17-let-is-const",
+          "types-stage17-let-as-local",
+          "types-stage17-let-as-const",
+          "types-stage17-lambda-is-local",
+          "types-stage17-lambda-is-const",
+          "types-stage17-lambda-as-local",
+          "types-stage17-lambda-as-const",
+          "types-stage17-recursive-depth-negative",
+          "types-stage17-recursive-depth-0",
+          "types-stage17-recursive-depth-1",
+          "types-stage17-recursive-depth-3"
         ],
         "state": "partial"
       }
@@ -129558,7 +131559,7 @@
           },
           {
             "path": "crates/pkl-runtime/src/vm/typecheck.rs",
-            "sha256": "905bab38633430ef7f16ff6c36b926532bbe155278501c4035d65ea363765bc1",
+            "sha256": "67955a47c008c7e34e0f14099fd4ab9621b74e52373f40c7e4bf924fecc55725",
             "symbol": "step_type"
           }
         ],
@@ -129793,17 +131794,17 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/heap.rs",
-            "sha256": "a7855219cf3cca13f353456729a05093bc1439f40b72b2da5cbda7cf624f63b4",
+            "sha256": "cc34077dded1fc675df7a93e5db92ed93095b0e85731125e9916a3378157caf7",
             "symbol": "Member"
           },
           {
             "path": "crates/pkl-runtime/src/heap.rs",
-            "sha256": "a7855219cf3cca13f353456729a05093bc1439f40b72b2da5cbda7cf624f63b4",
+            "sha256": "cc34077dded1fc675df7a93e5db92ed93095b0e85731125e9916a3378157caf7",
             "symbol": "Object"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "adcb42e87523c04d0b6e20ca7d4e3fd3b6b3964d43178d0d01bba2d6be704a34",
+            "sha256": "008008a4f1a0fb6cff140c881e3b0217c3d52fd065af0f18af0e5b079c8db51f",
             "symbol": "initialize_member_types"
           },
           {
@@ -129959,17 +131960,17 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/parser.rs",
-            "sha256": "11bc56270e04ce92abe23154b26b48df8b68976888263fa0a20f4e597048d58f",
+            "sha256": "123165a5a75d1d48309c4fbca63e5e5e7d4748dacac50dfc386f6dbccc34de10",
             "symbol": "import"
           },
           {
             "path": "crates/pkl-runtime/src/resolver.rs",
-            "sha256": "f62fc274cf76d0c83e75c409755632aea018743d7360859f9fcd9df55cc34267",
+            "sha256": "4da174bf094814854e8fcf7757ee2aa8d2ee9c73a1dda811fec1f85b56687b4e",
             "symbol": "type_expression"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "adcb42e87523c04d0b6e20ca7d4e3fd3b6b3964d43178d0d01bba2d6be704a34",
+            "sha256": "008008a4f1a0fb6cff140c881e3b0217c3d52fd065af0f18af0e5b079c8db51f",
             "symbol": "compile_type_at"
           }
         ],
@@ -130031,6 +132032,16 @@
             "path": "crates/pkl-runtime/src/diagnostic/frames.rs",
             "sha256": "d45d073db083cec0f65dd0cf051681a0e1f901866e12678233b5efd3e340fee5",
             "symbol": "render"
+          },
+          {
+            "path": "crates/pkl-runtime/src/resolver.rs",
+            "sha256": "4da174bf094814854e8fcf7757ee2aa8d2ee9c73a1dda811fec1f85b56687b4e",
+            "symbol": "ConstScope"
+          },
+          {
+            "path": "crates/pkl-runtime/src/parser.rs",
+            "sha256": "123165a5a75d1d48309c4fbca63e5e5e7d4748dacac50dfc386f6dbccc34de10",
+            "symbol": "arguments"
           }
         ],
         "state": "partial"
@@ -130043,7 +132054,7 @@
           "Colored output, general imported source stacks, first-error combinations and the complete parser/resolver/runtime diagnostic corpus remain open; selected uncolored recursive compression is covered.",
           "Original selected cycle and remainder-zero failures remain failed."
         ],
-        "scope": "Reference constructor, access, constraint and rendering errors retain complete message, authored frame, foreign standard-library source and URI bytes in selected comparisons. Stage11 adds selected fixed declaration, inherited metadata and complete raw diagnostics through the shared VM. Stage 13 adds selected alias/function metadata, exported-type equality and complete raw diagnostic comparisons; original suite execution and remaining scope stay open. Stage 14 adds selected authored type-resolution order, generic parameter scope and nested substitution, class/alias arity ordering, and owner signature diagnostics; persistent failed-declaration state has a separate sequence contract. Stage 15 adds selected non-generic recursive constraint block graphs and declaration type scope, plus builtin Class argument erasure and arity ordering. Recursive generic constraints remain open; Stage 16 adds bounded shared receiver-slot support. Stage 16: Selected recursive frame compression, count-one loops, complete call spans and hint placement match Java uncolored diagnostics.",
+        "scope": "Reference constructor, access, constraint and rendering errors retain complete message, authored frame, foreign standard-library source and URI bytes in selected comparisons. Stage11 adds selected fixed declaration, inherited metadata and complete raw diagnostics through the shared VM. Stage 13 adds selected alias/function metadata, exported-type equality and complete raw diagnostic comparisons; original suite execution and remaining scope stay open. Stage 14 adds selected authored type-resolution order, generic parameter scope and nested substitution, class/alias arity ordering, and owner signature diagnostics; persistent failed-declaration state has a separate sequence contract. Stage 15 adds selected non-generic recursive constraint block graphs and declaration type scope, plus builtin Class argument erasure and arity ordering. Recursive generic constraints remain open; Stage 16 adds bounded shared receiver-slot support. Stage 16: Selected recursive frame compression, count-one loops, complete call spans and hint placement match Java uncolored diagnostics. Stage 17: Selected const-method barriers, lambda lookup depth, immediate outer lexical scope, and grouped-callee parser diagnostics follow the pinned Java behavior.",
         "source": "compatibility/m2-mappings.json"
       },
       "tests": {
@@ -130834,7 +132845,62 @@
           "types-stage16-frames-const-hint-depth-3",
           "types-stage16-frames-const-hint-depth-3-power",
           "types-stage16-frames-const-hint-depth-4",
-          "types-stage16-frames-const-hint-depth-4-power"
+          "types-stage16-frames-const-hint-depth-4-power",
+          "types-stage17-inline-is-local",
+          "types-stage17-inline-as-local",
+          "types-stage17-let-is-local",
+          "types-stage17-let-as-local",
+          "types-stage17-lambda-is-local",
+          "types-stage17-lambda-as-local",
+          "types-stage17-recursive-depth-0",
+          "types-stage17-recursive-depth-1",
+          "types-stage17-recursive-depth-3",
+          "types-stage17-const-method-local",
+          "types-stage17-const-method-ordinary",
+          "types-stage17-const-method-this",
+          "types-stage17-const-method-module",
+          "types-stage17-const-method-method",
+          "types-stage17-const-method-lambda",
+          "types-stage17-const-method-object",
+          "types-stage17-const-method-object-lambda",
+          "types-stage17-const-method-let",
+          "types-stage17-const-method-local-method",
+          "types-stage17-const-method-outer",
+          "types-stage17-const-property-control",
+          "types-stage17-const-property-object-method",
+          "types-stage17-const-method-parameter-constraint",
+          "types-stage17-const-method-result-constraint",
+          "types-stage17-const-class-method",
+          "types-stage17-const-class-method-module",
+          "types-stage17-grouped-call-top",
+          "types-stage17-grouped-call-argument",
+          "types-stage17-grouped-call-constraint",
+          "types-stage17-grouped-call-conditional",
+          "types-stage17-grouped-call-list",
+          "types-stage17-grouped-call-group",
+          "types-stage17-grouped-call-interpolation",
+          "types-stage17-const-method-object-dynamic",
+          "types-stage17-const-method-object-lambda-dynamic",
+          "types-stage17-const-method-lambda-object-dynamic",
+          "types-stage17-const-method-local-method-dynamic",
+          "types-stage17-const-property-object-method-dynamic",
+          "types-stage17-const-property-lambda-object-method-dynamic",
+          "types-stage17-super-method",
+          "types-stage17-super-property",
+          "types-stage17-super-property-in-method",
+          "types-stage17-const-method-grouped",
+          "types-stage17-frames-const-hint-depth-1",
+          "types-stage17-frames-const-hint-depth-1-power",
+          "types-stage17-frames-const-hint-depth-2",
+          "types-stage17-frames-const-hint-depth-2-power",
+          "types-stage17-frames-const-hint-depth-3",
+          "types-stage17-frames-const-hint-depth-3-power",
+          "types-stage17-frames-const-hint-depth-4",
+          "types-stage17-frames-const-hint-depth-4-power",
+          "types-stage17-outer-method-lambda",
+          "types-stage17-outer-method-lambda-value",
+          "types-stage17-outer-property-lambda",
+          "types-stage17-outer-method-object"
         ],
         "state": "partial"
       }
@@ -136825,22 +138891,22 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/heap.rs",
-            "sha256": "a7855219cf3cca13f353456729a05093bc1439f40b72b2da5cbda7cf624f63b4",
+            "sha256": "cc34077dded1fc675df7a93e5db92ed93095b0e85731125e9916a3378157caf7",
             "symbol": "Member"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "adcb42e87523c04d0b6e20ca7d4e3fd3b6b3964d43178d0d01bba2d6be704a34",
+            "sha256": "008008a4f1a0fb6cff140c881e3b0217c3d52fd065af0f18af0e5b079c8db51f",
             "symbol": "validate_class_override"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "adcb42e87523c04d0b6e20ca7d4e3fd3b6b3964d43178d0d01bba2d6be704a34",
+            "sha256": "008008a4f1a0fb6cff140c881e3b0217c3d52fd065af0f18af0e5b079c8db51f",
             "symbol": "validate_object_override"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "adcb42e87523c04d0b6e20ca7d4e3fd3b6b3964d43178d0d01bba2d6be704a34",
+            "sha256": "008008a4f1a0fb6cff140c881e3b0217c3d52fd065af0f18af0e5b079c8db51f",
             "symbol": "initialize_member_types"
           }
         ],
@@ -137268,17 +139334,17 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/parser.rs",
-            "sha256": "11bc56270e04ce92abe23154b26b48df8b68976888263fa0a20f4e597048d58f",
+            "sha256": "123165a5a75d1d48309c4fbca63e5e5e7d4748dacac50dfc386f6dbccc34de10",
             "symbol": "import"
           },
           {
             "path": "crates/pkl-runtime/src/resolver.rs",
-            "sha256": "f62fc274cf76d0c83e75c409755632aea018743d7360859f9fcd9df55cc34267",
+            "sha256": "4da174bf094814854e8fcf7757ee2aa8d2ee9c73a1dda811fec1f85b56687b4e",
             "symbol": "type_expression"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "adcb42e87523c04d0b6e20ca7d4e3fd3b6b3964d43178d0d01bba2d6be704a34",
+            "sha256": "008008a4f1a0fb6cff140c881e3b0217c3d52fd065af0f18af0e5b079c8db51f",
             "symbol": "compile_type_at"
           }
         ],
@@ -138510,7 +140576,7 @@
           },
           {
             "path": "crates/pkl-runtime/src/vm/typecheck.rs",
-            "sha256": "905bab38633430ef7f16ff6c36b926532bbe155278501c4035d65ea363765bc1",
+            "sha256": "67955a47c008c7e34e0f14099fd4ab9621b74e52373f40c7e4bf924fecc55725",
             "symbol": "step_type"
           }
         ],
@@ -139732,10 +141798,10 @@
   "sources": {
     "compatibility/corpus.json": "0e95da22f965dede398f1a1f136703ba913d588aa51c1fb871cd97a11c84a0dd",
     "compatibility/inventory.json": "a9b21752adad9a269a54854c0dd298256757be88ad95c1388e30d7c78e407070",
-    "compatibility/m2-mappings.json": "20c29c4dd26087b25ac05920bd8ad6000a023b06c2c5efe8065779dd410af666",
+    "compatibility/m2-mappings.json": "dba271f14b2c7d22ccf736f280b77fa0a916d825262a3078fb9e11ef516a9ed6",
     "compatibility/regressions.json": "09c064f65730d30f72bf87a45c88d47ecc0844e57966a999dc8e759f083af3da",
     "compatibility/rev1-inventory.json": "6061f202ba3f04565efed3617ac69d3c2fadc54eec1f562b67a4758b3d0a8ab5",
     "references.lock": "278f48fd7697459281aa78a706c9ca57222f36a8c0785d838a6449fbaf26d30b",
-    "tests/fixtures/m2/cases.json": "a7a028d585d3f7522301d59718a2980a58f8ed183810fd5e7f103896a1320ffb"
+    "tests/fixtures/m2/cases.json": "2ef3df3935caf544ea56a3d8dbd1c2cfcde17a42c8ca5f0f66a2510dd65c426f"
   }
 }

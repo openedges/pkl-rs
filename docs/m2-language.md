@@ -181,6 +181,17 @@ and complete diagnostic frames. Parameter renaming and nested alias expansion
 provide separate metamorphic relations. Native and shared platform scenarios
 check retained declaration state after the same failures.
 
+Type-use ownership sequences preserve local const-property resolution after a
+failed first read. They distinguish independent inline and lambda uses, shared
+non-generic let roots, recursive depths, inherited annotation declarations, and
+successive members of lazy Listing and Mapping wrappers. Repeated calls resolve
+the current receiver and owner while retaining the member definition. Separate
+native tests cover Host reentry, cancellation, GC, evaluator isolation, and
+terminal release. Const-method lexical barriers and contextual grouped-callee
+syntax errors also have independent raw Java comparisons. These bounded cases
+do not complete recursive generic instantiation, generic let-root sharing, or
+the full const-scope corpus.
+
 A complete runtime type-resolution model, general imported types, annotation
 syntax, and full module initialization/caching remain open requirements. The
 persistent adapter requires an acquired module; module-entry failures do not

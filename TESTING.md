@@ -215,6 +215,16 @@ own logical root. Recursive call controls distinguish inserted let frames from
 the still-open repeated-frame compression requirement. Failed exploratory
 captures remain retained alongside promoted regressions.
 
+Type-use ownership tests distinguish persistent executable nodes from per-call
+constraint receiver slots. Retained-heap assertions count ordinary values and
+executable entries separately, preserve exact historical value counts, and
+require zero total entries after terminal cleanup. They cover source-level Host
+reentry, cancellation before and after local resolution, independent evaluator
+state, recursive retries, and lazy collection members. Persistent Java sequences
+and Node/browser scenarios compare complete ordered outcomes separately from
+these internal lifetime checks. Generic instantiation and the complete lexical
+scope model remain outside this bounded contract.
+
 M1 experiments have narrower, explicit contracts:
 
 ```sh

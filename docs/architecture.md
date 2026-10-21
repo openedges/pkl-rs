@@ -546,11 +546,87 @@ retention checks establish lifecycle behavior, not speed or memory parity.
 
 Type aliases apply a module const barrier to lexical property and method reads.
 The barrier remains deferred until the read executes; unused aliases, alias
-identity, and short-circuited reads need not fail. Complete retry behavior remains
-open: Java can cache a local property's resolved node before raising a const
-error, so later reads may succeed. Inline alias instantiation, recursion, and
-let-root call targets have different cache identities. A single flag per alias
-or bytecode block would merge distinct nodes and is not a compatible solution.
+identity, and short-circuited reads need not fail. Stage 17 adds persistent
+resolution state for the selected non-generic retry paths described below.
+
+### Persistent type-use and executable ownership
+
+Immutable `Program` blocks describe code templates. Mutable resolution state
+belongs to evaluator-local `ExecutableOwnerId` and `TypeNodeId` handles in the
+tracing heap. Each executable owns child sites for authored type uses, property
+annotations, member bodies, function creation, and constraints. Type-tree child
+ordinals distinguish alias expansions, union alternatives, and collection type
+arguments. A block or instruction offset identifies a site only within its
+executable owner; it is not a global resolution-cache key. An environment with
+no explicit cloned owner keeps its canonical static template implicit. Reaching
+a check resolves that template's state without changing what subsequent object
+or function literals capture, so ownership cannot depend on the earlier branch
+history of an invocation. Type nodes are allocated as reached and reused across
+failures and retries. Recursive inline
+`is`/`as` therefore builds a persistent prefix of distinct type-use nodes instead
+of merging every depth into the recursive bytecode block.
+
+Inline alias constraints execute with their type node's executable owner.
+Lambda creation inside such a constraint retains a separate body owner in the
+function's captured environment. Repeated function calls reuse that body state
+while receiving fresh logical receiver slots. Non-generic constraints containing
+local-writing lets retain a canonical compiler-selected call target; cloned
+wrappers share its executable state. These choices are independent of the
+`CustomThisSlot` invocation rules above. A lazy collection wrapper retains its
+actual argument `TypeNodeId`, so different elements use the same argument node.
+Inherited annotation checks use the declaring property's annotation site,
+including synthetic standard-library declarations without an authored
+`CheckType` instruction. Distinct constrained casts remain distinct even when
+they share bytecode: wrapper elision requires the same type-node identity.
+Semantic type equivalence remains sufficient for types without executable
+constraints.
+
+A local const-boundary read publishes the actual resolved `Member` definition
+before checking its const modifier, matching
+`ReadLocalPropertyNode.getProperty` in the pinned Java source. The first const
+failure leaves that definition available to the same read node on retry. The
+read still takes its lexical owner and receiver from the current frame; it does
+not capture the first instance. Missing resolution is not published. This state
+is separate from successful lazy-value caching, so a later failure in the
+property body remains retryable. Ordinary property reads and both lexical method
+kinds retain their repeated const failures. Independent inline and lambda type
+uses have separate read caches; the selected recursive value-two control has
+three failures followed by three successful reads.
+
+Executable entries retain child identities and immutable member definitions,
+not captured objects or receiver values. Static call-target roots retain their
+reached resolution prefixes for the evaluator lifetime. Objects, functions,
+collection casts, active type runs, pending member casts, and suspended frames
+trace the executable handles they actually reference. This lets an unreachable
+receiver or closure be collected even while its code state remains reachable.
+Generation and evaluator checks reject stale or foreign handles. Nonterminal
+cancellation unwinds invocation state while preserving published resolution;
+close, timeout, and terminal cancellation release the complete heap and static
+root table. `HeapStats.executable_live` identifies executable/type entries within
+`live`, allowing tests to assert both the original object/receiver counts and
+exact persistent-node counts. These are retention checks, not performance or
+peak-memory parity evidence.
+
+The bounded const-scope resolver distinguishes object, method, and lambda
+scopes. Methods contribute a const barrier without increasing lexical lookup
+depth; lambdas increase lookup depth without contributing a barrier. Eager
+predicate lookup can skip an object while retaining that object's const barrier.
+Qualified and standalone `outer` checks inspect the immediate represented
+lexical parent. This does not yet model every upstream lexical scope: let bodies
+and for-generator scopes require further const-depth and const-level work. The
+retained Stage 17 let follow-up has three matching controls and one mismatch:
+with `local value = 1`, Java permits `const result = let (n = 0) value`, while
+Rust still reports a const-boundary error. The direct read, let initializer,
+and lambda-inside-let controls match. This exploratory mismatch is not part of
+the selected acceptance contract and is not counted as passing.
+
+Type-check metadata and type arguments still use the existing static expansion.
+This ownership graph does not implement general lazy generic instantiation,
+changing recursive type arguments, generic alias-root substitution identity, or
+all generic shared-let clone policies. Recursive generic checks remain explicit
+unsupported results, and observed generic let-sharing differences remain open.
+The selected non-generic sequences do not establish complete const, type, Host,
+module-cache, or language compatibility.
 
 ### Recursive diagnostic frames
 

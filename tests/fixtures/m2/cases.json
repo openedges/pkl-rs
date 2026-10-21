@@ -20515,6 +20515,863 @@
         "semantic:functions"
       ],
       "power_assertions": true
+    },
+    {
+      "id": "types-stage17-inline-is-local",
+      "input": "tests/fixtures/m2/types-stage17-inline-is-local.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:type-tests-casts",
+        "semantic:modifiers",
+        "semantic:name-resolution",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "types-stage17-inline-is-const",
+      "input": "tests/fixtures/m2/types-stage17-inline-is-const.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:type-tests-casts",
+        "semantic:modifiers",
+        "semantic:name-resolution"
+      ],
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "types-stage17-inline-is-const",
+          "types-stage17-let-is-const",
+          "types-stage17-lambda-is-const"
+        ],
+        "domain": "Const local bounds preserve the same scalar is outcome across inline, let-root, and lambda constraints."
+      }
+    },
+    {
+      "id": "types-stage17-inline-as-local",
+      "input": "tests/fixtures/m2/types-stage17-inline-as-local.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:type-tests-casts",
+        "semantic:modifiers",
+        "semantic:name-resolution",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "types-stage17-inline-as-const",
+      "input": "tests/fixtures/m2/types-stage17-inline-as-const.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:type-tests-casts",
+        "semantic:modifiers",
+        "semantic:name-resolution"
+      ],
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "types-stage17-inline-as-const",
+          "types-stage17-let-as-const",
+          "types-stage17-lambda-as-const"
+        ],
+        "domain": "Const local bounds preserve the same scalar as outcome across inline, let-root, and lambda constraints."
+      }
+    },
+    {
+      "id": "types-stage17-let-is-local",
+      "input": "tests/fixtures/m2/types-stage17-let-is-local.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:type-tests-casts",
+        "semantic:modifiers",
+        "semantic:name-resolution",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "types-stage17-let-is-const",
+      "input": "tests/fixtures/m2/types-stage17-let-is-const.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:type-tests-casts",
+        "semantic:modifiers",
+        "semantic:name-resolution"
+      ],
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "types-stage17-inline-is-const",
+          "types-stage17-let-is-const",
+          "types-stage17-lambda-is-const"
+        ],
+        "domain": "Const local bounds preserve the same scalar is outcome across inline, let-root, and lambda constraints."
+      }
+    },
+    {
+      "id": "types-stage17-let-as-local",
+      "input": "tests/fixtures/m2/types-stage17-let-as-local.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:type-tests-casts",
+        "semantic:modifiers",
+        "semantic:name-resolution",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "types-stage17-let-as-const",
+      "input": "tests/fixtures/m2/types-stage17-let-as-const.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:type-tests-casts",
+        "semantic:modifiers",
+        "semantic:name-resolution"
+      ],
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "types-stage17-inline-as-const",
+          "types-stage17-let-as-const",
+          "types-stage17-lambda-as-const"
+        ],
+        "domain": "Const local bounds preserve the same scalar as outcome across inline, let-root, and lambda constraints."
+      }
+    },
+    {
+      "id": "types-stage17-lambda-is-local",
+      "input": "tests/fixtures/m2/types-stage17-lambda-is-local.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:type-tests-casts",
+        "semantic:modifiers",
+        "semantic:name-resolution",
+        "semantic:functions",
+        "semantic:closures",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "types-stage17-lambda-is-const",
+      "input": "tests/fixtures/m2/types-stage17-lambda-is-const.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:type-tests-casts",
+        "semantic:modifiers",
+        "semantic:name-resolution",
+        "semantic:functions",
+        "semantic:closures"
+      ],
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "types-stage17-inline-is-const",
+          "types-stage17-let-is-const",
+          "types-stage17-lambda-is-const"
+        ],
+        "domain": "Const local bounds preserve the same scalar is outcome across inline, let-root, and lambda constraints."
+      }
+    },
+    {
+      "id": "types-stage17-lambda-as-local",
+      "input": "tests/fixtures/m2/types-stage17-lambda-as-local.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:type-tests-casts",
+        "semantic:modifiers",
+        "semantic:name-resolution",
+        "semantic:functions",
+        "semantic:closures",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "types-stage17-lambda-as-const",
+      "input": "tests/fixtures/m2/types-stage17-lambda-as-const.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:type-tests-casts",
+        "semantic:modifiers",
+        "semantic:name-resolution",
+        "semantic:functions",
+        "semantic:closures"
+      ],
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "types-stage17-inline-as-const",
+          "types-stage17-let-as-const",
+          "types-stage17-lambda-as-const"
+        ],
+        "domain": "Const local bounds preserve the same scalar as outcome across inline, let-root, and lambda constraints."
+      }
+    },
+    {
+      "id": "types-stage17-recursive-depth-negative",
+      "input": "tests/fixtures/m2/types-stage17-recursive-depth-negative.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:type-tests-casts",
+        "semantic:modifiers",
+        "semantic:name-resolution"
+      ]
+    },
+    {
+      "id": "types-stage17-recursive-depth-0",
+      "input": "tests/fixtures/m2/types-stage17-recursive-depth-0.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:type-tests-casts",
+        "semantic:modifiers",
+        "semantic:name-resolution",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "types-stage17-recursive-depth-1",
+      "input": "tests/fixtures/m2/types-stage17-recursive-depth-1.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:type-tests-casts",
+        "semantic:modifiers",
+        "semantic:name-resolution",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "types-stage17-recursive-depth-3",
+      "input": "tests/fixtures/m2/types-stage17-recursive-depth-3.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:type-tests-casts",
+        "semantic:modifiers",
+        "semantic:name-resolution",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "types-stage17-const-method-local",
+      "input": "tests/fixtures/m2/types-stage17-const-method-local.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:functions",
+        "semantic:diagnostics",
+        "semantic:modifiers",
+        "semantic:name-resolution"
+      ]
+    },
+    {
+      "id": "types-stage17-const-method-ordinary",
+      "input": "tests/fixtures/m2/types-stage17-const-method-ordinary.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:functions",
+        "semantic:diagnostics",
+        "semantic:modifiers",
+        "semantic:name-resolution"
+      ]
+    },
+    {
+      "id": "types-stage17-const-method-this",
+      "input": "tests/fixtures/m2/types-stage17-const-method-this.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:functions",
+        "semantic:diagnostics",
+        "semantic:modifiers",
+        "semantic:name-resolution"
+      ]
+    },
+    {
+      "id": "types-stage17-const-method-module",
+      "input": "tests/fixtures/m2/types-stage17-const-method-module.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:functions",
+        "semantic:diagnostics",
+        "semantic:modifiers",
+        "semantic:name-resolution"
+      ]
+    },
+    {
+      "id": "types-stage17-const-method-method",
+      "input": "tests/fixtures/m2/types-stage17-const-method-method.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:functions",
+        "semantic:diagnostics",
+        "semantic:modifiers",
+        "semantic:name-resolution"
+      ]
+    },
+    {
+      "id": "types-stage17-const-method-lambda",
+      "input": "tests/fixtures/m2/types-stage17-const-method-lambda.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:functions",
+        "semantic:diagnostics",
+        "semantic:modifiers",
+        "semantic:name-resolution",
+        "semantic:closures"
+      ]
+    },
+    {
+      "id": "types-stage17-const-method-object",
+      "input": "tests/fixtures/m2/types-stage17-const-method-object.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:functions",
+        "semantic:diagnostics",
+        "semantic:modifiers",
+        "semantic:name-resolution"
+      ]
+    },
+    {
+      "id": "types-stage17-const-method-object-lambda",
+      "input": "tests/fixtures/m2/types-stage17-const-method-object-lambda.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:functions",
+        "semantic:diagnostics",
+        "semantic:modifiers",
+        "semantic:name-resolution",
+        "semantic:closures"
+      ]
+    },
+    {
+      "id": "types-stage17-const-method-let",
+      "input": "tests/fixtures/m2/types-stage17-const-method-let.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:functions",
+        "semantic:diagnostics",
+        "semantic:modifiers",
+        "semantic:name-resolution"
+      ]
+    },
+    {
+      "id": "types-stage17-const-method-local-method",
+      "input": "tests/fixtures/m2/types-stage17-const-method-local-method.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:functions",
+        "semantic:diagnostics",
+        "semantic:modifiers",
+        "semantic:name-resolution"
+      ]
+    },
+    {
+      "id": "types-stage17-const-method-outer",
+      "input": "tests/fixtures/m2/types-stage17-const-method-outer.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:functions",
+        "semantic:diagnostics",
+        "semantic:modifiers",
+        "semantic:name-resolution"
+      ]
+    },
+    {
+      "id": "types-stage17-const-property-control",
+      "input": "tests/fixtures/m2/types-stage17-const-property-control.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:functions",
+        "semantic:diagnostics",
+        "semantic:modifiers",
+        "semantic:name-resolution"
+      ]
+    },
+    {
+      "id": "types-stage17-const-property-object-method",
+      "input": "tests/fixtures/m2/types-stage17-const-property-object-method.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:functions",
+        "semantic:diagnostics",
+        "semantic:modifiers",
+        "semantic:name-resolution"
+      ]
+    },
+    {
+      "id": "types-stage17-const-method-parameter-constraint",
+      "input": "tests/fixtures/m2/types-stage17-const-method-parameter-constraint.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:functions",
+        "semantic:diagnostics",
+        "semantic:modifiers",
+        "semantic:name-resolution",
+        "semantic:types",
+        "semantic:constraints"
+      ]
+    },
+    {
+      "id": "types-stage17-const-method-result-constraint",
+      "input": "tests/fixtures/m2/types-stage17-const-method-result-constraint.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:functions",
+        "semantic:diagnostics",
+        "semantic:modifiers",
+        "semantic:name-resolution",
+        "semantic:types",
+        "semantic:constraints"
+      ]
+    },
+    {
+      "id": "types-stage17-const-class-method",
+      "input": "tests/fixtures/m2/types-stage17-const-class-method.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:functions",
+        "semantic:diagnostics",
+        "semantic:modifiers",
+        "semantic:name-resolution",
+        "semantic:classes"
+      ]
+    },
+    {
+      "id": "types-stage17-const-class-method-module",
+      "input": "tests/fixtures/m2/types-stage17-const-class-method-module.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:functions",
+        "semantic:diagnostics",
+        "semantic:modifiers",
+        "semantic:name-resolution",
+        "semantic:classes"
+      ]
+    },
+    {
+      "id": "types-stage17-grouped-call-top",
+      "input": "tests/fixtures/m2/types-stage17-grouped-call-top.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:functions",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "types-stage17-grouped-call-argument",
+      "input": "tests/fixtures/m2/types-stage17-grouped-call-argument.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:functions",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "types-stage17-grouped-call-constraint",
+      "input": "tests/fixtures/m2/types-stage17-grouped-call-constraint.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:functions",
+        "semantic:diagnostics",
+        "semantic:types",
+        "semantic:constraints"
+      ]
+    },
+    {
+      "id": "types-stage17-grouped-call-conditional",
+      "input": "tests/fixtures/m2/types-stage17-grouped-call-conditional.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:functions",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "types-stage17-grouped-call-list",
+      "input": "tests/fixtures/m2/types-stage17-grouped-call-list.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:functions",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "types-stage17-grouped-call-group",
+      "input": "tests/fixtures/m2/types-stage17-grouped-call-group.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:functions",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "types-stage17-grouped-call-interpolation",
+      "input": "tests/fixtures/m2/types-stage17-grouped-call-interpolation.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:functions",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "types-stage17-const-method-object-dynamic",
+      "input": "tests/fixtures/m2/types-stage17-const-method-object-dynamic.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:functions",
+        "semantic:diagnostics",
+        "semantic:modifiers",
+        "semantic:name-resolution"
+      ]
+    },
+    {
+      "id": "types-stage17-const-method-object-lambda-dynamic",
+      "input": "tests/fixtures/m2/types-stage17-const-method-object-lambda-dynamic.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:functions",
+        "semantic:diagnostics",
+        "semantic:modifiers",
+        "semantic:name-resolution",
+        "semantic:closures"
+      ]
+    },
+    {
+      "id": "types-stage17-const-method-lambda-object-dynamic",
+      "input": "tests/fixtures/m2/types-stage17-const-method-lambda-object-dynamic.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:functions",
+        "semantic:diagnostics",
+        "semantic:modifiers",
+        "semantic:name-resolution",
+        "semantic:closures"
+      ]
+    },
+    {
+      "id": "types-stage17-const-method-local-method-dynamic",
+      "input": "tests/fixtures/m2/types-stage17-const-method-local-method-dynamic.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:functions",
+        "semantic:diagnostics",
+        "semantic:modifiers",
+        "semantic:name-resolution"
+      ]
+    },
+    {
+      "id": "types-stage17-const-property-object-method-dynamic",
+      "input": "tests/fixtures/m2/types-stage17-const-property-object-method-dynamic.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:functions",
+        "semantic:diagnostics",
+        "semantic:modifiers",
+        "semantic:name-resolution"
+      ]
+    },
+    {
+      "id": "types-stage17-const-property-lambda-object-method-dynamic",
+      "input": "tests/fixtures/m2/types-stage17-const-property-lambda-object-method-dynamic.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:functions",
+        "semantic:diagnostics",
+        "semantic:modifiers",
+        "semantic:name-resolution",
+        "semantic:closures"
+      ]
+    },
+    {
+      "id": "types-stage17-super-method",
+      "input": "tests/fixtures/m2/types-stage17-super-method.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:functions",
+        "semantic:diagnostics",
+        "semantic:modifiers",
+        "semantic:name-resolution",
+        "semantic:classes"
+      ]
+    },
+    {
+      "id": "types-stage17-super-property",
+      "input": "tests/fixtures/m2/types-stage17-super-property.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:functions",
+        "semantic:diagnostics",
+        "semantic:modifiers",
+        "semantic:name-resolution",
+        "semantic:classes"
+      ]
+    },
+    {
+      "id": "types-stage17-super-property-in-method",
+      "input": "tests/fixtures/m2/types-stage17-super-property-in-method.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:functions",
+        "semantic:diagnostics",
+        "semantic:modifiers",
+        "semantic:name-resolution",
+        "semantic:classes"
+      ]
+    },
+    {
+      "id": "types-stage17-const-method-grouped",
+      "input": "tests/fixtures/m2/types-stage17-const-method-grouped.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:functions",
+        "semantic:diagnostics",
+        "semantic:modifiers",
+        "semantic:name-resolution"
+      ]
+    },
+    {
+      "id": "types-stage17-frames-const-hint-depth-1",
+      "input": "tests/fixtures/m2/types-stage17-frames-const-hint-depth-1.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:functions",
+        "semantic:diagnostics",
+        "semantic:modifiers",
+        "semantic:name-resolution"
+      ]
+    },
+    {
+      "id": "types-stage17-frames-const-hint-depth-1-power",
+      "input": "tests/fixtures/m2/types-stage17-frames-const-hint-depth-1-power.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:functions",
+        "semantic:diagnostics",
+        "semantic:modifiers",
+        "semantic:name-resolution"
+      ],
+      "power_assertions": true
+    },
+    {
+      "id": "types-stage17-frames-const-hint-depth-2",
+      "input": "tests/fixtures/m2/types-stage17-frames-const-hint-depth-2.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:functions",
+        "semantic:diagnostics",
+        "semantic:modifiers",
+        "semantic:name-resolution"
+      ]
+    },
+    {
+      "id": "types-stage17-frames-const-hint-depth-2-power",
+      "input": "tests/fixtures/m2/types-stage17-frames-const-hint-depth-2-power.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:functions",
+        "semantic:diagnostics",
+        "semantic:modifiers",
+        "semantic:name-resolution"
+      ],
+      "power_assertions": true
+    },
+    {
+      "id": "types-stage17-frames-const-hint-depth-3",
+      "input": "tests/fixtures/m2/types-stage17-frames-const-hint-depth-3.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:functions",
+        "semantic:diagnostics",
+        "semantic:modifiers",
+        "semantic:name-resolution"
+      ]
+    },
+    {
+      "id": "types-stage17-frames-const-hint-depth-3-power",
+      "input": "tests/fixtures/m2/types-stage17-frames-const-hint-depth-3-power.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:functions",
+        "semantic:diagnostics",
+        "semantic:modifiers",
+        "semantic:name-resolution"
+      ],
+      "power_assertions": true
+    },
+    {
+      "id": "types-stage17-frames-const-hint-depth-4",
+      "input": "tests/fixtures/m2/types-stage17-frames-const-hint-depth-4.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:functions",
+        "semantic:diagnostics",
+        "semantic:modifiers",
+        "semantic:name-resolution"
+      ]
+    },
+    {
+      "id": "types-stage17-frames-const-hint-depth-4-power",
+      "input": "tests/fixtures/m2/types-stage17-frames-const-hint-depth-4-power.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:functions",
+        "semantic:diagnostics",
+        "semantic:modifiers",
+        "semantic:name-resolution"
+      ],
+      "power_assertions": true
+    },
+    {
+      "id": "types-stage17-outer-method-lambda",
+      "input": "tests/fixtures/m2/types-stage17-outer-method-lambda.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:functions",
+        "semantic:closures",
+        "semantic:name-resolution",
+        "semantic:modifiers",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "types-stage17-outer-method-lambda-value",
+      "input": "tests/fixtures/m2/types-stage17-outer-method-lambda-value.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:functions",
+        "semantic:closures",
+        "semantic:name-resolution",
+        "semantic:modifiers",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "types-stage17-outer-property-lambda",
+      "input": "tests/fixtures/m2/types-stage17-outer-property-lambda.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:functions",
+        "semantic:closures",
+        "semantic:name-resolution",
+        "semantic:modifiers",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "types-stage17-outer-method-object",
+      "input": "tests/fixtures/m2/types-stage17-outer-method-object.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:functions",
+        "semantic:closures",
+        "semantic:name-resolution",
+        "semantic:modifiers",
+        "semantic:diagnostics"
+      ]
     }
   ],
   "schema_version": 1,

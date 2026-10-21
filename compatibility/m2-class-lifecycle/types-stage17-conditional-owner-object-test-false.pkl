@@ -1,0 +1,7 @@
+module stage17.ownerReview
+local threshold=0
+typealias A=Int(this<threshold)
+function make(flag)=if(flag||(-1 is Int(this<0)))new Dynamic { value=-1 is A } else throw("unreachable")
+first=make(false).value
+second=make(true).value
+stable=42

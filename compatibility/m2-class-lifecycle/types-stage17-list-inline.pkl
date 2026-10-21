@@ -1,0 +1,6 @@
+local threshold=0
+typealias A = Int(this < threshold)
+values: List<A> = List(-1,-2)
+one=values[0]
+two=values[1]
+stable=42

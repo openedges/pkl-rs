@@ -1,0 +1,6 @@
+local threshold=0
+typealias A = Int(let (n = this) n < threshold)
+values: Listing<A> = new Listing { -1; -2 }
+one=values[0]
+two=values[1]
+stable=42

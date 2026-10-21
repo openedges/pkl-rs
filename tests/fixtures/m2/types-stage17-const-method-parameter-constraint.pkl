@@ -1,0 +1,4 @@
+module stage17.root
+local x = 7
+const function f(a: Int(this < x)) = a
+result = f(2)

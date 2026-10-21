@@ -707,7 +707,7 @@ impl Vm {
             Task::ResumeForce(receiver, owner, name, local, memoize, method, entry, predicate) => {
                 self.frames[frame_index].equality_run = Some(run);
                 return self.force_key_mode_prepared(
-                    receiver, owner, name, local, memoize, method, entry, predicate, true,
+                    receiver, owner, name, local, memoize, method, entry, predicate, true, None,
                 );
             }
             Task::PublishCache(id, key, value) => {

@@ -245,7 +245,7 @@ fn nested_generic_bindings_survive_host_reentry_failures_and_gc() {
     let alias = host_ready(&mut session, 0).unwrap();
     session.start(outer, vec![module.clone()], 1, None).unwrap();
     let parent = host_read(&mut session, 1, "mem:outer");
-    let suspended = session.collect(&[]).live;
+    let suspended = retained_values(session.collect(&[]), 8);
     for (now, response) in [
         (
             2,
@@ -290,7 +290,7 @@ fn nested_generic_bindings_survive_host_reentry_failures_and_gc() {
     assert_eq!(host_ready(&mut session, 5), Ok(alias));
     session.resume(&parent, Ok(Value::string("ok")), 5).unwrap();
     assert_eq!(host_ready(&mut session, 5), Ok(Value::Int(42)));
-    assert!(session.collect(&[]).live < suspended);
+    assert!(retained_values(session.collect(&[]), 23) < suspended);
     session.close();
     assert_eq!(session.heap_stats().slots, 0);
 }
@@ -313,7 +313,7 @@ fn terminal_actions_release_nested_generic_captures_and_both_reads() {
             .unwrap();
         let child = host_read(&mut session, 2, "mem:inner");
         assert_eq!(session.context_depth(), 2);
-        assert!(session.collect(&[]).live > 0);
+        assert!(retained_values(session.collect(&[]), 16) > 0);
         match termination {
             ErrorKind::Cancelled => session.cancel(),
             ErrorKind::Closed => session.close(),
@@ -372,7 +372,7 @@ fn nonterminal_cancel_keeps_alias_roots_and_retries_nested_bindings() {
             }
         };
         if attempt == 0 {
-            assert!(vm.collect(&[]).live > 3);
+            assert!(retained_values(vm.collect(&[]), 8) > 3);
             vm.cancel();
             assert_eq!(ready(&mut vm).unwrap_err().kind, ErrorKind::Cancelled);
             assert!(!vm.is_closed());
@@ -384,7 +384,7 @@ fn nonterminal_cancel_keeps_alias_roots_and_retries_nested_bindings() {
             assert_eq!(member(&mut vm, &module, "identity"), Ok(alias.clone()));
             // Nested, Gate, and their declaration module survive cancellation;
             // the captured object and collection check temporaries do not.
-            assert_eq!(vm.collect(&[]).live, 3);
+            assert_eq!(retained_values(vm.collect(&[]), 8), 3);
             cancelled_request = Some(pending);
         } else {
             assert_ne!(Some(pending), cancelled_request);
@@ -399,7 +399,18 @@ fn nonterminal_cancel_keeps_alias_roots_and_retries_nested_bindings() {
         }
     }
     assert_eq!(member(&mut vm, &module, "identity"), Ok(alias));
-    assert_eq!(vm.collect(&[]).live, 3);
+    assert_eq!(retained_values(vm.collect(&[]), 8), 3);
     vm.close();
     assert_eq!(vm.heap_stats().slots, 0);
+}
+
+// Persistent executable/type nodes have their own exact bound. The returned
+// count preserves the original object and custom-this-slot assertions.
+#[track_caller]
+fn retained_values(stats: pkl_runtime::heap::HeapStats, expected_executables: usize) -> usize {
+    assert_eq!(
+        stats.executable_live, expected_executables,
+        "persistent executable graph"
+    );
+    stats.live - stats.executable_live
 }

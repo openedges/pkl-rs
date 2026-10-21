@@ -137,6 +137,7 @@ enum Task {
     CollectionValueReady(CollectionState),
     CollectionValueResult(CollectionState),
     RestoreEnvironment(Environment),
+    RestoreTypeNode(Option<TypeNodeId>),
     AfterBase {
         constraints: Vec<ConstraintCode>,
     },
@@ -164,6 +165,7 @@ enum Task {
 }
 
 pub(super) struct TypeRun {
+    pub(super) node: Option<TypeNodeId>,
     value: Value,
     checked: Value,
     pub(super) environment: Environment,
@@ -183,6 +185,7 @@ pub(super) fn environment_roots(environment: &Environment, roots: &mut Vec<Value
     roots.extend(environment.this_value.iter().cloned());
     roots.extend(environment.outer_value.iter().cloned());
     roots.extend(environment.custom_this.map(|slot| slot.root()));
+    roots.extend(environment.executable_owner.map(|owner| owner.root()));
     for scope in &environment.scopes {
         roots.extend([Value::Object(scope.receiver), Value::Object(scope.owner)]);
     }
@@ -194,6 +197,7 @@ impl TypeRun {
         self.frames.iter().skip(1)
     }
     pub(super) fn roots(&self, roots: &mut Vec<Value>) {
+        roots.extend(self.node.map(|node| node.0.root()));
         roots.extend([self.value.clone(), self.checked.clone()]);
         roots.extend(self.returned.iter().cloned());
         environment_roots(&self.environment, roots);
@@ -224,6 +228,7 @@ impl TypeRun {
                 }
                 Task::ReferenceDomainResult { value, .. } => roots.push(value.clone()),
                 Task::RestoreEnvironment(environment) => environment_roots(environment, roots),
+                Task::RestoreTypeNode(node) => roots.extend(node.map(|node| node.0.root())),
                 Task::PredicateResult {
                     function, value, ..
                 } => {
@@ -248,7 +253,7 @@ impl TypeRun {
 }
 // Function parameter/result and Reference referent types are metadata; they do
 // not evaluate constraints in this frame. The remaining wrappers can do so.
-fn needs_custom_this(ty: &TypeCheck) -> bool {
+pub(super) fn needs_custom_this(ty: &TypeCheck) -> bool {
     match ty {
         TypeCheck::Constrained { .. } => true,
         TypeCheck::NamedAlias { expanded, .. }
@@ -311,6 +316,38 @@ impl Vm {
         destination: TypeDestination,
         frames: Vec<RuntimeFrame>,
     ) -> Result<(), RuntimeError> {
+        let node = if needs_custom_this(&ty) {
+            let owner = self.current_executable()?;
+            let frame = self.frames.last().expect("type-check frame");
+            let instruction = frame.pc.saturating_sub(1);
+            let site = if self
+                .program
+                .metadata
+                .get(frame.block)
+                .is_some_and(|metadata| metadata.property_typecheck == Some(instruction))
+            {
+                ExecutionSite::PropertyType(frame.block)
+            } else {
+                ExecutionSite::TypeUse {
+                    block: frame.block,
+                    instruction,
+                }
+            };
+            Some(TypeNodeId(self.heap.executable_child(owner, site)?))
+        } else {
+            None
+        };
+        self.begin_type_node(ty, value, destination, frames, node)
+    }
+
+    pub(super) fn begin_type_node(
+        &mut self,
+        ty: TypeCheck,
+        value: Value,
+        destination: TypeDestination,
+        frames: Vec<RuntimeFrame>,
+        node: Option<TypeNodeId>,
+    ) -> Result<(), RuntimeError> {
         let in_type_test = matches!(destination, TypeDestination::Test)
             || self
                 .frames
@@ -354,6 +391,7 @@ impl Vm {
             .or_else(|| metadata.map(|metadata| metadata.member.clone()))
             .unwrap_or_else(|| Arc::from(""));
         frame.type_run = Some(TypeRun {
+            node,
             value: value.clone(),
             checked: value,
             environment: frame.environment.clone(),
@@ -370,6 +408,28 @@ impl Vm {
         });
         Ok(())
     }
+    fn push_type_child(
+        &mut self,
+        run: &mut TypeRun,
+        ty: TypeCheck,
+        span: Span,
+        index: usize,
+    ) -> Result<(), RuntimeError> {
+        if needs_custom_this(&ty) {
+            let parent = run
+                .node
+                .ok_or_else(|| invalid("missing parent type node"))?;
+            let child = TypeNodeId(
+                self.heap
+                    .executable_child(parent.0, ExecutionSite::TypeChild(index))?,
+            );
+            run.tasks.push(Task::RestoreTypeNode(run.node));
+            run.node = Some(child);
+        }
+        run.tasks.push(Task::Check { ty, span });
+        Ok(())
+    }
+
     fn constraint_value(&self, environment: &Environment) -> Result<Value, RuntimeError> {
         let slot = environment
             .custom_this
@@ -399,6 +459,21 @@ impl Vm {
             let value = self.constraint_value(&environment)?;
             environment.custom_this = Some(self.heap.allocate_custom_this(Some(value)));
         }
+        let owner = if self
+            .program
+            .metadata
+            .get(constraint.block)
+            .is_some_and(|metadata| metadata.constraint_root.is_some())
+        {
+            self.executable_root(constraint.block)
+        } else {
+            let node = run
+                .node
+                .ok_or_else(|| invalid("missing constraint type node"))?;
+            self.heap
+                .executable_child(node.0, ExecutionSite::Constraint(constraint.block))?
+        };
+        environment.executable_owner = Some(owner);
         let member = self
             .program
             .metadata
@@ -539,22 +614,21 @@ impl Vm {
                     let value = std::mem::replace(&mut run.value, reference.domain.clone());
                     run.tasks
                         .push(Task::ReferenceDomainResult { value, ty, span });
-                    run.tasks.push(Task::Check { ty: domain, span });
+                    self.push_type_child(&mut run, domain, span, 0)?;
                 }
-                TypeCheck::NamedAlias { expanded, .. } => run.tasks.push(Task::Check {
-                    ty: *expanded,
-                    span,
-                }),
+                TypeCheck::NamedAlias { expanded, .. } => {
+                    self.push_type_child(&mut run, *expanded, span, 0)?
+                }
                 TypeCheck::Alias(inner) | TypeCheck::GenericAlias(inner) => {
                     let environment = module_environment(&run.environment)?;
                     run.tasks.push(Task::RestoreEnvironment(std::mem::replace(
                         &mut run.environment,
                         environment,
                     )));
-                    run.tasks.push(Task::Check { ty: *inner, span });
+                    self.push_type_child(&mut run, *inner, span, 0)?;
                 }
                 TypeCheck::Nullable(inner) if !matches!(run.value, Value::Null) => {
-                    run.tasks.push(Task::Check { ty: *inner, span })
+                    self.push_type_child(&mut run, *inner, span, 0)?
                 }
                 TypeCheck::Union {
                     types,
@@ -577,10 +651,7 @@ impl Vm {
                         parent_eager,
                         replay: false,
                     }));
-                    run.tasks.push(Task::Check {
-                        ty: types[0].clone(),
-                        span: spans[0],
-                    });
+                    self.push_type_child(&mut run, types[0].clone(), spans[0], 0)?;
                 }
                 TypeCheck::ParameterizedCollection { kind, arguments }
                     if TypeCheck::Collection(kind).accepts(&run.value, &self.heap) =>
@@ -625,10 +696,7 @@ impl Vm {
                     constraints,
                 } => {
                     run.tasks.push(Task::AfterBase { constraints });
-                    run.tasks.push(Task::Check {
-                        ty: *base,
-                        span: base_span,
-                    });
+                    self.push_type_child(&mut run, *base, base_span, 0)?;
                 }
                 ty => {
                     run.outcome = Some(if ty.accepts(&run.value, &self.heap) {
@@ -675,7 +743,7 @@ impl Vm {
                     run.eager = true;
                     let (ty, span) = state.arguments[0].clone();
                     run.tasks.push(Task::CollectionKeyResult(state));
-                    run.tasks.push(Task::Check { ty, span });
+                    self.push_type_child(&mut run, ty, span, 0)?;
                 } else if state.kind != crate::heap::CollectionKind::Mapping || state.eager {
                     return self.collection_value(run, state);
                 } else {
@@ -731,8 +799,9 @@ impl Vm {
                     .last()
                     .expect("collection value type")
                     .clone();
+                let argument = state.arguments.len() - 1;
                 run.tasks.push(Task::CollectionValueResult(state));
-                run.tasks.push(Task::Check { ty, span });
+                self.push_type_child(&mut run, ty, span, argument)?;
             }
             Task::CollectionValueResult(mut state) => {
                 if let Some(Ok(value)) = &run.outcome {
@@ -749,6 +818,7 @@ impl Vm {
                 }
             }
             Task::RestoreEnvironment(environment) => run.environment = environment,
+            Task::RestoreTypeNode(node) => run.node = node,
             Task::AfterBase { constraints } => {
                 if let Some(Ok(value)) = &run.outcome {
                     run.checked = value.clone();
@@ -950,8 +1020,9 @@ impl Vm {
                     }
                     let ty = state.types[state.index].clone();
                     let span = state.spans[state.index];
+                    let index = state.index;
                     run.tasks.push(Task::UnionResult(state));
-                    run.tasks.push(Task::Check { ty, span });
+                    self.push_type_child(&mut run, ty, span, index)?;
                 }
             }
         }
@@ -1091,13 +1162,28 @@ impl Vm {
             }
         } else {
             let (ty, span) = state.arguments.last().expect("value type").clone();
+            let node = if needs_custom_this(&ty) {
+                let parent = run
+                    .node
+                    .ok_or_else(|| invalid("missing collection type node"))?;
+                Some(TypeNodeId(self.heap.executable_child(
+                    parent.0,
+                    ExecutionSite::TypeChild(state.arguments.len() - 1),
+                )?))
+            } else {
+                None
+            };
             if ty.noop()
                 || self
                     .heap
                     .get(id)?
                     .collection_cast
                     .as_ref()
-                    .is_some_and(|cast| cast.ty.equivalent(&ty))
+                    .is_some_and(|cast| {
+                        // ConstrainedTypeNode is equivalent only to itself. Shared
+                        // bytecode (especially let roots) is not type-node identity.
+                        cast.ty.equivalent(&ty) && (node.is_none() || cast.node == node)
+                    })
             {
                 Value::Object(id)
             } else {
@@ -1110,6 +1196,7 @@ impl Vm {
                     collection_kind: state.kind,
                     length: object.length,
                     collection_cast: Some(crate::heap::CollectionCast {
+                        node,
                         ty,
                         span,
                         member: run.member.clone(),

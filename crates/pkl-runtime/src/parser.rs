@@ -763,6 +763,13 @@ impl<'a> Parser<'a> {
                     "Keyword `import` is not allowed here.\n\nIf you must use this name as identifier, enclose it in backticks.",
                 ));
             }
+            if !matches!(self.token.kind, Kind::Name(_) | Kind::QuotedName(_)) {
+                return Err(Diagnostic::new(
+                    DiagnosticKind::Syntax,
+                    self.token.span,
+                    "Invalid token at position. Expected a class, typealias, method, or property.",
+                ));
+            }
             members.push(self.member(context, initial.take())?);
             if self.is_symbol(';') {
                 self.advance()?;
@@ -1174,11 +1181,9 @@ impl<'a> Parser<'a> {
                 ) || (matches!(left.kind, ExprKind::Name(_))
                     && self.lexer.source[left.span.start..left.span.end].starts_with('('))
                 {
-                    return Err(Diagnostic::new(
-                        DiagnosticKind::Syntax,
-                        self.token.span,
-                        "Invalid token at position. Expected a class, typealias, method, or property.",
-                    ));
+                    // Calls are only postfix syntax on unqualified or qualified
+                    // names. Let the enclosing grammar report its own delimiter.
+                    break;
                 }
                 let arguments = self.arguments()?;
                 let span = Span::new(left.span.start, self.previous_end);
@@ -1454,7 +1459,10 @@ impl<'a> Parser<'a> {
             }
             self.advance()?;
         }
-        self.expect(')')?;
+        if !self.is_symbol(')') {
+            return Err(self.unexpected(Some(",` or `)")));
+        }
+        self.advance()?;
         Ok(arguments)
     }
 

@@ -1,0 +1,3 @@
+module stage17.root
+class C { local x = 7; const function f() = x }
+result = new C {}.f()

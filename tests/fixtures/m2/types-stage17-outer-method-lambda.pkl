@@ -1,0 +1,4 @@
+module stage17.root
+threshold=0
+const function f()=(n)->outer.threshold
+result=f().apply(0)

@@ -1,0 +1,5 @@
+threshold = 0
+typealias A = Int(this < threshold)
+first: A = -1
+second: A = -2
+stable = 42

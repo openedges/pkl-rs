@@ -1,0 +1,8 @@
+local threshold=0
+typealias A=Int(this<threshold)
+open class Base { value:A=-1 }
+class Child extends Base { value=-2 }
+one=new Child {}
+two=new Base {}
+three=new Child {}
+stable=42

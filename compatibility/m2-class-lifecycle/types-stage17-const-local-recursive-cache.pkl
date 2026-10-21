@@ -1,0 +1,4 @@
+local threshold = 0
+typealias A = Int(this < 0 || ((this - 1) is A && this < threshold))
+value: A = 2
+stable = 42

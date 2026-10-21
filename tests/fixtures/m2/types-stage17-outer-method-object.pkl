@@ -1,0 +1,4 @@
+module stage17.root
+threshold=0
+const function f()=new Dynamic { x=outer.threshold }.x
+result=f()

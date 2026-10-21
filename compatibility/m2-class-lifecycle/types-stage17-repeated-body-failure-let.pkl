@@ -1,0 +1,5 @@
+local threshold = throw("body failure")
+typealias A = Int(let (n = this) n < threshold)
+first: A = -1
+second: A = -2
+stable = 42

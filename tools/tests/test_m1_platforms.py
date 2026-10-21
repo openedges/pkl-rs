@@ -73,6 +73,11 @@ class PlatformEvidenceTests(unittest.TestCase):
             'm2-type-resolution-error-order',
             'm2-type-parameter-shadowing',
             'm2-unfinished-alias-arguments',
+            'm2-local-resolution-inline-sequences',
+            'm2-local-resolution-call-targets-sequences',
+            'm2-local-resolution-recursive-sequences',
+            'm2-local-resolution-owners-sequences',
+            'm2-local-resolution-wrappers-sequences',
         }
         names = sorted(m1_platforms.REQUIRED_SCENARIOS)
         valid = {'nodeChecks': names, 'browserChecks': names, 'browserErrors': [],

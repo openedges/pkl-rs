@@ -1,0 +1,16 @@
+local threshold = 0
+local const limit = 0
+function bound(): Int = 0
+const function constantBound(): Int = 0
+typealias Local = Int(this < threshold)
+typealias Fixed = Int(this < limit)
+typealias Method = Int(this < bound())
+typealias ConstMethod = Int(this < constantBound())
+typealias Short = Int(this < 0 || this < threshold)
+identity = Local.toString()
+localValue: Local = -1
+fixedValue: Fixed = -1
+methodValue: Method = -1
+constMethodValue: ConstMethod = -1
+shortValue: Short = -1
+stable = 42

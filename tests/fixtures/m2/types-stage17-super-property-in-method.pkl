@@ -1,0 +1,5 @@
+module stage17.root
+open class Parent { value = 1; function method() = 2 }
+class Child extends Parent { const function calculate() = super.value }
+value = new Child {}
+result = value.calculate()

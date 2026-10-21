@@ -1,0 +1,7 @@
+local threshold = 0
+typealias A = Int(let (n = this) n < threshold)
+one: A = -1
+two: A = -2
+three = -3 is A
+cast = -4 as A
+stable = 42

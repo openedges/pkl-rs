@@ -1,0 +1,3 @@
+module stage17.root
+function f(x) = x
+result = 1 is Int((f)(1))

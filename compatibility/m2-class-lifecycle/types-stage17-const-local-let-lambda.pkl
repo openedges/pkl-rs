@@ -1,0 +1,8 @@
+local threshold = 0
+typealias L = Int(let (n = this) n < threshold)
+typealias F = Int((x) -> x < threshold)
+first: L = -1
+second: L = -2
+lambdaFirst: F = -1
+lambdaSecond: F = -2
+stable = 42

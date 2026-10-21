@@ -265,7 +265,7 @@ fn cancelling_reclaims_slot_capture_cycles_and_retry_keeps_alias_identity() {
     for _ in 0..8 {
         vm.start_member(object, "outerResult").unwrap();
         let token = vm_read(&mut vm, "mem:outer");
-        assert!(vm.collect(&[]).live > baseline);
+        assert!(retained_values(vm.collect(&[]), 7) > baseline);
         if let Some(old) = previous {
             assert_ne!(old, token);
             assert_eq!(
@@ -287,7 +287,7 @@ fn cancelling_reclaims_slot_capture_cycles_and_retry_keeps_alias_identity() {
         vm.start(scalar, vec![]).unwrap();
         assert_eq!(vm_ready(&mut vm), Ok(Value::Int(0)));
         let collected = vm.collect(&[]);
-        assert_eq!(collected.live, baseline);
+        assert_eq!(retained_values(collected, 7), baseline);
         previous = Some(token);
     }
     vm.start_member(object, "identity").unwrap();
@@ -298,7 +298,7 @@ fn cancelling_reclaims_slot_capture_cycles_and_retry_keeps_alias_identity() {
     assert_eq!(vm_ready(&mut vm), Ok(Value::Int(1)));
     vm.start(scalar, vec![]).unwrap();
     assert_eq!(vm_ready(&mut vm), Ok(Value::Int(0)));
-    assert_eq!(vm.collect(&[]).live, baseline);
+    assert_eq!(retained_values(vm.collect(&[]), 10), baseline);
     vm.close();
     assert_eq!(vm.heap_stats().slots, 0);
 }
@@ -336,4 +336,15 @@ fn shared_immutable_program_keeps_mutated_slots_and_read_ids_per_vm() {
     assert_eq!(vm_ready(&mut left), Ok(Value::Int(1)));
     left.close();
     assert_eq!(left.heap_stats().slots, 0);
+}
+
+// Persistent executable/type nodes have their own exact bound. The returned
+// count preserves the original object and custom-this-slot assertions.
+#[track_caller]
+fn retained_values(stats: pkl_runtime::heap::HeapStats, expected_executables: usize) -> usize {
+    assert_eq!(
+        stats.executable_live, expected_executables,
+        "persistent executable graph"
+    );
+    stats.live - stats.executable_live
 }

@@ -67,6 +67,11 @@ REQUIRED_SCENARIOS = {
     'm2-erased-class-argument-sequences',
     'm2-shared-constraint-slots-sequences',
     'm2-constraint-call-boundaries-sequences',
+    'm2-local-resolution-inline-sequences',
+    'm2-local-resolution-call-targets-sequences',
+    'm2-local-resolution-recursive-sequences',
+    'm2-local-resolution-owners-sequences',
+    'm2-local-resolution-wrappers-sequences',
 }
 
 

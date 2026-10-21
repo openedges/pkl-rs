@@ -1,0 +1,6 @@
+local threshold = 0
+typealias A = Int(this < threshold)
+first: A = -1
+second: A = -2
+identity = A.toString()
+stable = 42

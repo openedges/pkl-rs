@@ -1,0 +1,9 @@
+function threshold(): Int = 0
+local function localBound(): Int = 0
+typealias A = Int(this < threshold())
+typealias B = Int(this < localBound())
+first: A = -1
+second: A = -2
+localFirst: B = -1
+localSecond: B = -2
+stable = 42

@@ -171,8 +171,8 @@ fn domain_constraint_continuations_keep_reference_and_custom_this_through_gc() {
     assert_eq!(ready(&mut session, 4), Ok(Value::Null));
     // Evaluator-owned class roots retain the captured module's completed cache
     // closure. Repeated GC must settle at this exact source-specific size.
-    assert_eq!(session.collect(&[]).live, 9);
-    assert_eq!(session.collect(&[]).live, 9);
+    assert_eq!(retained_values(session.collect(&[]), 4), 9);
+    assert_eq!(retained_values(session.collect(&[]), 4), 9);
     session.close();
     assert_eq!(session.heap_stats().live, 0);
     assert_eq!(session.heap_stats().slots, 0);
@@ -288,4 +288,15 @@ fn equality_retains_pending_domain_and_data_comparisons_and_retries_only_failed_
     session.close();
     assert_eq!(session.heap_stats().live, 0);
     assert_eq!(session.heap_stats().slots, 0);
+}
+
+// Persistent executable/type nodes have their own exact bound. The returned
+// count preserves the original object and custom-this-slot assertions.
+#[track_caller]
+fn retained_values(stats: pkl_runtime::heap::HeapStats, expected_executables: usize) -> usize {
+    assert_eq!(
+        stats.executable_live, expected_executables,
+        "persistent executable graph"
+    );
+    stats.live - stats.executable_live
 }

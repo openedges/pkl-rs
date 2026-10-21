@@ -65,24 +65,24 @@ fn alias_singleton_roots_its_declaration_graph_and_releases_temporary_values() {
     assert_eq!(vm.collect(&[]).live, 2);
     assert_eq!(member(&mut vm, &module, "result"), Ok(Value::Int(42)));
     // The singleton's declaration module now also retains the captured object.
-    assert_eq!(vm.collect(&[]).live, 3);
+    assert_eq!(retained_values(vm.collect(&[]), 5), 3);
     vm.start(scalar, vec![]).unwrap();
     assert_eq!(vm_ready(&mut vm), Ok(Value::Int(7)));
-    assert_eq!(vm.collect(&[]).live, 3);
+    assert_eq!(retained_values(vm.collect(&[]), 5), 3);
     assert_eq!(member(&mut vm, &module, "Answer"), Ok(alias.clone()));
     vm.start_member(module.as_object().unwrap(), "temporary")
         .unwrap();
     let temporary = vm_ready(&mut vm).unwrap();
     // A completed module property deliberately remains in the declaration graph.
-    assert_eq!(vm.collect(&[]).live, 4);
+    assert_eq!(retained_values(vm.collect(&[]), 5), 4);
     assert_eq!(member(&mut vm, &module, "Answer"), Ok(alias));
     vm.start(transient_entry, vec![]).unwrap();
     let transient = vm_ready(&mut vm).unwrap();
-    assert_eq!(vm.collect(&[]).live, 5);
+    assert_eq!(retained_values(vm.collect(&[]), 5), 5);
     vm.start(scalar, vec![]).unwrap();
     assert_eq!(vm_ready(&mut vm), Ok(Value::Int(7)));
     let collected = vm.collect(&[]);
-    assert_eq!(collected.live, 4);
+    assert_eq!(retained_values(collected, 5), 4);
     assert!(collected.reclaimed > 0);
     assert_eq!(
         vm.start(scalar, vec![transient]).unwrap_err().kind,
@@ -201,12 +201,12 @@ fn generic_function_and_nested_alias_checks_keep_captures_across_gc_and_host_ree
         .start(outer_entry, vec![module.clone()], 1, None)
         .unwrap();
     let outer = request(&mut session, 1, "mem:outer");
-    let suspended = session.collect(&[]).live;
+    let suspended = retained_values(session.collect(&[]), 3);
     session
         .reenter(&outer, inner_entry, vec![module.clone()], 2, None)
         .unwrap();
     let inner = request(&mut session, 2, "mem:inner");
-    assert!(session.collect(&[]).live > suspended);
+    assert!(retained_values(session.collect(&[]), 11) > suspended);
     session
         .reenter(&inner, alias_entry, vec![module.clone()], 2, None)
         .unwrap();
@@ -224,7 +224,7 @@ fn generic_function_and_nested_alias_checks_keep_captures_across_gc_and_host_ree
     session.resume(&outer, Ok(Value::string("ok")), 4).unwrap();
     assert_eq!(ready(&mut session, 4), Ok(Value::Int(42)));
     assert_eq!(session.context_depth(), 0);
-    assert!(session.collect(&[]).live < suspended);
+    assert!(retained_values(session.collect(&[]), 11) < suspended);
     session.close();
     assert_eq!(session.heap_stats().slots, 0);
     assert!(session.drain_cancelled_reads().is_empty());
@@ -304,7 +304,7 @@ fn terminal_actions_release_aliases_function_captures_and_all_pending_metadata_r
             .unwrap();
         let inner = request(&mut session, 2, "mem:inner");
         assert_eq!(session.context_depth(), 2);
-        assert!(session.collect(&[]).live > 0);
+        assert!(retained_values(session.collect(&[]), 11) > 0);
         match termination {
             ErrorKind::Cancelled => session.cancel(),
             ErrorKind::Closed => session.close(),
@@ -362,7 +362,7 @@ fn development_cancel_retries_function_type_checks_and_preserves_alias_identity(
             event => panic!("expected function constraint read, got {event:?}"),
         }
     };
-    let suspended = vm.collect(&[]).live;
+    let suspended = retained_values(vm.collect(&[]), 3);
     vm.cancel();
     assert_eq!(vm_ready(&mut vm).unwrap_err().kind, ErrorKind::Cancelled);
     assert!(!vm.is_closed());
@@ -377,8 +377,19 @@ fn development_cancel_retries_function_type_checks_and_preserves_alias_identity(
     );
     vm.start(scalar, vec![]).unwrap();
     assert_eq!(vm_ready(&mut vm), Ok(Value::Int(0)));
-    assert!(vm.collect(&[]).live < suspended);
+    assert!(retained_values(vm.collect(&[]), 3) < suspended);
     assert_eq!(member(&mut vm, &module, "Callback"), Ok(alias));
     vm.close();
     assert_eq!(vm.heap_stats().slots, 0);
+}
+
+// Persistent executable/type nodes have their own exact bound. The returned
+// count preserves the original object and custom-this-slot assertions.
+#[track_caller]
+fn retained_values(stats: pkl_runtime::heap::HeapStats, expected_executables: usize) -> usize {
+    assert_eq!(
+        stats.executable_live, expected_executables,
+        "persistent executable graph"
+    );
+    stats.live - stats.executable_live
 }

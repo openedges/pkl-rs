@@ -114,13 +114,13 @@ fn suspended_parent_constraint_keeps_reentry_eager_until_it_finishes() {
     // creates a lazy wrapper and length does not force the invalid element.
     session.start(entries[1], vec![root], 4, None).unwrap();
     assert_eq!(ready(&mut session, 4), Ok(Value::Int(2)));
-    assert_eq!(session.collect(&[]).live, 0);
+    assert_eq!(retained_values(session.collect(&[]), 3), 0);
     assert!(session.drain_cancelled_reads().is_empty());
 }
 
 #[test]
 fn parameter_and_let_bindings_publish_checked_wrappers_before_the_body_runs() {
-    for source in [
+    for (index, source) in [
         r#"function consume(prefix, values: Listing<String(read("mem:parameter") == "ok")>) = prefix + values[0]
             result = consume("prefix:", new Listing { "value" })"#,
         r#"function consume(prefix, values: List<Mapping<String, String(read("mem:parameter") == "ok")>>) = prefix + values[0]["key"]
@@ -128,7 +128,7 @@ fn parameter_and_let_bindings_publish_checked_wrappers_before_the_body_runs() {
         r#"result = let (values: Listing<String(read("mem:parameter") == "ok")> = new Listing { "value" }) "prefix:" + values[0]"#,
         r#"f = (prefix, values: Listing<String(read("mem:parameter") == "ok")>) -> prefix + values[0]
             result = f.apply("prefix:", new Listing { "value" })"#,
-    ] {
+    ].into_iter().enumerate() {
         let parsed = parse_module(source).unwrap();
         let mut program = (*compile_module(&resolve_module(&parsed).unwrap()).unwrap()).clone();
         let module_entry = program.entry;
@@ -143,14 +143,14 @@ fn parameter_and_let_bindings_publish_checked_wrappers_before_the_body_runs() {
         let root = ready(&mut session, 0).unwrap();
         session.start(result_entry, vec![root], 1, None).unwrap();
         let token = request(&mut session, 1, "mem:parameter");
-        assert!(session.collect(&[]).live > 0);
+        assert!(retained_values(session.collect(&[]), [4, 5, 4, 4][index]) > 0);
         session.resume(&token, Ok(Value::string("ok")), 2).unwrap();
         assert_eq!(
             ready(&mut session, 2),
             Ok(Value::string("prefix:value")),
             "{source}"
         );
-        assert_eq!(session.collect(&[]).live, 0);
+        assert_eq!(retained_values(session.collect(&[]), [4, 5, 4, 4][index]), 0);
     }
 }
 
@@ -213,7 +213,7 @@ fn failed_cast_of_cached_source_retries_and_successful_wrapper_cache_is_shared()
     assert_eq!(ready(&mut session, 3), Ok(Value::string("cached")));
     session.start(entries[2], vec![root], 4, None).unwrap();
     assert_eq!(ready(&mut session, 4), Ok(Value::string("cached")));
-    assert_eq!(session.collect(&[]).live, 0);
+    assert_eq!(retained_values(session.collect(&[]), 4), 0);
     assert!(session.drain_cancelled_reads().is_empty());
 }
 
@@ -224,12 +224,12 @@ fn nested_wrappers_keep_temporary_check_receivers_across_gc_and_reentry() {
         .start(outer_entry, vec![root.clone()], 1, None)
         .unwrap();
     let outer = request(&mut session, 1, "mem:outer");
-    assert!(session.collect(&[]).live > 0);
+    assert!(retained_values(session.collect(&[]), 4) > 0);
     session
         .reenter(&outer, inner_entry, vec![root], 2, None)
         .unwrap();
     let inner = request(&mut session, 2, "mem:inner");
-    assert!(session.collect(&[]).live > 0);
+    assert!(retained_values(session.collect(&[]), 9) > 0);
     session
         .resume(&inner, Ok(Value::string("inner")), 3)
         .unwrap();
@@ -244,8 +244,8 @@ fn nested_wrappers_keep_temporary_check_receivers_across_gc_and_reentry() {
     assert_eq!(session.context_depth(), 0);
     // Only Check and its captured module survive. Temporary receivers,
     // Listings, Mappings and wrappers must all have been reclaimed.
-    assert_eq!(session.collect(&[]).live, 2);
-    assert_eq!(session.collect(&[]).live, 2);
+    assert_eq!(retained_values(session.collect(&[]), 9), 2);
+    assert_eq!(retained_values(session.collect(&[]), 9), 2);
     session.close();
     assert_eq!(session.heap_stats().live, 0);
     assert_eq!(session.heap_stats().slots, 0);
@@ -294,8 +294,8 @@ fn failed_wrapper_predicate_retries_without_publishing_a_successful_member() {
     assert_eq!(ready(&mut session, 4), Ok(Value::string("outer")));
     // Only Check and its captured module survive. Temporary receivers,
     // Listings, Mappings and wrappers must all have been reclaimed.
-    assert_eq!(session.collect(&[]).live, 2);
-    assert_eq!(session.collect(&[]).live, 2);
+    assert_eq!(retained_values(session.collect(&[]), 9), 2);
+    assert_eq!(retained_values(session.collect(&[]), 9), 2);
     session.close();
     assert_eq!(session.heap_stats().live, 0);
     assert_eq!(session.heap_stats().slots, 0);
@@ -329,7 +329,7 @@ fn terminal_reentry_releases_wrapper_checks_and_cancels_both_pending_reads() {
             .unwrap();
         let inner = request(&mut session, 2, "mem:inner");
         assert_eq!(session.context_depth(), 2);
-        assert!(session.collect(&[]).live > 0);
+        assert!(retained_values(session.collect(&[]), 9) > 0);
         let (now, kind) = match termination {
             Termination::Close => {
                 session.close();
@@ -382,4 +382,15 @@ fn terminal_reentry_releases_wrapper_checks_and_cancels_both_pending_reads() {
         assert_eq!(ready(&mut session, now + 1).unwrap_err(), error);
         assert!(session.drain_cancelled_reads().is_empty());
     }
+}
+
+// Persistent executable/type nodes have their own exact bound. The returned
+// count preserves the original object and custom-this-slot assertions.
+#[track_caller]
+fn retained_values(stats: pkl_runtime::heap::HeapStats, expected_executables: usize) -> usize {
+    assert_eq!(
+        stats.executable_live, expected_executables,
+        "persistent executable graph"
+    );
+    stats.live - stats.executable_live
 }

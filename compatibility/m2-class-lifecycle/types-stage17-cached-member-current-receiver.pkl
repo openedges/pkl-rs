@@ -1,0 +1,12 @@
+open class C {
+ seed:Int
+ local value=seed
+ const function get()=value
+}
+a=new C { seed=1 }
+b=new C { seed=2 }
+c=new C { seed=3 }
+first=a.get()
+second=b.get()
+third=c.get()
+stable=42

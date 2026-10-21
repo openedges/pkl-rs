@@ -1,0 +1,6 @@
+module stage17.root
+local x = 7
+y = 8
+function other() = 9
+const function f() = other()
+result = f()

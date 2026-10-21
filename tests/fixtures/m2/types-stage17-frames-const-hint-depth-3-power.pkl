@@ -1,0 +1,4 @@
+module stage16.types
+local threshold = 0
+const function descend(n: Int): Int = if (n == 0) threshold else descend(n - 1)
+result = descend(3)

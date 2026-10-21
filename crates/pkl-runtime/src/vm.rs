@@ -4,7 +4,8 @@ use std::collections::{BTreeMap, BTreeSet};
 use std::sync::Arc;
 
 use crate::heap::{
-    CacheKey, Class, Environment, Function, Heap, HeapStats, LazyState, Member, Object, Scope,
+    CacheKey, Class, Environment, ExecutableOwnerId, ExecutionSite, Function, Heap, HeapStats,
+    LazyState, Member, Object, Scope, TypeNodeId,
 };
 use crate::source::Span;
 use crate::value::{ErrorKind, ObjectId, RuntimeError, RuntimeFrame, Value};
@@ -627,6 +628,8 @@ pub struct Vm {
     /// Reentering or restarting a declaration retains its first captured environment.
     class_singletons: BTreeMap<usize, ObjectId>,
     alias_singletons: BTreeMap<usize, ObjectId>,
+    /// Static call targets own code state, never captured receivers/environments.
+    executable_roots: BTreeMap<usize, ExecutableOwnerId>,
 }
 
 impl Vm {
@@ -660,6 +663,7 @@ impl Vm {
             power_assertions: false,
             class_singletons: BTreeMap::new(),
             alias_singletons: BTreeMap::new(),
+            executable_roots: BTreeMap::new(),
         }
     }
 
@@ -872,6 +876,7 @@ impl Vm {
         self.state = State::Closed;
         self.class_singletons.clear();
         self.alias_singletons.clear();
+        self.executable_roots.clear();
         self.heap.release();
         self.program = Arc::new(Program::new(Vec::new()));
     }
@@ -912,6 +917,7 @@ impl Vm {
     /// Safepoint collection includes suspended frames and externally pinned results.
     pub fn collect(&mut self, external_roots: &[Value]) -> HeapStats {
         let mut roots = external_roots.to_vec();
+        roots.extend(self.executable_roots.values().map(|owner| owner.root()));
         roots.extend(self.class_singletons.values().copied().map(Value::Class));
         roots.extend(
             self.alias_singletons
@@ -949,6 +955,7 @@ impl Vm {
                 roots.extend(frame.environment.this_value.iter().cloned());
                 roots.extend(frame.environment.outer_value.iter().cloned());
                 roots.extend(frame.environment.custom_this.map(|slot| slot.root()));
+                roots.extend(frame.environment.executable_owner.map(|owner| owner.root()));
                 if let Some(run) = &frame.key_search {
                     run.roots(&mut roots);
                 }
@@ -967,6 +974,7 @@ impl Vm {
                     roots.push(Value::Object(force.owner));
                     for cast in &force.collection_casts {
                         typecheck::environment_roots(&cast.environment, &mut roots);
+                        roots.extend(cast.node.map(|node| node.0.root()));
                     }
                     roots.extend(
                         force
@@ -1239,6 +1247,7 @@ impl Vm {
             entry,
             predicate,
             false,
+            None,
         )
     }
 
@@ -1254,6 +1263,7 @@ impl Vm {
         entry: bool,
         predicate: bool,
         hash_prepared: bool,
+        resolved_member: Option<Member>,
     ) -> Result<(), RuntimeError> {
         if !hash_prepared
             && self.prepare_cache_read(
@@ -1281,29 +1291,33 @@ impl Vm {
         }
         let mut owner = initial_owner;
         let mut visited = BTreeSet::new();
-        let member = loop {
-            if !visited.insert(owner) {
-                return Err(RuntimeError::new(ErrorKind::Cycle, "cyclic parent chain"));
+        let member = if let Some(member) = resolved_member {
+            member
+        } else {
+            loop {
+                if !visited.insert(owner) {
+                    return Err(RuntimeError::new(ErrorKind::Cycle, "cyclic parent chain"));
+                }
+                let object = self.heap.get(owner)?;
+                if let Some(member) = object.members.iter().find(|member| {
+                    member.name == name
+                        && member.local == local
+                        && member.method == method
+                        && member.entry == entry
+                }) {
+                    break member.clone();
+                }
+                if local {
+                    return Err(RuntimeError::new(
+                        ErrorKind::MissingMember,
+                        format!("missing local member {name}"),
+                    ));
+                }
+                owner = match object.parent {
+                    Some(parent) => parent,
+                    None => return Err(self.missing_member(receiver, &name, method)?),
+                };
             }
-            let object = self.heap.get(owner)?;
-            if let Some(member) = object.members.iter().find(|member| {
-                member.name == name
-                    && member.local == local
-                    && member.method == method
-                    && member.entry == entry
-            }) {
-                break member.clone();
-            }
-            if local {
-                return Err(RuntimeError::new(
-                    ErrorKind::MissingMember,
-                    format!("missing local member {name}"),
-                ));
-            }
-            owner = match object.parent {
-                Some(parent) => parent,
-                None => return Err(self.missing_member(receiver, &name, method)?),
-            };
         };
         // Only direct class declaration call targets bypass ordinary lazy cycles.
         // Other reads execute BeginClass, whose early return still publishes the
@@ -1487,6 +1501,13 @@ impl Vm {
         environment.outer_value = environment.this_value.clone();
         environment.this_value = Some(Value::Object(receiver));
         environment.custom_this = None;
+        environment.executable_owner = environment
+            .executable_owner
+            .map(|parent| {
+                self.heap
+                    .executable_child(parent, ExecutionSite::Member(member.code))
+            })
+            .transpose()?;
         environment.scopes.insert(0, Scope { receiver, owner });
         if memoize {
             self.heap
@@ -1939,6 +1960,27 @@ impl Vm {
         Ok(())
     }
 
+    fn executable_root(&mut self, block: usize) -> ExecutableOwnerId {
+        *self
+            .executable_roots
+            .entry(block)
+            .or_insert_with(|| self.heap.allocate_executable())
+    }
+
+    fn current_executable(&mut self) -> Result<ExecutableOwnerId, RuntimeError> {
+        let frame = self
+            .frames
+            .last()
+            .ok_or_else(|| invalid("missing executable frame"))?;
+        if let Some(owner) = frame.environment.executable_owner {
+            return Ok(owner);
+        }
+        // None denotes the canonical static template, not an uninitialized
+        // captured owner. A prior check must not change how later function or
+        // object literals clone their code state on this invocation's path.
+        Ok(self.executable_root(frame.block))
+    }
+
     fn current_custom_this(&self) -> Result<Option<Value>, RuntimeError> {
         match self
             .frames
@@ -2315,12 +2357,38 @@ impl Vm {
                 method,
             } => {
                 let scope = self.scope(owner_depth)?;
-                self.require_const(
-                    if local { scope.owner } else { scope.receiver },
-                    &name,
-                    local,
-                    method,
-                )?;
+                if local && !method {
+                    let owner = self.current_executable()?;
+                    let frame = self.frames.last().expect("active frame");
+                    // The following GetProperty is the read node's execution site.
+                    let site = (frame.block, frame.pc);
+                    if self.heap.resolved_local(owner, site)?.is_none() {
+                        let member = self
+                            .heap
+                            .get(scope.owner)?
+                            .members
+                            .iter()
+                            .find(|member| {
+                                member.name == name
+                                    && member.local
+                                    && !member.method
+                                    && !member.entry
+                            })
+                            .cloned();
+                        if let Some(member) = member {
+                            // Java publishes ObjectMember before its const check can fail.
+                            self.heap.publish_local(owner, site, member)?;
+                            self.require_const(scope.owner, &name, true, false)?;
+                        }
+                    }
+                } else {
+                    self.require_const(
+                        if local { scope.owner } else { scope.receiver },
+                        &name,
+                        local,
+                        method,
+                    )?;
+                }
             }
             Instruction::GetMember(ref name)
             | Instruction::GetMethod(ref name)
@@ -2382,13 +2450,29 @@ impl Vm {
             } => {
                 let method = matches!(instruction, Instruction::GetMethodProperty { .. });
                 let scope = self.scope(owner_depth)?;
-                self.force(
+                let frame = self.frames.last().expect("active frame");
+                let resolved = if local && !method {
+                    frame
+                        .environment
+                        .executable_owner
+                        .or_else(|| self.executable_roots.get(&frame.block).copied())
+                        .map(|owner| self.heap.resolved_local(owner, (frame.block, frame.pc - 1)))
+                        .transpose()?
+                        .flatten()
+                } else {
+                    None
+                };
+                self.force_key_mode_prepared(
                     scope.receiver,
                     if local { scope.owner } else { scope.receiver },
                     name.clone(),
                     local,
                     true,
                     method,
+                    false,
+                    false,
+                    false,
+                    resolved,
                 )?;
             }
             Instruction::GetImplicitProperty(ref name)
@@ -2700,6 +2784,17 @@ impl Vm {
                     .expect("active frame")
                     .environment
                     .clone();
+                let mut environment = environment;
+                if let Some(parent) = environment.executable_owner {
+                    let frame = self.frames.last().expect("active frame");
+                    environment.executable_owner = Some(self.heap.executable_child(
+                        parent,
+                        ExecutionSite::Function {
+                            block: frame.block,
+                            instruction: frame.pc - 1,
+                        },
+                    )?);
+                }
                 let captured_this = if capture_custom_this {
                     let slot = environment
                         .custom_this
@@ -2925,14 +3020,38 @@ impl Vm {
                 {
                     let receiver = force.receiver;
                     let (ty, span, member, owner) = force.inherited_types.remove(0);
-                    let source = self
+                    let declaration = self
                         .heap
                         .get(owner)?
                         .members
                         .iter()
                         .find(|m| m.name == force.name && !m.method)
-                        .and_then(|m| self.program.metadata.get(m.code))
+                        .ok_or_else(|| invalid("missing inherited declaration"))?
+                        .code;
+                    let source = self
+                        .program
+                        .metadata
+                        .get(declaration)
                         .and_then(|m| m.source.clone());
+                    let node = if typecheck::needs_custom_this(&ty) {
+                        let executable = if let Some(parent) =
+                            self.heap.get(owner)?.environment.executable_owner
+                        {
+                            self.heap
+                                .executable_child(parent, ExecutionSite::Member(declaration))?
+                        } else {
+                            self.executable_root(declaration)
+                        };
+                        // Synthetic stdlib members carry annotation metadata without
+                        // an authored CheckType instruction. Their declaration still
+                        // owns a distinct annotation site, shared with direct checks.
+                        Some(TypeNodeId(self.heap.executable_child(
+                            executable,
+                            ExecutionSite::PropertyType(declaration),
+                        )?))
+                    } else {
+                        None
+                    };
                     let mut frames = vec![RuntimeFrame {
                         source,
                         span,
@@ -2948,7 +3067,7 @@ impl Vm {
                             member: metadata.member.clone(),
                         });
                     }
-                    self.begin_type(ty, value, TypeDestination::Return, frames)?;
+                    self.begin_type_node(ty, value, TypeDestination::Return, frames, node)?;
                     let mut environment = self.heap.get(owner)?.environment.clone();
                     environment.outer_value = environment.this_value.clone();
                     environment.this_value = Some(Value::Object(receiver));
@@ -2988,7 +3107,13 @@ impl Vm {
                             member: metadata.member.clone(),
                         });
                     }
-                    self.begin_type(cast.ty, value, TypeDestination::Return, frames)?;
+                    self.begin_type_node(
+                        cast.ty,
+                        value,
+                        TypeDestination::Return,
+                        frames,
+                        cast.node,
+                    )?;
                     let mut environment = cast.environment;
                     environment.custom_this = self
                         .frames
@@ -3249,6 +3374,7 @@ fn compile_module_configured(
         alias_frames: Vec::new(),
         constraint_origins: BTreeMap::new(),
         active_constraints: BTreeMap::new(),
+        shared_constraint_roots: BTreeMap::new(),
         active_type_parameters: BTreeMap::new(),
         parameter_spans: BTreeMap::new(),
         function_counts: BTreeMap::new(),
@@ -3325,6 +3451,8 @@ struct Compiler<'a> {
     /// Constraint bytecode is a graph: a recursive type use can point back to
     /// a reserved block without recursively compiling that expression again.
     active_constraints: BTreeMap<Span, (usize, bool)>,
+    /// Non-generic local-writing constraints retain their original call target.
+    shared_constraint_roots: BTreeMap<Span, usize>,
     active_type_parameters: BTreeMap<String, TypeCheck>,
     parameter_spans: BTreeMap<String, Span>,
     function_counts: BTreeMap<String, usize>,
@@ -4858,8 +4986,16 @@ impl Compiler<'_> {
                     origin.extend(self.alias_frames.iter().rev().cloned());
                     self.constraint_origins
                         .insert(block, (origin, self.alias_frames.clone()));
+                    let target = if writes_slots && parameters.is_empty() {
+                        *self
+                            .shared_constraint_roots
+                            .entry(expression.span)
+                            .or_insert(block)
+                    } else {
+                        block
+                    };
                     compiled.push(ConstraintCode {
-                        block,
+                        block: target,
                         span: expression.span,
                         module_environment: self.constraint_module,
                         source,

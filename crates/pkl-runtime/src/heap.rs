@@ -20,6 +20,9 @@ pub struct Environment {
     pub this_value: Option<Value>,
     pub outer_value: Option<Value>,
     pub custom_this: Option<CustomThisSlot>,
+    /// Persistent cloned executable identity, independent of the receiver slot.
+    /// None keeps the canonical code template implicit across every branch.
+    pub executable_owner: Option<ExecutableOwnerId>,
     /// Innermost first; immutable captured lexical object scopes.
     pub scopes: Vec<Scope>,
 }
@@ -115,6 +118,7 @@ pub struct PredicateIterator {
 
 #[derive(Clone, Debug)]
 pub struct CollectionCast {
+    pub(crate) node: Option<TypeNodeId>,
     pub ty: crate::vm::TypeCheck,
     pub span: crate::source::Span,
     pub member: Arc<str>,
@@ -204,9 +208,42 @@ impl CustomThisSlot {
     }
 }
 
+/// Persistent evaluator-local executable state. Handles are generation checked
+/// and traced, but are never exposed as language values.
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub struct ExecutableOwnerId(ObjectId);
+
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub(crate) struct TypeNodeId(pub(crate) ExecutableOwnerId);
+
+#[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord)]
+pub(crate) enum ExecutionSite {
+    TypeUse { block: usize, instruction: usize },
+    PropertyType(usize),
+    TypeChild(usize),
+    Constraint(usize),
+    Function { block: usize, instruction: usize },
+    Member(usize),
+}
+
+#[derive(Default)]
+struct ExecutableState {
+    children: BTreeMap<ExecutionSite, ExecutableOwnerId>,
+    // ObjectMember belongs to the declaration, whereas owner/receiver are read
+    // from the current frame on every invocation. Never retain the first receiver.
+    local_properties: BTreeMap<(usize, usize), Member>,
+}
+
+impl ExecutableOwnerId {
+    pub(crate) fn root(self) -> Value {
+        Value::Object(self.0)
+    }
+}
+
 enum Entry {
     Object(Box<Object>),
     CustomThis(Option<Value>),
+    Executable(Box<ExecutableState>),
 }
 
 struct Slot {
@@ -226,6 +263,8 @@ impl Slot {
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
 pub struct HeapStats {
     pub live: usize,
+    /// Persistent executable/type nodes included in `live`, excluding objects and receiver slots.
+    pub executable_live: usize,
     pub slots: usize,
     pub collections: usize,
     pub reclaimed: usize,
@@ -288,7 +327,66 @@ impl Heap {
         Ok(())
     }
 
+    pub(crate) fn allocate_executable(&mut self) -> ExecutableOwnerId {
+        ExecutableOwnerId(self.allocate_entry(Entry::Executable(Box::default())))
+    }
+
+    fn executable(&self, owner: ExecutableOwnerId) -> Result<&ExecutableState, RuntimeError> {
+        match self.entry(owner.0)? {
+            Entry::Executable(state) => Ok(state),
+            _ => Err(RuntimeError::new(
+                ErrorKind::StaleHandle,
+                "invalid executable owner",
+            )),
+        }
+    }
+
+    fn executable_mut(
+        &mut self,
+        owner: ExecutableOwnerId,
+    ) -> Result<&mut ExecutableState, RuntimeError> {
+        self.executable(owner)?;
+        match self.slots[owner.0.index].entry.as_mut() {
+            Some(Entry::Executable(state)) => Ok(state),
+            _ => unreachable!("validated executable owner"),
+        }
+    }
+
+    pub(crate) fn executable_child(
+        &mut self,
+        owner: ExecutableOwnerId,
+        site: ExecutionSite,
+    ) -> Result<ExecutableOwnerId, RuntimeError> {
+        if let Some(child) = self.executable(owner)?.children.get(&site) {
+            return Ok(*child);
+        }
+        let child = self.allocate_executable();
+        self.executable_mut(owner)?.children.insert(site, child);
+        Ok(child)
+    }
+
+    pub(crate) fn resolved_local(
+        &self,
+        owner: ExecutableOwnerId,
+        site: (usize, usize),
+    ) -> Result<Option<Member>, RuntimeError> {
+        Ok(self.executable(owner)?.local_properties.get(&site).cloned())
+    }
+
+    pub(crate) fn publish_local(
+        &mut self,
+        owner: ExecutableOwnerId,
+        site: (usize, usize),
+        member: Member,
+    ) -> Result<(), RuntimeError> {
+        self.executable_mut(owner)?
+            .local_properties
+            .insert(site, member);
+        Ok(())
+    }
+
     fn allocate_entry(&mut self, entry: Entry) -> ObjectId {
+        self.stats.executable_live += usize::from(matches!(entry, Entry::Executable(_)));
         let index = if let Some(index) = self.free.pop() {
             self.slots[index].entry = Some(entry);
             index
@@ -366,7 +464,7 @@ impl Heap {
     pub fn get(&self, id: ObjectId) -> Result<&Object, RuntimeError> {
         match self.entry(id)? {
             Entry::Object(object) => Ok(object),
-            Entry::CustomThis(_) => Err(RuntimeError::new(
+            Entry::CustomThis(_) | Entry::Executable(_) => Err(RuntimeError::new(
                 ErrorKind::StaleHandle,
                 "internal slot is not a Pkl object",
             )),
@@ -397,6 +495,10 @@ impl Heap {
             }
             marked[id.index] = true;
             let object = match entry {
+                Entry::Executable(state) => {
+                    pending.extend(state.children.values().map(|owner| owner.0));
+                    continue;
+                }
                 Entry::CustomThis(value) => {
                     pending.extend(value.iter().filter_map(Value::heap_id));
                     continue;
@@ -404,6 +506,13 @@ impl Heap {
                 Entry::Object(object) => object,
             };
             pending.extend(object.parent);
+            pending.extend(
+                object
+                    .collection_cast
+                    .as_ref()
+                    .and_then(|cast| cast.node)
+                    .map(|node| (node.0).0),
+            );
             if let Some(function) = &object.function {
                 pending.extend(function.captured_this.iter().filter_map(Value::heap_id));
             }
@@ -439,6 +548,7 @@ impl Heap {
                 .chain(object.collection_cast.iter().map(|cast| &cast.environment))
             {
                 pending.extend(environment.custom_this.map(|slot| slot.0));
+                pending.extend(environment.executable_owner.map(|owner| owner.0));
                 for scope in &environment.scopes {
                     pending.push(scope.receiver);
                     pending.push(scope.owner);
@@ -453,6 +563,7 @@ impl Heap {
                 );
             }
             pending.extend(object.environment.custom_this.map(|slot| slot.0));
+            pending.extend(object.environment.executable_owner.map(|owner| owner.0));
             for scope in &object.environment.scopes {
                 pending.push(scope.receiver);
                 pending.push(scope.owner);
@@ -484,7 +595,10 @@ impl Heap {
             }
         }
         for (index, slot) in self.slots.iter_mut().enumerate() {
-            if !marked[index] && slot.entry.take_if(|_| true).is_some() {
+            if !marked[index]
+                && let Some(entry) = slot.entry.take()
+            {
+                self.stats.executable_live -= usize::from(matches!(entry, Entry::Executable(_)));
                 self.stats.live -= 1;
                 self.stats.reclaimed += 1;
                 // Exhausted generations are retired rather than wrapped.
@@ -541,6 +655,7 @@ impl Heap {
     pub fn release(&mut self) {
         self.stats.reclaimed += self.stats.live;
         self.stats.live = 0;
+        self.stats.executable_live = 0;
         self.stats.slots = 0;
         self.stats.collections += 1;
         self.slots = Vec::new();
@@ -554,6 +669,80 @@ impl Heap {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn captured_executable_graphs_trace_children_without_retaining_receivers() {
+        let mut heap = Heap::new();
+        let owner = heap.allocate_executable();
+        let child = heap
+            .executable_child(owner, ExecutionSite::Member(7))
+            .unwrap();
+        let capture = heap.allocate(Object {
+            environment: Environment {
+                executable_owner: Some(owner),
+                ..Environment::default()
+            },
+            ..Object::default()
+        });
+        let retained = heap.collect(&[Value::Object(capture)]);
+        assert_eq!(retained.live, 3);
+        assert_eq!(retained.executable_live, 2);
+        assert_eq!(
+            heap.executable_child(owner, ExecutionSite::Member(7))
+                .unwrap(),
+            child
+        );
+        assert!(heap.get(owner.0).is_err());
+        // A static owner may persist, but must not keep a prior lexical receiver.
+        let retained = heap.collect(&[owner.root()]);
+        assert_eq!(retained.live, 2);
+        assert_eq!(retained.executable_live, 2);
+        assert!(heap.get(capture).is_err());
+        assert_eq!(heap.collect(&[]).live, 0);
+        assert_eq!(heap.stats().executable_live, 0);
+        let replacement = heap.allocate_executable();
+        assert!(
+            heap.executable_child(owner, ExecutionSite::Member(7))
+                .is_err()
+        );
+        assert!(
+            Heap::new()
+                .executable_child(replacement, ExecutionSite::Member(7))
+                .is_err()
+        );
+        heap.release();
+        assert!(
+            heap.executable_child(replacement, ExecutionSite::Member(7))
+                .is_err()
+        );
+    }
+
+    #[test]
+    fn lazy_cast_retains_its_type_node_without_a_live_execution_frame() {
+        let mut heap = Heap::new();
+        let owner = heap.allocate_executable();
+        let node = TypeNodeId(
+            heap.executable_child(owner, ExecutionSite::TypeChild(0))
+                .unwrap(),
+        );
+        let wrapper = heap.allocate(Object {
+            collection_cast: Some(CollectionCast {
+                node: Some(node),
+                ty: crate::vm::TypeCheck::Int,
+                span: crate::source::Span::new(0, 1),
+                member: Arc::from("#values"),
+                environment: Environment::default(),
+            }),
+            ..Object::default()
+        });
+        let retained = heap.collect(&[Value::Object(wrapper)]);
+        assert_eq!(retained.live, 2);
+        assert_eq!(retained.executable_live, 1);
+        assert!(heap.executable(owner).is_err());
+        assert!(heap.executable(node.0).is_ok());
+        assert_eq!(heap.collect(&[]).live, 0);
+        assert!(heap.executable(node.0).is_err());
+    }
 
     #[test]
     fn custom_receiver_cycles_are_traced_and_reclaimed_in_the_object_arena() {

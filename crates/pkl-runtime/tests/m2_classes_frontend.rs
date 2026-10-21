@@ -259,18 +259,20 @@ fn semantic_diagnostics_preserve_declared_module_and_identifier_spans() {
 }
 
 #[test]
-fn const_super_reads_and_calls_are_marked_before_dispatch() {
+fn const_super_reads_respect_property_and_method_scope_barriers() {
     let source = "open class Parent { value = 1; function method() = 1 } class Child extends Parent { const result = super.value; const function calculate() = super.method() }";
     let resolved = resolve_module(&parse_module(source).unwrap()).unwrap();
-    for fragment in ["super.value", "super.method"] {
+    for (fragment, required) in [("super.value", true), ("super.method", false)] {
         let start = source.find(fragment).unwrap();
-        assert!(
+        assert_eq!(
             resolved
                 .const_names
                 .contains(&pkl_runtime::source::Span::new(
                     start,
                     start + fragment.len()
-                ))
+                )),
+            required,
+            "A const method creates a lexical const barrier; a const property does not."
         );
     }
 }

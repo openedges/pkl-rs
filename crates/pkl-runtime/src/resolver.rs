@@ -202,6 +202,20 @@ enum ConstLevel {
     All,
 }
 
+#[derive(Clone, Copy, PartialEq, Eq)]
+enum ConstScopeKind {
+    Object,
+    Method,
+    Lambda,
+}
+
+struct ConstScope {
+    level: ConstLevel,
+    kind: ConstScopeKind,
+    // Eager predicates skip an object for lookup but retain its const barrier.
+    lookup: bool,
+}
+
 struct Resolver<'a> {
     scopes: Vec<Scope<'a>>,
     folded_integer_spans: &'a BTreeMap<Span, Span>,
@@ -213,8 +227,7 @@ struct Resolver<'a> {
     object_levels: Vec<ConstLevel>,
     object_receiver_lambdas: Vec<bool>,
     receiver_is_lambda: bool,
-    lambda_depth: usize,
-    predicate_const_scopes: Vec<usize>,
+    const_scopes: Vec<ConstScope>,
     entry_counts: BTreeMap<String, usize>,
     member_path: Vec<String>,
     diagnostic_path: Vec<String>,
@@ -313,6 +326,11 @@ impl<'a> Resolver<'a> {
         }
         self.scopes.push(Scope::Object(members.iter().collect()));
         self.object_levels.push(self.const_level);
+        self.const_scopes.push(ConstScope {
+            level: self.const_level,
+            kind: ConstScopeKind::Object,
+            lookup: true,
+        });
         let previous_lambda = std::mem::replace(&mut self.receiver_is_lambda, false);
         self.object_receiver_lambdas.push(previous_lambda);
         for member in members {
@@ -321,6 +339,7 @@ impl<'a> Resolver<'a> {
         self.receiver_is_lambda = previous_lambda;
         self.object_receiver_lambdas.pop();
         self.object_levels.pop();
+        self.const_scopes.pop();
         self.scopes.pop();
         Ok(())
     }
@@ -416,6 +435,11 @@ impl<'a> Resolver<'a> {
         }
         self.scopes.push(Scope::Object(names));
         self.object_levels.push(self.const_level);
+        self.const_scopes.push(ConstScope {
+            level: self.const_level,
+            kind: ConstScopeKind::Object,
+            lookup: true,
+        });
         let previous_lambda = std::mem::replace(&mut self.receiver_is_lambda, false);
         self.object_receiver_lambdas.push(previous_lambda);
         self.object_body(members, None)?;
@@ -423,6 +447,7 @@ impl<'a> Resolver<'a> {
         self.object_receiver_lambdas.pop();
         self.receiver_is_lambda = previous_lambda;
         self.object_levels.pop();
+        self.const_scopes.pop();
         self.scopes.pop();
         Ok(())
     }
@@ -485,13 +510,12 @@ impl<'a> Resolver<'a> {
                 .last()
                 .expect("object receiver"),
         );
-        // Eager lookup skips the target object, but Java's getConstDepth
-        // still counts that object's const scope. A lambda adds a lexical
-        // lookup level without adding a const barrier of its own.
-        let const_barrier = custom && level == ConstLevel::All;
-        if const_barrier {
-            self.predicate_const_scopes.push(self.lambda_depth);
-        }
+        let const_index = self
+            .const_scopes
+            .iter()
+            .rposition(|scope| scope.kind == ConstScopeKind::Object && scope.lookup)
+            .expect("object const scope");
+        self.const_scopes[const_index].lookup = false;
         if custom {
             self.scopes.push(Scope::CustomThis);
         }
@@ -499,9 +523,7 @@ impl<'a> Resolver<'a> {
         if custom {
             self.scopes.pop();
         }
-        if const_barrier {
-            self.predicate_const_scopes.pop();
-        }
+        self.const_scopes[const_index].lookup = true;
         self.receiver_is_lambda = lambda;
         self.object_levels.push(level);
         self.scopes.insert(index, scope);
@@ -838,21 +860,33 @@ impl<'a> Resolver<'a> {
             ConstLevel::None => false,
             ConstLevel::Module => depth + 1 == self.object_levels.len(),
             ConstLevel::All => {
-                let object_depth = self
-                    .object_levels
-                    .iter()
-                    .rev()
-                    .take_while(|level| **level == ConstLevel::All)
-                    .count();
-                let lambda_depth = self
-                    .predicate_const_scopes
-                    .first()
-                    .map_or(0, |depth| self.lambda_depth - depth);
-                depth
-                    >= (object_depth + self.predicate_const_scopes.len())
-                        .saturating_sub(lambda_depth)
+                let mut remaining = depth;
+                let mut levels_up = 0;
+                for scope in self.const_scopes.iter().rev().filter(|scope| scope.lookup) {
+                    match scope.kind {
+                        ConstScopeKind::Object if remaining == 0 => break,
+                        ConstScopeKind::Object => {
+                            remaining -= 1;
+                            levels_up += 1;
+                        }
+                        ConstScopeKind::Lambda => levels_up += 1,
+                        ConstScopeKind::Method => {}
+                    }
+                }
+                levels_up >= self.const_scope_count()
             }
         }
+    }
+
+    fn const_scope_count(&self) -> usize {
+        // Java methods create const scope barriers without increasing lexical
+        // lookup depth; lambdas increase lookup depth without adding barriers.
+        self.const_scopes
+            .iter()
+            .rev()
+            .take_while(|scope| scope.level == ConstLevel::All)
+            .filter(|scope| scope.kind != ConstScopeKind::Lambda)
+            .count()
     }
 
     fn mark_const_binding(&mut self, span: Span, binding: Binding) {
@@ -861,7 +895,7 @@ impl<'a> Resolver<'a> {
                 self.needs_const(owner_depth)
             }
             Binding::ImplicitThis | Binding::ImplicitMethod => {
-                self.const_level == ConstLevel::All && self.needs_const(0)
+                self.const_level == ConstLevel::All && self.const_scope_count() == 0
             }
             Binding::Lexical { .. }
             | Binding::BaseConstant
@@ -881,11 +915,25 @@ impl<'a> Resolver<'a> {
             ExprKind::Module => self.const_level != ConstLevel::None,
             ExprKind::This if self.is_custom_this_scope() => false,
             ExprKind::This | ExprKind::Super => {
-                self.const_level == ConstLevel::All && self.needs_const(0)
+                self.const_level == ConstLevel::All && self.const_scope_count() == 0
             }
-            ExprKind::Outer => self.needs_const(usize::from(!self.receiver_is_lambda)),
+            ExprKind::Outer => {
+                self.parent_const_scope()
+                    .is_some_and(|(index, scope)| match self.const_level {
+                        ConstLevel::None => false,
+                        ConstLevel::Module => index == 0,
+                        ConstLevel::All => scope.level != ConstLevel::All,
+                    })
+            }
             _ => false,
         }
+    }
+
+    fn parent_const_scope(&self) -> Option<(usize, &ConstScope)> {
+        // `outer` uses the immediately enclosing lexical scope, including
+        // methods and lambdas, rather than the property's lookup distance.
+        let index = self.const_scopes.len().checked_sub(2)?;
+        Some((index, &self.const_scopes[index]))
     }
 
     fn receiver(&mut self, receiver: &'a Expr) -> Result<(), Diagnostic> {
@@ -992,7 +1040,15 @@ impl<'a> Resolver<'a> {
                     self.custom_functions.insert(expression.span);
                 }
                 self.scopes.push(Scope::Parameters(parameters));
-                self.lambda_depth += usize::from(!method);
+                self.const_scopes.push(ConstScope {
+                    level: self.const_level,
+                    kind: if *method {
+                        ConstScopeKind::Method
+                    } else {
+                        ConstScopeKind::Lambda
+                    },
+                    lookup: true,
+                });
                 let previous_lambda = std::mem::replace(&mut self.receiver_is_lambda, !method);
                 for parameter in parameters {
                     if let Some(ty) = &parameter.ty {
@@ -1004,7 +1060,7 @@ impl<'a> Resolver<'a> {
                 }
                 self.expression(body, false)?;
                 self.receiver_is_lambda = previous_lambda;
-                self.lambda_depth -= usize::from(!method);
+                self.const_scopes.pop();
                 self.scopes.pop();
             }
             ExprKind::Call { callee, arguments } => {
@@ -1126,7 +1182,7 @@ impl<'a> Resolver<'a> {
             ExprKind::This => {
                 if self.is_custom_this_scope() {
                     self.custom_this.insert(expression.span);
-                } else if self.const_level == ConstLevel::All && self.needs_const(0) {
+                } else if self.const_level == ConstLevel::All && self.const_scope_count() == 0 {
                     return Err(self.const_error(
                         expression,
                         "Cannot reference `this` from here because it is not `const`.",
@@ -1147,11 +1203,10 @@ impl<'a> Resolver<'a> {
                 }
             }
             ExprKind::Outer => {
-                let target = self
-                    .object_levels
-                    .len()
-                    .checked_sub(1 + usize::from(!self.receiver_is_lambda));
-                if target.is_some_and(|index| self.const_level > self.object_levels[index]) {
+                if self
+                    .parent_const_scope()
+                    .is_some_and(|(_, scope)| self.const_level > scope.level)
+                {
                     return Err(self.const_error(
                         expression,
                         "Cannot reference `outer` from here because it's not `const`.",
@@ -1252,8 +1307,7 @@ pub fn resolve_module(module: &Module) -> Result<ResolvedModule, Diagnostic> {
         object_levels: Vec::new(),
         object_receiver_lambdas: Vec::new(),
         receiver_is_lambda: false,
-        lambda_depth: 0,
-        predicate_const_scopes: Vec::new(),
+        const_scopes: Vec::new(),
         entry_counts: BTreeMap::new(),
         member_path: Vec::new(),
         diagnostic_path: Vec::new(),

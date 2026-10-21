@@ -258,6 +258,223 @@
       "id": "types-stage16-root-boundaries-retry",
       "note": "Raw shared constraint slots, let roots, creation-time lambda receivers, real call boundaries, and failed retries; recursive generic and unpromoted mismatches remain exploratory.",
       "source": "types-stage16-root-boundaries-retry.pkl"
+    },
+    {
+      "expressions": "types-stage17-alias-const-retry.expressions",
+      "group": "T17",
+      "id": "types-stage17-alias-const-retry",
+      "note": "Complete raw Java local-property resolution retries with independent type uses, shared call targets, recursive depth, declaration owners, and strict failure controls. Generic controls and invalid parser candidates remain separate exploratory evidence.",
+      "source": "types-stage17-alias-const-retry.pkl"
+    },
+    {
+      "expressions": "types-stage17-const-local-use-sites.expressions",
+      "group": "T17",
+      "id": "types-stage17-const-local-use-sites",
+      "note": "Complete raw Java local-property resolution retries with independent type uses, shared call targets, recursive depth, declaration owners, and strict failure controls. Generic controls and invalid parser candidates remain separate exploratory evidence.",
+      "source": "types-stage17-const-local-use-sites.pkl"
+    },
+    {
+      "expressions": "types-stage17-const-member-use-sites.expressions",
+      "group": "T17",
+      "id": "types-stage17-const-member-use-sites",
+      "note": "Complete raw Java local-property resolution retries with independent type uses, shared call targets, recursive depth, declaration owners, and strict failure controls. Generic controls and invalid parser candidates remain separate exploratory evidence.",
+      "source": "types-stage17-const-member-use-sites.pkl"
+    },
+    {
+      "expressions": "types-stage17-const-method-use-sites.expressions",
+      "group": "T17",
+      "id": "types-stage17-const-method-use-sites",
+      "note": "Complete raw Java local-property resolution retries with independent type uses, shared call targets, recursive depth, declaration owners, and strict failure controls. Generic controls and invalid parser candidates remain separate exploratory evidence.",
+      "source": "types-stage17-const-method-use-sites.pkl"
+    },
+    {
+      "expressions": "types-stage17-const-local-let-lambda.expressions",
+      "group": "T17",
+      "id": "types-stage17-const-local-let-lambda",
+      "note": "Complete raw Java local-property resolution retries with independent type uses, shared call targets, recursive depth, declaration owners, and strict failure controls. Generic controls and invalid parser candidates remain separate exploratory evidence.",
+      "source": "types-stage17-const-local-let-lambda.pkl"
+    },
+    {
+      "expressions": "types-stage17-const-local-recursive-cache.expressions",
+      "group": "T17",
+      "id": "types-stage17-const-local-recursive-cache",
+      "note": "Complete raw Java local-property resolution retries with independent type uses, shared call targets, recursive depth, declaration owners, and strict failure controls. Generic controls and invalid parser candidates remain separate exploratory evidence.",
+      "source": "types-stage17-const-local-recursive-cache.pkl"
+    },
+    {
+      "expressions": "types-stage17-inline-use-site-order.expressions",
+      "group": "T17",
+      "id": "types-stage17-inline-use-site-order",
+      "note": "Complete raw Java local-property resolution retries with independent type uses, shared call targets, recursive depth, declaration owners, and strict failure controls. Generic controls and invalid parser candidates remain separate exploratory evidence.",
+      "source": "types-stage17-inline-use-site-order.pkl"
+    },
+    {
+      "expressions": "types-stage17-let-root-use-site-order.expressions",
+      "group": "T17",
+      "id": "types-stage17-let-root-use-site-order",
+      "note": "Complete raw Java local-property resolution retries with independent type uses, shared call targets, recursive depth, declaration owners, and strict failure controls. Generic controls and invalid parser candidates remain separate exploratory evidence.",
+      "source": "types-stage17-let-root-use-site-order.pkl"
+    },
+    {
+      "expressions": "types-stage17-lambda-use-site-order.expressions",
+      "group": "T17",
+      "id": "types-stage17-lambda-use-site-order",
+      "note": "Complete raw Java local-property resolution retries with independent type uses, shared call targets, recursive depth, declaration owners, and strict failure controls. Generic controls and invalid parser candidates remain separate exploratory evidence.",
+      "source": "types-stage17-lambda-use-site-order.pkl"
+    },
+    {
+      "expressions": "types-stage17-property-method-persistent-errors.expressions",
+      "group": "T17",
+      "id": "types-stage17-property-method-persistent-errors",
+      "note": "Complete raw Java local-property resolution retries with independent type uses, shared call targets, recursive depth, declaration owners, and strict failure controls. Generic controls and invalid parser candidates remain separate exploratory evidence.",
+      "source": "types-stage17-property-method-persistent-errors.pkl"
+    },
+    {
+      "expressions": "types-stage17-recursive-depth-0.expressions",
+      "group": "T17",
+      "id": "types-stage17-recursive-depth-0",
+      "note": "Complete raw Java local-property resolution retries with independent type uses, shared call targets, recursive depth, declaration owners, and strict failure controls. Generic controls and invalid parser candidates remain separate exploratory evidence.",
+      "source": "types-stage17-recursive-depth-0.pkl"
+    },
+    {
+      "expressions": "types-stage17-recursive-depth-1.expressions",
+      "group": "T17",
+      "id": "types-stage17-recursive-depth-1",
+      "note": "Complete raw Java local-property resolution retries with independent type uses, shared call targets, recursive depth, declaration owners, and strict failure controls. Generic controls and invalid parser candidates remain separate exploratory evidence.",
+      "source": "types-stage17-recursive-depth-1.pkl"
+    },
+    {
+      "expressions": "types-stage17-recursive-depth-3.expressions",
+      "group": "T17",
+      "id": "types-stage17-recursive-depth-3",
+      "note": "Complete raw Java local-property resolution retries with independent type uses, shared call targets, recursive depth, declaration owners, and strict failure controls. Generic controls and invalid parser candidates remain separate exploratory evidence.",
+      "source": "types-stage17-recursive-depth-3.pkl"
+    },
+    {
+      "expressions": "types-stage17-repeated-body-failure-inline.expressions",
+      "group": "T17",
+      "id": "types-stage17-repeated-body-failure-inline",
+      "note": "Complete raw Java local-property resolution retries with independent type uses, shared call targets, recursive depth, declaration owners, and strict failure controls. Generic controls and invalid parser candidates remain separate exploratory evidence.",
+      "source": "types-stage17-repeated-body-failure-inline.pkl"
+    },
+    {
+      "expressions": "types-stage17-repeated-body-failure-let.expressions",
+      "group": "T17",
+      "id": "types-stage17-repeated-body-failure-let",
+      "note": "Complete raw Java local-property resolution retries with independent type uses, shared call targets, recursive depth, declaration owners, and strict failure controls. Generic controls and invalid parser candidates remain separate exploratory evidence.",
+      "source": "types-stage17-repeated-body-failure-let.pkl"
+    },
+    {
+      "expressions": "types-stage17-instance-inline.expressions",
+      "group": "T17",
+      "id": "types-stage17-instance-inline",
+      "note": "Complete raw Java local-property resolution retries with independent type uses, shared call targets, recursive depth, declaration owners, and strict failure controls. Generic controls and invalid parser candidates remain separate exploratory evidence.",
+      "source": "types-stage17-instance-inline.pkl"
+    },
+    {
+      "expressions": "types-stage17-instance-let.expressions",
+      "group": "T17",
+      "id": "types-stage17-instance-let",
+      "note": "Complete raw Java local-property resolution retries with independent type uses, shared call targets, recursive depth, declaration owners, and strict failure controls. Generic controls and invalid parser candidates remain separate exploratory evidence.",
+      "source": "types-stage17-instance-let.pkl"
+    },
+    {
+      "expressions": "types-stage17-instance-class-inline.expressions",
+      "group": "T17",
+      "id": "types-stage17-instance-class-inline",
+      "note": "Complete raw Java local-property resolution retries with independent type uses, shared call targets, recursive depth, declaration owners, and strict failure controls. Generic controls and invalid parser candidates remain separate exploratory evidence.",
+      "source": "types-stage17-instance-class-inline.pkl"
+    },
+    {
+      "expressions": "types-stage17-instance-class-let.expressions",
+      "group": "T17",
+      "id": "types-stage17-instance-class-let",
+      "note": "Complete raw Java local-property resolution retries with independent type uses, shared call targets, recursive depth, declaration owners, and strict failure controls. Generic controls and invalid parser candidates remain separate exploratory evidence.",
+      "source": "types-stage17-instance-class-let.pkl"
+    },
+    {
+      "expressions": "types-stage17-listing-inline.expressions",
+      "group": "T17",
+      "id": "types-stage17-listing-inline",
+      "note": "Complete raw Java local-property resolution retries with independent type uses, shared call targets, recursive depth, declaration owners, and strict failure controls. Generic controls and invalid parser candidates remain separate exploratory evidence.",
+      "source": "types-stage17-listing-inline.pkl"
+    },
+    {
+      "expressions": "types-stage17-listing-let.expressions",
+      "group": "T17",
+      "id": "types-stage17-listing-let",
+      "note": "Complete raw Java local-property resolution retries with independent type uses, shared call targets, recursive depth, declaration owners, and strict failure controls. Generic controls and invalid parser candidates remain separate exploratory evidence.",
+      "source": "types-stage17-listing-let.pkl"
+    },
+    {
+      "expressions": "types-stage17-mapping-inline.expressions",
+      "group": "T17",
+      "id": "types-stage17-mapping-inline",
+      "note": "Complete raw Java local-property resolution retries with independent type uses, shared call targets, recursive depth, declaration owners, and strict failure controls. Generic controls and invalid parser candidates remain separate exploratory evidence.",
+      "source": "types-stage17-mapping-inline.pkl"
+    },
+    {
+      "expressions": "types-stage17-mapping-let.expressions",
+      "group": "T17",
+      "id": "types-stage17-mapping-let",
+      "note": "Complete raw Java local-property resolution retries with independent type uses, shared call targets, recursive depth, declaration owners, and strict failure controls. Generic controls and invalid parser candidates remain separate exploratory evidence.",
+      "source": "types-stage17-mapping-let.pkl"
+    },
+    {
+      "expressions": "types-stage17-list-inline.expressions",
+      "group": "T17",
+      "id": "types-stage17-list-inline",
+      "note": "Complete raw Java local-property resolution retries with independent type uses, shared call targets, recursive depth, declaration owners, and strict failure controls. Generic controls and invalid parser candidates remain separate exploratory evidence.",
+      "source": "types-stage17-list-inline.pkl"
+    },
+    {
+      "expressions": "types-stage17-list-let.expressions",
+      "group": "T17",
+      "id": "types-stage17-list-let",
+      "note": "Complete raw Java local-property resolution retries with independent type uses, shared call targets, recursive depth, declaration owners, and strict failure controls. Generic controls and invalid parser candidates remain separate exploratory evidence.",
+      "source": "types-stage17-list-let.pkl"
+    },
+    {
+      "expressions": "types-stage17-inherited-annotation-owner.expressions",
+      "group": "T17",
+      "id": "types-stage17-inherited-annotation-owner",
+      "note": "Complete raw declaration-owned inherited annotation retries and cached local member reads using the current instance receiver.",
+      "source": "types-stage17-inherited-annotation-owner.pkl"
+    },
+    {
+      "expressions": "types-stage17-cached-member-current-receiver.expressions",
+      "group": "T17",
+      "id": "types-stage17-cached-member-current-receiver",
+      "note": "Complete raw declaration-owned inherited annotation retries and cached local member reads using the current instance receiver.",
+      "source": "types-stage17-cached-member-current-receiver.pkl"
+    },
+    {
+      "expressions": "types-stage17-conditional-owner-lambda-true.expressions",
+      "group": "T17",
+      "id": "types-stage17-conditional-owner-lambda-true",
+      "note": "Complete raw conditional branch-order history verifies stable authored lambda/object body ownership after an earlier inline type-check branch.",
+      "source": "types-stage17-conditional-owner-lambda-true.pkl"
+    },
+    {
+      "expressions": "types-stage17-conditional-owner-lambda-false.expressions",
+      "group": "T17",
+      "id": "types-stage17-conditional-owner-lambda-false",
+      "note": "Complete raw conditional branch-order history verifies stable authored lambda/object body ownership after an earlier inline type-check branch.",
+      "source": "types-stage17-conditional-owner-lambda-false.pkl"
+    },
+    {
+      "expressions": "types-stage17-conditional-owner-object-test-true.expressions",
+      "group": "T17",
+      "id": "types-stage17-conditional-owner-object-test-true",
+      "note": "Complete raw conditional branch-order history verifies stable authored lambda/object body ownership after an earlier inline type-check branch.",
+      "source": "types-stage17-conditional-owner-object-test-true.pkl"
+    },
+    {
+      "expressions": "types-stage17-conditional-owner-object-test-false.expressions",
+      "group": "T17",
+      "id": "types-stage17-conditional-owner-object-test-false",
+      "note": "Complete raw conditional branch-order history verifies stable authored lambda/object body ownership after an earlier inline type-check branch.",
+      "source": "types-stage17-conditional-owner-object-test-false.pkl"
     }
   ],
   "unexecuted_groups": [

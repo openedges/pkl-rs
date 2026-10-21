@@ -364,8 +364,8 @@ fn key_comparison_forces_wrappers_with_temporary_declaration_receivers() {
     assert_eq!(ready(&mut session, 3), Ok(Value::Bool(true)));
     // Only Check and its captured module remain, proving the temporary class
     // receivers, wrapper Listings and structural-key Mapping were released.
-    assert_eq!(session.collect(&[]).live, 2);
-    assert_eq!(session.collect(&[]).live, 2);
+    assert_eq!(retained_values(session.collect(&[]), 4), 2);
+    assert_eq!(retained_values(session.collect(&[]), 4), 2);
     session.close();
     assert_eq!(session.heap_stats().live, 0);
     assert_eq!(session.heap_stats().slots, 0);
@@ -527,4 +527,15 @@ fn terminal_reentry_releases_comparison_and_key_state_and_cancels_reads() {
             assert!(session.drain_cancelled_reads().is_empty());
         }
     }
+}
+
+// Persistent executable/type nodes have their own exact bound. The returned
+// count preserves the original object and custom-this-slot assertions.
+#[track_caller]
+fn retained_values(stats: pkl_runtime::heap::HeapStats, expected_executables: usize) -> usize {
+    assert_eq!(
+        stats.executable_live, expected_executables,
+        "persistent executable graph"
+    );
+    stats.live - stats.executable_live
 }

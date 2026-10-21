@@ -1,0 +1,4 @@
+module stage17.root
+local x = 7
+const function f() = new Dynamic { local function g() = x; z = g() }.z
+result = f()

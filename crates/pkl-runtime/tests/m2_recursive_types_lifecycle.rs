@@ -145,7 +145,7 @@ fn recursive_constraints_reenter_retry_and_keep_suspended_values_alive() {
         }
     }
     assert_eq!(host_ready(&mut session, 4), Ok(Value::Int(42)));
-    assert_eq!(session.collect(&[]).live, 2);
+    assert_eq!(retained_values(session.collect(&[]), 30), 2);
     session.close();
     assert_eq!(session.heap_stats().slots, 0);
 }
@@ -161,7 +161,7 @@ fn cancelling_recursive_check_reclaims_temporaries_and_preserves_retry_identity(
     let alias = vm_ready(&mut vm).unwrap();
     vm.start_member(object, "outerResult").unwrap();
     let old = vm_read(&mut vm);
-    assert!(vm.collect(&[]).live > 2);
+    assert!(retained_values(vm.collect(&[]), 5) > 2);
     vm.cancel();
     assert_eq!(vm_ready(&mut vm).unwrap_err().kind, ErrorKind::Cancelled);
     assert!(!vm.is_closed());
@@ -169,7 +169,7 @@ fn cancelling_recursive_check_reclaims_temporaries_and_preserves_retry_identity(
         vm.member_state(object, "outerResult").unwrap(),
         LazyState::Unevaluated
     );
-    assert_eq!(vm.collect(&[]).live, 2);
+    assert_eq!(retained_values(vm.collect(&[]), 5), 2);
     vm.start_member(object, "identity").unwrap();
     assert_eq!(vm_ready(&mut vm), Ok(alias));
     vm.start_member(object, "outerResult").unwrap();
@@ -183,7 +183,7 @@ fn cancelling_recursive_check_reclaims_temporaries_and_preserves_retry_identity(
         vm.resume(request, Ok(Value::string("ok"))).unwrap();
     }
     assert_eq!(vm_ready(&mut vm), Ok(Value::Int(42)));
-    assert_eq!(vm.collect(&[]).live, 2);
+    assert_eq!(retained_values(vm.collect(&[]), 17), 2);
     vm.close();
     assert_eq!(vm.heap_stats().slots, 0);
 }
@@ -206,7 +206,7 @@ fn terminal_actions_release_recursive_parent_and_child_reads() {
             .unwrap();
         let child = host_read(&mut session, 2);
         assert_eq!(session.context_depth(), 2);
-        assert!(session.collect(&[]).live > 2);
+        assert!(retained_values(session.collect(&[]), 10) > 2);
         match termination {
             ErrorKind::Cancelled => session.cancel(),
             ErrorKind::Closed => session.close(),
@@ -238,4 +238,15 @@ fn terminal_actions_release_recursive_parent_and_child_reads() {
         session.close();
         assert!(session.drain_cancelled_reads().is_empty());
     }
+}
+
+// Persistent executable/type nodes have their own exact bound. The returned
+// count preserves the original object and custom-this-slot assertions.
+#[track_caller]
+fn retained_values(stats: pkl_runtime::heap::HeapStats, expected_executables: usize) -> usize {
+    assert_eq!(
+        stats.executable_live, expected_executables,
+        "persistent executable graph"
+    );
+    stats.live - stats.executable_live
 }
