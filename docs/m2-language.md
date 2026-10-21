@@ -173,8 +173,18 @@ Alias sequences cover value identity, generic metadata, failed definition reuse,
 and later type uses in properties, deferred annotations, constructors, and
 superclasses. They preserve the original class sequence definitions and raw
 call outcomes. Their counts remain separate from independent expressions and
-native GC/Host tests. A complete runtime type-resolution model, mixed missing-name
-error ordering, annotations, and module caching remain open requirements.
+native GC/Host tests. Ordered-resolution sequences additionally distinguish
+missing names before and after alias initialization, generic parameter shadowing,
+nested substitutions, and unfinished aliases with failing arguments. Independent
+cases compare class and alias argument-count error ordering, member signatures,
+and complete diagnostic frames. Parameter renaming and nested alias expansion
+provide separate metamorphic relations. Native and shared platform scenarios
+check retained declaration state after the same failures.
+
+A complete runtime type-resolution model, general imported types, annotation
+syntax, and full module initialization/caching remain open requirements. The
+persistent adapter requires an acquired module; module-entry failures do not
+establish later module retry or cache behavior.
 
 The collection-type selection compares lazy and eager checking, wrapper
 composition, aliases, defaults, constraint identity, cache reuse, and complete

@@ -1,0 +1,6 @@
+module stage14.types
+typealias T = ShadowMissing
+typealias Inner<T> = List<T>
+typealias A<T> = Inner<T>
+p: A<String> = List("ok")
+result = p[0]

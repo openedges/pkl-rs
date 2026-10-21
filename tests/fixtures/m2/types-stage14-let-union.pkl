@@ -1,0 +1,4 @@
+module stage14.types
+typealias Broken = BrokenMissing
+p = let (x: Missing | Broken = 1) x
+result = p

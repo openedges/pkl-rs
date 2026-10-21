@@ -1,0 +1,8 @@
+typealias A<T> = Missing
+a = A
+class H { p: A<ArgumentMissing> = 1 }
+p = new H {}.p
+class G { q: A<Int, String> = 2 }
+q = new G {}.q
+class I { r: A<Int> = 3 }
+r = new I {}.r

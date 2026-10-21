@@ -1,0 +1,4 @@
+module stage14.types
+typealias A<T> = T
+p: A<Int, Missing> = 1
+result = p

@@ -456,16 +456,26 @@ fn type_aliases_resolve_lexically_and_contextual_new_uses_declared_class() {
         evaluate("class C { x = 42 }\ntypealias Alias = C\nc: Alias = new {}\nresult = c.x"),
         Ok(Value::Int(42))
     );
-    let parsed = parse_module("local Int = 5\nresult: Int = 1").unwrap();
-    let error = compile_module(&resolve_module(&parsed).unwrap()).unwrap_err();
-    assert_eq!(error.kind, ErrorKind::Type);
-    let parsed = parse_module("typealias A = B\ntypealias B = A\nresult: A = 1").unwrap();
-    assert_eq!(
-        compile_module(&resolve_module(&parsed).unwrap())
-            .unwrap_err()
-            .kind,
-        ErrorKind::Cycle
-    );
+    for (source, kind, message) in [
+        (
+            "local Int = 5\nresult: Int = 1",
+            ErrorKind::Type,
+            "Expected `Int` to be a type, but it is not.",
+        ),
+        (
+            "typealias A = B\ntypealias B = A\nresult: A = 1",
+            ErrorKind::Cycle,
+            "Type alias definitions must not be cyclic.",
+        ),
+    ] {
+        let parsed = parse_module(source).unwrap();
+        let program = compile_module(&resolve_module(&parsed).unwrap()).unwrap();
+        let mut vm = Vm::new(program.clone());
+        vm.start(program.entry, vec![]).unwrap();
+        let error = done(&mut vm).unwrap_err();
+        assert_eq!(error.kind, kind);
+        assert_eq!(error.message, message);
+    }
 }
 
 #[test]

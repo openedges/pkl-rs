@@ -1,0 +1,5 @@
+module stage14.types
+typealias X = XMissing
+typealias Y = YMissing
+typealias A<X,Y> = (X) -> Y
+result = A

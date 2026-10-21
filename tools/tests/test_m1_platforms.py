@@ -70,6 +70,9 @@ class PlatformEvidenceTests(unittest.TestCase):
             'm2-type-alias-values',
             'm2-function-type-metadata',
             'm2-generic-alias-diagnostics',
+            'm2-type-resolution-error-order',
+            'm2-type-parameter-shadowing',
+            'm2-unfinished-alias-arguments',
         }
         names = sorted(m1_platforms.REQUIRED_SCENARIOS)
         valid = {'nodeChecks': names, 'browserChecks': names, 'browserErrors': [],

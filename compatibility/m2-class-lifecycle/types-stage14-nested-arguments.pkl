@@ -1,0 +1,9 @@
+typealias Broken = BrokenMissing
+typealias Inner<T> = Int
+typealias A = Inner<Missing | Broken>
+a = A
+b = Broken
+class H { p: Inner<Broken> = 3 }
+p = new H {}.p
+class G { q: Inner<String> = 4 }
+q = new G {}.q

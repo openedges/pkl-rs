@@ -1,0 +1,5 @@
+module stage14.types
+typealias T<X> = X
+typealias A<T> = T<String>
+p: A<Int> = "ok"
+result = p

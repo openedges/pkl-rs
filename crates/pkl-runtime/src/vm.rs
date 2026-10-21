@@ -2401,7 +2401,7 @@ impl Vm {
                     Some(scope) => scope.receiver,
                     None => self
                         .stack
-                        .last()
+                        .first()
                         .ok_or_else(|| invalid("missing module for type resolution"))?
                         .as_object()?,
                 };
@@ -3378,8 +3378,41 @@ impl Compiler<'_> {
         } else {
             format!("{previous_member}.{}", member.name)
         };
+        let mut initialization_error = None;
+        let compiled_type = member.ty.as_ref().map(|ty| {
+            self.compile_type(ty).unwrap_or_else(|error| {
+                initialization_error = Some(error);
+                TypeCheck::Unknown
+            })
+        });
+        if initialization_error.is_none()
+            && let crate::syntax::ExprKind::Function {
+                parameters,
+                return_type,
+                method: true,
+                ..
+            } = &member.expr.kind
+        {
+            for ty in parameters
+                .iter()
+                .filter_map(|p| p.ty.as_ref())
+                .chain(return_type.iter())
+            {
+                if let Err(error) = self.compile_type(ty) {
+                    initialization_error = Some(error);
+                    break;
+                }
+            }
+        }
         let mut instructions = Code::default();
-        if matches!(member.expr.kind, crate::syntax::ExprKind::Uninitialized) {
+        if let Some(error) = &initialization_error {
+            // Annotation resolution runs when the owner is initialized. Keep a
+            // stub body so compilation cannot bypass earlier type dependencies.
+            instructions.push_at(
+                Instruction::Fail(error.clone()),
+                error.span.unwrap_or(member.span),
+            );
+        } else if matches!(member.expr.kind, crate::syntax::ExprKind::Uninitialized) {
             self.default_property(member, &mut instructions)?;
         } else if let crate::syntax::ExprKind::Object {
             parent: None,
@@ -3415,11 +3448,6 @@ impl Compiler<'_> {
             self.expression(&member.expr, &mut instructions)?;
         }
         let property_typecheck = member.ty.as_ref().map(|_| instructions.len());
-        let compiled_type = member
-            .ty
-            .as_ref()
-            .map(|ty| self.compile_type(ty))
-            .transpose()?;
         if let Some(ty) = &member.ty {
             instructions.push_at(
                 Instruction::CheckType(compiled_type.clone().expect("member annotation")),
@@ -3441,6 +3469,7 @@ impl Compiler<'_> {
             .iter()
             .any(|m| m.kind == crate::syntax::ModifierKind::Hidden);
         self.program.metadata[code].value_span = Some(member.expr.span);
+        self.program.metadata[code].initialization_error = initialization_error;
         self.program.metadata[code].property_typecheck = property_typecheck;
         self.program.metadata[code].amendment = member.is_amendment();
         self.program.metadata[code].fixed_span = member.override_fixed_span;
@@ -3636,7 +3665,7 @@ impl Compiler<'_> {
                             // Expansion failures still resolve declaration identities at
                             // runtime, including a previously published partial alias.
                             if let Some(ty) = &member.ty {
-                                self.initialize_alias_dependencies(ty, output);
+                                self.initialize_type_resolution(ty, output);
                             }
                             if let ExprKind::Function {
                                 parameters,
@@ -3649,7 +3678,7 @@ impl Compiler<'_> {
                                     .filter_map(|p| p.ty.as_ref())
                                     .chain(return_type.iter())
                                 {
-                                    self.initialize_alias_dependencies(ty, output);
+                                    self.initialize_type_resolution(ty, output);
                                 }
                             }
                             output.push_at(
@@ -3706,9 +3735,11 @@ impl Compiler<'_> {
                     &mut BTreeSet::new(),
                     &parameters,
                 ) {
-                    Ok(check) => self.initialize_type(&check, ty.span, output),
+                    Ok(_) => {
+                        self.initialize_type_resolution_with_parameters(ty, &parameters, output)
+                    }
                     Err(error) => {
-                        self.initialize_alias_dependencies(ty, output);
+                        self.initialize_type_resolution_with_parameters(ty, &parameters, output);
                         let span = error.span.unwrap_or(ty.span);
                         output.push_at(Instruction::Fail(error), span);
                     }
@@ -3723,13 +3754,13 @@ impl Compiler<'_> {
                 let check = match self.compile_type(ty) {
                     Ok(check) => check,
                     Err(error) => {
-                        self.initialize_alias_dependencies(ty, output);
+                        self.initialize_type_resolution(ty, output);
                         let span = error.span.unwrap_or(ty.span);
                         output.push_at(Instruction::Fail(error), span);
                         return Ok(());
                     }
                 };
-                self.initialize_alias_dependencies(ty, output);
+                self.initialize_type_resolution(ty, output);
                 if let TypeCheck::Collection(kind)
                 | TypeCheck::ParameterizedCollection { kind, .. } = check.unaliased()
                 {
@@ -4416,8 +4447,7 @@ impl Compiler<'_> {
     ) -> Result<(), RuntimeError> {
         for member in members {
             if let Some(ty) = &member.ty {
-                let check = self.compile_type(ty)?;
-                self.initialize_type(&check, self.type_source_span(ty), output);
+                self.initialize_type_resolution(ty, output);
             }
             if let crate::syntax::ExprKind::Function {
                 parameters,
@@ -4431,75 +4461,64 @@ impl Compiler<'_> {
                     .filter_map(|parameter| parameter.ty.as_ref())
                     .chain(return_type.iter())
                 {
-                    let check = self.compile_type(ty)?;
-                    self.initialize_type(&check, self.type_source_span(ty), output);
+                    self.initialize_type_resolution(ty, output);
                 }
             }
         }
         Ok(())
     }
 
-    /// Preserve publication order even when static expansion discovers a cycle.
-    fn initialize_alias_dependencies(&mut self, ty: &crate::syntax::Type, output: &mut Code) {
-        use crate::syntax::TypeKind;
-        match &ty.kind {
-            TypeKind::Named {
-                path, arguments, ..
-            } => {
-                if path.len() == 1
-                    && let Some((member, _)) = self.find_type(&path[0], self.type_scopes.len())
-                    && matches!(member.expr.kind, crate::syntax::ExprKind::TypeAlias { .. })
-                {
-                    output.push_at(
-                        Instruction::ResolveClassType {
-                            name: Arc::from(member.name.as_str()),
-                            local: crate::syntax::modifier_flags(&member.modifiers)
-                                & crate::syntax::ModifierKind::Local.flag()
-                                != 0,
-                        },
-                        ty.span,
-                    );
-                    output.push_at(Instruction::CheckTypeAliasInitialized, ty.span);
-                }
-                for argument in arguments {
-                    self.initialize_alias_dependencies(argument, output);
-                }
-            }
-            TypeKind::Nullable(inner) | TypeKind::Constrained { base: inner, .. } => {
-                self.initialize_alias_dependencies(inner, output)
-            }
-            TypeKind::Union { types, .. } => {
-                for ty in types {
-                    self.initialize_alias_dependencies(ty, output);
-                }
-            }
-            TypeKind::Function {
-                parameters,
-                return_type,
-            } => {
-                for ty in parameters {
-                    self.initialize_alias_dependencies(ty, output);
-                }
-                self.initialize_alias_dependencies(return_type, output);
-            }
-            _ => {}
+    /// Compile the authored resolution order separately from the expanded check.
+    /// A declaration executes at its position in this plan, before later names
+    /// are resolved. Failures remain VM instructions, so published declarations
+    /// survive and ordinary lazy members can retry through the same scheduler.
+    fn initialize_type_resolution(&mut self, ty: &crate::syntax::Type, output: &mut Code) {
+        self.initialize_type_resolution_with_parameters(
+            ty,
+            &self.active_type_parameters.clone(),
+            output,
+        );
+    }
+
+    fn initialize_type_resolution_with_parameters(
+        &mut self,
+        ty: &crate::syntax::Type,
+        parameters: &BTreeMap<String, TypeCheck>,
+        output: &mut Code,
+    ) {
+        if let Err(failure) = self.type_resolution_plan(ty, parameters, output) {
+            let (error, span) = *failure;
+            output.push_at(Instruction::Fail(error.at(span)), span);
         }
     }
 
-    fn initialize_type(&mut self, check: &TypeCheck, span: Span, output: &mut Code) {
-        match check {
-            TypeCheck::NamedAlias {
-                declaration,
-                expanded,
+    fn type_resolution_plan(
+        &mut self,
+        ty: &crate::syntax::Type,
+        parameters: &BTreeMap<String, TypeCheck>,
+        output: &mut Code,
+    ) -> Result<(), Box<(RuntimeError, Span)>> {
+        use crate::syntax::{ExprKind, TypeKind};
+        match &ty.kind {
+            TypeKind::Named {
+                path,
                 arguments,
-                ..
+                name_spans,
             } => {
-                if let Some(member) = self
-                    .resolved
-                    .module
-                    .members
-                    .iter()
-                    .find(|member| member.expr.span.start == *declaration)
+                let parameter =
+                    path.len() == 1 && arguments.is_empty() && parameters.contains_key(&path[0]);
+                let declaration = (!parameter && path.len() == 1)
+                    .then(|| self.find_type(&path[0], self.type_scopes.len()))
+                    .flatten()
+                    .map(|(member, _)| member);
+                let alias = declaration
+                    .as_ref()
+                    .is_some_and(|member| matches!(member.expr.kind, ExprKind::TypeAlias { .. }));
+                if let Some(member) = &declaration
+                    && matches!(
+                        member.expr.kind,
+                        ExprKind::Class { .. } | ExprKind::TypeAlias { .. }
+                    )
                 {
                     output.push_at(
                         Instruction::ResolveClassType {
@@ -4508,66 +4527,64 @@ impl Compiler<'_> {
                                 & crate::syntax::ModifierKind::Local.flag()
                                 != 0,
                         },
-                        span,
+                        name_spans[0],
                     );
-                    output.push_at(Instruction::CheckTypeAliasInitialized, span);
+                    // Parameterized aliases resolve actual arguments before testing
+                    // initialization or arity. Keep the alias value on the VM stack
+                    // across those child plans; suspension and GC already trace it.
+                    if !alias {
+                        output.push(Instruction::Pop);
+                    }
                 }
-                for ty in arguments {
-                    self.initialize_type(ty, span, output);
+                if !alias {
+                    // Class arity and missing base names precede argument resolution.
+                    // Unknown placeholders validate only this node, without resolving
+                    // its authored arguments ahead of their position in the plan.
+                    let mut base = ty.clone();
+                    if let TypeKind::Named { arguments, .. } = &mut base.kind {
+                        for argument in arguments {
+                            argument.kind = TypeKind::Unknown;
+                        }
+                    }
+                    self.compile_type_at(
+                        &base,
+                        self.type_scopes.len(),
+                        &mut BTreeSet::new(),
+                        parameters,
+                    )
+                    .map_err(|error| Box::new((error, ty.span)))?;
                 }
-                self.initialize_type(expanded, span, output);
-            }
-            TypeCheck::Function {
-                parameters, result, ..
-            } => {
-                for ty in parameters.iter().flatten() {
-                    self.initialize_type(ty, span, output);
+                for argument in arguments {
+                    self.type_resolution_plan(argument, parameters, output)?;
                 }
-                self.initialize_type(result, span, output);
-            }
-            TypeCheck::Class { id, .. } => {
-                if let Some(member) = self
-                    .resolved
-                    .module
-                    .members
-                    .iter()
-                    .find(|member| member.expr.span.start == *id)
-                {
-                    output.push_at(
-                        Instruction::ResolveClassType {
-                            name: Arc::from(member.name.as_str()),
-                            local: crate::syntax::modifier_flags(&member.modifiers)
-                                & crate::syntax::ModifierKind::Local.flag()
-                                != 0,
-                        },
-                        span,
-                    );
-                    output.push(Instruction::Pop);
+                if alias {
+                    output.push_at(Instruction::CheckTypeAliasInitialized, ty.span);
                 }
             }
-            TypeCheck::ParameterizedCollection { arguments, .. } => {
-                for (ty, span) in arguments {
-                    self.initialize_type(ty, *span, output);
-                }
+            TypeKind::Nullable(inner) | TypeKind::Constrained { base: inner, .. } => {
+                self.type_resolution_plan(inner, parameters, output)?;
             }
-            TypeCheck::Reference { domain, referent } => {
-                self.initialize_type(domain, span, output);
-                self.initialize_type(referent, span, output);
-            }
-            TypeCheck::Nullable(inner) => self.initialize_type(inner, span, output),
-            TypeCheck::Alias(inner) | TypeCheck::GenericAlias(inner) => {
-                self.initialize_type(inner, span, output)
-            }
-            TypeCheck::Constrained {
-                base, base_span, ..
-            } => self.initialize_type(base, *base_span, output),
-            TypeCheck::Union { types, .. } => {
+            TypeKind::Union { types, .. } => {
                 for ty in types {
-                    self.initialize_type(ty, span, output);
+                    self.type_resolution_plan(ty, parameters, output)?;
                 }
+            }
+            TypeKind::Function {
+                parameters: arguments,
+                return_type,
+            } => {
+                for ty in arguments {
+                    self.type_resolution_plan(ty, parameters, output)?;
+                }
+                self.type_resolution_plan(return_type, parameters, output)?;
             }
             _ => {}
         }
+        // Validation that depends on resolved arguments (including alias
+        // instantiation and Reference constraints) occurs after child resolution.
+        self.compile_type_at(ty, self.type_scopes.len(), &mut BTreeSet::new(), parameters)
+            .map_err(|error| Box::new((error, ty.span)))?;
+        Ok(())
     }
 
     fn resolve_expression_type(
@@ -4582,11 +4599,11 @@ impl Compiler<'_> {
             &self.active_type_parameters.clone(),
         ) {
             Ok(check) => {
-                self.initialize_type(&check, self.type_source_span(ty), output);
+                self.initialize_type_resolution(ty, output);
                 Some(check)
             }
             Err(error) => {
-                self.initialize_alias_dependencies(ty, output);
+                self.initialize_type_resolution(ty, output);
                 output.push_at(Instruction::Fail(error.at(ty.span)), ty.span);
                 None
             }
@@ -4648,7 +4665,7 @@ impl Compiler<'_> {
             TypeKind::Named {
                 path, arguments, ..
             } if path.len() == 1 => {
-                if let Some(span) = parameters.get(&path[0]) {
+                if let Some(span) = parameters.get(&path[0]).filter(|_| arguments.is_empty()) {
                     return *span;
                 }
                 if let Some((member, _)) = self.find_type(&path[0], self.type_scopes.len())
@@ -4759,7 +4776,9 @@ impl Compiler<'_> {
                 labels: types
                     .iter()
                     .map(|ty| match &ty.kind {
-                        TypeKind::Named { path, .. } if path.len() == 1 => self
+                        TypeKind::Named {
+                            path, arguments, ..
+                        } if path.len() == 1 && arguments.is_empty() => self
                             .parameter_spans
                             .get(&path[0])
                             .copied()
@@ -4885,13 +4904,7 @@ impl Compiler<'_> {
                 arguments,
                 name_spans,
             } if path.len() == 1 => {
-                if let Some(parameter) = parameters.get(&path[0]) {
-                    if !arguments.is_empty() {
-                        return Err(RuntimeError::new(
-                            ErrorKind::Type,
-                            "Type parameters cannot have type arguments.",
-                        ));
-                    }
+                if let Some(parameter) = parameters.get(&path[0]).filter(|_| arguments.is_empty()) {
                     parameter.clone()
                 } else if let Some((member, index)) = self.find_type(&path[0], limit) {
                     match &member.expr.kind {
@@ -4899,7 +4912,10 @@ impl Compiler<'_> {
                             if !arguments.is_empty() {
                                 return Err(RuntimeError::new(
                                     ErrorKind::Type,
-                                    format!("Class `{}` does not have type parameters.", path[0]),
+                                    format!(
+                                        "Expected 0 type argument(s) but got {}.",
+                                        arguments.len()
+                                    ),
                                 ));
                             }
                             TypeCheck::Class {
@@ -5042,7 +5058,18 @@ impl Compiler<'_> {
                             "Listing" => crate::heap::CollectionKind::Listing,
                             "Mapping" => crate::heap::CollectionKind::Mapping,
                             "List" => crate::heap::CollectionKind::List,
-                            _ => return Err(unsupported_type("generic builtin types")),
+                            _ if crate::diagnostic_names::BASE_PROPERTIES
+                                .contains(&path[0].as_str()) =>
+                            {
+                                return Err(unsupported_type("generic builtin types"));
+                            }
+                            _ => {
+                                return Err(RuntimeError::new(
+                                    ErrorKind::MissingType,
+                                    format!("Cannot find type `{}`.", path[0]),
+                                )
+                                .at(name_spans[0]));
+                            }
                         };
                         let arity = if kind == crate::heap::CollectionKind::Mapping {
                             2
@@ -5127,7 +5154,7 @@ impl Compiler<'_> {
         limit: usize,
         aliases: &mut BTreeSet<Span>,
     ) -> Result<(), RuntimeError> {
-        self.initialize_alias_dependencies(ty, output);
+        self.initialize_type_resolution(ty, output);
         let check = self
             .compile_type_at(ty, limit, aliases, &BTreeMap::new())
             .map_err(|error| error.at(ty.span))?;

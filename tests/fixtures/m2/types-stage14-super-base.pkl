@@ -1,0 +1,5 @@
+module stage14.types
+typealias Broken = BrokenMissing
+typealias A = Missing | Broken
+class C extends A {}
+result = C

@@ -1,0 +1,5 @@
+module stage14.types
+typealias Broken = BrokenMissing
+typealias Id<T> = T
+typealias A = Id<List<Missing | Broken>>
+result = A

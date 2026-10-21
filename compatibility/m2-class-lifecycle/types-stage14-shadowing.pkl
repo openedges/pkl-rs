@@ -1,0 +1,8 @@
+typealias T = ShadowMissing
+typealias A<T> = T
+typealias B<T> = T<String>
+a = A
+b = B
+t = T
+p: A<String> = "ok"
+q: A<String> = 1

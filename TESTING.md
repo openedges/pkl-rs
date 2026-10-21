@@ -109,6 +109,14 @@ ordinary lazy retries, and terminal release. See the
 [sequence contract](docs/m2-language.md#persistent-class-initialization-sequences)
 for source/build provenance, adapters, and remaining scope.
 
+Type-resolution regressions compare authored child order, base-name failures,
+class versus alias arity checks, generic parameter shadowing, nested substitution,
+and owner signature initialization. Repeated calls preserve failed declaration
+state while ordinary lazy expressions retry. Native Host/GC tests separately
+exercise nested generic constraints, suspended values, heap isolation, temporary
+reclamation, nonterminal cancellation, and terminal cleanup. Node and browser
+sequence scenarios retain the same Java-derived complete payloads.
+
 Collection regressions cover lazy bodies, eager keys and source forcing,
 inheritance order, primitive key equality, generator captures, spread, and
 complete subscript diagnostics. Native lifecycle tests also force collection

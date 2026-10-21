@@ -1,0 +1,5 @@
+module stage14.types
+typealias Broken = BrokenMissing
+class C {  }
+p: C<Broken> = new C {}
+result = p

@@ -477,7 +477,28 @@ variance. Exported arrow metadata equality and hashing preserve nested alias
 declarations and exact constraint text. The parsed module retains its source text
 for these identities.
 
-These changes do not implement a fully lazy runtime type-node resolver. Mixed
-unresolved-name/dependency error ordering, failing generic-parameter shadowing,
-complete annotations, imported types, structural types, reflection, and the
-original upstream type/function suites remain unverified or unimplemented.
+### Ordered type resolution
+
+The compiler emits a resolution plan from the authored type syntax separately
+from the expanded value check. Supported named types resolve their base before
+their arguments. Class initialization and arity checks precede child resolution;
+alias arguments resolve before the unfinished-alias and argument-count checks.
+Union branches and function parameter/result types preserve authored order.
+This prevents a later alias from being published when an earlier missing name
+has already failed. Type errors in member signatures execute during owner
+initialization, retaining completed declarations and their original error frames.
+
+Generic parameters take precedence over declarations and builtins for bare type
+names in the declaration scope. Explicit type arguments bypass this parameter
+lookup, matching the pinned parser's type-name resolution. Nested alias actual
+arguments resolve in the caller's parameter scope before substitution into the
+callee's definition. Constraint compilation retains the active parameter scope.
+Alias values awaiting argument resolution stay on the ordinary traced VM stack.
+The plan uses the existing scheduler, declaration caches, and failure unwinding;
+ordinary failed lazy members remain retryable.
+
+Expanded check metadata still uses static compilation. These ordered execution
+plans do not establish a complete lazy runtime type-node model. General imported
+types, annotation syntax, full module initialization/caching, structural types,
+reflection, and the original upstream type/function suites remain unverified or
+unimplemented. Unsupported builtin generic types remain explicit gaps.

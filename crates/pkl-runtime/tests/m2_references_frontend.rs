@@ -9,6 +9,23 @@ fn span(source: &str, fragment: &str) -> Span {
     Span::new(start, start + fragment.len())
 }
 
+// Type names resolve during owner initialization so earlier declarations can
+// publish or fail before a later unresolved name is reached.
+fn initialize_error(source: &str) -> pkl_runtime::value::RuntimeError {
+    use pkl_runtime::vm::{Vm, VmPoll, compile_module};
+    let program = compile_module(&resolve_module(&parse_module(source).unwrap()).unwrap()).unwrap();
+    let mut vm = Vm::new(program.clone());
+    vm.start(program.entry, vec![]).unwrap();
+    for _ in 0..1000 {
+        match vm.poll(100) {
+            VmPoll::Ready(result) => return result.unwrap_err(),
+            VmPoll::Yielded => {}
+            VmPoll::Pending(_) => panic!("unexpected Host request"),
+        }
+    }
+    panic!("type initialization instruction budget exceeded")
+}
+
 #[test]
 fn imports_are_local_const_members_with_authored_namespace_and_source_identity() {
     let source = "module example\nimport \"pkl:ref\" as deferred\nresult = deferred.Reference";
@@ -153,9 +170,7 @@ fn imports_share_the_property_namespace_but_keep_methods_separate() {
 #[test]
 fn generic_reference_constraint_validation_keeps_alias_bodies_and_the_declaration_name() {
     let source = "import \"pkl:ref\"\ntypealias Ref<T> = ref.Reference<ref.Domain, T>\ntypealias Ref2<T> = Ref<T(isEmpty)>\nfoo: Ref2<String>";
-    let error =
-        pkl_runtime::vm::compile_module(&resolve_module(&parse_module(source).unwrap()).unwrap())
-            .unwrap_err();
+    let error = initialize_error(source);
     assert_eq!(
         error.message,
         "`Reference` referent type argument may not include type constraints."
@@ -181,9 +196,7 @@ fn generic_reference_constraint_validation_keeps_alias_bodies_and_the_declaratio
 #[test]
 fn constraints_authored_in_alias_arguments_keep_the_complete_use_site_span() {
     let source = "import \"pkl:ref\"\ntypealias Ref<T> = ref.Reference<ref.Domain, T>\ntypealias Ref2<T> = Ref<T>\nfoo: Ref2<String(isEmpty)>";
-    let error =
-        pkl_runtime::vm::compile_module(&resolve_module(&parse_module(source).unwrap()).unwrap())
-            .unwrap_err();
+    let error = initialize_error(source);
     assert_eq!(
         error.frames.last().unwrap().span,
         span(source, "Ref2<String(isEmpty)>")
@@ -211,9 +224,7 @@ fn nested_raw_interpolations_keep_full_delimiters_separate_from_expression_spans
 #[test]
 fn direct_reference_constraint_validation_omits_only_the_outer_referent_alias_frame() {
     let source = "import \"pkl:ref\"\ntypealias First = Second\ntypealias Second = String(isEmpty)\nfoo: ref.Reference<ref.Domain, First>";
-    let error =
-        pkl_runtime::vm::compile_module(&resolve_module(&parse_module(source).unwrap()).unwrap())
-            .unwrap_err();
+    let error = initialize_error(source);
     assert_eq!(
         error
             .frames

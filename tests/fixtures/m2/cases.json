@@ -17679,6 +17679,1128 @@
         "semantic:reflection-metadata"
       ],
       "expected_outcome": "success"
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage14-order-union-missing-first",
+      "input": "tests/fixtures/m2/types-stage14-order-union-missing-first.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:collections",
+        "semantic:generics",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage14-order-union-alias-first",
+      "input": "tests/fixtures/m2/types-stage14-order-union-alias-first.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:collections",
+        "semantic:generics",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage14-order-function-missing-first",
+      "input": "tests/fixtures/m2/types-stage14-order-function-missing-first.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:collections",
+        "semantic:generics",
+        "semantic:functions",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage14-order-function-alias-first",
+      "input": "tests/fixtures/m2/types-stage14-order-function-alias-first.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:collections",
+        "semantic:generics",
+        "semantic:functions",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage14-order-function-args-missing-first",
+      "input": "tests/fixtures/m2/types-stage14-order-function-args-missing-first.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:collections",
+        "semantic:generics",
+        "semantic:functions",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage14-order-function-args-alias-first",
+      "input": "tests/fixtures/m2/types-stage14-order-function-args-alias-first.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:collections",
+        "semantic:generics",
+        "semantic:functions",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage14-order-list-missing-first",
+      "input": "tests/fixtures/m2/types-stage14-order-list-missing-first.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:collections",
+        "semantic:generics",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage14-order-list-alias-first",
+      "input": "tests/fixtures/m2/types-stage14-order-list-alias-first.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:collections",
+        "semantic:generics",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage14-order-nullable-missing-first",
+      "input": "tests/fixtures/m2/types-stage14-order-nullable-missing-first.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:collections",
+        "semantic:generics",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage14-order-union-nested-missing-first",
+      "input": "tests/fixtures/m2/types-stage14-order-union-nested-missing-first.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:collections",
+        "semantic:generics",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage14-order-union-nested-alias-first",
+      "input": "tests/fixtures/m2/types-stage14-order-union-nested-alias-first.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:collections",
+        "semantic:generics",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage14-shadow-alias-direct",
+      "input": "tests/fixtures/m2/types-stage14-shadow-alias-direct.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:generics"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage14-shadow-alias-list",
+      "input": "tests/fixtures/m2/types-stage14-shadow-alias-list.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:collections",
+        "semantic:generics"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage14-shadow-alias-nullable",
+      "input": "tests/fixtures/m2/types-stage14-shadow-alias-nullable.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:generics"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage14-shadow-alias-function",
+      "input": "tests/fixtures/m2/types-stage14-shadow-alias-function.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:generics",
+        "semantic:functions"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage14-shadow-alias-union",
+      "input": "tests/fixtures/m2/types-stage14-shadow-alias-union.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:generics"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage14-shadow-class-direct",
+      "input": "tests/fixtures/m2/types-stage14-shadow-class-direct.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:classes",
+        "semantic:generics"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage14-shadow-class-list",
+      "input": "tests/fixtures/m2/types-stage14-shadow-class-list.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:classes",
+        "semantic:collections",
+        "semantic:generics"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage14-shadow-class-nullable",
+      "input": "tests/fixtures/m2/types-stage14-shadow-class-nullable.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:classes",
+        "semantic:generics"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage14-shadow-class-function",
+      "input": "tests/fixtures/m2/types-stage14-shadow-class-function.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:classes",
+        "semantic:generics",
+        "semantic:functions"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage14-shadow-class-union",
+      "input": "tests/fixtures/m2/types-stage14-shadow-class-union.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:classes",
+        "semantic:generics"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage14-shadow-cycle-direct",
+      "input": "tests/fixtures/m2/types-stage14-shadow-cycle-direct.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:generics"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage14-shadow-cycle-list",
+      "input": "tests/fixtures/m2/types-stage14-shadow-cycle-list.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:collections",
+        "semantic:generics"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage14-shadow-cycle-nullable",
+      "input": "tests/fixtures/m2/types-stage14-shadow-cycle-nullable.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:generics"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage14-shadow-cycle-function",
+      "input": "tests/fixtures/m2/types-stage14-shadow-cycle-function.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:generics",
+        "semantic:functions"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage14-shadow-cycle-union",
+      "input": "tests/fixtures/m2/types-stage14-shadow-cycle-union.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:generics"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage14-parameter-direct",
+      "input": "tests/fixtures/m2/types-stage14-parameter-direct.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:generics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage14-parameter-mismatch",
+      "input": "tests/fixtures/m2/types-stage14-parameter-mismatch.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:generics",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage14-alias-name",
+      "input": "tests/fixtures/m2/types-stage14-alias-name.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage14-unused-argument-missing",
+      "input": "tests/fixtures/m2/types-stage14-unused-argument-missing.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:generics",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage14-unused-argument-alias",
+      "input": "tests/fixtures/m2/types-stage14-unused-argument-alias.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:generics",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage14-base-before-argument",
+      "input": "tests/fixtures/m2/types-stage14-base-before-argument.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage14-base-missing-before-argument",
+      "input": "tests/fixtures/m2/types-stage14-base-missing-before-argument.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage14-arity-before-argument",
+      "input": "tests/fixtures/m2/types-stage14-arity-before-argument.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage14-nested-args-before-alias-body",
+      "input": "tests/fixtures/m2/types-stage14-nested-args-before-alias-body.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:generics",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage14-two-parameters",
+      "input": "tests/fixtures/m2/types-stage14-two-parameters.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:functions"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage14-qualified-missing-first",
+      "input": "tests/fixtures/m2/types-stage14-qualified-missing-first.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage14-qualified-alias-first",
+      "input": "tests/fixtures/m2/types-stage14-qualified-alias-first.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage14-class-before-missing",
+      "input": "tests/fixtures/m2/types-stage14-class-before-missing.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:classes",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage14-class-after-missing",
+      "input": "tests/fixtures/m2/types-stage14-class-after-missing.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:classes",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage14-class-member-union",
+      "input": "tests/fixtures/m2/types-stage14-class-member-union.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:classes",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage14-class-method-union",
+      "input": "tests/fixtures/m2/types-stage14-class-method-union.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:classes",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage14-property-union",
+      "input": "tests/fixtures/m2/types-stage14-property-union.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage14-lambda-union",
+      "input": "tests/fixtures/m2/types-stage14-lambda-union.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:functions",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage14-lambda-function",
+      "input": "tests/fixtures/m2/types-stage14-lambda-function.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:functions",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage14-let-union",
+      "input": "tests/fixtures/m2/types-stage14-let-union.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage14-let-initializer-order",
+      "input": "tests/fixtures/m2/types-stage14-let-initializer-order.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage14-is-union",
+      "input": "tests/fixtures/m2/types-stage14-is-union.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage14-as-union",
+      "input": "tests/fixtures/m2/types-stage14-as-union.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage14-is-value-order",
+      "input": "tests/fixtures/m2/types-stage14-is-value-order.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage14-as-value-order",
+      "input": "tests/fixtures/m2/types-stage14-as-value-order.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage14-new-base",
+      "input": "tests/fixtures/m2/types-stage14-new-base.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage14-super-base",
+      "input": "tests/fixtures/m2/types-stage14-super-base.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:classes",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage14-constraint-order",
+      "input": "tests/fixtures/m2/types-stage14-constraint-order.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage14-nested-function-order",
+      "input": "tests/fixtures/m2/types-stage14-nested-function-order.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:functions",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage14-type-name-parameterized",
+      "input": "tests/fixtures/m2/types-stage14-type-name-parameterized.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:generics",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage14-type-name-qualified",
+      "input": "tests/fixtures/m2/types-stage14-type-name-qualified.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:generics",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage14-shadow-builtin-String",
+      "input": "tests/fixtures/m2/types-stage14-shadow-builtin-String.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:generics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage14-shadow-builtin-mismatch-String",
+      "input": "tests/fixtures/m2/types-stage14-shadow-builtin-mismatch-String.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:generics",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage14-shadow-builtin-Int",
+      "input": "tests/fixtures/m2/types-stage14-shadow-builtin-Int.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:generics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage14-shadow-builtin-mismatch-Int",
+      "input": "tests/fixtures/m2/types-stage14-shadow-builtin-mismatch-Int.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:generics",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage14-shadow-builtin-List",
+      "input": "tests/fixtures/m2/types-stage14-shadow-builtin-List.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:generics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage14-shadow-builtin-mismatch-List",
+      "input": "tests/fixtures/m2/types-stage14-shadow-builtin-mismatch-List.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:generics",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage14-shadow-builtin-Function",
+      "input": "tests/fixtures/m2/types-stage14-shadow-builtin-Function.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:generics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage14-shadow-builtin-mismatch-Function",
+      "input": "tests/fixtures/m2/types-stage14-shadow-builtin-mismatch-Function.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:generics",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage14-shadow-builtin-TypeAlias",
+      "input": "tests/fixtures/m2/types-stage14-shadow-builtin-TypeAlias.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:generics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage14-shadow-builtin-mismatch-TypeAlias",
+      "input": "tests/fixtures/m2/types-stage14-shadow-builtin-mismatch-TypeAlias.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:generics",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage14-nested-argument-scalar",
+      "input": "tests/fixtures/m2/types-stage14-nested-argument-scalar.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:collections",
+        "semantic:generics"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage14-nested-name-shadow-scalar",
+      "input": "tests/fixtures/m2/types-stage14-nested-name-shadow-scalar.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:collections",
+        "semantic:generics"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage14-shadow-constraint",
+      "input": "tests/fixtures/m2/types-stage14-shadow-constraint.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:generics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage14-shadow-constraint-mismatch",
+      "input": "tests/fixtures/m2/types-stage14-shadow-constraint-mismatch.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:generics",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage14-arity-two-missing-first",
+      "input": "tests/fixtures/m2/types-stage14-arity-two-missing-first.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:generics",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage14-arity-two-missing-last",
+      "input": "tests/fixtures/m2/types-stage14-arity-two-missing-last.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:generics",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage14-arity-two-broken-first",
+      "input": "tests/fixtures/m2/types-stage14-arity-two-broken-first.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:generics",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage14-arity-two-broken-last",
+      "input": "tests/fixtures/m2/types-stage14-arity-two-broken-last.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:generics",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage14-generic-builtin-base-missing",
+      "input": "tests/fixtures/m2/types-stage14-generic-builtin-base-missing.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:collections",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage14-generic-builtin-base-broken",
+      "input": "tests/fixtures/m2/types-stage14-generic-builtin-base-broken.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:collections",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage14-nested-alias-arguments",
+      "input": "tests/fixtures/m2/types-stage14-nested-alias-arguments.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:collections",
+        "semantic:generics",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage14-nested-alias-argument-first",
+      "input": "tests/fixtures/m2/types-stage14-nested-alias-argument-first.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:collections",
+        "semantic:generics",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage14-shadow-unknown-unrelated",
+      "input": "tests/fixtures/m2/types-stage14-shadow-unknown-unrelated.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:generics",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage14-shadow-generic-parameterized",
+      "input": "tests/fixtures/m2/types-stage14-shadow-generic-parameterized.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:generics",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage14-super-type-error-first",
+      "input": "tests/fixtures/m2/types-stage14-super-type-error-first.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:classes",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage14-relation-generic-parameter-rename-left",
+      "input": "tests/fixtures/m2/types-stage14-relation-generic-parameter-rename-left.pkl",
+      "metamorphic_relation": {
+        "case_ids": [
+          "types-stage14-relation-generic-parameter-rename-left",
+          "types-stage14-relation-generic-parameter-rename-right"
+        ],
+        "domain": "Generic parameter alpha-renaming preserves the scalar result without initializing a shadowed module alias.",
+        "kind": "equal-stdout"
+      },
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:generics"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage14-relation-generic-parameter-rename-right",
+      "input": "tests/fixtures/m2/types-stage14-relation-generic-parameter-rename-right.pkl",
+      "metamorphic_relation": {
+        "case_ids": [
+          "types-stage14-relation-generic-parameter-rename-left",
+          "types-stage14-relation-generic-parameter-rename-right"
+        ],
+        "domain": "Generic parameter alpha-renaming preserves the scalar result without initializing a shadowed module alias.",
+        "kind": "equal-stdout"
+      },
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:generics"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage14-relation-generic-alias-expansion-left",
+      "input": "tests/fixtures/m2/types-stage14-relation-generic-alias-expansion-left.pkl",
+      "metamorphic_relation": {
+        "case_ids": [
+          "types-stage14-relation-generic-alias-expansion-left",
+          "types-stage14-relation-generic-alias-expansion-right"
+        ],
+        "domain": "Expanding the nested generic alias preserves the checked scalar List member.",
+        "kind": "equal-stdout"
+      },
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:collections",
+        "semantic:generics"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage14-relation-generic-alias-expansion-right",
+      "input": "tests/fixtures/m2/types-stage14-relation-generic-alias-expansion-right.pkl",
+      "metamorphic_relation": {
+        "case_ids": [
+          "types-stage14-relation-generic-alias-expansion-left",
+          "types-stage14-relation-generic-alias-expansion-right"
+        ],
+        "domain": "Expanding the nested generic alias preserves the checked scalar List member.",
+        "kind": "equal-stdout"
+      },
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:collections",
+        "semantic:generics"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage14-shadow-parameterized-module-success",
+      "input": "tests/fixtures/m2/types-stage14-shadow-parameterized-module-success.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:generics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage14-class-arity-broken",
+      "input": "tests/fixtures/m2/types-stage14-class-arity-broken.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:classes",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage14-class-arity-missing",
+      "input": "tests/fixtures/m2/types-stage14-class-arity-missing.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:classes",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage14-class-body-before-arity",
+      "input": "tests/fixtures/m2/types-stage14-class-body-before-arity.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:classes",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage14-class-arity-valid",
+      "input": "tests/fixtures/m2/types-stage14-class-arity-valid.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:classes",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "types-stage14-shadow-applied-union-diagnostic",
+      "input": "tests/fixtures/m2/types-stage14-shadow-applied-union-diagnostic.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:generics",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
     }
   ]
 }

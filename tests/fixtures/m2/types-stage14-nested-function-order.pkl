@@ -1,0 +1,4 @@
+module stage14.types
+typealias Broken = BrokenMissing
+typealias A = ((Missing) -> Broken) -> Int
+result = A

@@ -1,0 +1,5 @@
+module stage14.types
+typealias Broken = BrokenMissing
+typealias Inner<T> = Missing
+typealias A = Inner<Broken>
+result = A

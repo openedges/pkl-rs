@@ -1,0 +1,5 @@
+module stage14.types
+class C { p: ClassMissing }
+typealias A = C | Missing
+class D extends A {}
+result = D

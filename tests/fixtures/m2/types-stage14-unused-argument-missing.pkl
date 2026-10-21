@@ -1,0 +1,5 @@
+module stage14.types
+typealias Broken = BrokenMissing
+typealias A<T> = Int
+p: A<Missing> = 1
+result = p

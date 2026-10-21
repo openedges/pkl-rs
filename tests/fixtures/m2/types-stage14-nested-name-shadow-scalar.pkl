@@ -1,0 +1,5 @@
+module stage14.types
+typealias Inner = InnerMissing
+typealias A<Inner> = List<Inner>
+p: A<String> = List("ok")
+result = p[0]

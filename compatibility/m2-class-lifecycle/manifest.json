@@ -196,6 +196,41 @@
       "source": "types-stage13-alias-deferred-combined.pkl",
       "expressions": "types-stage13-alias-deferred-combined.expressions",
       "note": "Failed alias publication followed by typed class, deferred type, construction, and superclass uses; complete errors and retry order retained."
+    },
+    {
+      "expressions": "types-stage14-ordering-missing-first.expressions",
+      "group": "T14",
+      "id": "types-stage14-ordering-missing-first",
+      "note": "Ordered type resolution, generic scope, incomplete publication, and deferred uses share one evaluator; separate from original class and Stage13 alias subtotals.",
+      "source": "types-stage14-ordering-missing-first.pkl"
+    },
+    {
+      "expressions": "types-stage14-ordering-alias-first.expressions",
+      "group": "T14",
+      "id": "types-stage14-ordering-alias-first",
+      "note": "Ordered type resolution, generic scope, incomplete publication, and deferred uses share one evaluator; separate from original class and Stage13 alias subtotals.",
+      "source": "types-stage14-ordering-alias-first.pkl"
+    },
+    {
+      "expressions": "types-stage14-shadowing.expressions",
+      "group": "T14",
+      "id": "types-stage14-shadowing",
+      "note": "Ordered type resolution, generic scope, incomplete publication, and deferred uses share one evaluator; separate from original class and Stage13 alias subtotals.",
+      "source": "types-stage14-shadowing.pkl"
+    },
+    {
+      "expressions": "types-stage14-nested-arguments.expressions",
+      "group": "T14",
+      "id": "types-stage14-nested-arguments",
+      "note": "Ordered type resolution, generic scope, incomplete publication, and deferred uses share one evaluator; separate from original class and Stage13 alias subtotals.",
+      "source": "types-stage14-nested-arguments.pkl"
+    },
+    {
+      "expressions": "types-stage14-unfinished-arguments.expressions",
+      "group": "T14",
+      "id": "types-stage14-unfinished-arguments",
+      "note": "Ordered type resolution, generic scope, incomplete publication, and deferred uses share one evaluator; separate from original class and Stage13 alias subtotals.",
+      "source": "types-stage14-unfinished-arguments.pkl"
     }
   ],
   "unexecuted_groups": [

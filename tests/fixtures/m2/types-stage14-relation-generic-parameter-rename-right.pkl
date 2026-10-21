@@ -1,0 +1,5 @@
+module stage14.types
+typealias T = ShadowMissing
+typealias A<X> = X
+p: A<String> = "ok"
+result = p

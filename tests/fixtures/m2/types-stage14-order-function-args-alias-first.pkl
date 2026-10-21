@@ -1,0 +1,5 @@
+module stage14.types
+typealias Broken = BrokenMissing
+typealias Pair<X, Y> = List<X>
+typealias A = (Broken, Missing) -> Int
+result = A
