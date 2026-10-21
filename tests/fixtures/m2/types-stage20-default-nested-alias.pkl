@@ -1,0 +1,6 @@
+class C { p = 1 }
+class D { p = 2 }
+typealias Nullable = C?
+typealias Pick<T> = T?
+typealias A<T> = Int((new Listing<Mapping<String,T>> {new {["k"] {}}})[0]["k"].p > 0)
+result: A<Nullable> = 1

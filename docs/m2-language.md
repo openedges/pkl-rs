@@ -201,6 +201,16 @@ stack-overflow diagnostic. Reference metadata traversal within one instruction
 and output expansion retain resource and cancellation-latency limitations. The
 complete generic, const, and diagnostic corpus remains open.
 
+Stage 20 retains a nullable type's inner default in the evaluator-owned heap.
+Selected cases distinguish empty amendments, which expose one attached default,
+from amendments with members, which unwrap nested defaults. Null equality,
+hashing, type checks, and output remain independent of the attachment;
+null-propagating operations discard it. Generic collection defaults use the
+existing scheduler and GC roots. Captured closures and Host failure, retry,
+cancellation, isolation, and terminal cleanup have separate lifecycle checks.
+Direct generic constructors and remaining shared-let and Reference differences
+remain outside this selected contract.
+
 A complete runtime type-resolution model, general imported types, annotation
 syntax, and full module initialization/caching remain open requirements. The
 persistent adapter requires an acquired module; module-entry failures do not

@@ -1,0 +1,3 @@
+abstract class C { p = 1 }
+value: C?
+result = value == null

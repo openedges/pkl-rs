@@ -84,7 +84,7 @@ pub fn hex(bytes: &[u8]) -> String {
 }
 pub fn encode_value(value: Value) -> String {
     match value {
-        Value::Null => "null\t".into(),
+        Value::Null | Value::NullWithDefault(_) => "null\t".into(),
         Value::Bool(v) => format!("bool\t{v}"),
         Value::Int(v) => format!("int\t{v}"),
         Value::Float(v) => format!("float\t{:016x}", v.to_bits()),

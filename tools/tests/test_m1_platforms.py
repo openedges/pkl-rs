@@ -78,6 +78,9 @@ class PlatformEvidenceTests(unittest.TestCase):
             'm2-local-resolution-recursive-sequences',
             'm2-local-resolution-owners-sequences',
             'm2-local-resolution-wrappers-sequences',
+            'm2-nullable-default-listing-sequences',
+            'm2-nullable-default-mapping-sequences',
+            'm2-nullable-default-nested-sequences',
         }
         names = sorted(m1_platforms.REQUIRED_SCENARIOS)
         valid = {'nodeChecks': names, 'browserChecks': names, 'browserErrors': [],

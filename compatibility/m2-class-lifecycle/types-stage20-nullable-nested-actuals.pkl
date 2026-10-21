@@ -1,0 +1,11 @@
+class C { p = 1 }
+class D { p = 2 }
+class Broken { p = throw("nullable default failure") }
+typealias Pick<T> = T?
+typealias A<T> = Int((new Listing<Mapping<String,T>> {new {["k"] {}}})[0]["k"].p == this)
+one: A<C?> = 1
+two: A<D?> = 2
+viaAlias: A<Pick<D>> = 2
+bad: A<Broken?> = 1
+missing: A<Int?> = 1
+stable = 42

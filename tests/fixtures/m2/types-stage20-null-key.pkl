@@ -1,0 +1,4 @@
+class C { p = 1 }
+typealias N = C?
+value: N
+result = (new Mapping {[value] = "ok"})[null]

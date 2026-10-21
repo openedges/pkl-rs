@@ -24107,6 +24107,813 @@
         "semantic:collections",
         "semantic:diagnostics"
       ]
+    },
+    {
+      "id": "types-stage20-default-listing-class",
+      "input": "tests/fixtures/m2/types-stage20-default-listing-class.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:lazy-evaluation",
+        "semantic:unions",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:collections",
+        "semantic:classes"
+      ],
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "types-stage20-default-listing-class",
+          "types-stage20-default-listing-nullable",
+          "types-stage20-default-listing-alias",
+          "types-stage20-default-listing-generic-alias",
+          "types-stage20-default-listing-union",
+          "types-stage20-default-listing-nullable-union"
+        ],
+        "domain": "A class default remains usable through nullable types, nullable aliases and nullable default unions when an inferred listing element is amended."
+      }
+    },
+    {
+      "id": "types-stage20-default-listing-nullable",
+      "input": "tests/fixtures/m2/types-stage20-default-listing-nullable.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:lazy-evaluation",
+        "semantic:unions",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:collections",
+        "semantic:classes"
+      ],
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "types-stage20-default-listing-class",
+          "types-stage20-default-listing-nullable",
+          "types-stage20-default-listing-alias",
+          "types-stage20-default-listing-generic-alias",
+          "types-stage20-default-listing-union",
+          "types-stage20-default-listing-nullable-union"
+        ],
+        "domain": "A class default remains usable through nullable types, nullable aliases and nullable default unions when an inferred listing element is amended."
+      }
+    },
+    {
+      "id": "types-stage20-default-listing-alias",
+      "input": "tests/fixtures/m2/types-stage20-default-listing-alias.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:lazy-evaluation",
+        "semantic:unions",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:collections",
+        "semantic:classes"
+      ],
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "types-stage20-default-listing-class",
+          "types-stage20-default-listing-nullable",
+          "types-stage20-default-listing-alias",
+          "types-stage20-default-listing-generic-alias",
+          "types-stage20-default-listing-union",
+          "types-stage20-default-listing-nullable-union"
+        ],
+        "domain": "A class default remains usable through nullable types, nullable aliases and nullable default unions when an inferred listing element is amended."
+      }
+    },
+    {
+      "id": "types-stage20-default-listing-generic-alias",
+      "input": "tests/fixtures/m2/types-stage20-default-listing-generic-alias.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:lazy-evaluation",
+        "semantic:unions",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:collections",
+        "semantic:classes"
+      ],
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "types-stage20-default-listing-class",
+          "types-stage20-default-listing-nullable",
+          "types-stage20-default-listing-alias",
+          "types-stage20-default-listing-generic-alias",
+          "types-stage20-default-listing-union",
+          "types-stage20-default-listing-nullable-union"
+        ],
+        "domain": "A class default remains usable through nullable types, nullable aliases and nullable default unions when an inferred listing element is amended."
+      }
+    },
+    {
+      "id": "types-stage20-default-listing-union",
+      "input": "tests/fixtures/m2/types-stage20-default-listing-union.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:lazy-evaluation",
+        "semantic:unions",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:collections",
+        "semantic:classes"
+      ],
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "types-stage20-default-listing-class",
+          "types-stage20-default-listing-nullable",
+          "types-stage20-default-listing-alias",
+          "types-stage20-default-listing-generic-alias",
+          "types-stage20-default-listing-union",
+          "types-stage20-default-listing-nullable-union"
+        ],
+        "domain": "A class default remains usable through nullable types, nullable aliases and nullable default unions when an inferred listing element is amended."
+      }
+    },
+    {
+      "id": "types-stage20-default-listing-nullable-union",
+      "input": "tests/fixtures/m2/types-stage20-default-listing-nullable-union.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:lazy-evaluation",
+        "semantic:unions",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:collections",
+        "semantic:classes"
+      ],
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "types-stage20-default-listing-class",
+          "types-stage20-default-listing-nullable",
+          "types-stage20-default-listing-alias",
+          "types-stage20-default-listing-generic-alias",
+          "types-stage20-default-listing-union",
+          "types-stage20-default-listing-nullable-union"
+        ],
+        "domain": "A class default remains usable through nullable types, nullable aliases and nullable default unions when an inferred listing element is amended."
+      }
+    },
+    {
+      "id": "types-stage20-default-listing-missing",
+      "input": "tests/fixtures/m2/types-stage20-default-listing-missing.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:types",
+        "semantic:lazy-evaluation",
+        "semantic:unions",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:collections",
+        "semantic:classes",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "types-stage20-default-mapping-class",
+      "input": "tests/fixtures/m2/types-stage20-default-mapping-class.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:lazy-evaluation",
+        "semantic:unions",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:collections",
+        "semantic:classes"
+      ],
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "types-stage20-default-mapping-class",
+          "types-stage20-default-mapping-nullable",
+          "types-stage20-default-mapping-alias",
+          "types-stage20-default-mapping-generic-alias",
+          "types-stage20-default-mapping-union",
+          "types-stage20-default-mapping-nullable-union"
+        ],
+        "domain": "A class default remains usable through nullable types, nullable aliases and nullable default unions when an inferred mapping element is amended."
+      }
+    },
+    {
+      "id": "types-stage20-default-mapping-nullable",
+      "input": "tests/fixtures/m2/types-stage20-default-mapping-nullable.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:lazy-evaluation",
+        "semantic:unions",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:collections",
+        "semantic:classes"
+      ],
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "types-stage20-default-mapping-class",
+          "types-stage20-default-mapping-nullable",
+          "types-stage20-default-mapping-alias",
+          "types-stage20-default-mapping-generic-alias",
+          "types-stage20-default-mapping-union",
+          "types-stage20-default-mapping-nullable-union"
+        ],
+        "domain": "A class default remains usable through nullable types, nullable aliases and nullable default unions when an inferred mapping element is amended."
+      }
+    },
+    {
+      "id": "types-stage20-default-mapping-alias",
+      "input": "tests/fixtures/m2/types-stage20-default-mapping-alias.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:lazy-evaluation",
+        "semantic:unions",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:collections",
+        "semantic:classes"
+      ],
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "types-stage20-default-mapping-class",
+          "types-stage20-default-mapping-nullable",
+          "types-stage20-default-mapping-alias",
+          "types-stage20-default-mapping-generic-alias",
+          "types-stage20-default-mapping-union",
+          "types-stage20-default-mapping-nullable-union"
+        ],
+        "domain": "A class default remains usable through nullable types, nullable aliases and nullable default unions when an inferred mapping element is amended."
+      }
+    },
+    {
+      "id": "types-stage20-default-mapping-generic-alias",
+      "input": "tests/fixtures/m2/types-stage20-default-mapping-generic-alias.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:lazy-evaluation",
+        "semantic:unions",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:collections",
+        "semantic:classes"
+      ],
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "types-stage20-default-mapping-class",
+          "types-stage20-default-mapping-nullable",
+          "types-stage20-default-mapping-alias",
+          "types-stage20-default-mapping-generic-alias",
+          "types-stage20-default-mapping-union",
+          "types-stage20-default-mapping-nullable-union"
+        ],
+        "domain": "A class default remains usable through nullable types, nullable aliases and nullable default unions when an inferred mapping element is amended."
+      }
+    },
+    {
+      "id": "types-stage20-default-mapping-union",
+      "input": "tests/fixtures/m2/types-stage20-default-mapping-union.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:lazy-evaluation",
+        "semantic:unions",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:collections",
+        "semantic:classes"
+      ],
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "types-stage20-default-mapping-class",
+          "types-stage20-default-mapping-nullable",
+          "types-stage20-default-mapping-alias",
+          "types-stage20-default-mapping-generic-alias",
+          "types-stage20-default-mapping-union",
+          "types-stage20-default-mapping-nullable-union"
+        ],
+        "domain": "A class default remains usable through nullable types, nullable aliases and nullable default unions when an inferred mapping element is amended."
+      }
+    },
+    {
+      "id": "types-stage20-default-mapping-nullable-union",
+      "input": "tests/fixtures/m2/types-stage20-default-mapping-nullable-union.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:lazy-evaluation",
+        "semantic:unions",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:collections",
+        "semantic:classes"
+      ],
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "types-stage20-default-mapping-class",
+          "types-stage20-default-mapping-nullable",
+          "types-stage20-default-mapping-alias",
+          "types-stage20-default-mapping-generic-alias",
+          "types-stage20-default-mapping-union",
+          "types-stage20-default-mapping-nullable-union"
+        ],
+        "domain": "A class default remains usable through nullable types, nullable aliases and nullable default unions when an inferred mapping element is amended."
+      }
+    },
+    {
+      "id": "types-stage20-default-mapping-missing",
+      "input": "tests/fixtures/m2/types-stage20-default-mapping-missing.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:types",
+        "semantic:lazy-evaluation",
+        "semantic:unions",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:collections",
+        "semantic:classes",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "types-stage20-default-nested-class",
+      "input": "tests/fixtures/m2/types-stage20-default-nested-class.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:lazy-evaluation",
+        "semantic:unions",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:collections",
+        "semantic:classes"
+      ],
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "types-stage20-default-nested-class",
+          "types-stage20-default-nested-nullable",
+          "types-stage20-default-nested-alias",
+          "types-stage20-default-nested-generic-alias",
+          "types-stage20-default-nested-union",
+          "types-stage20-default-nested-nullable-union"
+        ],
+        "domain": "A class default remains usable through nullable types, nullable aliases and nullable default unions when an inferred nested element is amended."
+      }
+    },
+    {
+      "id": "types-stage20-default-nested-nullable",
+      "input": "tests/fixtures/m2/types-stage20-default-nested-nullable.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:lazy-evaluation",
+        "semantic:unions",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:collections",
+        "semantic:classes"
+      ],
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "types-stage20-default-nested-class",
+          "types-stage20-default-nested-nullable",
+          "types-stage20-default-nested-alias",
+          "types-stage20-default-nested-generic-alias",
+          "types-stage20-default-nested-union",
+          "types-stage20-default-nested-nullable-union"
+        ],
+        "domain": "A class default remains usable through nullable types, nullable aliases and nullable default unions when an inferred nested element is amended."
+      }
+    },
+    {
+      "id": "types-stage20-default-nested-alias",
+      "input": "tests/fixtures/m2/types-stage20-default-nested-alias.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:lazy-evaluation",
+        "semantic:unions",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:collections",
+        "semantic:classes"
+      ],
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "types-stage20-default-nested-class",
+          "types-stage20-default-nested-nullable",
+          "types-stage20-default-nested-alias",
+          "types-stage20-default-nested-generic-alias",
+          "types-stage20-default-nested-union",
+          "types-stage20-default-nested-nullable-union"
+        ],
+        "domain": "A class default remains usable through nullable types, nullable aliases and nullable default unions when an inferred nested element is amended."
+      }
+    },
+    {
+      "id": "types-stage20-default-nested-generic-alias",
+      "input": "tests/fixtures/m2/types-stage20-default-nested-generic-alias.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:lazy-evaluation",
+        "semantic:unions",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:collections",
+        "semantic:classes"
+      ],
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "types-stage20-default-nested-class",
+          "types-stage20-default-nested-nullable",
+          "types-stage20-default-nested-alias",
+          "types-stage20-default-nested-generic-alias",
+          "types-stage20-default-nested-union",
+          "types-stage20-default-nested-nullable-union"
+        ],
+        "domain": "A class default remains usable through nullable types, nullable aliases and nullable default unions when an inferred nested element is amended."
+      }
+    },
+    {
+      "id": "types-stage20-default-nested-union",
+      "input": "tests/fixtures/m2/types-stage20-default-nested-union.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:lazy-evaluation",
+        "semantic:unions",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:collections",
+        "semantic:classes"
+      ],
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "types-stage20-default-nested-class",
+          "types-stage20-default-nested-nullable",
+          "types-stage20-default-nested-alias",
+          "types-stage20-default-nested-generic-alias",
+          "types-stage20-default-nested-union",
+          "types-stage20-default-nested-nullable-union"
+        ],
+        "domain": "A class default remains usable through nullable types, nullable aliases and nullable default unions when an inferred nested element is amended."
+      }
+    },
+    {
+      "id": "types-stage20-default-nested-nullable-union",
+      "input": "tests/fixtures/m2/types-stage20-default-nested-nullable-union.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:lazy-evaluation",
+        "semantic:unions",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:collections",
+        "semantic:classes"
+      ],
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "types-stage20-default-nested-class",
+          "types-stage20-default-nested-nullable",
+          "types-stage20-default-nested-alias",
+          "types-stage20-default-nested-generic-alias",
+          "types-stage20-default-nested-union",
+          "types-stage20-default-nested-nullable-union"
+        ],
+        "domain": "A class default remains usable through nullable types, nullable aliases and nullable default unions when an inferred nested element is amended."
+      }
+    },
+    {
+      "id": "types-stage20-default-nested-missing",
+      "input": "tests/fixtures/m2/types-stage20-default-nested-missing.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:types",
+        "semantic:lazy-evaluation",
+        "semantic:unions",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:collections",
+        "semantic:classes",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "types-stage20-static-empty",
+      "input": "tests/fixtures/m2/types-stage20-static-empty.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:lazy-evaluation",
+        "semantic:unions",
+        "semantic:type-aliases",
+        "semantic:amendment",
+        "semantic:classes"
+      ]
+    },
+    {
+      "id": "types-stage20-static-nonempty",
+      "input": "tests/fixtures/m2/types-stage20-static-nonempty.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:lazy-evaluation",
+        "semantic:unions",
+        "semantic:type-aliases",
+        "semantic:amendment",
+        "semantic:classes"
+      ]
+    },
+    {
+      "id": "types-stage20-nested-empty",
+      "input": "tests/fixtures/m2/types-stage20-nested-empty.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:lazy-evaluation",
+        "semantic:unions",
+        "semantic:type-aliases",
+        "semantic:amendment",
+        "semantic:classes"
+      ]
+    },
+    {
+      "id": "types-stage20-nested-nonempty",
+      "input": "tests/fixtures/m2/types-stage20-nested-nonempty.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:lazy-evaluation",
+        "semantic:unions",
+        "semantic:type-aliases",
+        "semantic:amendment",
+        "semantic:classes"
+      ]
+    },
+    {
+      "id": "types-stage20-nested-double-empty",
+      "input": "tests/fixtures/m2/types-stage20-nested-double-empty.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:lazy-evaluation",
+        "semantic:unions",
+        "semantic:type-aliases",
+        "semantic:amendment",
+        "semantic:classes"
+      ]
+    },
+    {
+      "id": "types-stage20-null-equality",
+      "input": "tests/fixtures/m2/types-stage20-null-equality.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:lazy-evaluation",
+        "semantic:unions",
+        "semantic:operators"
+      ]
+    },
+    {
+      "id": "types-stage20-null-coalescing",
+      "input": "tests/fixtures/m2/types-stage20-null-coalescing.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:lazy-evaluation",
+        "semantic:unions",
+        "semantic:operators",
+        "semantic:control-flow"
+      ]
+    },
+    {
+      "id": "types-stage20-null-type-test",
+      "input": "tests/fixtures/m2/types-stage20-null-type-test.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:lazy-evaluation",
+        "semantic:unions",
+        "semantic:operators",
+        "semantic:type-tests-casts"
+      ]
+    },
+    {
+      "id": "types-stage20-null-nonnull",
+      "input": "tests/fixtures/m2/types-stage20-null-nonnull.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:types",
+        "semantic:lazy-evaluation",
+        "semantic:unions",
+        "semantic:operators",
+        "semantic:control-flow",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "types-stage20-null-propagation",
+      "input": "tests/fixtures/m2/types-stage20-null-propagation.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:lazy-evaluation",
+        "semantic:unions",
+        "semantic:operators",
+        "semantic:control-flow"
+      ]
+    },
+    {
+      "id": "types-stage20-primitive-empty",
+      "input": "tests/fixtures/m2/types-stage20-primitive-empty.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:lazy-evaluation",
+        "semantic:unions",
+        "semantic:type-aliases",
+        "semantic:amendment",
+        "semantic:classes"
+      ]
+    },
+    {
+      "id": "types-stage20-generic-nested-empty",
+      "input": "tests/fixtures/m2/types-stage20-generic-nested-empty.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:lazy-evaluation",
+        "semantic:unions",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:collections",
+        "semantic:classes"
+      ]
+    },
+    {
+      "id": "types-stage20-generic-nested-nonempty",
+      "input": "tests/fixtures/m2/types-stage20-generic-nested-nonempty.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:lazy-evaluation",
+        "semantic:unions",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:collections",
+        "semantic:classes"
+      ]
+    },
+    {
+      "id": "types-stage20-null-structural",
+      "input": "tests/fixtures/m2/types-stage20-null-structural.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:lazy-evaluation",
+        "semantic:unions",
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects"
+      ]
+    },
+    {
+      "id": "types-stage20-null-key",
+      "input": "tests/fixtures/m2/types-stage20-null-key.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:lazy-evaluation",
+        "semantic:unions",
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects"
+      ]
+    },
+    {
+      "id": "types-stage20-null-key-reverse",
+      "input": "tests/fixtures/m2/types-stage20-null-key-reverse.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:lazy-evaluation",
+        "semantic:unions",
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects"
+      ]
+    },
+    {
+      "id": "types-stage20-abstract-null",
+      "input": "tests/fixtures/m2/types-stage20-abstract-null.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:lazy-evaluation",
+        "semantic:unions",
+        "semantic:operators"
+      ]
+    },
+    {
+      "id": "types-stage20-abstract-lazy",
+      "input": "tests/fixtures/m2/types-stage20-abstract-lazy.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:types",
+        "semantic:lazy-evaluation",
+        "semantic:unions",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:collections",
+        "semantic:classes",
+        "semantic:diagnostics"
+      ]
     }
   ],
   "schema_version": 1,

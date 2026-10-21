@@ -37387,6 +37387,1086 @@
       ]
     },
     {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage20-default-listing-class",
+      "input": "tests/fixtures/m2/types-stage20-default-listing-class.pkl",
+      "input_sha256": "2be1dfabde1c6e68eececd33752d40c810c3cd5fbb8d2d9987c229af78e1cb13",
+      "metamorphic_relation": {
+        "case_ids": [
+          "types-stage20-default-listing-class",
+          "types-stage20-default-listing-nullable",
+          "types-stage20-default-listing-alias",
+          "types-stage20-default-listing-generic-alias",
+          "types-stage20-default-listing-union",
+          "types-stage20-default-listing-nullable-union"
+        ],
+        "domain": "A class default remains usable through nullable types, nullable aliases and nullable default unions when an inferred listing element is amended.",
+        "kind": "equal-stdout"
+      },
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:lazy-evaluation",
+        "semantic:unions",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:collections",
+        "semantic:classes"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage20-default-listing-nullable",
+      "input": "tests/fixtures/m2/types-stage20-default-listing-nullable.pkl",
+      "input_sha256": "895f673fb6646aa5463fec315fc415c73062c4c46fd29a1537f1a0c17e466514",
+      "metamorphic_relation": {
+        "case_ids": [
+          "types-stage20-default-listing-class",
+          "types-stage20-default-listing-nullable",
+          "types-stage20-default-listing-alias",
+          "types-stage20-default-listing-generic-alias",
+          "types-stage20-default-listing-union",
+          "types-stage20-default-listing-nullable-union"
+        ],
+        "domain": "A class default remains usable through nullable types, nullable aliases and nullable default unions when an inferred listing element is amended.",
+        "kind": "equal-stdout"
+      },
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:lazy-evaluation",
+        "semantic:unions",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:collections",
+        "semantic:classes"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage20-default-listing-alias",
+      "input": "tests/fixtures/m2/types-stage20-default-listing-alias.pkl",
+      "input_sha256": "d5f17572773864761e34a34e6e312a40324fd8a8f22dc46c9729bfe5807a7ee3",
+      "metamorphic_relation": {
+        "case_ids": [
+          "types-stage20-default-listing-class",
+          "types-stage20-default-listing-nullable",
+          "types-stage20-default-listing-alias",
+          "types-stage20-default-listing-generic-alias",
+          "types-stage20-default-listing-union",
+          "types-stage20-default-listing-nullable-union"
+        ],
+        "domain": "A class default remains usable through nullable types, nullable aliases and nullable default unions when an inferred listing element is amended.",
+        "kind": "equal-stdout"
+      },
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:lazy-evaluation",
+        "semantic:unions",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:collections",
+        "semantic:classes"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage20-default-listing-generic-alias",
+      "input": "tests/fixtures/m2/types-stage20-default-listing-generic-alias.pkl",
+      "input_sha256": "b4f0ff6a606c957bf669cbcba1e77f6a2f6202a139d9685467561dc6fae285fa",
+      "metamorphic_relation": {
+        "case_ids": [
+          "types-stage20-default-listing-class",
+          "types-stage20-default-listing-nullable",
+          "types-stage20-default-listing-alias",
+          "types-stage20-default-listing-generic-alias",
+          "types-stage20-default-listing-union",
+          "types-stage20-default-listing-nullable-union"
+        ],
+        "domain": "A class default remains usable through nullable types, nullable aliases and nullable default unions when an inferred listing element is amended.",
+        "kind": "equal-stdout"
+      },
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:lazy-evaluation",
+        "semantic:unions",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:collections",
+        "semantic:classes"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage20-default-listing-union",
+      "input": "tests/fixtures/m2/types-stage20-default-listing-union.pkl",
+      "input_sha256": "df08267730bc252575476ea67c90c3f630017199f020c13d4738d40cc1daf834",
+      "metamorphic_relation": {
+        "case_ids": [
+          "types-stage20-default-listing-class",
+          "types-stage20-default-listing-nullable",
+          "types-stage20-default-listing-alias",
+          "types-stage20-default-listing-generic-alias",
+          "types-stage20-default-listing-union",
+          "types-stage20-default-listing-nullable-union"
+        ],
+        "domain": "A class default remains usable through nullable types, nullable aliases and nullable default unions when an inferred listing element is amended.",
+        "kind": "equal-stdout"
+      },
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:lazy-evaluation",
+        "semantic:unions",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:collections",
+        "semantic:classes"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage20-default-listing-nullable-union",
+      "input": "tests/fixtures/m2/types-stage20-default-listing-nullable-union.pkl",
+      "input_sha256": "0b243b3c76dbdc0641d5c68e676763ec7ec0e182e888fe8a6196ac317813713b",
+      "metamorphic_relation": {
+        "case_ids": [
+          "types-stage20-default-listing-class",
+          "types-stage20-default-listing-nullable",
+          "types-stage20-default-listing-alias",
+          "types-stage20-default-listing-generic-alias",
+          "types-stage20-default-listing-union",
+          "types-stage20-default-listing-nullable-union"
+        ],
+        "domain": "A class default remains usable through nullable types, nullable aliases and nullable default unions when an inferred listing element is amended.",
+        "kind": "equal-stdout"
+      },
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:lazy-evaluation",
+        "semantic:unions",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:collections",
+        "semantic:classes"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage20-default-listing-missing",
+      "input": "tests/fixtures/m2/types-stage20-default-listing-missing.pkl",
+      "input_sha256": "c4a2ade24999c5134dee0314d9218e2a64e2b5814107ea0a9a923bd7f6909e07",
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:lazy-evaluation",
+        "semantic:unions",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:collections",
+        "semantic:classes",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage20-default-mapping-class",
+      "input": "tests/fixtures/m2/types-stage20-default-mapping-class.pkl",
+      "input_sha256": "69f78d9a91015358164076b27b26c2ef7420a05b62ec3aa7387fb30fb3e2e727",
+      "metamorphic_relation": {
+        "case_ids": [
+          "types-stage20-default-mapping-class",
+          "types-stage20-default-mapping-nullable",
+          "types-stage20-default-mapping-alias",
+          "types-stage20-default-mapping-generic-alias",
+          "types-stage20-default-mapping-union",
+          "types-stage20-default-mapping-nullable-union"
+        ],
+        "domain": "A class default remains usable through nullable types, nullable aliases and nullable default unions when an inferred mapping element is amended.",
+        "kind": "equal-stdout"
+      },
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:lazy-evaluation",
+        "semantic:unions",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:collections",
+        "semantic:classes"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage20-default-mapping-nullable",
+      "input": "tests/fixtures/m2/types-stage20-default-mapping-nullable.pkl",
+      "input_sha256": "6633bac32d2f32a57712504f467ccb6b6dd61cc2f5c00d3e0705a2eec185b67a",
+      "metamorphic_relation": {
+        "case_ids": [
+          "types-stage20-default-mapping-class",
+          "types-stage20-default-mapping-nullable",
+          "types-stage20-default-mapping-alias",
+          "types-stage20-default-mapping-generic-alias",
+          "types-stage20-default-mapping-union",
+          "types-stage20-default-mapping-nullable-union"
+        ],
+        "domain": "A class default remains usable through nullable types, nullable aliases and nullable default unions when an inferred mapping element is amended.",
+        "kind": "equal-stdout"
+      },
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:lazy-evaluation",
+        "semantic:unions",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:collections",
+        "semantic:classes"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage20-default-mapping-alias",
+      "input": "tests/fixtures/m2/types-stage20-default-mapping-alias.pkl",
+      "input_sha256": "588936790241d6485360c755520dff57f857d37cd9ec4ca92f990f56d3054278",
+      "metamorphic_relation": {
+        "case_ids": [
+          "types-stage20-default-mapping-class",
+          "types-stage20-default-mapping-nullable",
+          "types-stage20-default-mapping-alias",
+          "types-stage20-default-mapping-generic-alias",
+          "types-stage20-default-mapping-union",
+          "types-stage20-default-mapping-nullable-union"
+        ],
+        "domain": "A class default remains usable through nullable types, nullable aliases and nullable default unions when an inferred mapping element is amended.",
+        "kind": "equal-stdout"
+      },
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:lazy-evaluation",
+        "semantic:unions",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:collections",
+        "semantic:classes"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage20-default-mapping-generic-alias",
+      "input": "tests/fixtures/m2/types-stage20-default-mapping-generic-alias.pkl",
+      "input_sha256": "ac8e096568edaf369e4847e125cfebda6908595b46e933fe55bcdd66a609efc6",
+      "metamorphic_relation": {
+        "case_ids": [
+          "types-stage20-default-mapping-class",
+          "types-stage20-default-mapping-nullable",
+          "types-stage20-default-mapping-alias",
+          "types-stage20-default-mapping-generic-alias",
+          "types-stage20-default-mapping-union",
+          "types-stage20-default-mapping-nullable-union"
+        ],
+        "domain": "A class default remains usable through nullable types, nullable aliases and nullable default unions when an inferred mapping element is amended.",
+        "kind": "equal-stdout"
+      },
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:lazy-evaluation",
+        "semantic:unions",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:collections",
+        "semantic:classes"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage20-default-mapping-union",
+      "input": "tests/fixtures/m2/types-stage20-default-mapping-union.pkl",
+      "input_sha256": "eb9c304a5be1d2b970eb2562bb0e43be6bbb25b0164451e25394a91b75303bf3",
+      "metamorphic_relation": {
+        "case_ids": [
+          "types-stage20-default-mapping-class",
+          "types-stage20-default-mapping-nullable",
+          "types-stage20-default-mapping-alias",
+          "types-stage20-default-mapping-generic-alias",
+          "types-stage20-default-mapping-union",
+          "types-stage20-default-mapping-nullable-union"
+        ],
+        "domain": "A class default remains usable through nullable types, nullable aliases and nullable default unions when an inferred mapping element is amended.",
+        "kind": "equal-stdout"
+      },
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:lazy-evaluation",
+        "semantic:unions",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:collections",
+        "semantic:classes"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage20-default-mapping-nullable-union",
+      "input": "tests/fixtures/m2/types-stage20-default-mapping-nullable-union.pkl",
+      "input_sha256": "f30ed7ec7417e49015d6bcd7217a6c05726a6bffe45a4e5fc564837d7f900a92",
+      "metamorphic_relation": {
+        "case_ids": [
+          "types-stage20-default-mapping-class",
+          "types-stage20-default-mapping-nullable",
+          "types-stage20-default-mapping-alias",
+          "types-stage20-default-mapping-generic-alias",
+          "types-stage20-default-mapping-union",
+          "types-stage20-default-mapping-nullable-union"
+        ],
+        "domain": "A class default remains usable through nullable types, nullable aliases and nullable default unions when an inferred mapping element is amended.",
+        "kind": "equal-stdout"
+      },
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:lazy-evaluation",
+        "semantic:unions",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:collections",
+        "semantic:classes"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage20-default-mapping-missing",
+      "input": "tests/fixtures/m2/types-stage20-default-mapping-missing.pkl",
+      "input_sha256": "b94897bef4e6249297a95c465a2d67fd8d72bcdf31dbc5f529553853683ea077",
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:lazy-evaluation",
+        "semantic:unions",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:collections",
+        "semantic:classes",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage20-default-nested-class",
+      "input": "tests/fixtures/m2/types-stage20-default-nested-class.pkl",
+      "input_sha256": "91cdc42a67cc4481f907cf961f7409dcd3ab3514f7acfc5350a4f20663a2af81",
+      "metamorphic_relation": {
+        "case_ids": [
+          "types-stage20-default-nested-class",
+          "types-stage20-default-nested-nullable",
+          "types-stage20-default-nested-alias",
+          "types-stage20-default-nested-generic-alias",
+          "types-stage20-default-nested-union",
+          "types-stage20-default-nested-nullable-union"
+        ],
+        "domain": "A class default remains usable through nullable types, nullable aliases and nullable default unions when an inferred nested element is amended.",
+        "kind": "equal-stdout"
+      },
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:lazy-evaluation",
+        "semantic:unions",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:collections",
+        "semantic:classes"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage20-default-nested-nullable",
+      "input": "tests/fixtures/m2/types-stage20-default-nested-nullable.pkl",
+      "input_sha256": "b5fd30b8d4b052764bbfa20d81b5546290aba53fe7b4f2d3d4866f83f98dec35",
+      "metamorphic_relation": {
+        "case_ids": [
+          "types-stage20-default-nested-class",
+          "types-stage20-default-nested-nullable",
+          "types-stage20-default-nested-alias",
+          "types-stage20-default-nested-generic-alias",
+          "types-stage20-default-nested-union",
+          "types-stage20-default-nested-nullable-union"
+        ],
+        "domain": "A class default remains usable through nullable types, nullable aliases and nullable default unions when an inferred nested element is amended.",
+        "kind": "equal-stdout"
+      },
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:lazy-evaluation",
+        "semantic:unions",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:collections",
+        "semantic:classes"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage20-default-nested-alias",
+      "input": "tests/fixtures/m2/types-stage20-default-nested-alias.pkl",
+      "input_sha256": "66cb8dcc92e7eb721cec9785c84550e8765bacdb17122f65b47dab512383acba",
+      "metamorphic_relation": {
+        "case_ids": [
+          "types-stage20-default-nested-class",
+          "types-stage20-default-nested-nullable",
+          "types-stage20-default-nested-alias",
+          "types-stage20-default-nested-generic-alias",
+          "types-stage20-default-nested-union",
+          "types-stage20-default-nested-nullable-union"
+        ],
+        "domain": "A class default remains usable through nullable types, nullable aliases and nullable default unions when an inferred nested element is amended.",
+        "kind": "equal-stdout"
+      },
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:lazy-evaluation",
+        "semantic:unions",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:collections",
+        "semantic:classes"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage20-default-nested-generic-alias",
+      "input": "tests/fixtures/m2/types-stage20-default-nested-generic-alias.pkl",
+      "input_sha256": "cd294bd951625b3f42bd25620b8147581028268893e3efc9e20335e3ddbe387c",
+      "metamorphic_relation": {
+        "case_ids": [
+          "types-stage20-default-nested-class",
+          "types-stage20-default-nested-nullable",
+          "types-stage20-default-nested-alias",
+          "types-stage20-default-nested-generic-alias",
+          "types-stage20-default-nested-union",
+          "types-stage20-default-nested-nullable-union"
+        ],
+        "domain": "A class default remains usable through nullable types, nullable aliases and nullable default unions when an inferred nested element is amended.",
+        "kind": "equal-stdout"
+      },
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:lazy-evaluation",
+        "semantic:unions",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:collections",
+        "semantic:classes"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage20-default-nested-union",
+      "input": "tests/fixtures/m2/types-stage20-default-nested-union.pkl",
+      "input_sha256": "a997e2a60b394f3e421a60d887094dc1895ce5ecde319e6309696c6b9572fe9d",
+      "metamorphic_relation": {
+        "case_ids": [
+          "types-stage20-default-nested-class",
+          "types-stage20-default-nested-nullable",
+          "types-stage20-default-nested-alias",
+          "types-stage20-default-nested-generic-alias",
+          "types-stage20-default-nested-union",
+          "types-stage20-default-nested-nullable-union"
+        ],
+        "domain": "A class default remains usable through nullable types, nullable aliases and nullable default unions when an inferred nested element is amended.",
+        "kind": "equal-stdout"
+      },
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:lazy-evaluation",
+        "semantic:unions",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:collections",
+        "semantic:classes"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage20-default-nested-nullable-union",
+      "input": "tests/fixtures/m2/types-stage20-default-nested-nullable-union.pkl",
+      "input_sha256": "f5bc092e3804721b1dff0ca601b92c13ae0330e39dd48873f9388b616b6836b0",
+      "metamorphic_relation": {
+        "case_ids": [
+          "types-stage20-default-nested-class",
+          "types-stage20-default-nested-nullable",
+          "types-stage20-default-nested-alias",
+          "types-stage20-default-nested-generic-alias",
+          "types-stage20-default-nested-union",
+          "types-stage20-default-nested-nullable-union"
+        ],
+        "domain": "A class default remains usable through nullable types, nullable aliases and nullable default unions when an inferred nested element is amended.",
+        "kind": "equal-stdout"
+      },
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:lazy-evaluation",
+        "semantic:unions",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:collections",
+        "semantic:classes"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage20-default-nested-missing",
+      "input": "tests/fixtures/m2/types-stage20-default-nested-missing.pkl",
+      "input_sha256": "886f393ca9433d23439e57ccb913a67e31601a7be770329506b79d1a1288cebf",
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:lazy-evaluation",
+        "semantic:unions",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:collections",
+        "semantic:classes",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage20-static-empty",
+      "input": "tests/fixtures/m2/types-stage20-static-empty.pkl",
+      "input_sha256": "74a5d37dc818aed717ed5887e3c8158c696e8df0e4e620397f7342da2bbb2bc8",
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:lazy-evaluation",
+        "semantic:unions",
+        "semantic:type-aliases",
+        "semantic:amendment",
+        "semantic:classes"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage20-static-nonempty",
+      "input": "tests/fixtures/m2/types-stage20-static-nonempty.pkl",
+      "input_sha256": "defb435d03e30ef17ef12afe11231f812ceccb11e27d43bffff2c4205d4f84e1",
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:lazy-evaluation",
+        "semantic:unions",
+        "semantic:type-aliases",
+        "semantic:amendment",
+        "semantic:classes"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage20-nested-empty",
+      "input": "tests/fixtures/m2/types-stage20-nested-empty.pkl",
+      "input_sha256": "d9c805461de5676dbe0b63feeaee938c3625ab2fef58551bfa4292377498e478",
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:lazy-evaluation",
+        "semantic:unions",
+        "semantic:type-aliases",
+        "semantic:amendment",
+        "semantic:classes"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage20-nested-nonempty",
+      "input": "tests/fixtures/m2/types-stage20-nested-nonempty.pkl",
+      "input_sha256": "bf24c94760afc27367397fe55ec99c5a307985afcf414a77fa2c1de08927bf15",
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:lazy-evaluation",
+        "semantic:unions",
+        "semantic:type-aliases",
+        "semantic:amendment",
+        "semantic:classes"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage20-nested-double-empty",
+      "input": "tests/fixtures/m2/types-stage20-nested-double-empty.pkl",
+      "input_sha256": "785aa6346a99f6730671517cf6beb35d9c610ba851b0b47843b38fc1b2868613",
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:lazy-evaluation",
+        "semantic:unions",
+        "semantic:type-aliases",
+        "semantic:amendment",
+        "semantic:classes"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage20-null-equality",
+      "input": "tests/fixtures/m2/types-stage20-null-equality.pkl",
+      "input_sha256": "4551499fadfa5244976e18fdfd0e42fecf55f6986c378f516fdf52de2a612b74",
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:lazy-evaluation",
+        "semantic:unions",
+        "semantic:operators"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage20-null-coalescing",
+      "input": "tests/fixtures/m2/types-stage20-null-coalescing.pkl",
+      "input_sha256": "d79f9d479700bfdfa22c897b24df3504efbf0da256afbf0552029bf28a8edccd",
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:lazy-evaluation",
+        "semantic:unions",
+        "semantic:operators",
+        "semantic:control-flow"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage20-null-type-test",
+      "input": "tests/fixtures/m2/types-stage20-null-type-test.pkl",
+      "input_sha256": "0b750bc8e400356492a92d2588204da3ef65dc80228b8fb6a97383bb924df110",
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:lazy-evaluation",
+        "semantic:unions",
+        "semantic:operators",
+        "semantic:type-tests-casts"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage20-null-nonnull",
+      "input": "tests/fixtures/m2/types-stage20-null-nonnull.pkl",
+      "input_sha256": "e406c9e87a4df87a88e2080baa82527029607f24377d69cad030ae8f8e435046",
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:lazy-evaluation",
+        "semantic:unions",
+        "semantic:operators",
+        "semantic:control-flow",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage20-null-propagation",
+      "input": "tests/fixtures/m2/types-stage20-null-propagation.pkl",
+      "input_sha256": "fea57d610569abd9480c0a76b7b4e750e54610f1ba24c6ef70ad6c706f2f13cb",
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:lazy-evaluation",
+        "semantic:unions",
+        "semantic:operators",
+        "semantic:control-flow"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage20-primitive-empty",
+      "input": "tests/fixtures/m2/types-stage20-primitive-empty.pkl",
+      "input_sha256": "0b2551e085672199bd22054b87b529f8e53929c039ee6c2c771da409ae17e0d8",
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:lazy-evaluation",
+        "semantic:unions",
+        "semantic:type-aliases",
+        "semantic:amendment",
+        "semantic:classes"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage20-generic-nested-empty",
+      "input": "tests/fixtures/m2/types-stage20-generic-nested-empty.pkl",
+      "input_sha256": "71a1e37ce0507c026fdede854e74ed6a2858199621bfb20423cdc39149104595",
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:lazy-evaluation",
+        "semantic:unions",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:collections",
+        "semantic:classes"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage20-generic-nested-nonempty",
+      "input": "tests/fixtures/m2/types-stage20-generic-nested-nonempty.pkl",
+      "input_sha256": "06b6cb1cb49c9b7448b36bc9ec60a7ac7d5adeed1344f539d13cfa66a89c8a57",
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:lazy-evaluation",
+        "semantic:unions",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:collections",
+        "semantic:classes"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage20-null-structural",
+      "input": "tests/fixtures/m2/types-stage20-null-structural.pkl",
+      "input_sha256": "853591edb988a53a2b0f16a13859935132e82633d4ce35a1fa89cba3425217ef",
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:lazy-evaluation",
+        "semantic:unions",
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage20-null-key",
+      "input": "tests/fixtures/m2/types-stage20-null-key.pkl",
+      "input_sha256": "853828dbb96095e54fb8ed59648517faf37df47acce9e9cdeb480a110246178c",
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:lazy-evaluation",
+        "semantic:unions",
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage20-null-key-reverse",
+      "input": "tests/fixtures/m2/types-stage20-null-key-reverse.pkl",
+      "input_sha256": "bdbd3e6d7614465c88ccbedc9f9a6a4a4c1f05c41f7531e9c03960ead7cf2627",
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:lazy-evaluation",
+        "semantic:unions",
+        "semantic:operators",
+        "semantic:collections",
+        "semantic:objects"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage20-abstract-null",
+      "input": "tests/fixtures/m2/types-stage20-abstract-null.pkl",
+      "input_sha256": "410c3059ce77dfb8a10e42de90e426ae25a7e607041cd783522d8b41e852f8f0",
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:lazy-evaluation",
+        "semantic:unions",
+        "semantic:operators"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage20-abstract-lazy",
+      "input": "tests/fixtures/m2/types-stage20-abstract-lazy.pkl",
+      "input_sha256": "068546a152a9106c80c2f02557dede604c10e9f19bee06f0b11c3d1269fe29c4",
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:lazy-evaluation",
+        "semantic:unions",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:collections",
+        "semantic:classes",
+        "semantic:diagnostics"
+      ]
+    },
+    {
       "adapter": null,
       "execution": {
         "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
@@ -128799,9 +129879,9 @@
   "comparison_boundary": "evaluateExpressionString(ModuleSource.path(same absolute URI), expression) UTF-8 stdout; whole PklException.getMessage() UTF-8 stderr and exit 1; no trimming. Power assertions default to disabled; an explicit per-case power_assertions boolean enables the same option in both probes. Stringification alone is not typed value/API compatibility.",
   "completion": "Every required semantic/source requirement needs implementation/test mappings and complete passing execution. Pending/unmapped/unimplemented/mismatch remains a full-gate failure.",
   "counts": {
-    "cases": 2821,
+    "cases": 2860,
     "cases_by_execution": {
-      "ready": 1821,
+      "ready": 1860,
       "unimplemented": 960,
       "unmapped": 40
     },
@@ -129392,7 +130472,16 @@
           "types-stage13-reference-function-equality-same-constraint",
           "types-stage13-reference-function-equality-constraint-whitespace",
           "types-stage13-reference-function-equality-nullable-alias",
-          "types-stage13-reference-function-equality-list-alias"
+          "types-stage13-reference-function-equality-list-alias",
+          "types-stage20-null-equality",
+          "types-stage20-null-coalescing",
+          "types-stage20-null-type-test",
+          "types-stage20-null-nonnull",
+          "types-stage20-null-propagation",
+          "types-stage20-null-structural",
+          "types-stage20-null-key",
+          "types-stage20-null-key-reverse",
+          "types-stage20-abstract-null"
         ],
         "state": "partial"
       }
@@ -129475,7 +130564,10 @@
           "types-stage18-const-entry-key",
           "types-stage18-const-class-let",
           "types-stage18-class-for-module",
-          "types-stage18-following-const"
+          "types-stage18-following-const",
+          "types-stage20-null-coalescing",
+          "types-stage20-null-nonnull",
+          "types-stage20-null-propagation"
         ],
         "state": "partial"
       }
@@ -129832,52 +130924,52 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "8fd62f94814835e5ceaf7ffe2bfebb1fa52e49bf399b285c52ad5324d1b0bea8",
+            "sha256": "27366898e91bbf38c046eb4eae438e1e54a79c2e560168e81e67f71fe22422f5",
             "symbol": "initialize_member_types"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "8fd62f94814835e5ceaf7ffe2bfebb1fa52e49bf399b285c52ad5324d1b0bea8",
+            "sha256": "27366898e91bbf38c046eb4eae438e1e54a79c2e560168e81e67f71fe22422f5",
             "symbol": "validate_class_override"
           },
           {
             "path": "crates/pkl-runtime/src/vm/reference.rs",
-            "sha256": "4c10dd15dcf08d3e19d063f9ccc2fd9598c2d0dc953ecc41cb538692929ad330",
+            "sha256": "6610416634ade15f996177c072ddfa4bac0b390d2b96cfeafcea9c0681ee87ec",
             "symbol": "reference_candidate"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "8fd62f94814835e5ceaf7ffe2bfebb1fa52e49bf399b285c52ad5324d1b0bea8",
+            "sha256": "27366898e91bbf38c046eb4eae438e1e54a79c2e560168e81e67f71fe22422f5",
             "symbol": "force_key"
           },
           {
             "path": "crates/pkl-runtime/src/heap.rs",
-            "sha256": "4b5b88dabc0df00078c8820646e49fdb4d874e8956afa10d56bff38adaf581ce",
+            "sha256": "59936349a6d333550db62939abe582327cb80a17bcc8c13c5ff9c4353dca610b",
             "symbol": "ExecutableState"
           },
           {
             "path": "crates/pkl-runtime/src/vm/typecheck.rs",
-            "sha256": "cfe1e239f6a420428736db2aa4ed7429a185ef3f1325cb76de8cc84ca0d6fa4d",
+            "sha256": "5bb07c0c1debd6a3ee900b387bb64103d66a2bad16e4b9bfdf0ce1fa1f288b61",
             "symbol": "begin_type_node"
           },
           {
             "path": "crates/pkl-runtime/src/vm/generics.rs",
-            "sha256": "398800b74e9fdee8e3fdd6fd340d73feecd9500875582c4e7988435bdd75c486",
+            "sha256": "7d7af9f7e0cb9e46fa691ecdbad050544a38f029cf6558a174afe43b9a7059a6",
             "symbol": "substituted"
           },
           {
             "path": "crates/pkl-runtime/src/vm/generics.rs",
-            "sha256": "398800b74e9fdee8e3fdd6fd340d73feecd9500875582c4e7988435bdd75c486",
+            "sha256": "7d7af9f7e0cb9e46fa691ecdbad050544a38f029cf6558a174afe43b9a7059a6",
             "symbol": "default_depends_on_parameters"
           },
           {
             "path": "crates/pkl-runtime/src/vm/generics.rs",
-            "sha256": "398800b74e9fdee8e3fdd6fd340d73feecd9500875582c4e7988435bdd75c486",
+            "sha256": "7d7af9f7e0cb9e46fa691ecdbad050544a38f029cf6558a174afe43b9a7059a6",
             "symbol": "step_generic_default"
           },
           {
             "path": "crates/pkl-runtime/src/vm/generics.rs",
-            "sha256": "398800b74e9fdee8e3fdd6fd340d73feecd9500875582c4e7988435bdd75c486",
+            "sha256": "7d7af9f7e0cb9e46fa691ecdbad050544a38f029cf6558a174afe43b9a7059a6",
             "symbol": "validate_reference_arguments"
           }
         ],
@@ -129892,7 +130984,7 @@
           "Selected non-generic and finite generic const-read retries, shared generic let roots and let/for lexical barriers are covered; complete lexical-scope, general lazy generic resolution and runtime type-node identity still retain gaps.",
           "Nullable collection defaults, some missing/literal/default-root diagnostics, general inferred generic new construction and complete Reference argument diagnostic frames retain exploratory gaps; these are not counted as passing selected cases."
         ],
-        "scope": "Selected probes preserve unforced fixed initializers, class type-before-modifier errors, fixed override checks before body forcing, and fixed Reference metadata without evaluating referent bodies. Stage 16: Selected lazy member calls isolate receiver slots and alias const checks remain deferred until a lexical read executes. Stage 17: Evaluator-owned executable and type-use nodes preserve selected non-generic local const-property resolution across retries, distinct inline/lambda uses, shared let roots, recursive depth, inherited annotations, and lazy collection members; per-call receiver slots remain separate. Stage 18 adds finite recursive generic checks with lexical constraint-template substitutions, including changing actual arguments, parameter shadowing, root-parameter alias chains and inline/lambda argument captures. Generic local-writing let constraints retain their declaration call target and its unbound parameter interpretation; selected retry sharing is recorded separately from complete type-node identity. Stage 18 adds selected let-body and for-generator lexical const-depth boundaries while retaining enclosing const levels, plus their complete raw diagnostics and lambda controls. Selected generic collection-element amendments derive defaults after actual type substitution, retaining existing class objects, lazy bodies, nested collection shapes and first failure/retry behavior. Deferred Reference referent validation runs at the reached authored resolution site before the checked value; original diagnostic gaps remain separately recorded. Stage 19 adds bounded shared-metadata regressions for finite deep and branching actual arguments, observable class-argument swaps, inline/lambda/shared-let recursion, recursive Reference validation, and distinct wrapper actuals. Original Java stack errors, historical native abort evidence, full language semantics and performance remain separately accounted.",
+        "scope": "Selected probes preserve unforced fixed initializers, class type-before-modifier errors, fixed override checks before body forcing, and fixed Reference metadata without evaluating referent bodies. Stage 16: Selected lazy member calls isolate receiver slots and alias const checks remain deferred until a lexical read executes. Stage 17: Evaluator-owned executable and type-use nodes preserve selected non-generic local const-property resolution across retries, distinct inline/lambda uses, shared let roots, recursive depth, inherited annotations, and lazy collection members; per-call receiver slots remain separate. Stage 18 adds finite recursive generic checks with lexical constraint-template substitutions, including changing actual arguments, parameter shadowing, root-parameter alias chains and inline/lambda argument captures. Generic local-writing let constraints retain their declaration call target and its unbound parameter interpretation; selected retry sharing is recorded separately from complete type-node identity. Stage 18 adds selected let-body and for-generator lexical const-depth boundaries while retaining enclosing const levels, plus their complete raw diagnostics and lambda controls. Selected generic collection-element amendments derive defaults after actual type substitution, retaining existing class objects, lazy bodies, nested collection shapes and first failure/retry behavior. Deferred Reference referent validation runs at the reached authored resolution site before the checked value; original diagnostic gaps remain separately recorded. Stage 19 adds bounded shared-metadata regressions for finite deep and branching actual arguments, observable class-argument swaps, inline/lambda/shared-let recursion, recursive Reference validation, and distinct wrapper actuals. Original Java stack errors, historical native abort evidence, full language semantics and performance remain separately accounted. Stage20 adds bounded nullable defaults, inferred collection amendments, null identity and repeated default failures; complete nullable and collection semantics remain unverified.",
         "source": "compatibility/m2-mappings.json"
       },
       "tests": {
@@ -130786,6 +131878,45 @@
           "types-stage19-wrapper-recheck-31",
           "types-stage19-wrapper-recheck-32",
           "types-stage19-wrapper-recheck-33",
+          "types-stage20-default-listing-class",
+          "types-stage20-default-listing-nullable",
+          "types-stage20-default-listing-alias",
+          "types-stage20-default-listing-generic-alias",
+          "types-stage20-default-listing-union",
+          "types-stage20-default-listing-nullable-union",
+          "types-stage20-default-listing-missing",
+          "types-stage20-default-mapping-class",
+          "types-stage20-default-mapping-nullable",
+          "types-stage20-default-mapping-alias",
+          "types-stage20-default-mapping-generic-alias",
+          "types-stage20-default-mapping-union",
+          "types-stage20-default-mapping-nullable-union",
+          "types-stage20-default-mapping-missing",
+          "types-stage20-default-nested-class",
+          "types-stage20-default-nested-nullable",
+          "types-stage20-default-nested-alias",
+          "types-stage20-default-nested-generic-alias",
+          "types-stage20-default-nested-union",
+          "types-stage20-default-nested-nullable-union",
+          "types-stage20-default-nested-missing",
+          "types-stage20-static-empty",
+          "types-stage20-static-nonempty",
+          "types-stage20-nested-empty",
+          "types-stage20-nested-nonempty",
+          "types-stage20-nested-double-empty",
+          "types-stage20-null-equality",
+          "types-stage20-null-coalescing",
+          "types-stage20-null-type-test",
+          "types-stage20-null-nonnull",
+          "types-stage20-null-propagation",
+          "types-stage20-primitive-empty",
+          "types-stage20-generic-nested-empty",
+          "types-stage20-generic-nested-nonempty",
+          "types-stage20-null-structural",
+          "types-stage20-null-key",
+          "types-stage20-null-key-reverse",
+          "types-stage20-abstract-null",
+          "types-stage20-abstract-lazy",
           "types-stage17-inline-is-local",
           "types-stage17-inline-is-const",
           "types-stage17-inline-as-local",
@@ -131459,7 +132590,10 @@
           "fixed-stage11-order-fixed-before-unknown",
           "fixed-stage11-order-unknown-before-fixed",
           "fixed-stage11-order-fixed-before-const",
-          "fixed-stage11-order-const-before-fixed"
+          "fixed-stage11-order-const-before-fixed",
+          "types-stage20-null-structural",
+          "types-stage20-null-key",
+          "types-stage20-null-key-reverse"
         ],
         "state": "partial"
       }
@@ -131471,12 +132605,12 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "8fd62f94814835e5ceaf7ffe2bfebb1fa52e49bf399b285c52ad5324d1b0bea8",
+            "sha256": "27366898e91bbf38c046eb4eae438e1e54a79c2e560168e81e67f71fe22422f5",
             "symbol": "validate_object_override"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "8fd62f94814835e5ceaf7ffe2bfebb1fa52e49bf399b285c52ad5324d1b0bea8",
+            "sha256": "27366898e91bbf38c046eb4eae438e1e54a79c2e560168e81e67f71fe22422f5",
             "symbol": "inherited_member"
           }
         ],
@@ -131489,7 +132623,7 @@
         "remaining": [
           "General module amendments, function amendments, generic and cyclic object inheritance, and the complete amendment corpus remain open."
         ],
-        "scope": "Selected fixed instance amendments are rejected; extracting the fixed property value still permits amendment of that value. Empty receiver amendments preserve fixed values.",
+        "scope": "Selected fixed instance amendments are rejected; extracting the fixed property value still permits amendment of that value. Empty receiver amendments preserve fixed values. Stage20 adds bounded nullable defaults, inferred collection amendments, null identity and repeated default failures; complete nullable and collection semantics remain unverified.",
         "source": "compatibility/m2-mappings.json"
       },
       "tests": {
@@ -131616,7 +132750,13 @@
           "fixed-stage11-instance-amend-direct",
           "fixed-stage11-instance-amend-empty",
           "fixed-stage11-amend-extracted-fixed-value",
-          "fixed-stage11-abstract-fixed-amendment-body"
+          "fixed-stage11-abstract-fixed-amendment-body",
+          "types-stage20-static-empty",
+          "types-stage20-static-nonempty",
+          "types-stage20-nested-empty",
+          "types-stage20-nested-nonempty",
+          "types-stage20-nested-double-empty",
+          "types-stage20-primitive-empty"
         ],
         "state": "partial"
       }
@@ -131628,22 +132768,22 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/heap.rs",
-            "sha256": "4b5b88dabc0df00078c8820646e49fdb4d874e8956afa10d56bff38adaf581ce",
+            "sha256": "59936349a6d333550db62939abe582327cb80a17bcc8c13c5ff9c4353dca610b",
             "symbol": "Member"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "8fd62f94814835e5ceaf7ffe2bfebb1fa52e49bf399b285c52ad5324d1b0bea8",
+            "sha256": "27366898e91bbf38c046eb4eae438e1e54a79c2e560168e81e67f71fe22422f5",
             "symbol": "validate_class_override"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "8fd62f94814835e5ceaf7ffe2bfebb1fa52e49bf399b285c52ad5324d1b0bea8",
+            "sha256": "27366898e91bbf38c046eb4eae438e1e54a79c2e560168e81e67f71fe22422f5",
             "symbol": "validate_object_override"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "8fd62f94814835e5ceaf7ffe2bfebb1fa52e49bf399b285c52ad5324d1b0bea8",
+            "sha256": "27366898e91bbf38c046eb4eae438e1e54a79c2e560168e81e67f71fe22422f5",
             "symbol": "initialize_member_types"
           }
         ],
@@ -131658,7 +132798,7 @@
           "Full modifier combinations, annotation metadata, generic class inheritance and the complete class/member error corpus remain outside this bounded selection.",
           "Caught upstream PklBugException duplicate hidden/local outputs and any recorded exploratory mismatches remain separate failures, without development exceptions."
         ],
-        "scope": "Selected class fixed properties preserve declaration fixedness through inheritance, reject instance assignment and amendment before forcing bodies, and retain member/type initialization error order. Raw comparisons cover only the linked fixtures at their actual URIs. Stage 14 adds selected authored type-resolution order, generic parameter scope and nested substitution, class/alias arity ordering, and owner signature diagnostics; persistent failed-declaration state has a separate sequence contract. Stage 15 adds selected non-generic recursive constraint block graphs and declaration type scope, plus builtin Class argument erasure and arity ordering. At Stage 15 recursive generic constraints remained open; Stage 16 adds bounded shared receiver-slot support. Stage 19 adds bounded shared-metadata regressions for finite deep and branching actual arguments, observable class-argument swaps, inline/lambda/shared-let recursion, recursive Reference validation, and distinct wrapper actuals. Original Java stack errors, historical native abort evidence, full language semantics and performance remain separately accounted.",
+        "scope": "Selected class fixed properties preserve declaration fixedness through inheritance, reject instance assignment and amendment before forcing bodies, and retain member/type initialization error order. Raw comparisons cover only the linked fixtures at their actual URIs. Stage 14 adds selected authored type-resolution order, generic parameter scope and nested substitution, class/alias arity ordering, and owner signature diagnostics; persistent failed-declaration state has a separate sequence contract. Stage 15 adds selected non-generic recursive constraint block graphs and declaration type scope, plus builtin Class argument erasure and arity ordering. At Stage 15 recursive generic constraints remained open; Stage 16 adds bounded shared receiver-slot support. Stage 19 adds bounded shared-metadata regressions for finite deep and branching actual arguments, observable class-argument swaps, inline/lambda/shared-let recursion, recursive Reference validation, and distinct wrapper actuals. Original Java stack errors, historical native abort evidence, full language semantics and performance remain separately accounted. Stage20 adds bounded nullable defaults, inferred collection amendments, null identity and repeated default failures; complete nullable and collection semantics remain unverified.",
         "source": "compatibility/m2-mappings.json"
       },
       "tests": {
@@ -131889,7 +133029,37 @@
           "types-stage19-swap-default-inline-32",
           "types-stage19-swap-default-lambda-0",
           "types-stage19-swap-default-lambda-1",
-          "types-stage19-swap-default-lambda-32"
+          "types-stage19-swap-default-lambda-32",
+          "types-stage20-default-listing-class",
+          "types-stage20-default-listing-nullable",
+          "types-stage20-default-listing-alias",
+          "types-stage20-default-listing-generic-alias",
+          "types-stage20-default-listing-union",
+          "types-stage20-default-listing-nullable-union",
+          "types-stage20-default-listing-missing",
+          "types-stage20-default-mapping-class",
+          "types-stage20-default-mapping-nullable",
+          "types-stage20-default-mapping-alias",
+          "types-stage20-default-mapping-generic-alias",
+          "types-stage20-default-mapping-union",
+          "types-stage20-default-mapping-nullable-union",
+          "types-stage20-default-mapping-missing",
+          "types-stage20-default-nested-class",
+          "types-stage20-default-nested-nullable",
+          "types-stage20-default-nested-alias",
+          "types-stage20-default-nested-generic-alias",
+          "types-stage20-default-nested-union",
+          "types-stage20-default-nested-nullable-union",
+          "types-stage20-default-nested-missing",
+          "types-stage20-static-empty",
+          "types-stage20-static-nonempty",
+          "types-stage20-nested-empty",
+          "types-stage20-nested-nonempty",
+          "types-stage20-nested-double-empty",
+          "types-stage20-primitive-empty",
+          "types-stage20-generic-nested-empty",
+          "types-stage20-generic-nested-nonempty",
+          "types-stage20-abstract-lazy"
         ],
         "state": "partial"
       }
@@ -131901,22 +133071,22 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/heap.rs",
-            "sha256": "4b5b88dabc0df00078c8820646e49fdb4d874e8956afa10d56bff38adaf581ce",
+            "sha256": "59936349a6d333550db62939abe582327cb80a17bcc8c13c5ff9c4353dca610b",
             "symbol": "Member"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "8fd62f94814835e5ceaf7ffe2bfebb1fa52e49bf399b285c52ad5324d1b0bea8",
+            "sha256": "27366898e91bbf38c046eb4eae438e1e54a79c2e560168e81e67f71fe22422f5",
             "symbol": "validate_class_override"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "8fd62f94814835e5ceaf7ffe2bfebb1fa52e49bf399b285c52ad5324d1b0bea8",
+            "sha256": "27366898e91bbf38c046eb4eae438e1e54a79c2e560168e81e67f71fe22422f5",
             "symbol": "validate_object_override"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "8fd62f94814835e5ceaf7ffe2bfebb1fa52e49bf399b285c52ad5324d1b0bea8",
+            "sha256": "27366898e91bbf38c046eb4eae438e1e54a79c2e560168e81e67f71fe22422f5",
             "symbol": "initialize_member_types"
           },
           {
@@ -132224,27 +133394,27 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "8fd62f94814835e5ceaf7ffe2bfebb1fa52e49bf399b285c52ad5324d1b0bea8",
+            "sha256": "27366898e91bbf38c046eb4eae438e1e54a79c2e560168e81e67f71fe22422f5",
             "symbol": "TypeCheck"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "8fd62f94814835e5ceaf7ffe2bfebb1fa52e49bf399b285c52ad5324d1b0bea8",
+            "sha256": "27366898e91bbf38c046eb4eae438e1e54a79c2e560168e81e67f71fe22422f5",
             "symbol": "compile_type_at"
           },
           {
             "path": "crates/pkl-runtime/src/vm/reference.rs",
-            "sha256": "4c10dd15dcf08d3e19d063f9ccc2fd9598c2d0dc953ecc41cb538692929ad330",
+            "sha256": "6610416634ade15f996177c072ddfa4bac0b390d2b96cfeafcea9c0681ee87ec",
             "symbol": "subtype"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "8fd62f94814835e5ceaf7ffe2bfebb1fa52e49bf399b285c52ad5324d1b0bea8",
+            "sha256": "27366898e91bbf38c046eb4eae438e1e54a79c2e560168e81e67f71fe22422f5",
             "symbol": "invoke_function"
           },
           {
             "path": "crates/pkl-runtime/src/heap.rs",
-            "sha256": "4b5b88dabc0df00078c8820646e49fdb4d874e8956afa10d56bff38adaf581ce",
+            "sha256": "59936349a6d333550db62939abe582327cb80a17bcc8c13c5ff9c4353dca610b",
             "symbol": "Function"
           },
           {
@@ -133679,7 +134849,34 @@
           "types-stage19-swap-default-lambda-32",
           "types-stage19-wrapper-recheck-31",
           "types-stage19-wrapper-recheck-32",
-          "types-stage19-wrapper-recheck-33"
+          "types-stage19-wrapper-recheck-33",
+          "types-stage20-default-listing-class",
+          "types-stage20-default-listing-nullable",
+          "types-stage20-default-listing-alias",
+          "types-stage20-default-listing-generic-alias",
+          "types-stage20-default-listing-union",
+          "types-stage20-default-listing-nullable-union",
+          "types-stage20-default-listing-missing",
+          "types-stage20-default-mapping-class",
+          "types-stage20-default-mapping-nullable",
+          "types-stage20-default-mapping-alias",
+          "types-stage20-default-mapping-generic-alias",
+          "types-stage20-default-mapping-union",
+          "types-stage20-default-mapping-nullable-union",
+          "types-stage20-default-mapping-missing",
+          "types-stage20-default-nested-class",
+          "types-stage20-default-nested-nullable",
+          "types-stage20-default-nested-alias",
+          "types-stage20-default-nested-generic-alias",
+          "types-stage20-default-nested-union",
+          "types-stage20-default-nested-nullable-union",
+          "types-stage20-default-nested-missing",
+          "types-stage20-generic-nested-empty",
+          "types-stage20-generic-nested-nonempty",
+          "types-stage20-null-structural",
+          "types-stage20-null-key",
+          "types-stage20-null-key-reverse",
+          "types-stage20-abstract-lazy"
         ],
         "state": "partial"
       }
@@ -133691,62 +134888,62 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "8fd62f94814835e5ceaf7ffe2bfebb1fa52e49bf399b285c52ad5324d1b0bea8",
+            "sha256": "27366898e91bbf38c046eb4eae438e1e54a79c2e560168e81e67f71fe22422f5",
             "symbol": "TypeCheck"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "8fd62f94814835e5ceaf7ffe2bfebb1fa52e49bf399b285c52ad5324d1b0bea8",
+            "sha256": "27366898e91bbf38c046eb4eae438e1e54a79c2e560168e81e67f71fe22422f5",
             "symbol": "initialize_type_resolution"
           },
           {
             "path": "crates/pkl-runtime/src/vm/typecheck.rs",
-            "sha256": "cfe1e239f6a420428736db2aa4ed7429a185ef3f1325cb76de8cc84ca0d6fa4d",
+            "sha256": "5bb07c0c1debd6a3ee900b387bb64103d66a2bad16e4b9bfdf0ce1fa1f288b61",
             "symbol": "step_type"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "8fd62f94814835e5ceaf7ffe2bfebb1fa52e49bf399b285c52ad5324d1b0bea8",
+            "sha256": "27366898e91bbf38c046eb4eae438e1e54a79c2e560168e81e67f71fe22422f5",
             "symbol": "type_resolution_plan"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "8fd62f94814835e5ceaf7ffe2bfebb1fa52e49bf399b285c52ad5324d1b0bea8",
+            "sha256": "27366898e91bbf38c046eb4eae438e1e54a79c2e560168e81e67f71fe22422f5",
             "symbol": "active_constraints"
           },
           {
             "path": "crates/pkl-runtime/src/heap.rs",
-            "sha256": "4b5b88dabc0df00078c8820646e49fdb4d874e8956afa10d56bff38adaf581ce",
+            "sha256": "59936349a6d333550db62939abe582327cb80a17bcc8c13c5ff9c4353dca610b",
             "symbol": "CustomThisSlot"
           },
           {
             "path": "crates/pkl-runtime/src/heap.rs",
-            "sha256": "4b5b88dabc0df00078c8820646e49fdb4d874e8956afa10d56bff38adaf581ce",
+            "sha256": "59936349a6d333550db62939abe582327cb80a17bcc8c13c5ff9c4353dca610b",
             "symbol": "ExecutableState"
           },
           {
             "path": "crates/pkl-runtime/src/vm/typecheck.rs",
-            "sha256": "cfe1e239f6a420428736db2aa4ed7429a185ef3f1325cb76de8cc84ca0d6fa4d",
+            "sha256": "5bb07c0c1debd6a3ee900b387bb64103d66a2bad16e4b9bfdf0ce1fa1f288b61",
             "symbol": "begin_type_node"
           },
           {
             "path": "crates/pkl-runtime/src/vm/generics.rs",
-            "sha256": "398800b74e9fdee8e3fdd6fd340d73feecd9500875582c4e7988435bdd75c486",
+            "sha256": "7d7af9f7e0cb9e46fa691ecdbad050544a38f029cf6558a174afe43b9a7059a6",
             "symbol": "substituted"
           },
           {
             "path": "crates/pkl-runtime/src/vm/generics.rs",
-            "sha256": "398800b74e9fdee8e3fdd6fd340d73feecd9500875582c4e7988435bdd75c486",
+            "sha256": "7d7af9f7e0cb9e46fa691ecdbad050544a38f029cf6558a174afe43b9a7059a6",
             "symbol": "default_depends_on_parameters"
           },
           {
             "path": "crates/pkl-runtime/src/vm/generics.rs",
-            "sha256": "398800b74e9fdee8e3fdd6fd340d73feecd9500875582c4e7988435bdd75c486",
+            "sha256": "7d7af9f7e0cb9e46fa691ecdbad050544a38f029cf6558a174afe43b9a7059a6",
             "symbol": "step_generic_default"
           },
           {
             "path": "crates/pkl-runtime/src/vm/generics.rs",
-            "sha256": "398800b74e9fdee8e3fdd6fd340d73feecd9500875582c4e7988435bdd75c486",
+            "sha256": "7d7af9f7e0cb9e46fa691ecdbad050544a38f029cf6558a174afe43b9a7059a6",
             "symbol": "validate_reference_arguments"
           }
         ],
@@ -133761,7 +134958,7 @@
           "General lazy generic declaration resolution, full alias-root substitution identity, imported generic declarations and original suite adapters remain open. The Stage 18 changing-argument native-stack abort remains preserved as historical failure evidence. Shared metadata now has bounded extended execution and cleanup checks; exact Java stack diagnostics, wall-time bounds, and metadata/output resource bounds remain unverified.",
           "Nullable collection defaults, some missing/literal/default-root diagnostics, general inferred generic new construction and complete Reference argument diagnostic frames retain exploratory gaps; these are not counted as passing selected cases."
         ],
-        "scope": "The Stage 13 selection links named alias expansion, meta-class checks, function arity and exported type metadata to the shared VM. Existing upstream case definitions, adapters and execution states remain unchanged. Stage 14 adds selected authored type-resolution order, generic parameter scope and nested substitution, class/alias arity ordering, and owner signature diagnostics; persistent failed-declaration state has a separate sequence contract. Stage 15 adds selected non-generic recursive constraint block graphs and declaration type scope, plus builtin Class argument erasure and arity ordering. At Stage 15 recursive generic constraints remained open; Stage 16 adds bounded shared receiver-slot support. Stage 16: Selected nested is/as and recursive constraints retain receiver mutations, original successful values, predicate arguments and complete failure bytes. Stage 17: Evaluator-owned executable and type-use nodes preserve selected non-generic local const-property resolution across retries, distinct inline/lambda uses, shared let roots, recursive depth, inherited annotations, and lazy collection members; per-call receiver slots remain separate. Stage 18 adds finite recursive generic checks with lexical constraint-template substitutions, including changing actual arguments, parameter shadowing, root-parameter alias chains and inline/lambda argument captures. Generic local-writing let constraints retain their declaration call target and its unbound parameter interpretation; selected retry sharing is recorded separately from complete type-node identity. Selected generic collection-element amendments derive defaults after actual type substitution, retaining existing class objects, lazy bodies, nested collection shapes and first failure/retry behavior. Deferred Reference referent validation runs at the reached authored resolution site before the checked value; original diagnostic gaps remain separately recorded. Stage 19 adds bounded shared-metadata regressions for finite deep and branching actual arguments, observable class-argument swaps, inline/lambda/shared-let recursion, recursive Reference validation, and distinct wrapper actuals. Original Java stack errors, historical native abort evidence, full language semantics and performance remain separately accounted.",
+        "scope": "The Stage 13 selection links named alias expansion, meta-class checks, function arity and exported type metadata to the shared VM. Existing upstream case definitions, adapters and execution states remain unchanged. Stage 14 adds selected authored type-resolution order, generic parameter scope and nested substitution, class/alias arity ordering, and owner signature diagnostics; persistent failed-declaration state has a separate sequence contract. Stage 15 adds selected non-generic recursive constraint block graphs and declaration type scope, plus builtin Class argument erasure and arity ordering. At Stage 15 recursive generic constraints remained open; Stage 16 adds bounded shared receiver-slot support. Stage 16: Selected nested is/as and recursive constraints retain receiver mutations, original successful values, predicate arguments and complete failure bytes. Stage 17: Evaluator-owned executable and type-use nodes preserve selected non-generic local const-property resolution across retries, distinct inline/lambda uses, shared let roots, recursive depth, inherited annotations, and lazy collection members; per-call receiver slots remain separate. Stage 18 adds finite recursive generic checks with lexical constraint-template substitutions, including changing actual arguments, parameter shadowing, root-parameter alias chains and inline/lambda argument captures. Generic local-writing let constraints retain their declaration call target and its unbound parameter interpretation; selected retry sharing is recorded separately from complete type-node identity. Selected generic collection-element amendments derive defaults after actual type substitution, retaining existing class objects, lazy bodies, nested collection shapes and first failure/retry behavior. Deferred Reference referent validation runs at the reached authored resolution site before the checked value; original diagnostic gaps remain separately recorded. Stage 19 adds bounded shared-metadata regressions for finite deep and branching actual arguments, observable class-argument swaps, inline/lambda/shared-let recursion, recursive Reference validation, and distinct wrapper actuals. Original Java stack errors, historical native abort evidence, full language semantics and performance remain separately accounted. Stage20 adds bounded nullable defaults, inferred collection amendments, null identity and repeated default failures; complete nullable and collection semantics remain unverified.",
         "source": "compatibility/m2-mappings.json"
       },
       "tests": {
@@ -134476,6 +135673,45 @@
           "types-stage19-wrapper-recheck-31",
           "types-stage19-wrapper-recheck-32",
           "types-stage19-wrapper-recheck-33",
+          "types-stage20-default-listing-class",
+          "types-stage20-default-listing-nullable",
+          "types-stage20-default-listing-alias",
+          "types-stage20-default-listing-generic-alias",
+          "types-stage20-default-listing-union",
+          "types-stage20-default-listing-nullable-union",
+          "types-stage20-default-listing-missing",
+          "types-stage20-default-mapping-class",
+          "types-stage20-default-mapping-nullable",
+          "types-stage20-default-mapping-alias",
+          "types-stage20-default-mapping-generic-alias",
+          "types-stage20-default-mapping-union",
+          "types-stage20-default-mapping-nullable-union",
+          "types-stage20-default-mapping-missing",
+          "types-stage20-default-nested-class",
+          "types-stage20-default-nested-nullable",
+          "types-stage20-default-nested-alias",
+          "types-stage20-default-nested-generic-alias",
+          "types-stage20-default-nested-union",
+          "types-stage20-default-nested-nullable-union",
+          "types-stage20-default-nested-missing",
+          "types-stage20-static-empty",
+          "types-stage20-static-nonempty",
+          "types-stage20-nested-empty",
+          "types-stage20-nested-nonempty",
+          "types-stage20-nested-double-empty",
+          "types-stage20-null-equality",
+          "types-stage20-null-coalescing",
+          "types-stage20-null-type-test",
+          "types-stage20-null-nonnull",
+          "types-stage20-null-propagation",
+          "types-stage20-primitive-empty",
+          "types-stage20-generic-nested-empty",
+          "types-stage20-generic-nested-nonempty",
+          "types-stage20-null-structural",
+          "types-stage20-null-key",
+          "types-stage20-null-key-reverse",
+          "types-stage20-abstract-null",
+          "types-stage20-abstract-lazy",
           "types-stage13-alias-value",
           "types-stage13-alias-self-equal",
           "types-stage13-alias-distinct-equal",
@@ -134615,72 +135851,72 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "8fd62f94814835e5ceaf7ffe2bfebb1fa52e49bf399b285c52ad5324d1b0bea8",
+            "sha256": "27366898e91bbf38c046eb4eae438e1e54a79c2e560168e81e67f71fe22422f5",
             "symbol": "BeginTypeAlias"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "8fd62f94814835e5ceaf7ffe2bfebb1fa52e49bf399b285c52ad5324d1b0bea8",
+            "sha256": "27366898e91bbf38c046eb4eae438e1e54a79c2e560168e81e67f71fe22422f5",
             "symbol": "NamedAlias"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "8fd62f94814835e5ceaf7ffe2bfebb1fa52e49bf399b285c52ad5324d1b0bea8",
+            "sha256": "27366898e91bbf38c046eb4eae438e1e54a79c2e560168e81e67f71fe22422f5",
             "symbol": "compile_type_at"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "8fd62f94814835e5ceaf7ffe2bfebb1fa52e49bf399b285c52ad5324d1b0bea8",
+            "sha256": "27366898e91bbf38c046eb4eae438e1e54a79c2e560168e81e67f71fe22422f5",
             "symbol": "type_resolution_plan"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "8fd62f94814835e5ceaf7ffe2bfebb1fa52e49bf399b285c52ad5324d1b0bea8",
+            "sha256": "27366898e91bbf38c046eb4eae438e1e54a79c2e560168e81e67f71fe22422f5",
             "symbol": "initialize_type_resolution"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "8fd62f94814835e5ceaf7ffe2bfebb1fa52e49bf399b285c52ad5324d1b0bea8",
+            "sha256": "27366898e91bbf38c046eb4eae438e1e54a79c2e560168e81e67f71fe22422f5",
             "symbol": "active_constraints"
           },
           {
             "path": "crates/pkl-runtime/src/vm/typecheck.rs",
-            "sha256": "cfe1e239f6a420428736db2aa4ed7429a185ef3f1325cb76de8cc84ca0d6fa4d",
+            "sha256": "5bb07c0c1debd6a3ee900b387bb64103d66a2bad16e4b9bfdf0ce1fa1f288b61",
             "symbol": "step_type"
           },
           {
             "path": "crates/pkl-runtime/src/heap.rs",
-            "sha256": "4b5b88dabc0df00078c8820646e49fdb4d874e8956afa10d56bff38adaf581ce",
+            "sha256": "59936349a6d333550db62939abe582327cb80a17bcc8c13c5ff9c4353dca610b",
             "symbol": "CustomThisSlot"
           },
           {
             "path": "crates/pkl-runtime/src/heap.rs",
-            "sha256": "4b5b88dabc0df00078c8820646e49fdb4d874e8956afa10d56bff38adaf581ce",
+            "sha256": "59936349a6d333550db62939abe582327cb80a17bcc8c13c5ff9c4353dca610b",
             "symbol": "ExecutableState"
           },
           {
             "path": "crates/pkl-runtime/src/vm/typecheck.rs",
-            "sha256": "cfe1e239f6a420428736db2aa4ed7429a185ef3f1325cb76de8cc84ca0d6fa4d",
+            "sha256": "5bb07c0c1debd6a3ee900b387bb64103d66a2bad16e4b9bfdf0ce1fa1f288b61",
             "symbol": "begin_type_node"
           },
           {
             "path": "crates/pkl-runtime/src/vm/generics.rs",
-            "sha256": "398800b74e9fdee8e3fdd6fd340d73feecd9500875582c4e7988435bdd75c486",
+            "sha256": "7d7af9f7e0cb9e46fa691ecdbad050544a38f029cf6558a174afe43b9a7059a6",
             "symbol": "substituted"
           },
           {
             "path": "crates/pkl-runtime/src/vm/generics.rs",
-            "sha256": "398800b74e9fdee8e3fdd6fd340d73feecd9500875582c4e7988435bdd75c486",
+            "sha256": "7d7af9f7e0cb9e46fa691ecdbad050544a38f029cf6558a174afe43b9a7059a6",
             "symbol": "default_depends_on_parameters"
           },
           {
             "path": "crates/pkl-runtime/src/vm/generics.rs",
-            "sha256": "398800b74e9fdee8e3fdd6fd340d73feecd9500875582c4e7988435bdd75c486",
+            "sha256": "7d7af9f7e0cb9e46fa691ecdbad050544a38f029cf6558a174afe43b9a7059a6",
             "symbol": "step_generic_default"
           },
           {
             "path": "crates/pkl-runtime/src/vm/generics.rs",
-            "sha256": "398800b74e9fdee8e3fdd6fd340d73feecd9500875582c4e7988435bdd75c486",
+            "sha256": "7d7af9f7e0cb9e46fa691ecdbad050544a38f029cf6558a174afe43b9a7059a6",
             "symbol": "validate_reference_arguments"
           }
         ],
@@ -134698,7 +135934,7 @@
           "General lazy generic declaration resolution, full alias-root substitution identity, imported generic declarations and original suite adapters remain open. The Stage 18 changing-argument native-stack abort remains preserved as historical failure evidence. Shared metadata now has bounded extended execution and cleanup checks; exact Java stack diagnostics, wall-time bounds, and metadata/output resource bounds remain unverified.",
           "Nullable collection defaults, some missing/literal/default-root diagnostics, general inferred generic new construction and complete Reference argument diagnostic frames retain exploratory gaps; these are not counted as passing selected cases."
         ],
-        "scope": "Selected user alias values preserve declaration identity, qualified display, lazy initialization, published failure state, and expanded validation. Independent expressions cover alias values, cycles, generic arguments, Mapping keys and complete diagnostics; persistent failure/reaccess sequences and GC/Host tests have separate contracts. Stage 14 adds selected authored type-resolution order, generic parameter scope and nested substitution, class/alias arity ordering, and owner signature diagnostics; persistent failed-declaration state has a separate sequence contract. Stage 15 adds selected non-generic recursive constraint block graphs and declaration type scope, plus builtin Class argument erasure and arity ordering. At Stage 15 recursive generic constraints remained open; Stage 16 adds bounded shared receiver-slot support. Stage 16: Selected recursive and inline constraints share mutable auxiliary receiver slots within a logical call; alias lexical reads enforce the first-read const barrier. Stage 17: Evaluator-owned executable and type-use nodes preserve selected non-generic local const-property resolution across retries, distinct inline/lambda uses, shared let roots, recursive depth, inherited annotations, and lazy collection members; per-call receiver slots remain separate. Stage 18 adds finite recursive generic checks with lexical constraint-template substitutions, including changing actual arguments, parameter shadowing, root-parameter alias chains and inline/lambda argument captures. Generic local-writing let constraints retain their declaration call target and its unbound parameter interpretation; selected retry sharing is recorded separately from complete type-node identity. Selected generic collection-element amendments derive defaults after actual type substitution, retaining existing class objects, lazy bodies, nested collection shapes and first failure/retry behavior. Deferred Reference referent validation runs at the reached authored resolution site before the checked value; original diagnostic gaps remain separately recorded. Stage 19 adds bounded shared-metadata regressions for finite deep and branching actual arguments, observable class-argument swaps, inline/lambda/shared-let recursion, recursive Reference validation, and distinct wrapper actuals. Original Java stack errors, historical native abort evidence, full language semantics and performance remain separately accounted.",
+        "scope": "Selected user alias values preserve declaration identity, qualified display, lazy initialization, published failure state, and expanded validation. Independent expressions cover alias values, cycles, generic arguments, Mapping keys and complete diagnostics; persistent failure/reaccess sequences and GC/Host tests have separate contracts. Stage 14 adds selected authored type-resolution order, generic parameter scope and nested substitution, class/alias arity ordering, and owner signature diagnostics; persistent failed-declaration state has a separate sequence contract. Stage 15 adds selected non-generic recursive constraint block graphs and declaration type scope, plus builtin Class argument erasure and arity ordering. At Stage 15 recursive generic constraints remained open; Stage 16 adds bounded shared receiver-slot support. Stage 16: Selected recursive and inline constraints share mutable auxiliary receiver slots within a logical call; alias lexical reads enforce the first-read const barrier. Stage 17: Evaluator-owned executable and type-use nodes preserve selected non-generic local const-property resolution across retries, distinct inline/lambda uses, shared let roots, recursive depth, inherited annotations, and lazy collection members; per-call receiver slots remain separate. Stage 18 adds finite recursive generic checks with lexical constraint-template substitutions, including changing actual arguments, parameter shadowing, root-parameter alias chains and inline/lambda argument captures. Generic local-writing let constraints retain their declaration call target and its unbound parameter interpretation; selected retry sharing is recorded separately from complete type-node identity. Selected generic collection-element amendments derive defaults after actual type substitution, retaining existing class objects, lazy bodies, nested collection shapes and first failure/retry behavior. Deferred Reference referent validation runs at the reached authored resolution site before the checked value; original diagnostic gaps remain separately recorded. Stage 19 adds bounded shared-metadata regressions for finite deep and branching actual arguments, observable class-argument swaps, inline/lambda/shared-let recursion, recursive Reference validation, and distinct wrapper actuals. Original Java stack errors, historical native abort evidence, full language semantics and performance remain separately accounted. Stage20 adds bounded nullable defaults, inferred collection amendments, null identity and repeated default failures; complete nullable and collection semantics remain unverified.",
         "source": "compatibility/m2-mappings.json"
       },
       "tests": {
@@ -135153,6 +136389,36 @@
           "types-stage19-wrapper-recheck-31",
           "types-stage19-wrapper-recheck-32",
           "types-stage19-wrapper-recheck-33",
+          "types-stage20-default-listing-class",
+          "types-stage20-default-listing-nullable",
+          "types-stage20-default-listing-alias",
+          "types-stage20-default-listing-generic-alias",
+          "types-stage20-default-listing-union",
+          "types-stage20-default-listing-nullable-union",
+          "types-stage20-default-listing-missing",
+          "types-stage20-default-mapping-class",
+          "types-stage20-default-mapping-nullable",
+          "types-stage20-default-mapping-alias",
+          "types-stage20-default-mapping-generic-alias",
+          "types-stage20-default-mapping-union",
+          "types-stage20-default-mapping-nullable-union",
+          "types-stage20-default-mapping-missing",
+          "types-stage20-default-nested-class",
+          "types-stage20-default-nested-nullable",
+          "types-stage20-default-nested-alias",
+          "types-stage20-default-nested-generic-alias",
+          "types-stage20-default-nested-union",
+          "types-stage20-default-nested-nullable-union",
+          "types-stage20-default-nested-missing",
+          "types-stage20-static-empty",
+          "types-stage20-static-nonempty",
+          "types-stage20-nested-empty",
+          "types-stage20-nested-nonempty",
+          "types-stage20-nested-double-empty",
+          "types-stage20-primitive-empty",
+          "types-stage20-generic-nested-empty",
+          "types-stage20-generic-nested-nonempty",
+          "types-stage20-abstract-lazy",
           "types-stage17-const-method-local",
           "types-stage17-const-method-ordinary",
           "types-stage17-const-method-this",
@@ -135210,52 +136476,52 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/heap.rs",
-            "sha256": "4b5b88dabc0df00078c8820646e49fdb4d874e8956afa10d56bff38adaf581ce",
+            "sha256": "59936349a6d333550db62939abe582327cb80a17bcc8c13c5ff9c4353dca610b",
             "symbol": "CustomThisSlot"
           },
           {
             "path": "crates/pkl-runtime/src/vm/typecheck.rs",
-            "sha256": "cfe1e239f6a420428736db2aa4ed7429a185ef3f1325cb76de8cc84ca0d6fa4d",
+            "sha256": "5bb07c0c1debd6a3ee900b387bb64103d66a2bad16e4b9bfdf0ce1fa1f288b61",
             "symbol": "step_type"
           },
           {
             "path": "crates/pkl-runtime/src/vm/typecheck.rs",
-            "sha256": "cfe1e239f6a420428736db2aa4ed7429a185ef3f1325cb76de8cc84ca0d6fa4d",
+            "sha256": "5bb07c0c1debd6a3ee900b387bb64103d66a2bad16e4b9bfdf0ce1fa1f288b61",
             "symbol": "launch_constraint"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "8fd62f94814835e5ceaf7ffe2bfebb1fa52e49bf399b285c52ad5324d1b0bea8",
+            "sha256": "27366898e91bbf38c046eb4eae438e1e54a79c2e560168e81e67f71fe22422f5",
             "symbol": "invoke_function"
           },
           {
             "path": "crates/pkl-runtime/src/heap.rs",
-            "sha256": "4b5b88dabc0df00078c8820646e49fdb4d874e8956afa10d56bff38adaf581ce",
+            "sha256": "59936349a6d333550db62939abe582327cb80a17bcc8c13c5ff9c4353dca610b",
             "symbol": "ExecutableState"
           },
           {
             "path": "crates/pkl-runtime/src/vm/typecheck.rs",
-            "sha256": "cfe1e239f6a420428736db2aa4ed7429a185ef3f1325cb76de8cc84ca0d6fa4d",
+            "sha256": "5bb07c0c1debd6a3ee900b387bb64103d66a2bad16e4b9bfdf0ce1fa1f288b61",
             "symbol": "begin_type_node"
           },
           {
             "path": "crates/pkl-runtime/src/vm/generics.rs",
-            "sha256": "398800b74e9fdee8e3fdd6fd340d73feecd9500875582c4e7988435bdd75c486",
+            "sha256": "7d7af9f7e0cb9e46fa691ecdbad050544a38f029cf6558a174afe43b9a7059a6",
             "symbol": "substituted"
           },
           {
             "path": "crates/pkl-runtime/src/vm/generics.rs",
-            "sha256": "398800b74e9fdee8e3fdd6fd340d73feecd9500875582c4e7988435bdd75c486",
+            "sha256": "7d7af9f7e0cb9e46fa691ecdbad050544a38f029cf6558a174afe43b9a7059a6",
             "symbol": "default_depends_on_parameters"
           },
           {
             "path": "crates/pkl-runtime/src/vm/generics.rs",
-            "sha256": "398800b74e9fdee8e3fdd6fd340d73feecd9500875582c4e7988435bdd75c486",
+            "sha256": "7d7af9f7e0cb9e46fa691ecdbad050544a38f029cf6558a174afe43b9a7059a6",
             "symbol": "step_generic_default"
           },
           {
             "path": "crates/pkl-runtime/src/vm/generics.rs",
-            "sha256": "398800b74e9fdee8e3fdd6fd340d73feecd9500875582c4e7988435bdd75c486",
+            "sha256": "7d7af9f7e0cb9e46fa691ecdbad050544a38f029cf6558a174afe43b9a7059a6",
             "symbol": "validate_reference_arguments"
           }
         ],
@@ -135271,7 +136537,7 @@
           "Selected generic let-root and finite recursive checks now match retained raw comparisons. The original exploratory outcomes, unbounded recursion abort, other known mismatches and complete language/performance gates remain separately accounted.",
           "Nullable collection defaults, some missing/literal/default-root diagnostics, general inferred generic new construction and complete Reference argument diagnostic frames retain exploratory gaps; these are not counted as passing selected cases."
         ],
-        "scope": "Selected shared logical-call receiver slots, recursive and inline constraints, lambda snapshots, separate function/let/member roots, Boolean and predicate failures, union branches and power assertions compare complete Java bytes. Native Host/GC and persistent platform sequences provide separate lifecycle evidence. Stage 17: Evaluator-owned executable and type-use nodes preserve selected non-generic local const-property resolution across retries, distinct inline/lambda uses, shared let roots, recursive depth, inherited annotations, and lazy collection members; per-call receiver slots remain separate. Stage 18 adds finite recursive generic checks with lexical constraint-template substitutions, including changing actual arguments, parameter shadowing, root-parameter alias chains and inline/lambda argument captures. Generic local-writing let constraints retain their declaration call target and its unbound parameter interpretation; selected retry sharing is recorded separately from complete type-node identity. Selected generic collection-element amendments derive defaults after actual type substitution, retaining existing class objects, lazy bodies, nested collection shapes and first failure/retry behavior. Deferred Reference referent validation runs at the reached authored resolution site before the checked value; original diagnostic gaps remain separately recorded. Stage 19 adds bounded shared-metadata regressions for finite deep and branching actual arguments, observable class-argument swaps, inline/lambda/shared-let recursion, recursive Reference validation, and distinct wrapper actuals. Original Java stack errors, historical native abort evidence, full language semantics and performance remain separately accounted.",
+        "scope": "Selected shared logical-call receiver slots, recursive and inline constraints, lambda snapshots, separate function/let/member roots, Boolean and predicate failures, union branches and power assertions compare complete Java bytes. Native Host/GC and persistent platform sequences provide separate lifecycle evidence. Stage 17: Evaluator-owned executable and type-use nodes preserve selected non-generic local const-property resolution across retries, distinct inline/lambda uses, shared let roots, recursive depth, inherited annotations, and lazy collection members; per-call receiver slots remain separate. Stage 18 adds finite recursive generic checks with lexical constraint-template substitutions, including changing actual arguments, parameter shadowing, root-parameter alias chains and inline/lambda argument captures. Generic local-writing let constraints retain their declaration call target and its unbound parameter interpretation; selected retry sharing is recorded separately from complete type-node identity. Selected generic collection-element amendments derive defaults after actual type substitution, retaining existing class objects, lazy bodies, nested collection shapes and first failure/retry behavior. Deferred Reference referent validation runs at the reached authored resolution site before the checked value; original diagnostic gaps remain separately recorded. Stage 19 adds bounded shared-metadata regressions for finite deep and branching actual arguments, observable class-argument swaps, inline/lambda/shared-let recursion, recursive Reference validation, and distinct wrapper actuals. Original Java stack errors, historical native abort evidence, full language semantics and performance remain separately accounted. Stage20 adds bounded nullable defaults, inferred collection amendments, null identity and repeated default failures; complete nullable and collection semantics remain unverified.",
         "source": "compatibility/m2-mappings.json"
       },
       "tests": {
@@ -135750,6 +137016,30 @@
           "types-stage19-wrapper-recheck-31",
           "types-stage19-wrapper-recheck-32",
           "types-stage19-wrapper-recheck-33",
+          "types-stage20-default-listing-class",
+          "types-stage20-default-listing-nullable",
+          "types-stage20-default-listing-alias",
+          "types-stage20-default-listing-generic-alias",
+          "types-stage20-default-listing-union",
+          "types-stage20-default-listing-nullable-union",
+          "types-stage20-default-listing-missing",
+          "types-stage20-default-mapping-class",
+          "types-stage20-default-mapping-nullable",
+          "types-stage20-default-mapping-alias",
+          "types-stage20-default-mapping-generic-alias",
+          "types-stage20-default-mapping-union",
+          "types-stage20-default-mapping-nullable-union",
+          "types-stage20-default-mapping-missing",
+          "types-stage20-default-nested-class",
+          "types-stage20-default-nested-nullable",
+          "types-stage20-default-nested-alias",
+          "types-stage20-default-nested-generic-alias",
+          "types-stage20-default-nested-union",
+          "types-stage20-default-nested-nullable-union",
+          "types-stage20-default-nested-missing",
+          "types-stage20-generic-nested-empty",
+          "types-stage20-generic-nested-nonempty",
+          "types-stage20-abstract-lazy",
           "types-stage17-const-method-local",
           "types-stage17-const-method-ordinary",
           "types-stage17-const-method-this",
@@ -135804,47 +137094,47 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "8fd62f94814835e5ceaf7ffe2bfebb1fa52e49bf399b285c52ad5324d1b0bea8",
+            "sha256": "27366898e91bbf38c046eb4eae438e1e54a79c2e560168e81e67f71fe22422f5",
             "symbol": "NamedAlias"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "8fd62f94814835e5ceaf7ffe2bfebb1fa52e49bf399b285c52ad5324d1b0bea8",
+            "sha256": "27366898e91bbf38c046eb4eae438e1e54a79c2e560168e81e67f71fe22422f5",
             "symbol": "compile_type_at"
           },
           {
             "path": "crates/pkl-runtime/src/vm/typecheck.rs",
-            "sha256": "cfe1e239f6a420428736db2aa4ed7429a185ef3f1325cb76de8cc84ca0d6fa4d",
+            "sha256": "5bb07c0c1debd6a3ee900b387bb64103d66a2bad16e4b9bfdf0ce1fa1f288b61",
             "symbol": "step_type"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "8fd62f94814835e5ceaf7ffe2bfebb1fa52e49bf399b285c52ad5324d1b0bea8",
+            "sha256": "27366898e91bbf38c046eb4eae438e1e54a79c2e560168e81e67f71fe22422f5",
             "symbol": "type_resolution_plan"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "8fd62f94814835e5ceaf7ffe2bfebb1fa52e49bf399b285c52ad5324d1b0bea8",
+            "sha256": "27366898e91bbf38c046eb4eae438e1e54a79c2e560168e81e67f71fe22422f5",
             "symbol": "initialize_type_resolution"
           },
           {
             "path": "crates/pkl-runtime/src/vm/generics.rs",
-            "sha256": "398800b74e9fdee8e3fdd6fd340d73feecd9500875582c4e7988435bdd75c486",
+            "sha256": "7d7af9f7e0cb9e46fa691ecdbad050544a38f029cf6558a174afe43b9a7059a6",
             "symbol": "substituted"
           },
           {
             "path": "crates/pkl-runtime/src/vm/generics.rs",
-            "sha256": "398800b74e9fdee8e3fdd6fd340d73feecd9500875582c4e7988435bdd75c486",
+            "sha256": "7d7af9f7e0cb9e46fa691ecdbad050544a38f029cf6558a174afe43b9a7059a6",
             "symbol": "default_depends_on_parameters"
           },
           {
             "path": "crates/pkl-runtime/src/vm/generics.rs",
-            "sha256": "398800b74e9fdee8e3fdd6fd340d73feecd9500875582c4e7988435bdd75c486",
+            "sha256": "7d7af9f7e0cb9e46fa691ecdbad050544a38f029cf6558a174afe43b9a7059a6",
             "symbol": "step_generic_default"
           },
           {
             "path": "crates/pkl-runtime/src/vm/generics.rs",
-            "sha256": "398800b74e9fdee8e3fdd6fd340d73feecd9500875582c4e7988435bdd75c486",
+            "sha256": "7d7af9f7e0cb9e46fa691ecdbad050544a38f029cf6558a174afe43b9a7059a6",
             "symbol": "validate_reference_arguments"
           }
         ],
@@ -135859,7 +137149,7 @@
           "General lazy generic declaration resolution, full alias-root substitution identity, imported generic declarations and original suite adapters remain open. The Stage 18 changing-argument native-stack abort remains preserved as historical failure evidence. Shared metadata now has bounded extended execution and cleanup checks; exact Java stack diagnostics, wall-time bounds, and metadata/output resource bounds remain unverified.",
           "Nullable collection defaults, some missing/literal/default-root diagnostics, general inferred generic new construction and complete Reference argument diagnostic frames retain exploratory gaps; these are not counted as passing selected cases."
         ],
-        "scope": "Selected generic aliases retain declaration identity and metadata arguments independently of expanded checks, use unknown for omitted arguments, and preserve argument-count and expanded-value diagnostics. Stage 14 adds selected authored type-resolution order, generic parameter scope and nested substitution, class/alias arity ordering, and owner signature diagnostics; persistent failed-declaration state has a separate sequence contract. Stage 15 adds selected non-generic recursive constraint block graphs and declaration type scope, plus builtin Class argument erasure and arity ordering. At Stage 15 recursive generic constraints remained open; Stage 16 adds bounded shared receiver-slot support. Stage 18 adds finite recursive generic checks with lexical constraint-template substitutions, including changing actual arguments, parameter shadowing, root-parameter alias chains and inline/lambda argument captures. Generic local-writing let constraints retain their declaration call target and its unbound parameter interpretation; selected retry sharing is recorded separately from complete type-node identity. Selected generic collection-element amendments derive defaults after actual type substitution, retaining existing class objects, lazy bodies, nested collection shapes and first failure/retry behavior. Deferred Reference referent validation runs at the reached authored resolution site before the checked value; original diagnostic gaps remain separately recorded. Stage 19 adds bounded shared-metadata regressions for finite deep and branching actual arguments, observable class-argument swaps, inline/lambda/shared-let recursion, recursive Reference validation, and distinct wrapper actuals. Original Java stack errors, historical native abort evidence, full language semantics and performance remain separately accounted.",
+        "scope": "Selected generic aliases retain declaration identity and metadata arguments independently of expanded checks, use unknown for omitted arguments, and preserve argument-count and expanded-value diagnostics. Stage 14 adds selected authored type-resolution order, generic parameter scope and nested substitution, class/alias arity ordering, and owner signature diagnostics; persistent failed-declaration state has a separate sequence contract. Stage 15 adds selected non-generic recursive constraint block graphs and declaration type scope, plus builtin Class argument erasure and arity ordering. At Stage 15 recursive generic constraints remained open; Stage 16 adds bounded shared receiver-slot support. Stage 18 adds finite recursive generic checks with lexical constraint-template substitutions, including changing actual arguments, parameter shadowing, root-parameter alias chains and inline/lambda argument captures. Generic local-writing let constraints retain their declaration call target and its unbound parameter interpretation; selected retry sharing is recorded separately from complete type-node identity. Selected generic collection-element amendments derive defaults after actual type substitution, retaining existing class objects, lazy bodies, nested collection shapes and first failure/retry behavior. Deferred Reference referent validation runs at the reached authored resolution site before the checked value; original diagnostic gaps remain separately recorded. Stage 19 adds bounded shared-metadata regressions for finite deep and branching actual arguments, observable class-argument swaps, inline/lambda/shared-let recursion, recursive Reference validation, and distinct wrapper actuals. Original Java stack errors, historical native abort evidence, full language semantics and performance remain separately accounted. Stage20 adds bounded nullable defaults, inferred collection amendments, null identity and repeated default failures; complete nullable and collection semantics remain unverified.",
         "source": "compatibility/m2-mappings.json"
       },
       "tests": {
@@ -136229,7 +137519,31 @@
           "types-stage19-grow-reference-30",
           "types-stage19-wrapper-recheck-31",
           "types-stage19-wrapper-recheck-32",
-          "types-stage19-wrapper-recheck-33"
+          "types-stage19-wrapper-recheck-33",
+          "types-stage20-default-listing-class",
+          "types-stage20-default-listing-nullable",
+          "types-stage20-default-listing-alias",
+          "types-stage20-default-listing-generic-alias",
+          "types-stage20-default-listing-union",
+          "types-stage20-default-listing-nullable-union",
+          "types-stage20-default-listing-missing",
+          "types-stage20-default-mapping-class",
+          "types-stage20-default-mapping-nullable",
+          "types-stage20-default-mapping-alias",
+          "types-stage20-default-mapping-generic-alias",
+          "types-stage20-default-mapping-union",
+          "types-stage20-default-mapping-nullable-union",
+          "types-stage20-default-mapping-missing",
+          "types-stage20-default-nested-class",
+          "types-stage20-default-nested-nullable",
+          "types-stage20-default-nested-alias",
+          "types-stage20-default-nested-generic-alias",
+          "types-stage20-default-nested-union",
+          "types-stage20-default-nested-nullable-union",
+          "types-stage20-default-nested-missing",
+          "types-stage20-generic-nested-empty",
+          "types-stage20-generic-nested-nonempty",
+          "types-stage20-abstract-lazy"
         ],
         "state": "partial"
       }
@@ -136290,7 +137604,46 @@
           "reference-stage10-equality-type-union",
           "reference-stage10-mapping-key-type-union",
           "reference-stage10-equality-type-nullable",
-          "reference-stage10-mapping-key-type-nullable"
+          "reference-stage10-mapping-key-type-nullable",
+          "types-stage20-default-listing-class",
+          "types-stage20-default-listing-nullable",
+          "types-stage20-default-listing-alias",
+          "types-stage20-default-listing-generic-alias",
+          "types-stage20-default-listing-union",
+          "types-stage20-default-listing-nullable-union",
+          "types-stage20-default-listing-missing",
+          "types-stage20-default-mapping-class",
+          "types-stage20-default-mapping-nullable",
+          "types-stage20-default-mapping-alias",
+          "types-stage20-default-mapping-generic-alias",
+          "types-stage20-default-mapping-union",
+          "types-stage20-default-mapping-nullable-union",
+          "types-stage20-default-mapping-missing",
+          "types-stage20-default-nested-class",
+          "types-stage20-default-nested-nullable",
+          "types-stage20-default-nested-alias",
+          "types-stage20-default-nested-generic-alias",
+          "types-stage20-default-nested-union",
+          "types-stage20-default-nested-nullable-union",
+          "types-stage20-default-nested-missing",
+          "types-stage20-static-empty",
+          "types-stage20-static-nonempty",
+          "types-stage20-nested-empty",
+          "types-stage20-nested-nonempty",
+          "types-stage20-nested-double-empty",
+          "types-stage20-null-equality",
+          "types-stage20-null-coalescing",
+          "types-stage20-null-type-test",
+          "types-stage20-null-nonnull",
+          "types-stage20-null-propagation",
+          "types-stage20-primitive-empty",
+          "types-stage20-generic-nested-empty",
+          "types-stage20-generic-nested-nonempty",
+          "types-stage20-null-structural",
+          "types-stage20-null-key",
+          "types-stage20-null-key-reverse",
+          "types-stage20-abstract-null",
+          "types-stage20-abstract-lazy"
         ],
         "state": "partial"
       }
@@ -136560,7 +137913,8 @@
           "types-stage19-grow-reference-30",
           "types-stage19-wrapper-recheck-31",
           "types-stage19-wrapper-recheck-32",
-          "types-stage19-wrapper-recheck-33"
+          "types-stage19-wrapper-recheck-33",
+          "types-stage20-null-type-test"
         ],
         "state": "partial"
       }
@@ -136572,27 +137926,27 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/vm/reference.rs",
-            "sha256": "4c10dd15dcf08d3e19d063f9ccc2fd9598c2d0dc953ecc41cb538692929ad330",
+            "sha256": "6610416634ade15f996177c072ddfa4bac0b390d2b96cfeafcea9c0681ee87ec",
             "symbol": "Reference"
           },
           {
             "path": "crates/pkl-runtime/src/vm/reference.rs",
-            "sha256": "4c10dd15dcf08d3e19d063f9ccc2fd9598c2d0dc953ecc41cb538692929ad330",
+            "sha256": "6610416634ade15f996177c072ddfa4bac0b390d2b96cfeafcea9c0681ee87ec",
             "symbol": "reference_access"
           },
           {
             "path": "crates/pkl-runtime/src/vm/reference.rs",
-            "sha256": "4c10dd15dcf08d3e19d063f9ccc2fd9598c2d0dc953ecc41cb538692929ad330",
+            "sha256": "6610416634ade15f996177c072ddfa4bac0b390d2b96cfeafcea9c0681ee87ec",
             "symbol": "invoke_reference_native"
           },
           {
             "path": "crates/pkl-runtime/src/vm/typecheck.rs",
-            "sha256": "cfe1e239f6a420428736db2aa4ed7429a185ef3f1325cb76de8cc84ca0d6fa4d",
+            "sha256": "5bb07c0c1debd6a3ee900b387bb64103d66a2bad16e4b9bfdf0ce1fa1f288b61",
             "symbol": "step_type"
           },
           {
             "path": "crates/pkl-runtime/src/vm/generics.rs",
-            "sha256": "398800b74e9fdee8e3fdd6fd340d73feecd9500875582c4e7988435bdd75c486",
+            "sha256": "7d7af9f7e0cb9e46fa691ecdbad050544a38f029cf6558a174afe43b9a7059a6",
             "symbol": "validate_reference_arguments"
           }
         ],
@@ -136843,22 +138197,22 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/heap.rs",
-            "sha256": "4b5b88dabc0df00078c8820646e49fdb4d874e8956afa10d56bff38adaf581ce",
+            "sha256": "59936349a6d333550db62939abe582327cb80a17bcc8c13c5ff9c4353dca610b",
             "symbol": "Member"
           },
           {
             "path": "crates/pkl-runtime/src/heap.rs",
-            "sha256": "4b5b88dabc0df00078c8820646e49fdb4d874e8956afa10d56bff38adaf581ce",
+            "sha256": "59936349a6d333550db62939abe582327cb80a17bcc8c13c5ff9c4353dca610b",
             "symbol": "Object"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "8fd62f94814835e5ceaf7ffe2bfebb1fa52e49bf399b285c52ad5324d1b0bea8",
+            "sha256": "27366898e91bbf38c046eb4eae438e1e54a79c2e560168e81e67f71fe22422f5",
             "symbol": "initialize_member_types"
           },
           {
             "path": "crates/pkl-runtime/src/vm/reference.rs",
-            "sha256": "4c10dd15dcf08d3e19d063f9ccc2fd9598c2d0dc953ecc41cb538692929ad330",
+            "sha256": "6610416634ade15f996177c072ddfa4bac0b390d2b96cfeafcea9c0681ee87ec",
             "symbol": "reference_candidate"
           }
         ],
@@ -137019,7 +138373,7 @@
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "8fd62f94814835e5ceaf7ffe2bfebb1fa52e49bf399b285c52ad5324d1b0bea8",
+            "sha256": "27366898e91bbf38c046eb4eae438e1e54a79c2e560168e81e67f71fe22422f5",
             "symbol": "compile_type_at"
           }
         ],
@@ -137059,17 +138413,17 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/value.rs",
-            "sha256": "42b3355ac5ced85408de01c9eadd083209e69b1acc2e392815e6bab122fe70e1",
+            "sha256": "87fb2de2ddfaa2112168a2a0a31f1914f6fc4f4140f93fb79ee0414884e62fe5",
             "symbol": "RuntimeSource"
           },
           {
             "path": "crates/pkl-runtime/src/evaluation.rs",
-            "sha256": "75110508206f041b94d1901b9fb47b428166555b96719b0c1ec4ef243f4b1bb0",
+            "sha256": "7545dff9e07980335503b693666438004e51f5898a415b77bea73a7e62d5a7a8",
             "symbol": "runtime_error"
           },
           {
             "path": "crates/pkl-runtime/src/diagnostic_values.rs",
-            "sha256": "b75d639176445395fab9b0c935ad1362fa5f78245124ca013b52a82d82aeaa95",
+            "sha256": "2489431e725946011159f7056d4e2e7b58a18e9bcc39c269835fe3ba028466e6",
             "symbol": "Renderer"
           },
           {
@@ -137103,7 +138457,7 @@
           "Colored output, general imported source stacks, first-error combinations and the complete parser/resolver/runtime diagnostic corpus remain open; selected uncolored recursive compression is covered.",
           "Original selected cycle and remainder-zero failures remain failed."
         ],
-        "scope": "Reference constructor, access, constraint and rendering errors retain complete message, authored frame, foreign standard-library source and URI bytes in selected comparisons. Stage11 adds selected fixed declaration, inherited metadata and complete raw diagnostics through the shared VM. Stage 13 adds selected alias/function metadata, exported-type equality and complete raw diagnostic comparisons; original suite execution and remaining scope stay open. Stage 14 adds selected authored type-resolution order, generic parameter scope and nested substitution, class/alias arity ordering, and owner signature diagnostics; persistent failed-declaration state has a separate sequence contract. Stage 15 adds selected non-generic recursive constraint block graphs and declaration type scope, plus builtin Class argument erasure and arity ordering. At Stage 15 recursive generic constraints remained open; Stage 16 adds bounded shared receiver-slot support. Stage 16: Selected recursive frame compression, count-one loops, complete call spans and hint placement match Java uncolored diagnostics. Stage 17: Selected const-method barriers, lambda lookup depth, immediate outer lexical scope, and grouped-callee parser diagnostics follow the pinned Java behavior. Stage 18 adds selected let-body and for-generator lexical const-depth boundaries while retaining enclosing const levels, plus their complete raw diagnostics and lambda controls. Selected finite recursive generic and instantiated type-variable failures compare complete Java bytes with power assertions enabled and disabled. Stage 19 adds bounded shared-metadata regressions for finite deep and branching actual arguments, observable class-argument swaps, inline/lambda/shared-let recursion, recursive Reference validation, and distinct wrapper actuals. Original Java stack errors, historical native abort evidence, full language semantics and performance remain separately accounted.",
+        "scope": "Reference constructor, access, constraint and rendering errors retain complete message, authored frame, foreign standard-library source and URI bytes in selected comparisons. Stage11 adds selected fixed declaration, inherited metadata and complete raw diagnostics through the shared VM. Stage 13 adds selected alias/function metadata, exported-type equality and complete raw diagnostic comparisons; original suite execution and remaining scope stay open. Stage 14 adds selected authored type-resolution order, generic parameter scope and nested substitution, class/alias arity ordering, and owner signature diagnostics; persistent failed-declaration state has a separate sequence contract. Stage 15 adds selected non-generic recursive constraint block graphs and declaration type scope, plus builtin Class argument erasure and arity ordering. At Stage 15 recursive generic constraints remained open; Stage 16 adds bounded shared receiver-slot support. Stage 16: Selected recursive frame compression, count-one loops, complete call spans and hint placement match Java uncolored diagnostics. Stage 17: Selected const-method barriers, lambda lookup depth, immediate outer lexical scope, and grouped-callee parser diagnostics follow the pinned Java behavior. Stage 18 adds selected let-body and for-generator lexical const-depth boundaries while retaining enclosing const levels, plus their complete raw diagnostics and lambda controls. Selected finite recursive generic and instantiated type-variable failures compare complete Java bytes with power assertions enabled and disabled. Stage 19 adds bounded shared-metadata regressions for finite deep and branching actual arguments, observable class-argument swaps, inline/lambda/shared-let recursion, recursive Reference validation, and distinct wrapper actuals. Original Java stack errors, historical native abort evidence, full language semantics and performance remain separately accounted. Stage20 adds bounded nullable defaults, inferred collection amendments, null identity and repeated default failures; complete nullable and collection semantics remain unverified.",
         "source": "compatibility/m2-mappings.json"
       },
       "tests": {
@@ -138007,7 +139361,12 @@
           "types-stage19-grow-reference-28",
           "types-stage19-grow-reference-30",
           "types-stage19-wrapper-recheck-31",
-          "types-stage19-wrapper-recheck-33"
+          "types-stage19-wrapper-recheck-33",
+          "types-stage20-default-listing-missing",
+          "types-stage20-default-mapping-missing",
+          "types-stage20-default-nested-missing",
+          "types-stage20-null-nonnull",
+          "types-stage20-abstract-lazy"
         ],
         "state": "partial"
       }
@@ -143998,22 +145357,22 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/heap.rs",
-            "sha256": "4b5b88dabc0df00078c8820646e49fdb4d874e8956afa10d56bff38adaf581ce",
+            "sha256": "59936349a6d333550db62939abe582327cb80a17bcc8c13c5ff9c4353dca610b",
             "symbol": "Member"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "8fd62f94814835e5ceaf7ffe2bfebb1fa52e49bf399b285c52ad5324d1b0bea8",
+            "sha256": "27366898e91bbf38c046eb4eae438e1e54a79c2e560168e81e67f71fe22422f5",
             "symbol": "validate_class_override"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "8fd62f94814835e5ceaf7ffe2bfebb1fa52e49bf399b285c52ad5324d1b0bea8",
+            "sha256": "27366898e91bbf38c046eb4eae438e1e54a79c2e560168e81e67f71fe22422f5",
             "symbol": "validate_object_override"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "8fd62f94814835e5ceaf7ffe2bfebb1fa52e49bf399b285c52ad5324d1b0bea8",
+            "sha256": "27366898e91bbf38c046eb4eae438e1e54a79c2e560168e81e67f71fe22422f5",
             "symbol": "initialize_member_types"
           }
         ],
@@ -144451,7 +145810,7 @@
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "8fd62f94814835e5ceaf7ffe2bfebb1fa52e49bf399b285c52ad5324d1b0bea8",
+            "sha256": "27366898e91bbf38c046eb4eae438e1e54a79c2e560168e81e67f71fe22422f5",
             "symbol": "compile_type_at"
           }
         ],
@@ -145668,22 +147027,22 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/vm/reference.rs",
-            "sha256": "4c10dd15dcf08d3e19d063f9ccc2fd9598c2d0dc953ecc41cb538692929ad330",
+            "sha256": "6610416634ade15f996177c072ddfa4bac0b390d2b96cfeafcea9c0681ee87ec",
             "symbol": "Reference"
           },
           {
             "path": "crates/pkl-runtime/src/vm/reference.rs",
-            "sha256": "4c10dd15dcf08d3e19d063f9ccc2fd9598c2d0dc953ecc41cb538692929ad330",
+            "sha256": "6610416634ade15f996177c072ddfa4bac0b390d2b96cfeafcea9c0681ee87ec",
             "symbol": "reference_access"
           },
           {
             "path": "crates/pkl-runtime/src/vm/reference.rs",
-            "sha256": "4c10dd15dcf08d3e19d063f9ccc2fd9598c2d0dc953ecc41cb538692929ad330",
+            "sha256": "6610416634ade15f996177c072ddfa4bac0b390d2b96cfeafcea9c0681ee87ec",
             "symbol": "invoke_reference_native"
           },
           {
             "path": "crates/pkl-runtime/src/vm/typecheck.rs",
-            "sha256": "cfe1e239f6a420428736db2aa4ed7429a185ef3f1325cb76de8cc84ca0d6fa4d",
+            "sha256": "5bb07c0c1debd6a3ee900b387bb64103d66a2bad16e4b9bfdf0ce1fa1f288b61",
             "symbol": "step_type"
           }
         ],
@@ -146905,10 +148264,10 @@
   "sources": {
     "compatibility/corpus.json": "0e95da22f965dede398f1a1f136703ba913d588aa51c1fb871cd97a11c84a0dd",
     "compatibility/inventory.json": "a9b21752adad9a269a54854c0dd298256757be88ad95c1388e30d7c78e407070",
-    "compatibility/m2-mappings.json": "9e43f66c374122bff187be1b73e04723ecf0d9405ce4e270863859e69d0901f6",
+    "compatibility/m2-mappings.json": "dbe5cad8ea38e3dfaad294272bc565e2030c65e9714aefa8d5db55e8f01367c8",
     "compatibility/regressions.json": "09c064f65730d30f72bf87a45c88d47ecc0844e57966a999dc8e759f083af3da",
     "compatibility/rev1-inventory.json": "6061f202ba3f04565efed3617ac69d3c2fadc54eec1f562b67a4758b3d0a8ab5",
     "references.lock": "278f48fd7697459281aa78a706c9ca57222f36a8c0785d838a6449fbaf26d30b",
-    "tests/fixtures/m2/cases.json": "a896e11d2f301d2fd40225dfc1c4b54b5615037814a6c09d9f186dea5222b935"
+    "tests/fixtures/m2/cases.json": "118d364f77dcaa94a9f634ee96c267c0f82e99529d4c97d30090e0480f133a3e"
   }
 }

@@ -34,6 +34,11 @@ pub enum Instruction {
     BuiltinClass(TypeCheck),
     ReferenceRenderMethod,
     Constant(Value),
+    WrapNullableDefault {
+        defined: bool,
+    },
+    StripNullDefault,
+    AmendEmpty,
     Input(usize),
     LoadLocal(usize),
     StoreLocal(usize),
@@ -454,7 +459,7 @@ impl TypeCheck {
                 }
             };
             match ty {
-                Self::Nullable(_) if matches!(value, Value::Null) => accepted = true,
+                Self::Nullable(_) if value.is_null() => accepted = true,
                 Self::Alias(inner)
                 | Self::GenericAlias(inner)
                 | Self::Nullable(inner)
@@ -500,8 +505,8 @@ impl TypeCheck {
                 matches!(value,Value::Int(i) if i>=min && i<=max)
             }
             Self::Nothing => false,
-            Self::NonNull => !matches!(value, Value::Null),
-            Self::Null => matches!(value, Value::Null),
+            Self::NonNull => !value.is_null(),
+            Self::Null => value.is_null(),
             Self::Boolean => matches!(value, Value::Bool(_)),
             Self::Int => matches!(value, Value::Int(_)),
             Self::Float => matches!(value, Value::Float(_)),
@@ -787,9 +792,7 @@ impl Vm {
             return Err(invalid("invalid entry block"));
         }
         for input in &inputs {
-            if let Some(id) = input.heap_id() {
-                self.heap.get(id)?;
-            }
+            self.heap.validate_value(input)?;
         }
         self.stack.clear();
         self.inputs = inputs;
@@ -940,9 +943,7 @@ impl Vm {
         }
         match result {
             Ok(value) => {
-                if let Some(object) = value.heap_id() {
-                    self.heap.get(object)?;
-                }
+                self.heap.validate_value(&value)?;
                 self.stack.push(value);
                 self.state = State::Running;
             }
@@ -2320,6 +2321,7 @@ impl Vm {
             | Instruction::EndCollection
             | Instruction::SetCollectionDefault { .. }
             | Instruction::SetCollectionTypeDefault(_)
+            | Instruction::AmendEmpty
             | Instruction::AddCollectionProperty(_)
             | Instruction::AddCollectionElement(_)
             | Instruction::AddCollectionEntry { .. }
@@ -2334,6 +2336,15 @@ impl Vm {
             | Instruction::EntryParent
             | Instruction::MakeList { .. } => self.collection_instruction(instruction)?,
             Instruction::Constant(value) => self.stack.push(value),
+            Instruction::WrapNullableDefault { defined } => {
+                let default = if defined { Some(self.pop()?) } else { None };
+                self.stack.push(self.heap.allocate_null(default));
+            }
+            Instruction::StripNullDefault => {
+                if self.stack.last().is_some_and(Value::is_null) {
+                    *self.stack.last_mut().expect("null value") = Value::Null;
+                }
+            }
             Instruction::Input(index) => self.stack.push(
                 self.inputs
                     .get(index)
@@ -2426,7 +2437,7 @@ impl Vm {
             }
             Instruction::NonNull => {
                 let value = self.pop()?;
-                if matches!(value, Value::Null) {
+                if value.is_null() {
                     return Err(RuntimeError::new(
                         ErrorKind::Type,
                         "Expected a non-null value, but got `null`.",
@@ -2472,7 +2483,7 @@ impl Vm {
                 self.begin_type(ty, value, TypeDestination::Test, Vec::new())?;
             }
             Instruction::JumpIfNull(target) => {
-                if matches!(self.pop()?, Value::Null) {
+                if self.pop()?.is_null() {
                     self.jump(target)?;
                 }
             }
@@ -3067,7 +3078,7 @@ impl Vm {
                 self.stack.push(value);
             }
             Instruction::JumpIfNotNull(target) => {
-                if !matches!(self.pop()?, Value::Null) {
+                if !self.pop()?.is_null() {
                     self.jump(target)?;
                 }
             }
@@ -4181,6 +4192,7 @@ impl Compiler<'_> {
             }
             ExprKind::NullableMember(receiver, name) => {
                 self.expression(receiver, output)?;
+                output.push(Instruction::StripNullDefault);
                 output.push(Instruction::Duplicate);
                 let branch = output.len();
                 output.push(Instruction::JumpIfNull(0));
@@ -4410,6 +4422,7 @@ impl Compiler<'_> {
                 let lookup_start = output.len();
                 let method = if let ExprKind::NullableMember(receiver, name) = &callee.kind {
                     self.expression(receiver, output)?;
+                    output.push(Instruction::StripNullDefault);
                     output.push(Instruction::Duplicate);
                     nullable_branch = Some(output.len());
                     output.push(Instruction::JumpIfNull(0));
@@ -4591,7 +4604,7 @@ impl Compiler<'_> {
 
 fn scalar_string(value: &Value) -> Result<String, RuntimeError> {
     Ok(match value {
-        Value::Null => "null".to_owned(),
+        Value::Null | Value::NullWithDefault(_) => "null".to_owned(),
         Value::Bool(value) => value.to_string(),
         Value::Int(value) => value.to_string(),
         Value::Float(value) => crate::numeric::double_to_string(*value),
@@ -4717,7 +4730,7 @@ fn type_name(ty: &TypeCheck, module: &str) -> String {
 
 fn value_type_name(value: &Value) -> &'static str {
     match value {
-        Value::Null => "Null",
+        Value::Null | Value::NullWithDefault(_) => "Null",
         Value::Bool(_) => "Boolean",
         Value::Int(_) => "Int",
         Value::Float(_) => "Float",
@@ -5672,8 +5685,10 @@ impl Compiler<'_> {
         span: Span,
     ) -> Result<bool, RuntimeError> {
         match check {
-            TypeCheck::Null | TypeCheck::Nullable(_) => {
-                output.push_at(Instruction::Constant(Value::Null), span)
+            TypeCheck::Null => output.push_at(Instruction::Constant(Value::Null), span),
+            TypeCheck::Nullable(inner) => {
+                let defined = self.default_type(inner, output, span)?;
+                output.push_at(Instruction::WrapNullableDefault { defined }, span);
             }
             TypeCheck::StringLiteral(value) => {
                 output.push_at(Instruction::Constant(Value::String(value.clone())), span)
@@ -5713,7 +5728,16 @@ impl Compiler<'_> {
                     output.push(Instruction::EndCollection);
                 }
             }
-            TypeCheck::Class { .. } => {
+            TypeCheck::Class { id, .. } => {
+                if self.type_scopes.iter().flatten().any(|member| {
+                    member.expr.span.start == *id
+                        && matches!(member.expr.kind, crate::syntax::ExprKind::Class { .. })
+                        && crate::syntax::modifier_flags(&member.modifiers)
+                            & crate::syntax::ModifierKind::Abstract.flag()
+                            != 0
+                }) {
+                    return Ok(false);
+                }
                 self.class_value(check, output, span)?;
                 output.push_at(Instruction::DefaultClassInstance, span);
             }

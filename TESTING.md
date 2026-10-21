@@ -162,6 +162,14 @@ controls. Reference metadata checks separately cover constrained actual argument
 validation before a throwing value, deferred branches, shared let roots, and
 persistent retries; existing inline diagnostic gaps remain failed observations.
 
+Nullable-default regressions compare attached class and collection defaults,
+empty versus nonempty amendments, nested nulls, and null-propagating operations.
+Equality, structural keys, coalescing, type checks, and diagnostics must retain
+ordinary null behavior. Native tests trace attached defaults through captured
+closures, Host failure and retry, cancellation, evaluator isolation, and terminal
+release. These checks do not establish bounded wall-time cancellation or full
+generic-constructor compatibility.
+
 Constraint receiver tests distinguish same-call mutation from separate function,
 member, let-root, and Host reentry frames. Lambda receiver capture is checked at
 creation, with GC between instructions and explicit cycle reclamation after

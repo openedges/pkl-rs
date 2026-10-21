@@ -152,7 +152,7 @@ pub fn scalar_expressions_with_options(
                         })?;
                 }
                 match value {
-                    Value::Null => Ok("null".into()),
+                    Value::Null | Value::NullWithDefault(_) => Ok("null".into()),
                     Value::Bool(value) => Ok(value.to_string()),
                     Value::Int(value) => Ok(value.to_string()),
                     Value::Float(value) => Ok(crate::numeric::double_to_string(value)),

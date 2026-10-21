@@ -1,0 +1,2 @@
+value: Int?
+result = ((value) {}).getClass() == Dynamic

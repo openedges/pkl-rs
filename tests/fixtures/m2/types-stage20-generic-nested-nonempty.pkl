@@ -1,0 +1,7 @@
+class C { p = 1 }
+typealias N = C?
+typealias NN = N?
+value: N
+deep: NN
+typealias A<T> = Int((new Listing<T> {new {p = 7}})[0].p == 7)
+result: A<NN> = 1

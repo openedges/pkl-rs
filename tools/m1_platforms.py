@@ -82,6 +82,9 @@ REQUIRED_SCENARIOS = {
     'm2-generic-metadata-deep-sequences',
     'm2-generic-metadata-default-sequences',
     'm2-generic-metadata-consumer-sequences',
+    'm2-nullable-default-listing-sequences',
+    'm2-nullable-default-mapping-sequences',
+    'm2-nullable-default-nested-sequences',
 }
 
 

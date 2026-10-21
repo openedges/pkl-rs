@@ -811,6 +811,27 @@
       "expressions": "types-stage19-alias-root-actuals.expressions",
       "group": "T19",
       "note": "Complete raw Java finite generic metadata, actual-argument distinction and persistent failure/retry observations. Native stack safety, Host/GC cancellation and unbounded Java stack errors have separate contracts."
+    },
+    {
+      "id": "types-stage20-nullable-listing-actuals",
+      "source": "types-stage20-nullable-listing-actuals.pkl",
+      "expressions": "types-stage20-nullable-listing-actuals.expressions",
+      "group": "T20",
+      "note": "Complete raw pinned Java nullable class and alias actual arguments, inferred collection defaults, distinct successful caches, throwing default retries and missing primitive defaults. Abstract missing-property diagnostics and direct new T remain retained exploratory failures."
+    },
+    {
+      "id": "types-stage20-nullable-mapping-actuals",
+      "source": "types-stage20-nullable-mapping-actuals.pkl",
+      "expressions": "types-stage20-nullable-mapping-actuals.expressions",
+      "group": "T20",
+      "note": "Complete raw pinned Java nullable class and alias actual arguments, inferred collection defaults, distinct successful caches, throwing default retries and missing primitive defaults. Abstract missing-property diagnostics and direct new T remain retained exploratory failures."
+    },
+    {
+      "id": "types-stage20-nullable-nested-actuals",
+      "source": "types-stage20-nullable-nested-actuals.pkl",
+      "expressions": "types-stage20-nullable-nested-actuals.expressions",
+      "group": "T20",
+      "note": "Complete raw pinned Java nullable class and alias actual arguments, inferred collection defaults, distinct successful caches, throwing default retries and missing primitive defaults. Abstract missing-property diagnostics and direct new T remain retained exploratory failures."
     }
   ],
   "unexecuted_groups": [

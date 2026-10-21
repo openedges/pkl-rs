@@ -245,6 +245,7 @@ impl ExecutableOwnerId {
 
 enum Entry {
     Object(Box<Object>),
+    NullDefault(Value),
     CustomThis(Option<Value>),
     Executable(Box<ExecutableState>),
 }
@@ -304,6 +305,31 @@ impl Heap {
 
     pub fn allocate(&mut self, object: Object) -> ObjectId {
         self.allocate_entry(Entry::Object(Box::new(object)))
+    }
+
+    pub(crate) fn allocate_null(&mut self, default: Option<Value>) -> Value {
+        default.map_or(Value::Null, |value| {
+            Value::NullWithDefault(self.allocate_entry(Entry::NullDefault(value)))
+        })
+    }
+
+    pub(crate) fn null_default(&self, id: ObjectId) -> Result<Value, RuntimeError> {
+        match self.entry(id)? {
+            Entry::NullDefault(value) => Ok(value.clone()),
+            _ => Err(RuntimeError::new(
+                ErrorKind::StaleHandle,
+                "invalid null default slot",
+            )),
+        }
+    }
+
+    pub(crate) fn validate_value(&self, value: &Value) -> Result<(), RuntimeError> {
+        if let Value::NullWithDefault(id) = value {
+            self.null_default(*id)?;
+        } else if let Some(id) = value.heap_id() {
+            self.get(id)?;
+        }
+        Ok(())
     }
 
     pub(crate) fn allocate_custom_this(&mut self, value: Option<Value>) -> CustomThisSlot {
@@ -467,10 +493,9 @@ impl Heap {
     pub fn get(&self, id: ObjectId) -> Result<&Object, RuntimeError> {
         match self.entry(id)? {
             Entry::Object(object) => Ok(object),
-            Entry::CustomThis(_) | Entry::Executable(_) => Err(RuntimeError::new(
-                ErrorKind::StaleHandle,
-                "internal slot is not a Pkl object",
-            )),
+            Entry::CustomThis(_) | Entry::Executable(_) | Entry::NullDefault(_) => Err(
+                RuntimeError::new(ErrorKind::StaleHandle, "internal slot is not a Pkl object"),
+            ),
         }
     }
 
@@ -498,6 +523,10 @@ impl Heap {
             }
             marked[id.index] = true;
             let object = match entry {
+                Entry::NullDefault(value) => {
+                    pending.extend(value.heap_id());
+                    continue;
+                }
                 Entry::Executable(state) => {
                     pending.extend(state.children.values().map(|owner| owner.0));
                     continue;
@@ -672,6 +701,53 @@ impl Heap {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn nullable_defaults_are_null_values_with_checked_private_heap_edges() {
+        let mut heap = Heap::new();
+        let value = heap.allocate_null(Some(Value::Int(7)));
+        assert_eq!(value, Value::Null);
+        let id = value.heap_id().expect("default payload is traced");
+        assert_eq!(heap.null_default(id), Ok(Value::Int(7)));
+        assert_eq!(heap.get(id).unwrap_err().kind, ErrorKind::StaleHandle);
+        assert_eq!(
+            Heap::new().null_default(id).unwrap_err().kind,
+            ErrorKind::StaleHandle
+        );
+        assert_eq!(heap.collect(std::slice::from_ref(&value)).live, 1);
+        assert_eq!(heap.collect(&[]).live, 0);
+        let replacement = heap.allocate_null(Some(Value::Int(8)));
+        assert_ne!(replacement.heap_id(), Some(id));
+        assert_eq!(
+            heap.null_default(id).unwrap_err().kind,
+            ErrorKind::StaleHandle
+        );
+        assert_eq!(heap.allocate_null(None), Value::Null);
+    }
+
+    #[test]
+    fn deep_nullable_defaults_trace_and_release_iteratively_on_small_stack() {
+        std::thread::Builder::new()
+            .stack_size(256 * 1024)
+            .spawn(|| {
+                let mut heap = Heap::new();
+                let mut value = Value::Object(heap.allocate(Object::default()));
+                for _ in 0..20_000 {
+                    value = heap.allocate_null(Some(value));
+                }
+                assert_eq!(heap.collect(std::slice::from_ref(&value)).live, 20_001);
+                assert_eq!(heap.collect(&[]).live, 0);
+                value = Value::Object(heap.allocate(Object::default()));
+                for _ in 0..20_000 {
+                    value = heap.allocate_null(Some(value));
+                }
+                // Arena destruction releases edges as handles, not Rust recursion.
+                drop(heap);
+            })
+            .unwrap()
+            .join()
+            .unwrap();
+    }
 
     #[test]
     fn captured_executable_graphs_trace_children_without_retaining_receivers() {

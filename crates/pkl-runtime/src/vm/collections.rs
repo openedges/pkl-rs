@@ -576,6 +576,22 @@ impl Vm {
         &mut self,
         instruction: Instruction,
     ) -> Result<(), RuntimeError> {
+        let empty_amendment = matches!(instruction, Instruction::AmendEmpty);
+        // Reuse construction without nesting this large dispatcher's native frame.
+        let instruction = if empty_amendment {
+            if let Some(Value::NullWithDefault(id)) = self.stack.last() {
+                let value = self.heap.null_default(*id)?;
+                *self.stack.last_mut().expect("null parent") = value;
+                return Ok(());
+            }
+            Instruction::BeginCollection {
+                kind: CollectionKind::Dynamic,
+                has_parent: true,
+                specialized: true,
+            }
+        } else {
+            instruction
+        };
         match instruction {
             Instruction::Swap => {
                 let right = self.pop()?;
@@ -589,7 +605,11 @@ impl Vm {
                 specialized,
             } => {
                 let parent = if has_parent {
-                    match self.pop()? {
+                    let mut value = self.pop()?;
+                    while let Value::NullWithDefault(id) = value {
+                        value = self.heap.null_default(id)?;
+                    }
+                    match value {
                         Value::Null => None,
                         value @ (Value::Bool(_)
                         | Value::Int(_)
@@ -663,22 +683,7 @@ impl Vm {
                 }
             }
 
-            Instruction::EndCollection => {
-                let id = self
-                    .frames
-                    .last_mut()
-                    .expect("active frame")
-                    .builders
-                    .pop()
-                    .ok_or_else(|| invalid("missing collection builder"))?;
-                let object = self.heap.get(id)?;
-                let result = if object.specialized_literal && object.members.is_empty() {
-                    object.parent.unwrap_or(id)
-                } else {
-                    id
-                };
-                self.stack.push(Value::Object(result));
-            }
+            Instruction::EndCollection => self.end_collection()?,
             Instruction::AddCollectionProperty(member) => {
                 let key = Value::String(member.name.clone());
                 if self.prepare_insertion(&key, CollectionMemberKind::Property)? {
@@ -1452,6 +1457,27 @@ impl Vm {
             }
             _ => return Err(invalid("unexpected collection instruction")),
         }
+        if empty_amendment {
+            self.end_collection()?;
+        }
+        Ok(())
+    }
+
+    fn end_collection(&mut self) -> Result<(), RuntimeError> {
+        let id = self
+            .frames
+            .last_mut()
+            .expect("active frame")
+            .builders
+            .pop()
+            .ok_or_else(|| invalid("missing collection builder"))?;
+        let object = self.heap.get(id)?;
+        let result = if object.specialized_literal && object.members.is_empty() {
+            object.parent.unwrap_or(id)
+        } else {
+            id
+        };
+        self.stack.push(Value::Object(result));
         Ok(())
     }
 }
@@ -1525,6 +1551,10 @@ impl Compiler<'_> {
         has_parent: bool,
         output: &mut Code,
     ) -> Result<(), RuntimeError> {
+        if has_parent && members.is_empty() {
+            output.push(Instruction::AmendEmpty);
+            return Ok(());
+        }
         let mut properties = Vec::new();
         Self::body_properties(members, &mut properties);
         self.type_scopes.push(properties.clone());

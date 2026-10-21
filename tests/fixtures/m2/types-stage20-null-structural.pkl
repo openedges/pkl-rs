@@ -1,0 +1,4 @@
+class C { p = 1 }
+typealias N = C?
+value: N
+result = List(value) == List(null) && (new Mapping {["k"] = value}) == (new Mapping {["k"] = null}) && (new Dynamic {p = value}) == (new Dynamic {p = null})

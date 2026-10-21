@@ -90,7 +90,7 @@ impl TypeCheck {
 
 impl TypeCheck {
     /// Whether selecting a default requires this invocation's actual argument.
-    /// Nullable and List defaults do not depend on their element type; constraints
+    /// Nullable defaults retain their inner default for amendment. Constraints
     /// do not run while obtaining the base type's default.
     pub(super) fn default_depends_on_parameters(&self) -> bool {
         let mut ty = self;
@@ -98,6 +98,7 @@ impl TypeCheck {
             ty = match ty.resolved() {
                 Self::Parameter { .. } => return true,
                 Self::NamedAlias { expanded, .. }
+                | Self::Nullable(expanded)
                 | Self::Alias(expanded)
                 | Self::GenericAlias(expanded)
                 | Self::Constrained { base: expanded, .. } => expanded,
@@ -122,6 +123,7 @@ impl TypeCheck {
 
 enum DefaultTask {
     Visit(TypeCheck),
+    Nullable,
     Collection(ObjectId),
     Publish(ObjectId),
 }
@@ -140,7 +142,7 @@ impl GenericDefaultRun {
         roots.extend(self.value.iter().cloned());
         roots.extend(self.tasks.iter().filter_map(|task| match task {
             DefaultTask::Collection(id) | DefaultTask::Publish(id) => Some(Value::Object(*id)),
-            DefaultTask::Visit(_) => None,
+            DefaultTask::Visit(_) | DefaultTask::Nullable => None,
         }));
     }
 }
@@ -161,6 +163,9 @@ impl Vm {
             .pop()
             .ok_or_else(|| invalid("empty default run"))?
         {
+            DefaultTask::Nullable => {
+                run.value = Some(self.heap.allocate_null(run.value.take()));
+            }
             DefaultTask::Publish(target) => {
                 self.heap.get_mut(target)?.collection_default = Some(run.value);
                 return Ok(());
@@ -170,7 +175,11 @@ impl Vm {
                 run.value = Some(Value::Object(id));
             }
             DefaultTask::Visit(ty) => match ty.into_resolved() {
-                TypeCheck::Null | TypeCheck::Nullable(_) => run.value = Some(Value::Null),
+                TypeCheck::Null => run.value = Some(Value::Null),
+                TypeCheck::Nullable(inner) => {
+                    run.tasks.push(DefaultTask::Nullable);
+                    run.tasks.push(DefaultTask::Visit(*inner));
+                }
                 TypeCheck::StringLiteral(value) => run.value = Some(Value::String(value)),
                 TypeCheck::NamedAlias { expanded, .. }
                 | TypeCheck::Alias(expanded)
@@ -195,12 +204,10 @@ impl Vm {
                         .as_ref()
                         .is_none_or(|class| class.abstract_)
                     {
-                        return Err(RuntimeError::new(
-                            ErrorKind::Type,
-                            "Abstract class has no default value.",
-                        ));
+                        run.value = None;
+                    } else {
+                        run.value = Some(Value::Object(object));
                     }
-                    run.value = Some(Value::Object(object));
                 }
                 ty @ (TypeCheck::Collection(_) | TypeCheck::ParameterizedCollection { .. }) => {
                     let (kind, argument) = match ty {

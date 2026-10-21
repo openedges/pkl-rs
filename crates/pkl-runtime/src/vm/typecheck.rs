@@ -58,7 +58,7 @@ impl Mismatch {
                 })).collect::<Result<Vec<_>, RuntimeError>>()).transpose()?,
             },
             Self::Union { span, value, children } => TypeDiagnostic::Union {
-                span: *span, value: render(value, heap, module, 80usize.saturating_sub(indent))?, actual_type: actual_type(value, heap, module)?, is_null: matches!(value, Value::Null),
+                span: *span, value: render(value, heap, module, 80usize.saturating_sub(indent))?, actual_type: actual_type(value, heap, module)?, is_null: value.is_null(),
                 children: children.iter().map(|(type_span, mismatch)| Ok(UnionTypeDiagnostic {
                     type_span: *type_span,
                     nontrivial: !matches!(mismatch, Mismatch::Simple { span, ty, .. } if span == type_span && !matches!(ty.unaliased(), TypeCheck::Nothing)),
@@ -655,7 +655,7 @@ impl Vm {
                     )));
                     self.push_type_child(&mut run, *inner, span, 0)?;
                 }
-                TypeCheck::Nullable(inner) if !matches!(run.value, Value::Null) => {
+                TypeCheck::Nullable(inner) if !run.value.is_null() => {
                     self.push_type_child(&mut run, *inner, span, 0)?
                 }
                 TypeCheck::Union {
@@ -917,7 +917,7 @@ impl Vm {
                         return self.launch_predicate(run, function, value);
                     }
                     value => {
-                        let error = if matches!(value, Value::Null) {
+                        let error = if value.is_null() {
                             Ok(RuntimeError::new(
                                 ErrorKind::Type,
                                 "Expected value of type `Boolean` or `Function`, but got `null`.",

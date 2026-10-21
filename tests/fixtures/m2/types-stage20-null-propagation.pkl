@@ -1,0 +1,6 @@
+class C { p = 1 }
+typealias N = C?
+typealias NN = N?
+value: N
+deep: NN
+result = ((value?.p) {}).getClass() == Dynamic

@@ -13,9 +13,11 @@ pub struct ObjectId {
     pub(crate) generation: u64,
 }
 
-#[derive(Clone, Debug, PartialEq)]
+#[derive(Clone, Debug)]
 pub enum Value {
     Null,
+    /// A language null retaining the default used when it is amended.
+    NullWithDefault(ObjectId),
     Bool(bool),
     Int(i64),
     Float(f64),
@@ -27,7 +29,29 @@ pub enum Value {
     TypeAlias(ObjectId),
 }
 
+impl PartialEq for Value {
+    fn eq(&self, other: &Self) -> bool {
+        match (self, other) {
+            (a, b) if a.is_null() && b.is_null() => true,
+            (Self::Bool(a), Self::Bool(b)) => a == b,
+            (Self::Int(a), Self::Int(b)) => a == b,
+            (Self::Float(a), Self::Float(b)) => a == b,
+            (Self::String(a), Self::String(b)) => a == b,
+            (Self::Bytes(a), Self::Bytes(b)) => a == b,
+            (Self::Object(a), Self::Object(b))
+            | (Self::Function(a), Self::Function(b))
+            | (Self::Class(a), Self::Class(b))
+            | (Self::TypeAlias(a), Self::TypeAlias(b)) => a == b,
+            _ => false,
+        }
+    }
+}
+
 impl Value {
+    pub fn is_null(&self) -> bool {
+        matches!(self, Self::Null | Self::NullWithDefault(_))
+    }
+
     pub fn string(value: impl Into<Arc<str>>) -> Self {
         Self::String(value.into())
     }
@@ -35,9 +59,11 @@ impl Value {
     /// Heap identity for every traced value variant.
     pub fn heap_id(&self) -> Option<ObjectId> {
         match self {
-            Self::Object(id) | Self::Function(id) | Self::Class(id) | Self::TypeAlias(id) => {
-                Some(*id)
-            }
+            Self::Object(id)
+            | Self::Function(id)
+            | Self::Class(id)
+            | Self::TypeAlias(id)
+            | Self::NullWithDefault(id) => Some(*id),
             _ => None,
         }
     }

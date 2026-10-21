@@ -46,7 +46,7 @@ impl StructuralKey {
 }
 fn atom(heap: &Heap, value: &Value) -> Result<Atom, RuntimeError> {
     Ok(match value {
-        Value::Null => Atom::Null,
+        Value::Null | Value::NullWithDefault(_) => Atom::Null,
         Value::Bool(v) => Atom::Bool(*v),
         Value::Int(v) => Atom::Int(*v),
         Value::Float(v) => Atom::Float(if v.is_nan() {
@@ -75,7 +75,7 @@ fn string_hash(value: &str) -> i32 {
 impl Vm {
     pub(super) fn java_hash(&self, value: &Value) -> Result<Option<i32>, RuntimeError> {
         Ok(match value {
-            Value::Null => Some(0),
+            Value::Null | Value::NullWithDefault(_) => Some(0),
             Value::Bool(value) => Some(if *value { 1231 } else { 1237 }),
             Value::Int(value) => Some((*value as u64 ^ ((*value as u64) >> 32)) as i32),
             Value::Float(value) => {

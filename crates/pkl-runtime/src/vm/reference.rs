@@ -909,7 +909,7 @@ impl Vm {
 
     fn reference_get_class(&mut self, value: &Value) -> Result<Value, RuntimeError> {
         let ty = match value {
-            Value::Null => TypeCheck::Null,
+            Value::Null | Value::NullWithDefault(_) => TypeCheck::Null,
             Value::Bool(_) => TypeCheck::Boolean,
             Value::Int(_) => TypeCheck::Int,
             Value::Float(_) => TypeCheck::Float,

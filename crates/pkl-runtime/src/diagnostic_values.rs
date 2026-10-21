@@ -61,7 +61,7 @@ fn function_name(id: ObjectId, heap: &Heap) -> Result<String, RuntimeError> {
 
 pub(crate) fn type_name(value: &Value, heap: &Heap, module: &str) -> Result<String, RuntimeError> {
     Ok(match value {
-        Value::Null => "Null".into(),
+        Value::Null | Value::NullWithDefault(_) => "Null".into(),
         Value::Bool(_) => "Boolean".into(),
         Value::Int(_) => "Int".into(),
         Value::Float(_) => "Float".into(),
@@ -158,7 +158,7 @@ impl Renderer<'_> {
             return Ok(());
         }
         match value {
-            Value::Null => self.append("null"),
+            Value::Null | Value::NullWithDefault(_) => self.append("null"),
             Value::Bool(value) => self.append(if *value { "true" } else { "false" }),
             Value::Int(value) => self.append(&value.to_string()),
             Value::Float(value) => self.append(&crate::numeric::double_to_string(*value)),

@@ -674,6 +674,26 @@ substitution identity, recursive argument resource bounds, and the full type
 and const corpus remain open. These cases do not establish complete const,
 type, Host, module-cache, or language compatibility.
 
+### Nullable defaults
+
+A nullable value can retain the inner type's default without exposing it as the
+value itself. `Value::NullWithDefault` references an evaluator-owned heap entry;
+the collector traces its payload through objects, closures, pending defaults,
+and suspended frames. Equality, key hashing, type checks, and rendered output
+treat both null representations as `null`. No reference-counted value chain is
+introduced.
+
+An empty amendment returns one attached default. An amendment with members
+unwraps nested nullable defaults until it reaches the parent to amend. A null
+with no attached default uses an empty Dynamic parent. Null-propagating member
+and method operations return plain null, discarding the attachment. Nullable
+generic collection defaults use the existing resumable default constructor;
+each wrapper construction consumes VM fuel and retains its payload as a GC root.
+These rules follow the pinned `VmNull`, nullable type node, and object literal
+implementations. Parent unwrapping still runs within one instruction, so these
+changes do not establish a uniform wall-time cancellation bound. General generic
+constructors and synchronous metadata resource bounds remain separate requirements.
+
 ### Recursive diagnostic frames
 
 Uncolored frame rendering follows the pinned Java compressor, including partial
