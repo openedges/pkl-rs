@@ -1,4 +1,5 @@
 //! Structured diagnostics before product-specific rendering.
+mod frames;
 mod highlight;
 
 use crate::source::{Source, SourceId, Span};
@@ -215,19 +216,14 @@ pub struct RenderFrame<'a> {
 
 /// Render the ordinary, uncolored Pkl exception layout.
 ///
-/// Recursive frame compression, source transformers, and colored output remain
-/// separate compatibility requirements.
+/// Includes the pinned recursive frame compression. Source transformers and
+/// colored output remain separate compatibility requirements.
 pub fn render_error(message: &str, frames: &[RenderFrame<'_>], hint: Option<&str>) -> String {
     use std::fmt::Write;
     let mut output = format!("–– Pkl Error ––\n{message}\n");
-    for (index, frame) in frames.iter().enumerate() {
+    if !frames.is_empty() {
         output.push('\n');
-        render_frame(&mut output, frame);
-        if index == 0
-            && let Some(hint) = hint
-        {
-            write!(output, "\n{hint}\n").unwrap();
-        }
+        frames::render(&mut output, frames, hint);
     }
     if frames.is_empty()
         && let Some(hint) = hint
@@ -237,7 +233,7 @@ pub fn render_error(message: &str, frames: &[RenderFrame<'_>], hint: Option<&str
     output
 }
 
-fn render_frame(output: &mut String, frame: &RenderFrame<'_>) {
+fn render_frame(output: &mut String, frame: &RenderFrame<'_>, margin: &str) {
     use std::fmt::Write;
     let text = frame.source.text();
     let Some(position) = frame.source.position(frame.span.start) else {
@@ -269,15 +265,15 @@ fn render_frame(output: &mut String, frame: &RenderFrame<'_>) {
         end.max(1)
     });
     let prefix = format!("{} | ", position.line);
-    writeln!(output, "{prefix}{}", highlight::uncolored(stripped)).unwrap();
+    writeln!(output, "{margin}{prefix}{}", highlight::uncolored(stripped)).unwrap();
     writeln!(
         output,
-        "{}{}",
+        "{margin}{}{}",
         " ".repeat(prefix.len() + column),
         "^".repeat(width)
     )
     .unwrap();
-    writeln!(output, "at {} ({})", frame.member, frame.uri).unwrap();
+    writeln!(output, "{margin}at {} ({})", frame.member, frame.uri).unwrap();
 }
 
 // Java Character.isWhitespace deliberately excludes the non-breaking spaces.

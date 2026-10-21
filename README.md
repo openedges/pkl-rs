@@ -13,7 +13,8 @@ typed default properties and cache-sensitive comparison order, deferred
 References through `pkl:ref`, evaluator-owned class and type-alias identity,
 function type metadata and arity checks, ordered type resolution and generic
 parameter scopes, selected recursive constraints and erased `Class<T>` arguments,
-and structured source diagnostics with optional power assertions
+shared constraint receiver slots and creation-time lambda captures,
+and structured source diagnostics with recursive frame compression with optional power assertions
 and standard-library frames. The [latest checkpoint](reports/m2/README.md)
 records the accepted local verification scope, known failures, and unexecuted
 environments.

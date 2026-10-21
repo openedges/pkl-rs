@@ -244,6 +244,20 @@
       "id": "types-stage15-class-erased-after-alias-failure",
       "note": "Non-generic recursive constraint checks and erased Class arguments share ordered retries; known shared-this and generic recursion gaps remain separate exploratory failures.",
       "source": "types-stage15-class-erased-after-alias-failure.pkl"
+    },
+    {
+      "expressions": "types-stage16-shared-slots-retry.expressions",
+      "group": "T16",
+      "id": "types-stage16-shared-slots-retry",
+      "note": "Raw shared constraint slots, let roots, creation-time lambda receivers, real call boundaries, and failed retries; recursive generic and unpromoted mismatches remain exploratory.",
+      "source": "types-stage16-shared-slots-retry.pkl"
+    },
+    {
+      "expressions": "types-stage16-root-boundaries-retry.expressions",
+      "group": "T16",
+      "id": "types-stage16-root-boundaries-retry",
+      "note": "Raw shared constraint slots, let roots, creation-time lambda receivers, real call boundaries, and failed retries; recursive generic and unpromoted mismatches remain exploratory.",
+      "source": "types-stage16-root-boundaries-retry.pkl"
     }
   ],
   "unexecuted_groups": [

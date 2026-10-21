@@ -731,7 +731,7 @@ impl Vm {
                 block: self.program.reference_render_block,
                 arity: 0,
                 method: true,
-                capture_custom_this: false,
+                captured_this: None,
             }),
             environment: Environment {
                 locals: vec![Value::Object(id)],

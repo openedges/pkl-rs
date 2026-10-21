@@ -153,10 +153,12 @@ enum Task {
         index: usize,
         body_span: Span,
         function: ObjectId,
+        value: Value,
     },
     TraceResult {
         span: Span,
         body_span: Span,
+        predicate_value: Option<Value>,
     },
     UnionResult(UnionState),
 }
@@ -180,7 +182,7 @@ pub(super) fn environment_roots(environment: &Environment, roots: &mut Vec<Value
     roots.extend(environment.locals.iter().cloned());
     roots.extend(environment.this_value.iter().cloned());
     roots.extend(environment.outer_value.iter().cloned());
-    roots.extend(environment.custom_this.iter().cloned());
+    roots.extend(environment.custom_this.map(|slot| slot.root()));
     for scope in &environment.scopes {
         roots.extend([Value::Object(scope.receiver), Value::Object(scope.owner)]);
     }
@@ -222,20 +224,46 @@ impl TypeRun {
                 }
                 Task::ReferenceDomainResult { value, .. } => roots.push(value.clone()),
                 Task::RestoreEnvironment(environment) => environment_roots(environment, roots),
-                Task::PredicateResult { function, .. } => roots.push(Value::Function(*function)),
+                Task::PredicateResult {
+                    function, value, ..
+                } => {
+                    roots.push(Value::Function(*function));
+                    roots.push(value.clone());
+                }
+                Task::TraceResult {
+                    predicate_value, ..
+                } => roots.extend(predicate_value.iter().cloned()),
                 _ => {}
             }
         }
     }
-    fn mismatch(&mut self, span: Span, body_span: Span) {
+    fn mismatch(&mut self, span: Span, body_span: Span, value: Value) {
         self.outcome = Some(Err(Mismatch::Constraint {
             span,
-            value: self.value.clone(),
+            value,
             body_span,
             observations: self.tracker.take(),
         }));
     }
 }
+// Function parameter/result and Reference referent types are metadata; they do
+// not evaluate constraints in this frame. The remaining wrappers can do so.
+fn needs_custom_this(ty: &TypeCheck) -> bool {
+    match ty {
+        TypeCheck::Constrained { .. } => true,
+        TypeCheck::NamedAlias { expanded, .. }
+        | TypeCheck::Nullable(expanded)
+        | TypeCheck::Alias(expanded)
+        | TypeCheck::GenericAlias(expanded) => needs_custom_this(expanded),
+        TypeCheck::Reference { domain, .. } => needs_custom_this(domain),
+        TypeCheck::ParameterizedCollection { arguments, .. } => {
+            arguments.iter().any(|(ty, _)| needs_custom_this(ty))
+        }
+        TypeCheck::Union { types, .. } => types.iter().any(needs_custom_this),
+        _ => false,
+    }
+}
+
 fn module_environment(environment: &Environment) -> Result<Environment, RuntimeError> {
     let mut result = environment.clone();
     let scope = *result
@@ -305,6 +333,9 @@ impl Vm {
             .frames
             .last_mut()
             .ok_or_else(|| invalid("missing type-check frame"))?;
+        if frame.environment.custom_this.is_none() && needs_custom_this(&ty) {
+            frame.environment.custom_this = Some(self.heap.allocate_custom_this(None));
+        }
         let metadata = self.program.metadata.get(frame.block);
         let span = frames
             .first()
@@ -339,6 +370,14 @@ impl Vm {
         });
         Ok(())
     }
+    fn constraint_value(&self, environment: &Environment) -> Result<Value, RuntimeError> {
+        let slot = environment
+            .custom_this
+            .ok_or_else(|| invalid("missing constraint receiver slot"))?;
+        self.heap
+            .custom_this(slot)?
+            .ok_or_else(|| invalid("missing constraint receiver"))
+    }
     fn launch_constraint(
         &mut self,
         mut run: TypeRun,
@@ -349,7 +388,17 @@ impl Vm {
         } else {
             run.environment.clone()
         };
-        environment.custom_this = Some(run.value.clone());
+        // Local-writing constraints execute in a fresh Java root frame. Inline
+        // constraints use the checking frame's slot, including during replay.
+        if self
+            .program
+            .metadata
+            .get(constraint.block)
+            .is_some_and(|metadata| metadata.constraint_root.is_some())
+        {
+            let value = self.constraint_value(&environment)?;
+            environment.custom_this = Some(self.heap.allocate_custom_this(Some(value)));
+        }
         let member = self
             .program
             .metadata
@@ -381,8 +430,8 @@ impl Vm {
         &mut self,
         mut run: TypeRun,
         function: ObjectId,
+        argument: Value,
     ) -> Result<(), RuntimeError> {
-        let argument = run.value.clone();
         run.constraint_active = true;
         self.frames.last_mut().expect("type frame").type_run = Some(run);
         self.frames.last_mut().expect("type frame").callsite_hidden = true;
@@ -703,6 +752,11 @@ impl Vm {
             Task::AfterBase { constraints } => {
                 if let Some(Ok(value)) = &run.outcome {
                     run.checked = value.clone();
+                    let slot = run
+                        .environment
+                        .custom_this
+                        .ok_or_else(|| invalid("missing constraint receiver slot"))?;
+                    self.heap.set_custom_this(slot, Some(run.value.clone()))?;
                     run.tasks.push(Task::Constraints {
                         constraints,
                         index: 0,
@@ -737,10 +791,14 @@ impl Vm {
                         run.tasks.push(Task::TraceResult {
                             span: constraint.span,
                             body_span: constraint.span,
+                            predicate_value: None,
                         });
                         return self.launch_constraint(run, constraint);
                     }
-                    Value::Bool(false) => run.mismatch(constraint.span, constraint.span),
+                    Value::Bool(false) => {
+                        let value = self.constraint_value(&run.environment)?;
+                        run.mismatch(constraint.span, constraint.span, value);
+                    }
                     Value::Function(function) => {
                         let body_span = self
                             .heap
@@ -750,13 +808,15 @@ impl Vm {
                             .and_then(|function| self.program.metadata.get(function.block))
                             .and_then(|metadata| metadata.declaration.or(metadata.value_span))
                             .unwrap_or(constraint.span);
+                        let value = self.constraint_value(&run.environment)?;
                         run.tasks.push(Task::PredicateResult {
                             constraints,
                             index,
                             body_span,
                             function,
+                            value: value.clone(),
                         });
-                        return self.launch_predicate(run, function);
+                        return self.launch_predicate(run, function, value);
                     }
                     value => {
                         let error = if matches!(value, Value::Null) {
@@ -794,6 +854,7 @@ impl Vm {
                 index,
                 body_span,
                 function,
+                value: predicate_value,
             } => {
                 run.constraint_active = false;
                 let result = run
@@ -813,12 +874,13 @@ impl Vm {
                         run.tasks.push(Task::TraceResult {
                             span: constraints[index].span,
                             body_span,
+                            predicate_value: Some(predicate_value.clone()),
                         });
-                        return self.launch_predicate(run, function);
+                        return self.launch_predicate(run, function, predicate_value);
                     }
                     Value::Bool(false) => {
                         self.frames.last_mut().expect("type frame").callsite_hidden = false;
-                        run.mismatch(constraints[index].span, body_span);
+                        run.mismatch(constraints[index].span, body_span, predicate_value);
                     }
                     value => {
                         let error = type_error(
@@ -831,13 +893,21 @@ impl Vm {
                     }
                 }
             }
-            Task::TraceResult { span, body_span } => {
+            Task::TraceResult {
+                span,
+                body_span,
+                predicate_value,
+            } => {
                 run.constraint_active = false;
                 self.frames.last_mut().expect("type frame").callsite_hidden = false;
                 run.returned
                     .take()
                     .ok_or_else(|| invalid("missing trace result"))?;
-                run.mismatch(span, body_span);
+                let value = match predicate_value {
+                    Some(value) => value,
+                    None => self.constraint_value(&run.environment)?,
+                };
+                run.mismatch(span, body_span, value);
             }
             Task::UnionResult(mut state) => {
                 let outcome = run

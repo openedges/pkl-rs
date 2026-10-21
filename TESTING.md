@@ -142,6 +142,14 @@ cancellation, and complete terminal release. `Class<T>` cases verify erased
 arguments without publishing broken declarations, while preserving alias argument
 resolution and wrong-arity errors.
 
+Constraint receiver tests distinguish same-call mutation from separate function,
+member, let-root, and Host reentry frames. Lambda receiver capture is checked at
+creation, with GC between instructions and explicit cycle reclamation after
+cancellation. Boolean and function-predicate failure values are compared with
+power assertions off and on. Alias const tests separate first-read diagnostics
+from unresolved persistent local-property resolution caches; retained retry
+witnesses must not be counted as passing first-read cases.
+
 Collection regressions cover lazy bodies, eager keys and source forcing,
 inheritance order, primitive key equality, generator captures, spread, and
 complete subscript diagnostics. Native lifecycle tests also force collection

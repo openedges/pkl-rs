@@ -1,0 +1,4 @@
+module stage16.types
+const function check(x: Int): Boolean = (x - 1) is Int(true)
+typealias A = Int(check(this) && this == 2)
+result: A = 2

@@ -1,0 +1,315 @@
+// Compression and loop rendering adapted from Pkl 0.32.0 StackTraceRenderer.java.
+// Copyright © 2024-2026 Apple Inc. and the Pkl project authors. All rights reserved.
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at https://www.apache.org/licenses/LICENSE-2.0
+// Unless required by applicable law or agreed to in writing, software distributed
+// under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
+// CONDITIONS OF ANY KIND, either express or implied. See the License for the
+// specific language governing permissions and limitations under the License.
+
+use super::RenderFrame;
+use std::fmt::Write;
+
+#[derive(Debug, PartialEq, Eq)]
+enum Group {
+    Frame(usize),
+    Loop { frames: Vec<Group>, count: usize },
+}
+
+/// Equality follows org.pkl.core.StackFrame, before display whitespace stripping
+/// and highlighting. Neither Rust source identity nor formatted output is a key.
+#[derive(PartialEq, Eq)]
+struct FrameKey<'a> {
+    uri: &'a str,
+    member: &'a str,
+    source_lines: Vec<&'a str>,
+    start_line: usize,
+    start_column: usize,
+    end_line: usize,
+    end_column: usize,
+}
+
+fn key<'a>(frame: &'a RenderFrame<'_>) -> Option<FrameKey<'a>> {
+    let start = frame.source.position(frame.span.start)?;
+    let (end_line, end_column) = if let Some(width) = frame.highlight_length_utf16 {
+        (start.line, start.column_utf16 + width.saturating_sub(1))
+    } else if let Some((offset, ch)) = frame.source.slice(frame.span)?.char_indices().next_back() {
+        let end = frame.source.position(frame.span.start + offset)?;
+        (end.line, end.column_utf16 + ch.len_utf16() - 1)
+    } else {
+        (start.line, start.column_utf16)
+    };
+    let text = frame.source.text();
+    let mut source_lines = Vec::new();
+    let mut line = 1;
+    let mut beginning = 0;
+    for (offset, ch) in text.char_indices() {
+        if ch == '\n' || ch == '\r' && text.as_bytes().get(offset + 1) != Some(&b'\n') {
+            if line >= start.line && line <= end_line {
+                source_lines.push(
+                    text[beginning..offset]
+                        .strip_suffix('\r')
+                        .unwrap_or(&text[beginning..offset]),
+                );
+            }
+            beginning = offset + 1;
+            line += 1;
+        }
+    }
+    if line >= start.line && line <= end_line {
+        source_lines.push(&text[beginning..]);
+    }
+    Some(FrameKey {
+        uri: frame.uri,
+        member: frame.member,
+        source_lines,
+        start_line: start.line,
+        start_column: start.column_utf16,
+        end_line,
+        end_column,
+    })
+}
+
+fn compress<T: PartialEq>(frames: &[T]) -> Vec<Group> {
+    let mut result = Vec::new();
+    compress_range(
+        frames,
+        &mut vec![0; frames.len()],
+        &mut result,
+        0,
+        frames.len(),
+    );
+    result
+}
+
+fn compress_range<T: PartialEq>(
+    frames: &[T],
+    lpps: &mut [usize],
+    result: &mut Vec<Group>,
+    beginning: usize,
+    ending: usize,
+) {
+    let total_size = ending - beginning;
+    let mut max_length = 0;
+    let mut pattern_start = 0;
+    let mut match_end = 0;
+    'search: for i in beginning..ending {
+        let mut best = i;
+        let mut len = 0;
+        lpps[i] = 0;
+        let mut j = i + 1;
+        while j < ending {
+            let matches = frames[frames.len() - 1 - j] == frames[frames.len() - 1 - (len + i)];
+            if !matches && len != 0 {
+                len = lpps[len - 1];
+            } else {
+                len += usize::from(matches);
+                lpps[j] = len;
+                if len > lpps[best] {
+                    best = j;
+                } else if len > 0 && len == lpps[j - 1] {
+                    continue 'search;
+                }
+                j += 1;
+            }
+        }
+        let length = best - i + 1;
+        if length > 1 && max_length < length {
+            max_length = length;
+            match_end = best;
+            pattern_start = i;
+        }
+        if max_length > ending - i || max_length * 2 > total_size {
+            break;
+        }
+    }
+    if max_length > 1 {
+        // Preserve the pinned algorithm's partial-pattern/count-one behavior.
+        let width = match_end - lpps[match_end] - pattern_start + 1;
+        compress_range(frames, lpps, result, match_end + 1, ending);
+        let mut nested = Vec::new();
+        compress_range(
+            frames,
+            lpps,
+            &mut nested,
+            pattern_start,
+            pattern_start + width,
+        );
+        result.push(Group::Loop {
+            frames: nested,
+            count: max_length / width,
+        });
+        compress_range(frames, lpps, result, beginning, pattern_start);
+    } else {
+        result.extend(
+            (beginning..ending)
+                .rev()
+                .map(|i| Group::Frame(frames.len() - 1 - i)),
+        );
+    }
+}
+
+pub(super) fn render(output: &mut String, frames: &[RenderFrame<'_>], hint: Option<&str>) {
+    // Invalid source positions are never compressed with each other.
+    let keys: Vec<_> = frames
+        .iter()
+        .enumerate()
+        .map(|(index, frame)| key(frame).ok_or(index))
+        .collect();
+    render_groups(output, frames, &compress(&keys), hint, "", true);
+}
+
+fn render_hint(output: &mut String, hint: Option<&str>, margin: &str) {
+    if let Some(hint) = hint {
+        write!(output, "\n{margin}{hint}\n").unwrap();
+    }
+}
+
+fn render_groups(
+    output: &mut String,
+    frames: &[RenderFrame<'_>],
+    groups: &[Group],
+    hint: Option<&str>,
+    margin: &str,
+    mut first: bool,
+) {
+    for group in groups {
+        match group {
+            Group::Loop {
+                frames: nested,
+                count: 1,
+            } => render_groups(output, frames, nested, None, margin, first),
+            Group::Loop {
+                frames: nested,
+                count,
+            } => {
+                if !first {
+                    writeln!(output, "{margin}").unwrap();
+                }
+                writeln!(output, "{margin}┌─ {count} repetitions of:").unwrap();
+                let nested_margin = format!("{margin}│ ");
+                render_groups(output, frames, nested, None, &nested_margin, first);
+                if first {
+                    render_hint(output, hint, &nested_margin);
+                    first = false;
+                }
+                writeln!(output, "{margin}└─").unwrap();
+            }
+            Group::Frame(index) => {
+                if !first {
+                    writeln!(output, "{margin}").unwrap();
+                }
+                super::render_frame(output, &frames[*index], margin);
+            }
+        }
+        if first {
+            render_hint(output, hint, margin);
+            first = false;
+        }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn pinned_prefix_suffix_and_thirty_frame_loop() {
+        // The sizes and layout are from upstream StackTraceRendererTest.
+        let frames: Vec<_> = (0..10)
+            .chain((10..40).cycle().take(120))
+            .chain(40..45)
+            .collect();
+        let compressed = compress(&frames);
+        assert_eq!(compressed.len(), 16);
+        assert_eq!(
+            &compressed[..10],
+            &(0..10).map(Group::Frame).collect::<Vec<_>>()
+        );
+        assert_eq!(
+            compressed[10],
+            Group::Loop {
+                frames: (100..130).map(Group::Frame).collect(),
+                count: 4,
+            }
+        );
+        assert_eq!(
+            &compressed[11..],
+            &(130..135).map(Group::Frame).collect::<Vec<_>>()
+        );
+    }
+
+    #[test]
+    fn pinned_partial_pattern_keeps_count_one_loop() {
+        assert_eq!(
+            compress(&['A', 'B', 'A']),
+            vec![Group::Loop {
+                frames: vec![Group::Frame(1), Group::Frame(2)],
+                count: 1,
+            }]
+        );
+    }
+
+    #[test]
+    fn repeated_frame_rendering_keeps_loop_margins_and_first_hint() {
+        use crate::source::{SourceMap, Span};
+        let mut sources = SourceMap::default();
+        let id = sources.add("source", "foo");
+        let frames: Vec<_> = (0..3)
+            .map(|_| RenderFrame {
+                source: sources.get(id).unwrap(),
+                uri: "repl:text",
+                member: "f",
+                span: Span::new(0, 3),
+                highlight_length_utf16: None,
+            })
+            .collect();
+        assert_eq!(
+            super::super::render_error("failure", &frames, Some("hint\ncontinued")),
+            "–– Pkl Error ––\nfailure\n\n┌─ 3 repetitions of:\n│ 1 | foo\n│     ^^^\n│ at f (repl:text)\n\n│ hint\ncontinued\n└─\n"
+        );
+    }
+
+    #[test]
+    fn count_one_rendering_keeps_partial_pattern_and_hint_position() {
+        use crate::source::{SourceMap, Span};
+        let mut sources = SourceMap::default();
+        let id = sources.add("source", "foo");
+        let frames: Vec<_> = ["A", "B", "A"]
+            .into_iter()
+            .map(|member| RenderFrame {
+                source: sources.get(id).unwrap(),
+                uri: "repl:text",
+                member,
+                span: Span::new(0, 3),
+                highlight_length_utf16: None,
+            })
+            .collect();
+        assert_eq!(
+            super::super::render_error("failure", &frames, Some("hint")),
+            "–– Pkl Error ––\nfailure\n\n1 | foo\n    ^^^\nat B (repl:text)\n\n1 | foo\n    ^^^\nat A (repl:text)\n\nhint\n"
+        );
+    }
+
+    #[test]
+    fn compression_compares_all_source_lines_before_display_transforms() {
+        use crate::source::{SourceMap, Span};
+        let mut sources = SourceMap::default();
+        let first = sources.add("first", "foo\nbar");
+        let same = sources.add("second", "foo\r\nbar");
+        let different = sources.add("third", "foo\nbaz");
+        let frame = |id, end| RenderFrame {
+            source: sources.get(id).unwrap(),
+            uri: "repl:text",
+            member: "f",
+            span: Span::new(0, end),
+            highlight_length_utf16: None,
+        };
+        assert!(key(&frame(first, 7)) == key(&frame(same, 8)));
+        assert!(key(&frame(first, 7)) != key(&frame(different, 7)));
+        let mut other_uri = frame(first, 7);
+        other_uri.uri = "repl:other";
+        assert!(key(&frame(first, 7)) != key(&other_uri));
+    }
+}

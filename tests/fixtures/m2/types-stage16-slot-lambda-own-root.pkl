@@ -1,0 +1,3 @@
+module stage16.types
+typealias A = Int(let (f = (ignored) -> ((this - 1) is Int(true))) f.apply(null) && this == 2)
+result: A = 2

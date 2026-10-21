@@ -948,7 +948,7 @@ impl Vm {
                 roots.extend(frame.environment.locals.iter().cloned());
                 roots.extend(frame.environment.this_value.iter().cloned());
                 roots.extend(frame.environment.outer_value.iter().cloned());
-                roots.extend(frame.environment.custom_this.iter().cloned());
+                roots.extend(frame.environment.custom_this.map(|slot| slot.root()));
                 if let Some(run) = &frame.key_search {
                     run.roots(&mut roots);
                 }
@@ -1486,6 +1486,7 @@ impl Vm {
             .clone();
         environment.outer_value = environment.this_value.clone();
         environment.this_value = Some(Value::Object(receiver));
+        environment.custom_this = None;
         environment.scopes.insert(0, Scope { receiver, owner });
         if memoize {
             self.heap
@@ -1938,6 +1939,32 @@ impl Vm {
         Ok(())
     }
 
+    fn current_custom_this(&self) -> Result<Option<Value>, RuntimeError> {
+        match self
+            .frames
+            .last()
+            .expect("active frame")
+            .environment
+            .custom_this
+        {
+            Some(slot) => self.heap.custom_this(slot),
+            None => Ok(None),
+        }
+    }
+
+    fn set_current_custom_this(&mut self, value: Option<Value>) -> Result<(), RuntimeError> {
+        let frame = self.frames.last_mut().expect("active frame");
+        match frame.environment.custom_this {
+            Some(slot) => self.heap.set_custom_this(slot, value),
+            None => {
+                if value.is_some() {
+                    frame.environment.custom_this = Some(self.heap.allocate_custom_this(value));
+                }
+                Ok(())
+            }
+        }
+    }
+
     fn invoke_function(
         &mut self,
         id: ObjectId,
@@ -1986,9 +2013,12 @@ impl Vm {
         }
         let mut environment = object.environment.clone();
         environment.outer_value = environment.this_value.clone();
-        if function.capture_custom_this {
-            environment.this_value = environment.custom_this.clone();
+        if let Some(receiver) = &function.captured_this {
+            environment.this_value = Some(receiver.clone());
         }
+        // A function call creates a logical frame, unlike a constraint bytecode
+        // continuation. Its lexical capture must not supply the mutable slot.
+        environment.custom_this = None;
         environment.locals.extend(arguments);
         self.frames.push(Frame {
             block: function.block,
@@ -2188,13 +2218,17 @@ impl Vm {
                     .clone()
                     .unwrap_or(Value::Object(self.scope(0)?.receiver)),
             ),
-            Instruction::LoadCustomThis => self.stack.push(
-                frame
+            Instruction::LoadCustomThis => {
+                let slot = frame
                     .environment
                     .custom_this
-                    .clone()
-                    .ok_or_else(|| invalid("missing custom receiver"))?,
-            ),
+                    .ok_or_else(|| invalid("missing custom receiver slot"))?;
+                self.stack.push(
+                    self.heap
+                        .custom_this(slot)?
+                        .ok_or_else(|| invalid("missing custom receiver"))?,
+                );
+            }
             Instruction::LoadOuter => {
                 if let Some(value) = frame.environment.outer_value.clone() {
                     self.stack.push(value);
@@ -2666,12 +2700,20 @@ impl Vm {
                     .expect("active frame")
                     .environment
                     .clone();
+                let captured_this = if capture_custom_this {
+                    let slot = environment
+                        .custom_this
+                        .ok_or_else(|| invalid("missing captured receiver slot"))?;
+                    self.heap.custom_this(slot)?
+                } else {
+                    None
+                };
                 let id = self.heap.allocate(Object {
                     function: Some(Function {
                         block,
                         arity,
                         method,
-                        capture_custom_this,
+                        captured_this,
                     }),
                     environment,
                     ..Object::default()
@@ -2911,6 +2953,12 @@ impl Vm {
                     environment.outer_value = environment.this_value.clone();
                     environment.this_value = Some(Value::Object(receiver));
                     environment.scopes.insert(0, Scope { receiver, owner });
+                    environment.custom_this = self
+                        .frames
+                        .last()
+                        .expect("type frame")
+                        .environment
+                        .custom_this;
                     self.frames
                         .last_mut()
                         .expect("type frame")
@@ -2941,13 +2989,20 @@ impl Vm {
                         });
                     }
                     self.begin_type(cast.ty, value, TypeDestination::Return, frames)?;
+                    let mut environment = cast.environment;
+                    environment.custom_this = self
+                        .frames
+                        .last()
+                        .expect("type frame")
+                        .environment
+                        .custom_this;
                     self.frames
                         .last_mut()
                         .expect("type frame")
                         .type_run
                         .as_mut()
                         .expect("type run")
-                        .environment = cast.environment;
+                        .environment = environment;
                     return Ok(());
                 }
                 if let Some(force) = self.frames.last_mut().expect("active frame").force.as_mut()
@@ -4116,6 +4171,16 @@ impl Compiler<'_> {
                     name != "apply"
                 } else {
                     self.expression(callee, output)?;
+                    // A lexical method's const error covers the entire call,
+                    // including its argument list, just like method lookup.
+                    if matches!(callee.kind, ExprKind::Name(_))
+                        && matches!(
+                            output.get(lookup_start),
+                            Some(Instruction::RequireConstProperty { method: true, .. })
+                        )
+                    {
+                        output.spans[lookup_start] = Some(expression.span);
+                    }
                     true
                 };
                 if matches!(

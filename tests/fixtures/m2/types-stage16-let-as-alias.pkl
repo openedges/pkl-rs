@@ -1,0 +1,4 @@
+module stage16.types
+typealias B = Int(false)
+typealias A = Int(let (n = this) (n as B) == this)
+result: A = 2

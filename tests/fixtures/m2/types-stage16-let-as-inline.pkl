@@ -1,0 +1,2 @@
+module stage16.types
+result: Int(let (n = this) (n as Int(false)) == this) = 2

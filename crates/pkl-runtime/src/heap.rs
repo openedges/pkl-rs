@@ -19,7 +19,7 @@ pub struct Environment {
     pub locals: Vec<Value>,
     pub this_value: Option<Value>,
     pub outer_value: Option<Value>,
-    pub custom_this: Option<Value>,
+    pub custom_this: Option<CustomThisSlot>,
     /// Innermost first; immutable captured lexical object scopes.
     pub scopes: Vec<Scope>,
 }
@@ -59,7 +59,8 @@ pub struct Function {
     pub block: usize,
     pub arity: usize,
     pub method: bool,
-    pub capture_custom_this: bool,
+    /// Custom-scope receiver captured when the literal is evaluated.
+    pub captured_this: Option<Value>,
 }
 
 #[derive(Clone, Debug)]
@@ -192,9 +193,34 @@ impl Object {
     }
 }
 
+/// Identity of one logical call frame's auxiliary receiver slot. This is never
+/// exposed as a Pkl value; its arena entry participates in ordinary tracing.
+#[derive(Clone, Copy, Debug)]
+pub struct CustomThisSlot(ObjectId);
+
+impl CustomThisSlot {
+    pub(crate) fn root(self) -> Value {
+        Value::Object(self.0)
+    }
+}
+
+enum Entry {
+    Object(Box<Object>),
+    CustomThis(Option<Value>),
+}
+
 struct Slot {
     generation: u64,
-    object: Option<Object>,
+    entry: Option<Entry>,
+}
+
+impl Slot {
+    fn object(&self) -> Option<&Object> {
+        match &self.entry {
+            Some(Entry::Object(object)) => Some(object),
+            _ => None,
+        }
+    }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
@@ -235,13 +261,41 @@ impl Heap {
     }
 
     pub fn allocate(&mut self, object: Object) -> ObjectId {
+        self.allocate_entry(Entry::Object(Box::new(object)))
+    }
+
+    pub(crate) fn allocate_custom_this(&mut self, value: Option<Value>) -> CustomThisSlot {
+        CustomThisSlot(self.allocate_entry(Entry::CustomThis(value)))
+    }
+
+    pub(crate) fn custom_this(&self, slot: CustomThisSlot) -> Result<Option<Value>, RuntimeError> {
+        match self.entry(slot.0)? {
+            Entry::CustomThis(value) => Ok(value.clone()),
+            _ => Err(RuntimeError::new(
+                ErrorKind::StaleHandle,
+                "invalid custom receiver slot",
+            )),
+        }
+    }
+
+    pub(crate) fn set_custom_this(
+        &mut self,
+        slot: CustomThisSlot,
+        value: Option<Value>,
+    ) -> Result<(), RuntimeError> {
+        self.custom_this(slot)?;
+        self.slots[slot.0.index].entry = Some(Entry::CustomThis(value));
+        Ok(())
+    }
+
+    fn allocate_entry(&mut self, entry: Entry) -> ObjectId {
         let index = if let Some(index) = self.free.pop() {
-            self.slots[index].object = Some(object);
+            self.slots[index].entry = Some(entry);
             index
         } else {
             self.slots.push(Slot {
                 generation: 0,
-                object: Some(object),
+                entry: Some(entry),
             });
             self.slots.len() - 1
         };
@@ -256,8 +310,7 @@ impl Heap {
 
     pub(crate) fn find_type_alias(&self, name: &str) -> Option<ObjectId> {
         self.slots.iter().enumerate().find_map(|(index, slot)| {
-            slot.object
-                .as_ref()
+            slot.object()
                 .filter(|o| o.type_alias.as_deref() == Some(name))
                 .map(|_| ObjectId {
                     heap: self.identity,
@@ -269,8 +322,7 @@ impl Heap {
 
     pub(crate) fn find_builtin_class(&self, ty: &crate::vm::TypeCheck) -> Option<ObjectId> {
         self.slots.iter().enumerate().find_map(|(index, slot)| {
-            slot.object
-                .as_ref()
+            slot.object()
                 .filter(|o| o.builtin_type.as_ref().is_some_and(|t| t.equivalent(ty)))
                 .map(|_| ObjectId {
                     heap: self.identity,
@@ -282,8 +334,7 @@ impl Heap {
 
     pub(crate) fn find_class(&self, class_id: usize) -> Option<ObjectId> {
         self.slots.iter().enumerate().find_map(|(index, slot)| {
-            slot.object
-                .as_ref()
+            slot.object()
                 .filter(|object| {
                     object
                         .class_definition
@@ -298,13 +349,13 @@ impl Heap {
         })
     }
 
-    pub fn get(&self, id: ObjectId) -> Result<&Object, RuntimeError> {
+    fn entry(&self, id: ObjectId) -> Result<&Entry, RuntimeError> {
         if id.heap == self.identity
             && let Some(slot) = self.slots.get(id.index)
             && slot.generation == id.generation
-            && let Some(object) = &slot.object
+            && let Some(entry) = &slot.entry
         {
-            return Ok(object);
+            return Ok(entry);
         }
         Err(RuntimeError::new(
             ErrorKind::StaleHandle,
@@ -312,12 +363,22 @@ impl Heap {
         ))
     }
 
+    pub fn get(&self, id: ObjectId) -> Result<&Object, RuntimeError> {
+        match self.entry(id)? {
+            Entry::Object(object) => Ok(object),
+            Entry::CustomThis(_) => Err(RuntimeError::new(
+                ErrorKind::StaleHandle,
+                "internal slot is not a Pkl object",
+            )),
+        }
+    }
+
     pub fn get_mut(&mut self, id: ObjectId) -> Result<&mut Object, RuntimeError> {
         self.get(id)?;
-        Ok(self.slots[id.index]
-            .object
-            .as_mut()
-            .expect("validated live slot"))
+        match self.slots[id.index].entry.as_mut() {
+            Some(Entry::Object(object)) => Ok(object),
+            _ => unreachable!("validated object slot"),
+        }
     }
 
     pub fn stats(&self) -> HeapStats {
@@ -330,12 +391,22 @@ impl Heap {
         let mut marked = vec![false; self.slots.len()];
         let mut pending: Vec<ObjectId> = roots.iter().filter_map(Value::heap_id).collect();
         while let Some(id) = pending.pop() {
-            let Ok(object) = self.get(id) else { continue };
+            let Ok(entry) = self.entry(id) else { continue };
             if marked[id.index] {
                 continue;
             }
             marked[id.index] = true;
+            let object = match entry {
+                Entry::CustomThis(value) => {
+                    pending.extend(value.iter().filter_map(Value::heap_id));
+                    continue;
+                }
+                Entry::Object(object) => object,
+            };
             pending.extend(object.parent);
+            if let Some(function) = &object.function {
+                pending.extend(function.captured_this.iter().filter_map(Value::heap_id));
+            }
             if let Some(reference) = &object.reference {
                 pending.extend(reference.domain.heap_id());
                 pending.extend(reference.data.heap_id());
@@ -367,6 +438,7 @@ impl Heap {
                 .values()
                 .chain(object.collection_cast.iter().map(|cast| &cast.environment))
             {
+                pending.extend(environment.custom_this.map(|slot| slot.0));
                 for scope in &environment.scopes {
                     pending.push(scope.receiver);
                     pending.push(scope.owner);
@@ -377,10 +449,10 @@ impl Heap {
                         .iter()
                         .chain(environment.this_value.iter())
                         .chain(environment.outer_value.iter())
-                        .chain(environment.custom_this.iter())
                         .filter_map(Value::heap_id),
                 );
             }
+            pending.extend(object.environment.custom_this.map(|slot| slot.0));
             for scope in &object.environment.scopes {
                 pending.push(scope.receiver);
                 pending.push(scope.owner);
@@ -391,7 +463,6 @@ impl Heap {
                 .iter()
                 .chain(object.environment.this_value.iter())
                 .chain(object.environment.outer_value.iter())
-                .chain(object.environment.custom_this.iter())
                 .chain(object.collection_default.iter().flatten())
                 .chain(object.member_values.values())
                 .chain(object.cache_slots.iter().map(|slot| &slot.value))
@@ -413,7 +484,7 @@ impl Heap {
             }
         }
         for (index, slot) in self.slots.iter_mut().enumerate() {
-            if !marked[index] && slot.object.take_if(|_| true).is_some() {
+            if !marked[index] && slot.entry.take_if(|_| true).is_some() {
                 self.stats.live -= 1;
                 self.stats.reclaimed += 1;
                 // Exhausted generations are retired rather than wrapped.
@@ -428,7 +499,7 @@ impl Heap {
             .iter()
             .enumerate()
             .filter_map(|(index, slot)| {
-                slot.object.as_ref().map(|_| ObjectId {
+                slot.object().map(|_| ObjectId {
                     heap: self.identity,
                     index,
                     generation: slot.generation,
@@ -447,7 +518,7 @@ impl Heap {
         let mut pending: Vec<_> = self
             .slots
             .iter()
-            .filter_map(|slot| slot.object.as_ref().and_then(|o| o.structural_key))
+            .filter_map(|slot| slot.object().and_then(|o| o.structural_key))
             .collect();
         let mut retained = std::collections::BTreeSet::new();
         while let Some(id) = pending.pop() {
@@ -477,5 +548,74 @@ impl Heap {
         self.structural_keys = BTreeMap::new();
         self.key_equalities.clear();
         self.identity = NEXT_HEAP.fetch_add(1, Ordering::Relaxed);
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn custom_receiver_cycles_are_traced_and_reclaimed_in_the_object_arena() {
+        let mut heap = Heap::new();
+        let slot = heap.allocate_custom_this(None);
+        let object = heap.allocate(Object {
+            environment: Environment {
+                custom_this: Some(slot),
+                ..Environment::default()
+            },
+            ..Object::default()
+        });
+        heap.set_custom_this(slot, Some(Value::Object(object)))
+            .unwrap();
+        assert_eq!(heap.collect(&[slot.root()]).live, 2);
+        assert_eq!(heap.custom_this(slot).unwrap(), Some(Value::Object(object)));
+        assert!(heap.get(object).is_ok());
+        assert!(
+            heap.get(slot.0).is_err(),
+            "internal slots are not Pkl objects"
+        );
+        assert_eq!(heap.collect(&[Value::Object(object)]).live, 2);
+        assert_eq!(heap.collect(&[]).live, 0);
+        assert!(heap.custom_this(slot).is_err());
+        let replacement = heap.allocate_custom_this(Some(Value::Null));
+        assert!(
+            heap.custom_this(slot).is_err(),
+            "reused slots reject old generations"
+        );
+        assert_eq!(heap.custom_this(replacement).unwrap(), Some(Value::Null));
+        assert!(Heap::new().custom_this(replacement).is_err());
+        heap.release();
+        assert!(heap.custom_this(replacement).is_err());
+        assert_eq!(heap.stats().slots, 0);
+    }
+
+    #[test]
+    fn function_snapshot_survives_an_independent_receiver_slot_mutation() {
+        let mut heap = Heap::new();
+        let snapshot = heap.allocate(Object::default());
+        let slot = heap.allocate_custom_this(Some(Value::Object(snapshot)));
+        let function = heap.allocate(Object {
+            function: Some(Function {
+                block: 0,
+                arity: 0,
+                method: false,
+                captured_this: Some(Value::Object(snapshot)),
+            }),
+            environment: Environment {
+                custom_this: Some(slot),
+                ..Environment::default()
+            },
+            ..Object::default()
+        });
+        heap.set_custom_this(slot, Some(Value::Function(function)))
+            .unwrap();
+        assert_eq!(heap.collect(&[Value::Function(function)]).live, 3);
+        assert!(heap.get(snapshot).is_ok());
+        assert_eq!(
+            heap.custom_this(slot).unwrap(),
+            Some(Value::Function(function))
+        );
+        assert_eq!(heap.collect(&[]).live, 0);
     }
 }

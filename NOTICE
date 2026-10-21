@@ -15,6 +15,11 @@ Copyright © 2024-2026 Apple Inc. and the Pkl project authors.
 These upstream sources are licensed under the Apache License, Version 2.0;
 their original notices remain in the pinned external/pkl checkout.
 
+The recursive frame compression and loop rendering in
+crates/pkl-runtime/src/diagnostic/frames.rs adapt Pkl 0.32.0
+StackTraceRenderer.java. Copyright © 2024-2026 Apple Inc. and the Pkl project
+authors. The Apache-2.0 attribution is retained in the Rust source.
+
 crates/pkl-runtime/src/stdlib/ref.pkl is copied without changes from the pinned
 Pkl 0.32.0 standard library for source-accurate diagnostic frames. Its original
 Apache-2.0 copyright and license header is retained.

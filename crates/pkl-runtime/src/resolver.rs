@@ -1099,7 +1099,10 @@ impl<'a> Resolver<'a> {
                     }
                 }
                 self.scopes.push(Scope::TypeParameters(type_parameters));
+                let previous_level = self.const_level;
+                self.const_level = self.const_level.max(ConstLevel::Module);
                 self.type_expression(ty)?;
+                self.const_level = previous_level;
                 self.scopes.pop();
             }
             ExprKind::New { ty, members } => {

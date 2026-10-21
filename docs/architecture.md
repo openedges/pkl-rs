@@ -520,8 +520,43 @@ arguments supplied to an enclosing alias retain their own resolution policy.
 
 This graph representation does not implement recursive generic instantiation.
 Reaching such an inner type use produces an explicit unsupported result; unused
-or short-circuited branches remain deferred. Java's mutable auxiliary `this` slot
-can also affect values read after a recursive check, including failure diagnostics;
-the current copied environment does not reproduce all of those observations.
-Non-const alias lexical access remains another known gap. Selected terminating
-recursive forms do not establish complete recursive-type or constraint behavior.
+or short-circuited branches remain deferred. Selected terminating recursive forms
+do not establish complete recursive-type or constraint behavior.
+
+### Constraint receiver slots
+
+A logical call frame's auxiliary `this` value lives in a typed, evaluator-owned
+heap slot. Inline constraints, nested `is`/`as`, and alias owner changes share that
+slot. A constrained type writes its input after the base check, once before its
+constraint list; later constraints and diagnostic replay observe mutations made
+by nested checks. Successful checks still return the original checked value.
+Boolean constraint failures read the current slot, while function predicates
+retain the value passed to the function for a later failure diagnostic.
+
+Constraints that write local slots execute in a separate root with a snapshot of
+the parent's receiver. Real function and lazy member calls have separate receiver
+slots. A lambda captures the custom receiver value when it is created, rather
+than observing future mutations in the slot when called. Host suspension retains
+the active frame, while reentry creates an independent call. Internal slots and
+their values participate in the same tracing arena as objects, including captured
+cycles and suspended contexts. They cannot be read as ordinary Pkl objects.
+The arena boxes object payloads so adding small receiver-slot entries does not
+reserve a full object payload for each slot. This adds object indirection;
+retention checks establish lifecycle behavior, not speed or memory parity.
+
+Type aliases apply a module const barrier to lexical property and method reads.
+The barrier remains deferred until the read executes; unused aliases, alias
+identity, and short-circuited reads need not fail. Complete retry behavior remains
+open: Java can cache a local property's resolved node before raising a const
+error, so later reads may succeed. Inline alias instantiation, recursion, and
+let-root call targets have different cache identities. A single flag per alias
+or bytecode block would merge distinct nodes and is not a compatible solution.
+
+### Recursive diagnostic frames
+
+Uncolored frame rendering follows the pinned Java compressor, including partial
+patterns and count-one loops. Frame equality uses the URI, member name, complete
+source lines and UTF-16 positions, before display transformations. Loop margins
+and the first hint are rendered together. Selected recursive and mutual-alias
+failures exercise this path with power assertions enabled and disabled; general
+stack overflow, colored output and the complete diagnostic corpus remain open.

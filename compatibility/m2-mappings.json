@@ -435,6 +435,14 @@
           {
             "path": "crates/pkl-runtime/src/diagnostic_values.rs",
             "symbol": "Renderer"
+          },
+          {
+            "path": "crates/pkl-runtime/src/diagnostic/frames.rs",
+            "symbol": "compress"
+          },
+          {
+            "path": "crates/pkl-runtime/src/diagnostic/frames.rs",
+            "symbol": "render"
           }
         ]
       },
@@ -630,12 +638,71 @@
           "types-stage15-class-bare-value-mismatch",
           "types-stage15-class-generic-erased",
           "types-stage15-class-generic-name-shadow",
-          "types-stage15-class-named-alias-shadow"
+          "types-stage15-class-named-alias-shadow",
+          "types-stage16-const-local-read",
+          "types-stage16-const-property-read",
+          "types-stage16-const-module-read",
+          "types-stage16-const-lambda-read",
+          "types-stage16-slot-inline-is",
+          "types-stage16-slot-inline-is-power",
+          "types-stage16-slot-let-is",
+          "types-stage16-slot-let-is-power",
+          "types-stage16-slot-inline-as",
+          "types-stage16-slot-inline-as-power",
+          "types-stage16-slot-multiple-fail",
+          "types-stage16-slot-multiple-fail-power",
+          "types-stage16-slot-predicate-failure",
+          "types-stage16-slot-predicate-failure-power",
+          "types-stage16-slot-predicate-inner-failure",
+          "types-stage16-slot-predicate-inner-failure-power",
+          "types-stage16-slot-boolean-failure",
+          "types-stage16-slot-boolean-failure-power",
+          "types-stage16-slot-let-boolean-failure",
+          "types-stage16-slot-let-boolean-failure-power",
+          "types-stage16-recursive-finite-rejection",
+          "types-stage16-recursive-as-in-constraint",
+          "types-stage16-recursive-lexical-capture",
+          "types-stage16-recursive-this-after-is",
+          "types-stage16-slot-object-predicate-error",
+          "types-stage16-const-method-read",
+          "types-stage16-slot-let-as",
+          "types-stage16-let-as-depth-0",
+          "types-stage16-let-as-depth-1",
+          "types-stage16-let-as-depth-2",
+          "types-stage16-let-as-alias",
+          "types-stage16-let-as-inline",
+          "types-stage16-const-method-args",
+          "types-stage16-const-method-qualified",
+          "types-stage16-const-method-argument-first",
+          "types-stage16-frames-recursive-depth-1",
+          "types-stage16-frames-recursive-depth-1-power",
+          "types-stage16-frames-mutual-depth-1",
+          "types-stage16-frames-mutual-depth-1-power",
+          "types-stage16-frames-recursive-depth-2",
+          "types-stage16-frames-recursive-depth-2-power",
+          "types-stage16-frames-mutual-depth-2",
+          "types-stage16-frames-mutual-depth-2-power",
+          "types-stage16-frames-recursive-depth-3",
+          "types-stage16-frames-recursive-depth-3-power",
+          "types-stage16-frames-mutual-depth-3",
+          "types-stage16-frames-mutual-depth-3-power",
+          "types-stage16-frames-recursive-depth-4",
+          "types-stage16-frames-recursive-depth-4-power",
+          "types-stage16-frames-mutual-depth-4",
+          "types-stage16-frames-mutual-depth-4-power",
+          "types-stage16-frames-const-hint-depth-1",
+          "types-stage16-frames-const-hint-depth-1-power",
+          "types-stage16-frames-const-hint-depth-2",
+          "types-stage16-frames-const-hint-depth-2-power",
+          "types-stage16-frames-const-hint-depth-3",
+          "types-stage16-frames-const-hint-depth-3-power",
+          "types-stage16-frames-const-hint-depth-4",
+          "types-stage16-frames-const-hint-depth-4-power"
         ]
       },
-      "scope": "Reference constructor, access, constraint and rendering errors retain complete message, authored frame, foreign standard-library source and URI bytes in selected comparisons. Stage11 adds selected fixed declaration, inherited metadata and complete raw diagnostics through the shared VM. Stage 13 adds selected alias/function metadata, exported-type equality and complete raw diagnostic comparisons; original suite execution and remaining scope stay open. Stage 14 adds selected authored type-resolution order, generic parameter scope and nested substitution, class/alias arity ordering, and owner signature diagnostics; persistent failed-declaration state has a separate sequence contract. Stage 15 adds selected non-generic recursive constraint block graphs and declaration type scope, plus builtin Class argument erasure and arity ordering. Recursive generic constraints and shared custom-this slot behavior remain open.",
+      "scope": "Reference constructor, access, constraint and rendering errors retain complete message, authored frame, foreign standard-library source and URI bytes in selected comparisons. Stage11 adds selected fixed declaration, inherited metadata and complete raw diagnostics through the shared VM. Stage 13 adds selected alias/function metadata, exported-type equality and complete raw diagnostic comparisons; original suite execution and remaining scope stay open. Stage 14 adds selected authored type-resolution order, generic parameter scope and nested substitution, class/alias arity ordering, and owner signature diagnostics; persistent failed-declaration state has a separate sequence contract. Stage 15 adds selected non-generic recursive constraint block graphs and declaration type scope, plus builtin Class argument erasure and arity ordering. Recursive generic constraints remain open; Stage 16 adds bounded shared receiver-slot support. Stage 16: Selected recursive frame compression, count-one loops, complete call spans and hint placement match Java uncolored diagnostics.",
       "remaining": [
-        "Recursive frame compression, general imported source stacks, first-error combinations and the complete parser/resolver/runtime diagnostic corpus remain open.",
+        "Colored output, general imported source stacks, first-error combinations and the complete parser/resolver/runtime diagnostic corpus remain open; selected uncolored recursive compression is covered.",
         "Original selected cycle and remainder-zero failures remain failed."
       ]
     },
@@ -876,6 +943,10 @@
           {
             "path": "crates/pkl-runtime/src/resolver.rs",
             "symbol": "validate_modifiers"
+          },
+          {
+            "path": "crates/pkl-runtime/src/resolver.rs",
+            "symbol": "ConstLevel"
           }
         ]
       },
@@ -970,14 +1041,43 @@
           "fixed-stage11-duplicate-fixed-override-fixed",
           "fixed-stage11-carry-const-in-identifier",
           "fixed-stage11-carry-const-in-comment",
-          "fixed-stage11-carry-const-multiline-backtick"
+          "fixed-stage11-carry-const-multiline-backtick",
+          "types-stage16-const-unused",
+          "types-stage16-const-identity",
+          "types-stage16-const-shortcircuit",
+          "types-stage16-const-local-read",
+          "types-stage16-const-local-control",
+          "types-stage16-const-property-read",
+          "types-stage16-const-property-control",
+          "types-stage16-const-method-control",
+          "types-stage16-const-module-read",
+          "types-stage16-const-module-control",
+          "types-stage16-const-lambda-read",
+          "types-stage16-const-lambda-control",
+          "types-stage16-const-this-control",
+          "types-stage16-recursive-lexical-capture",
+          "types-stage16-const-nonconst-unused-method",
+          "types-stage16-const-nonconst-short-method",
+          "types-stage16-const-method-read",
+          "types-stage16-const-method-args",
+          "types-stage16-const-method-qualified",
+          "types-stage16-const-method-argument-first",
+          "types-stage16-frames-const-hint-depth-1",
+          "types-stage16-frames-const-hint-depth-1-power",
+          "types-stage16-frames-const-hint-depth-2",
+          "types-stage16-frames-const-hint-depth-2-power",
+          "types-stage16-frames-const-hint-depth-3",
+          "types-stage16-frames-const-hint-depth-3-power",
+          "types-stage16-frames-const-hint-depth-4",
+          "types-stage16-frames-const-hint-depth-4-power"
         ]
       },
-      "scope": "Selected class fixed properties preserve declaration fixedness through inheritance, reject instance assignment and amendment before forcing bodies, and retain member/type initialization error order. Raw comparisons cover only the linked fixtures at their actual URIs.",
+      "scope": "Selected class fixed properties preserve declaration fixedness through inheritance, reject instance assignment and amendment before forcing bodies, and retain member/type initialization error order. Raw comparisons cover only the linked fixtures at their actual URIs. Stage 16: Selected alias lexical property/method reads apply a deferred module const barrier, including unused and short-circuited reads.",
       "remaining": [
         "Module extends/amends and the original upstream fixed-property snippet suite contracts remain unimplemented or unexecuted.",
         "Full modifier combinations, annotation metadata, generic class inheritance and the complete class/member error corpus remain outside this bounded selection.",
-        "Caught upstream PklBugException duplicate hidden/local outputs and any recorded exploratory mismatches remain separate failures, without development exceptions."
+        "Caught upstream PklBugException duplicate hidden/local outputs and any recorded exploratory mismatches remain separate failures, without development exceptions.",
+        "Local const-read retry cache ownership, recursive alias instantiation identity and const-function local reads retain recorded exploratory mismatches."
       ]
     },
     {
@@ -1124,7 +1224,7 @@
           "types-stage15-recursive-lexical-type-shadow"
         ]
       },
-      "scope": "Selected class fixed properties preserve declaration fixedness through inheritance, reject instance assignment and amendment before forcing bodies, and retain member/type initialization error order. Raw comparisons cover only the linked fixtures at their actual URIs. Stage 14 adds selected authored type-resolution order, generic parameter scope and nested substitution, class/alias arity ordering, and owner signature diagnostics; persistent failed-declaration state has a separate sequence contract. Stage 15 adds selected non-generic recursive constraint block graphs and declaration type scope, plus builtin Class argument erasure and arity ordering. Recursive generic constraints and shared custom-this slot behavior remain open.",
+      "scope": "Selected class fixed properties preserve declaration fixedness through inheritance, reject instance assignment and amendment before forcing bodies, and retain member/type initialization error order. Raw comparisons cover only the linked fixtures at their actual URIs. Stage 14 adds selected authored type-resolution order, generic parameter scope and nested substitution, class/alias arity ordering, and owner signature diagnostics; persistent failed-declaration state has a separate sequence contract. Stage 15 adds selected non-generic recursive constraint block graphs and declaration type scope, plus builtin Class argument erasure and arity ordering. Recursive generic constraints remain open; Stage 16 adds bounded shared receiver-slot support.",
       "remaining": [
         "Module extends/amends and the original upstream fixed-property snippet suite contracts remain unimplemented or unexecuted.",
         "Full modifier combinations, annotation metadata, generic class inheritance and the complete class/member error corpus remain outside this bounded selection.",
@@ -1179,6 +1279,10 @@
           {
             "path": "crates/pkl-runtime/src/vm/reference.rs",
             "symbol": "reference_candidate"
+          },
+          {
+            "path": "crates/pkl-runtime/src/vm.rs",
+            "symbol": "force_key"
           }
         ]
       },
@@ -1211,9 +1315,10 @@
           "fixed-stage11-relation-reference-unforced-fixed-right"
         ]
       },
-      "scope": "Selected probes preserve unforced fixed initializers, class type-before-modifier errors, fixed override checks before body forcing, and fixed Reference metadata without evaluating referent bodies.",
+      "scope": "Selected probes preserve unforced fixed initializers, class type-before-modifier errors, fixed override checks before body forcing, and fixed Reference metadata without evaluating referent bodies. Stage 16: Selected lazy member calls isolate receiver slots and alias const checks remain deferred until a lexical read executes.",
       "remaining": [
-        "Complete lazy error ordering, successful memoization, retry semantics, cycles and failure-path diagnostics require the original inventory and broader differential execution."
+        "Complete lazy error ordering, successful memoization, retry semantics, cycles and failure-path diagnostics require the original inventory and broader differential execution.",
+        "Local const-read retry cache ownership, recursive alias instantiation identity and const-function local reads retain recorded exploratory mismatches."
       ]
     },
     {
@@ -1368,6 +1473,14 @@
           {
             "path": "crates/pkl-runtime/src/vm.rs",
             "symbol": "active_constraints"
+          },
+          {
+            "path": "crates/pkl-runtime/src/vm/typecheck.rs",
+            "symbol": "step_type"
+          },
+          {
+            "path": "crates/pkl-runtime/src/heap.rs",
+            "symbol": "CustomThisSlot"
           }
         ]
       },
@@ -1553,14 +1666,99 @@
           "types-stage15-relation-erased-class-right",
           "types-stage15-relation-recursive-shortcircuit-left",
           "types-stage15-relation-recursive-shortcircuit-right",
-          "types-stage15-recursive-lexical-type-shadow"
+          "types-stage15-recursive-lexical-type-shadow",
+          "types-stage16-const-unused",
+          "types-stage16-const-identity",
+          "types-stage16-const-shortcircuit",
+          "types-stage16-const-local-read",
+          "types-stage16-const-local-control",
+          "types-stage16-const-property-read",
+          "types-stage16-const-property-control",
+          "types-stage16-const-method-control",
+          "types-stage16-const-module-read",
+          "types-stage16-const-module-control",
+          "types-stage16-const-lambda-read",
+          "types-stage16-const-lambda-control",
+          "types-stage16-const-this-control",
+          "types-stage16-slot-inline-is",
+          "types-stage16-slot-inline-is-power",
+          "types-stage16-slot-let-is",
+          "types-stage16-slot-let-is-power",
+          "types-stage16-slot-inline-as",
+          "types-stage16-slot-inline-as-power",
+          "types-stage16-slot-multiple",
+          "types-stage16-slot-multiple-fail",
+          "types-stage16-slot-multiple-fail-power",
+          "types-stage16-slot-union",
+          "types-stage16-slot-union-branches",
+          "types-stage16-slot-return-original",
+          "types-stage16-slot-lambda-snapshot",
+          "types-stage16-slot-lambda-own-root",
+          "types-stage16-slot-method-boundary",
+          "types-stage16-slot-lazy-boundary",
+          "types-stage16-slot-predicate-capture",
+          "types-stage16-slot-predicate-failure",
+          "types-stage16-slot-predicate-failure-power",
+          "types-stage16-slot-predicate-inner",
+          "types-stage16-slot-predicate-inner-failure",
+          "types-stage16-slot-predicate-inner-failure-power",
+          "types-stage16-slot-boolean-failure",
+          "types-stage16-slot-boolean-failure-power",
+          "types-stage16-slot-let-boolean-failure",
+          "types-stage16-slot-let-boolean-failure-power",
+          "types-stage16-recursive-finite-rejection",
+          "types-stage16-recursive-as-in-constraint",
+          "types-stage16-recursive-lexical-capture",
+          "types-stage16-recursive-this-after-is",
+          "types-stage16-slot-object-predicate-normal",
+          "types-stage16-slot-object-predicate-nested-check",
+          "types-stage16-slot-object-predicate-error",
+          "types-stage16-slot-nested-let-function",
+          "types-stage16-slot-union-first-branch-fail",
+          "types-stage16-const-nonconst-unused-method",
+          "types-stage16-const-nonconst-short-method",
+          "types-stage16-const-method-read",
+          "types-stage16-slot-let-as",
+          "types-stage16-let-as-depth-0",
+          "types-stage16-let-as-depth-1",
+          "types-stage16-let-as-depth-2",
+          "types-stage16-let-as-alias",
+          "types-stage16-let-as-inline",
+          "types-stage16-const-method-args",
+          "types-stage16-const-method-qualified",
+          "types-stage16-const-method-argument-first",
+          "types-stage16-frames-recursive-depth-1",
+          "types-stage16-frames-recursive-depth-1-power",
+          "types-stage16-frames-mutual-depth-1",
+          "types-stage16-frames-mutual-depth-1-power",
+          "types-stage16-frames-recursive-depth-2",
+          "types-stage16-frames-recursive-depth-2-power",
+          "types-stage16-frames-mutual-depth-2",
+          "types-stage16-frames-mutual-depth-2-power",
+          "types-stage16-frames-recursive-depth-3",
+          "types-stage16-frames-recursive-depth-3-power",
+          "types-stage16-frames-mutual-depth-3",
+          "types-stage16-frames-mutual-depth-3-power",
+          "types-stage16-frames-recursive-depth-4",
+          "types-stage16-frames-recursive-depth-4-power",
+          "types-stage16-frames-mutual-depth-4",
+          "types-stage16-frames-mutual-depth-4-power",
+          "types-stage16-frames-const-hint-depth-1",
+          "types-stage16-frames-const-hint-depth-1-power",
+          "types-stage16-frames-const-hint-depth-2",
+          "types-stage16-frames-const-hint-depth-2-power",
+          "types-stage16-frames-const-hint-depth-3",
+          "types-stage16-frames-const-hint-depth-3-power",
+          "types-stage16-frames-const-hint-depth-4",
+          "types-stage16-frames-const-hint-depth-4-power"
         ]
       },
-      "scope": "Selected user alias values preserve declaration identity, qualified display, lazy initialization, published failure state, and expanded validation. Independent expressions cover alias values, cycles, generic arguments, Mapping keys and complete diagnostics; persistent failure/reaccess sequences and GC/Host tests have separate contracts. Stage 14 adds selected authored type-resolution order, generic parameter scope and nested substitution, class/alias arity ordering, and owner signature diagnostics; persistent failed-declaration state has a separate sequence contract. Stage 15 adds selected non-generic recursive constraint block graphs and declaration type scope, plus builtin Class argument erasure and arity ordering. Recursive generic constraints and shared custom-this slot behavior remain open.",
+      "scope": "Selected user alias values preserve declaration identity, qualified display, lazy initialization, published failure state, and expanded validation. Independent expressions cover alias values, cycles, generic arguments, Mapping keys and complete diagnostics; persistent failure/reaccess sequences and GC/Host tests have separate contracts. Stage 14 adds selected authored type-resolution order, generic parameter scope and nested substitution, class/alias arity ordering, and owner signature diagnostics; persistent failed-declaration state has a separate sequence contract. Stage 15 adds selected non-generic recursive constraint block graphs and declaration type scope, plus builtin Class argument erasure and arity ordering. Recursive generic constraints remain open; Stage 16 adds bounded shared receiver-slot support. Stage 16: Selected recursive and inline constraints share mutable auxiliary receiver slots within a logical call; alias lexical reads enforce the first-read const barrier.",
       "remaining": [
         "Complete imported/module-scoped alias behavior, annotation initialization, full reflection and the original upstream alias suites remain unimplemented or unexecuted.",
         "Exploratory mismatches and upstream internal errors retain their original outcomes; these selected mappings do not grant completion.",
-        "A full runtime type-node resolution model, mixed unresolved-name/dependency error ordering, and failures involving generic-parameter shadowing remain unverified."
+        "A full runtime type-node resolution model, mixed unresolved-name/dependency error ordering, and failures involving generic-parameter shadowing remain unverified.",
+        "Local const-read retry cache ownership, recursive alias instantiation identity and const-function local reads retain recorded exploratory mismatches."
       ]
     },
     {
@@ -1579,6 +1777,14 @@
           {
             "path": "crates/pkl-runtime/src/vm/reference.rs",
             "symbol": "subtype"
+          },
+          {
+            "path": "crates/pkl-runtime/src/vm.rs",
+            "symbol": "invoke_function"
+          },
+          {
+            "path": "crates/pkl-runtime/src/heap.rs",
+            "symbol": "Function"
           }
         ]
       },
@@ -1648,10 +1854,56 @@
           "types-stage14-lambda-function",
           "types-stage14-nested-function-order",
           "types-stage15-recursive-function-parameter",
-          "types-stage15-recursive-function-result"
+          "types-stage15-recursive-function-result",
+          "types-stage16-const-method-control",
+          "types-stage16-const-lambda-read",
+          "types-stage16-const-lambda-control",
+          "types-stage16-slot-lambda-snapshot",
+          "types-stage16-slot-lambda-own-root",
+          "types-stage16-slot-method-boundary",
+          "types-stage16-slot-predicate-capture",
+          "types-stage16-slot-predicate-failure",
+          "types-stage16-slot-predicate-failure-power",
+          "types-stage16-slot-predicate-inner",
+          "types-stage16-slot-predicate-inner-failure",
+          "types-stage16-slot-predicate-inner-failure-power",
+          "types-stage16-slot-object-predicate-normal",
+          "types-stage16-slot-object-predicate-nested-check",
+          "types-stage16-slot-object-predicate-error",
+          "types-stage16-slot-nested-let-function",
+          "types-stage16-const-nonconst-unused-method",
+          "types-stage16-const-nonconst-short-method",
+          "types-stage16-const-method-read",
+          "types-stage16-const-method-args",
+          "types-stage16-const-method-qualified",
+          "types-stage16-const-method-argument-first",
+          "types-stage16-frames-recursive-depth-1",
+          "types-stage16-frames-recursive-depth-1-power",
+          "types-stage16-frames-mutual-depth-1",
+          "types-stage16-frames-mutual-depth-1-power",
+          "types-stage16-frames-recursive-depth-2",
+          "types-stage16-frames-recursive-depth-2-power",
+          "types-stage16-frames-mutual-depth-2",
+          "types-stage16-frames-mutual-depth-2-power",
+          "types-stage16-frames-recursive-depth-3",
+          "types-stage16-frames-recursive-depth-3-power",
+          "types-stage16-frames-mutual-depth-3",
+          "types-stage16-frames-mutual-depth-3-power",
+          "types-stage16-frames-recursive-depth-4",
+          "types-stage16-frames-recursive-depth-4-power",
+          "types-stage16-frames-mutual-depth-4",
+          "types-stage16-frames-mutual-depth-4-power",
+          "types-stage16-frames-const-hint-depth-1",
+          "types-stage16-frames-const-hint-depth-1-power",
+          "types-stage16-frames-const-hint-depth-2",
+          "types-stage16-frames-const-hint-depth-2-power",
+          "types-stage16-frames-const-hint-depth-3",
+          "types-stage16-frames-const-hint-depth-3-power",
+          "types-stage16-frames-const-hint-depth-4",
+          "types-stage16-frames-const-hint-depth-4-power"
         ]
       },
-      "scope": "Function and Function0..5 class types and arrow annotations retain parameter/result metadata while selected runtime value checks use arity. Comparisons distinguish annotation checks from a lambda declaration's own argument checks and distinguish Reference type tests from exported-type equality. Stage 14 adds selected authored type-resolution order, generic parameter scope and nested substitution, class/alias arity ordering, and owner signature diagnostics; persistent failed-declaration state has a separate sequence contract. Stage 15 adds selected non-generic recursive constraint block graphs and declaration type scope, plus builtin Class argument erasure and arity ordering. Recursive generic constraints and shared custom-this slot behavior remain open.",
+      "scope": "Function and Function0..5 class types and arrow annotations retain parameter/result metadata while selected runtime value checks use arity. Comparisons distinguish annotation checks from a lambda declaration's own argument checks and distinguish Reference type tests from exported-type equality. Stage 14 adds selected authored type-resolution order, generic parameter scope and nested substitution, class/alias arity ordering, and owner signature diagnostics; persistent failed-declaration state has a separate sequence contract. Stage 15 adds selected non-generic recursive constraint block graphs and declaration type scope, plus builtin Class argument erasure and arity ordering. Recursive generic constraints remain open; Stage 16 adds bounded shared receiver-slot support. Stage 16: Selected lambdas snapshot the custom receiver at creation; function and local-writing let roots isolate subsequent receiver mutations.",
       "remaining": [
         "Function amendments, full callable/builtin behavior, imports and the original function suite contracts remain outside this bounded selection.",
         "The broader function, closure, diagnostic and reflection inventories are not completed by metadata comparisons."
@@ -1681,6 +1933,10 @@
           {
             "path": "crates/pkl-runtime/src/vm.rs",
             "symbol": "active_constraints"
+          },
+          {
+            "path": "crates/pkl-runtime/src/heap.rs",
+            "symbol": "CustomThisSlot"
           }
         ]
       },
@@ -1908,10 +2164,94 @@
           "types-stage15-relation-erased-class-right",
           "types-stage15-relation-recursive-shortcircuit-left",
           "types-stage15-relation-recursive-shortcircuit-right",
-          "types-stage15-recursive-lexical-type-shadow"
+          "types-stage15-recursive-lexical-type-shadow",
+          "types-stage16-const-unused",
+          "types-stage16-const-identity",
+          "types-stage16-const-shortcircuit",
+          "types-stage16-const-local-read",
+          "types-stage16-const-local-control",
+          "types-stage16-const-property-read",
+          "types-stage16-const-property-control",
+          "types-stage16-const-method-control",
+          "types-stage16-const-module-read",
+          "types-stage16-const-module-control",
+          "types-stage16-const-lambda-read",
+          "types-stage16-const-lambda-control",
+          "types-stage16-const-this-control",
+          "types-stage16-slot-inline-is",
+          "types-stage16-slot-inline-is-power",
+          "types-stage16-slot-let-is",
+          "types-stage16-slot-let-is-power",
+          "types-stage16-slot-inline-as",
+          "types-stage16-slot-inline-as-power",
+          "types-stage16-slot-multiple",
+          "types-stage16-slot-multiple-fail",
+          "types-stage16-slot-multiple-fail-power",
+          "types-stage16-slot-union",
+          "types-stage16-slot-union-branches",
+          "types-stage16-slot-return-original",
+          "types-stage16-slot-lambda-snapshot",
+          "types-stage16-slot-lambda-own-root",
+          "types-stage16-slot-method-boundary",
+          "types-stage16-slot-lazy-boundary",
+          "types-stage16-slot-predicate-capture",
+          "types-stage16-slot-predicate-failure",
+          "types-stage16-slot-predicate-failure-power",
+          "types-stage16-slot-predicate-inner",
+          "types-stage16-slot-predicate-inner-failure",
+          "types-stage16-slot-predicate-inner-failure-power",
+          "types-stage16-slot-boolean-failure",
+          "types-stage16-slot-boolean-failure-power",
+          "types-stage16-slot-let-boolean-failure",
+          "types-stage16-slot-let-boolean-failure-power",
+          "types-stage16-recursive-finite-rejection",
+          "types-stage16-recursive-as-in-constraint",
+          "types-stage16-recursive-lexical-capture",
+          "types-stage16-recursive-this-after-is",
+          "types-stage16-slot-object-predicate-normal",
+          "types-stage16-slot-object-predicate-nested-check",
+          "types-stage16-slot-object-predicate-error",
+          "types-stage16-slot-nested-let-function",
+          "types-stage16-slot-union-first-branch-fail",
+          "types-stage16-const-nonconst-unused-method",
+          "types-stage16-const-nonconst-short-method",
+          "types-stage16-const-method-read",
+          "types-stage16-slot-let-as",
+          "types-stage16-let-as-depth-0",
+          "types-stage16-let-as-depth-1",
+          "types-stage16-let-as-depth-2",
+          "types-stage16-let-as-alias",
+          "types-stage16-let-as-inline",
+          "types-stage16-const-method-args",
+          "types-stage16-const-method-qualified",
+          "types-stage16-const-method-argument-first",
+          "types-stage16-frames-recursive-depth-1",
+          "types-stage16-frames-recursive-depth-1-power",
+          "types-stage16-frames-mutual-depth-1",
+          "types-stage16-frames-mutual-depth-1-power",
+          "types-stage16-frames-recursive-depth-2",
+          "types-stage16-frames-recursive-depth-2-power",
+          "types-stage16-frames-mutual-depth-2",
+          "types-stage16-frames-mutual-depth-2-power",
+          "types-stage16-frames-recursive-depth-3",
+          "types-stage16-frames-recursive-depth-3-power",
+          "types-stage16-frames-mutual-depth-3",
+          "types-stage16-frames-mutual-depth-3-power",
+          "types-stage16-frames-recursive-depth-4",
+          "types-stage16-frames-recursive-depth-4-power",
+          "types-stage16-frames-mutual-depth-4",
+          "types-stage16-frames-mutual-depth-4-power",
+          "types-stage16-frames-const-hint-depth-1",
+          "types-stage16-frames-const-hint-depth-1-power",
+          "types-stage16-frames-const-hint-depth-2",
+          "types-stage16-frames-const-hint-depth-2-power",
+          "types-stage16-frames-const-hint-depth-3",
+          "types-stage16-frames-const-hint-depth-3-power",
+          "types-stage16-frames-const-hint-depth-4",
+          "types-stage16-frames-const-hint-depth-4-power"
         ]
       },
-      "scope": "The Stage 13 selection links named alias expansion, meta-class checks, function arity and exported type metadata to the shared VM. Existing upstream case definitions, adapters and execution states remain unchanged. Stage 14 adds selected authored type-resolution order, generic parameter scope and nested substitution, class/alias arity ordering, and owner signature diagnostics; persistent failed-declaration state has a separate sequence contract. Stage 15 adds selected non-generic recursive constraint block graphs and declaration type scope, plus builtin Class argument erasure and arity ordering. Recursive generic constraints and shared custom-this slot behavior remain open.",
+      "scope": "The Stage 13 selection links named alias expansion, meta-class checks, function arity and exported type metadata to the shared VM. Existing upstream case definitions, adapters and execution states remain unchanged. Stage 14 adds selected authored type-resolution order, generic parameter scope and nested substitution, class/alias arity ordering, and owner signature diagnostics; persistent failed-declaration state has a separate sequence contract. Stage 15 adds selected non-generic recursive constraint block graphs and declaration type scope, plus builtin Class argument erasure and arity ordering. Recursive generic constraints remain open; Stage 16 adds bounded shared receiver-slot support. Stage 16: Selected nested is/as and recursive constraints retain receiver mutations, original successful values, predicate arguments and complete failure bytes.",
       "remaining": [
         "The complete type, structural/generic class, constraint, recursive and imported-type corpus still requires implementation and original-adapter execution."
       ]
@@ -2023,9 +2363,127 @@
           "types-stage15-class-named-alias-shadow"
         ]
       },
-      "scope": "Selected generic aliases retain declaration identity and metadata arguments independently of expanded checks, use unknown for omitted arguments, and preserve argument-count and expanded-value diagnostics. Stage 14 adds selected authored type-resolution order, generic parameter scope and nested substitution, class/alias arity ordering, and owner signature diagnostics; persistent failed-declaration state has a separate sequence contract. Stage 15 adds selected non-generic recursive constraint block graphs and declaration type scope, plus builtin Class argument erasure and arity ordering. Recursive generic constraints and shared custom-this slot behavior remain open.",
+      "scope": "Selected generic aliases retain declaration identity and metadata arguments independently of expanded checks, use unknown for omitted arguments, and preserve argument-count and expanded-value diagnostics. Stage 14 adds selected authored type-resolution order, generic parameter scope and nested substitution, class/alias arity ordering, and owner signature diagnostics; persistent failed-declaration state has a separate sequence contract. Stage 15 adds selected non-generic recursive constraint block graphs and declaration type scope, plus builtin Class argument erasure and arity ordering. Recursive generic constraints remain open; Stage 16 adds bounded shared receiver-slot support.",
       "remaining": [
         "Complete generic classes, variance, imported generic declarations, recursive expansion and the original generic suite contracts remain unimplemented or unverified."
+      ]
+    },
+    {
+      "requirement": "semantic:constraints",
+      "implementation": {
+        "state": "partial",
+        "links": [
+          {
+            "path": "crates/pkl-runtime/src/heap.rs",
+            "symbol": "CustomThisSlot"
+          },
+          {
+            "path": "crates/pkl-runtime/src/vm/typecheck.rs",
+            "symbol": "step_type"
+          },
+          {
+            "path": "crates/pkl-runtime/src/vm/typecheck.rs",
+            "symbol": "launch_constraint"
+          },
+          {
+            "path": "crates/pkl-runtime/src/vm.rs",
+            "symbol": "invoke_function"
+          }
+        ]
+      },
+      "tests": {
+        "state": "partial",
+        "case_ids": [
+          "types-stage16-const-unused",
+          "types-stage16-const-identity",
+          "types-stage16-const-shortcircuit",
+          "types-stage16-const-local-read",
+          "types-stage16-const-local-control",
+          "types-stage16-const-property-read",
+          "types-stage16-const-property-control",
+          "types-stage16-const-method-control",
+          "types-stage16-const-module-read",
+          "types-stage16-const-module-control",
+          "types-stage16-const-lambda-read",
+          "types-stage16-const-lambda-control",
+          "types-stage16-const-this-control",
+          "types-stage16-slot-inline-is",
+          "types-stage16-slot-inline-is-power",
+          "types-stage16-slot-let-is",
+          "types-stage16-slot-let-is-power",
+          "types-stage16-slot-inline-as",
+          "types-stage16-slot-inline-as-power",
+          "types-stage16-slot-multiple",
+          "types-stage16-slot-multiple-fail",
+          "types-stage16-slot-multiple-fail-power",
+          "types-stage16-slot-union",
+          "types-stage16-slot-union-branches",
+          "types-stage16-slot-return-original",
+          "types-stage16-slot-lambda-snapshot",
+          "types-stage16-slot-lambda-own-root",
+          "types-stage16-slot-method-boundary",
+          "types-stage16-slot-lazy-boundary",
+          "types-stage16-slot-predicate-capture",
+          "types-stage16-slot-predicate-failure",
+          "types-stage16-slot-predicate-failure-power",
+          "types-stage16-slot-predicate-inner",
+          "types-stage16-slot-predicate-inner-failure",
+          "types-stage16-slot-predicate-inner-failure-power",
+          "types-stage16-slot-boolean-failure",
+          "types-stage16-slot-boolean-failure-power",
+          "types-stage16-slot-let-boolean-failure",
+          "types-stage16-slot-let-boolean-failure-power",
+          "types-stage16-recursive-finite-rejection",
+          "types-stage16-recursive-as-in-constraint",
+          "types-stage16-recursive-lexical-capture",
+          "types-stage16-recursive-this-after-is",
+          "types-stage16-slot-object-predicate-normal",
+          "types-stage16-slot-object-predicate-nested-check",
+          "types-stage16-slot-object-predicate-error",
+          "types-stage16-slot-nested-let-function",
+          "types-stage16-slot-union-first-branch-fail",
+          "types-stage16-const-nonconst-unused-method",
+          "types-stage16-const-nonconst-short-method",
+          "types-stage16-const-method-read",
+          "types-stage16-slot-let-as",
+          "types-stage16-let-as-depth-0",
+          "types-stage16-let-as-depth-1",
+          "types-stage16-let-as-depth-2",
+          "types-stage16-let-as-alias",
+          "types-stage16-let-as-inline",
+          "types-stage16-const-method-args",
+          "types-stage16-const-method-qualified",
+          "types-stage16-const-method-argument-first",
+          "types-stage16-frames-recursive-depth-1",
+          "types-stage16-frames-recursive-depth-1-power",
+          "types-stage16-frames-mutual-depth-1",
+          "types-stage16-frames-mutual-depth-1-power",
+          "types-stage16-frames-recursive-depth-2",
+          "types-stage16-frames-recursive-depth-2-power",
+          "types-stage16-frames-mutual-depth-2",
+          "types-stage16-frames-mutual-depth-2-power",
+          "types-stage16-frames-recursive-depth-3",
+          "types-stage16-frames-recursive-depth-3-power",
+          "types-stage16-frames-mutual-depth-3",
+          "types-stage16-frames-mutual-depth-3-power",
+          "types-stage16-frames-recursive-depth-4",
+          "types-stage16-frames-recursive-depth-4-power",
+          "types-stage16-frames-mutual-depth-4",
+          "types-stage16-frames-mutual-depth-4-power",
+          "types-stage16-frames-const-hint-depth-1",
+          "types-stage16-frames-const-hint-depth-1-power",
+          "types-stage16-frames-const-hint-depth-2",
+          "types-stage16-frames-const-hint-depth-2-power",
+          "types-stage16-frames-const-hint-depth-3",
+          "types-stage16-frames-const-hint-depth-3-power",
+          "types-stage16-frames-const-hint-depth-4",
+          "types-stage16-frames-const-hint-depth-4-power"
+        ]
+      },
+      "scope": "Selected shared logical-call receiver slots, recursive and inline constraints, lambda snapshots, separate function/let/member roots, Boolean and predicate failures, union branches and power assertions compare complete Java bytes. Native Host/GC and persistent platform sequences provide separate lifecycle evidence.",
+      "remaining": [
+        "The complete original constraint suites, imported constraints, recursive generic instantiation and full runtime type-node identity semantics remain unimplemented or unverified.",
+        "Recorded local const-read retry and const-function lexical-scope mismatches remain failures; lifecycle and selected-byte agreement do not establish full language or performance completion."
       ]
     }
   ]

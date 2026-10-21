@@ -1,0 +1,3 @@
+module stage16.types
+typealias A = Int((this - 1) is Int(true), this == 1)
+result: A = 2

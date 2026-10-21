@@ -1,0 +1,3 @@
+module stage16.types
+function descend(n: Int): Int = if (n == 0) throw("frame") else descend(n - 1)
+result = descend(4)

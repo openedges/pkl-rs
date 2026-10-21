@@ -1237,13 +1237,7 @@ impl Vm {
                 } else {
                     Vec::new()
                 };
-                let previous_this = self
-                    .frames
-                    .last()
-                    .expect("active frame")
-                    .environment
-                    .custom_this
-                    .clone();
+                let previous_this = self.current_custom_this()?;
                 let id = self.heap.allocate(Object {
                     predicate_iterator: Some(PredicateIterator {
                         source,
@@ -1311,19 +1305,11 @@ impl Vm {
                         .as_mut()
                         .expect("predicate iterator")
                         .awaiting_value = false;
-                    self.frames
-                        .last_mut()
-                        .expect("active frame")
-                        .environment
-                        .custom_this = Some(value);
+                    self.set_current_custom_this(Some(value))?;
                     return Ok(());
                 }
                 let Some((owner, member)) = next else {
-                    self.frames
-                        .last_mut()
-                        .expect("active frame")
-                        .environment
-                        .custom_this = previous_this;
+                    self.set_current_custom_this(previous_this)?;
                     self.pop()?;
                     self.jump(end)?;
                     return Ok(());
@@ -1341,11 +1327,7 @@ impl Vm {
                     entry: true,
                 };
                 if let Some(value) = self.cached_slot(owner, &key)? {
-                    self.frames
-                        .last_mut()
-                        .expect("active frame")
-                        .environment
-                        .custom_this = Some(value.clone());
+                    self.set_current_custom_this(Some(value))?;
                 } else {
                     self.heap
                         .get_mut(id)?
@@ -1385,11 +1367,8 @@ impl Vm {
                     .ok_or_else(|| invalid("missing predicate iterator"))?;
                 let key = state.members[state.position - 1].1.key.clone();
                 let kind = state.members[state.position - 1].1.kind;
-                self.frames
-                    .last_mut()
-                    .expect("active frame")
-                    .environment
-                    .custom_this = state.previous_this.clone();
+                let previous_this = state.previous_this.clone();
+                self.set_current_custom_this(previous_this)?;
                 let Value::Bool(applicable) = applicable else {
                     return Err(type_error(
                         &TypeCheck::Boolean,

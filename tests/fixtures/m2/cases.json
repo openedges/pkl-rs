@@ -19276,6 +19276,1245 @@
         "semantic:type-aliases",
         "semantic:classes"
       ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage16-const-unused",
+      "input": "tests/fixtures/m2/types-stage16-const-unused.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:type-tests-casts",
+        "semantic:modifiers",
+        "semantic:name-resolution"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage16-const-identity",
+      "input": "tests/fixtures/m2/types-stage16-const-identity.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:type-tests-casts",
+        "semantic:modifiers",
+        "semantic:name-resolution"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage16-const-shortcircuit",
+      "input": "tests/fixtures/m2/types-stage16-const-shortcircuit.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:type-tests-casts",
+        "semantic:modifiers",
+        "semantic:name-resolution"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage16-const-local-read",
+      "input": "tests/fixtures/m2/types-stage16-const-local-read.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:type-tests-casts",
+        "semantic:modifiers",
+        "semantic:name-resolution",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage16-const-local-control",
+      "input": "tests/fixtures/m2/types-stage16-const-local-control.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:type-tests-casts",
+        "semantic:modifiers",
+        "semantic:name-resolution"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage16-const-property-read",
+      "input": "tests/fixtures/m2/types-stage16-const-property-read.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:type-tests-casts",
+        "semantic:modifiers",
+        "semantic:name-resolution",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage16-const-property-control",
+      "input": "tests/fixtures/m2/types-stage16-const-property-control.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:type-tests-casts",
+        "semantic:modifiers",
+        "semantic:name-resolution"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage16-const-method-control",
+      "input": "tests/fixtures/m2/types-stage16-const-method-control.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:type-tests-casts",
+        "semantic:modifiers",
+        "semantic:name-resolution",
+        "semantic:functions",
+        "semantic:closures"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage16-const-module-read",
+      "input": "tests/fixtures/m2/types-stage16-const-module-read.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:type-tests-casts",
+        "semantic:modifiers",
+        "semantic:name-resolution",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage16-const-module-control",
+      "input": "tests/fixtures/m2/types-stage16-const-module-control.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:type-tests-casts",
+        "semantic:modifiers",
+        "semantic:name-resolution"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage16-const-lambda-read",
+      "input": "tests/fixtures/m2/types-stage16-const-lambda-read.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:type-tests-casts",
+        "semantic:modifiers",
+        "semantic:name-resolution",
+        "semantic:functions",
+        "semantic:closures",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage16-const-lambda-control",
+      "input": "tests/fixtures/m2/types-stage16-const-lambda-control.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:type-tests-casts",
+        "semantic:modifiers",
+        "semantic:name-resolution",
+        "semantic:functions",
+        "semantic:closures"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage16-const-this-control",
+      "input": "tests/fixtures/m2/types-stage16-const-this-control.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:type-tests-casts",
+        "semantic:modifiers",
+        "semantic:name-resolution"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage16-slot-inline-is",
+      "input": "tests/fixtures/m2/types-stage16-slot-inline-is.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:type-tests-casts",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage16-slot-inline-is-power",
+      "input": "tests/fixtures/m2/types-stage16-slot-inline-is-power.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:type-tests-casts",
+        "semantic:diagnostics"
+      ],
+      "power_assertions": true
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage16-slot-let-is",
+      "input": "tests/fixtures/m2/types-stage16-slot-let-is.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:type-tests-casts",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage16-slot-let-is-power",
+      "input": "tests/fixtures/m2/types-stage16-slot-let-is-power.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:type-tests-casts",
+        "semantic:diagnostics"
+      ],
+      "power_assertions": true
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage16-slot-inline-as",
+      "input": "tests/fixtures/m2/types-stage16-slot-inline-as.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:type-tests-casts",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage16-slot-inline-as-power",
+      "input": "tests/fixtures/m2/types-stage16-slot-inline-as-power.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:type-tests-casts",
+        "semantic:diagnostics"
+      ],
+      "power_assertions": true
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage16-slot-multiple",
+      "input": "tests/fixtures/m2/types-stage16-slot-multiple.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:type-tests-casts"
+      ],
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "types-stage16-slot-return-original",
+          "types-stage16-slot-multiple"
+        ],
+        "domain": "A second constraint observes the mutated same-frame slot while successful checking returns the original scalar."
+      }
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage16-slot-multiple-fail",
+      "input": "tests/fixtures/m2/types-stage16-slot-multiple-fail.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:type-tests-casts",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage16-slot-multiple-fail-power",
+      "input": "tests/fixtures/m2/types-stage16-slot-multiple-fail-power.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:type-tests-casts",
+        "semantic:diagnostics"
+      ],
+      "power_assertions": true
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage16-slot-union",
+      "input": "tests/fixtures/m2/types-stage16-slot-union.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:type-tests-casts"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage16-slot-union-branches",
+      "input": "tests/fixtures/m2/types-stage16-slot-union-branches.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:type-tests-casts"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage16-slot-return-original",
+      "input": "tests/fixtures/m2/types-stage16-slot-return-original.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:type-tests-casts"
+      ],
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "types-stage16-slot-return-original",
+          "types-stage16-slot-multiple"
+        ],
+        "domain": "A second constraint observes the mutated same-frame slot while successful checking returns the original scalar."
+      }
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage16-slot-lambda-snapshot",
+      "input": "tests/fixtures/m2/types-stage16-slot-lambda-snapshot.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:type-tests-casts",
+        "semantic:functions",
+        "semantic:closures"
+      ],
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "types-stage16-slot-lambda-snapshot",
+          "types-stage16-slot-lambda-own-root"
+        ],
+        "domain": "Creation-time custom receiver snapshots and a separate lambda call slot preserve the original scalar."
+      }
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage16-slot-lambda-own-root",
+      "input": "tests/fixtures/m2/types-stage16-slot-lambda-own-root.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:type-tests-casts",
+        "semantic:functions",
+        "semantic:closures"
+      ],
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "types-stage16-slot-lambda-snapshot",
+          "types-stage16-slot-lambda-own-root"
+        ],
+        "domain": "Creation-time custom receiver snapshots and a separate lambda call slot preserve the original scalar."
+      }
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage16-slot-method-boundary",
+      "input": "tests/fixtures/m2/types-stage16-slot-method-boundary.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:type-tests-casts",
+        "semantic:functions",
+        "semantic:closures"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage16-slot-lazy-boundary",
+      "input": "tests/fixtures/m2/types-stage16-slot-lazy-boundary.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:type-tests-casts"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage16-slot-predicate-capture",
+      "input": "tests/fixtures/m2/types-stage16-slot-predicate-capture.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:type-tests-casts",
+        "semantic:functions",
+        "semantic:closures"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage16-slot-predicate-failure",
+      "input": "tests/fixtures/m2/types-stage16-slot-predicate-failure.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:type-tests-casts",
+        "semantic:functions",
+        "semantic:closures",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage16-slot-predicate-failure-power",
+      "input": "tests/fixtures/m2/types-stage16-slot-predicate-failure-power.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:type-tests-casts",
+        "semantic:functions",
+        "semantic:closures",
+        "semantic:diagnostics"
+      ],
+      "power_assertions": true
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage16-slot-predicate-inner",
+      "input": "tests/fixtures/m2/types-stage16-slot-predicate-inner.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:type-tests-casts",
+        "semantic:functions",
+        "semantic:closures"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage16-slot-predicate-inner-failure",
+      "input": "tests/fixtures/m2/types-stage16-slot-predicate-inner-failure.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:type-tests-casts",
+        "semantic:functions",
+        "semantic:closures",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage16-slot-predicate-inner-failure-power",
+      "input": "tests/fixtures/m2/types-stage16-slot-predicate-inner-failure-power.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:type-tests-casts",
+        "semantic:functions",
+        "semantic:closures",
+        "semantic:diagnostics"
+      ],
+      "power_assertions": true
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage16-slot-boolean-failure",
+      "input": "tests/fixtures/m2/types-stage16-slot-boolean-failure.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:type-tests-casts",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage16-slot-boolean-failure-power",
+      "input": "tests/fixtures/m2/types-stage16-slot-boolean-failure-power.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:type-tests-casts",
+        "semantic:diagnostics"
+      ],
+      "power_assertions": true
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage16-slot-let-boolean-failure",
+      "input": "tests/fixtures/m2/types-stage16-slot-let-boolean-failure.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:type-tests-casts",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage16-slot-let-boolean-failure-power",
+      "input": "tests/fixtures/m2/types-stage16-slot-let-boolean-failure-power.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:type-tests-casts",
+        "semantic:diagnostics"
+      ],
+      "power_assertions": true
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage16-recursive-finite-rejection",
+      "input": "tests/fixtures/m2/types-stage16-recursive-finite-rejection.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:type-tests-casts",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage16-recursive-as-in-constraint",
+      "input": "tests/fixtures/m2/types-stage16-recursive-as-in-constraint.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:type-tests-casts",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage16-recursive-lexical-capture",
+      "input": "tests/fixtures/m2/types-stage16-recursive-lexical-capture.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:type-tests-casts",
+        "semantic:modifiers",
+        "semantic:name-resolution",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage16-recursive-this-after-is",
+      "input": "tests/fixtures/m2/types-stage16-recursive-this-after-is.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:type-tests-casts",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage16-slot-object-predicate-normal",
+      "input": "tests/fixtures/m2/types-stage16-slot-object-predicate-normal.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:type-tests-casts",
+        "semantic:functions",
+        "semantic:closures"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage16-slot-object-predicate-nested-check",
+      "input": "tests/fixtures/m2/types-stage16-slot-object-predicate-nested-check.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:type-tests-casts",
+        "semantic:functions",
+        "semantic:closures"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage16-slot-object-predicate-error",
+      "input": "tests/fixtures/m2/types-stage16-slot-object-predicate-error.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:type-tests-casts",
+        "semantic:functions",
+        "semantic:closures",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage16-slot-nested-let-function",
+      "input": "tests/fixtures/m2/types-stage16-slot-nested-let-function.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:type-tests-casts",
+        "semantic:functions",
+        "semantic:closures"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage16-slot-union-first-branch-fail",
+      "input": "tests/fixtures/m2/types-stage16-slot-union-first-branch-fail.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:type-tests-casts"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage16-const-nonconst-unused-method",
+      "input": "tests/fixtures/m2/types-stage16-const-nonconst-unused-method.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:type-tests-casts",
+        "semantic:modifiers",
+        "semantic:name-resolution",
+        "semantic:functions",
+        "semantic:closures"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage16-const-nonconst-short-method",
+      "input": "tests/fixtures/m2/types-stage16-const-nonconst-short-method.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:type-tests-casts",
+        "semantic:modifiers",
+        "semantic:name-resolution",
+        "semantic:functions",
+        "semantic:closures"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage16-const-method-read",
+      "input": "tests/fixtures/m2/types-stage16-const-method-read.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:type-tests-casts",
+        "semantic:diagnostics",
+        "semantic:modifiers",
+        "semantic:name-resolution",
+        "semantic:functions"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage16-slot-let-as",
+      "input": "tests/fixtures/m2/types-stage16-slot-let-as.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:type-tests-casts",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage16-let-as-depth-0",
+      "input": "tests/fixtures/m2/types-stage16-let-as-depth-0.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:type-tests-casts",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage16-let-as-depth-1",
+      "input": "tests/fixtures/m2/types-stage16-let-as-depth-1.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:type-tests-casts",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage16-let-as-depth-2",
+      "input": "tests/fixtures/m2/types-stage16-let-as-depth-2.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:type-tests-casts",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage16-let-as-alias",
+      "input": "tests/fixtures/m2/types-stage16-let-as-alias.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:type-tests-casts",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage16-let-as-inline",
+      "input": "tests/fixtures/m2/types-stage16-let-as-inline.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:type-tests-casts",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage16-const-method-args",
+      "input": "tests/fixtures/m2/types-stage16-const-method-args.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:type-tests-casts",
+        "semantic:diagnostics",
+        "semantic:modifiers",
+        "semantic:name-resolution",
+        "semantic:functions"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage16-const-method-qualified",
+      "input": "tests/fixtures/m2/types-stage16-const-method-qualified.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:type-tests-casts",
+        "semantic:diagnostics",
+        "semantic:modifiers",
+        "semantic:name-resolution",
+        "semantic:functions"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage16-const-method-argument-first",
+      "input": "tests/fixtures/m2/types-stage16-const-method-argument-first.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:type-tests-casts",
+        "semantic:diagnostics",
+        "semantic:modifiers",
+        "semantic:name-resolution",
+        "semantic:functions"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage16-frames-recursive-depth-1",
+      "input": "tests/fixtures/m2/types-stage16-frames-recursive-depth-1.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:type-tests-casts",
+        "semantic:diagnostics",
+        "semantic:functions"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage16-frames-recursive-depth-1-power",
+      "input": "tests/fixtures/m2/types-stage16-frames-recursive-depth-1-power.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:type-tests-casts",
+        "semantic:diagnostics",
+        "semantic:functions"
+      ],
+      "power_assertions": true
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage16-frames-mutual-depth-1",
+      "input": "tests/fixtures/m2/types-stage16-frames-mutual-depth-1.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:type-tests-casts",
+        "semantic:diagnostics",
+        "semantic:functions"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage16-frames-mutual-depth-1-power",
+      "input": "tests/fixtures/m2/types-stage16-frames-mutual-depth-1-power.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:type-tests-casts",
+        "semantic:diagnostics",
+        "semantic:functions"
+      ],
+      "power_assertions": true
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage16-frames-recursive-depth-2",
+      "input": "tests/fixtures/m2/types-stage16-frames-recursive-depth-2.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:type-tests-casts",
+        "semantic:diagnostics",
+        "semantic:functions"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage16-frames-recursive-depth-2-power",
+      "input": "tests/fixtures/m2/types-stage16-frames-recursive-depth-2-power.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:type-tests-casts",
+        "semantic:diagnostics",
+        "semantic:functions"
+      ],
+      "power_assertions": true
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage16-frames-mutual-depth-2",
+      "input": "tests/fixtures/m2/types-stage16-frames-mutual-depth-2.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:type-tests-casts",
+        "semantic:diagnostics",
+        "semantic:functions"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage16-frames-mutual-depth-2-power",
+      "input": "tests/fixtures/m2/types-stage16-frames-mutual-depth-2-power.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:type-tests-casts",
+        "semantic:diagnostics",
+        "semantic:functions"
+      ],
+      "power_assertions": true
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage16-frames-recursive-depth-3",
+      "input": "tests/fixtures/m2/types-stage16-frames-recursive-depth-3.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:type-tests-casts",
+        "semantic:diagnostics",
+        "semantic:functions"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage16-frames-recursive-depth-3-power",
+      "input": "tests/fixtures/m2/types-stage16-frames-recursive-depth-3-power.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:type-tests-casts",
+        "semantic:diagnostics",
+        "semantic:functions"
+      ],
+      "power_assertions": true
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage16-frames-mutual-depth-3",
+      "input": "tests/fixtures/m2/types-stage16-frames-mutual-depth-3.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:type-tests-casts",
+        "semantic:diagnostics",
+        "semantic:functions"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage16-frames-mutual-depth-3-power",
+      "input": "tests/fixtures/m2/types-stage16-frames-mutual-depth-3-power.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:type-tests-casts",
+        "semantic:diagnostics",
+        "semantic:functions"
+      ],
+      "power_assertions": true
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage16-frames-recursive-depth-4",
+      "input": "tests/fixtures/m2/types-stage16-frames-recursive-depth-4.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:type-tests-casts",
+        "semantic:diagnostics",
+        "semantic:functions"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage16-frames-recursive-depth-4-power",
+      "input": "tests/fixtures/m2/types-stage16-frames-recursive-depth-4-power.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:type-tests-casts",
+        "semantic:diagnostics",
+        "semantic:functions"
+      ],
+      "power_assertions": true
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage16-frames-mutual-depth-4",
+      "input": "tests/fixtures/m2/types-stage16-frames-mutual-depth-4.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:type-tests-casts",
+        "semantic:diagnostics",
+        "semantic:functions"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage16-frames-mutual-depth-4-power",
+      "input": "tests/fixtures/m2/types-stage16-frames-mutual-depth-4-power.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:type-tests-casts",
+        "semantic:diagnostics",
+        "semantic:functions"
+      ],
+      "power_assertions": true
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage16-frames-const-hint-depth-1",
+      "input": "tests/fixtures/m2/types-stage16-frames-const-hint-depth-1.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:type-tests-casts",
+        "semantic:diagnostics",
+        "semantic:modifiers",
+        "semantic:name-resolution",
+        "semantic:functions"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage16-frames-const-hint-depth-1-power",
+      "input": "tests/fixtures/m2/types-stage16-frames-const-hint-depth-1-power.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:type-tests-casts",
+        "semantic:diagnostics",
+        "semantic:modifiers",
+        "semantic:name-resolution",
+        "semantic:functions"
+      ],
+      "power_assertions": true
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage16-frames-const-hint-depth-2",
+      "input": "tests/fixtures/m2/types-stage16-frames-const-hint-depth-2.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:type-tests-casts",
+        "semantic:diagnostics",
+        "semantic:modifiers",
+        "semantic:name-resolution",
+        "semantic:functions"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage16-frames-const-hint-depth-2-power",
+      "input": "tests/fixtures/m2/types-stage16-frames-const-hint-depth-2-power.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:type-tests-casts",
+        "semantic:diagnostics",
+        "semantic:modifiers",
+        "semantic:name-resolution",
+        "semantic:functions"
+      ],
+      "power_assertions": true
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage16-frames-const-hint-depth-3",
+      "input": "tests/fixtures/m2/types-stage16-frames-const-hint-depth-3.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:type-tests-casts",
+        "semantic:diagnostics",
+        "semantic:modifiers",
+        "semantic:name-resolution",
+        "semantic:functions"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage16-frames-const-hint-depth-3-power",
+      "input": "tests/fixtures/m2/types-stage16-frames-const-hint-depth-3-power.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:type-tests-casts",
+        "semantic:diagnostics",
+        "semantic:modifiers",
+        "semantic:name-resolution",
+        "semantic:functions"
+      ],
+      "power_assertions": true
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage16-frames-const-hint-depth-4",
+      "input": "tests/fixtures/m2/types-stage16-frames-const-hint-depth-4.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:type-tests-casts",
+        "semantic:diagnostics",
+        "semantic:modifiers",
+        "semantic:name-resolution",
+        "semantic:functions"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage16-frames-const-hint-depth-4-power",
+      "input": "tests/fixtures/m2/types-stage16-frames-const-hint-depth-4-power.pkl",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:type-tests-casts",
+        "semantic:diagnostics",
+        "semantic:modifiers",
+        "semantic:name-resolution",
+        "semantic:functions"
+      ],
+      "power_assertions": true
     }
   ],
   "schema_version": 1,

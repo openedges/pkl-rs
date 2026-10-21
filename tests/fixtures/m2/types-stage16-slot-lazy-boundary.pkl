@@ -1,0 +1,4 @@
+module stage16.types
+const holder = new { checked = 1 is Int(true) }
+typealias A = Int(holder.checked && this == 2)
+result: A = 2

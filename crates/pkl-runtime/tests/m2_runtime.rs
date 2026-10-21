@@ -179,7 +179,7 @@ fn gc_traces_closure_cycles_and_invalidates_reclaimed_function_handles() {
             block: 0,
             arity: 0,
             method: false,
-            capture_custom_this: false,
+            captured_this: None,
         }),
         environment: Environment {
             locals: vec![Value::Object(parent)],

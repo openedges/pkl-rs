@@ -1,0 +1,4 @@
+module stage16.types
+function first(n: Int): Int = if (n == 0) throw("frame") else second(n - 1)
+function second(n: Int): Int = if (n == 0) throw("frame") else first(n - 1)
+result = first(2)

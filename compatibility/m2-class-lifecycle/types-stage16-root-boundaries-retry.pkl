@@ -1,0 +1,15 @@
+const function check(x: Int): Boolean = (x - 1) is Int(true)
+const holder = new { checked = 1 is Int(true) }
+typealias LetRoot = Int(let (n = this) ((n - 1) is Int(true)) && this == 2)
+typealias Snapshot = Int(let (f = (ignored) -> this) ((this - 1) is Int(true)) && f.apply(null) == 2)
+typealias Lambda = Int(let (f = (ignored) -> ((this - 1) is Int(true))) f.apply(null) && this == 2)
+typealias Method = Int(check(this) && this == 2)
+typealias Lazy = Int(holder.checked && this == 2)
+typealias Predicate = Int((this - 1) is Int(true), (x) -> x == 2)
+letRoot: LetRoot = 2
+snapshot: Snapshot = 2
+lambda: Lambda = 2
+method: Method = 2
+lazyValue: Lazy = 2
+predicate: Predicate = 2
+stable = 42

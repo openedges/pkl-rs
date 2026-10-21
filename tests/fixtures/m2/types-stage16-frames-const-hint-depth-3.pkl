@@ -1,0 +1,5 @@
+module stage16.types
+local threshold = 0
+typealias A = Int(this < threshold)
+function descend(n: Int): Int = if (n == 0) (-1 as A) else descend(n - 1)
+result = descend(3)

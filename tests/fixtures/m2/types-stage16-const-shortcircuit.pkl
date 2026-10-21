@@ -1,0 +1,4 @@
+module stage16.types
+local threshold = 0
+typealias A = Int(this < 0 || this < threshold)
+result: A = -1

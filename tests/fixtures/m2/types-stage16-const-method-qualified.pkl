@@ -1,0 +1,4 @@
+module stage16.types
+function threshold(x: Int): Int = 0
+typealias A = Int(this < module.threshold(this))
+result: A = -1

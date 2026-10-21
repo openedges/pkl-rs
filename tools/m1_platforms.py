@@ -65,6 +65,8 @@ REQUIRED_SCENARIOS = {
     'm2-unfinished-alias-arguments',
     'm2-recursive-constraint-sequences',
     'm2-erased-class-argument-sequences',
+    'm2-shared-constraint-slots-sequences',
+    'm2-constraint-call-boundaries-sequences',
 }
 
 

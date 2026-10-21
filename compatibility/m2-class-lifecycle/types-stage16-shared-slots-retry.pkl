@@ -1,0 +1,12 @@
+typealias Shared = Int(this < 0 || ((this - 1) is Shared && this > 0))
+typealias Rejected = Int(this < 0 || (this > 0 && (this - 1) is Rejected))
+typealias Cast = Int(this < 0 || ((this - 1) as Cast) < this)
+typealias Multiple = Int((this - 1) is Int(true), this == 1)
+typealias BadMultiple = Int((this - 1) is Int(true), this == 2)
+shared: Shared = 2
+rejected: Rejected = 2
+cast: Cast = 3
+multiple: Multiple = 2
+badMultiple: BadMultiple = 2
+identity = Shared.toString()
+stable = 42

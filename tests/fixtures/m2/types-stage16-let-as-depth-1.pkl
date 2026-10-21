@@ -1,0 +1,3 @@
+module stage16.types
+typealias A = Int(let (n = this) n < 0 || ((n - 1) as A) < this)
+result: A = 1
