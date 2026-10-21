@@ -20,8 +20,81 @@ and exported arrow metadata equality. Stage 14 adds ordered type resolution, gen
 parameter scopes, and owner signature initialization. Stage 15 adds selected recursive
 constraint graphs and erased `Class<T>` arguments. Stage 16 adds shared constraint
 receiver slots, creation-time lambda captures, selected alias const boundaries
-and recursive diagnostic compression.
+and recursive diagnostic compression. Stage 17 adds persistent evaluator-local
+executable/type-use ownership, selected local const-property retries, and
+const-method lexical scope corrections.
 These checkpoints do not complete the language milestone.
+
+## Stage 17 local verification checkpoint
+
+Implementation `43db2bc4664ae91521204021deac8b7ce1641f3b` is committed and pushed.
+Runtime work and independent ownership review used `gpt-6-astra / high`; Java evidence, lifecycle
+checks, actual platform execution, and evidence auditing used `gpt-6.1-sol / high`.
+All checkpoint verification ran locally on macOS. M2 remains in progress.
+
+Evaluator-owned executable and type-use nodes now preserve local const-property
+resolution across failed first reads and later retries. Inline uses and cloned
+lambdas retain separate nodes; selected non-generic let roots and lazy collection
+members share their appropriate nodes. Cached member definitions use the current
+receiver, and inherited annotations retain declaration identity. Const methods,
+lambda lookup depth, immediate `outer` scope checks, and grouped-callee parser
+errors have bounded raw Java comparisons.
+
+Independent review caught an execution-order bug: reaching a type check could
+change ownership of a subsequently created lambda or object. The corrected model
+keeps implicit canonical ownership stable. Both branch orders now have persistent
+Java controls, native Host reentry, cancellation, and GC regressions. Superseded
+successful checks and the interrupted first whole-selection acquisition remain
+preserved; they are excluded from final implementation claims.
+
+The [final summary](stage17-final-summary.json) records **1,659 independent cases,
+1,657 raw matches, and the same two failures**, with **56 passing metamorphic
+relations**. The 62 additions comprise 31 successful values and 31 expected
+errors. The original 1,597 definitions, inputs, and 54 relations remain unchanged.
+`error-cycle` remains an oracle error and `error-remainder-zero` remains a raw
+diagnostic mismatch. No new development exception was introduced.
+
+Persistent comparison separately covers **67 sequences, 134 executions, and
+1,052 matching calls**. Actual Node and Chromium
+each pass **61 development scenarios**. The shared primitive corpus retains
+6,078 engine matches and 6,076 Java matches per target, with the same two regex
+mismatches. Required Rust, Python, inventory and reference checks pass; see
+[validation](validation-stage17-final.json). Native retention tests preserve exact
+historical value counts, separately count persistent executable entries, and
+require zero total heap entries on terminal cleanup. M1 regressions preserve all
+15 frontend matches, six runtime value matches, the existing runtime cycle
+diagnostic difference, and the historical Host diagnostic/upstream failures.
+These bounded regression contracts do not establish full API compatibility.
+
+[Exploratory evidence](exploration-stage17-evidence.tar.gz) retains initial
+hypotheses, invalid controls, discovered mismatches, superseded builds, and final
+replays. This evidence is partitioned into the main archive and four indexed
+history archives: [1](exploration-stage17-history-01-evidence.tar.gz),
+[2](exploration-stage17-history-02-evidence.tar.gz),
+[3](exploration-stage17-history-03-evidence.tar.gz), and
+[4](exploration-stage17-history-04-evidence.tar.gz). An offline review requires
+all five parts. Each has a verified inventory; the index proves disjoint paths
+and complete original file/hash/size conservation. The original Stage 16
+single-case exploration improves from 84/94 to 93/94 matches; recursive generic instantiation remains unresolved. All original
+82 persistent retry calls now match. Remaining observations include generic
+let-root sharing, const let-body scope behavior, local typed-property frames,
+and other parser or missing-member diagnostic differences. Failed exploratory
+cases are not selected as passing compatibility evidence.
+
+The [source audit](source-stage17-final-evidence.tar.gz) binds **2,409 captured
+project source copies across 1,946 unique paths**
+to the exact implementation commit. No upstream source blobs are included in
+that count; reference pins and oracle provenance were verified separately.
+Historical explorations retain their own provenance. The inventory preserves all 474 requirements and 16 partial reviewed
+mappings: 2,659 overlapping accounting rows contain 1,659 ready, 960 unimplemented,
+and 40 unmapped entries. Integrity and development gates pass; strict selected
+and full gates retain their failures, including 1,950 full-gate failure reasons.
+These inventory counts are not a completion percentage.
+
+Recursive generics, the remaining const-scope and diagnostic corpus, strict
+Map/Set, annotations, modules and cache behavior, original upstream adapters,
+product APIs and release platforms remain open. No execution-time or peak-RSS
+parity is claimed. **Stage 17 closes only its bounded local development contract.**
 
 ## Stage 16 local verification checkpoint
 

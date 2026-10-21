@@ -19,7 +19,7 @@ M0의 참조 소스·Java oracle 고정, 기능·코퍼스 목록, 원시 차등
 | 초기 구성 | 구축됨 | 없음 | Git·Rust workspace·참조 submodule·개발 문서와 초기 구성 검증 |
 | M0 기준선 | 완료: 로컬 기준선·원격 CI 검증 확인 | 초기 구성 | oracle·목록·원시 비교 도구·Java 초기 측정과 전체 처리 상태 확보; 판정 보류와 미구현 범위 보존 |
 | M1 구조 검증 | 완료: 구조·Graal 조사·원격 CI 증거 확인 | M0의 oracle·실행 계약·초기 기준선 | 제한된 공통 엔진·실제 Node/브라우저·원시 비교와 비용 측정 완료. 후보 기각과 알려진 호환성·성능 실패는 후속 필수 조건으로 보존 |
-| M2 언어 런타임 | 진행 중: 재귀 제약·Class 인자 소거 보완; 전체 gate 미완료 | M1의 이름 해석·값·heap·진단 설계 결정 | 객체·lazy 평가·상속·closure·타입·Reference 구현; 언어 코퍼스의 결과·오류 바이트 일치 |
+| M2 언어 런타임 | 진행 중: type-use 소유권·const 재시도 보완; 전체 gate 미완료 | M1의 이름 해석·값·heap·진단 설계 결정 | 객체·lazy 평가·상속·closure·타입·Reference 구현; 언어 코퍼스의 결과·오류 바이트 일치 |
 | M3 표준 라이브러리·출력 | 계획됨 | M2의 해당 언어 기능 | 전체 builtin·renderer·reflection·Pkl Binary 구현; 공개 멤버 누락 0, 출력·오류 일치 |
 | M4 외부 기능 | 계획됨 | M1 Host 계약과 M2·M3의 해당 기능 | module/resource Host·HTTP·프로젝트·패키지·external reader 구현; 실제 I/O·패키지 코퍼스 통과 |
 | M5 제품 API | 계획됨 | M2·M3·M4의 해당 기능 | CLI·REPL·server·Rust API·formatter·문서 생성·코드 생성·JVM adapter 구현; 기존 호출·client·수명주기 호환 |
@@ -289,14 +289,24 @@ Stage 15의 원래 입력·URI 그대로 재비교하여 shared-slot 실패 3개
 
 탐색 중 local const read는 Java가 오류 전에 resolution node를 cache하여 재시도 결과가 달라짐을 확인했습니다. inline 별칭·let root·lambda·재귀 깊이에 따라 node/call-target 공유 범위가 달라 단일 alias/block flag로 수정하지 않았습니다. const 함수의 local read와 grouped callee 구문 진단 차이도 원시 결과를 보존합니다. 새 개발 예외를 추가하지 않습니다.
 
+열일곱 번째 단계의 구현 커밋 `43db2bc4664ae91521204021deac8b7ce1641f3b`를 푸시했습니다. 런타임과 소유권 검토는 `gpt-6-astra / high`, Java 차등 검증·수명주기·실제 플랫폼·증거 검토는 `gpt-6.1-sol / high`로 분담했습니다. evaluator별 executable/type-use node를 도입하여 오류 전에 게시한 local const-property 해석 상태를 재시도에서 보존합니다. 독립 inline·lambda 사용, 공유 non-generic let root, 재귀 깊이, 상속 annotation 선언, lazy Listing·Mapping 원소의 node 공유를 구분하고 receiver·owner는 현재 호출에서 가져옵니다. const 메서드와 lambda의 lookup/barrier 차이, `outer`의 직전 lexical scope, grouped callee의 문맥별 parser 진단도 보완했습니다.
+
+최종 독립 검토에서 앞선 타입 검사 실행 여부가 이후 생성되는 lambda·객체의 소유권을 바꾸는 오류를 발견했습니다. canonical owner를 환경에 암묵적으로 승격하지 않도록 수정하고 양쪽 분기 순서의 Java 순차 사례와 Host 재진입·취소·GC 회귀를 추가했습니다. 수정 전 완료한 검사들과 323개 사례에서 중단한 첫 전체 수집은 별도 보존하고 최종 증거에서 제외했습니다.
+
+[최종 요약](reports/m2/stage17-final-summary.json)의 선택은 1,659개 독립 식·56개 변형 관계입니다. 추가 62개는 성공 31개·예상 오류 31개이며 Java와 전체 바이트가 일치합니다. 기존 1,597개 정의·입력과 54개 관계를 유지했습니다. 새 전체 Java 수집은 1,657개 일치·기존 순환 oracle 오류와 정수 `% 0` 진단 불일치 두 개를 기록하고 새 개발 예외를 추가하지 않았습니다. 별도 persistent 계약은 67개 목록을 두 번씩 실행한 134회·1,052개 호출이 모두 일치합니다. 이전 502개 호출의 원시 결과도 보존했습니다.
+
+필수 검사 7종에서 Rust 363개·Python 194개가 통과했고 기존 ignored probe 1개는 별도입니다. 실제 Node·Chromium은 각각 61개 시나리오를 통과했습니다. 공통 primitive 6,078개의 엔진 일치와 target별 Java 일치 6,076개·기존 regex 실패 2개를 유지합니다. 내부 수명주기 검사는 기존 값 수치를 유지하면서 executable node를 별도 정확한 수치로 검사하고 terminal 상태에서 전체 heap 0을 요구합니다. [소스 증거](reports/m2/source-stage17-final-evidence.tar.gz)는 소스 사본 2,409개·고유 경로 1,946개를 구현 커밋에 대조합니다. upstream 소스 사본은 0개이며 참조 pin·oracle 출처는 별도 검증했습니다.
+
+[탐색 증거](reports/m2/exploration-stage17-evidence.tar.gz)에서 이전 독립 관찰 94개는 84개에서 93개 일치로 개선되고 recursive generic 한 개가 남았습니다. 이전 const 재시도 82개 호출은 모두 일치합니다. 새 generic let-root 공유, const let body 범위, local typed-property frame과 일부 parser·missing-member 진단 차이는 미선택 실패로 유지합니다. 엄격한 전체 gate의 실패 이유 1,950개와 미구현 960개·미연결 40개 accounting row를 성공으로 바꾸지 않습니다. **Stage 17의 제한된 로컬 개발 계약만 마감했으며 전체 M2·제품 API·성능·메모리·릴리스 플랫폼은 계속 미완료입니다.**
+
 다음 구현은 남은 탐색 불일치의 의존성을 기준으로 진행합니다.
 
-1. 별칭 선언·실제 타입 인자·runtime type node와 call-target identity를 보존하는 표현을 설계합니다. 지속되는 해석 node와 호출마다 새로 만드는 custom-this frame slot은 분리합니다. 독립 inline 사용·lambda 복제·공유 let root의 non-generic const 재시도를 먼저 연결하고, 재귀 깊이별 node와 지연 타입 인수 환경을 연결해 recursive generic으로 확장합니다. const 함수의 local read 허용 범위와 grouped callee 구문 진단 차이를 별도 회귀 사례로 유지합니다. 이미 검증한 shared-slot·lambda snapshot·비재귀/재귀 block graph·`Class<T>` 인자 소거 규칙, Host/GC/취소/terminal 동작을 회귀 기준으로 유지합니다.
+1. Stage 17의 지속 type-use·call-target 소유권을 실제 타입 인자와 지연 타입 인수 환경에 연결해 recursive generic으로 확장합니다. generic let-root 공유와 대입 identity, const let body·for-generator 범위 및 남은 local typed-property·outer 진단을 보완합니다. 이미 검증한 독립 inline·lambda·공유 non-generic let·분기 순서와 재귀 깊이별 재시도, shared-slot·lambda snapshot·`Class<T>` 인자 소거, Host/GC/취소/terminal 동작을 회귀 기준으로 유지합니다.
 2. 엄격한 Map·Set의 값 모델·타입·동등성·해시·강제 평가를 공통 VM·GC·Host 수명주기에 구현합니다. 기존 Mapping 검증이 이를 대체하지 않습니다. Duration metadata와 List/Listing의 `map`·`join`은 필요한 M3 의존성으로 함께 추적합니다.
 3. annotation과 남은 클래스 초기화·modifier·재귀 타입·reflection 규칙을 확장합니다. 실제 source의 초기화 중 Host 중단·재진입, 미게시 local 선언의 Java 내부 오류와 순환 계층의 비종료 관찰은 원래 실패·미실행 상태를 보존하며 별도로 검증합니다.
 4. 모듈 클래스 상속·선언 출처·ModuleOutput override를 M2 의미론에 연결하고 실제 모듈 로딩·URI/source cache identity·Host는 M4 경로와 통합합니다. primitive missing-method 진단도 실제 멤버 목록을 사용하도록 보완합니다.
 
-다음 기능도 한 evaluator의 상태·오류 순서·GC root·Host 재진입·terminal 해제를 함께 검증해야 합니다. 현재 선택된 1,597개 독립 식과 54개 변형 관계, 별도 클래스·별칭 순차 계약 502개 호출을 회귀 기준으로 유지하고 Java 원시 결과를 Rust 출력으로 대체하지 않습니다. 순차 계약의 성공은 전체 클래스·module API나 M2 완료, 메모리 목표 달성을 뜻하지 않습니다.
+다음 기능도 한 evaluator의 상태·오류 순서·GC root·Host 재진입·terminal 해제를 함께 검증해야 합니다. 현재 선택된 1,659개 독립 식과 56개 변형 관계, 별도 클래스·별칭 순차 계약 1,052개 호출을 회귀 기준으로 유지하고 Java 원시 결과를 Rust 출력으로 대체하지 않습니다. 순차 계약의 성공은 전체 클래스·module API나 M2 완료, 메모리 목표 달성을 뜻하지 않습니다.
 
 [원본 API 사례](external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/api/reference.pkl)는 `fixed` 이후에도 Map·`map`/`join`·`pkl:math`·renderer converter를 요구하며, [원본 basic 사례](external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/basic/reference.pkl)는 module amendment·`pkl:test`·PCF 출력에 의존합니다. 이 M3·M4 연결을 별도 작업으로 추적하며 원래 snippet/API 실행 조건을 유지합니다. Stage 13의 Reference 탐색 재비교에서는 이전 불일치 4개가 해결되어 191개 중 173개 일치·18개 불일치가 남았습니다. 남은 불일치를 삭제하거나 개발 예외로 바꾸지 않고 단계별로 재검증합니다. 이는 Stage 12에서 수정한 순차 클래스 진단 불일치 22개와 별도 집계입니다.
 

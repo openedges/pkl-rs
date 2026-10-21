@@ -1,0 +1,2816 @@
+{
+  "archives": {
+    "class-lifecycle": {
+      "bytes": 1471054,
+      "files_including_inventory": 9466,
+      "inventory_verified": true,
+      "path": "reports/m2/class-lifecycle-stage17-final-evidence.tar.gz",
+      "sha256": "afe409da39467d8e7209d225a04a6c5dbf47c0f8fd560a15bddf67f48de52a22"
+    },
+    "gates": {
+      "bytes": 938,
+      "files_including_inventory": 10,
+      "inventory_verified": true,
+      "path": "reports/m2/gates-stage17-final-evidence.tar.gz",
+      "sha256": "f4307bf3ec4ae777ae4c935774a5c07f6b6c1e3ff2eab4a10cf547f9d469c6a4"
+    },
+    "language": {
+      "bytes": 3883852,
+      "files_including_inventory": 15053,
+      "inventory_verified": true,
+      "path": "reports/m2/language-stage17-final-evidence.tar.gz",
+      "sha256": "0b9f25ccec620ff0bc1cb216e053aabc863858265c0229d01b8012f41a6a05b6"
+    },
+    "platforms": {
+      "bytes": 3367449,
+      "files_including_inventory": 106,
+      "inventory_verified": true,
+      "path": "reports/m2/platforms-stage17-final-evidence.tar.gz",
+      "sha256": "6ead24db1a84e03970d7c5fe47b5664c8ae4fd1b949f4484bedc036014710f10"
+    },
+    "regressions": {
+      "bytes": 21456570,
+      "files_including_inventory": 8679,
+      "inventory_verified": true,
+      "path": "reports/m2/regressions-stage17-final-evidence.tar.gz",
+      "sha256": "f0709e8fd8d44d2b73903e238c0f0c665c62fc84b62fc4ada348b578caf75e22"
+    },
+    "source": {
+      "bytes": 4103478,
+      "files_including_inventory": 2019,
+      "inventory_verified": true,
+      "path": "reports/m2/source-stage17-final-evidence.tar.gz",
+      "sha256": "a012d2be480a070f5c67c4743702fe4529c8f7cf9617e2e2fff00cc8a115fc4d"
+    },
+    "validation": {
+      "bytes": 16967,
+      "files_including_inventory": 16,
+      "inventory_verified": true,
+      "path": "reports/m2/validation-stage17-final-evidence.tar.gz",
+      "sha256": "92069c17bc7451a4e092808b7f557b4ba5e0ae50078e85e6b4cc63e1b8c14a62"
+    }
+  },
+  "captured_binaries_executed_by_packaging": false,
+  "class_lifecycle": {
+    "added_call_comparisons": 550,
+    "added_sequences": 31,
+    "call_comparisons": 1052,
+    "compatibility_complete": false,
+    "evidence": {
+      "bytes": 1471054,
+      "files_including_inventory": 9466,
+      "inventory_verified": true,
+      "path": "reports/m2/class-lifecycle-stage17-final-evidence.tar.gz",
+      "sha256": "afe409da39467d8e7209d225a04a6c5dbf47c0f8fd560a15bddf67f48de52a22"
+    },
+    "original_call_comparisons": 502,
+    "original_definitions_order_and_raw_bytes_preserved": true,
+    "original_sequences": 36,
+    "passing_calls": 1052,
+    "sequence_executions": 134,
+    "unexecuted_groups": [
+      {
+        "group": "P09",
+        "reason": "Java-only module-cache probe stage12-java-module-identity-01 observes same URI/source identity retained, changed source at same URI ignored (marker remains1), distinct URI/evaluator identity separated. Rust multi-source module-cache parity is unimplemented; same-module identity is compared."
+      },
+      {
+        "group": "P10",
+        "reason": "Java observable sequence comparisons do not expose heap counts; Rust architectural GC coverage is separate."
+      },
+      {
+        "group": "P11",
+        "reason": "Real Java class-initialization read observed via @Deprecated { ...(read(\"life:class\")) } in stage12-java-host-path-01; Rust annotation frontend unsupported, so actual Host-in-class cross-language reentry remains unexecuted. Internal scheduler tests are separate."
+      },
+      {
+        "group": "P12",
+        "reason": "Terminal context/token/heap cleanup is covered by separate Rust lifecycle tests, not Java raw-byte equivalence."
+      },
+      {
+        "group": "P05",
+        "reason": "Indirect cyclic hierarchy property traversal new A {}.missing timed out after successful class identity calls in stage12-java-observations-03; traversal is observed oracle-timeout, not a compatibility pass."
+      }
+    ],
+    "unique_sequences": 67
+  },
+  "exploration": {
+    "archive": {
+      "bytes": 40915589,
+      "path": "reports/m2/exploration-stage17-evidence.tar.gz",
+      "sha256": "0bac7fcf0f4860d7463913671e35270e08355888c31d0df15979fae8a8defdd9"
+    },
+    "archive_inventory_verified_by_sealer": true,
+    "archive_partition_verification": {
+      "disjoint_paths": true,
+      "exact_path_hash_byte_conservation": true,
+      "index_sha256": "f5bf4144418ba6a2b3fa6aa2e0e02586620ffc0da49f568a6f23953e79c6e911",
+      "offline_requirement": "Acquire main and every indexed support archive. Their original payload paths are disjoint and can be extracted together before raw report audit.",
+      "original_payload_bytes": 779711183,
+      "original_payload_files": 58394,
+      "status": "pass",
+      "support_archives": [
+        {
+          "bytes": 38356107,
+          "files_count": 22942,
+          "inventory_verified": true,
+          "partition_key": "reports/m2/exploration-stage17-history-01-evidence.tar.gz",
+          "path": "reports/m2/exploration-stage17-history-01-evidence.tar.gz",
+          "scope": "Complete superseded and exploratory supporting histories; paths and raw identities are conserved by the partition index.",
+          "sha256": "792963ccfdb64df3d7683340a91f53f6333144ca4e3d160bf1fed3f17f915113",
+          "uncompressed_payload_bytes": 172985250
+        },
+        {
+          "bytes": 38961690,
+          "files_count": 22408,
+          "inventory_verified": true,
+          "partition_key": "reports/m2/exploration-stage17-history-02-evidence.tar.gz",
+          "path": "reports/m2/exploration-stage17-history-02-evidence.tar.gz",
+          "scope": "Complete superseded and exploratory supporting histories; paths and raw identities are conserved by the partition index.",
+          "sha256": "6915d3724c2a96ab272039c3b334eec4f872d647ae3c7206e436f4a3b1fa9285",
+          "uncompressed_payload_bytes": 171245491
+        },
+        {
+          "bytes": 32294731,
+          "files_count": 164,
+          "inventory_verified": true,
+          "partition_key": "reports/m2/exploration-stage17-history-03-evidence.tar.gz",
+          "path": "reports/m2/exploration-stage17-history-03-evidence.tar.gz",
+          "scope": "Complete superseded and exploratory supporting histories; paths and raw identities are conserved by the partition index.",
+          "sha256": "e42ec9e4655531eb82207a66c5ae728ab99dc934e04ad6156ca9bdf542811229",
+          "uncompressed_payload_bytes": 136711625
+        },
+        {
+          "bytes": 35794996,
+          "files_count": 3517,
+          "inventory_verified": true,
+          "partition_key": "reports/m2/exploration-stage17-history-04-evidence.tar.gz",
+          "path": "reports/m2/exploration-stage17-history-04-evidence.tar.gz",
+          "scope": "Complete superseded and exploratory supporting histories; paths and raw identities are conserved by the partition index.",
+          "sha256": "5e6a4ea6172ff5ba1a68660b2a82ddd25f0b03c1d72bd399e50c553767edb7dd",
+          "uncompressed_payload_bytes": 151211498
+        }
+      ]
+    },
+    "original_failed_sequences_and_all_acquisition_iterations_retained": true,
+    "summary": {
+      "class_lifecycle": {
+        "candidate_build_sha256": "aa2a675c418b7c656b4c34743aaf70539154a5fd8706b78af7049557d634e519",
+        "comparisons": 1052,
+        "original502_calls_preserved_raw_captures": 3012,
+        "path": "target/m2/class-lifecycle-stage17-final-02",
+        "repetitions": 2,
+        "separate_recorded_build_binding": {
+          "all_native_sources_equal_exact_commit": true,
+          "artifact_bytes_each": 1751504,
+          "differing_byte_count": 48,
+          "differing_raw_regions": [
+            {
+              "first_offset": 1944,
+              "last_offset": 1959
+            },
+            {
+              "first_offset": 1737904,
+              "last_offset": 1737935
+            }
+          ],
+          "exploratory_recorded_probe_sha256": "afc29be0fbcb20ffecdde5a61d47551dfc60d3d4db6b933cfd24c7f64ae2972e",
+          "implementation_revision": "43db2bc4664ae91521204021deac8b7ce1641f3b",
+          "native_candidate_sha256": "aa2a675c418b7c656b4c34743aaf70539154a5fd8706b78af7049557d634e519",
+          "native_recorded_build_source_count": 232,
+          "observation": "The otool load-command dump differs at LC_UUID. Complete artifacts remain distinct and retain separate recorded-build provenance; no bytes are normalized for any comparison.",
+          "same_artifact": false,
+          "sources": [
+            {
+              "path": "references.lock",
+              "sha256": "278f48fd7697459281aa78a706c9ca57222f36a8c0785d838a6449fbaf26d30b"
+            },
+            {
+              "path": "oracle.lock.json",
+              "sha256": "7b77395ff5b64f7a220db74975e4c3858a36b19c5c0f5bca92681e3b1bc6504b"
+            },
+            {
+              "path": "tools/m2_class_lifecycle.py",
+              "sha256": "8d146f4a1eab3c40dc86cb8523cb56ffe6e2fae5075091bbe11dcfbb3a3f2381"
+            },
+            {
+              "path": "tools/java/M2ClassLifecycleProbe.java",
+              "sha256": "2d6f7b62bd62dce7d94c14c0291f7f7b12ce744b35ae7254884196d061da8b1e"
+            },
+            {
+              "path": "tools/java/M2ClassLifecycleHostProbe.java",
+              "sha256": "44c7860998ab5afcca59d6bb404cd2d730bb8a6f179d613d075fc236ae094c52"
+            },
+            {
+              "path": "tools/java/M2ClassIdentityProbe.java",
+              "sha256": "6cd6dc891a9eb9641d210cfadfd20460be5eb2dde363efcb9f946c4ce8d08fe5"
+            },
+            {
+              "path": "tools/benchmark.py",
+              "sha256": "a3822a1702abf7a6a385b1d8173d45e3ba941b5fb7e80cb66a0b86adf1681604"
+            },
+            {
+              "path": "tools/oracle.py",
+              "sha256": "0433e4cec011d8daadf0f779d643712019bc6334cce205f02c75799c232f533e"
+            },
+            {
+              "path": "tools/tests/test_m2_class_lifecycle.py",
+              "sha256": "825674ce3a2fab722f808f7e72b1e166b0cf27310c11340b90f52a06c3a632ca"
+            },
+            {
+              "path": "compatibility/m2-class-lifecycle/inherited-metadata.expressions",
+              "sha256": "09cec60bdb74ee785db1be8e870cdb61adab050a945b29d34772b6d61d84f6fa"
+            },
+            {
+              "path": "compatibility/m2-class-lifecycle/inherited-metadata.pkl",
+              "sha256": "b40bc0bd709fefc5f5926681834ed55ea3e31253306100c095890ab3ded57267"
+            },
+            {
+              "path": "compatibility/m2-class-lifecycle/lazy-body.expressions",
+              "sha256": "06c2adfc9be2e66bd4d85a8f30dbb1151be8c42f0af8e8f767ac2b6e6ff2bae7"
+            },
+            {
+              "path": "compatibility/m2-class-lifecycle/lazy-body.pkl",
+              "sha256": "1fdd7b86d9f3eb135dc52e8dafcf42e79ed3defb03af245b184021aceb7eb4d7"
+            },
+            {
+              "path": "compatibility/m2-class-lifecycle/manifest.json",
+              "sha256": "96f178e5bd6ebd4f484bcb7e61c0ed7551e470bc549da249fed8a4b2712d3852"
+            },
+            {
+              "path": "compatibility/m2-class-lifecycle/method-prefix.expressions",
+              "sha256": "eff4fe410cf8f645635b24322f74a3d9011a78590d8e172b97fbce9e14516531"
+            },
+            {
+              "path": "compatibility/m2-class-lifecycle/method-prefix.pkl",
+              "sha256": "61058150fd1348d0114b0e1976fdfe8b9f349d2b8628e3b897902941bb234e1c"
+            },
+            {
+              "path": "compatibility/m2-class-lifecycle/method-return.expressions",
+              "sha256": "f9e409ff75cf6a67c8341818f833ceeea43b6961866728ef9ff4dd9e6a78820f"
+            },
+            {
+              "path": "compatibility/m2-class-lifecycle/method-return.pkl",
+              "sha256": "05c6fa8fcbd2ea77b90b28f1acd5800dac44f199874fa48d5f931e08c4bbf4b6"
+            },
+            {
+              "path": "compatibility/m2-class-lifecycle/mutual-type.expressions",
+              "sha256": "8fbb83fab8e5276cbde3558b9b8b581fe7018b3cc492dd3768e28dd390495d68"
+            },
+            {
+              "path": "compatibility/m2-class-lifecycle/mutual-type.pkl",
+              "sha256": "247c047e2afc68e4be6c0aa10d57165d9d797aa4ff05a80efe806cfbf31c5cf1"
+            },
+            {
+              "path": "compatibility/m2-class-lifecycle/partial-reference.expressions",
+              "sha256": "dac6d53b008d519ce4d52e8f3dec840b790df25d4f217abbfa0be0a775a03134"
+            },
+            {
+              "path": "compatibility/m2-class-lifecycle/partial-reference.pkl",
+              "sha256": "b377350610bb82e8707b459e749df4ce64e6440fc0f36bd4bbd548c4117e9727"
+            },
+            {
+              "path": "compatibility/m2-class-lifecycle/position-first.expressions",
+              "sha256": "8d1c47fd8828ec4753d9548dc961ba21905c0803c22c1dfc16d9cbee4a38ccb5"
+            },
+            {
+              "path": "compatibility/m2-class-lifecycle/position-first.pkl",
+              "sha256": "031d329b97cc12671e6cdbfb77927f5d88aee9de2af9fc8a50145669a9095e9a"
+            },
+            {
+              "path": "compatibility/m2-class-lifecycle/position-last.expressions",
+              "sha256": "8d1c47fd8828ec4753d9548dc961ba21905c0803c22c1dfc16d9cbee4a38ccb5"
+            },
+            {
+              "path": "compatibility/m2-class-lifecycle/position-last.pkl",
+              "sha256": "b7c8fe5b2d8a9b92b26dfd4bd625a144240c6732d95cf927e9d9950c43c6aaa7"
+            },
+            {
+              "path": "compatibility/m2-class-lifecycle/position-middle.expressions",
+              "sha256": "8d1c47fd8828ec4753d9548dc961ba21905c0803c22c1dfc16d9cbee4a38ccb5"
+            },
+            {
+              "path": "compatibility/m2-class-lifecycle/position-middle.pkl",
+              "sha256": "1a2510e220a775ffac0c7c36dc63f9241cfc90de66c42536eddf1567ba8082a2"
+            },
+            {
+              "path": "compatibility/m2-class-lifecycle/prefix.expressions",
+              "sha256": "7af4f28a4824bdb9c630d520e574794e1bfdb8e3758585bd9749b9dfbba6b100"
+            },
+            {
+              "path": "compatibility/m2-class-lifecycle/prefix.pkl",
+              "sha256": "1a2510e220a775ffac0c7c36dc63f9241cfc90de66c42536eddf1567ba8082a2"
+            },
+            {
+              "path": "compatibility/m2-class-lifecycle/property-type.expressions",
+              "sha256": "5288adc605698aa5c6cbcc49508977ca64dffc5a3e487697a545ad96edc307ea"
+            },
+            {
+              "path": "compatibility/m2-class-lifecycle/property-type.pkl",
+              "sha256": "c7864f1400a51021a156b7f730c0876eb4a0bc090e1ae63520699b060679b574"
+            },
+            {
+              "path": "compatibility/m2-class-lifecycle/recursive-type.expressions",
+              "sha256": "cc52dfb62a65bfad3c3e0850ab306dfca42e4692a488c8855041e5c07fd1b38e"
+            },
+            {
+              "path": "compatibility/m2-class-lifecycle/recursive-type.pkl",
+              "sha256": "0baa2a56f5c6da64b559baef3b039187b4ff7e2688d9cc06ce0d0be44da37ccb"
+            },
+            {
+              "path": "compatibility/m2-class-lifecycle/super-closed.expressions",
+              "sha256": "c19adba3bd26be26920b8f6b31af423c8a1a1f049d48d64e687c9ae84b9e0ffb"
+            },
+            {
+              "path": "compatibility/m2-class-lifecycle/super-closed.pkl",
+              "sha256": "f4706adec3f04e5639f874c677afd7055328f6924f24ea886bdc7556787d8a43"
+            },
+            {
+              "path": "compatibility/m2-class-lifecycle/super-missing.expressions",
+              "sha256": "c19adba3bd26be26920b8f6b31af423c8a1a1f049d48d64e687c9ae84b9e0ffb"
+            },
+            {
+              "path": "compatibility/m2-class-lifecycle/super-missing.pkl",
+              "sha256": "2d79d751c29bf5557c30a5e4c68300255e94103ff0fe64727ccf9d17cd8fbf5b"
+            },
+            {
+              "path": "compatibility/m2-class-lifecycle/super-mutual.expressions",
+              "sha256": "7c4a2bc4800b51b7e295276300142c35ca33f3f55d56c469b206aa9e0a92e7b9"
+            },
+            {
+              "path": "compatibility/m2-class-lifecycle/super-mutual.pkl",
+              "sha256": "7d070113e231f599d3cfe8a0a530c2526be61bb48f6a2471fa43226d557206f4"
+            },
+            {
+              "path": "compatibility/m2-class-lifecycle/super-self.expressions",
+              "sha256": "c19adba3bd26be26920b8f6b31af423c8a1a1f049d48d64e687c9ae84b9e0ffb"
+            },
+            {
+              "path": "compatibility/m2-class-lifecycle/super-self.pkl",
+              "sha256": "f1cddee65597cd16bf739888c558ad5cc4dcf9fb6a4e4f685aebd257006c7a4b"
+            },
+            {
+              "path": "compatibility/m2-class-lifecycle/type-before-modifier.expressions",
+              "sha256": "183f5a08db7fe21a08575438f935ee7bd985d6965c1b46974f23a5d441882aaa"
+            },
+            {
+              "path": "compatibility/m2-class-lifecycle/type-before-modifier.pkl",
+              "sha256": "8d30d158b4a1eea397366c7fb8661c9204764dbaafa33a2a9a526e3279805cce"
+            },
+            {
+              "path": "compatibility/m2-class-lifecycle/types-stage13-alias-cycle-typed.expressions",
+              "sha256": "36468d23643f3298c7760852d1a287e3c2f529654a8154851fc0ba64796b4954"
+            },
+            {
+              "path": "compatibility/m2-class-lifecycle/types-stage13-alias-cycle-typed.pkl",
+              "sha256": "396675a74e059f23e6c53633efaee1a0d43c72fdc0739e2922c79842390bed97"
+            },
+            {
+              "path": "compatibility/m2-class-lifecycle/types-stage13-alias-cycle.expressions",
+              "sha256": "01b04c4dabc347fd5a6168eab02ce133e7ec5cbad1d762a4b1fc5f76039bf14a"
+            },
+            {
+              "path": "compatibility/m2-class-lifecycle/types-stage13-alias-cycle.pkl",
+              "sha256": "bd7b744a09bbb30e8574baff39a2126446ed3e70d64d17c1d20149143bf008f4"
+            },
+            {
+              "path": "compatibility/m2-class-lifecycle/types-stage13-alias-deferred-combined.expressions",
+              "sha256": "c25ed5aae34f639b3aea2149dc04bba5acd228a0271dc4c67b1b4bc995630efa"
+            },
+            {
+              "path": "compatibility/m2-class-lifecycle/types-stage13-alias-deferred-combined.pkl",
+              "sha256": "6366c6a41f2bf646526c467e3473549d85f88dafe192184d4a334820d82b403f"
+            },
+            {
+              "path": "compatibility/m2-class-lifecycle/types-stage13-alias-generic.expressions",
+              "sha256": "a281e71298b7288c47b41022739aa6c9a85bb13148d3479206c7ee7215c7d60b"
+            },
+            {
+              "path": "compatibility/m2-class-lifecycle/types-stage13-alias-generic.pkl",
+              "sha256": "3b9b75a5e74661d75094af7eb18dbd375944cec3726115cc964ebb853ce4056a"
+            },
+            {
+              "path": "compatibility/m2-class-lifecycle/types-stage13-alias-missing-typed.expressions",
+              "sha256": "36468d23643f3298c7760852d1a287e3c2f529654a8154851fc0ba64796b4954"
+            },
+            {
+              "path": "compatibility/m2-class-lifecycle/types-stage13-alias-missing-typed.pkl",
+              "sha256": "a3056d58f5aa8b09b12af336b052d75aadb38fb2e44b7ad8fcfd1732e13eb20b"
+            },
+            {
+              "path": "compatibility/m2-class-lifecycle/types-stage13-alias-missing.expressions",
+              "sha256": "01b04c4dabc347fd5a6168eab02ce133e7ec5cbad1d762a4b1fc5f76039bf14a"
+            },
+            {
+              "path": "compatibility/m2-class-lifecycle/types-stage13-alias-missing.pkl",
+              "sha256": "adfb26a5450497d8e369b6477b02cc9af974cf24964b791b90f8a90d07485998"
+            },
+            {
+              "path": "compatibility/m2-class-lifecycle/types-stage13-alias-mutual.expressions",
+              "sha256": "d7dce9085edc6c8a9580a74ce7c065d1c5bb6f168ef50594383b1d71a3ffce12"
+            },
+            {
+              "path": "compatibility/m2-class-lifecycle/types-stage13-alias-mutual.pkl",
+              "sha256": "168d72b4f4491df9ed41f4a143811e281278e9e24b2656d6dc5350fe9a653a99"
+            },
+            {
+              "path": "compatibility/m2-class-lifecycle/types-stage13-alias-values.expressions",
+              "sha256": "a7f7ebc8e353380825b3e15e53859353fa8933ff06e76560a4e102bdf33217b6"
+            },
+            {
+              "path": "compatibility/m2-class-lifecycle/types-stage13-alias-values.pkl",
+              "sha256": "73b65d4eb2be8330f280b26bf76ff93ca672aeb787c5f78e21d94c68f8635eb6"
+            },
+            {
+              "path": "compatibility/m2-class-lifecycle/types-stage13-function-metadata.expressions",
+              "sha256": "b7263d2d433e696c4e00770257fb5ca172e75ebafaff48cd40c87971dff2af56"
+            },
+            {
+              "path": "compatibility/m2-class-lifecycle/types-stage13-function-metadata.pkl",
+              "sha256": "f24e6afbee290a88f8fb6a65ef848dfd377647a529863177113d9bd7d903f3d6"
+            },
+            {
+              "path": "compatibility/m2-class-lifecycle/types-stage14-nested-arguments.expressions",
+              "sha256": "1326c71fa9647f7d0b5114f72b23bc81758de078cfef304b08c46626e2974c11"
+            },
+            {
+              "path": "compatibility/m2-class-lifecycle/types-stage14-nested-arguments.pkl",
+              "sha256": "0fbff82850496ff16e63169562a85602f7ff131eed72330c08a25f7f883ebdfc"
+            },
+            {
+              "path": "compatibility/m2-class-lifecycle/types-stage14-ordering-alias-first.expressions",
+              "sha256": "8beeafd6e29e618a9985258734eb1bc90a477d16681676010b80200d331289d6"
+            },
+            {
+              "path": "compatibility/m2-class-lifecycle/types-stage14-ordering-alias-first.pkl",
+              "sha256": "573a4e7432561d5f5fe4cc7a79f1c1bac6e15c0302b271cf38552c9a0310e0b8"
+            },
+            {
+              "path": "compatibility/m2-class-lifecycle/types-stage14-ordering-missing-first.expressions",
+              "sha256": "8beeafd6e29e618a9985258734eb1bc90a477d16681676010b80200d331289d6"
+            },
+            {
+              "path": "compatibility/m2-class-lifecycle/types-stage14-ordering-missing-first.pkl",
+              "sha256": "63f4e208e677db731e0d576a275ca8857f71c4b432bb7cf98e711821f79063ee"
+            },
+            {
+              "path": "compatibility/m2-class-lifecycle/types-stage14-shadowing.expressions",
+              "sha256": "e47e8801bfef84cc1afc0480a42d3311cf43c1f1b927dd47608ca00322e19e6d"
+            },
+            {
+              "path": "compatibility/m2-class-lifecycle/types-stage14-shadowing.pkl",
+              "sha256": "af5269061198da41c9eb4c071d5e3bb101887e859e2def432adfb83c9afb624f"
+            },
+            {
+              "path": "compatibility/m2-class-lifecycle/types-stage14-unfinished-arguments.expressions",
+              "sha256": "299c913e2569998818ad5f7999fcf3a15e06290aab9a9e026b880efc8f0d954b"
+            },
+            {
+              "path": "compatibility/m2-class-lifecycle/types-stage14-unfinished-arguments.pkl",
+              "sha256": "721f3d656413d9c436cc55deb4b2dbd565133299a0e3ba5407781067e78bab01"
+            },
+            {
+              "path": "compatibility/m2-class-lifecycle/types-stage15-class-erased-after-alias-failure.expressions",
+              "sha256": "88f617435095a9137af39f284ad9b3f6c5141457f7ec7c4c89f2cba3a66056aa"
+            },
+            {
+              "path": "compatibility/m2-class-lifecycle/types-stage15-class-erased-after-alias-failure.pkl",
+              "sha256": "39b562049f2058991067d9f898c35c51e3aaad979187d09c89be58b278cdfcd0"
+            },
+            {
+              "path": "compatibility/m2-class-lifecycle/types-stage15-recursive-constraint-retry.expressions",
+              "sha256": "36c21320e08929894411c832c6f3dae1f65a0671487f39bf397d4b5cc897d3d7"
+            },
+            {
+              "path": "compatibility/m2-class-lifecycle/types-stage15-recursive-constraint-retry.pkl",
+              "sha256": "024b7220c4c6e2ca850e0747edb98228abdfd744db3e496e8ec534d032a4cc61"
+            },
+            {
+              "path": "compatibility/m2-class-lifecycle/types-stage16-root-boundaries-retry.expressions",
+              "sha256": "4983072ed3f68b2a8469bdef326cce6b2694fa454a5e56645caac23e28aca4e8"
+            },
+            {
+              "path": "compatibility/m2-class-lifecycle/types-stage16-root-boundaries-retry.pkl",
+              "sha256": "08b3bd7e0c3bd829da81620aa397791772234e8b016d0ea8c140769f439ada83"
+            },
+            {
+              "path": "compatibility/m2-class-lifecycle/types-stage16-shared-slots-retry.expressions",
+              "sha256": "ff2c90a27a6b9a841e52ca21ff030f0300724fd61d85f8eb23130ea1f04b6309"
+            },
+            {
+              "path": "compatibility/m2-class-lifecycle/types-stage16-shared-slots-retry.pkl",
+              "sha256": "ee1bf06cfb47827d3fc34fea7db8ecbf08117458007cfdc02a85da470abd22ba"
+            },
+            {
+              "path": "compatibility/m2-class-lifecycle/types-stage17-alias-const-retry.expressions",
+              "sha256": "107d66c2f65dc4d6fb88f79d3ce02ac6168a6529c12f8e8f9f4064cb1f36325d"
+            },
+            {
+              "path": "compatibility/m2-class-lifecycle/types-stage17-alias-const-retry.pkl",
+              "sha256": "16ec207eb412136087353e265f2e96261991b85a4a5df3887465f2b2441838a5"
+            },
+            {
+              "path": "compatibility/m2-class-lifecycle/types-stage17-cached-member-current-receiver.expressions",
+              "sha256": "30075c2ba35593b25696decea4089c3d151b16e0982bf8c1ed909b12b0631422"
+            },
+            {
+              "path": "compatibility/m2-class-lifecycle/types-stage17-cached-member-current-receiver.pkl",
+              "sha256": "d132a2e3ce8506f305caacc1ba9a168f3af2c289baacb8ed0d7a82252f7ddacd"
+            },
+            {
+              "path": "compatibility/m2-class-lifecycle/types-stage17-conditional-owner-lambda-false.expressions",
+              "sha256": "ad79998a23da4d65129ad6270f35c0959d5c0d7bc0bb4bf5c294aa5430ebb7e8"
+            },
+            {
+              "path": "compatibility/m2-class-lifecycle/types-stage17-conditional-owner-lambda-false.pkl",
+              "sha256": "1a5f6a3cd995075ad3846ea8cae61da87a5049d3a3ff26005d2f0ad8fd9fd3a2"
+            },
+            {
+              "path": "compatibility/m2-class-lifecycle/types-stage17-conditional-owner-lambda-true.expressions",
+              "sha256": "ad79998a23da4d65129ad6270f35c0959d5c0d7bc0bb4bf5c294aa5430ebb7e8"
+            },
+            {
+              "path": "compatibility/m2-class-lifecycle/types-stage17-conditional-owner-lambda-true.pkl",
+              "sha256": "3c2a7c92581d92345b49d73e348e078a5d1927b465cfd9cef8b7f82ff6d16b23"
+            },
+            {
+              "path": "compatibility/m2-class-lifecycle/types-stage17-conditional-owner-object-test-false.expressions",
+              "sha256": "ad79998a23da4d65129ad6270f35c0959d5c0d7bc0bb4bf5c294aa5430ebb7e8"
+            },
+            {
+              "path": "compatibility/m2-class-lifecycle/types-stage17-conditional-owner-object-test-false.pkl",
+              "sha256": "c437123ad0f9b83a37788ad0a24e1076edb80b37c0a4ebeec2751e311c3af0ad"
+            },
+            {
+              "path": "compatibility/m2-class-lifecycle/types-stage17-conditional-owner-object-test-true.expressions",
+              "sha256": "ad79998a23da4d65129ad6270f35c0959d5c0d7bc0bb4bf5c294aa5430ebb7e8"
+            },
+            {
+              "path": "compatibility/m2-class-lifecycle/types-stage17-conditional-owner-object-test-true.pkl",
+              "sha256": "17aea9f1d58470612085d867f0f5290c79765fbe8a9fee79b6e235a08c4c5e9a"
+            },
+            {
+              "path": "compatibility/m2-class-lifecycle/types-stage17-const-local-let-lambda.expressions",
+              "sha256": "3940c9545d70562603783ed587ad54fbe44243f832104791cfb188238164bb12"
+            },
+            {
+              "path": "compatibility/m2-class-lifecycle/types-stage17-const-local-let-lambda.pkl",
+              "sha256": "0683eef0ce8458dbbc7790f6f0e745feed0ad8c41a8f94dbf5107c79619c360f"
+            },
+            {
+              "path": "compatibility/m2-class-lifecycle/types-stage17-const-local-recursive-cache.expressions",
+              "sha256": "81b934063b25b4116173830f6fb7a98fa1cd1b399fddca3401d5eb20023d3258"
+            },
+            {
+              "path": "compatibility/m2-class-lifecycle/types-stage17-const-local-recursive-cache.pkl",
+              "sha256": "24e1552d707a46fa1d25dba3989564dc7171ff8d38dd829eb21379d5c2b7314f"
+            },
+            {
+              "path": "compatibility/m2-class-lifecycle/types-stage17-const-local-use-sites.expressions",
+              "sha256": "a40ca4c56fd7c91c6c93e7b56fb93b0e2d827a51437e92e0c675c7644b1f6f75"
+            },
+            {
+              "path": "compatibility/m2-class-lifecycle/types-stage17-const-local-use-sites.pkl",
+              "sha256": "b72e38c2095fdd1a28e6c152627e14302180caf374764569f67d0f3c64be5fb8"
+            },
+            {
+              "path": "compatibility/m2-class-lifecycle/types-stage17-const-member-use-sites.expressions",
+              "sha256": "ad79998a23da4d65129ad6270f35c0959d5c0d7bc0bb4bf5c294aa5430ebb7e8"
+            },
+            {
+              "path": "compatibility/m2-class-lifecycle/types-stage17-const-member-use-sites.pkl",
+              "sha256": "428a07e767aa2dc6b057e2f229cf449ce8de1718137382ba9cd3b0b47028beb3"
+            },
+            {
+              "path": "compatibility/m2-class-lifecycle/types-stage17-const-method-use-sites.expressions",
+              "sha256": "e0dd3cb6250a3a0c44c20493452c5dd0ae3c7a8207c5dabc694dc5ddde6aae2c"
+            },
+            {
+              "path": "compatibility/m2-class-lifecycle/types-stage17-const-method-use-sites.pkl",
+              "sha256": "7fadbe5c7349585a1e6663505a1e523d8bcb4483f92b5a03dbc6ae2faf69caf8"
+            },
+            {
+              "path": "compatibility/m2-class-lifecycle/types-stage17-inherited-annotation-owner.expressions",
+              "sha256": "3718840c632bb25f22cb4c3c013bf73524227a04051d29e5ff63bdb9aa043fb5"
+            },
+            {
+              "path": "compatibility/m2-class-lifecycle/types-stage17-inherited-annotation-owner.pkl",
+              "sha256": "40eea254c6dfcef0d925c4f74fc18c54c3a2d1dc199a8228269329aede3bf860"
+            },
+            {
+              "path": "compatibility/m2-class-lifecycle/types-stage17-inline-use-site-order.expressions",
+              "sha256": "f3e8999cbe931689d10630769a85fb08686f566ec28229e2bb959530dbbbc5c5"
+            },
+            {
+              "path": "compatibility/m2-class-lifecycle/types-stage17-inline-use-site-order.pkl",
+              "sha256": "aab6eacc120e9cc996283eeb532369d9b557a1911eac3ac871f07575a2518f41"
+            },
+            {
+              "path": "compatibility/m2-class-lifecycle/types-stage17-instance-class-inline.expressions",
+              "sha256": "259021e248d37fa5f7f5ebb4762c06778b64f60277fd8dc6cfd38b231c6aeac1"
+            },
+            {
+              "path": "compatibility/m2-class-lifecycle/types-stage17-instance-class-inline.pkl",
+              "sha256": "701ad36fe05d87f77f5940964158441b4ccdb79585e4a53f70027adfcf656257"
+            },
+            {
+              "path": "compatibility/m2-class-lifecycle/types-stage17-instance-class-let.expressions",
+              "sha256": "259021e248d37fa5f7f5ebb4762c06778b64f60277fd8dc6cfd38b231c6aeac1"
+            },
+            {
+              "path": "compatibility/m2-class-lifecycle/types-stage17-instance-class-let.pkl",
+              "sha256": "ea4f8df6185a71ab20868911d43d70b43e100d8941c8033973225977c4196f02"
+            },
+            {
+              "path": "compatibility/m2-class-lifecycle/types-stage17-instance-inline.expressions",
+              "sha256": "259021e248d37fa5f7f5ebb4762c06778b64f60277fd8dc6cfd38b231c6aeac1"
+            },
+            {
+              "path": "compatibility/m2-class-lifecycle/types-stage17-instance-inline.pkl",
+              "sha256": "4f0d0bbc4ce6bc46a58300117c232c4b16985b8437fe71022927476f1de75d0b"
+            },
+            {
+              "path": "compatibility/m2-class-lifecycle/types-stage17-instance-let.expressions",
+              "sha256": "259021e248d37fa5f7f5ebb4762c06778b64f60277fd8dc6cfd38b231c6aeac1"
+            },
+            {
+              "path": "compatibility/m2-class-lifecycle/types-stage17-instance-let.pkl",
+              "sha256": "2b5767ff6f8c67ff538717ecc2039a053ea720ba52fd7f8c5151c27bfa17d199"
+            },
+            {
+              "path": "compatibility/m2-class-lifecycle/types-stage17-lambda-use-site-order.expressions",
+              "sha256": "642d016c064b30a836dd44714e876e70f76653f2504693e778c722c721457717"
+            },
+            {
+              "path": "compatibility/m2-class-lifecycle/types-stage17-lambda-use-site-order.pkl",
+              "sha256": "8d0aa9b499d01ba463f8624edd356a6479131f298406195cd3f92d5b03ffc2b5"
+            },
+            {
+              "path": "compatibility/m2-class-lifecycle/types-stage17-let-root-use-site-order.expressions",
+              "sha256": "4fa267712339b5d2d69bf4d85c36c6703f37ca7da48119843e00afe414091024"
+            },
+            {
+              "path": "compatibility/m2-class-lifecycle/types-stage17-let-root-use-site-order.pkl",
+              "sha256": "a48340a18cf0d3b3a88797290f51a43e979c9a3815660d4d3b1396d37050ed5a"
+            },
+            {
+              "path": "compatibility/m2-class-lifecycle/types-stage17-list-inline.expressions",
+              "sha256": "1fd45dd41d5c8118fab859a602ceb88131d9a8c15b4f0f3024de90dd6d71ab31"
+            },
+            {
+              "path": "compatibility/m2-class-lifecycle/types-stage17-list-inline.pkl",
+              "sha256": "c5387cb618009e0215810e4082eb018992b638dc29a7ae3010aafdc976b296f1"
+            },
+            {
+              "path": "compatibility/m2-class-lifecycle/types-stage17-list-let.expressions",
+              "sha256": "1fd45dd41d5c8118fab859a602ceb88131d9a8c15b4f0f3024de90dd6d71ab31"
+            },
+            {
+              "path": "compatibility/m2-class-lifecycle/types-stage17-list-let.pkl",
+              "sha256": "94c3e37f0bd601092a8f1dd71fcc5d0804c8554c3e9b88eead95214d2e3fe965"
+            },
+            {
+              "path": "compatibility/m2-class-lifecycle/types-stage17-listing-inline.expressions",
+              "sha256": "1fd45dd41d5c8118fab859a602ceb88131d9a8c15b4f0f3024de90dd6d71ab31"
+            },
+            {
+              "path": "compatibility/m2-class-lifecycle/types-stage17-listing-inline.pkl",
+              "sha256": "cd47ac5569d80355c771435e8fb9f930ff6f14fda3bc02f48ee82ed072cdea02"
+            },
+            {
+              "path": "compatibility/m2-class-lifecycle/types-stage17-listing-let.expressions",
+              "sha256": "1fd45dd41d5c8118fab859a602ceb88131d9a8c15b4f0f3024de90dd6d71ab31"
+            },
+            {
+              "path": "compatibility/m2-class-lifecycle/types-stage17-listing-let.pkl",
+              "sha256": "f5d39fd82d7015b44884b71df27498e46c88373d5fea5367b819c8961ea78790"
+            },
+            {
+              "path": "compatibility/m2-class-lifecycle/types-stage17-mapping-inline.expressions",
+              "sha256": "1fd45dd41d5c8118fab859a602ceb88131d9a8c15b4f0f3024de90dd6d71ab31"
+            },
+            {
+              "path": "compatibility/m2-class-lifecycle/types-stage17-mapping-inline.pkl",
+              "sha256": "f010f5917f3322649cc84ed06a905485facd0ebe53e667b03875db36953aa776"
+            },
+            {
+              "path": "compatibility/m2-class-lifecycle/types-stage17-mapping-let.expressions",
+              "sha256": "1fd45dd41d5c8118fab859a602ceb88131d9a8c15b4f0f3024de90dd6d71ab31"
+            },
+            {
+              "path": "compatibility/m2-class-lifecycle/types-stage17-mapping-let.pkl",
+              "sha256": "b37da30b3d9dfc63d74af48baf3a6597bd8157e53b0e40a6ae218ea9e6f38b94"
+            },
+            {
+              "path": "compatibility/m2-class-lifecycle/types-stage17-property-method-persistent-errors.expressions",
+              "sha256": "db5bc55b12eaf78d7eb816ae37004e70334ab1473bd5920a3ef08a28f2efc253"
+            },
+            {
+              "path": "compatibility/m2-class-lifecycle/types-stage17-property-method-persistent-errors.pkl",
+              "sha256": "986e07a2d845edfd4f829757c8768dc75cc400f55317add72b70d3114bfba30d"
+            },
+            {
+              "path": "compatibility/m2-class-lifecycle/types-stage17-recursive-depth-0.expressions",
+              "sha256": "6a29ebd8627dd56de75b0e2cd4321f1ae1cf527cd8454c8e2ea78ecfd16a28b3"
+            },
+            {
+              "path": "compatibility/m2-class-lifecycle/types-stage17-recursive-depth-0.pkl",
+              "sha256": "bf500565066cfc59b0cc6eedd518afcfe96f9593bea8805ed339deb51304fd9f"
+            },
+            {
+              "path": "compatibility/m2-class-lifecycle/types-stage17-recursive-depth-1.expressions",
+              "sha256": "fd513a32b3894602efb4fbb0d43d8dd23ef296ab2321b14bbafac3188a1faa6a"
+            },
+            {
+              "path": "compatibility/m2-class-lifecycle/types-stage17-recursive-depth-1.pkl",
+              "sha256": "912a5ad9835fa4d20cda5ca0452d8192473686c28210a4faf3affd02fd014399"
+            },
+            {
+              "path": "compatibility/m2-class-lifecycle/types-stage17-recursive-depth-3.expressions",
+              "sha256": "36dc52287a5d4f2a44cc8cbecf7cc3111065fdb7b5544b7753b19175d4d8ef65"
+            },
+            {
+              "path": "compatibility/m2-class-lifecycle/types-stage17-recursive-depth-3.pkl",
+              "sha256": "64701525f5d098ec4465b9bffced72e787ebc8e1f31a979c0c49307d3b461cf1"
+            },
+            {
+              "path": "compatibility/m2-class-lifecycle/types-stage17-repeated-body-failure-inline.expressions",
+              "sha256": "8e0a67eaf9e309b03e2f9112e0126f250c84e550dee9bd101a14cfea1e63414a"
+            },
+            {
+              "path": "compatibility/m2-class-lifecycle/types-stage17-repeated-body-failure-inline.pkl",
+              "sha256": "e6cf30508c8cf05c71c06499eca5d8b571a9fccf147b746239f6afac8b4b2b82"
+            },
+            {
+              "path": "compatibility/m2-class-lifecycle/types-stage17-repeated-body-failure-let.expressions",
+              "sha256": "6dbdd186666df71fff5ca0b10e4e8909085631f82f4fe14c04aa8c55640a7a19"
+            },
+            {
+              "path": "compatibility/m2-class-lifecycle/types-stage17-repeated-body-failure-let.pkl",
+              "sha256": "1348e5bd036aeca5185adf340ffc5f1d706902064cb01937a0dc5a7b431a0abc"
+            },
+            {
+              "path": "compatibility/m2-class-lifecycle/wrapper-retry.expressions",
+              "sha256": "7c1a55d8fdb68a2dc0f21a5f2f85488be8b0272f0555a2dcc8f69ba35f3717db"
+            },
+            {
+              "path": "compatibility/m2-class-lifecycle/wrapper-retry.pkl",
+              "sha256": "265ccb4d69dc66fb27b3763c20c1a97ae60b28859c98a59dbab382a055674229"
+            },
+            {
+              "path": "Cargo.toml",
+              "sha256": "f1ef2c20d58d3dad9d755a5c26939784216a54aeec4ab95da5c9a375b269e9de"
+            },
+            {
+              "path": "Cargo.lock",
+              "sha256": "17114bdbbe6146393c569475c128bdfc618863bbaab8f4bada41860bf8eab96b"
+            },
+            {
+              "path": "rust-toolchain.toml",
+              "sha256": "04ab0c8ee214f246c7c53bdfba7ba80a93dad65da5b8455edf17c5ec226d5b20"
+            },
+            {
+              "path": "crates/pkl-napi/Cargo.toml",
+              "sha256": "0e102eb1b79bda75f7044789eef7ef48b8bce399a5210126611a54d85d5fa452"
+            },
+            {
+              "path": "crates/pkl-napi/build.rs",
+              "sha256": "fcbd1ff3f627a7553fa1704dc6f558998daff8bc256015c37aace62cc49ce584"
+            },
+            {
+              "path": "crates/pkl-napi/src/lib.rs",
+              "sha256": "93b174fea8b7a4776646b10df680b7a503449d4be901aa7b8cda4f37a0c74eef"
+            },
+            {
+              "path": "crates/pkl-runtime/Cargo.toml",
+              "sha256": "e6a605602038dac45d16ac8f45e749e91dc9f57f2ad3b32d4b6b4e86dd476f55"
+            },
+            {
+              "path": "crates/pkl-runtime/examples/class_lifecycle_probe.rs",
+              "sha256": "b58af04693ef82396bdca1a68fcedcf1dd63b1d9b7540f858507f813b39c2d01"
+            },
+            {
+              "path": "crates/pkl-runtime/examples/language_probe.rs",
+              "sha256": "5b7a8059e7870a968880dac2d6e59d422fd1c9d1fb09c8856ff1b86d2054180e"
+            },
+            {
+              "path": "crates/pkl-runtime/examples/lifecycle_probe.rs",
+              "sha256": "a7ccc467696910f9f593300d3924f57bcb994cc16aaab44d3bfb8b30b31fc167"
+            },
+            {
+              "path": "crates/pkl-runtime/examples/runtime_bench.rs",
+              "sha256": "de57e472c544b066cfad12693392e6cd71dea318386f999c8481a3f703b0d159"
+            },
+            {
+              "path": "crates/pkl-runtime/examples/runtime_probe.rs",
+              "sha256": "5b7a8059e7870a968880dac2d6e59d422fd1c9d1fb09c8856ff1b86d2054180e"
+            },
+            {
+              "path": "crates/pkl-runtime/examples/semantics_bench.rs",
+              "sha256": "4fbd6f5642674657332a90a9e12080de8e9ad15918ac8e09dc92fe4826b1504c"
+            },
+            {
+              "path": "crates/pkl-runtime/examples/semantics_probe.rs",
+              "sha256": "98347f237e0817cad13616c1cc75aae30ceca10c46d295692edd46a0261563c6"
+            },
+            {
+              "path": "crates/pkl-runtime/examples/support/scalar_probe.rs",
+              "sha256": "fd32f91f837f74a74960f55b14ec11aa7acc2d025505cd5eb951edd3210eab49"
+            },
+            {
+              "path": "crates/pkl-runtime/src/diagnostic/frames.rs",
+              "sha256": "d45d073db083cec0f65dd0cf051681a0e1f901866e12678233b5efd3e340fee5"
+            },
+            {
+              "path": "crates/pkl-runtime/src/diagnostic/highlight.rs",
+              "sha256": "14258cab69e2a396443e4614c2db87923269913e9eec53001b4ed2fb1a891b03"
+            },
+            {
+              "path": "crates/pkl-runtime/src/diagnostic.rs",
+              "sha256": "2d54ed07ac0df290863e5f739558c35c40d5513d511c75cb95ebf0b0b87bef00"
+            },
+            {
+              "path": "crates/pkl-runtime/src/diagnostic_names.rs",
+              "sha256": "0030c11cb4430fde64bba3fb177112d6dd213d0232dbc1d376a4c11e747740e0"
+            },
+            {
+              "path": "crates/pkl-runtime/src/diagnostic_values.rs",
+              "sha256": "b75d639176445395fab9b0c935ad1362fa5f78245124ca013b52a82d82aeaa95"
+            },
+            {
+              "path": "crates/pkl-runtime/src/economic_map.rs",
+              "sha256": "4e207539f11a75b2686d4de314fab5cb06ce60c22bbac9e3edbcb1c8d9912fef"
+            },
+            {
+              "path": "crates/pkl-runtime/src/evaluation.rs",
+              "sha256": "75110508206f041b94d1901b9fb47b428166555b96719b0c1ec4ef243f4b1bb0"
+            },
+            {
+              "path": "crates/pkl-runtime/src/heap.rs",
+              "sha256": "cc34077dded1fc675df7a93e5db92ed93095b0e85731125e9916a3378157caf7"
+            },
+            {
+              "path": "crates/pkl-runtime/src/host.rs",
+              "sha256": "f6e348790b4b51224bc5fafd33b6f9fd062a9b407777e80a39b6073a406091fb"
+            },
+            {
+              "path": "crates/pkl-runtime/src/lib.rs",
+              "sha256": "5a191bd8eeedba709e5775143f8ffe32c7e7fbd80db902435ae5b9dcda2dc28f"
+            },
+            {
+              "path": "crates/pkl-runtime/src/numeric.rs",
+              "sha256": "6d318ab81dee53600bdd3ef5a78daa87419346456ead54912e47312eacf7ec07"
+            },
+            {
+              "path": "crates/pkl-runtime/src/parser/unicode_identifier.rs",
+              "sha256": "dd0cd3f9583b5236819eaeda45bd64a2f1c4a7d09aae3510167b2aa9520de66b"
+            },
+            {
+              "path": "crates/pkl-runtime/src/parser.rs",
+              "sha256": "123165a5a75d1d48309c4fbca63e5e5e7d4748dacac50dfc386f6dbccc34de10"
+            },
+            {
+              "path": "crates/pkl-runtime/src/power_assertions.rs",
+              "sha256": "d4441655cda753f5ef8a7c478b452df2cec06a3a57e845c7600e60e264a0c543"
+            },
+            {
+              "path": "crates/pkl-runtime/src/probe.rs",
+              "sha256": "d098627594f6f6ed1f4c8ca658888835b414077c194594990c58b38483228c91"
+            },
+            {
+              "path": "crates/pkl-runtime/src/regex.rs",
+              "sha256": "7d105b0df534f51dfd8a8649681b4b309d14b7a4f212c2b93efb2acc668aaa89"
+            },
+            {
+              "path": "crates/pkl-runtime/src/resolver/constant_keys.rs",
+              "sha256": "9ef92337befdba899e5ea53e27c05c616d2edf9d2b287085f266e3416fe84e6f"
+            },
+            {
+              "path": "crates/pkl-runtime/src/resolver.rs",
+              "sha256": "4da174bf094814854e8fcf7757ee2aa8d2ee9c73a1dda811fec1f85b56687b4e"
+            },
+            {
+              "path": "crates/pkl-runtime/src/source.rs",
+              "sha256": "82ee206749dce7faef63d110414747d424595f2999cc61168374cd85d66bd2d7"
+            },
+            {
+              "path": "crates/pkl-runtime/src/stdlib/ref.pkl",
+              "sha256": "aefca000fc62f11a4bdefe81ac2afc517c2d07214b35e3d10dd8ce3d40f86a12"
+            },
+            {
+              "path": "crates/pkl-runtime/src/stdlib_sources.rs",
+              "sha256": "bb232fff8795f3b56392cb3c9df68a4b4f2fbc25d0117dd83c79ca002c51582d"
+            },
+            {
+              "path": "crates/pkl-runtime/src/syntax.rs",
+              "sha256": "c70a3c6087f07c7ccc4d4e3a9cab19f7d337d27da4c834391354d2941a234f8c"
+            },
+            {
+              "path": "crates/pkl-runtime/src/value.rs",
+              "sha256": "42b3355ac5ced85408de01c9eadd083209e69b1acc2e392815e6bab122fe70e1"
+            },
+            {
+              "path": "crates/pkl-runtime/src/vm/collections.rs",
+              "sha256": "84ace83dcc7201bbbd4733c177695ca29145cef0564dd8568af8532d844fedcf"
+            },
+            {
+              "path": "crates/pkl-runtime/src/vm/equality.rs",
+              "sha256": "19daa56aedf145ad157da37f3aed1c64b5d2977f72a288f326746bdd718b0b2d"
+            },
+            {
+              "path": "crates/pkl-runtime/src/vm/reference.rs",
+              "sha256": "f89b23d31f04962af2e150362c8398f3d3440be01d375e7e7d0d4be7f6c1d694"
+            },
+            {
+              "path": "crates/pkl-runtime/src/vm/typecheck.rs",
+              "sha256": "67955a47c008c7e34e0f14099fd4ab9621b74e52373f40c7e4bf924fecc55725"
+            },
+            {
+              "path": "crates/pkl-runtime/src/vm.rs",
+              "sha256": "008008a4f1a0fb6cff140c881e3b0217c3d52fd065af0f18af0e5b079c8db51f"
+            },
+            {
+              "path": "crates/pkl-runtime/tests/frontend.rs",
+              "sha256": "bf68ada05948ddf579ea49adf869271f55ee1e723797d097efb513ae5fc980a1"
+            },
+            {
+              "path": "crates/pkl-runtime/tests/host.rs",
+              "sha256": "91c33d7c6064e5d202395702adc127cdaa7a0a52da18dffa47d79b663e509a38"
+            },
+            {
+              "path": "crates/pkl-runtime/tests/m2_alias_const_runtime.rs",
+              "sha256": "5abea2b17d1b8e7b6c014350310eabfd0e59cac2cd6195d4ddd470f66dcfee8e"
+            },
+            {
+              "path": "crates/pkl-runtime/tests/m2_class_lifecycle.rs",
+              "sha256": "70a33695c27d81db3f2d3ac6378f12df17e5b3bce4fac2fe3234757ecc578256"
+            },
+            {
+              "path": "crates/pkl-runtime/tests/m2_class_publication_runtime.rs",
+              "sha256": "17917877e6830e4b409b4fd3914dd932d3e88cc6b63813b55f0cc322819077fa"
+            },
+            {
+              "path": "crates/pkl-runtime/tests/m2_classes_frontend.rs",
+              "sha256": "15d651c9c337a483b834d926f77f6318f82653fa6efd6b81d90048b9c7d71f62"
+            },
+            {
+              "path": "crates/pkl-runtime/tests/m2_collection_types_frontend.rs",
+              "sha256": "a9685c507d32e852e74f3c90f595a34e76819abaf27e58e892753db9400be337"
+            },
+            {
+              "path": "crates/pkl-runtime/tests/m2_collection_types_lifecycle.rs",
+              "sha256": "76b97d153873a0f2d0bdc4759ea6f5d7acaadb42e16f75998f06d3122862b91a"
+            },
+            {
+              "path": "crates/pkl-runtime/tests/m2_collections_bindings.rs",
+              "sha256": "0ac8b19328b5954c4c331f4aeae33229d01be9d632771b0bd86e96f8d1228c4c"
+            },
+            {
+              "path": "crates/pkl-runtime/tests/m2_collections_frontend.rs",
+              "sha256": "4193f002dde45d61f9f488043647129c04b607a91f444a2b218651f3510d4448"
+            },
+            {
+              "path": "crates/pkl-runtime/tests/m2_collections_lifecycle.rs",
+              "sha256": "0c6e4f996550e4928274a62b4bb09abfde449971ce27e463f4088c4c55805f57"
+            },
+            {
+              "path": "crates/pkl-runtime/tests/m2_collections_runtime.rs",
+              "sha256": "086cb55e09eceef67f2fb8f70b9670bd6580e828322b840c5d7c944b984c6b28"
+            },
+            {
+              "path": "crates/pkl-runtime/tests/m2_const_scopes_runtime.rs",
+              "sha256": "570905ae7299926c049dfcb44a64b758767bfd9d2fd26f65fa4304935244c9f1"
+            },
+            {
+              "path": "crates/pkl-runtime/tests/m2_constraint_slots_lifecycle.rs",
+              "sha256": "fd3c4122a926c2618a38b4bef87d34c2c7e22ca6c9652dd70afed580dbbcc648"
+            },
+            {
+              "path": "crates/pkl-runtime/tests/m2_constraint_slots_runtime.rs",
+              "sha256": "86b9472a90c9a1845be707f5285079d55b54f2804056ff4a787a948da4a8121a"
+            },
+            {
+              "path": "crates/pkl-runtime/tests/m2_constraints_frontend.rs",
+              "sha256": "f9ef916226a91cd0ada80f5851c74cbb5bdf5119054a7fb37bbff6ef26b19571"
+            },
+            {
+              "path": "crates/pkl-runtime/tests/m2_constraints_lifecycle.rs",
+              "sha256": "164aaa477207adb133a3d437f0737832e44896e5e02971afd714253d2da88216"
+            },
+            {
+              "path": "crates/pkl-runtime/tests/m2_diagnostics.rs",
+              "sha256": "d17ac3af6c90fd680538f28f5179b2f559c67fe32d8b7324696639057e560916"
+            },
+            {
+              "path": "crates/pkl-runtime/tests/m2_equality_frontend.rs",
+              "sha256": "d851b6358f264f147b515e3ac657871400a91afdb5a94c635526d1845660c495"
+            },
+            {
+              "path": "crates/pkl-runtime/tests/m2_equality_lifecycle.rs",
+              "sha256": "600f4a5a63c4678c6f1002822ed0903f114d929d1748b806f5b0b7a11867cdf4"
+            },
+            {
+              "path": "crates/pkl-runtime/tests/m2_fixed_frontend.rs",
+              "sha256": "8483c389079aa370c1dcda71ef92c4efd12790b9fd56f1140d42d4aeb3d058a7"
+            },
+            {
+              "path": "crates/pkl-runtime/tests/m2_fixed_lifecycle.rs",
+              "sha256": "c2d22c4f4a90e0ede030cb69940e51e963666fdf3131690cf51e1ecac94c2776"
+            },
+            {
+              "path": "crates/pkl-runtime/tests/m2_fixed_runtime.rs",
+              "sha256": "bbc3962f3ca0a83e6f9cf361d527cb65a59a5408ef288c910a0f5ad5e8175590"
+            },
+            {
+              "path": "crates/pkl-runtime/tests/m2_frontend.rs",
+              "sha256": "d8045c7a62ebc6678c126abfa1d47c98f4fec1a511df1501cdf8d70d70bd0d38"
+            },
+            {
+              "path": "crates/pkl-runtime/tests/m2_map_lifecycle.rs",
+              "sha256": "044845105c30ce7b2766fab4123e1f2d6c378a25a4a332be9dc23e6c332131b8"
+            },
+            {
+              "path": "crates/pkl-runtime/tests/m2_predicates_frontend.rs",
+              "sha256": "481fa5af474e8da59dc8ed2bdd0ba97e404595ddfff115aaa01b61d2f9ffed73"
+            },
+            {
+              "path": "crates/pkl-runtime/tests/m2_predicates_lifecycle.rs",
+              "sha256": "ebac17692b344b0ba198dfd6a2d8958d68997ba753c941539d4ef52a2ec34316"
+            },
+            {
+              "path": "crates/pkl-runtime/tests/m2_predicates_runtime.rs",
+              "sha256": "278a929251e3f099debca62f86351d0abcbeeb9cf85b17f7df5ab3680fc97ef7"
+            },
+            {
+              "path": "crates/pkl-runtime/tests/m2_predicates_scope_lifecycle.rs",
+              "sha256": "83e651529dc2419ef72c473f5aba2316de7908250e5f2090109fe8b5f5ff5db6"
+            },
+            {
+              "path": "crates/pkl-runtime/tests/m2_recursive_constraints_runtime.rs",
+              "sha256": "393e4b6d689cb93d88b4b020fa930a91143cf11e95f44b641eb17944ae62cbeb"
+            },
+            {
+              "path": "crates/pkl-runtime/tests/m2_recursive_types_lifecycle.rs",
+              "sha256": "c78349fe1df1819a858121226cbc0b3d55f2fa6653d4c3d2af9dd2c61a3f4573"
+            },
+            {
+              "path": "crates/pkl-runtime/tests/m2_references_frontend.rs",
+              "sha256": "8d3dd0b2d808a779a8172679d19778a7ac43c012d0de5dadf14f10de9efd1272"
+            },
+            {
+              "path": "crates/pkl-runtime/tests/m2_references_lifecycle.rs",
+              "sha256": "f41eca41141f7249c58d30271f24ad38a58465bd64e7cd68313114f8c6853ce6"
+            },
+            {
+              "path": "crates/pkl-runtime/tests/m2_runtime.rs",
+              "sha256": "c290ebef4c5b7c2613a68e3bcfdf55ce1c9e8e0a62947cd27b298457059ef98e"
+            },
+            {
+              "path": "crates/pkl-runtime/tests/m2_scalar_sequence.rs",
+              "sha256": "05d847e48970f0b9904d6c283c74270cb5d2e01d2765fe60d505304bab5835a5"
+            },
+            {
+              "path": "crates/pkl-runtime/tests/m2_type_metadata_lifecycle.rs",
+              "sha256": "2e5934126235064166922d74ba3459218ac1df8e707fc54c63d4f2153dfc6e08"
+            },
+            {
+              "path": "crates/pkl-runtime/tests/m2_type_metadata_runtime.rs",
+              "sha256": "69284709cc88154f4e2167d19024a78fa2c43aa319e70ac61f3411f5a00777cc"
+            },
+            {
+              "path": "crates/pkl-runtime/tests/m2_type_node_lifecycle.rs",
+              "sha256": "72c8ba3bc56b3ab58f3f0042746ee3f0e23e95097ad3a091c5626059c512525e"
+            },
+            {
+              "path": "crates/pkl-runtime/tests/m2_type_node_runtime.rs",
+              "sha256": "1f7c3d8f72f34e82eb0eabac17aa1e804d9261911947c13fbcd8c2583bdb0c2a"
+            },
+            {
+              "path": "crates/pkl-runtime/tests/m2_type_resolution_lifecycle.rs",
+              "sha256": "bc4a29bb794c48d9bf0254c331f9e49c03014eb627b3223f23abfcc7adaf390f"
+            },
+            {
+              "path": "crates/pkl-runtime/tests/m2_type_resolution_runtime.rs",
+              "sha256": "9b763bd06df94a20de4b71d038c6402be2d4fe0c23693cf037253d387706004c"
+            },
+            {
+              "path": "crates/pkl-runtime/tests/runtime.rs",
+              "sha256": "07b59a53ff1a270f23e347a7d70b5d661322ca83082464798aaeca75d769507d"
+            },
+            {
+              "path": "crates/pkl-runtime/tests/semantics.rs",
+              "sha256": "205d2297ec864b819ab66dc769ed0fcd8f4022e9e7e8e47a054db9e81a603e4f"
+            },
+            {
+              "path": "crates/pkl-wasm/Cargo.toml",
+              "sha256": "920188996694727331a4d6153d8645d91e6f8ebfa5dbb666dd0031104e2ae82f"
+            },
+            {
+              "path": "crates/pkl-wasm/src/lib.rs",
+              "sha256": "7e80285ab8780ebed6f91ac92af9925b9bd59a37bc099bd82039a8673572f5ac"
+            }
+          ]
+        },
+        "sequence_executions": 134,
+        "stage17_new_comparisons": 550,
+        "unexecuted_groups": [
+          {
+            "group": "P09",
+            "reason": "Java-only module-cache probe stage12-java-module-identity-01 observes same URI/source identity retained, changed source at same URI ignored (marker remains1), distinct URI/evaluator identity separated. Rust multi-source module-cache parity is unimplemented; same-module identity is compared."
+          },
+          {
+            "group": "P10",
+            "reason": "Java observable sequence comparisons do not expose heap counts; Rust architectural GC coverage is separate."
+          },
+          {
+            "group": "P11",
+            "reason": "Real Java class-initialization read observed via @Deprecated { ...(read(\"life:class\")) } in stage12-java-host-path-01; Rust annotation frontend unsupported, so actual Host-in-class cross-language reentry remains unexecuted. Internal scheduler tests are separate."
+          },
+          {
+            "group": "P12",
+            "reason": "Terminal context/token/heap cleanup is covered by separate Rust lifecycle tests, not Java raw-byte equivalence."
+          },
+          {
+            "group": "P05",
+            "reason": "Indirect cyclic hierarchy property traversal new A {}.missing timed out after successful class identity calls in stage12-java-observations-03; traversal is observed oracle-timeout, not a compatibility pass."
+          }
+        ],
+        "unique_sequences": 67
+      },
+      "contract_preservation": {
+        "baseline_revision": "a415e0437353f358211157ea87e7068c8aeeaef8",
+        "new_expected_errors": 31,
+        "new_selected": 62,
+        "new_success": 31,
+        "original_persistent_definitions_preserved": 36,
+        "original_platform_payload_files_preserved": 8,
+        "original_selected_and_persistent_input_files_preserved": 1669,
+        "original_selected_definitions_preserved": 1597,
+        "persistent_calls": 1052,
+        "persistent_executions": 134,
+        "persistent_unique": 67,
+        "relations": 56,
+        "selected_total": 1659
+      },
+      "exploration_partition": {
+        "index_path": "EXPLORATION-PARTITION.json",
+        "index_sha256": "f5bf4144418ba6a2b3fa6aa2e0e02586620ffc0da49f568a6f23953e79c6e911",
+        "original_payload_bytes": 779711183,
+        "original_payload_files": 58394
+      },
+      "failed_history_notes": {
+        "conditional-owner-history": "The first recorded build and all first-final suites are superseded after branch-dependent closure/object ownership split one authored cache. Original owner review observed 6 matches/1 mismatch; final replay resolves all seven. Four balanced lambda/object property-initializer histories were promoted after complete raw verification. Invalid Dynamic property annotation probes and two local typed property frame mismatches remain retained and unpromoted.",
+        "lifecycle-history": "Preliminary unbound lifecycle captures, one draft compile failure, count/retention experiments and all logs remain in the archive; they do not replace the final source-bound native/Host tests.",
+        "stage17-exploration-prepare-final": "Initial preparation incorrectly required the separately recorded native binary to equal the central exploratory artifact. It stopped before any bundle was created. Complete artifacts differ at 48 bytes in two regions (including LC_UUID); all 232 native sources equal the exact implementation commit. Final summary keeps the two recorded builds distinct.",
+        "stage17-let-followup-java-01": "Direct const and initializer/lambda negative controls match, while the local read in a const let body still differs; all four complete captures remain unselected.",
+        "stage17-original-observations-candidate-01": "Initial candidate keeps the previous ten independent mismatches. Final replay resolves eight const-function local reads and grouped-callee diagnostics; original recursive generic remains.",
+        "stage17-prior1597-debug-01": "First exploratory prior replay retains three synthetic Reference annotation failures, later fixed. Nested caller metadata was copied before rebuilding and is stale; the main frozen artifact SHA is correct. Separate provenance note records this; it is not final recorded-build evidence.",
+        "stage17-prior1597-debug-02": "Second exploratory prior replay retains the three synthetic Reference failures with consistent unbound artifact identity. Final debug03 replay preserves the previous 1595 passes and two existing failures.",
+        "stage17-root-java-01": "Original new {} context hypotheses and original expected outcomes remain unchanged; promoted selection records the actually observed Java outcome at fresh fixture URIs. Two missing-parent diagnostic cases remain mismatches.",
+        "stage17-root-java-02": "Corrected new Dynamic controls acquired independently; direct outer local missing-member diagnostic remains a mismatch.",
+        "stage17-root-java-04": "Four valid complete matches promoted at fresh fixture URIs. Top-level direct outer first-error and lambda-value frame diagnostics remain mismatches.",
+        "stage17-sequences-java-01": "Two initial class-local alias candidates are invalid in Java; their complete Rust diagnostics differ across 22 calls. All initial raw bytes remain; corrected legal module-alias owner controls were acquired independently. Three generic controls remain exploratory, with two let-root sharing mismatches.",
+        "stage17-wrappers-candidate-01": "Two lazy inline collection wrapper argument nodes were incorrectly separated by member. Final wrapper replay resolves them after owner correction."
+      },
+      "final_discovery_replay": {
+        "count": 94,
+        "known_mismatches": [
+          {
+            "baseline": "stage16-java-01",
+            "id": "original-recursive-generic-shadow"
+          }
+        ],
+        "path": "target/m2/stage17-observations-release-final-02",
+        "status_counts": {
+          "mismatch": 1,
+          "pass": 93
+        }
+      },
+      "historical_gap": {
+        "path": "target/m2/stage16-const-retry-gap.json",
+        "sha256": "428e79964b9c2dcff50310102571e13359115867b15124b381e2de4400333e6e",
+        "status": "Historical original known-unimplemented record remains unchanged; its exact non-generic controls resolve in Stage17 and generic ownership remains open."
+      },
+      "implementation_binding": {
+        "all_tracked_sources_equal_exact_commit": true,
+        "implementation_revision": "43db2bc4664ae91521204021deac8b7ce1641f3b",
+        "recorded_build": "target/m2/stage17-release-probe-build-final-02",
+        "source_stability": true,
+        "sources": [
+          {
+            "exact_commit_equal": true,
+            "path": "Cargo.lock",
+            "sha256": "17114bdbbe6146393c569475c128bdfc618863bbaab8f4bada41860bf8eab96b"
+          },
+          {
+            "exact_commit_equal": true,
+            "path": "Cargo.toml",
+            "sha256": "f1ef2c20d58d3dad9d755a5c26939784216a54aeec4ab95da5c9a375b269e9de"
+          },
+          {
+            "exact_commit_equal": true,
+            "path": "crates/pkl-napi/Cargo.toml",
+            "sha256": "0e102eb1b79bda75f7044789eef7ef48b8bce399a5210126611a54d85d5fa452"
+          },
+          {
+            "exact_commit_equal": true,
+            "path": "crates/pkl-napi/build.rs",
+            "sha256": "fcbd1ff3f627a7553fa1704dc6f558998daff8bc256015c37aace62cc49ce584"
+          },
+          {
+            "exact_commit_equal": true,
+            "path": "crates/pkl-napi/src/lib.rs",
+            "sha256": "93b174fea8b7a4776646b10df680b7a503449d4be901aa7b8cda4f37a0c74eef"
+          },
+          {
+            "exact_commit_equal": true,
+            "path": "crates/pkl-runtime/Cargo.toml",
+            "sha256": "e6a605602038dac45d16ac8f45e749e91dc9f57f2ad3b32d4b6b4e86dd476f55"
+          },
+          {
+            "exact_commit_equal": true,
+            "path": "crates/pkl-runtime/examples/class_lifecycle_probe.rs",
+            "sha256": "b58af04693ef82396bdca1a68fcedcf1dd63b1d9b7540f858507f813b39c2d01"
+          },
+          {
+            "exact_commit_equal": true,
+            "path": "crates/pkl-runtime/examples/language_probe.rs",
+            "sha256": "5b7a8059e7870a968880dac2d6e59d422fd1c9d1fb09c8856ff1b86d2054180e"
+          },
+          {
+            "exact_commit_equal": true,
+            "path": "crates/pkl-runtime/examples/lifecycle_probe.rs",
+            "sha256": "a7ccc467696910f9f593300d3924f57bcb994cc16aaab44d3bfb8b30b31fc167"
+          },
+          {
+            "exact_commit_equal": true,
+            "path": "crates/pkl-runtime/examples/runtime_bench.rs",
+            "sha256": "de57e472c544b066cfad12693392e6cd71dea318386f999c8481a3f703b0d159"
+          },
+          {
+            "exact_commit_equal": true,
+            "path": "crates/pkl-runtime/examples/runtime_probe.rs",
+            "sha256": "5b7a8059e7870a968880dac2d6e59d422fd1c9d1fb09c8856ff1b86d2054180e"
+          },
+          {
+            "exact_commit_equal": true,
+            "path": "crates/pkl-runtime/examples/semantics_bench.rs",
+            "sha256": "4fbd6f5642674657332a90a9e12080de8e9ad15918ac8e09dc92fe4826b1504c"
+          },
+          {
+            "exact_commit_equal": true,
+            "path": "crates/pkl-runtime/examples/semantics_probe.rs",
+            "sha256": "98347f237e0817cad13616c1cc75aae30ceca10c46d295692edd46a0261563c6"
+          },
+          {
+            "exact_commit_equal": true,
+            "path": "crates/pkl-runtime/examples/support/scalar_probe.rs",
+            "sha256": "fd32f91f837f74a74960f55b14ec11aa7acc2d025505cd5eb951edd3210eab49"
+          },
+          {
+            "exact_commit_equal": true,
+            "path": "crates/pkl-runtime/src/diagnostic.rs",
+            "sha256": "2d54ed07ac0df290863e5f739558c35c40d5513d511c75cb95ebf0b0b87bef00"
+          },
+          {
+            "exact_commit_equal": true,
+            "path": "crates/pkl-runtime/src/diagnostic/frames.rs",
+            "sha256": "d45d073db083cec0f65dd0cf051681a0e1f901866e12678233b5efd3e340fee5"
+          },
+          {
+            "exact_commit_equal": true,
+            "path": "crates/pkl-runtime/src/diagnostic/highlight.rs",
+            "sha256": "14258cab69e2a396443e4614c2db87923269913e9eec53001b4ed2fb1a891b03"
+          },
+          {
+            "exact_commit_equal": true,
+            "path": "crates/pkl-runtime/src/diagnostic_names.rs",
+            "sha256": "0030c11cb4430fde64bba3fb177112d6dd213d0232dbc1d376a4c11e747740e0"
+          },
+          {
+            "exact_commit_equal": true,
+            "path": "crates/pkl-runtime/src/diagnostic_values.rs",
+            "sha256": "b75d639176445395fab9b0c935ad1362fa5f78245124ca013b52a82d82aeaa95"
+          },
+          {
+            "exact_commit_equal": true,
+            "path": "crates/pkl-runtime/src/economic_map.rs",
+            "sha256": "4e207539f11a75b2686d4de314fab5cb06ce60c22bbac9e3edbcb1c8d9912fef"
+          },
+          {
+            "exact_commit_equal": true,
+            "path": "crates/pkl-runtime/src/evaluation.rs",
+            "sha256": "75110508206f041b94d1901b9fb47b428166555b96719b0c1ec4ef243f4b1bb0"
+          },
+          {
+            "exact_commit_equal": true,
+            "path": "crates/pkl-runtime/src/heap.rs",
+            "sha256": "cc34077dded1fc675df7a93e5db92ed93095b0e85731125e9916a3378157caf7"
+          },
+          {
+            "exact_commit_equal": true,
+            "path": "crates/pkl-runtime/src/host.rs",
+            "sha256": "f6e348790b4b51224bc5fafd33b6f9fd062a9b407777e80a39b6073a406091fb"
+          },
+          {
+            "exact_commit_equal": true,
+            "path": "crates/pkl-runtime/src/lib.rs",
+            "sha256": "5a191bd8eeedba709e5775143f8ffe32c7e7fbd80db902435ae5b9dcda2dc28f"
+          },
+          {
+            "exact_commit_equal": true,
+            "path": "crates/pkl-runtime/src/numeric.rs",
+            "sha256": "6d318ab81dee53600bdd3ef5a78daa87419346456ead54912e47312eacf7ec07"
+          },
+          {
+            "exact_commit_equal": true,
+            "path": "crates/pkl-runtime/src/parser.rs",
+            "sha256": "123165a5a75d1d48309c4fbca63e5e5e7d4748dacac50dfc386f6dbccc34de10"
+          },
+          {
+            "exact_commit_equal": true,
+            "path": "crates/pkl-runtime/src/parser/unicode_identifier.rs",
+            "sha256": "dd0cd3f9583b5236819eaeda45bd64a2f1c4a7d09aae3510167b2aa9520de66b"
+          },
+          {
+            "exact_commit_equal": true,
+            "path": "crates/pkl-runtime/src/power_assertions.rs",
+            "sha256": "d4441655cda753f5ef8a7c478b452df2cec06a3a57e845c7600e60e264a0c543"
+          },
+          {
+            "exact_commit_equal": true,
+            "path": "crates/pkl-runtime/src/probe.rs",
+            "sha256": "d098627594f6f6ed1f4c8ca658888835b414077c194594990c58b38483228c91"
+          },
+          {
+            "exact_commit_equal": true,
+            "path": "crates/pkl-runtime/src/regex.rs",
+            "sha256": "7d105b0df534f51dfd8a8649681b4b309d14b7a4f212c2b93efb2acc668aaa89"
+          },
+          {
+            "exact_commit_equal": true,
+            "path": "crates/pkl-runtime/src/resolver.rs",
+            "sha256": "4da174bf094814854e8fcf7757ee2aa8d2ee9c73a1dda811fec1f85b56687b4e"
+          },
+          {
+            "exact_commit_equal": true,
+            "path": "crates/pkl-runtime/src/resolver/constant_keys.rs",
+            "sha256": "9ef92337befdba899e5ea53e27c05c616d2edf9d2b287085f266e3416fe84e6f"
+          },
+          {
+            "exact_commit_equal": true,
+            "path": "crates/pkl-runtime/src/source.rs",
+            "sha256": "82ee206749dce7faef63d110414747d424595f2999cc61168374cd85d66bd2d7"
+          },
+          {
+            "exact_commit_equal": true,
+            "path": "crates/pkl-runtime/src/stdlib/ref.pkl",
+            "sha256": "aefca000fc62f11a4bdefe81ac2afc517c2d07214b35e3d10dd8ce3d40f86a12"
+          },
+          {
+            "exact_commit_equal": true,
+            "path": "crates/pkl-runtime/src/stdlib_sources.rs",
+            "sha256": "bb232fff8795f3b56392cb3c9df68a4b4f2fbc25d0117dd83c79ca002c51582d"
+          },
+          {
+            "exact_commit_equal": true,
+            "path": "crates/pkl-runtime/src/syntax.rs",
+            "sha256": "c70a3c6087f07c7ccc4d4e3a9cab19f7d337d27da4c834391354d2941a234f8c"
+          },
+          {
+            "exact_commit_equal": true,
+            "path": "crates/pkl-runtime/src/value.rs",
+            "sha256": "42b3355ac5ced85408de01c9eadd083209e69b1acc2e392815e6bab122fe70e1"
+          },
+          {
+            "exact_commit_equal": true,
+            "path": "crates/pkl-runtime/src/vm.rs",
+            "sha256": "008008a4f1a0fb6cff140c881e3b0217c3d52fd065af0f18af0e5b079c8db51f"
+          },
+          {
+            "exact_commit_equal": true,
+            "path": "crates/pkl-runtime/src/vm/collections.rs",
+            "sha256": "84ace83dcc7201bbbd4733c177695ca29145cef0564dd8568af8532d844fedcf"
+          },
+          {
+            "exact_commit_equal": true,
+            "path": "crates/pkl-runtime/src/vm/equality.rs",
+            "sha256": "19daa56aedf145ad157da37f3aed1c64b5d2977f72a288f326746bdd718b0b2d"
+          },
+          {
+            "exact_commit_equal": true,
+            "path": "crates/pkl-runtime/src/vm/reference.rs",
+            "sha256": "f89b23d31f04962af2e150362c8398f3d3440be01d375e7e7d0d4be7f6c1d694"
+          },
+          {
+            "exact_commit_equal": true,
+            "path": "crates/pkl-runtime/src/vm/typecheck.rs",
+            "sha256": "67955a47c008c7e34e0f14099fd4ab9621b74e52373f40c7e4bf924fecc55725"
+          },
+          {
+            "exact_commit_equal": true,
+            "path": "crates/pkl-runtime/tests/frontend.rs",
+            "sha256": "bf68ada05948ddf579ea49adf869271f55ee1e723797d097efb513ae5fc980a1"
+          },
+          {
+            "exact_commit_equal": true,
+            "path": "crates/pkl-runtime/tests/host.rs",
+            "sha256": "91c33d7c6064e5d202395702adc127cdaa7a0a52da18dffa47d79b663e509a38"
+          },
+          {
+            "exact_commit_equal": true,
+            "path": "crates/pkl-runtime/tests/m2_alias_const_runtime.rs",
+            "sha256": "5abea2b17d1b8e7b6c014350310eabfd0e59cac2cd6195d4ddd470f66dcfee8e"
+          },
+          {
+            "exact_commit_equal": true,
+            "path": "crates/pkl-runtime/tests/m2_class_lifecycle.rs",
+            "sha256": "70a33695c27d81db3f2d3ac6378f12df17e5b3bce4fac2fe3234757ecc578256"
+          },
+          {
+            "exact_commit_equal": true,
+            "path": "crates/pkl-runtime/tests/m2_class_publication_runtime.rs",
+            "sha256": "17917877e6830e4b409b4fd3914dd932d3e88cc6b63813b55f0cc322819077fa"
+          },
+          {
+            "exact_commit_equal": true,
+            "path": "crates/pkl-runtime/tests/m2_classes_frontend.rs",
+            "sha256": "15d651c9c337a483b834d926f77f6318f82653fa6efd6b81d90048b9c7d71f62"
+          },
+          {
+            "exact_commit_equal": true,
+            "path": "crates/pkl-runtime/tests/m2_collection_types_frontend.rs",
+            "sha256": "a9685c507d32e852e74f3c90f595a34e76819abaf27e58e892753db9400be337"
+          },
+          {
+            "exact_commit_equal": true,
+            "path": "crates/pkl-runtime/tests/m2_collection_types_lifecycle.rs",
+            "sha256": "76b97d153873a0f2d0bdc4759ea6f5d7acaadb42e16f75998f06d3122862b91a"
+          },
+          {
+            "exact_commit_equal": true,
+            "path": "crates/pkl-runtime/tests/m2_collections_bindings.rs",
+            "sha256": "0ac8b19328b5954c4c331f4aeae33229d01be9d632771b0bd86e96f8d1228c4c"
+          },
+          {
+            "exact_commit_equal": true,
+            "path": "crates/pkl-runtime/tests/m2_collections_frontend.rs",
+            "sha256": "4193f002dde45d61f9f488043647129c04b607a91f444a2b218651f3510d4448"
+          },
+          {
+            "exact_commit_equal": true,
+            "path": "crates/pkl-runtime/tests/m2_collections_lifecycle.rs",
+            "sha256": "0c6e4f996550e4928274a62b4bb09abfde449971ce27e463f4088c4c55805f57"
+          },
+          {
+            "exact_commit_equal": true,
+            "path": "crates/pkl-runtime/tests/m2_collections_runtime.rs",
+            "sha256": "086cb55e09eceef67f2fb8f70b9670bd6580e828322b840c5d7c944b984c6b28"
+          },
+          {
+            "exact_commit_equal": true,
+            "path": "crates/pkl-runtime/tests/m2_const_scopes_runtime.rs",
+            "sha256": "570905ae7299926c049dfcb44a64b758767bfd9d2fd26f65fa4304935244c9f1"
+          },
+          {
+            "exact_commit_equal": true,
+            "path": "crates/pkl-runtime/tests/m2_constraint_slots_lifecycle.rs",
+            "sha256": "fd3c4122a926c2618a38b4bef87d34c2c7e22ca6c9652dd70afed580dbbcc648"
+          },
+          {
+            "exact_commit_equal": true,
+            "path": "crates/pkl-runtime/tests/m2_constraint_slots_runtime.rs",
+            "sha256": "86b9472a90c9a1845be707f5285079d55b54f2804056ff4a787a948da4a8121a"
+          },
+          {
+            "exact_commit_equal": true,
+            "path": "crates/pkl-runtime/tests/m2_constraints_frontend.rs",
+            "sha256": "f9ef916226a91cd0ada80f5851c74cbb5bdf5119054a7fb37bbff6ef26b19571"
+          },
+          {
+            "exact_commit_equal": true,
+            "path": "crates/pkl-runtime/tests/m2_constraints_lifecycle.rs",
+            "sha256": "164aaa477207adb133a3d437f0737832e44896e5e02971afd714253d2da88216"
+          },
+          {
+            "exact_commit_equal": true,
+            "path": "crates/pkl-runtime/tests/m2_diagnostics.rs",
+            "sha256": "d17ac3af6c90fd680538f28f5179b2f559c67fe32d8b7324696639057e560916"
+          },
+          {
+            "exact_commit_equal": true,
+            "path": "crates/pkl-runtime/tests/m2_equality_frontend.rs",
+            "sha256": "d851b6358f264f147b515e3ac657871400a91afdb5a94c635526d1845660c495"
+          },
+          {
+            "exact_commit_equal": true,
+            "path": "crates/pkl-runtime/tests/m2_equality_lifecycle.rs",
+            "sha256": "600f4a5a63c4678c6f1002822ed0903f114d929d1748b806f5b0b7a11867cdf4"
+          },
+          {
+            "exact_commit_equal": true,
+            "path": "crates/pkl-runtime/tests/m2_fixed_frontend.rs",
+            "sha256": "8483c389079aa370c1dcda71ef92c4efd12790b9fd56f1140d42d4aeb3d058a7"
+          },
+          {
+            "exact_commit_equal": true,
+            "path": "crates/pkl-runtime/tests/m2_fixed_lifecycle.rs",
+            "sha256": "c2d22c4f4a90e0ede030cb69940e51e963666fdf3131690cf51e1ecac94c2776"
+          },
+          {
+            "exact_commit_equal": true,
+            "path": "crates/pkl-runtime/tests/m2_fixed_runtime.rs",
+            "sha256": "bbc3962f3ca0a83e6f9cf361d527cb65a59a5408ef288c910a0f5ad5e8175590"
+          },
+          {
+            "exact_commit_equal": true,
+            "path": "crates/pkl-runtime/tests/m2_frontend.rs",
+            "sha256": "d8045c7a62ebc6678c126abfa1d47c98f4fec1a511df1501cdf8d70d70bd0d38"
+          },
+          {
+            "exact_commit_equal": true,
+            "path": "crates/pkl-runtime/tests/m2_map_lifecycle.rs",
+            "sha256": "044845105c30ce7b2766fab4123e1f2d6c378a25a4a332be9dc23e6c332131b8"
+          },
+          {
+            "exact_commit_equal": true,
+            "path": "crates/pkl-runtime/tests/m2_predicates_frontend.rs",
+            "sha256": "481fa5af474e8da59dc8ed2bdd0ba97e404595ddfff115aaa01b61d2f9ffed73"
+          },
+          {
+            "exact_commit_equal": true,
+            "path": "crates/pkl-runtime/tests/m2_predicates_lifecycle.rs",
+            "sha256": "ebac17692b344b0ba198dfd6a2d8958d68997ba753c941539d4ef52a2ec34316"
+          },
+          {
+            "exact_commit_equal": true,
+            "path": "crates/pkl-runtime/tests/m2_predicates_runtime.rs",
+            "sha256": "278a929251e3f099debca62f86351d0abcbeeb9cf85b17f7df5ab3680fc97ef7"
+          },
+          {
+            "exact_commit_equal": true,
+            "path": "crates/pkl-runtime/tests/m2_predicates_scope_lifecycle.rs",
+            "sha256": "83e651529dc2419ef72c473f5aba2316de7908250e5f2090109fe8b5f5ff5db6"
+          },
+          {
+            "exact_commit_equal": true,
+            "path": "crates/pkl-runtime/tests/m2_recursive_constraints_runtime.rs",
+            "sha256": "393e4b6d689cb93d88b4b020fa930a91143cf11e95f44b641eb17944ae62cbeb"
+          },
+          {
+            "exact_commit_equal": true,
+            "path": "crates/pkl-runtime/tests/m2_recursive_types_lifecycle.rs",
+            "sha256": "c78349fe1df1819a858121226cbc0b3d55f2fa6653d4c3d2af9dd2c61a3f4573"
+          },
+          {
+            "exact_commit_equal": true,
+            "path": "crates/pkl-runtime/tests/m2_references_frontend.rs",
+            "sha256": "8d3dd0b2d808a779a8172679d19778a7ac43c012d0de5dadf14f10de9efd1272"
+          },
+          {
+            "exact_commit_equal": true,
+            "path": "crates/pkl-runtime/tests/m2_references_lifecycle.rs",
+            "sha256": "f41eca41141f7249c58d30271f24ad38a58465bd64e7cd68313114f8c6853ce6"
+          },
+          {
+            "exact_commit_equal": true,
+            "path": "crates/pkl-runtime/tests/m2_runtime.rs",
+            "sha256": "c290ebef4c5b7c2613a68e3bcfdf55ce1c9e8e0a62947cd27b298457059ef98e"
+          },
+          {
+            "exact_commit_equal": true,
+            "path": "crates/pkl-runtime/tests/m2_scalar_sequence.rs",
+            "sha256": "05d847e48970f0b9904d6c283c74270cb5d2e01d2765fe60d505304bab5835a5"
+          },
+          {
+            "exact_commit_equal": true,
+            "path": "crates/pkl-runtime/tests/m2_type_metadata_lifecycle.rs",
+            "sha256": "2e5934126235064166922d74ba3459218ac1df8e707fc54c63d4f2153dfc6e08"
+          },
+          {
+            "exact_commit_equal": true,
+            "path": "crates/pkl-runtime/tests/m2_type_metadata_runtime.rs",
+            "sha256": "69284709cc88154f4e2167d19024a78fa2c43aa319e70ac61f3411f5a00777cc"
+          },
+          {
+            "exact_commit_equal": true,
+            "path": "crates/pkl-runtime/tests/m2_type_node_lifecycle.rs",
+            "sha256": "72c8ba3bc56b3ab58f3f0042746ee3f0e23e95097ad3a091c5626059c512525e"
+          },
+          {
+            "exact_commit_equal": true,
+            "path": "crates/pkl-runtime/tests/m2_type_node_runtime.rs",
+            "sha256": "1f7c3d8f72f34e82eb0eabac17aa1e804d9261911947c13fbcd8c2583bdb0c2a"
+          },
+          {
+            "exact_commit_equal": true,
+            "path": "crates/pkl-runtime/tests/m2_type_resolution_lifecycle.rs",
+            "sha256": "bc4a29bb794c48d9bf0254c331f9e49c03014eb627b3223f23abfcc7adaf390f"
+          },
+          {
+            "exact_commit_equal": true,
+            "path": "crates/pkl-runtime/tests/m2_type_resolution_runtime.rs",
+            "sha256": "9b763bd06df94a20de4b71d038c6402be2d4fe0c23693cf037253d387706004c"
+          },
+          {
+            "exact_commit_equal": true,
+            "path": "crates/pkl-runtime/tests/runtime.rs",
+            "sha256": "07b59a53ff1a270f23e347a7d70b5d661322ca83082464798aaeca75d769507d"
+          },
+          {
+            "exact_commit_equal": true,
+            "path": "crates/pkl-runtime/tests/semantics.rs",
+            "sha256": "205d2297ec864b819ab66dc769ed0fcd8f4022e9e7e8e47a054db9e81a603e4f"
+          },
+          {
+            "exact_commit_equal": true,
+            "path": "crates/pkl-wasm/Cargo.toml",
+            "sha256": "920188996694727331a4d6153d8645d91e6f8ebfa5dbb666dd0031104e2ae82f"
+          },
+          {
+            "exact_commit_equal": true,
+            "path": "crates/pkl-wasm/src/lib.rs",
+            "sha256": "7e80285ab8780ebed6f91ac92af9925b9bd59a37bc099bd82039a8673572f5ac"
+          },
+          {
+            "exact_commit_equal": true,
+            "path": "oracle.lock.json",
+            "sha256": "7b77395ff5b64f7a220db74975e4c3858a36b19c5c0f5bca92681e3b1bc6504b"
+          },
+          {
+            "exact_commit_equal": true,
+            "path": "references.lock",
+            "sha256": "278f48fd7697459281aa78a706c9ca57222f36a8c0785d838a6449fbaf26d30b"
+          },
+          {
+            "exact_commit_equal": true,
+            "path": "rust-toolchain.toml",
+            "sha256": "04ab0c8ee214f246c7c53bdfba7ba80a93dad65da5b8455edf17c5ec226d5b20"
+          },
+          {
+            "exact_commit_equal": true,
+            "path": "tools/m2_language.py",
+            "sha256": "217453888d3db68f7e1d86a50e804cc330fc05f5b64f1594b58f92213a708f74"
+          },
+          {
+            "exact_commit_equal": true,
+            "path": "tools/oracle.py",
+            "sha256": "0433e4cec011d8daadf0f779d643712019bc6334cce205f02c75799c232f533e"
+          }
+        ],
+        "tracked_source_count": 92,
+        "untracked_acquisition_helpers": [
+          {
+            "path": "target/m2/stage17_build_probe.py",
+            "scope": "Untracked acquisition helper retained as exact source snapshot; excluded from Git implementation source claim.",
+            "sha256": "1cd3b159925e767a7340aae1fc18fb564941db54fb05240cf0bb5a3a1796c968"
+          }
+        ],
+        "verification_note": "An initial unchecked Git lookup stopped at the untracked acquisition helper. The final proof explicitly separates retained helper provenance from committed implementation sources."
+      },
+      "let_followup_replay": {
+        "count": 4,
+        "known_mismatches": [
+          {
+            "baseline": "stage17-let-followup-java-01",
+            "id": "const-let-body"
+          }
+        ],
+        "path": "target/m2/stage17-let-followup-release-final-02",
+        "status_counts": {
+          "mismatch": 1,
+          "pass": 3
+        }
+      },
+      "metamorphic_relations": 56,
+      "new_metamorphic_relations": 2,
+      "new_selected_count": 62,
+      "new_selected_expected_errors": 31,
+      "new_selected_success": 31,
+      "original_five_gap_replays": [
+        {
+          "id": "original-recursive-finite-rejection",
+          "input_sha256": "ab7dc145967d415da599630b9cf255874ca1f6d83975b57fa1fc5343f71f080d",
+          "input_uri": "file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage15-java-01/cases/recursive-finite-rejection/input.pkl",
+          "status": "pass"
+        },
+        {
+          "id": "original-recursive-as-in-constraint",
+          "input_sha256": "459061b056e7f86ee13f608e4bb9883e84549c82df476255e0a445cd29838692",
+          "input_uri": "file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage15-java-01/cases/recursive-as-in-constraint/input.pkl",
+          "status": "pass"
+        },
+        {
+          "id": "original-recursive-generic-shadow",
+          "input_sha256": "1d12709080afcf9680d5b2a0b2f153b1c8593b6408895151b45230526fce1637",
+          "input_uri": "file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage15-java-01/cases/recursive-generic-shadow/input.pkl",
+          "status": "mismatch"
+        },
+        {
+          "id": "original-recursive-lexical-capture",
+          "input_sha256": "a7f7cf5a535a8166e4ceb8bd91791c4ca97327f0ce50aa24438ab957873ebb64",
+          "input_uri": "file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage15-java-01/cases/recursive-lexical-capture/input.pkl",
+          "status": "pass"
+        },
+        {
+          "id": "original-recursive-this-after-is",
+          "input_sha256": "2df5fc3c7aadc7ea55ebac5831a4ec007a8f05330e00e5ca4ee5012877580858",
+          "input_uri": "file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage15-java-extra-01/cases/recursive-this-after-is/input.pkl",
+          "status": "pass"
+        }
+      ],
+      "original_selected_preserved": 1597,
+      "package_exclusions": [
+        "Cargo build directories are omitted; frozen executables, exact source snapshots, commands, and raw outputs remain.",
+        "Full language/prior regression/native persistent/platform/validation/M1 evidence have separate final archives."
+      ],
+      "persistent_exploration": {
+        "acquisitions": [
+          {
+            "baseline": "target/m2/stage16-sequences-java-02",
+            "comparisons": 36,
+            "path": "target/m2/stage17-original-sequences-release-final-02",
+            "status_counts": {
+              "pass": 36
+            }
+          },
+          {
+            "baseline": "target/m2/stage16-const-retries-java-01",
+            "comparisons": 38,
+            "path": "target/m2/stage17-original-const-release-final-02",
+            "status_counts": {
+              "pass": 38
+            }
+          },
+          {
+            "baseline": "target/m2/stage16-const-recursive-java-01",
+            "comparisons": 8,
+            "path": "target/m2/stage17-original-recursive-release-final-02",
+            "status_counts": {
+              "pass": 8
+            }
+          },
+          {
+            "baseline": "target/m2/stage17-sequences-java-01",
+            "comparisons": 133,
+            "path": "target/m2/stage17-sequences-release-final-02",
+            "status_counts": {
+              "mismatch": 24,
+              "pass": 109
+            }
+          },
+          {
+            "baseline": "target/m2/stage17-owners-java-01",
+            "comparisons": 48,
+            "path": "target/m2/stage17-owners-release-final-02",
+            "status_counts": {
+              "pass": 48
+            }
+          },
+          {
+            "baseline": "target/m2/stage17-wrappers-java-01",
+            "comparisons": 42,
+            "path": "target/m2/stage17-wrappers-release-final-02",
+            "status_counts": {
+              "pass": 42
+            }
+          },
+          {
+            "baseline": "target/m2/stage17-inherited-java-01",
+            "comparisons": 15,
+            "path": "target/m2/stage17-inherited-release-final-02",
+            "status_counts": {
+              "pass": 15
+            }
+          },
+          {
+            "baseline": "target/m2/stage17-recast-java-01",
+            "comparisons": 32,
+            "path": "target/m2/stage17-recast-release-final-02",
+            "status_counts": {
+              "pass": 32
+            }
+          },
+          {
+            "baseline": "target/m2/stage17-owner-review-java-02",
+            "comparisons": 7,
+            "path": "target/m2/stage17-owner-review-release-final-02",
+            "status_counts": {
+              "pass": 7
+            }
+          },
+          {
+            "baseline": "target/m2/stage17-owner-branch-controls-java-02",
+            "comparisons": 28,
+            "path": "target/m2/stage17-owner-branch-controls-release-final-02",
+            "status_counts": {
+              "mismatch": 2,
+              "pass": 26
+            }
+          },
+          {
+            "baseline": "target/m2/stage17-owner-object-tests-java-01",
+            "comparisons": 14,
+            "path": "target/m2/stage17-owner-object-tests-release-final-02",
+            "status_counts": {
+              "pass": 14
+            }
+          }
+        ],
+        "comparisons": 401,
+        "original_gap_comparisons": 82,
+        "original_gap_replays": [
+          {
+            "baseline": "target/m2/stage16-sequences-java-02",
+            "comparisons": 36,
+            "path": "target/m2/stage17-original-sequences-release-final-02",
+            "status_counts": {
+              "pass": 36
+            }
+          },
+          {
+            "baseline": "target/m2/stage16-const-retries-java-01",
+            "comparisons": 38,
+            "path": "target/m2/stage17-original-const-release-final-02",
+            "status_counts": {
+              "pass": 38
+            }
+          },
+          {
+            "baseline": "target/m2/stage16-const-recursive-java-01",
+            "comparisons": 8,
+            "path": "target/m2/stage17-original-recursive-release-final-02",
+            "status_counts": {
+              "pass": 8
+            }
+          }
+        ],
+        "original_gap_status_counts": {
+          "pass": 82
+        },
+        "remaining_gap": "Bounded original non-generic const-resolution retry matrix resolves with complete raw matches. Fresh generic let-root sharing remains two mismatches; invalid class-local alias syntax retains 22 complete parser-diagnostic mismatches. Two unpromoted local typed Dynamic object histories retain extra Rust diagnostic frames. They remain unselected failures with no new development exceptions.",
+        "status_counts": {
+          "mismatch": 26,
+          "pass": 375
+        }
+      },
+      "platform_payload_integrity": {
+        "all_original_scenario_names_preserved": true,
+        "all_payloads_raw_java_equal": true,
+        "new_calls_each_repetition": 275,
+        "new_groups": 5,
+        "new_sequence_fixtures": 31,
+        "payload_sha256": "dead2f32acf2ed459c4e36d3bf87bf93d0c70f450718a65c98ce714e8e0d271e",
+        "platform_scenarios_after": 61,
+        "platform_scenarios_before": 56
+      },
+      "release_build": {
+        "artifacts": {
+          "class_lifecycle_probe": {
+            "candidate_path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/release/examples/class_lifecycle_probe",
+            "candidate_sha256": "afc29be0fbcb20ffecdde5a61d47551dfc60d3d4db6b933cfd24c7f64ae2972e",
+            "frozen_path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage17-release-probe-build-final-02/artifacts/class_lifecycle_probe",
+            "frozen_sha256": "afc29be0fbcb20ffecdde5a61d47551dfc60d3d4db6b933cfd24c7f64ae2972e"
+          },
+          "language_probe": {
+            "candidate_path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/release/examples/language_probe",
+            "candidate_sha256": "56215472551de20621f02731cd1e7dbb7af4d9cb9ce5e9f6304dab1ac20f64df",
+            "frozen_path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage17-release-probe-build-final-02/artifacts/language_probe",
+            "frozen_sha256": "56215472551de20621f02731cd1e7dbb7af4d9cb9ce5e9f6304dab1ac20f64df"
+          }
+        },
+        "metadata_sha256": "2030a8f2372e3135c05107d92ac7e41be8ad01d8840e90872a212a779fdeb9af",
+        "path": "target/m2/stage17-release-probe-build-final-02",
+        "replay_binding": "All final focused/exploratory frozen executable hashes equal the recorded-build artifact; original caller-supplied replay metadata remains unchanged.",
+        "source_binding": "recorded-build",
+        "source_stability": true
+      },
+      "root_discovery_replay": {
+        "count": 42,
+        "known_mismatches": [
+          {
+            "baseline": "stage17-root-java-01",
+            "id": "const-method-lambda-object"
+          },
+          {
+            "baseline": "stage17-root-java-01",
+            "id": "const-property-lambda-object-method"
+          },
+          {
+            "baseline": "stage17-root-java-02",
+            "id": "const-method-outer"
+          },
+          {
+            "baseline": "stage17-root-java-04",
+            "id": "outer-method-direct"
+          },
+          {
+            "baseline": "stage17-root-java-04",
+            "id": "outer-property-lambda-value"
+          }
+        ],
+        "path": "target/m2/stage17-root-release-final-02",
+        "status_counts": {
+          "mismatch": 5,
+          "pass": 37
+        }
+      },
+      "schema": 1,
+      "scope": "Bounded evaluator-owned non-generic type-use and call-target resolution identity, local const retry caches, declaration-owned collection/inherited checks, method lexical const scope, and grouped-callee parser diagnostics. Full type/generic/const/language/API/performance and release platform scope remain open.",
+      "selected_count": 1659,
+      "selected_release_replay": {
+        "count": 62,
+        "known_mismatches": [],
+        "path": "target/m2/stage17-selected-release-final-02",
+        "status_counts": {
+          "pass": 62
+        }
+      },
+      "superseded_acquisitions": {
+        "acquisitions": [
+          {
+            "path": "target/m2/validation-stage17-final",
+            "report_sha256": "94ae46ee0ac42681822f1b0d799fbdfd8ba0a47c2fbbd348958d4428cc1e3f54",
+            "status": "completed-before-confirmed-owner-history-fix; superseded"
+          },
+          {
+            "path": "target/m2/platforms-stage17-final",
+            "report_sha256": "9b2b07b91602f89f7f153a34af80345c57de171d3259ecc8f99e0304fbc6860f",
+            "status": "completed-before-confirmed-owner-history-fix; superseded"
+          },
+          {
+            "path": "target/m2/frontend-stage17-final",
+            "report_sha256": "fa453676575a96f180befd917b6c0880947988e75f3d3f00d547c34de2cc7df9",
+            "status": "completed-before-confirmed-owner-history-fix; superseded"
+          },
+          {
+            "path": "target/m2/runtime-stage17-final",
+            "report_sha256": "7cfa3a96c7b96b87bd0ed92b2d75adf486c36d80b9ed4def785f18dcd8f983d6",
+            "status": "completed-before-confirmed-owner-history-fix; superseded"
+          },
+          {
+            "path": "target/m2/lifecycle-stage17-final",
+            "report_sha256": "603e00ed0768ec19bfa72f1a47819fc4efe76a9e39c9f2ac5dee67204e2d3795",
+            "status": "completed-before-confirmed-owner-history-fix; superseded"
+          },
+          {
+            "path": "target/m2/class-lifecycle-stage17-final",
+            "report_sha256": "bb96f2c1008a9d52f9144b36994742b5815165a3fd8d95b5060077d3a6286c9d",
+            "status": "completed-before-confirmed-owner-history-fix; superseded"
+          },
+          {
+            "path": "target/m2/language-stage17-final",
+            "provenance": "target/m2/stage17-language-final-superseded.json",
+            "status": "partial; SIGTERM; not a passing acquisition"
+          }
+        ],
+        "reason": "Implicit canonical owner promotion changed lambda/object clone identities according to previous branch execution. Corrected candidates require fresh validation."
+      },
+      "support_archives": [
+        {
+          "bytes": 38356107,
+          "files_count": 22942,
+          "partition_key": "reports/m2/exploration-stage17-history-01-evidence.tar.gz",
+          "path": "reports/m2/exploration-stage17-history-01-evidence.tar.gz",
+          "scope": "Complete superseded and exploratory supporting histories; paths and raw identities are conserved by the partition index.",
+          "sha256": "792963ccfdb64df3d7683340a91f53f6333144ca4e3d160bf1fed3f17f915113",
+          "uncompressed_payload_bytes": 172985250
+        },
+        {
+          "bytes": 38961690,
+          "files_count": 22408,
+          "partition_key": "reports/m2/exploration-stage17-history-02-evidence.tar.gz",
+          "path": "reports/m2/exploration-stage17-history-02-evidence.tar.gz",
+          "scope": "Complete superseded and exploratory supporting histories; paths and raw identities are conserved by the partition index.",
+          "sha256": "6915d3724c2a96ab272039c3b334eec4f872d647ae3c7206e436f4a3b1fa9285",
+          "uncompressed_payload_bytes": 171245491
+        },
+        {
+          "bytes": 32294731,
+          "files_count": 164,
+          "partition_key": "reports/m2/exploration-stage17-history-03-evidence.tar.gz",
+          "path": "reports/m2/exploration-stage17-history-03-evidence.tar.gz",
+          "scope": "Complete superseded and exploratory supporting histories; paths and raw identities are conserved by the partition index.",
+          "sha256": "e42ec9e4655531eb82207a66c5ae728ab99dc934e04ad6156ca9bdf542811229",
+          "uncompressed_payload_bytes": 136711625
+        },
+        {
+          "bytes": 35794996,
+          "files_count": 3517,
+          "partition_key": "reports/m2/exploration-stage17-history-04-evidence.tar.gz",
+          "path": "reports/m2/exploration-stage17-history-04-evidence.tar.gz",
+          "scope": "Complete superseded and exploratory supporting histories; paths and raw identities are conserved by the partition index.",
+          "sha256": "5e6a4ea6172ff5ba1a68660b2a82ddd25f0b03c1d72bd399e50c553767edb7dd",
+          "uncompressed_payload_bytes": 151211498
+        }
+      ]
+    },
+    "summary_path": "target/m2/stage17-exploration-summary-final.json",
+    "summary_sha256": "08ffcfb1751429d128627bb2a31db00f84487f5f2c230674a3821f41a4a88542",
+    "supplementary_replays": {
+      "let_followup_replay": {
+        "count": 4,
+        "known_mismatches": [
+          {
+            "baseline": "stage17-let-followup-java-01",
+            "id": "const-let-body"
+          }
+        ],
+        "status_counts": {
+          "mismatch": 1,
+          "pass": 3
+        }
+      },
+      "root_discovery_replay": {
+        "count": 42,
+        "known_mismatches": [
+          {
+            "baseline": "stage17-root-java-01",
+            "id": "const-method-lambda-object"
+          },
+          {
+            "baseline": "stage17-root-java-01",
+            "id": "const-property-lambda-object-method"
+          },
+          {
+            "baseline": "stage17-root-java-02",
+            "id": "const-method-outer"
+          },
+          {
+            "baseline": "stage17-root-java-04",
+            "id": "outer-method-direct"
+          },
+          {
+            "baseline": "stage17-root-java-04",
+            "id": "outer-property-lambda-value"
+          }
+        ],
+        "status_counts": {
+          "mismatch": 5,
+          "pass": 37
+        }
+      }
+    },
+    "support_archives": [
+      {
+        "bytes": 38356107,
+        "files_count": 22942,
+        "inventory_verified": true,
+        "partition_key": "reports/m2/exploration-stage17-history-01-evidence.tar.gz",
+        "path": "reports/m2/exploration-stage17-history-01-evidence.tar.gz",
+        "scope": "Complete superseded and exploratory supporting histories; paths and raw identities are conserved by the partition index.",
+        "sha256": "792963ccfdb64df3d7683340a91f53f6333144ca4e3d160bf1fed3f17f915113",
+        "uncompressed_payload_bytes": 172985250
+      },
+      {
+        "bytes": 38961690,
+        "files_count": 22408,
+        "inventory_verified": true,
+        "partition_key": "reports/m2/exploration-stage17-history-02-evidence.tar.gz",
+        "path": "reports/m2/exploration-stage17-history-02-evidence.tar.gz",
+        "scope": "Complete superseded and exploratory supporting histories; paths and raw identities are conserved by the partition index.",
+        "sha256": "6915d3724c2a96ab272039c3b334eec4f872d647ae3c7206e436f4a3b1fa9285",
+        "uncompressed_payload_bytes": 171245491
+      },
+      {
+        "bytes": 32294731,
+        "files_count": 164,
+        "inventory_verified": true,
+        "partition_key": "reports/m2/exploration-stage17-history-03-evidence.tar.gz",
+        "path": "reports/m2/exploration-stage17-history-03-evidence.tar.gz",
+        "scope": "Complete superseded and exploratory supporting histories; paths and raw identities are conserved by the partition index.",
+        "sha256": "e42ec9e4655531eb82207a66c5ae728ab99dc934e04ad6156ca9bdf542811229",
+        "uncompressed_payload_bytes": 136711625
+      },
+      {
+        "bytes": 35794996,
+        "files_count": 3517,
+        "inventory_verified": true,
+        "partition_key": "reports/m2/exploration-stage17-history-04-evidence.tar.gz",
+        "path": "reports/m2/exploration-stage17-history-04-evidence.tar.gz",
+        "scope": "Complete superseded and exploratory supporting histories; paths and raw identities are conserved by the partition index.",
+        "sha256": "5e6a4ea6172ff5ba1a68660b2a82ddd25f0b03c1d72bd399e50c553767edb7dd",
+        "uncompressed_payload_bytes": 151211498
+      }
+    ]
+  },
+  "field_scope": "Packaging/read-only audit only. The retained acquisition commands executed their evaluator artifacts.",
+  "final_claims_audit": {
+    "captured_binaries_executed": false,
+    "class_sequences": {
+      "added_call_comparisons": 550,
+      "added_sequences": 31,
+      "call_comparisons": 1052,
+      "original_call_comparisons": 502,
+      "original_definitions_order_and_raw_bytes_preserved": true,
+      "original_sequences": 36,
+      "passing_calls": 1052,
+      "sequence_executions": 134,
+      "unique_sequences": 67
+    },
+    "const_retry_gap": {
+      "accepted_scope": "Evaluator-local local-property resolution ownership for selected non-generic inline, lambda, shared let-root, recursive depth, inherited declarations and lazy collection wrapper cases.",
+      "all_original_persistent_controls_raw_match": true,
+      "full_language_requirement_remains_open": true,
+      "historical_path": "target/m2/stage16-const-retry-gap.json",
+      "historical_record_unchanged": true,
+      "historical_sha256": "428e79964b9c2dcff50310102571e13359115867b15124b381e2de4400333e6e",
+      "remaining_scope": "Recursive generic instantiation, generic let-root type-variable behavior, invalid class-path and local typed-object diagnostic frames, const-let-body/outer lexical-scope observations, full runtime type-resolution/M2/API and release performance/platform requirements remain open.",
+      "status": "bounded-non-generic-controls-resolved"
+    },
+    "field_scope": "Read-only packaging audit only; acquisition commands executed their retained evaluator artifacts.",
+    "mappings": {
+      "added_partial_mappings": 0,
+      "current_partial_mappings": 16,
+      "open_scope_preserved_except_reviewed_bounded_updates": true,
+      "original_partial_mappings": 16,
+      "reviewed_remaining_updates": [
+        {
+          "current": "Selected non-generic local const-read retries and const-method lexical barriers are covered; recursive generic instantiation, generic let-root sharing, and the complete lexical-scope corpus retain gaps.",
+          "evidence": "Stage17 selected raw Java and persistent retry/owner/wrapper/inherited witnesses, with original failures retained.",
+          "original": "Local const-read retry cache ownership, recursive alias instantiation identity and const-function local reads retain recorded exploratory mismatches.",
+          "requirement": "semantic:modifiers",
+          "resolved_scope": "Selected non-generic local const-read ownership and const-method lexical barriers only; generic let-root, recursive generic and full lexical/runtime requirements remain open."
+        },
+        {
+          "current": "Selected non-generic local const-read retries and const-method lexical barriers are covered; recursive generic instantiation, generic let-root sharing, and the complete lexical-scope corpus retain gaps.",
+          "evidence": "Stage17 selected raw Java and persistent retry/owner/wrapper/inherited witnesses, with original failures retained.",
+          "original": "Local const-read retry cache ownership, recursive alias instantiation identity and const-function local reads retain recorded exploratory mismatches.",
+          "requirement": "semantic:lazy-evaluation",
+          "resolved_scope": "Selected non-generic local const-read ownership and const-method lexical barriers only; generic let-root, recursive generic and full lexical/runtime requirements remain open."
+        },
+        {
+          "current": "Selected non-generic local const-read retries and const-method lexical barriers are covered; recursive generic instantiation, generic let-root sharing, and the complete lexical-scope corpus retain gaps.",
+          "evidence": "Stage17 selected raw Java and persistent retry/owner/wrapper/inherited witnesses, with original failures retained.",
+          "original": "Local const-read retry cache ownership, recursive alias instantiation identity and const-function local reads retain recorded exploratory mismatches.",
+          "requirement": "semantic:type-aliases",
+          "resolved_scope": "Selected non-generic local const-read ownership and const-method lexical barriers only; generic let-root, recursive generic and full lexical/runtime requirements remain open."
+        },
+        {
+          "current": "Generic let-root sharing and recursive generic instantiation retain recorded mismatches; bounded non-generic lifecycle and selected-byte agreement do not establish full language or performance completion.",
+          "evidence": "Stage17 selected raw Java and persistent retry/owner/wrapper/inherited witnesses, with original failures retained.",
+          "original": "Recorded local const-read retry and const-function lexical-scope mismatches remain failures; lifecycle and selected-byte agreement do not establish full language or performance completion.",
+          "requirement": "semantic:constraints",
+          "resolved_scope": "Selected non-generic local const-read ownership and const-method lexical barriers only; generic let-root, recursive generic and full lexical/runtime requirements remain open."
+        }
+      ],
+      "states_and_existing_links_preserved": true
+    },
+    "platforms": {
+      "browser_scenarios": 61,
+      "comparisons_recomputed_from_raw": true,
+      "node_scenarios": 61,
+      "oracle_mismatch_ids": {
+        "browser": [
+          "regex-unicode-15-vs-16",
+          "regex-zero-width-supplementary"
+        ],
+        "node": [
+          "regex-unicode-15-vs-16",
+          "regex-zero-width-supplementary"
+        ],
+        "rust": [
+          "regex-unicode-15-vs-16",
+          "regex-zero-width-supplementary"
+        ]
+      },
+      "oracle_passed": {
+        "browser": 6076,
+        "node": 6076,
+        "rust": 6076
+      },
+      "report_execution_equals_retained": true,
+      "scenario_lists_equal_retained": true,
+      "shared_engine_passed": 6078,
+      "total": 6078
+    },
+    "regressions": {
+      "frontend_raw_matches": 15,
+      "lifecycle_full_diagnostic_mismatches": 4,
+      "lifecycle_protocol_matches": 2,
+      "runtime_diagnostic_matches": 2,
+      "runtime_diagnostic_mismatches": 1,
+      "runtime_known_diagnostic_mismatch_ids": [
+        "forcing-cycle"
+      ],
+      "runtime_value_matches": 6
+    },
+    "requirements": {
+      "allowed_updates": "Regenerated source/implementation hashes and additive implementation/test links reflect new verified work.",
+      "ids_order_definitions_states_and_existing_links_preserved": true,
+      "open_scope_preserved_except_reviewed_bounded_updates": true,
+      "original_inventory_cases": 2597,
+      "original_requirements": 474,
+      "reviewed_remaining_updates": [
+        {
+          "current": "Selected non-generic local const-read retries and const-method lexical barriers are covered; recursive generic instantiation, generic let-root sharing, and the complete lexical-scope corpus retain gaps.",
+          "evidence": "Stage17 selected raw Java and persistent retry/owner/wrapper/inherited witnesses, with original failures retained.",
+          "original": "Local const-read retry cache ownership, recursive alias instantiation identity and const-function local reads retain recorded exploratory mismatches.",
+          "requirement": "semantic:lazy-evaluation",
+          "resolved_scope": "Selected non-generic local const-read ownership and const-method lexical barriers only; generic let-root, recursive generic and full lexical/runtime requirements remain open."
+        },
+        {
+          "current": "Selected non-generic local const-read retries and const-method lexical barriers are covered; recursive generic instantiation, generic let-root sharing, and the complete lexical-scope corpus retain gaps.",
+          "evidence": "Stage17 selected raw Java and persistent retry/owner/wrapper/inherited witnesses, with original failures retained.",
+          "original": "Local const-read retry cache ownership, recursive alias instantiation identity and const-function local reads retain recorded exploratory mismatches.",
+          "requirement": "semantic:modifiers",
+          "resolved_scope": "Selected non-generic local const-read ownership and const-method lexical barriers only; generic let-root, recursive generic and full lexical/runtime requirements remain open."
+        },
+        {
+          "current": "Selected non-generic local const-read retries and const-method lexical barriers are covered; recursive generic instantiation, generic let-root sharing, and the complete lexical-scope corpus retain gaps.",
+          "evidence": "Stage17 selected raw Java and persistent retry/owner/wrapper/inherited witnesses, with original failures retained.",
+          "original": "Local const-read retry cache ownership, recursive alias instantiation identity and const-function local reads retain recorded exploratory mismatches.",
+          "requirement": "semantic:type-aliases",
+          "resolved_scope": "Selected non-generic local const-read ownership and const-method lexical barriers only; generic let-root, recursive generic and full lexical/runtime requirements remain open."
+        },
+        {
+          "current": "Generic let-root sharing and recursive generic instantiation retain recorded mismatches; bounded non-generic lifecycle and selected-byte agreement do not establish full language or performance completion.",
+          "evidence": "Stage17 selected raw Java and persistent retry/owner/wrapper/inherited witnesses, with original failures retained.",
+          "original": "Recorded local const-read retry and const-function lexical-scope mismatches remain failures; lifecycle and selected-byte agreement do not establish full language or performance completion.",
+          "requirement": "semantic:constraints",
+          "resolved_scope": "Selected non-generic local const-read ownership and const-method lexical barriers only; generic let-root, recursive generic and full lexical/runtime requirements remain open."
+        }
+      ]
+    },
+    "selection": {
+      "added_selected": 62,
+      "baseline_metadata_sha256": "1672b43ea8a5fe9fdb74273a4fd11724d79174ce402384835d78c452e3e67342",
+      "exact_result_order": true,
+      "frozen_selection_sha256": "2ef3df3935caf544ea56a3d8dbd1c2cfcde17a42c8ca5f0f66a2510dd65c426f",
+      "original_definitions_preserved": true,
+      "original_input_bytes_preserved": true,
+      "original_inventory_rows_preserved": 2597,
+      "original_known_failures_preserved_separately": true,
+      "original_passing_raw_bytes_preserved": true,
+      "original_selected": 1597,
+      "relations": 56,
+      "selected": 1659
+    },
+    "status": "pass"
+  },
+  "full_m2_complete": false,
+  "gates": [
+    {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/m2_language.py",
+        "--verify-report",
+        "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/language-stage17-final-02"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "gate": "report",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "d370957d5a50e69593efdca95ed6fdd17f01ef36c1e0ca43696dafd98de03fe0"
+    },
+    {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/m2_language.py",
+        "--verify-development",
+        "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/language-stage17-final-02"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "gate": "development",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "d370957d5a50e69593efdca95ed6fdd17f01ef36c1e0ca43696dafd98de03fe0"
+    },
+    {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/m2_language.py",
+        "--verify-subset",
+        "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/language-stage17-final-02"
+      ],
+      "exit_code": 1,
+      "expected_exit_code": 1,
+      "gate": "subset",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "d370957d5a50e69593efdca95ed6fdd17f01ef36c1e0ca43696dafd98de03fe0"
+    },
+    {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/m2_language.py",
+        "--verify-full",
+        "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/language-stage17-final-02"
+      ],
+      "exit_code": 1,
+      "expected_exit_code": 1,
+      "gate": "full",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "d370957d5a50e69593efdca95ed6fdd17f01ef36c1e0ca43696dafd98de03fe0"
+    }
+  ],
+  "implementation_commit": "43db2bc4664ae91521204021deac8b7ce1641f3b",
+  "implementation_source_verification": {
+    "captured_binaries_executed": false,
+    "evidence": {
+      "bytes": 4103478,
+      "files_including_inventory": 2019,
+      "inventory_verified": true,
+      "path": "reports/m2/source-stage17-final-evidence.tar.gz",
+      "sha256": "a012d2be480a070f5c67c4743702fe4529c8f7cf9617e2e2fff00cc8a115fc4d"
+    },
+    "external_source_snapshot_copies": 0,
+    "git_command_captures": 2,
+    "implementation_commit": "43db2bc4664ae91521204021deac8b7ce1641f3b",
+    "matched_exact_git_commit": true,
+    "method": "Every final source snapshot enumerated in source_checks equals exact implementation Git bytes. Any captured upstream bytes resolve through the implementation commit gitlinks. Upstream blob proof exists only when external_source_snapshot_copies is positive. Reference pin validation remains separate.",
+    "pinned_submodule_blobs": false,
+    "source_binding_scope": "Final language, class sequences, M1 frontend/runtime/lifecycle, platforms, prior-selection replay, and focused native lifecycle Rust/Cargo source copies enumerated below. Historical exploratory and superseded focused native lifecycle source copies are outside this current-commit equality claim. Final focused native lifecycle project Rust/Cargo/toolchain source snapshots are included; its untracked capture helper has separate identity.",
+    "source_snapshot_copies": 2409,
+    "unique_external_source_files": 0,
+    "unique_source_files": 1946,
+    "upstream_source_blobs_verified": false,
+    "validation_source_binding": "Validation archive preserves raw command captures only; it does not add acquisition-time source snapshots. Other final suites retain full source snapshots."
+  },
+  "independent_source_review": {
+    "path": "stage17-final-source-review.json",
+    "retained_in": [
+      "source",
+      "regressions"
+    ],
+    "scope": "Independent final implementation source review; compatibility results remain separate raw evidence.",
+    "sha256": "3c33145b7ae7894fe4241d321195a162639264dbed9a5c35c27f99dfdc40bd05"
+  },
+  "initial_design": {
+    "path": "stage17-type-node-design-draft.md",
+    "retained_in": [
+      "source"
+    ],
+    "scope": "Preserved preimplementation planning proposal; later implementation and final execution evidence are separate. This draft is not a current-commit source equality claim.",
+    "sha256": "5c0097696dba55373cc589dfccc94a4925606628099b72e1a1cbe29b151f5d16"
+  },
+  "language": {
+    "added_selected": 62,
+    "artifact_stability": true,
+    "baseline_metadata_sha256": "1672b43ea8a5fe9fdb74273a4fd11724d79174ce402384835d78c452e3e67342",
+    "candidate": {
+      "build": {
+        "command": [
+          "cargo",
+          "build",
+          "-p",
+          "pkl-runtime",
+          "--example",
+          "language_probe",
+          "--locked",
+          "--release",
+          "--target-dir",
+          "/Users/cody.ij.hwang/Projects/pkl-rs/target"
+        ],
+        "exit_code": 0,
+        "stderr_sha256": "c63a9dfef4b93f607b4a403626db845b1141d22cdb2f62ffb2b0c0a6346e68f9",
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "timed_out": false
+      },
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/release/examples/language_probe",
+      "sha256": "56215472551de20621f02731cd1e7dbb7af4d9cb9ce5e9f6304dab1ac20f64df",
+      "source_binding": "recorded-build"
+    },
+    "exact_result_order": true,
+    "frozen_selection_sha256": "2ef3df3935caf544ea56a3d8dbd1c2cfcde17a42c8ca5f0f66a2510dd65c426f",
+    "full_gate_failure_reasons": 1950,
+    "inventory_counts": {
+      "cases": 2659,
+      "cases_by_execution": {
+        "ready": 1659,
+        "unimplemented": 960,
+        "unmapped": 40
+      },
+      "requirements": 474,
+      "requirements_by_kind": {
+        "language_parser": 137,
+        "language_token": 109,
+        "semantic-family": 30,
+        "specification": 198
+      }
+    },
+    "known_failures": [
+      {
+        "id": "error-cycle",
+        "status": "oracle-error"
+      },
+      {
+        "id": "error-remainder-zero",
+        "status": "mismatch"
+      }
+    ],
+    "metamorphic_relations": 56,
+    "metamorphic_statuses": [
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass"
+    ],
+    "original_definitions_preserved": true,
+    "original_input_bytes_preserved": true,
+    "original_inventory_rows_preserved": 2597,
+    "original_known_failures_preserved_separately": true,
+    "original_passing_raw_bytes_preserved": true,
+    "original_selected": 1597,
+    "relations": 56,
+    "selected": 1659,
+    "selected_count": 1659,
+    "source_snapshot_count": 1763,
+    "source_stability": true,
+    "status_counts": {
+      "mismatch": 1,
+      "oracle-error": 1,
+      "pass": 1657
+    }
+  },
+  "mapping_preservation": {
+    "added_partial_mappings": 0,
+    "current_partial_mappings": 16,
+    "open_scope_preserved_except_reviewed_bounded_updates": true,
+    "original_partial_mappings": 16,
+    "reviewed_remaining_updates": [
+      {
+        "current": "Selected non-generic local const-read retries and const-method lexical barriers are covered; recursive generic instantiation, generic let-root sharing, and the complete lexical-scope corpus retain gaps.",
+        "evidence": "Stage17 selected raw Java and persistent retry/owner/wrapper/inherited witnesses, with original failures retained.",
+        "original": "Local const-read retry cache ownership, recursive alias instantiation identity and const-function local reads retain recorded exploratory mismatches.",
+        "requirement": "semantic:modifiers",
+        "resolved_scope": "Selected non-generic local const-read ownership and const-method lexical barriers only; generic let-root, recursive generic and full lexical/runtime requirements remain open."
+      },
+      {
+        "current": "Selected non-generic local const-read retries and const-method lexical barriers are covered; recursive generic instantiation, generic let-root sharing, and the complete lexical-scope corpus retain gaps.",
+        "evidence": "Stage17 selected raw Java and persistent retry/owner/wrapper/inherited witnesses, with original failures retained.",
+        "original": "Local const-read retry cache ownership, recursive alias instantiation identity and const-function local reads retain recorded exploratory mismatches.",
+        "requirement": "semantic:lazy-evaluation",
+        "resolved_scope": "Selected non-generic local const-read ownership and const-method lexical barriers only; generic let-root, recursive generic and full lexical/runtime requirements remain open."
+      },
+      {
+        "current": "Selected non-generic local const-read retries and const-method lexical barriers are covered; recursive generic instantiation, generic let-root sharing, and the complete lexical-scope corpus retain gaps.",
+        "evidence": "Stage17 selected raw Java and persistent retry/owner/wrapper/inherited witnesses, with original failures retained.",
+        "original": "Local const-read retry cache ownership, recursive alias instantiation identity and const-function local reads retain recorded exploratory mismatches.",
+        "requirement": "semantic:type-aliases",
+        "resolved_scope": "Selected non-generic local const-read ownership and const-method lexical barriers only; generic let-root, recursive generic and full lexical/runtime requirements remain open."
+      },
+      {
+        "current": "Generic let-root sharing and recursive generic instantiation retain recorded mismatches; bounded non-generic lifecycle and selected-byte agreement do not establish full language or performance completion.",
+        "evidence": "Stage17 selected raw Java and persistent retry/owner/wrapper/inherited witnesses, with original failures retained.",
+        "original": "Recorded local const-read retry and const-function lexical-scope mismatches remain failures; lifecycle and selected-byte agreement do not establish full language or performance completion.",
+        "requirement": "semantic:constraints",
+        "resolved_scope": "Selected non-generic local const-read ownership and const-method lexical barriers only; generic let-root, recursive generic and full lexical/runtime requirements remain open."
+      }
+    ],
+    "states_and_existing_links_preserved": true
+  },
+  "native_type_node_lifecycle": {
+    "binary_artifacts": 8,
+    "capture_helper_source_scope": "Untracked capture helper retained with its own hash; excluded from Git-commit equality claim.",
+    "ignored": 0,
+    "passed": 52,
+    "snapshot_binding_scope": "All captured project Rust/Cargo/toolchain source snapshots equal the exact implementation commit; the executed test subset is reported separately.",
+    "source_stability": true,
+    "tracked_sources_bound_to_implementation": true
+  },
+  "node_ownership_review": {
+    "path": "stage17-node-ownership-review-07.json",
+    "retained_in": [
+      "source",
+      "regressions"
+    ],
+    "scope": "Independent ownership/GC/Host review bound to the exact implementation; focused native execution and raw Java results remain separately identified.",
+    "sha256": "bfb388f1c0bbd7ba0a4cac1417e2c9d5a8c198f5bad291e5b7fdc6b34f522992"
+  },
+  "original_evidence_preserved": {
+    "immutable_stage17_baseline_from_exact_git_blobs": true,
+    "no_original_archive_modified": true,
+    "source_provenance_scope": "Original Stage16 archives and reports remain unchanged.",
+    "stage16_summary": "reports/m2/stage16-final-summary.json"
+  },
+  "platforms": {
+    "browser_scenarios": 61,
+    "compatibility_status": "fail",
+    "experiment_contract_status": "pass",
+    "known_gaps": [
+      "regex-unicode-15-vs-16",
+      "regex-zero-width-supplementary"
+    ],
+    "node_scenarios": 61,
+    "oracle_passed": {
+      "browser": 6076,
+      "node": 6076,
+      "rust": 6076
+    },
+    "shared_engine_passed": 6078,
+    "source_stability": true,
+    "total": 6078
+  },
+  "prior_selection_replay": {
+    "count": 1597,
+    "exact_original_ids_order_input_bytes_and_raw_verdicts": true,
+    "scope": "Postfreeze Stage17 recorded-build candidate against retained original1597 complete Stage16 Java bytes. Fresh full Java acquisition remains separate.",
+    "status_counts": {
+      "mismatch": 1,
+      "oracle-error": 1,
+      "pass": 1595
+    }
+  },
+  "regressions": {
+    "frontend_raw_matches": 15,
+    "lifecycle_full_diagnostic_mismatches": 4,
+    "lifecycle_protocol_matches": 2,
+    "runtime_diagnostic_matches": 2,
+    "runtime_diagnostic_mismatches": 1,
+    "runtime_known_diagnostic_mismatch_ids": [
+      "forcing-cycle"
+    ],
+    "runtime_value_matches": 6
+  },
+  "remote_ci_required": false,
+  "requirements_preservation": {
+    "allowed_updates": "Regenerated source/implementation hashes and additive implementation/test links reflect new verified work.",
+    "ids_order_definitions_states_and_existing_links_preserved": true,
+    "open_scope_preserved_except_reviewed_bounded_updates": true,
+    "original_inventory_cases": 2597,
+    "original_requirements": 474,
+    "reviewed_remaining_updates": [
+      {
+        "current": "Selected non-generic local const-read retries and const-method lexical barriers are covered; recursive generic instantiation, generic let-root sharing, and the complete lexical-scope corpus retain gaps.",
+        "evidence": "Stage17 selected raw Java and persistent retry/owner/wrapper/inherited witnesses, with original failures retained.",
+        "original": "Local const-read retry cache ownership, recursive alias instantiation identity and const-function local reads retain recorded exploratory mismatches.",
+        "requirement": "semantic:lazy-evaluation",
+        "resolved_scope": "Selected non-generic local const-read ownership and const-method lexical barriers only; generic let-root, recursive generic and full lexical/runtime requirements remain open."
+      },
+      {
+        "current": "Selected non-generic local const-read retries and const-method lexical barriers are covered; recursive generic instantiation, generic let-root sharing, and the complete lexical-scope corpus retain gaps.",
+        "evidence": "Stage17 selected raw Java and persistent retry/owner/wrapper/inherited witnesses, with original failures retained.",
+        "original": "Local const-read retry cache ownership, recursive alias instantiation identity and const-function local reads retain recorded exploratory mismatches.",
+        "requirement": "semantic:modifiers",
+        "resolved_scope": "Selected non-generic local const-read ownership and const-method lexical barriers only; generic let-root, recursive generic and full lexical/runtime requirements remain open."
+      },
+      {
+        "current": "Selected non-generic local const-read retries and const-method lexical barriers are covered; recursive generic instantiation, generic let-root sharing, and the complete lexical-scope corpus retain gaps.",
+        "evidence": "Stage17 selected raw Java and persistent retry/owner/wrapper/inherited witnesses, with original failures retained.",
+        "original": "Local const-read retry cache ownership, recursive alias instantiation identity and const-function local reads retain recorded exploratory mismatches.",
+        "requirement": "semantic:type-aliases",
+        "resolved_scope": "Selected non-generic local const-read ownership and const-method lexical barriers only; generic let-root, recursive generic and full lexical/runtime requirements remain open."
+      },
+      {
+        "current": "Generic let-root sharing and recursive generic instantiation retain recorded mismatches; bounded non-generic lifecycle and selected-byte agreement do not establish full language or performance completion.",
+        "evidence": "Stage17 selected raw Java and persistent retry/owner/wrapper/inherited witnesses, with original failures retained.",
+        "original": "Recorded local const-read retry and const-function lexical-scope mismatches remain failures; lifecycle and selected-byte agreement do not establish full language or performance completion.",
+        "requirement": "semantic:constraints",
+        "resolved_scope": "Selected non-generic local const-read ownership and const-method lexical barriers only; generic let-root, recursive generic and full lexical/runtime requirements remain open."
+      }
+    ]
+  },
+  "reviewed_mappings": {
+    "count": 16,
+    "scope": "Partial reviewed mappings; strict full failures retained."
+  },
+  "schema_version": 1,
+  "scope": "Stage17 evaluator-local executable/type-use ownership and persistent non-generic local const-property retry caches, including recursive depth, inline/lambda separation, shared let roots, lazy collection casts, and inherited declarations; local macOS native/Wasm/Node/browser evidence. Recursive generic instantiation, full runtime type-resolution/M2/API, performance, and release platform requirements remain open.",
+  "source_report_identities": {
+    "classes": {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/class-lifecycle-stage17-final-02/report.json",
+      "sha256": "bdc3864e5c0d85a7fc28d1dbc91c655cd4e0980d0016607a40024064518c8c82"
+    },
+    "frontend": {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/frontend-stage17-final-02/report.json",
+      "sha256": "39a31a818480975eb56654c0b71ed8fa9c64865655bb17a9007e5ec6ba7b6bae"
+    },
+    "language": {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/language-stage17-final-02/report.json",
+      "sha256": "921155e0f5cc8b78c72c43c9678d103ac74d116262caaabe8fd199248c8df4e4"
+    },
+    "lifecycle": {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/lifecycle-stage17-final-02/report.json",
+      "sha256": "314ccf0741d9373b9ca793b9b25335ff35c05c2173bfb0d1dc42045a6d5ba56c"
+    },
+    "platforms": {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/platforms-stage17-final-02/report.json",
+      "sha256": "7f536fce0ecb35de243d9b605de29b0080411e7760fd3d36cbffd602413edce8"
+    },
+    "runtime": {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/runtime-stage17-final-02/report.json",
+      "sha256": "ce392ad3092e0199af2e973605fe4acfc00dbd91cf9a31e301cff3153aff0bf1"
+    },
+    "validation": {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/validation-stage17-final-02/report.json",
+      "sha256": "b59c79d588cf40e30ce64f8761f7f3134c1c1b5bdf8387388888c5bbed93b980"
+    }
+  },
+  "source_to_commit_binding": "Every core-suite final source copy enumerated in source-verification.json equals exact implementation Git bytes. Historical exploratory and superseded focused native lifecycle source copies retain separate provenance; final focused lifecycle Rust/Cargo snapshots are included in the exact-commit check. Build identities and retained raw outcomes remain separate evidence.",
+  "type_node_ownership_scope": {
+    "accepted_scope": "Evaluator-local local-property resolution ownership for selected non-generic inline, lambda, shared let-root, recursive depth, inherited declarations and lazy collection wrapper cases.",
+    "all_original_persistent_controls_raw_match": true,
+    "full_language_requirement_remains_open": true,
+    "historical_path": "target/m2/stage16-const-retry-gap.json",
+    "historical_record_unchanged": true,
+    "historical_sha256": "428e79964b9c2dcff50310102571e13359115867b15124b381e2de4400333e6e",
+    "remaining_scope": "Recursive generic instantiation, generic let-root type-variable behavior, invalid class-path and local typed-object diagnostic frames, const-let-body/outer lexical-scope observations, full runtime type-resolution/M2/API and release performance/platform requirements remain open.",
+    "status": "bounded-non-generic-controls-resolved"
+  },
+  "unavailable_platform_execution": [
+    "Linux",
+    "Windows"
+  ],
+  "unselected_exploratory_mismatches": {
+    "persistent_observations": {
+      "acquisitions": [
+        {
+          "baseline": "target/m2/stage16-sequences-java-02",
+          "comparisons": 36,
+          "path": "target/m2/stage17-original-sequences-release-final-02",
+          "status_counts": {
+            "pass": 36
+          }
+        },
+        {
+          "baseline": "target/m2/stage16-const-retries-java-01",
+          "comparisons": 38,
+          "path": "target/m2/stage17-original-const-release-final-02",
+          "status_counts": {
+            "pass": 38
+          }
+        },
+        {
+          "baseline": "target/m2/stage16-const-recursive-java-01",
+          "comparisons": 8,
+          "path": "target/m2/stage17-original-recursive-release-final-02",
+          "status_counts": {
+            "pass": 8
+          }
+        },
+        {
+          "baseline": "target/m2/stage17-sequences-java-01",
+          "comparisons": 133,
+          "path": "target/m2/stage17-sequences-release-final-02",
+          "status_counts": {
+            "mismatch": 24,
+            "pass": 109
+          }
+        },
+        {
+          "baseline": "target/m2/stage17-owners-java-01",
+          "comparisons": 48,
+          "path": "target/m2/stage17-owners-release-final-02",
+          "status_counts": {
+            "pass": 48
+          }
+        },
+        {
+          "baseline": "target/m2/stage17-wrappers-java-01",
+          "comparisons": 42,
+          "path": "target/m2/stage17-wrappers-release-final-02",
+          "status_counts": {
+            "pass": 42
+          }
+        },
+        {
+          "baseline": "target/m2/stage17-inherited-java-01",
+          "comparisons": 15,
+          "path": "target/m2/stage17-inherited-release-final-02",
+          "status_counts": {
+            "pass": 15
+          }
+        },
+        {
+          "baseline": "target/m2/stage17-recast-java-01",
+          "comparisons": 32,
+          "path": "target/m2/stage17-recast-release-final-02",
+          "status_counts": {
+            "pass": 32
+          }
+        },
+        {
+          "baseline": "target/m2/stage17-owner-review-java-02",
+          "comparisons": 7,
+          "path": "target/m2/stage17-owner-review-release-final-02",
+          "status_counts": {
+            "pass": 7
+          }
+        },
+        {
+          "baseline": "target/m2/stage17-owner-branch-controls-java-02",
+          "comparisons": 28,
+          "path": "target/m2/stage17-owner-branch-controls-release-final-02",
+          "status_counts": {
+            "mismatch": 2,
+            "pass": 26
+          }
+        },
+        {
+          "baseline": "target/m2/stage17-owner-object-tests-java-01",
+          "comparisons": 14,
+          "path": "target/m2/stage17-owner-object-tests-release-final-02",
+          "status_counts": {
+            "pass": 14
+          }
+        }
+      ],
+      "comparisons": 401,
+      "original_gap_comparisons": 82,
+      "original_gap_replays": [
+        {
+          "baseline": "target/m2/stage16-sequences-java-02",
+          "comparisons": 36,
+          "path": "target/m2/stage17-original-sequences-release-final-02",
+          "status_counts": {
+            "pass": 36
+          }
+        },
+        {
+          "baseline": "target/m2/stage16-const-retries-java-01",
+          "comparisons": 38,
+          "path": "target/m2/stage17-original-const-release-final-02",
+          "status_counts": {
+            "pass": 38
+          }
+        },
+        {
+          "baseline": "target/m2/stage16-const-recursive-java-01",
+          "comparisons": 8,
+          "path": "target/m2/stage17-original-recursive-release-final-02",
+          "status_counts": {
+            "pass": 8
+          }
+        }
+      ],
+      "original_gap_status_counts": {
+        "pass": 82
+      },
+      "remaining_gap": "Bounded original non-generic const-resolution retry matrix resolves with complete raw matches. Fresh generic let-root sharing remains two mismatches; invalid class-local alias syntax retains 22 complete parser-diagnostic mismatches. Two unpromoted local typed Dynamic object histories retain extra Rust diagnostic frames. They remain unselected failures with no new development exceptions.",
+      "status_counts": {
+        "mismatch": 26,
+        "pass": 375
+      }
+    },
+    "required_scope_remains_open": true,
+    "single_observations": {
+      "count": 94,
+      "known_mismatches": [
+        {
+          "baseline": "stage16-java-01",
+          "id": "original-recursive-generic-shadow"
+        }
+      ],
+      "path": "target/m2/stage17-observations-release-final-02",
+      "status_counts": {
+        "mismatch": 1,
+        "pass": 93
+      }
+    }
+  },
+  "validation": {
+    "python_passed": 194,
+    "rust_intentionally_ignored": 1,
+    "rust_passed": 363
+  }
+}
