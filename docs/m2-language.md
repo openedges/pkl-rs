@@ -16,6 +16,22 @@ also have historical candidate rows, parser declarations can share names, and
 language-reference headings can cover the same behavior. Totals must not be
 presented as distinct feature or test counts. Semantic mappings require review.
 
+`compatibility/m2-mappings.json` is the reviewed input for linking existing
+requirement IDs to Rust implementation symbols and existing case IDs. Its
+baseline must match the pinned inventory. The manifest generator validates
+source paths and symbols, records current source hashes, adds reverse case
+links, and preserves previously selected supporting cases. A source symbol's
+presence establishes provenance, not semantic completeness.
+
+Each reviewed entry states the supported scope and remaining work. Partial
+implementation or test mappings continue to fail the full gate. Completed
+mapping labels still require all linked cases to execute and pass. Linking an
+original upstream ID does not change its input, adapter, execution state, or
+output boundary. Selected reproductions therefore cannot silently replace the
+original snippet contract. Missing IDs, duplicate links, source drift, wrong
+baselines, and contradictory scope claims fail validation. The initial mapping
+input is empty; entries are added only after implementation and case review.
+
 ```sh
 python3 tools/m2_manifest.py --check
 python3 tools/m2_identifier_tables.py --output target/m2/identifiers-new

@@ -196,7 +196,9 @@ M1의 공통 VM을 확장합니다. VM·heap·호출 의미론은 `gpt-6-astra /
 
 [원격 CI](https://github.com/luuvish/pkl-rs/actions/runs/39529055834) 작업 6개가 모두 성공했습니다. [CI 증거 검증](reports/m2/ci-stage9-summary.json)은 원본 ZIP 해시와 소스 스냅샷 1,357개(고유 경로 1,177개)를 정확한 구현 커밋에 대조했습니다. 두 차례 오프라인 검증이 통과했고 최종 봉인 패키지는 바뀌지 않았습니다. JVM identity hash·같은 캐시의 순환 재진입·순환 키·재귀 진단 압축과 나머지 M2 언어·타입·Reference·메타데이터 범위가 남아 있으므로 **M2 전체는 진행 중**입니다. 전체 gate의 1,950개 실패 이유와 성능·메모리 목표도 계속 열려 있습니다.
 
-다음 구현은 [`pkl:ref`](external/pkl/stdlib/ref.pkl)의 최소 실행 경로와 공통 선언·타입 메타데이터를 우선 연결합니다. 읽기 전용 의존성 조사만 완료했으며 아래 기능의 구현·검증은 아직 수행하지 않았습니다.
+열 번째 단계는 [`pkl:ref`](external/pkl/stdlib/ref.pkl)의 최소 실행 경로와 공통 선언·타입 메타데이터를 연결하는 작업을 시작했습니다. 런타임은 `gpt-6-astra / high`, frontend·수명주기 검토와 Java 차등 증거는 각각 `gpt-6.1-sol / high`에 배정했습니다. 구현·진단·회귀 검증은 진행 중이며 아직 완료로 판정하지 않았습니다.
+
+전체 완료 판정의 연결 경로도 보완합니다. `compatibility/m2-mappings.json`의 검토된 요구사항 ID·Rust 소스 심볼·사례 ID를 생성기에 연결하고 원래 사례의 입력·adapter·실행 상태를 유지합니다. 연결 입력은 빈 상태로 시작하며 실제 구현과 사례 검토 후 채웁니다. 부분 구현·부분 검증, 미실행 upstream 사례와 기존 실패는 전체 gate 실패로 남습니다. 아래 구현 순서를 유지합니다.
 
 1. `import "pkl:ref"` namespace와 qualified 이름 해석, 선언 identity·module owner·상속 property 타입을 보존하는 메타데이터를 연결합니다.
 2. Reference의 domain·data·path·referent type과 합성 property/subscript 접근을 구현합니다. 접근 중 실제 referent 본문이 실행되지 않는지 확인합니다.
