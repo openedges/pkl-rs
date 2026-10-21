@@ -1,0 +1,6 @@
+local threshold = 0
+typealias A<T> = T(this < threshold)
+first: A<Int> = -1
+second: A<Int> = -2
+other: A<Float> = -3.0
+stable = 42

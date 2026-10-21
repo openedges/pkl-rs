@@ -1104,6 +1104,7 @@ pub(super) fn access_members(
         base_span: span("String(key == null)?"),
         constraints: vec![ConstraintCode {
             block: constraint,
+            arguments: BTreeMap::new(),
             span: predicate_span,
             module_environment: false,
             source: Arc::from("key == null"),

@@ -1,0 +1,4 @@
+module stage15.types
+typealias T = ShadowMissing
+typealias A<T> = Int(this < 0 || (this - 1) is A<T>)
+result: A<String> = 2

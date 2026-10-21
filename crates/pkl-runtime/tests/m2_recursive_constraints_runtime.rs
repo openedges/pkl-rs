@@ -96,19 +96,25 @@ fn recursive_constraint_failure_retries_without_poisoning_the_declaration() {
 }
 
 #[test]
-fn recursively_expanding_generic_constraints_fail_only_when_the_type_use_executes() {
+fn recursively_expanding_generic_constraints_can_be_cancelled_after_bounded_progress() {
     let (mut vm, module) = module(
         "typealias A<T> = Int(this < 0 || this is A<List<T>>)\nunused = 42\nidentity = A == A\nshort: A<Int> = -1\nunsupported: A<Int> = 1",
     );
     assert_eq!(member(&mut vm, module, "unused"), Ok(Value::Int(42)));
     assert_eq!(member(&mut vm, module, "identity"), Ok(Value::Bool(true)));
     assert_eq!(member(&mut vm, module, "short"), Ok(Value::Int(-1)));
-    assert!(
-        member(&mut vm, module, "unsupported")
-            .unwrap_err()
-            .message
-            .contains("recursive generic constraints")
-    );
+    // Preserve the original nonterminating input. Generic expansion now runs;
+    // bounded progress and cancellation are the contract of this regression.
+    // Unbounded by-value argument growth is a separately recorded stack limit,
+    // not a compatibility pass or an implicit successful evaluation.
+    vm.start_member(module, "unsupported").unwrap();
+    for _ in 0..3 {
+        assert!(matches!(vm.poll(100), VmPoll::Yielded));
+    }
+    vm.cancel();
+    assert_eq!(member(&mut vm, module, "unused"), Ok(Value::Int(42)));
+    assert_eq!(member(&mut vm, module, "identity"), Ok(Value::Bool(true)));
+    assert_eq!(member(&mut vm, module, "short"), Ok(Value::Int(-1)));
 }
 
 #[test]

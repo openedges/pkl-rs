@@ -72,6 +72,13 @@ REQUIRED_SCENARIOS = {
     'm2-local-resolution-recursive-sequences',
     'm2-local-resolution-owners-sequences',
     'm2-local-resolution-wrappers-sequences',
+    'm2-generic-recursive-sequences',
+    'm2-generic-type-variables-sequences',
+    'm2-generic-let-sharing-sequences',
+    'm2-generic-use-sites-sequences',
+    'm2-generic-wrappers-sequences',
+    'm2-generic-defaults-sequences',
+    'm2-generic-reference-sequences',
 }
 
 

@@ -1,0 +1,3 @@
+typealias A<T> = T
+typealias B<U> = A<U>
+result: B<String> = 2

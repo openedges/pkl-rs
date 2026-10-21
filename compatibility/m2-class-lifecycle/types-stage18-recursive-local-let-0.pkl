@@ -1,0 +1,5 @@
+local threshold = 0
+typealias A<T> = Int(let (n = this) n < 0 || ((n - 1) is A<T> && n < threshold))
+one: A<Int> = 0
+two: A<String> = 1
+stable = 42

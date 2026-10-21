@@ -1,0 +1,3 @@
+typealias A<Int> = Int
+value: A<String> = "ok"
+result = value

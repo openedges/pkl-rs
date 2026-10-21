@@ -1,0 +1,3 @@
+typealias A<T> = T
+value: A<List<Int>> = List(1, 2)
+result = value[1]

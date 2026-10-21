@@ -188,9 +188,14 @@ successive members of lazy Listing and Mapping wrappers. Repeated calls resolve
 the current receiver and owner while retaining the member definition. Separate
 native tests cover Host reentry, cancellation, GC, evaluator isolation, and
 terminal release. Const-method lexical barriers and contextual grouped-callee
-syntax errors also have independent raw Java comparisons. These bounded cases
-do not complete recursive generic instantiation, generic let-root sharing, or
-the full const-scope corpus.
+syntax errors also have independent raw Java comparisons. Stage 18 extends this
+contract to finite recursive generics with changing arguments, actual-argument
+capture, shared generic let roots and their unbound type variables, and let/for
+const barriers. Original observations and failed hypotheses remain separate
+from the selected additions. Unbounded growing type metadata can still exhaust
+the native stack; a bounded cancellation test does not turn that abort into a
+compatibility pass. The complete generic, const, and diagnostic corpus remains
+open.
 
 A complete runtime type-resolution model, general imported types, annotation
 syntax, and full module initialization/caching remain open requirements. The

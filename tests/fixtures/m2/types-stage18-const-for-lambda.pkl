@@ -1,0 +1,6 @@
+module stage18.scopes
+local threshold=2
+value=2
+function f()=2
+const xs=new Listing {for(n in List(0)) {(()->threshold).apply()}}
+result=xs[0]

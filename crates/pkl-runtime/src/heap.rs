@@ -23,6 +23,8 @@ pub struct Environment {
     /// Persistent cloned executable identity, independent of the receiver slot.
     /// None keeps the canonical code template implicit across every branch.
     pub executable_owner: Option<ExecutableOwnerId>,
+    /// Lexical substitutions captured by reusable generic constraint bodies.
+    pub type_arguments: BTreeMap<(usize, Arc<str>), crate::vm::TypeCheck>,
     /// Innermost first; immutable captured lexical object scopes.
     pub scopes: Vec<Scope>,
 }

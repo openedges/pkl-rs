@@ -1,0 +1,5 @@
+local threshold = 0
+typealias L<T> = Int(let (n = this) n is T && n > threshold)
+left = 2 is L<Int>
+right = 3 is L<String>
+stable = 42

@@ -316,6 +316,13 @@ impl Vm {
         destination: TypeDestination,
         frames: Vec<RuntimeFrame>,
     ) -> Result<(), RuntimeError> {
+        let ty = ty.substituted(
+            &self
+                .frames
+                .last()
+                .ok_or_else(|| invalid("missing type-check frame"))?
+                .environment,
+        )?;
         let node = if needs_custom_this(&ty) {
             let owner = self.current_executable()?;
             let frame = self.frames.last().expect("type-check frame");
@@ -448,6 +455,24 @@ impl Vm {
         } else {
             run.environment.clone()
         };
+        let shared_root = self
+            .program
+            .metadata
+            .get(constraint.block)
+            .is_some_and(|metadata| metadata.constraint_root.is_some());
+        for (name, argument) in &constraint.arguments {
+            // VmTypeAlias.instantiate visits the cloned child tree, but a let
+            // expression's call target is outside that tree. Its type variables
+            // retain the alias declaration's unbound (unknown) interpretation.
+            let argument = if shared_root {
+                TypeCheck::Unknown
+            } else {
+                argument.substituted(&run.environment)?
+            };
+            environment
+                .type_arguments
+                .insert((constraint.block, Arc::from(name.as_str())), argument);
+        }
         // Local-writing constraints execute in a fresh Java root frame. Inline
         // constraints use the checking frame's slot, including during replay.
         if self

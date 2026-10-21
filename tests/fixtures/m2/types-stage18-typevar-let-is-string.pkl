@@ -1,0 +1,2 @@
+typealias A<T> = Int(let (n = this) n is T)
+result = 2 is A<String>

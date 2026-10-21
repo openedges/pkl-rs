@@ -1,0 +1,5 @@
+module stage18.scopes
+local threshold=2
+value=2
+function f()=2
+const result=let(_=0)threshold

@@ -11,6 +11,7 @@ use crate::source::Span;
 use crate::value::{ErrorKind, ObjectId, RuntimeError, RuntimeFrame, Value};
 pub mod collections;
 pub(crate) mod equality;
+mod generics;
 pub(crate) mod reference;
 mod typecheck;
 use typecheck::{TypeDestination, TypeRun};
@@ -26,6 +27,10 @@ pub enum Instruction {
     },
     FinishTypeAlias,
     CheckTypeAliasInitialized,
+    ValidateTypeArguments {
+        ty: TypeCheck,
+        aliases: Vec<RuntimeFrame>,
+    },
     BuiltinClass(TypeCheck),
     ReferenceRenderMethod,
     Constant(Value),
@@ -44,6 +49,8 @@ pub enum Instruction {
     SetCollectionDefault {
         defined: bool,
     },
+    /// Instantiate a collection element default after lexical type substitution.
+    SetCollectionTypeDefault(TypeCheck),
     AddCollectionProperty(Member),
     AddCollectionElement(Member),
     AddCollectionEntry {
@@ -188,6 +195,11 @@ pub enum Instruction {
 #[derive(Clone, Debug)]
 pub enum TypeCheck {
     Unknown,
+    /// A lexical parameter in a reusable constraint template. Resolved before checking.
+    Parameter {
+        block: usize,
+        name: Arc<str>,
+    },
     /// Declaration identity and arguments are retained independently of validation.
     NamedAlias {
         declaration: usize,
@@ -252,6 +264,8 @@ pub enum TypeCheck {
 #[derive(Clone, Debug)]
 pub struct ConstraintCode {
     block: usize,
+    /// Actual arguments for this constraint template, possibly referring to an outer template.
+    arguments: BTreeMap<String, TypeCheck>,
     span: Span,
     module_environment: bool,
     source: Arc<str>,
@@ -453,7 +467,7 @@ impl TypeCheck {
                 expanded: inner, ..
             } => inner.accepts(value, heap),
             Self::Union { types, .. } => types.iter().any(|ty| ty.accepts(value, heap)),
-            Self::Constrained { .. } => false,
+            Self::Constrained { .. } | Self::Parameter { .. } => false,
         }
     }
 }
@@ -497,6 +511,7 @@ pub struct Program {
     pub entry: usize,
     pub(crate) reference_render_block: usize,
     pub(crate) access_members: Vec<Member>,
+    pub(crate) constraint_origins: BTreeMap<usize, (Vec<RuntimeFrame>, Vec<RuntimeFrame>)>,
 }
 
 impl Program {
@@ -549,6 +564,7 @@ impl Program {
             entry: 0,
             reference_render_block,
             access_members,
+            constraint_origins: BTreeMap::new(),
         }
     }
 }
@@ -2150,6 +2166,19 @@ impl Vm {
                     ));
                 }
             }
+            Instruction::ValidateTypeArguments { ty, aliases } => {
+                let frame = self.frames.last().expect("active frame");
+                let ty = ty.substituted(&frame.environment)?;
+                let span = self
+                    .program
+                    .metadata
+                    .get(frame.block)
+                    .and_then(|metadata| metadata.spans.get(frame.pc.saturating_sub(1)))
+                    .copied()
+                    .flatten()
+                    .unwrap_or(Span::new(0, 0));
+                ty.validate_reference_arguments(span, &aliases, &self.program.constraint_origins)?;
+            }
             Instruction::BuiltinTypeAlias(name) => {
                 let id = self.heap.find_type_alias(&name).unwrap_or_else(|| {
                     self.heap.allocate(Object {
@@ -2168,6 +2197,7 @@ impl Vm {
                 self.stack.push(Value::Object(id));
             }
             Instruction::BuiltinClass(ty) => {
+                let ty = ty.substituted(&self.frames.last().expect("active frame").environment)?;
                 let value = self.builtin_class(ty);
                 self.stack.push(value);
             }
@@ -2194,6 +2224,7 @@ impl Vm {
             | Instruction::BeginCollection { .. }
             | Instruction::EndCollection
             | Instruction::SetCollectionDefault { .. }
+            | Instruction::SetCollectionTypeDefault(_)
             | Instruction::AddCollectionProperty(_)
             | Instruction::AddCollectionElement(_)
             | Instruction::AddCollectionEntry { .. }
@@ -3028,6 +3059,7 @@ impl Vm {
                         .find(|m| m.name == force.name && !m.method)
                         .ok_or_else(|| invalid("missing inherited declaration"))?
                         .code;
+                    let ty = ty.substituted(&self.heap.get(owner)?.environment)?;
                     let source = self
                         .program
                         .metadata
@@ -3403,6 +3435,7 @@ fn compile_module_configured(
     compiler.type_scopes.pop();
     entry.push(Instruction::Return);
     compiler.program.entry = compiler.block(entry, None);
+    compiler.program.constraint_origins = compiler.constraint_origins;
     Ok(Arc::new(compiler.program))
 }
 
@@ -3450,8 +3483,8 @@ struct Compiler<'a> {
     constraint_origins: BTreeMap<usize, (Vec<RuntimeFrame>, Vec<RuntimeFrame>)>,
     /// Constraint bytecode is a graph: a recursive type use can point back to
     /// a reserved block without recursively compiling that expression again.
-    active_constraints: BTreeMap<Span, (usize, bool)>,
-    /// Non-generic local-writing constraints retain their original call target.
+    active_constraints: BTreeMap<Span, usize>,
+    /// Local-writing constraints retain their declaration call target across substitutions.
     shared_constraint_roots: BTreeMap<Span, usize>,
     active_type_parameters: BTreeMap<String, TypeCheck>,
     parameter_spans: BTreeMap<String, Span>,
@@ -4785,8 +4818,18 @@ impl Compiler<'_> {
         }
         // Validation that depends on resolved arguments (including alias
         // instantiation and Reference constraints) occurs after child resolution.
-        self.compile_type_at(ty, self.type_scopes.len(), &mut BTreeSet::new(), parameters)
+        let check = self
+            .compile_type_at(ty, self.type_scopes.len(), &mut BTreeSet::new(), parameters)
             .map_err(|error| Box::new((error, ty.span)))?;
+        if check.has_deferred_reference_validation() {
+            output.push_at(
+                Instruction::ValidateTypeArguments {
+                    ty: check,
+                    aliases: self.alias_frames.clone(),
+                },
+                ty.span,
+            );
+        }
         Ok(())
     }
 
@@ -4935,16 +4978,10 @@ impl Compiler<'_> {
                         &self.resolved.module.source[expression.span.start..expression.span.end],
                     );
                     let expression = expression.unparenthesized();
-                    if let Some(&(block, generic)) = self.active_constraints.get(&expression.span) {
-                        if generic || !parameters.is_empty() {
-                            // A changing substitution can generate infinitely many distinct
-                            // checks. It needs runtime type parameters, not a depth limit or
-                            // an unsound reuse of another instantiation's bytecode.
-                            return Err(unsupported_type("recursive generic constraints")
-                                .at(expression.span));
-                        }
+                    if let Some(&block) = self.active_constraints.get(&expression.span) {
                         compiled.push(ConstraintCode {
                             block,
+                            arguments: parameters.clone(),
                             span: expression.span,
                             module_environment: self.constraint_module,
                             source,
@@ -4952,10 +4989,22 @@ impl Compiler<'_> {
                         continue;
                     }
                     let block = self.block(Code::default(), Some(expression.span));
-                    self.active_constraints
-                        .insert(expression.span, (block, !parameters.is_empty()));
-                    let previous =
-                        std::mem::replace(&mut self.active_type_parameters, parameters.clone());
+                    self.active_constraints.insert(expression.span, block);
+                    // Compile one finite template. Recursive uses retain substitutions
+                    // instead of expanding an unbounded family of specialized bodies.
+                    let symbolic = parameters
+                        .keys()
+                        .map(|name| {
+                            (
+                                name.clone(),
+                                TypeCheck::Parameter {
+                                    block,
+                                    name: Arc::from(name.as_str()),
+                                },
+                            )
+                        })
+                        .collect();
+                    let previous = std::mem::replace(&mut self.active_type_parameters, symbolic);
                     let mut code = Code::default();
                     // CustomThisScope interrupts consecutive let qualification.
                     let enclosing_lets = std::mem::take(&mut self.let_members);
@@ -4986,7 +5035,7 @@ impl Compiler<'_> {
                     origin.extend(self.alias_frames.iter().rev().cloned());
                     self.constraint_origins
                         .insert(block, (origin, self.alias_frames.clone()));
-                    let target = if writes_slots && parameters.is_empty() {
+                    let target = if writes_slots {
                         *self
                             .shared_constraint_roots
                             .entry(expression.span)
@@ -4996,6 +5045,7 @@ impl Compiler<'_> {
                     };
                     compiled.push(ConstraintCode {
                         block: target,
+                        arguments: parameters.clone(),
                         span: expression.span,
                         module_environment: self.constraint_module,
                         source,
@@ -5518,7 +5568,10 @@ impl Compiler<'_> {
                     });
                     if let TypeCheck::ParameterizedCollection { arguments, .. } = check {
                         let (ty, span) = arguments.last().expect("collection value type");
-                        if !ty.noop() {
+                        if ty.default_depends_on_parameters() {
+                            output
+                                .push_at(Instruction::SetCollectionTypeDefault(ty.clone()), *span);
+                        } else if !ty.noop() {
                             let defined = self.default_type(ty, output, *span)?;
                             output.push(Instruction::SetCollectionDefault { defined });
                         }

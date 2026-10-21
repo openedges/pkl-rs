@@ -1,0 +1,3 @@
+typealias A<T> = T?
+value: A<Int> = null
+result = value

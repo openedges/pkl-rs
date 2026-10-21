@@ -1,0 +1,2 @@
+typealias A<T> = Int(this is T)
+result: A<Int> = 2

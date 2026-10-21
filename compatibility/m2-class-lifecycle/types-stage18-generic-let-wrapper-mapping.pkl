@@ -1,0 +1,6 @@
+local threshold = 0
+typealias A<T> = T(let (n = this) n < threshold)
+items: Mapping<String, A<Int>> = new Mapping { ["x"] = -1; ["y"] = -2 }
+first = items["x"]
+second = items["y"]
+stable = 42

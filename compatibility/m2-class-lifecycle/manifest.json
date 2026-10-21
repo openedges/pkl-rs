@@ -475,6 +475,293 @@
       "id": "types-stage17-conditional-owner-object-test-false",
       "note": "Complete raw conditional branch-order history verifies stable authored lambda/object body ownership after an earlier inline type-check branch.",
       "source": "types-stage17-conditional-owner-object-test-false.pkl"
+    },
+    {
+      "expressions": "types-stage18-generic-inline-control.expressions",
+      "group": "T18",
+      "id": "types-stage18-generic-inline-control",
+      "note": "Complete raw pinned Java generic recursion, actual type arguments, inline/lambda use identity, shared let-root cache and erased let-root type variables; original invalid hypotheses and unmatched controls remain separate evidence.",
+      "source": "types-stage18-generic-inline-control.pkl"
+    },
+    {
+      "expressions": "types-stage18-generic-let-control.expressions",
+      "group": "T18",
+      "id": "types-stage18-generic-let-control",
+      "note": "Complete raw pinned Java generic recursion, actual type arguments, inline/lambda use identity, shared let-root cache and erased let-root type variables; original invalid hypotheses and unmatched controls remain separate evidence.",
+      "source": "types-stage18-generic-let-control.pkl"
+    },
+    {
+      "expressions": "types-stage18-generic-lambda-control.expressions",
+      "group": "T18",
+      "id": "types-stage18-generic-lambda-control",
+      "note": "Complete raw pinned Java generic recursion, actual type arguments, inline/lambda use identity, shared let-root cache and erased let-root type variables; original invalid hypotheses and unmatched controls remain separate evidence.",
+      "source": "types-stage18-generic-lambda-control.pkl"
+    },
+    {
+      "expressions": "types-stage18-generic-inline-mixed-use.expressions",
+      "group": "T18",
+      "id": "types-stage18-generic-inline-mixed-use",
+      "note": "Complete raw pinned Java generic recursion, actual type arguments, inline/lambda use identity, shared let-root cache and erased let-root type variables; original invalid hypotheses and unmatched controls remain separate evidence.",
+      "source": "types-stage18-generic-inline-mixed-use.pkl"
+    },
+    {
+      "expressions": "types-stage18-generic-inline-float-first.expressions",
+      "group": "T18",
+      "id": "types-stage18-generic-inline-float-first",
+      "note": "Complete raw pinned Java generic recursion, actual type arguments, inline/lambda use identity, shared let-root cache and erased let-root type variables; original invalid hypotheses and unmatched controls remain separate evidence.",
+      "source": "types-stage18-generic-inline-float-first.pkl"
+    },
+    {
+      "expressions": "types-stage18-generic-inline-throwing-local.expressions",
+      "group": "T18",
+      "id": "types-stage18-generic-inline-throwing-local",
+      "note": "Complete raw pinned Java generic recursion, actual type arguments, inline/lambda use identity, shared let-root cache and erased let-root type variables; original invalid hypotheses and unmatched controls remain separate evidence.",
+      "source": "types-stage18-generic-inline-throwing-local.pkl"
+    },
+    {
+      "expressions": "types-stage18-generic-inline-const-local.expressions",
+      "group": "T18",
+      "id": "types-stage18-generic-inline-const-local",
+      "note": "Complete raw pinned Java generic recursion, actual type arguments, inline/lambda use identity, shared let-root cache and erased let-root type variables; original invalid hypotheses and unmatched controls remain separate evidence.",
+      "source": "types-stage18-generic-inline-const-local.pkl"
+    },
+    {
+      "expressions": "types-stage18-generic-let-mixed-use.expressions",
+      "group": "T18",
+      "id": "types-stage18-generic-let-mixed-use",
+      "note": "Complete raw pinned Java generic recursion, actual type arguments, inline/lambda use identity, shared let-root cache and erased let-root type variables; original invalid hypotheses and unmatched controls remain separate evidence.",
+      "source": "types-stage18-generic-let-mixed-use.pkl"
+    },
+    {
+      "expressions": "types-stage18-generic-let-float-first.expressions",
+      "group": "T18",
+      "id": "types-stage18-generic-let-float-first",
+      "note": "Complete raw pinned Java generic recursion, actual type arguments, inline/lambda use identity, shared let-root cache and erased let-root type variables; original invalid hypotheses and unmatched controls remain separate evidence.",
+      "source": "types-stage18-generic-let-float-first.pkl"
+    },
+    {
+      "expressions": "types-stage18-generic-let-throwing-local.expressions",
+      "group": "T18",
+      "id": "types-stage18-generic-let-throwing-local",
+      "note": "Complete raw pinned Java generic recursion, actual type arguments, inline/lambda use identity, shared let-root cache and erased let-root type variables; original invalid hypotheses and unmatched controls remain separate evidence.",
+      "source": "types-stage18-generic-let-throwing-local.pkl"
+    },
+    {
+      "expressions": "types-stage18-generic-let-const-local.expressions",
+      "group": "T18",
+      "id": "types-stage18-generic-let-const-local",
+      "note": "Complete raw pinned Java generic recursion, actual type arguments, inline/lambda use identity, shared let-root cache and erased let-root type variables; original invalid hypotheses and unmatched controls remain separate evidence.",
+      "source": "types-stage18-generic-let-const-local.pkl"
+    },
+    {
+      "expressions": "types-stage18-generic-lambda-mixed-use.expressions",
+      "group": "T18",
+      "id": "types-stage18-generic-lambda-mixed-use",
+      "note": "Complete raw pinned Java generic recursion, actual type arguments, inline/lambda use identity, shared let-root cache and erased let-root type variables; original invalid hypotheses and unmatched controls remain separate evidence.",
+      "source": "types-stage18-generic-lambda-mixed-use.pkl"
+    },
+    {
+      "expressions": "types-stage18-generic-lambda-float-first.expressions",
+      "group": "T18",
+      "id": "types-stage18-generic-lambda-float-first",
+      "note": "Complete raw pinned Java generic recursion, actual type arguments, inline/lambda use identity, shared let-root cache and erased let-root type variables; original invalid hypotheses and unmatched controls remain separate evidence.",
+      "source": "types-stage18-generic-lambda-float-first.pkl"
+    },
+    {
+      "expressions": "types-stage18-generic-lambda-throwing-local.expressions",
+      "group": "T18",
+      "id": "types-stage18-generic-lambda-throwing-local",
+      "note": "Complete raw pinned Java generic recursion, actual type arguments, inline/lambda use identity, shared let-root cache and erased let-root type variables; original invalid hypotheses and unmatched controls remain separate evidence.",
+      "source": "types-stage18-generic-lambda-throwing-local.pkl"
+    },
+    {
+      "expressions": "types-stage18-generic-lambda-const-local.expressions",
+      "group": "T18",
+      "id": "types-stage18-generic-lambda-const-local",
+      "note": "Complete raw pinned Java generic recursion, actual type arguments, inline/lambda use identity, shared let-root cache and erased let-root type variables; original invalid hypotheses and unmatched controls remain separate evidence.",
+      "source": "types-stage18-generic-lambda-const-local.pkl"
+    },
+    {
+      "expressions": "types-stage18-generic-let-wrapper-list.expressions",
+      "group": "T18",
+      "id": "types-stage18-generic-let-wrapper-list",
+      "note": "Complete raw pinned Java generic recursion, actual type arguments, inline/lambda use identity, shared let-root cache and erased let-root type variables; original invalid hypotheses and unmatched controls remain separate evidence.",
+      "source": "types-stage18-generic-let-wrapper-list.pkl"
+    },
+    {
+      "expressions": "types-stage18-generic-let-wrapper-listing.expressions",
+      "group": "T18",
+      "id": "types-stage18-generic-let-wrapper-listing",
+      "note": "Complete raw pinned Java generic recursion, actual type arguments, inline/lambda use identity, shared let-root cache and erased let-root type variables; original invalid hypotheses and unmatched controls remain separate evidence.",
+      "source": "types-stage18-generic-let-wrapper-listing.pkl"
+    },
+    {
+      "expressions": "types-stage18-generic-let-wrapper-mapping.expressions",
+      "group": "T18",
+      "id": "types-stage18-generic-let-wrapper-mapping",
+      "note": "Complete raw pinned Java generic recursion, actual type arguments, inline/lambda use identity, shared let-root cache and erased let-root type variables; original invalid hypotheses and unmatched controls remain separate evidence.",
+      "source": "types-stage18-generic-let-wrapper-mapping.pkl"
+    },
+    {
+      "expressions": "types-stage18-recursive-same-argument.expressions",
+      "group": "T18",
+      "id": "types-stage18-recursive-same-argument",
+      "note": "Complete raw pinned Java generic recursion, actual type arguments, inline/lambda use identity, shared let-root cache and erased let-root type variables; original invalid hypotheses and unmatched controls remain separate evidence.",
+      "source": "types-stage18-recursive-same-argument.pkl"
+    },
+    {
+      "expressions": "types-stage18-recursive-changing-argument.expressions",
+      "group": "T18",
+      "id": "types-stage18-recursive-changing-argument",
+      "note": "Complete raw pinned Java generic recursion, actual type arguments, inline/lambda use identity, shared let-root cache and erased let-root type variables; original invalid hypotheses and unmatched controls remain separate evidence.",
+      "source": "types-stage18-recursive-changing-argument.pkl"
+    },
+    {
+      "expressions": "types-stage18-recursive-local-inline-0.expressions",
+      "group": "T18",
+      "id": "types-stage18-recursive-local-inline-0",
+      "note": "Complete raw pinned Java generic recursion, actual type arguments, inline/lambda use identity, shared let-root cache and erased let-root type variables; original invalid hypotheses and unmatched controls remain separate evidence.",
+      "source": "types-stage18-recursive-local-inline-0.pkl"
+    },
+    {
+      "expressions": "types-stage18-recursive-local-inline-1.expressions",
+      "group": "T18",
+      "id": "types-stage18-recursive-local-inline-1",
+      "note": "Complete raw pinned Java generic recursion, actual type arguments, inline/lambda use identity, shared let-root cache and erased let-root type variables; original invalid hypotheses and unmatched controls remain separate evidence.",
+      "source": "types-stage18-recursive-local-inline-1.pkl"
+    },
+    {
+      "expressions": "types-stage18-recursive-local-inline-3.expressions",
+      "group": "T18",
+      "id": "types-stage18-recursive-local-inline-3",
+      "note": "Complete raw pinned Java generic recursion, actual type arguments, inline/lambda use identity, shared let-root cache and erased let-root type variables; original invalid hypotheses and unmatched controls remain separate evidence.",
+      "source": "types-stage18-recursive-local-inline-3.pkl"
+    },
+    {
+      "expressions": "types-stage18-recursive-local-let-0.expressions",
+      "group": "T18",
+      "id": "types-stage18-recursive-local-let-0",
+      "note": "Complete raw pinned Java generic recursion, actual type arguments, inline/lambda use identity, shared let-root cache and erased let-root type variables; original invalid hypotheses and unmatched controls remain separate evidence.",
+      "source": "types-stage18-recursive-local-let-0.pkl"
+    },
+    {
+      "expressions": "types-stage18-recursive-local-let-1.expressions",
+      "group": "T18",
+      "id": "types-stage18-recursive-local-let-1",
+      "note": "Complete raw pinned Java generic recursion, actual type arguments, inline/lambda use identity, shared let-root cache and erased let-root type variables; original invalid hypotheses and unmatched controls remain separate evidence.",
+      "source": "types-stage18-recursive-local-let-1.pkl"
+    },
+    {
+      "expressions": "types-stage18-recursive-local-let-3.expressions",
+      "group": "T18",
+      "id": "types-stage18-recursive-local-let-3",
+      "note": "Complete raw pinned Java generic recursion, actual type arguments, inline/lambda use identity, shared let-root cache and erased let-root type variables; original invalid hypotheses and unmatched controls remain separate evidence.",
+      "source": "types-stage18-recursive-local-let-3.pkl"
+    },
+    {
+      "expressions": "types-stage18-recursive-local-lambda-0.expressions",
+      "group": "T18",
+      "id": "types-stage18-recursive-local-lambda-0",
+      "note": "Complete raw pinned Java generic recursion, actual type arguments, inline/lambda use identity, shared let-root cache and erased let-root type variables; original invalid hypotheses and unmatched controls remain separate evidence.",
+      "source": "types-stage18-recursive-local-lambda-0.pkl"
+    },
+    {
+      "expressions": "types-stage18-recursive-local-lambda-1.expressions",
+      "group": "T18",
+      "id": "types-stage18-recursive-local-lambda-1",
+      "note": "Complete raw pinned Java generic recursion, actual type arguments, inline/lambda use identity, shared let-root cache and erased let-root type variables; original invalid hypotheses and unmatched controls remain separate evidence.",
+      "source": "types-stage18-recursive-local-lambda-1.pkl"
+    },
+    {
+      "expressions": "types-stage18-recursive-local-lambda-3.expressions",
+      "group": "T18",
+      "id": "types-stage18-recursive-local-lambda-3",
+      "note": "Complete raw pinned Java generic recursion, actual type arguments, inline/lambda use identity, shared let-root cache and erased let-root type variables; original invalid hypotheses and unmatched controls remain separate evidence.",
+      "source": "types-stage18-recursive-local-lambda-3.pkl"
+    },
+    {
+      "expressions": "types-stage18-typevar-inline.expressions",
+      "group": "T18",
+      "id": "types-stage18-typevar-inline",
+      "note": "Complete raw pinned Java generic recursion, actual type arguments, inline/lambda use identity, shared let-root cache and erased let-root type variables; original invalid hypotheses and unmatched controls remain separate evidence.",
+      "source": "types-stage18-typevar-inline.pkl"
+    },
+    {
+      "expressions": "types-stage18-typevar-let.expressions",
+      "group": "T18",
+      "id": "types-stage18-typevar-let",
+      "note": "Complete raw pinned Java generic recursion, actual type arguments, inline/lambda use identity, shared let-root cache and erased let-root type variables; original invalid hypotheses and unmatched controls remain separate evidence.",
+      "source": "types-stage18-typevar-let.pkl"
+    },
+    {
+      "expressions": "types-stage18-typevar-lambda.expressions",
+      "group": "T18",
+      "id": "types-stage18-typevar-lambda",
+      "note": "Complete raw pinned Java generic recursion, actual type arguments, inline/lambda use identity, shared let-root cache and erased let-root type variables; original invalid hypotheses and unmatched controls remain separate evidence.",
+      "source": "types-stage18-typevar-lambda.pkl"
+    },
+    {
+      "expressions": "types-stage18-typevar-let-shared-local.expressions",
+      "group": "T18",
+      "id": "types-stage18-typevar-let-shared-local",
+      "note": "Complete raw pinned Java generic recursion, actual type arguments, inline/lambda use identity, shared let-root cache and erased let-root type variables; original invalid hypotheses and unmatched controls remain separate evidence.",
+      "source": "types-stage18-typevar-let-shared-local.pkl"
+    },
+    {
+      "id": "types-stage18-default-mapping-class-union-types",
+      "source": "types-stage18-default-mapping-class-union-types.pkl",
+      "expressions": "types-stage18-default-mapping-class-union-types.expressions",
+      "group": "T18",
+      "note": "Complete raw Java class and default-union actual arguments with inferred generic collection defaults, healthy argument separation and throwing default retries. Original nullable, literal, missing-default, class-init and abstract diagnostic gaps remain exploratory failures."
+    },
+    {
+      "id": "types-stage18-default-mapping-failure-retry",
+      "source": "types-stage18-default-mapping-failure-retry.pkl",
+      "expressions": "types-stage18-default-mapping-failure-retry.expressions",
+      "group": "T18",
+      "note": "Complete raw Java class and default-union actual arguments with inferred generic collection defaults, healthy argument separation and throwing default retries. Original nullable, literal, missing-default, class-init and abstract diagnostic gaps remain exploratory failures."
+    },
+    {
+      "id": "types-stage18-default-listing-class-union-types",
+      "source": "types-stage18-default-listing-class-union-types.pkl",
+      "expressions": "types-stage18-default-listing-class-union-types.expressions",
+      "group": "T18",
+      "note": "Complete raw Java class and default-union actual arguments with inferred generic collection defaults, healthy argument separation and throwing default retries. Original nullable, literal, missing-default, class-init and abstract diagnostic gaps remain exploratory failures."
+    },
+    {
+      "id": "types-stage18-default-listing-failure-retry",
+      "source": "types-stage18-default-listing-failure-retry.pkl",
+      "expressions": "types-stage18-default-listing-failure-retry.expressions",
+      "group": "T18",
+      "note": "Complete raw Java class and default-union actual arguments with inferred generic collection defaults, healthy argument separation and throwing default retries. Original nullable, literal, missing-default, class-init and abstract diagnostic gaps remain exploratory failures."
+    },
+    {
+      "id": "types-stage18-default-nested-class-union-types",
+      "source": "types-stage18-default-nested-class-union-types.pkl",
+      "expressions": "types-stage18-default-nested-class-union-types.expressions",
+      "group": "T18",
+      "note": "Complete raw Java class and default-union actual arguments with inferred generic collection defaults, healthy argument separation and throwing default retries. Original nullable, literal, missing-default, class-init and abstract diagnostic gaps remain exploratory failures."
+    },
+    {
+      "id": "types-stage18-default-nested-failure-retry",
+      "source": "types-stage18-default-nested-failure-retry.pkl",
+      "expressions": "types-stage18-default-nested-failure-retry.expressions",
+      "group": "T18",
+      "note": "Complete raw Java class and default-union actual arguments with inferred generic collection defaults, healthy argument separation and throwing default retries. Original nullable, literal, missing-default, class-init and abstract diagnostic gaps remain exploratory failures."
+    },
+    {
+      "id": "types-stage18-reference-lambda-retry",
+      "source": "types-stage18-reference-lambda-retry.pkl",
+      "expressions": "types-stage18-reference-lambda-retry.expressions",
+      "group": "T18",
+      "note": "Complete raw Java generic Reference actual-argument validation and retry ordering for lambda and erased shared let-root call targets. Inline diagnostic frame gaps remain exploratory failures."
+    },
+    {
+      "id": "types-stage18-reference-let-retry",
+      "source": "types-stage18-reference-let-retry.pkl",
+      "expressions": "types-stage18-reference-let-retry.expressions",
+      "group": "T18",
+      "note": "Complete raw Java generic Reference actual-argument validation and retry ordering for lambda and erased shared let-root call targets. Inline diagnostic frame gaps remain exploratory failures."
     }
   ],
   "unexecuted_groups": [

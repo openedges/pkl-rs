@@ -1,0 +1,8 @@
+import "pkl:ref"
+class D extends ref.Domain {}
+typealias Positive = Int(this > 0)
+typealias A<T> = Int((n) -> n is ref.Reference<D, T>)
+one = 1 is A<Int(this > 0)>
+two = 2 is A<Int>
+three = 3 is A<Positive>
+stable = 42

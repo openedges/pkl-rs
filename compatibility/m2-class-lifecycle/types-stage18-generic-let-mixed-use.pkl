@@ -1,0 +1,8 @@
+local threshold = 0
+typealias A<T> = T(let (n = this) n < threshold)
+first: A<Int> = -1
+second: A<Int> = -2
+other: A<Float> = -3.0
+test = -4 is A<Int>
+cast = -5 as A<Int>
+stable = 42

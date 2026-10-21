@@ -21372,6 +21372,2304 @@
         "semantic:modifiers",
         "semantic:diagnostics"
       ]
+    },
+    {
+      "id": "types-stage18-original-recursive-generic-shadow",
+      "input": "tests/fixtures/m2/types-stage18-original-recursive-generic-shadow.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:type-tests-casts"
+      ]
+    },
+    {
+      "id": "types-stage18-recursive-depth-negative1",
+      "input": "tests/fixtures/m2/types-stage18-recursive-depth-negative1.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:type-tests-casts"
+      ]
+    },
+    {
+      "id": "types-stage18-recursive-depth-0",
+      "input": "tests/fixtures/m2/types-stage18-recursive-depth-0.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:type-tests-casts"
+      ]
+    },
+    {
+      "id": "types-stage18-recursive-depth-1",
+      "input": "tests/fixtures/m2/types-stage18-recursive-depth-1.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:type-tests-casts"
+      ]
+    },
+    {
+      "id": "types-stage18-recursive-depth-3",
+      "input": "tests/fixtures/m2/types-stage18-recursive-depth-3.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:type-tests-casts"
+      ]
+    },
+    {
+      "id": "types-stage18-recursive-depth-7",
+      "input": "tests/fixtures/m2/types-stage18-recursive-depth-7.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:type-tests-casts"
+      ]
+    },
+    {
+      "id": "types-stage18-recursive-changing-argument",
+      "input": "tests/fixtures/m2/types-stage18-recursive-changing-argument.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:type-tests-casts"
+      ],
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "types-stage18-recursive-changing-argument",
+          "types-stage18-recursive-mutual",
+          "types-stage18-recursive-swapped",
+          "types-stage18-recursive-nullable",
+          "types-stage18-recursive-union",
+          "types-stage18-recursive-cast"
+        ],
+        "domain": "Finite recursion preserves the scalar result across changing, mutual, swapped and wrapped actual type arguments."
+      }
+    },
+    {
+      "id": "types-stage18-recursive-mutual",
+      "input": "tests/fixtures/m2/types-stage18-recursive-mutual.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:type-tests-casts"
+      ],
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "types-stage18-recursive-changing-argument",
+          "types-stage18-recursive-mutual",
+          "types-stage18-recursive-swapped",
+          "types-stage18-recursive-nullable",
+          "types-stage18-recursive-union",
+          "types-stage18-recursive-cast"
+        ],
+        "domain": "Finite recursion preserves the scalar result across changing, mutual, swapped and wrapped actual type arguments."
+      }
+    },
+    {
+      "id": "types-stage18-recursive-swapped",
+      "input": "tests/fixtures/m2/types-stage18-recursive-swapped.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:type-tests-casts"
+      ],
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "types-stage18-recursive-changing-argument",
+          "types-stage18-recursive-mutual",
+          "types-stage18-recursive-swapped",
+          "types-stage18-recursive-nullable",
+          "types-stage18-recursive-union",
+          "types-stage18-recursive-cast"
+        ],
+        "domain": "Finite recursion preserves the scalar result across changing, mutual, swapped and wrapped actual type arguments."
+      }
+    },
+    {
+      "id": "types-stage18-recursive-nullable",
+      "input": "tests/fixtures/m2/types-stage18-recursive-nullable.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:type-tests-casts"
+      ],
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "types-stage18-recursive-changing-argument",
+          "types-stage18-recursive-mutual",
+          "types-stage18-recursive-swapped",
+          "types-stage18-recursive-nullable",
+          "types-stage18-recursive-union",
+          "types-stage18-recursive-cast"
+        ],
+        "domain": "Finite recursion preserves the scalar result across changing, mutual, swapped and wrapped actual type arguments."
+      }
+    },
+    {
+      "id": "types-stage18-recursive-union",
+      "input": "tests/fixtures/m2/types-stage18-recursive-union.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:type-tests-casts"
+      ],
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "types-stage18-recursive-changing-argument",
+          "types-stage18-recursive-mutual",
+          "types-stage18-recursive-swapped",
+          "types-stage18-recursive-nullable",
+          "types-stage18-recursive-union",
+          "types-stage18-recursive-cast"
+        ],
+        "domain": "Finite recursion preserves the scalar result across changing, mutual, swapped and wrapped actual type arguments."
+      }
+    },
+    {
+      "id": "types-stage18-recursive-cast",
+      "input": "tests/fixtures/m2/types-stage18-recursive-cast.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:type-tests-casts"
+      ],
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "types-stage18-recursive-changing-argument",
+          "types-stage18-recursive-mutual",
+          "types-stage18-recursive-swapped",
+          "types-stage18-recursive-nullable",
+          "types-stage18-recursive-union",
+          "types-stage18-recursive-cast"
+        ],
+        "domain": "Finite recursion preserves the scalar result across changing, mutual, swapped and wrapped actual type arguments."
+      }
+    },
+    {
+      "id": "types-stage18-base-match",
+      "input": "tests/fixtures/m2/types-stage18-base-match.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "id": "types-stage18-base-mismatch",
+      "input": "tests/fixtures/m2/types-stage18-base-mismatch.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "types-stage18-first-failure",
+      "input": "tests/fixtures/m2/types-stage18-first-failure.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "types-stage18-false-before-missing",
+      "input": "tests/fixtures/m2/types-stage18-false-before-missing.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "types-stage18-true-before-missing",
+      "input": "tests/fixtures/m2/types-stage18-true-before-missing.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "id": "types-stage18-missing-argument",
+      "input": "tests/fixtures/m2/types-stage18-missing-argument.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "types-stage18-recursive-wrong-arity",
+      "input": "tests/fixtures/m2/types-stage18-recursive-wrong-arity.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:type-tests-casts",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "types-stage18-unused-recursive",
+      "input": "tests/fixtures/m2/types-stage18-unused-recursive.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:type-tests-casts"
+      ]
+    },
+    {
+      "id": "types-stage18-alias-forward",
+      "input": "tests/fixtures/m2/types-stage18-alias-forward.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "id": "types-stage18-shadowed-parameter",
+      "input": "tests/fixtures/m2/types-stage18-shadowed-parameter.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "id": "types-stage18-nested-shadow",
+      "input": "tests/fixtures/m2/types-stage18-nested-shadow.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "id": "types-stage18-default",
+      "input": "tests/fixtures/m2/types-stage18-default.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "types-stage18-default-recursive",
+      "input": "tests/fixtures/m2/types-stage18-default-recursive.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:type-tests-casts",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "types-stage18-arity-before-child",
+      "input": "tests/fixtures/m2/types-stage18-arity-before-child.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "types-stage18-missing-before-constraint",
+      "input": "tests/fixtures/m2/types-stage18-missing-before-constraint.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "types-stage18-unrelated-missing-type",
+      "input": "tests/fixtures/m2/types-stage18-unrelated-missing-type.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "types-stage18-typevar-inline-is-int",
+      "input": "tests/fixtures/m2/types-stage18-typevar-inline-is-int.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:type-tests-casts"
+      ],
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "types-stage18-typevar-inline-is-int",
+          "types-stage18-typevar-let-is-int",
+          "types-stage18-typevar-lambda-is-int"
+        ],
+        "domain": "An Int type argument preserves the scalar is outcome across inline, let-root and lambda constraint bodies."
+      }
+    },
+    {
+      "id": "types-stage18-typevar-inline-is-string",
+      "input": "tests/fixtures/m2/types-stage18-typevar-inline-is-string.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:type-tests-casts"
+      ]
+    },
+    {
+      "id": "types-stage18-typevar-inline-as-int",
+      "input": "tests/fixtures/m2/types-stage18-typevar-inline-as-int.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:type-tests-casts"
+      ],
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "types-stage18-typevar-inline-as-int",
+          "types-stage18-typevar-let-as-int",
+          "types-stage18-typevar-lambda-as-int"
+        ],
+        "domain": "An Int type argument preserves the scalar as outcome across inline, let-root and lambda constraint bodies."
+      }
+    },
+    {
+      "id": "types-stage18-typevar-inline-as-string",
+      "input": "tests/fixtures/m2/types-stage18-typevar-inline-as-string.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:type-tests-casts",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "types-stage18-typevar-inline-annotation-int",
+      "input": "tests/fixtures/m2/types-stage18-typevar-inline-annotation-int.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation"
+      ],
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "types-stage18-typevar-inline-annotation-int",
+          "types-stage18-typevar-let-annotation-int",
+          "types-stage18-typevar-lambda-annotation-int"
+        ],
+        "domain": "An Int type argument preserves the scalar annotation outcome across inline, let-root and lambda constraint bodies."
+      }
+    },
+    {
+      "id": "types-stage18-typevar-inline-annotation-string",
+      "input": "tests/fixtures/m2/types-stage18-typevar-inline-annotation-string.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "types-stage18-typevar-let-is-int",
+      "input": "tests/fixtures/m2/types-stage18-typevar-let-is-int.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:type-tests-casts"
+      ],
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "types-stage18-typevar-inline-is-int",
+          "types-stage18-typevar-let-is-int",
+          "types-stage18-typevar-lambda-is-int"
+        ],
+        "domain": "An Int type argument preserves the scalar is outcome across inline, let-root and lambda constraint bodies."
+      }
+    },
+    {
+      "id": "types-stage18-typevar-let-is-string",
+      "input": "tests/fixtures/m2/types-stage18-typevar-let-is-string.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:type-tests-casts"
+      ]
+    },
+    {
+      "id": "types-stage18-typevar-let-as-int",
+      "input": "tests/fixtures/m2/types-stage18-typevar-let-as-int.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:type-tests-casts"
+      ],
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "types-stage18-typevar-inline-as-int",
+          "types-stage18-typevar-let-as-int",
+          "types-stage18-typevar-lambda-as-int"
+        ],
+        "domain": "An Int type argument preserves the scalar as outcome across inline, let-root and lambda constraint bodies."
+      }
+    },
+    {
+      "id": "types-stage18-typevar-let-as-string",
+      "input": "tests/fixtures/m2/types-stage18-typevar-let-as-string.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:type-tests-casts"
+      ]
+    },
+    {
+      "id": "types-stage18-typevar-let-annotation-int",
+      "input": "tests/fixtures/m2/types-stage18-typevar-let-annotation-int.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation"
+      ],
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "types-stage18-typevar-inline-annotation-int",
+          "types-stage18-typevar-let-annotation-int",
+          "types-stage18-typevar-lambda-annotation-int"
+        ],
+        "domain": "An Int type argument preserves the scalar annotation outcome across inline, let-root and lambda constraint bodies."
+      }
+    },
+    {
+      "id": "types-stage18-typevar-let-annotation-string",
+      "input": "tests/fixtures/m2/types-stage18-typevar-let-annotation-string.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "id": "types-stage18-typevar-lambda-is-int",
+      "input": "tests/fixtures/m2/types-stage18-typevar-lambda-is-int.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:functions",
+        "semantic:closures",
+        "semantic:type-tests-casts"
+      ],
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "types-stage18-typevar-inline-is-int",
+          "types-stage18-typevar-let-is-int",
+          "types-stage18-typevar-lambda-is-int"
+        ],
+        "domain": "An Int type argument preserves the scalar is outcome across inline, let-root and lambda constraint bodies."
+      }
+    },
+    {
+      "id": "types-stage18-typevar-lambda-is-string",
+      "input": "tests/fixtures/m2/types-stage18-typevar-lambda-is-string.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:functions",
+        "semantic:closures",
+        "semantic:type-tests-casts"
+      ]
+    },
+    {
+      "id": "types-stage18-typevar-lambda-as-int",
+      "input": "tests/fixtures/m2/types-stage18-typevar-lambda-as-int.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:functions",
+        "semantic:closures",
+        "semantic:type-tests-casts"
+      ],
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "types-stage18-typevar-inline-as-int",
+          "types-stage18-typevar-let-as-int",
+          "types-stage18-typevar-lambda-as-int"
+        ],
+        "domain": "An Int type argument preserves the scalar as outcome across inline, let-root and lambda constraint bodies."
+      }
+    },
+    {
+      "id": "types-stage18-typevar-lambda-as-string",
+      "input": "tests/fixtures/m2/types-stage18-typevar-lambda-as-string.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:functions",
+        "semantic:closures",
+        "semantic:type-tests-casts",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "types-stage18-typevar-lambda-annotation-int",
+      "input": "tests/fixtures/m2/types-stage18-typevar-lambda-annotation-int.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:functions",
+        "semantic:closures"
+      ],
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "types-stage18-typevar-inline-annotation-int",
+          "types-stage18-typevar-let-annotation-int",
+          "types-stage18-typevar-lambda-annotation-int"
+        ],
+        "domain": "An Int type argument preserves the scalar annotation outcome across inline, let-root and lambda constraint bodies."
+      }
+    },
+    {
+      "id": "types-stage18-typevar-lambda-annotation-string",
+      "input": "tests/fixtures/m2/types-stage18-typevar-lambda-annotation-string.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:functions",
+        "semantic:closures",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "types-stage18-typevar-inline-wrapper-list",
+      "input": "tests/fixtures/m2/types-stage18-typevar-inline-wrapper-list.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:collections",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "types-stage18-typevar-let-wrapper-list",
+      "input": "tests/fixtures/m2/types-stage18-typevar-let-wrapper-list.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:collections"
+      ],
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "types-stage18-typevar-let-wrapper-list",
+          "types-stage18-typevar-let-wrapper-listing",
+          "types-stage18-typevar-let-wrapper-mapping"
+        ],
+        "domain": "Java generic let-root type-variable erasure preserves the scalar value through strict List and lazy Listing/Mapping wrappers."
+      }
+    },
+    {
+      "id": "types-stage18-typevar-inline-wrapper-listing",
+      "input": "tests/fixtures/m2/types-stage18-typevar-inline-wrapper-listing.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:collections",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "types-stage18-typevar-let-wrapper-listing",
+      "input": "tests/fixtures/m2/types-stage18-typevar-let-wrapper-listing.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:collections"
+      ],
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "types-stage18-typevar-let-wrapper-list",
+          "types-stage18-typevar-let-wrapper-listing",
+          "types-stage18-typevar-let-wrapper-mapping"
+        ],
+        "domain": "Java generic let-root type-variable erasure preserves the scalar value through strict List and lazy Listing/Mapping wrappers."
+      }
+    },
+    {
+      "id": "types-stage18-typevar-inline-wrapper-mapping",
+      "input": "tests/fixtures/m2/types-stage18-typevar-inline-wrapper-mapping.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:collections",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "types-stage18-typevar-let-wrapper-mapping",
+      "input": "tests/fixtures/m2/types-stage18-typevar-let-wrapper-mapping.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:collections"
+      ],
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "types-stage18-typevar-let-wrapper-list",
+          "types-stage18-typevar-let-wrapper-listing",
+          "types-stage18-typevar-let-wrapper-mapping"
+        ],
+        "domain": "Java generic let-root type-variable erasure preserves the scalar value through strict List and lazy Listing/Mapping wrappers."
+      }
+    },
+    {
+      "id": "types-stage18-recursive-failure-power-false",
+      "input": "tests/fixtures/m2/types-stage18-recursive-failure-power-false.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:type-tests-casts",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "types-stage18-recursive-failure-power-true",
+      "input": "tests/fixtures/m2/types-stage18-recursive-failure-power-true.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:type-tests-casts",
+        "semantic:diagnostics"
+      ],
+      "power_assertions": true
+    },
+    {
+      "id": "types-stage18-countdown-int",
+      "input": "tests/fixtures/m2/types-stage18-countdown-int.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "id": "types-stage18-countdown-string",
+      "input": "tests/fixtures/m2/types-stage18-countdown-string.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "id": "types-stage18-grow",
+      "input": "tests/fixtures/m2/types-stage18-grow.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "id": "types-stage18-root-identity-int",
+      "input": "tests/fixtures/m2/types-stage18-root-identity-int.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "id": "types-stage18-root-identity-string-bad",
+      "input": "tests/fixtures/m2/types-stage18-root-identity-string-bad.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "types-stage18-root-identity-string",
+      "input": "tests/fixtures/m2/types-stage18-root-identity-string.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "id": "types-stage18-through-identity",
+      "input": "tests/fixtures/m2/types-stage18-through-identity.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "id": "types-stage18-changing-through-identity",
+      "input": "tests/fixtures/m2/types-stage18-changing-through-identity.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "id": "types-stage18-constrained-argument",
+      "input": "tests/fixtures/m2/types-stage18-constrained-argument.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "id": "types-stage18-root-parameter-constrained",
+      "input": "tests/fixtures/m2/types-stage18-root-parameter-constrained.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "id": "types-stage18-nested-constrained-root",
+      "input": "tests/fixtures/m2/types-stage18-nested-constrained-root.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "id": "types-stage18-builtin-name-shadow",
+      "input": "tests/fixtures/m2/types-stage18-builtin-name-shadow.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "id": "types-stage18-nested-union",
+      "input": "tests/fixtures/m2/types-stage18-nested-union.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "id": "types-stage18-nested-nullable",
+      "input": "tests/fixtures/m2/types-stage18-nested-nullable.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "id": "types-stage18-list-argument",
+      "input": "tests/fixtures/m2/types-stage18-list-argument.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:collections"
+      ]
+    },
+    {
+      "id": "types-stage18-function-parameter-pipe",
+      "input": "tests/fixtures/m2/types-stage18-function-parameter-pipe.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:functions",
+        "semantic:closures"
+      ]
+    },
+    {
+      "id": "types-stage18-const-let-body",
+      "input": "tests/fixtures/m2/types-stage18-const-let-body.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:name-resolution",
+        "semantic:control-flow",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "id": "types-stage18-const-let-initializer",
+      "input": "tests/fixtures/m2/types-stage18-const-let-initializer.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:name-resolution",
+        "semantic:control-flow",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "types-stage18-const-let-nested",
+      "input": "tests/fixtures/m2/types-stage18-const-let-nested.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:name-resolution",
+        "semantic:control-flow",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "id": "types-stage18-const-let-lambda",
+      "input": "tests/fixtures/m2/types-stage18-const-let-lambda.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:name-resolution",
+        "semantic:control-flow",
+        "semantic:lazy-evaluation",
+        "semantic:functions",
+        "semantic:closures",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "types-stage18-const-let-lambda-let",
+      "input": "tests/fixtures/m2/types-stage18-const-let-lambda-let.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:name-resolution",
+        "semantic:control-flow",
+        "semantic:lazy-evaluation",
+        "semantic:functions",
+        "semantic:closures",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "types-stage18-const-let-nested-lambda",
+      "input": "tests/fixtures/m2/types-stage18-const-let-nested-lambda.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:name-resolution",
+        "semantic:control-flow",
+        "semantic:lazy-evaluation",
+        "semantic:functions",
+        "semantic:closures"
+      ]
+    },
+    {
+      "id": "types-stage18-const-let-method",
+      "input": "tests/fixtures/m2/types-stage18-const-let-method.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:name-resolution",
+        "semantic:control-flow",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "id": "types-stage18-const-let-this",
+      "input": "tests/fixtures/m2/types-stage18-const-let-this.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:name-resolution",
+        "semantic:control-flow",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "id": "types-stage18-const-let-module",
+      "input": "tests/fixtures/m2/types-stage18-const-let-module.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:name-resolution",
+        "semantic:control-flow",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "types-stage18-const-let-outer-value",
+      "input": "tests/fixtures/m2/types-stage18-const-let-outer-value.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:name-resolution",
+        "semantic:control-flow",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "types-stage18-const-let-annotation",
+      "input": "tests/fixtures/m2/types-stage18-const-let-annotation.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:name-resolution",
+        "semantic:control-flow",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "types-stage18-const-let-empty-binding",
+      "input": "tests/fixtures/m2/types-stage18-const-let-empty-binding.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:name-resolution",
+        "semantic:control-flow",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "id": "types-stage18-const-listing-element",
+      "input": "tests/fixtures/m2/types-stage18-const-listing-element.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:name-resolution",
+        "semantic:control-flow",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "types-stage18-const-for-element",
+      "input": "tests/fixtures/m2/types-stage18-const-for-element.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:name-resolution",
+        "semantic:control-flow",
+        "semantic:lazy-evaluation",
+        "semantic:generators",
+        "semantic:collections"
+      ]
+    },
+    {
+      "id": "types-stage18-const-listing-lambda",
+      "input": "tests/fixtures/m2/types-stage18-const-listing-lambda.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:name-resolution",
+        "semantic:control-flow",
+        "semantic:lazy-evaluation",
+        "semantic:functions",
+        "semantic:closures",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "types-stage18-const-for-lambda",
+      "input": "tests/fixtures/m2/types-stage18-const-for-lambda.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:name-resolution",
+        "semantic:control-flow",
+        "semantic:lazy-evaluation",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:functions",
+        "semantic:closures",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "types-stage18-const-listing-let",
+      "input": "tests/fixtures/m2/types-stage18-const-listing-let.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:name-resolution",
+        "semantic:control-flow",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "id": "types-stage18-const-for-let",
+      "input": "tests/fixtures/m2/types-stage18-const-for-let.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:name-resolution",
+        "semantic:control-flow",
+        "semantic:lazy-evaluation",
+        "semantic:generators",
+        "semantic:collections"
+      ]
+    },
+    {
+      "id": "types-stage18-const-listing-module",
+      "input": "tests/fixtures/m2/types-stage18-const-listing-module.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:name-resolution",
+        "semantic:control-flow",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "types-stage18-const-for-module",
+      "input": "tests/fixtures/m2/types-stage18-const-for-module.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:name-resolution",
+        "semantic:control-flow",
+        "semantic:lazy-evaluation",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "types-stage18-const-listing-method",
+      "input": "tests/fixtures/m2/types-stage18-const-listing-method.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:name-resolution",
+        "semantic:control-flow",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "types-stage18-const-for-method",
+      "input": "tests/fixtures/m2/types-stage18-const-for-method.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:name-resolution",
+        "semantic:control-flow",
+        "semantic:lazy-evaluation",
+        "semantic:generators",
+        "semantic:collections"
+      ]
+    },
+    {
+      "id": "types-stage18-const-generator-when",
+      "input": "tests/fixtures/m2/types-stage18-const-generator-when.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:name-resolution",
+        "semantic:control-flow",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "id": "types-stage18-const-generator-when-lambda",
+      "input": "tests/fixtures/m2/types-stage18-const-generator-when-lambda.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:name-resolution",
+        "semantic:control-flow",
+        "semantic:lazy-evaluation",
+        "semantic:functions",
+        "semantic:closures",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "types-stage18-const-generator-spread",
+      "input": "tests/fixtures/m2/types-stage18-const-generator-spread.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:name-resolution",
+        "semantic:control-flow",
+        "semantic:lazy-evaluation",
+        "semantic:generators",
+        "semantic:collections"
+      ]
+    },
+    {
+      "id": "types-stage18-const-generator-spread-lambda",
+      "input": "tests/fixtures/m2/types-stage18-const-generator-spread-lambda.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:name-resolution",
+        "semantic:control-flow",
+        "semantic:lazy-evaluation",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:functions",
+        "semantic:closures",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "types-stage18-const-generator-iterable",
+      "input": "tests/fixtures/m2/types-stage18-const-generator-iterable.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:name-resolution",
+        "semantic:control-flow",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "id": "types-stage18-const-generator-iterable-lambda",
+      "input": "tests/fixtures/m2/types-stage18-const-generator-iterable-lambda.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:name-resolution",
+        "semantic:control-flow",
+        "semantic:lazy-evaluation",
+        "semantic:functions",
+        "semantic:closures",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "types-stage18-const-generator-for-when",
+      "input": "tests/fixtures/m2/types-stage18-const-generator-for-when.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:name-resolution",
+        "semantic:control-flow",
+        "semantic:lazy-evaluation",
+        "semantic:generators",
+        "semantic:collections"
+      ]
+    },
+    {
+      "id": "types-stage18-const-generator-for-nested",
+      "input": "tests/fixtures/m2/types-stage18-const-generator-for-nested.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:name-resolution",
+        "semantic:control-flow",
+        "semantic:lazy-evaluation",
+        "semantic:generators",
+        "semantic:collections"
+      ]
+    },
+    {
+      "id": "types-stage18-const-entry-key",
+      "input": "tests/fixtures/m2/types-stage18-const-entry-key.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:name-resolution",
+        "semantic:control-flow",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "types-stage18-const-class-let",
+      "input": "tests/fixtures/m2/types-stage18-const-class-let.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:name-resolution",
+        "semantic:control-flow",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "id": "types-stage18-class-for-module",
+      "input": "tests/fixtures/m2/types-stage18-class-for-module.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:name-resolution",
+        "semantic:control-flow",
+        "semantic:lazy-evaluation",
+        "semantic:generators",
+        "semantic:collections",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "types-stage18-following-const",
+      "input": "tests/fixtures/m2/types-stage18-following-const.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:name-resolution",
+        "semantic:control-flow",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "types-stage18-default-mapping-class-c",
+      "input": "tests/fixtures/m2/types-stage18-default-mapping-class-c.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:generics",
+        "semantic:constraints",
+        "semantic:type-aliases",
+        "semantic:collections",
+        "semantic:classes",
+        "semantic:lazy-evaluation"
+      ],
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "types-stage18-default-mapping-class-c",
+          "types-stage18-default-listing-class-c",
+          "types-stage18-default-nested-class-c"
+        ],
+        "domain": "A class actual type argument preserves successful inferred default construction across Mapping, Listing, and nested Mapping constraint bodies."
+      }
+    },
+    {
+      "id": "types-stage18-default-mapping-class-d",
+      "input": "tests/fixtures/m2/types-stage18-default-mapping-class-d.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:generics",
+        "semantic:constraints",
+        "semantic:type-aliases",
+        "semantic:collections",
+        "semantic:classes",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "id": "types-stage18-default-mapping-union",
+      "input": "tests/fixtures/m2/types-stage18-default-mapping-union.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:generics",
+        "semantic:constraints",
+        "semantic:type-aliases",
+        "semantic:collections",
+        "semantic:classes",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "id": "types-stage18-default-mapping-missing-type",
+      "input": "tests/fixtures/m2/types-stage18-default-mapping-missing-type.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:types",
+        "semantic:generics",
+        "semantic:constraints",
+        "semantic:type-aliases",
+        "semantic:collections",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "types-stage18-default-mapping-throwing",
+      "input": "tests/fixtures/m2/types-stage18-default-mapping-throwing.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:types",
+        "semantic:generics",
+        "semantic:constraints",
+        "semantic:type-aliases",
+        "semantic:collections",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "types-stage18-default-mapping-undefined",
+      "input": "tests/fixtures/m2/types-stage18-default-mapping-undefined.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:types",
+        "semantic:generics",
+        "semantic:constraints",
+        "semantic:type-aliases",
+        "semantic:collections",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "types-stage18-default-listing-class-c",
+      "input": "tests/fixtures/m2/types-stage18-default-listing-class-c.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:generics",
+        "semantic:constraints",
+        "semantic:type-aliases",
+        "semantic:collections",
+        "semantic:classes",
+        "semantic:lazy-evaluation"
+      ],
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "types-stage18-default-mapping-class-c",
+          "types-stage18-default-listing-class-c",
+          "types-stage18-default-nested-class-c"
+        ],
+        "domain": "A class actual type argument preserves successful inferred default construction across Mapping, Listing, and nested Mapping constraint bodies."
+      }
+    },
+    {
+      "id": "types-stage18-default-listing-class-d",
+      "input": "tests/fixtures/m2/types-stage18-default-listing-class-d.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:generics",
+        "semantic:constraints",
+        "semantic:type-aliases",
+        "semantic:collections",
+        "semantic:classes",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "id": "types-stage18-default-listing-union",
+      "input": "tests/fixtures/m2/types-stage18-default-listing-union.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:generics",
+        "semantic:constraints",
+        "semantic:type-aliases",
+        "semantic:collections",
+        "semantic:classes",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "id": "types-stage18-default-listing-literal",
+      "input": "tests/fixtures/m2/types-stage18-default-listing-literal.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:types",
+        "semantic:generics",
+        "semantic:constraints",
+        "semantic:type-aliases",
+        "semantic:collections",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "types-stage18-default-listing-missing-type",
+      "input": "tests/fixtures/m2/types-stage18-default-listing-missing-type.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:types",
+        "semantic:generics",
+        "semantic:constraints",
+        "semantic:type-aliases",
+        "semantic:collections",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "types-stage18-default-listing-throwing",
+      "input": "tests/fixtures/m2/types-stage18-default-listing-throwing.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:types",
+        "semantic:generics",
+        "semantic:constraints",
+        "semantic:type-aliases",
+        "semantic:collections",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "types-stage18-default-listing-undefined",
+      "input": "tests/fixtures/m2/types-stage18-default-listing-undefined.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:types",
+        "semantic:generics",
+        "semantic:constraints",
+        "semantic:type-aliases",
+        "semantic:collections",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "types-stage18-default-nested-class-c",
+      "input": "tests/fixtures/m2/types-stage18-default-nested-class-c.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:generics",
+        "semantic:constraints",
+        "semantic:type-aliases",
+        "semantic:collections",
+        "semantic:classes",
+        "semantic:lazy-evaluation"
+      ],
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "types-stage18-default-mapping-class-c",
+          "types-stage18-default-listing-class-c",
+          "types-stage18-default-nested-class-c"
+        ],
+        "domain": "A class actual type argument preserves successful inferred default construction across Mapping, Listing, and nested Mapping constraint bodies."
+      }
+    },
+    {
+      "id": "types-stage18-default-nested-class-d",
+      "input": "tests/fixtures/m2/types-stage18-default-nested-class-d.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:generics",
+        "semantic:constraints",
+        "semantic:type-aliases",
+        "semantic:collections",
+        "semantic:classes",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "id": "types-stage18-default-nested-union",
+      "input": "tests/fixtures/m2/types-stage18-default-nested-union.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:generics",
+        "semantic:constraints",
+        "semantic:type-aliases",
+        "semantic:collections",
+        "semantic:classes",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "id": "types-stage18-default-nested-missing-type",
+      "input": "tests/fixtures/m2/types-stage18-default-nested-missing-type.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:types",
+        "semantic:generics",
+        "semantic:constraints",
+        "semantic:type-aliases",
+        "semantic:collections",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "types-stage18-default-nested-throwing",
+      "input": "tests/fixtures/m2/types-stage18-default-nested-throwing.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:types",
+        "semantic:generics",
+        "semantic:constraints",
+        "semantic:type-aliases",
+        "semantic:collections",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "types-stage18-default-nested-undefined",
+      "input": "tests/fixtures/m2/types-stage18-default-nested-undefined.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:types",
+        "semantic:generics",
+        "semantic:constraints",
+        "semantic:type-aliases",
+        "semantic:collections",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "types-stage18-default-style-inline",
+      "input": "tests/fixtures/m2/types-stage18-default-style-inline.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:generics",
+        "semantic:constraints",
+        "semantic:type-aliases",
+        "semantic:collections",
+        "semantic:classes",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "id": "types-stage18-default-style-lambda",
+      "input": "tests/fixtures/m2/types-stage18-default-style-lambda.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:generics",
+        "semantic:constraints",
+        "semantic:type-aliases",
+        "semantic:collections",
+        "semantic:classes",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "id": "types-stage18-default-nonempty-amend",
+      "input": "tests/fixtures/m2/types-stage18-default-nonempty-amend.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:generics",
+        "semantic:constraints",
+        "semantic:type-aliases",
+        "semantic:collections",
+        "semantic:classes",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "id": "types-stage18-default-init-before-value",
+      "input": "tests/fixtures/m2/types-stage18-default-init-before-value.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:types",
+        "semantic:generics",
+        "semantic:constraints",
+        "semantic:type-aliases",
+        "semantic:collections",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "types-stage18-reference-inline-plain",
+      "input": "tests/fixtures/m2/types-stage18-reference-inline-plain.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:generics",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:reference",
+        "semantic:type-tests-casts",
+        "semantic:lazy-evaluation"
+      ],
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "types-stage18-reference-inline-plain",
+          "types-stage18-reference-lambda-plain",
+          "types-stage18-reference-let-plain"
+        ],
+        "domain": "Plain generic Reference referent metadata preserves the false scalar type-test result across inline, lambda and shared let-root constraints."
+      }
+    },
+    {
+      "id": "types-stage18-reference-lambda-plain",
+      "input": "tests/fixtures/m2/types-stage18-reference-lambda-plain.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:generics",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:reference",
+        "semantic:type-tests-casts",
+        "semantic:lazy-evaluation",
+        "semantic:functions",
+        "semantic:closures"
+      ],
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "types-stage18-reference-inline-plain",
+          "types-stage18-reference-lambda-plain",
+          "types-stage18-reference-let-plain"
+        ],
+        "domain": "Plain generic Reference referent metadata preserves the false scalar type-test result across inline, lambda and shared let-root constraints."
+      }
+    },
+    {
+      "id": "types-stage18-reference-lambda-constrained",
+      "input": "tests/fixtures/m2/types-stage18-reference-lambda-constrained.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:types",
+        "semantic:generics",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:reference",
+        "semantic:type-tests-casts",
+        "semantic:lazy-evaluation",
+        "semantic:functions",
+        "semantic:closures",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "types-stage18-reference-lambda-alias",
+      "input": "tests/fixtures/m2/types-stage18-reference-lambda-alias.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:types",
+        "semantic:generics",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:reference",
+        "semantic:type-tests-casts",
+        "semantic:lazy-evaluation",
+        "semantic:functions",
+        "semantic:closures",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "types-stage18-reference-lambda-nested",
+      "input": "tests/fixtures/m2/types-stage18-reference-lambda-nested.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:types",
+        "semantic:generics",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:reference",
+        "semantic:type-tests-casts",
+        "semantic:lazy-evaluation",
+        "semantic:functions",
+        "semantic:closures",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "types-stage18-reference-let-plain",
+      "input": "tests/fixtures/m2/types-stage18-reference-let-plain.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:generics",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:reference",
+        "semantic:type-tests-casts",
+        "semantic:lazy-evaluation"
+      ],
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "types-stage18-reference-inline-plain",
+          "types-stage18-reference-lambda-plain",
+          "types-stage18-reference-let-plain"
+        ],
+        "domain": "Plain generic Reference referent metadata preserves the false scalar type-test result across inline, lambda and shared let-root constraints."
+      }
+    },
+    {
+      "id": "types-stage18-reference-let-constrained",
+      "input": "tests/fixtures/m2/types-stage18-reference-let-constrained.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:generics",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:reference",
+        "semantic:type-tests-casts",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "id": "types-stage18-reference-let-alias",
+      "input": "tests/fixtures/m2/types-stage18-reference-let-alias.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:generics",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:reference",
+        "semantic:type-tests-casts",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "id": "types-stage18-reference-let-nested",
+      "input": "tests/fixtures/m2/types-stage18-reference-let-nested.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:generics",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:reference",
+        "semantic:type-tests-casts",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "id": "types-stage18-reference-shortcircuit-negative1",
+      "input": "tests/fixtures/m2/types-stage18-reference-shortcircuit-negative1.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:generics",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:reference",
+        "semantic:type-tests-casts",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "id": "types-stage18-reference-before-throw-lambda",
+      "input": "tests/fixtures/m2/types-stage18-reference-before-throw-lambda.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:types",
+        "semantic:generics",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:reference",
+        "semantic:type-tests-casts",
+        "semantic:lazy-evaluation",
+        "semantic:functions",
+        "semantic:closures",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "types-stage18-reference-before-throw-let",
+      "input": "tests/fixtures/m2/types-stage18-reference-before-throw-let.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:types",
+        "semantic:generics",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:reference",
+        "semantic:type-tests-casts",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
     }
   ],
   "schema_version": 1,

@@ -207,6 +207,8 @@ enum ConstScopeKind {
     Object,
     Method,
     Lambda,
+    Let,
+    For,
 }
 
 struct ConstScope {
@@ -613,7 +615,13 @@ impl<'a> Resolver<'a> {
                     }
                     self.eager_expression(iterable, false)?;
                     self.scopes.push(Scope::GeneratorParameters(parameters));
+                    self.const_scopes.push(ConstScope {
+                        level: self.const_level,
+                        kind: ConstScopeKind::For,
+                        lookup: true,
+                    });
                     self.object_body(members, Some(*span))?;
+                    self.const_scopes.pop();
                     self.scopes.pop();
                 }
             }
@@ -870,7 +878,7 @@ impl<'a> Resolver<'a> {
                             levels_up += 1;
                         }
                         ConstScopeKind::Lambda => levels_up += 1,
-                        ConstScopeKind::Method => {}
+                        ConstScopeKind::Method | ConstScopeKind::Let | ConstScopeKind::For => {}
                     }
                 }
                 levels_up >= self.const_scope_count()
@@ -879,7 +887,7 @@ impl<'a> Resolver<'a> {
     }
 
     fn const_scope_count(&self) -> usize {
-        // Java methods create const scope barriers without increasing lexical
+        // Methods, lets and for scopes create const barriers without increasing
         // lookup depth; lambdas increase lookup depth without adding barriers.
         self.const_scopes
             .iter()
@@ -1119,7 +1127,13 @@ impl<'a> Resolver<'a> {
                     self.diagnostic_path.push("<let expr>".to_owned());
                 }
                 self.scopes.push(Scope::Let(name));
+                self.const_scopes.push(ConstScope {
+                    level: self.const_level,
+                    kind: ConstScopeKind::Let,
+                    lookup: true,
+                });
                 self.expression(body, contextual_new)?;
+                self.const_scopes.pop();
                 self.scopes.pop();
                 if !nested_let {
                     self.diagnostic_path.pop();

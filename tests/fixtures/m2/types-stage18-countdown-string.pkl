@@ -1,0 +1,2 @@
+typealias Countdown<T> = Int(this < 0 || (true && this is T && (this - 1) is Countdown<T>))
+result = 2 is Countdown<String>

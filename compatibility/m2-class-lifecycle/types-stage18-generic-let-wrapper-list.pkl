@@ -1,0 +1,6 @@
+local threshold = 0
+typealias A<T> = T(let (n = this) n < threshold)
+items: List<A<Int>> = List(-1, -2)
+first = items[0]
+second = items[1]
+stable = 42

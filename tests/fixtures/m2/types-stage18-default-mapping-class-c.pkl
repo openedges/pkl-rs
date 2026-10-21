@@ -1,0 +1,4 @@
+class C { p = 1 }
+class D { p = 2 }
+typealias A<T> = Int((new Mapping<String, T> {["k"] {}})["k"].p > 0)
+result: A<C> = 1

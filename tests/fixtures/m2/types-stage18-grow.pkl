@@ -1,0 +1,2 @@
+typealias Grow<T> = Int(this < 0 || (true && (this - 1) is Grow<List<T>>))
+result = 2 is Grow<Int>

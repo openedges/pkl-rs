@@ -1,0 +1,7 @@
+class C { p = 1 }
+class D { p = 2 }
+typealias A<T> = Int((new Mapping<String, Mapping<String,T>> {["outer"] { ["inner"] {} }})["outer"]["inner"].p > 0)
+one: A<C> = 1
+two: A<D> = 2
+three: A<*C|String> = 3
+stable = 42

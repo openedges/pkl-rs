@@ -1,0 +1,2 @@
+typealias A<T> = Int((n) -> n is T)
+result = 2 as A<String>

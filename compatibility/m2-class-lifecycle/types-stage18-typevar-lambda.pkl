@@ -1,0 +1,6 @@
+typealias A<T> = Int((n) -> n is T)
+one: A<Int> = 1
+two: A<String> = 2
+three = 3 is A<String>
+four = 4 as A<String>
+stable = 42

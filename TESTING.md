@@ -142,6 +142,20 @@ cancellation, and complete terminal release. `Class<T>` cases verify erased
 arguments without publishing broken declarations, while preserving alias argument
 resolution and wrong-arity errors.
 
+Finite generic recursion additionally compares changing `List<T>` arguments,
+mutual recursion, parameter shadowing, first failures, and inline/lambda versus
+shared let targets. Persistent sequences use different actual arguments within
+one evaluator. Native tests carry these argument environments through real Host
+suspension, child reentry, failure retry, GC at each yield, cancellation, and
+terminal release. The original infinitely expanding generic predicate retains
+its observed native-stack abort as a failure; bounded yielding and cancellation
+are separate lifecycle assertions. Let/for const cases distinguish body scope
+from initializers, annotations, eager generator inputs, lambdas, and sibling
+members. Generic collection defaults retain original Java and pre-change Rust
+controls. Reference metadata checks separately cover constrained actual arguments,
+validation before a throwing value, deferred branches, shared let roots, and
+persistent retries; existing inline diagnostic gaps remain failed observations.
+
 Constraint receiver tests distinguish same-call mutation from separate function,
 member, let-root, and Host reentry frames. Lambda receiver capture is checked at
 creation, with GC between instructions and explicit cycle reclamation after
@@ -211,9 +225,10 @@ child hash and retries the count without forcing entry values.
 
 Let diagnostics compare complete Java output for nested bodies, initializer
 failures, typed bindings, captured members/functions, and constraints with their
-own logical root. Recursive call controls distinguish inserted let frames from
-the still-open repeated-frame compression requirement. Failed exploratory
-captures remain retained alongside promoted regressions.
+own logical root. Recursive call controls distinguish inserted let frames and
+selected uncolored repeated-frame compression. General stack-overflow and
+colored-output behavior remain open. Failed exploratory captures remain
+retained alongside promoted regressions.
 
 Type-use ownership tests distinguish persistent executable nodes from per-call
 constraint receiver slots. Retained-heap assertions count ordinary values and
@@ -222,8 +237,9 @@ require zero total entries after terminal cleanup. They cover source-level Host
 reentry, cancellation before and after local resolution, independent evaluator
 state, recursive retries, and lazy collection members. Persistent Java sequences
 and Node/browser scenarios compare complete ordered outcomes separately from
-these internal lifetime checks. Generic instantiation and the complete lexical
-scope model remain outside this bounded contract.
+these internal lifetime checks. Finite generic instantiation and selected
+let/for boundaries are included; complete generic instantiation, alias-root
+identity, and the full lexical scope model remain outside this bounded contract.
 
 M1 experiments have narrower, explicit contracts:
 

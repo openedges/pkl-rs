@@ -1,0 +1,5 @@
+import "pkl:ref"
+class D extends ref.Domain {}
+typealias Positive = Int(this > 0)
+typealias A<T> = Int(this < 0 || this is ref.Reference<D, T>)
+result = -1 is A<Positive>

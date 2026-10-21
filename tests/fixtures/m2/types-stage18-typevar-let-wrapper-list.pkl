@@ -1,0 +1,3 @@
+typealias A<T> = Int(let (n = this) n is T)
+items: List<A<String>> = List(2)
+result = items[0]

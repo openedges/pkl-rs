@@ -644,6 +644,22 @@ impl Vm {
                 let target = self.builder()?;
                 self.heap.get_mut(target)?.collection_default = Some(value);
             }
+            Instruction::SetCollectionTypeDefault(ty) => {
+                let environment = self
+                    .frames
+                    .last()
+                    .expect("active frame")
+                    .environment
+                    .clone();
+                let ty = ty.substituted(&environment)?;
+                let value = if ty.noop() {
+                    None
+                } else {
+                    Some(self.generic_default_value(&ty, &environment)?)
+                };
+                let target = self.builder()?;
+                self.heap.get_mut(target)?.collection_default = value;
+            }
             Instruction::EndCollection => {
                 let id = self
                     .frames

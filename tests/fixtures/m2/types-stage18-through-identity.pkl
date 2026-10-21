@@ -1,0 +1,3 @@
+typealias Identity<U> = U
+typealias A<T> = Int(this < 0 || (this - 1) is Identity<A<T>>)
+result: A<Int> = 2

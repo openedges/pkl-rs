@@ -1,0 +1,3 @@
+class DefaultValue { p = 42; marker = 0 }
+typealias ViaDefault<T> = Int((new Mapping<String, T> {["key"] { marker = 7 }})["key"].p == this)
+result: ViaDefault<DefaultValue> = 42

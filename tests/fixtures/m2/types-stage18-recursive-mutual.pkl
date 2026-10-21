@@ -1,0 +1,3 @@
+typealias A<T> = Int(this < 0 || (this - 1) is B<T>)
+typealias B<T> = Int(this < 0 || (this - 1) is A<List<T>>)
+result: A<String> = 3

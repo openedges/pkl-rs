@@ -1,0 +1,3 @@
+typealias B<U> = U
+typealias A<T> = B<T>(this < 0 || (this - 1) is A<T>)
+result: A<Int> = 2

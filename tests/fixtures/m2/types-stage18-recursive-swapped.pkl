@@ -1,0 +1,2 @@
+typealias A<T, U> = Int(this < 0 || (this - 1) is A<U, T>)
+result: A<String, Float> = 3

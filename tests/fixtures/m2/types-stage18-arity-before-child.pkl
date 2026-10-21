@@ -1,0 +1,2 @@
+typealias A<T> = Int(this < 0 || (this - 1) is A<T>)
+result: A<Missing, Missing2> = 2

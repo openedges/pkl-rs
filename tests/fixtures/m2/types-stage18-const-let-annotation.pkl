@@ -1,0 +1,5 @@
+module stage18.scopes
+local threshold=2
+value=2
+function f()=2
+const result=let(n:Int(this<threshold)=1)n

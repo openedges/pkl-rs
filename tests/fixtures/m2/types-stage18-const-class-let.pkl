@@ -1,0 +1,6 @@
+module stage18.scopes
+local threshold=2
+value=2
+function f()=2
+class C { local threshold=3; const x=let(n=0)threshold }
+result=new C {}.x

@@ -1,0 +1,6 @@
+class C { p = throw("default failure") }
+class D { p = 2 }
+typealias A<T> = Int((new Listing<T> {new {}})[0].p > 0)
+one: A<C> = 1
+two: A<D> = 2
+stable = 42

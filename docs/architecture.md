@@ -347,7 +347,8 @@ comparison fallback. Member caches use evaluator-local bucket assignments for
 those keys; these assignments do not establish JVM identity hash parity.
 Same-cache cyclic reentry during a partial rebuild, unpublished
 declaration-map failure state, and cyclic structural hashes remain open.
-Repeated recursive diagnostic frame compression also remains unimplemented.
+Selected uncolored recursive frame compression is implemented; general stack-overflow
+and colored-output behavior remain open.
 Cyclic key preparation
 currently reports a Rust cycle error;
 the observed Java cases fail inside the JVM. Full format-time wrapper checks,
@@ -497,8 +498,8 @@ Alias values awaiting argument resolution stay on the ordinary traced VM stack.
 The plan uses the existing scheduler, declaration caches, and failure unwinding;
 ordinary failed lazy members remain retryable.
 
-Expanded check metadata still uses static compilation. These ordered execution
-plans do not establish a complete lazy runtime type-node model. General imported
+Check metadata uses compiled templates with runtime actual-argument substitution.
+These ordered execution plans do not establish a complete lazy runtime type-node model. General imported
 types, annotation syntax, full module initialization/caching, structural types,
 reflection, and the original upstream type/function suites remain unverified or
 unimplemented. Unsupported builtin generic types remain explicit gaps.
@@ -507,7 +508,7 @@ unimplemented. Unsupported builtin generic types remain explicit gaps.
 
 Constraint bytecode can contain a back edge to an active constraint block. The
 compiler reserves a block before compiling its expression and reuses that block
-for recursive non-generic type uses. Type-check metadata remains finite because
+for recursive type uses. Constraint templates remain finite because
 constraint bodies refer to block IDs. Unused and short-circuited recursive checks
 therefore do not expand indefinitely during compilation. Constraint type names
 retain the alias declaration's lexical scope even when instantiated in a nested
@@ -518,10 +519,36 @@ Builtin `Class<T>` validates its argument count and erases the argument without
 resolving its names, aliases, or constraints. User declarations named `Class` and
 arguments supplied to an enclosing alias retain their own resolution policy.
 
-This graph representation does not implement recursive generic instantiation.
-Reaching such an inner type use produces an explicit unsupported result; unused
-or short-circuited branches remain deferred. Selected terminating recursive forms
-do not establish complete recursive-type or constraint behavior.
+Generic constraints compile finite body templates using symbolic parameters
+identified by constraint block and parameter name. Recursive back edges reuse the
+active template; separate authored uses can compile distinct templates.
+Each invocation captures its actual type
+arguments in the lexical environment; type checks substitute those arguments when
+executed. Back edges can therefore change arguments, including `A<List<T>>`,
+without expanding bytecode or imposing a compilation depth cutoff. Deferred
+branches, base checks, argument ordering, and declaration scope retain their
+existing behavior. Finite direct and mutual recursion have raw Java controls.
+
+Collection element defaults that depend on a symbolic parameter are resolved
+after substituting the actual arguments. They preserve the existing distinction
+between an unconstrained dynamic default and a type with no default. Nested
+collections derive their value defaults recursively; typed defaults reuse the
+already resolved evaluator-local class declaration, keeping its members lazy.
+This avoids losing class defaults while compiling a reusable generic body.
+
+Reference referent validation that depends on a symbolic type argument also
+runs after substitution, at its authored resolution position. It precedes the
+associated value evaluation and retains short-circuiting inside constraint
+bodies. The validator walks structural metadata without entering executable
+constraint bodies or their argument environments. Existing constraint-origin
+frames remain available to the runtime; broader diagnostic gaps remain open.
+
+Argument metadata currently uses recursively owned values and cloning. An
+unbounded predicate such as `this is A<List<T>>` can exhaust the native stack;
+its captured abort remains an explicit failure. The original source also has a
+bounded yield/cancel regression, which does not establish safe arbitrary-depth
+execution, Java-compatible stack diagnostics, or time/memory parity. Structural
+sharing and bounded host-stack work remain follow-up requirements.
 
 ### Constraint receiver slots
 
@@ -569,7 +596,7 @@ of merging every depth into the recursive bytecode block.
 Inline alias constraints execute with their type node's executable owner.
 Lambda creation inside such a constraint retains a separate body owner in the
 function's captured environment. Repeated function calls reuse that body state
-while receiving fresh logical receiver slots. Non-generic constraints containing
+while receiving fresh logical receiver slots. Constraints containing
 local-writing lets retain a canonical compiler-selected call target; cloned
 wrappers share its executable state. These choices are independent of the
 `CustomThisSlot` invocation rules above. A lazy collection wrapper retains its
@@ -607,26 +634,27 @@ root table. `HeapStats.executable_live` identifies executable/type entries withi
 exact persistent-node counts. These are retention checks, not performance or
 peak-memory parity evidence.
 
-The bounded const-scope resolver distinguishes object, method, and lambda
-scopes. Methods contribute a const barrier without increasing lexical lookup
-depth; lambdas increase lookup depth without contributing a barrier. Eager
-predicate lookup can skip an object while retaining that object's const barrier.
+The const-scope resolver distinguishes object, method, lambda, let, and for
+scopes. Methods, let bodies, and for bodies contribute a const barrier without
+increasing lexical lookup depth; lambdas increase lookup depth without adding a
+barrier. Let annotations and initializers execute before entering that barrier.
+Eager generator lookup can skip an object while retaining its const barrier.
+Every scope preserves the inherited const level, including generator scopes.
 Qualified and standalone `outer` checks inspect the immediate represented
-lexical parent. This does not yet model every upstream lexical scope: let bodies
-and for-generator scopes require further const-depth and const-level work. The
-retained Stage 17 let follow-up has three matching controls and one mismatch:
-with `local value = 1`, Java permits `const result = let (n = 0) value`, while
-Rust still reports a const-boundary error. The direct read, let initializer,
-and lambda-inside-let controls match. This exploratory mismatch is not part of
-the selected acceptance contract and is not counted as passing.
+lexical parent. Separate Java controls cover initializers, nested lambdas,
+generator inputs and bodies, explicit `module` reads, and scope exit.
+Remaining outer and other diagnostic differences are retained in exploration.
 
-Type-check metadata and type arguments still use the existing static expansion.
-This ownership graph does not implement general lazy generic instantiation,
-changing recursive type arguments, generic alias-root substitution identity, or
-all generic shared-let clone policies. Recursive generic checks remain explicit
-unsupported results, and observed generic let-sharing differences remain open.
-The selected non-generic sequences do not establish complete const, type, Host,
-module-cache, or language compatibility.
+Generic inline and lambda constraints receive actual type arguments. A generic
+let root remains a shared declaration call target: the Java clone traversal does
+not enter that target, so its type variables retain their unbound `unknown`
+meaning. Selected Java sequences distinguish this behavior across arguments,
+properties, `is`/`as`, recursive depths, and retry order. Native tests retain
+argument environments across Host suspension, child reentry, collection,
+cancellation, and separate evaluators. General imported types, alias-root
+substitution identity, recursive argument resource bounds, and the full type
+and const corpus remain open. These cases do not establish complete const,
+type, Host, module-cache, or language compatibility.
 
 ### Recursive diagnostic frames
 
