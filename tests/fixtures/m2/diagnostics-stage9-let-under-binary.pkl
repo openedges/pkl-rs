@@ -1,0 +1,1 @@
+result=2 + (let(x=1) throw("body"))

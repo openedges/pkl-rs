@@ -1,0 +1,1 @@
+result=let(x=1) ((y)->throw("lambda")).apply(x)

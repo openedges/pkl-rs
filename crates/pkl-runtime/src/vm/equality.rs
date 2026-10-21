@@ -63,20 +63,82 @@ fn atom(heap: &Heap, value: &Value) -> Result<Atom, RuntimeError> {
         ),
     })
 }
+fn string_hash(value: &str) -> i32 {
+    value.encode_utf16().fold(0i32, |hash, unit| {
+        hash.wrapping_mul(31).wrapping_add(i32::from(unit))
+    })
+}
+
+impl Vm {
+    pub(super) fn java_hash(&self, value: &Value) -> Result<Option<i32>, RuntimeError> {
+        Ok(match value {
+            Value::Null => Some(0),
+            Value::Bool(value) => Some(if *value { 1231 } else { 1237 }),
+            Value::Int(value) => Some((*value as u64 ^ ((*value as u64) >> 32)) as i32),
+            Value::Float(value) => {
+                let bits = if value.is_nan() {
+                    0x7ff8000000000000
+                } else {
+                    value.to_bits()
+                };
+                Some((bits ^ (bits >> 32)) as i32)
+            }
+            Value::String(value) => Some(string_hash(value)),
+            Value::Bytes(value) => Some(value.iter().fold(1i32, |hash, byte| {
+                hash.wrapping_mul(31).wrapping_add(i32::from(*byte as i8))
+            })),
+            Value::Function(_) => None,
+            Value::Class(id) => {
+                self.heap.get(*id)?.class_definition.as_ref().map(|class| {
+                    string_hash(&format!("{}#{}", self.program.module_name, class.name))
+                })
+            }
+            Value::Object(id) => self.heap.get(*id)?.java_hash.flatten(),
+        })
+    }
+}
+
+pub(super) fn identical_key(heap: &Heap, left: &Value, right: &Value) -> bool {
+    match (left, right) {
+        (Value::Object(a), Value::Object(b)) => a == b,
+        _ => same_key(heap, left, right),
+    }
+}
+
 pub(super) fn same_key(heap: &Heap, left: &Value, right: &Value) -> bool {
     if let (Value::Object(a), Value::Object(b)) = (left, right) {
-        return a == b
-            || heap.key_equalities.contains(&(*a, *b))
-            || heap
-                .get(*a)
-                .ok()
-                .and_then(|o| o.structural_key)
-                .is_some_and(|key| heap.get(*b).is_ok_and(|o| o.structural_key == Some(key)));
+        if a == b {
+            return true;
+        }
+        return heap.key_equalities.contains(&(*a, *b));
     }
     matches!((atom(heap, left), atom(heap, right)), (Ok(a), Ok(b)) if a == b)
 }
 #[derive(Clone)]
 enum Task {
+    CountKey(ObjectId, Vec<Value>, usize, Vec<(Value, Option<i32>)>),
+    CountReady(ObjectId, Vec<Value>, usize, Vec<(Value, Option<i32>)>),
+    CountKeys(
+        ObjectId,
+        Vec<Value>,
+        usize,
+        Vec<(Value, Option<i32>)>,
+        usize,
+        Option<i32>,
+    ),
+    CountMatched(
+        ObjectId,
+        Vec<Value>,
+        usize,
+        Vec<(Value, Option<i32>)>,
+        Value,
+    ),
+    PublishCache(ObjectId, CacheKey, Value),
+    AppendCache(ObjectId, CacheKey, Value),
+    CacheRebuild(ObjectId, usize),
+    CacheLink(ObjectId, usize, bool),
+    ResumeForce(ObjectId, ObjectId, Arc<str>, bool, bool, bool, bool, bool),
+    Reject,
     Compare(Value, Value, bool),
     CompareMembers(ObjectId, ObjectId),
     Deep(Value),
@@ -108,9 +170,11 @@ pub(super) struct EqualityRun {
     equal: bool,
     negate: bool,
     retry: bool,
+    prepared_hashes: Option<Vec<Value>>,
     key_search: bool,
     pub(super) hide_callsite: bool,
     forward: bool,
+    pub(super) forward_to_type: bool,
 }
 pub(super) struct KeySearch {
     key: Value,
@@ -137,9 +201,148 @@ impl EqualityRun {
 
     pub(super) fn roots(&self, roots: &mut Vec<Value>) {
         roots.extend(self.roots.iter().cloned());
+        roots.extend(self.prepared_hashes.iter().flatten().cloned());
     }
 }
 impl Vm {
+    fn schedule_tasks(&mut self, tasks: Vec<Task>, roots: Vec<Value>) {
+        let frame = self.frames.last_mut().expect("active frame");
+        let run = frame.equality_run.get_or_insert_with(|| EqualityRun {
+            tasks: Vec::new(),
+            on_false: Vec::new(),
+            active: BTreeSet::new(),
+            forced: BTreeSet::new(),
+            roots: Vec::new(),
+            equal: true,
+            negate: false,
+            retry: false,
+            prepared_hashes: None,
+            key_search: false,
+            hide_callsite: true,
+            forward: true,
+            forward_to_type: false,
+        });
+        run.tasks.extend(tasks);
+        run.roots.extend(roots);
+    }
+
+    pub(super) fn cache_value_key(
+        &self,
+        receiver: ObjectId,
+        key: &CacheKey,
+    ) -> Result<Option<Value>, RuntimeError> {
+        if !key.entry || key.owner.is_some() {
+            return Ok(None);
+        }
+        let mut owner = Some(receiver);
+        while let Some(id) = owner {
+            let object = self.heap.get(id)?;
+            if let Some(member) = object.collection_members.iter().find(|member| {
+                member.name == key.name && member.kind != CollectionMemberKind::Property
+            }) {
+                return Ok(Some(member.key.clone()));
+            }
+            owner = object.parent;
+        }
+        Err(invalid("missing cache entry key"))
+    }
+
+    fn cache_key_hash(&self, receiver: ObjectId, key: &CacheKey) -> Result<i32, RuntimeError> {
+        // Property/local identity hashes are evaluator-local bucket assignments;
+        // they are not claimed to reproduce JVM identity allocation.
+        Ok(if let Some(value) = self.cache_value_key(receiver, key)? {
+            self.java_hash(&value)?.unwrap_or(0)
+        } else {
+            string_hash(&key.name) ^ key.owner.map_or(0, |owner| owner.index as i32)
+        })
+    }
+
+    pub(super) fn cached_slot(
+        &self,
+        receiver: ObjectId,
+        key: &CacheKey,
+    ) -> Result<Option<Value>, RuntimeError> {
+        let object = self.heap.get(receiver)?;
+        let indices = if object.cache_index.len() == object.cache_slots.len() {
+            object
+                .cache_index
+                .candidates(Some(self.cache_key_hash(receiver, key)?))
+        } else {
+            (0..object.cache_slots.len()).collect()
+        };
+        Ok(indices.into_iter().find_map(|index| {
+            let slot = &object.cache_slots[index];
+            (slot.key == *key).then(|| slot.value.clone())
+        }))
+    }
+
+    pub(super) fn complete_cache(
+        &mut self,
+        receiver: ObjectId,
+        key: CacheKey,
+        value: Value,
+    ) -> Result<(), RuntimeError> {
+        let mut tasks = vec![Task::PublishCache(receiver, key.clone(), value.clone())];
+        if self.heap.get(receiver)?.cache_index.has_hash()
+            && let Some(value_key) = self.cache_value_key(receiver, &key)?
+        {
+            tasks.push(Task::Prepare(value_key));
+        }
+        self.schedule_tasks(tasks, vec![Value::Object(receiver), value]);
+        Ok(())
+    }
+
+    #[allow(clippy::too_many_arguments)]
+    pub(super) fn prepare_cache_read(
+        &mut self,
+        receiver: ObjectId,
+        owner: ObjectId,
+        name: Arc<str>,
+        local: bool,
+        memoize: bool,
+        method: bool,
+        entry: bool,
+        predicate: bool,
+    ) -> Result<bool, RuntimeError> {
+        let key = CacheKey {
+            name: name.clone(),
+            owner: local.then_some(owner),
+            method,
+            entry,
+        };
+        if self.heap.get(receiver)?.cache_index.has_hash()
+            && let Some(value) = self.cache_value_key(receiver, &key)?
+            && matches!(&value, Value::Object(id) if matches!(self.heap.get(*id)?.java_hash, None | Some(Some(0))))
+        {
+            self.schedule_tasks(
+                vec![
+                    Task::ResumeForce(
+                        receiver, owner, name, local, memoize, method, entry, predicate,
+                    ),
+                    Task::Prepare(value.clone()),
+                ],
+                vec![Value::Object(receiver), Value::Object(owner), value],
+            );
+            return Ok(true);
+        }
+        Ok(false)
+    }
+
+    pub(super) fn count_mapping_keys(&mut self, id: ObjectId, keys: Vec<Value>) {
+        let mut roots = keys.clone();
+        roots.push(Value::Object(id));
+        self.schedule_tasks(vec![Task::CountKey(id, keys, 0, Vec::new())], roots);
+        let run = self
+            .frames
+            .last_mut()
+            .expect("active frame")
+            .equality_run
+            .as_mut()
+            .expect("mapping count");
+        run.retry = true;
+        run.hide_callsite = false;
+    }
+
     pub(super) fn begin_equality(&mut self, left: Value, right: Value, negate: bool) {
         self.frames.last_mut().expect("active frame").equality_run = Some(EqualityRun {
             tasks: vec![Task::Compare(left.clone(), right.clone(), true)],
@@ -150,9 +353,11 @@ impl Vm {
             equal: true,
             negate,
             retry: false,
+            prepared_hashes: None,
             key_search: false,
             hide_callsite: true,
             forward: false,
+            forward_to_type: false,
         });
     }
     pub(super) fn force_collection_member(
@@ -170,9 +375,11 @@ impl Vm {
             equal: true,
             negate: false,
             retry: false,
+            prepared_hashes: None,
             key_search: false,
             hide_callsite: true,
             forward: true,
+            forward_to_type: false,
         });
         Ok(())
     }
@@ -195,7 +402,6 @@ impl Vm {
                 (&search.key, &search.candidates[search.position - 1])
             {
                 self.heap.key_equalities.insert((*a, *b));
-                self.heap.key_equalities.insert((*b, *a));
             }
             return Ok(false);
         }
@@ -219,9 +425,21 @@ impl Vm {
         Ok(false)
     }
     pub(super) fn prepare_keys(&mut self, keys: Vec<Value>) -> Result<bool, RuntimeError> {
+        let frame = self.frames.last_mut().expect("active frame");
+        if frame.prepared_hashes.as_ref().is_some_and(|prepared| {
+            prepared.len() == keys.len()
+                && prepared
+                    .iter()
+                    .zip(&keys)
+                    .all(|(left, right)| identical_key(&self.heap, left, right))
+        }) {
+            frame.prepared_hashes = None;
+            return Ok(false);
+        }
         let mut pending = Vec::new();
-        for key in keys {
-            if matches!(&key, Value::Object(id) if self.heap.get(*id)?.structural_key.is_none()) {
+        for key in keys.iter().cloned() {
+            if matches!(&key, Value::Object(id) if matches!(self.heap.get(*id)?.java_hash, None | Some(Some(0))))
+            {
                 pending.push(key);
             }
         }
@@ -237,9 +455,11 @@ impl Vm {
             equal: true,
             negate: false,
             retry: true,
+            prepared_hashes: Some(keys),
             key_search: false,
             hide_callsite: true,
             forward: false,
+            forward_to_type: false,
         });
         Ok(true)
     }
@@ -287,10 +507,8 @@ impl Vm {
             method: false,
             entry: member.kind != CollectionMemberKind::Property,
         };
-        match self.heap.get(id)?.cache.get(&key) {
-            Some(LazyState::Completed(value)) => Ok(value.clone()),
-            _ => Err(invalid("unforced equality member")),
-        }
+        self.cached_slot(id, &key)?
+            .ok_or_else(|| invalid("unforced equality member"))
     }
     /// Equality visits typed properties in class declaration order; collection
     /// equality visits values in successful cache insertion order. Neither order
@@ -336,6 +554,45 @@ impl Vm {
         }
         Ok(result)
     }
+    fn hash_entries(&self, id: ObjectId) -> Result<Vec<(Option<Value>, Value)>, RuntimeError> {
+        let object = self.heap.get(id)?;
+        let typed = self.class_identity(id)?.is_some() || object.is_module;
+        if typed || object.collection_kind == CollectionKind::List {
+            let members = if object.collection_kind == CollectionKind::List {
+                collections::ordered_members(&self.heap, id)?
+            } else {
+                self.comparison_members(id)?
+            };
+            return members
+                .iter()
+                .map(|member| Ok((None, self.cached_equality_member(id, member)?)))
+                .collect();
+        }
+        let members = self.equality_members(id)?;
+        let mut result = Vec::new();
+        for slot in &object.cache_slots {
+            let key = &slot.key;
+            let value = &slot.value;
+            if key.owner.is_some() {
+                if matches!(
+                    object.collection_kind,
+                    CollectionKind::Listing | CollectionKind::Mapping
+                ) {
+                    result.push((None, value.clone()));
+                }
+            } else if let Some(member) = members.iter().find(|member| {
+                member.name == key.name
+                    && (member.kind != CollectionMemberKind::Property) == key.entry
+            }) {
+                result.push((
+                    (member.kind != CollectionMemberKind::Property).then(|| member.key.clone()),
+                    value.clone(),
+                ));
+            }
+        }
+        Ok(result)
+    }
+
     pub(super) fn step_equality(&mut self) -> Result<(), RuntimeError> {
         let frame_index = self.frames.len() - 1;
         let mut run = self.frames[frame_index]
@@ -344,7 +601,14 @@ impl Vm {
             .expect("equality run");
         let Some(task) = run.tasks.pop() else {
             self.frames[frame_index].callsite_hidden = false;
-            if run.key_search {
+            if run.forward_to_type {
+                let value = self.pop()?;
+                self.frames[frame_index]
+                    .type_run
+                    .as_mut()
+                    .ok_or_else(|| invalid("missing deferred cache type continuation"))?
+                    .returned = Some(value);
+            } else if run.key_search {
                 self.frames[frame_index]
                     .key_search
                     .as_mut()
@@ -352,6 +616,7 @@ impl Vm {
                     .returned = Some(run.equal);
                 self.frames[frame_index].pc -= 1;
             } else if run.retry {
+                self.frames[frame_index].prepared_hashes = run.prepared_hashes;
                 self.frames[frame_index].pc -= 1;
             } else if !run.forward {
                 self.stack.push(Value::Bool(run.equal ^ run.negate));
@@ -359,6 +624,168 @@ impl Vm {
             return Ok(());
         };
         match task {
+            Task::CountKey(id, keys, position, seen) => {
+                if let Some(key) = keys.get(position).cloned() {
+                    run.tasks.push(Task::CountReady(id, keys, position, seen));
+                    run.tasks.push(Task::Prepare(key));
+                } else {
+                    self.heap.get_mut(id)?.mapping_length = Some(seen.len());
+                }
+            }
+            Task::CountReady(id, keys, position, seen) => {
+                let hash = self.java_hash(&keys[position])?;
+                run.tasks
+                    .push(Task::CountKeys(id, keys, position, seen, 0, hash));
+            }
+            Task::CountKeys(id, keys, position, mut seen, candidate, hash) => {
+                let key = &keys[position];
+                if let Some((other, stored_hash)) = seen.get(candidate).cloned() {
+                    let same_hash = match (hash, stored_hash) {
+                        (Some(left), Some(right)) => left == right,
+                        _ => true,
+                    };
+                    if same_hash && same_key(&self.heap, key, &other) {
+                        run.tasks.push(Task::CountKey(id, keys, position + 1, seen));
+                    } else if same_hash
+                        && matches!((key, &other), (Value::Object(_), Value::Object(_)))
+                    {
+                        let depth = run.tasks.len();
+                        run.on_false.push((
+                            depth,
+                            Task::CountKeys(
+                                id,
+                                keys.clone(),
+                                position,
+                                seen.clone(),
+                                candidate + 1,
+                                hash,
+                            ),
+                        ));
+                        run.tasks.push(Task::CountMatched(
+                            id,
+                            keys.clone(),
+                            position,
+                            seen,
+                            other.clone(),
+                        ));
+                        run.tasks.push(Task::Compare(key.clone(), other, false));
+                    } else {
+                        run.tasks.push(Task::CountKeys(
+                            id,
+                            keys,
+                            position,
+                            seen,
+                            candidate + 1,
+                            hash,
+                        ));
+                    }
+                } else {
+                    seen.push((key.clone(), hash));
+                    run.tasks.push(Task::CountKey(id, keys, position + 1, seen));
+                }
+            }
+            Task::CountMatched(id, keys, position, seen, other) => {
+                run.on_false
+                    .pop()
+                    .ok_or_else(|| invalid("missing mapping count comparison"))?;
+                if let (Value::Object(query), Value::Object(stored)) = (&keys[position], other) {
+                    self.heap.key_equalities.insert((*query, stored));
+                }
+                run.tasks.push(Task::CountKey(id, keys, position + 1, seen));
+            }
+            Task::Reject => run.reject(),
+            Task::ResumeForce(receiver, owner, name, local, memoize, method, entry, predicate) => {
+                self.frames[frame_index].equality_run = Some(run);
+                return self.force_key_mode_prepared(
+                    receiver, owner, name, local, memoize, method, entry, predicate, true,
+                );
+            }
+            Task::PublishCache(id, key, value) => {
+                // Bootstrap strict collections can carry completed scalar slots
+                // before their object is installed in the heap.
+                while self.heap.get(id)?.cache_index.len() < self.heap.get(id)?.cache_slots.len() {
+                    let object = self.heap.get_mut(id)?;
+                    object.cache_index.grow_before_append();
+                    object.cache_index.push();
+                }
+                let hash = self.cache_key_hash(id, &key)?;
+                let existing = self
+                    .heap
+                    .get(id)?
+                    .cache_index
+                    .candidates(Some(hash))
+                    .into_iter()
+                    .find(|index| {
+                        self.heap.get(id).expect("cache object").cache_slots[*index].key == key
+                    });
+                if let Some(index) = existing {
+                    let object = self.heap.get_mut(id)?;
+                    object.cache_slots[index].value = value.clone();
+                    object.cache.insert(key, LazyState::Completed(value));
+                } else {
+                    run.tasks.push(Task::AppendCache(id, key, value));
+                    if self.heap.get_mut(id)?.cache_index.grow_before_append() {
+                        self.heap.get_mut(id)?.cache_index.start_rehash();
+                        run.tasks.push(Task::CacheRebuild(id, 0));
+                    }
+                }
+            }
+            Task::AppendCache(id, key, value) => {
+                // Warming local slots or publishing duplicate slots can change
+                // directional object equality, including that of enclosing keys.
+                if key.owner.is_some()
+                    || self
+                        .heap
+                        .get(id)?
+                        .cache_slots
+                        .iter()
+                        .any(|slot| slot.key == key)
+                {
+                    self.heap.key_equalities.clear();
+                }
+                let object = self.heap.get_mut(id)?;
+                let index = object.cache_index.push();
+                object.completed_cache_order.push(key.clone());
+                object.cache_slots.push(crate::heap::CacheSlot {
+                    key: key.clone(),
+                    value: value.clone(),
+                });
+                object
+                    .cache
+                    .insert(key.clone(), LazyState::Completed(value));
+                if object.cache_index.has_hash() {
+                    run.tasks.push(Task::CacheLink(id, index, true));
+                    if let Some(value) = self.cache_value_key(id, &key)? {
+                        run.tasks.push(Task::Prepare(value));
+                    }
+                } else if object.cache_index.len() > 4 {
+                    object.cache_index.start_rehash();
+                    run.tasks.push(Task::CacheRebuild(id, 0));
+                }
+            }
+            Task::CacheRebuild(id, index) => {
+                if let Some(slot) = self.heap.get(id)?.cache_slots.get(index).cloned() {
+                    run.tasks.push(Task::CacheRebuild(id, index + 1));
+                    run.tasks.push(Task::CacheLink(id, index, false));
+                    if let Some(value) = self.cache_value_key(id, &slot.key)? {
+                        run.roots.push(value.clone());
+                        run.tasks.push(Task::Prepare(value));
+                    }
+                }
+            }
+            Task::CacheLink(id, index, allow_rehash) => {
+                let key = self.heap.get(id)?.cache_slots[index].key.clone();
+                let hash = self.cache_key_hash(id, &key)?;
+                let object = self.heap.get_mut(id)?;
+                if object.cache_index.put_hash(
+                    index,
+                    hash,
+                    allow_rehash && object.cache_index.should_rehash(),
+                ) {
+                    object.cache_index.start_rehash();
+                    run.tasks.push(Task::CacheRebuild(id, 0));
+                }
+            }
             Task::Compare(left, right, semantic) => {
                 let equal = match (&left, &right) {
                     (Value::Int(a), Value::Float(b)) if semantic => Some(*a as f64 == *b),
@@ -428,25 +855,75 @@ impl Vm {
                     }
                 }
                 let lhs = self.comparison_members(a)?;
-                let rhs = self.comparison_members(b)?;
-                if lhs.len() != rhs.len() {
+                let rhs = self.equality_members(b)?;
+                let typed = self.class_identity(a)?.is_some() || self.heap.get(a)?.is_module;
+                let mut entries = Vec::new();
+                if typed {
+                    for member in lhs {
+                        let value = self.cached_equality_member(a, &member)?;
+                        entries.push((Some(member), None, value));
+                    }
+                } else {
+                    let members = self.equality_members(a)?;
+                    for slot in &self.heap.get(a)?.cache_slots {
+                        if slot.key.owner.is_some() {
+                            if matches!(
+                                self.heap.get(a)?.collection_kind,
+                                CollectionKind::Listing | CollectionKind::Mapping
+                            ) {
+                                entries.push((None, Some(slot.key.clone()), slot.value.clone()));
+                            }
+                        } else if let Some(member) = members.iter().find(|member| {
+                            member.name == slot.key.name
+                                && (member.kind != CollectionMemberKind::Property) == slot.key.entry
+                        }) {
+                            entries.push((Some(member.clone()), None, slot.value.clone()));
+                        }
+                    }
+                }
+                if self.equality_members(a)?.len() != rhs.len() {
                     run.reject();
                 } else {
-                    for l in lhs.iter().rev() {
-                        let left = self.cached_equality_member(a, l)?;
+                    for (member, local, left) in entries.into_iter().rev() {
+                        if let Some(local) = local {
+                            if let Some(right) = self.cached_slot(b, &local)? {
+                                run.roots.extend([left.clone(), right.clone()]);
+                                run.tasks.push(Task::Compare(left, right, false));
+                            } else {
+                                run.tasks.push(Task::Reject);
+                            }
+                            continue;
+                        }
+                        let member = member.expect("regular comparison member");
+                        let object = self.heap.get(b)?;
+                        let hash = if member.kind == CollectionMemberKind::Property {
+                            string_hash(&member.name)
+                        } else {
+                            self.java_hash(&member.key)?.unwrap_or(0)
+                        };
+                        let indices = if object.cache_index.len() == object.cache_slots.len() {
+                            object.cache_index.candidates(Some(hash))
+                        } else {
+                            (0..object.cache_slots.len()).collect()
+                        };
                         let mut candidates = Vec::new();
-                        for r in &rhs {
-                            if (l.kind == CollectionMemberKind::Property)
-                                == (r.kind == CollectionMemberKind::Property)
+                        for index in indices {
+                            let slot = &object.cache_slots[index];
+                            if slot.key.owner.is_none()
+                                && let Some(other) = rhs.iter().find(|other| {
+                                    other.name == slot.key.name
+                                        && (other.kind != CollectionMemberKind::Property)
+                                            == slot.key.entry
+                                })
+                                && (member.kind == CollectionMemberKind::Property)
+                                    == (other.kind == CollectionMemberKind::Property)
                             {
-                                let value = self.cached_equality_member(b, r)?;
-                                run.roots.extend([r.key.clone(), value.clone()]);
-                                candidates.push((r.key.clone(), value));
+                                run.roots.extend([other.key.clone(), slot.value.clone()]);
+                                candidates.push((other.key.clone(), slot.value.clone()));
                             }
                         }
-                        run.roots.extend([l.key.clone(), left.clone()]);
-                        run.tasks
-                            .push(Task::Match(l.key.clone(), left, candidates, 0));
+                        run.roots.extend([member.key.clone(), left.clone()]);
+                        run.tasks.push(Task::Match(member.key, left, candidates, 0));
                     }
                 }
             }
@@ -474,7 +951,6 @@ impl Vm {
                     .ok_or_else(|| invalid("missing key comparison branch"))?;
                 if let (Value::Object(a), Value::Object(b)) = (key, other_key) {
                     self.heap.key_equalities.insert((a, b));
-                    self.heap.key_equalities.insert((b, a));
                 }
                 run.tasks.push(Task::Compare(value, other_value, false));
             }
@@ -489,7 +965,7 @@ impl Vm {
             }
             Task::Prepare(value) => {
                 if let Value::Object(id) = value
-                    && self.heap.get(id)?.structural_key.is_none()
+                    && matches!(self.heap.get(id)?.java_hash, None | Some(Some(0)))
                 {
                     if !run.active.insert(id) {
                         return Err(RuntimeError::new(ErrorKind::Cycle, "cyclic structural key"));
@@ -505,16 +981,13 @@ impl Vm {
                 // Java completes recursive value forcing before computing member
                 // hashes. Nested Mapping keys can still be lazy at that point.
                 // Hashing then follows cache order (or class property order).
-                let members = if self.heap.get(id)?.collection_kind == CollectionKind::List {
-                    collections::ordered_members(&self.heap, id)?
-                } else {
-                    self.comparison_members(id)?
-                };
-                for member in members.into_iter().rev() {
-                    let value = self.cached_equality_member(id, &member)?;
-                    run.roots.extend([member.key.clone(), value.clone()]);
+                for (key, value) in self.hash_entries(id)?.into_iter().rev() {
+                    run.roots.push(value.clone());
                     run.tasks.push(Task::Prepare(value));
-                    run.tasks.push(Task::Prepare(member.key));
+                    if let Some(key) = key {
+                        run.roots.push(key.clone());
+                        run.tasks.push(Task::Prepare(key));
+                    }
                 }
             }
             Task::Force(id, member, prepare) => {
@@ -556,7 +1029,6 @@ impl Vm {
                     .ok_or_else(|| invalid("missing member resolution branch"))?;
                 if let (Value::Object(a), Value::Object(b)) = (key, &member.key) {
                     self.heap.key_equalities.insert((a, *b));
-                    self.heap.key_equalities.insert((*b, a));
                 }
                 run.tasks.push(Task::Read(id, member, prepare));
             }
@@ -609,6 +1081,37 @@ impl Vm {
                     class: self.class_identity(id)?,
                     members,
                 };
+                let typed = self.class_identity(id)?.is_some() || self.heap.get(id)?.is_module;
+                let sequence = typed
+                    || matches!(
+                        self.heap.get(id)?.collection_kind,
+                        CollectionKind::Listing | CollectionKind::List
+                    );
+                let mut hash = Some(
+                    if self.heap.get(id)?.collection_kind == CollectionKind::List {
+                        1i32
+                    } else {
+                        0i32
+                    },
+                );
+                for (key, value) in self.hash_entries(id)? {
+                    let value_hash = self.java_hash(&value)?;
+                    let key_hash = key
+                        .as_ref()
+                        .map(|key| self.java_hash(key))
+                        .transpose()?
+                        .flatten();
+                    hash = match (hash, value_hash) {
+                        (Some(total), Some(value)) if sequence => {
+                            Some(total.wrapping_mul(31).wrapping_add(value))
+                        }
+                        (Some(total), Some(value)) => {
+                            key_hash.map(|key| total.wrapping_add(key ^ value))
+                        }
+                        _ => None,
+                    };
+                }
+                self.heap.get_mut(id)?.java_hash = Some(hash);
                 let next = self.heap.next_structural_key;
                 let value = *self.heap.structural_keys.entry(key).or_insert_with(|| {
                     self.heap.next_structural_key += 1;

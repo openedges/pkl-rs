@@ -1,0 +1,1 @@
+m=new Mapping {[null]=0;[true]=1;[false]=2;[0]=3;[1]=4;[2]=5;};result=m[null]==0 && m[true]==1 && m[false]==2 && m[0]==3 && m[1]==4 && m[2]==5

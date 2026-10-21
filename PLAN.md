@@ -190,7 +190,9 @@ M1의 공통 VM을 확장합니다. VM·heap·호출 의미론은 `gpt-6-astra /
 
 [원격 CI](https://github.com/luuvish/pkl-rs/actions/runs/39435577349) 작업 6개가 모두 성공했습니다. [CI 증거 검증](reports/m2/ci-stage8-summary.json)은 원본 artifact ZIP 해시와 소스 스냅샷 1,198개(고유 경로 1,023개)를 구현 커밋에 대조했습니다. 두 차례 오프라인 검증이 통과했고 최종 봉인 패키지는 바뀌지 않았습니다. 전체 gate의 1,950개 실패 이유와 성능 목표는 계속 열려 있으므로 **M2 전체는 진행 중**입니다.
 
-다음 collection 보완은 실제 캐시 키 종류(property identifier·local 선언·entry 값), 구조 동등성 ID와 분리된 Java 정수 해시, 삽입 순서·버킷을 보존하는 map, 중단·재개 가능한 map 연산 순으로 진행합니다. 다섯 번째 삽입 중 Java의 부분 게시와 실패 재시도를 먼저 관찰하고, warmed Listing·충돌·상속 lookup·local 캐시·GC 회귀를 연결합니다. Identifier·함수의 JVM identity hash와 순환 키의 실패 동작은 별도 검증 과제로 남기며 임의의 Rust identity hash를 바이트 호환의 증거로 삼지 않습니다. 중첩 `let` 프레임은 진단 보완 항목으로 유지합니다.
+아홉 번째 단계는 구조 동등성 ID와 Java 정수 해시를 분리하고, 안정적인 해시의 선언 버킷과 캐시의 부분 게시·재해시·실패 재시도를 구현했습니다. 런타임 continuation은 `gpt-6-astra / high`, 고정 Java 관찰·차등 입력과 독립 map·수명주기 검토는 각각 `gpt-6.1-sol / high`에 배정했습니다. 다섯 번째 캐시 값의 선행 게시, 실패 뒤 숨겨진 슬롯과 중복 값, local 캐시의 비대칭 비교, zero-hash 재계산을 검증합니다. Mapping 길이는 별도의 HashSet 규칙으로 조상부터 키를 순차 처리하고 성공한 길이만 게시합니다. 중첩 `let`·타입 제약·wildcard·명시적 cast의 오류 프레임은 소스 메타데이터로 복원합니다.
+
+기존 907개 정의·입력 바이트를 유지하며 152개 사례와 9개 변형 관계를 추가했습니다. 구현 후보의 기존 907개 재실행은 905개 일치·기존 실패 2개이며, 실제 fixture URI에서 새 152개가 모두 Java와 원시 바이트로 일치했습니다. Rust 221개·Python 171개 검사, Wasm 빌드와 실제 Node·Chromium 각 39개 시나리오의 개발 계약이 통과했습니다. 마감 회귀 검사에서 발견한 상속 Mapping 길이 차이와 수정 전 수집 중단 기록을 보존하고, 수정된 후보로 전체 1,059개·41개 관계의 최종 수집과 원격 CI를 진행합니다. JVM identity hash, 같은 캐시의 순환 재진입·순환 키, 재귀 진단 압축과 나머지 M2 언어·타입·Reference·메타데이터 범위는 남아 있으며 성능 목표 달성을 주장하지 않습니다.
 
 - 전체 문법, 이름 해석, IR·compiler, lazy evaluation, 객체·amendment·상속, closure, generator를 구현합니다.
 - 타입·제약·generic·union, `Reference<Domain, Type>`, reflection에 필요한 런타임 메타데이터를 구현합니다. 다중 행 문자열의 continuation 등 0.32 기능을 목록에 연결합니다.

@@ -1,0 +1,1 @@
+class Aa {};class BB {};m=new Mapping {[0]=0;[32]=1;[64]=2;[96]=3;[Aa]=10;[BB]=20};result=m[Aa]==10 && m[BB]==20

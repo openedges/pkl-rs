@@ -100,7 +100,7 @@ pub(super) fn forcing_members(
             }
             if let Some(descriptor) = effective.iter().find(|d| {
                 d.name == member.name && (d.kind != CollectionMemberKind::Property) == member.entry
-            }) && !result.iter().any(|old| same_member(heap, old, descriptor))
+            }) && !result.iter().any(|old| same_member(heap, descriptor, old))
             {
                 result.push(descriptor.clone());
             }
@@ -127,7 +127,7 @@ fn predicate_members(
         }
         let object = heap.get(owner)?;
         for descriptor in &object.collection_members {
-            if seen.iter().any(|old| same_member(heap, old, descriptor)) {
+            if seen.iter().any(|old| same_member(heap, descriptor, old)) {
                 continue;
             }
             seen.push(descriptor.clone());
@@ -164,10 +164,15 @@ impl Vm {
         name: &str,
     ) -> Result<bool, RuntimeError> {
         let object = self.heap.get(receiver)?;
-        if object.collection_kind == CollectionKind::Dynamic || object.is_module {
+        if object.collection_kind == CollectionKind::Dynamic
+            || object.is_module
+            || !matches!(name, "length" | "isEmpty")
+        {
             return Ok(false);
         }
-        if object.collection_kind == CollectionKind::Mapping && matches!(name, "length" | "isEmpty")
+        if object.collection_kind == CollectionKind::Mapping
+            && object.mapping_length.is_none()
+            && matches!(name, "length" | "isEmpty")
         {
             let mut chain = Vec::new();
             let mut owner = Some(receiver);
@@ -182,10 +187,12 @@ impl Vm {
                         .get(id)?
                         .collection_members
                         .iter()
+                        .filter(|m| m.kind == CollectionMemberKind::Entry)
                         .map(|m| m.key.clone()),
                 );
             }
-            if self.prepare_keys(keys)? {
+            self.count_mapping_keys(receiver, keys);
+            {
                 self.frames
                     .last_mut()
                     .expect("active frame")
@@ -208,10 +215,7 @@ impl Vm {
         }
         let object = self.heap.get(receiver)?;
         let length = if object.collection_kind == CollectionKind::Mapping {
-            ordered_members(&self.heap, receiver)?
-                .iter()
-                .filter(|m| m.kind == CollectionMemberKind::Entry)
-                .count()
+            object.mapping_length.expect("completed Mapping length")
         } else {
             object.length
         };
@@ -224,6 +228,83 @@ impl Vm {
         Ok(true)
     }
 
+    /// Stable-hash declaration maps use the pinned bucket chain order. Maps
+    /// containing JVM identity-dependent keys retain the explicit linear fallback.
+    fn declaration_candidates(
+        &self,
+        owner: ObjectId,
+        key: &Value,
+        inherited: bool,
+    ) -> Result<Vec<Value>, RuntimeError> {
+        let mut result = Vec::new();
+        let mut current = Some(owner);
+        while let Some(id) = current {
+            let object = self.heap.get(id)?;
+            let members = &object.collection_members;
+            let indices = if let (Some(index), Some(hash)) =
+                (&object.declaration_index, self.java_hash(key)?)
+            {
+                index.candidates(Some(hash))
+            } else {
+                (0..members.len()).collect()
+            };
+            result.extend(indices.into_iter().filter_map(|index| {
+                let member = &members[index];
+                (member.kind != CollectionMemberKind::Property).then(|| member.key.clone())
+            }));
+            current = if inherited { object.parent } else { None };
+        }
+        Ok(result)
+    }
+
+    fn update_declaration_index(&mut self, id: ObjectId) -> Result<(), RuntimeError> {
+        let object = self.heap.get(id)?;
+        if object.members.len() <= 4 {
+            return Ok(());
+        }
+        let keys = object
+            .collection_members
+            .iter()
+            .map(|member| {
+                if member.kind == CollectionMemberKind::Property {
+                    Ok(None)
+                } else {
+                    self.java_hash(&member.key)
+                }
+            })
+            .collect::<Result<Option<Vec<_>>, _>>()?;
+        let keys = keys.filter(|_| object.collection_members.len() == object.members.len());
+        let Some(keys) = keys else {
+            let object = self.heap.get_mut(id)?;
+            object.declaration_index = None;
+            object.declaration_hashes.clear();
+            return Ok(());
+        };
+        let object = self.heap.get_mut(id)?;
+        let index = object
+            .declaration_index
+            .get_or_insert_with(|| crate::economic_map::EconomicMapIndex::with_capacity(0));
+        while index.len() < keys.len() {
+            if index.grow_before_append() {
+                for old in index.start_rehash() {
+                    object.declaration_hashes[old] = keys[old];
+                    index.put_hash(old, keys[old], false);
+                }
+            }
+            let slot = index.push();
+            object.declaration_hashes.push(keys[slot]);
+            if (!index.has_hash() && index.len() > 4)
+                || (index.has_hash() && index.put_hash(slot, keys[slot], index.should_rehash()))
+            {
+                for old in index.start_rehash() {
+                    object.declaration_hashes[old] = keys[old];
+                    index.put_hash(old, keys[old], false);
+                }
+            }
+        }
+        Ok(())
+    }
+
     fn prepare_insertion(
         &mut self,
         key: &Value,
@@ -234,7 +315,7 @@ impl Vm {
             || object.collection_members.iter().any(|member| {
                 (member.kind == CollectionMemberKind::Property)
                     == (kind == CollectionMemberKind::Property)
-                    && same_key(&self.heap, &member.key, key)
+                    && same_key(&self.heap, key, &member.key)
             })
         {
             return Ok(false);
@@ -348,10 +429,14 @@ impl Vm {
             name: member.name.clone(),
             kind,
         };
-        let replacing = object
-            .collection_members
-            .iter()
-            .position(|old| same_member(&self.heap, old, &descriptor));
+        let candidates = self.declaration_candidates(target, &descriptor.key, false)?;
+        let replacing = object.collection_members.iter().position(|old| {
+            (descriptor.kind == CollectionMemberKind::Property
+                || candidates
+                    .iter()
+                    .any(|candidate| equality::identical_key(&self.heap, candidate, &old.key)))
+                && same_member(&self.heap, &descriptor, old)
+        });
         if replacing.is_some_and(|index| {
             !(object.specialized_literal
                 && kind == CollectionMemberKind::Element
@@ -379,7 +464,7 @@ impl Vm {
                         .and_then(|members| {
                             members
                                 .into_iter()
-                                .find(|old| same_member(&self.heap, old, &descriptor))
+                                .find(|old| same_member(&self.heap, &descriptor, old))
                         })
                         .map(|old| old.name)
                 })
@@ -432,8 +517,9 @@ impl Vm {
             object
                 .member_values
                 .insert(cache_key.clone(), value.clone());
-            object.complete_cache(cache_key, value);
+            self.complete_cache(target, cache_key, value)?;
         }
+        self.update_declaration_index(target)?;
         Ok(())
     }
 
@@ -601,14 +687,13 @@ impl Vm {
                 let key = self.pop()?;
                 let target = self.builder()?;
                 if typed_class(&self.heap, target)?.is_none() && !check_index {
-                    let candidates = self
-                        .heap
-                        .get(target)?
-                        .collection_members
-                        .iter()
-                        .filter(|m| m.kind != CollectionMemberKind::Property)
-                        .map(|m| m.key.clone())
-                        .collect();
+                    if self.heap.get(target)?.members.len() > 4
+                        && self.prepare_keys(vec![key.clone()])?
+                    {
+                        self.stack.push(key);
+                        return Ok(());
+                    }
+                    let candidates = self.declaration_candidates(target, &key, false)?;
                     if self.search_key(&key, candidates)? {
                         self.stack.push(key);
                         return Ok(());
@@ -679,11 +764,7 @@ impl Vm {
                     self.stack.push(key);
                     return Ok(());
                 }
-                let candidates = forcing_members(&self.heap, owner)?
-                    .into_iter()
-                    .filter(|m| m.kind != CollectionMemberKind::Property)
-                    .map(|m| m.key)
-                    .collect();
+                let candidates = self.declaration_candidates(owner, &key, true)?;
                 if self.search_key(&key, candidates)? {
                     if !is_super {
                         self.stack.push(Value::Object(receiver));
@@ -728,12 +809,16 @@ impl Vm {
                         ));
                     }
                 }
+                let candidates = self.declaration_candidates(owner, &key, true)?;
                 let member = ordered_members(&self.heap, owner)?
                     .into_iter()
                     .rev()
                     .find(|m| {
                         m.kind != CollectionMemberKind::Property
-                            && same_key(&self.heap, &m.key, &key)
+                            && candidates.iter().any(|candidate| {
+                                equality::identical_key(&self.heap, candidate, &m.key)
+                            })
+                            && same_key(&self.heap, &key, &m.key)
                     });
                 if member.is_none() && self.prepare_keys(vec![key.clone()])? {
                     if !is_super {
@@ -794,7 +879,7 @@ impl Vm {
                             && (member.name == force.name
                                 || key
                                     .as_ref()
-                                    .is_some_and(|key| same_key(&self.heap, &member.key, key)))
+                                    .is_some_and(|key| same_key(&self.heap, key, &member.key)))
                     });
                 if let (Some(parent), Some(member)) = (parent, inherited) {
                     self.force_key(
@@ -1053,14 +1138,13 @@ impl Vm {
                     return Err(self.spread_error(format!("Cannot spread object containing {kind} into object of type `{type_label}`."), &member));
                 }
                 if source_member.kind == CollectionMemberKind::Entry {
-                    let candidates = self
-                        .heap
-                        .get(target)?
-                        .collection_members
-                        .iter()
-                        .filter(|m| m.kind != CollectionMemberKind::Property)
-                        .map(|m| m.key.clone())
-                        .collect();
+                    if self.heap.get(target)?.members.len() > 4
+                        && self.prepare_keys(vec![key.clone()])?
+                    {
+                        self.stack.push(key);
+                        return Ok(());
+                    }
+                    let candidates = self.declaration_candidates(target, &key, false)?;
                     if self.search_key(&key, candidates)? {
                         self.stack.push(key);
                         self.stack.push(value);
@@ -1082,7 +1166,7 @@ impl Vm {
                     && object
                         .collection_members
                         .iter()
-                        .any(|m| same_member(&self.heap, m, &source_member))
+                        .any(|m| same_member(&self.heap, &source_member, m))
                 {
                     let label = if source_member.kind == CollectionMemberKind::Property {
                         "property"
@@ -1187,7 +1271,8 @@ impl Vm {
                     let value = self.pop()?;
                     let (owner, member) =
                         next.ok_or_else(|| invalid("missing pending predicate member"))?;
-                    self.heap.get_mut(owner)?.complete_cache(
+                    self.complete_cache(
+                        owner,
                         CacheKey {
                             owner: None,
                             name: member.name.clone(),
@@ -1195,7 +1280,7 @@ impl Vm {
                             entry: true,
                         },
                         value.clone(),
-                    );
+                    )?;
                     self.heap
                         .get_mut(id)?
                         .predicate_iterator
@@ -1231,7 +1316,7 @@ impl Vm {
                     method: false,
                     entry: true,
                 };
-                if let Some(LazyState::Completed(value)) = self.heap.get(owner)?.cache.get(&key) {
+                if let Some(value) = self.cached_slot(owner, &key)? {
                     self.frames
                         .last_mut()
                         .expect("active frame")

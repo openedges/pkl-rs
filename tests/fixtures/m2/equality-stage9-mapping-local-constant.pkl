@@ -1,0 +1,1 @@
+left=new Mapping {local x=1;["a"]=x};right=new Mapping {["a"]=1};result=left==right

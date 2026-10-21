@@ -1,0 +1,1 @@
+left=new Listing {1;33};right=new Listing {1;33};result=let(w=left[1]) new Mapping {[left]=10;["a"]=1;["b"]=2;["c"]=3;["d"]=4}[right]

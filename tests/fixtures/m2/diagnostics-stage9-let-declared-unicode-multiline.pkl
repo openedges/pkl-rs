@@ -1,0 +1,3 @@
+module demo.lets
+result = let (message = "😀")
+  throw(message)

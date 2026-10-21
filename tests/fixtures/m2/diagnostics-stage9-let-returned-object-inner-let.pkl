@@ -1,0 +1,1 @@
+obj=let(x=1) new Dynamic { y=let(z=x) throw("member") }; result=obj.y

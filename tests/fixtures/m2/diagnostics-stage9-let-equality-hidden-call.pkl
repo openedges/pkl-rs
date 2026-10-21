@@ -1,0 +1,1 @@
+left=new Dynamic {x=throw("left")}; right=new Dynamic {x=1}; result=let(x=1) left==right

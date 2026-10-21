@@ -1,0 +1,1 @@
+left=new Listing {1;17};right=new Listing {1;17};p=new Mapping {[left]=0};c=(p){[right]=7};result=let(wleft=left[1]) c.length

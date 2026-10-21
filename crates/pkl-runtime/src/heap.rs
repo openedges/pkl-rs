@@ -118,10 +118,19 @@ pub struct CollectionCast {
     pub environment: Environment,
 }
 
+#[derive(Clone, Debug)]
+pub struct CacheSlot {
+    pub key: CacheKey,
+    pub value: Value,
+}
+
 #[derive(Clone, Debug, Default)]
 pub struct Object {
     /// Evaluator-owned canonical identity, populated only after key hashing succeeds.
     pub structural_key: Option<u64>,
+    /// Numeric Java hash, independent of canonical equality identity.
+    /// Inner None marks a hash depending on JVM identity allocation.
+    pub java_hash: Option<Option<i32>>,
     pub function: Option<Function>,
     pub is_module: bool,
     pub class_definition: Option<Class>,
@@ -132,9 +141,14 @@ pub struct Object {
     /// Successful cache publication order, matching VmObject.cachedValues.
     /// Evaluating markers do not occupy an insertion position.
     pub completed_cache_order: Vec<CacheKey>,
+    pub cache_slots: Vec<CacheSlot>,
+    pub cache_index: crate::economic_map::EconomicMapIndex,
     pub collection_kind: CollectionKind,
     pub collection_members: Vec<CollectionMember>,
+    pub declaration_index: Option<crate::economic_map::EconomicMapIndex>,
+    pub declaration_hashes: Vec<i32>,
     pub length: usize,
+    pub mapping_length: Option<usize>,
     pub specialized_literal: bool,
     pub member_environments: BTreeMap<CacheKey, Environment>,
     pub member_values: BTreeMap<CacheKey, Value>,
@@ -152,6 +166,13 @@ impl Object {
         // removes only pending entries, so retries acquire their position here.
         if !matches!(self.cache.get(&key), Some(LazyState::Completed(_))) {
             self.completed_cache_order.push(key.clone());
+            self.cache_slots.push(CacheSlot {
+                key: key.clone(),
+                value: value.clone(),
+            });
+        }
+        if let Some(slot) = self.cache_slots.iter_mut().find(|slot| slot.key == key) {
+            slot.value = value.clone();
         }
         self.cache.insert(key, LazyState::Completed(value));
     }
@@ -306,6 +327,7 @@ impl Heap {
                 .chain(object.environment.custom_this.iter())
                 .chain(object.collection_default.iter().flatten())
                 .chain(object.member_values.values())
+                .chain(object.cache_slots.iter().map(|slot| &slot.value))
                 .chain(object.cache.values().filter_map(|state| match state {
                     LazyState::Completed(value) => Some(value),
                     _ => None,
@@ -315,7 +337,11 @@ impl Heap {
                     pending.push(id);
                 }
             }
-            for key in object.cache.keys() {
+            for key in object
+                .cache
+                .keys()
+                .chain(object.cache_slots.iter().map(|slot| &slot.key))
+            {
                 pending.extend(key.owner);
             }
         }

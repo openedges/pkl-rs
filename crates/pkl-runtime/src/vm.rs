@@ -354,6 +354,17 @@ pub struct BlockMetadata {
     pub declaration: Option<Span>,
     pub value_span: Option<Span>,
     pub property_typecheck: Option<usize>,
+    pub(crate) let_scopes: Vec<LetScope>,
+    pub(crate) constraint_root: Option<Span>,
+    pub(crate) inline_constraint: bool,
+    pub(crate) type_casts: Vec<usize>,
+}
+
+#[derive(Clone, Debug)]
+pub(crate) struct LetScope {
+    body: std::ops::Range<usize>,
+    frame: RuntimeFrame,
+    writes_slot: bool,
 }
 
 #[derive(Clone, Debug)]
@@ -414,6 +425,7 @@ struct Frame {
     lambda: bool,
     type_run: Option<TypeRun>,
     equality_run: Option<equality::EqualityRun>,
+    prepared_hashes: Option<Vec<Value>>,
     key_search: Option<equality::KeySearch>,
     return_to_type: bool,
     diagnostic_member: Option<Arc<str>>,
@@ -520,6 +532,7 @@ impl Vm {
             lambda: false,
             type_run: None,
             equality_run: None,
+            prepared_hashes: None,
             key_search: None,
             return_to_type: false,
             diagnostic_member: None,
@@ -750,6 +763,7 @@ impl Vm {
             }
             for frame in frames {
                 roots.extend(frame.builders.iter().copied().map(Value::Object));
+                roots.extend(frame.prepared_hashes.iter().flatten().cloned());
                 roots.extend(frame.environment.locals.iter().cloned());
                 roots.extend(frame.environment.this_value.iter().cloned());
                 roots.extend(frame.environment.outer_value.iter().cloned());
@@ -786,6 +800,60 @@ impl Vm {
     }
 
     fn fail(&mut self, mut error: RuntimeError) {
+        // LetExprNode inserts one frame per call target when a body throws.
+        // Unwinding replaces inner scopes with the outermost active scope,
+        // including across recursive calls. Initializers and type checks are
+        // outside the body range and therefore do not insert a frame.
+        let mut let_frames = BTreeMap::new();
+        let mut logical_targets = Vec::with_capacity(self.frames.len());
+        for frame in &self.frames {
+            let target = if frame.return_to_type
+                && self
+                    .program
+                    .metadata
+                    .get(frame.block)
+                    .is_some_and(|m| m.inline_constraint)
+            {
+                logical_targets.last().copied().unwrap_or(frame.block)
+            } else {
+                frame.block
+            };
+            logical_targets.push(target);
+        }
+        for (index, frame) in self.frames.iter().rev().enumerate() {
+            // A recoverable mismatch becomes VmException only at PklRootNode.
+            // Let bodies within that root do not catch the original mismatch.
+            if index == 0
+                && error.type_diagnostic.is_some()
+                && !self
+                    .program
+                    .metadata
+                    .get(frame.block)
+                    .is_some_and(|metadata| {
+                        metadata.type_casts.contains(&frame.pc.saturating_sub(1))
+                    })
+            {
+                continue;
+            }
+            if let Some(scope) = self
+                .program
+                .metadata
+                .get(frame.block)
+                .filter(|metadata| !metadata.inline_constraint)
+                .and_then(|metadata| {
+                    metadata
+                        .let_scopes
+                        .iter()
+                        .rev()
+                        .find(|scope| scope.body.contains(&frame.pc.saturating_sub(1)))
+                })
+            {
+                let_frames.insert(
+                    logical_targets[self.frames.len() - 1 - index],
+                    scope.frame.clone(),
+                );
+            }
+        }
         if error.kind == ErrorKind::MissingMember
             && let Some(frame) = self.frames.last()
             && let Some(
@@ -829,7 +897,7 @@ impl Vm {
             error.message = format!("Cannot find property `{name}`.");
             error.hint = crate::diagnostic::property_suggestions(name, names, true);
         }
-        for frame in self.frames.iter().rev() {
+        for (frame_index, frame) in self.frames.iter().enumerate().rev() {
             if let Some(metadata) = self.program.metadata.get(frame.block)
                 && let Some(Some(span)) = metadata.spans.get(frame.pc.saturating_sub(1))
             {
@@ -862,6 +930,25 @@ impl Vm {
             }
             if let Some(run) = &frame.type_run {
                 error.frames.extend(run.fatal_value_frames().cloned());
+            }
+            if let Some(inserted) = let_frames.remove(&logical_targets[frame_index]) {
+                error.frames.push(inserted);
+            }
+            if frame.return_to_type
+                && let Some(span) = self
+                    .program
+                    .metadata
+                    .get(frame.block)
+                    .and_then(|m| m.constraint_root)
+                && let Some(caller) = frame_index
+                    .checked_sub(1)
+                    .and_then(|index| self.frames.get(index))
+                && let Some(run) = &caller.type_run
+            {
+                error.frames.push(RuntimeFrame {
+                    span,
+                    member: run.member.clone(),
+                });
             }
         }
         if error.span.is_none() {
@@ -958,6 +1045,46 @@ impl Vm {
         entry: bool,
         predicate: bool,
     ) -> Result<(), RuntimeError> {
+        self.force_key_mode_prepared(
+            receiver,
+            initial_owner,
+            name,
+            local,
+            memoize,
+            method,
+            entry,
+            predicate,
+            false,
+        )
+    }
+
+    #[allow(clippy::too_many_arguments)]
+    fn force_key_mode_prepared(
+        &mut self,
+        receiver: ObjectId,
+        initial_owner: ObjectId,
+        name: Arc<str>,
+        local: bool,
+        mut memoize: bool,
+        method: bool,
+        entry: bool,
+        predicate: bool,
+        hash_prepared: bool,
+    ) -> Result<(), RuntimeError> {
+        if !hash_prepared
+            && self.prepare_cache_read(
+                receiver,
+                initial_owner,
+                name.clone(),
+                local,
+                memoize,
+                method,
+                entry,
+                predicate,
+            )?
+        {
+            return Ok(());
+        }
         let key = CacheKey {
             entry,
             owner: local.then_some(initial_owner),
@@ -965,18 +1092,15 @@ impl Vm {
             method,
         };
         if memoize {
-            match self.heap.get(receiver)?.cache.get(&key) {
-                Some(LazyState::Completed(value)) => {
-                    self.stack.push(value.clone());
-                    return Ok(());
-                }
-                Some(LazyState::Evaluating) => {
-                    return Err(RuntimeError::new(
-                        ErrorKind::Cycle,
-                        format!("cyclic forcing of {name}"),
-                    ));
-                }
-                _ => {}
+            if let Some(value) = self.cached_slot(receiver, &key)? {
+                self.stack.push(value);
+                return Ok(());
+            }
+            if let Some(LazyState::Evaluating) = self.heap.get(receiver)?.cache.get(&key) {
+                return Err(RuntimeError::new(
+                    ErrorKind::Cycle,
+                    format!("cyclic forcing of {name}"),
+                ));
             }
         }
         let mut owner = initial_owner;
@@ -1004,6 +1128,16 @@ impl Vm {
                 RuntimeError::new(ErrorKind::MissingMember, format!("missing member {name}"))
             })?;
         };
+        if local
+            && self.program.blocks.get(member.code).is_some_and(|block| {
+                matches!(
+                    block.as_slice(),
+                    [Instruction::Constant(_), Instruction::Return]
+                )
+            })
+        {
+            memoize = false;
+        }
         if self
             .frames
             .iter()
@@ -1031,9 +1165,9 @@ impl Vm {
             loop {
                 let object = self.heap.get(current)?;
                 if current != receiver
-                    && let Some(LazyState::Completed(value)) = object.cache.get(&key)
+                    && let Some(value) = self.cached_slot(current, &key)?
                 {
-                    cached = Some(value.clone());
+                    cached = Some(value);
                     break;
                 }
                 if let Some(cast) = &object.collection_cast {
@@ -1089,9 +1223,7 @@ impl Vm {
         if let Some(value) = &constant_value {
             if collection_casts.is_empty() {
                 if memoize {
-                    self.heap
-                        .get_mut(receiver)?
-                        .complete_cache(key, value.clone());
+                    self.complete_cache(receiver, key, value.clone())?;
                 }
                 self.stack.push(value.clone());
                 return Ok(());
@@ -1168,6 +1300,7 @@ impl Vm {
             lambda: false,
             type_run: None,
             equality_run: None,
+            prepared_hashes: None,
             key_search: None,
             return_to_type: false,
             diagnostic_member: None,
@@ -1406,6 +1539,7 @@ impl Vm {
             lambda: !function.method,
             type_run: None,
             equality_run: None,
+            prepared_hashes: None,
             key_search: None,
             return_to_type: false,
             diagnostic_member: None,
@@ -2167,14 +2301,20 @@ impl Vm {
                         .environment = cast.environment;
                     return Ok(());
                 }
-                let frame = self.frames.pop().expect("active frame");
-                if let Some(force) = frame.force
-                    && let Some(key) = force.cache
+                if let Some(force) = self.frames.last_mut().expect("active frame").force.as_mut()
+                    && let Some(key) = force.cache.take()
                 {
-                    self.heap
-                        .get_mut(force.receiver)?
-                        .complete_cache(key, value.clone());
+                    let receiver = force.receiver;
+                    self.complete_cache(receiver, key, value.clone())?;
+                    if self.frames.len() > 1 {
+                        let caller = self.frames.len() - 2;
+                        self.frames[caller].callsite_hidden = true;
+                    }
+                    self.stack.push(value);
+                    self.frames.last_mut().expect("active frame").pc -= 1;
+                    return Ok(());
                 }
+                let frame = self.frames.pop().expect("active frame");
                 if frame.return_to_type {
                     self.frames
                         .last_mut()
@@ -2398,6 +2538,7 @@ fn compile_module_configured(
         program: Program::new(Vec::new()),
         options,
         member: String::new(),
+        let_members: Vec::new(),
         type_scopes: Vec::new(),
         modifiers: Vec::new(),
         constraint_module: false,
@@ -2436,6 +2577,8 @@ fn compile_module_configured(
 struct Code {
     instructions: Vec<Instruction>,
     spans: Vec<Option<Span>>,
+    let_scopes: Vec<LetScope>,
+    type_casts: Vec<usize>,
 }
 impl Code {
     fn push(&mut self, instruction: Instruction) {
@@ -2464,6 +2607,7 @@ struct Compiler<'a> {
     program: Program,
     options: CompileOptions,
     member: String,
+    let_members: Vec<String>,
     type_scopes: Vec<Vec<crate::syntax::Member>>,
     modifiers: Vec<crate::syntax::Modifier>,
     constraint_module: bool,
@@ -2594,6 +2738,10 @@ impl Compiler<'_> {
             declaration,
             value_span: None,
             property_typecheck: None,
+            let_scopes: code.let_scopes,
+            constraint_root: None,
+            inline_constraint: false,
+            type_casts: code.type_casts,
         });
         index
     }
@@ -2780,6 +2928,7 @@ impl Compiler<'_> {
                     return Ok(());
                 };
                 self.expression(value, output)?;
+                output.type_casts.push(output.len());
                 output.push_at(Instruction::CheckType(check), self.type_source_span(ty));
             }
             ExprKind::NullableMember(receiver, name) => {
@@ -3103,7 +3252,10 @@ impl Compiler<'_> {
                 }
             }
             ExprKind::Let {
-                value, body, ty, ..
+                name,
+                value,
+                body,
+                ty,
             } => {
                 self.expression(value, output)?;
                 if let Some(ty) = ty {
@@ -3113,7 +3265,24 @@ impl Compiler<'_> {
                     output.push_at(Instruction::CheckType(check), self.type_source_span(ty));
                 }
                 output.push(Instruction::PushLocal);
-                self.expression(body, output)?;
+                let previous_member = self.member.clone();
+                if self.let_members.last() != Some(&self.member) {
+                    self.member.push_str(".<let expr>");
+                }
+                self.let_members.push(self.member.clone());
+                let start = output.len();
+                let result = self.expression(body, output);
+                output.let_scopes.push(LetScope {
+                    body: start..output.len(),
+                    writes_slot: name != "_",
+                    frame: RuntimeFrame {
+                        span: expression.span,
+                        member: Arc::from(self.member.as_str()),
+                    },
+                });
+                self.let_members.pop();
+                self.member = previous_member;
+                result?;
                 output.push(Instruction::PopLocal);
             }
             ExprKind::Object { parent, members } => {
@@ -3479,11 +3648,18 @@ impl Compiler<'_> {
                     let previous =
                         std::mem::replace(&mut self.active_type_parameters, parameters.clone());
                     let mut code = Code::default();
+                    // CustomThisScope interrupts consecutive let qualification.
+                    let enclosing_lets = std::mem::take(&mut self.let_members);
                     let result = self.expression(expression, &mut code);
+                    self.let_members = enclosing_lets;
                     self.active_type_parameters = previous;
                     result?;
+                    let writes_slots = code.let_scopes.iter().any(|scope| scope.writes_slot);
                     code.push(Instruction::Return);
                     let block = self.block(code, Some(expression.span));
+                    self.program.metadata[block].constraint_root =
+                        writes_slots.then_some(expression.span);
+                    self.program.metadata[block].inline_constraint = !writes_slots;
                     compiled.push(ConstraintCode {
                         block,
                         span: expression.span,
@@ -3585,6 +3761,8 @@ impl Compiler<'_> {
                                 std::mem::replace(&mut self.parameter_spans, spans);
                             let previous_module =
                                 std::mem::replace(&mut self.constraint_module, true);
+                            let previous_member =
+                                std::mem::replace(&mut self.member, format!("#{}", member.name));
                             let result = self
                                 .compile_type_at(aliased, index + 1, aliases, &substitutions)
                                 .map_err(|mut error| {
@@ -3595,6 +3773,7 @@ impl Compiler<'_> {
                                     error
                                 });
                             self.constraint_module = previous_module;
+                            self.member = previous_member;
                             self.parameter_spans = previous_spans;
                             let result = result?;
                             aliases.remove(&member.expr.span);

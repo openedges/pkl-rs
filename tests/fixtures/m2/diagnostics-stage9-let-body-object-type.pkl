@@ -1,0 +1,1 @@
+class C { x:Int }; result=let(y=1) new C {x="bad"}.x

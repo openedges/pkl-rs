@@ -1,0 +1,2 @@
+function f(x)=let(a=x) if(x==0) let(b=2) throw("zero") else f(x-1)
+result=f(1)

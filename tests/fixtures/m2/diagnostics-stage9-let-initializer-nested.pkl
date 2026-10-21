@@ -1,0 +1,1 @@
+result=let(x=let(y=1) throw("inner initializer")) x

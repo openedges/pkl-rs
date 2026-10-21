@@ -1,0 +1,1 @@
+left=new Listing {local x=0+0;x};right=new Listing {0};p=new Mapping {[left]=0};c=(p){[right]=7};result=c.length

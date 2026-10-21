@@ -1,0 +1,1 @@
+key=new Listing {throw("cache hash")};p=new Mapping {[key]=9};c=(p) {["a"]=1;["b"]=2;["c"]=3;["d"]=4};result=List(c["a"],c["b"],c[key],c["c"],c["d"])[4]

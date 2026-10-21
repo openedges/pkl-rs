@@ -1,0 +1,1 @@
+m=new Mapping {[0.0]=0;[-0.0]=1;[NaN]=2;[Infinity]=3;[-Infinity]=4;[1.0]=5;};result=m[0.0]==0 && m[-0.0]==1 && m[NaN]==2 && m[Infinity]==3 && m[-Infinity]==4 && m[1.0]==5

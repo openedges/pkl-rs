@@ -160,7 +160,7 @@ pub(super) struct TypeRun {
     value: Value,
     checked: Value,
     pub(super) environment: Environment,
-    member: Arc<str>,
+    pub(super) member: Arc<str>,
     tasks: Vec<Task>,
     outcome: Option<Result<Value, Mismatch>>,
     pub(super) returned: Option<Value>,
@@ -344,7 +344,12 @@ impl Vm {
             run.environment.clone()
         };
         environment.custom_this = Some(run.value.clone());
-        let member = run.member.clone();
+        let member = self
+            .program
+            .metadata
+            .get(constraint.block)
+            .filter(|metadata| metadata.constraint_root.is_some())
+            .map_or_else(|| run.member.clone(), |metadata| metadata.member.clone());
         run.constraint_active = true;
         self.frames.last_mut().expect("type frame").type_run = Some(run);
         self.frames.last_mut().expect("type frame").callsite_hidden = true;
@@ -357,6 +362,7 @@ impl Vm {
             lambda: false,
             type_run: None,
             equality_run: None,
+            prepared_hashes: None,
             key_search: None,
             return_to_type: true,
             diagnostic_member: Some(member),
@@ -895,6 +901,7 @@ impl Vm {
         run.tasks.push(Task::CollectionValueReady(state));
         self.frames.last_mut().expect("type frame").type_run = Some(run);
         let depth = self.frames.len();
+        let stack_depth = self.stack.len();
         self.force_key(
             receiver,
             item.owner,
@@ -910,6 +917,14 @@ impl Vm {
                 .last_mut()
                 .expect("collection value frame")
                 .return_to_type = true;
+        } else if self.stack.len() == stack_depth {
+            self.frames
+                .last_mut()
+                .expect("type frame")
+                .equality_run
+                .as_mut()
+                .ok_or_else(|| invalid("missing deferred cache read"))?
+                .forward_to_type = true;
         } else {
             let value = self.pop()?;
             self.frames

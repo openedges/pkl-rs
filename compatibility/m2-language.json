@@ -18006,6 +18006,3310 @@
       ]
     },
     {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "equality-stage9-held-mapping-cache-key-first",
+      "input": "tests/fixtures/m2/equality-stage9-held-mapping-cache-key-first.pkl",
+      "input_sha256": "dce464ffcee4255309437294d5fa003ccdf2c09e4e7cf7f16900dd4a68d74f1b",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:amendment"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "equality-stage9-held-mapping-cache-key-last",
+      "input": "tests/fixtures/m2/equality-stage9-held-mapping-cache-key-last.pkl",
+      "input_sha256": "6e79ed5a5a0e89d0f45b3c88264554d1a5c4ebc0f4b54a0600b0cefec51f7ed4",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:amendment"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "equality-stage9-held-dynamic-cache-key-first",
+      "input": "tests/fixtures/m2/equality-stage9-held-dynamic-cache-key-first.pkl",
+      "input_sha256": "69b3db2529d16e8548e071e02a09b2605cc8dd9488d702dad7fee40246f640c6",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:amendment"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "equality-stage9-held-dynamic-cache-key-last",
+      "input": "tests/fixtures/m2/equality-stage9-held-dynamic-cache-key-last.pkl",
+      "input_sha256": "2169054ac3b326b3970ef3f32519eee506abf43249b6e0c4bb3a3104cb64c452",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:amendment"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "equality-stage9-held-listing-key-warm-fifth",
+      "input": "tests/fixtures/m2/equality-stage9-held-listing-key-warm-fifth.pkl",
+      "input_sha256": "35ee33f08251d1327a99640e90982af6a0aced647afe6bfdedf50e33be328b8a",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-stage9-held-listing-warm-hashed-duplicate",
+      "input": "tests/fixtures/m2/equality-stage9-held-listing-warm-hashed-duplicate.pkl",
+      "input_sha256": "34c95050330bafa7e77651bb860e9e5d37e9fc010041e60db3657d3c25075d4e",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "equality-stage9-held-listing-warm-hashed-inherited-lookup",
+      "input": "tests/fixtures/m2/equality-stage9-held-listing-warm-hashed-inherited-lookup.pkl",
+      "input_sha256": "74d971603aa7e31feefa004b65737c9bb3906f3a9e5451d6d093541dcb6f426a",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:amendment"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "equality-stage9-held-dynamic-hash-warm-b-cache-order",
+      "input": "tests/fixtures/m2/equality-stage9-held-dynamic-hash-warm-b-cache-order.pkl",
+      "input_sha256": "5d4bc7df58f6e095c53728c7ee76cca6332d3fccd9d11c73c6bf131d768f2e4e",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-stage9-held-listing-local-cache-regular-equality",
+      "input": "tests/fixtures/m2/equality-stage9-held-listing-local-cache-regular-equality.pkl",
+      "input_sha256": "745587a442090b4710905080e43a71429d424518d11ae57063408b27f756abf1",
+      "metamorphic_relation": {
+        "case_ids": [
+          "equality-stage9-held-listing-local-cache-regular-equality",
+          "equality-stage9-listing-local-both",
+          "equality-stage9-held-mapping-local-cache-regular-equality",
+          "equality-stage9-mapping-local-both"
+        ],
+        "domain": "A regular local declaration contributes an ObjectMember cache key in Listing/Mapping equality; comparing the left local cache to an absent or distinct right local declaration remains false.",
+        "kind": "equal-stdout"
+      },
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:modifiers",
+        "semantic:generated-verification"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-stage9-held-mapping-local-cache-regular-equality",
+      "input": "tests/fixtures/m2/equality-stage9-held-mapping-local-cache-regular-equality.pkl",
+      "input_sha256": "73c84cef0b124547ffef203679fc07e4ee72971546b0ad8327ca436c6193d566",
+      "metamorphic_relation": {
+        "case_ids": [
+          "equality-stage9-held-listing-local-cache-regular-equality",
+          "equality-stage9-listing-local-both",
+          "equality-stage9-held-mapping-local-cache-regular-equality",
+          "equality-stage9-mapping-local-both"
+        ],
+        "domain": "A regular local declaration contributes an ObjectMember cache key in Listing/Mapping equality; comparing the left local cache to an absent or distinct right local declaration remains false.",
+        "kind": "equal-stdout"
+      },
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:modifiers",
+        "semantic:generated-verification"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-stage9-listing-local-cache-reverse",
+      "input": "tests/fixtures/m2/equality-stage9-listing-local-cache-reverse.pkl",
+      "input_sha256": "f2dcc8a37803810ddaec33bbaada1db4a3f03793ad54c6a2fd45ea680b9731ce",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:modifiers"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-stage9-listing-local-cache-identity",
+      "input": "tests/fixtures/m2/equality-stage9-listing-local-cache-identity.pkl",
+      "input_sha256": "53fc9fd2c429e7c9c2baad54087ef3b01a710f45f564702a1f71ca30204aa690",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:modifiers"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-stage9-listing-local-constant",
+      "input": "tests/fixtures/m2/equality-stage9-listing-local-constant.pkl",
+      "input_sha256": "298c2e82c3910988524bb79fac7bf32ff9b968fc93b21c282d1ed034a045fdce",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:modifiers"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-stage9-listing-local-both",
+      "input": "tests/fixtures/m2/equality-stage9-listing-local-both.pkl",
+      "input_sha256": "309e59b4b6b7b7bfecd7abe9287b0308a27c9b63d656adac685c882247e7a007",
+      "metamorphic_relation": {
+        "case_ids": [
+          "equality-stage9-held-listing-local-cache-regular-equality",
+          "equality-stage9-listing-local-both",
+          "equality-stage9-held-mapping-local-cache-regular-equality",
+          "equality-stage9-mapping-local-both"
+        ],
+        "domain": "A regular local declaration contributes an ObjectMember cache key in Listing/Mapping equality; comparing the left local cache to an absent or distinct right local declaration remains false.",
+        "kind": "equal-stdout"
+      },
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:modifiers",
+        "semantic:generated-verification"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-stage9-mapping-local-cache-reverse",
+      "input": "tests/fixtures/m2/equality-stage9-mapping-local-cache-reverse.pkl",
+      "input_sha256": "c04ce0ed2c0e10ed2ca4d8a2e3b64ccd9bb74a3e331e1d21d1ec7e51346cfba9",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:modifiers"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-stage9-mapping-local-cache-identity",
+      "input": "tests/fixtures/m2/equality-stage9-mapping-local-cache-identity.pkl",
+      "input_sha256": "5b36c18c0517945614c4392b36cbd517d519a98c34d5e28944caef4826a507b6",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:modifiers"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-stage9-mapping-local-constant",
+      "input": "tests/fixtures/m2/equality-stage9-mapping-local-constant.pkl",
+      "input_sha256": "9a4c8fc289fe85f36d0fe78fc847174bc6f1f732599275d99d42bd01cbafb69e",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:modifiers"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-stage9-mapping-local-both",
+      "input": "tests/fixtures/m2/equality-stage9-mapping-local-both.pkl",
+      "input_sha256": "a5da23c20e62ca64f6412524f81de23613b0bf2aca773a57b989741573b0b5f7",
+      "metamorphic_relation": {
+        "case_ids": [
+          "equality-stage9-held-listing-local-cache-regular-equality",
+          "equality-stage9-listing-local-both",
+          "equality-stage9-held-mapping-local-cache-regular-equality",
+          "equality-stage9-mapping-local-both"
+        ],
+        "domain": "A regular local declaration contributes an ObjectMember cache key in Listing/Mapping equality; comparing the left local cache to an absent or distinct right local declaration remains false.",
+        "kind": "equal-stdout"
+      },
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:modifiers",
+        "semantic:generated-verification"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-stage9-dynamic-local-cache-forward",
+      "input": "tests/fixtures/m2/equality-stage9-dynamic-local-cache-forward.pkl",
+      "input_sha256": "003e8c77049940790da6f8fe00796524649b6eb50a91b55ebd7431dca56caa1d",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:modifiers"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-stage9-dynamic-local-constant",
+      "input": "tests/fixtures/m2/equality-stage9-dynamic-local-constant.pkl",
+      "input_sha256": "5e463bc1efeaaf808ef466c0f83c7bdfa469d92de898ebd43de96711ab12907c",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:modifiers"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-stage9-dynamic-local-both",
+      "input": "tests/fixtures/m2/equality-stage9-dynamic-local-both.pkl",
+      "input_sha256": "31198e522d2a71d5d2cbf0be16e54c1b6c7956fc1cd5a714fa405dbdde7f52f3",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:modifiers"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-stage9-listing-left-warm0-fifth",
+      "input": "tests/fixtures/m2/equality-stage9-listing-left-warm0-fifth.pkl",
+      "input_sha256": "74d2d29cdc9b80b65b1d9904d2522a370f143ba219d32a6a54ef45b61635211e",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-stage9-listing-right-warm0-fifth",
+      "input": "tests/fixtures/m2/equality-stage9-listing-right-warm0-fifth.pkl",
+      "input_sha256": "2ee39ea15a78d9fcc22b4bd57dae0e48c04d716b7f0cf82f88212c2ba2101b5b",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-stage9-listing-both-warm0-fifth",
+      "input": "tests/fixtures/m2/equality-stage9-listing-both-warm0-fifth.pkl",
+      "input_sha256": "ef2d233bdd05f8b9ff19b2fb0edd6b57f171acb062f54d7af88de33dfe5d0328",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "equality-stage9-listing-left-warm1-fifth",
+      "input": "tests/fixtures/m2/equality-stage9-listing-left-warm1-fifth.pkl",
+      "input_sha256": "0c9fdf58f8457594378a523ecf28b3d331d37bf0faa08ac9394be1df71627b6e",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "equality-stage9-listing-right-warm1-fifth",
+      "input": "tests/fixtures/m2/equality-stage9-listing-right-warm1-fifth.pkl",
+      "input_sha256": "81554037effe4435d5dfae5481a9777f126e05835f569ca6cd794ca91c9ac2e2",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-stage9-listing-both-warm1-fifth",
+      "input": "tests/fixtures/m2/equality-stage9-listing-both-warm1-fifth.pkl",
+      "input_sha256": "f6d5e248e90ad4b5cca6641fd03ae3060d2d143e4f372371fad3da4354ffea20",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "equality-stage9-listing-left-warm2-fifth",
+      "input": "tests/fixtures/m2/equality-stage9-listing-left-warm2-fifth.pkl",
+      "input_sha256": "e10425dbc978eb886b8c937d02c098787bc48f67251f17c08127c5edafd8c75f",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "equality-stage9-listing-right-warm2-fifth",
+      "input": "tests/fixtures/m2/equality-stage9-listing-right-warm2-fifth.pkl",
+      "input_sha256": "27d7fc6ee7bf239eac6e0cee0226806d3c2c3365653e17a25cdaaf78b8b5a625",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-stage9-listing-both-warm2-fifth",
+      "input": "tests/fixtures/m2/equality-stage9-listing-both-warm2-fifth.pkl",
+      "input_sha256": "77766310f63d9ecff1db65c388610f3b19922dcf75a3666bd2944ba990828277",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-stage9-stable-key-list",
+      "input": "tests/fixtures/m2/equality-stage9-stable-key-list.pkl",
+      "input_sha256": "815f4f1b01e5fab860e6e46119c3ed04a9ff844fe774a7565c6e18556670ba1c",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-stage9-stable-key-listing",
+      "input": "tests/fixtures/m2/equality-stage9-stable-key-listing.pkl",
+      "input_sha256": "cd09a068afcabf7124f0389c9d751d10ef552a6f6a4b459d40fc5c1ea1e05996",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-stage9-stable-key-mapping",
+      "input": "tests/fixtures/m2/equality-stage9-stable-key-mapping.pkl",
+      "input_sha256": "e998b606e244ba6e0bdeeb50beb554d08ba6631461e0608fbe0d2370b2e3f60e",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-stage9-stable-key-dynamic",
+      "input": "tests/fixtures/m2/equality-stage9-stable-key-dynamic.pkl",
+      "input_sha256": "a9f631f8f74116bf54846c2295b24c6e0aa23c8255fa0eeda106a12e77d02c8e",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-stage9-numeric-collisions-4",
+      "input": "tests/fixtures/m2/equality-stage9-numeric-collisions-4.pkl",
+      "input_sha256": "a6ef2a362c733b6945a14743206feef7e11cb9cdaee9c3dca3c8d4f2617f253c",
+      "metamorphic_relation": {
+        "case_ids": [
+          "equality-stage9-numeric-collisions-4",
+          "equality-stage9-strict-list-bucket-keys-4"
+        ],
+        "domain": "Replacing each integral key with a strict one-element List preserves lookup of the final assigned value across 4 colliding keys.",
+        "kind": "equal-stdout"
+      },
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:generated-verification"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-stage9-numeric-collisions-5",
+      "input": "tests/fixtures/m2/equality-stage9-numeric-collisions-5.pkl",
+      "input_sha256": "794af8e1e7a01978c0ef6ce0236b7c2f7a65832bde221667ff912496bd026934",
+      "metamorphic_relation": {
+        "case_ids": [
+          "equality-stage9-numeric-collisions-5",
+          "equality-stage9-strict-list-bucket-keys-5"
+        ],
+        "domain": "Replacing each integral key with a strict one-element List preserves lookup of the final assigned value across 5 colliding keys.",
+        "kind": "equal-stdout"
+      },
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:generated-verification"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-stage9-numeric-collisions-6",
+      "input": "tests/fixtures/m2/equality-stage9-numeric-collisions-6.pkl",
+      "input_sha256": "7a0b8d66f4bc0458d554493714867f4c3b2f6d14214e2aad889b865f450f0e24",
+      "metamorphic_relation": {
+        "case_ids": [
+          "equality-stage9-numeric-collisions-6",
+          "equality-stage9-strict-list-bucket-keys-6"
+        ],
+        "domain": "Replacing each integral key with a strict one-element List preserves lookup of the final assigned value across 6 colliding keys.",
+        "kind": "equal-stdout"
+      },
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:generated-verification"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-stage9-numeric-collisions-22",
+      "input": "tests/fixtures/m2/equality-stage9-numeric-collisions-22.pkl",
+      "input_sha256": "2e564758a10fdfeca1c80abd5c848039600b19de91a1169a62642027c47de77d",
+      "metamorphic_relation": {
+        "case_ids": [
+          "equality-stage9-numeric-collisions-22",
+          "equality-stage9-strict-list-bucket-keys-22"
+        ],
+        "domain": "Replacing each integral key with a strict one-element List preserves lookup of the final assigned value across 22 colliding keys.",
+        "kind": "equal-stdout"
+      },
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:generated-verification"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-stage9-numeric-collisions-23",
+      "input": "tests/fixtures/m2/equality-stage9-numeric-collisions-23.pkl",
+      "input_sha256": "f386b6bbde09af44a77111a5ebed90628ed3caf5a5b88f6879fc3abb29ea1f05",
+      "metamorphic_relation": {
+        "case_ids": [
+          "equality-stage9-numeric-collisions-23",
+          "equality-stage9-strict-list-bucket-keys-23"
+        ],
+        "domain": "Replacing each integral key with a strict one-element List preserves lookup of the final assigned value across 23 colliding keys.",
+        "kind": "equal-stdout"
+      },
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:generated-verification"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-stage9-numeric-collisions-32",
+      "input": "tests/fixtures/m2/equality-stage9-numeric-collisions-32.pkl",
+      "input_sha256": "07e2d5614f83fb55ced3957044e36164c3e56b57fb69d9edc18afa81beeceb49",
+      "metamorphic_relation": {
+        "case_ids": [
+          "equality-stage9-numeric-collisions-32",
+          "equality-stage9-strict-list-bucket-keys-32"
+        ],
+        "domain": "Replacing each integral key with a strict one-element List preserves lookup of the final assigned value across 32 colliding keys.",
+        "kind": "equal-stdout"
+      },
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:generated-verification"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-stage9-stable-keys-int-bucket-scalar",
+      "input": "tests/fixtures/m2/equality-stage9-stable-keys-int-bucket-scalar.pkl",
+      "input_sha256": "6eb22fdaf9009102903d8ba6a3d65bac4f73b9f7e32d70422f2e8e521a3a5265",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-stage9-stable-keys-int-fold-scalar",
+      "input": "tests/fixtures/m2/equality-stage9-stable-keys-int-fold-scalar.pkl",
+      "input_sha256": "56e2b702ce8b053c137af1e9bdf1ee1eeef3d9a3c6e615e329e63752fea77cc4",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-stage9-stable-keys-strings-scalar",
+      "input": "tests/fixtures/m2/equality-stage9-stable-keys-strings-scalar.pkl",
+      "input_sha256": "5b3233667409a2bdfb384037f5d10f35413aa1c3e10d929d94b926a447e3dfc3",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-stage9-stable-keys-float-scalar",
+      "input": "tests/fixtures/m2/equality-stage9-stable-keys-float-scalar.pkl",
+      "input_sha256": "6ba75ebc5b7517d2073741347687fa21b51aff3ee11a1e098d35be2d28978333",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-stage9-stable-keys-nullbool-scalar",
+      "input": "tests/fixtures/m2/equality-stage9-stable-keys-nullbool-scalar.pkl",
+      "input_sha256": "fba7857275ea62e6c1ceda4f143d26d440dbd07d2b2d9ac9ff4e3b3c0551f78e",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "equality-stage9-mapping-listing-cache-fifth-position0",
+      "input": "tests/fixtures/m2/equality-stage9-mapping-listing-cache-fifth-position0.pkl",
+      "input_sha256": "c24a66c4bbc454720d8e083cfe4303e4eb236b75a63dd8f34d282e2cf04ab1c2",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:amendment"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "equality-stage9-mapping-listing-cache-fifth-position2",
+      "input": "tests/fixtures/m2/equality-stage9-mapping-listing-cache-fifth-position2.pkl",
+      "input_sha256": "f56ed58cf36ae99a1f9158e355f84c6d42560de16a93816a30a80d61b50e937b",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:amendment"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "equality-stage9-mapping-listing-cache-fifth-position4",
+      "input": "tests/fixtures/m2/equality-stage9-mapping-listing-cache-fifth-position4.pkl",
+      "input_sha256": "579c6341933994047c4e3cd8420a7d0460c09ffc4a92563679bd26991971e96d",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:amendment"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-stage9-mapping-listing-cache-four-control",
+      "input": "tests/fixtures/m2/equality-stage9-mapping-listing-cache-four-control.pkl",
+      "input_sha256": "e32d1a9c1d85784b488bc74ec7ae25e0f755dfa968e6eef50f51f33074c8e9fd",
+      "metamorphic_relation": {
+        "case_ids": [
+          "equality-stage9-mapping-listing-cache-four-control",
+          "equality-stage9-mapping-dynamic-cache-four-control",
+          "equality-stage9-dynamic-listing-cache-four-control",
+          "equality-stage9-dynamic-dynamic-cache-four-control"
+        ],
+        "domain": "Changing the Mapping/Dynamic receiver and structural key kind preserves the successful fourth cached read before the fifth-insertion hash transition.",
+        "kind": "equal-stdout"
+      },
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:amendment",
+        "semantic:generated-verification"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "equality-stage9-mapping-dynamic-cache-fifth-position0",
+      "input": "tests/fixtures/m2/equality-stage9-mapping-dynamic-cache-fifth-position0.pkl",
+      "input_sha256": "ca60dda49425583ccf56930ee303cb48ff57fbf0fd153178f20941df09dea683",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:amendment"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "equality-stage9-mapping-dynamic-cache-fifth-position2",
+      "input": "tests/fixtures/m2/equality-stage9-mapping-dynamic-cache-fifth-position2.pkl",
+      "input_sha256": "ced6a069d0674a9a660f0129f4dc729bc3d70d0ea27e0bb9c68b353f1ded8d06",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:amendment"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "equality-stage9-mapping-dynamic-cache-fifth-position4",
+      "input": "tests/fixtures/m2/equality-stage9-mapping-dynamic-cache-fifth-position4.pkl",
+      "input_sha256": "a28176593d3be4ee9bf1c9d84aa68533ebd6002cb1503ef768f93cc8f37ca26c",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:amendment"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-stage9-mapping-dynamic-cache-four-control",
+      "input": "tests/fixtures/m2/equality-stage9-mapping-dynamic-cache-four-control.pkl",
+      "input_sha256": "7a8951957b9ee79ec9fae6bb2d0847bfe5bbaf4f56e9d7548ebab7f691e31d62",
+      "metamorphic_relation": {
+        "case_ids": [
+          "equality-stage9-mapping-listing-cache-four-control",
+          "equality-stage9-mapping-dynamic-cache-four-control",
+          "equality-stage9-dynamic-listing-cache-four-control",
+          "equality-stage9-dynamic-dynamic-cache-four-control"
+        ],
+        "domain": "Changing the Mapping/Dynamic receiver and structural key kind preserves the successful fourth cached read before the fifth-insertion hash transition.",
+        "kind": "equal-stdout"
+      },
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:amendment",
+        "semantic:generated-verification"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "equality-stage9-dynamic-listing-cache-fifth-position0",
+      "input": "tests/fixtures/m2/equality-stage9-dynamic-listing-cache-fifth-position0.pkl",
+      "input_sha256": "c6620c6ad03c9c7d47324f224528f937f6c0bb1bc67fed9c4c8a91abe327ce01",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:amendment"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "equality-stage9-dynamic-listing-cache-fifth-position2",
+      "input": "tests/fixtures/m2/equality-stage9-dynamic-listing-cache-fifth-position2.pkl",
+      "input_sha256": "3508f4629b3adc523210d4874c2c5c8eb363ff27ba4f6ea9e4ec1bb023e6cb11",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:amendment"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "equality-stage9-dynamic-listing-cache-fifth-position4",
+      "input": "tests/fixtures/m2/equality-stage9-dynamic-listing-cache-fifth-position4.pkl",
+      "input_sha256": "0bfa75fb1b64a5de89e4045bdbd4dfc2e5955374ff223abfc4b118331be177a6",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:amendment"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-stage9-dynamic-listing-cache-four-control",
+      "input": "tests/fixtures/m2/equality-stage9-dynamic-listing-cache-four-control.pkl",
+      "input_sha256": "eac03f8d8eeb3d9591536310043deda697240b5d1e9c0fc62f145b06487a642c",
+      "metamorphic_relation": {
+        "case_ids": [
+          "equality-stage9-mapping-listing-cache-four-control",
+          "equality-stage9-mapping-dynamic-cache-four-control",
+          "equality-stage9-dynamic-listing-cache-four-control",
+          "equality-stage9-dynamic-dynamic-cache-four-control"
+        ],
+        "domain": "Changing the Mapping/Dynamic receiver and structural key kind preserves the successful fourth cached read before the fifth-insertion hash transition.",
+        "kind": "equal-stdout"
+      },
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:amendment",
+        "semantic:generated-verification"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "equality-stage9-dynamic-dynamic-cache-fifth-position0",
+      "input": "tests/fixtures/m2/equality-stage9-dynamic-dynamic-cache-fifth-position0.pkl",
+      "input_sha256": "b4d443c4eb2e7bae68365abe58c5f794f85ad0c2959a1f39f68b622c874f7ca3",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:amendment"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "equality-stage9-dynamic-dynamic-cache-fifth-position2",
+      "input": "tests/fixtures/m2/equality-stage9-dynamic-dynamic-cache-fifth-position2.pkl",
+      "input_sha256": "514b3d6af5acc80c4d9a23e9c7d4b4cf53c689c3e3dd3cf9643fc9509d3f2a04",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:amendment"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "equality-stage9-dynamic-dynamic-cache-fifth-position4",
+      "input": "tests/fixtures/m2/equality-stage9-dynamic-dynamic-cache-fifth-position4.pkl",
+      "input_sha256": "844e0fc598ad495d8567b59dde1f0c58e0d34794de579a9f8cc70c7b1cacd2d5",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:amendment"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-stage9-dynamic-dynamic-cache-four-control",
+      "input": "tests/fixtures/m2/equality-stage9-dynamic-dynamic-cache-four-control.pkl",
+      "input_sha256": "1186a79d273facaaf7970cb253e4cdf59338061560690433890614bfe18d0a1f",
+      "metamorphic_relation": {
+        "case_ids": [
+          "equality-stage9-mapping-listing-cache-four-control",
+          "equality-stage9-mapping-dynamic-cache-four-control",
+          "equality-stage9-dynamic-listing-cache-four-control",
+          "equality-stage9-dynamic-dynamic-cache-four-control"
+        ],
+        "domain": "Changing the Mapping/Dynamic receiver and structural key kind preserves the successful fourth cached read before the fifth-insertion hash transition.",
+        "kind": "equal-stdout"
+      },
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:amendment",
+        "semantic:generated-verification"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-stage9-strict-list-bucket-keys-4",
+      "input": "tests/fixtures/m2/equality-stage9-strict-list-bucket-keys-4.pkl",
+      "input_sha256": "6fd5a620233ae69ead5eff9c9494c04cd8f76a2eb3f6cc389368331f2f036360",
+      "metamorphic_relation": {
+        "case_ids": [
+          "equality-stage9-numeric-collisions-4",
+          "equality-stage9-strict-list-bucket-keys-4"
+        ],
+        "domain": "Replacing each integral key with a strict one-element List preserves lookup of the final assigned value across 4 colliding keys.",
+        "kind": "equal-stdout"
+      },
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:generated-verification"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-stage9-strict-list-bucket-keys-5",
+      "input": "tests/fixtures/m2/equality-stage9-strict-list-bucket-keys-5.pkl",
+      "input_sha256": "a1e7eb31c2fd2b064e764a07e5d38d97646ba75c685a29aa77aafccf1cc2442f",
+      "metamorphic_relation": {
+        "case_ids": [
+          "equality-stage9-numeric-collisions-5",
+          "equality-stage9-strict-list-bucket-keys-5"
+        ],
+        "domain": "Replacing each integral key with a strict one-element List preserves lookup of the final assigned value across 5 colliding keys.",
+        "kind": "equal-stdout"
+      },
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:generated-verification"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-stage9-strict-list-bucket-keys-6",
+      "input": "tests/fixtures/m2/equality-stage9-strict-list-bucket-keys-6.pkl",
+      "input_sha256": "599b3279c9337738a9695b74b10448afb99ddbc8725230a1975c134d26a25a5d",
+      "metamorphic_relation": {
+        "case_ids": [
+          "equality-stage9-numeric-collisions-6",
+          "equality-stage9-strict-list-bucket-keys-6"
+        ],
+        "domain": "Replacing each integral key with a strict one-element List preserves lookup of the final assigned value across 6 colliding keys.",
+        "kind": "equal-stdout"
+      },
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:generated-verification"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-stage9-strict-list-bucket-keys-22",
+      "input": "tests/fixtures/m2/equality-stage9-strict-list-bucket-keys-22.pkl",
+      "input_sha256": "8d1c626e5e6558fdba341f9f0419353474c1e7ad8dbcde2126a787cb3863ed7a",
+      "metamorphic_relation": {
+        "case_ids": [
+          "equality-stage9-numeric-collisions-22",
+          "equality-stage9-strict-list-bucket-keys-22"
+        ],
+        "domain": "Replacing each integral key with a strict one-element List preserves lookup of the final assigned value across 22 colliding keys.",
+        "kind": "equal-stdout"
+      },
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:generated-verification"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-stage9-strict-list-bucket-keys-23",
+      "input": "tests/fixtures/m2/equality-stage9-strict-list-bucket-keys-23.pkl",
+      "input_sha256": "9597bc870db25feec90e954e666ba50b437a67248a8e2abb381ebd0c060ada1f",
+      "metamorphic_relation": {
+        "case_ids": [
+          "equality-stage9-numeric-collisions-23",
+          "equality-stage9-strict-list-bucket-keys-23"
+        ],
+        "domain": "Replacing each integral key with a strict one-element List preserves lookup of the final assigned value across 23 colliding keys.",
+        "kind": "equal-stdout"
+      },
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:generated-verification"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-stage9-strict-list-bucket-keys-32",
+      "input": "tests/fixtures/m2/equality-stage9-strict-list-bucket-keys-32.pkl",
+      "input_sha256": "4657c98d242f4f88d7424151df65db21d2af04de2de782a5691d58cc1feceded",
+      "metamorphic_relation": {
+        "case_ids": [
+          "equality-stage9-numeric-collisions-32",
+          "equality-stage9-strict-list-bucket-keys-32"
+        ],
+        "domain": "Replacing each integral key with a strict one-element List preserves lookup of the final assigned value across 32 colliding keys.",
+        "kind": "equal-stdout"
+      },
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:generated-verification"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-stage9-unforced-key-hash-threshold-4",
+      "input": "tests/fixtures/m2/equality-stage9-unforced-key-hash-threshold-4.pkl",
+      "input_sha256": "3f67fe8a827b25fb588faabaa7720d2f78718f4bc066bd1c92be1ea8f0deebe7",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "equality-stage9-unforced-key-hash-threshold-5",
+      "input": "tests/fixtures/m2/equality-stage9-unforced-key-hash-threshold-5.pkl",
+      "input_sha256": "fa9b6a6726863d784f0f455730686b34f63802ae017c8b1d0a7243dddb3f3415",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-stage9-listing-hash-bucket-1-17-left",
+      "input": "tests/fixtures/m2/equality-stage9-listing-hash-bucket-1-17-left.pkl",
+      "input_sha256": "ee52e6edc55501a6c640cd465590d816b80e0e64c5b1605ec201c826da5f80d0",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-stage9-listing-hash-bucket-1-17-right",
+      "input": "tests/fixtures/m2/equality-stage9-listing-hash-bucket-1-17-right.pkl",
+      "input_sha256": "f01a448fed188ab539e7785c0666723b532fca3f93c84142607526e43699348b",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-stage9-listing-hash-bucket-1-17-both",
+      "input": "tests/fixtures/m2/equality-stage9-listing-hash-bucket-1-17-both.pkl",
+      "input_sha256": "8d6e77ab2778555317233a01ad7f48de257e5bf0f227cf16b6baf4a8b9a808c1",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "equality-stage9-listing-hash-bucket-1-17-duplicate",
+      "input": "tests/fixtures/m2/equality-stage9-listing-hash-bucket-1-17-duplicate.pkl",
+      "input_sha256": "af3e3726dcebd21997bd44852ca6b6384c710b79afa5a00588184284f04146c1",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-stage9-listing-hash-bucket-1-17-inherited",
+      "input": "tests/fixtures/m2/equality-stage9-listing-hash-bucket-1-17-inherited.pkl",
+      "input_sha256": "c153fe049abf65487582ef035c89de90bda76884487f8618e1a178d8f8dac7b2",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:amendment"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-stage9-listing-hash-bucket-1-33-left",
+      "input": "tests/fixtures/m2/equality-stage9-listing-hash-bucket-1-33-left.pkl",
+      "input_sha256": "493e215f52227da9786623da8dc1effeaa77db5ea992c2a46f4ef8939065029f",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "equality-stage9-listing-hash-bucket-1-33-duplicate",
+      "input": "tests/fixtures/m2/equality-stage9-listing-hash-bucket-1-33-duplicate.pkl",
+      "input_sha256": "7815447b4dd5bc0cb58fc68557f32d5a47a4d460d3bf6f3a73f61920f2d1df42",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "equality-stage9-listing-hash-bucket-1-minus15-left",
+      "input": "tests/fixtures/m2/equality-stage9-listing-hash-bucket-1-minus15-left.pkl",
+      "input_sha256": "bc9dfb3ac9dff6aadab5a974199e246746e464bcf643bd2b576fde71fb815be7",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-stage9-listing-hash-bucket-1-minus15-duplicate",
+      "input": "tests/fixtures/m2/equality-stage9-listing-hash-bucket-1-minus15-duplicate.pkl",
+      "input_sha256": "5f9b03d684704cec8a7a610e2a363d3bac040b2a74072df31470f30c8d95b565",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-stage9-listing-hash-bucket-0-16-left",
+      "input": "tests/fixtures/m2/equality-stage9-listing-hash-bucket-0-16-left.pkl",
+      "input_sha256": "62b39be27eabad3bc13e92b798a9931f1e4d69814660fc4159e120b02c0d3155",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "equality-stage9-listing-hash-bucket-0-16-duplicate",
+      "input": "tests/fixtures/m2/equality-stage9-listing-hash-bucket-0-16-duplicate.pkl",
+      "input_sha256": "5f5741bc3c18512d7bf95c8b7cf92c8aba307792563d682f96ba5d736f5b98d7",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-stage9-listing-hash-bucket-0-0-left",
+      "input": "tests/fixtures/m2/equality-stage9-listing-hash-bucket-0-0-left.pkl",
+      "input_sha256": "63d5b0f1763b7b9543f833311cf28855a3e75a50701a853ee24dd4b016299945",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "equality-stage9-listing-hash-bucket-0-0-duplicate",
+      "input": "tests/fixtures/m2/equality-stage9-listing-hash-bucket-0-0-duplicate.pkl",
+      "input_sha256": "544275be0dc1454db681bf232e909ee267ad1e9a9e1e4d6551f364d8aca23a06",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-stage9-class-qualified-hash-unnamed",
+      "input": "tests/fixtures/m2/equality-stage9-class-qualified-hash-unnamed.pkl",
+      "input_sha256": "c4e031e59729e642ba9bcd3a7bc0e7ba6341083f11a71379a101724adcada65a",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:classes",
+        "semantic:types"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-stage9-class-qualified-hash-named",
+      "input": "tests/fixtures/m2/equality-stage9-class-qualified-hash-named.pkl",
+      "input_sha256": "17ab6e97c278a3145fdb7c154a59c0a25914d4b83b7dd5b2c4122abc014d297e",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:classes",
+        "semantic:types",
+        "semantic:modules"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "equality-stage9-listing-zero-hash-regular-local-warm",
+      "input": "tests/fixtures/m2/equality-stage9-listing-zero-hash-regular-local-warm.pkl",
+      "input_sha256": "05a6f0664cffd7c3294a91b66d40517f4f7df6bc330d80f4ac04e3a036adf927",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:modifiers",
+        "semantic:functions",
+        "semantic:closures"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-stage9-listing-zero-hash-constant-local-warm",
+      "input": "tests/fixtures/m2/equality-stage9-listing-zero-hash-constant-local-warm.pkl",
+      "input_sha256": "72a8f77bda15ecb79e39249c2b4c1e8c943cac0f0642db85d24cc9e5b0fe79f9",
+      "metamorphic_relation": {
+        "case_ids": [
+          "equality-stage9-listing-zero-hash-constant-local-warm",
+          "equality-stage9-listing-nonzero-hash-constant-local-warm",
+          "equality-stage9-listing-nonzero-hash-regular-local-warm"
+        ],
+        "domain": "An absent regular-local cache entry or a nonzero memoized Listing hash preserves lookup after calling the hidden default function; only the zero hash with a newly warmed regular-local entry recomputes.",
+        "kind": "equal-stdout"
+      },
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:modifiers",
+        "semantic:functions",
+        "semantic:closures",
+        "semantic:generated-verification"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-stage9-listing-nonzero-hash-regular-local-warm",
+      "input": "tests/fixtures/m2/equality-stage9-listing-nonzero-hash-regular-local-warm.pkl",
+      "input_sha256": "f27a1901aabad31890eabd86ac31356e4997e5138123b415a1f14fa72258c253",
+      "metamorphic_relation": {
+        "case_ids": [
+          "equality-stage9-listing-zero-hash-constant-local-warm",
+          "equality-stage9-listing-nonzero-hash-constant-local-warm",
+          "equality-stage9-listing-nonzero-hash-regular-local-warm"
+        ],
+        "domain": "An absent regular-local cache entry or a nonzero memoized Listing hash preserves lookup after calling the hidden default function; only the zero hash with a newly warmed regular-local entry recomputes.",
+        "kind": "equal-stdout"
+      },
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:modifiers",
+        "semantic:functions",
+        "semantic:closures",
+        "semantic:generated-verification"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-stage9-listing-nonzero-hash-constant-local-warm",
+      "input": "tests/fixtures/m2/equality-stage9-listing-nonzero-hash-constant-local-warm.pkl",
+      "input_sha256": "64e2f1571494fc7d50cdb002b62ba924a16365173e76cd54eb808d97bd47b10c",
+      "metamorphic_relation": {
+        "case_ids": [
+          "equality-stage9-listing-zero-hash-constant-local-warm",
+          "equality-stage9-listing-nonzero-hash-constant-local-warm",
+          "equality-stage9-listing-nonzero-hash-regular-local-warm"
+        ],
+        "domain": "An absent regular-local cache entry or a nonzero memoized Listing hash preserves lookup after calling the hidden default function; only the zero hash with a newly warmed regular-local entry recomputes.",
+        "kind": "equal-stdout"
+      },
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:modifiers",
+        "semantic:functions",
+        "semantic:closures",
+        "semantic:generated-verification"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-stage9-mapping-zero-listing-cache-type-check",
+      "input": "tests/fixtures/m2/equality-stage9-mapping-zero-listing-cache-type-check.pkl",
+      "input_sha256": "2eac3644aac941d2ae6c7138a184fbbcf696f0bd4cbdaae8320c1f7943599d2f",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:generics",
+        "semantic:types",
+        "semantic:type-tests-casts"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "diagnostics-stage9-let-body-throw",
+      "input": "tests/fixtures/m2/diagnostics-stage9-let-body-throw.pkl",
+      "input_sha256": "765efb38d7b10e327635652c5a8e002980f082b249fe353d067adc968d4d9b2d",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "diagnostics-stage9-let-initializer-throw",
+      "input": "tests/fixtures/m2/diagnostics-stage9-let-initializer-throw.pkl",
+      "input_sha256": "a6531d0d2f524208b3f00b7e7b006ad21c54acce96aee1dff4fe0791158263b1",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "diagnostics-stage9-let-binding-type",
+      "input": "tests/fixtures/m2/diagnostics-stage9-let-binding-type.pkl",
+      "input_sha256": "d087cae7d2774be1dee459d11932cb00f1649a65fc6575f711795d9373261d38",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:types"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "diagnostics-stage9-let-nested-body",
+      "input": "tests/fixtures/m2/diagnostics-stage9-let-nested-body.pkl",
+      "input_sha256": "5cf5668d9ecadaab6b18121585d65494ece1b974d07a8d60d30d83e9cb2c11a7",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "diagnostics-stage9-let-inner-initializer",
+      "input": "tests/fixtures/m2/diagnostics-stage9-let-inner-initializer.pkl",
+      "input_sha256": "d3578cf6d04346fb9fa184f3efffaae7a2a896e726f51e21d65356125dcb681f",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "diagnostics-stage9-let-body-binary",
+      "input": "tests/fixtures/m2/diagnostics-stage9-let-body-binary.pkl",
+      "input_sha256": "a87a53d0a8941c99cc56389f72b22c51ef5846668670e975e7956a139e6d55de",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "diagnostics-stage9-let-under-binary",
+      "input": "tests/fixtures/m2/diagnostics-stage9-let-under-binary.pkl",
+      "input_sha256": "32009ac37c9ece1fc15dddfcc5bdca6974d91135cc8568cdc5cd80e124886c5c",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "diagnostics-stage9-let-nested-under-binary",
+      "input": "tests/fixtures/m2/diagnostics-stage9-let-nested-under-binary.pkl",
+      "input_sha256": "87c97ac66983621df92e93ede0f944804f99314ffce5b7109aa53cd23602341a",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "diagnostics-stage9-let-parenthesized-nesting",
+      "input": "tests/fixtures/m2/diagnostics-stage9-let-parenthesized-nesting.pkl",
+      "input_sha256": "cfd80f30211c31a2bb6981178ce04ba7495609f4c243bbd6484f07d0d85a66b9",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "diagnostics-stage9-let-object-body",
+      "input": "tests/fixtures/m2/diagnostics-stage9-let-object-body.pkl",
+      "input_sha256": "41be3a065fd64493066338c307f47575c042dd59d35c1f7da0c3b8f180eec787",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "diagnostics-stage9-let-returned-object",
+      "input": "tests/fixtures/m2/diagnostics-stage9-let-returned-object.pkl",
+      "input_sha256": "0fd7475f10301f8f75fa6fc39bb9fd37beb35fcf3580346f669f4a527d98fb6a",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "diagnostics-stage9-let-inner-member-body",
+      "input": "tests/fixtures/m2/diagnostics-stage9-let-inner-member-body.pkl",
+      "input_sha256": "e5d021feda3e91f4ab400adad26b548b388bdea9848ca6f8203abc484921f2ef",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "diagnostics-stage9-let-function-body",
+      "input": "tests/fixtures/m2/diagnostics-stage9-let-function-body.pkl",
+      "input_sha256": "2aab0297dabf4b92cb34f721b3a74a2b1a2c6bdc42a708e19efd972631371175",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:functions"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "diagnostics-stage9-let-calls-function",
+      "input": "tests/fixtures/m2/diagnostics-stage9-let-calls-function.pkl",
+      "input_sha256": "32631c0261564ee82156742e062c93adc299f6eb32106278c1004d6d28062cda",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:functions"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "diagnostics-stage9-let-calls-let-function",
+      "input": "tests/fixtures/m2/diagnostics-stage9-let-calls-let-function.pkl",
+      "input_sha256": "ec8136df48926f9b2956f4694b99e0ceed46a06420d5fd6346893e7f1e723a19",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:functions"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "diagnostics-stage9-let-lambda-capture",
+      "input": "tests/fixtures/m2/diagnostics-stage9-let-lambda-capture.pkl",
+      "input_sha256": "ad4a6564dfcedcef8585ae70d01722d76b4cffdc4f73197e2de736a94b629101",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:functions",
+        "semantic:closures"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "diagnostics-stage9-let-calls-lambda",
+      "input": "tests/fixtures/m2/diagnostics-stage9-let-calls-lambda.pkl",
+      "input_sha256": "fcec6fcdeb2a9c1cd90269fbf91008f3d952ec700f464c8adcc97030c22cff08",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:functions",
+        "semantic:closures"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "diagnostics-stage9-let-constraint",
+      "input": "tests/fixtures/m2/diagnostics-stage9-let-constraint.pkl",
+      "input_sha256": "82330a7c723540784ed1cef571c42e1ccc195b88a2f230fc47dfc9c170155b83",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:types",
+        "semantic:constraints"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "diagnostics-stage9-let-type-test-control",
+      "input": "tests/fixtures/m2/diagnostics-stage9-let-type-test-control.pkl",
+      "input_sha256": "4283b1746df3edfd369cc71499d9bb0f6b85384b4d162d7fe4e4969887bc06fe",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:constraints",
+        "semantic:types",
+        "semantic:type-tests-casts"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "diagnostics-stage9-let-initializer-nested",
+      "input": "tests/fixtures/m2/diagnostics-stage9-let-initializer-nested.pkl",
+      "input_sha256": "a716f114a74f28c35059f7311b73e3656eb709a2640608c62d32996c1a0a0e2a",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "diagnostics-stage9-let-property-read",
+      "input": "tests/fixtures/m2/diagnostics-stage9-let-property-read.pkl",
+      "input_sha256": "03d4bd2f584c161423424f011cdc9a6e0679691574e85b48b5a2c92888948785",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "diagnostics-stage9-let-equality-hidden-call",
+      "input": "tests/fixtures/m2/diagnostics-stage9-let-equality-hidden-call.pkl",
+      "input_sha256": "089f5b82bb668f9bba2a9cb5bf6222cbe1d7a3432f0aa4293d29e6e00a101101",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "diagnostics-stage9-let-success-locals",
+      "input": "tests/fixtures/m2/diagnostics-stage9-let-success-locals.pkl",
+      "input_sha256": "7b015087a3892154d1f0c9d724b6a21c3502457fd5136238a6029695bb44716f",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "diagnostics-stage9-let-constraint-throw",
+      "input": "tests/fixtures/m2/diagnostics-stage9-let-constraint-throw.pkl",
+      "input_sha256": "ae13c3138be728160518a0d8e7164a6ade5cf20ecbaf9f5ae5f53c26ad064c92",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:types",
+        "semantic:constraints"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "diagnostics-stage9-let-constraint-initializer-throw",
+      "input": "tests/fixtures/m2/diagnostics-stage9-let-constraint-initializer-throw.pkl",
+      "input_sha256": "a8d7f936eef49dbd18293895a941eb0e9e4d8c0c9f32f98ae7f58ea0eb4ce57f",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:types",
+        "semantic:constraints"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "diagnostics-stage9-let-returned-object-inner-let",
+      "input": "tests/fixtures/m2/diagnostics-stage9-let-returned-object-inner-let.pkl",
+      "input_sha256": "5780fa6232a7146c1d0eb7408cdb9bc431c70afa3cf3f2653a057c620aea5b7e",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "diagnostics-stage9-let-returned-function-inner-let",
+      "input": "tests/fixtures/m2/diagnostics-stage9-let-returned-function-inner-let.pkl",
+      "input_sha256": "de857cfb1e766d9562bbd154d825fde2bdaa14dd692fd5063b83bb4b2c719268",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:functions",
+        "semantic:closures"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "diagnostics-stage9-let-body-typed-local",
+      "input": "tests/fixtures/m2/diagnostics-stage9-let-body-typed-local.pkl",
+      "input_sha256": "b4811247ee6a996ed5fea926ffaba6737c0d27b9fa43c9455d489635d8057a3b",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:types"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "diagnostics-stage9-let-declared-unicode-multiline",
+      "input": "tests/fixtures/m2/diagnostics-stage9-let-declared-unicode-multiline.pkl",
+      "input_sha256": "0662a35da35fdb1250e0c17a84708f802755fff97f539e1c3abbd080e09f0dbd",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:modules"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "diagnostics-stage9-let-body-missing-property",
+      "input": "tests/fixtures/m2/diagnostics-stage9-let-body-missing-property.pkl",
+      "input_sha256": "e34f7efe6e2e9933b30ef5bc43f89cd06bacd661bf03ab1d3dbf77e6bf962e24",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "diagnostics-stage9-let-body-object-type",
+      "input": "tests/fixtures/m2/diagnostics-stage9-let-body-object-type.pkl",
+      "input_sha256": "9779d04abc0582cb81d62b2e986c16847655034f2876fbaaa542c3067d2b7437",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:types",
+        "semantic:classes"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "diagnostics-stage9-let-body-nested-constraint",
+      "input": "tests/fixtures/m2/diagnostics-stage9-let-body-nested-constraint.pkl",
+      "input_sha256": "8da3c1f33f586c3914c9986772299a07570fbc17b303921b97da715db08746ff",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:constraints",
+        "semantic:types",
+        "semantic:type-tests-casts"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "diagnostics-stage9-let-recursive-scope-single",
+      "input": "tests/fixtures/m2/diagnostics-stage9-let-recursive-scope-single.pkl",
+      "input_sha256": "b2afd23cccb08d55b67bdde88448dbc68f3003335130d97947da32fd8735872c",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:functions"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "diagnostics-stage9-let-recursive-outer-scope-single",
+      "input": "tests/fixtures/m2/diagnostics-stage9-let-recursive-outer-scope-single.pkl",
+      "input_sha256": "e05de07238fecdba222fadf960af6f6df30de37aed23b3239337703978193260",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:functions"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "diagnostics-stage9-let-alias-constraint-throw",
+      "input": "tests/fixtures/m2/diagnostics-stage9-let-alias-constraint-throw.pkl",
+      "input_sha256": "fe9fbd47a5022d2814df0b01c18e9099526ca7ef71d38340f734656c0a9e9e75",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "diagnostics-stage9-let-inherited-constraint-throw",
+      "input": "tests/fixtures/m2/diagnostics-stage9-let-inherited-constraint-throw.pkl",
+      "input_sha256": "ce3b076289011bb6d12fd0fc9b97b940c52f9e924d173a69c45f8a36f6b07546",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:types",
+        "semantic:classes",
+        "semantic:constraints",
+        "semantic:amendment"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "diagnostics-stage9-let-caller-typed-mismatch",
+      "input": "tests/fixtures/m2/diagnostics-stage9-let-caller-typed-mismatch.pkl",
+      "input_sha256": "7ebf8e314cc695c388939a6f20b0ed6ca8689aa184a0350c8a5a6c41aba224dc",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:types",
+        "semantic:functions"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "diagnostics-stage9-let-constraint-typed-mismatch",
+      "input": "tests/fixtures/m2/diagnostics-stage9-let-constraint-typed-mismatch.pkl",
+      "input_sha256": "2c3c2fc7da0193e67133a34668a90b69f7360a7897a2bafcb6f9689d1f4eee43",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:types",
+        "semantic:constraints"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "diagnostics-stage9-let-wildcard-constraint",
+      "input": "tests/fixtures/m2/diagnostics-stage9-let-wildcard-constraint.pkl",
+      "input_sha256": "36cc5024b978e489643685009a19a4894fe29406c585e998827ae367cea6149b",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:types",
+        "semantic:constraints"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "diagnostics-stage9-let-wildcard-under-let",
+      "input": "tests/fixtures/m2/diagnostics-stage9-let-wildcard-under-let.pkl",
+      "input_sha256": "e506aaff8b5ca98e34b70a6d1eb71b82c515eb62e1eb25e65076017989fba6d8",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:constraints",
+        "semantic:types",
+        "semantic:type-tests-casts"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "diagnostics-stage9-let-wildcard-before-named",
+      "input": "tests/fixtures/m2/diagnostics-stage9-let-wildcard-before-named.pkl",
+      "input_sha256": "e2bcd2a0fb0185ff93fe7df8a0adb47d4e0c051274ca1b1caa54eef4a9ab55ce",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:types",
+        "semantic:constraints"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "diagnostics-stage9-let-named-before-wildcard",
+      "input": "tests/fixtures/m2/diagnostics-stage9-let-named-before-wildcard.pkl",
+      "input_sha256": "ed3eb17a44997ee81589e27e32ea440ce78348216453066957f7f758b4bc4d91",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:types",
+        "semantic:constraints"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "diagnostics-stage9-let-wildcard-local-depth",
+      "input": "tests/fixtures/m2/diagnostics-stage9-let-wildcard-local-depth.pkl",
+      "input_sha256": "02e73da8402fd417fac6d051aad6974d2c5faea87d2b31632a6d655ab8d8d040",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "diagnostics-stage9-let-wildcard-initializer-named",
+      "input": "tests/fixtures/m2/diagnostics-stage9-let-wildcard-initializer-named.pkl",
+      "input_sha256": "6a7263235705c6b640425293c3916d26a89497b841524c2b38e477992432b8a1",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:types",
+        "semantic:constraints"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "diagnostics-stage9-let-wildcard-alias",
+      "input": "tests/fixtures/m2/diagnostics-stage9-let-wildcard-alias.pkl",
+      "input_sha256": "ddcbdb2a6b498e9e7bb5288fca1d924363a4a6bce5be10ddbf46c00a40aefaee",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "diagnostics-stage9-let-inline-constraint-under-let",
+      "input": "tests/fixtures/m2/diagnostics-stage9-let-inline-constraint-under-let.pkl",
+      "input_sha256": "39a44b679a6b2147ede0080e59603b4e4295e555cbbe5985e6f937239faadad2",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:constraints",
+        "semantic:types",
+        "semantic:type-tests-casts"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "diagnostics-stage9-let-inline-constraint-cast-mismatch",
+      "input": "tests/fixtures/m2/diagnostics-stage9-let-inline-constraint-cast-mismatch.pkl",
+      "input_sha256": "97c7d0aa02d93d4548062d4ac7fc45c8c4e162a0fc1cddbca3de7f892eb57f1e",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:constraints",
+        "semantic:types",
+        "semantic:type-tests-casts"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "diagnostics-stage9-let-named-constraint-cast-mismatch",
+      "input": "tests/fixtures/m2/diagnostics-stage9-let-named-constraint-cast-mismatch.pkl",
+      "input_sha256": "b7450fa0fb42ae1c5e6cc7a64bd0a3a16ffa5e664f2384820ac74fe7c358451d",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:constraints",
+        "semantic:types",
+        "semantic:type-tests-casts"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-stage9-mapping-length-listing-1-17-none",
+      "input": "tests/fixtures/m2/equality-stage9-mapping-length-listing-1-17-none.pkl",
+      "input_sha256": "899ae4199f6d22b7c6c8f4c596b9ab81347aa4b879893b4dcd84607512d4a711",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:amendment",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-stage9-mapping-length-listing-1-17-left",
+      "input": "tests/fixtures/m2/equality-stage9-mapping-length-listing-1-17-left.pkl",
+      "input_sha256": "59f1ad5d74c048ac65236f3361ed70bbf7f76f9e344ab0d9bc24167805e19966",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:amendment",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-stage9-mapping-length-listing-1-17-right",
+      "input": "tests/fixtures/m2/equality-stage9-mapping-length-listing-1-17-right.pkl",
+      "input_sha256": "279ece454fc67b18b4daa4b1f260780949c33405ce463fedd81fd23525fc1c2f",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:amendment",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-stage9-mapping-length-listing-1-17-both",
+      "input": "tests/fixtures/m2/equality-stage9-mapping-length-listing-1-17-both.pkl",
+      "input_sha256": "c927fab581496face253f7e3182ecfb4bedd04775be515110bc300cf0d15cef0",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:amendment",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-stage9-mapping-length-listing-1-2-none",
+      "input": "tests/fixtures/m2/equality-stage9-mapping-length-listing-1-2-none.pkl",
+      "input_sha256": "8e2955e03cfeaac403387c2c56810b49545eb874db417e072dd1098d09bc55ae",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:amendment",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-stage9-mapping-length-listing-1-2-left",
+      "input": "tests/fixtures/m2/equality-stage9-mapping-length-listing-1-2-left.pkl",
+      "input_sha256": "3400e48be0133225d0761364860ae1febfcd8d2bdd5bd9592a2cdba7af382a0d",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:amendment",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-stage9-mapping-length-listing-1-2-right",
+      "input": "tests/fixtures/m2/equality-stage9-mapping-length-listing-1-2-right.pkl",
+      "input_sha256": "560dd1515d90c8c28cb82a953363fe847797ce5b99b96b6075318a04f526ebc9",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:amendment",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-stage9-mapping-length-listing-1-2-both",
+      "input": "tests/fixtures/m2/equality-stage9-mapping-length-listing-1-2-both.pkl",
+      "input_sha256": "b7453fee632fbe375e37756abf37894b8f4ae9c44242982d12304853183e1ad7",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:amendment",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-stage9-mapping-length-local-query-ordinary",
+      "input": "tests/fixtures/m2/equality-stage9-mapping-length-local-query-ordinary.pkl",
+      "input_sha256": "f52336e16ec1c251e5b80ffd16fc3b56f4038943121a70787ab09c6e3a0b6c69",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:amendment",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:modifiers"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-stage9-mapping-length-local-query-local",
+      "input": "tests/fixtures/m2/equality-stage9-mapping-length-local-query-local.pkl",
+      "input_sha256": "7216a3eaf2e646b1e395a756a40d2c6b4ae6fc3435c3d7bc9317dd14db628ecc",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:amendment",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:modifiers"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-stage9-mapping-length-key-nan",
+      "input": "tests/fixtures/m2/equality-stage9-mapping-length-key-nan.pkl",
+      "input_sha256": "6df055bdbeac581bd9c9ba142fbe1eabf640797b79e86c8ee2887477fd86c2ba",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:amendment",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-stage9-mapping-length-key-signed-zero",
+      "input": "tests/fixtures/m2/equality-stage9-mapping-length-key-signed-zero.pkl",
+      "input_sha256": "432828b3f47e28a7986b780320952d0c56157d3d750c14e7dbc233fe11743159",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:amendment",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-stage9-mapping-length-key-boxed-numeric",
+      "input": "tests/fixtures/m2/equality-stage9-mapping-length-key-boxed-numeric.pkl",
+      "input_sha256": "7a333776ad78cd64429603d79d4f0e55337a1fe5ae29b07e5f259a193c9810aa",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:amendment",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-stage9-mapping-length-key-folded-int-collision",
+      "input": "tests/fixtures/m2/equality-stage9-mapping-length-key-folded-int-collision.pkl",
+      "input_sha256": "968758060ff2c77f9688fe0af76d71b31cb006e2d3bf017f38af3c07b2247e1b",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:amendment",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "equality-stage9-mapping-length-key-entry-dynamic",
+      "input": "tests/fixtures/m2/equality-stage9-mapping-length-key-entry-dynamic.pkl",
+      "input_sha256": "2bd28f7bf360826ec69b8048be519babc7e8d593c3ff9692edb99790f21a6aa1",
+      "required": true,
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:amendment",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
       "adapter": null,
       "execution": {
         "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
@@ -109418,9 +112722,9 @@
   "comparison_boundary": "evaluateExpressionString(ModuleSource.path(same absolute URI), expression) UTF-8 stdout; whole PklException.getMessage() UTF-8 stderr and exit 1; no trimming. Power assertions default to disabled; an explicit per-case power_assertions boolean enables the same option in both probes. Stringification alone is not typed value/API compatibility.",
   "completion": "Every required semantic/source requirement needs implementation/test mappings and complete passing execution. Pending/unmapped/unimplemented/mismatch remains a full-gate failure.",
   "counts": {
-    "cases": 1907,
+    "cases": 2059,
     "cases_by_execution": {
-      "ready": 907,
+      "ready": 1059,
       "unimplemented": 960,
       "unmapped": 40
     },
@@ -109852,7 +113156,159 @@
           "equality-stage8-typed-hash-deep-before-nested-hash",
           "equality-stage8-dynamic-hash-cold-cache-order",
           "equality-stage8-typed-hash-child-before-parent",
-          "equality-stage8-dynamic-hash-warm-b-cache-order-initializer"
+          "equality-stage8-dynamic-hash-warm-b-cache-order-initializer",
+          "equality-stage9-held-mapping-cache-key-first",
+          "equality-stage9-held-mapping-cache-key-last",
+          "equality-stage9-held-dynamic-cache-key-first",
+          "equality-stage9-held-dynamic-cache-key-last",
+          "equality-stage9-held-listing-key-warm-fifth",
+          "equality-stage9-held-listing-warm-hashed-duplicate",
+          "equality-stage9-held-listing-warm-hashed-inherited-lookup",
+          "equality-stage9-held-dynamic-hash-warm-b-cache-order",
+          "equality-stage9-held-listing-local-cache-regular-equality",
+          "equality-stage9-held-mapping-local-cache-regular-equality",
+          "equality-stage9-listing-local-cache-reverse",
+          "equality-stage9-listing-local-cache-identity",
+          "equality-stage9-listing-local-constant",
+          "equality-stage9-listing-local-both",
+          "equality-stage9-mapping-local-cache-reverse",
+          "equality-stage9-mapping-local-cache-identity",
+          "equality-stage9-mapping-local-constant",
+          "equality-stage9-mapping-local-both",
+          "equality-stage9-dynamic-local-cache-forward",
+          "equality-stage9-dynamic-local-constant",
+          "equality-stage9-dynamic-local-both",
+          "equality-stage9-listing-left-warm0-fifth",
+          "equality-stage9-listing-right-warm0-fifth",
+          "equality-stage9-listing-both-warm0-fifth",
+          "equality-stage9-listing-left-warm1-fifth",
+          "equality-stage9-listing-right-warm1-fifth",
+          "equality-stage9-listing-both-warm1-fifth",
+          "equality-stage9-listing-left-warm2-fifth",
+          "equality-stage9-listing-right-warm2-fifth",
+          "equality-stage9-listing-both-warm2-fifth",
+          "equality-stage9-stable-key-list",
+          "equality-stage9-stable-key-listing",
+          "equality-stage9-stable-key-mapping",
+          "equality-stage9-stable-key-dynamic",
+          "equality-stage9-numeric-collisions-4",
+          "equality-stage9-numeric-collisions-5",
+          "equality-stage9-numeric-collisions-6",
+          "equality-stage9-numeric-collisions-22",
+          "equality-stage9-numeric-collisions-23",
+          "equality-stage9-numeric-collisions-32",
+          "equality-stage9-stable-keys-int-bucket-scalar",
+          "equality-stage9-stable-keys-int-fold-scalar",
+          "equality-stage9-stable-keys-strings-scalar",
+          "equality-stage9-stable-keys-float-scalar",
+          "equality-stage9-stable-keys-nullbool-scalar",
+          "equality-stage9-mapping-listing-cache-fifth-position0",
+          "equality-stage9-mapping-listing-cache-fifth-position2",
+          "equality-stage9-mapping-listing-cache-fifth-position4",
+          "equality-stage9-mapping-listing-cache-four-control",
+          "equality-stage9-mapping-dynamic-cache-fifth-position0",
+          "equality-stage9-mapping-dynamic-cache-fifth-position2",
+          "equality-stage9-mapping-dynamic-cache-fifth-position4",
+          "equality-stage9-mapping-dynamic-cache-four-control",
+          "equality-stage9-dynamic-listing-cache-fifth-position0",
+          "equality-stage9-dynamic-listing-cache-fifth-position2",
+          "equality-stage9-dynamic-listing-cache-fifth-position4",
+          "equality-stage9-dynamic-listing-cache-four-control",
+          "equality-stage9-dynamic-dynamic-cache-fifth-position0",
+          "equality-stage9-dynamic-dynamic-cache-fifth-position2",
+          "equality-stage9-dynamic-dynamic-cache-fifth-position4",
+          "equality-stage9-dynamic-dynamic-cache-four-control",
+          "equality-stage9-strict-list-bucket-keys-4",
+          "equality-stage9-strict-list-bucket-keys-5",
+          "equality-stage9-strict-list-bucket-keys-6",
+          "equality-stage9-strict-list-bucket-keys-22",
+          "equality-stage9-strict-list-bucket-keys-23",
+          "equality-stage9-strict-list-bucket-keys-32",
+          "equality-stage9-unforced-key-hash-threshold-4",
+          "equality-stage9-unforced-key-hash-threshold-5",
+          "equality-stage9-listing-hash-bucket-1-17-left",
+          "equality-stage9-listing-hash-bucket-1-17-right",
+          "equality-stage9-listing-hash-bucket-1-17-both",
+          "equality-stage9-listing-hash-bucket-1-17-duplicate",
+          "equality-stage9-listing-hash-bucket-1-17-inherited",
+          "equality-stage9-listing-hash-bucket-1-33-left",
+          "equality-stage9-listing-hash-bucket-1-33-duplicate",
+          "equality-stage9-listing-hash-bucket-1-minus15-left",
+          "equality-stage9-listing-hash-bucket-1-minus15-duplicate",
+          "equality-stage9-listing-hash-bucket-0-16-left",
+          "equality-stage9-listing-hash-bucket-0-16-duplicate",
+          "equality-stage9-listing-hash-bucket-0-0-left",
+          "equality-stage9-listing-hash-bucket-0-0-duplicate",
+          "equality-stage9-class-qualified-hash-unnamed",
+          "equality-stage9-class-qualified-hash-named",
+          "equality-stage9-listing-zero-hash-regular-local-warm",
+          "equality-stage9-listing-zero-hash-constant-local-warm",
+          "equality-stage9-listing-nonzero-hash-regular-local-warm",
+          "equality-stage9-listing-nonzero-hash-constant-local-warm",
+          "equality-stage9-mapping-zero-listing-cache-type-check",
+          "diagnostics-stage9-let-body-throw",
+          "diagnostics-stage9-let-initializer-throw",
+          "diagnostics-stage9-let-binding-type",
+          "diagnostics-stage9-let-nested-body",
+          "diagnostics-stage9-let-inner-initializer",
+          "diagnostics-stage9-let-body-binary",
+          "diagnostics-stage9-let-under-binary",
+          "diagnostics-stage9-let-nested-under-binary",
+          "diagnostics-stage9-let-parenthesized-nesting",
+          "diagnostics-stage9-let-object-body",
+          "diagnostics-stage9-let-returned-object",
+          "diagnostics-stage9-let-inner-member-body",
+          "diagnostics-stage9-let-function-body",
+          "diagnostics-stage9-let-calls-function",
+          "diagnostics-stage9-let-calls-let-function",
+          "diagnostics-stage9-let-lambda-capture",
+          "diagnostics-stage9-let-calls-lambda",
+          "diagnostics-stage9-let-constraint",
+          "diagnostics-stage9-let-type-test-control",
+          "diagnostics-stage9-let-initializer-nested",
+          "diagnostics-stage9-let-property-read",
+          "diagnostics-stage9-let-equality-hidden-call",
+          "diagnostics-stage9-let-success-locals",
+          "diagnostics-stage9-let-constraint-throw",
+          "diagnostics-stage9-let-constraint-initializer-throw",
+          "diagnostics-stage9-let-returned-object-inner-let",
+          "diagnostics-stage9-let-returned-function-inner-let",
+          "diagnostics-stage9-let-body-typed-local",
+          "diagnostics-stage9-let-declared-unicode-multiline",
+          "diagnostics-stage9-let-body-missing-property",
+          "diagnostics-stage9-let-body-object-type",
+          "diagnostics-stage9-let-body-nested-constraint",
+          "diagnostics-stage9-let-recursive-scope-single",
+          "diagnostics-stage9-let-recursive-outer-scope-single",
+          "diagnostics-stage9-let-alias-constraint-throw",
+          "diagnostics-stage9-let-inherited-constraint-throw",
+          "diagnostics-stage9-let-caller-typed-mismatch",
+          "diagnostics-stage9-let-constraint-typed-mismatch",
+          "diagnostics-stage9-let-wildcard-constraint",
+          "diagnostics-stage9-let-wildcard-under-let",
+          "diagnostics-stage9-let-wildcard-before-named",
+          "diagnostics-stage9-let-named-before-wildcard",
+          "diagnostics-stage9-let-wildcard-local-depth",
+          "diagnostics-stage9-let-wildcard-initializer-named",
+          "diagnostics-stage9-let-wildcard-alias",
+          "diagnostics-stage9-let-inline-constraint-under-let",
+          "diagnostics-stage9-let-inline-constraint-cast-mismatch",
+          "diagnostics-stage9-let-named-constraint-cast-mismatch",
+          "equality-stage9-mapping-length-listing-1-17-none",
+          "equality-stage9-mapping-length-listing-1-17-left",
+          "equality-stage9-mapping-length-listing-1-17-right",
+          "equality-stage9-mapping-length-listing-1-17-both",
+          "equality-stage9-mapping-length-listing-1-2-none",
+          "equality-stage9-mapping-length-listing-1-2-left",
+          "equality-stage9-mapping-length-listing-1-2-right",
+          "equality-stage9-mapping-length-listing-1-2-both",
+          "equality-stage9-mapping-length-local-query-ordinary",
+          "equality-stage9-mapping-length-local-query-local",
+          "equality-stage9-mapping-length-key-nan",
+          "equality-stage9-mapping-length-key-signed-zero",
+          "equality-stage9-mapping-length-key-boxed-numeric",
+          "equality-stage9-mapping-length-key-folded-int-collision",
+          "equality-stage9-mapping-length-key-entry-dynamic"
         ],
         "state": "partial"
       }
@@ -110596,7 +114052,159 @@
           "equality-stage8-typed-hash-deep-before-nested-hash",
           "equality-stage8-dynamic-hash-cold-cache-order",
           "equality-stage8-typed-hash-child-before-parent",
-          "equality-stage8-dynamic-hash-warm-b-cache-order-initializer"
+          "equality-stage8-dynamic-hash-warm-b-cache-order-initializer",
+          "equality-stage9-held-mapping-cache-key-first",
+          "equality-stage9-held-mapping-cache-key-last",
+          "equality-stage9-held-dynamic-cache-key-first",
+          "equality-stage9-held-dynamic-cache-key-last",
+          "equality-stage9-held-listing-key-warm-fifth",
+          "equality-stage9-held-listing-warm-hashed-duplicate",
+          "equality-stage9-held-listing-warm-hashed-inherited-lookup",
+          "equality-stage9-held-dynamic-hash-warm-b-cache-order",
+          "equality-stage9-held-listing-local-cache-regular-equality",
+          "equality-stage9-held-mapping-local-cache-regular-equality",
+          "equality-stage9-listing-local-cache-reverse",
+          "equality-stage9-listing-local-cache-identity",
+          "equality-stage9-listing-local-constant",
+          "equality-stage9-listing-local-both",
+          "equality-stage9-mapping-local-cache-reverse",
+          "equality-stage9-mapping-local-cache-identity",
+          "equality-stage9-mapping-local-constant",
+          "equality-stage9-mapping-local-both",
+          "equality-stage9-dynamic-local-cache-forward",
+          "equality-stage9-dynamic-local-constant",
+          "equality-stage9-dynamic-local-both",
+          "equality-stage9-listing-left-warm0-fifth",
+          "equality-stage9-listing-right-warm0-fifth",
+          "equality-stage9-listing-both-warm0-fifth",
+          "equality-stage9-listing-left-warm1-fifth",
+          "equality-stage9-listing-right-warm1-fifth",
+          "equality-stage9-listing-both-warm1-fifth",
+          "equality-stage9-listing-left-warm2-fifth",
+          "equality-stage9-listing-right-warm2-fifth",
+          "equality-stage9-listing-both-warm2-fifth",
+          "equality-stage9-stable-key-list",
+          "equality-stage9-stable-key-listing",
+          "equality-stage9-stable-key-mapping",
+          "equality-stage9-stable-key-dynamic",
+          "equality-stage9-numeric-collisions-4",
+          "equality-stage9-numeric-collisions-5",
+          "equality-stage9-numeric-collisions-6",
+          "equality-stage9-numeric-collisions-22",
+          "equality-stage9-numeric-collisions-23",
+          "equality-stage9-numeric-collisions-32",
+          "equality-stage9-stable-keys-int-bucket-scalar",
+          "equality-stage9-stable-keys-int-fold-scalar",
+          "equality-stage9-stable-keys-strings-scalar",
+          "equality-stage9-stable-keys-float-scalar",
+          "equality-stage9-stable-keys-nullbool-scalar",
+          "equality-stage9-mapping-listing-cache-fifth-position0",
+          "equality-stage9-mapping-listing-cache-fifth-position2",
+          "equality-stage9-mapping-listing-cache-fifth-position4",
+          "equality-stage9-mapping-listing-cache-four-control",
+          "equality-stage9-mapping-dynamic-cache-fifth-position0",
+          "equality-stage9-mapping-dynamic-cache-fifth-position2",
+          "equality-stage9-mapping-dynamic-cache-fifth-position4",
+          "equality-stage9-mapping-dynamic-cache-four-control",
+          "equality-stage9-dynamic-listing-cache-fifth-position0",
+          "equality-stage9-dynamic-listing-cache-fifth-position2",
+          "equality-stage9-dynamic-listing-cache-fifth-position4",
+          "equality-stage9-dynamic-listing-cache-four-control",
+          "equality-stage9-dynamic-dynamic-cache-fifth-position0",
+          "equality-stage9-dynamic-dynamic-cache-fifth-position2",
+          "equality-stage9-dynamic-dynamic-cache-fifth-position4",
+          "equality-stage9-dynamic-dynamic-cache-four-control",
+          "equality-stage9-strict-list-bucket-keys-4",
+          "equality-stage9-strict-list-bucket-keys-5",
+          "equality-stage9-strict-list-bucket-keys-6",
+          "equality-stage9-strict-list-bucket-keys-22",
+          "equality-stage9-strict-list-bucket-keys-23",
+          "equality-stage9-strict-list-bucket-keys-32",
+          "equality-stage9-unforced-key-hash-threshold-4",
+          "equality-stage9-unforced-key-hash-threshold-5",
+          "equality-stage9-listing-hash-bucket-1-17-left",
+          "equality-stage9-listing-hash-bucket-1-17-right",
+          "equality-stage9-listing-hash-bucket-1-17-both",
+          "equality-stage9-listing-hash-bucket-1-17-duplicate",
+          "equality-stage9-listing-hash-bucket-1-17-inherited",
+          "equality-stage9-listing-hash-bucket-1-33-left",
+          "equality-stage9-listing-hash-bucket-1-33-duplicate",
+          "equality-stage9-listing-hash-bucket-1-minus15-left",
+          "equality-stage9-listing-hash-bucket-1-minus15-duplicate",
+          "equality-stage9-listing-hash-bucket-0-16-left",
+          "equality-stage9-listing-hash-bucket-0-16-duplicate",
+          "equality-stage9-listing-hash-bucket-0-0-left",
+          "equality-stage9-listing-hash-bucket-0-0-duplicate",
+          "equality-stage9-class-qualified-hash-unnamed",
+          "equality-stage9-class-qualified-hash-named",
+          "equality-stage9-listing-zero-hash-regular-local-warm",
+          "equality-stage9-listing-zero-hash-constant-local-warm",
+          "equality-stage9-listing-nonzero-hash-regular-local-warm",
+          "equality-stage9-listing-nonzero-hash-constant-local-warm",
+          "equality-stage9-mapping-zero-listing-cache-type-check",
+          "diagnostics-stage9-let-body-throw",
+          "diagnostics-stage9-let-initializer-throw",
+          "diagnostics-stage9-let-binding-type",
+          "diagnostics-stage9-let-nested-body",
+          "diagnostics-stage9-let-inner-initializer",
+          "diagnostics-stage9-let-body-binary",
+          "diagnostics-stage9-let-under-binary",
+          "diagnostics-stage9-let-nested-under-binary",
+          "diagnostics-stage9-let-parenthesized-nesting",
+          "diagnostics-stage9-let-object-body",
+          "diagnostics-stage9-let-returned-object",
+          "diagnostics-stage9-let-inner-member-body",
+          "diagnostics-stage9-let-function-body",
+          "diagnostics-stage9-let-calls-function",
+          "diagnostics-stage9-let-calls-let-function",
+          "diagnostics-stage9-let-lambda-capture",
+          "diagnostics-stage9-let-calls-lambda",
+          "diagnostics-stage9-let-constraint",
+          "diagnostics-stage9-let-type-test-control",
+          "diagnostics-stage9-let-initializer-nested",
+          "diagnostics-stage9-let-property-read",
+          "diagnostics-stage9-let-equality-hidden-call",
+          "diagnostics-stage9-let-success-locals",
+          "diagnostics-stage9-let-constraint-throw",
+          "diagnostics-stage9-let-constraint-initializer-throw",
+          "diagnostics-stage9-let-returned-object-inner-let",
+          "diagnostics-stage9-let-returned-function-inner-let",
+          "diagnostics-stage9-let-body-typed-local",
+          "diagnostics-stage9-let-declared-unicode-multiline",
+          "diagnostics-stage9-let-body-missing-property",
+          "diagnostics-stage9-let-body-object-type",
+          "diagnostics-stage9-let-body-nested-constraint",
+          "diagnostics-stage9-let-recursive-scope-single",
+          "diagnostics-stage9-let-recursive-outer-scope-single",
+          "diagnostics-stage9-let-alias-constraint-throw",
+          "diagnostics-stage9-let-inherited-constraint-throw",
+          "diagnostics-stage9-let-caller-typed-mismatch",
+          "diagnostics-stage9-let-constraint-typed-mismatch",
+          "diagnostics-stage9-let-wildcard-constraint",
+          "diagnostics-stage9-let-wildcard-under-let",
+          "diagnostics-stage9-let-wildcard-before-named",
+          "diagnostics-stage9-let-named-before-wildcard",
+          "diagnostics-stage9-let-wildcard-local-depth",
+          "diagnostics-stage9-let-wildcard-initializer-named",
+          "diagnostics-stage9-let-wildcard-alias",
+          "diagnostics-stage9-let-inline-constraint-under-let",
+          "diagnostics-stage9-let-inline-constraint-cast-mismatch",
+          "diagnostics-stage9-let-named-constraint-cast-mismatch",
+          "equality-stage9-mapping-length-listing-1-17-none",
+          "equality-stage9-mapping-length-listing-1-17-left",
+          "equality-stage9-mapping-length-listing-1-17-right",
+          "equality-stage9-mapping-length-listing-1-17-both",
+          "equality-stage9-mapping-length-listing-1-2-none",
+          "equality-stage9-mapping-length-listing-1-2-left",
+          "equality-stage9-mapping-length-listing-1-2-right",
+          "equality-stage9-mapping-length-listing-1-2-both",
+          "equality-stage9-mapping-length-local-query-ordinary",
+          "equality-stage9-mapping-length-local-query-local",
+          "equality-stage9-mapping-length-key-nan",
+          "equality-stage9-mapping-length-key-signed-zero",
+          "equality-stage9-mapping-length-key-boxed-numeric",
+          "equality-stage9-mapping-length-key-folded-int-collision",
+          "equality-stage9-mapping-length-key-entry-dynamic"
         ],
         "state": "partial"
       }
@@ -111082,7 +114690,111 @@
           "equality-stage8-typed-hash-deep-before-nested-hash",
           "equality-stage8-dynamic-hash-cold-cache-order",
           "equality-stage8-typed-hash-child-before-parent",
-          "equality-stage8-dynamic-hash-warm-b-cache-order-initializer"
+          "equality-stage8-dynamic-hash-warm-b-cache-order-initializer",
+          "equality-stage9-held-mapping-cache-key-first",
+          "equality-stage9-held-mapping-cache-key-last",
+          "equality-stage9-held-dynamic-cache-key-first",
+          "equality-stage9-held-dynamic-cache-key-last",
+          "equality-stage9-held-listing-key-warm-fifth",
+          "equality-stage9-held-listing-warm-hashed-duplicate",
+          "equality-stage9-held-listing-warm-hashed-inherited-lookup",
+          "equality-stage9-held-dynamic-hash-warm-b-cache-order",
+          "equality-stage9-held-listing-local-cache-regular-equality",
+          "equality-stage9-held-mapping-local-cache-regular-equality",
+          "equality-stage9-listing-local-cache-reverse",
+          "equality-stage9-listing-local-cache-identity",
+          "equality-stage9-listing-local-constant",
+          "equality-stage9-listing-local-both",
+          "equality-stage9-mapping-local-cache-reverse",
+          "equality-stage9-mapping-local-cache-identity",
+          "equality-stage9-mapping-local-constant",
+          "equality-stage9-mapping-local-both",
+          "equality-stage9-dynamic-local-cache-forward",
+          "equality-stage9-dynamic-local-constant",
+          "equality-stage9-dynamic-local-both",
+          "equality-stage9-listing-left-warm0-fifth",
+          "equality-stage9-listing-right-warm0-fifth",
+          "equality-stage9-listing-both-warm0-fifth",
+          "equality-stage9-listing-left-warm1-fifth",
+          "equality-stage9-listing-right-warm1-fifth",
+          "equality-stage9-listing-both-warm1-fifth",
+          "equality-stage9-listing-left-warm2-fifth",
+          "equality-stage9-listing-right-warm2-fifth",
+          "equality-stage9-listing-both-warm2-fifth",
+          "equality-stage9-stable-key-list",
+          "equality-stage9-stable-key-listing",
+          "equality-stage9-stable-key-mapping",
+          "equality-stage9-stable-key-dynamic",
+          "equality-stage9-numeric-collisions-4",
+          "equality-stage9-numeric-collisions-5",
+          "equality-stage9-numeric-collisions-6",
+          "equality-stage9-numeric-collisions-22",
+          "equality-stage9-numeric-collisions-23",
+          "equality-stage9-numeric-collisions-32",
+          "equality-stage9-stable-keys-int-bucket-scalar",
+          "equality-stage9-stable-keys-int-fold-scalar",
+          "equality-stage9-stable-keys-strings-scalar",
+          "equality-stage9-stable-keys-float-scalar",
+          "equality-stage9-stable-keys-nullbool-scalar",
+          "equality-stage9-mapping-listing-cache-fifth-position0",
+          "equality-stage9-mapping-listing-cache-fifth-position2",
+          "equality-stage9-mapping-listing-cache-fifth-position4",
+          "equality-stage9-mapping-listing-cache-four-control",
+          "equality-stage9-mapping-dynamic-cache-fifth-position0",
+          "equality-stage9-mapping-dynamic-cache-fifth-position2",
+          "equality-stage9-mapping-dynamic-cache-fifth-position4",
+          "equality-stage9-mapping-dynamic-cache-four-control",
+          "equality-stage9-dynamic-listing-cache-fifth-position0",
+          "equality-stage9-dynamic-listing-cache-fifth-position2",
+          "equality-stage9-dynamic-listing-cache-fifth-position4",
+          "equality-stage9-dynamic-listing-cache-four-control",
+          "equality-stage9-dynamic-dynamic-cache-fifth-position0",
+          "equality-stage9-dynamic-dynamic-cache-fifth-position2",
+          "equality-stage9-dynamic-dynamic-cache-fifth-position4",
+          "equality-stage9-dynamic-dynamic-cache-four-control",
+          "equality-stage9-strict-list-bucket-keys-4",
+          "equality-stage9-strict-list-bucket-keys-5",
+          "equality-stage9-strict-list-bucket-keys-6",
+          "equality-stage9-strict-list-bucket-keys-22",
+          "equality-stage9-strict-list-bucket-keys-23",
+          "equality-stage9-strict-list-bucket-keys-32",
+          "equality-stage9-unforced-key-hash-threshold-4",
+          "equality-stage9-unforced-key-hash-threshold-5",
+          "equality-stage9-listing-hash-bucket-1-17-left",
+          "equality-stage9-listing-hash-bucket-1-17-right",
+          "equality-stage9-listing-hash-bucket-1-17-both",
+          "equality-stage9-listing-hash-bucket-1-17-duplicate",
+          "equality-stage9-listing-hash-bucket-1-17-inherited",
+          "equality-stage9-listing-hash-bucket-1-33-left",
+          "equality-stage9-listing-hash-bucket-1-33-duplicate",
+          "equality-stage9-listing-hash-bucket-1-minus15-left",
+          "equality-stage9-listing-hash-bucket-1-minus15-duplicate",
+          "equality-stage9-listing-hash-bucket-0-16-left",
+          "equality-stage9-listing-hash-bucket-0-16-duplicate",
+          "equality-stage9-listing-hash-bucket-0-0-left",
+          "equality-stage9-listing-hash-bucket-0-0-duplicate",
+          "equality-stage9-class-qualified-hash-unnamed",
+          "equality-stage9-class-qualified-hash-named",
+          "equality-stage9-listing-zero-hash-regular-local-warm",
+          "equality-stage9-listing-zero-hash-constant-local-warm",
+          "equality-stage9-listing-nonzero-hash-regular-local-warm",
+          "equality-stage9-listing-nonzero-hash-constant-local-warm",
+          "equality-stage9-mapping-zero-listing-cache-type-check",
+          "equality-stage9-mapping-length-listing-1-17-none",
+          "equality-stage9-mapping-length-listing-1-17-left",
+          "equality-stage9-mapping-length-listing-1-17-right",
+          "equality-stage9-mapping-length-listing-1-17-both",
+          "equality-stage9-mapping-length-listing-1-2-none",
+          "equality-stage9-mapping-length-listing-1-2-left",
+          "equality-stage9-mapping-length-listing-1-2-right",
+          "equality-stage9-mapping-length-listing-1-2-both",
+          "equality-stage9-mapping-length-local-query-ordinary",
+          "equality-stage9-mapping-length-local-query-local",
+          "equality-stage9-mapping-length-key-nan",
+          "equality-stage9-mapping-length-key-signed-zero",
+          "equality-stage9-mapping-length-key-boxed-numeric",
+          "equality-stage9-mapping-length-key-folded-int-collision",
+          "equality-stage9-mapping-length-key-entry-dynamic"
         ],
         "state": "partial"
       }
@@ -111174,7 +114886,45 @@
           "equality-key-review-mapping-override-value-before-key",
           "equality-stage8-typed-default-inherited",
           "equality-stage8-typed-cache-amendment-class-order",
-          "equality-stage8-typed-hash-child-before-parent"
+          "equality-stage8-typed-hash-child-before-parent",
+          "equality-stage9-held-mapping-cache-key-first",
+          "equality-stage9-held-mapping-cache-key-last",
+          "equality-stage9-held-dynamic-cache-key-first",
+          "equality-stage9-held-dynamic-cache-key-last",
+          "equality-stage9-held-listing-warm-hashed-inherited-lookup",
+          "equality-stage9-mapping-listing-cache-fifth-position0",
+          "equality-stage9-mapping-listing-cache-fifth-position2",
+          "equality-stage9-mapping-listing-cache-fifth-position4",
+          "equality-stage9-mapping-listing-cache-four-control",
+          "equality-stage9-mapping-dynamic-cache-fifth-position0",
+          "equality-stage9-mapping-dynamic-cache-fifth-position2",
+          "equality-stage9-mapping-dynamic-cache-fifth-position4",
+          "equality-stage9-mapping-dynamic-cache-four-control",
+          "equality-stage9-dynamic-listing-cache-fifth-position0",
+          "equality-stage9-dynamic-listing-cache-fifth-position2",
+          "equality-stage9-dynamic-listing-cache-fifth-position4",
+          "equality-stage9-dynamic-listing-cache-four-control",
+          "equality-stage9-dynamic-dynamic-cache-fifth-position0",
+          "equality-stage9-dynamic-dynamic-cache-fifth-position2",
+          "equality-stage9-dynamic-dynamic-cache-fifth-position4",
+          "equality-stage9-dynamic-dynamic-cache-four-control",
+          "equality-stage9-listing-hash-bucket-1-17-inherited",
+          "diagnostics-stage9-let-inherited-constraint-throw",
+          "equality-stage9-mapping-length-listing-1-17-none",
+          "equality-stage9-mapping-length-listing-1-17-left",
+          "equality-stage9-mapping-length-listing-1-17-right",
+          "equality-stage9-mapping-length-listing-1-17-both",
+          "equality-stage9-mapping-length-listing-1-2-none",
+          "equality-stage9-mapping-length-listing-1-2-left",
+          "equality-stage9-mapping-length-listing-1-2-right",
+          "equality-stage9-mapping-length-listing-1-2-both",
+          "equality-stage9-mapping-length-local-query-ordinary",
+          "equality-stage9-mapping-length-local-query-local",
+          "equality-stage9-mapping-length-key-nan",
+          "equality-stage9-mapping-length-key-signed-zero",
+          "equality-stage9-mapping-length-key-boxed-numeric",
+          "equality-stage9-mapping-length-key-folded-int-collision",
+          "equality-stage9-mapping-length-key-entry-dynamic"
         ],
         "state": "partial"
       }
@@ -111263,7 +115013,11 @@
           "equality-stage8-typed-cache-amendment-class-order",
           "equality-stage8-typed-cache-child-class-order",
           "equality-stage8-typed-hash-deep-before-nested-hash",
-          "equality-stage8-typed-hash-child-before-parent"
+          "equality-stage8-typed-hash-child-before-parent",
+          "equality-stage9-class-qualified-hash-unnamed",
+          "equality-stage9-class-qualified-hash-named",
+          "diagnostics-stage9-let-body-object-type",
+          "diagnostics-stage9-let-inherited-constraint-throw"
         ],
         "state": "partial"
       }
@@ -111303,7 +115057,26 @@
           "equality-typed-hidden-override",
           "equality-key-dynamic-local",
           "equality-key-typed-hidden",
-          "equality-supplement-equality-hidden-cache"
+          "equality-supplement-equality-hidden-cache",
+          "equality-stage9-held-listing-local-cache-regular-equality",
+          "equality-stage9-held-mapping-local-cache-regular-equality",
+          "equality-stage9-listing-local-cache-reverse",
+          "equality-stage9-listing-local-cache-identity",
+          "equality-stage9-listing-local-constant",
+          "equality-stage9-listing-local-both",
+          "equality-stage9-mapping-local-cache-reverse",
+          "equality-stage9-mapping-local-cache-identity",
+          "equality-stage9-mapping-local-constant",
+          "equality-stage9-mapping-local-both",
+          "equality-stage9-dynamic-local-cache-forward",
+          "equality-stage9-dynamic-local-constant",
+          "equality-stage9-dynamic-local-both",
+          "equality-stage9-listing-zero-hash-regular-local-warm",
+          "equality-stage9-listing-zero-hash-constant-local-warm",
+          "equality-stage9-listing-nonzero-hash-regular-local-warm",
+          "equality-stage9-listing-nonzero-hash-constant-local-warm",
+          "equality-stage9-mapping-length-local-query-ordinary",
+          "equality-stage9-mapping-length-local-query-local"
         ],
         "state": "partial"
       }
@@ -111374,7 +115147,20 @@
           "equality-key-function-lookup",
           "equality-key-function-duplicate",
           "equality-key-function-distinct",
-          "equality-shadowed-list-constructor"
+          "equality-shadowed-list-constructor",
+          "equality-stage9-listing-zero-hash-regular-local-warm",
+          "equality-stage9-listing-zero-hash-constant-local-warm",
+          "equality-stage9-listing-nonzero-hash-regular-local-warm",
+          "equality-stage9-listing-nonzero-hash-constant-local-warm",
+          "diagnostics-stage9-let-function-body",
+          "diagnostics-stage9-let-calls-function",
+          "diagnostics-stage9-let-calls-let-function",
+          "diagnostics-stage9-let-lambda-capture",
+          "diagnostics-stage9-let-calls-lambda",
+          "diagnostics-stage9-let-returned-function-inner-let",
+          "diagnostics-stage9-let-recursive-scope-single",
+          "diagnostics-stage9-let-recursive-outer-scope-single",
+          "diagnostics-stage9-let-caller-typed-mismatch"
         ],
         "state": "partial"
       }
@@ -111408,7 +115194,14 @@
           "equality-function-same",
           "equality-key-function-lookup",
           "equality-key-function-duplicate",
-          "equality-key-function-distinct"
+          "equality-key-function-distinct",
+          "equality-stage9-listing-zero-hash-regular-local-warm",
+          "equality-stage9-listing-zero-hash-constant-local-warm",
+          "equality-stage9-listing-nonzero-hash-regular-local-warm",
+          "equality-stage9-listing-nonzero-hash-constant-local-warm",
+          "diagnostics-stage9-let-lambda-capture",
+          "diagnostics-stage9-let-calls-lambda",
+          "diagnostics-stage9-let-returned-function-inner-let"
         ],
         "state": "partial"
       }
@@ -112234,7 +116027,111 @@
           "equality-stage8-typed-hash-deep-before-nested-hash",
           "equality-stage8-dynamic-hash-cold-cache-order",
           "equality-stage8-typed-hash-child-before-parent",
-          "equality-stage8-dynamic-hash-warm-b-cache-order-initializer"
+          "equality-stage8-dynamic-hash-warm-b-cache-order-initializer",
+          "equality-stage9-held-mapping-cache-key-first",
+          "equality-stage9-held-mapping-cache-key-last",
+          "equality-stage9-held-dynamic-cache-key-first",
+          "equality-stage9-held-dynamic-cache-key-last",
+          "equality-stage9-held-listing-key-warm-fifth",
+          "equality-stage9-held-listing-warm-hashed-duplicate",
+          "equality-stage9-held-listing-warm-hashed-inherited-lookup",
+          "equality-stage9-held-dynamic-hash-warm-b-cache-order",
+          "equality-stage9-held-listing-local-cache-regular-equality",
+          "equality-stage9-held-mapping-local-cache-regular-equality",
+          "equality-stage9-listing-local-cache-reverse",
+          "equality-stage9-listing-local-cache-identity",
+          "equality-stage9-listing-local-constant",
+          "equality-stage9-listing-local-both",
+          "equality-stage9-mapping-local-cache-reverse",
+          "equality-stage9-mapping-local-cache-identity",
+          "equality-stage9-mapping-local-constant",
+          "equality-stage9-mapping-local-both",
+          "equality-stage9-dynamic-local-cache-forward",
+          "equality-stage9-dynamic-local-constant",
+          "equality-stage9-dynamic-local-both",
+          "equality-stage9-listing-left-warm0-fifth",
+          "equality-stage9-listing-right-warm0-fifth",
+          "equality-stage9-listing-both-warm0-fifth",
+          "equality-stage9-listing-left-warm1-fifth",
+          "equality-stage9-listing-right-warm1-fifth",
+          "equality-stage9-listing-both-warm1-fifth",
+          "equality-stage9-listing-left-warm2-fifth",
+          "equality-stage9-listing-right-warm2-fifth",
+          "equality-stage9-listing-both-warm2-fifth",
+          "equality-stage9-stable-key-list",
+          "equality-stage9-stable-key-listing",
+          "equality-stage9-stable-key-mapping",
+          "equality-stage9-stable-key-dynamic",
+          "equality-stage9-numeric-collisions-4",
+          "equality-stage9-numeric-collisions-5",
+          "equality-stage9-numeric-collisions-6",
+          "equality-stage9-numeric-collisions-22",
+          "equality-stage9-numeric-collisions-23",
+          "equality-stage9-numeric-collisions-32",
+          "equality-stage9-stable-keys-int-bucket-scalar",
+          "equality-stage9-stable-keys-int-fold-scalar",
+          "equality-stage9-stable-keys-strings-scalar",
+          "equality-stage9-stable-keys-float-scalar",
+          "equality-stage9-stable-keys-nullbool-scalar",
+          "equality-stage9-mapping-listing-cache-fifth-position0",
+          "equality-stage9-mapping-listing-cache-fifth-position2",
+          "equality-stage9-mapping-listing-cache-fifth-position4",
+          "equality-stage9-mapping-listing-cache-four-control",
+          "equality-stage9-mapping-dynamic-cache-fifth-position0",
+          "equality-stage9-mapping-dynamic-cache-fifth-position2",
+          "equality-stage9-mapping-dynamic-cache-fifth-position4",
+          "equality-stage9-mapping-dynamic-cache-four-control",
+          "equality-stage9-dynamic-listing-cache-fifth-position0",
+          "equality-stage9-dynamic-listing-cache-fifth-position2",
+          "equality-stage9-dynamic-listing-cache-fifth-position4",
+          "equality-stage9-dynamic-listing-cache-four-control",
+          "equality-stage9-dynamic-dynamic-cache-fifth-position0",
+          "equality-stage9-dynamic-dynamic-cache-fifth-position2",
+          "equality-stage9-dynamic-dynamic-cache-fifth-position4",
+          "equality-stage9-dynamic-dynamic-cache-four-control",
+          "equality-stage9-strict-list-bucket-keys-4",
+          "equality-stage9-strict-list-bucket-keys-5",
+          "equality-stage9-strict-list-bucket-keys-6",
+          "equality-stage9-strict-list-bucket-keys-22",
+          "equality-stage9-strict-list-bucket-keys-23",
+          "equality-stage9-strict-list-bucket-keys-32",
+          "equality-stage9-unforced-key-hash-threshold-4",
+          "equality-stage9-unforced-key-hash-threshold-5",
+          "equality-stage9-listing-hash-bucket-1-17-left",
+          "equality-stage9-listing-hash-bucket-1-17-right",
+          "equality-stage9-listing-hash-bucket-1-17-both",
+          "equality-stage9-listing-hash-bucket-1-17-duplicate",
+          "equality-stage9-listing-hash-bucket-1-17-inherited",
+          "equality-stage9-listing-hash-bucket-1-33-left",
+          "equality-stage9-listing-hash-bucket-1-33-duplicate",
+          "equality-stage9-listing-hash-bucket-1-minus15-left",
+          "equality-stage9-listing-hash-bucket-1-minus15-duplicate",
+          "equality-stage9-listing-hash-bucket-0-16-left",
+          "equality-stage9-listing-hash-bucket-0-16-duplicate",
+          "equality-stage9-listing-hash-bucket-0-0-left",
+          "equality-stage9-listing-hash-bucket-0-0-duplicate",
+          "equality-stage9-class-qualified-hash-unnamed",
+          "equality-stage9-class-qualified-hash-named",
+          "equality-stage9-listing-zero-hash-regular-local-warm",
+          "equality-stage9-listing-zero-hash-constant-local-warm",
+          "equality-stage9-listing-nonzero-hash-regular-local-warm",
+          "equality-stage9-listing-nonzero-hash-constant-local-warm",
+          "equality-stage9-mapping-zero-listing-cache-type-check",
+          "equality-stage9-mapping-length-listing-1-17-none",
+          "equality-stage9-mapping-length-listing-1-17-left",
+          "equality-stage9-mapping-length-listing-1-17-right",
+          "equality-stage9-mapping-length-listing-1-17-both",
+          "equality-stage9-mapping-length-listing-1-2-none",
+          "equality-stage9-mapping-length-listing-1-2-left",
+          "equality-stage9-mapping-length-listing-1-2-right",
+          "equality-stage9-mapping-length-listing-1-2-both",
+          "equality-stage9-mapping-length-local-query-ordinary",
+          "equality-stage9-mapping-length-local-query-local",
+          "equality-stage9-mapping-length-key-nan",
+          "equality-stage9-mapping-length-key-signed-zero",
+          "equality-stage9-mapping-length-key-boxed-numeric",
+          "equality-stage9-mapping-length-key-folded-int-collision",
+          "equality-stage9-mapping-length-key-entry-dynamic"
         ],
         "state": "partial"
       }
@@ -112502,7 +116399,31 @@
           "equality-stage8-typed-cache-amendment-class-order",
           "equality-stage8-typed-cache-child-class-order",
           "equality-stage8-typed-hash-deep-before-nested-hash",
-          "equality-stage8-typed-hash-child-before-parent"
+          "equality-stage8-typed-hash-child-before-parent",
+          "equality-stage9-class-qualified-hash-unnamed",
+          "equality-stage9-class-qualified-hash-named",
+          "equality-stage9-mapping-zero-listing-cache-type-check",
+          "diagnostics-stage9-let-binding-type",
+          "diagnostics-stage9-let-constraint",
+          "diagnostics-stage9-let-type-test-control",
+          "diagnostics-stage9-let-constraint-throw",
+          "diagnostics-stage9-let-constraint-initializer-throw",
+          "diagnostics-stage9-let-body-typed-local",
+          "diagnostics-stage9-let-body-object-type",
+          "diagnostics-stage9-let-body-nested-constraint",
+          "diagnostics-stage9-let-alias-constraint-throw",
+          "diagnostics-stage9-let-inherited-constraint-throw",
+          "diagnostics-stage9-let-caller-typed-mismatch",
+          "diagnostics-stage9-let-constraint-typed-mismatch",
+          "diagnostics-stage9-let-wildcard-constraint",
+          "diagnostics-stage9-let-wildcard-under-let",
+          "diagnostics-stage9-let-wildcard-before-named",
+          "diagnostics-stage9-let-named-before-wildcard",
+          "diagnostics-stage9-let-wildcard-initializer-named",
+          "diagnostics-stage9-let-wildcard-alias",
+          "diagnostics-stage9-let-inline-constraint-under-let",
+          "diagnostics-stage9-let-inline-constraint-cast-mismatch",
+          "diagnostics-stage9-let-named-constraint-cast-mismatch"
         ],
         "state": "partial"
       }
@@ -112551,7 +116472,9 @@
           "collection-type-union-primitive-alias",
           "collection-type-union-constraint-alias",
           "collection-type-union-generic-alias",
-          "collection-type-union-substituted-argument"
+          "collection-type-union-substituted-argument",
+          "diagnostics-stage9-let-alias-constraint-throw",
+          "diagnostics-stage9-let-wildcard-alias"
         ],
         "state": "partial"
       }
@@ -112690,7 +116613,24 @@
           "equality-power-equal-object-false",
           "equality-power-key-missing",
           "equality-power-key-duplicate",
-          "equality-power-wrapper-force"
+          "equality-power-wrapper-force",
+          "diagnostics-stage9-let-constraint",
+          "diagnostics-stage9-let-type-test-control",
+          "diagnostics-stage9-let-constraint-throw",
+          "diagnostics-stage9-let-constraint-initializer-throw",
+          "diagnostics-stage9-let-body-nested-constraint",
+          "diagnostics-stage9-let-alias-constraint-throw",
+          "diagnostics-stage9-let-inherited-constraint-throw",
+          "diagnostics-stage9-let-constraint-typed-mismatch",
+          "diagnostics-stage9-let-wildcard-constraint",
+          "diagnostics-stage9-let-wildcard-under-let",
+          "diagnostics-stage9-let-wildcard-before-named",
+          "diagnostics-stage9-let-named-before-wildcard",
+          "diagnostics-stage9-let-wildcard-initializer-named",
+          "diagnostics-stage9-let-wildcard-alias",
+          "diagnostics-stage9-let-inline-constraint-under-let",
+          "diagnostics-stage9-let-inline-constraint-cast-mismatch",
+          "diagnostics-stage9-let-named-constraint-cast-mismatch"
         ],
         "state": "partial"
       }
@@ -112867,7 +116807,8 @@
           "equality-key-mapping-wrapper-bad",
           "equality-power-wrapper-force",
           "equality-supplement-wrapper-identity-skip",
-          "equality-supplement-wrapper-length-skip"
+          "equality-supplement-wrapper-length-skip",
+          "equality-stage9-mapping-zero-listing-cache-type-check"
         ],
         "state": "partial"
       }
@@ -112950,7 +116891,14 @@
           "collection-type-listing-is-first-mismatch",
           "collection-type-listing-is-first-runtime",
           "collection-type-mapping-is-key-before-value",
-          "collection-type-mapping-is-value-before-later-key"
+          "collection-type-mapping-is-value-before-later-key",
+          "equality-stage9-mapping-zero-listing-cache-type-check",
+          "diagnostics-stage9-let-type-test-control",
+          "diagnostics-stage9-let-body-nested-constraint",
+          "diagnostics-stage9-let-wildcard-under-let",
+          "diagnostics-stage9-let-inline-constraint-under-let",
+          "diagnostics-stage9-let-inline-constraint-cast-mismatch",
+          "diagnostics-stage9-let-named-constraint-cast-mismatch"
         ],
         "state": "partial"
       }
@@ -113014,7 +116962,9 @@
         "case_ids": [
           "module-basic",
           "collection-module-dynamic-classification",
-          "collection-module-iteration"
+          "collection-module-iteration",
+          "equality-stage9-class-qualified-hash-named",
+          "diagnostics-stage9-let-declared-unicode-multiline"
         ],
         "state": "partial"
       }
@@ -113416,7 +117366,159 @@
           "equality-stage8-typed-hash-deep-before-nested-hash",
           "equality-stage8-dynamic-hash-cold-cache-order",
           "equality-stage8-typed-hash-child-before-parent",
-          "equality-stage8-dynamic-hash-warm-b-cache-order-initializer"
+          "equality-stage8-dynamic-hash-warm-b-cache-order-initializer",
+          "equality-stage9-held-mapping-cache-key-first",
+          "equality-stage9-held-mapping-cache-key-last",
+          "equality-stage9-held-dynamic-cache-key-first",
+          "equality-stage9-held-dynamic-cache-key-last",
+          "equality-stage9-held-listing-key-warm-fifth",
+          "equality-stage9-held-listing-warm-hashed-duplicate",
+          "equality-stage9-held-listing-warm-hashed-inherited-lookup",
+          "equality-stage9-held-dynamic-hash-warm-b-cache-order",
+          "equality-stage9-held-listing-local-cache-regular-equality",
+          "equality-stage9-held-mapping-local-cache-regular-equality",
+          "equality-stage9-listing-local-cache-reverse",
+          "equality-stage9-listing-local-cache-identity",
+          "equality-stage9-listing-local-constant",
+          "equality-stage9-listing-local-both",
+          "equality-stage9-mapping-local-cache-reverse",
+          "equality-stage9-mapping-local-cache-identity",
+          "equality-stage9-mapping-local-constant",
+          "equality-stage9-mapping-local-both",
+          "equality-stage9-dynamic-local-cache-forward",
+          "equality-stage9-dynamic-local-constant",
+          "equality-stage9-dynamic-local-both",
+          "equality-stage9-listing-left-warm0-fifth",
+          "equality-stage9-listing-right-warm0-fifth",
+          "equality-stage9-listing-both-warm0-fifth",
+          "equality-stage9-listing-left-warm1-fifth",
+          "equality-stage9-listing-right-warm1-fifth",
+          "equality-stage9-listing-both-warm1-fifth",
+          "equality-stage9-listing-left-warm2-fifth",
+          "equality-stage9-listing-right-warm2-fifth",
+          "equality-stage9-listing-both-warm2-fifth",
+          "equality-stage9-stable-key-list",
+          "equality-stage9-stable-key-listing",
+          "equality-stage9-stable-key-mapping",
+          "equality-stage9-stable-key-dynamic",
+          "equality-stage9-numeric-collisions-4",
+          "equality-stage9-numeric-collisions-5",
+          "equality-stage9-numeric-collisions-6",
+          "equality-stage9-numeric-collisions-22",
+          "equality-stage9-numeric-collisions-23",
+          "equality-stage9-numeric-collisions-32",
+          "equality-stage9-stable-keys-int-bucket-scalar",
+          "equality-stage9-stable-keys-int-fold-scalar",
+          "equality-stage9-stable-keys-strings-scalar",
+          "equality-stage9-stable-keys-float-scalar",
+          "equality-stage9-stable-keys-nullbool-scalar",
+          "equality-stage9-mapping-listing-cache-fifth-position0",
+          "equality-stage9-mapping-listing-cache-fifth-position2",
+          "equality-stage9-mapping-listing-cache-fifth-position4",
+          "equality-stage9-mapping-listing-cache-four-control",
+          "equality-stage9-mapping-dynamic-cache-fifth-position0",
+          "equality-stage9-mapping-dynamic-cache-fifth-position2",
+          "equality-stage9-mapping-dynamic-cache-fifth-position4",
+          "equality-stage9-mapping-dynamic-cache-four-control",
+          "equality-stage9-dynamic-listing-cache-fifth-position0",
+          "equality-stage9-dynamic-listing-cache-fifth-position2",
+          "equality-stage9-dynamic-listing-cache-fifth-position4",
+          "equality-stage9-dynamic-listing-cache-four-control",
+          "equality-stage9-dynamic-dynamic-cache-fifth-position0",
+          "equality-stage9-dynamic-dynamic-cache-fifth-position2",
+          "equality-stage9-dynamic-dynamic-cache-fifth-position4",
+          "equality-stage9-dynamic-dynamic-cache-four-control",
+          "equality-stage9-strict-list-bucket-keys-4",
+          "equality-stage9-strict-list-bucket-keys-5",
+          "equality-stage9-strict-list-bucket-keys-6",
+          "equality-stage9-strict-list-bucket-keys-22",
+          "equality-stage9-strict-list-bucket-keys-23",
+          "equality-stage9-strict-list-bucket-keys-32",
+          "equality-stage9-unforced-key-hash-threshold-4",
+          "equality-stage9-unforced-key-hash-threshold-5",
+          "equality-stage9-listing-hash-bucket-1-17-left",
+          "equality-stage9-listing-hash-bucket-1-17-right",
+          "equality-stage9-listing-hash-bucket-1-17-both",
+          "equality-stage9-listing-hash-bucket-1-17-duplicate",
+          "equality-stage9-listing-hash-bucket-1-17-inherited",
+          "equality-stage9-listing-hash-bucket-1-33-left",
+          "equality-stage9-listing-hash-bucket-1-33-duplicate",
+          "equality-stage9-listing-hash-bucket-1-minus15-left",
+          "equality-stage9-listing-hash-bucket-1-minus15-duplicate",
+          "equality-stage9-listing-hash-bucket-0-16-left",
+          "equality-stage9-listing-hash-bucket-0-16-duplicate",
+          "equality-stage9-listing-hash-bucket-0-0-left",
+          "equality-stage9-listing-hash-bucket-0-0-duplicate",
+          "equality-stage9-class-qualified-hash-unnamed",
+          "equality-stage9-class-qualified-hash-named",
+          "equality-stage9-listing-zero-hash-regular-local-warm",
+          "equality-stage9-listing-zero-hash-constant-local-warm",
+          "equality-stage9-listing-nonzero-hash-regular-local-warm",
+          "equality-stage9-listing-nonzero-hash-constant-local-warm",
+          "equality-stage9-mapping-zero-listing-cache-type-check",
+          "diagnostics-stage9-let-body-throw",
+          "diagnostics-stage9-let-initializer-throw",
+          "diagnostics-stage9-let-binding-type",
+          "diagnostics-stage9-let-nested-body",
+          "diagnostics-stage9-let-inner-initializer",
+          "diagnostics-stage9-let-body-binary",
+          "diagnostics-stage9-let-under-binary",
+          "diagnostics-stage9-let-nested-under-binary",
+          "diagnostics-stage9-let-parenthesized-nesting",
+          "diagnostics-stage9-let-object-body",
+          "diagnostics-stage9-let-returned-object",
+          "diagnostics-stage9-let-inner-member-body",
+          "diagnostics-stage9-let-function-body",
+          "diagnostics-stage9-let-calls-function",
+          "diagnostics-stage9-let-calls-let-function",
+          "diagnostics-stage9-let-lambda-capture",
+          "diagnostics-stage9-let-calls-lambda",
+          "diagnostics-stage9-let-constraint",
+          "diagnostics-stage9-let-type-test-control",
+          "diagnostics-stage9-let-initializer-nested",
+          "diagnostics-stage9-let-property-read",
+          "diagnostics-stage9-let-equality-hidden-call",
+          "diagnostics-stage9-let-success-locals",
+          "diagnostics-stage9-let-constraint-throw",
+          "diagnostics-stage9-let-constraint-initializer-throw",
+          "diagnostics-stage9-let-returned-object-inner-let",
+          "diagnostics-stage9-let-returned-function-inner-let",
+          "diagnostics-stage9-let-body-typed-local",
+          "diagnostics-stage9-let-declared-unicode-multiline",
+          "diagnostics-stage9-let-body-missing-property",
+          "diagnostics-stage9-let-body-object-type",
+          "diagnostics-stage9-let-body-nested-constraint",
+          "diagnostics-stage9-let-recursive-scope-single",
+          "diagnostics-stage9-let-recursive-outer-scope-single",
+          "diagnostics-stage9-let-alias-constraint-throw",
+          "diagnostics-stage9-let-inherited-constraint-throw",
+          "diagnostics-stage9-let-caller-typed-mismatch",
+          "diagnostics-stage9-let-constraint-typed-mismatch",
+          "diagnostics-stage9-let-wildcard-constraint",
+          "diagnostics-stage9-let-wildcard-under-let",
+          "diagnostics-stage9-let-wildcard-before-named",
+          "diagnostics-stage9-let-named-before-wildcard",
+          "diagnostics-stage9-let-wildcard-local-depth",
+          "diagnostics-stage9-let-wildcard-initializer-named",
+          "diagnostics-stage9-let-wildcard-alias",
+          "diagnostics-stage9-let-inline-constraint-under-let",
+          "diagnostics-stage9-let-inline-constraint-cast-mismatch",
+          "diagnostics-stage9-let-named-constraint-cast-mismatch",
+          "equality-stage9-mapping-length-listing-1-17-none",
+          "equality-stage9-mapping-length-listing-1-17-left",
+          "equality-stage9-mapping-length-listing-1-17-right",
+          "equality-stage9-mapping-length-listing-1-17-both",
+          "equality-stage9-mapping-length-listing-1-2-none",
+          "equality-stage9-mapping-length-listing-1-2-left",
+          "equality-stage9-mapping-length-listing-1-2-right",
+          "equality-stage9-mapping-length-listing-1-2-both",
+          "equality-stage9-mapping-length-local-query-ordinary",
+          "equality-stage9-mapping-length-local-query-local",
+          "equality-stage9-mapping-length-key-nan",
+          "equality-stage9-mapping-length-key-signed-zero",
+          "equality-stage9-mapping-length-key-boxed-numeric",
+          "equality-stage9-mapping-length-key-folded-int-collision",
+          "equality-stage9-mapping-length-key-entry-dynamic"
         ],
         "state": "partial"
       }
@@ -113520,7 +117622,30 @@
           "equality-stage8-listing-cache-cold-comparison-order",
           "equality-stage8-listing-cache-warm-a-comparison-order",
           "equality-stage8-typed-cache-warm-class-order",
-          "equality-stage8-typed-cache-amendment-class-order"
+          "equality-stage8-typed-cache-amendment-class-order",
+          "equality-stage9-held-listing-local-cache-regular-equality",
+          "equality-stage9-held-mapping-local-cache-regular-equality",
+          "equality-stage9-listing-local-both",
+          "equality-stage9-mapping-local-both",
+          "equality-stage9-numeric-collisions-4",
+          "equality-stage9-numeric-collisions-5",
+          "equality-stage9-numeric-collisions-6",
+          "equality-stage9-numeric-collisions-22",
+          "equality-stage9-numeric-collisions-23",
+          "equality-stage9-numeric-collisions-32",
+          "equality-stage9-mapping-listing-cache-four-control",
+          "equality-stage9-mapping-dynamic-cache-four-control",
+          "equality-stage9-dynamic-listing-cache-four-control",
+          "equality-stage9-dynamic-dynamic-cache-four-control",
+          "equality-stage9-strict-list-bucket-keys-4",
+          "equality-stage9-strict-list-bucket-keys-5",
+          "equality-stage9-strict-list-bucket-keys-6",
+          "equality-stage9-strict-list-bucket-keys-22",
+          "equality-stage9-strict-list-bucket-keys-23",
+          "equality-stage9-strict-list-bucket-keys-32",
+          "equality-stage9-listing-zero-hash-constant-local-warm",
+          "equality-stage9-listing-nonzero-hash-regular-local-warm",
+          "equality-stage9-listing-nonzero-hash-constant-local-warm"
         ],
         "state": "partial"
       }
@@ -121970,6 +126095,6 @@
     "compatibility/regressions.json": "09c064f65730d30f72bf87a45c88d47ecc0844e57966a999dc8e759f083af3da",
     "compatibility/rev1-inventory.json": "6061f202ba3f04565efed3617ac69d3c2fadc54eec1f562b67a4758b3d0a8ab5",
     "references.lock": "278f48fd7697459281aa78a706c9ca57222f36a8c0785d838a6449fbaf26d30b",
-    "tests/fixtures/m2/cases.json": "99a222fa4fc0fa8f838ef65b13f09b1524aaa3bce8b4e976407748575fd1da0c"
+    "tests/fixtures/m2/cases.json": "7831c59f1bf722d2b4af04fb6ee82fc239f346add3b5e19fc314186a8ad3b301"
   }
 }

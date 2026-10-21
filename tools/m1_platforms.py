@@ -46,6 +46,10 @@ REQUIRED_SCENARIOS = {
     'm2-typed-default-equality-and-keys',
     'm2-comparison-cache-and-class-order',
     'm2-deep-force-before-key-hash',
+    'm2-local-cache-comparison',
+    'm2-hashed-key-buckets',
+    'm2-cache-fifth-publication',
+    'm2-let-diagnostic-scopes',
 }
 
 

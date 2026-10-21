@@ -275,21 +275,48 @@ spread. Mapping length prepares keys in ancestor order; equality performs this
 after deep forcing. Prepared structural identities and successful key-equality
 pairs are heap metadata, pruned when their objects are reclaimed.
 
-Successful cache publications retain their insertion order separately from
-pending evaluation markers. Regular Dynamic, Listing, and Mapping comparisons
-use that order; typed comparisons use class property declarations, visiting
+Cache publications retain insertion slots separately from pending evaluation
+markers. Regular Dynamic, Listing, and Mapping comparisons use the original
+slot values; typed comparisons use class property declarations, visiting
 the most derived class before its ancestors. Ordinary typed properties named
 `default` participate in forcing, comparison, and structural key preparation.
 The special collection default and hidden/local properties retain their
-separate rules. Retry preserves already completed members and publishes newly
-successful members at their completion position.
+separate rules. Nonconstant locals use declaration identity as their cache key;
+Listing and Mapping include those slots, producing asymmetric comparisons when
+only one operand has a local cache. Literal constant locals bypass that cache.
 
 Dynamic, Listing, Mapping, and typed key preparation completes deep value forcing
 before recursively preparing member keys and values. That second phase uses
 cache or class property order. Both phases run on the same scheduler and retain their operands across
 Host suspension, nested evaluation, GC, and failure recovery. The resulting
-canonical identities still represent structural equality, not Java hash integers.
-Strict List retains sequential element hashing.
+canonical identities describe prepared value graphs, separately from Java's
+32-bit hashes. They do not bypass later object comparison: nested cache warming
+can change directional equality. Successful comparison memos are directional
+and are invalidated by local or duplicate cache publication.
+Stable hashes include scalar values, UTF-16 strings, class
+qualified names, and eligible structural values. Strict List starts its
+sequential element hash at one; Listing and typed objects start at zero.
+Zero hashes are recomputed on later operations, matching Java's cache sentinel.
+JVM identity-dependent hashes remain explicitly unknown.
+
+The map index models forward linear comparison through four entries, followed
+by bucket lookup with newest collisions first. Bucket matching uses the mixed
+low bits without filtering by the full hash. Stable declaration maps preserve
+their index and insertion hashes; an actual rebuild refreshes those hashes.
+Member caches retain their actual index, keys, and values.
+The fifth cache value is published before its keys are hashed. A failed rebuild
+leaves all published slots and only the completed bucket prefix visible. A
+retry may append another slot for a hidden key; its old value remains a GC
+root and participates in cursor traversal. Capacity changes and load-triggered
+rebuilds preserve their distinct publication order. Hashing and comparison can
+suspend through the shared VM and Host continuation.
+
+Mapping length uses a separate ancestor-first unique-key pass, matching Java's
+HashSet boundary. Each key is hashed and compared before the next key; stable
+full hashes must match before query-first equality is evaluated. Insertion
+hashes stay attached to retained keys even if a later key warms an earlier
+cache. Only a completed pass publishes the cached length, and entry values
+remain unforced. The same continuation supports equality's length check.
 
 An empty object body preserves the parent's identity; empty typed construction
 uses the class prototype. Compile-time constant entry validation recognizes
@@ -304,12 +331,24 @@ closing parenthesis; rendering preserves that behavior while underlines use
 the original source positions. A lexical error restores the complete source
 line. This display path does not rewrite source inputs or comparison evidence.
 
-The selected cases do not establish complete Java map behavior. Cached-member
-hash-table transitions, all hash-bucket collision orders, and cyclic structural
-hashes remain open. Listing/Mapping caches containing nonconstant local members
-also have observed comparison differences. A nested-let hash failure retains a
-diagnostic frame difference. These raw failures remain separate from selected
-passing regressions. Cyclic key preparation
+Let-body ranges are source metadata, adding no VM dispatch instructions.
+When an evaluation error unwinds, the outermost active let contributes one
+inserted frame per call target. Initializers and recoverable type mismatches
+follow Java's distinct catch boundaries; explicit casts convert a mismatch
+before an enclosing let catches it. Constraints that write local slots
+have a separate logical root; lexical let names remain attached to captured
+objects and functions after the let returns. Inline constraints without named
+bindings do not contribute their own inserted let frame.
+
+The selected cases do not establish complete Java map behavior. Identifier,
+local declaration, and function identity hashes cannot be reproduced with
+portable numeric hashes. Declaration maps with unknown hashes use a linear
+comparison fallback. Member caches use evaluator-local bucket assignments for
+those keys; these assignments do not establish JVM identity hash parity.
+Same-cache cyclic reentry during a partial rebuild, unpublished
+declaration-map failure state, and cyclic structural hashes remain open.
+Repeated recursive diagnostic frame compression also remains unimplemented.
+Cyclic key preparation
 currently reports a Rust cycle error;
 the observed Java cases fail inside the JVM. Full format-time wrapper checks,
 function/class amendments, and the remaining types and metadata also remain

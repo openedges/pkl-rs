@@ -11650,6 +11650,2246 @@
         "semantic:diagnostics"
       ],
       "expected_outcome": "failure"
+    },
+    {
+      "id": "equality-stage9-held-mapping-cache-key-first",
+      "input": "tests/fixtures/m2/equality-stage9-held-mapping-cache-key-first.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:amendment"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "equality-stage9-held-mapping-cache-key-last",
+      "input": "tests/fixtures/m2/equality-stage9-held-mapping-cache-key-last.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:amendment"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "equality-stage9-held-dynamic-cache-key-first",
+      "input": "tests/fixtures/m2/equality-stage9-held-dynamic-cache-key-first.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:amendment"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "equality-stage9-held-dynamic-cache-key-last",
+      "input": "tests/fixtures/m2/equality-stage9-held-dynamic-cache-key-last.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:amendment"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "equality-stage9-held-listing-key-warm-fifth",
+      "input": "tests/fixtures/m2/equality-stage9-held-listing-key-warm-fifth.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "equality-stage9-held-listing-warm-hashed-duplicate",
+      "input": "tests/fixtures/m2/equality-stage9-held-listing-warm-hashed-duplicate.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-stage9-held-listing-warm-hashed-inherited-lookup",
+      "input": "tests/fixtures/m2/equality-stage9-held-listing-warm-hashed-inherited-lookup.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:amendment"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "equality-stage9-held-dynamic-hash-warm-b-cache-order",
+      "input": "tests/fixtures/m2/equality-stage9-held-dynamic-hash-warm-b-cache-order.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "equality-stage9-held-listing-local-cache-regular-equality",
+      "input": "tests/fixtures/m2/equality-stage9-held-listing-local-cache-regular-equality.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:modifiers",
+        "semantic:generated-verification"
+      ],
+      "expected_outcome": "success",
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "equality-stage9-held-listing-local-cache-regular-equality",
+          "equality-stage9-listing-local-both",
+          "equality-stage9-held-mapping-local-cache-regular-equality",
+          "equality-stage9-mapping-local-both"
+        ],
+        "domain": "A regular local declaration contributes an ObjectMember cache key in Listing/Mapping equality; comparing the left local cache to an absent or distinct right local declaration remains false."
+      }
+    },
+    {
+      "id": "equality-stage9-held-mapping-local-cache-regular-equality",
+      "input": "tests/fixtures/m2/equality-stage9-held-mapping-local-cache-regular-equality.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:modifiers",
+        "semantic:generated-verification"
+      ],
+      "expected_outcome": "success",
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "equality-stage9-held-listing-local-cache-regular-equality",
+          "equality-stage9-listing-local-both",
+          "equality-stage9-held-mapping-local-cache-regular-equality",
+          "equality-stage9-mapping-local-both"
+        ],
+        "domain": "A regular local declaration contributes an ObjectMember cache key in Listing/Mapping equality; comparing the left local cache to an absent or distinct right local declaration remains false."
+      }
+    },
+    {
+      "id": "equality-stage9-listing-local-cache-reverse",
+      "input": "tests/fixtures/m2/equality-stage9-listing-local-cache-reverse.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:modifiers"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-stage9-listing-local-cache-identity",
+      "input": "tests/fixtures/m2/equality-stage9-listing-local-cache-identity.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:modifiers"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-stage9-listing-local-constant",
+      "input": "tests/fixtures/m2/equality-stage9-listing-local-constant.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:modifiers"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-stage9-listing-local-both",
+      "input": "tests/fixtures/m2/equality-stage9-listing-local-both.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:modifiers",
+        "semantic:generated-verification"
+      ],
+      "expected_outcome": "success",
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "equality-stage9-held-listing-local-cache-regular-equality",
+          "equality-stage9-listing-local-both",
+          "equality-stage9-held-mapping-local-cache-regular-equality",
+          "equality-stage9-mapping-local-both"
+        ],
+        "domain": "A regular local declaration contributes an ObjectMember cache key in Listing/Mapping equality; comparing the left local cache to an absent or distinct right local declaration remains false."
+      }
+    },
+    {
+      "id": "equality-stage9-mapping-local-cache-reverse",
+      "input": "tests/fixtures/m2/equality-stage9-mapping-local-cache-reverse.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:modifiers"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-stage9-mapping-local-cache-identity",
+      "input": "tests/fixtures/m2/equality-stage9-mapping-local-cache-identity.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:modifiers"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-stage9-mapping-local-constant",
+      "input": "tests/fixtures/m2/equality-stage9-mapping-local-constant.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:modifiers"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-stage9-mapping-local-both",
+      "input": "tests/fixtures/m2/equality-stage9-mapping-local-both.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:modifiers",
+        "semantic:generated-verification"
+      ],
+      "expected_outcome": "success",
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "equality-stage9-held-listing-local-cache-regular-equality",
+          "equality-stage9-listing-local-both",
+          "equality-stage9-held-mapping-local-cache-regular-equality",
+          "equality-stage9-mapping-local-both"
+        ],
+        "domain": "A regular local declaration contributes an ObjectMember cache key in Listing/Mapping equality; comparing the left local cache to an absent or distinct right local declaration remains false."
+      }
+    },
+    {
+      "id": "equality-stage9-dynamic-local-cache-forward",
+      "input": "tests/fixtures/m2/equality-stage9-dynamic-local-cache-forward.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:modifiers"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-stage9-dynamic-local-constant",
+      "input": "tests/fixtures/m2/equality-stage9-dynamic-local-constant.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:modifiers"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-stage9-dynamic-local-both",
+      "input": "tests/fixtures/m2/equality-stage9-dynamic-local-both.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:modifiers"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-stage9-listing-left-warm0-fifth",
+      "input": "tests/fixtures/m2/equality-stage9-listing-left-warm0-fifth.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-stage9-listing-right-warm0-fifth",
+      "input": "tests/fixtures/m2/equality-stage9-listing-right-warm0-fifth.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-stage9-listing-both-warm0-fifth",
+      "input": "tests/fixtures/m2/equality-stage9-listing-both-warm0-fifth.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-stage9-listing-left-warm1-fifth",
+      "input": "tests/fixtures/m2/equality-stage9-listing-left-warm1-fifth.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "equality-stage9-listing-right-warm1-fifth",
+      "input": "tests/fixtures/m2/equality-stage9-listing-right-warm1-fifth.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "equality-stage9-listing-both-warm1-fifth",
+      "input": "tests/fixtures/m2/equality-stage9-listing-both-warm1-fifth.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-stage9-listing-left-warm2-fifth",
+      "input": "tests/fixtures/m2/equality-stage9-listing-left-warm2-fifth.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "equality-stage9-listing-right-warm2-fifth",
+      "input": "tests/fixtures/m2/equality-stage9-listing-right-warm2-fifth.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "equality-stage9-listing-both-warm2-fifth",
+      "input": "tests/fixtures/m2/equality-stage9-listing-both-warm2-fifth.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-stage9-stable-key-list",
+      "input": "tests/fixtures/m2/equality-stage9-stable-key-list.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-stage9-stable-key-listing",
+      "input": "tests/fixtures/m2/equality-stage9-stable-key-listing.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-stage9-stable-key-mapping",
+      "input": "tests/fixtures/m2/equality-stage9-stable-key-mapping.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-stage9-stable-key-dynamic",
+      "input": "tests/fixtures/m2/equality-stage9-stable-key-dynamic.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-stage9-numeric-collisions-4",
+      "input": "tests/fixtures/m2/equality-stage9-numeric-collisions-4.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:generated-verification"
+      ],
+      "expected_outcome": "success",
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "equality-stage9-numeric-collisions-4",
+          "equality-stage9-strict-list-bucket-keys-4"
+        ],
+        "domain": "Replacing each integral key with a strict one-element List preserves lookup of the final assigned value across 4 colliding keys."
+      }
+    },
+    {
+      "id": "equality-stage9-numeric-collisions-5",
+      "input": "tests/fixtures/m2/equality-stage9-numeric-collisions-5.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:generated-verification"
+      ],
+      "expected_outcome": "success",
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "equality-stage9-numeric-collisions-5",
+          "equality-stage9-strict-list-bucket-keys-5"
+        ],
+        "domain": "Replacing each integral key with a strict one-element List preserves lookup of the final assigned value across 5 colliding keys."
+      }
+    },
+    {
+      "id": "equality-stage9-numeric-collisions-6",
+      "input": "tests/fixtures/m2/equality-stage9-numeric-collisions-6.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:generated-verification"
+      ],
+      "expected_outcome": "success",
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "equality-stage9-numeric-collisions-6",
+          "equality-stage9-strict-list-bucket-keys-6"
+        ],
+        "domain": "Replacing each integral key with a strict one-element List preserves lookup of the final assigned value across 6 colliding keys."
+      }
+    },
+    {
+      "id": "equality-stage9-numeric-collisions-22",
+      "input": "tests/fixtures/m2/equality-stage9-numeric-collisions-22.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:generated-verification"
+      ],
+      "expected_outcome": "success",
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "equality-stage9-numeric-collisions-22",
+          "equality-stage9-strict-list-bucket-keys-22"
+        ],
+        "domain": "Replacing each integral key with a strict one-element List preserves lookup of the final assigned value across 22 colliding keys."
+      }
+    },
+    {
+      "id": "equality-stage9-numeric-collisions-23",
+      "input": "tests/fixtures/m2/equality-stage9-numeric-collisions-23.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:generated-verification"
+      ],
+      "expected_outcome": "success",
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "equality-stage9-numeric-collisions-23",
+          "equality-stage9-strict-list-bucket-keys-23"
+        ],
+        "domain": "Replacing each integral key with a strict one-element List preserves lookup of the final assigned value across 23 colliding keys."
+      }
+    },
+    {
+      "id": "equality-stage9-numeric-collisions-32",
+      "input": "tests/fixtures/m2/equality-stage9-numeric-collisions-32.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:generated-verification"
+      ],
+      "expected_outcome": "success",
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "equality-stage9-numeric-collisions-32",
+          "equality-stage9-strict-list-bucket-keys-32"
+        ],
+        "domain": "Replacing each integral key with a strict one-element List preserves lookup of the final assigned value across 32 colliding keys."
+      }
+    },
+    {
+      "id": "equality-stage9-stable-keys-int-bucket-scalar",
+      "input": "tests/fixtures/m2/equality-stage9-stable-keys-int-bucket-scalar.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-stage9-stable-keys-int-fold-scalar",
+      "input": "tests/fixtures/m2/equality-stage9-stable-keys-int-fold-scalar.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-stage9-stable-keys-strings-scalar",
+      "input": "tests/fixtures/m2/equality-stage9-stable-keys-strings-scalar.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-stage9-stable-keys-float-scalar",
+      "input": "tests/fixtures/m2/equality-stage9-stable-keys-float-scalar.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-stage9-stable-keys-nullbool-scalar",
+      "input": "tests/fixtures/m2/equality-stage9-stable-keys-nullbool-scalar.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-stage9-mapping-listing-cache-fifth-position0",
+      "input": "tests/fixtures/m2/equality-stage9-mapping-listing-cache-fifth-position0.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:amendment"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "equality-stage9-mapping-listing-cache-fifth-position2",
+      "input": "tests/fixtures/m2/equality-stage9-mapping-listing-cache-fifth-position2.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:amendment"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "equality-stage9-mapping-listing-cache-fifth-position4",
+      "input": "tests/fixtures/m2/equality-stage9-mapping-listing-cache-fifth-position4.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:amendment"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "equality-stage9-mapping-listing-cache-four-control",
+      "input": "tests/fixtures/m2/equality-stage9-mapping-listing-cache-four-control.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:amendment",
+        "semantic:generated-verification"
+      ],
+      "expected_outcome": "success",
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "equality-stage9-mapping-listing-cache-four-control",
+          "equality-stage9-mapping-dynamic-cache-four-control",
+          "equality-stage9-dynamic-listing-cache-four-control",
+          "equality-stage9-dynamic-dynamic-cache-four-control"
+        ],
+        "domain": "Changing the Mapping/Dynamic receiver and structural key kind preserves the successful fourth cached read before the fifth-insertion hash transition."
+      }
+    },
+    {
+      "id": "equality-stage9-mapping-dynamic-cache-fifth-position0",
+      "input": "tests/fixtures/m2/equality-stage9-mapping-dynamic-cache-fifth-position0.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:amendment"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "equality-stage9-mapping-dynamic-cache-fifth-position2",
+      "input": "tests/fixtures/m2/equality-stage9-mapping-dynamic-cache-fifth-position2.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:amendment"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "equality-stage9-mapping-dynamic-cache-fifth-position4",
+      "input": "tests/fixtures/m2/equality-stage9-mapping-dynamic-cache-fifth-position4.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:amendment"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "equality-stage9-mapping-dynamic-cache-four-control",
+      "input": "tests/fixtures/m2/equality-stage9-mapping-dynamic-cache-four-control.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:amendment",
+        "semantic:generated-verification"
+      ],
+      "expected_outcome": "success",
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "equality-stage9-mapping-listing-cache-four-control",
+          "equality-stage9-mapping-dynamic-cache-four-control",
+          "equality-stage9-dynamic-listing-cache-four-control",
+          "equality-stage9-dynamic-dynamic-cache-four-control"
+        ],
+        "domain": "Changing the Mapping/Dynamic receiver and structural key kind preserves the successful fourth cached read before the fifth-insertion hash transition."
+      }
+    },
+    {
+      "id": "equality-stage9-dynamic-listing-cache-fifth-position0",
+      "input": "tests/fixtures/m2/equality-stage9-dynamic-listing-cache-fifth-position0.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:amendment"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "equality-stage9-dynamic-listing-cache-fifth-position2",
+      "input": "tests/fixtures/m2/equality-stage9-dynamic-listing-cache-fifth-position2.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:amendment"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "equality-stage9-dynamic-listing-cache-fifth-position4",
+      "input": "tests/fixtures/m2/equality-stage9-dynamic-listing-cache-fifth-position4.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:amendment"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "equality-stage9-dynamic-listing-cache-four-control",
+      "input": "tests/fixtures/m2/equality-stage9-dynamic-listing-cache-four-control.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:amendment",
+        "semantic:generated-verification"
+      ],
+      "expected_outcome": "success",
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "equality-stage9-mapping-listing-cache-four-control",
+          "equality-stage9-mapping-dynamic-cache-four-control",
+          "equality-stage9-dynamic-listing-cache-four-control",
+          "equality-stage9-dynamic-dynamic-cache-four-control"
+        ],
+        "domain": "Changing the Mapping/Dynamic receiver and structural key kind preserves the successful fourth cached read before the fifth-insertion hash transition."
+      }
+    },
+    {
+      "id": "equality-stage9-dynamic-dynamic-cache-fifth-position0",
+      "input": "tests/fixtures/m2/equality-stage9-dynamic-dynamic-cache-fifth-position0.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:amendment"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "equality-stage9-dynamic-dynamic-cache-fifth-position2",
+      "input": "tests/fixtures/m2/equality-stage9-dynamic-dynamic-cache-fifth-position2.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:amendment"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "equality-stage9-dynamic-dynamic-cache-fifth-position4",
+      "input": "tests/fixtures/m2/equality-stage9-dynamic-dynamic-cache-fifth-position4.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:amendment"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "equality-stage9-dynamic-dynamic-cache-four-control",
+      "input": "tests/fixtures/m2/equality-stage9-dynamic-dynamic-cache-four-control.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:amendment",
+        "semantic:generated-verification"
+      ],
+      "expected_outcome": "success",
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "equality-stage9-mapping-listing-cache-four-control",
+          "equality-stage9-mapping-dynamic-cache-four-control",
+          "equality-stage9-dynamic-listing-cache-four-control",
+          "equality-stage9-dynamic-dynamic-cache-four-control"
+        ],
+        "domain": "Changing the Mapping/Dynamic receiver and structural key kind preserves the successful fourth cached read before the fifth-insertion hash transition."
+      }
+    },
+    {
+      "id": "equality-stage9-strict-list-bucket-keys-4",
+      "input": "tests/fixtures/m2/equality-stage9-strict-list-bucket-keys-4.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:generated-verification"
+      ],
+      "expected_outcome": "success",
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "equality-stage9-numeric-collisions-4",
+          "equality-stage9-strict-list-bucket-keys-4"
+        ],
+        "domain": "Replacing each integral key with a strict one-element List preserves lookup of the final assigned value across 4 colliding keys."
+      }
+    },
+    {
+      "id": "equality-stage9-strict-list-bucket-keys-5",
+      "input": "tests/fixtures/m2/equality-stage9-strict-list-bucket-keys-5.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:generated-verification"
+      ],
+      "expected_outcome": "success",
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "equality-stage9-numeric-collisions-5",
+          "equality-stage9-strict-list-bucket-keys-5"
+        ],
+        "domain": "Replacing each integral key with a strict one-element List preserves lookup of the final assigned value across 5 colliding keys."
+      }
+    },
+    {
+      "id": "equality-stage9-strict-list-bucket-keys-6",
+      "input": "tests/fixtures/m2/equality-stage9-strict-list-bucket-keys-6.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:generated-verification"
+      ],
+      "expected_outcome": "success",
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "equality-stage9-numeric-collisions-6",
+          "equality-stage9-strict-list-bucket-keys-6"
+        ],
+        "domain": "Replacing each integral key with a strict one-element List preserves lookup of the final assigned value across 6 colliding keys."
+      }
+    },
+    {
+      "id": "equality-stage9-strict-list-bucket-keys-22",
+      "input": "tests/fixtures/m2/equality-stage9-strict-list-bucket-keys-22.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:generated-verification"
+      ],
+      "expected_outcome": "success",
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "equality-stage9-numeric-collisions-22",
+          "equality-stage9-strict-list-bucket-keys-22"
+        ],
+        "domain": "Replacing each integral key with a strict one-element List preserves lookup of the final assigned value across 22 colliding keys."
+      }
+    },
+    {
+      "id": "equality-stage9-strict-list-bucket-keys-23",
+      "input": "tests/fixtures/m2/equality-stage9-strict-list-bucket-keys-23.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:generated-verification"
+      ],
+      "expected_outcome": "success",
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "equality-stage9-numeric-collisions-23",
+          "equality-stage9-strict-list-bucket-keys-23"
+        ],
+        "domain": "Replacing each integral key with a strict one-element List preserves lookup of the final assigned value across 23 colliding keys."
+      }
+    },
+    {
+      "id": "equality-stage9-strict-list-bucket-keys-32",
+      "input": "tests/fixtures/m2/equality-stage9-strict-list-bucket-keys-32.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:generated-verification"
+      ],
+      "expected_outcome": "success",
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "equality-stage9-numeric-collisions-32",
+          "equality-stage9-strict-list-bucket-keys-32"
+        ],
+        "domain": "Replacing each integral key with a strict one-element List preserves lookup of the final assigned value across 32 colliding keys."
+      }
+    },
+    {
+      "id": "equality-stage9-unforced-key-hash-threshold-4",
+      "input": "tests/fixtures/m2/equality-stage9-unforced-key-hash-threshold-4.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-stage9-unforced-key-hash-threshold-5",
+      "input": "tests/fixtures/m2/equality-stage9-unforced-key-hash-threshold-5.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "equality-stage9-listing-hash-bucket-1-17-left",
+      "input": "tests/fixtures/m2/equality-stage9-listing-hash-bucket-1-17-left.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-stage9-listing-hash-bucket-1-17-right",
+      "input": "tests/fixtures/m2/equality-stage9-listing-hash-bucket-1-17-right.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-stage9-listing-hash-bucket-1-17-both",
+      "input": "tests/fixtures/m2/equality-stage9-listing-hash-bucket-1-17-both.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-stage9-listing-hash-bucket-1-17-duplicate",
+      "input": "tests/fixtures/m2/equality-stage9-listing-hash-bucket-1-17-duplicate.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "equality-stage9-listing-hash-bucket-1-17-inherited",
+      "input": "tests/fixtures/m2/equality-stage9-listing-hash-bucket-1-17-inherited.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:amendment"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-stage9-listing-hash-bucket-1-33-left",
+      "input": "tests/fixtures/m2/equality-stage9-listing-hash-bucket-1-33-left.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-stage9-listing-hash-bucket-1-33-duplicate",
+      "input": "tests/fixtures/m2/equality-stage9-listing-hash-bucket-1-33-duplicate.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "equality-stage9-listing-hash-bucket-1-minus15-left",
+      "input": "tests/fixtures/m2/equality-stage9-listing-hash-bucket-1-minus15-left.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "equality-stage9-listing-hash-bucket-1-minus15-duplicate",
+      "input": "tests/fixtures/m2/equality-stage9-listing-hash-bucket-1-minus15-duplicate.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-stage9-listing-hash-bucket-0-16-left",
+      "input": "tests/fixtures/m2/equality-stage9-listing-hash-bucket-0-16-left.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-stage9-listing-hash-bucket-0-16-duplicate",
+      "input": "tests/fixtures/m2/equality-stage9-listing-hash-bucket-0-16-duplicate.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "equality-stage9-listing-hash-bucket-0-0-left",
+      "input": "tests/fixtures/m2/equality-stage9-listing-hash-bucket-0-0-left.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-stage9-listing-hash-bucket-0-0-duplicate",
+      "input": "tests/fixtures/m2/equality-stage9-listing-hash-bucket-0-0-duplicate.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "equality-stage9-class-qualified-hash-unnamed",
+      "input": "tests/fixtures/m2/equality-stage9-class-qualified-hash-unnamed.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:classes",
+        "semantic:types"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-stage9-class-qualified-hash-named",
+      "input": "tests/fixtures/m2/equality-stage9-class-qualified-hash-named.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:classes",
+        "semantic:types",
+        "semantic:modules"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-stage9-listing-zero-hash-regular-local-warm",
+      "input": "tests/fixtures/m2/equality-stage9-listing-zero-hash-regular-local-warm.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:modifiers",
+        "semantic:functions",
+        "semantic:closures"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "equality-stage9-listing-zero-hash-constant-local-warm",
+      "input": "tests/fixtures/m2/equality-stage9-listing-zero-hash-constant-local-warm.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:modifiers",
+        "semantic:functions",
+        "semantic:closures",
+        "semantic:generated-verification"
+      ],
+      "expected_outcome": "success",
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "equality-stage9-listing-zero-hash-constant-local-warm",
+          "equality-stage9-listing-nonzero-hash-constant-local-warm",
+          "equality-stage9-listing-nonzero-hash-regular-local-warm"
+        ],
+        "domain": "An absent regular-local cache entry or a nonzero memoized Listing hash preserves lookup after calling the hidden default function; only the zero hash with a newly warmed regular-local entry recomputes."
+      }
+    },
+    {
+      "id": "equality-stage9-listing-nonzero-hash-regular-local-warm",
+      "input": "tests/fixtures/m2/equality-stage9-listing-nonzero-hash-regular-local-warm.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:modifiers",
+        "semantic:functions",
+        "semantic:closures",
+        "semantic:generated-verification"
+      ],
+      "expected_outcome": "success",
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "equality-stage9-listing-zero-hash-constant-local-warm",
+          "equality-stage9-listing-nonzero-hash-constant-local-warm",
+          "equality-stage9-listing-nonzero-hash-regular-local-warm"
+        ],
+        "domain": "An absent regular-local cache entry or a nonzero memoized Listing hash preserves lookup after calling the hidden default function; only the zero hash with a newly warmed regular-local entry recomputes."
+      }
+    },
+    {
+      "id": "equality-stage9-listing-nonzero-hash-constant-local-warm",
+      "input": "tests/fixtures/m2/equality-stage9-listing-nonzero-hash-constant-local-warm.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:modifiers",
+        "semantic:functions",
+        "semantic:closures",
+        "semantic:generated-verification"
+      ],
+      "expected_outcome": "success",
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "equality-stage9-listing-zero-hash-constant-local-warm",
+          "equality-stage9-listing-nonzero-hash-constant-local-warm",
+          "equality-stage9-listing-nonzero-hash-regular-local-warm"
+        ],
+        "domain": "An absent regular-local cache entry or a nonzero memoized Listing hash preserves lookup after calling the hidden default function; only the zero hash with a newly warmed regular-local entry recomputes."
+      }
+    },
+    {
+      "id": "equality-stage9-mapping-zero-listing-cache-type-check",
+      "input": "tests/fixtures/m2/equality-stage9-mapping-zero-listing-cache-type-check.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:generics",
+        "semantic:types",
+        "semantic:type-tests-casts"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "diagnostics-stage9-let-body-throw",
+      "input": "tests/fixtures/m2/diagnostics-stage9-let-body-throw.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "diagnostics-stage9-let-initializer-throw",
+      "input": "tests/fixtures/m2/diagnostics-stage9-let-initializer-throw.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "diagnostics-stage9-let-binding-type",
+      "input": "tests/fixtures/m2/diagnostics-stage9-let-binding-type.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:types"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "diagnostics-stage9-let-nested-body",
+      "input": "tests/fixtures/m2/diagnostics-stage9-let-nested-body.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "diagnostics-stage9-let-inner-initializer",
+      "input": "tests/fixtures/m2/diagnostics-stage9-let-inner-initializer.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "diagnostics-stage9-let-body-binary",
+      "input": "tests/fixtures/m2/diagnostics-stage9-let-body-binary.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "diagnostics-stage9-let-under-binary",
+      "input": "tests/fixtures/m2/diagnostics-stage9-let-under-binary.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "diagnostics-stage9-let-nested-under-binary",
+      "input": "tests/fixtures/m2/diagnostics-stage9-let-nested-under-binary.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "diagnostics-stage9-let-parenthesized-nesting",
+      "input": "tests/fixtures/m2/diagnostics-stage9-let-parenthesized-nesting.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "diagnostics-stage9-let-object-body",
+      "input": "tests/fixtures/m2/diagnostics-stage9-let-object-body.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "diagnostics-stage9-let-returned-object",
+      "input": "tests/fixtures/m2/diagnostics-stage9-let-returned-object.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "diagnostics-stage9-let-inner-member-body",
+      "input": "tests/fixtures/m2/diagnostics-stage9-let-inner-member-body.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "diagnostics-stage9-let-function-body",
+      "input": "tests/fixtures/m2/diagnostics-stage9-let-function-body.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:functions"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "diagnostics-stage9-let-calls-function",
+      "input": "tests/fixtures/m2/diagnostics-stage9-let-calls-function.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:functions"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "diagnostics-stage9-let-calls-let-function",
+      "input": "tests/fixtures/m2/diagnostics-stage9-let-calls-let-function.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:functions"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "diagnostics-stage9-let-lambda-capture",
+      "input": "tests/fixtures/m2/diagnostics-stage9-let-lambda-capture.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:functions",
+        "semantic:closures"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "diagnostics-stage9-let-calls-lambda",
+      "input": "tests/fixtures/m2/diagnostics-stage9-let-calls-lambda.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:functions",
+        "semantic:closures"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "diagnostics-stage9-let-constraint",
+      "input": "tests/fixtures/m2/diagnostics-stage9-let-constraint.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:types",
+        "semantic:constraints"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "diagnostics-stage9-let-type-test-control",
+      "input": "tests/fixtures/m2/diagnostics-stage9-let-type-test-control.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:constraints",
+        "semantic:types",
+        "semantic:type-tests-casts"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "diagnostics-stage9-let-initializer-nested",
+      "input": "tests/fixtures/m2/diagnostics-stage9-let-initializer-nested.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "diagnostics-stage9-let-property-read",
+      "input": "tests/fixtures/m2/diagnostics-stage9-let-property-read.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "diagnostics-stage9-let-equality-hidden-call",
+      "input": "tests/fixtures/m2/diagnostics-stage9-let-equality-hidden-call.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "diagnostics-stage9-let-success-locals",
+      "input": "tests/fixtures/m2/diagnostics-stage9-let-success-locals.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "diagnostics-stage9-let-constraint-throw",
+      "input": "tests/fixtures/m2/diagnostics-stage9-let-constraint-throw.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:types",
+        "semantic:constraints"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "diagnostics-stage9-let-constraint-initializer-throw",
+      "input": "tests/fixtures/m2/diagnostics-stage9-let-constraint-initializer-throw.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:types",
+        "semantic:constraints"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "diagnostics-stage9-let-returned-object-inner-let",
+      "input": "tests/fixtures/m2/diagnostics-stage9-let-returned-object-inner-let.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "diagnostics-stage9-let-returned-function-inner-let",
+      "input": "tests/fixtures/m2/diagnostics-stage9-let-returned-function-inner-let.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:functions",
+        "semantic:closures"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "diagnostics-stage9-let-body-typed-local",
+      "input": "tests/fixtures/m2/diagnostics-stage9-let-body-typed-local.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:types"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "diagnostics-stage9-let-declared-unicode-multiline",
+      "input": "tests/fixtures/m2/diagnostics-stage9-let-declared-unicode-multiline.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:modules"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "diagnostics-stage9-let-body-missing-property",
+      "input": "tests/fixtures/m2/diagnostics-stage9-let-body-missing-property.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "diagnostics-stage9-let-body-object-type",
+      "input": "tests/fixtures/m2/diagnostics-stage9-let-body-object-type.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:types",
+        "semantic:classes"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "diagnostics-stage9-let-body-nested-constraint",
+      "input": "tests/fixtures/m2/diagnostics-stage9-let-body-nested-constraint.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:constraints",
+        "semantic:types",
+        "semantic:type-tests-casts"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "diagnostics-stage9-let-recursive-scope-single",
+      "input": "tests/fixtures/m2/diagnostics-stage9-let-recursive-scope-single.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:functions"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "diagnostics-stage9-let-recursive-outer-scope-single",
+      "input": "tests/fixtures/m2/diagnostics-stage9-let-recursive-outer-scope-single.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:functions"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "diagnostics-stage9-let-alias-constraint-throw",
+      "input": "tests/fixtures/m2/diagnostics-stage9-let-alias-constraint-throw.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "diagnostics-stage9-let-inherited-constraint-throw",
+      "input": "tests/fixtures/m2/diagnostics-stage9-let-inherited-constraint-throw.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:types",
+        "semantic:classes",
+        "semantic:constraints",
+        "semantic:amendment"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "diagnostics-stage9-let-caller-typed-mismatch",
+      "input": "tests/fixtures/m2/diagnostics-stage9-let-caller-typed-mismatch.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:types",
+        "semantic:functions"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "diagnostics-stage9-let-constraint-typed-mismatch",
+      "input": "tests/fixtures/m2/diagnostics-stage9-let-constraint-typed-mismatch.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:types",
+        "semantic:constraints"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "diagnostics-stage9-let-wildcard-constraint",
+      "input": "tests/fixtures/m2/diagnostics-stage9-let-wildcard-constraint.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:types",
+        "semantic:constraints"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "diagnostics-stage9-let-wildcard-under-let",
+      "input": "tests/fixtures/m2/diagnostics-stage9-let-wildcard-under-let.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:constraints",
+        "semantic:types",
+        "semantic:type-tests-casts"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "diagnostics-stage9-let-wildcard-before-named",
+      "input": "tests/fixtures/m2/diagnostics-stage9-let-wildcard-before-named.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:types",
+        "semantic:constraints"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "diagnostics-stage9-let-named-before-wildcard",
+      "input": "tests/fixtures/m2/diagnostics-stage9-let-named-before-wildcard.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:types",
+        "semantic:constraints"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "diagnostics-stage9-let-wildcard-local-depth",
+      "input": "tests/fixtures/m2/diagnostics-stage9-let-wildcard-local-depth.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "diagnostics-stage9-let-wildcard-initializer-named",
+      "input": "tests/fixtures/m2/diagnostics-stage9-let-wildcard-initializer-named.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:types",
+        "semantic:constraints"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "diagnostics-stage9-let-wildcard-alias",
+      "input": "tests/fixtures/m2/diagnostics-stage9-let-wildcard-alias.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "diagnostics-stage9-let-inline-constraint-under-let",
+      "input": "tests/fixtures/m2/diagnostics-stage9-let-inline-constraint-under-let.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:constraints",
+        "semantic:types",
+        "semantic:type-tests-casts"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "diagnostics-stage9-let-inline-constraint-cast-mismatch",
+      "input": "tests/fixtures/m2/diagnostics-stage9-let-inline-constraint-cast-mismatch.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:constraints",
+        "semantic:types",
+        "semantic:type-tests-casts"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "diagnostics-stage9-let-named-constraint-cast-mismatch",
+      "input": "tests/fixtures/m2/diagnostics-stage9-let-named-constraint-cast-mismatch.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:constraints",
+        "semantic:types",
+        "semantic:type-tests-casts"
+      ],
+      "expected_outcome": "failure"
+    },
+    {
+      "id": "equality-stage9-mapping-length-listing-1-17-none",
+      "input": "tests/fixtures/m2/equality-stage9-mapping-length-listing-1-17-none.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:amendment",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-stage9-mapping-length-listing-1-17-left",
+      "input": "tests/fixtures/m2/equality-stage9-mapping-length-listing-1-17-left.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:amendment",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-stage9-mapping-length-listing-1-17-right",
+      "input": "tests/fixtures/m2/equality-stage9-mapping-length-listing-1-17-right.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:amendment",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-stage9-mapping-length-listing-1-17-both",
+      "input": "tests/fixtures/m2/equality-stage9-mapping-length-listing-1-17-both.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:amendment",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-stage9-mapping-length-listing-1-2-none",
+      "input": "tests/fixtures/m2/equality-stage9-mapping-length-listing-1-2-none.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:amendment",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-stage9-mapping-length-listing-1-2-left",
+      "input": "tests/fixtures/m2/equality-stage9-mapping-length-listing-1-2-left.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:amendment",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-stage9-mapping-length-listing-1-2-right",
+      "input": "tests/fixtures/m2/equality-stage9-mapping-length-listing-1-2-right.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:amendment",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-stage9-mapping-length-listing-1-2-both",
+      "input": "tests/fixtures/m2/equality-stage9-mapping-length-listing-1-2-both.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:amendment",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-stage9-mapping-length-local-query-ordinary",
+      "input": "tests/fixtures/m2/equality-stage9-mapping-length-local-query-ordinary.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:amendment",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:modifiers"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-stage9-mapping-length-local-query-local",
+      "input": "tests/fixtures/m2/equality-stage9-mapping-length-local-query-local.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:amendment",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:modifiers"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-stage9-mapping-length-key-nan",
+      "input": "tests/fixtures/m2/equality-stage9-mapping-length-key-nan.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:amendment",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-stage9-mapping-length-key-signed-zero",
+      "input": "tests/fixtures/m2/equality-stage9-mapping-length-key-signed-zero.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:amendment",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-stage9-mapping-length-key-boxed-numeric",
+      "input": "tests/fixtures/m2/equality-stage9-mapping-length-key-boxed-numeric.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:amendment",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-stage9-mapping-length-key-folded-int-collision",
+      "input": "tests/fixtures/m2/equality-stage9-mapping-length-key-folded-int-collision.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:amendment",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "success"
+    },
+    {
+      "id": "equality-stage9-mapping-length-key-entry-dynamic",
+      "input": "tests/fixtures/m2/equality-stage9-mapping-length-key-entry-dynamic.pkl",
+      "expression": "result",
+      "requirements": [
+        "semantic:operators",
+        "semantic:objects",
+        "semantic:collections",
+        "semantic:amendment",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ],
+      "expected_outcome": "success"
     }
   ]
 }

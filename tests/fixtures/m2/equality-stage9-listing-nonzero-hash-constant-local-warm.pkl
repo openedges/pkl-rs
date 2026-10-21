@@ -1,0 +1,1 @@
+key=new Listing {local x=1;default=(_)->x;2};result=let(index=new Mapping {[key]=10;["a"]=1;["b"]=2;["c"]=3;["d"]=4}) let(warm=key.default.apply(0)) index[key]

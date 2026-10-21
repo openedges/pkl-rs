@@ -1,0 +1,1 @@
+m=new Mapping {["Aa"]=0;["BB"]=1;["😀"]=2;["a😀z"]=3;["AaAa"]=4;["BBBB"]=5;};result=m["Aa"]==0 && m["BB"]==1 && m["😀"]==2 && m["a😀z"]==3 && m["AaAa"]==4 && m["BBBB"]==5

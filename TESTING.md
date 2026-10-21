@@ -137,6 +137,26 @@ completed values while retrying failed reads. Actual Node and Chromium scenarios
 compare values and complete diagnostics captured from the pinned Java oracle at
 the identical module URI.
 
+Map regressions distinguish structural equality from numeric hashes and bucket
+membership. Pinned JAR observations supply collision order, signed hash mixing,
+four-to-five entry transitions, load growth, capacity boundaries, and partial
+rehash visibility. Language cases cover warmed Listing keys, constant and
+nonconstant local caches, scalar hashes, and class qualified names. Host tests
+publish a value before suspending in key hashing, then fail, retry, traverse old
+and new cache slots, and collect between VM steps. They separately exercise
+cancel, timeout, close, and stale completions. These lifecycle checks are not
+raw Java byte comparisons or proof of same-cache cyclic reentry compatibility.
+Mapping length regressions separately check HashSet full-hash filtering,
+directional local-cache equality, inherited structural overrides, and boxed
+numeric distinctions. Its Host test retains ancestor values across a failed
+child hash and retries the count without forcing entry values.
+
+Let diagnostics compare complete Java output for nested bodies, initializer
+failures, typed bindings, captured members/functions, and constraints with their
+own logical root. Recursive call controls distinguish inserted let frames from
+the still-open repeated-frame compression requirement. Failed exploratory
+captures remain retained alongside promoted regressions.
+
 M1 experiments have narrower, explicit contracts:
 
 ```sh

@@ -1,0 +1,2 @@
+function f()=let(x=1) let(y:Int="bad") y
+result=let(z=2) f()

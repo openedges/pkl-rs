@@ -1,0 +1,1 @@
+key=new Dynamic { x=throw("cache key") }; p=new Dynamic { [key]=9 }; c=(p) { ["a"]=1; ["b"]=2; ["c"]=3; ["d"]=4 }; result=let(a=c["a"]) let(b=c["b"]) let(c0=c["c"]) let(d=c["d"]) c[key]

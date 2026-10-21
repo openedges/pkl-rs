@@ -1,0 +1,2 @@
+typealias A=Int(let(x=this) throw("alias"))
+result: A=0

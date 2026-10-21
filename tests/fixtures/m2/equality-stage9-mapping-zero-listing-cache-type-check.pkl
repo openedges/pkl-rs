@@ -1,0 +1,1 @@
+m=new Mapping{[new Listing{0}]=0;[new Listing{1}]=1;[new Listing{2}]=2;[new Listing{3}]=3;[new Listing{4}]=4};result=List(m[new Listing{0}],m[new Listing{1}],m[new Listing{2}],m[new Listing{3}],m[new Listing{4}],m is Mapping<Listing,Int>)[5]

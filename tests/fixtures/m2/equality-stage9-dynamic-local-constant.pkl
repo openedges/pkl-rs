@@ -1,0 +1,1 @@
+left=new Dynamic {local x=1;a=x};right=new Dynamic {a=1};result=left==right
