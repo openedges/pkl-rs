@@ -652,14 +652,17 @@ impl Vm {
                     .environment
                     .clone();
                 let ty = ty.substituted(&environment)?;
-                let value = if ty.noop() {
-                    None
-                } else {
-                    Some(self.generic_default_value(&ty, &environment)?)
-                };
                 let target = self.builder()?;
-                self.heap.get_mut(target)?.collection_default = value;
+                if ty.noop() {
+                    self.heap.get_mut(target)?.collection_default = None;
+                } else {
+                    self.frames
+                        .last_mut()
+                        .expect("active frame")
+                        .generic_default = Some(generics::GenericDefaultRun::new(target, ty));
+                }
             }
+
             Instruction::EndCollection => {
                 let id = self
                     .frames

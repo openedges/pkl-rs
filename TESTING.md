@@ -148,8 +148,14 @@ shared let targets. Persistent sequences use different actual arguments within
 one evaluator. Native tests carry these argument environments through real Host
 suspension, child reentry, failure retry, GC at each yield, cancellation, and
 terminal release. The original infinitely expanding generic predicate retains
-its observed native-stack abort as a failure; bounded yielding and cancellation
-are separate lifecycle assertions. Let/for const cases distinguish body scope
+its historical native-stack abort evidence. Shared metadata regressions exercise
+20,000-level graphs on 256 KiB stacks, concurrent last-owner release, deep
+Reference metadata, and cancellation while collection defaults descend and
+unwind. Separate process-isolated evaluator tests retain the original infinite
+source and verify extended bounded execution, GC, cancellation, and teardown.
+The unchanged development adapter's instruction budget is not a Java-compatible
+stack-overflow diagnostic. These checks do not establish uniform wall-time
+cancellation or peak-memory parity. Let/for const cases distinguish body scope
 from initializers, annotations, eager generator inputs, lambdas, and sibling
 members. Generic collection defaults retain original Java and pre-change Rust
 controls. Reference metadata checks separately cover constrained actual arguments,

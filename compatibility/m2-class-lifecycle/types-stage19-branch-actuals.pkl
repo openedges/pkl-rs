@@ -1,0 +1,5 @@
+typealias A<T> = Int(this < 0 || (this - 1) is A<Mapping<T,T>>)
+one: A<Int> = 14
+two: A<String> = 18
+wrong: A<Int> = "bad"
+stable = 42

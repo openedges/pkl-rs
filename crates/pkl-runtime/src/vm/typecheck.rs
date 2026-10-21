@@ -255,6 +255,7 @@ impl TypeRun {
 // not evaluate constraints in this frame. The remaining wrappers can do so.
 pub(super) fn needs_custom_this(ty: &TypeCheck) -> bool {
     match ty {
+        TypeCheck::Shared(node) => node.needs_custom_this(),
         TypeCheck::Constrained { .. } => true,
         TypeCheck::NamedAlias { expanded, .. }
         | TypeCheck::Nullable(expanded)
@@ -469,9 +470,10 @@ impl Vm {
             } else {
                 argument.substituted(&run.environment)?
             };
-            environment
-                .type_arguments
-                .insert((constraint.block, Arc::from(name.as_str())), argument);
+            environment.type_arguments.insert(
+                (constraint.block, Arc::from(name.as_str())),
+                argument.shared(),
+            );
         }
         // Local-writing constraints execute in a fresh Java root frame. Inline
         // constraints use the checking frame's slot, including during replay.
@@ -516,6 +518,7 @@ impl Vm {
             force: None,
             lambda: false,
             type_run: None,
+            generic_default: None,
             equality_run: None,
             prepared_hashes: None,
             key_search: None,
@@ -625,7 +628,7 @@ impl Vm {
             return Ok(());
         };
         match task {
-            Task::Check { ty, span } => match ty {
+            Task::Check { ty, span } => match ty.into_resolved() {
                 ty @ TypeCheck::Reference { .. } if matches!(&run.value,Value::Object(id) if self.heap.get(*id)?.reference.is_some()) =>
                 {
                     let TypeCheck::Reference { domain, .. } = &ty else {
@@ -736,7 +739,7 @@ impl Vm {
                 }
             },
             Task::ReferenceDomainResult { value, ty, span } => {
-                let TypeCheck::Reference { referent, .. } = &ty else {
+                let TypeCheck::Reference { referent, .. } = ty.resolved() else {
                     unreachable!()
                 };
                 let Value::Object(id) = value else {
@@ -1062,42 +1065,38 @@ fn restore_collection(run: &mut TypeRun, state: &CollectionState) {
     run.eager = state.eager;
 }
 fn union_eager(types: &[TypeCheck]) -> bool {
-    fn visit(ty: &TypeCheck, kinds: &mut Vec<crate::heap::CollectionKind>) -> bool {
-        match ty {
+    let mut pending: Vec<_> = types.iter().rev().collect();
+    let mut kinds = Vec::new();
+    while let Some(ty) = pending.pop() {
+        match ty.resolved() {
             TypeCheck::ParameterizedCollection { kind, .. } => {
                 if kinds.contains(kind) {
-                    true
-                } else {
-                    kinds.push(*kind);
-                    false
+                    return true;
                 }
+                kinds.push(*kind);
             }
             TypeCheck::GenericAlias(inner) => {
-                let kind = match inner.unaliased() {
-                    TypeCheck::ParameterizedCollection { kind, .. } => Some(*kind),
-                    _ => None,
-                };
-                if let Some(kind) = kind {
-                    if kinds.contains(&kind) {
+                if let TypeCheck::ParameterizedCollection { kind, .. } = inner.unaliased() {
+                    if kinds.contains(kind) {
                         return true;
                     }
-                    kinds.push(kind);
+                    kinds.push(*kind);
                 }
-                visit(inner, kinds)
+                pending.push(inner);
             }
             TypeCheck::Alias(inner)
             | TypeCheck::Nullable(inner)
             | TypeCheck::NamedAlias {
                 expanded: inner, ..
-            } => visit(inner, kinds),
-            TypeCheck::Constrained { base, .. } => visit(base, kinds),
-            TypeCheck::Union { types, .. } => types.iter().any(|ty| visit(ty, kinds)),
-            _ => false,
+            }
+            | TypeCheck::Constrained { base: inner, .. } => pending.push(inner),
+            TypeCheck::Union { types, .. } => pending.extend(types.iter().rev()),
+            _ => {}
         }
     }
-    let mut kinds = Vec::new();
-    types.iter().any(|ty| visit(ty, &mut kinds))
+    false
 }
+
 impl Vm {
     fn collection_value(
         &mut self,

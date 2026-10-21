@@ -1,0 +1,2 @@
+typealias A<T,U> = Int(if (this < 0) "" is T else (this - 1) is A<U,T>)
+result = 1 is A<Int,String>

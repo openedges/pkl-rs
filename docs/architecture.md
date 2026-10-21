@@ -532,7 +532,8 @@ existing behavior. Finite direct and mutual recursion have raw Java controls.
 Collection element defaults that depend on a symbolic parameter are resolved
 after substituting the actual arguments. They preserve the existing distinction
 between an unconstrained dynamic default and a type with no default. Nested
-collections derive their value defaults recursively; typed defaults reuse the
+collections derive their value defaults through a resumable VM task; each descent,
+allocation, and unwind consumes fuel and traces unpublished objects. Typed defaults reuse the
 already resolved evaluator-local class declaration, keeping its members lazy.
 This avoids losing class defaults while compiling a reusable generic body.
 
@@ -543,12 +544,29 @@ bodies. The validator walks structural metadata without entering executable
 constraint bodies or their argument environments. Existing constraint-origin
 frames remain available to the runtime; broader diagnostic gaps remain open.
 
-Argument metadata currently uses recursively owned values and cloning. An
-unbounded predicate such as `this is A<List<T>>` can exhaust the native stack;
-its captured abort remains an explicit failure. The original source also has a
-bounded yield/cancel regression, which does not establish safe arbitrary-depth
-execution, Java-compatible stack diagnostics, or time/memory parity. Structural
-sharing and bounded host-stack work remain follow-up requirements.
+Instantiated argument metadata uses immutable shared nodes. Substitution walks
+the finite authored template and reuses already instantiated arguments. Cloning
+an environment copies handles; iterative last-owner reclamation drains metadata
+children without recursively dropping the graph. Concurrent last owners use
+`Arc::into_inner` so exactly one owner reclaims each node. These nodes contain
+declaration keys and type metadata, never evaluator heap handles. Cached
+classification avoids revisiting an accumulated argument graph at every call.
+
+Metadata comparison, validation, normalization, and formatting use explicit work
+stacks. Reference normalization memoizes graph nodes and shares its output.
+Exported metadata identity uses deterministic structural records instead of
+recursively escaping nested strings; identity is independent of pointer sharing
+and preserves alias declarations, arrow syntax, and exact constraint text.
+Recursive type checking continues on the ordinary VM scheduler.
+
+The original `this is A<List<T>>` abort remains preserved as historical evidence.
+Small-stack tests now exercise deep graphs, concurrent release, extended running
+evaluations, cancellation, and terminal cleanup without that abort. The adapter's
+existing instruction budget also stops the original input. These are resource
+and lifecycle results, not Java-compatible stack-overflow diagnostics. Reference
+normalization, validation, and some metadata comparisons still run within one VM
+instruction; textual rendering can expand a shared graph. Uniform wall-time
+cancellation bounds and execution-time/peak-memory parity remain unproven.
 
 ### Constraint receiver slots
 

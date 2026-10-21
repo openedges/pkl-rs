@@ -194,6 +194,8 @@ pub enum Instruction {
 /// resumable checks and lazy wrappers; function types preserve metadata and check arity.
 #[derive(Clone, Debug)]
 pub enum TypeCheck {
+    /// Immutable instantiated argument graph; cloning never copies its descendants.
+    Shared(generics::SharedTypeCheck),
     Unknown,
     /// A lexical parameter in a reusable constraint template. Resolved before checking.
     Parameter {
@@ -273,119 +275,145 @@ pub struct ConstraintCode {
 
 impl TypeCheck {
     fn unaliased(&self) -> &Self {
-        match self {
-            Self::Alias(inner)
-            | Self::GenericAlias(inner)
-            | Self::NamedAlias {
-                expanded: inner, ..
-            } => inner.unaliased(),
-            _ => self,
+        let mut current = self;
+        loop {
+            match current.resolved() {
+                Self::Alias(inner)
+                | Self::GenericAlias(inner)
+                | Self::NamedAlias {
+                    expanded: inner, ..
+                } => current = inner,
+                ty => return ty,
+            }
         }
     }
     pub(crate) fn equivalent(&self, other: &Self) -> bool {
-        let left = self.unaliased();
-        let right = other.unaliased();
-        match (left, right) {
-            (Self::MetaClass(a), Self::MetaClass(b)) => a == b,
-            (
-                Self::Function {
-                    parameters: a,
-                    result: ar,
-                    syntax: as_,
-                },
-                Self::Function {
-                    parameters: b,
-                    result: br,
-                    syntax: bs,
-                },
-            ) => {
-                as_ == bs
-                    && ar.equivalent(br)
-                    && match (a, b) {
-                        (None, None) => true,
-                        (Some(a), Some(b)) => {
-                            a.len() == b.len() && a.iter().zip(b).all(|(a, b)| a.equivalent(b))
+        let mut pending = vec![(self, other)];
+        let mut visited = BTreeSet::new();
+        while let Some((left, right)) = pending.pop() {
+            let left = left.unaliased();
+            let right = right.unaliased();
+            if std::ptr::eq(left, right) {
+                continue;
+            }
+            if !visited.insert((left as *const Self, right as *const Self)) {
+                continue;
+            }
+            let equal = match (left, right) {
+                (Self::MetaClass(a), Self::MetaClass(b)) => a == b,
+                (
+                    Self::Function {
+                        parameters: a,
+                        result: ar,
+                        syntax: ac,
+                    },
+                    Self::Function {
+                        parameters: b,
+                        result: br,
+                        syntax: bc,
+                    },
+                ) => {
+                    pending.push((ar, br));
+                    ac == bc
+                        && match (a, b) {
+                            (None, None) => true,
+                            (Some(a), Some(b)) if a.len() == b.len() => {
+                                pending.extend(a.iter().zip(b));
+                                true
+                            }
+                            _ => false,
                         }
-                        _ => false,
-                    }
+                }
+                (
+                    Self::Reference {
+                        domain: ad,
+                        referent: ar,
+                    },
+                    Self::Reference {
+                        domain: bd,
+                        referent: br,
+                    },
+                ) => {
+                    pending.extend([(ad.as_ref(), bd.as_ref()), (ar.as_ref(), br.as_ref())]);
+                    true
+                }
+                (Self::IntegerAlias { name: a, .. }, Self::IntegerAlias { name: b, .. }) => a == b,
+                (Self::Nullable(a), Self::Nullable(b)) => {
+                    pending.push((a, b));
+                    true
+                }
+                (Self::StringLiteral(a), Self::StringLiteral(b)) => a == b,
+                (Self::Class { id: a, .. }, Self::Class { id: b, .. }) => a == b,
+                (Self::Collection(a), Self::Collection(b)) => a == b,
+                (
+                    Self::ParameterizedCollection {
+                        kind: a,
+                        arguments: aa,
+                    },
+                    Self::ParameterizedCollection {
+                        kind: b,
+                        arguments: ba,
+                    },
+                ) => {
+                    pending.extend(aa.iter().zip(ba).map(|((a, _), (b, _))| (a, b)));
+                    a == b && aa.len() == ba.len()
+                }
+                (
+                    Self::Union {
+                        types: a,
+                        default: ad,
+                        ..
+                    },
+                    Self::Union {
+                        types: b,
+                        default: bd,
+                        ..
+                    },
+                ) => {
+                    pending.extend(a.iter().zip(b));
+                    ad == bd && a.len() == b.len()
+                }
+                (
+                    Self::Constrained {
+                        base: a,
+                        constraints: ac,
+                        ..
+                    },
+                    Self::Constrained {
+                        base: b,
+                        constraints: bc,
+                        ..
+                    },
+                ) => {
+                    pending.push((a, b));
+                    ac.len() == bc.len() && ac.iter().zip(bc).all(|(a, b)| a.block == b.block)
+                }
+                (
+                    Self::Unknown
+                    | Self::RefDomain
+                    | Self::Any
+                    | Self::Nothing
+                    | Self::NonNull
+                    | Self::Null
+                    | Self::Boolean
+                    | Self::Int
+                    | Self::Float
+                    | Self::Number
+                    | Self::String
+                    | Self::Bytes,
+                    _,
+                ) => std::mem::discriminant(left) == std::mem::discriminant(right),
+                _ => false,
+            };
+            if !equal {
+                return false;
             }
-            (
-                Self::Reference {
-                    domain: ad,
-                    referent: ar,
-                },
-                Self::Reference {
-                    domain: bd,
-                    referent: br,
-                },
-            ) => ad.equivalent(bd) && ar.equivalent(br),
-            (Self::IntegerAlias { name: a, .. }, Self::IntegerAlias { name: b, .. }) => a == b,
-            (Self::Nullable(a), Self::Nullable(b)) => a.equivalent(b),
-            (Self::StringLiteral(a), Self::StringLiteral(b)) => a == b,
-            (Self::Class { id: a, .. }, Self::Class { id: b, .. }) => a == b,
-            (Self::Collection(a), Self::Collection(b)) => a == b,
-            (
-                Self::ParameterizedCollection {
-                    kind: a,
-                    arguments: aa,
-                },
-                Self::ParameterizedCollection {
-                    kind: b,
-                    arguments: ba,
-                },
-            ) => {
-                a == b
-                    && aa.len() == ba.len()
-                    && aa.iter().zip(ba).all(|((a, _), (b, _))| a.equivalent(b))
-            }
-            (
-                Self::Union {
-                    types: a,
-                    default: ad,
-                    ..
-                },
-                Self::Union {
-                    types: b,
-                    default: bd,
-                    ..
-                },
-            ) => ad == bd && a.len() == b.len() && a.iter().zip(b).all(|(a, b)| a.equivalent(b)),
-            (
-                Self::Constrained {
-                    base: a,
-                    constraints: ac,
-                    ..
-                },
-                Self::Constrained {
-                    base: b,
-                    constraints: bc,
-                    ..
-                },
-            ) => {
-                a.equivalent(b)
-                    && ac.len() == bc.len()
-                    && ac.iter().zip(bc).all(|(a, b)| a.block == b.block)
-            }
-            (
-                Self::Unknown
-                | Self::RefDomain
-                | Self::Any
-                | Self::Nothing
-                | Self::NonNull
-                | Self::Null
-                | Self::Boolean
-                | Self::Int
-                | Self::Float
-                | Self::Number
-                | Self::String
-                | Self::Bytes,
-                _,
-            ) => std::mem::discriminant(left) == std::mem::discriminant(right),
-            _ => false,
         }
+        true
     }
     fn noop(&self) -> bool {
         match self {
+            Self::Shared(node) => node.noop(),
             Self::Any | Self::Unknown => true,
             Self::Alias(inner)
             | Self::GenericAlias(inner)
@@ -397,7 +425,64 @@ impl TypeCheck {
         }
     }
     fn accepts(&self, value: &Value, heap: &Heap) -> bool {
-        match self {
+        enum Work<'a> {
+            Check(&'a TypeCheck, &'a Value),
+            Union(&'a [TypeCheck], &'a Value),
+            Reference(&'a TypeCheck, &'a reference::Reference),
+        }
+        let mut pending = vec![Work::Check(self, value)];
+        let mut accepted = false;
+        while let Some(work) = pending.pop() {
+            let (ty, value) = match work {
+                Work::Check(ty, value) => (ty.resolved(), value),
+                Work::Union(rest, value) => {
+                    if !accepted && let Some((next, rest)) = rest.split_first() {
+                        pending.push(Work::Union(rest, value));
+                        pending.push(Work::Check(next, value));
+                    }
+                    continue;
+                }
+                Work::Reference(referent, reference) => {
+                    if accepted {
+                        accepted = reference::is_subtype(
+                            &reference.referent,
+                            &reference::normalize(referent, ""),
+                            heap,
+                        );
+                    }
+                    continue;
+                }
+            };
+            match ty {
+                Self::Nullable(_) if matches!(value, Value::Null) => accepted = true,
+                Self::Alias(inner)
+                | Self::GenericAlias(inner)
+                | Self::Nullable(inner)
+                | Self::NamedAlias {
+                    expanded: inner, ..
+                } => pending.push(Work::Check(inner, value)),
+                Self::Union { types, .. } => {
+                    accepted = false;
+                    pending.push(Work::Union(types, value));
+                }
+                Self::Reference { domain, referent } => {
+                    accepted = false;
+                    if let Value::Object(id) = value
+                        && let Ok(object) = heap.get(*id)
+                        && let Some(reference) = &object.reference
+                    {
+                        pending.push(Work::Reference(referent, reference));
+                        pending.push(Work::Check(domain, &reference.domain));
+                    }
+                }
+                _ => accepted = ty.accepts_leaf(value, heap),
+            }
+        }
+        accepted
+    }
+    fn accepts_leaf(&self, value: &Value, heap: &Heap) -> bool {
+        match self.resolved() {
+            Self::Shared(_) => unreachable!(),
             Self::Any | Self::Unknown => true,
             Self::MetaClass(name) => matches!(
                 (name.as_ref(), value),
@@ -411,9 +496,6 @@ impl TypeCheck {
                 name: Arc::from("Domain"),
             }
             .accepts(value, heap),
-            Self::Reference { domain, referent } => {
-                matches!(value, Value::Object(id) if heap.get(*id).ok().and_then(|o| o.reference.as_ref()).is_some_and(|r| domain.accepts(&r.domain, heap) && reference::is_subtype(&r.referent, &reference::normalize(referent, ""), heap)))
-            }
             Self::IntegerAlias { min, max, .. } => {
                 matches!(value,Value::Int(i) if i>=min && i<=max)
             }
@@ -460,13 +542,12 @@ impl TypeCheck {
             Self::StringLiteral(expected) => {
                 matches!(value, Value::String(actual) if actual == expected)
             }
-            Self::Nullable(inner) => matches!(value, Value::Null) || inner.accepts(value, heap),
-            Self::Alias(inner)
-            | Self::GenericAlias(inner)
-            | Self::NamedAlias {
-                expanded: inner, ..
-            } => inner.accepts(value, heap),
-            Self::Union { types, .. } => types.iter().any(|ty| ty.accepts(value, heap)),
+            Self::Nullable(_)
+            | Self::Alias(_)
+            | Self::GenericAlias(_)
+            | Self::NamedAlias { .. }
+            | Self::Union { .. }
+            | Self::Reference { .. } => unreachable!("structural accepts task"),
             Self::Constrained { .. } | Self::Parameter { .. } => false,
         }
     }
@@ -603,6 +684,7 @@ struct Frame {
     force: Option<Force>,
     lambda: bool,
     type_run: Option<TypeRun>,
+    generic_default: Option<generics::GenericDefaultRun>,
     equality_run: Option<equality::EqualityRun>,
     prepared_hashes: Option<Vec<Value>>,
     key_search: Option<equality::KeySearch>,
@@ -719,6 +801,7 @@ impl Vm {
             force: None,
             lambda: false,
             type_run: None,
+            generic_default: None,
             equality_run: None,
             prepared_hashes: None,
             key_search: None,
@@ -976,6 +1059,9 @@ impl Vm {
                     run.roots(&mut roots);
                 }
                 if let Some(run) = &frame.equality_run {
+                    run.roots(&mut roots);
+                }
+                if let Some(run) = &frame.generic_default {
                     run.roots(&mut roots);
                 }
                 if let Some(run) = &frame.type_run {
@@ -1550,6 +1636,7 @@ impl Vm {
             environment,
             lambda: false,
             type_run: None,
+            generic_default: None,
             equality_run: None,
             prepared_hashes: None,
             key_search: None,
@@ -2086,6 +2173,7 @@ impl Vm {
             force: None,
             lambda: !function.method,
             type_run: None,
+            generic_default: None,
             equality_run: None,
             prepared_hashes: None,
             key_search: None,
@@ -2098,6 +2186,13 @@ impl Vm {
     }
 
     fn step(&mut self) -> Result<(), RuntimeError> {
+        if self
+            .frames
+            .last()
+            .is_some_and(|f| f.generic_default.is_some())
+        {
+            return self.step_generic_default();
+        }
         if self.frames.last().is_some_and(|f| f.equality_run.is_some()) {
             return self.step_equality();
         }
@@ -2675,7 +2770,7 @@ impl Vm {
                 };
                 if let Some(ty) = &self.heap.get(parent)?.builtin_type
                     && !matches!(
-                        ty,
+                        ty.resolved(),
                         TypeCheck::RefDomain
                             | TypeCheck::Class {
                                 id: reference::ACCESS_ID,
@@ -2684,7 +2779,7 @@ impl Vm {
                     )
                 {
                     let name = reference::type_name(ty, &self.program.module_name);
-                    let name = if matches!(ty, TypeCheck::Reference { .. }) {
+                    let name = if matches!(ty.resolved(), TypeCheck::Reference { .. }) {
                         "pkl.ref#Reference"
                     } else {
                         &name
@@ -3513,23 +3608,33 @@ fn authored_type_constraints(ty: &crate::syntax::Type) -> bool {
 }
 
 fn reference_constrained_type(check: &TypeCheck) -> Option<&TypeCheck> {
-    match check {
-        TypeCheck::Constrained { .. } => Some(check),
-        TypeCheck::Nullable(inner)
-        | TypeCheck::Alias(inner)
-        | TypeCheck::GenericAlias(inner)
-        | TypeCheck::NamedAlias {
-            expanded: inner, ..
-        } => reference_constrained_type(inner),
-        TypeCheck::ParameterizedCollection { arguments, .. } => arguments
-            .iter()
-            .find_map(|(ty, _)| reference_constrained_type(ty)),
-        TypeCheck::Union { types, .. } => types.iter().find_map(reference_constrained_type),
-        TypeCheck::Reference { domain, referent } => {
-            reference_constrained_type(domain).or_else(|| reference_constrained_type(referent))
+    let mut pending = vec![check];
+    let mut visited = BTreeSet::new();
+    while let Some(check) = pending.pop() {
+        let check = check.resolved();
+        if !visited.insert(check as *const TypeCheck) {
+            continue;
         }
-        _ => None,
+        match check {
+            TypeCheck::Constrained { .. } => return Some(check),
+            TypeCheck::Nullable(inner)
+            | TypeCheck::Alias(inner)
+            | TypeCheck::GenericAlias(inner)
+            | TypeCheck::NamedAlias {
+                expanded: inner, ..
+            } => pending.push(inner),
+            TypeCheck::ParameterizedCollection { arguments, .. } => {
+                pending.extend(arguments.iter().rev().map(|(ty, _)| ty))
+            }
+            TypeCheck::Union { types, .. } => pending.extend(types.iter().rev()),
+            TypeCheck::Reference { domain, referent } => {
+                pending.push(referent);
+                pending.push(domain);
+            }
+            _ => {}
+        }
     }
+    None
 }
 
 impl Compiler<'_> {
@@ -4554,31 +4659,60 @@ fn type_error_at_width(
 }
 
 fn type_name(ty: &TypeCheck, module: &str) -> String {
-    match ty {
-        TypeCheck::Unknown => "unknown".into(),
-        TypeCheck::MetaClass(name) => name.to_string(),
-        TypeCheck::Function { parameters, .. } => parameters
-            .as_ref()
-            .map_or_else(|| "Function".into(), |p| format!("Function{}", p.len())),
-        TypeCheck::NamedAlias { expanded, .. } => type_name(expanded, module),
-        TypeCheck::IntegerAlias { name, .. } => name.to_string(),
-        TypeCheck::RefDomain => "pkl.ref#Domain".into(),
-        TypeCheck::Reference { .. } => "pkl.ref#Reference".into(),
-        TypeCheck::Class { name, .. } => format!("{module}#{name}"),
-        TypeCheck::Collection(kind) | TypeCheck::ParameterizedCollection { kind, .. } => {
-            format!("{kind:?}")
-        }
-        TypeCheck::StringLiteral(value) => format!("{value:?}"),
-        TypeCheck::Nullable(inner) => format!("{}?", type_name(inner, module)),
-        TypeCheck::Alias(inner) | TypeCheck::GenericAlias(inner) => type_name(inner, module),
-        TypeCheck::Constrained { base, .. } => type_name(base, module),
-        TypeCheck::Union { types, .. } => types
-            .iter()
-            .map(|ty| type_name(ty, module))
-            .collect::<Vec<_>>()
-            .join("|"),
-        _ => format!("{ty:?}"),
+    enum Part<'a> {
+        Type(&'a TypeCheck),
+        Text(String),
     }
+    let mut pending = vec![Part::Type(ty)];
+    let mut result = String::new();
+    while let Some(part) = pending.pop() {
+        let ty = match part {
+            Part::Text(text) => {
+                result.push_str(&text);
+                continue;
+            }
+            Part::Type(ty) => ty.resolved(),
+        };
+        let text = match ty {
+            TypeCheck::Unknown => "unknown".into(),
+            TypeCheck::MetaClass(name) => name.to_string(),
+            TypeCheck::Function { parameters, .. } => parameters
+                .as_ref()
+                .map_or_else(|| "Function".into(), |p| format!("Function{}", p.len())),
+            TypeCheck::NamedAlias { expanded, .. }
+            | TypeCheck::Alias(expanded)
+            | TypeCheck::GenericAlias(expanded)
+            | TypeCheck::Constrained { base: expanded, .. } => {
+                pending.push(Part::Type(expanded));
+                continue;
+            }
+            TypeCheck::IntegerAlias { name, .. } => name.to_string(),
+            TypeCheck::RefDomain => "pkl.ref#Domain".into(),
+            TypeCheck::Reference { .. } => "pkl.ref#Reference".into(),
+            TypeCheck::Class { name, .. } => format!("{module}#{name}"),
+            TypeCheck::Collection(kind) | TypeCheck::ParameterizedCollection { kind, .. } => {
+                format!("{kind:?}")
+            }
+            TypeCheck::StringLiteral(value) => format!("{value:?}"),
+            TypeCheck::Nullable(inner) => {
+                pending.push(Part::Text("?".into()));
+                pending.push(Part::Type(inner));
+                continue;
+            }
+            TypeCheck::Union { types, .. } => {
+                for (index, ty) in types.iter().enumerate().rev() {
+                    pending.push(Part::Type(ty));
+                    if index > 0 {
+                        pending.push(Part::Text("|".into()));
+                    }
+                }
+                continue;
+            }
+            _ => format!("{ty:?}"),
+        };
+        result.push_str(&text);
+    }
+    result
 }
 
 fn value_type_name(value: &Value) -> &'static str {

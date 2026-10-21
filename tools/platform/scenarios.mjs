@@ -6,6 +6,7 @@ import { recursiveTypesCases, recursiveTypesOracle } from './recursive-types-cas
 import { constraintSlotsCases, constraintSlotsOracle } from './constraint-slots-cases.mjs';
 import { localResolutionGroups, localResolutionContext } from './local-resolution-cases.mjs';
 import { genericTypesGroups, genericTypesContext } from './generic-types-cases.mjs';
+import { genericMetadataGroups, genericMetadataContext } from './generic-metadata-cases.mjs';
 
 // Identical assertions execute inside Node and an actual Chromium page.
 export async function scenarios(api) {
@@ -140,6 +141,21 @@ export async function scenarios(api) {
           const actual = api.evaluateLanguageSequence(fixture.source,
             genericTypesContext.uri, genericTypesContext.moduleName,
             fixture.expressions, genericTypesContext.powerAssertions);
+          eq(actual.length, fixture.expected.length);
+          for (let index = 0; index < actual.length; index++) {
+            eq(actual[index], fixture.expected[index]);
+          }
+        }
+      }
+    });
+  }
+  for (const group of genericMetadataGroups) {
+    await check(group.scenario, () => {
+      for (const fixture of group.fixtures) {
+        for (let repetition = 0; repetition < 2; repetition++) {
+          const actual = api.evaluateLanguageSequence(fixture.source,
+            genericMetadataContext.uri, genericMetadataContext.moduleName,
+            fixture.expressions, genericMetadataContext.powerAssertions);
           eq(actual.length, fixture.expected.length);
           for (let index = 0; index < actual.length; index++) {
             eq(actual[index], fixture.expected[index]);

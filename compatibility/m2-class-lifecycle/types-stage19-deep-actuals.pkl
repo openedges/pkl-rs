@@ -1,0 +1,5 @@
+typealias A<T> = Int(this < 0 || (this - 1) is A<List<T>>)
+one: A<Int> = 256
+two: A<String> = 1024
+wrong: A<Int> = "bad"
+stable = 42

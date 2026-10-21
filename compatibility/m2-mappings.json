@@ -235,10 +235,13 @@
           "types-stage18-reference-let-nested",
           "types-stage18-reference-shortcircuit-negative1",
           "types-stage18-reference-before-throw-lambda",
-          "types-stage18-reference-before-throw-let"
+          "types-stage18-reference-before-throw-let",
+          "types-stage19-grow-reference-27",
+          "types-stage19-grow-reference-28",
+          "types-stage19-grow-reference-30"
         ]
       },
-      "scope": "The pkl:ref bridge supports selected constructor, normalized referent type, synthetic property/subscript path, domain rendering, equality and key behavior through the shared VM. Linked native cases compare complete Java 0.32.0 process output at their actual fixture URIs. Stage11 adds selected fixed declaration, inherited metadata and complete raw diagnostics through the shared VM. Stage 13 adds selected alias/function metadata, exported-type equality and complete raw diagnostic comparisons; original suite execution and remaining scope stay open.",
+      "scope": "The pkl:ref bridge supports selected constructor, normalized referent type, synthetic property/subscript path, domain rendering, equality and key behavior through the shared VM. Linked native cases compare complete Java 0.32.0 process output at their actual fixture URIs. Stage11 adds selected fixed declaration, inherited metadata and complete raw diagnostics through the shared VM. Stage 13 adds selected alias/function metadata, exported-type equality and complete raw diagnostic comparisons; original suite execution and remaining scope stay open. Stage 19 adds bounded shared-metadata regressions for finite deep and branching actual arguments, observable class-argument swaps, inline/lambda/shared-let recursion, recursive Reference validation, and distinct wrapper actuals. Original Java stack errors, historical native abort evidence, full language semantics and performance remain separately accounted.",
       "remaining": [
         "Original upstream reference snippet and renderer/API suite contracts remain unexecuted; selected API-expression exploration is separate evidence.",
         "Complete referent metadata for all builtin types, generic classes and remaining collection types is not implemented or verified.",
@@ -822,10 +825,14 @@
           "types-stage18-reference-lambda-alias",
           "types-stage18-reference-lambda-nested",
           "types-stage18-reference-before-throw-lambda",
-          "types-stage18-reference-before-throw-let"
+          "types-stage18-reference-before-throw-let",
+          "types-stage19-grow-reference-28",
+          "types-stage19-grow-reference-30",
+          "types-stage19-wrapper-recheck-31",
+          "types-stage19-wrapper-recheck-33"
         ]
       },
-      "scope": "Reference constructor, access, constraint and rendering errors retain complete message, authored frame, foreign standard-library source and URI bytes in selected comparisons. Stage11 adds selected fixed declaration, inherited metadata and complete raw diagnostics through the shared VM. Stage 13 adds selected alias/function metadata, exported-type equality and complete raw diagnostic comparisons; original suite execution and remaining scope stay open. Stage 14 adds selected authored type-resolution order, generic parameter scope and nested substitution, class/alias arity ordering, and owner signature diagnostics; persistent failed-declaration state has a separate sequence contract. Stage 15 adds selected non-generic recursive constraint block graphs and declaration type scope, plus builtin Class argument erasure and arity ordering. At Stage 15 recursive generic constraints remained open; Stage 16 adds bounded shared receiver-slot support. Stage 16: Selected recursive frame compression, count-one loops, complete call spans and hint placement match Java uncolored diagnostics. Stage 17: Selected const-method barriers, lambda lookup depth, immediate outer lexical scope, and grouped-callee parser diagnostics follow the pinned Java behavior. Stage 18 adds selected let-body and for-generator lexical const-depth boundaries while retaining enclosing const levels, plus their complete raw diagnostics and lambda controls. Selected finite recursive generic and instantiated type-variable failures compare complete Java bytes with power assertions enabled and disabled.",
+      "scope": "Reference constructor, access, constraint and rendering errors retain complete message, authored frame, foreign standard-library source and URI bytes in selected comparisons. Stage11 adds selected fixed declaration, inherited metadata and complete raw diagnostics through the shared VM. Stage 13 adds selected alias/function metadata, exported-type equality and complete raw diagnostic comparisons; original suite execution and remaining scope stay open. Stage 14 adds selected authored type-resolution order, generic parameter scope and nested substitution, class/alias arity ordering, and owner signature diagnostics; persistent failed-declaration state has a separate sequence contract. Stage 15 adds selected non-generic recursive constraint block graphs and declaration type scope, plus builtin Class argument erasure and arity ordering. At Stage 15 recursive generic constraints remained open; Stage 16 adds bounded shared receiver-slot support. Stage 16: Selected recursive frame compression, count-one loops, complete call spans and hint placement match Java uncolored diagnostics. Stage 17: Selected const-method barriers, lambda lookup depth, immediate outer lexical scope, and grouped-callee parser diagnostics follow the pinned Java behavior. Stage 18 adds selected let-body and for-generator lexical const-depth boundaries while retaining enclosing const levels, plus their complete raw diagnostics and lambda controls. Selected finite recursive generic and instantiated type-variable failures compare complete Java bytes with power assertions enabled and disabled. Stage 19 adds bounded shared-metadata regressions for finite deep and branching actual arguments, observable class-argument swaps, inline/lambda/shared-let recursion, recursive Reference validation, and distinct wrapper actuals. Original Java stack errors, historical native abort evidence, full language semantics and performance remain separately accounted.",
       "remaining": [
         "Colored output, general imported source stacks, first-error combinations and the complete parser/resolver/runtime diagnostic corpus remain open; selected uncolored recursive compression is covered.",
         "Original selected cycle and remainder-zero failures remain failed."
@@ -1457,10 +1464,16 @@
           "types-stage18-default-style-inline",
           "types-stage18-default-style-lambda",
           "types-stage18-default-nonempty-amend",
-          "types-stage18-default-init-before-value"
+          "types-stage18-default-init-before-value",
+          "types-stage19-swap-default-inline-0",
+          "types-stage19-swap-default-inline-1",
+          "types-stage19-swap-default-inline-32",
+          "types-stage19-swap-default-lambda-0",
+          "types-stage19-swap-default-lambda-1",
+          "types-stage19-swap-default-lambda-32"
         ]
       },
-      "scope": "Selected class fixed properties preserve declaration fixedness through inheritance, reject instance assignment and amendment before forcing bodies, and retain member/type initialization error order. Raw comparisons cover only the linked fixtures at their actual URIs. Stage 14 adds selected authored type-resolution order, generic parameter scope and nested substitution, class/alias arity ordering, and owner signature diagnostics; persistent failed-declaration state has a separate sequence contract. Stage 15 adds selected non-generic recursive constraint block graphs and declaration type scope, plus builtin Class argument erasure and arity ordering. At Stage 15 recursive generic constraints remained open; Stage 16 adds bounded shared receiver-slot support.",
+      "scope": "Selected class fixed properties preserve declaration fixedness through inheritance, reject instance assignment and amendment before forcing bodies, and retain member/type initialization error order. Raw comparisons cover only the linked fixtures at their actual URIs. Stage 14 adds selected authored type-resolution order, generic parameter scope and nested substitution, class/alias arity ordering, and owner signature diagnostics; persistent failed-declaration state has a separate sequence contract. Stage 15 adds selected non-generic recursive constraint block graphs and declaration type scope, plus builtin Class argument erasure and arity ordering. At Stage 15 recursive generic constraints remained open; Stage 16 adds bounded shared receiver-slot support. Stage 19 adds bounded shared-metadata regressions for finite deep and branching actual arguments, observable class-argument swaps, inline/lambda/shared-let recursion, recursive Reference validation, and distinct wrapper actuals. Original Java stack errors, historical native abort evidence, full language semantics and performance remain separately accounted.",
       "remaining": [
         "Module extends/amends and the original upstream fixed-property snippet suite contracts remain unimplemented or unexecuted.",
         "Full modifier combinations, annotation metadata, generic class inheritance and the complete class/member error corpus remain outside this bounded selection.",
@@ -1538,7 +1551,7 @@
           },
           {
             "path": "crates/pkl-runtime/src/vm/generics.rs",
-            "symbol": "generic_default_value"
+            "symbol": "step_generic_default"
           },
           {
             "path": "crates/pkl-runtime/src/vm/generics.rs",
@@ -1773,10 +1786,33 @@
           "types-stage18-reference-let-nested",
           "types-stage18-reference-shortcircuit-negative1",
           "types-stage18-reference-before-throw-lambda",
-          "types-stage18-reference-before-throw-let"
+          "types-stage18-reference-before-throw-let",
+          "types-stage19-finite-list-depth-128",
+          "types-stage19-deep-list-256",
+          "types-stage19-deep-list-1024",
+          "types-stage19-deep-branch-14",
+          "types-stage19-deep-branch-18",
+          "types-stage19-swap-observed-0",
+          "types-stage19-swap-observed-1",
+          "types-stage19-swap-observed-16",
+          "types-stage19-finite-inline-32",
+          "types-stage19-finite-lambda-32",
+          "types-stage19-finite-let-32",
+          "types-stage19-swap-default-inline-0",
+          "types-stage19-swap-default-inline-1",
+          "types-stage19-swap-default-inline-32",
+          "types-stage19-swap-default-lambda-0",
+          "types-stage19-swap-default-lambda-1",
+          "types-stage19-swap-default-lambda-32",
+          "types-stage19-grow-reference-27",
+          "types-stage19-grow-reference-28",
+          "types-stage19-grow-reference-30",
+          "types-stage19-wrapper-recheck-31",
+          "types-stage19-wrapper-recheck-32",
+          "types-stage19-wrapper-recheck-33"
         ]
       },
-      "scope": "Selected probes preserve unforced fixed initializers, class type-before-modifier errors, fixed override checks before body forcing, and fixed Reference metadata without evaluating referent bodies. Stage 16: Selected lazy member calls isolate receiver slots and alias const checks remain deferred until a lexical read executes. Stage 17: Evaluator-owned executable and type-use nodes preserve selected non-generic local const-property resolution across retries, distinct inline/lambda uses, shared let roots, recursive depth, inherited annotations, and lazy collection members; per-call receiver slots remain separate. Stage 18 adds finite recursive generic checks with lexical constraint-template substitutions, including changing actual arguments, parameter shadowing, root-parameter alias chains and inline/lambda argument captures. Generic local-writing let constraints retain their declaration call target and its unbound parameter interpretation; selected retry sharing is recorded separately from complete type-node identity. Stage 18 adds selected let-body and for-generator lexical const-depth boundaries while retaining enclosing const levels, plus their complete raw diagnostics and lambda controls. Selected generic collection-element amendments derive defaults after actual type substitution, retaining existing class objects, lazy bodies, nested collection shapes and first failure/retry behavior. Deferred Reference referent validation runs at the reached authored resolution site before the checked value; original diagnostic gaps remain separately recorded.",
+      "scope": "Selected probes preserve unforced fixed initializers, class type-before-modifier errors, fixed override checks before body forcing, and fixed Reference metadata without evaluating referent bodies. Stage 16: Selected lazy member calls isolate receiver slots and alias const checks remain deferred until a lexical read executes. Stage 17: Evaluator-owned executable and type-use nodes preserve selected non-generic local const-property resolution across retries, distinct inline/lambda uses, shared let roots, recursive depth, inherited annotations, and lazy collection members; per-call receiver slots remain separate. Stage 18 adds finite recursive generic checks with lexical constraint-template substitutions, including changing actual arguments, parameter shadowing, root-parameter alias chains and inline/lambda argument captures. Generic local-writing let constraints retain their declaration call target and its unbound parameter interpretation; selected retry sharing is recorded separately from complete type-node identity. Stage 18 adds selected let-body and for-generator lexical const-depth boundaries while retaining enclosing const levels, plus their complete raw diagnostics and lambda controls. Selected generic collection-element amendments derive defaults after actual type substitution, retaining existing class objects, lazy bodies, nested collection shapes and first failure/retry behavior. Deferred Reference referent validation runs at the reached authored resolution site before the checked value; original diagnostic gaps remain separately recorded. Stage 19 adds bounded shared-metadata regressions for finite deep and branching actual arguments, observable class-argument swaps, inline/lambda/shared-let recursion, recursive Reference validation, and distinct wrapper actuals. Original Java stack errors, historical native abort evidence, full language semantics and performance remain separately accounted.",
       "remaining": [
         "Complete lazy error ordering, successful memoization, retry semantics, cycles and failure-path diagnostics require the original inventory and broader differential execution.",
         "Selected non-generic and finite generic const-read retries, shared generic let roots and let/for lexical barriers are covered; complete lexical-scope, general lazy generic resolution and runtime type-node identity still retain gaps.",
@@ -1962,7 +1998,7 @@
           },
           {
             "path": "crates/pkl-runtime/src/vm/generics.rs",
-            "symbol": "generic_default_value"
+            "symbol": "step_generic_default"
           },
           {
             "path": "crates/pkl-runtime/src/vm/generics.rs",
@@ -2403,16 +2439,39 @@
           "types-stage18-reference-let-nested",
           "types-stage18-reference-shortcircuit-negative1",
           "types-stage18-reference-before-throw-lambda",
-          "types-stage18-reference-before-throw-let"
+          "types-stage18-reference-before-throw-let",
+          "types-stage19-finite-list-depth-128",
+          "types-stage19-deep-list-256",
+          "types-stage19-deep-list-1024",
+          "types-stage19-deep-branch-14",
+          "types-stage19-deep-branch-18",
+          "types-stage19-swap-observed-0",
+          "types-stage19-swap-observed-1",
+          "types-stage19-swap-observed-16",
+          "types-stage19-finite-inline-32",
+          "types-stage19-finite-lambda-32",
+          "types-stage19-finite-let-32",
+          "types-stage19-swap-default-inline-0",
+          "types-stage19-swap-default-inline-1",
+          "types-stage19-swap-default-inline-32",
+          "types-stage19-swap-default-lambda-0",
+          "types-stage19-swap-default-lambda-1",
+          "types-stage19-swap-default-lambda-32",
+          "types-stage19-grow-reference-27",
+          "types-stage19-grow-reference-28",
+          "types-stage19-grow-reference-30",
+          "types-stage19-wrapper-recheck-31",
+          "types-stage19-wrapper-recheck-32",
+          "types-stage19-wrapper-recheck-33"
         ]
       },
-      "scope": "Selected user alias values preserve declaration identity, qualified display, lazy initialization, published failure state, and expanded validation. Independent expressions cover alias values, cycles, generic arguments, Mapping keys and complete diagnostics; persistent failure/reaccess sequences and GC/Host tests have separate contracts. Stage 14 adds selected authored type-resolution order, generic parameter scope and nested substitution, class/alias arity ordering, and owner signature diagnostics; persistent failed-declaration state has a separate sequence contract. Stage 15 adds selected non-generic recursive constraint block graphs and declaration type scope, plus builtin Class argument erasure and arity ordering. At Stage 15 recursive generic constraints remained open; Stage 16 adds bounded shared receiver-slot support. Stage 16: Selected recursive and inline constraints share mutable auxiliary receiver slots within a logical call; alias lexical reads enforce the first-read const barrier. Stage 17: Evaluator-owned executable and type-use nodes preserve selected non-generic local const-property resolution across retries, distinct inline/lambda uses, shared let roots, recursive depth, inherited annotations, and lazy collection members; per-call receiver slots remain separate. Stage 18 adds finite recursive generic checks with lexical constraint-template substitutions, including changing actual arguments, parameter shadowing, root-parameter alias chains and inline/lambda argument captures. Generic local-writing let constraints retain their declaration call target and its unbound parameter interpretation; selected retry sharing is recorded separately from complete type-node identity. Selected generic collection-element amendments derive defaults after actual type substitution, retaining existing class objects, lazy bodies, nested collection shapes and first failure/retry behavior. Deferred Reference referent validation runs at the reached authored resolution site before the checked value; original diagnostic gaps remain separately recorded.",
+      "scope": "Selected user alias values preserve declaration identity, qualified display, lazy initialization, published failure state, and expanded validation. Independent expressions cover alias values, cycles, generic arguments, Mapping keys and complete diagnostics; persistent failure/reaccess sequences and GC/Host tests have separate contracts. Stage 14 adds selected authored type-resolution order, generic parameter scope and nested substitution, class/alias arity ordering, and owner signature diagnostics; persistent failed-declaration state has a separate sequence contract. Stage 15 adds selected non-generic recursive constraint block graphs and declaration type scope, plus builtin Class argument erasure and arity ordering. At Stage 15 recursive generic constraints remained open; Stage 16 adds bounded shared receiver-slot support. Stage 16: Selected recursive and inline constraints share mutable auxiliary receiver slots within a logical call; alias lexical reads enforce the first-read const barrier. Stage 17: Evaluator-owned executable and type-use nodes preserve selected non-generic local const-property resolution across retries, distinct inline/lambda uses, shared let roots, recursive depth, inherited annotations, and lazy collection members; per-call receiver slots remain separate. Stage 18 adds finite recursive generic checks with lexical constraint-template substitutions, including changing actual arguments, parameter shadowing, root-parameter alias chains and inline/lambda argument captures. Generic local-writing let constraints retain their declaration call target and its unbound parameter interpretation; selected retry sharing is recorded separately from complete type-node identity. Selected generic collection-element amendments derive defaults after actual type substitution, retaining existing class objects, lazy bodies, nested collection shapes and first failure/retry behavior. Deferred Reference referent validation runs at the reached authored resolution site before the checked value; original diagnostic gaps remain separately recorded. Stage 19 adds bounded shared-metadata regressions for finite deep and branching actual arguments, observable class-argument swaps, inline/lambda/shared-let recursion, recursive Reference validation, and distinct wrapper actuals. Original Java stack errors, historical native abort evidence, full language semantics and performance remain separately accounted.",
       "remaining": [
         "Complete imported/module-scoped alias behavior, annotation initialization, full reflection and the original upstream alias suites remain unimplemented or unexecuted.",
         "Exploratory mismatches and upstream internal errors retain their original outcomes; these selected mappings do not grant completion.",
         "A full runtime type-node resolution model and mixed unresolved-name/dependency error ordering remain unverified; Stage 18 covers selected recursive generic-parameter shadowing and alias-root chains.",
         "Selected non-generic and finite generic const-read retries, shared generic let roots and let/for lexical barriers are covered; complete lexical-scope, general lazy generic resolution and runtime type-node identity still retain gaps.",
-        "General lazy generic declaration resolution, full alias-root substitution identity, imported generic declarations and original suite adapters remain open. Unbounded changing-argument recursion can overflow the host stack while cloning owned type metadata; the preserved abort is a known failure, while bounded yielding and cancellation have separate lifecycle checks.",
+        "General lazy generic declaration resolution, full alias-root substitution identity, imported generic declarations and original suite adapters remain open. The Stage 18 changing-argument native-stack abort remains preserved as historical failure evidence. Shared metadata now has bounded extended execution and cleanup checks; exact Java stack diagnostics, wall-time bounds, and metadata/output resource bounds remain unverified.",
         "Nullable collection defaults, some missing/literal/default-root diagnostics, general inferred generic new construction and complete Reference argument diagnostic frames retain exploratory gaps; these are not counted as passing selected cases."
       ]
     },
@@ -2630,10 +2689,14 @@
           "types-stage18-reference-lambda-constrained",
           "types-stage18-reference-lambda-alias",
           "types-stage18-reference-lambda-nested",
-          "types-stage18-reference-before-throw-lambda"
+          "types-stage18-reference-before-throw-lambda",
+          "types-stage19-finite-lambda-32",
+          "types-stage19-swap-default-lambda-0",
+          "types-stage19-swap-default-lambda-1",
+          "types-stage19-swap-default-lambda-32"
         ]
       },
-      "scope": "Function and Function0..5 class types and arrow annotations retain parameter/result metadata while selected runtime value checks use arity. Comparisons distinguish annotation checks from a lambda declaration's own argument checks and distinguish Reference type tests from exported-type equality. Stage 14 adds selected authored type-resolution order, generic parameter scope and nested substitution, class/alias arity ordering, and owner signature diagnostics; persistent failed-declaration state has a separate sequence contract. Stage 15 adds selected non-generic recursive constraint block graphs and declaration type scope, plus builtin Class argument erasure and arity ordering. At Stage 15 recursive generic constraints remained open; Stage 16 adds bounded shared receiver-slot support. Stage 16: Selected lambdas snapshot the custom receiver at creation; function and local-writing let roots isolate subsequent receiver mutations. Stage 17: Selected const-method barriers, lambda lookup depth, immediate outer lexical scope, and grouped-callee parser diagnostics follow the pinned Java behavior. Stage 18 adds selected let-body and for-generator lexical const-depth boundaries while retaining enclosing const levels, plus their complete raw diagnostics and lambda controls. Selected generic constraint lambdas retain invocation-specific type argument captures.",
+      "scope": "Function and Function0..5 class types and arrow annotations retain parameter/result metadata while selected runtime value checks use arity. Comparisons distinguish annotation checks from a lambda declaration's own argument checks and distinguish Reference type tests from exported-type equality. Stage 14 adds selected authored type-resolution order, generic parameter scope and nested substitution, class/alias arity ordering, and owner signature diagnostics; persistent failed-declaration state has a separate sequence contract. Stage 15 adds selected non-generic recursive constraint block graphs and declaration type scope, plus builtin Class argument erasure and arity ordering. At Stage 15 recursive generic constraints remained open; Stage 16 adds bounded shared receiver-slot support. Stage 16: Selected lambdas snapshot the custom receiver at creation; function and local-writing let roots isolate subsequent receiver mutations. Stage 17: Selected const-method barriers, lambda lookup depth, immediate outer lexical scope, and grouped-callee parser diagnostics follow the pinned Java behavior. Stage 18 adds selected let-body and for-generator lexical const-depth boundaries while retaining enclosing const levels, plus their complete raw diagnostics and lambda controls. Selected generic constraint lambdas retain invocation-specific type argument captures. Stage 19 adds bounded shared-metadata regressions for finite deep and branching actual arguments, observable class-argument swaps, inline/lambda/shared-let recursion, recursive Reference validation, and distinct wrapper actuals. Original Java stack errors, historical native abort evidence, full language semantics and performance remain separately accounted.",
       "remaining": [
         "Function amendments, full callable/builtin behavior, imports and the original function suite contracts remain outside this bounded selection.",
         "The broader function, closure, diagnostic and reflection inventories are not completed by metadata comparisons."
@@ -2686,7 +2749,7 @@
           },
           {
             "path": "crates/pkl-runtime/src/vm/generics.rs",
-            "symbol": "generic_default_value"
+            "symbol": "step_generic_default"
           },
           {
             "path": "crates/pkl-runtime/src/vm/generics.rs",
@@ -3169,13 +3232,36 @@
           "types-stage18-reference-let-nested",
           "types-stage18-reference-shortcircuit-negative1",
           "types-stage18-reference-before-throw-lambda",
-          "types-stage18-reference-before-throw-let"
+          "types-stage18-reference-before-throw-let",
+          "types-stage19-finite-list-depth-128",
+          "types-stage19-deep-list-256",
+          "types-stage19-deep-list-1024",
+          "types-stage19-deep-branch-14",
+          "types-stage19-deep-branch-18",
+          "types-stage19-swap-observed-0",
+          "types-stage19-swap-observed-1",
+          "types-stage19-swap-observed-16",
+          "types-stage19-finite-inline-32",
+          "types-stage19-finite-lambda-32",
+          "types-stage19-finite-let-32",
+          "types-stage19-swap-default-inline-0",
+          "types-stage19-swap-default-inline-1",
+          "types-stage19-swap-default-inline-32",
+          "types-stage19-swap-default-lambda-0",
+          "types-stage19-swap-default-lambda-1",
+          "types-stage19-swap-default-lambda-32",
+          "types-stage19-grow-reference-27",
+          "types-stage19-grow-reference-28",
+          "types-stage19-grow-reference-30",
+          "types-stage19-wrapper-recheck-31",
+          "types-stage19-wrapper-recheck-32",
+          "types-stage19-wrapper-recheck-33"
         ]
       },
-      "scope": "The Stage 13 selection links named alias expansion, meta-class checks, function arity and exported type metadata to the shared VM. Existing upstream case definitions, adapters and execution states remain unchanged. Stage 14 adds selected authored type-resolution order, generic parameter scope and nested substitution, class/alias arity ordering, and owner signature diagnostics; persistent failed-declaration state has a separate sequence contract. Stage 15 adds selected non-generic recursive constraint block graphs and declaration type scope, plus builtin Class argument erasure and arity ordering. At Stage 15 recursive generic constraints remained open; Stage 16 adds bounded shared receiver-slot support. Stage 16: Selected nested is/as and recursive constraints retain receiver mutations, original successful values, predicate arguments and complete failure bytes. Stage 17: Evaluator-owned executable and type-use nodes preserve selected non-generic local const-property resolution across retries, distinct inline/lambda uses, shared let roots, recursive depth, inherited annotations, and lazy collection members; per-call receiver slots remain separate. Stage 18 adds finite recursive generic checks with lexical constraint-template substitutions, including changing actual arguments, parameter shadowing, root-parameter alias chains and inline/lambda argument captures. Generic local-writing let constraints retain their declaration call target and its unbound parameter interpretation; selected retry sharing is recorded separately from complete type-node identity. Selected generic collection-element amendments derive defaults after actual type substitution, retaining existing class objects, lazy bodies, nested collection shapes and first failure/retry behavior. Deferred Reference referent validation runs at the reached authored resolution site before the checked value; original diagnostic gaps remain separately recorded.",
+      "scope": "The Stage 13 selection links named alias expansion, meta-class checks, function arity and exported type metadata to the shared VM. Existing upstream case definitions, adapters and execution states remain unchanged. Stage 14 adds selected authored type-resolution order, generic parameter scope and nested substitution, class/alias arity ordering, and owner signature diagnostics; persistent failed-declaration state has a separate sequence contract. Stage 15 adds selected non-generic recursive constraint block graphs and declaration type scope, plus builtin Class argument erasure and arity ordering. At Stage 15 recursive generic constraints remained open; Stage 16 adds bounded shared receiver-slot support. Stage 16: Selected nested is/as and recursive constraints retain receiver mutations, original successful values, predicate arguments and complete failure bytes. Stage 17: Evaluator-owned executable and type-use nodes preserve selected non-generic local const-property resolution across retries, distinct inline/lambda uses, shared let roots, recursive depth, inherited annotations, and lazy collection members; per-call receiver slots remain separate. Stage 18 adds finite recursive generic checks with lexical constraint-template substitutions, including changing actual arguments, parameter shadowing, root-parameter alias chains and inline/lambda argument captures. Generic local-writing let constraints retain their declaration call target and its unbound parameter interpretation; selected retry sharing is recorded separately from complete type-node identity. Selected generic collection-element amendments derive defaults after actual type substitution, retaining existing class objects, lazy bodies, nested collection shapes and first failure/retry behavior. Deferred Reference referent validation runs at the reached authored resolution site before the checked value; original diagnostic gaps remain separately recorded. Stage 19 adds bounded shared-metadata regressions for finite deep and branching actual arguments, observable class-argument swaps, inline/lambda/shared-let recursion, recursive Reference validation, and distinct wrapper actuals. Original Java stack errors, historical native abort evidence, full language semantics and performance remain separately accounted.",
       "remaining": [
         "The complete type, structural/generic class, constraint, recursive and imported-type corpus still requires implementation and original-adapter execution.",
-        "General lazy generic declaration resolution, full alias-root substitution identity, imported generic declarations and original suite adapters remain open. Unbounded changing-argument recursion can overflow the host stack while cloning owned type metadata; the preserved abort is a known failure, while bounded yielding and cancellation have separate lifecycle checks.",
+        "General lazy generic declaration resolution, full alias-root substitution identity, imported generic declarations and original suite adapters remain open. The Stage 18 changing-argument native-stack abort remains preserved as historical failure evidence. Shared metadata now has bounded extended execution and cleanup checks; exact Java stack diagnostics, wall-time bounds, and metadata/output resource bounds remain unverified.",
         "Nullable collection defaults, some missing/literal/default-root diagnostics, general inferred generic new construction and complete Reference argument diagnostic frames retain exploratory gaps; these are not counted as passing selected cases."
       ]
     },
@@ -3214,7 +3300,7 @@
           },
           {
             "path": "crates/pkl-runtime/src/vm/generics.rs",
-            "symbol": "generic_default_value"
+            "symbol": "step_generic_default"
           },
           {
             "path": "crates/pkl-runtime/src/vm/generics.rs",
@@ -3404,13 +3490,36 @@
           "types-stage18-reference-let-nested",
           "types-stage18-reference-shortcircuit-negative1",
           "types-stage18-reference-before-throw-lambda",
-          "types-stage18-reference-before-throw-let"
+          "types-stage18-reference-before-throw-let",
+          "types-stage19-finite-list-depth-128",
+          "types-stage19-deep-list-256",
+          "types-stage19-deep-list-1024",
+          "types-stage19-deep-branch-14",
+          "types-stage19-deep-branch-18",
+          "types-stage19-swap-observed-0",
+          "types-stage19-swap-observed-1",
+          "types-stage19-swap-observed-16",
+          "types-stage19-finite-inline-32",
+          "types-stage19-finite-lambda-32",
+          "types-stage19-finite-let-32",
+          "types-stage19-swap-default-inline-0",
+          "types-stage19-swap-default-inline-1",
+          "types-stage19-swap-default-inline-32",
+          "types-stage19-swap-default-lambda-0",
+          "types-stage19-swap-default-lambda-1",
+          "types-stage19-swap-default-lambda-32",
+          "types-stage19-grow-reference-27",
+          "types-stage19-grow-reference-28",
+          "types-stage19-grow-reference-30",
+          "types-stage19-wrapper-recheck-31",
+          "types-stage19-wrapper-recheck-32",
+          "types-stage19-wrapper-recheck-33"
         ]
       },
-      "scope": "Selected generic aliases retain declaration identity and metadata arguments independently of expanded checks, use unknown for omitted arguments, and preserve argument-count and expanded-value diagnostics. Stage 14 adds selected authored type-resolution order, generic parameter scope and nested substitution, class/alias arity ordering, and owner signature diagnostics; persistent failed-declaration state has a separate sequence contract. Stage 15 adds selected non-generic recursive constraint block graphs and declaration type scope, plus builtin Class argument erasure and arity ordering. At Stage 15 recursive generic constraints remained open; Stage 16 adds bounded shared receiver-slot support. Stage 18 adds finite recursive generic checks with lexical constraint-template substitutions, including changing actual arguments, parameter shadowing, root-parameter alias chains and inline/lambda argument captures. Generic local-writing let constraints retain their declaration call target and its unbound parameter interpretation; selected retry sharing is recorded separately from complete type-node identity. Selected generic collection-element amendments derive defaults after actual type substitution, retaining existing class objects, lazy bodies, nested collection shapes and first failure/retry behavior. Deferred Reference referent validation runs at the reached authored resolution site before the checked value; original diagnostic gaps remain separately recorded.",
+      "scope": "Selected generic aliases retain declaration identity and metadata arguments independently of expanded checks, use unknown for omitted arguments, and preserve argument-count and expanded-value diagnostics. Stage 14 adds selected authored type-resolution order, generic parameter scope and nested substitution, class/alias arity ordering, and owner signature diagnostics; persistent failed-declaration state has a separate sequence contract. Stage 15 adds selected non-generic recursive constraint block graphs and declaration type scope, plus builtin Class argument erasure and arity ordering. At Stage 15 recursive generic constraints remained open; Stage 16 adds bounded shared receiver-slot support. Stage 18 adds finite recursive generic checks with lexical constraint-template substitutions, including changing actual arguments, parameter shadowing, root-parameter alias chains and inline/lambda argument captures. Generic local-writing let constraints retain their declaration call target and its unbound parameter interpretation; selected retry sharing is recorded separately from complete type-node identity. Selected generic collection-element amendments derive defaults after actual type substitution, retaining existing class objects, lazy bodies, nested collection shapes and first failure/retry behavior. Deferred Reference referent validation runs at the reached authored resolution site before the checked value; original diagnostic gaps remain separately recorded. Stage 19 adds bounded shared-metadata regressions for finite deep and branching actual arguments, observable class-argument swaps, inline/lambda/shared-let recursion, recursive Reference validation, and distinct wrapper actuals. Original Java stack errors, historical native abort evidence, full language semantics and performance remain separately accounted.",
       "remaining": [
         "Complete generic classes, variance, imported generic declarations and the original generic suite contracts remain unimplemented or unverified.",
-        "General lazy generic declaration resolution, full alias-root substitution identity, imported generic declarations and original suite adapters remain open. Unbounded changing-argument recursion can overflow the host stack while cloning owned type metadata; the preserved abort is a known failure, while bounded yielding and cancellation have separate lifecycle checks.",
+        "General lazy generic declaration resolution, full alias-root substitution identity, imported generic declarations and original suite adapters remain open. The Stage 18 changing-argument native-stack abort remains preserved as historical failure evidence. Shared metadata now has bounded extended execution and cleanup checks; exact Java stack diagnostics, wall-time bounds, and metadata/output resource bounds remain unverified.",
         "Nullable collection defaults, some missing/literal/default-root diagnostics, general inferred generic new construction and complete Reference argument diagnostic frames retain exploratory gaps; these are not counted as passing selected cases."
       ]
     },
@@ -3453,7 +3562,7 @@
           },
           {
             "path": "crates/pkl-runtime/src/vm/generics.rs",
-            "symbol": "generic_default_value"
+            "symbol": "step_generic_default"
           },
           {
             "path": "crates/pkl-runtime/src/vm/generics.rs",
@@ -3714,13 +3823,36 @@
           "types-stage18-reference-let-nested",
           "types-stage18-reference-shortcircuit-negative1",
           "types-stage18-reference-before-throw-lambda",
-          "types-stage18-reference-before-throw-let"
+          "types-stage18-reference-before-throw-let",
+          "types-stage19-finite-list-depth-128",
+          "types-stage19-deep-list-256",
+          "types-stage19-deep-list-1024",
+          "types-stage19-deep-branch-14",
+          "types-stage19-deep-branch-18",
+          "types-stage19-swap-observed-0",
+          "types-stage19-swap-observed-1",
+          "types-stage19-swap-observed-16",
+          "types-stage19-finite-inline-32",
+          "types-stage19-finite-lambda-32",
+          "types-stage19-finite-let-32",
+          "types-stage19-swap-default-inline-0",
+          "types-stage19-swap-default-inline-1",
+          "types-stage19-swap-default-inline-32",
+          "types-stage19-swap-default-lambda-0",
+          "types-stage19-swap-default-lambda-1",
+          "types-stage19-swap-default-lambda-32",
+          "types-stage19-grow-reference-27",
+          "types-stage19-grow-reference-28",
+          "types-stage19-grow-reference-30",
+          "types-stage19-wrapper-recheck-31",
+          "types-stage19-wrapper-recheck-32",
+          "types-stage19-wrapper-recheck-33"
         ]
       },
-      "scope": "Selected shared logical-call receiver slots, recursive and inline constraints, lambda snapshots, separate function/let/member roots, Boolean and predicate failures, union branches and power assertions compare complete Java bytes. Native Host/GC and persistent platform sequences provide separate lifecycle evidence. Stage 17: Evaluator-owned executable and type-use nodes preserve selected non-generic local const-property resolution across retries, distinct inline/lambda uses, shared let roots, recursive depth, inherited annotations, and lazy collection members; per-call receiver slots remain separate. Stage 18 adds finite recursive generic checks with lexical constraint-template substitutions, including changing actual arguments, parameter shadowing, root-parameter alias chains and inline/lambda argument captures. Generic local-writing let constraints retain their declaration call target and its unbound parameter interpretation; selected retry sharing is recorded separately from complete type-node identity. Selected generic collection-element amendments derive defaults after actual type substitution, retaining existing class objects, lazy bodies, nested collection shapes and first failure/retry behavior. Deferred Reference referent validation runs at the reached authored resolution site before the checked value; original diagnostic gaps remain separately recorded.",
+      "scope": "Selected shared logical-call receiver slots, recursive and inline constraints, lambda snapshots, separate function/let/member roots, Boolean and predicate failures, union branches and power assertions compare complete Java bytes. Native Host/GC and persistent platform sequences provide separate lifecycle evidence. Stage 17: Evaluator-owned executable and type-use nodes preserve selected non-generic local const-property resolution across retries, distinct inline/lambda uses, shared let roots, recursive depth, inherited annotations, and lazy collection members; per-call receiver slots remain separate. Stage 18 adds finite recursive generic checks with lexical constraint-template substitutions, including changing actual arguments, parameter shadowing, root-parameter alias chains and inline/lambda argument captures. Generic local-writing let constraints retain their declaration call target and its unbound parameter interpretation; selected retry sharing is recorded separately from complete type-node identity. Selected generic collection-element amendments derive defaults after actual type substitution, retaining existing class objects, lazy bodies, nested collection shapes and first failure/retry behavior. Deferred Reference referent validation runs at the reached authored resolution site before the checked value; original diagnostic gaps remain separately recorded. Stage 19 adds bounded shared-metadata regressions for finite deep and branching actual arguments, observable class-argument swaps, inline/lambda/shared-let recursion, recursive Reference validation, and distinct wrapper actuals. Original Java stack errors, historical native abort evidence, full language semantics and performance remain separately accounted.",
       "remaining": [
         "The complete original constraint suites, imported constraints and full runtime type-node identity semantics remain unimplemented or unverified.",
-        "General lazy generic declaration resolution, full alias-root substitution identity, imported generic declarations and original suite adapters remain open. Unbounded changing-argument recursion can overflow the host stack while cloning owned type metadata; the preserved abort is a known failure, while bounded yielding and cancellation have separate lifecycle checks.",
+        "General lazy generic declaration resolution, full alias-root substitution identity, imported generic declarations and original suite adapters remain open. The Stage 18 changing-argument native-stack abort remains preserved as historical failure evidence. Shared metadata now has bounded extended execution and cleanup checks; exact Java stack diagnostics, wall-time bounds, and metadata/output resource bounds remain unverified.",
         "Selected generic let-root and finite recursive checks now match retained raw comparisons. The original exploratory outcomes, unbounded recursion abort, other known mismatches and complete language/performance gates remain separately accounted.",
         "Nullable collection defaults, some missing/literal/default-root diagnostics, general inferred generic new construction and complete Reference argument diagnostic frames retain exploratory gaps; these are not counted as passing selected cases."
       ]

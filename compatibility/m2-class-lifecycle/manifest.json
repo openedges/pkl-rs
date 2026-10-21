@@ -762,6 +762,55 @@
       "expressions": "types-stage18-reference-let-retry.expressions",
       "group": "T18",
       "note": "Complete raw Java generic Reference actual-argument validation and retry ordering for lambda and erased shared let-root call targets. Inline diagnostic frame gaps remain exploratory failures."
+    },
+    {
+      "id": "types-stage19-deep-actuals",
+      "source": "types-stage19-deep-actuals.pkl",
+      "expressions": "types-stage19-deep-actuals.expressions",
+      "group": "T19",
+      "note": "Complete raw Java finite generic metadata, actual-argument distinction and persistent failure/retry observations. Native stack safety, Host/GC cancellation and unbounded Java stack errors have separate contracts."
+    },
+    {
+      "id": "types-stage19-branch-actuals",
+      "source": "types-stage19-branch-actuals.pkl",
+      "expressions": "types-stage19-branch-actuals.expressions",
+      "group": "T19",
+      "note": "Complete raw Java finite generic metadata, actual-argument distinction and persistent failure/retry observations. Native stack safety, Host/GC cancellation and unbounded Java stack errors have separate contracts."
+    },
+    {
+      "id": "types-stage19-swap-default-inline",
+      "source": "types-stage19-swap-default-inline.pkl",
+      "expressions": "types-stage19-swap-default-inline.expressions",
+      "group": "T19",
+      "note": "Complete raw Java finite generic metadata, actual-argument distinction and persistent failure/retry observations. Native stack safety, Host/GC cancellation and unbounded Java stack errors have separate contracts."
+    },
+    {
+      "id": "types-stage19-swap-default-lambda",
+      "source": "types-stage19-swap-default-lambda.pkl",
+      "expressions": "types-stage19-swap-default-lambda.expressions",
+      "group": "T19",
+      "note": "Complete raw Java finite generic metadata, actual-argument distinction and persistent failure/retry observations. Native stack safety, Host/GC cancellation and unbounded Java stack errors have separate contracts."
+    },
+    {
+      "id": "types-stage19-wrapper-actuals",
+      "source": "types-stage19-wrapper-actuals.pkl",
+      "expressions": "types-stage19-wrapper-actuals.expressions",
+      "group": "T19",
+      "note": "Complete raw Java finite generic metadata, actual-argument distinction and persistent failure/retry observations. Native stack safety, Host/GC cancellation and unbounded Java stack errors have separate contracts."
+    },
+    {
+      "id": "types-stage19-reference-actuals",
+      "source": "types-stage19-reference-actuals.pkl",
+      "expressions": "types-stage19-reference-actuals.expressions",
+      "group": "T19",
+      "note": "Complete raw Java finite generic metadata, actual-argument distinction and persistent failure/retry observations. Native stack safety, Host/GC cancellation and unbounded Java stack errors have separate contracts."
+    },
+    {
+      "id": "types-stage19-alias-root-actuals",
+      "source": "types-stage19-alias-root-actuals.pkl",
+      "expressions": "types-stage19-alias-root-actuals.expressions",
+      "group": "T19",
+      "note": "Complete raw Java finite generic metadata, actual-argument distinction and persistent failure/retry observations. Native stack safety, Host/GC cancellation and unbounded Java stack errors have separate contracts."
     }
   ],
   "unexecuted_groups": [

@@ -1,0 +1,2 @@
+typealias A<T> = Int(let (n = this) n < 0 || (n - 1) is A<List<T>>)
+result: A<String> = 32

@@ -1,0 +1,5 @@
+typealias Check<T,U> = Int(((new Listing<T> {1}) as Listing<U>)[0] == 1)
+one = 1 is Check<Int,Int>
+two = 1 is Check<Int,String>
+three = 1 is Check<Int(this>0),Int(this<0)>
+stable = 42

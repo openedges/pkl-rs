@@ -1,0 +1,4 @@
+import "pkl:ref"
+class D extends ref.Domain {}
+typealias A<T> = Int((n) -> if (n < 0) 1 is ref.Reference<D,T> else (n - 1) is A<Mapping<T,T>>)
+result = 0 is A<Int(this > 0)>

@@ -49,144 +49,227 @@ pub(crate) fn base_type(name: &str) -> Option<TypeCheck> {
     })
 }
 
-pub(crate) fn type_name(ty: &TypeCheck, module: &str) -> String {
-    match ty {
-        TypeCheck::Unknown => "unknown".into(),
-        TypeCheck::NamedAlias {
-            name, arguments, ..
-        } => {
-            if arguments.is_empty() {
-                format!("{module}#{name}")
-            } else {
-                format!(
-                    "{module}#{name}<{}>",
-                    arguments
-                        .iter()
-                        .map(|ty| type_name(ty, module))
-                        .collect::<Vec<_>>()
-                        .join(", ")
-                )
-            }
-        }
-        TypeCheck::Function {
-            parameters,
-            result,
-            syntax,
-        } => {
-            let args = parameters
-                .iter()
-                .flatten()
-                .map(|ty| type_name(ty, module))
-                .collect::<Vec<_>>();
-            if *syntax {
-                format!("({}) -> {}", args.join(", "), type_name(result, module))
-            } else {
-                let mut args = args;
-                args.push(type_name(result, module));
-                format!("{}<{}>", super::type_name(ty, module), args.join(", "))
-            }
-        }
-        TypeCheck::RefDomain => "pkl.ref#Domain".into(),
-        TypeCheck::Reference { domain, referent } => format!(
-            "pkl.ref#Reference<{}, {}>",
-            type_name(domain, module),
-            type_name(referent, module)
-        ),
-        TypeCheck::Class { id: MODULE_ID, .. } => module.to_string(),
-        TypeCheck::Class { id: ACCESS_ID, .. } => "pkl.ref#Access".into(),
-        TypeCheck::Class { name, .. } => format!("{module}#{name}"),
-        TypeCheck::Union { types, .. } => types
-            .iter()
-            .map(|t| type_name(t, module))
-            .collect::<Vec<_>>()
-            .join(" | "),
-        TypeCheck::Nullable(t) => format!("{}?", type_name(t, module)),
-        TypeCheck::Alias(t) | TypeCheck::GenericAlias(t) => type_name(t, module),
-        TypeCheck::Constrained { base, .. } => type_name(base, module),
-        TypeCheck::ParameterizedCollection { kind, arguments } => format!(
-            "{kind:?}<{}>",
-            arguments
-                .iter()
-                .map(|(t, _)| type_name(t, module))
-                .collect::<Vec<_>>()
-                .join(", ")
-        ),
-        TypeCheck::Collection(kind) => format!("{kind:?}"),
-        TypeCheck::StringLiteral(s) => format!("\"{s}\""),
-        _ => super::type_name(ty, module),
+pub(crate) fn type_name<'a>(ty: &'a TypeCheck, module: &str) -> String {
+    enum Part<'a> {
+        Type(&'a TypeCheck),
+        Text(String),
     }
+    let mut output = String::new();
+    let mut pending = vec![Part::Type(ty)];
+    while let Some(part) = pending.pop() {
+        let ty = match part {
+            Part::Text(text) => {
+                output.push_str(&text);
+                continue;
+            }
+            Part::Type(ty) => ty.resolved(),
+        };
+        let mut sequence = Vec::new();
+        let mut list = |types: Vec<&'a TypeCheck>, separator: &str| {
+            for (index, ty) in types.into_iter().enumerate() {
+                if index != 0 {
+                    sequence.push(Part::Text(separator.to_owned()));
+                }
+                sequence.push(Part::Type(ty));
+            }
+        };
+        match ty {
+            TypeCheck::Unknown => output.push_str("unknown"),
+            TypeCheck::NamedAlias {
+                name, arguments, ..
+            } => {
+                output.push_str(&format!("{module}#{name}"));
+                if !arguments.is_empty() {
+                    output.push('<');
+                    list(arguments.iter().collect(), ", ");
+                    sequence.push(Part::Text(">".into()));
+                }
+            }
+            TypeCheck::Function {
+                parameters,
+                result,
+                syntax,
+            } => {
+                let mut args: Vec<_> = parameters.iter().flatten().collect();
+                if *syntax {
+                    output.push('(');
+                    list(args, ", ");
+                    sequence.push(Part::Text(") -> ".into()));
+                    sequence.push(Part::Type(result));
+                } else {
+                    output.push_str(&super::type_name(ty, module));
+                    output.push('<');
+                    args.push(result);
+                    list(args, ", ");
+                    sequence.push(Part::Text(">".into()));
+                }
+            }
+            TypeCheck::RefDomain => output.push_str("pkl.ref#Domain"),
+            TypeCheck::Reference { domain, referent } => {
+                output.push_str("pkl.ref#Reference<");
+                list(vec![domain, referent], ", ");
+                sequence.push(Part::Text(">".into()));
+            }
+            TypeCheck::Class { id: MODULE_ID, .. } => output.push_str(module),
+            TypeCheck::Class { id: ACCESS_ID, .. } => output.push_str("pkl.ref#Access"),
+            TypeCheck::Class { name, .. } => output.push_str(&format!("{module}#{name}")),
+            TypeCheck::Union { types, .. } => list(types.iter().collect(), " | "),
+            TypeCheck::Nullable(inner) => {
+                sequence.push(Part::Type(inner));
+                sequence.push(Part::Text("?".into()));
+            }
+            TypeCheck::Alias(inner)
+            | TypeCheck::GenericAlias(inner)
+            | TypeCheck::Constrained { base: inner, .. } => sequence.push(Part::Type(inner)),
+            TypeCheck::ParameterizedCollection { kind, arguments } => {
+                output.push_str(&format!("{kind:?}<"));
+                list(arguments.iter().map(|(ty, _)| ty).collect(), ", ");
+                sequence.push(Part::Text(">".into()));
+            }
+            TypeCheck::Collection(kind) => output.push_str(&format!("{kind:?}")),
+            TypeCheck::StringLiteral(value) => output.push_str(&format!("\"{value}\"")),
+            _ => output.push_str(&super::type_name(ty, module)),
+        }
+        pending.extend(sequence.into_iter().rev());
+    }
+    output
+}
+
+/// Fold an immutable metadata DAG in postorder without using the native stack.
+/// Pointer keys are local traversal identities, never exported type identities.
+fn fold_metadata<T: Clone>(
+    root: &TypeCheck,
+    children: impl Fn(&TypeCheck) -> Vec<&TypeCheck>,
+    mut fold: impl FnMut(&TypeCheck, Vec<T>) -> T,
+) -> T {
+    let mut values: BTreeMap<usize, T> = BTreeMap::new();
+    let mut pending = vec![(root, false)];
+    while let Some((ty, ready)) = pending.pop() {
+        let ty = ty.resolved();
+        let key = ty as *const TypeCheck as usize;
+        if values.contains_key(&key) {
+            continue;
+        }
+        let children = children(ty);
+        if !ready {
+            pending.push((ty, true));
+            pending.extend(children.into_iter().rev().map(|child| (child, false)));
+        } else {
+            let args = children
+                .into_iter()
+                .map(|child| values[&(child.resolved() as *const TypeCheck as usize)].clone())
+                .collect();
+            values.insert(key, fold(ty, args));
+        }
+    }
+    values
+        .remove(&(root.resolved() as *const TypeCheck as usize))
+        .expect("metadata root")
 }
 
 /// Java exports nullable types as flattened unions and erases constraints.
 pub(crate) fn normalize(ty: &TypeCheck, module: &str) -> TypeCheck {
-    match ty {
-        TypeCheck::NonNull => TypeCheck::Any,
-        TypeCheck::NamedAlias {
-            expanded: inner, ..
-        }
-        | TypeCheck::Alias(inner)
-        | TypeCheck::GenericAlias(inner)
-        | TypeCheck::Constrained { base: inner, .. } => normalize(inner, module),
-        TypeCheck::Nullable(inner) => {
-            union(vec![normalize(inner, module), TypeCheck::Null], module)
-        }
-        TypeCheck::Union { types, .. } => union(
-            types.iter().map(|ty| normalize(ty, module)).collect(),
-            module,
-        ),
-        TypeCheck::Collection(
-            kind @ (CollectionKind::List | CollectionKind::Listing | CollectionKind::Mapping),
-        ) => TypeCheck::ParameterizedCollection {
-            kind: *kind,
-            arguments: vec![
-                (TypeCheck::Unknown, Span::new(0, 0));
-                if *kind == CollectionKind::Mapping {
-                    2
-                } else {
-                    1
-                }
-            ],
-        },
-        TypeCheck::ParameterizedCollection { kind, arguments } => {
-            TypeCheck::ParameterizedCollection {
-                kind: *kind,
-                arguments: arguments
-                    .iter()
-                    .map(|(t, _)| (normalize(t, module), Span::new(0, 0)))
-                    .collect(),
+    fold_metadata(
+        ty,
+        |ty| match ty {
+            TypeCheck::NamedAlias {
+                expanded: inner, ..
             }
-        }
-        TypeCheck::Function {
-            parameters,
-            result,
-            syntax: false,
-        } => TypeCheck::Function {
-            parameters: parameters
-                .as_ref()
-                .map(|p| p.iter().map(|t| normalize(t, module)).collect()),
-            result: Box::new(normalize(result, module)),
-            syntax: false,
+            | TypeCheck::Alias(inner)
+            | TypeCheck::GenericAlias(inner)
+            | TypeCheck::Constrained { base: inner, .. }
+            | TypeCheck::Nullable(inner) => vec![inner],
+            TypeCheck::Union { types, .. } => types.iter().collect(),
+            TypeCheck::ParameterizedCollection { arguments, .. } => {
+                arguments.iter().map(|(ty, _)| ty).collect()
+            }
+            TypeCheck::Function {
+                parameters,
+                result,
+                syntax: false,
+            } => parameters
+                .iter()
+                .flatten()
+                .chain(std::iter::once(result.as_ref()))
+                .collect(),
+            TypeCheck::Reference { domain, referent } => vec![domain, referent],
+            _ => Vec::new(),
         },
-        TypeCheck::Reference { domain, referent } => TypeCheck::Reference {
-            domain: Box::new(normalize(domain, module)),
-            referent: Box::new(normalize(referent, module)),
+        |ty, mut args| {
+            let normalized = match ty {
+                TypeCheck::NonNull => TypeCheck::Any,
+                TypeCheck::NamedAlias { .. }
+                | TypeCheck::Alias(_)
+                | TypeCheck::GenericAlias(_)
+                | TypeCheck::Constrained { .. } => args.pop().expect("expanded type"),
+                TypeCheck::Nullable(_) => {
+                    args.push(TypeCheck::Null);
+                    union(args, module)
+                }
+                TypeCheck::Union { .. } => union(args, module),
+                TypeCheck::Collection(
+                    kind @ (CollectionKind::List
+                    | CollectionKind::Listing
+                    | CollectionKind::Mapping),
+                ) => TypeCheck::ParameterizedCollection {
+                    kind: *kind,
+                    arguments: vec![
+                        (TypeCheck::Unknown, Span::new(0, 0));
+                        if *kind == CollectionKind::Mapping {
+                            2
+                        } else {
+                            1
+                        }
+                    ],
+                },
+                TypeCheck::ParameterizedCollection { kind, .. } => {
+                    TypeCheck::ParameterizedCollection {
+                        kind: *kind,
+                        arguments: args.into_iter().map(|ty| (ty, Span::new(0, 0))).collect(),
+                    }
+                }
+                TypeCheck::Function {
+                    parameters,
+                    syntax: false,
+                    ..
+                } => {
+                    let result = Box::new(args.pop().expect("function result"));
+                    TypeCheck::Function {
+                        parameters: parameters.as_ref().map(|_| args),
+                        result,
+                        syntax: false,
+                    }
+                }
+                TypeCheck::Reference { .. } => {
+                    let referent = Box::new(args.pop().expect("referent"));
+                    let domain = Box::new(args.pop().expect("domain"));
+                    TypeCheck::Reference { domain, referent }
+                }
+                ty => ty.clone(),
+            };
+            normalized.shared()
         },
-        ty => ty.clone(),
-    }
+    )
 }
 fn union(types: Vec<TypeCheck>, module: &str) -> TypeCheck {
     let mut result = Vec::new();
     for ty in types {
-        if let TypeCheck::Union { types, .. } = ty {
-            result.extend(types);
+        if let TypeCheck::Union { types, .. } = ty.resolved() {
+            result.extend(types.iter().cloned());
         } else {
             result.push(ty);
         }
     }
-    if result.iter().any(|t| matches!(t, TypeCheck::Unknown)) {
+    if result
+        .iter()
+        .any(|ty| matches!(ty.resolved(), TypeCheck::Unknown))
+    {
         return TypeCheck::Unknown;
     }
-    if result.iter().any(|t| matches!(t, TypeCheck::Any)) {
+    if result
+        .iter()
+        .any(|ty| matches!(ty.resolved(), TypeCheck::Any))
+    {
         return TypeCheck::Any;
     }
     result.sort_by(|a, b| {
@@ -204,224 +287,395 @@ fn union(types: Vec<TypeCheck>, module: &str) -> TypeCheck {
         labels: Vec::new(),
         default: None,
     }
+    .shared()
 }
 
 /// Equality/hash identity of exported PType metadata, separate from checking
 /// equivalence. Arrow types retain nested aliases and exact constraint source.
+/// Interned postorder records avoid recursively escaping nested keys or expanding
+/// shared argument DAGs. Local pointer identities do not enter this encoding.
 pub(crate) fn metadata_key(ty: &TypeCheck) -> String {
-    match ty {
-        TypeCheck::NamedAlias {
-            declaration,
-            arguments,
-            ..
-        } => format!(
-            "alias:{declaration}:{:?}",
-            arguments.iter().map(metadata_key).collect::<Vec<_>>()
-        ),
-        TypeCheck::Alias(inner) | TypeCheck::GenericAlias(inner) => metadata_key(inner),
-        TypeCheck::Function {
-            parameters,
-            result,
-            syntax,
-        } => format!(
-            "function:{syntax}:{:?}:{}",
-            parameters
-                .as_ref()
-                .map(|p| p.iter().map(metadata_key).collect::<Vec<_>>()),
-            metadata_key(result)
-        ),
-        TypeCheck::Constrained {
-            base, constraints, ..
-        } => format!(
-            "constraint:{}:{:?}",
-            metadata_key(base),
-            constraints
+    let mut interned = BTreeMap::new();
+    let mut records = Vec::new();
+    let root = fold_metadata(
+        ty,
+        |ty| match ty {
+            TypeCheck::NamedAlias { arguments, .. } => arguments.iter().collect(),
+            TypeCheck::Alias(inner)
+            | TypeCheck::GenericAlias(inner)
+            | TypeCheck::Nullable(inner)
+            | TypeCheck::Constrained { base: inner, .. } => vec![inner],
+            TypeCheck::Function {
+                parameters, result, ..
+            } => parameters
                 .iter()
-                .map(|c| c.source.as_ref())
-                .collect::<Vec<_>>()
-        ),
-        TypeCheck::Nullable(inner) => format!("nullable:{}", metadata_key(inner)),
-        TypeCheck::Union { types, .. } => format!(
-            "union:{:?}",
-            types.iter().map(metadata_key).collect::<Vec<_>>()
-        ),
-        TypeCheck::ParameterizedCollection { kind, arguments } => format!(
-            "collection:{kind:?}:{:?}",
-            arguments
-                .iter()
-                .map(|(ty, _)| metadata_key(ty))
-                .collect::<Vec<_>>()
-        ),
-        TypeCheck::Reference { domain, referent } => format!(
-            "reference:{}:{}",
-            metadata_key(domain),
-            metadata_key(referent)
-        ),
-        other => format!("{other:?}"),
-    }
+                .flatten()
+                .chain(std::iter::once(result.as_ref()))
+                .collect(),
+            TypeCheck::Union { types, .. } => types.iter().collect(),
+            TypeCheck::ParameterizedCollection { arguments, .. } => {
+                arguments.iter().map(|(ty, _)| ty).collect()
+            }
+            TypeCheck::Reference { domain, referent } => vec![domain, referent],
+            _ => Vec::new(),
+        },
+        |ty, args: Vec<usize>| {
+            let record = match ty {
+                TypeCheck::Alias(_) | TypeCheck::GenericAlias(_) => return args[0],
+                TypeCheck::NamedAlias { declaration, .. } => {
+                    format!("alias:{declaration}:{args:?}")
+                }
+                TypeCheck::Function {
+                    parameters, syntax, ..
+                } => format!("function:{syntax}:{}:{args:?}", parameters.is_some()),
+                TypeCheck::Constrained { constraints, .. } => format!(
+                    "constraint:{}:{:?}",
+                    args[0],
+                    constraints
+                        .iter()
+                        .map(|c| c.source.as_ref())
+                        .collect::<Vec<_>>()
+                ),
+                TypeCheck::Nullable(_) => format!("nullable:{}", args[0]),
+                TypeCheck::Union { .. } => format!("union:{args:?}"),
+                TypeCheck::ParameterizedCollection { kind, .. } => {
+                    format!("collection:{kind:?}:{args:?}")
+                }
+                TypeCheck::Reference { .. } => format!("reference:{args:?}"),
+                other => format!("leaf:{other:?}"),
+            };
+            if let Some(index) = interned.get(&record) {
+                return *index;
+            }
+            let index = records.len();
+            records.push(record.clone());
+            interned.insert(record, index);
+            index
+        },
+    );
+    format!("{root}:{records:?}")
 }
 
 pub(crate) fn is_subtype(a: &TypeCheck, b: &TypeCheck, heap: &Heap) -> bool {
-    if matches!(a, TypeCheck::Unknown) || matches!(b, TypeCheck::Unknown | TypeCheck::Any) {
+    if matches!(a.resolved(), TypeCheck::Unknown)
+        || matches!(b.resolved(), TypeCheck::Unknown | TypeCheck::Any)
+    {
         return true;
     }
-    if matches!(b, TypeCheck::Nothing) {
+    if matches!(b.resolved(), TypeCheck::Nothing) {
         return false;
     }
     subtype(a, b, heap)
 }
-fn contains_function_syntax(ty: &TypeCheck) -> bool {
-    match ty {
-        TypeCheck::Function { syntax: true, .. } => true,
-        TypeCheck::Function {
-            parameters, result, ..
-        } => {
-            parameters.iter().flatten().any(contains_function_syntax)
-                || contains_function_syntax(result)
-        }
-        TypeCheck::ParameterizedCollection { arguments, .. } => {
-            arguments.iter().any(|(ty, _)| contains_function_syntax(ty))
-        }
-        TypeCheck::Reference { domain, referent } => {
-            contains_function_syntax(domain) || contains_function_syntax(referent)
-        }
-        TypeCheck::Union { types, .. } => types.iter().any(contains_function_syntax),
-        _ => false,
+fn function_syntax_flags(root: &TypeCheck) -> BTreeMap<usize, bool> {
+    let mut flags = BTreeMap::new();
+    fold_metadata(
+        root,
+        |ty| match ty {
+            TypeCheck::Function {
+                parameters,
+                result,
+                syntax: false,
+            } => parameters
+                .iter()
+                .flatten()
+                .chain(std::iter::once(result.as_ref()))
+                .collect(),
+            TypeCheck::ParameterizedCollection { arguments, .. } => {
+                arguments.iter().map(|(ty, _)| ty).collect()
+            }
+            TypeCheck::Reference { domain, referent } => vec![domain, referent],
+            TypeCheck::Union { types, .. } => types.iter().collect(),
+            _ => Vec::new(),
+        },
+        |ty, args: Vec<bool>| {
+            let found = matches!(ty, TypeCheck::Function { syntax: true, .. })
+                || args.into_iter().any(|x| x);
+            flags.insert(ty as *const TypeCheck as usize, found);
+            found
+        },
+    );
+    flags
+}
+
+fn class_subtype(id: usize, other: usize, heap: &Heap) -> bool {
+    if id == other {
+        return true;
     }
+    let mut current = heap.find_class(id);
+    let mut visited = BTreeSet::new();
+    while let Some(id) = current {
+        if !visited.insert(id) {
+            return false;
+        }
+        let Ok(object) = heap.get(id) else {
+            return false;
+        };
+        if object
+            .class_definition
+            .as_ref()
+            .is_some_and(|c| c.id == other)
+        {
+            return true;
+        }
+        current = object.parent;
+    }
+    false
 }
 
 fn subtype(a: &TypeCheck, b: &TypeCheck, heap: &Heap) -> bool {
-    // VmReference does not structurally compare exported function syntax types.
-    if matches!(a, TypeCheck::Function { syntax: true, .. })
-        || matches!(b, TypeCheck::Function { syntax: true, .. })
-    {
-        return false;
+    type Pair<'a> = (&'a TypeCheck, &'a TypeCheck);
+    enum Task<'a> {
+        Compare(Pair<'a>),
+        Save((usize, usize)),
+        Group {
+            pairs: Vec<Pair<'a>>,
+            next: usize,
+            all: bool,
+        },
+        ResumeGroup {
+            pairs: Vec<Pair<'a>>,
+            next: usize,
+            all: bool,
+        },
+        Union {
+            left: &'a [TypeCheck],
+            right: &'a [TypeCheck],
+            next: usize,
+        },
+        ResumeUnion {
+            left: &'a [TypeCheck],
+            right: &'a [TypeCheck],
+            next: usize,
+        },
     }
-    if a.equivalent(b) && !contains_function_syntax(a) && !contains_function_syntax(b) {
-        return true;
-    }
-    match (a, b) {
-        (TypeCheck::IntegerAlias { name: a, .. }, TypeCheck::IntegerAlias { name: b, .. }) => {
-            match a.as_ref() {
-                "Int8" => matches!(b.as_ref(), "Int16" | "Int32"),
-                "Int16" => b.as_ref() == "Int32",
-                "UInt8" => matches!(b.as_ref(), "Int16" | "Int32" | "UInt16" | "UInt32" | "UInt"),
-                "UInt16" => matches!(b.as_ref(), "Int32" | "UInt32" | "UInt"),
-                "UInt32" => b.as_ref() == "UInt",
-                _ => false,
+    let mut flags = function_syntax_flags(a);
+    flags.extend(function_syntax_flags(b));
+    let mut memo = BTreeMap::new();
+    let mut tasks = vec![Task::Compare((a, b))];
+    let mut value = false;
+    while let Some(task) = tasks.pop() {
+        match task {
+            Task::Save(key) => {
+                memo.insert(key, value);
             }
-        }
-        (TypeCheck::IntegerAlias { .. }, TypeCheck::Int | TypeCheck::Float | TypeCheck::Number) => {
-            true
-        }
-        (
-            TypeCheck::Null
-            | TypeCheck::Boolean
-            | TypeCheck::Int
-            | TypeCheck::Float
-            | TypeCheck::Number
-            | TypeCheck::String
-            | TypeCheck::Bytes
-            | TypeCheck::Class { .. }
-            | TypeCheck::RefDomain
-            | TypeCheck::Collection(_)
-            | TypeCheck::ParameterizedCollection { .. }
-            | TypeCheck::Reference { .. },
-            TypeCheck::Any,
-        ) => true,
-        (TypeCheck::Class { id, .. }, TypeCheck::RefDomain) => subtype(
-            &TypeCheck::Class {
-                id: *id,
-                name: Arc::from(""),
-            },
-            &TypeCheck::Class {
-                id: DOMAIN_ID,
-                name: Arc::from("Domain"),
-            },
-            heap,
-        ),
-        (
-            TypeCheck::Reference {
-                domain: ad,
-                referent: at,
-            },
-            TypeCheck::Reference {
-                domain: bd,
-                referent: bt,
-            },
-        ) => subtype(ad, bd, heap) && subtype(at, bt, heap),
-        (
-            TypeCheck::Function {
-                parameters: a,
-                result: ar,
-                syntax: false,
-            },
-            TypeCheck::Function {
-                parameters: b,
-                result: br,
-                syntax: false,
-            },
-        ) => {
-            subtype(ar, br, heap)
-                && match (a, b) {
-                    (None, None) => true,
-                    (Some(a), None) => a.is_empty(),
-                    (Some(a), Some(b)) => {
-                        a.len() == b.len() && a.iter().zip(b).all(|(a, b)| subtype(b, a, heap))
+            Task::Group { pairs, next, all } => {
+                if next == pairs.len() {
+                    value = all;
+                    continue;
+                }
+                let pair = pairs[next];
+                tasks.push(Task::ResumeGroup {
+                    pairs,
+                    next: next + 1,
+                    all,
+                });
+                tasks.push(Task::Compare(pair));
+            }
+            Task::ResumeGroup { pairs, next, all } => {
+                if value == all {
+                    tasks.push(Task::Group { pairs, next, all });
+                }
+            }
+            Task::Union { left, right, next } => {
+                if next == left.len() {
+                    value = true;
+                    continue;
+                }
+                tasks.push(Task::ResumeUnion {
+                    left,
+                    right,
+                    next: next + 1,
+                });
+                tasks.push(Task::Group {
+                    pairs: right.iter().map(|b| (&left[next], b)).collect(),
+                    next: 0,
+                    all: false,
+                });
+            }
+            Task::ResumeUnion { left, right, next } => {
+                if value {
+                    tasks.push(Task::Union { left, right, next });
+                }
+            }
+            Task::Compare((a, b)) => {
+                let (a, b) = (a.resolved(), b.resolved());
+                let key = (
+                    a as *const TypeCheck as usize,
+                    b as *const TypeCheck as usize,
+                );
+                if let Some(cached) = memo.get(&key) {
+                    value = *cached;
+                    continue;
+                }
+                tasks.push(Task::Save(key));
+                if matches!(a, TypeCheck::Function { syntax: true, .. })
+                    || matches!(b, TypeCheck::Function { syntax: true, .. })
+                {
+                    value = false;
+                    continue;
+                }
+                // These pairs have explicit recursive rules below. Rechecking
+                // their complete structural equality at every depth would make
+                // a covariant differing-leaf comparison quadratic.
+                let structural = matches!(
+                    (a, b),
+                    (TypeCheck::Function { .. }, TypeCheck::Function { .. })
+                        | (TypeCheck::Reference { .. }, TypeCheck::Reference { .. })
+                        | (
+                            TypeCheck::ParameterizedCollection { .. },
+                            TypeCheck::ParameterizedCollection { .. }
+                        )
+                        | (TypeCheck::Union { .. }, TypeCheck::Union { .. })
+                );
+                if !structural
+                    && !flags.get(&key.0).copied().unwrap_or(false)
+                    && !flags.get(&key.1).copied().unwrap_or(false)
+                    && a.equivalent(b)
+                {
+                    value = true;
+                    continue;
+                }
+                value = match (a, b) {
+                    (
+                        TypeCheck::IntegerAlias { name: a, .. },
+                        TypeCheck::IntegerAlias { name: b, .. },
+                    ) => match a.as_ref() {
+                        "Int8" => matches!(b.as_ref(), "Int16" | "Int32"),
+                        "Int16" => b.as_ref() == "Int32",
+                        "UInt8" => {
+                            matches!(b.as_ref(), "Int16" | "Int32" | "UInt16" | "UInt32" | "UInt")
+                        }
+                        "UInt16" => matches!(b.as_ref(), "Int32" | "UInt32" | "UInt"),
+                        "UInt32" => b.as_ref() == "UInt",
+                        _ => false,
+                    },
+                    (
+                        TypeCheck::IntegerAlias { .. },
+                        TypeCheck::Int | TypeCheck::Float | TypeCheck::Number,
+                    ) => true,
+                    (
+                        TypeCheck::Null
+                        | TypeCheck::Boolean
+                        | TypeCheck::Int
+                        | TypeCheck::Float
+                        | TypeCheck::Number
+                        | TypeCheck::String
+                        | TypeCheck::Bytes
+                        | TypeCheck::Class { .. }
+                        | TypeCheck::RefDomain
+                        | TypeCheck::Collection(_)
+                        | TypeCheck::ParameterizedCollection { .. }
+                        | TypeCheck::Reference { .. },
+                        TypeCheck::Any,
+                    ) => true,
+                    (TypeCheck::Class { id, .. }, TypeCheck::RefDomain) => {
+                        class_subtype(*id, DOMAIN_ID, heap)
+                    }
+                    (
+                        TypeCheck::Reference {
+                            domain: ad,
+                            referent: at,
+                        },
+                        TypeCheck::Reference {
+                            domain: bd,
+                            referent: bt,
+                        },
+                    ) => {
+                        tasks.push(Task::Group {
+                            pairs: vec![(ad, bd), (at, bt)],
+                            next: 0,
+                            all: true,
+                        });
+                        continue;
+                    }
+                    (
+                        TypeCheck::Function {
+                            parameters: a,
+                            result: ar,
+                            syntax: false,
+                        },
+                        TypeCheck::Function {
+                            parameters: b,
+                            result: br,
+                            syntax: false,
+                        },
+                    ) => {
+                        let parameters = match (a, b) {
+                            (None, None) => Some(Vec::new()),
+                            (Some(a), None) if a.is_empty() => Some(Vec::new()),
+                            (Some(a), Some(b)) if a.len() == b.len() => {
+                                Some(a.iter().zip(b).map(|(a, b)| (b, a)).collect::<Vec<_>>())
+                            }
+                            _ => None,
+                        };
+                        if let Some(parameters) = parameters {
+                            let mut pairs = vec![(ar.as_ref(), br.as_ref())];
+                            pairs.extend(parameters);
+                            tasks.push(Task::Group {
+                                pairs,
+                                next: 0,
+                                all: true,
+                            });
+                            continue;
+                        }
+                        false
+                    }
+                    (TypeCheck::StringLiteral(_), TypeCheck::String)
+                    | (TypeCheck::Int | TypeCheck::Float, TypeCheck::Number) => true,
+                    (TypeCheck::Class { id, .. }, TypeCheck::Class { id: other, .. }) => {
+                        class_subtype(*id, *other, heap)
+                    }
+                    (
+                        TypeCheck::ParameterizedCollection {
+                            kind: a,
+                            arguments: aa,
+                        },
+                        TypeCheck::ParameterizedCollection {
+                            kind: b,
+                            arguments: ba,
+                        },
+                    ) => {
+                        if a == b && aa.len() == ba.len() {
+                            tasks.push(Task::Group {
+                                pairs: aa.iter().zip(ba).map(|((a, _), (b, _))| (a, b)).collect(),
+                                next: 0,
+                                all: true,
+                            });
+                            continue;
+                        }
+                        false
+                    }
+                    (
+                        TypeCheck::Union { types: left, .. },
+                        TypeCheck::Union { types: right, .. },
+                    ) => {
+                        tasks.push(Task::Union {
+                            left,
+                            right,
+                            next: 0,
+                        });
+                        continue;
+                    }
+                    (a, TypeCheck::Union { types, .. }) => {
+                        tasks.push(Task::Group {
+                            pairs: types.iter().map(|b| (a, b)).collect(),
+                            next: 0,
+                            all: false,
+                        });
+                        continue;
                     }
                     _ => false,
-                }
-        }
-        (TypeCheck::StringLiteral(_), TypeCheck::String) => true,
-        (TypeCheck::Int | TypeCheck::Float, TypeCheck::Number) => true,
-        (TypeCheck::Class { id, .. }, TypeCheck::Class { id: other, .. }) => {
-            let mut current = heap.find_class(*id);
-            let mut visited = BTreeSet::new();
-            while let Some(id) = current {
-                if !visited.insert(id) {
-                    return false;
-                }
-                let Ok(object) = heap.get(id) else {
-                    return false;
                 };
-                if object
-                    .class_definition
-                    .as_ref()
-                    .is_some_and(|c| c.id == *other)
-                {
-                    return true;
-                }
-                current = object.parent;
             }
-            false
         }
-        (
-            TypeCheck::ParameterizedCollection {
-                kind: a,
-                arguments: aa,
-            },
-            TypeCheck::ParameterizedCollection {
-                kind: b,
-                arguments: ba,
-            },
-        ) => {
-            a == b
-                && aa.len() == ba.len()
-                && aa
-                    .iter()
-                    .zip(ba)
-                    .all(|((a, _), (b, _))| subtype(a, b, heap))
-        }
-        (TypeCheck::Union { types: a, .. }, TypeCheck::Union { types: b, .. }) => {
-            a.iter().all(|a| b.iter().any(|b| subtype(a, b, heap)))
-        }
-        (a, TypeCheck::Union { types, .. }) => types.iter().any(|b| subtype(a, b, heap)),
-        _ => false,
     }
+    value
 }
 
 impl Vm {
     pub(super) fn builtin_class(&mut self, ty: TypeCheck) -> Value {
+        let ty = ty.into_resolved();
         if let Some(id) = self.heap.find_builtin_class(&ty) {
             return Value::Class(id);
         }
@@ -842,7 +1096,7 @@ impl Vm {
             .reference
             .clone()
             .ok_or_else(|| invalid("missing reference payload"))?;
-        let types = if let TypeCheck::Union { types, .. } = &reference.referent {
+        let types = if let TypeCheck::Union { types, .. } = reference.referent.resolved() {
             types.clone()
         } else {
             vec![reference.referent.clone()]
@@ -876,6 +1130,7 @@ impl Vm {
         property: Option<&str>,
         key: Option<&Value>,
     ) -> Result<RuntimeError, RuntimeError> {
+        let failed = failed.resolved();
         let module = &self.program.module_name;
         let actual = export_type_name(reference, &self.heap, module)?;
         let referent = type_name(&reference.referent, module);
@@ -948,6 +1203,7 @@ impl Vm {
         property: Option<&str>,
         key: Option<&Value>,
     ) -> Result<TypeCheck, RuntimeError> {
+        let ty = ty.resolved();
         let fail = || {
             RuntimeError::new(
                 ErrorKind::MissingMember,
@@ -1020,18 +1276,29 @@ impl Vm {
     }
 }
 fn reference_key_matches(ty: &TypeCheck, key: &Value, heap: &Heap) -> bool {
-    match ty {
-        TypeCheck::Unknown => true,
-        TypeCheck::Union { types, .. } => types.iter().any(|t| reference_key_matches(t, key, heap)),
-        TypeCheck::Class { id, .. } => {
-            matches!(key,Value::Object(object) if collections::typed_class(heap,*object).ok().flatten().is_some_and(|c| c.id==*id))
+    let mut pending = vec![ty];
+    while let Some(ty) = pending.pop() {
+        let ty = ty.resolved();
+        let matches = match ty {
+            TypeCheck::Unknown => true,
+            TypeCheck::Union { types, .. } => {
+                pending.extend(types.iter().rev());
+                false
+            }
+            TypeCheck::Class { id, .. } => {
+                matches!(key,Value::Object(object) if collections::typed_class(heap,*object).ok().flatten().is_some_and(|c| c.id==*id))
+            }
+            TypeCheck::Any
+            | TypeCheck::NonNull
+            | TypeCheck::Number
+            | TypeCheck::IntegerAlias { .. } => false,
+            _ => ty.accepts(key, heap),
+        };
+        if matches {
+            return true;
         }
-        TypeCheck::Any
-        | TypeCheck::NonNull
-        | TypeCheck::Number
-        | TypeCheck::IntegerAlias { .. } => false,
-        _ => ty.accepts(key, heap),
     }
+    false
 }
 
 pub(crate) fn export_type_name(
@@ -1182,4 +1449,144 @@ pub(super) fn access_members(
         });
     }
     members
+}
+
+#[cfg(test)]
+mod generic_metadata_tests {
+    use super::*;
+
+    fn collection(kind: CollectionKind, arguments: Vec<TypeCheck>) -> TypeCheck {
+        TypeCheck::ParameterizedCollection {
+            kind,
+            arguments: arguments
+                .into_iter()
+                .map(|ty| (ty, Span::new(0, 0)))
+                .collect(),
+        }
+        .shared()
+    }
+
+    fn nested_list(mut ty: TypeCheck, depth: usize) -> TypeCheck {
+        for _ in 0..depth {
+            ty = collection(CollectionKind::List, vec![ty]);
+        }
+        ty
+    }
+
+    #[test]
+    fn exported_metadata_handles_deep_arguments_on_small_stack() {
+        std::thread::Builder::new()
+            .stack_size(256 * 1024)
+            .spawn(|| {
+                let depth = 2048;
+                let integer = nested_list(TypeCheck::Int, depth);
+                let same = nested_list(TypeCheck::Int, depth);
+                let number = nested_list(TypeCheck::Number, depth);
+                let normalized = normalize(&integer, "test");
+                assert_eq!(metadata_key(&integer), metadata_key(&normalized));
+                assert_eq!(metadata_key(&integer), metadata_key(&same));
+                assert_ne!(metadata_key(&integer), metadata_key(&number));
+                assert_eq!(
+                    type_name(&normalized, "test"),
+                    format!("{}Int{}", "List<".repeat(depth), ">".repeat(depth))
+                );
+                let heap = Heap::default();
+                assert!(is_subtype(&integer, &number, &heap));
+                assert!(!is_subtype(&number, &integer, &heap));
+            })
+            .expect("small-stack thread")
+            .join()
+            .expect("deep metadata remains stack safe");
+    }
+
+    #[test]
+    fn exported_metadata_preserves_sharing_without_changing_identity() {
+        let mut branching = TypeCheck::Int.shared();
+        for _ in 0..256 {
+            branching = collection(CollectionKind::Mapping, vec![branching.clone(), branching]);
+        }
+        let key = metadata_key(&branching);
+        assert!(
+            key.len() < 32 * 1024,
+            "metadata encoding must not expand the shared tree"
+        );
+        assert_eq!(key, metadata_key(&normalize(&branching, "test")));
+        let shared = collection(CollectionKind::List, vec![TypeCheck::Int]);
+        let shared_twice = collection(CollectionKind::Mapping, vec![shared.clone(), shared]);
+        let independent = collection(
+            CollectionKind::Mapping,
+            vec![
+                collection(CollectionKind::List, vec![TypeCheck::Int]),
+                collection(CollectionKind::List, vec![TypeCheck::Int]),
+            ],
+        );
+        assert_eq!(metadata_key(&shared_twice), metadata_key(&independent));
+        let changed = collection(
+            CollectionKind::Mapping,
+            vec![
+                collection(CollectionKind::List, vec![TypeCheck::Int]),
+                collection(CollectionKind::List, vec![TypeCheck::Float]),
+            ],
+        );
+        assert_ne!(metadata_key(&shared_twice), metadata_key(&changed));
+    }
+
+    #[test]
+    fn shared_exported_metadata_keeps_arrow_alias_and_constraint_identity() {
+        assert!(is_subtype(
+            &TypeCheck::Class {
+                id: DOMAIN_ID,
+                name: Arc::from("Domain")
+            }
+            .shared(),
+            &TypeCheck::RefDomain,
+            &Heap::default(),
+        ));
+        let alias = |declaration| {
+            TypeCheck::NamedAlias {
+                declaration,
+                name: Arc::from("Alias"),
+                arguments: vec![TypeCheck::String],
+                expanded: Box::new(TypeCheck::Int),
+            }
+            .shared()
+        };
+        let arrow = |ty| {
+            TypeCheck::Function {
+                parameters: Some(vec![ty]),
+                result: Box::new(TypeCheck::Boolean),
+                syntax: true,
+            }
+            .shared()
+        };
+        let a = arrow(alias(1));
+        let b = arrow(alias(2));
+        assert_ne!(
+            metadata_key(&normalize(&a, "test")),
+            metadata_key(&normalize(&b, "test"))
+        );
+        assert_eq!(type_name(&a, "test"), "(test#Alias<String>) -> Boolean");
+        assert!(!is_subtype(&a, &a, &Heap::default()));
+        let constrained = |source: &str| {
+            TypeCheck::Constrained {
+                base: Box::new(TypeCheck::Int),
+                base_span: Span::new(0, 0),
+                constraints: vec![ConstraintCode {
+                    block: 0,
+                    arguments: BTreeMap::new(),
+                    source: Arc::from(source),
+                    span: Span::new(0, 0),
+                    module_environment: false,
+                }],
+            }
+            .shared()
+        };
+        let a = arrow(constrained("this > 0"));
+        let b = arrow(constrained("this>0"));
+        assert_ne!(metadata_key(&a), metadata_key(&b));
+        assert_eq!(
+            metadata_key(&normalize(&constrained("this > 0"), "test")),
+            metadata_key(&TypeCheck::Int)
+        );
+    }
 }

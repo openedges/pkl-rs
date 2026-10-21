@@ -23670,6 +23670,443 @@
         "semantic:lazy-evaluation",
         "semantic:diagnostics"
       ]
+    },
+    {
+      "id": "types-stage19-finite-list-depth-128",
+      "input": "tests/fixtures/m2/types-stage19-finite-list-depth-128.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:type-tests-casts"
+      ]
+    },
+    {
+      "id": "types-stage19-deep-list-256",
+      "input": "tests/fixtures/m2/types-stage19-deep-list-256.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:type-tests-casts"
+      ]
+    },
+    {
+      "id": "types-stage19-deep-list-1024",
+      "input": "tests/fixtures/m2/types-stage19-deep-list-1024.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:type-tests-casts"
+      ]
+    },
+    {
+      "id": "types-stage19-deep-branch-14",
+      "input": "tests/fixtures/m2/types-stage19-deep-branch-14.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:type-tests-casts",
+        "semantic:collections"
+      ]
+    },
+    {
+      "id": "types-stage19-deep-branch-18",
+      "input": "tests/fixtures/m2/types-stage19-deep-branch-18.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:type-tests-casts",
+        "semantic:collections"
+      ]
+    },
+    {
+      "id": "types-stage19-swap-observed-0",
+      "input": "tests/fixtures/m2/types-stage19-swap-observed-0.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:type-tests-casts"
+      ]
+    },
+    {
+      "id": "types-stage19-swap-observed-1",
+      "input": "tests/fixtures/m2/types-stage19-swap-observed-1.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:type-tests-casts"
+      ]
+    },
+    {
+      "id": "types-stage19-swap-observed-16",
+      "input": "tests/fixtures/m2/types-stage19-swap-observed-16.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:type-tests-casts"
+      ]
+    },
+    {
+      "id": "types-stage19-finite-inline-32",
+      "input": "tests/fixtures/m2/types-stage19-finite-inline-32.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:type-tests-casts"
+      ],
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "types-stage19-finite-inline-32",
+          "types-stage19-finite-lambda-32",
+          "types-stage19-finite-let-32"
+        ],
+        "domain": "Finite depth 32 with growing actual arguments preserves the scalar result across inline, lambda and shared let-root predicates."
+      }
+    },
+    {
+      "id": "types-stage19-finite-lambda-32",
+      "input": "tests/fixtures/m2/types-stage19-finite-lambda-32.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:type-tests-casts",
+        "semantic:functions",
+        "semantic:closures"
+      ],
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "types-stage19-finite-inline-32",
+          "types-stage19-finite-lambda-32",
+          "types-stage19-finite-let-32"
+        ],
+        "domain": "Finite depth 32 with growing actual arguments preserves the scalar result across inline, lambda and shared let-root predicates."
+      }
+    },
+    {
+      "id": "types-stage19-finite-let-32",
+      "input": "tests/fixtures/m2/types-stage19-finite-let-32.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:type-tests-casts"
+      ],
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "types-stage19-finite-inline-32",
+          "types-stage19-finite-lambda-32",
+          "types-stage19-finite-let-32"
+        ],
+        "domain": "Finite depth 32 with growing actual arguments preserves the scalar result across inline, lambda and shared let-root predicates."
+      }
+    },
+    {
+      "id": "types-stage19-swap-default-inline-0",
+      "input": "tests/fixtures/m2/types-stage19-swap-default-inline-0.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:type-tests-casts",
+        "semantic:collections",
+        "semantic:classes"
+      ],
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "types-stage19-swap-default-inline-0",
+          "types-stage19-swap-default-inline-32",
+          "types-stage19-swap-default-lambda-0",
+          "types-stage19-swap-default-lambda-32"
+        ],
+        "domain": "An odd number of actual class-argument swaps preserves the false default-property predicate across inline and lambda bodies."
+      }
+    },
+    {
+      "id": "types-stage19-swap-default-inline-1",
+      "input": "tests/fixtures/m2/types-stage19-swap-default-inline-1.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:type-tests-casts",
+        "semantic:collections",
+        "semantic:classes"
+      ],
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "types-stage19-swap-default-inline-1",
+          "types-stage19-swap-default-lambda-1"
+        ],
+        "domain": "An even number of actual class-argument swaps preserves the true default-property predicate across inline and lambda bodies."
+      }
+    },
+    {
+      "id": "types-stage19-swap-default-inline-32",
+      "input": "tests/fixtures/m2/types-stage19-swap-default-inline-32.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:type-tests-casts",
+        "semantic:collections",
+        "semantic:classes"
+      ],
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "types-stage19-swap-default-inline-0",
+          "types-stage19-swap-default-inline-32",
+          "types-stage19-swap-default-lambda-0",
+          "types-stage19-swap-default-lambda-32"
+        ],
+        "domain": "An odd number of actual class-argument swaps preserves the false default-property predicate across inline and lambda bodies."
+      }
+    },
+    {
+      "id": "types-stage19-swap-default-lambda-0",
+      "input": "tests/fixtures/m2/types-stage19-swap-default-lambda-0.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:type-tests-casts",
+        "semantic:functions",
+        "semantic:closures",
+        "semantic:collections",
+        "semantic:classes"
+      ],
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "types-stage19-swap-default-inline-0",
+          "types-stage19-swap-default-inline-32",
+          "types-stage19-swap-default-lambda-0",
+          "types-stage19-swap-default-lambda-32"
+        ],
+        "domain": "An odd number of actual class-argument swaps preserves the false default-property predicate across inline and lambda bodies."
+      }
+    },
+    {
+      "id": "types-stage19-swap-default-lambda-1",
+      "input": "tests/fixtures/m2/types-stage19-swap-default-lambda-1.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:type-tests-casts",
+        "semantic:functions",
+        "semantic:closures",
+        "semantic:collections",
+        "semantic:classes"
+      ],
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "types-stage19-swap-default-inline-1",
+          "types-stage19-swap-default-lambda-1"
+        ],
+        "domain": "An even number of actual class-argument swaps preserves the true default-property predicate across inline and lambda bodies."
+      }
+    },
+    {
+      "id": "types-stage19-swap-default-lambda-32",
+      "input": "tests/fixtures/m2/types-stage19-swap-default-lambda-32.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:type-tests-casts",
+        "semantic:functions",
+        "semantic:closures",
+        "semantic:collections",
+        "semantic:classes"
+      ],
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "types-stage19-swap-default-inline-0",
+          "types-stage19-swap-default-inline-32",
+          "types-stage19-swap-default-lambda-0",
+          "types-stage19-swap-default-lambda-32"
+        ],
+        "domain": "An odd number of actual class-argument swaps preserves the false default-property predicate across inline and lambda bodies."
+      }
+    },
+    {
+      "id": "types-stage19-grow-reference-27",
+      "input": "tests/fixtures/m2/types-stage19-grow-reference-27.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:type-tests-casts",
+        "semantic:reference"
+      ]
+    },
+    {
+      "id": "types-stage19-grow-reference-28",
+      "input": "tests/fixtures/m2/types-stage19-grow-reference-28.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:type-tests-casts",
+        "semantic:reference",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "types-stage19-grow-reference-30",
+      "input": "tests/fixtures/m2/types-stage19-grow-reference-30.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:type-tests-casts",
+        "semantic:reference",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "types-stage19-wrapper-recheck-31",
+      "input": "tests/fixtures/m2/types-stage19-wrapper-recheck-31.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:type-tests-casts",
+        "semantic:collections",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "types-stage19-wrapper-recheck-32",
+      "input": "tests/fixtures/m2/types-stage19-wrapper-recheck-32.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:type-tests-casts",
+        "semantic:collections"
+      ]
+    },
+    {
+      "id": "types-stage19-wrapper-recheck-33",
+      "input": "tests/fixtures/m2/types-stage19-wrapper-recheck-33.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:lazy-evaluation",
+        "semantic:type-tests-casts",
+        "semantic:collections",
+        "semantic:diagnostics"
+      ]
     }
   ],
   "schema_version": 1,

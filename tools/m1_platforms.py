@@ -79,6 +79,9 @@ REQUIRED_SCENARIOS = {
     'm2-generic-wrappers-sequences',
     'm2-generic-defaults-sequences',
     'm2-generic-reference-sequences',
+    'm2-generic-metadata-deep-sequences',
+    'm2-generic-metadata-default-sequences',
+    'm2-generic-metadata-consumer-sequences',
 }
 
 

@@ -192,10 +192,14 @@ syntax errors also have independent raw Java comparisons. Stage 18 extends this
 contract to finite recursive generics with changing arguments, actual-argument
 capture, shared generic let roots and their unbound type variables, and let/for
 const barriers. Original observations and failed hypotheses remain separate
-from the selected additions. Unbounded growing type metadata can still exhaust
-the native stack; a bounded cancellation test does not turn that abort into a
-compatibility pass. The complete generic, const, and diagnostic corpus remains
-open.
+from the selected additions. Stage 19 shares instantiated argument graphs,
+reclaims them iteratively, and schedules nested defaults with VM fuel and GC
+roots. Deep small-stack and process-isolated lifecycle tests verify bounded
+execution and cancellation of the original abort input; its historical failure
+bytes remain preserved. The adapter instruction limit does not match Java's
+stack-overflow diagnostic. Reference metadata traversal within one instruction
+and output expansion retain resource and cancellation-latency limitations. The
+complete generic, const, and diagnostic corpus remains open.
 
 A complete runtime type-resolution model, general imported types, annotation
 syntax, and full module initialization/caching remain open requirements. The

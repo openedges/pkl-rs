@@ -1,0 +1,8 @@
+class C {p = 1}
+class D {p = 2}
+typealias Id<T> = T
+typealias A<T> = Int((new Listing<Id<T>> {new {}})[0].p == 1)
+one = 1 is A<C>
+two = 1 is A<D>
+three = 1 is A<*C|String>
+stable = 42

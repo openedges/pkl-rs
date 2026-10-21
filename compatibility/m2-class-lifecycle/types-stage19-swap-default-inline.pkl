@@ -1,0 +1,7 @@
+class C {p = 1}
+class D {p = 2}
+typealias A<T,U> = Int(if (this < 0) (new Listing<T> {new {}})[0].p == 1 else (this - 1) is A<U,T>)
+one = 32 is A<C,D>
+two = 32 is A<D,C>
+three = 31 is A<C,D>
+stable = 42

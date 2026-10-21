@@ -9,6 +9,7 @@ impl TypeCheck {
         use TypeCheck::*;
         let sub = |ty: &TypeCheck| ty.substituted(environment);
         Ok(match self {
+            Shared(_) => self.clone(),
             Parameter { block, name } => environment
                 .type_arguments
                 .get(&(*block, name.clone()))
@@ -92,111 +93,182 @@ impl TypeCheck {
     /// Nullable and List defaults do not depend on their element type; constraints
     /// do not run while obtaining the base type's default.
     pub(super) fn default_depends_on_parameters(&self) -> bool {
-        match self {
-            Self::Parameter { .. } => true,
-            Self::NamedAlias { expanded, .. }
-            | Self::Alias(expanded)
-            | Self::GenericAlias(expanded)
-            | Self::Constrained { base: expanded, .. } => expanded.default_depends_on_parameters(),
-            Self::Union {
-                types,
-                default: Some(index),
-                ..
-            } => types[*index].default_depends_on_parameters(),
-            Self::ParameterizedCollection { kind, arguments }
-                if *kind != crate::heap::CollectionKind::List =>
-            {
-                arguments
-                    .last()
-                    .is_some_and(|(ty, _)| ty.default_depends_on_parameters())
-            }
-            _ => false,
+        let mut ty = self;
+        loop {
+            ty = match ty.resolved() {
+                Self::Parameter { .. } => return true,
+                Self::NamedAlias { expanded, .. }
+                | Self::Alias(expanded)
+                | Self::GenericAlias(expanded)
+                | Self::Constrained { base: expanded, .. } => expanded,
+                Self::Union {
+                    types,
+                    default: Some(index),
+                    ..
+                } => &types[*index],
+                Self::ParameterizedCollection { kind, arguments }
+                    if *kind != crate::heap::CollectionKind::List =>
+                {
+                    let Some((argument, _)) = arguments.last() else {
+                        return false;
+                    };
+                    argument
+                }
+                _ => return false,
+            };
         }
     }
 }
 
+enum DefaultTask {
+    Visit(TypeCheck),
+    Collection(ObjectId),
+    Publish(ObjectId),
+}
+pub(super) struct GenericDefaultRun {
+    tasks: Vec<DefaultTask>,
+    value: Option<Value>,
+}
+impl GenericDefaultRun {
+    pub(super) fn new(target: ObjectId, ty: TypeCheck) -> Self {
+        Self {
+            tasks: vec![DefaultTask::Publish(target), DefaultTask::Visit(ty)],
+            value: None,
+        }
+    }
+    pub(super) fn roots(&self, roots: &mut Vec<Value>) {
+        roots.extend(self.value.iter().cloned());
+        roots.extend(self.tasks.iter().filter_map(|task| match task {
+            DefaultTask::Collection(id) | DefaultTask::Publish(id) => Some(Value::Object(*id)),
+            DefaultTask::Visit(_) => None,
+        }));
+    }
+}
 impl Vm {
-    /// Runtime counterpart of Compiler::default_type for a substituted argument.
-    /// Type resolution has already initialized actual class arguments. Preserve
-    /// their evaluator-local declaration identity and leave member bodies lazy.
-    pub(super) fn generic_default_value(
-        &mut self,
-        ty: &TypeCheck,
-        environment: &Environment,
-    ) -> Result<Option<Value>, RuntimeError> {
+    /// Default construction is VM work: each descent/allocation and each unwind
+    /// consumes fuel, and every unpublished object remains traced between steps.
+    pub(super) fn step_generic_default(&mut self) -> Result<(), RuntimeError> {
         use crate::heap::CollectionKind;
-        Ok(match ty {
-            TypeCheck::Null | TypeCheck::Nullable(_) => Some(Value::Null),
-            TypeCheck::StringLiteral(value) => Some(Value::String(value.clone())),
-            TypeCheck::NamedAlias { expanded, .. }
-            | TypeCheck::Alias(expanded)
-            | TypeCheck::GenericAlias(expanded)
-            | TypeCheck::Constrained { base: expanded, .. } => {
-                return self.generic_default_value(expanded, environment);
+        let mut run = self
+            .frames
+            .last_mut()
+            .expect("default frame")
+            .generic_default
+            .take()
+            .expect("default run");
+        match run
+            .tasks
+            .pop()
+            .ok_or_else(|| invalid("empty default run"))?
+        {
+            DefaultTask::Publish(target) => {
+                self.heap.get_mut(target)?.collection_default = Some(run.value);
+                return Ok(());
             }
-            TypeCheck::Union {
-                types,
-                default: Some(index),
-                ..
-            } => return self.generic_default_value(&types[*index], environment),
-            TypeCheck::Class { id, .. } => {
-                let object = self
-                    .heap
-                    .find_class(*id)
-                    .ok_or_else(|| invalid("missing resolved default class"))?;
-                if self
-                    .heap
-                    .get(object)?
-                    .class_definition
-                    .as_ref()
-                    .is_none_or(|class| class.abstract_)
-                {
-                    return Err(RuntimeError::new(
-                        ErrorKind::Type,
-                        "Abstract class has no default value.",
-                    ));
+            DefaultTask::Collection(id) => {
+                self.heap.get_mut(id)?.collection_default = Some(run.value.take());
+                run.value = Some(Value::Object(id));
+            }
+            DefaultTask::Visit(ty) => match ty.into_resolved() {
+                TypeCheck::Null | TypeCheck::Nullable(_) => run.value = Some(Value::Null),
+                TypeCheck::StringLiteral(value) => run.value = Some(Value::String(value)),
+                TypeCheck::NamedAlias { expanded, .. }
+                | TypeCheck::Alias(expanded)
+                | TypeCheck::GenericAlias(expanded)
+                | TypeCheck::Constrained { base: expanded, .. } => {
+                    run.tasks.push(DefaultTask::Visit(*expanded))
                 }
-                Some(Value::Object(object))
-            }
-            TypeCheck::Collection(kind) | TypeCheck::ParameterizedCollection { kind, .. } => {
-                let mut object = Object {
-                    collection_kind: *kind,
-                    ..Object::default()
-                };
-                if *kind != CollectionKind::List {
-                    object.environment = environment.clone();
-                    object.specialized_literal = true;
-                    if let TypeCheck::ParameterizedCollection { arguments, .. } = ty {
-                        let (argument, _) = arguments
+                TypeCheck::Union {
+                    mut types,
+                    default: Some(index),
+                    ..
+                } => run.tasks.push(DefaultTask::Visit(types.swap_remove(index))),
+                TypeCheck::Class { id, .. } => {
+                    let object = self
+                        .heap
+                        .find_class(id)
+                        .ok_or_else(|| invalid("missing resolved default class"))?;
+                    if self
+                        .heap
+                        .get(object)?
+                        .class_definition
+                        .as_ref()
+                        .is_none_or(|class| class.abstract_)
+                    {
+                        return Err(RuntimeError::new(
+                            ErrorKind::Type,
+                            "Abstract class has no default value.",
+                        ));
+                    }
+                    run.value = Some(Value::Object(object));
+                }
+                ty @ (TypeCheck::Collection(_) | TypeCheck::ParameterizedCollection { .. }) => {
+                    let (kind, argument) = match ty {
+                        TypeCheck::Collection(kind) => (kind, None),
+                        TypeCheck::ParameterizedCollection {
+                            kind,
+                            mut arguments,
+                        } => (kind, arguments.pop().map(|(ty, _)| ty)),
+                        _ => unreachable!(),
+                    };
+                    let mut object = Object {
+                        collection_kind: kind,
+                        ..Object::default()
+                    };
+                    if kind != CollectionKind::List {
+                        object.environment = self
+                            .frames
                             .last()
-                            .ok_or_else(|| invalid("missing collection argument"))?;
-                        if !argument.noop() {
-                            object.collection_default =
-                                Some(self.generic_default_value(argument, environment)?);
-                        }
+                            .expect("default frame")
+                            .environment
+                            .clone();
+                        object.specialized_literal = true;
+                    }
+                    let id = self.heap.allocate(object);
+                    if kind != CollectionKind::List
+                        && let Some(argument) = argument
+                        && !argument.noop()
+                    {
+                        run.tasks.push(DefaultTask::Collection(id));
+                        run.tasks.push(DefaultTask::Visit(argument));
+                    } else {
+                        run.value = Some(Value::Object(id));
                     }
                 }
-                Some(Value::Object(self.heap.allocate(object)))
-            }
-            TypeCheck::Parameter { .. } => {
-                return Err(invalid("unbound generic default parameter"));
-            }
-            _ => None,
-        })
+                TypeCheck::Parameter { .. } => {
+                    return Err(invalid("unbound generic default parameter"));
+                }
+                _ => run.value = None,
+            },
+        }
+        self.frames
+            .last_mut()
+            .expect("default frame")
+            .generic_default = Some(run);
+        Ok(())
     }
 }
 
 impl TypeCheck {
     fn contains_parameter(&self) -> bool {
-        match self {
-            Self::Parameter { .. } => true,
-            _ => self.type_children().any(Self::contains_parameter),
+        let mut pending = vec![self];
+        let mut visited = BTreeSet::new();
+        while let Some(ty) = pending.pop() {
+            let ty = ty.resolved();
+            if !visited.insert(ty as *const Self) {
+                continue;
+            }
+            if matches!(ty, Self::Parameter { .. }) {
+                return true;
+            }
+            pending.extend(ty.type_children());
         }
+        false
     }
 
     /// Structural metadata children, excluding executable constraint bodies.
     fn type_children(&self) -> Box<dyn Iterator<Item = &Self> + '_> {
-        match self {
+        match self.resolved() {
             Self::NamedAlias {
                 arguments,
                 expanded,
@@ -226,10 +298,19 @@ impl TypeCheck {
     }
 
     pub(super) fn has_deferred_reference_validation(&self) -> bool {
-        matches!(self, Self::Reference { referent, .. } if referent.contains_parameter())
-            || self
-                .type_children()
-                .any(Self::has_deferred_reference_validation)
+        let mut pending = vec![self];
+        let mut visited = BTreeSet::new();
+        while let Some(ty) = pending.pop() {
+            let ty = ty.resolved();
+            if !visited.insert(ty as *const Self) {
+                continue;
+            }
+            if matches!(ty, Self::Reference { referent, .. } if referent.contains_parameter()) {
+                return true;
+            }
+            pending.extend(ty.type_children());
+        }
+        false
     }
 
     pub(super) fn validate_reference_arguments(
@@ -238,37 +319,159 @@ impl TypeCheck {
         aliases: &[RuntimeFrame],
         origins: &BTreeMap<usize, (Vec<RuntimeFrame>, Vec<RuntimeFrame>)>,
     ) -> Result<(), RuntimeError> {
-        for child in self.type_children() {
-            child.validate_reference_arguments(span, aliases, origins)?;
-        }
-        if let Self::Reference { referent, .. } = self
-            && let Some(Self::Constrained { constraints, .. }) =
-                reference_constrained_type(referent)
-        {
-            let mut error = RuntimeError::new(
-                ErrorKind::Type,
-                "`Reference` referent type argument may not include type constraints.",
-            )
-            .at(span);
-            // Keep the compiler's existing origin-frame policy for actual
-            // arguments; do not fabricate source locations from their values.
-            if let Some((mut frames, origin_aliases)) = constraints
-                .first()
-                .and_then(|constraint| origins.get(&constraint.block))
-                .cloned()
-            {
-                if origin_aliases.starts_with(aliases) {
-                    frames.truncate(origin_aliases.len().saturating_sub(aliases.len() + 1));
+        let mut pending = vec![(self, false)];
+        let mut visited = BTreeSet::new();
+        while let Some((ty, complete)) = pending.pop() {
+            let ty = ty.resolved();
+            if !complete {
+                if !visited.insert(ty as *const Self) {
+                    continue;
                 }
-                frames.retain(|frame| {
-                    std::iter::once(span)
-                        .chain(aliases.iter().map(|alias| alias.span))
-                        .all(|usage| frame.span.start < usage.start || frame.span.end > usage.end)
-                });
-                error.frames = frames;
+                pending.push((ty, true));
+                let children: Vec<_> = ty.type_children().collect();
+                pending.extend(children.into_iter().rev().map(|child| (child, false)));
+                continue;
             }
-            return Err(error);
+            if let Self::Reference { referent, .. } = ty
+                && let Some(Self::Constrained { constraints, .. }) =
+                    reference_constrained_type(referent)
+            {
+                let mut error = RuntimeError::new(
+                    ErrorKind::Type,
+                    "`Reference` referent type argument may not include type constraints.",
+                )
+                .at(span);
+                // Keep the compiler's existing origin-frame policy for actual
+                // arguments; do not fabricate source locations from their values.
+                if let Some((mut frames, origin_aliases)) = constraints
+                    .first()
+                    .and_then(|constraint| origins.get(&constraint.block))
+                    .cloned()
+                {
+                    if origin_aliases.starts_with(aliases) {
+                        frames.truncate(origin_aliases.len().saturating_sub(aliases.len() + 1));
+                    }
+                    frames.retain(|frame| {
+                        std::iter::once(span)
+                            .chain(aliases.iter().map(|alias| alias.span))
+                            .all(|usage| {
+                                frame.span.start < usage.start || frame.span.end > usage.end
+                            })
+                    });
+                    error.frames = frames;
+                }
+                return Err(error);
+            }
         }
         Ok(())
     }
 }
+
+/// Runtime metadata has no value/heap edges and is immutable after substitution.
+/// The optional Arc permits iterative last-owner reclamation, including concurrent
+/// releases: Arc::into_inner guarantees exactly one releasing owner receives a node.
+#[derive(Clone)]
+pub struct SharedTypeCheck(Option<Arc<SharedNode>>);
+struct SharedNode {
+    ty: TypeCheck,
+    noop: bool,
+    needs_custom_this: bool,
+}
+impl std::fmt::Debug for SharedTypeCheck {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        // Debugging an Environment must not recursively print its argument DAG.
+        f.debug_struct("SharedTypeCheck").finish_non_exhaustive()
+    }
+}
+impl SharedTypeCheck {
+    fn node(&self) -> &SharedNode {
+        self.0.as_deref().expect("live shared type")
+    }
+    pub(super) fn noop(&self) -> bool {
+        self.node().noop
+    }
+    pub(super) fn needs_custom_this(&self) -> bool {
+        self.node().needs_custom_this
+    }
+}
+impl Drop for SharedTypeCheck {
+    fn drop(&mut self) {
+        let Some(node) = self.0.take().and_then(Arc::into_inner) else {
+            return;
+        };
+        let mut pending = vec![node.ty];
+        while let Some(ty) = pending.pop() {
+            match ty {
+                TypeCheck::Shared(mut shared) => {
+                    if let Some(node) = shared.0.take().and_then(Arc::into_inner) {
+                        pending.push(node.ty);
+                    }
+                }
+                TypeCheck::NamedAlias {
+                    arguments,
+                    expanded,
+                    ..
+                } => {
+                    pending.extend(arguments);
+                    pending.push(*expanded);
+                }
+                TypeCheck::Function {
+                    parameters, result, ..
+                } => {
+                    pending.extend(parameters.into_iter().flatten());
+                    pending.push(*result);
+                }
+                TypeCheck::Reference { domain, referent } => {
+                    pending.push(*domain);
+                    pending.push(*referent);
+                }
+                TypeCheck::Nullable(inner)
+                | TypeCheck::Alias(inner)
+                | TypeCheck::GenericAlias(inner) => pending.push(*inner),
+                TypeCheck::ParameterizedCollection { arguments, .. } => {
+                    pending.extend(arguments.into_iter().map(|(ty, _)| ty));
+                }
+                TypeCheck::Union { types, .. } => pending.extend(types),
+                TypeCheck::Constrained {
+                    base, constraints, ..
+                } => {
+                    pending.push(*base);
+                    for constraint in constraints {
+                        pending.extend(constraint.arguments.into_values());
+                    }
+                }
+                _ => {}
+            }
+        }
+    }
+}
+impl TypeCheck {
+    pub(super) fn resolved(&self) -> &Self {
+        let mut ty = self;
+        while let Self::Shared(node) = ty {
+            ty = &node.node().ty;
+        }
+        ty
+    }
+    pub(super) fn into_resolved(self) -> Self {
+        match self {
+            Self::Shared(node) => node.node().ty.clone(),
+            ty => ty,
+        }
+    }
+    pub(super) fn shared(self) -> Self {
+        if matches!(self, Self::Shared(_)) {
+            return self;
+        }
+        let noop = self.noop();
+        let needs_custom_this = typecheck::needs_custom_this(&self);
+        Self::Shared(SharedTypeCheck(Some(Arc::new(SharedNode {
+            ty: self,
+            noop,
+            needs_custom_this,
+        }))))
+    }
+}
+
+#[cfg(test)]
+mod tests;

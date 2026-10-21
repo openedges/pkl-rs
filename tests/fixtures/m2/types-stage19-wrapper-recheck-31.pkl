@@ -1,0 +1,2 @@
+typealias Check<T,U> = Int(((new Listing<T> {1}) as Listing<U>)[0] == 1)
+result = 1 is Check<Int,String>

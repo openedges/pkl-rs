@@ -1,0 +1,4 @@
+class C {p = 1}
+class D {p = 2}
+typealias A<T,U> = Int((n) -> if (n < 0) (new Listing<T> {new {}})[0].p == 1 else (n - 1) is A<U,T>)
+result = 1 is A<C,D>
