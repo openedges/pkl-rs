@@ -1,0 +1,1 @@
+result = Map(33, new Dynamic { p = throw("key-33") }, 32, new Dynamic { p = throw("key-32") }) == Map(32, new Dynamic { p = 1 }, 33, new Dynamic { p = 1 })

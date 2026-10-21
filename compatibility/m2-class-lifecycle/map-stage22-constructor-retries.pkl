@@ -1,0 +1,7 @@
+key = new Dynamic { p = throw("map key hash") }
+bad = Map(key, 1, throw("later key"), 2)
+valueFirst = Map(key, throw("map value before key hash"))
+good = Map("b", 1, "a", 2, "b", 3)
+stable = 42
+probe0 = good["b"]
+probe1 = good["a"]

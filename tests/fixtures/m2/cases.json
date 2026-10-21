@@ -26403,6 +26403,2354 @@
         "semantic:collections",
         "semantic:diagnostics"
       ]
+    },
+    {
+      "id": "map-stage22-empty",
+      "input": "tests/fixtures/m2/map-stage22-empty.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections"
+      ],
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "map-stage22-empty",
+          "map-stage22-map-alias-default",
+          "map-stage22-map-generic-default",
+          "map-stage22-collision-generator-empty"
+        ],
+        "domain": "An empty strict Map and its aliases/defaults have zero length, and iteration produces zero members."
+      }
+    },
+    {
+      "id": "map-stage22-empty-isempty",
+      "input": "tests/fixtures/m2/map-stage22-empty-isempty.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections"
+      ]
+    },
+    {
+      "id": "map-stage22-singleton",
+      "input": "tests/fixtures/m2/map-stage22-singleton.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections"
+      ]
+    },
+    {
+      "id": "map-stage22-duplicate",
+      "input": "tests/fixtures/m2/map-stage22-duplicate.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections"
+      ]
+    },
+    {
+      "id": "map-stage22-odd",
+      "input": "tests/fixtures/m2/map-stage22-odd.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "map-stage22-odd-throw",
+      "input": "tests/fixtures/m2/map-stage22-odd-throw.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "map-stage22-key-first",
+      "input": "tests/fixtures/m2/map-stage22-key-first.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "map-stage22-value-before-hash",
+      "input": "tests/fixtures/m2/map-stage22-value-before-hash.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "map-stage22-hash-before-next-key",
+      "input": "tests/fixtures/m2/map-stage22-hash-before-next-key.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "map-stage22-eager-unused-value",
+      "input": "tests/fixtures/m2/map-stage22-eager-unused-value.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "map-stage22-numeric-boxed",
+      "input": "tests/fixtures/m2/map-stage22-numeric-boxed.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators"
+      ]
+    },
+    {
+      "id": "map-stage22-numeric-length",
+      "input": "tests/fixtures/m2/map-stage22-numeric-length.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators"
+      ]
+    },
+    {
+      "id": "map-stage22-numeric-lookup-int",
+      "input": "tests/fixtures/m2/map-stage22-numeric-lookup-int.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators"
+      ]
+    },
+    {
+      "id": "map-stage22-numeric-lookup-float",
+      "input": "tests/fixtures/m2/map-stage22-numeric-lookup-float.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators"
+      ]
+    },
+    {
+      "id": "map-stage22-signed-zero",
+      "input": "tests/fixtures/m2/map-stage22-signed-zero.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators"
+      ]
+    },
+    {
+      "id": "map-stage22-signed-zero-length",
+      "input": "tests/fixtures/m2/map-stage22-signed-zero-length.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators"
+      ]
+    },
+    {
+      "id": "map-stage22-nan",
+      "input": "tests/fixtures/m2/map-stage22-nan.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators"
+      ]
+    },
+    {
+      "id": "map-stage22-null",
+      "input": "tests/fixtures/m2/map-stage22-null.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections"
+      ]
+    },
+    {
+      "id": "map-stage22-missing",
+      "input": "tests/fixtures/m2/map-stage22-missing.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "map-stage22-missing-null",
+      "input": "tests/fixtures/m2/map-stage22-missing-null.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections"
+      ]
+    },
+    {
+      "id": "map-stage22-contains-key",
+      "input": "tests/fixtures/m2/map-stage22-contains-key.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators"
+      ]
+    },
+    {
+      "id": "map-stage22-contains-key-missing",
+      "input": "tests/fixtures/m2/map-stage22-contains-key-missing.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators"
+      ]
+    },
+    {
+      "id": "map-stage22-structural-key",
+      "input": "tests/fixtures/m2/map-stage22-structural-key.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators"
+      ],
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "map-stage22-structural-key",
+          "map-stage22-list-key",
+          "map-stage22-mapping-key",
+          "map-stage22-map-key",
+          "map-stage22-map-empty-key",
+          "map-stage22-map-key-order-independent",
+          "map-stage22-class-keys",
+          "map-stage22-adversarial-inherited-entry-key"
+        ],
+        "domain": "Lookup with equal supported structural object, collection and Map keys returns the inserted value."
+      }
+    },
+    {
+      "id": "map-stage22-list-key",
+      "input": "tests/fixtures/m2/map-stage22-list-key.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators"
+      ],
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "map-stage22-structural-key",
+          "map-stage22-list-key",
+          "map-stage22-mapping-key",
+          "map-stage22-map-key",
+          "map-stage22-map-empty-key",
+          "map-stage22-map-key-order-independent",
+          "map-stage22-class-keys",
+          "map-stage22-adversarial-inherited-entry-key"
+        ],
+        "domain": "Lookup with equal supported structural object, collection and Map keys returns the inserted value."
+      }
+    },
+    {
+      "id": "map-stage22-mapping-key",
+      "input": "tests/fixtures/m2/map-stage22-mapping-key.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators"
+      ],
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "map-stage22-structural-key",
+          "map-stage22-list-key",
+          "map-stage22-mapping-key",
+          "map-stage22-map-key",
+          "map-stage22-map-empty-key",
+          "map-stage22-map-key-order-independent",
+          "map-stage22-class-keys",
+          "map-stage22-adversarial-inherited-entry-key"
+        ],
+        "domain": "Lookup with equal supported structural object, collection and Map keys returns the inserted value."
+      }
+    },
+    {
+      "id": "map-stage22-map-key",
+      "input": "tests/fixtures/m2/map-stage22-map-key.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators"
+      ],
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "map-stage22-structural-key",
+          "map-stage22-list-key",
+          "map-stage22-mapping-key",
+          "map-stage22-map-key",
+          "map-stage22-map-empty-key",
+          "map-stage22-map-key-order-independent",
+          "map-stage22-class-keys",
+          "map-stage22-adversarial-inherited-entry-key"
+        ],
+        "domain": "Lookup with equal supported structural object, collection and Map keys returns the inserted value."
+      }
+    },
+    {
+      "id": "map-stage22-map-equality",
+      "input": "tests/fixtures/m2/map-stage22-map-equality.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators"
+      ],
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "map-stage22-map-equality",
+          "map-stage22-adversarial-deep-map-equality",
+          "map-stage22-collision-duplicate-first-key-equality"
+        ],
+        "domain": "Strict Map equality preserves entries through reordering, nested equal Maps and replacement of duplicate keys."
+      }
+    },
+    {
+      "id": "map-stage22-map-numeric-equality",
+      "input": "tests/fixtures/m2/map-stage22-map-numeric-equality.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators"
+      ],
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "map-stage22-map-numeric-equality",
+          "map-stage22-map-numeric-key-equality",
+          "map-stage22-map-zero-key-equality",
+          "map-stage22-equals-int-float-list",
+          "map-stage22-equals-int-float-dynamic",
+          "map-stage22-equals-signed-zero-value",
+          "map-stage22-adversarial-deep-map-boxed-equality"
+        ],
+        "domain": "Strict Map equality retains Java boxed numeric identity for direct and nested keys or values, including signed zero."
+      }
+    },
+    {
+      "id": "map-stage22-map-numeric-key-equality",
+      "input": "tests/fixtures/m2/map-stage22-map-numeric-key-equality.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators"
+      ],
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "map-stage22-map-numeric-equality",
+          "map-stage22-map-numeric-key-equality",
+          "map-stage22-map-zero-key-equality",
+          "map-stage22-equals-int-float-list",
+          "map-stage22-equals-int-float-dynamic",
+          "map-stage22-equals-signed-zero-value",
+          "map-stage22-adversarial-deep-map-boxed-equality"
+        ],
+        "domain": "Strict Map equality retains Java boxed numeric identity for direct and nested keys or values, including signed zero."
+      }
+    },
+    {
+      "id": "map-stage22-map-zero-key-equality",
+      "input": "tests/fixtures/m2/map-stage22-map-zero-key-equality.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators"
+      ],
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "map-stage22-map-numeric-equality",
+          "map-stage22-map-numeric-key-equality",
+          "map-stage22-map-zero-key-equality",
+          "map-stage22-equals-int-float-list",
+          "map-stage22-equals-int-float-dynamic",
+          "map-stage22-equals-signed-zero-value",
+          "map-stage22-adversarial-deep-map-boxed-equality"
+        ],
+        "domain": "Strict Map equality retains Java boxed numeric identity for direct and nested keys or values, including signed zero."
+      }
+    },
+    {
+      "id": "map-stage22-map-mapping-equality",
+      "input": "tests/fixtures/m2/map-stage22-map-mapping-equality.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators"
+      ]
+    },
+    {
+      "id": "map-stage22-map-empty-key",
+      "input": "tests/fixtures/m2/map-stage22-map-empty-key.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators"
+      ],
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "map-stage22-structural-key",
+          "map-stage22-list-key",
+          "map-stage22-mapping-key",
+          "map-stage22-map-key",
+          "map-stage22-map-empty-key",
+          "map-stage22-map-key-order-independent",
+          "map-stage22-class-keys",
+          "map-stage22-adversarial-inherited-entry-key"
+        ],
+        "domain": "Lookup with equal supported structural object, collection and Map keys returns the inserted value."
+      }
+    },
+    {
+      "id": "map-stage22-type-test",
+      "input": "tests/fixtures/m2/map-stage22-type-test.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics"
+      ]
+    },
+    {
+      "id": "map-stage22-type-test-wrong",
+      "input": "tests/fixtures/m2/map-stage22-type-test-wrong.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics"
+      ]
+    },
+    {
+      "id": "map-stage22-type-default",
+      "input": "tests/fixtures/m2/map-stage22-type-default.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "map-stage22-hash-list-numeric",
+      "input": "tests/fixtures/m2/map-stage22-hash-list-numeric.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "id": "map-stage22-hash-dynamic-numeric",
+      "input": "tests/fixtures/m2/map-stage22-hash-dynamic-numeric.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "id": "map-stage22-duplicate-structural",
+      "input": "tests/fixtures/m2/map-stage22-duplicate-structural.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections"
+      ]
+    },
+    {
+      "id": "map-stage22-nested-value-unforced",
+      "input": "tests/fixtures/m2/map-stage22-nested-value-unforced.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "id": "map-stage22-nested-key-forced",
+      "input": "tests/fixtures/m2/map-stage22-nested-key-forced.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "map-stage22-hash-key-0",
+      "input": "tests/fixtures/m2/map-stage22-hash-key-0.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "map-stage22-hash-key-1",
+      "input": "tests/fixtures/m2/map-stage22-hash-key-1.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "map-stage22-hash-key-32",
+      "input": "tests/fixtures/m2/map-stage22-hash-key-32.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "map-stage22-hash-key-33",
+      "input": "tests/fixtures/m2/map-stage22-hash-key-33.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "map-stage22-hash-key-neg1",
+      "input": "tests/fixtures/m2/map-stage22-hash-key-neg1.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "map-stage22-hash-key-Aa",
+      "input": "tests/fixtures/m2/map-stage22-hash-key-Aa.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "map-stage22-hash-key-BB",
+      "input": "tests/fixtures/m2/map-stage22-hash-key-BB.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "map-stage22-typed-good",
+      "input": "tests/fixtures/m2/map-stage22-typed-good.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics"
+      ]
+    },
+    {
+      "id": "map-stage22-typed-bad-key",
+      "input": "tests/fixtures/m2/map-stage22-typed-bad-key.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "map-stage22-typed-bad-value",
+      "input": "tests/fixtures/m2/map-stage22-typed-bad-value.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "map-stage22-typed-nested-lazy",
+      "input": "tests/fixtures/m2/map-stage22-typed-nested-lazy.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:types",
+        "semantic:generics"
+      ]
+    },
+    {
+      "id": "map-stage22-typed-nested-force",
+      "input": "tests/fixtures/m2/map-stage22-typed-nested-force.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "map-stage22-typed-key-lazy",
+      "input": "tests/fixtures/m2/map-stage22-typed-key-lazy.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "map-stage22-default",
+      "input": "tests/fixtures/m2/map-stage22-default.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics"
+      ]
+    },
+    {
+      "id": "map-stage22-inherited-key",
+      "input": "tests/fixtures/m2/map-stage22-inherited-key.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:amendment"
+      ]
+    },
+    {
+      "id": "map-stage22-collision-values",
+      "input": "tests/fixtures/m2/map-stage22-collision-values.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "map-stage22-hash-order-values",
+      "input": "tests/fixtures/m2/map-stage22-hash-order-values.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "map-stage22-equals-int-float-list",
+      "input": "tests/fixtures/m2/map-stage22-equals-int-float-list.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators"
+      ],
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "map-stage22-map-numeric-equality",
+          "map-stage22-map-numeric-key-equality",
+          "map-stage22-map-zero-key-equality",
+          "map-stage22-equals-int-float-list",
+          "map-stage22-equals-int-float-dynamic",
+          "map-stage22-equals-signed-zero-value",
+          "map-stage22-adversarial-deep-map-boxed-equality"
+        ],
+        "domain": "Strict Map equality retains Java boxed numeric identity for direct and nested keys or values, including signed zero."
+      }
+    },
+    {
+      "id": "map-stage22-equals-int-float-dynamic",
+      "input": "tests/fixtures/m2/map-stage22-equals-int-float-dynamic.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators"
+      ],
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "map-stage22-map-numeric-equality",
+          "map-stage22-map-numeric-key-equality",
+          "map-stage22-map-zero-key-equality",
+          "map-stage22-equals-int-float-list",
+          "map-stage22-equals-int-float-dynamic",
+          "map-stage22-equals-signed-zero-value",
+          "map-stage22-adversarial-deep-map-boxed-equality"
+        ],
+        "domain": "Strict Map equality retains Java boxed numeric identity for direct and nested keys or values, including signed zero."
+      }
+    },
+    {
+      "id": "map-stage22-equals-nan",
+      "input": "tests/fixtures/m2/map-stage22-equals-nan.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators"
+      ]
+    },
+    {
+      "id": "map-stage22-equals-signed-zero-value",
+      "input": "tests/fixtures/m2/map-stage22-equals-signed-zero-value.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators"
+      ],
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "map-stage22-map-numeric-equality",
+          "map-stage22-map-numeric-key-equality",
+          "map-stage22-map-zero-key-equality",
+          "map-stage22-equals-int-float-list",
+          "map-stage22-equals-int-float-dynamic",
+          "map-stage22-equals-signed-zero-value",
+          "map-stage22-adversarial-deep-map-boxed-equality"
+        ],
+        "domain": "Strict Map equality retains Java boxed numeric identity for direct and nested keys or values, including signed zero."
+      }
+    },
+    {
+      "id": "map-stage22-equals-empty-mapping",
+      "input": "tests/fixtures/m2/map-stage22-equals-empty-mapping.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators"
+      ]
+    },
+    {
+      "id": "map-stage22-equals-length-unforced",
+      "input": "tests/fixtures/m2/map-stage22-equals-length-unforced.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "id": "map-stage22-equals-right-length-unforced",
+      "input": "tests/fixtures/m2/map-stage22-equals-right-length-unforced.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "id": "map-stage22-equals-missing-key-unforced",
+      "input": "tests/fixtures/m2/map-stage22-equals-missing-key-unforced.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "id": "map-stage22-equals-same-key-value-left",
+      "input": "tests/fixtures/m2/map-stage22-equals-same-key-value-left.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "map-stage22-map-empty-get-lazy-key",
+      "input": "tests/fixtures/m2/map-stage22-map-empty-get-lazy-key.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "id": "map-stage22-map-empty-contains-lazy-key",
+      "input": "tests/fixtures/m2/map-stage22-map-empty-contains-lazy-key.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "id": "map-stage22-map-nonempty-get-lazy-key",
+      "input": "tests/fixtures/m2/map-stage22-map-nonempty-get-lazy-key.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "map-stage22-map-nonempty-contains-lazy-key",
+      "input": "tests/fixtures/m2/map-stage22-map-nonempty-contains-lazy-key.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "map-stage22-map-key-value-hash",
+      "input": "tests/fixtures/m2/map-stage22-map-key-value-hash.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "map-stage22-map-key-order-independent",
+      "input": "tests/fixtures/m2/map-stage22-map-key-order-independent.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators"
+      ],
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "map-stage22-structural-key",
+          "map-stage22-list-key",
+          "map-stage22-mapping-key",
+          "map-stage22-map-key",
+          "map-stage22-map-empty-key",
+          "map-stage22-map-key-order-independent",
+          "map-stage22-class-keys",
+          "map-stage22-adversarial-inherited-entry-key"
+        ],
+        "domain": "Lookup with equal supported structural object, collection and Map keys returns the inserted value."
+      }
+    },
+    {
+      "id": "map-stage22-map-key-equality-boxed-values",
+      "input": "tests/fixtures/m2/map-stage22-map-key-equality-boxed-values.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators"
+      ]
+    },
+    {
+      "id": "map-stage22-map-null-value",
+      "input": "tests/fixtures/m2/map-stage22-map-null-value.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections"
+      ]
+    },
+    {
+      "id": "map-stage22-map-typed-new-empty",
+      "input": "tests/fixtures/m2/map-stage22-map-typed-new-empty.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "map-stage22-map-alias-default",
+      "input": "tests/fixtures/m2/map-stage22-map-alias-default.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:type-aliases"
+      ],
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "map-stage22-empty",
+          "map-stage22-map-alias-default",
+          "map-stage22-map-generic-default",
+          "map-stage22-collision-generator-empty"
+        ],
+        "domain": "An empty strict Map and its aliases/defaults have zero length, and iteration produces zero members."
+      }
+    },
+    {
+      "id": "map-stage22-map-generic-default",
+      "input": "tests/fixtures/m2/map-stage22-map-generic-default.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics"
+      ],
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "map-stage22-empty",
+          "map-stage22-map-alias-default",
+          "map-stage22-map-generic-default",
+          "map-stage22-collision-generator-empty"
+        ],
+        "domain": "An empty strict Map and its aliases/defaults have zero length, and iteration produces zero members."
+      }
+    },
+    {
+      "id": "map-stage22-spread-listing",
+      "input": "tests/fixtures/m2/map-stage22-spread-listing.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:generators",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "map-stage22-subscript-numeric-missing",
+      "input": "tests/fixtures/m2/map-stage22-subscript-numeric-missing.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "map-stage22-contains-nan",
+      "input": "tests/fixtures/m2/map-stage22-contains-nan.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators"
+      ]
+    },
+    {
+      "id": "map-stage22-contains-signed-zero",
+      "input": "tests/fixtures/m2/map-stage22-contains-signed-zero.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators"
+      ]
+    },
+    {
+      "id": "map-stage22-type-arity-missing",
+      "input": "tests/fixtures/m2/map-stage22-type-arity-missing.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "map-stage22-type-arity-extra",
+      "input": "tests/fixtures/m2/map-stage22-type-arity-extra.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "map-stage22-type-empty-vacuous",
+      "input": "tests/fixtures/m2/map-stage22-type-empty-vacuous.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics"
+      ]
+    },
+    {
+      "id": "map-stage22-type-return",
+      "input": "tests/fixtures/m2/map-stage22-type-return.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:functions"
+      ]
+    },
+    {
+      "id": "map-stage22-type-cast-value",
+      "input": "tests/fixtures/m2/map-stage22-type-cast-value.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "map-stage22-type-key-fails-before-value",
+      "input": "tests/fixtures/m2/map-stage22-type-key-fails-before-value.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "map-stage22-type-value-lazy-object",
+      "input": "tests/fixtures/m2/map-stage22-type-value-lazy-object.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:types",
+        "semantic:generics"
+      ]
+    },
+    {
+      "id": "map-stage22-type-value-lazy-object-force",
+      "input": "tests/fixtures/m2/map-stage22-type-value-lazy-object-force.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "map-stage22-null-attached-key",
+      "input": "tests/fixtures/m2/map-stage22-null-attached-key.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:classes"
+      ]
+    },
+    {
+      "id": "map-stage22-null-attached-key-get",
+      "input": "tests/fixtures/m2/map-stage22-null-attached-key-get.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:classes"
+      ]
+    },
+    {
+      "id": "map-stage22-null-attached-value-equality",
+      "input": "tests/fixtures/m2/map-stage22-null-attached-value-equality.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:classes"
+      ]
+    },
+    {
+      "id": "map-stage22-class-keys",
+      "input": "tests/fixtures/m2/map-stage22-class-keys.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:classes"
+      ],
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "map-stage22-structural-key",
+          "map-stage22-list-key",
+          "map-stage22-mapping-key",
+          "map-stage22-map-key",
+          "map-stage22-map-empty-key",
+          "map-stage22-map-key-order-independent",
+          "map-stage22-class-keys",
+          "map-stage22-adversarial-inherited-entry-key"
+        ],
+        "domain": "Lookup with equal supported structural object, collection and Map keys returns the inserted value."
+      }
+    },
+    {
+      "id": "map-stage22-class-key-other-class",
+      "input": "tests/fixtures/m2/map-stage22-class-key-other-class.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:classes"
+      ]
+    },
+    {
+      "id": "map-stage22-equality-order-zero-one",
+      "input": "tests/fixtures/m2/map-stage22-equality-order-zero-one.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "map-stage22-hash-order-zero-one",
+      "input": "tests/fixtures/m2/map-stage22-hash-order-zero-one.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "map-stage22-equality-order-one-thirtytwo",
+      "input": "tests/fixtures/m2/map-stage22-equality-order-one-thirtytwo.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "map-stage22-hash-order-one-thirtytwo",
+      "input": "tests/fixtures/m2/map-stage22-hash-order-one-thirtytwo.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "map-stage22-equality-order-zero-thirtytwo",
+      "input": "tests/fixtures/m2/map-stage22-equality-order-zero-thirtytwo.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "map-stage22-hash-order-zero-thirtytwo",
+      "input": "tests/fixtures/m2/map-stage22-hash-order-zero-thirtytwo.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "map-stage22-equality-order-thirtythree-thirtytwo",
+      "input": "tests/fixtures/m2/map-stage22-equality-order-thirtythree-thirtytwo.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "map-stage22-hash-order-thirtythree-thirtytwo",
+      "input": "tests/fixtures/m2/map-stage22-hash-order-thirtythree-thirtytwo.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "map-stage22-equality-order-negative-one-zero",
+      "input": "tests/fixtures/m2/map-stage22-equality-order-negative-one-zero.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "map-stage22-hash-order-negative-one-zero",
+      "input": "tests/fixtures/m2/map-stage22-hash-order-negative-one-zero.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "map-stage22-equality-order-thirtyone-negativeone",
+      "input": "tests/fixtures/m2/map-stage22-equality-order-thirtyone-negativeone.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "map-stage22-hash-order-thirtyone-negativeone",
+      "input": "tests/fixtures/m2/map-stage22-hash-order-thirtyone-negativeone.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "map-stage22-equality-order-Aa-BB",
+      "input": "tests/fixtures/m2/map-stage22-equality-order-Aa-BB.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "map-stage22-hash-order-Aa-BB",
+      "input": "tests/fixtures/m2/map-stage22-hash-order-Aa-BB.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "map-stage22-equality-order-BB-Aa",
+      "input": "tests/fixtures/m2/map-stage22-equality-order-BB-Aa.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "map-stage22-hash-order-BB-Aa",
+      "input": "tests/fixtures/m2/map-stage22-hash-order-BB-Aa.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "map-stage22-equality-order-Aa-AaAa",
+      "input": "tests/fixtures/m2/map-stage22-equality-order-Aa-AaAa.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "map-stage22-hash-order-Aa-AaAa",
+      "input": "tests/fixtures/m2/map-stage22-hash-order-Aa-AaAa.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "map-stage22-diagnostic-empty",
+      "input": "tests/fixtures/m2/map-stage22-diagnostic-empty.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "map-stage22-diagnostic-singleton",
+      "input": "tests/fixtures/m2/map-stage22-diagnostic-singleton.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "map-stage22-diagnostic-nested",
+      "input": "tests/fixtures/m2/map-stage22-diagnostic-nested.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "map-stage22-diagnostic-duplicate-order",
+      "input": "tests/fixtures/m2/map-stage22-diagnostic-duplicate-order.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "map-stage22-diagnostic-object-value",
+      "input": "tests/fixtures/m2/map-stage22-diagnostic-object-value.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "map-stage22-diagnostic-nested-property",
+      "input": "tests/fixtures/m2/map-stage22-diagnostic-nested-property.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "map-stage22-diagnostic-key-object",
+      "input": "tests/fixtures/m2/map-stage22-diagnostic-key-object.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "map-stage22-diagnostic-long-ascii",
+      "input": "tests/fixtures/m2/map-stage22-diagnostic-long-ascii.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "map-stage22-diagnostic-long-utf16",
+      "input": "tests/fixtures/m2/map-stage22-diagnostic-long-utf16.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "map-stage22-diagnostic-long-utf16-boundary",
+      "input": "tests/fixtures/m2/map-stage22-diagnostic-long-utf16-boundary.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "map-stage22-adversarial-colliding-string-lookup",
+      "input": "tests/fixtures/m2/map-stage22-adversarial-colliding-string-lookup.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections"
+      ]
+    },
+    {
+      "id": "map-stage22-adversarial-colliding-string-duplicate",
+      "input": "tests/fixtures/m2/map-stage22-adversarial-colliding-string-duplicate.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections"
+      ]
+    },
+    {
+      "id": "map-stage22-adversarial-colliding-int-lookup",
+      "input": "tests/fixtures/m2/map-stage22-adversarial-colliding-int-lookup.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections"
+      ]
+    },
+    {
+      "id": "map-stage22-adversarial-colliding-int-duplicate",
+      "input": "tests/fixtures/m2/map-stage22-adversarial-colliding-int-duplicate.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections"
+      ]
+    },
+    {
+      "id": "map-stage22-adversarial-nan-key-lookup",
+      "input": "tests/fixtures/m2/map-stage22-adversarial-nan-key-lookup.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators"
+      ]
+    },
+    {
+      "id": "map-stage22-adversarial-null-versus-empty-list",
+      "input": "tests/fixtures/m2/map-stage22-adversarial-null-versus-empty-list.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections"
+      ]
+    },
+    {
+      "id": "map-stage22-adversarial-zero-versus-empty-map",
+      "input": "tests/fixtures/m2/map-stage22-adversarial-zero-versus-empty-map.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators"
+      ]
+    },
+    {
+      "id": "map-stage22-adversarial-empty-kinds",
+      "input": "tests/fixtures/m2/map-stage22-adversarial-empty-kinds.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections"
+      ]
+    },
+    {
+      "id": "map-stage22-adversarial-boxed-boolean",
+      "input": "tests/fixtures/m2/map-stage22-adversarial-boxed-boolean.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators"
+      ]
+    },
+    {
+      "id": "map-stage22-adversarial-self-equality-lazy",
+      "input": "tests/fixtures/m2/map-stage22-adversarial-self-equality-lazy.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "id": "map-stage22-adversarial-structural-key-numeric-zero",
+      "input": "tests/fixtures/m2/map-stage22-adversarial-structural-key-numeric-zero.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators"
+      ]
+    },
+    {
+      "id": "map-stage22-adversarial-deep-map-equality",
+      "input": "tests/fixtures/m2/map-stage22-adversarial-deep-map-equality.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators"
+      ],
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "map-stage22-map-equality",
+          "map-stage22-adversarial-deep-map-equality",
+          "map-stage22-collision-duplicate-first-key-equality"
+        ],
+        "domain": "Strict Map equality preserves entries through reordering, nested equal Maps and replacement of duplicate keys."
+      }
+    },
+    {
+      "id": "map-stage22-adversarial-deep-map-boxed-equality",
+      "input": "tests/fixtures/m2/map-stage22-adversarial-deep-map-boxed-equality.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators"
+      ],
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "map-stage22-map-numeric-equality",
+          "map-stage22-map-numeric-key-equality",
+          "map-stage22-map-zero-key-equality",
+          "map-stage22-equals-int-float-list",
+          "map-stage22-equals-int-float-dynamic",
+          "map-stage22-equals-signed-zero-value",
+          "map-stage22-adversarial-deep-map-boxed-equality"
+        ],
+        "domain": "Strict Map equality retains Java boxed numeric identity for direct and nested keys or values, including signed zero."
+      }
+    },
+    {
+      "id": "map-stage22-adversarial-length-ignores-value",
+      "input": "tests/fixtures/m2/map-stage22-adversarial-length-ignores-value.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections"
+      ]
+    },
+    {
+      "id": "map-stage22-adversarial-key-before-next-value-type",
+      "input": "tests/fixtures/m2/map-stage22-adversarial-key-before-next-value-type.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "map-stage22-adversarial-value-before-next-key-type",
+      "input": "tests/fixtures/m2/map-stage22-adversarial-value-before-next-key-type.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "map-stage22-adversarial-key-insertion-order",
+      "input": "tests/fixtures/m2/map-stage22-adversarial-key-insertion-order.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "map-stage22-adversarial-key-eager-nested-listing",
+      "input": "tests/fixtures/m2/map-stage22-adversarial-key-eager-nested-listing.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "map-stage22-adversarial-value-eager-is",
+      "input": "tests/fixtures/m2/map-stage22-adversarial-value-eager-is.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections"
+      ]
+    },
+    {
+      "id": "map-stage22-adversarial-value-eager-is-error",
+      "input": "tests/fixtures/m2/map-stage22-adversarial-value-eager-is-error.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "map-stage22-adversarial-alias-identity-map",
+      "input": "tests/fixtures/m2/map-stage22-adversarial-alias-identity-map.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:type-aliases"
+      ]
+    },
+    {
+      "id": "map-stage22-adversarial-nullable-default",
+      "input": "tests/fixtures/m2/map-stage22-adversarial-nullable-default.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics"
+      ]
+    },
+    {
+      "id": "map-stage22-adversarial-inferred-empty",
+      "input": "tests/fixtures/m2/map-stage22-adversarial-inferred-empty.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "map-stage22-adversarial-inherited-entry-key",
+      "input": "tests/fixtures/m2/map-stage22-adversarial-inherited-entry-key.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:amendment"
+      ],
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "map-stage22-structural-key",
+          "map-stage22-list-key",
+          "map-stage22-mapping-key",
+          "map-stage22-map-key",
+          "map-stage22-map-empty-key",
+          "map-stage22-map-key-order-independent",
+          "map-stage22-class-keys",
+          "map-stage22-adversarial-inherited-entry-key"
+        ],
+        "domain": "Lookup with equal supported structural object, collection and Map keys returns the inserted value."
+      }
+    },
+    {
+      "id": "map-stage22-collision-null-zero",
+      "input": "tests/fixtures/m2/map-stage22-collision-null-zero.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "map-stage22-collision-zero-null",
+      "input": "tests/fixtures/m2/map-stage22-collision-zero-null.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "map-stage22-collision-null-emptystring",
+      "input": "tests/fixtures/m2/map-stage22-collision-null-emptystring.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "map-stage22-collision-emptystring-null",
+      "input": "tests/fixtures/m2/map-stage22-collision-emptystring-null.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "map-stage22-collision-zero-floatzero",
+      "input": "tests/fixtures/m2/map-stage22-collision-zero-floatzero.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "map-stage22-collision-floatzero-zero",
+      "input": "tests/fixtures/m2/map-stage22-collision-floatzero-zero.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "map-stage22-collision-zeromap-null",
+      "input": "tests/fixtures/m2/map-stage22-collision-zeromap-null.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "map-stage22-collision-generator-first",
+      "input": "tests/fixtures/m2/map-stage22-collision-generator-first.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:generators"
+      ]
+    },
+    {
+      "id": "map-stage22-collision-generator-last",
+      "input": "tests/fixtures/m2/map-stage22-collision-generator-last.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:generators"
+      ]
+    },
+    {
+      "id": "map-stage22-collision-generator-empty",
+      "input": "tests/fixtures/m2/map-stage22-collision-generator-empty.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:generators"
+      ],
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "map-stage22-empty",
+          "map-stage22-map-alias-default",
+          "map-stage22-map-generic-default",
+          "map-stage22-collision-generator-empty"
+        ],
+        "domain": "An empty strict Map and its aliases/defaults have zero length, and iteration produces zero members."
+      }
+    },
+    {
+      "id": "map-stage22-collision-spread-mapping-first",
+      "input": "tests/fixtures/m2/map-stage22-collision-spread-mapping-first.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:generators"
+      ]
+    },
+    {
+      "id": "map-stage22-collision-spread-dynamic-first",
+      "input": "tests/fixtures/m2/map-stage22-collision-spread-dynamic-first.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:generators"
+      ]
+    },
+    {
+      "id": "map-stage22-collision-duplicate-first-key-equality",
+      "input": "tests/fixtures/m2/map-stage22-collision-duplicate-first-key-equality.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:lazy-evaluation"
+      ],
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "map-stage22-map-equality",
+          "map-stage22-adversarial-deep-map-equality",
+          "map-stage22-collision-duplicate-first-key-equality"
+        ],
+        "domain": "Strict Map equality preserves entries through reordering, nested equal Maps and replacement of duplicate keys."
+      }
+    },
+    {
+      "id": "map-stage22-collision-arraynode-hash-order",
+      "input": "tests/fixtures/m2/map-stage22-collision-arraynode-hash-order.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "map-stage22-collision-arraynode-equality-order",
+      "input": "tests/fixtures/m2/map-stage22-collision-arraynode-equality-order.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "map-stage22-prefix-lookup-cold",
+      "input": "tests/fixtures/m2/map-stage22-prefix-lookup-cold.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "id": "map-stage22-prefix-lookup-prefix",
+      "input": "tests/fixtures/m2/map-stage22-prefix-lookup-prefix.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "id": "map-stage22-prefix-lookup-deeper",
+      "input": "tests/fixtures/m2/map-stage22-prefix-lookup-deeper.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "id": "map-stage22-prefix-lookup-otherbucket",
+      "input": "tests/fixtures/m2/map-stage22-prefix-lookup-otherbucket.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "id": "map-stage22-prefix-insert-prefix",
+      "input": "tests/fixtures/m2/map-stage22-prefix-insert-prefix.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "id": "map-stage22-prefix-insert-deeper",
+      "input": "tests/fixtures/m2/map-stage22-prefix-insert-deeper.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "id": "map-stage22-prefix-equals-prefix",
+      "input": "tests/fixtures/m2/map-stage22-prefix-equals-prefix.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "id": "map-stage22-prefix-equals-deeper",
+      "input": "tests/fixtures/m2/map-stage22-prefix-equals-deeper.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "id": "map-stage22-prefix-key-listing-equality",
+      "input": "tests/fixtures/m2/map-stage22-prefix-key-listing-equality.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "id": "map-stage22-array-prefix-15-lookup",
+      "input": "tests/fixtures/m2/map-stage22-array-prefix-15-lookup.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "id": "map-stage22-array-prefix-15-insert",
+      "input": "tests/fixtures/m2/map-stage22-array-prefix-15-insert.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "id": "map-stage22-array-prefix-16-lookup",
+      "input": "tests/fixtures/m2/map-stage22-array-prefix-16-lookup.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "id": "map-stage22-array-prefix-16-insert",
+      "input": "tests/fixtures/m2/map-stage22-array-prefix-16-insert.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "id": "map-stage22-array-prefix-17-lookup",
+      "input": "tests/fixtures/m2/map-stage22-array-prefix-17-lookup.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "id": "map-stage22-array-prefix-17-insert",
+      "input": "tests/fixtures/m2/map-stage22-array-prefix-17-insert.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "id": "map-stage22-trie-nested-array-lookup",
+      "input": "tests/fixtures/m2/map-stage22-trie-nested-array-lookup.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections"
+      ]
+    },
+    {
+      "id": "map-stage22-trie-nested-array-length",
+      "input": "tests/fixtures/m2/map-stage22-trie-nested-array-length.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections"
+      ]
+    },
+    {
+      "id": "map-stage22-trie-nested-array-map-key",
+      "input": "tests/fixtures/m2/map-stage22-trie-nested-array-map-key.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators"
+      ]
+    },
+    {
+      "id": "map-stage22-trie-nested-array-equality",
+      "input": "tests/fixtures/m2/map-stage22-trie-nested-array-equality.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "map-stage22-trie-nested-array-hash",
+      "input": "tests/fixtures/m2/map-stage22-trie-nested-array-hash.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "map-stage22-trie-mixed-collision-equality",
+      "input": "tests/fixtures/m2/map-stage22-trie-mixed-collision-equality.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "map-stage22-trie-mixed-collision-hash",
+      "input": "tests/fixtures/m2/map-stage22-trie-mixed-collision-hash.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "map-stage22-trie-negative-highbits-equality",
+      "input": "tests/fixtures/m2/map-stage22-trie-negative-highbits-equality.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "map-stage22-trie-negative-highbits-hash",
+      "input": "tests/fixtures/m2/map-stage22-trie-negative-highbits-hash.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "map-stage22-trie-negative-highbits-lookup",
+      "input": "tests/fixtures/m2/map-stage22-trie-negative-highbits-lookup.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections"
+      ]
+    },
+    {
+      "id": "map-stage22-collision-asymmetry-length",
+      "input": "tests/fixtures/m2/map-stage22-collision-asymmetry-length.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "id": "map-stage22-collision-asymmetry-lookup-a",
+      "input": "tests/fixtures/m2/map-stage22-collision-asymmetry-lookup-a.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "id": "map-stage22-collision-asymmetry-lookup-b",
+      "input": "tests/fixtures/m2/map-stage22-collision-asymmetry-lookup-b.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "id": "map-stage22-collision-asymmetry-lookup-int",
+      "input": "tests/fixtures/m2/map-stage22-collision-asymmetry-lookup-int.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "id": "map-stage22-collision-asymmetry-equality-to-order",
+      "input": "tests/fixtures/m2/map-stage22-collision-asymmetry-equality-to-order.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:lazy-evaluation"
+      ]
     }
   ],
   "schema_version": 1,

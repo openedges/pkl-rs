@@ -68,6 +68,7 @@ pub enum Instruction {
         check_index: bool,
         span: Span,
     },
+    CheckMapSpread,
     OpenIterator {
         nullable: bool,
         spread: bool,
@@ -87,6 +88,9 @@ pub enum Instruction {
     MakeList {
         length: usize,
     },
+    /// Hash and insert one strict Map pair before evaluating the next pair.
+    PrepareMapEntry,
+    AddMapEntry,
     LoadThis,
     LoadCustomThis,
     LoadOuter,
@@ -507,7 +511,7 @@ impl TypeCheck {
                 ("TypeAlias", Value::TypeAlias(_)) | ("Class", Value::Class(_))
             ),
             Self::Function { parameters, .. } => {
-                matches!(value, Value::Function(id) if heap.get(*id).is_ok_and(|object| parameters.as_ref().is_none_or(|parameters| object.function.as_ref().is_some_and(|function| function.arity == parameters.len()) || object.native_function.as_ref().is_some_and(|function| parameters.len() == if function.name.as_ref() == "Reference" {3} else {0}))))
+                matches!(value, Value::Function(id) if heap.get(*id).is_ok_and(|object| parameters.as_ref().is_none_or(|parameters| object.function.as_ref().is_some_and(|function| function.arity == parameters.len()) || object.native_function.as_ref().is_some_and(|function| parameters.len() == match function.name.as_ref() { "Reference" => 3, "containsKey" | "getOrNull" => 1, _ => 0 }))))
             }
             Self::RefDomain => Self::Class {
                 id: reference::DOMAIN_ID,
@@ -897,6 +901,12 @@ impl Vm {
         self.inputs.clear();
         self.stack.clear();
         self.state = State::Running;
+        if self.heap.get(receiver)?.collection_kind == crate::heap::CollectionKind::Map
+            && self.collection_builtin(receiver, name)?
+        {
+            self.finish_top()?;
+            return Ok(());
+        }
         if let Err(error) = self.force(receiver, receiver, Arc::from(name), false, true, false) {
             self.fail(error);
         } else if self.frames.is_empty() {
@@ -997,6 +1007,10 @@ impl Vm {
     pub fn is_closed(&self) -> bool {
         matches!(self.state, State::Closed)
     }
+    pub(crate) fn is_map(&self, value: &Value) -> bool {
+        matches!(value, Value::Object(id) if self.heap.get(*id).is_ok_and(|object| object.collection_kind == crate::heap::CollectionKind::Map))
+    }
+
     pub(crate) fn is_reference(&self, value: &Value) -> bool {
         matches!(value,Value::Object(id) if self.heap.get(*id).is_ok_and(|object| object.reference.is_some()))
     }
@@ -2131,6 +2145,9 @@ impl Vm {
         method: bool,
     ) -> Result<(), RuntimeError> {
         if let Some(native) = self.heap.get(id)?.native_function.clone() {
+            if matches!(native.name.as_ref(), "containsKey" | "getOrNull") {
+                return self.invoke_map_lookup(id, native, arguments);
+            }
             return self.invoke_reference_native(native, arguments);
         }
         let arity = arguments.len();
@@ -2232,6 +2249,52 @@ impl Vm {
                 .clone()
         };
         frame.pc += 1;
+        let frame_index = self.frames.len() - 1;
+        let result = if matches!(
+            &instruction,
+            Instruction::Swap
+                | Instruction::BeginCollection { .. }
+                | Instruction::EndCollection
+                | Instruction::SetCollectionDefault { .. }
+                | Instruction::SetCollectionTypeDefault(_)
+                | Instruction::GenericConstructorParent { .. }
+                | Instruction::AmendEmpty
+                | Instruction::AddCollectionProperty(_)
+                | Instruction::AddCollectionElement(_)
+                | Instruction::AddCollectionEntry { .. }
+                | Instruction::CheckMapSpread
+                | Instruction::OpenIterator { .. }
+                | Instruction::IteratorNext { .. }
+                | Instruction::SpreadMember
+                | Instruction::OpenPredicate
+                | Instruction::PredicateNext { .. }
+                | Instruction::AddPredicateMember(_)
+                | Instruction::Subscript
+                | Instruction::SuperSubscript
+                | Instruction::EntryParent
+                | Instruction::MakeList { .. }
+                | Instruction::PrepareMapEntry
+                | Instruction::AddMapEntry
+        ) {
+            self.collection_instruction(instruction)
+        } else {
+            self.step_instruction(instruction)
+        };
+        if let Some(frame) = self.frames.get_mut(frame_index)
+            && frame
+                .equality_run
+                .as_ref()
+                .is_none_or(|run| !run.retries_instruction())
+        {
+            frame.prepared_hashes = None;
+        }
+        result
+    }
+
+    /// Keep the large general dispatch frame out of collection and continuation
+    /// calls; their independent bounded stacks are exercised at 256 KiB.
+    fn step_instruction(&mut self, instruction: Instruction) -> Result<(), RuntimeError> {
+        let frame = self.frames.last_mut().expect("active frame");
         match instruction {
             Instruction::BeginTypeAlias {
                 declaration,
@@ -2339,6 +2402,7 @@ impl Vm {
             | Instruction::AddCollectionProperty(_)
             | Instruction::AddCollectionElement(_)
             | Instruction::AddCollectionEntry { .. }
+            | Instruction::CheckMapSpread
             | Instruction::OpenIterator { .. }
             | Instruction::IteratorNext { .. }
             | Instruction::SpreadMember
@@ -2348,7 +2412,11 @@ impl Vm {
             | Instruction::Subscript
             | Instruction::SuperSubscript
             | Instruction::EntryParent
-            | Instruction::MakeList { .. } => self.collection_instruction(instruction)?,
+            | Instruction::MakeList { .. }
+            | Instruction::PrepareMapEntry
+            | Instruction::AddMapEntry => {
+                return Err(invalid("collection instruction bypassed scheduler"));
+            }
             Instruction::Constant(value) => self.stack.push(value),
             Instruction::WrapNullableDefault { defined } => {
                 let default = if defined { Some(self.pop()?) } else { None };
@@ -2480,7 +2548,8 @@ impl Vm {
                 } else if matches!(
                     value,
                     Value::TypeAlias(_) | Value::Class(_) | Value::Function(_)
-                ) {
+                ) || self.is_map(&value)
+                {
                     let text = crate::diagnostic_values::render(
                         &value,
                         &self.heap,
@@ -2571,11 +2640,23 @@ impl Vm {
                     && name.as_ref() == "apply"
                 {
                     self.stack.push(receiver);
-                } else if method && name.as_ref() == "toString" && receiver.as_object().is_err() {
+                } else if method
+                    && name.as_ref() == "toString"
+                    && (receiver.as_object().is_err() || self.is_map(&receiver))
+                {
                     let function = self.native_reference_method(receiver, "scalarToString");
                     self.stack.push(function);
                 } else {
                     let receiver = receiver.as_object()?;
+                    if method
+                        && self.heap.get(receiver)?.collection_kind
+                            == crate::heap::CollectionKind::Map
+                        && matches!(name.as_ref(), "containsKey" | "getOrNull")
+                    {
+                        let function = self.native_reference_method(Value::Object(receiver), name);
+                        self.stack.push(function);
+                        return Ok(());
+                    }
                     if self.reference_member(receiver, name, method)? {
                         return Ok(());
                     }
@@ -3803,13 +3884,26 @@ impl Compiler<'_> {
                 self.compile_type(ty)?.unaliased()
         {
             let kind = *kind;
-            let check = self.compile_type(ty)?;
-            let has_default =
-                matches!(check.unaliased(), TypeCheck::ParameterizedCollection { .. });
-            if has_default {
-                self.default_type(&check, &mut instructions, ty.span)?;
+            if kind == crate::heap::CollectionKind::Map {
+                let span = member.expr.span;
+                let span = if self.resolved.module.source[span.start..].starts_with("new") {
+                    Span::new(span.start, span.start + 3)
+                } else {
+                    span
+                };
+                instructions.push_at(
+                    Instruction::Fail(collections::external_amendment_error("Map")),
+                    span,
+                );
+            } else {
+                let check = self.compile_type(ty)?;
+                let has_default =
+                    matches!(check.unaliased(), TypeCheck::ParameterizedCollection { .. });
+                if has_default {
+                    self.default_type(&check, &mut instructions, ty.span)?;
+                }
+                self.collection_body(members, kind, has_default, &mut instructions)?;
             }
-            self.collection_body(members, kind, has_default, &mut instructions)?;
         } else {
             self.expression(&member.expr, &mut instructions)?;
         }
@@ -4131,6 +4225,13 @@ impl Compiler<'_> {
                 | TypeCheck::ParameterizedCollection { kind, .. } = check.unaliased()
                 {
                     let kind = *kind;
+                    if kind == crate::heap::CollectionKind::Map {
+                        output.push_at(
+                            Instruction::Fail(collections::external_amendment_error("Map")),
+                            expression.span,
+                        );
+                        return Ok(());
+                    }
                     let has_default =
                         matches!(check.unaliased(), TypeCheck::ParameterizedCollection { .. });
                     if has_default {
@@ -4461,6 +4562,36 @@ impl Compiler<'_> {
                 });
             }
             ExprKind::Call { callee, arguments } => {
+                if matches!(&callee.kind, ExprKind::Name(name) if name == "Map")
+                    && self.resolved.names.get(&callee.span) == Some(&Binding::ImplicitMethod)
+                {
+                    if arguments.len() % 2 != 0 {
+                        let span = Span::new(expression.span.end - 1, expression.span.end);
+                        let mut error = RuntimeError::new(
+                            ErrorKind::Type,
+                            "Number of `Map()` arguments must be a multiple of two: `Map(key1, value1, key2, value2, ..., keyN, valueN)`",
+                        ).at(span);
+                        error.frames.push(RuntimeFrame {
+                            span,
+                            member: Arc::from(self.member.as_str()),
+                            source: None,
+                        });
+                        return Err(error);
+                    }
+                    output.push(Instruction::BeginCollection {
+                        kind: crate::heap::CollectionKind::Map,
+                        has_parent: false,
+                        specialized: false,
+                    });
+                    for pair in arguments.as_chunks::<2>().0 {
+                        self.expression(&pair[0], output)?;
+                        self.expression(&pair[1], output)?;
+                        output.push_at(Instruction::PrepareMapEntry, expression.span);
+                        output.push_at(Instruction::AddMapEntry, expression.span);
+                    }
+                    output.push(Instruction::EndCollection);
+                    return Ok(());
+                }
                 if matches!(&callee.kind, ExprKind::Name(name) if name == "List")
                     && self.resolved.names.get(&callee.span) == Some(&Binding::ImplicitMethod)
                 {
@@ -5616,6 +5747,7 @@ impl Compiler<'_> {
                             "Listing" => crate::heap::CollectionKind::Listing,
                             "Mapping" => crate::heap::CollectionKind::Mapping,
                             "List" => crate::heap::CollectionKind::List,
+                            "Map" => crate::heap::CollectionKind::Map,
                             _ if crate::diagnostic_names::BASE_PROPERTIES
                                 .contains(&path[0].as_str()) =>
                             {
@@ -5629,7 +5761,10 @@ impl Compiler<'_> {
                                 .at(name_spans[0]));
                             }
                         };
-                        let arity = if kind == crate::heap::CollectionKind::Mapping {
+                        let arity = if matches!(
+                            kind,
+                            crate::heap::CollectionKind::Mapping | crate::heap::CollectionKind::Map
+                        ) {
                             2
                         } else {
                             1
@@ -5686,6 +5821,7 @@ impl Compiler<'_> {
                         "Listing" => TypeCheck::Collection(crate::heap::CollectionKind::Listing),
                         "Mapping" => TypeCheck::Collection(crate::heap::CollectionKind::Mapping),
                         "List" => TypeCheck::Collection(crate::heap::CollectionKind::List),
+                        "Map" => TypeCheck::Collection(crate::heap::CollectionKind::Map),
                         _ if crate::diagnostic_names::BASE_PROPERTIES
                             .contains(&path[0].as_str()) =>
                         {
@@ -5827,7 +5963,9 @@ impl Compiler<'_> {
                         has_parent: false,
                         specialized: true,
                     });
-                    if let TypeCheck::ParameterizedCollection { arguments, .. } = check {
+                    if let TypeCheck::ParameterizedCollection { arguments, .. } = check
+                        && *kind != crate::heap::CollectionKind::Map
+                    {
                         let (ty, span) = arguments.last().expect("collection value type");
                         if ty.default_depends_on_parameters() {
                             output

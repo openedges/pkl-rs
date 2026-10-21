@@ -102,8 +102,9 @@ bytecode. VM errors retain these logical frames before unwinding. A shared
 scalar evaluation boundary combines them with source URIs and module names
 and renders complete uncolored diagnostics. Native `language_probe`, Node
 `evaluateLanguage`, and Wasm `evaluateLanguage` use this boundary. These are
-development adapters with scalar property-path results; full expression APIs,
-compound rendering, and external module loading remain separate requirements.
+development adapters with scalar and selected Reference/type-alias/strict Map
+property-path results; full expression APIs, general compound rendering, and
+external module loading remain separate requirements.
 
 Identifier predicates are generated from the pinned Java lexer and JDK.
 The upstream lexer tests UTF-16 code units, so supplementary characters are
@@ -227,6 +228,47 @@ those format-time checks requires resumable diagnostic preparation, including
 Host and GC handling. Exploratory failures remain recorded separately from the
 selected passing wrapper diagnostics.
 
+### Strict Map values
+
+Strict `Map` uses a distinct collection kind in the evaluator-owned arena. Its
+entries contain evaluated keys and values; nested objects retain their own lazy
+members. Construction evaluates each key and value, then hashes and inserts
+that pair before evaluating the next pair. Duplicate keys retain the original
+insertion position and replace the value. Construction frames and resumable
+hash/equality tasks retain unpublished builders and operands across Host reads,
+reentry, GC, failure, and cancellation.
+
+Strict Map lookup follows the pinned Paguro hash-trie routes separately from
+the EconomicMap index used by object declarations and caches. Iteration and
+diagnostic rendering use insertion order. Deep forcing and structural hashing
+visit hash-trie order; hashing prepares each key and value without first deep
+forcing the whole Map. Equality checks size before comparing entries and uses
+boxed value semantics. Unknown JVM identity hashes remain an explicit ordering
+limitation.
+
+Paguro collision lookup and insertion have different hash guards. After an
+object key's cache changes, insertion can add an internal table entry without
+adding an insertion-order key. The index therefore stores table slots and
+insertion order separately: public length follows key order, while equality,
+hashing and deep forcing include the entire table. The heap traces every table
+entry, including values absent from insertion order. Iteration hashes each
+current key before executing its body; it does not prepare later keys first.
+
+Completed key preparations accumulate across retries of one bytecode
+instruction, including its probe-key and insertion-key phases. The scheduler
+clears that state when the instruction completes, so later operations still
+recompute strict collection hashes. A small scheduler dispatches collection
+work and semantic continuations separately from the larger general instruction
+handler to preserve bounded evaluator stacks.
+
+`Map<K,V>` checks keys and values through the common type-check continuation.
+Nested lazy collection casts can return wrappers; replacing such values creates
+a distinct Map and clears inherited structural/hash metadata. Empty Map defaults
+do not construct a default value for `V`. Map stringification reads completed
+values without forcing nested objects, through the shared diagnostic value
+renderer. General compound stringification, Set, and the remaining Map APIs
+remain separate work.
+
 ### Member predicates
 
 Member predicates traverse the parent's declarations child first, suppressing
@@ -296,7 +338,8 @@ and are invalidated by local or duplicate cache publication.
 Stable hashes include scalar values, UTF-16 strings, class
 qualified names, and eligible structural values. Strict List starts its
 sequential element hash at one; Listing and typed objects start at zero.
-Zero hashes are recomputed on later operations, matching Java's cache sentinel.
+Strict List and Map recompute their hashes on later operations. Lazy objects
+recompute zero hashes, matching Java's cache sentinel.
 JVM identity-dependent hashes remain explicitly unknown.
 
 The map index models forward linear comparison through four entries, followed

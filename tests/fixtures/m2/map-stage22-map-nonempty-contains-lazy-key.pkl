@@ -1,0 +1,1 @@
+result = Map("a", 1).containsKey(new Dynamic { p = throw("lookup-key") })

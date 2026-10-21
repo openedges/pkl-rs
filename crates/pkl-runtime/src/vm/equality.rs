@@ -73,6 +73,14 @@ fn string_hash(value: &str) -> i32 {
 }
 
 impl Vm {
+    fn needs_key_hash(&self, id: ObjectId) -> Result<bool, RuntimeError> {
+        let object = self.heap.get(id)?;
+        Ok(matches!(
+            object.collection_kind,
+            CollectionKind::List | CollectionKind::Map
+        ) || matches!(object.java_hash, None | Some(Some(0))))
+    }
+
     pub(super) fn java_hash(&self, value: &Value) -> Result<Option<i32>, RuntimeError> {
         Ok(match value {
             Value::Null | Value::NullWithDefault(_) => Some(0),
@@ -151,6 +159,8 @@ enum Task {
     Reject,
     Compare(Value, Value, bool),
     CompareMembers(ObjectId, ObjectId),
+    MapNext(ObjectId, ObjectId, usize),
+    MapLookup(ObjectId, ObjectId, CollectionMember),
     Deep(Value),
     Match(Value, Value, Vec<(Value, Value)>, usize),
     Matched(Value, Value, Value, Value),
@@ -199,6 +209,10 @@ impl KeySearch {
     }
 }
 impl EqualityRun {
+    pub(super) fn retries_instruction(&self) -> bool {
+        self.retry || self.key_search
+    }
+
     fn reject(&mut self) {
         if let Some((depth, task)) = self.on_false.pop() {
             self.tasks.truncate(depth);
@@ -322,7 +336,7 @@ impl Vm {
         };
         if self.heap.get(receiver)?.cache_index.has_hash()
             && let Some(value) = self.cache_value_key(receiver, &key)?
-            && matches!(&value, Value::Object(id) if matches!(self.heap.get(*id)?.java_hash, None | Some(Some(0))))
+            && matches!(&value, Value::Object(id) if self.needs_key_hash(*id)?)
         {
             self.schedule_tasks(
                 vec![
@@ -435,25 +449,34 @@ impl Vm {
         Ok(false)
     }
     pub(super) fn prepare_keys(&mut self, keys: Vec<Value>) -> Result<bool, RuntimeError> {
-        let frame = self.frames.last_mut().expect("active frame");
-        if frame.prepared_hashes.as_ref().is_some_and(|prepared| {
-            prepared.len() == keys.len()
-                && prepared
-                    .iter()
-                    .zip(&keys)
-                    .all(|(left, right)| identical_key(&self.heap, left, right))
-        }) {
-            frame.prepared_hashes = None;
-            return Ok(false);
-        }
+        // One bytecode instruction can prepare a probe and then a larger set
+        // of insertion keys. Keep all completed preparations across its retries;
+        // the scheduler clears them only when that instruction completes.
+        let mut prepared = self
+            .frames
+            .last()
+            .expect("active frame")
+            .prepared_hashes
+            .clone()
+            .unwrap_or_default();
         let mut pending = Vec::new();
-        for key in keys.iter().cloned() {
-            if matches!(&key, Value::Object(id) if matches!(self.heap.get(*id)?.java_hash, None | Some(Some(0))))
+        for key in keys {
+            if prepared
+                .iter()
+                .any(|old| identical_key(&self.heap, old, &key))
             {
-                pending.push(key);
+                continue;
             }
+            if matches!(&key, Value::Object(id) if self.needs_key_hash(*id)?) {
+                pending.push(key.clone());
+            }
+            prepared.push(key);
         }
         if pending.is_empty() {
+            self.frames
+                .last_mut()
+                .expect("active frame")
+                .prepared_hashes = Some(prepared);
             return Ok(false);
         }
         self.frames.last_mut().expect("active frame").equality_run = Some(EqualityRun {
@@ -465,7 +488,7 @@ impl Vm {
             equal: true,
             negate: false,
             retry: true,
-            prepared_hashes: Some(keys),
+            prepared_hashes: Some(prepared),
             key_search: false,
             hide_callsite: true,
             forward: false,
@@ -486,6 +509,9 @@ impl Vm {
         }
     }
     fn equality_members(&self, id: ObjectId) -> Result<Vec<CollectionMember>, RuntimeError> {
+        if self.heap.get(id)?.collection_kind == CollectionKind::Map {
+            return self.map_hash_members(id);
+        }
         let mut members = collections::forcing_members(&self.heap, id)?;
         members.retain(|descriptor| {
             let mut owner = Some(id);
@@ -567,6 +593,18 @@ impl Vm {
     fn hash_entries(&self, id: ObjectId) -> Result<Vec<(Option<Value>, Value)>, RuntimeError> {
         let object = self.heap.get(id)?;
         let typed = self.class_identity(id)?.is_some() || object.is_module;
+        if object.collection_kind == CollectionKind::Map {
+            return self
+                .map_hash_members(id)?
+                .iter()
+                .map(|member| {
+                    Ok((
+                        Some(member.key.clone()),
+                        self.cached_equality_member(id, member)?,
+                    ))
+                })
+                .collect();
+        }
         if typed || object.collection_kind == CollectionKind::List {
             let members = if object.collection_kind == CollectionKind::List {
                 collections::ordered_members(&self.heap, id)?
@@ -843,8 +881,13 @@ impl Vm {
                                 x.collection_kind,
                                 CollectionKind::Listing | CollectionKind::List
                             ) && x.length != y.length)
+                            || (x.collection_kind == CollectionKind::Map
+                                && x.map_index().len() != y.map_index().len())
                         {
                             Some(false)
+                        } else if x.collection_kind == CollectionKind::Map {
+                            run.tasks.push(Task::MapNext(*a, *b, 0));
+                            None
                         } else if x.collection_kind == CollectionKind::List {
                             let lhs = collections::ordered_members(&self.heap, *a)?;
                             let rhs = collections::ordered_members(&self.heap, *b)?;
@@ -867,6 +910,28 @@ impl Vm {
                 if equal == Some(false) {
                     run.reject();
                 }
+            }
+            Task::MapNext(a, b, index) => {
+                if let Some(member) = self.map_hash_members(a)?.get(index).cloned() {
+                    let key = member.key.clone();
+                    run.tasks.push(Task::MapNext(a, b, index + 1));
+                    run.tasks.push(Task::MapLookup(a, b, member));
+                    run.tasks.push(Task::Prepare(key));
+                }
+            }
+            Task::MapLookup(a, b, member) => {
+                let hash = self.java_hash(&member.key)?;
+                let left = self.cached_equality_member(a, &member)?;
+                let object = self.heap.get(b)?;
+                let mut candidates = Vec::new();
+                for index in object.map_index().candidates(hash) {
+                    let other = &object.collection_members[index];
+                    let right = self.cached_equality_member(b, other)?;
+                    run.roots.extend([other.key.clone(), right.clone()]);
+                    candidates.push((other.key.clone(), right));
+                }
+                run.roots.extend([member.key.clone(), left.clone()]);
+                run.tasks.push(Task::Match(member.key, left, candidates, 0));
             }
             Task::CompareMembers(a, b) => {
                 if self.heap.get(a)?.collection_kind == CollectionKind::Mapping {
@@ -1007,6 +1072,13 @@ impl Vm {
                             run.tasks.push(Task::Deep(reference.data.clone()));
                             run.tasks.push(Task::Deep(reference.domain.clone()));
                         }
+                    } else if self.heap.get(id)?.collection_kind == CollectionKind::Map {
+                        for member in self.map_hash_members(id)?.into_iter().rev() {
+                            let value = self.cached_equality_member(id, &member)?;
+                            run.roots.extend([member.key.clone(), value.clone()]);
+                            run.tasks.push(Task::Deep(value));
+                            run.tasks.push(Task::Deep(member.key));
+                        }
                     } else {
                         for member in self.equality_members(id)?.into_iter().rev() {
                             run.tasks.push(Task::Force(id, member, false));
@@ -1016,14 +1088,17 @@ impl Vm {
             }
             Task::Prepare(value) => {
                 if let Value::Object(id) = value
-                    && matches!(self.heap.get(id)?.java_hash, None | Some(Some(0)))
+                    && self.needs_key_hash(id)?
                 {
                     if !run.active.insert(id) {
                         return Err(RuntimeError::new(ErrorKind::Cycle, "cyclic structural key"));
                     }
                     run.tasks.push(Task::Build(id));
                     run.tasks.push(Task::HashMembers(id));
-                    if self.heap.get(id)?.collection_kind != CollectionKind::List {
+                    if !matches!(
+                        self.heap.get(id)?.collection_kind,
+                        CollectionKind::List | CollectionKind::Map
+                    ) {
                         run.tasks.push(Task::Deep(Value::Object(id)));
                     }
                 }
@@ -1159,6 +1234,7 @@ impl Vm {
                     CollectionKind::Listing => 1,
                     CollectionKind::Mapping => 2,
                     CollectionKind::List => 3,
+                    CollectionKind::Map => 5,
                 };
                 let mut members = Vec::new();
                 for member in self.equality_members(id)? {

@@ -345,14 +345,22 @@ Stage 15의 원래 입력·URI 그대로 재비교하여 shared-slot 실패 3개
 
 [소스·gate 증거](reports/m2/source-stage21-final-evidence.tar.gz)는 소스 사본 5,133개·고유 경로 2,421개를 정확한 구현 커밋과 연결합니다. 참조 pin·oracle 출처는 별도 검증하며 upstream 소스 사본은 0개입니다. 요구사항 474개·부분 연결 16개와 accounting row 2,940개 중 ready 1,940개·미구현 960개·미연결 40개를 완료율로 계산하지 않습니다. 엄격한 전체 gate는 기존 실패 이유 1,950개를 유지합니다. **Stage 21의 제한된 generic-constructor 개발 계약만 마감했으며 M2 전체·제품 API·성능·메모리·릴리스 플랫폼 조건은 미완료입니다.**
 
+스물두 번째 단계는 strict `Map`의 생성·조회·기본값·타입 검사·순회·동등성·해시와 강제 평가 없는 문자열 출력을 구현합니다. 핵심 런타임은 `gpt-6-astra / xhigh`, Java 차등 비교와 독립 수명주기·플랫폼 검증은 각각 `gpt-6.1-sol / high`로 분담합니다. root는 Map 진단·expression-string adapter와 독립 소스 검토·최종 로컬 검증을 담당합니다.
+
+각 key→value 평가 직후 해시·삽입을 수행하고, 중복 키는 최초 위치를 유지하며 값을 교체합니다. 기존 Mapping의 EconomicMap 선언 index와 분리해 Paguro 해시 트리의 탐색 경로를 모델링합니다. 삽입 순서와 내부 해시 순서, boxed 숫자 키, nested Map·lazy wrapper·오류 후 재시도를 원시 Java 비교로 검증합니다. unpublished builder·key/value와 lookup·comparison continuation은 Host 재진입·GC·실패·취소·terminal 해제까지 함께 검증합니다. 전체 Map API·Set·일반 compound 출력·JVM identity hash의 순서·성능 및 메모리 동등성은 별도 과제로 유지합니다.
+
+독립 검토에서 추가한 256 KiB·768단계 중첩 Map 검사에 한 차례 스택 회귀가 나타났습니다. optional Map index를 boxed 저장으로 바꾸고 큰 dispatcher의 Map 작업을 별도 helper로 분리해 원래 조건을 유지한 재검사를 통과했습니다. 또한 캐시가 변한 객체 키에서 Paguro의 collision 조회와 삽입이 다르게 동작해 내부 table 항목이 삽입 순서 목록보다 많아질 수 있음을 Java로 확인했습니다. 두 목록을 분리하고 목록에 없는 heap 값의 GC·Host 수명주기 검사와 새 원시 회귀 사례 5개를 추가했습니다. 수정 전 실패·초기 수집 한계는 최종 통과 증거와 구분해 보존합니다.
+
+첫 전체 최종 검사에서는 기존 generic metadata의 256 KiB 스택 검사와 Node의 23개 List 키 Mapping 시나리오가 추가로 실패했습니다. 집중 검사에서 기존 generic metadata 파일을 빠뜨린 점과 새 코드의 회귀를 기록합니다. 작은 scheduler에서 collection·semantic continuation을 직접 실행하도록 분리하고, 한 bytecode의 여러 hash 준비 단계가 서로 재시도를 반복하지 않도록 완료된 키를 모아 보존한 뒤 명령 완료 시 지웁니다. 기존 stack·depth·timeout·instruction 예산을 유지한 집중 검사 25개와 원래 23개 키 입력이 통과했습니다. 최초 최종 수집은 superseded 증거로 보존하고, 수정 후 새 `final-02`에서 전체 필수 검사·플랫폼 검증을 먼저 통과한 뒤 Java 수집을 다시 진행합니다.
+
 다음 구현은 남은 탐색 불일치의 의존성을 기준으로 진행합니다.
 
 1. 남은 Reference metadata 작업·진단 확장을 continuation과 자원 계약으로 검증하고 Java stack-overflow 진단 및 취소 지연을 별도로 다룹니다. 전체 지연 타입 해석·alias-root 대입 identity와 wrapper 중복 제거의 실제 인자 구분을 검증합니다. 남은 nullable/default·inline Reference·local typed-property·outer 진단, generic constructor의 지연 멤버 frame 이름·builtin·generator 경계를 원래 실패 입력으로 보완합니다. 이미 검증한 공유 타입 인자의 깊은 실행·동시 해제, inline·lambda·공유 let·분기 순서·재귀 깊이별 재시도, 타입 인자 캡처·기본값·Reference 검사 순서, Host/GC/취소/terminal 동작을 회귀 기준으로 유지합니다.
-2. 엄격한 Map·Set의 값 모델·타입·동등성·해시·강제 평가를 공통 VM·GC·Host 수명주기에 구현합니다. 첫 범위는 strict `Map`의 생성·조회·기본값·타입 검사·동등성·해시이며, `Set`은 같은 해시 기반 위에 이어서 구현합니다. Java의 key→value→즉시 삽입/해시 순서, 중복 키의 최초 위치·최종 값, 삽입 순서와 내부 hash-map 강제 평가 순서를 원시 비교로 고정합니다. 기존 Mapping의 선언 cache와 첫 네 키 해시 지연은 이 계약을 대체하지 않습니다. builder·key/value를 continuation root로 보존하고 Host 중단·재진입·실패·취소를 함께 검증합니다. `Map.keys`·`entries`·고차 함수·변환 API, Duration metadata와 List/Listing의 `map`·`join`은 필요한 M3 의존성으로 추적합니다.
+2. 엄격한 Map·Set의 값 모델·타입·동등성·해시·강제 평가를 공통 VM·GC·Host 수명주기에 구현합니다. Stage 22에서 추가한 strict `Map`의 생성·조회·기본값·타입 검사·동등성·해시 회귀를 유지하며, `Set`을 같은 해시 기반 위에 이어서 구현합니다. JVM identity hash와 변경된 zero-hash 키의 순회·진단을 포함한 나머지 Map 경계도 보완합니다. Java의 key→value→즉시 삽입/해시 순서, 중복 키의 최초 위치·최종 값, 삽입 순서와 내부 hash-map 강제 평가 순서를 원시 비교로 고정합니다. 기존 Mapping의 선언 cache와 첫 네 키 해시 지연은 이 계약을 대체하지 않습니다. builder·key/value를 continuation root로 보존하고 Host 중단·재진입·실패·취소를 함께 검증합니다. `Map.keys`·`entries`·고차 함수·변환 API, Duration metadata와 List/Listing의 `map`·`join`은 필요한 M3 의존성으로 추적합니다.
 3. annotation과 남은 클래스 초기화·modifier·재귀 타입·reflection 규칙을 확장합니다. 실제 source의 초기화 중 Host 중단·재진입, 미게시 local 선언의 Java 내부 오류와 순환 계층의 비종료 관찰은 원래 실패·미실행 상태를 보존하며 별도로 검증합니다.
 4. 모듈 클래스 상속·선언 출처·ModuleOutput override를 M2 의미론에 연결하고 실제 모듈 로딩·URI/source cache identity·Host는 M4 경로와 통합합니다. primitive missing-method 진단도 실제 멤버 목록을 사용하도록 보완합니다.
 
-다음 기능도 한 evaluator의 상태·오류 순서·GC root·Host 재진입·terminal 해제를 함께 검증해야 합니다. 현재 선택된 1,940개 독립 식과 72개 변형 관계, 별도 클래스·별칭 순차 계약 2,026개 호출을 회귀 기준으로 유지하고 Java 원시 결과를 Rust 출력으로 대체하지 않습니다. 순차 계약의 성공은 전체 클래스·module API나 M2 완료, 메모리 목표 달성을 뜻하지 않습니다.
+다음 기능도 한 evaluator의 상태·오류 순서·GC root·Host 재진입·terminal 해제를 함께 검증해야 합니다. 현재 선택된 2,131개 독립 식과 76개 변형 관계, 별도 클래스·별칭 순차 계약 2,166개 호출을 회귀 기준으로 유지하고 Java 원시 결과를 Rust 출력으로 대체하지 않습니다. 순차 계약의 성공은 전체 클래스·module API나 M2 완료, 메모리 목표 달성을 뜻하지 않습니다.
 
 [원본 API 사례](external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/api/reference.pkl)는 `fixed` 이후에도 Map·`map`/`join`·`pkl:math`·renderer converter를 요구하며, [원본 basic 사례](external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/basic/reference.pkl)는 module amendment·`pkl:test`·PCF 출력에 의존합니다. 이 M3·M4 연결을 별도 작업으로 추적하며 원래 snippet/API 실행 조건을 유지합니다. Stage 13의 Reference 탐색 재비교에서는 이전 불일치 4개가 해결되어 191개 중 173개 일치·18개 불일치가 남았습니다. 남은 불일치를 삭제하거나 개발 예외로 바꾸지 않고 단계별로 재검증합니다. 이는 Stage 12에서 수정한 순차 클래스 진단 불일치 22개와 별도 집계입니다.
 

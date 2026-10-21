@@ -1,0 +1,1 @@
+result = Map(Map("Aa", new Dynamic { p = throw("key-Aa") }, "AaAa", new Dynamic { p = throw("key-AaAa") }), 1).length

@@ -15,7 +15,8 @@ function type metadata and arity checks, ordered type resolution and generic
 parameter scopes, selected recursive constraints and erased `Class<T>` arguments,
 shared constraint receiver slots and creation-time lambda captures,
 finite recursive generics with shared captured type arguments, nullable defaults,
-selected direct generic constructors and their diagnostic origins, persistent type-use
+selected direct generic constructors and their diagnostic origins, strict Map
+construction, lookup, typing and structural comparison, persistent type-use
 resolution, let/for const scopes, and structured source diagnostics with recursive frame compression with optional power assertions
 and standard-library frames. The [latest checkpoint](reports/m2/README.md)
 records the accepted local verification scope, known failures, and unexecuted

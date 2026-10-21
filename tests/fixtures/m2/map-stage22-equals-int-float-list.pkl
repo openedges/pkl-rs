@@ -1,0 +1,1 @@
+result = Map("a", List(1)) == Map("a", List(1.0))

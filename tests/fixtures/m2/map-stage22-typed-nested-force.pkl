@@ -1,0 +1,2 @@
+x: Map<String,Listing<Int>> = Map("a", new Listing { "bad" })
+result = x["a"][0]

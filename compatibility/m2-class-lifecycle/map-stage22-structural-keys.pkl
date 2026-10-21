@@ -1,0 +1,9 @@
+parent = new Dynamic { a = 1; b = throw("parent unused") }
+child = (parent) { b = 2 }
+values = Map(child, 9, List(1,2), 8, Map("a",1,"b",2), 7)
+stable = 42
+probe0 = values[new Dynamic { a = 1; b = 2 }]
+probe1 = values[List(1,2)]
+probe2 = values[Map("b",2,"a",1)]
+probe3 = values.getOrNull(List(1.0,2))
+probe4 = values.containsKey(child)

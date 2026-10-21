@@ -56,8 +56,10 @@ UTF-8 stdout, full uncolored `PklException.getMessage()` stderr, and exit codes 
 compared without normalization. A separate outcome file records whether Java
 returned normally or caught a particular `PklException` class. This distinguishes
 a handled upstream bug report from an uncaught JVM failure without changing
-stdout or stderr. The initial Rust probe accepts scalar property
-paths. This stringification boundary does not prove typed API compatibility or
+stdout or stderr. The Rust probe accepts property paths returning scalars,
+selected References and type aliases, or strict Maps. Map stringification reads
+completed values without forcing nested objects, matching its Java value
+renderer. This boundary does not prove typed API compatibility or general
 compound-value rendering.
 
 The default uses Java's API setting with power assertions disabled. Selected
@@ -222,6 +224,14 @@ Host reentry, GC, cancellation, isolation, terminal release, and 768-deep defaul
 construction on a 256 KiB evaluator stack. Lazy member frame names, unsupported
 builtin types, some missing-property diagnostics, and generator boundaries
 remain recorded exploratory failures rather than new development exceptions.
+
+Stage 22 adds selected strict Map construction, lookup, defaults, type checks,
+iteration, equality, hashing, and non-forcing stringification. Raw cases separate
+insertion order from hash-trie traversal and include boxed numeric keys, duplicate
+replacement, nested Map keys, lazy failures, and full diagnostics. Native
+lifecycle checks and ordered Java sequences retain their separate contracts.
+Set, complete Map APIs, JVM identity-dependent hash order, and general compound
+rendering remain open.
 
 A complete runtime type-resolution model, general imported types, annotation
 syntax, and full module initialization/caching remain open requirements. The

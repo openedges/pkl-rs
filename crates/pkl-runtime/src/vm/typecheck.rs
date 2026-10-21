@@ -707,14 +707,23 @@ impl Vm {
                     };
                     let mut items = Vec::new();
                     if !arguments.iter().all(|(ty, _)| ty.noop())
-                        && (kind == crate::heap::CollectionKind::List
-                            || run.eager
+                        && (matches!(
+                            kind,
+                            crate::heap::CollectionKind::List | crate::heap::CollectionKind::Map
+                        ) || run.eager
                             || kind == crate::heap::CollectionKind::Mapping)
                     {
                         let mut current = Some(id);
                         while let Some(owner) = current {
                             let object = self.heap.get(owner)?;
-                            for member in &object.collection_members {
+                            let ordered;
+                            let members = if kind == crate::heap::CollectionKind::Map {
+                                ordered = collections::ordered_members(&self.heap, owner)?;
+                                &ordered
+                            } else {
+                                &object.collection_members
+                            };
+                            for member in members {
                                 if member.kind != crate::heap::CollectionMemberKind::Property {
                                     items.push(CollectionItem {
                                         owner,
@@ -781,8 +790,10 @@ impl Vm {
             Task::CollectionNext(state) => {
                 if state.index == state.items.len() {
                     self.finish_collection(&mut run, state)?;
-                } else if state.kind == crate::heap::CollectionKind::Mapping
-                    && !state.arguments[0].0.noop()
+                } else if matches!(
+                    state.kind,
+                    crate::heap::CollectionKind::Mapping | crate::heap::CollectionKind::Map
+                ) && !state.arguments[0].0.noop()
                 {
                     run.value = state.items[state.index].member.key.clone();
                     run.checked = run.value.clone();
@@ -826,7 +837,7 @@ impl Vm {
                         mismatch
                     }));
                     restore_collection(&mut run, &state);
-                } else if state.eager {
+                } else if state.eager || state.kind == crate::heap::CollectionKind::Map {
                     return self.collection_value(run, state);
                 } else {
                     state.index += 1;
@@ -851,7 +862,11 @@ impl Vm {
             }
             Task::CollectionValueResult(mut state) => {
                 if let Some(Ok(value)) = &run.outcome {
-                    if state.kind == crate::heap::CollectionKind::List && *value != run.value {
+                    if matches!(
+                        state.kind,
+                        crate::heap::CollectionKind::List | crate::heap::CollectionKind::Map
+                    ) && *value != run.value
+                    {
                         state
                             .replacements
                             .push((state.items[state.index].member.name.clone(), value.clone()));
@@ -1185,11 +1200,16 @@ impl Vm {
         };
         let result = if state.eager {
             Value::Object(id)
-        } else if state.kind == crate::heap::CollectionKind::List {
+        } else if matches!(
+            state.kind,
+            crate::heap::CollectionKind::List | crate::heap::CollectionKind::Map
+        ) {
             if state.replacements.is_empty() {
                 Value::Object(id)
             } else {
                 let mut object = self.heap.get(id)?.clone();
+                object.structural_key = None;
+                object.java_hash = None;
                 for (name, value) in state.replacements {
                     let key = CacheKey {
                         entry: true,

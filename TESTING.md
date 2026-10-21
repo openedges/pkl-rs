@@ -265,6 +265,19 @@ constructs 768-deep defaults on a 256 KiB evaluator stack with a 60-second paren
 deadline; compilation runs on the ordinary stack. That test collects during
 bounded execution and does not establish peak-RSS or wall-time parity with Java.
 
+Strict Map comparisons cover per-pair key/value evaluation and immediate key
+hashing, duplicate replacement with preserved insertion positions, boxed keys,
+lookup, parameterized checks, nested Maps, and selected equality/hash ordering.
+Map rendering is non-forcing; its observations are separate from deep forcing
+and hashing. Persistent sequences retain successful and failed calls in one
+evaluator. Native tests collect during cooperative yields and exercise pending
+builders, query keys, value comparison, Host reentry, failed-read retry,
+cancellation, evaluator isolation, stale handles, and terminal cleanup. Nested
+Map hashing also runs at depth 768 on a 256 KiB evaluator stack in a child
+process with a 60-second parent deadline. JVM identity-dependent hash order,
+general compound output, Set, and the remaining Map APIs stay outside this
+bounded development contract.
+
 M1 experiments have narrower, explicit contracts:
 
 ```sh

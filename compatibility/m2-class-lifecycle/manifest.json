@@ -860,6 +860,55 @@
       "expressions": "types-stage21-direct-invalid-actuals.expressions",
       "group": "T21",
       "note": "Complete raw pinned Java direct symbolic constructors with distinct class, nullable, alias and invalid actual arguments, lazy replacement and lambda capture. Ordered repeated failures and subsequent successful reads retain one evaluator; native Host/GC lifecycle coverage is separate."
+    },
+    {
+      "id": "map-stage22-constructor-retries",
+      "source": "map-stage22-constructor-retries.pkl",
+      "expressions": "map-stage22-constructor-retries.expressions",
+      "group": "T22",
+      "note": "Complete raw pinned Java strict Map construction, immediate hash insertion, boxed keys, lazy nested value wrappers, HAMT hash/equality order and hash-prefix routing after Listing cache warm-up. Ordered repeated failures and successful reads share one evaluator. Native Host/GC lifecycle evidence remains separate."
+    },
+    {
+      "id": "map-stage22-boxed-keys",
+      "source": "map-stage22-boxed-keys.pkl",
+      "expressions": "map-stage22-boxed-keys.expressions",
+      "group": "T22",
+      "note": "Complete raw pinned Java strict Map construction, immediate hash insertion, boxed keys, lazy nested value wrappers, HAMT hash/equality order and hash-prefix routing after Listing cache warm-up. Ordered repeated failures and successful reads share one evaluator. Native Host/GC lifecycle evidence remains separate."
+    },
+    {
+      "id": "map-stage22-generic-wrapper",
+      "source": "map-stage22-generic-wrapper.pkl",
+      "expressions": "map-stage22-generic-wrapper.expressions",
+      "group": "T22",
+      "note": "Complete raw pinned Java strict Map construction, immediate hash insertion, boxed keys, lazy nested value wrappers, HAMT hash/equality order and hash-prefix routing after Listing cache warm-up. Ordered repeated failures and successful reads share one evaluator. Native Host/GC lifecycle evidence remains separate."
+    },
+    {
+      "id": "map-stage22-hash-equality-order",
+      "source": "map-stage22-hash-equality-order.pkl",
+      "expressions": "map-stage22-hash-equality-order.expressions",
+      "group": "T22",
+      "note": "Complete raw pinned Java strict Map construction, immediate hash insertion, boxed keys, lazy nested value wrappers, HAMT hash/equality order and hash-prefix routing after Listing cache warm-up. Ordered repeated failures and successful reads share one evaluator. Native Host/GC lifecycle evidence remains separate."
+    },
+    {
+      "id": "map-stage22-structural-keys",
+      "source": "map-stage22-structural-keys.pkl",
+      "expressions": "map-stage22-structural-keys.expressions",
+      "group": "T22",
+      "note": "Complete raw pinned Java strict Map construction, immediate hash insertion, boxed keys, lazy nested value wrappers, HAMT hash/equality order and hash-prefix routing after Listing cache warm-up. Ordered repeated failures and successful reads share one evaluator. Native Host/GC lifecycle evidence remains separate."
+    },
+    {
+      "id": "map-stage22-empty-lookup",
+      "source": "map-stage22-empty-lookup.pkl",
+      "expressions": "map-stage22-empty-lookup.expressions",
+      "group": "T22",
+      "note": "Complete raw pinned Java strict Map construction, immediate hash insertion, boxed keys, lazy nested value wrappers, HAMT hash/equality order and hash-prefix routing after Listing cache warm-up. Ordered repeated failures and successful reads share one evaluator. Native Host/GC lifecycle evidence remains separate."
+    },
+    {
+      "id": "map-stage22-prefix-cache",
+      "source": "map-stage22-prefix-cache.pkl",
+      "expressions": "map-stage22-prefix-cache.expressions",
+      "group": "T22",
+      "note": "Complete raw pinned Java strict Map construction, immediate hash insertion, boxed keys, lazy nested value wrappers, HAMT hash/equality order and hash-prefix routing after Listing cache warm-up. Ordered repeated failures and successful reads share one evaluator. Native Host/GC lifecycle evidence remains separate."
     }
   ],
   "unexecuted_groups": [

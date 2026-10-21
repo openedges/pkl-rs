@@ -1,0 +1,1 @@
+result = Map("Aa", new Dynamic { p = throw("key-Aa") }, "BB", new Dynamic { p = throw("key-BB") }) == Map("BB", new Dynamic { p = 1 }, "Aa", new Dynamic { p = 1 })

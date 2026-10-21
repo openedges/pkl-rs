@@ -1,0 +1,8 @@
+x: Map<String,Listing<Int>> = Map("a", new Listing { "bad" }, "b", new Listing { 7 })
+y: Map<String,Mapping<String,Int>> = Map("a", new Mapping { ["b"] = "bad" })
+wrongKey: Map<Int,Int> = Map("bad", "also bad")
+empty: Map<String,Int>
+stable = 42
+probe0 = x["b"][0]
+probe1 = x["a"][0]
+probe2 = y["a"]["b"]

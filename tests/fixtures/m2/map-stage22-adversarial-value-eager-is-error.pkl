@@ -1,0 +1,2 @@
+x = Map("a", new Listing { throw("nested value type") })
+result = x is Map<String,Listing<Int>>

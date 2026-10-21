@@ -1,0 +1,3 @@
+typealias A<T> = T
+x: A<Map<String,Int>> = Map("a", 1)
+result = x["a"]

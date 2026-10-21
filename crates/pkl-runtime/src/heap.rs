@@ -86,6 +86,7 @@ pub enum CollectionKind {
     Listing,
     Mapping,
     List,
+    Map,
 }
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
@@ -169,6 +170,7 @@ pub struct Object {
     pub cache_index: crate::economic_map::EconomicMapIndex,
     pub collection_kind: CollectionKind,
     pub collection_members: Vec<CollectionMember>,
+    pub map_index: Option<Box<crate::strict_map::MapIndex>>,
     pub declaration_index: Option<crate::economic_map::EconomicMapIndex>,
     pub declaration_hashes: Vec<i32>,
     pub length: usize,
@@ -185,6 +187,12 @@ pub struct Object {
 }
 
 impl Object {
+    pub(crate) fn map_index(&self) -> &crate::strict_map::MapIndex {
+        self.map_index
+            .as_deref()
+            .unwrap_or(&crate::strict_map::EMPTY)
+    }
+
     pub(crate) fn complete_cache(&mut self, key: CacheKey, value: Value) {
         // Completed entries persist for the object's lifetime. Failure cleanup
         // removes only pending entries, so retries acquire their position here.

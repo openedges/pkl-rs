@@ -35,6 +35,7 @@ fn object_name(id: ObjectId, heap: &Heap) -> Result<String, RuntimeError> {
         CollectionKind::Listing => "Listing".into(),
         CollectionKind::Mapping => "Mapping".into(),
         CollectionKind::List => "List".into(),
+        CollectionKind::Map => "Map".into(),
     })
 }
 
@@ -45,13 +46,14 @@ fn function_name(id: ObjectId, heap: &Heap) -> Result<String, RuntimeError> {
         .as_ref()
         .map(|function| function.arity)
         .or_else(|| {
-            object.native_function.as_ref().map(|function| {
-                if function.name.as_ref() == "Reference" {
-                    3
-                } else {
-                    0
-                }
-            })
+            object
+                .native_function
+                .as_ref()
+                .map(|function| match function.name.as_ref() {
+                    "Reference" => 3,
+                    "containsKey" | "getOrNull" => 1,
+                    _ => 0,
+                })
         })
         .ok_or_else(|| {
             RuntimeError::new(ErrorKind::InvalidBytecode, "function has no definition")
@@ -295,8 +297,13 @@ impl Renderer<'_> {
             }
             return Ok(());
         }
-        if self.heap.get(id)?.collection_kind == CollectionKind::List {
-            self.append("List(");
+        let kind = self.heap.get(id)?.collection_kind;
+        if matches!(kind, CollectionKind::List | CollectionKind::Map) {
+            self.append(if kind == CollectionKind::Map {
+                "Map("
+            } else {
+                "List("
+            });
             for (index, member) in crate::vm::collections::ordered_members(self.heap, id)?
                 .into_iter()
                 .enumerate()
@@ -305,6 +312,10 @@ impl Renderer<'_> {
                     return Ok(());
                 }
                 if index > 0 {
+                    self.append(", ");
+                }
+                if kind == CollectionKind::Map {
+                    self.value(&member.key, false)?;
                     self.append(", ");
                 }
                 let key = CacheKey {
@@ -358,8 +369,10 @@ impl Renderer<'_> {
             if member.kind != CollectionMemberKind::Element {
                 let object_like = match value {
                     Some(Value::Object(value)) => {
-                        self.heap.get(*value)?.collection_kind != CollectionKind::List
-                            && self.heap.get(*value)?.reference.is_none()
+                        !matches!(
+                            self.heap.get(*value)?.collection_kind,
+                            CollectionKind::List | CollectionKind::Map
+                        ) && self.heap.get(*value)?.reference.is_none()
                     }
                     Some(Value::Function(_)) => true,
                     _ => false,

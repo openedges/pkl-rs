@@ -1,0 +1,2 @@
+x: Map<Int,Int> = Map("bad", "also-bad")
+result = x.length

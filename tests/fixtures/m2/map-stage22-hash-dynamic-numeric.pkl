@@ -1,0 +1,1 @@
+result = Map(new Dynamic { p = 1 }, 7).getOrNull(new Dynamic { p = 1.0 })

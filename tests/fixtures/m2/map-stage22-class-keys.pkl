@@ -1,0 +1,3 @@
+class C { p: Int }
+class D { p: Int }
+result = Map(new C { p = 1 }, 7)[new C { p = 1 }]

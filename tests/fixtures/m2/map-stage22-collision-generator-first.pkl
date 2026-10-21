@@ -1,0 +1,1 @@
+result = (new Listing { for (k,v in Map("b",1,"a",2,"b",3)) { "\(k)=\(v)" } })[0]

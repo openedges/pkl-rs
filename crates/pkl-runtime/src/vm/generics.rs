@@ -122,7 +122,10 @@ impl TypeCheck {
                     ..
                 } => &types[*index],
                 Self::ParameterizedCollection { kind, arguments }
-                    if *kind != crate::heap::CollectionKind::List =>
+                    if !matches!(
+                        kind,
+                        crate::heap::CollectionKind::List | crate::heap::CollectionKind::Map
+                    ) =>
                 {
                     let Some((argument, _)) = arguments.last() else {
                         return false;
@@ -290,7 +293,7 @@ impl Vm {
                         collection_kind: kind,
                         ..Object::default()
                     };
-                    if kind != CollectionKind::List {
+                    if !matches!(kind, CollectionKind::List | CollectionKind::Map) {
                         object.environment = self
                             .frames
                             .last()
@@ -300,7 +303,7 @@ impl Vm {
                         object.specialized_literal = true;
                     }
                     let id = self.heap.allocate(object);
-                    if kind != CollectionKind::List
+                    if !matches!(kind, CollectionKind::List | CollectionKind::Map)
                         && let Some(argument) = argument
                         && !argument.noop()
                     {

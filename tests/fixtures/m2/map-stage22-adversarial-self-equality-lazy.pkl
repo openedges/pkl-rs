@@ -1,0 +1,1 @@
+result = let (m = Map("a", new Dynamic { p = throw("unforced") })) m == m

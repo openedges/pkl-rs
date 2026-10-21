@@ -1,0 +1,1 @@
+result = Map(Map(), new Dynamic { p = throw("position0") }, null, new Dynamic { p = throw("position1") }) == Map(null, new Dynamic { p = 1 }, Map(), new Dynamic { p = 1 })

@@ -1,0 +1,1 @@
+result = Map(Map("a", new Dynamic { p = throw("inner-value-hash") }), 1).length

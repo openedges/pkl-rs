@@ -1,0 +1,1 @@
+result = Map(32, 1, new Dynamic { p = throw("structural-key") }, 2, throw("later-key"), 3).length

@@ -1,0 +1,1 @@
+result = Map(2147483648, new Dynamic { p = 1 }, 0, new Dynamic { p = throw("first-trie-key") }) == Map(0, new Dynamic { p = 1 }, 2147483648, new Dynamic { p = 1 })

@@ -1,0 +1,1 @@
+result = Map("a", new Dynamic { p = 1 }) == Map("a", new Dynamic { p = 1.0 })

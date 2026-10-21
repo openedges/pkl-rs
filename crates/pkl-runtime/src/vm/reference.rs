@@ -45,6 +45,7 @@ pub(crate) fn base_type(name: &str) -> Option<TypeCheck> {
         "Listing" => TypeCheck::Collection(CollectionKind::Listing),
         "Mapping" => TypeCheck::Collection(CollectionKind::Mapping),
         "List" => TypeCheck::Collection(CollectionKind::List),
+        "Map" => TypeCheck::Collection(CollectionKind::Map),
         _ => return None,
     })
 }
@@ -210,12 +211,13 @@ pub(crate) fn normalize(ty: &TypeCheck, module: &str) -> TypeCheck {
                 TypeCheck::Collection(
                     kind @ (CollectionKind::List
                     | CollectionKind::Listing
-                    | CollectionKind::Mapping),
+                    | CollectionKind::Mapping
+                    | CollectionKind::Map),
                 ) => TypeCheck::ParameterizedCollection {
                     kind: *kind,
                     arguments: vec![
                         (TypeCheck::Unknown, Span::new(0, 0));
-                        if *kind == CollectionKind::Mapping {
+                        if matches!(kind, CollectionKind::Mapping | CollectionKind::Map) {
                             2
                         } else {
                             1
@@ -703,6 +705,7 @@ impl Vm {
                         TypeCheck::Collection(CollectionKind::Listing) => 20,
                         TypeCheck::Collection(CollectionKind::Mapping) => 21,
                         TypeCheck::Collection(CollectionKind::List) => 22,
+                        TypeCheck::Collection(CollectionKind::Map) => 25,
                         _ => 2,
                     },
                 super::type_name(&ty, &self.program.module_name),
@@ -815,7 +818,7 @@ impl Vm {
         }
         if native.name.as_ref() == "scalarToString" {
             let text = match &native.receiver {
-                Value::TypeAlias(_) | Value::Class(_) | Value::Function(_) => {
+                Value::TypeAlias(_) | Value::Class(_) | Value::Function(_) | Value::Object(_) => {
                     crate::diagnostic_values::render(
                         &native.receiver,
                         &self.heap,
@@ -927,7 +930,11 @@ impl Vm {
                         object
                             .native_function
                             .as_ref()
-                            .map(|f| if f.name.as_ref() == "Reference" { 3 } else { 0 })
+                            .map(|f| match f.name.as_ref() {
+                                "Reference" => 3,
+                                "containsKey" | "getOrNull" => 1,
+                                _ => 0,
+                            })
                     })
                     .ok_or_else(|| invalid("function metadata missing"))?;
                 TypeCheck::Function {
@@ -1261,7 +1268,7 @@ impl Vm {
                     {
                         Ok(normalize(&arguments[0].0, &self.program.module_name))
                     }
-                    CollectionKind::Mapping
+                    CollectionKind::Mapping | CollectionKind::Map
                         if reference_key_matches(&arguments[0].0, key, &self.heap) =>
                     {
                         Ok(normalize(&arguments[1].0, &self.program.module_name))

@@ -1,4 +1,4 @@
-//! Experimental scalar language boundary shared by development adapters.
+//! Experimental expression-string boundary shared by development adapters.
 //! This does not implement the full evaluator API, general compound stringification, or Host I/O.
 use crate::diagnostic::{RenderFrame, render_error};
 use crate::source::{Source, SourceMap, Span};
@@ -12,7 +12,7 @@ pub struct EvaluationOptions {
     pub power_assertions: bool,
 }
 
-/// Evaluate a property path to a scalar or domain-rendered Reference string.
+/// Evaluate a property path to a scalar, strict Map, or domain-rendered Reference string.
 /// The supplied URI and inferred module name are transport context, never rewritten
 /// after evaluation. Explicit module declarations override the inferred name.
 pub fn scalar_expression(
@@ -103,11 +103,11 @@ pub fn scalar_expressions_with_options(
     } else {
         crate::vm::compile_module(&resolved)
     }
-    .map_err(|error| runtime_error(source, uri, name, expression, error, false))?;
+    .map_err(|error| runtime_error(source, uri, name, expression, error, None))?;
     let program_mut = std::sync::Arc::make_mut(&mut program);
     program_mut.module_name = name.into();
     // The Java expression-string boundary converts a returned Reference through
-    // its domain renderer after evaluating the requested expression.
+    // its domain renderer and a strict Map through its non-forcing value renderer.
     let stringify = program_mut.blocks.len();
     program_mut.blocks.push(vec![
         Instruction::Input(0),
@@ -119,15 +119,20 @@ pub fn scalar_expressions_with_options(
     let mut vm = Vm::new(program);
     vm.set_power_assertions(options.power_assertions);
     vm.start(entry, vec![])
-        .map_err(|error| runtime_error(source, uri, name, expression, error, false))?;
-    let module_value = poll(&mut vm)
-        .map_err(|error| runtime_error(source, uri, name, expression, error, false))?;
+        .map_err(|error| runtime_error(source, uri, name, expression, error, None))?;
+    let module_value =
+        poll(&mut vm).map_err(|error| runtime_error(source, uri, name, expression, error, None))?;
     let mut results = Vec::with_capacity(expressions.len());
     for expression in expressions {
+        let mut expression_end = 0;
         let mut evaluate = || -> Result<Value, RuntimeError> {
             let mut value = module_value.clone();
             // The bounded adapter accepts property paths, not arbitrary REPL expressions.
             for member in expression.split('.') {
+                if expression_end > 0 {
+                    expression_end += 1; // The property separator is part of the prefix.
+                }
+                expression_end += member.len();
                 if member.is_empty() || !member.chars().all(|ch| ch.is_alphanumeric() || ch == '_')
                 {
                     return Err(RuntimeError::new(
@@ -141,14 +146,19 @@ pub fn scalar_expressions_with_options(
             Ok(value)
         };
         let result = evaluate()
-            .map_err(|error| runtime_error(source, uri, name, expression, error, true))
+            .map_err(|error| {
+                runtime_error(source, uri, name, expression, error, Some(expression_end))
+            })
             .and_then(|mut value| {
-                if vm.is_reference(&value) || matches!(value, Value::TypeAlias(_)) {
+                if vm.is_reference(&value)
+                    || vm.is_map(&value)
+                    || matches!(value, Value::TypeAlias(_))
+                {
                     value = vm
                         .start(stringify, vec![value])
                         .and_then(|()| poll(&mut vm))
                         .map_err(|error| {
-                            runtime_error(source, uri, name, expression, error, false)
+                            runtime_error(source, uri, name, expression, error, None)
                         })?;
                 }
                 match value {
@@ -198,7 +208,7 @@ fn runtime_error(
     module: &str,
     expression: &str,
     mut error: RuntimeError,
-    include_expression: bool,
+    expression_end: Option<usize>,
 ) -> String {
     let mut sources = SourceMap::default();
     let repl_id = sources.add("repl:text", expression);
@@ -302,12 +312,12 @@ fn runtime_error(
             highlight_length_utf16: None,
         });
     }
-    if include_expression {
+    if let Some(end) = expression_end {
         frames.push(RenderFrame {
             source: sources.get(repl_id).expect("expression source inserted"),
             uri: "repl:text",
             member: "",
-            span: Span::new(0, expression.len()),
+            span: Span::new(0, end),
             highlight_length_utf16: None,
         });
     }

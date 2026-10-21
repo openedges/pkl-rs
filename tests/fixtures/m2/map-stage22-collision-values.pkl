@@ -1,0 +1,3 @@
+a = new Dynamic { p = throw("Aa-value") }
+b = new Dynamic { p = throw("BB-value") }
+result = Map("Aa", a, "BB", b) == Map("Aa", new Dynamic { p = 1 }, "BB", new Dynamic { p = 2 })

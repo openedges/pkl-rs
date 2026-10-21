@@ -1,0 +1,1 @@
+result = Map(new Mapping { ["a"] = 1 }, 7)[new Mapping { ["a"] = 1 }]

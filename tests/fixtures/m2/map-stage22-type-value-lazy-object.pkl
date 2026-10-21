@@ -1,0 +1,2 @@
+x: Map<String,Mapping<String,Int>> = Map("a", new Mapping { ["b"] = "bad" })
+result = x.length

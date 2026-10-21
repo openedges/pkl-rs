@@ -1,0 +1,3 @@
+class C { p = 1 }
+x: C?
+result = Map("a", x) == Map("a", null)

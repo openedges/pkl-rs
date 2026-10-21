@@ -1,0 +1,14 @@
+a = new Listing { 1; 17 }
+b = new Listing { 1; 17 }
+warm = a[1]
+single = let (w = warm) Map(a, 7)
+deep = Map(a, 7, 16, 9)
+other = Map(a, 7, 1, 9)
+lookup = single.getOrNull(b)
+lookupDeep = deep.getOrNull(b)
+lookupOther = other.getOrNull(b)
+duplicate = Map(a, 7, b, 8).length
+duplicateDeep = Map(a, 7, 16, 9, b, 8).length
+equal = single == Map(b, 7)
+equalDeep = deep == Map(b, 7, 16, 9)
+stable = 42

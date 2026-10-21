@@ -1,0 +1,3 @@
+a = new Listing { 1; 17 }
+b = new Listing { 1; 17 }
+result = let (w = a[1]) Map(a, 7, 16, 9).getOrNull(b)

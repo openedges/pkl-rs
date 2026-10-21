@@ -1,0 +1,3 @@
+typealias A = Map<String,Int>
+x: A
+result = x.length

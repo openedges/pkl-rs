@@ -34,6 +34,15 @@ pub fn ordered_members(
     heap: &Heap,
     receiver: ObjectId,
 ) -> Result<Vec<CollectionMember>, RuntimeError> {
+    if heap.get(receiver)?.collection_kind == CollectionKind::Map {
+        let object = heap.get(receiver)?;
+        return Ok(object
+            .map_index()
+            .insertion_order()
+            .iter()
+            .map(|index| object.collection_members[*index].clone())
+            .collect());
+    }
     let typed = typed_class(heap, receiver)?.is_some() || heap.get(receiver)?.is_module;
     let mut chain = Vec::new();
     let mut next = Some(receiver);
@@ -85,6 +94,9 @@ pub(super) fn forcing_members(
     heap: &Heap,
     receiver: ObjectId,
 ) -> Result<Vec<CollectionMember>, RuntimeError> {
+    if heap.get(receiver)?.collection_kind == CollectionKind::Map {
+        return ordered_members(heap, receiver);
+    }
     let effective = ordered_members(heap, receiver)?;
     let mut result = Vec::new();
     let mut next = Some(receiver);
@@ -150,6 +162,257 @@ pub(super) fn external_amendment_error(name: &str) -> RuntimeError {
 }
 
 impl Vm {
+    fn map_candidates(&self, id: ObjectId, key: &Value) -> Result<Vec<Value>, RuntimeError> {
+        let object = self.heap.get(id)?;
+        Ok(object
+            .map_index()
+            .candidates(self.java_hash(key)?)
+            .into_iter()
+            .map(|index| object.collection_members[index].key.clone())
+            .collect())
+    }
+
+    /// Paguro skips hashing only when its root is empty. Every nonempty lookup
+    /// hashes the probe before comparing candidates, including small Maps.
+    fn prepare_map_lookup(&mut self, id: ObjectId, key: &Value) -> Result<bool, RuntimeError> {
+        if self.heap.get(id)?.length == 0 {
+            return Ok(false);
+        }
+        if self.prepare_keys(vec![key.clone()])? {
+            return Ok(true);
+        }
+        self.search_key(key, self.map_candidates(id, key)?)
+    }
+
+    fn map_value(&self, id: ObjectId, key: &Value) -> Result<Option<Value>, RuntimeError> {
+        let object = self.heap.get(id)?;
+        let candidates = self.map_candidates(id, key)?;
+        let member = object.collection_members.iter().find(|member| {
+            candidates
+                .iter()
+                .any(|candidate| equality::identical_key(&self.heap, candidate, &member.key))
+                && same_key(&self.heap, key, &member.key)
+        });
+        Ok(member.and_then(|member| {
+            object
+                .member_values
+                .get(&CacheKey {
+                    owner: None,
+                    name: member.name.clone(),
+                    method: false,
+                    entry: true,
+                })
+                .cloned()
+        }))
+    }
+
+    fn insert_map_entry(
+        &mut self,
+        id: ObjectId,
+        key: Value,
+        value: Value,
+    ) -> Result<(), RuntimeError> {
+        let object = self.heap.get(id)?;
+        let append_order = self.map_value(id, &key)?.is_none();
+        let candidates = object.map_index().assoc_candidates(self.java_hash(&key)?);
+        let replacing = object.collection_members.iter().position(|member| {
+            candidates.iter().any(|index| {
+                equality::identical_key(
+                    &self.heap,
+                    &object.collection_members[*index].key,
+                    &member.key,
+                )
+            }) && same_key(&self.heap, &key, &member.key)
+        });
+        let name = replacing
+            .map(|index| object.collection_members[index].name.clone())
+            .unwrap_or_else(|| {
+                Arc::from(format!(
+                    "\0{}:{}",
+                    id.index,
+                    object.collection_members.len()
+                ))
+            });
+        let mut hashes = object
+            .collection_members
+            .iter()
+            .map(|member| self.java_hash(&member.key))
+            .collect::<Result<Vec<_>, RuntimeError>>()?;
+        hashes.push(self.java_hash(&key)?);
+        let object = self.heap.get_mut(id)?;
+        if replacing.is_none() {
+            object
+                .map_index
+                .get_or_insert_with(Box::default)
+                .insert(hashes, append_order);
+            object.collection_members.push(CollectionMember {
+                key,
+                name: name.clone(),
+                kind: CollectionMemberKind::Entry,
+            });
+            object.members.push(Member {
+                name: name.clone(),
+                code: usize::MAX,
+                local: false,
+                method: false,
+                entry: true,
+                ty: None,
+                type_span: None,
+                constant: false,
+                fixed: false,
+            });
+            object.length = object.map_index().insertion_order().len();
+        }
+        let cache = CacheKey {
+            owner: None,
+            name,
+            method: false,
+            entry: true,
+        };
+        object.member_values.insert(cache.clone(), value.clone());
+        object.complete_cache(cache, value);
+        Ok(())
+    }
+
+    pub(super) fn invoke_map_lookup(
+        &mut self,
+        callable: ObjectId,
+        native: reference::NativeFunction,
+        arguments: Vec<Value>,
+    ) -> Result<(), RuntimeError> {
+        if arguments.len() != 1 {
+            return Err(RuntimeError::new(
+                ErrorKind::Type,
+                format!("Expected 1 function arguments but got {}.", arguments.len()),
+            ));
+        }
+        let id = native.receiver.as_object()?;
+        let key = &arguments[0];
+        if self.prepare_map_lookup(id, key)? {
+            self.frames
+                .last_mut()
+                .expect("active frame")
+                .equality_run
+                .as_mut()
+                .expect("Map lookup")
+                .hide_callsite = false;
+            self.stack.push(Value::Function(callable));
+            self.stack.extend(arguments);
+            return Ok(());
+        }
+        let value = self.map_value(id, key)?;
+        self.stack.push(if native.name.as_ref() == "containsKey" {
+            Value::Bool(value.is_some())
+        } else {
+            value.unwrap_or(Value::Null)
+        });
+        Ok(())
+    }
+
+    pub(super) fn map_hash_members(
+        &self,
+        id: ObjectId,
+    ) -> Result<Vec<CollectionMember>, RuntimeError> {
+        let object = self.heap.get(id)?;
+        Ok(object
+            .map_index()
+            .ordered()
+            .into_iter()
+            .map(|index| object.collection_members[index].clone())
+            .collect())
+    }
+
+    fn prepare_map_entry(&mut self) -> Result<(), RuntimeError> {
+        let value = self.pop()?;
+        let key = self.pop()?;
+        let id = self.builder()?;
+        if self.prepare_keys(vec![key.clone()])?
+            || self.search_key(&key, self.map_candidates(id, &key)?)?
+        {
+            self.stack.extend([key, value]);
+            return Ok(());
+        }
+        self.stack.extend([key, value]);
+        Ok(())
+    }
+
+    fn add_map_entry(&mut self) -> Result<(), RuntimeError> {
+        let value = self.pop()?;
+        let key = self.pop()?;
+        let id = self.builder()?;
+        if self.map_value(id, &key)?.is_none() {
+            let object = self.heap.get(id)?;
+            let old_keys = object
+                .map_index()
+                .rehash(self.java_hash(&key)?)
+                .into_iter()
+                .map(|index| object.collection_members[index].key.clone())
+                .collect();
+            if self.prepare_keys(old_keys)? {
+                self.stack.extend([key, value]);
+                return Ok(());
+            }
+        }
+        self.insert_map_entry(id, key, value)
+    }
+
+    fn next_map_entry(&mut self, iterator: ObjectId, end: usize) -> Result<(), RuntimeError> {
+        let state = self
+            .heap
+            .get(iterator)?
+            .iterator
+            .as_ref()
+            .expect("Map iterator");
+        let source = state.source;
+        let Some(member) = state.members.get(state.position).cloned() else {
+            return self.jump(end);
+        };
+        if self.prepare_map_lookup(source, &member.key)? {
+            return Ok(());
+        }
+        let value = self
+            .map_value(source, &member.key)?
+            .ok_or_else(|| invalid("Map iterator key is no longer reachable"))?;
+        self.heap
+            .get_mut(iterator)?
+            .iterator
+            .as_mut()
+            .expect("Map iterator")
+            .position += 1;
+        self.stack.extend([member.key, value]);
+        Ok(())
+    }
+
+    fn check_map_spread(&self) -> Result<(), RuntimeError> {
+        let value = self
+            .stack
+            .last()
+            .ok_or_else(|| invalid("missing spread source"))?;
+        if !self.is_map(value) {
+            return Ok(());
+        }
+        let target = self.builder()?;
+        let kind = self.heap.get(target)?.collection_kind;
+        let class = typed_class(&self.heap, target)?;
+        if matches!(kind, CollectionKind::Dynamic | CollectionKind::Mapping) && class.is_none() {
+            return Ok(());
+        }
+        let label = class.map_or_else(
+            || format!("{kind:?}"),
+            |class| format!("{}#{}", self.program.module_name, class.name),
+        );
+        let mut error = RuntimeError::new(
+            ErrorKind::Type,
+            format!(
+                "Cannot spread value of type `Map` into object of type `{label}`.\nValue: {}",
+                crate::diagnostic_values::render(value, &self.heap, &self.program.module_name, 80)?
+            ),
+        );
+        error.hint =
+            Some("`Map` can only be spread into objects of type `Dynamic` and `Mapping`.".into());
+        Err(error)
+    }
+
     fn builder(&self) -> Result<ObjectId, RuntimeError> {
         self.frames
             .last()
@@ -627,8 +890,14 @@ impl Vm {
                     if object.reference.is_some() {
                         return Err(external_amendment_error("pkl.ref#Reference"));
                     }
-                    if object.collection_kind == CollectionKind::List {
-                        return Err(external_amendment_error("List"));
+                    if matches!(
+                        object.collection_kind,
+                        CollectionKind::List | CollectionKind::Map
+                    ) {
+                        return Err(external_amendment_error(&format!(
+                            "{:?}",
+                            object.collection_kind
+                        )));
                     }
                     (object.collection_kind, object.length)
                 } else {
@@ -786,6 +1055,29 @@ impl Vm {
                 } else {
                     self.pop()?.as_object()?
                 };
+                if !is_super && self.heap.get(receiver)?.collection_kind == CollectionKind::Map {
+                    if self.prepare_map_lookup(receiver, &key)? {
+                        self.stack.extend([Value::Object(receiver), key]);
+                        return Ok(());
+                    }
+                    let value = self.map_value(receiver, &key)?.ok_or_else(|| {
+                        RuntimeError::new(
+                            ErrorKind::MissingMember,
+                            format!(
+                                "Cannot find key `{}`.",
+                                crate::diagnostic_values::render(
+                                    &key,
+                                    &self.heap,
+                                    &self.program.module_name,
+                                    80
+                                )
+                                .unwrap_or_else(|_| display_value(&key))
+                            ),
+                        )
+                    })?;
+                    self.stack.push(value);
+                    return Ok(());
+                }
                 if !is_super && self.heap.get(receiver)?.reference.is_some() {
                     let result = self.reference_access(receiver, None, Some(key))?;
                     self.stack.push(result);
@@ -1079,6 +1371,17 @@ impl Vm {
                     })
                     .or_else(|| self.stack.last().and_then(Value::heap_id))
                     .ok_or_else(|| invalid("missing iterator"))?;
+                let source = self
+                    .heap
+                    .get(id)?
+                    .iterator
+                    .as_ref()
+                    .ok_or_else(|| invalid("missing iterator"))?
+                    .source;
+                if self.heap.get(source)?.collection_kind == CollectionKind::Map {
+                    self.next_map_entry(id, end)?;
+                    return Ok(());
+                }
                 let awaiting = self
                     .heap
                     .get(id)?
@@ -1176,7 +1479,7 @@ impl Vm {
                         CollectionKind::Listing | CollectionKind::List => {
                             source_member.kind != CollectionMemberKind::Element
                         }
-                        CollectionKind::Mapping => {
+                        CollectionKind::Mapping | CollectionKind::Map => {
                             source_member.kind != CollectionMemberKind::Entry
                         }
                         CollectionKind::Dynamic => false,
@@ -1427,6 +1730,9 @@ impl Vm {
                         .kind = kind;
                 }
             }
+            Instruction::PrepareMapEntry => self.prepare_map_entry()?,
+            Instruction::AddMapEntry => self.add_map_entry()?,
+            Instruction::CheckMapSpread => self.check_map_spread()?,
             Instruction::MakeList { length } => {
                 let mut values = Vec::with_capacity(length);
                 for _ in 0..length {
@@ -1812,6 +2118,7 @@ impl Compiler<'_> {
                     span,
                 } => {
                     self.collection_eager_expression(value, output)?;
+                    output.push_at(Instruction::CheckMapSpread, *span);
                     output.push_at(
                         Instruction::OpenIterator {
                             nullable: *nullable,

@@ -21,3 +21,5 @@ mod stdlib_sources;
 pub mod syntax;
 pub mod value;
 pub mod vm;
+
+mod strict_map;

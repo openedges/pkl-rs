@@ -1,0 +1,13 @@
+class C { p = 1 }
+n: C?
+boxed = Map(1, "int", 1.0, "float", 0.0, "positive", -0.0, "negative", NaN, "first", NaN, "last")
+nulls = Map(n, 1, null, 2)
+stable = 42
+probe0 = boxed[1]
+probe1 = boxed[1.0]
+probe2 = boxed[0.0]
+probe3 = boxed[-0.0]
+probe4 = boxed[NaN]
+probe5 = nulls[null]
+probe6 = Map().isEmpty
+probe7 = Map("a",1).getOrNull("missing")

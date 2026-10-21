@@ -1,0 +1,2 @@
+x: Map<Listing<Int>,Int> = Map(new Listing { "bad" }, 1)
+result = x is Map<Listing<Int>,Int>

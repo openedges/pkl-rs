@@ -1,0 +1,8 @@
+key = new Dynamic { p = throw("lookup key hash") }
+empty = Map()
+nonempty = Map("a", 1)
+stable = 42
+probe0 = empty.getOrNull(key)
+probe1 = empty.containsKey(key)
+probe2 = nonempty.getOrNull(key)
+probe3 = nonempty.containsKey(key)
