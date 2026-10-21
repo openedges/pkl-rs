@@ -1,0 +1,4 @@
+open class A { fixed p: Int = 1 }
+open class B extends A
+class C extends B { fixed p: Int = 3 }
+result = new C {}.p

@@ -1440,6 +1440,7 @@ impl Vm {
                         ty: None,
                         type_span: None,
                         constant: false,
+                        fixed: false,
                     };
                     self.add_collection_member(
                         member,
@@ -1619,6 +1620,7 @@ impl Compiler<'_> {
             ty: None,
             type_span: None,
             constant: false,
+            fixed: false,
         })
     }
 

@@ -727,7 +727,15 @@ impl<'a> Resolver<'a> {
                 ),
             }
         };
-        validate_modifiers(&member.modifiers, valid, target)?;
+        validate_modifiers(&member.modifiers, valid, target).map_err(|mut error| {
+            // The pinned builder checks modifiers before entering the member's
+            // declaration scope, so the enclosing class or property owns it.
+            let enclosing = &self.diagnostic_path[..self.diagnostic_path.len() - 1];
+            if !enclosing.is_empty() {
+                error.member = Some(enclosing.join(".").into());
+            }
+            error
+        })?;
         let flags = modifier_flags(&member.modifiers);
         let has = |kind: ModifierKind| flags & kind.flag() != 0;
         let modifier = |kind| {
@@ -786,12 +794,24 @@ impl<'a> Resolver<'a> {
                     ExprKind::Class { .. } | ExprKind::Uninitialized
                 ),
             };
-            if has_body {
-                return Err(Diagnostic::new(
+            if has_body && !member.is_amendment() {
+                let header_span = match &member.expr.kind {
+                    ExprKind::Function { header_span, .. } => *header_span,
+                    _ => Span::new(
+                        member.span.start,
+                        member
+                            .ty
+                            .as_ref()
+                            .map_or(member.name_span.end, |ty| ty.span.end),
+                    ),
+                };
+                let mut error = Diagnostic::new(
                     DiagnosticKind::Syntax,
-                    member.span,
+                    header_span,
                     "Abstract members cannot have a body.",
-                ));
+                );
+                error.member = Some(self.diagnostic_path.join(".").into());
+                return Err(error);
             }
         }
         if has(M::Local) && matches!(member.expr.kind, ExprKind::Uninitialized) {

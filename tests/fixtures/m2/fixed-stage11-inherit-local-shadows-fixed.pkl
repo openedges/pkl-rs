@@ -1,0 +1,3 @@
+open class A { fixed p: Int = 1 }
+class B extends A { local p: Int = 2; q: Int = p }
+result = new B {}.q

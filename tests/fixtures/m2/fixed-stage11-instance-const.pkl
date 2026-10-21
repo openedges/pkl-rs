@@ -1,0 +1,2 @@
+class A { const p: Int = 1 }
+result = new A { p = 2 }.p

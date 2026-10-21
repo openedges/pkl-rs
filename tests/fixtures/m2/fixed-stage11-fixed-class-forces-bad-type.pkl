@@ -1,0 +1,2 @@
+class A { fixed p: Missing = throw("body") }
+result = A

@@ -235,6 +235,7 @@ fn shared_session() -> (HostSession, Value) {
             ty: None,
             type_span: None,
             constant: false,
+            fixed: false,
         },
         Member {
             entry: false,
@@ -245,6 +246,7 @@ fn shared_session() -> (HostSession, Value) {
             ty: None,
             type_span: None,
             constant: false,
+            fixed: false,
         },
     ]);
     let mut session = HostSession::new(Arc::new(program));

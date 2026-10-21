@@ -1,0 +1,2 @@
+class A { n: Int = 2; fixed p: Int = n + 1 }
+result = new A { n = 8 }.p

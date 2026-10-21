@@ -1,0 +1,3 @@
+open class A { const p: Int = 1 }
+class B extends A { p: Int = 2 }
+result = B

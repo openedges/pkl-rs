@@ -1,0 +1,2 @@
+class A { fixed p: Int = throw("base body") }
+result = new A { p = throw("override body") }.p

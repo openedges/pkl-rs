@@ -380,3 +380,28 @@ license and included in build-evidence snapshots. This supplies authored source
 locations for native constructor checks, inherited Access checks, and the domain
 rendering call. It does not imply that the entire standard-library module is
 interpreted by the current evaluator.
+
+Fixed property flags remain attached to shared heap declarations alongside const
+flags and declared types. Class initialization resolves each property's type and
+checks fixed agreement before const agreement, visiting properties before methods.
+A subclass may replace a fixed declaration when it retains the fixed modifier;
+instance assignments and property amendments reject inherited fixed declarations.
+These checks inspect declaration metadata without forcing property values. Fixed
+initializers retain ordinary virtual receiver dispatch, lazy caching, Host
+suspension, and failure recovery. Reference access uses the same inherited
+metadata and leaves referent initializers deferred, including hidden fixed values.
+
+Authored property amendments retain a separate source marker from explicit
+assignment expressions. This distinguishes assignment and amendment diagnostics
+and permits abstract amendment declarations while rejecting abstract assignment
+bodies. Modifier errors before declaration scope entry use the enclosing frame;
+abstract body errors use the declaration frame and header range. Class override
+modifier locations follow the pinned header substring lookup, including comments
+and repeated modifier flag carries.
+
+Persistent retry after failed class initialization remains a known lifecycle gap.
+The pinned Java class node retains its partially initialized singleton after an
+initialization exception, allowing a later evaluation in the same evaluator to
+return that class. The current Rust scheduler retries initialization and reports
+the error again. Successful Host read retries do not establish compatibility with
+this separate class publication behavior.

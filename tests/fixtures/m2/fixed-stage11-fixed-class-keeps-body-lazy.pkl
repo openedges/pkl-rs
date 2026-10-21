@@ -1,0 +1,2 @@
+class A { fixed p: Int = throw("body") }
+result = A == A

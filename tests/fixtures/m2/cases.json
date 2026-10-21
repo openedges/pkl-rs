@@ -15666,6 +15666,1051 @@
         "semantic:lazy-evaluation",
         "semantic:diagnostics"
       ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "fixed-stage11-module-fixed-value",
+      "input": "tests/fixtures/m2/fixed-stage11-module-fixed-value.pkl",
+      "requirements": [
+        "semantic:modifiers"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "fixed-stage11-class-fixed-value",
+      "input": "tests/fixtures/m2/fixed-stage11-class-fixed-value.pkl",
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "fixed-stage11-fixed-derived-late-binding",
+      "input": "tests/fixtures/m2/fixed-stage11-fixed-derived-late-binding.pkl",
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes",
+        "semantic:name-resolution"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "fixed-stage11-fixed-default-literal",
+      "input": "tests/fixtures/m2/fixed-stage11-fixed-default-literal.pkl",
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "fixed-stage11-fixed-default-nullable",
+      "input": "tests/fixtures/m2/fixed-stage11-fixed-default-nullable.pkl",
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "fixed-stage11-fixed-default-missing",
+      "input": "tests/fixtures/m2/fixed-stage11-fixed-default-missing.pkl",
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "fixed-stage11-fixed-typecheck",
+      "input": "tests/fixtures/m2/fixed-stage11-fixed-typecheck.pkl",
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes",
+        "semantic:types",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "fixed-stage11-module-modifier-local",
+      "input": "tests/fixtures/m2/fixed-stage11-module-modifier-local.pkl",
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "fixed-stage11-class-modifier-local",
+      "input": "tests/fixtures/m2/fixed-stage11-class-modifier-local.pkl",
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "fixed-stage11-invalid-fixed-method",
+      "input": "tests/fixtures/m2/fixed-stage11-invalid-fixed-method.pkl",
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "fixed-stage11-invalid-fixed-class",
+      "input": "tests/fixtures/m2/fixed-stage11-invalid-fixed-class.pkl",
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "fixed-stage11-invalid-fixed-module",
+      "input": "tests/fixtures/m2/fixed-stage11-invalid-fixed-module.pkl",
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "fixed-stage11-invalid-fixed-object",
+      "input": "tests/fixtures/m2/fixed-stage11-invalid-fixed-object.pkl",
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "fixed-stage11-invalid-fixed-listing",
+      "input": "tests/fixtures/m2/fixed-stage11-invalid-fixed-listing.pkl",
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "fixed-stage11-fixed-unused-initializer",
+      "input": "tests/fixtures/m2/fixed-stage11-fixed-unused-initializer.pkl",
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "fixed-stage11-fixed-unused-bad-type",
+      "input": "tests/fixtures/m2/fixed-stage11-fixed-unused-bad-type.pkl",
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:types"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "fixed-stage11-fixed-class-forces-bad-type",
+      "input": "tests/fixtures/m2/fixed-stage11-fixed-class-forces-bad-type.pkl",
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:types",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "fixed-stage11-fixed-class-keeps-body-lazy",
+      "input": "tests/fixtures/m2/fixed-stage11-fixed-class-keeps-body-lazy.pkl",
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "fixed-stage11-fixed-throw-before-later",
+      "input": "tests/fixtures/m2/fixed-stage11-fixed-throw-before-later.pkl",
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "fixed-stage11-inherit-preserve",
+      "input": "tests/fixtures/m2/fixed-stage11-inherit-preserve.pkl",
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "fixed-stage11-inherit-drop",
+      "input": "tests/fixtures/m2/fixed-stage11-inherit-drop.pkl",
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "fixed-stage11-inherit-add",
+      "input": "tests/fixtures/m2/fixed-stage11-inherit-add.pkl",
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "fixed-stage11-inherit-plain",
+      "input": "tests/fixtures/m2/fixed-stage11-inherit-plain.pkl",
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "fixed-stage11-inherit-hidden-preserve",
+      "input": "tests/fixtures/m2/fixed-stage11-inherit-hidden-preserve.pkl",
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "fixed-stage11-inherit-hidden-drop",
+      "input": "tests/fixtures/m2/fixed-stage11-inherit-hidden-drop.pkl",
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "fixed-stage11-inherit-fixed-to-const",
+      "input": "tests/fixtures/m2/fixed-stage11-inherit-fixed-to-const.pkl",
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "fixed-stage11-inherit-const-to-fixed",
+      "input": "tests/fixtures/m2/fixed-stage11-inherit-const-to-fixed.pkl",
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "fixed-stage11-inherit-const-preserve",
+      "input": "tests/fixtures/m2/fixed-stage11-inherit-const-preserve.pkl",
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "fixed-stage11-inherit-indirect-fixed",
+      "input": "tests/fixtures/m2/fixed-stage11-inherit-indirect-fixed.pkl",
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "fixed-stage11-inherit-indirect-drop",
+      "input": "tests/fixtures/m2/fixed-stage11-inherit-indirect-drop.pkl",
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "fixed-stage11-inherit-unforced-bad-override",
+      "input": "tests/fixtures/m2/fixed-stage11-inherit-unforced-bad-override.pkl",
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "fixed-stage11-inherit-class-bad-override",
+      "input": "tests/fixtures/m2/fixed-stage11-inherit-class-bad-override.pkl",
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "fixed-stage11-inherit-type-before-fixed",
+      "input": "tests/fixtures/m2/fixed-stage11-inherit-type-before-fixed.pkl",
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:types",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "fixed-stage11-inherit-first-property-error",
+      "input": "tests/fixtures/m2/fixed-stage11-inherit-first-property-error.pkl",
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "fixed-stage11-inherit-abstract-default",
+      "input": "tests/fixtures/m2/fixed-stage11-inherit-abstract-default.pkl",
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "fixed-stage11-inherit-narrow-default",
+      "input": "tests/fixtures/m2/fixed-stage11-inherit-narrow-default.pkl",
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "fixed-stage11-inherit-local-shadows-fixed",
+      "input": "tests/fixtures/m2/fixed-stage11-inherit-local-shadows-fixed.pkl",
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "fixed-stage11-inherit-fixed-shadows-local",
+      "input": "tests/fixtures/m2/fixed-stage11-inherit-fixed-shadows-local.pkl",
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "fixed-stage11-instance-assign-constant",
+      "input": "tests/fixtures/m2/fixed-stage11-instance-assign-constant.pkl",
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes",
+        "semantic:objects",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "fixed-stage11-instance-assign-computed",
+      "input": "tests/fixtures/m2/fixed-stage11-instance-assign-computed.pkl",
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes",
+        "semantic:objects",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "fixed-stage11-instance-assign-throw",
+      "input": "tests/fixtures/m2/fixed-stage11-instance-assign-throw.pkl",
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "fixed-stage11-instance-assign-other-force",
+      "input": "tests/fixtures/m2/fixed-stage11-instance-assign-other-force.pkl",
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes",
+        "semantic:objects",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "fixed-stage11-instance-unused-object",
+      "input": "tests/fixtures/m2/fixed-stage11-instance-unused-object.pkl",
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "fixed-stage11-instance-fixed-rhs-versus-body",
+      "input": "tests/fixtures/m2/fixed-stage11-instance-fixed-rhs-versus-body.pkl",
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "fixed-stage11-instance-indirect-assign",
+      "input": "tests/fixtures/m2/fixed-stage11-instance-indirect-assign.pkl",
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes",
+        "semantic:objects",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "fixed-stage11-instance-fixed-object-local-shadow",
+      "input": "tests/fixtures/m2/fixed-stage11-instance-fixed-object-local-shadow.pkl",
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes",
+        "semantic:objects"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "fixed-stage11-instance-hidden-fixed",
+      "input": "tests/fixtures/m2/fixed-stage11-instance-hidden-fixed.pkl",
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes",
+        "semantic:objects",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "fixed-stage11-instance-const",
+      "input": "tests/fixtures/m2/fixed-stage11-instance-const.pkl",
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes",
+        "semantic:objects",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "fixed-stage11-instance-amend-object",
+      "input": "tests/fixtures/m2/fixed-stage11-instance-amend-object.pkl",
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes",
+        "semantic:objects",
+        "semantic:amendment",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "fixed-stage11-instance-amend-assignment",
+      "input": "tests/fixtures/m2/fixed-stage11-instance-amend-assignment.pkl",
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes",
+        "semantic:objects",
+        "semantic:amendment",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "fixed-stage11-instance-amend-other-force",
+      "input": "tests/fixtures/m2/fixed-stage11-instance-amend-other-force.pkl",
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes",
+        "semantic:objects",
+        "semantic:amendment",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "fixed-stage11-instance-amend-direct",
+      "input": "tests/fixtures/m2/fixed-stage11-instance-amend-direct.pkl",
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes",
+        "semantic:objects",
+        "semantic:amendment",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "fixed-stage11-instance-amend-empty",
+      "input": "tests/fixtures/m2/fixed-stage11-instance-amend-empty.pkl",
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes",
+        "semantic:objects",
+        "semantic:amendment"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "fixed-stage11-amend-extracted-fixed-value",
+      "input": "tests/fixtures/m2/fixed-stage11-amend-extracted-fixed-value.pkl",
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes",
+        "semantic:objects",
+        "semantic:amendment"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "fixed-stage11-reference-metadata-fixed",
+      "input": "tests/fixtures/m2/fixed-stage11-reference-metadata-fixed.pkl",
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:reference",
+        "semantic:reflection-metadata"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "fixed-stage11-reference-metadata-hidden",
+      "input": "tests/fixtures/m2/fixed-stage11-reference-metadata-hidden.pkl",
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:reference",
+        "semantic:reflection-metadata"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "fixed-stage11-reference-metadata-inherited",
+      "input": "tests/fixtures/m2/fixed-stage11-reference-metadata-inherited.pkl",
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:reference",
+        "semantic:reflection-metadata"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "fixed-stage11-reference-metadata-indirect",
+      "input": "tests/fixtures/m2/fixed-stage11-reference-metadata-indirect.pkl",
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:reference",
+        "semantic:reflection-metadata"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "fixed-stage11-reference-metadata-override",
+      "input": "tests/fixtures/m2/fixed-stage11-reference-metadata-override.pkl",
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:reference",
+        "semantic:reflection-metadata"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "fixed-stage11-reference-metadata-invalid-override",
+      "input": "tests/fixtures/m2/fixed-stage11-reference-metadata-invalid-override.pkl",
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "fixed-stage11-reference-metadata-unrelated-invalid-override",
+      "input": "tests/fixtures/m2/fixed-stage11-reference-metadata-unrelated-invalid-override.pkl",
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "fixed-stage11-reference-metadata-unrelated-bad-type",
+      "input": "tests/fixtures/m2/fixed-stage11-reference-metadata-unrelated-bad-type.pkl",
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:types",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "fixed-stage11-reference-metadata-local",
+      "input": "tests/fixtures/m2/fixed-stage11-reference-metadata-local.pkl",
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "fixed-stage11-reference-metadata-constraint",
+      "input": "tests/fixtures/m2/fixed-stage11-reference-metadata-constraint.pkl",
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:reference",
+        "semantic:reflection-metadata"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "fixed-stage11-duplicate-fixed-implies-const-read",
+      "input": "tests/fixtures/m2/fixed-stage11-duplicate-fixed-implies-const-read.pkl",
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "fixed-stage11-duplicate-fixed-instance-override",
+      "input": "tests/fixtures/m2/fixed-stage11-duplicate-fixed-instance-override.pkl",
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "fixed-stage11-duplicate-const",
+      "input": "tests/fixtures/m2/fixed-stage11-duplicate-const.pkl",
+      "requirements": [
+        "semantic:modifiers"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "fixed-stage11-modifier-fixed-const-order",
+      "input": "tests/fixtures/m2/fixed-stage11-modifier-fixed-const-order.pkl",
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "fixed-stage11-modifier-fixed-abstract-order",
+      "input": "tests/fixtures/m2/fixed-stage11-modifier-fixed-abstract-order.pkl",
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "fixed-stage11-modifier-hidden-fixed-concrete",
+      "input": "tests/fixtures/m2/fixed-stage11-modifier-hidden-fixed-concrete.pkl",
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "fixed-stage11-modifier-abstract-fixed-concrete",
+      "input": "tests/fixtures/m2/fixed-stage11-modifier-abstract-fixed-concrete.pkl",
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "fixed-stage11-order-fixed-before-unknown",
+      "input": "tests/fixtures/m2/fixed-stage11-order-fixed-before-unknown.pkl",
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes",
+        "semantic:objects",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "fixed-stage11-order-unknown-before-fixed",
+      "input": "tests/fixtures/m2/fixed-stage11-order-unknown-before-fixed.pkl",
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes",
+        "semantic:objects",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "fixed-stage11-order-fixed-before-const",
+      "input": "tests/fixtures/m2/fixed-stage11-order-fixed-before-const.pkl",
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes",
+        "semantic:objects",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "fixed-stage11-order-const-before-fixed",
+      "input": "tests/fixtures/m2/fixed-stage11-order-const-before-fixed.pkl",
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes",
+        "semantic:objects",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "fixed-stage11-class-const-override-nonconst",
+      "input": "tests/fixtures/m2/fixed-stage11-class-const-override-nonconst.pkl",
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "fixed-stage11-class-type-before-const",
+      "input": "tests/fixtures/m2/fixed-stage11-class-type-before-const.pkl",
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes",
+        "semantic:types",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "fixed-stage11-relation-fixed-receiver-left",
+      "input": "tests/fixtures/m2/fixed-stage11-relation-fixed-receiver-left.pkl",
+      "metamorphic_relation": {
+        "case_ids": [
+          "fixed-stage11-relation-fixed-receiver-left",
+          "fixed-stage11-relation-fixed-receiver-right"
+        ],
+        "domain": "An inherited fixed computed property uses the amended receiver field and equals the explicit computation for that receiver.",
+        "kind": "equal-stdout"
+      },
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes",
+        "semantic:name-resolution"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "fixed-stage11-relation-fixed-receiver-right",
+      "input": "tests/fixtures/m2/fixed-stage11-relation-fixed-receiver-right.pkl",
+      "metamorphic_relation": {
+        "case_ids": [
+          "fixed-stage11-relation-fixed-receiver-left",
+          "fixed-stage11-relation-fixed-receiver-right"
+        ],
+        "domain": "An inherited fixed computed property uses the amended receiver field and equals the explicit computation for that receiver.",
+        "kind": "equal-stdout"
+      },
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:name-resolution"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "fixed-stage11-relation-reference-unforced-fixed-left",
+      "input": "tests/fixtures/m2/fixed-stage11-relation-reference-unforced-fixed-left.pkl",
+      "metamorphic_relation": {
+        "case_ids": [
+          "fixed-stage11-relation-reference-unforced-fixed-left",
+          "fixed-stage11-relation-reference-unforced-fixed-right"
+        ],
+        "domain": "Fixed property Reference metadata is unchanged when the initializer changes from a String literal to a throwing body; metadata access must not force that body.",
+        "kind": "equal-stdout"
+      },
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:reference",
+        "semantic:reflection-metadata"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "fixed-stage11-relation-reference-unforced-fixed-right",
+      "input": "tests/fixtures/m2/fixed-stage11-relation-reference-unforced-fixed-right.pkl",
+      "metamorphic_relation": {
+        "case_ids": [
+          "fixed-stage11-relation-reference-unforced-fixed-left",
+          "fixed-stage11-relation-reference-unforced-fixed-right"
+        ],
+        "domain": "Fixed property Reference metadata is unchanged when the initializer changes from a String literal to a throwing body; metadata access must not force that body.",
+        "kind": "equal-stdout"
+      },
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:reference",
+        "semantic:reflection-metadata"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "fixed-stage11-abstract-fixed-assignment-body",
+      "input": "tests/fixtures/m2/fixed-stage11-abstract-fixed-assignment-body.pkl",
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "fixed-stage11-abstract-fixed-amendment-body",
+      "input": "tests/fixtures/m2/fixed-stage11-abstract-fixed-amendment-body.pkl",
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes",
+        "semantic:amendment"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "fixed-stage11-duplicate-fixed-override-plain",
+      "input": "tests/fixtures/m2/fixed-stage11-duplicate-fixed-override-plain.pkl",
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "fixed-stage11-duplicate-fixed-override-const",
+      "input": "tests/fixtures/m2/fixed-stage11-duplicate-fixed-override-const.pkl",
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "fixed-stage11-duplicate-fixed-override-fixed",
+      "input": "tests/fixtures/m2/fixed-stage11-duplicate-fixed-override-fixed.pkl",
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "fixed-stage11-carry-const-in-identifier",
+      "input": "tests/fixtures/m2/fixed-stage11-carry-const-in-identifier.pkl",
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "fixed-stage11-carry-const-in-comment",
+      "input": "tests/fixtures/m2/fixed-stage11-carry-const-in-comment.pkl",
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "fixed-stage11-carry-const-multiline-backtick",
+      "input": "tests/fixtures/m2/fixed-stage11-carry-const-multiline-backtick.pkl",
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes",
+        "semantic:diagnostics"
+      ]
     }
   ]
 }

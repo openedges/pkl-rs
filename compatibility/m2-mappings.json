@@ -173,10 +173,22 @@
           "reference-stage10-reference-iteration-invalid",
           "reference-stage10-reference-new-parent-invalid",
           "reference-stage10-adapter-reference-render-success",
-          "reference-stage10-adapter-reference-render-failure"
+          "reference-stage10-adapter-reference-render-failure",
+          "fixed-stage11-reference-metadata-fixed",
+          "fixed-stage11-reference-metadata-hidden",
+          "fixed-stage11-reference-metadata-inherited",
+          "fixed-stage11-reference-metadata-indirect",
+          "fixed-stage11-reference-metadata-override",
+          "fixed-stage11-reference-metadata-invalid-override",
+          "fixed-stage11-reference-metadata-unrelated-invalid-override",
+          "fixed-stage11-reference-metadata-unrelated-bad-type",
+          "fixed-stage11-reference-metadata-local",
+          "fixed-stage11-reference-metadata-constraint",
+          "fixed-stage11-relation-reference-unforced-fixed-left",
+          "fixed-stage11-relation-reference-unforced-fixed-right"
         ]
       },
-      "scope": "The pkl:ref bridge supports selected constructor, normalized referent type, synthetic property/subscript path, domain rendering, equality and key behavior through the shared VM. Linked native cases compare complete Java 0.32.0 process output at their actual fixture URIs.",
+      "scope": "The pkl:ref bridge supports selected constructor, normalized referent type, synthetic property/subscript path, domain rendering, equality and key behavior through the shared VM. Linked native cases compare complete Java 0.32.0 process output at their actual fixture URIs. Stage11 adds selected fixed declaration, inherited metadata and complete raw diagnostics through the shared VM.",
       "remaining": [
         "Original upstream reference snippet and renderer/API suite contracts remain unexecuted; selected API-expression exploration is separate evidence.",
         "Complete referent metadata for all builtin types, generic classes and remaining collection types is not implemented or verified.",
@@ -284,10 +296,22 @@
           "reference-stage10-property-getclass",
           "reference-stage10-constructor-nonnull-alias",
           "reference-stage10-metadata-nonnull-erasure",
-          "reference-stage10-referent-nonnull-check"
+          "reference-stage10-referent-nonnull-check",
+          "fixed-stage11-reference-metadata-fixed",
+          "fixed-stage11-reference-metadata-hidden",
+          "fixed-stage11-reference-metadata-inherited",
+          "fixed-stage11-reference-metadata-indirect",
+          "fixed-stage11-reference-metadata-override",
+          "fixed-stage11-reference-metadata-invalid-override",
+          "fixed-stage11-reference-metadata-unrelated-invalid-override",
+          "fixed-stage11-reference-metadata-unrelated-bad-type",
+          "fixed-stage11-reference-metadata-local",
+          "fixed-stage11-reference-metadata-constraint",
+          "fixed-stage11-relation-reference-unforced-fixed-left",
+          "fixed-stage11-relation-reference-unforced-fixed-right"
         ]
       },
-      "scope": "Selected class, inherited property and normalized type metadata are used for Reference access without forcing referent bodies.",
+      "scope": "Selected class, inherited property and normalized type metadata are used for Reference access without forcing referent bodies. Stage11 adds selected fixed declaration, inherited metadata and complete raw diagnostics through the shared VM.",
       "remaining": [
         "The full reflection API, module/class/type metadata inventory, dynamic nested declaration identity and generic class metadata remain unimplemented or unverified."
       ]
@@ -391,10 +415,60 @@
           "reference-stage10-reference-spread-invalid",
           "reference-stage10-reference-iteration-invalid",
           "reference-stage10-reference-new-parent-invalid",
-          "reference-stage10-adapter-reference-render-failure"
+          "reference-stage10-adapter-reference-render-failure",
+          "fixed-stage11-fixed-default-missing",
+          "fixed-stage11-fixed-typecheck",
+          "fixed-stage11-module-modifier-local",
+          "fixed-stage11-class-modifier-local",
+          "fixed-stage11-invalid-fixed-method",
+          "fixed-stage11-invalid-fixed-class",
+          "fixed-stage11-invalid-fixed-module",
+          "fixed-stage11-invalid-fixed-object",
+          "fixed-stage11-invalid-fixed-listing",
+          "fixed-stage11-fixed-class-forces-bad-type",
+          "fixed-stage11-fixed-throw-before-later",
+          "fixed-stage11-inherit-drop",
+          "fixed-stage11-inherit-add",
+          "fixed-stage11-inherit-hidden-drop",
+          "fixed-stage11-inherit-fixed-to-const",
+          "fixed-stage11-inherit-const-to-fixed",
+          "fixed-stage11-inherit-indirect-drop",
+          "fixed-stage11-inherit-class-bad-override",
+          "fixed-stage11-inherit-type-before-fixed",
+          "fixed-stage11-inherit-first-property-error",
+          "fixed-stage11-instance-assign-constant",
+          "fixed-stage11-instance-assign-computed",
+          "fixed-stage11-instance-assign-throw",
+          "fixed-stage11-instance-assign-other-force",
+          "fixed-stage11-instance-fixed-rhs-versus-body",
+          "fixed-stage11-instance-indirect-assign",
+          "fixed-stage11-instance-hidden-fixed",
+          "fixed-stage11-instance-const",
+          "fixed-stage11-instance-amend-object",
+          "fixed-stage11-instance-amend-assignment",
+          "fixed-stage11-instance-amend-other-force",
+          "fixed-stage11-instance-amend-direct",
+          "fixed-stage11-reference-metadata-invalid-override",
+          "fixed-stage11-reference-metadata-unrelated-invalid-override",
+          "fixed-stage11-reference-metadata-unrelated-bad-type",
+          "fixed-stage11-reference-metadata-local",
+          "fixed-stage11-duplicate-fixed-implies-const-read",
+          "fixed-stage11-duplicate-fixed-instance-override",
+          "fixed-stage11-order-fixed-before-unknown",
+          "fixed-stage11-order-unknown-before-fixed",
+          "fixed-stage11-order-fixed-before-const",
+          "fixed-stage11-order-const-before-fixed",
+          "fixed-stage11-class-const-override-nonconst",
+          "fixed-stage11-class-type-before-const",
+          "fixed-stage11-abstract-fixed-assignment-body",
+          "fixed-stage11-duplicate-fixed-override-plain",
+          "fixed-stage11-duplicate-fixed-override-fixed",
+          "fixed-stage11-carry-const-in-identifier",
+          "fixed-stage11-carry-const-in-comment",
+          "fixed-stage11-carry-const-multiline-backtick"
         ]
       },
-      "scope": "Reference constructor, access, constraint and rendering errors retain complete message, authored frame, foreign standard-library source and URI bytes in selected comparisons.",
+      "scope": "Reference constructor, access, constraint and rendering errors retain complete message, authored frame, foreign standard-library source and URI bytes in selected comparisons. Stage11 adds selected fixed declaration, inherited metadata and complete raw diagnostics through the shared VM.",
       "remaining": [
         "Recursive frame compression, general imported source stacks, first-error combinations and the complete parser/resolver/runtime diagnostic corpus remain open.",
         "Original selected cycle and remainder-zero failures remain failed."
@@ -611,6 +685,458 @@
       "remaining": [
         "General module loading, extends/amends, imports beyond the pkl:ref bridge and complete module identity semantics remain open.",
         "Original import/module snippets and full invalid syntax/name resolution corpus still require their original adapters and execution."
+      ]
+    },
+    {
+      "requirement": "semantic:modifiers",
+      "implementation": {
+        "state": "partial",
+        "links": [
+          {
+            "path": "crates/pkl-runtime/src/heap.rs",
+            "symbol": "Member"
+          },
+          {
+            "path": "crates/pkl-runtime/src/vm.rs",
+            "symbol": "validate_class_override"
+          },
+          {
+            "path": "crates/pkl-runtime/src/vm.rs",
+            "symbol": "validate_object_override"
+          },
+          {
+            "path": "crates/pkl-runtime/src/vm.rs",
+            "symbol": "initialize_member_types"
+          },
+          {
+            "path": "crates/pkl-runtime/src/resolver.rs",
+            "symbol": "validate_modifiers"
+          }
+        ]
+      },
+      "tests": {
+        "state": "partial",
+        "case_ids": [
+          "fixed-stage11-module-fixed-value",
+          "fixed-stage11-class-fixed-value",
+          "fixed-stage11-fixed-derived-late-binding",
+          "fixed-stage11-fixed-default-literal",
+          "fixed-stage11-fixed-default-nullable",
+          "fixed-stage11-fixed-default-missing",
+          "fixed-stage11-fixed-typecheck",
+          "fixed-stage11-module-modifier-local",
+          "fixed-stage11-class-modifier-local",
+          "fixed-stage11-invalid-fixed-method",
+          "fixed-stage11-invalid-fixed-class",
+          "fixed-stage11-invalid-fixed-module",
+          "fixed-stage11-invalid-fixed-object",
+          "fixed-stage11-invalid-fixed-listing",
+          "fixed-stage11-fixed-unused-initializer",
+          "fixed-stage11-fixed-unused-bad-type",
+          "fixed-stage11-fixed-class-forces-bad-type",
+          "fixed-stage11-fixed-class-keeps-body-lazy",
+          "fixed-stage11-fixed-throw-before-later",
+          "fixed-stage11-inherit-preserve",
+          "fixed-stage11-inherit-drop",
+          "fixed-stage11-inherit-add",
+          "fixed-stage11-inherit-plain",
+          "fixed-stage11-inherit-hidden-preserve",
+          "fixed-stage11-inherit-hidden-drop",
+          "fixed-stage11-inherit-fixed-to-const",
+          "fixed-stage11-inherit-const-to-fixed",
+          "fixed-stage11-inherit-const-preserve",
+          "fixed-stage11-inherit-indirect-fixed",
+          "fixed-stage11-inherit-indirect-drop",
+          "fixed-stage11-inherit-unforced-bad-override",
+          "fixed-stage11-inherit-class-bad-override",
+          "fixed-stage11-inherit-type-before-fixed",
+          "fixed-stage11-inherit-first-property-error",
+          "fixed-stage11-inherit-abstract-default",
+          "fixed-stage11-inherit-narrow-default",
+          "fixed-stage11-inherit-local-shadows-fixed",
+          "fixed-stage11-inherit-fixed-shadows-local",
+          "fixed-stage11-instance-assign-constant",
+          "fixed-stage11-instance-assign-computed",
+          "fixed-stage11-instance-assign-throw",
+          "fixed-stage11-instance-assign-other-force",
+          "fixed-stage11-instance-unused-object",
+          "fixed-stage11-instance-fixed-rhs-versus-body",
+          "fixed-stage11-instance-indirect-assign",
+          "fixed-stage11-instance-fixed-object-local-shadow",
+          "fixed-stage11-instance-hidden-fixed",
+          "fixed-stage11-instance-const",
+          "fixed-stage11-instance-amend-object",
+          "fixed-stage11-instance-amend-assignment",
+          "fixed-stage11-instance-amend-other-force",
+          "fixed-stage11-instance-amend-direct",
+          "fixed-stage11-instance-amend-empty",
+          "fixed-stage11-amend-extracted-fixed-value",
+          "fixed-stage11-reference-metadata-fixed",
+          "fixed-stage11-reference-metadata-hidden",
+          "fixed-stage11-reference-metadata-inherited",
+          "fixed-stage11-reference-metadata-indirect",
+          "fixed-stage11-reference-metadata-override",
+          "fixed-stage11-reference-metadata-invalid-override",
+          "fixed-stage11-reference-metadata-unrelated-invalid-override",
+          "fixed-stage11-reference-metadata-unrelated-bad-type",
+          "fixed-stage11-reference-metadata-local",
+          "fixed-stage11-reference-metadata-constraint",
+          "fixed-stage11-duplicate-fixed-implies-const-read",
+          "fixed-stage11-duplicate-fixed-instance-override",
+          "fixed-stage11-duplicate-const",
+          "fixed-stage11-modifier-fixed-const-order",
+          "fixed-stage11-modifier-fixed-abstract-order",
+          "fixed-stage11-modifier-hidden-fixed-concrete",
+          "fixed-stage11-modifier-abstract-fixed-concrete",
+          "fixed-stage11-order-fixed-before-unknown",
+          "fixed-stage11-order-unknown-before-fixed",
+          "fixed-stage11-order-fixed-before-const",
+          "fixed-stage11-order-const-before-fixed",
+          "fixed-stage11-class-const-override-nonconst",
+          "fixed-stage11-class-type-before-const",
+          "fixed-stage11-relation-fixed-receiver-left",
+          "fixed-stage11-relation-fixed-receiver-right",
+          "fixed-stage11-relation-reference-unforced-fixed-left",
+          "fixed-stage11-relation-reference-unforced-fixed-right",
+          "fixed-stage11-abstract-fixed-assignment-body",
+          "fixed-stage11-abstract-fixed-amendment-body",
+          "fixed-stage11-duplicate-fixed-override-plain",
+          "fixed-stage11-duplicate-fixed-override-const",
+          "fixed-stage11-duplicate-fixed-override-fixed",
+          "fixed-stage11-carry-const-in-identifier",
+          "fixed-stage11-carry-const-in-comment",
+          "fixed-stage11-carry-const-multiline-backtick"
+        ]
+      },
+      "scope": "Selected class fixed properties preserve declaration fixedness through inheritance, reject instance assignment and amendment before forcing bodies, and retain member/type initialization error order. Raw comparisons cover only the linked fixtures at their actual URIs.",
+      "remaining": [
+        "Module extends/amends and the original upstream fixed-property snippet suite contracts remain unimplemented or unexecuted.",
+        "Full modifier combinations, annotation metadata, generic class inheritance and the complete class/member error corpus remain outside this bounded selection.",
+        "Caught upstream PklBugException duplicate hidden/local outputs and any recorded exploratory mismatches remain separate failures, without development exceptions."
+      ]
+    },
+    {
+      "requirement": "semantic:classes",
+      "implementation": {
+        "state": "partial",
+        "links": [
+          {
+            "path": "crates/pkl-runtime/src/heap.rs",
+            "symbol": "Member"
+          },
+          {
+            "path": "crates/pkl-runtime/src/vm.rs",
+            "symbol": "validate_class_override"
+          },
+          {
+            "path": "crates/pkl-runtime/src/vm.rs",
+            "symbol": "validate_object_override"
+          },
+          {
+            "path": "crates/pkl-runtime/src/vm.rs",
+            "symbol": "initialize_member_types"
+          }
+        ]
+      },
+      "tests": {
+        "state": "partial",
+        "case_ids": [
+          "fixed-stage11-class-fixed-value",
+          "fixed-stage11-fixed-derived-late-binding",
+          "fixed-stage11-fixed-default-literal",
+          "fixed-stage11-fixed-default-nullable",
+          "fixed-stage11-fixed-default-missing",
+          "fixed-stage11-fixed-typecheck",
+          "fixed-stage11-class-modifier-local",
+          "fixed-stage11-invalid-fixed-class",
+          "fixed-stage11-fixed-unused-initializer",
+          "fixed-stage11-fixed-unused-bad-type",
+          "fixed-stage11-fixed-class-forces-bad-type",
+          "fixed-stage11-fixed-class-keeps-body-lazy",
+          "fixed-stage11-fixed-throw-before-later",
+          "fixed-stage11-inherit-preserve",
+          "fixed-stage11-inherit-drop",
+          "fixed-stage11-inherit-add",
+          "fixed-stage11-inherit-plain",
+          "fixed-stage11-inherit-hidden-preserve",
+          "fixed-stage11-inherit-hidden-drop",
+          "fixed-stage11-inherit-fixed-to-const",
+          "fixed-stage11-inherit-const-to-fixed",
+          "fixed-stage11-inherit-const-preserve",
+          "fixed-stage11-inherit-indirect-fixed",
+          "fixed-stage11-inherit-indirect-drop",
+          "fixed-stage11-inherit-unforced-bad-override",
+          "fixed-stage11-inherit-class-bad-override",
+          "fixed-stage11-inherit-type-before-fixed",
+          "fixed-stage11-inherit-first-property-error",
+          "fixed-stage11-inherit-abstract-default",
+          "fixed-stage11-inherit-narrow-default",
+          "fixed-stage11-inherit-local-shadows-fixed",
+          "fixed-stage11-inherit-fixed-shadows-local",
+          "fixed-stage11-instance-assign-constant",
+          "fixed-stage11-instance-assign-computed",
+          "fixed-stage11-instance-assign-throw",
+          "fixed-stage11-instance-assign-other-force",
+          "fixed-stage11-instance-unused-object",
+          "fixed-stage11-instance-fixed-rhs-versus-body",
+          "fixed-stage11-instance-indirect-assign",
+          "fixed-stage11-instance-fixed-object-local-shadow",
+          "fixed-stage11-instance-hidden-fixed",
+          "fixed-stage11-instance-const",
+          "fixed-stage11-instance-amend-object",
+          "fixed-stage11-instance-amend-assignment",
+          "fixed-stage11-instance-amend-other-force",
+          "fixed-stage11-instance-amend-direct",
+          "fixed-stage11-instance-amend-empty",
+          "fixed-stage11-amend-extracted-fixed-value",
+          "fixed-stage11-reference-metadata-fixed",
+          "fixed-stage11-reference-metadata-hidden",
+          "fixed-stage11-reference-metadata-inherited",
+          "fixed-stage11-reference-metadata-indirect",
+          "fixed-stage11-reference-metadata-override",
+          "fixed-stage11-reference-metadata-invalid-override",
+          "fixed-stage11-reference-metadata-unrelated-invalid-override",
+          "fixed-stage11-reference-metadata-unrelated-bad-type",
+          "fixed-stage11-reference-metadata-local",
+          "fixed-stage11-reference-metadata-constraint",
+          "fixed-stage11-duplicate-fixed-instance-override",
+          "fixed-stage11-modifier-fixed-const-order",
+          "fixed-stage11-modifier-fixed-abstract-order",
+          "fixed-stage11-modifier-hidden-fixed-concrete",
+          "fixed-stage11-modifier-abstract-fixed-concrete",
+          "fixed-stage11-order-fixed-before-unknown",
+          "fixed-stage11-order-unknown-before-fixed",
+          "fixed-stage11-order-fixed-before-const",
+          "fixed-stage11-order-const-before-fixed",
+          "fixed-stage11-class-const-override-nonconst",
+          "fixed-stage11-class-type-before-const",
+          "fixed-stage11-relation-fixed-receiver-left",
+          "fixed-stage11-relation-reference-unforced-fixed-left",
+          "fixed-stage11-relation-reference-unforced-fixed-right",
+          "fixed-stage11-abstract-fixed-assignment-body",
+          "fixed-stage11-abstract-fixed-amendment-body",
+          "fixed-stage11-duplicate-fixed-override-plain",
+          "fixed-stage11-duplicate-fixed-override-const",
+          "fixed-stage11-duplicate-fixed-override-fixed",
+          "fixed-stage11-carry-const-in-identifier",
+          "fixed-stage11-carry-const-in-comment",
+          "fixed-stage11-carry-const-multiline-backtick"
+        ]
+      },
+      "scope": "Selected class fixed properties preserve declaration fixedness through inheritance, reject instance assignment and amendment before forcing bodies, and retain member/type initialization error order. Raw comparisons cover only the linked fixtures at their actual URIs.",
+      "remaining": [
+        "Module extends/amends and the original upstream fixed-property snippet suite contracts remain unimplemented or unexecuted.",
+        "Full modifier combinations, annotation metadata, generic class inheritance and the complete class/member error corpus remain outside this bounded selection.",
+        "Caught upstream PklBugException duplicate hidden/local outputs and any recorded exploratory mismatches remain separate failures, without development exceptions."
+      ]
+    },
+    {
+      "requirement": "semantic:amendment",
+      "implementation": {
+        "state": "partial",
+        "links": [
+          {
+            "path": "crates/pkl-runtime/src/vm.rs",
+            "symbol": "validate_object_override"
+          },
+          {
+            "path": "crates/pkl-runtime/src/vm.rs",
+            "symbol": "inherited_member"
+          }
+        ]
+      },
+      "tests": {
+        "state": "partial",
+        "case_ids": [
+          "fixed-stage11-instance-amend-object",
+          "fixed-stage11-instance-amend-assignment",
+          "fixed-stage11-instance-amend-other-force",
+          "fixed-stage11-instance-amend-direct",
+          "fixed-stage11-instance-amend-empty",
+          "fixed-stage11-amend-extracted-fixed-value",
+          "fixed-stage11-abstract-fixed-amendment-body"
+        ]
+      },
+      "scope": "Selected fixed instance amendments are rejected; extracting the fixed property value still permits amendment of that value. Empty receiver amendments preserve fixed values.",
+      "remaining": [
+        "General module amendments, function amendments, generic and cyclic object inheritance, and the complete amendment corpus remain open."
+      ]
+    },
+    {
+      "requirement": "semantic:lazy-evaluation",
+      "implementation": {
+        "state": "partial",
+        "links": [
+          {
+            "path": "crates/pkl-runtime/src/vm.rs",
+            "symbol": "initialize_member_types"
+          },
+          {
+            "path": "crates/pkl-runtime/src/vm.rs",
+            "symbol": "validate_class_override"
+          },
+          {
+            "path": "crates/pkl-runtime/src/vm/reference.rs",
+            "symbol": "reference_candidate"
+          }
+        ]
+      },
+      "tests": {
+        "state": "partial",
+        "case_ids": [
+          "fixed-stage11-fixed-unused-initializer",
+          "fixed-stage11-fixed-unused-bad-type",
+          "fixed-stage11-fixed-class-forces-bad-type",
+          "fixed-stage11-fixed-class-keeps-body-lazy",
+          "fixed-stage11-fixed-throw-before-later",
+          "fixed-stage11-inherit-unforced-bad-override",
+          "fixed-stage11-inherit-class-bad-override",
+          "fixed-stage11-inherit-type-before-fixed",
+          "fixed-stage11-inherit-first-property-error",
+          "fixed-stage11-instance-assign-throw",
+          "fixed-stage11-instance-unused-object",
+          "fixed-stage11-instance-fixed-rhs-versus-body",
+          "fixed-stage11-reference-metadata-fixed",
+          "fixed-stage11-reference-metadata-hidden",
+          "fixed-stage11-reference-metadata-inherited",
+          "fixed-stage11-reference-metadata-indirect",
+          "fixed-stage11-reference-metadata-override",
+          "fixed-stage11-reference-metadata-invalid-override",
+          "fixed-stage11-reference-metadata-unrelated-invalid-override",
+          "fixed-stage11-reference-metadata-unrelated-bad-type",
+          "fixed-stage11-reference-metadata-local",
+          "fixed-stage11-reference-metadata-constraint",
+          "fixed-stage11-relation-reference-unforced-fixed-left",
+          "fixed-stage11-relation-reference-unforced-fixed-right"
+        ]
+      },
+      "scope": "Selected probes preserve unforced fixed initializers, class type-before-modifier errors, fixed override checks before body forcing, and fixed Reference metadata without evaluating referent bodies.",
+      "remaining": [
+        "Complete lazy error ordering, successful memoization, retry semantics, cycles and failure-path diagnostics require the original inventory and broader differential execution."
+      ]
+    },
+    {
+      "requirement": "specification:docs/modules/language-reference/pages/index.adoc:Fixed properties",
+      "implementation": {
+        "state": "partial",
+        "links": [
+          {
+            "path": "crates/pkl-runtime/src/heap.rs",
+            "symbol": "Member"
+          },
+          {
+            "path": "crates/pkl-runtime/src/vm.rs",
+            "symbol": "validate_class_override"
+          },
+          {
+            "path": "crates/pkl-runtime/src/vm.rs",
+            "symbol": "validate_object_override"
+          },
+          {
+            "path": "crates/pkl-runtime/src/vm.rs",
+            "symbol": "initialize_member_types"
+          }
+        ]
+      },
+      "tests": {
+        "state": "partial",
+        "case_ids": [
+          "fixed-stage11-module-fixed-value",
+          "fixed-stage11-class-fixed-value",
+          "fixed-stage11-fixed-derived-late-binding",
+          "fixed-stage11-fixed-default-literal",
+          "fixed-stage11-fixed-default-nullable",
+          "fixed-stage11-fixed-default-missing",
+          "fixed-stage11-fixed-typecheck",
+          "fixed-stage11-module-modifier-local",
+          "fixed-stage11-class-modifier-local",
+          "fixed-stage11-invalid-fixed-method",
+          "fixed-stage11-invalid-fixed-class",
+          "fixed-stage11-invalid-fixed-module",
+          "fixed-stage11-invalid-fixed-object",
+          "fixed-stage11-invalid-fixed-listing",
+          "fixed-stage11-fixed-unused-initializer",
+          "fixed-stage11-fixed-unused-bad-type",
+          "fixed-stage11-fixed-class-forces-bad-type",
+          "fixed-stage11-fixed-class-keeps-body-lazy",
+          "fixed-stage11-fixed-throw-before-later",
+          "fixed-stage11-inherit-preserve",
+          "fixed-stage11-inherit-drop",
+          "fixed-stage11-inherit-add",
+          "fixed-stage11-inherit-plain",
+          "fixed-stage11-inherit-hidden-preserve",
+          "fixed-stage11-inherit-hidden-drop",
+          "fixed-stage11-inherit-fixed-to-const",
+          "fixed-stage11-inherit-const-to-fixed",
+          "fixed-stage11-inherit-const-preserve",
+          "fixed-stage11-inherit-indirect-fixed",
+          "fixed-stage11-inherit-indirect-drop",
+          "fixed-stage11-inherit-unforced-bad-override",
+          "fixed-stage11-inherit-class-bad-override",
+          "fixed-stage11-inherit-type-before-fixed",
+          "fixed-stage11-inherit-first-property-error",
+          "fixed-stage11-inherit-abstract-default",
+          "fixed-stage11-inherit-narrow-default",
+          "fixed-stage11-inherit-local-shadows-fixed",
+          "fixed-stage11-inherit-fixed-shadows-local",
+          "fixed-stage11-instance-assign-constant",
+          "fixed-stage11-instance-assign-computed",
+          "fixed-stage11-instance-assign-throw",
+          "fixed-stage11-instance-assign-other-force",
+          "fixed-stage11-instance-unused-object",
+          "fixed-stage11-instance-fixed-rhs-versus-body",
+          "fixed-stage11-instance-indirect-assign",
+          "fixed-stage11-instance-fixed-object-local-shadow",
+          "fixed-stage11-instance-hidden-fixed",
+          "fixed-stage11-instance-const",
+          "fixed-stage11-instance-amend-object",
+          "fixed-stage11-instance-amend-assignment",
+          "fixed-stage11-instance-amend-other-force",
+          "fixed-stage11-instance-amend-direct",
+          "fixed-stage11-instance-amend-empty",
+          "fixed-stage11-amend-extracted-fixed-value",
+          "fixed-stage11-reference-metadata-fixed",
+          "fixed-stage11-reference-metadata-hidden",
+          "fixed-stage11-reference-metadata-inherited",
+          "fixed-stage11-reference-metadata-indirect",
+          "fixed-stage11-reference-metadata-override",
+          "fixed-stage11-reference-metadata-invalid-override",
+          "fixed-stage11-reference-metadata-unrelated-invalid-override",
+          "fixed-stage11-reference-metadata-unrelated-bad-type",
+          "fixed-stage11-reference-metadata-local",
+          "fixed-stage11-reference-metadata-constraint",
+          "fixed-stage11-duplicate-fixed-implies-const-read",
+          "fixed-stage11-duplicate-fixed-instance-override",
+          "fixed-stage11-duplicate-const",
+          "fixed-stage11-modifier-fixed-const-order",
+          "fixed-stage11-modifier-fixed-abstract-order",
+          "fixed-stage11-modifier-hidden-fixed-concrete",
+          "fixed-stage11-modifier-abstract-fixed-concrete",
+          "fixed-stage11-order-fixed-before-unknown",
+          "fixed-stage11-order-unknown-before-fixed",
+          "fixed-stage11-order-fixed-before-const",
+          "fixed-stage11-order-const-before-fixed",
+          "fixed-stage11-class-const-override-nonconst",
+          "fixed-stage11-class-type-before-const",
+          "fixed-stage11-relation-fixed-receiver-left",
+          "fixed-stage11-relation-fixed-receiver-right",
+          "fixed-stage11-relation-reference-unforced-fixed-left",
+          "fixed-stage11-relation-reference-unforced-fixed-right",
+          "fixed-stage11-abstract-fixed-assignment-body",
+          "fixed-stage11-abstract-fixed-amendment-body",
+          "fixed-stage11-duplicate-fixed-override-plain",
+          "fixed-stage11-duplicate-fixed-override-const",
+          "fixed-stage11-duplicate-fixed-override-fixed",
+          "fixed-stage11-carry-const-in-identifier",
+          "fixed-stage11-carry-const-in-comment",
+          "fixed-stage11-carry-const-multiline-backtick"
+        ]
+      },
+      "scope": "Selected class fixed properties preserve declaration fixedness through inheritance, reject instance assignment and amendment before forcing bodies, and retain member/type initialization error order. Raw comparisons cover only the linked fixtures at their actual URIs.",
+      "remaining": [
+        "Module extends/amends and the original upstream fixed-property snippet suite contracts remain unimplemented or unexecuted.",
+        "Full modifier combinations, annotation metadata, generic class inheritance and the complete class/member error corpus remain outside this bounded selection.",
+        "Caught upstream PklBugException duplicate hidden/local outputs and any recorded exploratory mismatches remain separate failures, without development exceptions."
       ]
     }
   ]

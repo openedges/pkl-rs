@@ -1,0 +1,2 @@
+class A { fixed p: "ok" }
+result = new A {}.p

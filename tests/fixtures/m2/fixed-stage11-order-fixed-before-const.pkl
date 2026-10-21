@@ -1,0 +1,2 @@
+class A { fixed p: Int = 1; const q: Int = 2 }
+result = new A { p = 3; q = 4 }.getClass()

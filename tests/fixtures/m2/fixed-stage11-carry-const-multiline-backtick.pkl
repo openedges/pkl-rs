@@ -1,0 +1,6 @@
+open class A { `constant value`: Int = 1 }
+class B extends A {
+  fixed
+    fixed `constant value`: Int = 2
+}
+result = B

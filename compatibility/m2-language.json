@@ -24235,6 +24235,1763 @@
       ]
     },
     {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "fixed-stage11-module-fixed-value",
+      "input": "tests/fixtures/m2/fixed-stage11-module-fixed-value.pkl",
+      "input_sha256": "b790a8605ad979d87e8e4e521002881f082728dbbf72370af2010f996248600b",
+      "required": true,
+      "requirements": [
+        "semantic:modifiers",
+        "specification:docs/modules/language-reference/pages/index.adoc:Fixed properties"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "fixed-stage11-class-fixed-value",
+      "input": "tests/fixtures/m2/fixed-stage11-class-fixed-value.pkl",
+      "input_sha256": "cf19a0280fd2afdbd5b6a80c996fca0ad6a4d19511dd5a23790786fe1d8085e2",
+      "required": true,
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes",
+        "specification:docs/modules/language-reference/pages/index.adoc:Fixed properties"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "fixed-stage11-fixed-derived-late-binding",
+      "input": "tests/fixtures/m2/fixed-stage11-fixed-derived-late-binding.pkl",
+      "input_sha256": "d179f96cb59be5445713b5ba5af9c16be6bcc7bbdf8b3f23ff57d452c14d2036",
+      "required": true,
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes",
+        "semantic:name-resolution",
+        "specification:docs/modules/language-reference/pages/index.adoc:Fixed properties"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "fixed-stage11-fixed-default-literal",
+      "input": "tests/fixtures/m2/fixed-stage11-fixed-default-literal.pkl",
+      "input_sha256": "584e074ddb087a15490311643ac2821154086c0aa36a2699f2d3e84dc6189601",
+      "required": true,
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes",
+        "specification:docs/modules/language-reference/pages/index.adoc:Fixed properties"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "fixed-stage11-fixed-default-nullable",
+      "input": "tests/fixtures/m2/fixed-stage11-fixed-default-nullable.pkl",
+      "input_sha256": "6f33ebc949b924ef06838358aedc4c3b3942f42b8b7cada4e33cb3ae8ed16d5e",
+      "required": true,
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes",
+        "specification:docs/modules/language-reference/pages/index.adoc:Fixed properties"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "fixed-stage11-fixed-default-missing",
+      "input": "tests/fixtures/m2/fixed-stage11-fixed-default-missing.pkl",
+      "input_sha256": "950be89cfc4a044eb03ea452c7a9de3416041b8191327388c0dbbd9487748283",
+      "required": true,
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes",
+        "semantic:diagnostics",
+        "specification:docs/modules/language-reference/pages/index.adoc:Fixed properties"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "fixed-stage11-fixed-typecheck",
+      "input": "tests/fixtures/m2/fixed-stage11-fixed-typecheck.pkl",
+      "input_sha256": "f2d2f0a0dbee34bc2af51ce945fff69cd2d318caf21507ea1af8c4df8a5638d4",
+      "required": true,
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes",
+        "semantic:types",
+        "semantic:diagnostics",
+        "specification:docs/modules/language-reference/pages/index.adoc:Fixed properties"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "fixed-stage11-module-modifier-local",
+      "input": "tests/fixtures/m2/fixed-stage11-module-modifier-local.pkl",
+      "input_sha256": "b703018ef0b38bba69054685ea46238027e3ac1ebf3d528af5fcafca0d1660bb",
+      "required": true,
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:diagnostics",
+        "specification:docs/modules/language-reference/pages/index.adoc:Fixed properties"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "fixed-stage11-class-modifier-local",
+      "input": "tests/fixtures/m2/fixed-stage11-class-modifier-local.pkl",
+      "input_sha256": "c2f96fe5a6d345d92fdcb3cfaa363ef62591173d30c145683f1d855ded17c9b4",
+      "required": true,
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes",
+        "semantic:diagnostics",
+        "specification:docs/modules/language-reference/pages/index.adoc:Fixed properties"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "fixed-stage11-invalid-fixed-method",
+      "input": "tests/fixtures/m2/fixed-stage11-invalid-fixed-method.pkl",
+      "input_sha256": "e60c8f6b713bacdf60c9a73152e45e8ead92d3ab8e3fb54aa25cb3cdf56bfa01",
+      "required": true,
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:diagnostics",
+        "specification:docs/modules/language-reference/pages/index.adoc:Fixed properties"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "fixed-stage11-invalid-fixed-class",
+      "input": "tests/fixtures/m2/fixed-stage11-invalid-fixed-class.pkl",
+      "input_sha256": "cebf5abb2c08ec768738d644ac4e64b9a6f15a6f885ba8f765935fc2c2a745b1",
+      "required": true,
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes",
+        "semantic:diagnostics",
+        "specification:docs/modules/language-reference/pages/index.adoc:Fixed properties"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "fixed-stage11-invalid-fixed-module",
+      "input": "tests/fixtures/m2/fixed-stage11-invalid-fixed-module.pkl",
+      "input_sha256": "fd4ee94f67ee4e4f1fcbd5c4f71834de8d35b7e56982a4a86306881d49dc9dd6",
+      "required": true,
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:diagnostics",
+        "specification:docs/modules/language-reference/pages/index.adoc:Fixed properties"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "fixed-stage11-invalid-fixed-object",
+      "input": "tests/fixtures/m2/fixed-stage11-invalid-fixed-object.pkl",
+      "input_sha256": "2f1313da8bf8aab228971336c782a8192d1f698418d9188d5d5fd4830c4cf9e8",
+      "required": true,
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:diagnostics",
+        "specification:docs/modules/language-reference/pages/index.adoc:Fixed properties"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "fixed-stage11-invalid-fixed-listing",
+      "input": "tests/fixtures/m2/fixed-stage11-invalid-fixed-listing.pkl",
+      "input_sha256": "daf31b2c731a910aa35f491f117506a4937776af3da97b3a3ded3b3b35c70d8f",
+      "required": true,
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:diagnostics",
+        "specification:docs/modules/language-reference/pages/index.adoc:Fixed properties"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "fixed-stage11-fixed-unused-initializer",
+      "input": "tests/fixtures/m2/fixed-stage11-fixed-unused-initializer.pkl",
+      "input_sha256": "378e85ac11cc44177c4e26dbe51c1c2e779b4506ed6ed7b8800e91dbf9d4cb00",
+      "required": true,
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "specification:docs/modules/language-reference/pages/index.adoc:Fixed properties"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "fixed-stage11-fixed-unused-bad-type",
+      "input": "tests/fixtures/m2/fixed-stage11-fixed-unused-bad-type.pkl",
+      "input_sha256": "c5894a727895a791a548b712319fec4804523d4773e3ea33d4c66392922c1b7a",
+      "required": true,
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:types",
+        "specification:docs/modules/language-reference/pages/index.adoc:Fixed properties"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "fixed-stage11-fixed-class-forces-bad-type",
+      "input": "tests/fixtures/m2/fixed-stage11-fixed-class-forces-bad-type.pkl",
+      "input_sha256": "4327260b6a06cfecdb623ecff263c67b7c192631f7009edf6ef42bf6096d27dd",
+      "required": true,
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:types",
+        "semantic:diagnostics",
+        "specification:docs/modules/language-reference/pages/index.adoc:Fixed properties"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "fixed-stage11-fixed-class-keeps-body-lazy",
+      "input": "tests/fixtures/m2/fixed-stage11-fixed-class-keeps-body-lazy.pkl",
+      "input_sha256": "66715ab6a484f1a2982b0e22efd26841ffb458f40ed81813a6668e2ba12fab8a",
+      "required": true,
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "specification:docs/modules/language-reference/pages/index.adoc:Fixed properties"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "fixed-stage11-fixed-throw-before-later",
+      "input": "tests/fixtures/m2/fixed-stage11-fixed-throw-before-later.pkl",
+      "input_sha256": "a23f8f7e4a7d9d3d15c1ddfb484a11bc62faca22fca86985b921d9491ccf87ae",
+      "required": true,
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "specification:docs/modules/language-reference/pages/index.adoc:Fixed properties"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "fixed-stage11-inherit-preserve",
+      "input": "tests/fixtures/m2/fixed-stage11-inherit-preserve.pkl",
+      "input_sha256": "2891003a8941ae959ffa3c88fa5862fdaf47fab7c9845285eb610b6551ef1557",
+      "required": true,
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes",
+        "specification:docs/modules/language-reference/pages/index.adoc:Fixed properties"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "fixed-stage11-inherit-drop",
+      "input": "tests/fixtures/m2/fixed-stage11-inherit-drop.pkl",
+      "input_sha256": "977901bf57379e91db241539df4f25f32640114e3ffc8f0574cd863fec6bf649",
+      "required": true,
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes",
+        "semantic:diagnostics",
+        "specification:docs/modules/language-reference/pages/index.adoc:Fixed properties"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "fixed-stage11-inherit-add",
+      "input": "tests/fixtures/m2/fixed-stage11-inherit-add.pkl",
+      "input_sha256": "2c3c6709df6d77174eb5062bb8ca9248664afc119156ad0775a3622d2e5b3d46",
+      "required": true,
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes",
+        "semantic:diagnostics",
+        "specification:docs/modules/language-reference/pages/index.adoc:Fixed properties"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "fixed-stage11-inherit-plain",
+      "input": "tests/fixtures/m2/fixed-stage11-inherit-plain.pkl",
+      "input_sha256": "4e992392dd5925e5beb3a8d7efbae16bac825b25e963ebd4256841af31365e54",
+      "required": true,
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes",
+        "specification:docs/modules/language-reference/pages/index.adoc:Fixed properties"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "fixed-stage11-inherit-hidden-preserve",
+      "input": "tests/fixtures/m2/fixed-stage11-inherit-hidden-preserve.pkl",
+      "input_sha256": "8910d06bf0a364f4504fc7055055eb2db0b746b3298e0d5b0146da948d68a504",
+      "required": true,
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes",
+        "specification:docs/modules/language-reference/pages/index.adoc:Fixed properties"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "fixed-stage11-inherit-hidden-drop",
+      "input": "tests/fixtures/m2/fixed-stage11-inherit-hidden-drop.pkl",
+      "input_sha256": "b27f28cedf62ae4e2db2966663d1e8ce4845f5b69c77da38f9d2da685bcee9df",
+      "required": true,
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes",
+        "semantic:diagnostics",
+        "specification:docs/modules/language-reference/pages/index.adoc:Fixed properties"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "fixed-stage11-inherit-fixed-to-const",
+      "input": "tests/fixtures/m2/fixed-stage11-inherit-fixed-to-const.pkl",
+      "input_sha256": "f5dd030c5fd32e5c96263276405e02303d275ef23be1f8a78caa1c552f90e24a",
+      "required": true,
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes",
+        "semantic:diagnostics",
+        "specification:docs/modules/language-reference/pages/index.adoc:Fixed properties"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "fixed-stage11-inherit-const-to-fixed",
+      "input": "tests/fixtures/m2/fixed-stage11-inherit-const-to-fixed.pkl",
+      "input_sha256": "164b484032e1206457156edb6165207e2fe3bc66071773ba7226bd80b6509cfe",
+      "required": true,
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes",
+        "semantic:diagnostics",
+        "specification:docs/modules/language-reference/pages/index.adoc:Fixed properties"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "fixed-stage11-inherit-const-preserve",
+      "input": "tests/fixtures/m2/fixed-stage11-inherit-const-preserve.pkl",
+      "input_sha256": "9d8aa8e1b5af17cc3bfb5472e8295f01fa22a78f5950bb1103e9e3ddf6de6a81",
+      "required": true,
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes",
+        "specification:docs/modules/language-reference/pages/index.adoc:Fixed properties"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "fixed-stage11-inherit-indirect-fixed",
+      "input": "tests/fixtures/m2/fixed-stage11-inherit-indirect-fixed.pkl",
+      "input_sha256": "ea23f0158b2e5e41c41ebc75b8b45b97c11879377b34f51b0cb679cc06d0ce84",
+      "required": true,
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes",
+        "specification:docs/modules/language-reference/pages/index.adoc:Fixed properties"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "fixed-stage11-inherit-indirect-drop",
+      "input": "tests/fixtures/m2/fixed-stage11-inherit-indirect-drop.pkl",
+      "input_sha256": "a41d35f54e62f00a4c176f4fbe5eebec9b47bb34ac890de11f29e86156b854a4",
+      "required": true,
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes",
+        "semantic:diagnostics",
+        "specification:docs/modules/language-reference/pages/index.adoc:Fixed properties"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "fixed-stage11-inherit-unforced-bad-override",
+      "input": "tests/fixtures/m2/fixed-stage11-inherit-unforced-bad-override.pkl",
+      "input_sha256": "3f2d33767ec23d0f2e8a95c87745b4a2c4031cb0bee8885e749efdba2f130c74",
+      "required": true,
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "specification:docs/modules/language-reference/pages/index.adoc:Fixed properties"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "fixed-stage11-inherit-class-bad-override",
+      "input": "tests/fixtures/m2/fixed-stage11-inherit-class-bad-override.pkl",
+      "input_sha256": "a5243fc13fac26d48a86db41f7915e97332691c8969c34197469e9bda9ee4115",
+      "required": true,
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "specification:docs/modules/language-reference/pages/index.adoc:Fixed properties"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "fixed-stage11-inherit-type-before-fixed",
+      "input": "tests/fixtures/m2/fixed-stage11-inherit-type-before-fixed.pkl",
+      "input_sha256": "35b260b7a5ec20d8de09de691ff17a3fc876962c897a813d390988329eed7ef1",
+      "required": true,
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:types",
+        "semantic:diagnostics",
+        "specification:docs/modules/language-reference/pages/index.adoc:Fixed properties"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "fixed-stage11-inherit-first-property-error",
+      "input": "tests/fixtures/m2/fixed-stage11-inherit-first-property-error.pkl",
+      "input_sha256": "2299a298c22c9e64526e7c7729be0ba72800cd4bfc58f15daeeebf5b55cf750f",
+      "required": true,
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "specification:docs/modules/language-reference/pages/index.adoc:Fixed properties"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "fixed-stage11-inherit-abstract-default",
+      "input": "tests/fixtures/m2/fixed-stage11-inherit-abstract-default.pkl",
+      "input_sha256": "435c61783cb17e6f282b6b98a10fc0b0a809afc6399aab4935b632dc6a34eb59",
+      "required": true,
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes",
+        "specification:docs/modules/language-reference/pages/index.adoc:Fixed properties"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "fixed-stage11-inherit-narrow-default",
+      "input": "tests/fixtures/m2/fixed-stage11-inherit-narrow-default.pkl",
+      "input_sha256": "b82473ecc3829ea703188af73bb2dac123432fc2140440f10c2ceadadf9d3e2a",
+      "required": true,
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes",
+        "specification:docs/modules/language-reference/pages/index.adoc:Fixed properties"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "fixed-stage11-inherit-local-shadows-fixed",
+      "input": "tests/fixtures/m2/fixed-stage11-inherit-local-shadows-fixed.pkl",
+      "input_sha256": "9309cefc560eb3833f8b4556cf5c4bc7f17ace0090caf9221330b2a569be6d4c",
+      "required": true,
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes",
+        "specification:docs/modules/language-reference/pages/index.adoc:Fixed properties"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "fixed-stage11-inherit-fixed-shadows-local",
+      "input": "tests/fixtures/m2/fixed-stage11-inherit-fixed-shadows-local.pkl",
+      "input_sha256": "195a43c5ffee06b06d95028876b64ec44ec8bf398d02b04c85ab0984d16a8c72",
+      "required": true,
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes",
+        "specification:docs/modules/language-reference/pages/index.adoc:Fixed properties"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "fixed-stage11-instance-assign-constant",
+      "input": "tests/fixtures/m2/fixed-stage11-instance-assign-constant.pkl",
+      "input_sha256": "a393df2bc86c43a3f0d4da342becc872e788745ec981f42b3c4c93790eb7e115",
+      "required": true,
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes",
+        "semantic:objects",
+        "semantic:diagnostics",
+        "specification:docs/modules/language-reference/pages/index.adoc:Fixed properties"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "fixed-stage11-instance-assign-computed",
+      "input": "tests/fixtures/m2/fixed-stage11-instance-assign-computed.pkl",
+      "input_sha256": "a14886c8ec7aad1982764b41ca6b2c0fedb661c726e732951e7a7e7f4ad48569",
+      "required": true,
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes",
+        "semantic:objects",
+        "semantic:diagnostics",
+        "specification:docs/modules/language-reference/pages/index.adoc:Fixed properties"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "fixed-stage11-instance-assign-throw",
+      "input": "tests/fixtures/m2/fixed-stage11-instance-assign-throw.pkl",
+      "input_sha256": "c381273ca1dfec410833691764ce2c52630716e5197898e8ae20d0113ed01829",
+      "required": true,
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes",
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "specification:docs/modules/language-reference/pages/index.adoc:Fixed properties"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "fixed-stage11-instance-assign-other-force",
+      "input": "tests/fixtures/m2/fixed-stage11-instance-assign-other-force.pkl",
+      "input_sha256": "f00ee5d0a3f5a40195643e92381dd6ff8687cd00fd4d7fc09577608b28ccc701",
+      "required": true,
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes",
+        "semantic:objects",
+        "semantic:diagnostics",
+        "specification:docs/modules/language-reference/pages/index.adoc:Fixed properties"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "fixed-stage11-instance-unused-object",
+      "input": "tests/fixtures/m2/fixed-stage11-instance-unused-object.pkl",
+      "input_sha256": "cca21d393dfae681c83ae39b4b2b13da24a6c40d5b4d6ad5dae0d90e008bb2cc",
+      "required": true,
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "specification:docs/modules/language-reference/pages/index.adoc:Fixed properties"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "fixed-stage11-instance-fixed-rhs-versus-body",
+      "input": "tests/fixtures/m2/fixed-stage11-instance-fixed-rhs-versus-body.pkl",
+      "input_sha256": "f6c985ef87c99a07cd5ac549e07ce757c5c17d3bc21f9d731a29b697cd604d70",
+      "required": true,
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "specification:docs/modules/language-reference/pages/index.adoc:Fixed properties"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "fixed-stage11-instance-indirect-assign",
+      "input": "tests/fixtures/m2/fixed-stage11-instance-indirect-assign.pkl",
+      "input_sha256": "5306e5d969eeebce8a0c2c95e3b0194918a55de79ce8ce841aa89143c2a20e03",
+      "required": true,
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes",
+        "semantic:objects",
+        "semantic:diagnostics",
+        "specification:docs/modules/language-reference/pages/index.adoc:Fixed properties"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "fixed-stage11-instance-fixed-object-local-shadow",
+      "input": "tests/fixtures/m2/fixed-stage11-instance-fixed-object-local-shadow.pkl",
+      "input_sha256": "91c733f414483381e1e8aca417883f6589f18e44f36b1dd566ff361d26594836",
+      "required": true,
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes",
+        "semantic:objects",
+        "specification:docs/modules/language-reference/pages/index.adoc:Fixed properties"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "fixed-stage11-instance-hidden-fixed",
+      "input": "tests/fixtures/m2/fixed-stage11-instance-hidden-fixed.pkl",
+      "input_sha256": "2fd9d77772f2b0978b271dda34e30e7bdac8cf52cef4e18bd0e422c180a94f57",
+      "required": true,
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes",
+        "semantic:objects",
+        "semantic:diagnostics",
+        "specification:docs/modules/language-reference/pages/index.adoc:Fixed properties"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "fixed-stage11-instance-const",
+      "input": "tests/fixtures/m2/fixed-stage11-instance-const.pkl",
+      "input_sha256": "5e9de7f8a4d0bd914c776370b8a17f70d679fa1cbe7d98b34ff94a87402eed94",
+      "required": true,
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes",
+        "semantic:objects",
+        "semantic:diagnostics",
+        "specification:docs/modules/language-reference/pages/index.adoc:Fixed properties"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "fixed-stage11-instance-amend-object",
+      "input": "tests/fixtures/m2/fixed-stage11-instance-amend-object.pkl",
+      "input_sha256": "681b402f4eec3ad92f0cadb7ac8b89b01cac86d29759860ac6850f77246b76dc",
+      "required": true,
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes",
+        "semantic:objects",
+        "semantic:amendment",
+        "semantic:diagnostics",
+        "specification:docs/modules/language-reference/pages/index.adoc:Fixed properties"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "fixed-stage11-instance-amend-assignment",
+      "input": "tests/fixtures/m2/fixed-stage11-instance-amend-assignment.pkl",
+      "input_sha256": "a5af9e0641a8c2b8ecba7c78b55e6df4a2fc85ea877ba4616d146648f659be92",
+      "required": true,
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes",
+        "semantic:objects",
+        "semantic:amendment",
+        "semantic:diagnostics",
+        "specification:docs/modules/language-reference/pages/index.adoc:Fixed properties"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "fixed-stage11-instance-amend-other-force",
+      "input": "tests/fixtures/m2/fixed-stage11-instance-amend-other-force.pkl",
+      "input_sha256": "d059eb930541d672b5e275d507be2d316819f93195e7f3090d0063aeb15b5982",
+      "required": true,
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes",
+        "semantic:objects",
+        "semantic:amendment",
+        "semantic:diagnostics",
+        "specification:docs/modules/language-reference/pages/index.adoc:Fixed properties"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "fixed-stage11-instance-amend-direct",
+      "input": "tests/fixtures/m2/fixed-stage11-instance-amend-direct.pkl",
+      "input_sha256": "03e232e945513834ba81f3493f2eb7a68fa5ffd741253099b8a2bc935b9a31b7",
+      "required": true,
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes",
+        "semantic:objects",
+        "semantic:amendment",
+        "semantic:diagnostics",
+        "specification:docs/modules/language-reference/pages/index.adoc:Fixed properties"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "fixed-stage11-instance-amend-empty",
+      "input": "tests/fixtures/m2/fixed-stage11-instance-amend-empty.pkl",
+      "input_sha256": "d7b9e8d822ebfc20b3fa3296e6355e31ec9da64d4d9c786a2f3d21d52a843705",
+      "required": true,
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes",
+        "semantic:objects",
+        "semantic:amendment",
+        "specification:docs/modules/language-reference/pages/index.adoc:Fixed properties"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "fixed-stage11-amend-extracted-fixed-value",
+      "input": "tests/fixtures/m2/fixed-stage11-amend-extracted-fixed-value.pkl",
+      "input_sha256": "03631d7fff098513aa8678478739e401116c8d6ce3752926b20dadb3d0440391",
+      "required": true,
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes",
+        "semantic:objects",
+        "semantic:amendment",
+        "specification:docs/modules/language-reference/pages/index.adoc:Fixed properties"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "fixed-stage11-reference-metadata-fixed",
+      "input": "tests/fixtures/m2/fixed-stage11-reference-metadata-fixed.pkl",
+      "input_sha256": "2a0710739d5473c383f55369a348aade454ae3abf1a5fa678d3a9fad0b0edb6e",
+      "required": true,
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "specification:docs/modules/language-reference/pages/index.adoc:Fixed properties"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "fixed-stage11-reference-metadata-hidden",
+      "input": "tests/fixtures/m2/fixed-stage11-reference-metadata-hidden.pkl",
+      "input_sha256": "4b30f36886c1aaa2e3932fc3d7a1904978b4084024228ccc328e195f29799e0f",
+      "required": true,
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "specification:docs/modules/language-reference/pages/index.adoc:Fixed properties"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "fixed-stage11-reference-metadata-inherited",
+      "input": "tests/fixtures/m2/fixed-stage11-reference-metadata-inherited.pkl",
+      "input_sha256": "c9d213804093e346f63ed1d7d2508252c7b11de7f6722c4c31833c9362cd3bfc",
+      "required": true,
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "specification:docs/modules/language-reference/pages/index.adoc:Fixed properties"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "fixed-stage11-reference-metadata-indirect",
+      "input": "tests/fixtures/m2/fixed-stage11-reference-metadata-indirect.pkl",
+      "input_sha256": "1871418c54dfd2341b851572921d98289c9276a2dc035ecd613b6c718b1dfebe",
+      "required": true,
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "specification:docs/modules/language-reference/pages/index.adoc:Fixed properties"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "fixed-stage11-reference-metadata-override",
+      "input": "tests/fixtures/m2/fixed-stage11-reference-metadata-override.pkl",
+      "input_sha256": "3cddea92cc4313ba4beba160fd6f0c6f50c11c657dc43af45eae63a63526d850",
+      "required": true,
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "specification:docs/modules/language-reference/pages/index.adoc:Fixed properties"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "fixed-stage11-reference-metadata-invalid-override",
+      "input": "tests/fixtures/m2/fixed-stage11-reference-metadata-invalid-override.pkl",
+      "input_sha256": "eba65d609be2a9549bac6012c75a3b8d6fcbc9933b8afe59a6c778ff961c124e",
+      "required": true,
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:diagnostics",
+        "specification:docs/modules/language-reference/pages/index.adoc:Fixed properties"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "fixed-stage11-reference-metadata-unrelated-invalid-override",
+      "input": "tests/fixtures/m2/fixed-stage11-reference-metadata-unrelated-invalid-override.pkl",
+      "input_sha256": "93f75b5d003d0712429fc41bbb890a71b85e94d82b62170ff3c63969328d992a",
+      "required": true,
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:diagnostics",
+        "specification:docs/modules/language-reference/pages/index.adoc:Fixed properties"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "fixed-stage11-reference-metadata-unrelated-bad-type",
+      "input": "tests/fixtures/m2/fixed-stage11-reference-metadata-unrelated-bad-type.pkl",
+      "input_sha256": "366b65d9a4cbbc9be894525c9449b4ceaab007a12b33828d509782b6a81d657d",
+      "required": true,
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:types",
+        "semantic:diagnostics",
+        "specification:docs/modules/language-reference/pages/index.adoc:Fixed properties"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "fixed-stage11-reference-metadata-local",
+      "input": "tests/fixtures/m2/fixed-stage11-reference-metadata-local.pkl",
+      "input_sha256": "43eaaeac92754d90a7610be995dc076c2e11fe9e2ef44a7e03a0f05b39ff9935",
+      "required": true,
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:diagnostics",
+        "specification:docs/modules/language-reference/pages/index.adoc:Fixed properties"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "fixed-stage11-reference-metadata-constraint",
+      "input": "tests/fixtures/m2/fixed-stage11-reference-metadata-constraint.pkl",
+      "input_sha256": "fed70823d5201bfeb367db317c7ff7f4b3902c63c66697369fc8b8b3f05b3ea7",
+      "required": true,
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "specification:docs/modules/language-reference/pages/index.adoc:Fixed properties"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "fixed-stage11-duplicate-fixed-implies-const-read",
+      "input": "tests/fixtures/m2/fixed-stage11-duplicate-fixed-implies-const-read.pkl",
+      "input_sha256": "59462dc799063313ef4822dd350535b5747e1466c72592aad8e4b6737f26d905",
+      "required": true,
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:diagnostics",
+        "specification:docs/modules/language-reference/pages/index.adoc:Fixed properties"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "fixed-stage11-duplicate-fixed-instance-override",
+      "input": "tests/fixtures/m2/fixed-stage11-duplicate-fixed-instance-override.pkl",
+      "input_sha256": "fd3463fc35b733387b3899dc3e586d9b25baf8686a14de6ee2171ea69d1d0d10",
+      "required": true,
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes",
+        "semantic:diagnostics",
+        "specification:docs/modules/language-reference/pages/index.adoc:Fixed properties"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "fixed-stage11-duplicate-const",
+      "input": "tests/fixtures/m2/fixed-stage11-duplicate-const.pkl",
+      "input_sha256": "52304a360a56be77500bca74748837c5eb0bb534f1d1e22fe0e199ec53a58cb4",
+      "required": true,
+      "requirements": [
+        "semantic:modifiers",
+        "specification:docs/modules/language-reference/pages/index.adoc:Fixed properties"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "fixed-stage11-modifier-fixed-const-order",
+      "input": "tests/fixtures/m2/fixed-stage11-modifier-fixed-const-order.pkl",
+      "input_sha256": "da2ed246eccce6f1416e069f0fa18abc69562fd854ef61e60c7d549b87cb8441",
+      "required": true,
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes",
+        "specification:docs/modules/language-reference/pages/index.adoc:Fixed properties"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "fixed-stage11-modifier-fixed-abstract-order",
+      "input": "tests/fixtures/m2/fixed-stage11-modifier-fixed-abstract-order.pkl",
+      "input_sha256": "be684e0e2d04631c34e418817631e15fa97c5d96752a392d36a43d6aad1e7510",
+      "required": true,
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes",
+        "specification:docs/modules/language-reference/pages/index.adoc:Fixed properties"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "fixed-stage11-modifier-hidden-fixed-concrete",
+      "input": "tests/fixtures/m2/fixed-stage11-modifier-hidden-fixed-concrete.pkl",
+      "input_sha256": "68dbaff4fcf94a98d018146385212f148377a058e2d7d9099e68a79c793daf48",
+      "required": true,
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes",
+        "specification:docs/modules/language-reference/pages/index.adoc:Fixed properties"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "fixed-stage11-modifier-abstract-fixed-concrete",
+      "input": "tests/fixtures/m2/fixed-stage11-modifier-abstract-fixed-concrete.pkl",
+      "input_sha256": "beadbec907ecd2cad2fd80524a9d7d02ba9627565ea384888dd81ae793ca70b7",
+      "required": true,
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes",
+        "specification:docs/modules/language-reference/pages/index.adoc:Fixed properties"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "fixed-stage11-order-fixed-before-unknown",
+      "input": "tests/fixtures/m2/fixed-stage11-order-fixed-before-unknown.pkl",
+      "input_sha256": "0c4f6062ad4f23f6ceff059936c12e140c481c9e4cf8575d12286541a3ef8066",
+      "required": true,
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes",
+        "semantic:objects",
+        "semantic:diagnostics",
+        "specification:docs/modules/language-reference/pages/index.adoc:Fixed properties"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "fixed-stage11-order-unknown-before-fixed",
+      "input": "tests/fixtures/m2/fixed-stage11-order-unknown-before-fixed.pkl",
+      "input_sha256": "7a846302b66e72564e6f9085f8094eda6e7105e3e6bcd6d3f91c75b52e5661ae",
+      "required": true,
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes",
+        "semantic:objects",
+        "semantic:diagnostics",
+        "specification:docs/modules/language-reference/pages/index.adoc:Fixed properties"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "fixed-stage11-order-fixed-before-const",
+      "input": "tests/fixtures/m2/fixed-stage11-order-fixed-before-const.pkl",
+      "input_sha256": "c18a00085b542c9620a4939da5249e9c0f5f1af477baf38a50c00eb791e27b93",
+      "required": true,
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes",
+        "semantic:objects",
+        "semantic:diagnostics",
+        "specification:docs/modules/language-reference/pages/index.adoc:Fixed properties"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "fixed-stage11-order-const-before-fixed",
+      "input": "tests/fixtures/m2/fixed-stage11-order-const-before-fixed.pkl",
+      "input_sha256": "9170dfd31d89ad4e10f5f4b5ab686b3600400c7bb8313bd7e26b7c139c261755",
+      "required": true,
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes",
+        "semantic:objects",
+        "semantic:diagnostics",
+        "specification:docs/modules/language-reference/pages/index.adoc:Fixed properties"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "fixed-stage11-class-const-override-nonconst",
+      "input": "tests/fixtures/m2/fixed-stage11-class-const-override-nonconst.pkl",
+      "input_sha256": "65446d8453fff89203c1734bf7bf77c6de5539fd7a9bf19c1b1a7bf2c2ddf289",
+      "required": true,
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes",
+        "semantic:diagnostics",
+        "specification:docs/modules/language-reference/pages/index.adoc:Fixed properties"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "fixed-stage11-class-type-before-const",
+      "input": "tests/fixtures/m2/fixed-stage11-class-type-before-const.pkl",
+      "input_sha256": "a327b6d09ade7d6b28fc674d5f02e25f4d0f66b44a5fb48e2f6a21f91d72b8ef",
+      "required": true,
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes",
+        "semantic:types",
+        "semantic:diagnostics",
+        "specification:docs/modules/language-reference/pages/index.adoc:Fixed properties"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "fixed-stage11-relation-fixed-receiver-left",
+      "input": "tests/fixtures/m2/fixed-stage11-relation-fixed-receiver-left.pkl",
+      "input_sha256": "f18a986ca0975aa847ef6b7295d9f11f1b461eefd64769a197cf1d702ec5414f",
+      "metamorphic_relation": {
+        "case_ids": [
+          "fixed-stage11-relation-fixed-receiver-left",
+          "fixed-stage11-relation-fixed-receiver-right"
+        ],
+        "domain": "An inherited fixed computed property uses the amended receiver field and equals the explicit computation for that receiver.",
+        "kind": "equal-stdout"
+      },
+      "required": true,
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes",
+        "semantic:name-resolution",
+        "specification:docs/modules/language-reference/pages/index.adoc:Fixed properties"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "fixed-stage11-relation-fixed-receiver-right",
+      "input": "tests/fixtures/m2/fixed-stage11-relation-fixed-receiver-right.pkl",
+      "input_sha256": "1b45aa7b0c62715674bac0216b819909f6725fff085d1c92530823e3f0ce3895",
+      "metamorphic_relation": {
+        "case_ids": [
+          "fixed-stage11-relation-fixed-receiver-left",
+          "fixed-stage11-relation-fixed-receiver-right"
+        ],
+        "domain": "An inherited fixed computed property uses the amended receiver field and equals the explicit computation for that receiver.",
+        "kind": "equal-stdout"
+      },
+      "required": true,
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:name-resolution",
+        "specification:docs/modules/language-reference/pages/index.adoc:Fixed properties"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "fixed-stage11-relation-reference-unforced-fixed-left",
+      "input": "tests/fixtures/m2/fixed-stage11-relation-reference-unforced-fixed-left.pkl",
+      "input_sha256": "7cad289003b8bc09a2210cbd5c081a3ba0fcb87506c68e7a406a2992cf596e95",
+      "metamorphic_relation": {
+        "case_ids": [
+          "fixed-stage11-relation-reference-unforced-fixed-left",
+          "fixed-stage11-relation-reference-unforced-fixed-right"
+        ],
+        "domain": "Fixed property Reference metadata is unchanged when the initializer changes from a String literal to a throwing body; metadata access must not force that body.",
+        "kind": "equal-stdout"
+      },
+      "required": true,
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "specification:docs/modules/language-reference/pages/index.adoc:Fixed properties"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "fixed-stage11-relation-reference-unforced-fixed-right",
+      "input": "tests/fixtures/m2/fixed-stage11-relation-reference-unforced-fixed-right.pkl",
+      "input_sha256": "97cc1af2defa67e862bc68b8ab70b7309429d5a51cbb1eb6358092c022923bb4",
+      "metamorphic_relation": {
+        "case_ids": [
+          "fixed-stage11-relation-reference-unforced-fixed-left",
+          "fixed-stage11-relation-reference-unforced-fixed-right"
+        ],
+        "domain": "Fixed property Reference metadata is unchanged when the initializer changes from a String literal to a throwing body; metadata access must not force that body.",
+        "kind": "equal-stdout"
+      },
+      "required": true,
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "specification:docs/modules/language-reference/pages/index.adoc:Fixed properties"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "fixed-stage11-abstract-fixed-assignment-body",
+      "input": "tests/fixtures/m2/fixed-stage11-abstract-fixed-assignment-body.pkl",
+      "input_sha256": "f3c93cbab34d2c8e7675651ac5574c26abdce184e475890c0df7241ee1bfb120",
+      "required": true,
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes",
+        "semantic:diagnostics",
+        "specification:docs/modules/language-reference/pages/index.adoc:Fixed properties"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "fixed-stage11-abstract-fixed-amendment-body",
+      "input": "tests/fixtures/m2/fixed-stage11-abstract-fixed-amendment-body.pkl",
+      "input_sha256": "73dc35f272b33c406f238f3d3cc1e9dc49bec9d4f4ff6af8a49d1aa373e9e688",
+      "required": true,
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes",
+        "semantic:amendment",
+        "specification:docs/modules/language-reference/pages/index.adoc:Fixed properties"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "fixed-stage11-duplicate-fixed-override-plain",
+      "input": "tests/fixtures/m2/fixed-stage11-duplicate-fixed-override-plain.pkl",
+      "input_sha256": "fb9e85eb76e7d641cb23ef2931251e85e3a1c61791b02a6b1446f4d5193e3714",
+      "required": true,
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes",
+        "semantic:diagnostics",
+        "specification:docs/modules/language-reference/pages/index.adoc:Fixed properties"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "fixed-stage11-duplicate-fixed-override-const",
+      "input": "tests/fixtures/m2/fixed-stage11-duplicate-fixed-override-const.pkl",
+      "input_sha256": "12a1aa1978ea64c00c2b94f5f89b15cde73a5e83d735f0d48c37f1e64ce83a11",
+      "required": true,
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes",
+        "specification:docs/modules/language-reference/pages/index.adoc:Fixed properties"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "fixed-stage11-duplicate-fixed-override-fixed",
+      "input": "tests/fixtures/m2/fixed-stage11-duplicate-fixed-override-fixed.pkl",
+      "input_sha256": "bec0f6f58e1a1a9b44d01ae8da7f32932ea92e181f070602ad28fcde6e3fe00f",
+      "required": true,
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes",
+        "semantic:diagnostics",
+        "specification:docs/modules/language-reference/pages/index.adoc:Fixed properties"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "fixed-stage11-carry-const-in-identifier",
+      "input": "tests/fixtures/m2/fixed-stage11-carry-const-in-identifier.pkl",
+      "input_sha256": "303c4885337eddc90301382fd155cd78b961c2dc2a53aedf989b78810b73d3c3",
+      "required": true,
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes",
+        "semantic:diagnostics",
+        "specification:docs/modules/language-reference/pages/index.adoc:Fixed properties"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "fixed-stage11-carry-const-in-comment",
+      "input": "tests/fixtures/m2/fixed-stage11-carry-const-in-comment.pkl",
+      "input_sha256": "e1328ca2d190f5f90d9a8e47ec575352061e8686924c06cf770bed01578a0ecc",
+      "required": true,
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes",
+        "semantic:diagnostics",
+        "specification:docs/modules/language-reference/pages/index.adoc:Fixed properties"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "fixed-stage11-carry-const-multiline-backtick",
+      "input": "tests/fixtures/m2/fixed-stage11-carry-const-multiline-backtick.pkl",
+      "input_sha256": "134b2cb180faf6d67337a108c6840f738c5cb42468fa85bab176ebf2fadfca45",
+      "required": true,
+      "requirements": [
+        "semantic:modifiers",
+        "semantic:classes",
+        "semantic:diagnostics",
+        "specification:docs/modules/language-reference/pages/index.adoc:Fixed properties"
+      ]
+    },
+    {
       "adapter": null,
       "execution": {
         "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
@@ -115647,9 +117404,9 @@
   "comparison_boundary": "evaluateExpressionString(ModuleSource.path(same absolute URI), expression) UTF-8 stdout; whole PklException.getMessage() UTF-8 stderr and exit 1; no trimming. Power assertions default to disabled; an explicit per-case power_assertions boolean enables the same option in both probes. Stringification alone is not typed value/API compatibility.",
   "completion": "Every required semantic/source requirement needs implementation/test mappings and complete passing execution. Pending/unmapped/unimplemented/mismatch remains a full-gate failure.",
   "counts": {
-    "cases": 2202,
+    "cases": 2291,
     "cases_by_execution": {
-      "ready": 1202,
+      "ready": 1291,
       "unimplemented": 960,
       "unmapped": 40
     },
@@ -116437,7 +118194,10 @@
           "reference-stage10-namespace-parameter",
           "reference-stage10-namespace-alias-valid",
           "reference-stage10-namespace-property-duplicate",
-          "reference-stage10-native-method-property-namespace"
+          "reference-stage10-native-method-property-namespace",
+          "fixed-stage11-fixed-derived-late-binding",
+          "fixed-stage11-relation-fixed-receiver-left",
+          "fixed-stage11-relation-fixed-receiver-right"
         ],
         "state": "partial"
       }
@@ -116446,12 +118206,35 @@
       "description": "Member forcing, successful memoization, failed retries, cycles and error order",
       "id": "semantic:lazy-evaluation",
       "implementation": {
-        "links": [],
+        "links": [
+          {
+            "path": "crates/pkl-runtime/src/vm.rs",
+            "sha256": "f95483e0cf9692cf249018c294401737c5505dcdf029756a5060e683af0b2500",
+            "symbol": "initialize_member_types"
+          },
+          {
+            "path": "crates/pkl-runtime/src/vm.rs",
+            "sha256": "f95483e0cf9692cf249018c294401737c5505dcdf029756a5060e683af0b2500",
+            "symbol": "validate_class_override"
+          },
+          {
+            "path": "crates/pkl-runtime/src/vm/reference.rs",
+            "sha256": "cbab785245fcaea9452b39b4fa88865ce56e9866b0384a83ffb65eb0b0589740",
+            "symbol": "reference_candidate"
+          }
+        ],
         "state": "partial"
       },
       "kind": "semantic-family",
-      "reason": "A selected probe does not establish implementation or complete edge-case coverage.",
+      "reason": "Reviewed source/test links; completion still requires the full recorded scope and executions.",
       "required": true,
+      "reviewed_mapping": {
+        "remaining": [
+          "Complete lazy error ordering, successful memoization, retry semantics, cycles and failure-path diagnostics require the original inventory and broader differential execution."
+        ],
+        "scope": "Selected probes preserve unforced fixed initializers, class type-before-modifier errors, fixed override checks before body forcing, and fixed Reference metadata without evaluating referent bodies.",
+        "source": "compatibility/m2-mappings.json"
+      },
       "tests": {
         "case_ids": [
           "property-lazy",
@@ -117156,7 +118939,31 @@
           "reference-stage10-metadata-unknown-type-before-data",
           "reference-stage10-mapping-reference-hash-data",
           "reference-stage10-mapping-reference-hash-domain",
-          "reference-stage10-adapter-reference-render-failure"
+          "reference-stage10-adapter-reference-render-failure",
+          "fixed-stage11-fixed-unused-initializer",
+          "fixed-stage11-fixed-unused-bad-type",
+          "fixed-stage11-fixed-class-forces-bad-type",
+          "fixed-stage11-fixed-class-keeps-body-lazy",
+          "fixed-stage11-fixed-throw-before-later",
+          "fixed-stage11-inherit-unforced-bad-override",
+          "fixed-stage11-inherit-class-bad-override",
+          "fixed-stage11-inherit-type-before-fixed",
+          "fixed-stage11-inherit-first-property-error",
+          "fixed-stage11-instance-assign-throw",
+          "fixed-stage11-instance-unused-object",
+          "fixed-stage11-instance-fixed-rhs-versus-body",
+          "fixed-stage11-reference-metadata-fixed",
+          "fixed-stage11-reference-metadata-hidden",
+          "fixed-stage11-reference-metadata-inherited",
+          "fixed-stage11-reference-metadata-indirect",
+          "fixed-stage11-reference-metadata-override",
+          "fixed-stage11-reference-metadata-invalid-override",
+          "fixed-stage11-reference-metadata-unrelated-invalid-override",
+          "fixed-stage11-reference-metadata-unrelated-bad-type",
+          "fixed-stage11-reference-metadata-local",
+          "fixed-stage11-reference-metadata-constraint",
+          "fixed-stage11-relation-reference-unforced-fixed-left",
+          "fixed-stage11-relation-reference-unforced-fixed-right"
         ],
         "state": "partial"
       }
@@ -117750,7 +119557,25 @@
           "reference-stage10-reference-amendment-invalid",
           "reference-stage10-reference-spread-invalid",
           "reference-stage10-reference-iteration-invalid",
-          "reference-stage10-reference-new-parent-invalid"
+          "reference-stage10-reference-new-parent-invalid",
+          "fixed-stage11-instance-assign-constant",
+          "fixed-stage11-instance-assign-computed",
+          "fixed-stage11-instance-assign-throw",
+          "fixed-stage11-instance-assign-other-force",
+          "fixed-stage11-instance-indirect-assign",
+          "fixed-stage11-instance-fixed-object-local-shadow",
+          "fixed-stage11-instance-hidden-fixed",
+          "fixed-stage11-instance-const",
+          "fixed-stage11-instance-amend-object",
+          "fixed-stage11-instance-amend-assignment",
+          "fixed-stage11-instance-amend-other-force",
+          "fixed-stage11-instance-amend-direct",
+          "fixed-stage11-instance-amend-empty",
+          "fixed-stage11-amend-extracted-fixed-value",
+          "fixed-stage11-order-fixed-before-unknown",
+          "fixed-stage11-order-unknown-before-fixed",
+          "fixed-stage11-order-fixed-before-const",
+          "fixed-stage11-order-const-before-fixed"
         ],
         "state": "partial"
       }
@@ -117759,12 +119584,30 @@
       "description": "Object, function and null amendments, late binding and prototype chains",
       "id": "semantic:amendment",
       "implementation": {
-        "links": [],
+        "links": [
+          {
+            "path": "crates/pkl-runtime/src/vm.rs",
+            "sha256": "f95483e0cf9692cf249018c294401737c5505dcdf029756a5060e683af0b2500",
+            "symbol": "validate_object_override"
+          },
+          {
+            "path": "crates/pkl-runtime/src/vm.rs",
+            "sha256": "f95483e0cf9692cf249018c294401737c5505dcdf029756a5060e683af0b2500",
+            "symbol": "inherited_member"
+          }
+        ],
         "state": "partial"
       },
       "kind": "semantic-family",
-      "reason": "A selected probe does not establish implementation or complete edge-case coverage.",
+      "reason": "Reviewed source/test links; completion still requires the full recorded scope and executions.",
       "required": true,
+      "reviewed_mapping": {
+        "remaining": [
+          "General module amendments, function amendments, generic and cyclic object inheritance, and the complete amendment corpus remain open."
+        ],
+        "scope": "Selected fixed instance amendments are rejected; extracting the fixed property value still permits amendment of that value. Empty receiver amendments preserve fixed values.",
+        "source": "compatibility/m2-mappings.json"
+      },
       "tests": {
         "case_ids": [
           "object-amendment",
@@ -117882,7 +119725,14 @@
           "equality-stage9-mapping-length-key-folded-int-collision",
           "equality-stage9-mapping-length-key-entry-dynamic",
           "reference-stage10-reference-amendment-invalid",
-          "reference-stage10-reference-new-parent-invalid"
+          "reference-stage10-reference-new-parent-invalid",
+          "fixed-stage11-instance-amend-object",
+          "fixed-stage11-instance-amend-assignment",
+          "fixed-stage11-instance-amend-other-force",
+          "fixed-stage11-instance-amend-direct",
+          "fixed-stage11-instance-amend-empty",
+          "fixed-stage11-amend-extracted-fixed-value",
+          "fixed-stage11-abstract-fixed-amendment-body"
         ],
         "state": "partial"
       }
@@ -117891,12 +119741,42 @@
       "description": "Class declarations, constructors, typed objects, class inheritance and runtime class identity",
       "id": "semantic:classes",
       "implementation": {
-        "links": [],
+        "links": [
+          {
+            "path": "crates/pkl-runtime/src/heap.rs",
+            "sha256": "2d2e36ef29398e578986419f44739cd8fd5041bfe3ceccd6147521f31203cabf",
+            "symbol": "Member"
+          },
+          {
+            "path": "crates/pkl-runtime/src/vm.rs",
+            "sha256": "f95483e0cf9692cf249018c294401737c5505dcdf029756a5060e683af0b2500",
+            "symbol": "validate_class_override"
+          },
+          {
+            "path": "crates/pkl-runtime/src/vm.rs",
+            "sha256": "f95483e0cf9692cf249018c294401737c5505dcdf029756a5060e683af0b2500",
+            "symbol": "validate_object_override"
+          },
+          {
+            "path": "crates/pkl-runtime/src/vm.rs",
+            "sha256": "f95483e0cf9692cf249018c294401737c5505dcdf029756a5060e683af0b2500",
+            "symbol": "initialize_member_types"
+          }
+        ],
         "state": "partial"
       },
       "kind": "semantic-family",
-      "reason": "A selected probe does not establish implementation or complete edge-case coverage.",
+      "reason": "Reviewed source/test links; completion still requires the full recorded scope and executions.",
       "required": true,
+      "reviewed_mapping": {
+        "remaining": [
+          "Module extends/amends and the original upstream fixed-property snippet suite contracts remain unimplemented or unexecuted.",
+          "Full modifier combinations, annotation metadata, generic class inheritance and the complete class/member error corpus remain outside this bounded selection.",
+          "Caught upstream PklBugException duplicate hidden/local outputs and any recorded exploratory mismatches remain separate failures, without development exceptions."
+        ],
+        "scope": "Selected class fixed properties preserve declaration fixedness through inheritance, reject instance assignment and amendment before forcing bodies, and retain member/type initialization error order. Raw comparisons cover only the linked fixtures at their actual URIs.",
+        "source": "compatibility/m2-mappings.json"
+      },
       "tests": {
         "case_ids": [
           "class-basic",
@@ -117975,7 +119855,87 @@
           "equality-stage9-class-qualified-hash-unnamed",
           "equality-stage9-class-qualified-hash-named",
           "diagnostics-stage9-let-body-object-type",
-          "diagnostics-stage9-let-inherited-constraint-throw"
+          "diagnostics-stage9-let-inherited-constraint-throw",
+          "fixed-stage11-class-fixed-value",
+          "fixed-stage11-fixed-derived-late-binding",
+          "fixed-stage11-fixed-default-literal",
+          "fixed-stage11-fixed-default-nullable",
+          "fixed-stage11-fixed-default-missing",
+          "fixed-stage11-fixed-typecheck",
+          "fixed-stage11-class-modifier-local",
+          "fixed-stage11-invalid-fixed-class",
+          "fixed-stage11-fixed-unused-initializer",
+          "fixed-stage11-fixed-unused-bad-type",
+          "fixed-stage11-fixed-class-forces-bad-type",
+          "fixed-stage11-fixed-class-keeps-body-lazy",
+          "fixed-stage11-fixed-throw-before-later",
+          "fixed-stage11-inherit-preserve",
+          "fixed-stage11-inherit-drop",
+          "fixed-stage11-inherit-add",
+          "fixed-stage11-inherit-plain",
+          "fixed-stage11-inherit-hidden-preserve",
+          "fixed-stage11-inherit-hidden-drop",
+          "fixed-stage11-inherit-fixed-to-const",
+          "fixed-stage11-inherit-const-to-fixed",
+          "fixed-stage11-inherit-const-preserve",
+          "fixed-stage11-inherit-indirect-fixed",
+          "fixed-stage11-inherit-indirect-drop",
+          "fixed-stage11-inherit-unforced-bad-override",
+          "fixed-stage11-inherit-class-bad-override",
+          "fixed-stage11-inherit-type-before-fixed",
+          "fixed-stage11-inherit-first-property-error",
+          "fixed-stage11-inherit-abstract-default",
+          "fixed-stage11-inherit-narrow-default",
+          "fixed-stage11-inherit-local-shadows-fixed",
+          "fixed-stage11-inherit-fixed-shadows-local",
+          "fixed-stage11-instance-assign-constant",
+          "fixed-stage11-instance-assign-computed",
+          "fixed-stage11-instance-assign-throw",
+          "fixed-stage11-instance-assign-other-force",
+          "fixed-stage11-instance-unused-object",
+          "fixed-stage11-instance-fixed-rhs-versus-body",
+          "fixed-stage11-instance-indirect-assign",
+          "fixed-stage11-instance-fixed-object-local-shadow",
+          "fixed-stage11-instance-hidden-fixed",
+          "fixed-stage11-instance-const",
+          "fixed-stage11-instance-amend-object",
+          "fixed-stage11-instance-amend-assignment",
+          "fixed-stage11-instance-amend-other-force",
+          "fixed-stage11-instance-amend-direct",
+          "fixed-stage11-instance-amend-empty",
+          "fixed-stage11-amend-extracted-fixed-value",
+          "fixed-stage11-reference-metadata-fixed",
+          "fixed-stage11-reference-metadata-hidden",
+          "fixed-stage11-reference-metadata-inherited",
+          "fixed-stage11-reference-metadata-indirect",
+          "fixed-stage11-reference-metadata-override",
+          "fixed-stage11-reference-metadata-invalid-override",
+          "fixed-stage11-reference-metadata-unrelated-invalid-override",
+          "fixed-stage11-reference-metadata-unrelated-bad-type",
+          "fixed-stage11-reference-metadata-local",
+          "fixed-stage11-reference-metadata-constraint",
+          "fixed-stage11-duplicate-fixed-instance-override",
+          "fixed-stage11-modifier-fixed-const-order",
+          "fixed-stage11-modifier-fixed-abstract-order",
+          "fixed-stage11-modifier-hidden-fixed-concrete",
+          "fixed-stage11-modifier-abstract-fixed-concrete",
+          "fixed-stage11-order-fixed-before-unknown",
+          "fixed-stage11-order-unknown-before-fixed",
+          "fixed-stage11-order-fixed-before-const",
+          "fixed-stage11-order-const-before-fixed",
+          "fixed-stage11-class-const-override-nonconst",
+          "fixed-stage11-class-type-before-const",
+          "fixed-stage11-relation-fixed-receiver-left",
+          "fixed-stage11-relation-reference-unforced-fixed-left",
+          "fixed-stage11-relation-reference-unforced-fixed-right",
+          "fixed-stage11-abstract-fixed-assignment-body",
+          "fixed-stage11-abstract-fixed-amendment-body",
+          "fixed-stage11-duplicate-fixed-override-plain",
+          "fixed-stage11-duplicate-fixed-override-const",
+          "fixed-stage11-duplicate-fixed-override-fixed",
+          "fixed-stage11-carry-const-in-identifier",
+          "fixed-stage11-carry-const-in-comment",
+          "fixed-stage11-carry-const-multiline-backtick"
         ],
         "state": "partial"
       }
@@ -117984,12 +119944,47 @@
       "description": "Local, hidden, fixed, const, abstract, open, external; hidden override and modifier errors",
       "id": "semantic:modifiers",
       "implementation": {
-        "links": [],
+        "links": [
+          {
+            "path": "crates/pkl-runtime/src/heap.rs",
+            "sha256": "2d2e36ef29398e578986419f44739cd8fd5041bfe3ceccd6147521f31203cabf",
+            "symbol": "Member"
+          },
+          {
+            "path": "crates/pkl-runtime/src/vm.rs",
+            "sha256": "f95483e0cf9692cf249018c294401737c5505dcdf029756a5060e683af0b2500",
+            "symbol": "validate_class_override"
+          },
+          {
+            "path": "crates/pkl-runtime/src/vm.rs",
+            "sha256": "f95483e0cf9692cf249018c294401737c5505dcdf029756a5060e683af0b2500",
+            "symbol": "validate_object_override"
+          },
+          {
+            "path": "crates/pkl-runtime/src/vm.rs",
+            "sha256": "f95483e0cf9692cf249018c294401737c5505dcdf029756a5060e683af0b2500",
+            "symbol": "initialize_member_types"
+          },
+          {
+            "path": "crates/pkl-runtime/src/resolver.rs",
+            "sha256": "5ab702b97d8ab61b3c8e2cf4f49a00f52b076a6ce04a9cfd528f0fa91c757df1",
+            "symbol": "validate_modifiers"
+          }
+        ],
         "state": "partial"
       },
       "kind": "semantic-family",
-      "reason": "A selected probe does not establish implementation or complete edge-case coverage.",
+      "reason": "Reviewed source/test links; completion still requires the full recorded scope and executions.",
       "required": true,
+      "reviewed_mapping": {
+        "remaining": [
+          "Module extends/amends and the original upstream fixed-property snippet suite contracts remain unimplemented or unexecuted.",
+          "Full modifier combinations, annotation metadata, generic class inheritance and the complete class/member error corpus remain outside this bounded selection.",
+          "Caught upstream PklBugException duplicate hidden/local outputs and any recorded exploratory mismatches remain separate failures, without development exceptions."
+        ],
+        "scope": "Selected class fixed properties preserve declaration fixedness through inheritance, reject instance assignment and amendment before forcing bodies, and retain member/type initialization error order. Raw comparisons cover only the linked fixtures at their actual URIs.",
+        "source": "compatibility/m2-mappings.json"
+      },
       "tests": {
         "case_ids": [
           "error-class-nonconst-capture",
@@ -118034,7 +120029,96 @@
           "equality-stage9-listing-nonzero-hash-regular-local-warm",
           "equality-stage9-listing-nonzero-hash-constant-local-warm",
           "equality-stage9-mapping-length-local-query-ordinary",
-          "equality-stage9-mapping-length-local-query-local"
+          "equality-stage9-mapping-length-local-query-local",
+          "fixed-stage11-module-fixed-value",
+          "fixed-stage11-class-fixed-value",
+          "fixed-stage11-fixed-derived-late-binding",
+          "fixed-stage11-fixed-default-literal",
+          "fixed-stage11-fixed-default-nullable",
+          "fixed-stage11-fixed-default-missing",
+          "fixed-stage11-fixed-typecheck",
+          "fixed-stage11-module-modifier-local",
+          "fixed-stage11-class-modifier-local",
+          "fixed-stage11-invalid-fixed-method",
+          "fixed-stage11-invalid-fixed-class",
+          "fixed-stage11-invalid-fixed-module",
+          "fixed-stage11-invalid-fixed-object",
+          "fixed-stage11-invalid-fixed-listing",
+          "fixed-stage11-fixed-unused-initializer",
+          "fixed-stage11-fixed-unused-bad-type",
+          "fixed-stage11-fixed-class-forces-bad-type",
+          "fixed-stage11-fixed-class-keeps-body-lazy",
+          "fixed-stage11-fixed-throw-before-later",
+          "fixed-stage11-inherit-preserve",
+          "fixed-stage11-inherit-drop",
+          "fixed-stage11-inherit-add",
+          "fixed-stage11-inherit-plain",
+          "fixed-stage11-inherit-hidden-preserve",
+          "fixed-stage11-inherit-hidden-drop",
+          "fixed-stage11-inherit-fixed-to-const",
+          "fixed-stage11-inherit-const-to-fixed",
+          "fixed-stage11-inherit-const-preserve",
+          "fixed-stage11-inherit-indirect-fixed",
+          "fixed-stage11-inherit-indirect-drop",
+          "fixed-stage11-inherit-unforced-bad-override",
+          "fixed-stage11-inherit-class-bad-override",
+          "fixed-stage11-inherit-type-before-fixed",
+          "fixed-stage11-inherit-first-property-error",
+          "fixed-stage11-inherit-abstract-default",
+          "fixed-stage11-inherit-narrow-default",
+          "fixed-stage11-inherit-local-shadows-fixed",
+          "fixed-stage11-inherit-fixed-shadows-local",
+          "fixed-stage11-instance-assign-constant",
+          "fixed-stage11-instance-assign-computed",
+          "fixed-stage11-instance-assign-throw",
+          "fixed-stage11-instance-assign-other-force",
+          "fixed-stage11-instance-unused-object",
+          "fixed-stage11-instance-fixed-rhs-versus-body",
+          "fixed-stage11-instance-indirect-assign",
+          "fixed-stage11-instance-fixed-object-local-shadow",
+          "fixed-stage11-instance-hidden-fixed",
+          "fixed-stage11-instance-const",
+          "fixed-stage11-instance-amend-object",
+          "fixed-stage11-instance-amend-assignment",
+          "fixed-stage11-instance-amend-other-force",
+          "fixed-stage11-instance-amend-direct",
+          "fixed-stage11-instance-amend-empty",
+          "fixed-stage11-amend-extracted-fixed-value",
+          "fixed-stage11-reference-metadata-fixed",
+          "fixed-stage11-reference-metadata-hidden",
+          "fixed-stage11-reference-metadata-inherited",
+          "fixed-stage11-reference-metadata-indirect",
+          "fixed-stage11-reference-metadata-override",
+          "fixed-stage11-reference-metadata-invalid-override",
+          "fixed-stage11-reference-metadata-unrelated-invalid-override",
+          "fixed-stage11-reference-metadata-unrelated-bad-type",
+          "fixed-stage11-reference-metadata-local",
+          "fixed-stage11-reference-metadata-constraint",
+          "fixed-stage11-duplicate-fixed-implies-const-read",
+          "fixed-stage11-duplicate-fixed-instance-override",
+          "fixed-stage11-duplicate-const",
+          "fixed-stage11-modifier-fixed-const-order",
+          "fixed-stage11-modifier-fixed-abstract-order",
+          "fixed-stage11-modifier-hidden-fixed-concrete",
+          "fixed-stage11-modifier-abstract-fixed-concrete",
+          "fixed-stage11-order-fixed-before-unknown",
+          "fixed-stage11-order-unknown-before-fixed",
+          "fixed-stage11-order-fixed-before-const",
+          "fixed-stage11-order-const-before-fixed",
+          "fixed-stage11-class-const-override-nonconst",
+          "fixed-stage11-class-type-before-const",
+          "fixed-stage11-relation-fixed-receiver-left",
+          "fixed-stage11-relation-fixed-receiver-right",
+          "fixed-stage11-relation-reference-unforced-fixed-left",
+          "fixed-stage11-relation-reference-unforced-fixed-right",
+          "fixed-stage11-abstract-fixed-assignment-body",
+          "fixed-stage11-abstract-fixed-amendment-body",
+          "fixed-stage11-duplicate-fixed-override-plain",
+          "fixed-stage11-duplicate-fixed-override-const",
+          "fixed-stage11-duplicate-fixed-override-fixed",
+          "fixed-stage11-carry-const-in-identifier",
+          "fixed-stage11-carry-const-in-comment",
+          "fixed-stage11-carry-const-multiline-backtick"
         ],
         "state": "partial"
       }
@@ -119477,7 +121561,13 @@
           "reference-stage10-native-method-property-namespace",
           "reference-stage10-property-getclass",
           "reference-stage10-metadata-nonnull-erasure",
-          "reference-stage10-referent-nonnull-check"
+          "reference-stage10-referent-nonnull-check",
+          "fixed-stage11-fixed-typecheck",
+          "fixed-stage11-fixed-unused-bad-type",
+          "fixed-stage11-fixed-class-forces-bad-type",
+          "fixed-stage11-inherit-type-before-fixed",
+          "fixed-stage11-reference-metadata-unrelated-bad-type",
+          "fixed-stage11-class-type-before-const"
         ],
         "state": "partial"
       }
@@ -120152,17 +122242,17 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/vm/reference.rs",
-            "sha256": "ff7730ab07ea38442f2f24f40b4ce37d78e859f8ca53912a88b3bdd8e976c608",
+            "sha256": "cbab785245fcaea9452b39b4fa88865ce56e9866b0384a83ffb65eb0b0589740",
             "symbol": "Reference"
           },
           {
             "path": "crates/pkl-runtime/src/vm/reference.rs",
-            "sha256": "ff7730ab07ea38442f2f24f40b4ce37d78e859f8ca53912a88b3bdd8e976c608",
+            "sha256": "cbab785245fcaea9452b39b4fa88865ce56e9866b0384a83ffb65eb0b0589740",
             "symbol": "reference_access"
           },
           {
             "path": "crates/pkl-runtime/src/vm/reference.rs",
-            "sha256": "ff7730ab07ea38442f2f24f40b4ce37d78e859f8ca53912a88b3bdd8e976c608",
+            "sha256": "cbab785245fcaea9452b39b4fa88865ce56e9866b0384a83ffb65eb0b0589740",
             "symbol": "invoke_reference_native"
           },
           {
@@ -120182,7 +122272,7 @@
           "Complete referent metadata for all builtin types, generic classes and remaining collection types is not implemented or verified.",
           "Full reflection, compound-value renderers and cyclic or JVM identity-dependent key behavior remain open."
         ],
-        "scope": "The pkl:ref bridge supports selected constructor, normalized referent type, synthetic property/subscript path, domain rendering, equality and key behavior through the shared VM. Linked native cases compare complete Java 0.32.0 process output at their actual fixture URIs.",
+        "scope": "The pkl:ref bridge supports selected constructor, normalized referent type, synthetic property/subscript path, domain rendering, equality and key behavior through the shared VM. Linked native cases compare complete Java 0.32.0 process output at their actual fixture URIs. Stage11 adds selected fixed declaration, inherited metadata and complete raw diagnostics through the shared VM.",
         "source": "compatibility/m2-mappings.json"
       },
       "tests": {
@@ -120329,7 +122419,19 @@
           "reference-stage10-reference-iteration-invalid",
           "reference-stage10-reference-new-parent-invalid",
           "reference-stage10-adapter-reference-render-success",
-          "reference-stage10-adapter-reference-render-failure"
+          "reference-stage10-adapter-reference-render-failure",
+          "fixed-stage11-reference-metadata-fixed",
+          "fixed-stage11-reference-metadata-hidden",
+          "fixed-stage11-reference-metadata-inherited",
+          "fixed-stage11-reference-metadata-indirect",
+          "fixed-stage11-reference-metadata-override",
+          "fixed-stage11-reference-metadata-invalid-override",
+          "fixed-stage11-reference-metadata-unrelated-invalid-override",
+          "fixed-stage11-reference-metadata-unrelated-bad-type",
+          "fixed-stage11-reference-metadata-local",
+          "fixed-stage11-reference-metadata-constraint",
+          "fixed-stage11-relation-reference-unforced-fixed-left",
+          "fixed-stage11-relation-reference-unforced-fixed-right"
         ],
         "state": "partial"
       }
@@ -120356,22 +122458,22 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/heap.rs",
-            "sha256": "08b6ffd2450d4341971d54433b45e902a69e5fdd1ffbe3e7294862de08854b13",
+            "sha256": "2d2e36ef29398e578986419f44739cd8fd5041bfe3ceccd6147521f31203cabf",
             "symbol": "Member"
           },
           {
             "path": "crates/pkl-runtime/src/heap.rs",
-            "sha256": "08b6ffd2450d4341971d54433b45e902a69e5fdd1ffbe3e7294862de08854b13",
+            "sha256": "2d2e36ef29398e578986419f44739cd8fd5041bfe3ceccd6147521f31203cabf",
             "symbol": "Object"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "e0f7a4ea05eecb7ad89002d8cafa2a813f5233cd3a5f40e28c03f6382a0def50",
+            "sha256": "f95483e0cf9692cf249018c294401737c5505dcdf029756a5060e683af0b2500",
             "symbol": "initialize_member_types"
           },
           {
             "path": "crates/pkl-runtime/src/vm/reference.rs",
-            "sha256": "ff7730ab07ea38442f2f24f40b4ce37d78e859f8ca53912a88b3bdd8e976c608",
+            "sha256": "cbab785245fcaea9452b39b4fa88865ce56e9866b0384a83ffb65eb0b0589740",
             "symbol": "reference_candidate"
           }
         ],
@@ -120384,7 +122486,7 @@
         "remaining": [
           "The full reflection API, module/class/type metadata inventory, dynamic nested declaration identity and generic class metadata remain unimplemented or unverified."
         ],
-        "scope": "Selected class, inherited property and normalized type metadata are used for Reference access without forcing referent bodies.",
+        "scope": "Selected class, inherited property and normalized type metadata are used for Reference access without forcing referent bodies. Stage11 adds selected fixed declaration, inherited metadata and complete raw diagnostics through the shared VM.",
         "source": "compatibility/m2-mappings.json"
       },
       "tests": {
@@ -120464,7 +122566,19 @@
           "reference-stage10-property-getclass",
           "reference-stage10-constructor-nonnull-alias",
           "reference-stage10-metadata-nonnull-erasure",
-          "reference-stage10-referent-nonnull-check"
+          "reference-stage10-referent-nonnull-check",
+          "fixed-stage11-reference-metadata-fixed",
+          "fixed-stage11-reference-metadata-hidden",
+          "fixed-stage11-reference-metadata-inherited",
+          "fixed-stage11-reference-metadata-indirect",
+          "fixed-stage11-reference-metadata-override",
+          "fixed-stage11-reference-metadata-invalid-override",
+          "fixed-stage11-reference-metadata-unrelated-invalid-override",
+          "fixed-stage11-reference-metadata-unrelated-bad-type",
+          "fixed-stage11-reference-metadata-local",
+          "fixed-stage11-reference-metadata-constraint",
+          "fixed-stage11-relation-reference-unforced-fixed-left",
+          "fixed-stage11-relation-reference-unforced-fixed-right"
         ],
         "state": "partial"
       }
@@ -120476,17 +122590,17 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/parser.rs",
-            "sha256": "78ed24882879ca603e227cf772f5159232e478f166358c809e34b6679af03567",
+            "sha256": "1d67f99b6f13ba21fedb754803fa8f484a59509e18aaed6f8a3fbcde629bd949",
             "symbol": "import"
           },
           {
             "path": "crates/pkl-runtime/src/resolver.rs",
-            "sha256": "75ae7a336d327e2ca14ee6ed2aac9bc8f1380e058cf1cbdfc734f5f7c6f13e9c",
+            "sha256": "5ab702b97d8ab61b3c8e2cf4f49a00f52b076a6ce04a9cfd528f0fa91c757df1",
             "symbol": "type_expression"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "e0f7a4ea05eecb7ad89002d8cafa2a813f5233cd3a5f40e28c03f6382a0def50",
+            "sha256": "f95483e0cf9692cf249018c294401737c5505dcdf029756a5060e683af0b2500",
             "symbol": "compile_type_at"
           }
         ],
@@ -120536,7 +122650,7 @@
           },
           {
             "path": "crates/pkl-runtime/src/diagnostic_values.rs",
-            "sha256": "6b6a8689780e846c0483a0954a9f66d11380c6c7f58db2b1e1e4eebb5ac40ae3",
+            "sha256": "52fa51a865a0a8cd97745eba742a65b0b86af23b81891db521a6114af333b10b",
             "symbol": "Renderer"
           }
         ],
@@ -120550,7 +122664,7 @@
           "Recursive frame compression, general imported source stacks, first-error combinations and the complete parser/resolver/runtime diagnostic corpus remain open.",
           "Original selected cycle and remainder-zero failures remain failed."
         ],
-        "scope": "Reference constructor, access, constraint and rendering errors retain complete message, authored frame, foreign standard-library source and URI bytes in selected comparisons.",
+        "scope": "Reference constructor, access, constraint and rendering errors retain complete message, authored frame, foreign standard-library source and URI bytes in selected comparisons. Stage11 adds selected fixed declaration, inherited metadata and complete raw diagnostics through the shared VM.",
         "source": "compatibility/m2-mappings.json"
       },
       "tests": {
@@ -121135,7 +123249,57 @@
           "reference-stage10-reference-spread-invalid",
           "reference-stage10-reference-iteration-invalid",
           "reference-stage10-reference-new-parent-invalid",
-          "reference-stage10-adapter-reference-render-failure"
+          "reference-stage10-adapter-reference-render-failure",
+          "fixed-stage11-fixed-default-missing",
+          "fixed-stage11-fixed-typecheck",
+          "fixed-stage11-module-modifier-local",
+          "fixed-stage11-class-modifier-local",
+          "fixed-stage11-invalid-fixed-method",
+          "fixed-stage11-invalid-fixed-class",
+          "fixed-stage11-invalid-fixed-module",
+          "fixed-stage11-invalid-fixed-object",
+          "fixed-stage11-invalid-fixed-listing",
+          "fixed-stage11-fixed-class-forces-bad-type",
+          "fixed-stage11-fixed-throw-before-later",
+          "fixed-stage11-inherit-drop",
+          "fixed-stage11-inherit-add",
+          "fixed-stage11-inherit-hidden-drop",
+          "fixed-stage11-inherit-fixed-to-const",
+          "fixed-stage11-inherit-const-to-fixed",
+          "fixed-stage11-inherit-indirect-drop",
+          "fixed-stage11-inherit-class-bad-override",
+          "fixed-stage11-inherit-type-before-fixed",
+          "fixed-stage11-inherit-first-property-error",
+          "fixed-stage11-instance-assign-constant",
+          "fixed-stage11-instance-assign-computed",
+          "fixed-stage11-instance-assign-throw",
+          "fixed-stage11-instance-assign-other-force",
+          "fixed-stage11-instance-fixed-rhs-versus-body",
+          "fixed-stage11-instance-indirect-assign",
+          "fixed-stage11-instance-hidden-fixed",
+          "fixed-stage11-instance-const",
+          "fixed-stage11-instance-amend-object",
+          "fixed-stage11-instance-amend-assignment",
+          "fixed-stage11-instance-amend-other-force",
+          "fixed-stage11-instance-amend-direct",
+          "fixed-stage11-reference-metadata-invalid-override",
+          "fixed-stage11-reference-metadata-unrelated-invalid-override",
+          "fixed-stage11-reference-metadata-unrelated-bad-type",
+          "fixed-stage11-reference-metadata-local",
+          "fixed-stage11-duplicate-fixed-implies-const-read",
+          "fixed-stage11-duplicate-fixed-instance-override",
+          "fixed-stage11-order-fixed-before-unknown",
+          "fixed-stage11-order-unknown-before-fixed",
+          "fixed-stage11-order-fixed-before-const",
+          "fixed-stage11-order-const-before-fixed",
+          "fixed-stage11-class-const-override-nonconst",
+          "fixed-stage11-class-type-before-const",
+          "fixed-stage11-abstract-fixed-assignment-body",
+          "fixed-stage11-duplicate-fixed-override-plain",
+          "fixed-stage11-duplicate-fixed-override-fixed",
+          "fixed-stage11-carry-const-in-identifier",
+          "fixed-stage11-carry-const-in-comment",
+          "fixed-stage11-carry-const-multiline-backtick"
         ],
         "state": "partial"
       }
@@ -127123,19 +129287,139 @@
       "description": "Fixed properties",
       "id": "specification:docs/modules/language-reference/pages/index.adoc:Fixed properties",
       "implementation": {
-        "links": [],
-        "state": "unimplemented"
+        "links": [
+          {
+            "path": "crates/pkl-runtime/src/heap.rs",
+            "sha256": "2d2e36ef29398e578986419f44739cd8fd5041bfe3ceccd6147521f31203cabf",
+            "symbol": "Member"
+          },
+          {
+            "path": "crates/pkl-runtime/src/vm.rs",
+            "sha256": "f95483e0cf9692cf249018c294401737c5505dcdf029756a5060e683af0b2500",
+            "symbol": "validate_class_override"
+          },
+          {
+            "path": "crates/pkl-runtime/src/vm.rs",
+            "sha256": "f95483e0cf9692cf249018c294401737c5505dcdf029756a5060e683af0b2500",
+            "symbol": "validate_object_override"
+          },
+          {
+            "path": "crates/pkl-runtime/src/vm.rs",
+            "sha256": "f95483e0cf9692cf249018c294401737c5505dcdf029756a5060e683af0b2500",
+            "symbol": "initialize_member_types"
+          }
+        ],
+        "state": "partial"
       },
       "kind": "specification",
-      "reason": "Source-derived declaration/heading retained conservatively; semantic mapping requires review.",
+      "reason": "Reviewed source/test links; completion still requires the full recorded scope and executions.",
       "required": true,
+      "reviewed_mapping": {
+        "remaining": [
+          "Module extends/amends and the original upstream fixed-property snippet suite contracts remain unimplemented or unexecuted.",
+          "Full modifier combinations, annotation metadata, generic class inheritance and the complete class/member error corpus remain outside this bounded selection.",
+          "Caught upstream PklBugException duplicate hidden/local outputs and any recorded exploratory mismatches remain separate failures, without development exceptions."
+        ],
+        "scope": "Selected class fixed properties preserve declaration fixedness through inheritance, reject instance assignment and amendment before forcing bodies, and retain member/type initialization error order. Raw comparisons cover only the linked fixtures at their actual URIs.",
+        "source": "compatibility/m2-mappings.json"
+      },
       "source": {
         "line": 1050,
         "path": "docs/modules/language-reference/pages/index.adoc"
       },
       "tests": {
-        "case_ids": [],
-        "state": "unmapped"
+        "case_ids": [
+          "fixed-stage11-module-fixed-value",
+          "fixed-stage11-class-fixed-value",
+          "fixed-stage11-fixed-derived-late-binding",
+          "fixed-stage11-fixed-default-literal",
+          "fixed-stage11-fixed-default-nullable",
+          "fixed-stage11-fixed-default-missing",
+          "fixed-stage11-fixed-typecheck",
+          "fixed-stage11-module-modifier-local",
+          "fixed-stage11-class-modifier-local",
+          "fixed-stage11-invalid-fixed-method",
+          "fixed-stage11-invalid-fixed-class",
+          "fixed-stage11-invalid-fixed-module",
+          "fixed-stage11-invalid-fixed-object",
+          "fixed-stage11-invalid-fixed-listing",
+          "fixed-stage11-fixed-unused-initializer",
+          "fixed-stage11-fixed-unused-bad-type",
+          "fixed-stage11-fixed-class-forces-bad-type",
+          "fixed-stage11-fixed-class-keeps-body-lazy",
+          "fixed-stage11-fixed-throw-before-later",
+          "fixed-stage11-inherit-preserve",
+          "fixed-stage11-inherit-drop",
+          "fixed-stage11-inherit-add",
+          "fixed-stage11-inherit-plain",
+          "fixed-stage11-inherit-hidden-preserve",
+          "fixed-stage11-inherit-hidden-drop",
+          "fixed-stage11-inherit-fixed-to-const",
+          "fixed-stage11-inherit-const-to-fixed",
+          "fixed-stage11-inherit-const-preserve",
+          "fixed-stage11-inherit-indirect-fixed",
+          "fixed-stage11-inherit-indirect-drop",
+          "fixed-stage11-inherit-unforced-bad-override",
+          "fixed-stage11-inherit-class-bad-override",
+          "fixed-stage11-inherit-type-before-fixed",
+          "fixed-stage11-inherit-first-property-error",
+          "fixed-stage11-inherit-abstract-default",
+          "fixed-stage11-inherit-narrow-default",
+          "fixed-stage11-inherit-local-shadows-fixed",
+          "fixed-stage11-inherit-fixed-shadows-local",
+          "fixed-stage11-instance-assign-constant",
+          "fixed-stage11-instance-assign-computed",
+          "fixed-stage11-instance-assign-throw",
+          "fixed-stage11-instance-assign-other-force",
+          "fixed-stage11-instance-unused-object",
+          "fixed-stage11-instance-fixed-rhs-versus-body",
+          "fixed-stage11-instance-indirect-assign",
+          "fixed-stage11-instance-fixed-object-local-shadow",
+          "fixed-stage11-instance-hidden-fixed",
+          "fixed-stage11-instance-const",
+          "fixed-stage11-instance-amend-object",
+          "fixed-stage11-instance-amend-assignment",
+          "fixed-stage11-instance-amend-other-force",
+          "fixed-stage11-instance-amend-direct",
+          "fixed-stage11-instance-amend-empty",
+          "fixed-stage11-amend-extracted-fixed-value",
+          "fixed-stage11-reference-metadata-fixed",
+          "fixed-stage11-reference-metadata-hidden",
+          "fixed-stage11-reference-metadata-inherited",
+          "fixed-stage11-reference-metadata-indirect",
+          "fixed-stage11-reference-metadata-override",
+          "fixed-stage11-reference-metadata-invalid-override",
+          "fixed-stage11-reference-metadata-unrelated-invalid-override",
+          "fixed-stage11-reference-metadata-unrelated-bad-type",
+          "fixed-stage11-reference-metadata-local",
+          "fixed-stage11-reference-metadata-constraint",
+          "fixed-stage11-duplicate-fixed-implies-const-read",
+          "fixed-stage11-duplicate-fixed-instance-override",
+          "fixed-stage11-duplicate-const",
+          "fixed-stage11-modifier-fixed-const-order",
+          "fixed-stage11-modifier-fixed-abstract-order",
+          "fixed-stage11-modifier-hidden-fixed-concrete",
+          "fixed-stage11-modifier-abstract-fixed-concrete",
+          "fixed-stage11-order-fixed-before-unknown",
+          "fixed-stage11-order-unknown-before-fixed",
+          "fixed-stage11-order-fixed-before-const",
+          "fixed-stage11-order-const-before-fixed",
+          "fixed-stage11-class-const-override-nonconst",
+          "fixed-stage11-class-type-before-const",
+          "fixed-stage11-relation-fixed-receiver-left",
+          "fixed-stage11-relation-fixed-receiver-right",
+          "fixed-stage11-relation-reference-unforced-fixed-left",
+          "fixed-stage11-relation-reference-unforced-fixed-right",
+          "fixed-stage11-abstract-fixed-assignment-body",
+          "fixed-stage11-abstract-fixed-amendment-body",
+          "fixed-stage11-duplicate-fixed-override-plain",
+          "fixed-stage11-duplicate-fixed-override-const",
+          "fixed-stage11-duplicate-fixed-override-fixed",
+          "fixed-stage11-carry-const-in-identifier",
+          "fixed-stage11-carry-const-in-comment",
+          "fixed-stage11-carry-const-multiline-backtick"
+        ],
+        "state": "partial"
       }
     },
     {
@@ -127449,17 +129733,17 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/parser.rs",
-            "sha256": "78ed24882879ca603e227cf772f5159232e478f166358c809e34b6679af03567",
+            "sha256": "1d67f99b6f13ba21fedb754803fa8f484a59509e18aaed6f8a3fbcde629bd949",
             "symbol": "import"
           },
           {
             "path": "crates/pkl-runtime/src/resolver.rs",
-            "sha256": "75ae7a336d327e2ca14ee6ed2aac9bc8f1380e058cf1cbdfc734f5f7c6f13e9c",
+            "sha256": "5ab702b97d8ab61b3c8e2cf4f49a00f52b076a6ce04a9cfd528f0fa91c757df1",
             "symbol": "type_expression"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "e0f7a4ea05eecb7ad89002d8cafa2a813f5233cd3a5f40e28c03f6382a0def50",
+            "sha256": "f95483e0cf9692cf249018c294401737c5505dcdf029756a5060e683af0b2500",
             "symbol": "compile_type_at"
           }
         ],
@@ -128676,17 +130960,17 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/vm/reference.rs",
-            "sha256": "ff7730ab07ea38442f2f24f40b4ce37d78e859f8ca53912a88b3bdd8e976c608",
+            "sha256": "cbab785245fcaea9452b39b4fa88865ce56e9866b0384a83ffb65eb0b0589740",
             "symbol": "Reference"
           },
           {
             "path": "crates/pkl-runtime/src/vm/reference.rs",
-            "sha256": "ff7730ab07ea38442f2f24f40b4ce37d78e859f8ca53912a88b3bdd8e976c608",
+            "sha256": "cbab785245fcaea9452b39b4fa88865ce56e9866b0384a83ffb65eb0b0589740",
             "symbol": "reference_access"
           },
           {
             "path": "crates/pkl-runtime/src/vm/reference.rs",
-            "sha256": "ff7730ab07ea38442f2f24f40b4ce37d78e859f8ca53912a88b3bdd8e976c608",
+            "sha256": "cbab785245fcaea9452b39b4fa88865ce56e9866b0384a83ffb65eb0b0589740",
             "symbol": "invoke_reference_native"
           },
           {
@@ -129913,10 +132197,10 @@
   "sources": {
     "compatibility/corpus.json": "0e95da22f965dede398f1a1f136703ba913d588aa51c1fb871cd97a11c84a0dd",
     "compatibility/inventory.json": "a9b21752adad9a269a54854c0dd298256757be88ad95c1388e30d7c78e407070",
-    "compatibility/m2-mappings.json": "b2e86863aef5d62d3c9ddd6362193e2f944366ecc4b1b7a4b4d58ecd9ff6bbf1",
+    "compatibility/m2-mappings.json": "c4aa07e4563b0f1ddfe138f297ff114a4231b78a4d2a32af6421e7bc82888bb8",
     "compatibility/regressions.json": "09c064f65730d30f72bf87a45c88d47ecc0844e57966a999dc8e759f083af3da",
     "compatibility/rev1-inventory.json": "6061f202ba3f04565efed3617ac69d3c2fadc54eec1f562b67a4758b3d0a8ab5",
     "references.lock": "278f48fd7697459281aa78a706c9ca57222f36a8c0785d838a6449fbaf26d30b",
-    "tests/fixtures/m2/cases.json": "e099d8c37499b9667fa9a6c88ffe8bf2e168503559a906386500df4c5939033a"
+    "tests/fixtures/m2/cases.json": "b45a64ce91c457cbb16134a016defd5f45539303aae4bafbc90c48653468bf96"
   }
 }

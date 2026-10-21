@@ -132,6 +132,7 @@ fn program(mode: &str, source: &str) -> Arc<Program> {
                 ty: None,
                 type_span: None,
                 constant: false,
+                fixed: false,
             })
             .collect(),
     );

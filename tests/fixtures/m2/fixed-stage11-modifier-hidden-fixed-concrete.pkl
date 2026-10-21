@@ -1,0 +1,2 @@
+class A { hidden fixed p: Int = 1 }
+result = new A {}.p

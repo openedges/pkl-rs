@@ -564,6 +564,7 @@ impl Vm {
                 ty: None,
                 type_span: None,
                 constant: false,
+                fixed: false,
             });
             object.collection_members.push(CollectionMember {
                 key: Value::Int(index as i64),
@@ -610,6 +611,7 @@ impl Vm {
                 ty: None,
                 type_span: None,
                 constant: false,
+                fixed: false,
             });
             object.complete_cache(
                 CacheKey {
@@ -975,6 +977,7 @@ pub(super) fn access_members(
             ty: Some(ty),
             type_span: Some(declaration),
             constant: false,
+            fixed: matches!(name, "isProperty" | "isSubscript"),
         });
     }
     members

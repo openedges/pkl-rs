@@ -821,6 +821,8 @@ impl<'a> Parser<'a> {
                     span,
                 },
             ],
+            override_fixed_span: None,
+            override_const_span: None,
         })
     }
 
@@ -972,6 +974,33 @@ impl<'a> Parser<'a> {
         };
         let end = expr.span.end;
         self.member_path.pop();
+        let header_end = ty.as_ref().map_or(name_span.end, |ty| ty.span.end);
+        let override_modifier_span = |word: &str| {
+            let source = self.lexer.source;
+            let begin = source[start..header_end]
+                .find(word)
+                .map(|offset| start + offset)
+                // String.indexOf returns -1 when repeated flags carry into a
+                // modifier absent from the authored header.
+                .or_else(|| {
+                    source[..start]
+                        .char_indices()
+                        .next_back()
+                        .map(|(index, _)| index)
+                })?;
+            let mut end = begin;
+            let mut units = 0;
+            for character in source[begin..].chars() {
+                if units >= word.len() {
+                    break;
+                }
+                units += character.len_utf16();
+                end += character.len_utf8();
+            }
+            Some(Span::new(begin, end))
+        };
+        let override_fixed_span = override_modifier_span("fixed");
+        let override_const_span = override_modifier_span("const");
         Ok(Member {
             name,
             name_span,
@@ -980,6 +1009,8 @@ impl<'a> Parser<'a> {
             local,
             ty,
             modifiers,
+            override_fixed_span,
+            override_const_span,
         })
     }
 

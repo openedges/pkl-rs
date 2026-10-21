@@ -1,0 +1,5 @@
+open class A { p: Int = 1 }
+class B extends A {
+  fixed /*const*/ fixed p: Int = 2
+}
+result = B

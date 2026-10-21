@@ -21,6 +21,21 @@ pub struct Member {
     pub local: bool,
     pub ty: Option<Type>,
     pub modifiers: Vec<Modifier>,
+    /// Pinned class override diagnostics locate these words in the complete
+    /// header source, including comments and identifiers, rather than tokens.
+    pub override_fixed_span: Option<Span>,
+    pub override_const_span: Option<Span>,
+}
+
+impl Member {
+    /// An authored `property { ... }` carries a synthetic super read at the
+    /// property's name. An explicit amendment expression keeps its own span.
+    pub(crate) fn is_amendment(&self) -> bool {
+        matches!(
+            &self.expr.kind,
+            ExprKind::Object { parent: Some(parent), .. } if parent.span == self.name_span
+        )
+    }
 }
 
 /// Authored object members, retained in source order including generators.

@@ -406,6 +406,7 @@ mod tests {
             ty: None,
             type_span: None,
             constant: false,
+            fixed: false,
         }
     }
 

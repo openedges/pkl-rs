@@ -1,0 +1,2 @@
+class A { fixed p: Int = 1 }
+result = new A { missing = 3; p = 2 }.getClass()

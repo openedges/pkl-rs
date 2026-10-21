@@ -1,0 +1,3 @@
+open class A { n: Int = 2; fixed p: Int = n + 1 }
+class B extends A
+result = new B { n = 8 }.p

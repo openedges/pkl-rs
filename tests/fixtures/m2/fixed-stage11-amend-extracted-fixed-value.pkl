@@ -1,0 +1,3 @@
+class A { fixed p: Dynamic = new { n = 1 } }
+local a = new A {}
+result = (a.p) { n = 2 }.n

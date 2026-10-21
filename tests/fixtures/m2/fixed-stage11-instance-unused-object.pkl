@@ -1,0 +1,3 @@
+class A { fixed p: Int = 1 }
+local bad = new A { p = 2 }
+result = "ok"

@@ -1,0 +1,2 @@
+class A { fixed p: Int = throw("fixed first"); q: Int = throw("later") }
+result = new A {}.p

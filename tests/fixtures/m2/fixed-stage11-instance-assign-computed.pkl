@@ -1,0 +1,2 @@
+class A { fixed p: Int = 1; q: Int = 9 }
+result = new A { local n = 2; p = n }.p

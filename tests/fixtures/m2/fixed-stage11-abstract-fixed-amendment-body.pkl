@@ -1,0 +1,4 @@
+open class Base { fixed value = new Dynamic { x = 1 } }
+abstract class Child extends Base { abstract fixed value { x = 2 } }
+class GrandChild extends Child
+result = new GrandChild {}.value.x

@@ -53,6 +53,9 @@ REQUIRED_SCENARIOS = {
     'm2-reference-paths-and-rendering',
     'm2-reference-equality-and-type-checks',
     'm2-reference-stdlib-diagnostics',
+    'm2-fixed-inheritance-and-virtual-receivers',
+    'm2-fixed-reference-declaration-metadata',
+    'm2-fixed-property-diagnostics',
 }
 
 

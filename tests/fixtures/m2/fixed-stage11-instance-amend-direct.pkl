@@ -1,0 +1,3 @@
+class A { fixed p: Int = 1 }
+local a = new A {}
+result = (a) { p = 2 }.p

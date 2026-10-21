@@ -131,6 +131,9 @@ pub enum Instruction {
         class: Class,
         has_parent: bool,
     },
+    ValidateClassMember {
+        index: usize,
+    },
     MakeInstance {
         template: usize,
     },
@@ -395,6 +398,10 @@ pub struct BlockMetadata {
     pub declaration: Option<Span>,
     pub value_span: Option<Span>,
     pub property_typecheck: Option<usize>,
+    pub(crate) amendment: bool,
+    pub(crate) fixed_span: Option<Span>,
+    pub(crate) const_span: Option<Span>,
+    pub(crate) initialization_error: Option<RuntimeError>,
     pub(crate) let_scopes: Vec<LetScope>,
     pub(crate) constraint_root: Option<Span>,
     pub(crate) inline_constraint: bool,
@@ -1454,43 +1461,147 @@ impl Vm {
         Ok(())
     }
 
-    fn validate_const_overrides(
+    /// Find an inherited declaration without forcing its initializer. Typed object
+    /// validation starts at the class prototype, not an instance's cached value.
+    fn inherited_member(
         &self,
         parent: ObjectId,
-        members: &[Member],
-    ) -> Result<(), RuntimeError> {
-        for member in members.iter().filter(|member| !member.local) {
-            let mut current = Some(parent);
-            let mut visited = BTreeSet::new();
-            while let Some(id) = current {
-                if !visited.insert(id) {
-                    return Err(RuntimeError::new(ErrorKind::Cycle, "cyclic parent chain"));
-                }
-                let object = self.heap.get(id)?;
-                if let Some(inherited) = object.members.iter().find(|inherited| {
-                    !inherited.local
-                        && inherited.method == member.method
-                        && inherited.name == member.name
-                }) {
-                    if inherited.constant && !member.method {
-                        return Err(RuntimeError::new(
-                            ErrorKind::Type,
-                            format!("Cannot assign to const property `{}`.", member.name),
-                        ));
-                    }
-                    if inherited.constant && member.method && !member.constant {
-                        return Err(RuntimeError::new(
-                            ErrorKind::Type,
-                            format!(
-                                "Method `{}` must be const because it overrides a const method.",
-                                member.name
-                            ),
-                        ));
-                    }
-                    break;
-                }
-                current = object.parent;
+        member: &Member,
+    ) -> Result<Option<&Member>, RuntimeError> {
+        let mut current = Some(parent);
+        let mut visited = BTreeSet::new();
+        while let Some(id) = current {
+            if !visited.insert(id) {
+                return Err(RuntimeError::new(ErrorKind::Cycle, "cyclic parent chain"));
             }
+            let object = self.heap.get(id)?;
+            if let Some(inherited) = object.members.iter().find(|inherited| {
+                !inherited.local
+                    && inherited.entry == member.entry
+                    && inherited.method == member.method
+                    && inherited.name == member.name
+            }) {
+                return Ok(Some(inherited));
+            }
+            current = object.parent;
+        }
+        Ok(None)
+    }
+
+    fn validate_class_override(
+        &self,
+        parent: ObjectId,
+        member: &Member,
+    ) -> Result<(), RuntimeError> {
+        if member.local {
+            return Ok(());
+        }
+        let Some(inherited) = self.inherited_member(parent, member)? else {
+            return Ok(());
+        };
+        if member.method {
+            if inherited.constant && !member.constant {
+                return Err(RuntimeError::new(
+                    ErrorKind::Type,
+                    format!(
+                        "Method `{}` must be const because it overrides a const method.",
+                        member.name
+                    ),
+                ));
+            }
+            return Ok(());
+        }
+        let parent_class = self
+            .heap
+            .get(parent)?
+            .class_definition
+            .as_ref()
+            .ok_or_else(|| invalid("missing parent class"))?;
+        let parent_name = if parent_class.id == reference::ACCESS_ID {
+            "pkl.ref#Access".to_owned()
+        } else {
+            format!("{}#{}", self.program.module_name, parent_class.name)
+        };
+        // UnresolvedPropertyNode resolves the type, then checks fixed, then const.
+        for (modifier, actual, expected) in [
+            ("fixed", member.fixed, inherited.fixed),
+            ("const", member.constant, inherited.constant),
+        ] {
+            if actual == expected {
+                continue;
+            }
+            let metadata = self.program.metadata.get(member.code);
+            let mut error = if expected {
+                let mut error =
+                    RuntimeError::new(ErrorKind::Type, format!("Missing modifier `{modifier}`."));
+                error.hint = Some(format!(
+                    "Property `{}` must be declared {modifier}, because it overrides a {modifier} property on parent class `{parent_name}`.",
+                    member.name
+                ));
+                error.span = metadata.and_then(|m| m.declaration);
+                error
+            } else {
+                let mut error = RuntimeError::new(
+                    ErrorKind::Type,
+                    format!(
+                        "Modifier `{modifier}` cannot be applied to property `{}`.",
+                        member.name
+                    ),
+                );
+                error.hint = Some(format!(
+                    "Property `{}` cannot be declared {modifier}, because it overrides a non-{modifier} property on parent class `{parent_name}`.",
+                    member.name
+                ));
+                error.span = metadata.and_then(|m| {
+                    if modifier == "fixed" {
+                        m.fixed_span
+                    } else {
+                        m.const_span
+                    }
+                });
+                error
+            };
+            // Class initialization errors belong to the class's call target.
+            if error.span.is_none() {
+                error.span = metadata.and_then(|m| m.declaration);
+            }
+            return Err(error);
+        }
+        Ok(())
+    }
+
+    fn validate_object_override(
+        &self,
+        parent: ObjectId,
+        member: &Member,
+    ) -> Result<(), RuntimeError> {
+        let Some(inherited) = self.inherited_member(parent, member)? else {
+            return Ok(());
+        };
+        if member.method {
+            if inherited.constant && !member.constant {
+                return Err(RuntimeError::new(
+                    ErrorKind::Type,
+                    format!(
+                        "Method `{}` must be const because it overrides a const method.",
+                        member.name
+                    ),
+                ));
+            }
+        } else if inherited.constant || inherited.fixed {
+            let metadata = self.program.metadata.get(member.code);
+            let action = if metadata.is_some_and(|m| m.amendment) {
+                "amend"
+            } else {
+                "assign to"
+            };
+            let modifier = if inherited.constant { "const" } else { "fixed" };
+            let mut error = RuntimeError::new(
+                ErrorKind::Type,
+                format!("Cannot {action} {modifier} property `{}`.", member.name),
+            );
+            error.span = metadata.and_then(|m| m.declaration);
+            return Err(error);
         }
         Ok(())
     }
@@ -1500,32 +1611,11 @@ impl Vm {
         parent: ObjectId,
         members: &[Member],
     ) -> Result<(), RuntimeError> {
-        self.validate_const_overrides(parent, members)?;
-        if collections::typed_class(&self.heap, parent)?
-            .is_some_and(|c| c.id == reference::ACCESS_ID)
-        {
-            for member in members {
-                if !member.local
-                    && !member.method
-                    && matches!(member.name.as_ref(), "isProperty" | "isSubscript")
-                {
-                    let mut error = RuntimeError::new(
-                        ErrorKind::Type,
-                        format!("Cannot assign to fixed property `{}`.", member.name),
-                    );
-                    error.span = self
-                        .program
-                        .metadata
-                        .get(member.code)
-                        .and_then(|m| m.declaration);
-                    return Err(error);
-                }
-            }
-        }
         let mut ancestor = Some(parent);
         let mut declared = BTreeSet::new();
         let mut property_names = Vec::new();
         let mut class_name = None;
+        let mut class_parent = None;
         let mut visited = BTreeSet::new();
         while let Some(id) = ancestor {
             if !visited.insert(id) {
@@ -1533,6 +1623,9 @@ impl Vm {
             }
             let object = self.heap.get(id)?;
             if class_name.is_none() {
+                if object.class_definition.is_some() {
+                    class_parent = Some(id);
+                }
                 class_name = object
                     .class_definition
                     .as_ref()
@@ -1589,6 +1682,11 @@ impl Vm {
                     });
                     return Err(error);
                 }
+                self.validate_object_override(class_parent.unwrap_or(parent), member)?;
+            }
+        } else {
+            for member in members.iter().filter(|m| !m.local) {
+                self.validate_object_override(parent, member)?;
             }
         }
         Ok(())
@@ -2068,9 +2166,6 @@ impl Vm {
                     .get(template)
                     .ok_or_else(|| invalid("invalid class template"))?
                     .clone();
-                if let Some(parent) = parent {
-                    self.validate_const_overrides(parent, &members)?;
-                }
                 let environment = self
                     .frames
                     .last()
@@ -2085,6 +2180,19 @@ impl Vm {
                     ..Object::default()
                 });
                 self.stack.push(Value::Class(id));
+            }
+            Instruction::ValidateClassMember { index } => {
+                let Some(Value::Class(id)) = self.stack.last() else {
+                    return Err(invalid("missing class initialization target"));
+                };
+                let object = self.heap.get(*id)?;
+                if let Some(parent) = object.parent {
+                    let member = object
+                        .members
+                        .get(index)
+                        .ok_or_else(|| invalid("missing class member"))?;
+                    self.validate_class_override(parent, member)?;
+                }
             }
             Instruction::MakeInstance { template } => {
                 let Value::Class(parent) = self.pop()? else {
@@ -2876,111 +2984,164 @@ fn reference_constrained_type(check: &TypeCheck) -> Option<&TypeCheck> {
 
 impl Compiler<'_> {
     fn object(&mut self, members: &[crate::syntax::Member]) -> Result<usize, RuntimeError> {
+        self.object_template(members, false)
+    }
+
+    fn object_template(
+        &mut self,
+        members: &[crate::syntax::Member],
+        class: bool,
+    ) -> Result<usize, RuntimeError> {
         self.type_scopes.push(members.to_vec());
         let mut result = Vec::new();
         for member in members {
-            let previous_modifiers =
-                std::mem::replace(&mut self.modifiers, member.modifiers.clone());
-            self.validate_modifiers(member)?;
+            let scope_count = self.type_scopes.len();
             let previous_member = self.member.clone();
-            self.member = if previous_member.is_empty() {
-                format!("#{}", member.name)
-            } else {
-                format!("{previous_member}.{}", member.name)
-            };
-            let mut instructions = Code::default();
-            if matches!(member.expr.kind, crate::syntax::ExprKind::Uninitialized) {
-                self.default_property(member, &mut instructions)?;
-            } else if let crate::syntax::ExprKind::Object {
-                parent: None,
-                members,
-            } = &member.expr.kind
-                && let Some(ty) = &member.ty
-                && matches!(self.compile_type(ty)?.unaliased(), TypeCheck::Class { .. })
-            {
-                self.class_expression(
-                    ty,
-                    &mut instructions,
-                    self.type_scopes.len(),
-                    &mut BTreeSet::new(),
-                )?;
-                self.instance_body(members, ty.span, &mut instructions)?;
-            } else if let crate::syntax::ExprKind::Object {
-                parent: None,
-                members,
-            } = &member.expr.kind
-                && let Some(ty) = &member.ty
-                && let TypeCheck::Collection(kind) | TypeCheck::ParameterizedCollection { kind, .. } =
-                    self.compile_type(ty)?.unaliased()
-            {
-                let kind = *kind;
-                let check = self.compile_type(ty)?;
-                let has_default =
-                    matches!(check.unaliased(), TypeCheck::ParameterizedCollection { .. });
-                if has_default {
-                    self.default_type(&check, &mut instructions, ty.span)?;
+            let previous_modifiers = self.modifiers.clone();
+            match self.object_member(member) {
+                Ok(compiled) => result.push(compiled),
+                Err(error) if class => {
+                    // A later declaration's unresolved type must not outrun an earlier
+                    // declaration's override error. Replay failures during class
+                    // initialization, without running any property initializer.
+                    self.type_scopes.truncate(scope_count);
+                    self.member = format!("{previous_member}.{}", member.name);
+                    let mut code = Code::default();
+                    code.push_at(
+                        Instruction::Fail(error.clone()),
+                        error.span.unwrap_or(member.span),
+                    );
+                    let block = self.block(code, Some(member.name_span));
+                    self.program.metadata[block].initialization_error = Some(error);
+                    result.push(Member {
+                        entry: false,
+                        name: Arc::from(member.name.as_str()),
+                        code: block,
+                        local: member.local,
+                        method: matches!(
+                            member.expr.kind,
+                            crate::syntax::ExprKind::Function { method: true, .. }
+                        ),
+                        ty: None,
+                        type_span: None,
+                        constant: false,
+                        fixed: false,
+                    });
+                    self.member = previous_member;
+                    self.modifiers = previous_modifiers;
                 }
-                self.collection_body(members, kind, has_default, &mut instructions)?;
-            } else {
-                self.expression(&member.expr, &mut instructions)?;
+                Err(error) => return Err(error),
             }
-            let property_typecheck = member.ty.as_ref().map(|_| instructions.len());
-            let compiled_type = member
-                .ty
-                .as_ref()
-                .map(|ty| self.compile_type(ty))
-                .transpose()?;
-            if let Some(ty) = &member.ty {
-                instructions.push_at(
-                    Instruction::CheckType(compiled_type.clone().expect("member annotation")),
-                    self.type_source_span(ty),
-                );
-            }
-            instructions.push(Instruction::Return);
-            let code = self.program.blocks.len();
-            let header_span = Span::new(
-                member.span.start,
-                member
-                    .ty
-                    .as_ref()
-                    .map_or(member.name_span.end, |ty| ty.span.end),
-            );
-            self.block(instructions, Some(header_span));
-            self.program.metadata[code].hidden = member
-                .modifiers
-                .iter()
-                .any(|m| m.kind == crate::syntax::ModifierKind::Hidden);
-            self.program.metadata[code].value_span = Some(member.expr.span);
-            self.program.metadata[code].property_typecheck = property_typecheck;
-            self.member = previous_member;
-            self.modifiers = previous_modifiers;
-            result.push(Member {
-                entry: false,
-                name: Arc::from(member.name.as_str()),
-                code,
-                local: crate::syntax::modifier_flags(&member.modifiers)
-                    & crate::syntax::ModifierKind::Local.flag()
-                    != 0,
-                ty: compiled_type,
-                type_span: member.ty.as_ref().map(|ty| self.type_source_span(ty)),
-                constant: crate::syntax::modifier_flags(&member.modifiers)
-                    & crate::syntax::ModifierKind::Const.flag()
-                    != 0
-                    || matches!(
-                        member.expr.kind,
-                        crate::syntax::ExprKind::Class { .. }
-                            | crate::syntax::ExprKind::TypeAlias { .. }
-                    ),
-                method: matches!(
-                    member.expr.kind,
-                    crate::syntax::ExprKind::Function { method: true, .. }
-                ),
-            });
         }
         let index = self.program.objects.len();
         self.program.objects.push(result);
         self.type_scopes.pop();
         Ok(index)
+    }
+
+    fn object_member(&mut self, member: &crate::syntax::Member) -> Result<Member, RuntimeError> {
+        let previous_modifiers = std::mem::replace(&mut self.modifiers, member.modifiers.clone());
+        self.validate_modifiers(member)?;
+        let previous_member = self.member.clone();
+        self.member = if previous_member.is_empty() {
+            format!("#{}", member.name)
+        } else {
+            format!("{previous_member}.{}", member.name)
+        };
+        let mut instructions = Code::default();
+        if matches!(member.expr.kind, crate::syntax::ExprKind::Uninitialized) {
+            self.default_property(member, &mut instructions)?;
+        } else if let crate::syntax::ExprKind::Object {
+            parent: None,
+            members,
+        } = &member.expr.kind
+            && let Some(ty) = &member.ty
+            && matches!(self.compile_type(ty)?.unaliased(), TypeCheck::Class { .. })
+        {
+            self.class_expression(
+                ty,
+                &mut instructions,
+                self.type_scopes.len(),
+                &mut BTreeSet::new(),
+            )?;
+            self.instance_body(members, ty.span, &mut instructions)?;
+        } else if let crate::syntax::ExprKind::Object {
+            parent: None,
+            members,
+        } = &member.expr.kind
+            && let Some(ty) = &member.ty
+            && let TypeCheck::Collection(kind) | TypeCheck::ParameterizedCollection { kind, .. } =
+                self.compile_type(ty)?.unaliased()
+        {
+            let kind = *kind;
+            let check = self.compile_type(ty)?;
+            let has_default =
+                matches!(check.unaliased(), TypeCheck::ParameterizedCollection { .. });
+            if has_default {
+                self.default_type(&check, &mut instructions, ty.span)?;
+            }
+            self.collection_body(members, kind, has_default, &mut instructions)?;
+        } else {
+            self.expression(&member.expr, &mut instructions)?;
+        }
+        let property_typecheck = member.ty.as_ref().map(|_| instructions.len());
+        let compiled_type = member
+            .ty
+            .as_ref()
+            .map(|ty| self.compile_type(ty))
+            .transpose()?;
+        if let Some(ty) = &member.ty {
+            instructions.push_at(
+                Instruction::CheckType(compiled_type.clone().expect("member annotation")),
+                self.type_source_span(ty),
+            );
+        }
+        instructions.push(Instruction::Return);
+        let code = self.program.blocks.len();
+        let header_span = Span::new(
+            member.span.start,
+            member
+                .ty
+                .as_ref()
+                .map_or(member.name_span.end, |ty| ty.span.end),
+        );
+        self.block(instructions, Some(header_span));
+        self.program.metadata[code].hidden = member
+            .modifiers
+            .iter()
+            .any(|m| m.kind == crate::syntax::ModifierKind::Hidden);
+        self.program.metadata[code].value_span = Some(member.expr.span);
+        self.program.metadata[code].property_typecheck = property_typecheck;
+        self.program.metadata[code].amendment = member.is_amendment();
+        self.program.metadata[code].fixed_span = member.override_fixed_span;
+        self.program.metadata[code].const_span = member.override_const_span;
+        self.member = previous_member;
+        self.modifiers = previous_modifiers;
+        Ok(Member {
+            entry: false,
+            name: Arc::from(member.name.as_str()),
+            code,
+            local: crate::syntax::modifier_flags(&member.modifiers)
+                & crate::syntax::ModifierKind::Local.flag()
+                != 0,
+            ty: compiled_type,
+            type_span: member.ty.as_ref().map(|ty| self.type_source_span(ty)),
+            fixed: crate::syntax::modifier_flags(&member.modifiers)
+                & crate::syntax::ModifierKind::Fixed.flag()
+                != 0,
+            constant: crate::syntax::modifier_flags(&member.modifiers)
+                & crate::syntax::ModifierKind::Const.flag()
+                != 0
+                || matches!(
+                    member.expr.kind,
+                    crate::syntax::ExprKind::Class { .. }
+                        | crate::syntax::ExprKind::TypeAlias { .. }
+                ),
+            method: matches!(
+                member.expr.kind,
+                crate::syntax::ExprKind::Function { method: true, .. }
+            ),
+        })
     }
 
     fn block(&mut self, code: Code, declaration: Option<Span>) -> usize {
@@ -2994,6 +3155,10 @@ impl Compiler<'_> {
             declaration,
             value_span: None,
             property_typecheck: None,
+            amendment: false,
+            fixed_span: None,
+            const_span: None,
+            initialization_error: None,
             let_scopes: code.let_scopes,
             constraint_root: None,
             inline_constraint: false,
@@ -3079,7 +3244,7 @@ impl Compiler<'_> {
                     self.member.clone(),
                     self.modifiers.clone(),
                 );
-                let template = match self.object(members) {
+                let template = match self.object_template(members, true) {
                     Ok(template) => template,
                     Err(error) => {
                         self.program.blocks.truncate(checkpoint.0);
@@ -3101,7 +3266,30 @@ impl Compiler<'_> {
                     },
                     superclass.as_ref().map_or(expression.span, |ty| ty.span),
                 );
-                self.initialize_member_types(members, output)?;
+                self.type_scopes.push(members.to_vec());
+                // ClassNode initializes properties in declaration order, then methods.
+                let compiled = self.program.objects[template].clone();
+                for method in [false, true] {
+                    for (index, (member, compiled)) in members.iter().zip(&compiled).enumerate() {
+                        if compiled.method != method {
+                            continue;
+                        }
+                        if let Some(error) = self.program.metadata[compiled.code]
+                            .initialization_error
+                            .clone()
+                        {
+                            output.push_at(
+                                Instruction::Fail(error.clone()),
+                                error.span.unwrap_or(member.span),
+                            );
+                            continue;
+                        }
+                        self.initialize_member_types(std::slice::from_ref(member), output)?;
+                        output
+                            .push_at(Instruction::ValidateClassMember { index }, member.name_span);
+                    }
+                }
+                self.type_scopes.pop();
             }
             ExprKind::TypeAlias { .. } => {
                 // Declarations are lazy. Expand only when a type annotation or constructor uses the alias.
@@ -4472,7 +4660,10 @@ impl Compiler<'_> {
         use crate::syntax::{ExprKind, ModifierKind};
         for modifier in &member.modifiers {
             let supported = match modifier.kind {
-                ModifierKind::Local | ModifierKind::Const | ModifierKind::Hidden => true,
+                ModifierKind::Local
+                | ModifierKind::Const
+                | ModifierKind::Hidden
+                | ModifierKind::Fixed => true,
                 ModifierKind::Abstract => true,
                 ModifierKind::Open => matches!(member.expr.kind, ExprKind::Class { .. }),
                 _ => false,
@@ -4481,14 +4672,6 @@ impl Compiler<'_> {
                 return Err(
                     unsupported_type(&format!("{} modifiers", modifier.kind.spelling()))
                         .at(modifier.span),
-                );
-            }
-        }
-        let flags = crate::syntax::modifier_flags(&member.modifiers);
-        for kind in [ModifierKind::External, ModifierKind::Fixed] {
-            if flags & kind.flag() != 0 {
-                return Err(
-                    unsupported_type(&format!("{} modifiers", kind.spelling())).at(member.span)
                 );
             }
         }

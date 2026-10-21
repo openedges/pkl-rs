@@ -1,0 +1,2 @@
+class A { fixed p: Dynamic = new { n = 1 }; q: Int = 9 }
+result = new A { p { n = 2 } }.p.n

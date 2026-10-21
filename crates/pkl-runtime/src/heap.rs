@@ -34,6 +34,8 @@ pub struct Member {
     pub ty: Option<crate::vm::TypeCheck>,
     pub type_span: Option<crate::source::Span>,
     pub constant: bool,
+    /// A class property may be overridden only by another fixed declaration.
+    pub fixed: bool,
 }
 
 #[derive(Clone, Debug, PartialEq)]

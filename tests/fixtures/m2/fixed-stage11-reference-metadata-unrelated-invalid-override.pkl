@@ -1,0 +1,6 @@
+import "pkl:ref"
+class D extends ref.Domain { function renderReference(r): String = "ok" }
+local d = new D {}
+open class A { fixed bad: String = throw("referent") }
+class B extends A { bad: String = throw("override"); p: String }
+result = ref.Reference(d, B, null) .p is ref.Reference<D, String>

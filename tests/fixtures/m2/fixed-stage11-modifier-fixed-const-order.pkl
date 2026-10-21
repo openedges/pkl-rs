@@ -1,0 +1,2 @@
+class A { fixed const p: Int = 1 }
+result = new A {}.p
