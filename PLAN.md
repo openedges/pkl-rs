@@ -146,7 +146,7 @@ M1의 공통 VM을 확장합니다. VM·heap·호출 의미론은 `gpt-6-astra /
 | M2-02 lexer·표현식·문자열 | 진행 중 | 숫자·연산자 우선순위·조건식·nullable 연산·raw/multiline/interpolation과 0.32 continuation을 구현했습니다. 고정 Java의 UTF-16 식별자 표, CR/CRLF, 지연 AST 검증 순서를 연결했습니다. 전체 유효·오류 문법 코퍼스 연결이 필요합니다. |
 | M2-03 함수·closure·호출 | 진행 중 | 별도 method namespace, 재귀, lexical capture, 매개변수·반환 타입 검사, `\|>` 호출과 함수형 제약을 구현했습니다. Host 중단·재개 중 GC와 함수 타입 metadata·arity 검사를 연결했습니다. 전체 callable·amendment·오류 조건은 후속 항목입니다. |
 | M2-04 객체·클래스·상속 | 진행 중 | 클래스·prototype·상속·super 메서드·const capture·runtime identity와 타입 초기화 순서를 연결했습니다. fixed·const 선언 일치, 객체 대입·amendment 제한과 선언별 오류 순서를 구현했습니다. 선언별 singleton의 선행 게시·실패 뒤 부분 상태·GC 보존을 같은 evaluator 순차 계약에 연결했습니다. annotation·module 초기화, 전체 modifier·상속 순환 및 eager/lazy 규칙은 남아 있습니다. |
-| M2-05 타입·제약·generic | 진행 중 | primitive·nullable·union·클래스 타입과 generic alias·기본 값을 구현했습니다. 같은 VM의 제약 continuation, custom `this`, 상속된 제약의 선언 owner, alias 실행 환경, 복구 가능한 불일치와 실행 오류 구분을 연결했습니다. generic collection의 lazy wrapper·eager key/List 검사·캐시 재사용을 연결했습니다. 별칭 선언 identity와 확장 검사를 분리하고 함수 타입 metadata를 추가했습니다. 완전한 지연 타입 해석·구조 타입·recursive 타입·전체 제약 코퍼스는 남아 있습니다. |
+| M2-05 타입·제약·generic | 진행 중 | primitive·nullable·union·클래스 타입과 generic alias·기본 값을 구현했습니다. 같은 VM의 제약 continuation, custom `this`, 상속된 제약의 선언 owner, alias 실행 환경, 복구 가능한 불일치와 실행 오류 구분을 연결했습니다. generic collection의 lazy wrapper·eager key/List 검사·캐시 재사용을 연결했습니다. 별칭 선언 identity와 확장 검사를 분리하고 함수 타입 metadata를 추가했습니다. 지원하는 타입 구문의 해석 순서와 generic 매개변수 범위를 연결했습니다. 완전한 지연 타입 해석·구조 타입·recursive 타입·전체 제약 코퍼스는 남아 있습니다. |
 | M2-06 collection·generator | 진행 중 | 순서 있는 객체 본문, `Dynamic`·`Listing`·`Mapping`의 element·entry·subscript·amendment, `for`·`when`·spread와 `List` 생성 경로를 연결했습니다. 지연 멤버·반복 변수 capture·source 선행 강제 평가·상속 순서·Host 중단 중 GC를 검증합니다. generic wrapper와 일부 inferred new·클래스 기본 값을 연결했습니다. member predicate의 부모 순회·선택·amendment·지연 본문과 선언 owner 캐시를 추가했습니다. 구조 동등성과 객체 키를 확장하며 전체 해시 충돌·순환 키·typed generator·custom default 규칙은 남아 있습니다. |
 | M2-07 Reference·메타데이터 | 진행 중 | `pkl:ref` import·생성·합성 접근·정규화·렌더링·동등성과 필요한 선언·타입 정보를 연결했습니다. 상속된 hidden fixed 선언 메타데이터를 referent 본문 실행 없이 조회합니다. 전체 builtin metadata·reflection·원래 upstream suite는 남아 있습니다. |
 | M2-08 진단·첫 오류·논리적 스택 | 진행 중 | 공통 uncolored renderer에 제약·union 진단, 선택적인 power assertion 재실행·관찰값 그래프, 값을 강제하지 않는 객체 표시와 UTF-16 길이 제한을 연결했습니다. 재귀 frame 압축·전체 method 진단·전체 오류 선택은 남아 있습니다. |
@@ -248,16 +248,26 @@ Java에서는 annotation 생성 중 `read`와 같은 evaluator의 부분 클래�
 
 구현 커밋의 [원격 CI](https://github.com/luuvish/pkl-rs/actions/runs/39554130320) 작업 6개가 모두 성공했습니다. [독립 검증](reports/m2/ci-stage13-summary.json)은 원본 ZIP 2개의 GitHub 해시와 소스 사본 1,860개(고유 경로 1,575개)를 정확한 구현 커밋에 대조했습니다. 원격에서도 1,378개 식 일치·기존 실패 2개, 변형 관계 48개, 별도 순차 호출 302개와 Node·Chromium 각 49개 시나리오를 확인했습니다. [원본 CI 증거](reports/m2/ci-stage13-evidence.tar.gz)와 두 차례 [오프라인 재검증](reports/m2/ci-stage13-offline-evidence.tar.gz)이 통과했고 최종 패키지 182개 파일은 바뀌지 않았습니다. Artifact 다운로드의 timeout·TLS 실패는 별도 전송 재시도로 해결했으며 원본 ZIP 해시는 GitHub와 일치합니다. 실패한 전송 기록의 해시와 민감한 임시 URL을 제외한 metadata를 보존했고 CI나 언어 코퍼스를 다시 실행하지 않았습니다. 열세 번째 단계의 제한된 구현·검증을 마쳤습니다.
 
-완전한 지연 타입 해석 모델, 미해결 이름과 별칭 의존성이 섞인 오류 순서, generic 매개변수 shadowing 실패는 아직 검증하지 않았습니다. strict Map·Set, annotation, module inheritance/cache, 전체 reflection·원래 upstream 언어 코퍼스도 남아 있습니다. 새로운 개발 예외나 성능·메모리 목표 달성 주장은 추가하지 않았으며 **M2 전체는 계속 진행 중**입니다.
+Stage 13 시점에는 완전한 지연 타입 해석 모델, 미해결 이름과 별칭 의존성이 섞인 오류 순서, generic 매개변수 shadowing 실패가 남아 있었습니다. strict Map·Set, annotation, module inheritance/cache, 전체 reflection·원래 upstream 언어 코퍼스도 남아 있습니다. 새로운 개발 예외나 성능·메모리 목표 달성 주장은 추가하지 않았으며 **M2 전체는 계속 진행 중**입니다.
+
+열네 번째 단계는 지원하는 타입 구문의 해석 순서와 generic 매개변수 범위를 보완했습니다. 공통 VM·타입 해석은 `gpt-6-astra / high`, Java 차등 증거와 수명주기·플랫폼·독립 검토는 각각 `gpt-6.1-sol / high`에 배정했습니다. 구현 커밋 `4b27b7ecf2c6133e363ed228606b289e85c2e627`을 푸시했습니다. 별칭·클래스의 서로 다른 초기화·인자 검사 순서를 authored 위치의 명령으로 실행하며, 앞선 이름 오류 뒤에 나오는 선언은 게시하지 않습니다. bare 매개변수의 이름 가림과 `T<String>`처럼 인자가 붙은 모듈 선언의 해석을 구분하고 중첩 별칭의 호출 위치 범위와 union 진단 이름을 보존합니다. owner 초기화 시점의 signature 오류를 연결했으며 확장된 값 검사 metadata는 여전히 정적으로 컴파일합니다.
+
+[최종 로컬 요약](reports/m2/stage14-final-summary.json)과 [새 Java 전체 비교](reports/m2/language-stage14-final-evidence.tar.gz)는 1,472개 독립 식 중 1,470개 일치·기존 oracle 오류와 `% 0` 차이 2개를 기록합니다. 새 사례 92개는 성공 값 31개·예상 오류 61개이며 모두 전체 원시 바이트가 일치했습니다. 원래 1,380개 정의·입력과 관계 48개를 유지하고 변형 관계 50개가 통과했습니다. [같은 evaluator 순차 비교](reports/m2/class-lifecycle-stage14-final-evidence.tar.gz)는 고유 목록 32개를 두 번씩 실행한 64회·406개 호출이 모두 일치했으며 원래 27개 목록·302개 호출의 정의·순서·원시 결과를 보존합니다.
+
+[필수 검사](reports/m2/validation-stage14-final.json)에서는 Rust 303개·Python 194개, formatting·Clippy·Wasm·참조 pin·목록 freshness가 통과했습니다. 기존 ignored probe 1개는 일반 통과 개수에서 제외합니다. 새 Rust 검사는 핵심 8개·수명주기 7개이며 실제 Node·Chromium은 각 52개 시나리오가 통과했습니다. 공통 primitive 6,078개 중 Java와 일치하는 6,076개와 기존 regex 실패 2개를 구분합니다. 언어 수집은 소스 스냅샷 1,567개를 보존하며 [소스 대조 증거](reports/m2/source-stage14-final-evidence.tar.gz)는 최종 7개 suite의 사본 1,961개·고유 경로 1,677개를 정확한 구현 커밋과 대조합니다.
+
+[탐색 증거](reports/m2/exploration-stage14-evidence.tar.gz)는 98개 관찰 중 96개 일치·미선택 compound 출력 adapter 한계 2개, 수정 전 오류와 최종 focused 92개 일치를 보존합니다. 이전 Reference 191개는 173개 일치·18개 불일치로 유지됩니다. [대체 전 증거](reports/m2/superseded-stage14-evidence.tar.gz)에는 owner 초기화로 옮겨진 오류에 대해 컴파일 실패를 기대하던 기존 검사 실패와 명시적으로 중단한 첫 수집을 남겼습니다. 검사 시점과 오류 내용을 수정한 후 변경된 소스가 포함된 suite를 새 디렉터리에서 재수집했습니다. 부분 연결표 15개, 요구사항 474개, accounting row 2,472개(ready 1,472·미구현 960·미연결 40), 엄격한 전체 gate의 실패 이유 1,950개는 완료율이 아닙니다.
+
+[구현 CI](https://github.com/luuvish/pkl-rs/actions/runs/39561429923)는 GitHub 계정의 결제 실패 또는 사용 한도 문제로 작업 6개가 모두 시작되지 않았습니다. [차단 요약](reports/m2/ci-stage14-summary.json)과 [원시 증거](reports/m2/ci-stage14-blocked-evidence.tar.gz)에 원인·실행하지 못한 검사·artifact 0개를 기록했습니다. 원격 테스트, 원본 ZIP 해시·소스 대조, 두 차례 오프라인 재검증은 미실행입니다. 계정 설정 해결 후 정확한 구현 커밋의 CI를 재실행해야 하므로 **Stage 14 로컬 구현·검증은 완료했지만 원격 마감은 보류이며 M2 전체는 진행 중**입니다. 직전 보고서 커밋의 별도 CI 6개 작업은 성공했습니다.
 
 다음 구현은 남은 탐색 불일치의 의존성을 기준으로 진행합니다.
 
-1. TypeAlias·함수 타입의 선택 구현을 바탕으로 완전한 지연 타입 해석, 미해결 이름과 별칭 의존성이 섞인 오류 순서, generic 매개변수 shadowing 실패와 나머지 타입·제약을 확장합니다.
+1. 재귀 제약 안의 타입 사용이 정적 확장을 무한 반복하지 않도록 실제 지연 해석 경계를 우선 조사·구현합니다. 사용하지 않거나 단락 평가로 건너뛴 제약의 비실행, 실제 진입 때의 순환·진단·GC를 Java와 검증합니다. `Class<T>`의 인자 개수 검사 후 T를 해석하지 않는 erased-argument 규칙을 함께 연결하고 나머지 타입·제약은 계속 추적합니다.
 2. 엄격한 Map·Set의 값 모델·타입·동등성·해시·강제 평가를 공통 VM·GC·Host 수명주기에 구현합니다. 기존 Mapping 검증이 이를 대체하지 않습니다. Duration metadata와 List/Listing의 `map`·`join`은 필요한 M3 의존성으로 함께 추적합니다.
 3. annotation과 남은 클래스 초기화·modifier·재귀 타입·reflection 규칙을 확장합니다. 실제 source의 초기화 중 Host 중단·재진입, 미게시 local 선언의 Java 내부 오류와 순환 계층의 비종료 관찰은 원래 실패·미실행 상태를 보존하며 별도로 검증합니다.
 4. 모듈 클래스 상속·선언 출처·ModuleOutput override를 M2 의미론에 연결하고 실제 모듈 로딩·URI/source cache identity·Host는 M4 경로와 통합합니다. primitive missing-method 진단도 실제 멤버 목록을 사용하도록 보완합니다.
 
-다음 기능도 한 evaluator의 상태·오류 순서·GC root·Host 재진입·terminal 해제를 함께 검증해야 합니다. 현재 1,380개 독립 식과 48개 변형 관계, 별도 클래스·별칭 순차 계약 302개 호출을 회귀 기준으로 유지하고 Java 원시 결과를 Rust 출력으로 대체하지 않습니다. 순차 계약의 성공은 전체 클래스·module API나 M2 완료, 메모리 목표 달성을 뜻하지 않습니다.
+다음 기능도 한 evaluator의 상태·오류 순서·GC root·Host 재진입·terminal 해제를 함께 검증해야 합니다. 현재 1,472개 독립 식과 50개 변형 관계, 별도 클래스·별칭 순차 계약 406개 호출을 회귀 기준으로 유지하고 Java 원시 결과를 Rust 출력으로 대체하지 않습니다. 순차 계약의 성공은 전체 클래스·module API나 M2 완료, 메모리 목표 달성을 뜻하지 않습니다.
 
 [원본 API 사례](external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/api/reference.pkl)는 `fixed` 이후에도 Map·`map`/`join`·`pkl:math`·renderer converter를 요구하며, [원본 basic 사례](external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/basic/reference.pkl)는 module amendment·`pkl:test`·PCF 출력에 의존합니다. 이 M3·M4 연결을 별도 작업으로 추적하며 원래 snippet/API 실행 조건을 유지합니다. Stage 13의 Reference 탐색 재비교에서는 이전 불일치 4개가 해결되어 191개 중 173개 일치·18개 불일치가 남았습니다. 남은 불일치를 삭제하거나 개발 예외로 바꾸지 않고 단계별로 재검증합니다. 이는 Stage 12에서 수정한 순차 클래스 진단 불일치 22개와 별도 집계입니다.
 
@@ -344,6 +354,3 @@ cargo check -p pkl-runtime --target wasm32-unknown-unknown --locked
 `cargo xtask verify`는 참조 소스 고정을 확인합니다. 위 명령은 Java 차등 검증이나 제품 성능 측정을 수행하지 않습니다. 현재 Java 기록·재비교·초기 성능 측정 명령과 실행 범위는 [TESTING.md](TESTING.md)에 정리되어 있습니다. Rust 평가기 구현 후 실제 Java/Rust 비교를 연결합니다. 단순 문서 수정에는 링크·내용·형식 확인 등 변경에 맞는 검증을 수행합니다.
 
 단계별 로드맵과 상세 실행 계획은 이 문서에서 함께 관리합니다. 증거가 생길 때 단계 상태와 다음 작업을 갱신하고, 단계의 범위나 완료 기준이 바뀌면 요약 표와 해당 상세 절을 함께 수정합니다. 설계 결정은 아키텍처에, 검증 계약 변경은 TESTING.md에 반영합니다. 기준 버전·필수 기능·성능 목표를 바꾸는 경우에는 INTENT.md까지 함께 갱신하고 목표 변경 이유를 명시합니다. 실패를 없애기 위한 범위 축소는 일반 구현 진척으로 기록하지 않습니다.
-
-
-열네 번째 단계는 타입 해석의 첫 오류·선언 게시 순서와 generic 매개변수의 이름 가림을 보완합니다. 공통 VM·타입 해석은 `gpt-6-astra / high`, Java 차등 증거와 수명주기·플랫폼·독립 검토는 각각 `gpt-6.1-sol / high`에 배정했습니다. 타입 구문에서 순서 있는 해석 명령을 생성하고 확장된 값 검사와 분리합니다. 클래스 초기화·인자 개수 검사와 별칭 인자 해석의 서로 다른 순서, 선언과 호출 위치의 매개변수 범위, owner 초기화 시점의 signature 오류를 검증합니다. 전체 회귀 검사·새 Java 수집·실제 플랫폼·원격 CI 및 증거 검증을 완료한 뒤 결과를 기록합니다. 완전한 지연 타입 해석, annotation 구문, 일반 모듈 로딩·캐시, reflection과 나머지 M2 종료 조건은 유지합니다.

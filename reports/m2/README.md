@@ -16,8 +16,94 @@ standard-library source frames. Stage 11 adds fixed declarations, ordered
 override checks, and inherited modifier metadata. Stage 12 adds evaluator-owned
 class publication, retained partial classes, and persistent sequence comparisons.
 Stage 13 adds type-alias identity and publication, function metadata and arity checks,
-and exported arrow metadata equality.
+and exported arrow metadata equality. Stage 14 adds ordered type resolution, generic
+parameter scopes, and owner signature initialization.
 These checkpoints do not complete the language milestone.
+
+## Stage 14 local checkpoint; remote CI blocked
+
+Implementation `4b27b7ecf2c6133e363ed228606b289e85c2e627` is committed and pushed.
+Runtime and type-resolution work used `gpt-6-astra / high`; Java evidence,
+lifecycle, platform, and independent review work used `gpt-6.1-sol / high`.
+
+The shared compiler now emits ordered resolution plans separately from expanded
+value checks. Missing names stop later declaration publication. Class initialization
+and argument-count checks precede argument resolution; alias arguments precede
+unfinished-alias and argument-count checks. Bare generic parameters shadow module
+and builtin names, while parameterized names such as `T<String>` resolve the named
+declaration. Nested substitutions retain caller scope, and owner initialization
+preserves signature error order and authored diagnostic spans. Expanded metadata
+remains statically compiled; this is a bounded implementation of ordered resolution.
+
+The [final local summary](stage14-final-summary.json) and [fresh Java
+capture](language-stage14-final-evidence.tar.gz) record **1,470 matches among 1,472
+independent cases**, retaining `error-cycle` as an oracle error and
+`error-remainder-zero` as a mismatch. All **50 metamorphic relations pass**.
+The 92 additions comprise 31 successful values and 61 expected errors, all matching
+complete Java status/stdout/stderr bytes. The original 1,380 definitions, input bytes,
+and 48 relations remain unchanged. The [prior replay](regressions-stage14-final-evidence.tar.gz)
+uses retained Stage 13 Java bytes and preserves its 1,378 matches and two failures;
+it is separate from the fresh full acquisition.
+
+The [persistent evaluator capture](class-lifecycle-stage14-final-evidence.tar.gz)
+records **32 sequences, 64 fresh-evaluator executions, and 406 matching raw calls**.
+Five additions contribute 104 calls; the original 27 sequences and 302 raw call
+outcomes remain unchanged. Error order, generic shadowing, nested arguments, and
+unfinished alias arguments are observed across repeated calls in one evaluator.
+Native GC/Host assertions remain a separate architectural contract.
+
+[Required checks](validation-stage14-final.json) pass: **303 Rust tests, 194 Python
+tests**, formatting, workspace Clippy, reference pins, Wasm build, and inventory
+freshness. One existing ignored probe is excluded from the ordinary passing count.
+The 15 new Rust tests comprise eight core regressions and seven lifecycle tests.
+Actual [Node and Chromium](platforms-stage14-final-evidence.tar.gz) each pass **52
+scenarios**. All 6,078 shared-engine primitives agree; 6,076 match Java on each
+platform and the two known regex differences remain failures. Existing M1 captures
+retain 15 frontend matches, six runtime values and two complete diagnostics matching,
+one cycle diagnostic mismatch, two lifecycle protocol matches, and four complete
+lifecycle diagnostic mismatches.
+
+The language acquisition retains **1,567 source snapshots**. The [exact-commit
+source proof](source-stage14-final-evidence.tar.gz) binds **1,961 captured copies
+spanning 1,677 unique paths** across seven final suites to implementation bytes,
+including pinned submodule blobs. Source and executable identities remain stable.
+The [superseded evidence](superseded-stage14-evidence.tar.gz) preserves the first
+workspace failure: historical tests expected compilation errors that now occur at
+owner initialization. The corrected tests assert both phase and exact messages.
+An in-flight language acquisition was explicitly stopped and restarted; pre-correction
+captures were retained. Unaffected frontend/runtime/platform source snapshots remain
+valid, and changed-source suites were reacquired in fresh directories.
+
+The [exploration archive](exploration-stage14-evidence.tar.gz) retains 11,722 files,
+including pre-fix failures and successful pre-correction captures. The final discovery
+replay has 96 matches among 98 observations; two compound-output adapter limitations
+remain unselected. Final focused additions match 92/92. The earlier 191 Reference
+observations retain 173 matches and 18 mismatches. Exploratory caller-supplied artifact
+labels remain unchanged; separate hashes bind final replays to the stable recorded
+release artifact. These observations do not replace original upstream suite contracts.
+
+The [gates](gates-stage14-final-evidence.tar.gz) distinguish passing integrity and
+development checks from failing strict selected/full gates. Fifteen reviewed mappings
+remain partial. Inventory accounting retains 474 requirements and 2,472 overlapping
+rows: 1,472 ready, 960 unimplemented, and 40 unmapped. The strict full gate still has
+**1,950 failure reasons**. These are accounting counts, not feature completion rates.
+No development exception was added.
+
+[Implementation CI](https://github.com/luuvish/pkl-rs/actions/runs/39561429923)
+was **blocked before any job started**. GitHub reported failed account payments or
+a spending limit requiring adjustment. The [CI summary](ci-stage14-summary.json)
+and [raw blocked-run evidence](ci-stage14-blocked-evidence.tar.gz) retain all six
+not-started jobs and their annotations; zero artifacts were produced. No CI tests,
+original ZIP digest checks, remote source checks, or offline artifact replays passed
+or executed. Local success does not replace these outstanding remote checks. The
+account setting must be corrected before rerunning this exact implementation commit.
+The preceding report-only commit's separate CI completed all six jobs successfully.
+
+**M2 remains in progress, and Stage 14 remote closeout is pending.** Recursive
+constraint/type resolution, erased `Class<T>` arguments, strict Map/Set, annotation
+syntax, general module loading/cache behavior, full reflection, and the remaining
+upstream corpus still require work. Full language/API compatibility and speed/memory
+parity are not established by this checkpoint.
 
 ## Stage 13 checkpoint
 

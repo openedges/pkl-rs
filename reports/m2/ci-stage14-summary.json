@@ -1,0 +1,276 @@
+{
+  "all_six_jobs_succeeded": false,
+  "artifact_count": 0,
+  "block_reason": "GitHub account billing/payment or spending limit prevented every job from starting.",
+  "captured_binaries_executed": false,
+  "ci_source_snapshot_checks_executed": false,
+  "ci_test_passes": 0,
+  "ci_zip_digest_checks_executed": false,
+  "commit": "4b27b7ecf2c6133e363ed228606b289e85c2e627",
+  "conclusion": "failure",
+  "evidence_archive": {
+    "bytes": 38476,
+    "inventory_verified": true,
+    "path": "reports/m2/ci-stage14-blocked-evidence.tar.gz",
+    "sha256": "dcef2033a2b906719acfd952594ca912f8ad020902cb8468a65f36f14daf0194"
+  },
+  "evidence_scope": "Failed CI startup metadata only; no successful CI evidence, artifact download, source snapshot binding, or offline replay.",
+  "job_count": 6,
+  "jobs": [
+    {
+      "conclusion": "failure",
+      "failure_annotation": "The job was not started because recent account payments have failed or your spending limit needs to be increased. Please check the 'Billing & plans' section in your settings",
+      "id": 119093374788,
+      "name": "M1 architecture experiments (known gaps recorded)",
+      "steps": []
+    },
+    {
+      "conclusion": "failure",
+      "failure_annotation": "The job was not started because recent account payments have failed or your spending limit needs to be increased. Please check the 'Billing & plans' section in your settings",
+      "id": 119093375040,
+      "name": "Workspace (windows-latest)",
+      "steps": []
+    },
+    {
+      "conclusion": "failure",
+      "failure_annotation": "The job was not started because recent account payments have failed or your spending limit needs to be increased. Please check the 'Billing & plans' section in your settings",
+      "id": 119093375104,
+      "name": "Compatibility tooling and Java replay",
+      "steps": []
+    },
+    {
+      "conclusion": "failure",
+      "failure_annotation": "The job was not started because recent account payments have failed or your spending limit needs to be increased. Please check the 'Billing & plans' section in your settings",
+      "id": 119093375110,
+      "name": "Workspace (ubuntu-latest)",
+      "steps": []
+    },
+    {
+      "conclusion": "failure",
+      "failure_annotation": "The job was not started because recent account payments have failed or your spending limit needs to be increased. Please check the 'Billing & plans' section in your settings",
+      "id": 119093375141,
+      "name": "M2 language development (full gate incomplete)",
+      "steps": []
+    },
+    {
+      "conclusion": "failure",
+      "failure_annotation": "The job was not started because recent account payments have failed or your spending limit needs to be increased. Please check the 'Billing & plans' section in your settings",
+      "id": 119093375398,
+      "name": "Workspace (macos-latest)",
+      "steps": []
+    }
+  ],
+  "local_helper_preparation_tests": {
+    "capture_directory": "target/m2/ci-stage14/acquisition-self-test-02",
+    "passed": 9,
+    "scope": "Local target-only verifier/acquisition preparation; not CI test execution."
+  },
+  "offline_checks_executed": 0,
+  "required_action": "Correct GitHub account Billing & plans payment/spending limit state before rerunning this exact-commit workflow.",
+  "rerun_requested": false,
+  "retained_files": {
+    "target/m2/ci-stage14-acquire-process/process.json": {
+      "bytes": 704,
+      "sha256": "2da4abe0cb8ce39da1b207a0315ad6e60b19d323c66f7202967ac1c9ad7e532e"
+    },
+    "target/m2/ci-stage14-acquire-process/stderr.bin": {
+      "bytes": 39,
+      "sha256": "26e09c8fdc67eb7414be3b47cbeeef3b2c8857d8f85e26fff5ea65ffeb256e18"
+    },
+    "target/m2/ci-stage14-acquire-process/stdout.bin": {
+      "bytes": 70,
+      "sha256": "39fcfdfe43313b9b9fa0efd185eaec154785c7b030decc363d12589045016f2a"
+    },
+    "target/m2/ci-stage14-acquired/acquisition.json": {
+      "bytes": 359,
+      "sha256": "0b92eeb69249ce2be967ddaded015288f5ab893de9687445722ecaec76cbe8a2"
+    },
+    "target/m2/ci-stage14-acquired/poll-000-artifacts.json": {
+      "bytes": 32,
+      "sha256": "244563f989470892c537c9a4622920af0d228ee4528f7d00c64a06d6cd95856c"
+    },
+    "target/m2/ci-stage14-acquired/poll-000-artifacts.process.json": {
+      "bytes": 338,
+      "sha256": "ead3ea3ce22dfaf8ef20fd9940e3c1fca3184359ec6d0da9c9cbeb1ee5eca057"
+    },
+    "target/m2/ci-stage14-acquired/poll-000-jobs.json": {
+      "bytes": 5036,
+      "sha256": "1460e2e71914f9f8f8dbc8a294975edd2d9f963c81c5e770b0017c8f67de79f0"
+    },
+    "target/m2/ci-stage14-acquired/poll-000-jobs.process.json": {
+      "bytes": 334,
+      "sha256": "36917906c2a993e2a31a69ce814b002c40a98f47f7acd201b84ab89af7562d20"
+    },
+    "target/m2/ci-stage14-acquired/poll-000-run.json": {
+      "bytes": 11514,
+      "sha256": "1de983488999fe19f12bcc0d2e00357ca25ed49da4f5639703460e408dd85b64"
+    },
+    "target/m2/ci-stage14-acquired/poll-000-run.process.json": {
+      "bytes": 315,
+      "sha256": "813f29d12430cfb342185bf9dd6d8a4945dcc09351520428dde0ed91deabf3ba"
+    },
+    "target/m2/ci-stage14-discovery/process.json": {
+      "bytes": 704,
+      "sha256": "0fca64d1e410a699200678a9bdc562ea57bfa1a2f43aa184c544075c7738c13c"
+    },
+    "target/m2/ci-stage14-discovery/stderr.bin": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/ci-stage14-discovery/stdout.bin": {
+      "bytes": 298,
+      "sha256": "f7261e974a5dc3ba332c4ea18b49cadaaabd3032f34968c9823aabae4aff26f1"
+    },
+    "target/m2/ci-stage14-failure-diagnosis/119093374788-annotations.process.json": {
+      "bytes": 326,
+      "sha256": "85be51ce9ba02b5027394eb743f0c1e4bd42ac69e93510ff745998d82e53c360"
+    },
+    "target/m2/ci-stage14-failure-diagnosis/119093374788-annotations.stderr.bin": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/ci-stage14-failure-diagnosis/119093374788-annotations.stdout.bin": {
+      "bytes": 431,
+      "sha256": "d816b128e7e76299b5eb994c9046ac218e57f2abc268f91ed2037df8a38d9d7e"
+    },
+    "target/m2/ci-stage14-failure-diagnosis/119093374788-check.process.json": {
+      "bytes": 314,
+      "sha256": "2228e5b20ed50313b65c235c0c68536f5758c72cdb2349ff98da28db85288556"
+    },
+    "target/m2/ci-stage14-failure-diagnosis/119093374788-check.stderr.bin": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/ci-stage14-failure-diagnosis/119093374788-check.stdout.bin": {
+      "bytes": 3075,
+      "sha256": "7c16567aeea885a269c1c28130453ff6ddcee03ff9da8dd8217688e129871d10"
+    },
+    "target/m2/ci-stage14-failure-diagnosis/119093375040-annotations.process.json": {
+      "bytes": 326,
+      "sha256": "147804809cc378749ae70f6698490d01a67e86bf140f9b821a2c81cc52e27576"
+    },
+    "target/m2/ci-stage14-failure-diagnosis/119093375040-annotations.stderr.bin": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/ci-stage14-failure-diagnosis/119093375040-annotations.stdout.bin": {
+      "bytes": 431,
+      "sha256": "d816b128e7e76299b5eb994c9046ac218e57f2abc268f91ed2037df8a38d9d7e"
+    },
+    "target/m2/ci-stage14-failure-diagnosis/119093375040-check.process.json": {
+      "bytes": 314,
+      "sha256": "4f38d571fa4ec9362e5603bbddfdb5e6dca63f05a5a238a4a4303383430f43a0"
+    },
+    "target/m2/ci-stage14-failure-diagnosis/119093375040-check.stderr.bin": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/ci-stage14-failure-diagnosis/119093375040-check.stdout.bin": {
+      "bytes": 3052,
+      "sha256": "57c844a3ccae0cf641664af547a44e76709ba606e5c686c562e6fa4274277735"
+    },
+    "target/m2/ci-stage14-failure-diagnosis/119093375104-annotations.process.json": {
+      "bytes": 326,
+      "sha256": "f068fbe00a987ad304775a1418bcbd341d4ab4fdb30814c7cfc724b7aa165c6a"
+    },
+    "target/m2/ci-stage14-failure-diagnosis/119093375104-annotations.stderr.bin": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/ci-stage14-failure-diagnosis/119093375104-annotations.stdout.bin": {
+      "bytes": 431,
+      "sha256": "d816b128e7e76299b5eb994c9046ac218e57f2abc268f91ed2037df8a38d9d7e"
+    },
+    "target/m2/ci-stage14-failure-diagnosis/119093375104-check.process.json": {
+      "bytes": 314,
+      "sha256": "b0cba14b6a937a83527c1d600a6d9bce4ccc6426e39cd87e1d5331afcd8260fe"
+    },
+    "target/m2/ci-stage14-failure-diagnosis/119093375104-check.stderr.bin": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/ci-stage14-failure-diagnosis/119093375104-check.stdout.bin": {
+      "bytes": 3063,
+      "sha256": "77ee5f71072a2a4169b7687f24708c3311999cc0acf6455afb4e13e78fc5aa47"
+    },
+    "target/m2/ci-stage14-failure-diagnosis/119093375110-annotations.process.json": {
+      "bytes": 326,
+      "sha256": "de1471a3db19174fdc60c26c80d28f7e7e53da978604a1756f684141db427224"
+    },
+    "target/m2/ci-stage14-failure-diagnosis/119093375110-annotations.stderr.bin": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/ci-stage14-failure-diagnosis/119093375110-annotations.stdout.bin": {
+      "bytes": 848,
+      "sha256": "5d2278fee453aee8d198ab6d0ad45c35e12bedf46848e5f4548b93094ca36778"
+    },
+    "target/m2/ci-stage14-failure-diagnosis/119093375110-check.process.json": {
+      "bytes": 314,
+      "sha256": "aa97375d11497cba182982eca9cf550527b202c2b3b0070fdc3bbee4bd2f0763"
+    },
+    "target/m2/ci-stage14-failure-diagnosis/119093375110-check.stderr.bin": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/ci-stage14-failure-diagnosis/119093375110-check.stdout.bin": {
+      "bytes": 3051,
+      "sha256": "21178341f0245ceeba4002d1eeedfbb73088d460922ad82554355bb256c638dc"
+    },
+    "target/m2/ci-stage14-failure-diagnosis/119093375141-annotations.process.json": {
+      "bytes": 326,
+      "sha256": "a20e7b04cf95b154a5fa1639c7a1aa3d18c0977a3b6d597f5e3e4874034177e7"
+    },
+    "target/m2/ci-stage14-failure-diagnosis/119093375141-annotations.stderr.bin": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/ci-stage14-failure-diagnosis/119093375141-annotations.stdout.bin": {
+      "bytes": 431,
+      "sha256": "d816b128e7e76299b5eb994c9046ac218e57f2abc268f91ed2037df8a38d9d7e"
+    },
+    "target/m2/ci-stage14-failure-diagnosis/119093375141-check.process.json": {
+      "bytes": 314,
+      "sha256": "2f6ac38730960aed8d7428b09d12468f759331f24ed9d454eea2a04256aa0bb2"
+    },
+    "target/m2/ci-stage14-failure-diagnosis/119093375141-check.stderr.bin": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/ci-stage14-failure-diagnosis/119093375141-check.stdout.bin": {
+      "bytes": 3072,
+      "sha256": "9ef940ca6583c9dcfa165be5aa82c084bd8fe962ccd89f22029024ce499b208f"
+    },
+    "target/m2/ci-stage14-failure-diagnosis/119093375398-annotations.process.json": {
+      "bytes": 326,
+      "sha256": "78cd3e223c8de7864fe0c0a8c43c7180f8e5f590d44c059d66b1c05f2b698d3b"
+    },
+    "target/m2/ci-stage14-failure-diagnosis/119093375398-annotations.stderr.bin": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/ci-stage14-failure-diagnosis/119093375398-annotations.stdout.bin": {
+      "bytes": 785,
+      "sha256": "ed5e35955150df41a6e8cf02670fa86594a1412497fffc37ce3afcfae4261de9"
+    },
+    "target/m2/ci-stage14-failure-diagnosis/119093375398-check.process.json": {
+      "bytes": 314,
+      "sha256": "779f8585edb5aa8c5e59192c0853298173ec1980fae6e0a1c4e08809e8d68fdd"
+    },
+    "target/m2/ci-stage14-failure-diagnosis/119093375398-check.stderr.bin": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target/m2/ci-stage14-failure-diagnosis/119093375398-check.stdout.bin": {
+      "bytes": 3050,
+      "sha256": "9d9c91e903a9d50d5278880b4fc6d79381dd2819315c4ea342da4509f4f543cd"
+    }
+  },
+  "run_attempt": 1,
+  "run_id": 39561429923,
+  "run_url": "https://github.com/luuvish/pkl-rs/actions/runs/39561429923",
+  "schema_version": 1,
+  "scope": "Exact-commit CI failed before any runner started; not source verification results or successful CI artifact evidence.",
+  "started_job_count": 0,
+  "status": "blocked"
+}
