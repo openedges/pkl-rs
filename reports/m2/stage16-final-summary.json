@@ -1,0 +1,823 @@
+{
+  "archives": {
+    "class-lifecycle": {
+      "bytes": 1253219,
+      "files_including_inventory": 4629,
+      "inventory_verified": true,
+      "path": "reports/m2/class-lifecycle-stage16-final-evidence.tar.gz",
+      "sha256": "c9c1733ced8cb729b1787be24d0ca8489d8166cc6df6fc0ede50527d87ada401"
+    },
+    "gates": {
+      "bytes": 938,
+      "files_including_inventory": 10,
+      "inventory_verified": true,
+      "path": "reports/m2/gates-stage16-final-evidence.tar.gz",
+      "sha256": "b5f662d42c38aa8fbb3963b82e7665ad0b8cb24a312e3100cc70955aba9e4765"
+    },
+    "language": {
+      "bytes": 3792906,
+      "files_including_inventory": 14492,
+      "inventory_verified": true,
+      "path": "reports/m2/language-stage16-final-evidence.tar.gz",
+      "sha256": "14bf85b22214e35ee3121259c9c16de9789d68ec2e3dec172a8be2c6602c05ea"
+    },
+    "platforms": {
+      "bytes": 3322990,
+      "files_including_inventory": 105,
+      "inventory_verified": true,
+      "path": "reports/m2/platforms-stage16-final-evidence.tar.gz",
+      "sha256": "a82e99833f70a204251015a4afcf73ab1f6082ad428bdfb04ef28fe4edcfa06e"
+    },
+    "regressions": {
+      "bytes": 5470160,
+      "files_including_inventory": 8221,
+      "inventory_verified": true,
+      "path": "reports/m2/regressions-stage16-final-evidence.tar.gz",
+      "sha256": "833201df53f9f5ec3c488bf8e63aaccc87e957e83b92541fc12ae66df83ed364"
+    },
+    "source": {
+      "bytes": 4971900,
+      "files_including_inventory": 1895,
+      "inventory_verified": true,
+      "path": "reports/m2/source-stage16-final-evidence.tar.gz",
+      "sha256": "febd89a8687d3e815172d965f46610227bc38239e6cdaa5df91a6f9c7657567c"
+    },
+    "validation": {
+      "bytes": 16404,
+      "files_including_inventory": 16,
+      "inventory_verified": true,
+      "path": "reports/m2/validation-stage16-final-evidence.tar.gz",
+      "sha256": "ce104111295f2d63a40aa71bef8a837562ae7040353d536fde9c382eb720aead"
+    }
+  },
+  "captured_binaries_executed_by_packaging": false,
+  "class_lifecycle": {
+    "added_call_comparisons": 48,
+    "added_sequences": 2,
+    "call_comparisons": 502,
+    "compatibility_complete": false,
+    "evidence": {
+      "bytes": 1253219,
+      "files_including_inventory": 4629,
+      "inventory_verified": true,
+      "path": "reports/m2/class-lifecycle-stage16-final-evidence.tar.gz",
+      "sha256": "c9c1733ced8cb729b1787be24d0ca8489d8166cc6df6fc0ede50527d87ada401"
+    },
+    "original_call_comparisons": 454,
+    "original_definitions_order_and_raw_bytes_preserved": true,
+    "original_sequences": 34,
+    "passing_calls": 502,
+    "sequence_executions": 72,
+    "unexecuted_groups": [
+      {
+        "group": "P09",
+        "reason": "Java-only module-cache probe stage12-java-module-identity-01 observes same URI/source identity retained, changed source at same URI ignored (marker remains1), distinct URI/evaluator identity separated. Rust multi-source module-cache parity is unimplemented; same-module identity is compared."
+      },
+      {
+        "group": "P10",
+        "reason": "Java observable sequence comparisons do not expose heap counts; Rust architectural GC coverage is separate."
+      },
+      {
+        "group": "P11",
+        "reason": "Real Java class-initialization read observed via @Deprecated { ...(read(\"life:class\")) } in stage12-java-host-path-01; Rust annotation frontend unsupported, so actual Host-in-class cross-language reentry remains unexecuted. Internal scheduler tests are separate."
+      },
+      {
+        "group": "P12",
+        "reason": "Terminal context/token/heap cleanup is covered by separate Rust lifecycle tests, not Java raw-byte equivalence."
+      },
+      {
+        "group": "P05",
+        "reason": "Indirect cyclic hierarchy property traversal new A {}.missing timed out after successful class identity calls in stage12-java-observations-03; traversal is observed oracle-timeout, not a compatibility pass."
+      }
+    ],
+    "unique_sequences": 36
+  },
+  "exploration": {
+    "archive": {
+      "bytes": 24977444,
+      "path": "reports/m2/exploration-stage16-evidence.tar.gz",
+      "sha256": "197de42db32f6be50a4c74a605ba5cc734a060a3240b2bf6e82190ad67f6b673"
+    },
+    "archive_inventory_verified_by_sealer": true,
+    "original_failed_sequences_and_all_acquisition_iterations_retained": true,
+    "summary": {
+      "class_lifecycle": {
+        "comparisons": 502,
+        "path": "target/m2/class-lifecycle-stage16-final",
+        "repetitions": 2,
+        "sequence_executions": 72,
+        "stage16_new_comparisons": 48,
+        "unexecuted_groups": [
+          {
+            "group": "P09",
+            "reason": "Java-only module-cache probe stage12-java-module-identity-01 observes same URI/source identity retained, changed source at same URI ignored (marker remains1), distinct URI/evaluator identity separated. Rust multi-source module-cache parity is unimplemented; same-module identity is compared."
+          },
+          {
+            "group": "P10",
+            "reason": "Java observable sequence comparisons do not expose heap counts; Rust architectural GC coverage is separate."
+          },
+          {
+            "group": "P11",
+            "reason": "Real Java class-initialization read observed via @Deprecated { ...(read(\"life:class\")) } in stage12-java-host-path-01; Rust annotation frontend unsupported, so actual Host-in-class cross-language reentry remains unexecuted. Internal scheduler tests are separate."
+          },
+          {
+            "group": "P12",
+            "reason": "Terminal context/token/heap cleanup is covered by separate Rust lifecycle tests, not Java raw-byte equivalence."
+          },
+          {
+            "group": "P05",
+            "reason": "Indirect cyclic hierarchy property traversal new A {}.missing timed out after successful class identity calls in stage12-java-observations-03; traversal is observed oracle-timeout, not a compatibility pass."
+          }
+        ],
+        "unique_sequences": 36
+      },
+      "failed_history_notes": {
+        "baseline-contract": "Initial 1577-file baseline omitted lifecycle inputs; 69 immutable HEAD files were added before tracked fixture edits. repair.json and reconstructed initial-summary/hash inventories preserve the omission/repair provenance.",
+        "stage16-build-02": "Sources changed during build. source_stability=false is retained; this artifact is not final source-bound evidence.",
+        "stage16-candidate-01": "Incomplete tooling error: inherited argument indexing selected result instead of input path for power cases. Original 15 captures and acquisition-error.json retained. Repaired helper selects exact input_uri and passes the power flag.",
+        "stage16-candidate-02": "Initial candidate preserved3single mismatches including pre-fix method underline and recursive let-cast extra frame. Later final replay resolves those2 while retaining original generic mismatch and newly discovered gaps.",
+        "stage16-const-recursive-java-01": "Six reads yield3errors then3successes in Java; Rust keeps rejecting, retained explicit gap.",
+        "stage16-const-retries-java-01": "Distinct inline/lambda use sites cache independently, let roots share cache, normal properties/methods continue rejecting. All controls retained.",
+        "stage16-java-01": "Initial let-as hypothesis expected success; Java failed Value0. Original expected_outcome remains unchanged in discovery; promoted fixture uses the actually observed failure outcome.",
+        "stage16-java-hint-frames-01": "Const-function local-property control unexpectedly succeeds0 in Java and rejects in Rust. All8 variants remain raw mismatches, separate from corrected alias-const diagnostic hint probes.",
+        "stage16-java-method-01": "Grouped callee is rejected by both parsers with different complete diagnostics; remains mismatch and unselected.",
+        "stage16-sequences-java-01": "Alias sequence used reserved keyword fixed and every call rejected at parse time. Complete failed acquisition retained; corrected v2 uses constantBound.",
+        "stage16-sequences-java-02": "Unselected alias-const-retry retains first rejection then successful cached local-property retry in Java; Rust retries continue rejecting."
+      },
+      "final_discovery_replay": {
+        "count": 94,
+        "known_mismatches": [
+          {
+            "baseline": "stage16-java-01",
+            "id": "original-recursive-generic-shadow"
+          },
+          {
+            "baseline": "stage16-java-method-01",
+            "id": "const-method-grouped"
+          },
+          {
+            "baseline": "stage16-java-hint-frames-01",
+            "id": "frames-const-hint-depth-1"
+          },
+          {
+            "baseline": "stage16-java-hint-frames-01",
+            "id": "frames-const-hint-depth-1-power"
+          },
+          {
+            "baseline": "stage16-java-hint-frames-01",
+            "id": "frames-const-hint-depth-2"
+          },
+          {
+            "baseline": "stage16-java-hint-frames-01",
+            "id": "frames-const-hint-depth-2-power"
+          },
+          {
+            "baseline": "stage16-java-hint-frames-01",
+            "id": "frames-const-hint-depth-3"
+          },
+          {
+            "baseline": "stage16-java-hint-frames-01",
+            "id": "frames-const-hint-depth-3-power"
+          },
+          {
+            "baseline": "stage16-java-hint-frames-01",
+            "id": "frames-const-hint-depth-4"
+          },
+          {
+            "baseline": "stage16-java-hint-frames-01",
+            "id": "frames-const-hint-depth-4-power"
+          }
+        ],
+        "path": "target/m2/stage16-observations-release-final",
+        "status_counts": {
+          "mismatch": 10,
+          "pass": 84
+        }
+      },
+      "metamorphic_relations": 54,
+      "new_metamorphic_relations": 2,
+      "new_selected_count": 84,
+      "original_five_gap_replays": [
+        {
+          "id": "original-recursive-finite-rejection",
+          "input_sha256": "ab7dc145967d415da599630b9cf255874ca1f6d83975b57fa1fc5343f71f080d",
+          "input_uri": "file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage15-java-01/cases/recursive-finite-rejection/input.pkl",
+          "status": "pass"
+        },
+        {
+          "id": "original-recursive-as-in-constraint",
+          "input_sha256": "459061b056e7f86ee13f608e4bb9883e84549c82df476255e0a445cd29838692",
+          "input_uri": "file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage15-java-01/cases/recursive-as-in-constraint/input.pkl",
+          "status": "pass"
+        },
+        {
+          "id": "original-recursive-generic-shadow",
+          "input_sha256": "1d12709080afcf9680d5b2a0b2f153b1c8593b6408895151b45230526fce1637",
+          "input_uri": "file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage15-java-01/cases/recursive-generic-shadow/input.pkl",
+          "status": "mismatch"
+        },
+        {
+          "id": "original-recursive-lexical-capture",
+          "input_sha256": "a7f7cf5a535a8166e4ceb8bd91791c4ca97327f0ce50aa24438ab957873ebb64",
+          "input_uri": "file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage15-java-01/cases/recursive-lexical-capture/input.pkl",
+          "status": "pass"
+        },
+        {
+          "id": "original-recursive-this-after-is",
+          "input_sha256": "2df5fc3c7aadc7ea55ebac5831a4ec007a8f05330e00e5ca4ee5012877580858",
+          "input_uri": "file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage15-java-extra-01/cases/recursive-this-after-is/input.pkl",
+          "status": "pass"
+        }
+      ],
+      "original_selected_preserved": 1513,
+      "package_exclusions": [
+        "Cargo build directories are omitted; frozen executables, exact source snapshots, commands and raw outputs remain.",
+        "Final full persistent, full selected, prior corpus, validation, platform and M1 evidence have separate archives."
+      ],
+      "persistent_exploration": {
+        "acquisitions": [
+          "target/m2/stage16-sequences-release-final",
+          "target/m2/stage16-const-retries-release-final",
+          "target/m2/stage16-const-recursive-release-final"
+        ],
+        "comparisons": 82,
+        "remaining_gap": "Local non-const property resolution caches after a first rejection; distinct per-use/recursive instances and shared let-root targets require evaluator-local type-node identity. No failed sequence was weakened.",
+        "status_counts": {
+          "mismatch": 13,
+          "pass": 69
+        }
+      },
+      "release_build": {
+        "artifacts": {
+          "class_lifecycle_probe": {
+            "candidate_path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/release/examples/class_lifecycle_probe",
+            "candidate_sha256": "1bd1e4c09ffbabb48da181cfb05637fd7fe43176006fed5bc5c26673bd1d14f8",
+            "frozen_path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage16-release-probe-build-final/artifacts/class_lifecycle_probe",
+            "frozen_sha256": "1bd1e4c09ffbabb48da181cfb05637fd7fe43176006fed5bc5c26673bd1d14f8"
+          },
+          "language_probe": {
+            "candidate_path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/release/examples/language_probe",
+            "candidate_sha256": "f3a2106e65bffb0c40a720086251f0eedb1ee275d6ddb306604c2d9c953fb32f",
+            "frozen_path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage16-release-probe-build-final/artifacts/language_probe",
+            "frozen_sha256": "f3a2106e65bffb0c40a720086251f0eedb1ee275d6ddb306604c2d9c953fb32f"
+          }
+        },
+        "metadata_sha256": "7e4fbf58f868440d01fe116f4d97f33723eb384008a21e338184f9df8ed75ffb",
+        "path": "target/m2/stage16-release-probe-build-final",
+        "replay_binding": "All final focused and discovery frozen executable SHA-256 values equal the recorded-build artifact. Original caller-supplied comparison metadata remains unchanged.",
+        "source_binding": "recorded-build",
+        "source_stability": true
+      },
+      "schema": 1,
+      "scope": "Bounded shared constraint slots, logical roots/calls, creation-time lambda receivers, first-read alias const enforcement, and Java recursive diagnostic compression. Full language/API/performance and instantiated type-use cache ownership remain open.",
+      "selected_count": 1597,
+      "selected_release_replay": {
+        "count": 84,
+        "path": "target/m2/stage16-selected-release-final",
+        "status_counts": {
+          "pass": 84
+        }
+      }
+    },
+    "summary_path": "target/m2/stage16-exploration-summary-final.json",
+    "summary_sha256": "186b7b23e67b8e3d95e1866932ad06b71cf2804569e2d056df11927cca54abc2"
+  },
+  "field_scope": "Packaging/read-only audit only. The retained acquisition commands executed their evaluator artifacts.",
+  "final_claims_audit": {
+    "captured_binaries_executed": false,
+    "class_sequences": {
+      "added_call_comparisons": 48,
+      "added_sequences": 2,
+      "call_comparisons": 502,
+      "original_call_comparisons": 454,
+      "original_definitions_order_and_raw_bytes_preserved": true,
+      "original_sequences": 34,
+      "passing_calls": 502,
+      "sequence_executions": 72,
+      "unique_sequences": 36
+    },
+    "const_retry_gap": {
+      "accepted_scope": "Bounded logical slot and first-read const-boundary checkpoint only; persistent resolution retry ownership remains required unimplemented scope.",
+      "path": "target/m2/stage16-const-retry-gap.json",
+      "release_requirement_remains_open": true,
+      "sha256": "428e79964b9c2dcff50310102571e13359115867b15124b381e2de4400333e6e",
+      "status": "known-unimplemented"
+    },
+    "field_scope": "Read-only packaging audit only; acquisition commands executed their retained evaluator artifacts.",
+    "mappings": {
+      "added_partial_mappings": 1,
+      "current_partial_mappings": 16,
+      "open_scope_preserved_except_verified_recursive_compression": true,
+      "original_partial_mappings": 15,
+      "reviewed_remaining_updates": [
+        {
+          "current": "Colored output, general imported source stacks, first-error combinations and the complete parser/resolver/runtime diagnostic corpus remain open; selected uncolored recursive compression is covered.",
+          "evidence": "Stage16 selected raw Java frame-compression witnesses and persistent sequence comparisons.",
+          "original": "Recursive frame compression, general imported source stacks, first-error combinations and the complete parser/resolver/runtime diagnostic corpus remain open.",
+          "requirement": "semantic:diagnostics",
+          "resolved_scope": "Selected uncolored recursive frame compression only; colored/general diagnostic requirements remain open."
+        }
+      ],
+      "states_and_existing_links_preserved": true
+    },
+    "platforms": {
+      "browser_scenarios": 56,
+      "comparisons_recomputed_from_raw": true,
+      "node_scenarios": 56,
+      "oracle_mismatch_ids": {
+        "browser": [
+          "regex-unicode-15-vs-16",
+          "regex-zero-width-supplementary"
+        ],
+        "node": [
+          "regex-unicode-15-vs-16",
+          "regex-zero-width-supplementary"
+        ],
+        "rust": [
+          "regex-unicode-15-vs-16",
+          "regex-zero-width-supplementary"
+        ]
+      },
+      "oracle_passed": {
+        "browser": 6076,
+        "node": 6076,
+        "rust": 6076
+      },
+      "report_execution_equals_retained": true,
+      "scenario_lists_equal_retained": true,
+      "shared_engine_passed": 6078,
+      "total": 6078
+    },
+    "regressions": {
+      "frontend_raw_matches": 15,
+      "lifecycle_full_diagnostic_mismatches": 4,
+      "lifecycle_protocol_matches": 2,
+      "runtime_diagnostic_matches": 2,
+      "runtime_diagnostic_mismatches": 1,
+      "runtime_known_diagnostic_mismatch_ids": [
+        "forcing-cycle"
+      ],
+      "runtime_value_matches": 6
+    },
+    "requirements": {
+      "allowed_updates": "Regenerated source/implementation hashes and additive implementation/test links reflect new verified work.",
+      "ids_order_definitions_states_and_existing_links_preserved": true,
+      "open_scope_preserved_except_verified_recursive_compression": true,
+      "original_inventory_cases": 2513,
+      "original_requirements": 474,
+      "reviewed_remaining_updates": [
+        {
+          "current": "Colored output, general imported source stacks, first-error combinations and the complete parser/resolver/runtime diagnostic corpus remain open; selected uncolored recursive compression is covered.",
+          "evidence": "Stage16 selected raw Java frame-compression witnesses and persistent sequence comparisons.",
+          "original": "Recursive frame compression, general imported source stacks, first-error combinations and the complete parser/resolver/runtime diagnostic corpus remain open.",
+          "requirement": "semantic:diagnostics",
+          "resolved_scope": "Selected uncolored recursive frame compression only; colored/general diagnostic requirements remain open."
+        }
+      ]
+    },
+    "selection": {
+      "added_selected": 84,
+      "baseline_metadata_sha256": "54ecc64f8a2bf6e1084627c3b3f1e811cf94a1dcaa349ac157e340c7675010bf",
+      "exact_result_order": true,
+      "frozen_selection_sha256": "a7a028d585d3f7522301d59718a2980a58f8ed183810fd5e7f103896a1320ffb",
+      "original_definitions_preserved": true,
+      "original_input_bytes_preserved": true,
+      "original_inventory_rows_preserved": 2513,
+      "original_known_failures_preserved_separately": true,
+      "original_passing_raw_bytes_preserved": true,
+      "original_selected": 1513,
+      "relations": 54,
+      "selected": 1597
+    },
+    "status": "pass"
+  },
+  "followup_design": {
+    "path": "stage17-type-node-design-draft.md",
+    "retained_in": [
+      "source"
+    ],
+    "scope": "Read-only planning proposal. No implementation, new execution, or current-commit source equality claim.",
+    "sha256": "5c0097696dba55373cc589dfccc94a4925606628099b72e1a1cbe29b151f5d16"
+  },
+  "full_m2_complete": false,
+  "gates": [
+    {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/m2_language.py",
+        "--verify-report",
+        "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/language-stage16-final"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "gate": "report",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "f191c5bbc9360d39058c1f60050482030fc98c86042072be062c13dbff985e28"
+    },
+    {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/m2_language.py",
+        "--verify-development",
+        "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/language-stage16-final"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "gate": "development",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "f191c5bbc9360d39058c1f60050482030fc98c86042072be062c13dbff985e28"
+    },
+    {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/m2_language.py",
+        "--verify-subset",
+        "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/language-stage16-final"
+      ],
+      "exit_code": 1,
+      "expected_exit_code": 1,
+      "gate": "subset",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "f191c5bbc9360d39058c1f60050482030fc98c86042072be062c13dbff985e28"
+    },
+    {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/m2_language.py",
+        "--verify-full",
+        "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/language-stage16-final"
+      ],
+      "exit_code": 1,
+      "expected_exit_code": 1,
+      "gate": "full",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "f191c5bbc9360d39058c1f60050482030fc98c86042072be062c13dbff985e28"
+    }
+  ],
+  "implementation_commit": "540d81818a0c5c18fab6d6354356621dfea9f962",
+  "implementation_source_verification": {
+    "captured_binaries_executed": false,
+    "evidence": {
+      "bytes": 4971900,
+      "files_including_inventory": 1895,
+      "inventory_verified": true,
+      "path": "reports/m2/source-stage16-final-evidence.tar.gz",
+      "sha256": "febd89a8687d3e815172d965f46610227bc38239e6cdaa5df91a6f9c7657567c"
+    },
+    "external_source_snapshot_copies": 0,
+    "git_command_captures": 2,
+    "implementation_commit": "540d81818a0c5c18fab6d6354356621dfea9f962",
+    "matched_exact_git_commit": true,
+    "method": "Every captured final project source byte string equals exact implementation Git bytes. Any captured upstream bytes resolve through the implementation commit gitlinks. Upstream blob proof exists only when external_source_snapshot_copies is positive. Reference pin validation remains separate.",
+    "pinned_submodule_blobs": false,
+    "source_binding_scope": "Final language, class sequences, M1 frontend/runtime/lifecycle, platforms and prior-selection replay source copies enumerated below. Historical exploratory source copies are outside this current-commit equality claim.",
+    "source_snapshot_copies": 2199,
+    "unique_external_source_files": 0,
+    "unique_source_files": 1818,
+    "upstream_source_blobs_verified": false,
+    "validation_source_binding": "Validation archive preserves raw command captures only; it does not add acquisition-time source snapshots. Other final suites retain full source snapshots."
+  },
+  "independent_source_review": {
+    "path": "stage16-final-source-review.json",
+    "retained_in": [
+      "source",
+      "regressions"
+    ],
+    "scope": "Independent final implementation source review; compatibility results remain separate raw evidence.",
+    "sha256": "2f9b33b1b90dfa45fd40e1600b62dec856f64ec0c98ea195a40c303a55557aba"
+  },
+  "known_const_retry_gap": {
+    "accepted_scope": "Bounded logical slot and first-read const-boundary checkpoint only; persistent resolution retry ownership remains required unimplemented scope.",
+    "path": "target/m2/stage16-const-retry-gap.json",
+    "release_requirement_remains_open": true,
+    "sha256": "428e79964b9c2dcff50310102571e13359115867b15124b381e2de4400333e6e",
+    "status": "known-unimplemented"
+  },
+  "language": {
+    "added_selected": 84,
+    "artifact_stability": true,
+    "baseline_metadata_sha256": "54ecc64f8a2bf6e1084627c3b3f1e811cf94a1dcaa349ac157e340c7675010bf",
+    "candidate": {
+      "build": {
+        "command": [
+          "cargo",
+          "build",
+          "-p",
+          "pkl-runtime",
+          "--example",
+          "language_probe",
+          "--locked",
+          "--release",
+          "--target-dir",
+          "/Users/cody.ij.hwang/Projects/pkl-rs/target"
+        ],
+        "exit_code": 0,
+        "stderr_sha256": "722942196c07b539a84bc56e350fa973f4c4d4999c6147681ae340dc92e005b4",
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "timed_out": false
+      },
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/release/examples/language_probe",
+      "sha256": "f3a2106e65bffb0c40a720086251f0eedb1ee275d6ddb306604c2d9c953fb32f",
+      "source_binding": "recorded-build"
+    },
+    "exact_result_order": true,
+    "frozen_selection_sha256": "a7a028d585d3f7522301d59718a2980a58f8ed183810fd5e7f103896a1320ffb",
+    "full_gate_failure_reasons": 1950,
+    "inventory_counts": {
+      "cases": 2597,
+      "cases_by_execution": {
+        "ready": 1597,
+        "unimplemented": 960,
+        "unmapped": 40
+      },
+      "requirements": 474,
+      "requirements_by_kind": {
+        "language_parser": 137,
+        "language_token": 109,
+        "semantic-family": 30,
+        "specification": 198
+      }
+    },
+    "known_failures": [
+      {
+        "id": "error-cycle",
+        "status": "oracle-error"
+      },
+      {
+        "id": "error-remainder-zero",
+        "status": "mismatch"
+      }
+    ],
+    "metamorphic_relations": 54,
+    "metamorphic_statuses": [
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass",
+      "pass"
+    ],
+    "original_definitions_preserved": true,
+    "original_input_bytes_preserved": true,
+    "original_inventory_rows_preserved": 2513,
+    "original_known_failures_preserved_separately": true,
+    "original_passing_raw_bytes_preserved": true,
+    "original_selected": 1513,
+    "relations": 54,
+    "selected": 1597,
+    "selected_count": 1597,
+    "source_snapshot_count": 1698,
+    "source_stability": true,
+    "status_counts": {
+      "mismatch": 1,
+      "oracle-error": 1,
+      "pass": 1595
+    }
+  },
+  "mapping_preservation": {
+    "added_partial_mappings": 1,
+    "current_partial_mappings": 16,
+    "open_scope_preserved_except_verified_recursive_compression": true,
+    "original_partial_mappings": 15,
+    "reviewed_remaining_updates": [
+      {
+        "current": "Colored output, general imported source stacks, first-error combinations and the complete parser/resolver/runtime diagnostic corpus remain open; selected uncolored recursive compression is covered.",
+        "evidence": "Stage16 selected raw Java frame-compression witnesses and persistent sequence comparisons.",
+        "original": "Recursive frame compression, general imported source stacks, first-error combinations and the complete parser/resolver/runtime diagnostic corpus remain open.",
+        "requirement": "semantic:diagnostics",
+        "resolved_scope": "Selected uncolored recursive frame compression only; colored/general diagnostic requirements remain open."
+      }
+    ],
+    "states_and_existing_links_preserved": true
+  },
+  "original_evidence_preserved": {
+    "immutable_stage16_baseline_with_repair_history": true,
+    "no_original_archive_modified": true,
+    "source_provenance_amendment": "reports/m2/source-stage15-final-amendment-evidence.tar.gz",
+    "stage15_summary": "reports/m2/stage15-final-summary.json"
+  },
+  "platforms": {
+    "browser_scenarios": 56,
+    "compatibility_status": "fail",
+    "experiment_contract_status": "pass",
+    "known_gaps": [
+      "regex-unicode-15-vs-16",
+      "regex-zero-width-supplementary"
+    ],
+    "node_scenarios": 56,
+    "oracle_passed": {
+      "browser": 6076,
+      "node": 6076,
+      "rust": 6076
+    },
+    "shared_engine_passed": 6078,
+    "source_stability": true,
+    "total": 6078
+  },
+  "prior_selection_replay": {
+    "count": 1513,
+    "exact_original_ids_order_input_bytes_and_raw_verdicts": true,
+    "scope": "Postfreeze Stage16 recorded-build candidate against retained original1513 complete Stage15 Java bytes. Fresh full Java acquisition remains separate.",
+    "status_counts": {
+      "mismatch": 1,
+      "oracle-error": 1,
+      "pass": 1511
+    }
+  },
+  "regressions": {
+    "frontend_raw_matches": 15,
+    "lifecycle_full_diagnostic_mismatches": 4,
+    "lifecycle_protocol_matches": 2,
+    "runtime_diagnostic_matches": 2,
+    "runtime_diagnostic_mismatches": 1,
+    "runtime_known_diagnostic_mismatch_ids": [
+      "forcing-cycle"
+    ],
+    "runtime_value_matches": 6
+  },
+  "remote_ci_required": false,
+  "requirements_preservation": {
+    "allowed_updates": "Regenerated source/implementation hashes and additive implementation/test links reflect new verified work.",
+    "ids_order_definitions_states_and_existing_links_preserved": true,
+    "open_scope_preserved_except_verified_recursive_compression": true,
+    "original_inventory_cases": 2513,
+    "original_requirements": 474,
+    "reviewed_remaining_updates": [
+      {
+        "current": "Colored output, general imported source stacks, first-error combinations and the complete parser/resolver/runtime diagnostic corpus remain open; selected uncolored recursive compression is covered.",
+        "evidence": "Stage16 selected raw Java frame-compression witnesses and persistent sequence comparisons.",
+        "original": "Recursive frame compression, general imported source stacks, first-error combinations and the complete parser/resolver/runtime diagnostic corpus remain open.",
+        "requirement": "semantic:diagnostics",
+        "resolved_scope": "Selected uncolored recursive frame compression only; colored/general diagnostic requirements remain open."
+      }
+    ]
+  },
+  "reviewed_mappings": {
+    "count": 16,
+    "scope": "Partial reviewed mappings; strict full failures retained."
+  },
+  "runtime_source_review": {
+    "path": "stage16-runtime-final-review.json",
+    "retained_in": [
+      "source",
+      "regressions"
+    ],
+    "sha256": "7cf91897f3e9053303959146637d5230d85227a9b48ddb4ef93174eeedb0cfe4"
+  },
+  "schema_version": 1,
+  "scope": "Stage16 logical-frame mutable custom-this slots, creation-time lambda snapshots, alias first-read const boundaries, and recursive diagnostic compression; local macOS native/Wasm/Node/browser evidence. Persistent local-property const-resolution retry ownership, recursive generics, full M2/API and performance remain open.",
+  "source_report_identities": {
+    "classes": {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/class-lifecycle-stage16-final/report.json",
+      "sha256": "7b62db10e6392b212a45be8c2678bbc9764c347a9e2c200d2dcdae3ea58242c9"
+    },
+    "frontend": {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/frontend-stage16-final/report.json",
+      "sha256": "dffe14fe8d3ca7b39980ed95af4ad6f4d928285243ff81c4a7a859c53fab3c4f"
+    },
+    "language": {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/language-stage16-final/report.json",
+      "sha256": "4eb9b5bd9d86f96b4e47ebc6de3aca2ca6150ca8afbc66320bae3ddb91dfa465"
+    },
+    "lifecycle": {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/lifecycle-stage16-final/report.json",
+      "sha256": "0f0fd2098ac74c8e932a27ea0a73831a2be7f9019c4c77e7e255b6d97694e257"
+    },
+    "platforms": {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/platforms-stage16-final/report.json",
+      "sha256": "1692832450e3b64581b1c534e68f1f8bae5bcc88f8599daba0d552fa0e630ef3"
+    },
+    "runtime": {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/runtime-stage16-final/report.json",
+      "sha256": "090d151176ceefde75001b9c3bf023d784c54c4aed6487ca627d37a9400050a7"
+    },
+    "validation": {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/validation-stage16-final/report.json",
+      "sha256": "49db3ea7fcda5cf23a84f0e0693bcc22b7bf33a4f4a6f0e08b700f04a9113fa4"
+    }
+  },
+  "source_to_commit_binding": "Every core-suite final source copy enumerated in source-verification.json equals exact implementation Git bytes. Historical exploratory source copies retain separate provenance. Build identities and retained raw outcomes remain separate evidence.",
+  "unavailable_platform_execution": [
+    "Linux",
+    "Windows"
+  ],
+  "unselected_exploratory_mismatches": {
+    "persistent_observations": {
+      "acquisitions": [
+        "target/m2/stage16-sequences-release-final",
+        "target/m2/stage16-const-retries-release-final",
+        "target/m2/stage16-const-recursive-release-final"
+      ],
+      "comparisons": 82,
+      "remaining_gap": "Local non-const property resolution caches after a first rejection; distinct per-use/recursive instances and shared let-root targets require evaluator-local type-node identity. No failed sequence was weakened.",
+      "status_counts": {
+        "mismatch": 13,
+        "pass": 69
+      }
+    },
+    "required_scope_remains_open": true,
+    "single_observations": {
+      "count": 94,
+      "known_mismatches": [
+        {
+          "baseline": "stage16-java-01",
+          "id": "original-recursive-generic-shadow"
+        },
+        {
+          "baseline": "stage16-java-method-01",
+          "id": "const-method-grouped"
+        },
+        {
+          "baseline": "stage16-java-hint-frames-01",
+          "id": "frames-const-hint-depth-1"
+        },
+        {
+          "baseline": "stage16-java-hint-frames-01",
+          "id": "frames-const-hint-depth-1-power"
+        },
+        {
+          "baseline": "stage16-java-hint-frames-01",
+          "id": "frames-const-hint-depth-2"
+        },
+        {
+          "baseline": "stage16-java-hint-frames-01",
+          "id": "frames-const-hint-depth-2-power"
+        },
+        {
+          "baseline": "stage16-java-hint-frames-01",
+          "id": "frames-const-hint-depth-3"
+        },
+        {
+          "baseline": "stage16-java-hint-frames-01",
+          "id": "frames-const-hint-depth-3-power"
+        },
+        {
+          "baseline": "stage16-java-hint-frames-01",
+          "id": "frames-const-hint-depth-4"
+        },
+        {
+          "baseline": "stage16-java-hint-frames-01",
+          "id": "frames-const-hint-depth-4-power"
+        }
+      ],
+      "path": "target/m2/stage16-observations-release-final",
+      "status_counts": {
+        "mismatch": 10,
+        "pass": 84
+      }
+    }
+  },
+  "validation": {
+    "python_passed": 194,
+    "rust_intentionally_ignored": 1,
+    "rust_passed": 338
+  }
+}

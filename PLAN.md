@@ -277,15 +277,21 @@ Stage 13 시점에는 완전한 지연 타입 해석 모델, 미해결 이름과
 
 **Stage 15의 제한된 개발 계약은 로컬 검증으로 마감했습니다.** 전체 릴리스의 OS·언어/API·성능 조건은 유지하며 미실행 환경과 남은 불일치를 통과로 바꾸지 않습니다.
 
-열여섯 번째 단계는 frame별 mutable custom-this slot, lambda 생성 시 값 캡처, 별칭의 지연 const 검사와 Java 반복 frame 압축을 구현했습니다. 런타임·압축은 `gpt-6-astra / high`, Java 증거·수명주기·플랫폼·독립 검증은 `gpt-6.1-sol / high`로 분담했습니다. 같은 호출의 중첩 `is`/`as`는 슬롯을 공유하며 함수·let root·lazy member·Host 재진입은 분리합니다. 내부 슬롯도 evaluator의 tracing heap에서 순환·중단 상태와 함께 회수하고 기존 heap 검사 수치를 완화하지 않았습니다.
+열여섯 번째 단계의 구현 커밋 `540d81818a0c5c18fab6d6354356621dfea9f962`를 푸시했습니다. frame별 mutable custom-this slot, lambda 생성 시 값 캡처, 별칭의 지연 const 검사와 Java 반복 frame 압축을 구현했습니다. 런타임·압축은 `gpt-6-astra / high`, Java 증거·수명주기·플랫폼·독립 검증은 `gpt-6.1-sol / high`로 분담했습니다. 같은 호출의 중첩 `is`/`as`는 슬롯을 공유하며 함수·let root·lazy member·Host 재진입은 분리합니다. 내부 슬롯도 evaluator의 tracing heap에서 순환·중단 상태와 함께 회수하고 기존 heap 검사 수치를 완화하지 않았습니다.
 
-Stage 15의 원래 입력·URI 그대로 재비교하여 shared-slot 실패 3개와 non-const alias capture 1개를 해결했으며 recursive generic은 남았습니다. 새 선택 84개를 추가해 1,597개·변형 관계 54개, 별도 순차 목록 36개를 두 번 실행하는 72회·502개 호출 계약을 구성했습니다. 반복 frame과 hint 위치는 Java의 부분 패턴·count-one loop 동작까지 구현했고 const method 오류는 전체 호출 span을 사용합니다. 부분 연결은 16개이며 요구사항 474개·미구현 960행·미연결 40행과 기존 실패는 그대로 추적합니다. 최종 전체 로컬 검증과 증거 마감은 진행 중이며 이 구현 기록만으로 단계나 M2 완료를 주장하지 않습니다.
+Stage 15의 원래 입력·URI 그대로 재비교하여 shared-slot 실패 3개와 non-const alias capture 1개를 해결했으며 recursive generic은 남았습니다. 새 선택 84개를 추가해 1,597개·변형 관계 54개, 별도 순차 목록 36개를 두 번 실행하는 72회·502개 호출 계약을 구성했습니다. 반복 frame과 hint 위치는 Java의 부분 패턴·count-one loop 동작까지 구현했고 const method 오류는 전체 호출 span을 사용합니다. 부분 연결은 16개이며 요구사항 474개·미구현 960행·미연결 40행과 기존 실패는 그대로 추적합니다. [새 Java 전체 비교](reports/m2/language-stage16-final-evidence.tar.gz)는 1,595개 일치와 기존 `error-cycle` oracle 오류·`error-remainder-zero` 진단 차이만 남겼으며 변형 관계 54개가 모두 통과했습니다. [이전 선택 재비교](reports/m2/regressions-stage16-final-evidence.tar.gz)도 기존 1,511개 일치·2개 실패를 보존했습니다.
+
+필수 로컬 검사 7종에서 Rust 338개·Python 194개와 formatting·Clippy·Wasm·참조 pin·목록 freshness가 통과했습니다. 기존 ignored probe 1개는 제외합니다. 실제 Node·Chromium은 각각 56개 시나리오가 통과했고 공통 primitive 6,078개 중 Java 일치 6,076개와 기존 regex 실패 2개를 유지했습니다. [순차 계약](reports/m2/class-lifecycle-stage16-final-evidence.tar.gz) 502개 호출은 모두 일치하며 이전 454개 호출의 Java/Rust status·stdout·stderr 사본 2,724개도 같은 바이트입니다.
+
+[최종 요약](reports/m2/stage16-final-summary.json)과 [소스 증거](reports/m2/source-stage16-final-evidence.tar.gz)는 소스 사본 2,199개·고유 경로 1,818개를 정확한 구현 커밋에 대조합니다. 언어 수집의 소스 스냅샷은 1,698개이며 이번 source proof에 upstream submodule 소스 사본은 없습니다. 참조 pin과 oracle 출처는 별도 검사했습니다. 최초 패키징 준비 검사가 변경된 플랫폼 파일에도 옛 바이트를 요구해 중단된 기록과 수정한 검사·기존 시나리오 보존 증거도 남겼습니다. [gate 증거](reports/m2/gates-stage16-final-evidence.tar.gz)는 무결성·개발 계약 통과와 엄격한 선택·전체 gate 실패를 구분하며 전체 실패 이유 1,950개를 유지합니다.
+
+[탐색 증거](reports/m2/exploration-stage16-evidence.tar.gz)는 파일 7,629개와 독립 관찰 94개 중 84개 일치·10개 차이, 별도 순차 탐색 82개 호출 중 69개 일치·13개 차이를 보존합니다. 단계의 선택 통과에 미선택 실패를 섞거나 새 예외를 추가하지 않았습니다. object payload boxing은 내부 슬롯 크기를 줄이기 위한 구조 변경이며 실행 속도·peak RSS 동등성은 아직 측정하지 않았습니다. **Stage 16의 제한된 개발 계약은 로컬 검증으로 마감했으며 전체 M2·API·성능·릴리스 플랫폼 조건은 계속 미완료입니다.**
 
 탐색 중 local const read는 Java가 오류 전에 resolution node를 cache하여 재시도 결과가 달라짐을 확인했습니다. inline 별칭·let root·lambda·재귀 깊이에 따라 node/call-target 공유 범위가 달라 단일 alias/block flag로 수정하지 않았습니다. const 함수의 local read와 grouped callee 구문 진단 차이도 원시 결과를 보존합니다. 새 개발 예외를 추가하지 않습니다.
 
 다음 구현은 남은 탐색 불일치의 의존성을 기준으로 진행합니다.
 
-1. 별칭 선언·실제 타입 인자·runtime type node와 call-target identity를 보존하는 표현을 설계해 recursive generic과 local const-read retry cache를 확장합니다. const 함수의 local read 허용 범위와 grouped callee 구문 진단 차이를 별도 회귀 사례로 유지합니다. 이미 검증한 shared-slot·lambda snapshot·비재귀/재귀 block graph·`Class<T>` 인자 소거 규칙, Host/GC/취소/terminal 동작을 회귀 기준으로 유지합니다.
+1. 별칭 선언·실제 타입 인자·runtime type node와 call-target identity를 보존하는 표현을 설계합니다. 지속되는 해석 node와 호출마다 새로 만드는 custom-this frame slot은 분리합니다. 독립 inline 사용·lambda 복제·공유 let root의 non-generic const 재시도를 먼저 연결하고, 재귀 깊이별 node와 지연 타입 인수 환경을 연결해 recursive generic으로 확장합니다. const 함수의 local read 허용 범위와 grouped callee 구문 진단 차이를 별도 회귀 사례로 유지합니다. 이미 검증한 shared-slot·lambda snapshot·비재귀/재귀 block graph·`Class<T>` 인자 소거 규칙, Host/GC/취소/terminal 동작을 회귀 기준으로 유지합니다.
 2. 엄격한 Map·Set의 값 모델·타입·동등성·해시·강제 평가를 공통 VM·GC·Host 수명주기에 구현합니다. 기존 Mapping 검증이 이를 대체하지 않습니다. Duration metadata와 List/Listing의 `map`·`join`은 필요한 M3 의존성으로 함께 추적합니다.
 3. annotation과 남은 클래스 초기화·modifier·재귀 타입·reflection 규칙을 확장합니다. 실제 source의 초기화 중 Host 중단·재진입, 미게시 local 선언의 Java 내부 오류와 순환 계층의 비종료 관찰은 원래 실패·미실행 상태를 보존하며 별도로 검증합니다.
 4. 모듈 클래스 상속·선언 출처·ModuleOutput override를 M2 의미론에 연결하고 실제 모듈 로딩·URI/source cache identity·Host는 M4 경로와 통합합니다. primitive missing-method 진단도 실제 멤버 목록을 사용하도록 보완합니다.

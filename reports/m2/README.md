@@ -18,8 +18,100 @@ class publication, retained partial classes, and persistent sequence comparisons
 Stage 13 adds type-alias identity and publication, function metadata and arity checks,
 and exported arrow metadata equality. Stage 14 adds ordered type resolution, generic
 parameter scopes, and owner signature initialization. Stage 15 adds selected recursive
-constraint graphs and erased `Class<T>` arguments.
+constraint graphs and erased `Class<T>` arguments. Stage 16 adds shared constraint
+receiver slots, creation-time lambda captures, selected alias const boundaries
+and recursive diagnostic compression.
 These checkpoints do not complete the language milestone.
+
+## Stage 16 local verification checkpoint
+
+Implementation `540d81818a0c5c18fab6d6354356621dfea9f962` is committed and pushed.
+Runtime implementation and independent review used `gpt-6-astra / high`; Java
+evidence, lifecycle tests, platform execution and evidence auditing used
+`gpt-6.1-sol / high`. Verification ran locally on macOS; no hosted CI or
+unexecuted Linux/Windows result is claimed.
+
+Constraint evaluation now shares a mutable auxiliary receiver slot within each
+logical call. Nested `is`/`as` and recursive alias checks can change the receiver
+seen by later constraints and failure rendering. Lambdas capture the receiver
+value at creation, while function, local-writing let, lazy member and Host reentry
+calls have separate slots. Typed slots and captured cycles are traced by the
+existing heap. Selected first reads in alias bodies enforce the deferred module
+const boundary, and method errors cover the complete call span. Uncolored diagnostic rendering
+follows Java's recursive frame compression, including partial patterns,
+count-one loops, margins and hint placement.
+
+The [exploration archive](exploration-stage16-evidence.tar.gz) replays all five
+Stage 15 gaps at their original inputs and URIs. Four now match: three shared-slot
+failures and the non-const alias capture failure. Recursive generic instantiation
+remains unimplemented. The archive retains 7,629 files, including failed
+hypotheses, superseded builds and unchanged original raw outputs. Its SHA-256 is
+`197de42db32f6be50a4c74a605ba5cc734a060a3240b2bf6e82190ad67f6b673`.
+
+The 84 new selected fixtures match Java at their final fixture URIs, giving
+**1,597 independent cases and 54 metamorphic relations**. Original 1,513 case
+definitions, input bytes, 52 relations and requirement links are preserved.
+[Fresh whole-selection evidence](language-stage16-final-evidence.tar.gz) records
+**1,595 raw matches and the same two failures**: `error-cycle` is an oracle error
+and `error-remainder-zero` is a diagnostic mismatch. All 54 relations pass.
+[Prior-selection replay](regressions-stage16-final-evidence.tar.gz)
+separately retains the previous Java captures and the same 1,511 matches and two
+known failures. Neither comparison normalizes output or grants a new exception.
+
+The [persistent contract](class-lifecycle-stage16-final-evidence.tar.gz) passes
+**502 calls across 72 executions of 36 unique sequences**. Two new sequences add
+48 calls; the original 454 calls preserve all 2,724 Java/Rust
+status/stdout/stderr files byte for byte. Native tests separately cover Host
+suspension, child reentry, creation-time captures, failed retries, stale tokens,
+shared-Program evaluator isolation, cancellation and terminal cleanup. This is
+lifecycle evidence, not a claim of Java Host API equivalence.
+
+The [seven required checks](validation-stage16-final.json) pass: **338 Rust tests
+and 194 Python tests**, formatting, workspace Clippy, Wasm compilation, reference
+pins and inventory freshness. One existing ignored Rust probe is excluded.
+Actual [Node and Chromium execution](platforms-stage16-final-evidence.tar.gz)
+passes **56 scenarios per target**. All 6,078 primitive results agree across Rust
+targets; 6,076 match Java per target and the same two regex differences remain
+failed. Existing M1 evidence retains 15 frontend matches, six runtime values and
+two complete diagnostics matching, one runtime cycle diagnostic mismatch, two
+lifecycle protocol matches and four lifecycle full diagnostic mismatches.
+
+The [summary](stage16-final-summary.json), [source proof](source-stage16-final-evidence.tar.gz)
+and [gate captures](gates-stage16-final-evidence.tar.gz) distinguish source
+identity, evidence integrity, development acceptance and strict compatibility.
+All 2,199 captured final source copies across 1,818 unique paths equal the
+exact implementation commit; the language acquisition retains 1,698 snapshots.
+This source proof contains no upstream submodule source copies. Reference pins
+were verified separately by `cargo xtask verify` and pinned oracle metadata.
+The original baseline snapshot repair and exact Git reads of omitted generated
+metadata remain explicit. A first packaging-readiness attempt
+incorrectly required previous bytes for three intentionally extended platform
+sources. Its failed capture and executed helper are retained; the corrected
+check preserves prior scenario identities and order and binds updated sources
+to the implementation commit. All 474 requirements remain;
+16 reviewed mappings are partial, and the 2,597 overlapping accounting rows
+contain 1,597 ready, 960 unimplemented and 40 unmapped entries. These counts are
+not a completion percentage. The strict full gate retains **1,950 failure
+reasons**; integrity and development checks pass, while strict selected and full compatibility gates fail.
+
+The final exploratory single-case comparison has **84 matches and 10 failures**:
+one recursive generic case, one grouped-callee parser diagnostic, and eight
+variants where Java permits a const function's local property read but Rust
+rejects it. Separate persistent exploration has **69 matches and 13 failures
+across 82 calls**. Java sometimes caches a local property's resolution before
+raising a const error, allowing a later retry to succeed. Inline alias copies,
+recursive depths, lambda bodies and shared let call targets have different cache
+identities; a flag per alias or bytecode block would merge distinct states.
+These failures remain recorded obligations and were not promoted as passing
+selected fixtures. Complete runtime type-use identity is the next dependency.
+
+Object payloads are boxed to keep small receiver-slot arena entries compact.
+Lifecycle checks do not measure peak RSS or execution speed; no performance or
+memory parity is claimed. Original upstream suites, recursive generics and
+remaining constraint/modifier semantics, strict Map/Set, annotations,
+module/cache behavior, product APIs and release platforms remain open.
+**Stage 16 is closed within its bounded local development contract; M2 remains
+in progress.**
 
 ## Stage 15 local verification checkpoint
 
