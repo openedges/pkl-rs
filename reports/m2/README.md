@@ -12,8 +12,115 @@ cache-sensitive comparison order, and deep-force/hash preparation order.
 Stage 9 adds stable hashes,
 partial map publication and retries, HashSet length counting, and let diagnostic
 scopes. Stage 10 adds deferred References, declaration/type metadata, and
-standard-library source frames. These checkpoints do not complete the language
-milestone.
+standard-library source frames. Stage 11 adds fixed declarations, ordered
+override checks, and inherited modifier metadata. These checkpoints do not
+complete the language milestone.
+
+## Stage 11 checkpoint
+
+**Persistent retry after failed class initialization remains a confirmed lifecycle
+mismatch.** In one retained evaluator, the first invalid class access produces the
+same complete error bytes in Java and Rust. Java then returns its partially
+initialized class on the next two accesses, while Rust repeats the initialization
+error. Java preserves declarations initialized before the failure, inherits the
+parent's fixed declaration at the failed property, and leaves later declarations
+absent. The same-session protocol, full raw channels, source and binary
+identities, and the additional Java observations are preserved in the
+[exploration archive](exploration-stage11-evidence.tar.gz). This protocol is
+separate from the independent-expression selection and remains a failure without
+a development exception. Successful Host read retries do not establish class
+initialization retry compatibility.
+
+The [stage 11 summary](stage11-final-summary.json) records **1,291 selected
+comparisons: 1,289 raw-byte matches, one remainder-zero mismatch, and one cycle
+oracle failure**. All 46 metamorphic relations pass. The 89 additions and two new
+relations preserve every previous 1,202 definition and input byte. Implementation
+`52cabbe01a8392ee44bf55889346c6f692d3c595` is pushed. The
+[language archive](language-stage11-final-evidence.tar.gz) retains a recorded
+release build, fresh pinned Java captures at actual fixture URIs, complete output
+channels, and 1,378 source snapshots. Source and artifact identities stayed stable
+during acquisition, and every snapshot matches that exact implementation commit.
+
+The shared engine now carries fixed-property metadata and performs ordered
+override checks. An overriding property must preserve fixed and const declaration
+flags. Property types resolve before those checks; fixed agreement precedes const
+agreement, and properties initialize before methods. Instance assignment and
+property amendment reject inherited fixed properties without forcing their
+initializers. Reference synthesis reads the same inherited metadata, including
+hidden fixed properties, while referent bodies stay deferred. Abstract assignment
+bodies and authored abstract amendments retain their distinct rules. Diagnostics
+preserve enclosing/declaration frames, header ranges, and the pinned header
+substring lookup for repeated modifier flag carries.
+
+The [validation record](validation-stage11-final.json) and
+[raw checks](validation-stage11-final-evidence.tar.gz) retain reference pin checks,
+formatting, workspace Clippy, **251 passing Rust tests and 179 Python tests**,
+Wasm compilation, and inventory freshness. One existing differential probe remains
+ignored by ordinary unit-test execution and retains its separate adapter contract.
+The [platform archive](platforms-stage11-final-evidence.tar.gz) records **45
+scenarios in each of actual Node and Chromium**, including three new fixed-property
+scenarios whose full expected values and diagnostics came from pinned Java at the
+exact adapter URI. All 6,078 primitive results agree across Rust targets; each
+matches Java on 6,076, preserving the same two regex failures. Three new native
+lifecycle tests cover inherited fixed receiver dispatch, hidden fixed Reference
+metadata, Host suspension, reentry, GC, failed reads and retries, stale
+completions, cancellation, close, and deadlines.
+
+The [regression archive](regressions-stage11-final-evidence.tar.gz) retains the
+1,202 unchanged-input replays and fresh pre-push comparisons of all 89 additions.
+Those exploratory frozen candidates remain separate from the recorded-build full
+acquisition above. Existing bounded regressions retain 15 frontend matches, six
+runtime value matches, two runtime diagnostic matches, one cycle diagnostic
+mismatch, two matching lifecycle protocols, and four full lifecycle diagnostic
+mismatches.
+
+The [exploration archive](exploration-stage11-evidence.tar.gz) retains 111
+independent-expression Java observations; the final exploratory candidate matches
+100 and preserves **11 nonselected mismatches**. That count excludes the separate
+persistent-evaluator and platform-URI protocols. A replay of the previous 191
+Reference observations now matches 169 and retains 22 mismatches; `property-fixed`
+changed from mismatch to match. Fourteen original fixed-related snippet
+observations through selected API expressions do not execute their original
+snippet, renderer, or assertion contracts. The exploratory candidate's source
+binding remains unverified; its recorded source differs from the implementation
+only by the later `fixed: false` field correction in
+`crates/pkl-runtime/examples/lifecycle_probe.rs`. This limitation does not apply
+to the separately verified recorded-build acquisition. Earlier candidates, an
+interrupted actual-URI acquisition, corrected draft expectation metadata, and
+caught upstream `PklBugException` results remain visible. The
+[build-failure archive](exploration-stage11-build-failures-evidence.tar.gz)
+separately retains the initial lifecycle compilation failure and the superseded
+runtime acquisition; those records are not passing final validation.
+
+Eleven [reviewed mappings](../../compatibility/m2-mappings.json) link partial
+implementation and test scope to Rust symbols and selected cases. They preserve
+all original upstream execution contracts and do not claim complete requirements.
+The inventory has 474 requirement records and 2,291 overlapping accounting rows:
+1,291 executable selections, 960 unimplemented rows, and 40 unmapped rows. These
+are not distinct feature counts or a completion percentage. The
+[gate captures](gates-stage11-final-evidence.tar.gz) retain integrity and
+development success, strict selected/full compatibility failure, and 1,950 full
+gate failure reasons. No new development exception was added.
+
+The [implementation CI run](https://github.com/luuvish/pkl-rs/actions/runs/39543295843)
+completed successfully across all six jobs. The [independent CI verification](ci-stage11-summary.json)
+checks both original ZIPs against GitHub artifact digests and binds 1,615 source
+snapshot copies, covering 1,418 unique paths, to implementation commit `52cabbe`.
+Remote results retain 1,289 matches and the same two failures, 46 passing
+relations, and passing development contracts for 45 scenarios in each of Node and
+Chromium. The [CI archive](ci-stage11-evidence.tar.gz) preserves the original
+artifacts and verification records. Two [offline verification passes](ci-stage11-offline-evidence.tar.gz)
+passed without executing captured binaries; the final sealed package remained
+unchanged.
+
+Complete class publication/retry
+semantics, alias identity and diagnostics, function types, strict Map/Set values,
+general imports and module inheritance, reflection, and the original upstream
+contracts remain open. The next priority is evaluator-owned class singleton
+publication before superclass resolution, incremental member publication, and
+GC/lifecycle retention of partial classes, followed by alias/function metadata and
+strict Map/Set support. No new speed or memory parity measurement was made.
+**M2 remains in progress.**
 
 ## Stage 10 checkpoint
 
