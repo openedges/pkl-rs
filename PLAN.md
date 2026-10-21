@@ -313,9 +313,15 @@ Stage 15의 원래 입력·URI 그대로 재비교하여 shared-slot 실패 3개
 
 열아홉 번째 단계는 recursive generic의 타입 인자를 불변 공유 그래프로 바꾸었습니다. 런타임 구현과 교차 검토는 `gpt-6-astra / high`, Java 비교·수명주기·실제 플랫폼·증거 검토는 `gpt-6.1-sol / high`로 분담했습니다. 이미 대입한 인자를 다시 깊게 복사하지 않고, 마지막 소유자의 해제는 명시적 작업 목록으로 수행합니다. `Arc::into_inner`로 동시에 마지막 참조를 해제해도 한 소유자가 회수하도록 했습니다. 깊은 타입 비교·진단·Reference 정규화와 metadata identity를 반복 순회로 바꾸고, nested collection 기본값의 하강·생성·복귀는 VM fuel을 소비하며 임시 객체를 GC root로 보존합니다.
 
-초기 검증에서 256 KiB 스택의 20,000단계 공유 그래프·동시 해제와 2,048단계 Reference metadata, 768단계 evaluator 상태·캡처·실패 재시도·GC, Host 재진입·terminal 해제를 확인했습니다. 원래 무한 확장 입력은 150,000개 instruction씩 세 차례 실행 후 취소·재사용하고, 실행 중 VM을 해제하는 검사도 통과했습니다. 기존 1,798개 재비교는 원래 두 실패를 유지합니다. 독립 검토가 찾은 `Domain` 동일 class id의 shortcut 회귀를 수정했습니다. Java 증거가 없는 wrapper actual-argument 동등성 변경은 포함하지 않았습니다.
+초기 검증에서 256 KiB 스택의 20,000단계 공유 그래프·동시 해제와 2,048단계 Reference metadata, 768단계 evaluator 상태·캡처·실패 재시도·GC, Host 재진입·terminal 해제를 확인했습니다. 원래 무한 확장 입력은 150,000개 VM step씩 세 차례 실행 후 취소·재사용하고, 실행 중 VM을 해제하는 검사도 통과했습니다. 기존 1,798개 재비교는 원래 두 실패를 유지합니다. 독립 검토가 찾은 `Domain` 동일 class id의 shortcut 회귀를 수정했습니다. Java 증거가 없는 wrapper actual-argument 동등성 변경은 포함하지 않았습니다.
 
-새 선택 23개·관계 3개·순차 목록 7개를 추가하여 선택 1,821개·관계 66개·별도 persistent 호출 1,870개를 최종 로컬 검증할 예정입니다. 원래 SIGABRT와 수정 전 실행은 역사적 증거로 보존합니다. 기존 probe의 instruction 예산 종료와 작은 스택의 안전한 취소는 Java의 stack-overflow 오류 바이트 일치를 의미하지 않습니다. Reference 정규화·검증 등 한 instruction 안의 작업량과 진단 문자열 확장, authored compiler nesting, 전체 호환성·실행 시간·peak RSS 목표는 여전히 별도 검증 대상입니다.
+구현 커밋 `a0801b9b4d614f6d936d9c410f67a05be59e7733`를 푸시했습니다. [최종 로컬 요약](reports/m2/stage19-final-summary.json)은 1,821개 독립 식 중 1,819개 원시 바이트 일치와 기존 순환 oracle 오류·정수 `% 0` 진단 불일치를 기록합니다. 추가 23개는 성공 19개·예상 오류 4개이며 모두 일치하고 변형 관계 66개도 통과했습니다. 기존 1,798개 정의·입력·63개 관계는 그대로 보존하며 새 개발 예외는 추가하지 않았습니다.
+
+별도 persistent 계약은 115개 목록을 두 번 실행한 230회·1,870개 호출이 모두 일치합니다. 기존 108개 목록과 1,782개 호출, 과거 수명주기 검사 파일 16개를 유지했습니다. [필수 로컬 검사 7종](reports/m2/validation-stage19-final.json)이 통과했고 Rust 392개·Python 194개 성공과 기존 ignored probe 1개를 구분합니다. 자식 프로세스의 재실행은 검사 수에 중복 계산하지 않습니다. 실제 Node·Chromium 각각 71개 개발 시나리오가 통과했고, 공통 primitive 6,078개의 엔진 일치·target별 Java 일치 6,076개·기존 regex 실패 2개를 유지했습니다.
+
+[탐색 증거](reports/m2/exploration-stage19-evidence.tar.gz)와 지원 archive 1개는 원본 경로 13,900개를 고유 내용 5,906개로 보존하며 바이트·크기·mode 복원을 검증했습니다. 기존 Stage 18 archive는 해시로 연결하고 내용을 중복 저장하지 않았습니다. 이전 관찰 166개의 Rust 결과와 비일치 25개는 그대로 유지하며, 그중 Java 내부 오류 한 개의 oracle-error 분류를 명확히 했습니다. 별도 집중 탐색 77개의 일치 66개·불일치 10개·oracle 오류 1개도 선택 계약과 구분합니다. [소스·gate 증거](reports/m2/source-stage19-final-evidence.tar.gz)는 소스 사본 5,059개·고유 경로 2,284개를 정확한 구현 커밋과 연결합니다. upstream 소스 사본은 0개이며 참조 pin·oracle 출처는 별도 검증했습니다. 무결성·개발 gate는 통과하고 엄격한 전체 gate의 실패 이유 1,950개를 유지합니다.
+
+원래 125바이트 입력의 SIGABRT와 수정 전 실행은 역사적 증거로 보존합니다. 기존 probe의 instruction 예산 종료와 작은 스택의 안전한 취소는 Java의 stack-overflow 오류 바이트 일치를 의미하지 않습니다. 앞의 VM step 수에는 타입·기본값 scheduler 작업도 포함됩니다. Reference 정규화·검증 등 한 instruction 안의 작업량과 진단 문자열 확장, authored compiler nesting, 전체 호환성·실행 시간·peak RSS 목표는 여전히 별도 검증 대상입니다. **Stage 19의 제한된 로컬 개발 계약만 마감했으며 M2 전체·제품 API·성능·메모리·릴리스 플랫폼 조건은 미완료입니다.**
 
 다음 구현은 남은 탐색 불일치의 의존성을 기준으로 진행합니다.
 

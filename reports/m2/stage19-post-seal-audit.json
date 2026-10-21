@@ -1,0 +1,396 @@
+{
+  "schema": 1,
+  "utc": "2026-10-21T12:05:12.440600+00:00",
+  "status": "pass",
+  "implementation_commit": "a0801b9b4d614f6d936d9c410f67a05be59e7733",
+  "scope": "Read-only checksum, archive-inventory, immutable-helper, exact source-copy and gate-result verification. No retained binary was executed.",
+  "summary": {
+    "path": "reports/m2/stage19-final-summary.json",
+    "sha256": "2714acf295b74dd5a69dd750f91d8b48f53d26a0926798762177a727dee60e66"
+  },
+  "packaging_process": {
+    "path": "target/m2/stage19-package-captured-final-01/process.json",
+    "sha256": "6144e56c8b12f278710f7e001c29487914edb19ecbaca4d8b2e59b08db862094",
+    "exit_code": 0,
+    "helper_stable": true
+  },
+  "archives": [
+    {
+      "name": "class-lifecycle",
+      "bytes": 1826768,
+      "files_including_inventory": 16688,
+      "inventory_verified": true,
+      "path": "reports/m2/class-lifecycle-stage19-final-evidence.tar.gz",
+      "sha256": "59c2307e382115467653f93c724bae058a453a0ef257a52b3021c5d9be0f2217",
+      "hash_size_and_inventory_verified": true
+    },
+    {
+      "name": "exploration",
+      "bytes": 448580,
+      "inventory_verified": true,
+      "path": "reports/m2/exploration-stage19-evidence.tar.gz",
+      "sha256": "5aea00bbddf3d5a18a3b610de7fe447d34c36d7963525cfa1e70006fa650ec77",
+      "hash_size_and_inventory_verified": true
+    },
+    {
+      "name": "frontend",
+      "bytes": 192767,
+      "files_including_inventory": 133,
+      "inventory_verified": true,
+      "path": "reports/m2/frontend-stage19-final-evidence.tar.gz",
+      "sha256": "b233f996c77b0afade6fd2042fd172b8a5ac642d1622daaad87e930e2aba7267",
+      "hash_size_and_inventory_verified": true
+    },
+    {
+      "name": "language",
+      "bytes": 4125872,
+      "files_including_inventory": 16517,
+      "inventory_verified": true,
+      "path": "reports/m2/language-stage19-final-evidence.tar.gz",
+      "sha256": "2c2e3b2d082ab21414bf08f1eb36230dd4142fcc2a8ee8d465b8747f45fa7ab9",
+      "hash_size_and_inventory_verified": true
+    },
+    {
+      "name": "lifecycle",
+      "bytes": 951385,
+      "files_including_inventory": 155,
+      "inventory_verified": true,
+      "path": "reports/m2/lifecycle-stage19-final-evidence.tar.gz",
+      "sha256": "469c0d707e8a0964831c696d4015c5171323b35342e5748a7e78b3c24837cd1d",
+      "hash_size_and_inventory_verified": true
+    },
+    {
+      "name": "native-generics",
+      "bytes": 2422874,
+      "files_including_inventory": 75,
+      "inventory_verified": true,
+      "path": "reports/m2/native-generics-stage19-final-evidence.tar.gz",
+      "sha256": "e317d548e64e4535dacc5c88cf1d6d7aa37b9ebf89d8cd53ed455e9196a2e1f3",
+      "hash_size_and_inventory_verified": true
+    },
+    {
+      "name": "platforms",
+      "bytes": 3497456,
+      "files_including_inventory": 110,
+      "inventory_verified": true,
+      "path": "reports/m2/platforms-stage19-final-evidence.tar.gz",
+      "sha256": "255797a2361f1292758cdbb78c8bdf8c20c89704858dbcabba49d93143b1bfc5",
+      "hash_size_and_inventory_verified": true
+    },
+    {
+      "name": "prior-selection",
+      "bytes": 2004187,
+      "files_including_inventory": 7291,
+      "inventory_verified": true,
+      "path": "reports/m2/prior-selection-stage19-final-evidence.tar.gz",
+      "sha256": "c3b6c9f7efbb8f9d60d0aa3477727eaec6b0895a356b523d502eab398007351b",
+      "hash_size_and_inventory_verified": true
+    },
+    {
+      "name": "release-build",
+      "bytes": 1959564,
+      "files_including_inventory": 113,
+      "inventory_verified": true,
+      "path": "reports/m2/release-build-stage19-final-evidence.tar.gz",
+      "sha256": "6d24016af93366319fb5242f8c9f80a57da6332198274a427bbae423b1f10dc0",
+      "hash_size_and_inventory_verified": true
+    },
+    {
+      "name": "runtime",
+      "bytes": 1646051,
+      "files_including_inventory": 129,
+      "inventory_verified": true,
+      "path": "reports/m2/runtime-stage19-final-evidence.tar.gz",
+      "sha256": "f94ee9c288fbd5157c16c0d987f85763d02b788dfabe350b161613279a3a79ce",
+      "hash_size_and_inventory_verified": true
+    },
+    {
+      "name": "source",
+      "bytes": 5034776,
+      "files_including_inventory": 2336,
+      "inventory_verified": true,
+      "path": "reports/m2/source-stage19-final-evidence.tar.gz",
+      "sha256": "512117386589bee1b68ed1355dc8d0525775abae6324cceab54dd1e69b10da61",
+      "hash_size_and_inventory_verified": true
+    },
+    {
+      "name": "validation",
+      "bytes": 2369149,
+      "files_including_inventory": 2309,
+      "inventory_verified": true,
+      "path": "reports/m2/validation-stage19-final-evidence.tar.gz",
+      "sha256": "eb7395ff6e4e2b4dbacaab6329fa7d4257f7bca33bb2b1322b62c8c6f4615dca",
+      "hash_size_and_inventory_verified": true
+    },
+    {
+      "name": "exploration-support-1",
+      "blob_count": 5906,
+      "bytes": 7431252,
+      "inventory_verified": true,
+      "path": "reports/m2/exploration-stage19-support-01-evidence.tar.gz",
+      "sha256": "c27e29bc0a8092bf9803a868b9b2e2e1da6782fdf1722648512c927b41bad9c8",
+      "uncompressed_unique_bytes": 27190958,
+      "hash_size_and_inventory_verified": true
+    }
+  ],
+  "historical_dependencies": [
+    {
+      "name": "class-lifecycle",
+      "path": "reports/m2/class-lifecycle-stage18-final-evidence.tar.gz",
+      "sha256": "50c67d1a47083956d08d5c5444ebdf54bcf5e6b4ac0be010641f2ea7efdeb6de",
+      "bytes": 1752505,
+      "hash_size_verified": true,
+      "payload_rewritten": false
+    },
+    {
+      "name": "exploration",
+      "path": "reports/m2/exploration-stage18-evidence.tar.gz",
+      "sha256": "9e226b18304278a74db30bbb0462a87054121ae93cfc224fbfc90fc7385cff5c",
+      "bytes": 1814949,
+      "hash_size_verified": true,
+      "payload_rewritten": false
+    },
+    {
+      "name": "exploration-history-1",
+      "path": "reports/m2/exploration-stage18-support-01-evidence.tar.gz",
+      "sha256": "c85deece0cc11e9b2d85fa9fe911e581d73990623b7b12985fac363d64101780",
+      "bytes": 46292188,
+      "hash_size_verified": true,
+      "payload_rewritten": false
+    },
+    {
+      "name": "exploration-history-2",
+      "path": "reports/m2/exploration-stage18-support-02-evidence.tar.gz",
+      "sha256": "9a3f4eed701edc76430de2e779738e3c3dada3aa85e3d3af81cb68dafcad6f17",
+      "bytes": 45885557,
+      "hash_size_verified": true,
+      "payload_rewritten": false
+    },
+    {
+      "name": "exploration-history-3",
+      "path": "reports/m2/exploration-stage18-support-03-evidence.tar.gz",
+      "sha256": "b20759c38d2f6e92c9ef213b02fb11ec64e1982c3247cacd8f6251552b834253",
+      "bytes": 21104951,
+      "hash_size_verified": true,
+      "payload_rewritten": false
+    },
+    {
+      "name": "frontend",
+      "path": "reports/m2/frontend-stage18-final-evidence.tar.gz",
+      "sha256": "cb4fd2efe0baebf59bd04bdadcf129665f91cc3cf1b98c1f750c1c954ec414a1",
+      "bytes": 185701,
+      "hash_size_verified": true,
+      "payload_rewritten": false
+    },
+    {
+      "name": "language",
+      "path": "reports/m2/language-stage18-final-evidence.tar.gz",
+      "sha256": "841bde3b331b3782c9e8daa721396663cc09411b35b60ca2647b1bf6209eb54c",
+      "bytes": 4056803,
+      "hash_size_verified": true,
+      "payload_rewritten": false
+    },
+    {
+      "name": "lifecycle",
+      "path": "reports/m2/lifecycle-stage18-final-evidence.tar.gz",
+      "sha256": "2822ab537ed13bd8a7336c2be84a48ca579159bdc7c3a609b1073c3acefe5df5",
+      "bytes": 904626,
+      "hash_size_verified": true,
+      "payload_rewritten": false
+    },
+    {
+      "name": "native-generics",
+      "path": "reports/m2/native-generics-stage18-final-evidence.tar.gz",
+      "sha256": "13f3a3c497a4c626435e15218e1a7017be1fe141da469ae27c5490b3d6e9bc65",
+      "bytes": 2316514,
+      "hash_size_verified": true,
+      "payload_rewritten": false
+    },
+    {
+      "name": "platforms",
+      "path": "reports/m2/platforms-stage18-final-evidence.tar.gz",
+      "sha256": "129649a7dff6a54ca417ddccba0e4290779c621193e75649be2a879797446adc",
+      "bytes": 3425421,
+      "hash_size_verified": true,
+      "payload_rewritten": false
+    },
+    {
+      "name": "prior-selection",
+      "path": "reports/m2/prior-selection-stage18-final-evidence.tar.gz",
+      "sha256": "d2c7cf51991bad4154bbe12e864b561f07a9caa5251b25387ad07865e0416332",
+      "bytes": 1893909,
+      "hash_size_verified": true,
+      "payload_rewritten": false
+    },
+    {
+      "name": "release-build",
+      "path": "reports/m2/release-build-stage18-final-evidence.tar.gz",
+      "sha256": "0231e85476567f430a7a27abab614f456360d19b7b9f536eb27851443af00298",
+      "bytes": 1878992,
+      "hash_size_verified": true,
+      "payload_rewritten": false
+    },
+    {
+      "name": "runtime",
+      "path": "reports/m2/runtime-stage18-final-evidence.tar.gz",
+      "sha256": "f9a402ed01e6d42f6809933bff22a44c1aeb318065dc82892603edf086a769e6",
+      "bytes": 1568345,
+      "hash_size_verified": true,
+      "payload_rewritten": false
+    },
+    {
+      "name": "source",
+      "path": "reports/m2/source-stage18-final-evidence.tar.gz",
+      "sha256": "f1b9400694d2d583eed1f413321b6f3223c7535d7b313f55aa503b01a407141c",
+      "bytes": 5495125,
+      "hash_size_verified": true,
+      "payload_rewritten": false
+    },
+    {
+      "name": "validation",
+      "path": "reports/m2/validation-stage18-final-evidence.tar.gz",
+      "sha256": "72b4913fb9bfa6b537e060e8f544b75fbaf8ef302d46cad6c307616653a701c5",
+      "bytes": 2344824,
+      "hash_size_verified": true,
+      "payload_rewritten": false
+    }
+  ],
+  "source_binding": {
+    "source_snapshot_copies": 5059,
+    "unique_source_files": 2284,
+    "upstream_source_snapshot_copies": 0,
+    "all_enumerated_implementation_source_payload_hashes_verified": true,
+    "git_request_response_hashes_verified": true
+  },
+  "gates": [
+    {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/m2_language.py",
+        "--verify-report",
+        "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/language-stage19-final-01"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "gate": "report",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "03ae555f11d2a112384a26c0ca73b1d60e22b988fbc68b0da579c7f8e5d8e9cf"
+    },
+    {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/m2_language.py",
+        "--verify-development",
+        "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/language-stage19-final-01"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "gate": "development",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "03ae555f11d2a112384a26c0ca73b1d60e22b988fbc68b0da579c7f8e5d8e9cf"
+    },
+    {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/m2_language.py",
+        "--verify-subset",
+        "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/language-stage19-final-01"
+      ],
+      "exit_code": 1,
+      "expected_exit_code": 1,
+      "gate": "subset",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "03ae555f11d2a112384a26c0ca73b1d60e22b988fbc68b0da579c7f8e5d8e9cf"
+    },
+    {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/m2_language.py",
+        "--verify-full",
+        "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/language-stage19-final-01"
+      ],
+      "exit_code": 1,
+      "expected_exit_code": 1,
+      "gate": "full",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "03ae555f11d2a112384a26c0ca73b1d60e22b988fbc68b0da579c7f8e5d8e9cf"
+    },
+    {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/m2_class_lifecycle.py",
+        "--verify-report",
+        "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/class-lifecycle-stage19-final-01"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "gate": "class-report",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "53d5836735f7782f89d6ff33eb9e84e302c225d6b12e5f9d0c9761d329303f5c"
+    },
+    {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/m2_class_lifecycle.py",
+        "--verify-contract",
+        "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/class-lifecycle-stage19-final-01"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "gate": "class-contract",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "53d5836735f7782f89d6ff33eb9e84e302c225d6b12e5f9d0c9761d329303f5c"
+    }
+  ],
+  "independent_reviews": {
+    "stage19-evidence-review-final.json": {
+      "binding_scope": "Evidence/oracle/artifact review; referenced final-build source hashes are bound indirectly to exact implementation, not relabeled as a direct production source review.",
+      "implementation_commit": "a0801b9b4d614f6d936d9c410f67a05be59e7733",
+      "path": "target/m2/stage19-evidence-review-final.json",
+      "sha256": "bb4a368f3f1026491be3da09a083d3f046d2900d6c2d91fec051adc66de8b53b",
+      "source_count": 98,
+      "source_hashes_bound_to_exact_commit": true
+    },
+    "stage19-final-source-review.json": {
+      "binding_scope": "Review enumerated source hashes are bound directly to exact implementation; original author/independent review scopes remain in each retained record.",
+      "implementation_commit": "a0801b9b4d614f6d936d9c410f67a05be59e7733",
+      "path": "target/m2/stage19-final-source-review.json",
+      "sha256": "c853e87c00b09628e9a4d5c66434e51c2fd469007bf19a5b028be5d41808ede2",
+      "source_count": 16,
+      "source_hashes_bound_to_exact_commit": true
+    },
+    "stage19-generic-design-review-final.json": {
+      "binding_scope": "Review enumerated source hashes are bound directly to exact implementation; original author/independent review scopes remain in each retained record.",
+      "implementation_commit": "a0801b9b4d614f6d936d9c410f67a05be59e7733",
+      "path": "target/m2/stage19-generic-design-review-final.json",
+      "sha256": "fa7749665a4fbc820434c2b241e7f8091cb89f8ff8ab57a65e272fb7461cb3f7",
+      "source_count": 16,
+      "source_hashes_bound_to_exact_commit": true
+    },
+    "stage19-runtime-final-review.json": {
+      "binding_scope": "Review enumerated source hashes are bound directly to exact implementation; original author/independent review scopes remain in each retained record.",
+      "implementation_commit": "a0801b9b4d614f6d936d9c410f67a05be59e7733",
+      "path": "target/m2/stage19-runtime-final-review.json",
+      "sha256": "d6c02b5f27fe7d5af90bed3be5f5741a5849da94e1d79f4588c476e83ddc4b10",
+      "source_count": 12,
+      "source_hashes_bound_to_exact_commit": true
+    },
+    "stage19-type-consumer-audit-final.json": {
+      "binding_scope": "Review enumerated source hashes are bound directly to exact implementation; original author/independent review scopes remain in each retained record.",
+      "implementation_commit": "a0801b9b4d614f6d936d9c410f67a05be59e7733",
+      "path": "target/m2/stage19-type-consumer-audit-final.json",
+      "sha256": "1e3b9709c7988cb3ff42d73931137236ecb55a5b71b54015646fee938325011f",
+      "source_count": 16,
+      "source_hashes_bound_to_exact_commit": true
+    }
+  },
+  "compatibility_complete": false,
+  "performance_targets_established": false,
+  "retained_binaries_executed": false,
+  "audit_helper": {
+    "path": "target/m2/stage19-post-seal-helper-final-01.py",
+    "sha256": "0e13bc10160d203c2429c7814faeb1be264f170a153fb2e8e9f1e50fbd14664f",
+    "bytes": 4649,
+    "source_utf8": "\"\"\"Read-only verification of Stage19 sealed archives, source proof and gate outcomes.\"\"\"\nfrom pathlib import Path\nimport datetime,hashlib,json,subprocess,sys,tarfile\nroot=Path.cwd();sys.path.insert(0,str(root/'tools'));import evidence\nsha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()\nread=lambda p:json.loads(p.read_bytes())\nsummary_path=root/'reports/m2/stage19-final-summary.json';summary=read(summary_path)\nprocess_path=root/'target/m2/stage19-package-captured-final-01/process.json';process=read(process_path)\nassert process['exit_code']==0 and process['helper']['stable']\nassert process['helper']['sha256_before']==summary['packaging_helper']['sha256']==process['helper']['sha256_after']\nrecords=dict(summary['archives'])\nfor index,row in enumerate(summary['exploration']['support_archives']):records['exploration-support-'+str(index+1)]=row\narchives=[]\nfor name,row in records.items():\n path=root/row['path'];assert sha(path)==row['sha256'] and path.stat().st_size==row['bytes'],name\n evidence.verify(path)\n archives.append(dict(name=name,**row,hash_size_and_inventory_verified=True))\nhistorical=[]\nfor name,row in summary['historical_dependencies']['archives'].items():\n path=root/row['path'];assert sha(path)==row['sha256'] and path.stat().st_size==row['bytes'],name\n historical.append(dict(name=name,path=row['path'],sha256=row['sha256'],bytes=row['bytes'],hash_size_verified=True,payload_rewritten=False))\nwith tarfile.open(root/summary['archives']['source']['path']) as stream:\n binding=json.load(stream.extractfile('source-verification.json'))\n assert hashlib.sha256(stream.extractfile('git-proof/request.bin').read()).hexdigest()==binding['git_request_sha256']\n assert hashlib.sha256(stream.extractfile('git-proof/stdout.bin').read()).hexdigest()==binding['git_response_sha256']\n helper=stream.extractfile('package_stage19_final.py').read();assert hashlib.sha256(helper).hexdigest()==summary['packaging_helper']['sha256']\n preflight=json.load(stream.extractfile('packaging-execution-preflight/invocation.json'));assert preflight['helper']['sha256']==summary['packaging_helper']['sha256']\n implementation={row['path']:row['sha256'] for row in binding['copies']}\n for name,digest in implementation.items():assert hashlib.sha256(stream.extractfile('implementation-sources/'+name).read()).hexdigest()==digest\n gate_rows=json.load(stream.extractfile('gates/report.json'));assert gate_rows==summary['gates']\n for row in gate_rows:\n  assert row['exit_code']==row['expected_exit_code']\n  for channel in ['stdout','stderr']:assert hashlib.sha256(stream.extractfile('gates/'+row['gate']+'.'+channel+'.bin').read()).hexdigest()==row[channel+'_sha256']\n for name,row in summary['independent_reviews'].items():assert hashlib.sha256(stream.extractfile(name).read()).hexdigest()==row['sha256']\nassert not summary['missing_or_running_suites']\nassert not summary['compatibility_complete'] and not summary['performance_targets_established']\nassert not summary['captured_binaries_executed_by_packaging']\ncode=Path(__file__).read_bytes()\nreport=dict(schema=1,utc=datetime.datetime.now(datetime.timezone.utc).isoformat(),status='pass',implementation_commit=summary['implementation_commit'],scope='Read-only checksum, archive-inventory, immutable-helper, exact source-copy and gate-result verification. No retained binary was executed.',summary=dict(path=str(summary_path.relative_to(root)),sha256=sha(summary_path)),packaging_process=dict(path=str(process_path.relative_to(root)),sha256=sha(process_path),exit_code=process['exit_code'],helper_stable=True),archives=archives,historical_dependencies=historical,source_binding=dict(source_snapshot_copies=binding['source_snapshot_copies'],unique_source_files=binding['unique_source_files'],upstream_source_snapshot_copies=binding['upstream_source_snapshot_copies'],all_enumerated_implementation_source_payload_hashes_verified=True,git_request_response_hashes_verified=True),gates=gate_rows,independent_reviews=summary['independent_reviews'],compatibility_complete=False,performance_targets_established=False,retained_binaries_executed=False,audit_helper=dict(path=str(Path(__file__).resolve().relative_to(root)),sha256=hashlib.sha256(code).hexdigest(),bytes=len(code),source_utf8=code.decode()))\nout=root/'reports/m2/stage19-post-seal-audit.json'\nwith out.open('x') as f:json.dump(report,f,indent=2);f.write('\\n')\nprint(json.dumps(dict(status='verified',new_archives=len(archives),historical_archive_hashes=len(historical),source_snapshot_copies=binding['source_snapshot_copies'],unique_source_files=binding['unique_source_files'],audit_path=str(out.relative_to(root)),audit_sha256=sha(out)),indent=2))\n"
+  }
+}

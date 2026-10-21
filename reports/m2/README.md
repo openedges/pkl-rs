@@ -24,8 +24,103 @@ and recursive diagnostic compression. Stage 17 adds persistent evaluator-local
 executable/type-use ownership, selected local const-property retries, and
 const-method lexical scope corrections. Stage 18 adds finite recursive generic
 argument environments, shared generic let roots, selected collection defaults
-and Reference validation, and let/for const-scope boundaries.
+and Reference validation, and let/for const-scope boundaries. Stage 19 shares
+runtime generic argument graphs, reclaims them iteratively, schedules nested
+defaults, and makes deep Reference metadata traversal stack safe.
 These checkpoints do not complete the language milestone.
+
+## Stage 19 local verification checkpoint
+
+Implementation `a0801b9b4d614f6d936d9c410f67a05be59e7733` is committed and pushed.
+Core implementation and independent Reference review used `gpt-6-astra / high`;
+Java comparisons, lifecycle tests, actual platform execution, and evidence audits
+used `gpt-6.1-sol / high`. The root agent implemented Reference traversal and
+reviewed the core ownership/default changes. Verification ran locally on macOS;
+M2 remains in progress.
+
+Runtime generic arguments now form an immutable shared graph. Substitution
+traverses the finite authored template and reuses instantiated arguments.
+Environment clones copy handles, and last-owner destruction drains metadata
+iteratively. Concurrent releases use `Arc::into_inner` to preserve reclamation.
+Nested collection defaults run as VM tasks, consuming fuel and tracing unfinished
+objects during descent and unwind. Reference normalization memoizes graph nodes;
+comparison and formatting use explicit work stacks. Exported metadata identity
+preserves alias declarations, arrow syntax, and exact constraint text without
+recursively escaping or expanding shared subgraphs.
+
+Independent review found a lost equal-class-ID shortcut in Reference subtype
+comparison; it was restored before final acquisition. The earlier candidate and
+its successful comparisons remain separate historical evidence. The prior
+constraint-equivalence rule was preserved because no Java witness established a
+correction for the suspected wrapper argument-identity issue.
+
+The [final summary](stage19-final-summary.json) records **1,821 independent
+cases, 1,819 raw matches, and the same two failures**, with **66 passing
+metamorphic relations**. All 23 additions match Java at their final fixture URIs:
+19 successful values and four expected errors. Original 1,798 definitions, input
+bytes, and 63 relations remain unchanged. The separate prior-selection replay
+retains 1,796 raw matches and the original cycle oracle error and remainder-zero
+diagnostic mismatch. No development exception was added.
+
+The [persistent contract](class-lifecycle-stage19-final-evidence.tar.gz) passes
+**1,870 calls across 230 executions of 115 sequences**. The original 108
+sequences and 1,782 calls remain preserved. All 16 historical lifecycle test
+files retain their assertions. New process-isolated tests use a 256 KiB evaluator
+stack and a 60-second timeout; child aborts, failures, and timeouts fail the
+parent test. They cover 768-deep arguments/defaults/Reference validation,
+captured closures, Host reentry, retries, GC, evaluator isolation, and terminal
+cleanup. Internal tests exercise 20,000-level shared graphs, concurrent last
+release, 2,048-level Reference metadata, and cancellation during both default
+construction phases. These depth controls are test workloads, not language
+compatibility limits.
+
+All [seven required checks](validation-stage19-final.json) pass, including
+**392 Rust tests and 194 Python tests**. One existing ignored Rust probe is
+excluded, and isolated child invocations are not counted again. Actual
+[Node and Chromium execution](platforms-stage19-final-evidence.tar.gz) passes
+**71 development scenarios per target**, preserving the prior 68 scenarios.
+The shared primitive corpus retains 6,078 engine matches and 6,076 Java matches
+per target, with the same two regex failures. M1 regressions preserve the prior
+frontend/value matches and the existing cycle, Host diagnostic, and upstream
+Java failures.
+
+The [exploration archive](exploration-stage19-evidence.tar.gz) and its
+[support archive](exploration-stage19-support-01-evidence.tar.gz) retain
+**13,900 original paths using 5,906 unique payload blobs**. Complete rehydration
+verifies original bytes, sizes, and modes. Historical Stage 18 archives remain
+explicit hash dependencies rather than duplicated payloads. The original 166
+observations retain identical Rust outcome bytes and all 25 nonmatches; one
+Java internal failure is now explicitly classified as an oracle error. Separate
+focused exploration records 66 matches, ten mismatches, and one oracle error
+across 77 observations. These overlapping counts are not added to coverage.
+
+The original 125-byte infinitely growing predicate is preserved unchanged.
+Its Stage 18 native-stack SIGABRT remains historical evidence. The new isolated
+VM test executes 150,000 VM steps three times with cancellation and
+reuse, then also drops a running VM. These steps include type/default scheduler
+work, not only bytecode instructions. The unchanged development adapter now
+reaches its instruction-budget error on the original input. Java instead raises
+an internal stack failure; this input remains outside passing compatibility
+claims. Reference metadata work within one instruction, expanded diagnostic
+text, arbitrary authored parser/compiler nesting, and uniform wall-time
+cancellation bounds remain open.
+
+The [source audit and gate captures](source-stage19-final-evidence.tar.gz) bind
+**5,059 captured project source copies across 2,284 unique paths** to the exact
+implementation commit. No upstream source copies are included; reference pins
+and oracle provenance are separate checks. The independent
+[post-seal audit](stage19-post-seal-audit.json) verifies all 13 new archives,
+15 historical archive dependencies, captured source identities, and gate results.
+All 474 requirements and 16 partial
+mappings remain; 2,821 overlapping accounting rows contain 1,821 ready, 960
+unimplemented, and 40 unmapped entries. Exact source-symbol migrations point to
+the resumable default constructor and retain the original obligations. Integrity
+and development gates pass; strict selected and full compatibility
+gates fail, retaining 1,950 full-gate failure reasons. Inventory counts are not
+completion percentages. Remaining language/type/default/scope
+compatibility, product APIs, release platforms, and execution-time/peak-RSS
+parity remain open. **Stage 19 closes only its bounded local development
+contract.**
 
 ## Stage 18 local verification checkpoint
 
