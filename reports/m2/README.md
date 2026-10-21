@@ -29,8 +29,120 @@ runtime generic argument graphs, reclaims them iteratively, schedules nested
 defaults, and makes deep Reference metadata traversal stack safe. Stage 20
 preserves nullable defaults through amendments and evaluator lifecycles. Stage 21
 adds selected direct generic constructors, argument-source diagnostics, and their
-shared-engine lifecycle checks.
+shared-engine lifecycle checks. Stage 22 adds selected strict Map construction,
+lookup, typing, equality, hashing, iteration and stringification.
 These checkpoints do not complete the language milestone.
+
+## Stage 22 local verification checkpoint
+
+Implementation `bb30657aecc0be64cdbf1510e949053794b1ca8d` is committed and pushed.
+Runtime implementation used `gpt-6-astra / xhigh`; Java comparisons and independent
+lifecycle/platform review used `gpt-6.1-sol / high`. Root implemented Map diagnostic
+rendering and the expression-string adapter, independently reviewed the remaining
+runtime changes, and coordinated local macOS verification. Author, independent
+source, comparison, and packaging reviews retain their separate scopes.
+
+Strict Map construction evaluates each key and value before hashing and inserting
+that pair. Duplicate keys preserve their first position and replace their value.
+The shared VM now supports selected lookup, typing, defaults, equality, hashing,
+iteration, and non-forcing stringification. Its hash trie follows Java's pinned
+Paguro implementation, while insertion order remains separate from internal table
+order. This separation also preserves heap values omitted from the insertion-order
+list when structurally equal keys acquire different cache-order-dependent hashes.
+Builder, lookup, and comparison continuations remain rooted across Host
+suspension, re-entry, failure, and retry.
+
+The [final summary](stage22-final-summary.json) records **2,131 independent
+expressions: 2,129 raw matches and the original cycle
+oracle error and integer `% 0` diagnostic mismatch**. All 191 additions match:
+108 successes and 83 expected errors. All 76 metamorphic relations pass. The
+[persistent suite](class-lifecycle-stage22-final-evidence.tar.gz) runs 129 sequences
+twice, with **2,166 matching calls**. The previous 1,940
+definitions, 72 relations, 122 sequences, 2,026 calls, 19 lifecycle test files,
+and 76 platform scenarios are preserved. No development exception was added.
+
+All seven [required local checks](validation-stage22-final.json) pass:
+**415 Rust tests and 194 Python tests**, formatting, Clippy, Wasm compilation,
+reference pins, and manifest freshness. One existing ignored Rust probe remains
+excluded. Nine [native lifecycle tests](native-map-stage22-final-evidence.tar.gz)
+cover unpublished builders, pending queries and comparisons, Host failure/retry,
+24 nonterminal cancellations, evaluator isolation, stale handles, terminal release,
+hash-trie expansion, and retention of values present only in the internal table.
+Eight tests use ordinary test-thread stacks. The process-isolated test hashes a
+768-deep Map on a 256 KiB evaluator thread with a 60-second parent deadline;
+compilation uses the ordinary stack. These establish bounded lifetime and stack
+behavior, not Java-equivalent resource limits or peak-RSS parity.
+
+[Actual Node and Chromium](platforms-stage22-final-evidence.tar.gz) each pass
+78 development scenarios. All 6,078 shared primitive results agree across engines;
+each target matches Java in 6,076 cases, preserving the two regex failures.
+The architecture contract passes and strict primitive compatibility fails.
+M1 frontend, runtime, and lifecycle comparisons retain their earlier successful
+results and known cycle/complete-diagnostic differences. No new hosted CI,
+Linux, or Windows execution is claimed.
+
+Preparation exposed a small-stack Map regression; the first full acquisition then
+failed the unchanged generic-metadata small-stack test and the existing Node
+scenario with 23 List keys in a Mapping. Optional boxed Map metadata and a smaller
+VM scheduler remove the extra stack frames. Completed hash preparations now
+accumulate within one bytecode instruction, preventing repeated preparation of
+different key sets. The original stacks, depths, deadlines, and instruction
+budgets remain unchanged. All final results use the corrected `final-02` sources.
+
+The [exploration archive](exploration-stage22-evidence.tar.gz),
+[interim candidates](exploration-stage22-superseded-evidence.tar.gz), and
+[superseded first acquisition](exploration-stage22-superseded-final01-evidence.tar.gz) retain
+original inputs, failed hypotheses, superseded acquisition, helpers, and final
+artifact replays. The final artifacts match the 191 selected original exploratory
+URIs and 70 focused persistent calls. Broader 201-case exploration retains 186 raw
+matches and **15 mismatches**, covering missing/builtin diagnostics and remaining
+compound output and API behavior. Twelve separate late observations retain nine
+matches and three Java internal-error outcomes; five matches also belong to the
+selected set. These observations overlap selected coverage and are not additional
+coverage denominators or new development exceptions.
+
+Failed preparations include an initial compiler error without a separate raw
+capture and small-stack runs without retained per-run binary/source closures.
+Stopping the first full acquisition also interrupted its outer capture wrappers:
+the language and persistent runs have no final outer process record. Their raw
+child output, stop ledger, and tool-returned status are retained; truncated tool
+output is identified explicitly. None of these superseded or incomplete captures
+counts as final passing evidence. The initial two-archive packaging attempt
+exceeded its unchanged 80 MB limit. Its receipt and exact helper/configuration
+snapshots are published; the failed derived archive bytes remain local under
+`target/m2/stage22-failed-seal-artifacts-01`. All original raw captures are retained
+in the three corrected archives. The exploration audit verifies
+39,437 original paths and all 39,449 inventory records, with no cache exclusions,
+without executing retained artifacts.
+
+The [source and gate audit](source-stage22-final-evidence.tar.gz) binds
+**5,557 captured source copies across 2,629 unique
+project paths** to the exact implementation commit. No upstream source copies
+are claimed; reference pins and oracle provenance are verified separately.
+All 474 requirements and 16 partial mappings remain. The 3,131 overlapping
+accounting rows contain 2,131 ready, 960 unimplemented, and 40 unmapped entries.
+Integrity and development gates pass; strict selected and full gates fail with
+the same 1,950 full-gate failure reasons. These counts are not completion
+percentages. The [post-seal audit](stage22-post-seal-audit.json) checks all
+12 final archives, source bindings, review records, gate
+outcomes, immutable packaging execution, and historical identities without
+running retained artifacts.
+
+The first final packaging attempt rejected the four new metamorphic relations
+because they were sorted between existing records. Its prefix-only check was
+incorrect: all 72 prior complete records and their relative order were unchanged.
+The corrected check rejects duplicate identities and compares the complete prior
+records in their original relative order. The revised helper received a separate
+independent review; the failed immutable helper, invocation, raw output, and
+process record remain in the source archive's `helper-history` directory.
+
+**Stage 22 closes only the bounded strict-Map development contract.**
+Set, remaining Map APIs, JVM identity-dependent key order, mutable zero-hash key
+boundaries, general compound stringification, remaining diagnostics, annotation
+and module behavior, Java stack-error bytes, complete language/API/platform
+coverage, and execution-time/peak-RSS parity remain open. The small-stack hashing
+test does not establish resource bounds for synchronous compound diagnostic
+rendering.
 
 ## Stage 21 local verification checkpoint
 
