@@ -144,7 +144,7 @@ def sources():
              "tools/java/M1LifecycleProbe.java", "tools/tests/test_m1_lifecycle.py"]
     paths = [ROOT / relative for relative in fixed]
     paths.extend(path for path in sorted((ROOT / "crates").rglob("*"))
-                 if path.is_file() and (path.suffix == ".rs" or path.name == "Cargo.toml"))
+                 if path.is_file() and (path.suffix in {".rs", ".pkl"} or path.name == "Cargo.toml"))
     return paths
 
 

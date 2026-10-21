@@ -1,0 +1,5 @@
+import "pkl:ref"
+class D extends ref.Domain { function renderReference(r): String = r.getData().toString() }
+local d = new D {}
+class Data { value = throw("data forced") }
+result = ref.Reference(d, String, new Data {}).getPath().length

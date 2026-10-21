@@ -1,0 +1,5 @@
+import "pkl:ref"
+class D extends ref.Domain { function renderReference(r): String = "ok" }
+local d = new D {}
+class H { p: String }
+result = ref.Reference(d, H, null).p.getPath()[0] is ref.Access

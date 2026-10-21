@@ -1,0 +1,7 @@
+import "pkl:ref"
+class D extends ref.Domain { function renderReference(r): String = "ok" }
+local d = new D {}
+class Data { value = throw("hash data forced") }
+local key = ref.Reference(d, String, new Data {})
+local m = new Mapping { [key] = "present" }
+result = m.length

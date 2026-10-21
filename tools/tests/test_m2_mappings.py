@@ -97,6 +97,10 @@ class ReviewedMappingTests(unittest.TestCase):
             mapping[field] = value
             with self.subTest(field=field, value=value), self.assertRaises(ValueError):
                 self.apply(mapping)
+        for malformed in (None, [], 'not a mapping', {}):
+            with self.subTest(malformed=malformed), self.assertRaises(ValueError):
+                m2_manifest.apply_mappings(self.requirements, self.cases, malformed,
+                                           self.baseline, self.root)
 
     def test_scope_cannot_claim_complete_while_retaining_known_work(self):
         for implementation, tests, remaining in [

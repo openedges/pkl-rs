@@ -83,6 +83,7 @@ def execute(output):
     metadata = oracle.ensure_oracle(ROOT, fetch=False)
     output.mkdir(parents=True)
     tracked = sorted({str(path.relative_to(ROOT)) for path in (ROOT / "crates/pkl-runtime/src").rglob("*.rs")}
+                     | {str(path.relative_to(ROOT)) for path in (ROOT / "crates/pkl-runtime/src").rglob("*.pkl")}
                      | {"crates/pkl-runtime/tests/frontend.rs", "crates/pkl-runtime/Cargo.toml", "Cargo.toml", "Cargo.lock", "rust-toolchain.toml",
                         "tools/java/M1FrontendProbe.java", "tools/m1_frontend.py"})
     initial_hashes = {path: oracle.sha256(ROOT / path) for path in tracked}

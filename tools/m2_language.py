@@ -84,7 +84,8 @@ def source_paths(root=ROOT):
     paths = set(contract.INPUTS) | {'tools/m2_manifest.py', 'tools/m2_language.py',
             'tools/m2_generate.py', 'tools/m2_identifier_tables.py', 'tools/java/M2IdentifierProbe.java', 'tools/java/M2LanguageProbe.java', str(contract.MANIFEST), 'tools/oracle.py', 'oracle.lock.json',
             'Cargo.toml', 'Cargo.lock', 'rust-toolchain.toml'}
-    for directory, pattern in [('crates', '*.rs'), ('crates', 'Cargo.toml'), ('tests/fixtures/m2', '*')]:
+    for directory, pattern in [('crates', '*.rs'), ('crates', '*.pkl'), ('crates', 'Cargo.toml'),
+                               ('tests/fixtures/m2', '*')]:
         paths.update(str(p.relative_to(root)) for p in (root / directory).rglob(pattern) if p.is_file())
     return sorted(paths)
 

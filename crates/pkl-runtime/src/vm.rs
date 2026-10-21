@@ -10,11 +10,16 @@ use crate::source::Span;
 use crate::value::{ErrorKind, ObjectId, RuntimeError, RuntimeFrame, Value};
 pub mod collections;
 pub(crate) mod equality;
+pub(crate) mod reference;
 mod typecheck;
 use typecheck::{TypeDestination, TypeRun};
 
 #[derive(Clone, Debug)]
 pub enum Instruction {
+    LoadRefModule,
+    BuiltinTypeAlias(Arc<str>),
+    BuiltinClass(TypeCheck),
+    ReferenceRenderMethod,
     Constant(Value),
     Input(usize),
     LoadLocal(usize),
@@ -166,6 +171,17 @@ pub enum Instruction {
 /// resumable checks and lazy wrappers; structural/function types remain unsupported.
 #[derive(Clone, Debug)]
 pub enum TypeCheck {
+    Unknown,
+    IntegerAlias {
+        name: Arc<str>,
+        min: i64,
+        max: i64,
+    },
+    RefDomain,
+    Reference {
+        domain: Box<TypeCheck>,
+        referent: Box<TypeCheck>,
+    },
     Any,
     Nothing,
     NonNull,
@@ -217,10 +233,21 @@ impl TypeCheck {
             _ => self,
         }
     }
-    fn equivalent(&self, other: &Self) -> bool {
+    pub(crate) fn equivalent(&self, other: &Self) -> bool {
         let left = self.unaliased();
         let right = other.unaliased();
         match (left, right) {
+            (
+                Self::Reference {
+                    domain: ad,
+                    referent: ar,
+                },
+                Self::Reference {
+                    domain: bd,
+                    referent: br,
+                },
+            ) => ad.equivalent(bd) && ar.equivalent(br),
+            (Self::IntegerAlias { name: a, .. }, Self::IntegerAlias { name: b, .. }) => a == b,
             (Self::Nullable(a), Self::Nullable(b)) => a.equivalent(b),
             (Self::StringLiteral(a), Self::StringLiteral(b)) => a == b,
             (Self::Class { id: a, .. }, Self::Class { id: b, .. }) => a == b,
@@ -268,7 +295,9 @@ impl TypeCheck {
                     && ac.iter().zip(bc).all(|(a, b)| a.block == b.block)
             }
             (
-                Self::Any
+                Self::Unknown
+                | Self::RefDomain
+                | Self::Any
                 | Self::Nothing
                 | Self::NonNull
                 | Self::Null
@@ -285,7 +314,7 @@ impl TypeCheck {
     }
     fn noop(&self) -> bool {
         match self {
-            Self::Any => true,
+            Self::Any | Self::Unknown => true,
             Self::Alias(inner) | Self::GenericAlias(inner) => inner.noop(),
             Self::Union { types, .. } => types.iter().all(Self::noop),
             _ => false,
@@ -293,7 +322,18 @@ impl TypeCheck {
     }
     fn accepts(&self, value: &Value, heap: &Heap) -> bool {
         match self {
-            Self::Any => true,
+            Self::Any | Self::Unknown => true,
+            Self::RefDomain => Self::Class {
+                id: reference::DOMAIN_ID,
+                name: Arc::from("Domain"),
+            }
+            .accepts(value, heap),
+            Self::Reference { domain, referent } => {
+                matches!(value, Value::Object(id) if heap.get(*id).ok().and_then(|o| o.reference.as_ref()).is_some_and(|r| domain.accepts(&r.domain, heap) && reference::is_subtype(&r.referent, &reference::normalize(referent, ""), heap)))
+            }
+            Self::IntegerAlias { min, max, .. } => {
+                matches!(value,Value::Int(i) if i>=min && i<=max)
+            }
             Self::Nothing => false,
             Self::NonNull => !matches!(value, Value::Null),
             Self::Null => matches!(value, Value::Null),
@@ -304,7 +344,7 @@ impl TypeCheck {
             Self::String => matches!(value, Value::String(_)),
             Self::Bytes => matches!(value, Value::Bytes(_)),
             Self::Collection(kind) => {
-                matches!(value, Value::Object(id) if heap.get(*id).is_ok_and(|object| object.collection_kind == *kind && !object.is_module) && collections::typed_class(heap, *id).is_ok_and(|class| class.is_none()))
+                matches!(value, Value::Object(id) if heap.get(*id).is_ok_and(|object| object.collection_kind == *kind && !object.is_module && object.reference.is_none() && !object.ref_module) && collections::typed_class(heap, *id).is_ok_and(|class| class.is_none()))
             }
             Self::ParameterizedCollection { kind, .. } => {
                 Self::Collection(*kind).accepts(value, heap)
@@ -348,6 +388,7 @@ impl TypeCheck {
 /// Source metadata is parallel to bytecode, so diagnostics add no VM dispatches.
 #[derive(Clone, Debug, Default)]
 pub struct BlockMetadata {
+    pub source: Option<Arc<crate::value::RuntimeSource>>,
     pub hidden: bool,
     pub spans: Vec<Option<Span>>,
     pub member: Arc<str>,
@@ -375,17 +416,60 @@ pub struct Program {
     pub metadata: Vec<BlockMetadata>,
     pub objects: Vec<Vec<Member>>,
     pub entry: usize,
+    pub(crate) reference_render_block: usize,
+    pub(crate) access_members: Vec<Member>,
 }
 
 impl Program {
-    pub fn new(blocks: Vec<Vec<Instruction>>) -> Self {
+    pub fn new(mut blocks: Vec<Vec<Instruction>>) -> Self {
+        let reference_render_block = blocks.len();
+        blocks.push(vec![
+            Instruction::LoadLocal(0),
+            Instruction::ReferenceRenderMethod,
+            Instruction::LoadLocal(0),
+            Instruction::Call {
+                arity: 1,
+                method: true,
+            },
+            Instruction::CheckType(TypeCheck::String),
+            Instruction::Return,
+        ]);
+        let mut metadata = vec![BlockMetadata::default(); blocks.len()];
+        let source = crate::stdlib_sources::reference();
+        let expression = "getDomain().renderReference(this)";
+        let start = source
+            .text
+            .find(expression)
+            .expect("pinned reference render expression");
+        let span = Span::new(start, start + expression.len());
+        let return_start = source
+            .text
+            .find("function toString(): String")
+            .expect("reference method")
+            + "function toString(): ".len();
+        metadata[reference_render_block] = BlockMetadata {
+            source: Some(source),
+            spans: vec![
+                Some(span),
+                Some(span),
+                Some(span),
+                Some(span),
+                Some(Span::new(return_start, return_start + 6)),
+                None,
+            ],
+            member: Arc::from("#Reference.toString"),
+            ..BlockMetadata::default()
+        };
+        let access_members = reference::access_members(&mut blocks, &mut metadata);
         Self {
             module_name: Arc::from(""),
             module_template: None,
-            metadata: vec![BlockMetadata::default(); blocks.len()],
+            metadata,
             blocks,
             objects: Vec::new(),
             entry: 0,
+            reference_render_block,
+            access_members,
         }
     }
 }
@@ -709,6 +793,10 @@ impl Vm {
     pub fn is_closed(&self) -> bool {
         matches!(self.state, State::Closed)
     }
+    pub(crate) fn is_reference(&self, value: &Value) -> bool {
+        matches!(value,Value::Object(id) if self.heap.get(*id).is_ok_and(|object| object.reference.is_some()))
+    }
+
     pub fn heap_stats(&self) -> HeapStats {
         self.heap.stats()
     }
@@ -903,6 +991,7 @@ impl Vm {
             {
                 if !frame.callsite_hidden {
                     error.frames.push(RuntimeFrame {
+                        source: metadata.source.clone(),
                         span: if error.frames.is_empty() {
                             error.span.unwrap_or(*span)
                         } else {
@@ -923,6 +1012,7 @@ impl Vm {
                     && let Some(value_span) = metadata.value_span
                 {
                     error.frames.push(RuntimeFrame {
+                        source: metadata.source.clone(),
                         span: value_span,
                         member: metadata.member.clone(),
                     });
@@ -946,6 +1036,7 @@ impl Vm {
                 && let Some(run) = &caller.type_run
             {
                 error.frames.push(RuntimeFrame {
+                    source: None,
                     span,
                     member: run.member.clone(),
                 });
@@ -1410,6 +1501,27 @@ impl Vm {
         members: &[Member],
     ) -> Result<(), RuntimeError> {
         self.validate_const_overrides(parent, members)?;
+        if collections::typed_class(&self.heap, parent)?
+            .is_some_and(|c| c.id == reference::ACCESS_ID)
+        {
+            for member in members {
+                if !member.local
+                    && !member.method
+                    && matches!(member.name.as_ref(), "isProperty" | "isSubscript")
+                {
+                    let mut error = RuntimeError::new(
+                        ErrorKind::Type,
+                        format!("Cannot assign to fixed property `{}`.", member.name),
+                    );
+                    error.span = self
+                        .program
+                        .metadata
+                        .get(member.code)
+                        .and_then(|m| m.declaration);
+                    return Err(error);
+                }
+            }
+        }
         let mut ancestor = Some(parent);
         let mut declared = BTreeSet::new();
         let mut property_names = Vec::new();
@@ -1488,6 +1600,9 @@ impl Vm {
         arguments: Vec<Value>,
         method: bool,
     ) -> Result<(), RuntimeError> {
+        if let Some(native) = self.heap.get(id)?.native_function.clone() {
+            return self.invoke_reference_native(native, arguments);
+        }
         let arity = arguments.len();
         let object = self.heap.get(id)?;
         let function = object
@@ -1512,6 +1627,7 @@ impl Vm {
                 && let Some(span) = metadata.declaration
             {
                 error.frames.push(RuntimeFrame {
+                    source: None,
                     span,
                     member: metadata.member.clone(),
                 });
@@ -1576,6 +1692,45 @@ impl Vm {
         };
         frame.pc += 1;
         match instruction {
+            Instruction::BuiltinTypeAlias(name) => {
+                let id = self.heap.find_type_alias(&name).unwrap_or_else(|| {
+                    self.heap.allocate(Object {
+                        type_alias: Some(name),
+                        ..Object::default()
+                    })
+                });
+                self.stack.push(Value::TypeAlias(id));
+            }
+            Instruction::LoadRefModule => {
+                let id = self.heap.allocate(Object {
+                    ref_module: true,
+                    ..Object::default()
+                });
+                self.stack.push(Value::Object(id));
+            }
+            Instruction::BuiltinClass(ty) => {
+                let value = self.builtin_class(ty);
+                self.stack.push(value);
+            }
+            Instruction::ReferenceRenderMethod => {
+                let id = self.pop()?.as_object()?;
+                let domain = self
+                    .heap
+                    .get(id)?
+                    .reference
+                    .as_ref()
+                    .ok_or_else(|| invalid("reference render receiver"))?
+                    .domain
+                    .as_object()?;
+                self.force(
+                    domain,
+                    domain,
+                    Arc::from("renderReference"),
+                    false,
+                    true,
+                    true,
+                )?;
+            }
             Instruction::Swap
             | Instruction::BeginCollection { .. }
             | Instruction::EndCollection
@@ -1704,7 +1859,13 @@ impl Vm {
             }
             Instruction::ToString => {
                 let value = self.pop()?;
-                self.stack.push(Value::string(scalar_string(&value)?));
+                if let Value::Object(id) = value
+                    && self.heap.get(id)?.reference.is_some()
+                {
+                    self.render_reference(id)?;
+                } else {
+                    self.stack.push(Value::string(scalar_string(&value)?));
+                }
             }
             Instruction::TestType(ty) => {
                 let value = self.pop()?;
@@ -1742,10 +1903,22 @@ impl Vm {
                     Instruction::GetConstMember(_) | Instruction::GetConstMethod(_)
                 );
                 let receiver = self.pop()?;
-                if matches!(receiver, Value::Function(_)) && method && name.as_ref() == "apply" {
+                if method && name.as_ref() == "getClass" {
+                    let function = self.native_reference_method(receiver, "getClass");
+                    self.stack.push(function);
+                } else if matches!(receiver, Value::Function(_))
+                    && method
+                    && name.as_ref() == "apply"
+                {
                     self.stack.push(receiver);
+                } else if method && name.as_ref() == "toString" && receiver.as_object().is_err() {
+                    let function = self.native_reference_method(receiver, "scalarToString");
+                    self.stack.push(function);
                 } else {
                     let receiver = receiver.as_object()?;
+                    if self.reference_member(receiver, name, method)? {
+                        return Ok(());
+                    }
                     if needs_const {
                         self.require_const(receiver, name, false, method)?;
                     }
@@ -1917,6 +2090,31 @@ impl Vm {
                 let Value::Class(parent) = self.pop()? else {
                     return Err(RuntimeError::new(ErrorKind::Type, "Expected a class."));
                 };
+                if let Some(ty) = &self.heap.get(parent)?.builtin_type
+                    && !matches!(
+                        ty,
+                        TypeCheck::RefDomain
+                            | TypeCheck::Class {
+                                id: reference::ACCESS_ID,
+                                ..
+                            }
+                    )
+                {
+                    let name = reference::type_name(ty, &self.program.module_name);
+                    let name = if matches!(ty, TypeCheck::Reference { .. }) {
+                        "pkl.ref#Reference"
+                    } else {
+                        &name
+                    };
+                    let mut error = RuntimeError::new(
+                        ErrorKind::Type,
+                        format!(
+                            "Cannot instantiate, or amend an instance of, external class `{name}`."
+                        ),
+                    );
+                    error.hint=Some("To create an instance of an external class, use its literal syntax or constructor method.\nExamples:\n* `123` uses literal syntax to create an instance of class `Int`.\n* `Pair(1, 2)` uses the `Pair()` constructor method to create an instance of class `Pair`.".into());
+                    return Err(error);
+                }
                 let class = self
                     .heap
                     .get(parent)?
@@ -1986,8 +2184,10 @@ impl Vm {
                 } else {
                     None
                 };
-                if let Some(id) = parent {
-                    self.heap.get(id)?;
+                if let Some(id) = parent
+                    && self.heap.get(id)?.reference.is_some()
+                {
+                    return Err(collections::external_amendment_error("pkl.ref#Reference"));
                 }
                 let members = self
                     .program
@@ -2249,12 +2449,25 @@ impl Vm {
                 {
                     let receiver = force.receiver;
                     let (ty, span, member, owner) = force.inherited_types.remove(0);
-                    let mut frames = vec![RuntimeFrame { span, member }];
+                    let source = self
+                        .heap
+                        .get(owner)?
+                        .members
+                        .iter()
+                        .find(|m| m.name == force.name && !m.method)
+                        .and_then(|m| self.program.metadata.get(m.code))
+                        .and_then(|m| m.source.clone());
+                    let mut frames = vec![RuntimeFrame {
+                        source,
+                        span,
+                        member,
+                    }];
                     let frame = self.frames.last().expect("active frame");
                     if let Some(metadata) = self.program.metadata.get(frame.block)
                         && let Some(span) = metadata.value_span
                     {
                         frames.push(RuntimeFrame {
+                            source: metadata.source.clone(),
                             span,
                             member: metadata.member.clone(),
                         });
@@ -2279,6 +2492,7 @@ impl Vm {
                 {
                     let cast = force.collection_casts.remove(0);
                     let mut frames = vec![RuntimeFrame {
+                        source: None,
                         span: cast.span,
                         member: cast.member,
                     }];
@@ -2287,6 +2501,7 @@ impl Vm {
                         && let Some(span) = metadata.value_span
                     {
                         frames.push(RuntimeFrame {
+                            source: metadata.source.clone(),
                             span,
                             member: metadata.member.clone(),
                         });
@@ -2542,6 +2757,8 @@ fn compile_module_configured(
         type_scopes: Vec::new(),
         modifiers: Vec::new(),
         constraint_module: false,
+        alias_frames: Vec::new(),
+        constraint_origins: BTreeMap::new(),
         active_type_parameters: BTreeMap::new(),
         parameter_spans: BTreeMap::new(),
         function_counts: BTreeMap::new(),
@@ -2611,12 +2828,50 @@ struct Compiler<'a> {
     type_scopes: Vec<Vec<crate::syntax::Member>>,
     modifiers: Vec<crate::syntax::Modifier>,
     constraint_module: bool,
+    /// Alias use sites retained separately from executable constraint blocks.
+    alias_frames: Vec<RuntimeFrame>,
+    constraint_origins: BTreeMap<usize, (Vec<RuntimeFrame>, Vec<RuntimeFrame>)>,
     active_type_parameters: BTreeMap<String, TypeCheck>,
     parameter_spans: BTreeMap<String, Span>,
     function_counts: BTreeMap<String, usize>,
     entry_counts: BTreeMap<String, usize>,
     function_names: BTreeMap<Span, String>,
     instrument: bool,
+}
+
+fn authored_type_constraints(ty: &crate::syntax::Type) -> bool {
+    use crate::syntax::TypeKind;
+    match &ty.kind {
+        TypeKind::Constrained { .. } => true,
+        TypeKind::Named { arguments, .. } => arguments.iter().any(authored_type_constraints),
+        TypeKind::Nullable(inner) => authored_type_constraints(inner),
+        TypeKind::Union { types, .. } => types.iter().any(authored_type_constraints),
+        TypeKind::Function {
+            parameters,
+            return_type,
+        } => {
+            parameters.iter().any(authored_type_constraints)
+                || authored_type_constraints(return_type)
+        }
+        _ => false,
+    }
+}
+
+fn reference_constrained_type(check: &TypeCheck) -> Option<&TypeCheck> {
+    match check {
+        TypeCheck::Constrained { .. } => Some(check),
+        TypeCheck::Nullable(inner) | TypeCheck::Alias(inner) | TypeCheck::GenericAlias(inner) => {
+            reference_constrained_type(inner)
+        }
+        TypeCheck::ParameterizedCollection { arguments, .. } => arguments
+            .iter()
+            .find_map(|(ty, _)| reference_constrained_type(ty)),
+        TypeCheck::Union { types, .. } => types.iter().find_map(reference_constrained_type),
+        TypeCheck::Reference { domain, referent } => {
+            reference_constrained_type(domain).or_else(|| reference_constrained_type(referent))
+        }
+        _ => None,
+    }
 }
 
 impl Compiler<'_> {
@@ -2732,6 +2987,7 @@ impl Compiler<'_> {
         let index = self.program.blocks.len();
         self.program.blocks.push(code.instructions);
         self.program.metadata.push(BlockMetadata {
+            source: None,
             hidden: false,
             spans: code.spans,
             member: Arc::from(self.member.as_str()),
@@ -2774,6 +3030,15 @@ impl Compiler<'_> {
         use crate::resolver::Binding;
         use crate::syntax::{BinaryOp, ExprKind};
         match &expression.kind {
+            ExprKind::Import { uri } => {
+                if uri == "pkl:ref" {
+                    output.push(Instruction::LoadRefModule);
+                } else {
+                    output.push(Instruction::Unsupported(Arc::from(format!(
+                        "module import `{uri}` is not implemented"
+                    ))));
+                }
+            }
             ExprKind::Parenthesized(inner) => self.expression(inner, output)?,
             ExprKind::Class {
                 type_parameters,
@@ -2845,7 +3110,14 @@ impl Compiler<'_> {
                 )));
             }
             ExprKind::New { ty, members } => {
-                let check = self.compile_type(ty)?;
+                let check = match self.compile_type(ty) {
+                    Ok(check) => check,
+                    Err(error) => {
+                        let span = error.span.unwrap_or(ty.span);
+                        output.push_at(Instruction::Fail(error), span);
+                        return Ok(());
+                    }
+                };
                 if let TypeCheck::Collection(kind)
                 | TypeCheck::ParameterizedCollection { kind, .. } = check.unaliased()
                 {
@@ -2904,7 +3176,15 @@ impl Compiler<'_> {
                 output.push(Instruction::Constant(Value::string("")));
                 for part in parts {
                     self.expression(part, output)?;
-                    output.push(Instruction::ToString);
+                    output.push_at(
+                        Instruction::ToString,
+                        self.resolved
+                            .module
+                            .interpolation_spans
+                            .get(&part.span)
+                            .copied()
+                            .unwrap_or(expression.span),
+                    );
                     output.push(Instruction::Add);
                 }
             }
@@ -2977,6 +3257,12 @@ impl Compiler<'_> {
                     .get(&expression.span)
                     .ok_or_else(|| invalid("missing static binding"))?
                 {
+                    Binding::BaseTypeAlias => output.push(Instruction::BuiltinTypeAlias(name)),
+                    Binding::BaseClass => {
+                        let ty = reference::base_type(&name)
+                            .ok_or_else(|| unsupported_type("builtin class value"))?;
+                        output.push(Instruction::BuiltinClass(ty));
+                    }
                     Binding::BaseConstant => output.push(Instruction::Constant(Value::Float(
                         if name.as_ref() == "NaN" {
                             f64::NAN
@@ -3276,6 +3562,7 @@ impl Compiler<'_> {
                     body: start..output.len(),
                     writes_slot: name != "_",
                     frame: RuntimeFrame {
+                        source: None,
                         span: expression.span,
                         member: Arc::from(self.member.as_str()),
                     },
@@ -3336,7 +3623,18 @@ fn type_error_at_width(
     heap: &Heap,
     limit: usize,
 ) -> Result<RuntimeError, RuntimeError> {
-    let actual_type = crate::diagnostic_values::type_name(actual, heap, module)?;
+    let actual_reference = if let Value::Object(id) = actual {
+        heap.get(*id)?.reference.as_ref()
+    } else {
+        None
+    };
+    let actual_type = if matches!(expected.unaliased(), TypeCheck::Reference { .. })
+        && let Some(reference) = actual_reference
+    {
+        reference::export_type_name(reference, heap, module)?
+    } else {
+        crate::diagnostic_values::type_name(actual, heap, module)?
+    };
     let value = crate::diagnostic_values::render(actual, heap, module, limit)?;
     if matches!(expected.unaliased(), TypeCheck::Nothing) {
         return Ok(RuntimeError::new(
@@ -3348,7 +3646,13 @@ fn type_error_at_width(
             ),
         ));
     }
-    let expected = type_name(expected, module);
+    let expected = if matches!(expected.unaliased(), TypeCheck::Reference { .. })
+        && actual_reference.is_some()
+    {
+        reference::type_name(expected, module)
+    } else {
+        type_name(expected, module)
+    };
     Ok(RuntimeError::new(
         ErrorKind::Type,
         format!(
@@ -3359,6 +3663,10 @@ fn type_error_at_width(
 
 fn type_name(ty: &TypeCheck, module: &str) -> String {
     match ty {
+        TypeCheck::Unknown => "unknown".into(),
+        TypeCheck::IntegerAlias { name, .. } => name.to_string(),
+        TypeCheck::RefDomain => "pkl.ref#Domain".into(),
+        TypeCheck::Reference { .. } => "pkl.ref#Reference".into(),
         TypeCheck::Class { name, .. } => format!("{module}#{name}"),
         TypeCheck::Collection(kind) | TypeCheck::ParameterizedCollection { kind, .. } => {
             format!("{kind:?}")
@@ -3387,6 +3695,7 @@ fn value_type_name(value: &Value) -> &'static str {
         Value::Object(_) => "Dynamic",
         Value::Function(_) => "Function",
         Value::Class(_) => "Class",
+        Value::TypeAlias(_) => "TypeAlias",
     }
 }
 
@@ -3521,6 +3830,10 @@ impl Compiler<'_> {
                     self.initialize_type(ty, *span, output);
                 }
             }
+            TypeCheck::Reference { domain, referent } => {
+                self.initialize_type(domain, span, output);
+                self.initialize_type(referent, span, output);
+            }
             TypeCheck::Nullable(inner) => self.initialize_type(inner, span, output),
             TypeCheck::Alias(inner) | TypeCheck::GenericAlias(inner) => {
                 self.initialize_type(inner, span, output)
@@ -3568,9 +3881,28 @@ impl Compiler<'_> {
         )
         .map_err(|mut error| {
             if !error.frames.is_empty() {
+                let span = if error.message
+                    == "`Reference` referent type argument may not include type constraints."
+                {
+                    match &ty.kind {
+                        crate::syntax::TypeKind::Named {
+                            path,
+                            name_spans,
+                            arguments,
+                        } if path.len() == 1
+                            && !arguments.iter().any(authored_type_constraints) =>
+                        {
+                            name_spans[0]
+                        }
+                        _ => ty.span,
+                    }
+                } else {
+                    ty.span
+                };
                 error.frames.push(RuntimeFrame {
-                    span: ty.span,
+                    span,
                     member: Arc::from(""),
+                    source: None,
                 });
             }
             error.at(ty.span)
@@ -3592,7 +3924,9 @@ impl Compiler<'_> {
         use crate::syntax::{ExprKind, TypeKind};
         match &ty.kind {
             TypeKind::Nullable(inner) => self.type_source_span_at(inner, parameters, aliases),
-            TypeKind::Named { path, arguments } if path.len() == 1 => {
+            TypeKind::Named {
+                path, arguments, ..
+            } if path.len() == 1 => {
                 if let Some(span) = parameters.get(&path[0]) {
                     return *span;
                 }
@@ -3634,7 +3968,7 @@ impl Compiler<'_> {
     ) -> Result<TypeCheck, RuntimeError> {
         use crate::syntax::{ExprKind, TypeKind};
         Ok(match &ty.kind {
-            TypeKind::Unknown => TypeCheck::Any,
+            TypeKind::Unknown => TypeCheck::Unknown,
             TypeKind::Nothing => TypeCheck::Nothing,
             TypeKind::String(value) => TypeCheck::StringLiteral(Arc::from(value.as_str())),
             TypeKind::Nullable(inner) => TypeCheck::Nullable(Box::new(
@@ -3657,6 +3991,14 @@ impl Compiler<'_> {
                     let writes_slots = code.let_scopes.iter().any(|scope| scope.writes_slot);
                     code.push(Instruction::Return);
                     let block = self.block(code, Some(expression.span));
+                    let mut origin = vec![RuntimeFrame {
+                        span: ty.span,
+                        member: Arc::from(self.member.as_str()),
+                        source: None,
+                    }];
+                    origin.extend(self.alias_frames.iter().rev().cloned());
+                    self.constraint_origins
+                        .insert(block, (origin, self.alias_frames.clone()));
                     self.program.metadata[block].constraint_root =
                         writes_slots.then_some(expression.span);
                     self.program.metadata[block].inline_constraint = !writes_slots;
@@ -3694,7 +4036,118 @@ impl Compiler<'_> {
                     .collect::<Result<_, _>>()?,
                 default: *default,
             },
-            TypeKind::Named { path, arguments } if path.len() == 1 => {
+            TypeKind::Named {
+                path,
+                arguments,
+                name_spans,
+            } if path.len() == 2 => {
+                let import = self
+                    .resolved
+                    .module
+                    .members
+                    .iter()
+                    .find(|member| member.name == path[0] && member.local)
+                    .ok_or_else(|| {
+                        RuntimeError::new(
+                            ErrorKind::Type,
+                            format!("Cannot find module import `{}`.", path[0]),
+                        )
+                        .at(name_spans[0])
+                    })?;
+                let ExprKind::Import { uri } = &import.expr.kind else {
+                    return Err(RuntimeError::new(
+                        ErrorKind::Type,
+                        format!(
+                            "Expected `{}` to be a module import, but it is not.",
+                            path[0]
+                        ),
+                    )
+                    .at(name_spans[0]));
+                };
+                if uri != "pkl:ref" {
+                    return Err(unsupported_type(&format!("module import {uri}")).at(import.span));
+                }
+                match path[1].as_str() {
+                    "Domain" if arguments.is_empty() => TypeCheck::RefDomain,
+                    "Access" if arguments.is_empty() => TypeCheck::Class {
+                        id: reference::ACCESS_ID,
+                        name: Arc::from("Access"),
+                    },
+                    "Reference" if arguments.is_empty() => TypeCheck::Reference {
+                        domain: Box::new(TypeCheck::Unknown),
+                        referent: Box::new(TypeCheck::Unknown),
+                    },
+                    "Reference" if arguments.len() == 2 => {
+                        let domain =
+                            self.compile_type_at(&arguments[0], limit, aliases, parameters)?;
+                        let referent =
+                            self.compile_type_at(&arguments[1], limit, aliases, parameters)?;
+                        if let Some(TypeCheck::Constrained { constraints, .. }) =
+                            reference_constrained_type(&referent)
+                        {
+                            let mut error = RuntimeError::new(
+                                ErrorKind::Type,
+                                "`Reference` referent type argument may not include type constraints.",
+                            ).at(ty.span);
+                            if let Some((mut frames, origin_aliases)) = constraints
+                                .first()
+                                .and_then(|constraint| {
+                                    self.constraint_origins.get(&constraint.block)
+                                })
+                                .cloned()
+                            {
+                                // Aliases first expanded inside this Reference have
+                                // not yet adopted their outermost node when initial
+                                // validation runs. Already substituted type arguments
+                                // retain the alias tree from their use site instead.
+                                if origin_aliases.starts_with(&self.alias_frames) {
+                                    frames.truncate(
+                                        origin_aliases
+                                            .len()
+                                            .saturating_sub(self.alias_frames.len() + 1),
+                                    );
+                                }
+                                frames.retain(|frame| {
+                                    std::iter::once(ty.span)
+                                        .chain(self.alias_frames.iter().map(|alias| alias.span))
+                                        .all(|usage| {
+                                            frame.span.start < usage.start
+                                                || frame.span.end > usage.end
+                                        })
+                                });
+                                error.frames = frames;
+                            }
+                            return Err(error);
+                        }
+                        TypeCheck::Reference {
+                            domain: Box::new(domain),
+                            referent: Box::new(referent),
+                        }
+                    }
+                    "Domain" | "Reference" | "Access" => {
+                        return Err(RuntimeError::new(
+                            ErrorKind::Type,
+                            format!(
+                                "Expected {} type arguments but got {}.",
+                                if path[1] == "Reference" { 2 } else { 0 },
+                                arguments.len()
+                            ),
+                        ));
+                    }
+                    _ => {
+                        return Err(RuntimeError::new(
+                            ErrorKind::Type,
+                            format!("Cannot find type `{}` in module `pkl.ref`.", path[1]),
+                        )
+                        .at(name_spans[1]));
+                    }
+                }
+            }
+            TypeKind::Named {
+                path,
+                arguments,
+                name_spans,
+            } if path.len() == 1 => {
                 if let Some(parameter) = parameters.get(&path[0]) {
                     if !arguments.is_empty() {
                         return Err(RuntimeError::new(
@@ -3763,15 +4216,22 @@ impl Compiler<'_> {
                                 std::mem::replace(&mut self.constraint_module, true);
                             let previous_member =
                                 std::mem::replace(&mut self.member, format!("#{}", member.name));
+                            self.alias_frames.push(RuntimeFrame {
+                                span: ty.span,
+                                member: Arc::from(previous_member.as_str()),
+                                source: None,
+                            });
                             let result = self
                                 .compile_type_at(aliased, index + 1, aliases, &substitutions)
                                 .map_err(|mut error| {
                                     error.frames.push(RuntimeFrame {
                                         span: aliased.span,
                                         member: Arc::from(format!("#{}", member.name)),
+                                        source: None,
                                     });
                                     error
                                 });
+                            self.alias_frames.pop();
                             self.constraint_module = previous_module;
                             self.member = previous_member;
                             self.parameter_spans = previous_spans;
@@ -3786,8 +4246,9 @@ impl Compiler<'_> {
                         _ => {
                             return Err(RuntimeError::new(
                                 ErrorKind::Type,
-                                format!("`{}` is not a type.", path[0]),
-                            ));
+                                format!("Expected `{}` to be a type, but it is not.", path[0]),
+                            )
+                            .at(name_spans[0]));
                         }
                     }
                 } else {
@@ -3833,6 +4294,23 @@ impl Compiler<'_> {
                         "Number" => TypeCheck::Number,
                         "String" => TypeCheck::String,
                         "Bytes" => TypeCheck::Bytes,
+                        name @ ("Int8" | "Int16" | "Int32" | "UInt8" | "UInt16" | "UInt32"
+                        | "UInt") => {
+                            let (min, max) = match name {
+                                "Int8" => (i8::MIN as i64, i8::MAX as i64),
+                                "Int16" => (i16::MIN as i64, i16::MAX as i64),
+                                "Int32" => (i32::MIN as i64, i32::MAX as i64),
+                                "UInt8" => (0, u8::MAX as i64),
+                                "UInt16" => (0, u16::MAX as i64),
+                                "UInt32" => (0, u32::MAX as i64),
+                                _ => (0, i64::MAX),
+                            };
+                            TypeCheck::IntegerAlias {
+                                name: Arc::from(name),
+                                min,
+                                max,
+                            }
+                        }
                         "Dynamic" => TypeCheck::Collection(crate::heap::CollectionKind::Dynamic),
                         "Listing" => TypeCheck::Collection(crate::heap::CollectionKind::Listing),
                         "Mapping" => TypeCheck::Collection(crate::heap::CollectionKind::Mapping),
@@ -3875,6 +4353,14 @@ impl Compiler<'_> {
         output: &mut Code,
         span: Span,
     ) -> Result<(), RuntimeError> {
+        if matches!(
+            check.unaliased(),
+            TypeCheck::RefDomain | TypeCheck::Reference { .. }
+        ) || matches!(check.unaliased(), TypeCheck::Class { id, .. } if *id == reference::ACCESS_ID)
+        {
+            output.push_at(Instruction::BuiltinClass(check.clone()), span);
+            return Ok(());
+        }
         let TypeCheck::Class { id, .. } = check.unaliased() else {
             return Err(RuntimeError::new(ErrorKind::Type, "Expected a class type."));
         };

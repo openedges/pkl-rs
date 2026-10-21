@@ -1,0 +1,4 @@
+import "pkl:ref"
+class D extends ref.Domain { function renderReference(r): String = "ok" }
+local d = new D {}
+result = ref.Reference(d, String, 1) == ref.Reference(d, String, 1.0)

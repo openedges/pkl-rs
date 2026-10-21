@@ -1,0 +1,5 @@
+import "pkl:ref"
+class D extends ref.Domain { function renderReference(r): String = r.getData().toString() }
+local d = new D {}
+local r = ref.Reference(d, String, "root")
+result = "prefix:" + r.toString() + ":suffix"

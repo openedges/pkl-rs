@@ -353,3 +353,30 @@ currently reports a Rust cycle error;
 the observed Java cases fail inside the JVM. Full format-time wrapper checks,
 function/class amendments, and the remaining types and metadata also remain
 unimplemented or unverified. No new speed or memory parity claim is made.
+
+
+Deferred Reference values retain the domain, data, normalized referent type,
+access path, and required class objects in the shared heap. Synthetic property
+and subscript access consult declaration metadata without evaluating referent
+member bodies. Exported type normalization erases user constraints and aliases,
+flattens nullable unions, and removes authored spans from parameterized type
+identity. Type checks and structural equality remain distinct operations.
+Reference forcing, hashing, and domain rendering use the existing VM scheduler
+and GC roots. Domain rendering runs ordinary method bytecode and can suspend for
+Host input, reenter, fail, retry, or terminate through the same lifecycle.
+
+The current module bridge recognizes `pkl:ref`. Import aliases remain local const
+members, qualified type resolution uses the import scope, and class values retain
+a declaration kind separate from the builtin `NonNull` type alias. The bridge does
+not implement general module loading or the complete reflection API. Class and
+member metadata preserve inherited declaration owners and types for Reference
+access; public reflection and other standard-library modules remain work in
+progress.
+
+Logical frames may carry a detached source identity for a declaration outside
+the primary module. The shared renderer uses that source's text, module name,
+URI, and line anchor. The pinned `ref.pkl` source is bundled unchanged with its
+license and included in build-evidence snapshots. This supplies authored source
+locations for native constructor checks, inherited Access checks, and the domain
+rendering call. It does not imply that the entire standard-library module is
+interpreted by the current evaluator.

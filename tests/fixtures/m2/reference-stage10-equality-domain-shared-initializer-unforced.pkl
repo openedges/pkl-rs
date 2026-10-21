@@ -1,0 +1,5 @@
+import "pkl:ref"
+class D extends ref.Domain { function renderReference(r): String = r.getData().toString() }
+local d = new D {}
+class LazyDomain extends ref.Domain { p = throw("domain forced"); function renderReference(r): String = "ok" }
+result = ref.Reference(new LazyDomain {}, String, null) == ref.Reference(new LazyDomain {}, String, null)

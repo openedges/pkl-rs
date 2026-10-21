@@ -39,7 +39,7 @@ class PlatformEvidenceTests(unittest.TestCase):
                                          'browserErrors': [], 'playwright': '1.64.1',
                                          'playwrightCore': '1.64.1', 'playwrightPin': '1.64.1'})
 
-    def test_collection_scenarios_are_required_on_each_target(self):
+    def test_language_scenarios_are_required_on_each_target(self):
         collections = {
             'm2-ordered-collection-members-and-amendments',
             'm2-collection-generators-and-spread',
@@ -60,6 +60,9 @@ class PlatformEvidenceTests(unittest.TestCase):
             'm2-hashed-key-buckets',
             'm2-cache-fifth-publication',
             'm2-let-diagnostic-scopes',
+            'm2-reference-paths-and-rendering',
+            'm2-reference-equality-and-type-checks',
+            'm2-reference-stdlib-diagnostics',
         }
         names = sorted(m1_platforms.REQUIRED_SCENARIOS)
         valid = {'nodeChecks': names, 'browserChecks': names, 'browserErrors': [],

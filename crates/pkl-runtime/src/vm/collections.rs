@@ -140,7 +140,7 @@ fn predicate_members(
     Ok(result)
 }
 
-fn external_amendment_error(name: &str) -> RuntimeError {
+pub(super) fn external_amendment_error(name: &str) -> RuntimeError {
     let mut error = RuntimeError::new(
         ErrorKind::Type,
         format!("Cannot instantiate, or amend an instance of, external class `{name}`."),
@@ -551,6 +551,7 @@ impl Vm {
             && let Some(Some(span)) = metadata.spans.get(frame.pc - 1)
         {
             error.frames.push(RuntimeFrame {
+                source: None,
                 span: *span,
                 member: frame
                     .diagnostic_member
@@ -562,6 +563,7 @@ impl Vm {
             && let Some(span) = metadata.declaration
         {
             error.frames.push(RuntimeFrame {
+                source: None,
                 span,
                 member: metadata.member.clone(),
             });
@@ -602,6 +604,9 @@ impl Vm {
                 };
                 let (kind, length) = if let Some(id) = parent {
                     let object = self.heap.get(id)?;
+                    if object.reference.is_some() {
+                        return Err(external_amendment_error("pkl.ref#Reference"));
+                    }
                     if object.collection_kind == CollectionKind::List {
                         return Err(external_amendment_error("List"));
                     }
@@ -748,6 +753,11 @@ impl Vm {
                 } else {
                     self.pop()?.as_object()?
                 };
+                if !is_super && self.heap.get(receiver)?.reference.is_some() {
+                    let result = self.reference_access(receiver, None, Some(key))?;
+                    self.stack.push(result);
+                    return Ok(());
+                }
                 let owner = if is_super {
                     self.heap.get(self.scope(0)?.owner)?.parent.ok_or_else(|| {
                         RuntimeError::new(ErrorKind::MissingMember, "super has no parent")
@@ -950,6 +960,20 @@ impl Vm {
                         }
                         error
                     })?;
+                    if self.heap.get(source)?.reference.is_some() {
+                        return Err(RuntimeError::new(
+                            ErrorKind::Type,
+                            format!(
+                                "Cannot iterate over value of type `pkl.ref#Reference`.\nValue: {}",
+                                crate::diagnostic_values::render(
+                                    &value,
+                                    &self.heap,
+                                    &self.program.module_name,
+                                    80
+                                )?
+                            ),
+                        ));
+                    }
                     if self.heap.get(source)?.is_module {
                         let mut error = RuntimeError::new(
                             ErrorKind::Type,

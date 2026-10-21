@@ -1,0 +1,8 @@
+import "pkl:ref"
+class D extends ref.Domain { function renderReference(r): String = "ok" }
+local d = new D {}
+class H { p: String; q: String }
+local a = ref.Reference(d, H, null).p
+local b = ref.Reference(d, H, null).q
+local m = new Mapping { [a] = "p"; [b] = "q" }
+result = m.length

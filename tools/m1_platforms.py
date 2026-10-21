@@ -50,6 +50,9 @@ REQUIRED_SCENARIOS = {
     'm2-hashed-key-buckets',
     'm2-cache-fifth-publication',
     'm2-let-diagnostic-scopes',
+    'm2-reference-paths-and-rendering',
+    'm2-reference-equality-and-type-checks',
+    'm2-reference-stdlib-diagnostics',
 }
 
 
@@ -101,7 +104,7 @@ def run(output, bindgen, verify_contract):
              'crates/pkl-runtime/examples/semantics_probe.rs']}
     for folder in ['crates/pkl-runtime/src', 'crates/pkl-wasm', 'crates/pkl-napi', 'tools/platform']:
         paths.update(path for path in (ROOT/folder).rglob('*') if path.is_file()
-                     and 'node_modules' not in path.parts and path.suffix in {'.rs', '.toml', '.mjs', '.json'})
+                     and 'node_modules' not in path.parts and path.suffix in {'.rs', '.pkl', '.toml', '.mjs', '.json'})
     source_hashes = {}
     for path in sorted(paths):
         relative = path.relative_to(ROOT)

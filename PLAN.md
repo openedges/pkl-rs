@@ -148,7 +148,7 @@ M1의 공통 VM을 확장합니다. VM·heap·호출 의미론은 `gpt-6-astra /
 | M2-04 객체·클래스·상속 | 진행 중 | 클래스·prototype·상속·super 메서드·const capture·runtime identity와 타입 초기화 순서를 연결했습니다. 전체 modifier·override·초기화 재시도·상속 순환 및 eager/lazy 규칙의 완료가 필요합니다. |
 | M2-05 타입·제약·generic | 진행 중 | primitive·nullable·union·클래스 타입과 generic alias·기본 값을 구현했습니다. 같은 VM의 제약 continuation, custom `this`, 상속된 제약의 선언 owner, alias 실행 환경, 복구 가능한 불일치와 실행 오류 구분을 연결했습니다. generic collection의 lazy wrapper·eager key/List 검사·캐시 재사용을 연결했습니다. 함수/구조 타입·recursive 타입·전체 제약 코퍼스는 남아 있습니다. |
 | M2-06 collection·generator | 진행 중 | 순서 있는 객체 본문, `Dynamic`·`Listing`·`Mapping`의 element·entry·subscript·amendment, `for`·`when`·spread와 `List` 생성 경로를 연결했습니다. 지연 멤버·반복 변수 capture·source 선행 강제 평가·상속 순서·Host 중단 중 GC를 검증합니다. generic wrapper와 일부 inferred new·클래스 기본 값을 연결했습니다. member predicate의 부모 순회·선택·amendment·지연 본문과 선언 owner 캐시를 추가했습니다. 구조 동등성과 객체 키를 확장하며 전체 해시 충돌·순환 키·typed generator·custom default 규칙은 남아 있습니다. |
-| M2-07 Reference·메타데이터 | 계획됨 | `Reference<Domain, Type>` 및 reflection에 필요한 module/class/member/type 정보를 구현합니다. |
+| M2-07 Reference·메타데이터 | 진행 중 | `pkl:ref` import·생성·합성 접근·정규화·렌더링·동등성과 필요한 선언·타입 정보를 연결했습니다. 전체 builtin metadata·reflection·원래 upstream suite는 남아 있습니다. |
 | M2-08 진단·첫 오류·논리적 스택 | 진행 중 | 공통 uncolored renderer에 제약·union 진단, 선택적인 power assertion 재실행·관찰값 그래프, 값을 강제하지 않는 객체 표시와 UTF-16 길이 제한을 연결했습니다. 재귀 frame 압축·전체 method 진단·전체 오류 선택은 남아 있습니다. |
 | M2-09 생성 검사·플랫폼·완료 gate | 진행 중 | Java 차등 입력·metamorphic 관계·seeded 생성과 실제 native/Node/browser 실행을 연결합니다. 작은 선택 코퍼스 성공은 M2 전체 완료가 아닙니다. |
 
@@ -196,14 +196,11 @@ M1의 공통 VM을 확장합니다. VM·heap·호출 의미론은 `gpt-6-astra /
 
 [원격 CI](https://github.com/luuvish/pkl-rs/actions/runs/39529055834) 작업 6개가 모두 성공했습니다. [CI 증거 검증](reports/m2/ci-stage9-summary.json)은 원본 ZIP 해시와 소스 스냅샷 1,357개(고유 경로 1,177개)를 정확한 구현 커밋에 대조했습니다. 두 차례 오프라인 검증이 통과했고 최종 봉인 패키지는 바뀌지 않았습니다. JVM identity hash·같은 캐시의 순환 재진입·순환 키·재귀 진단 압축과 나머지 M2 언어·타입·Reference·메타데이터 범위가 남아 있으므로 **M2 전체는 진행 중**입니다. 전체 gate의 1,950개 실패 이유와 성능·메모리 목표도 계속 열려 있습니다.
 
-열 번째 단계는 [`pkl:ref`](external/pkl/stdlib/ref.pkl)의 최소 실행 경로와 공통 선언·타입 메타데이터를 연결하는 작업을 시작했습니다. 런타임은 `gpt-6-astra / high`, frontend·수명주기 검토와 Java 차등 증거는 각각 `gpt-6.1-sol / high`에 배정했습니다. 구현·진단·회귀 검증은 진행 중이며 아직 완료로 판정하지 않았습니다.
+열 번째 단계는 [`pkl:ref`](external/pkl/stdlib/ref.pkl)의 실행 경로와 공통 선언·타입 메타데이터를 연결했습니다. 런타임은 `gpt-6-astra / high`, frontend·수명주기 검토와 Java 차등 증거는 각각 `gpt-6.1-sol / high`에 배정했습니다. import alias·qualified 타입 이름, Reference의 domain·data·path·정규화된 referent 타입·합성 접근과 공통 VM의 렌더링·동등성·해시 준비·GC·Host 수명주기를 구현했습니다. 고정 `ref.pkl`의 원본 소스와 URI를 진단에 연결하고 값 종류 및 implicit 문자열 변환 경계도 보완했습니다.
 
-전체 완료 판정의 연결 경로도 보완합니다. `compatibility/m2-mappings.json`의 검토된 요구사항 ID·Rust 소스 심볼·사례 ID를 생성기에 연결하고 원래 사례의 입력·adapter·실행 상태를 유지합니다. 연결 입력은 빈 상태로 시작하며 실제 구현과 사례 검토 후 채웁니다. 부분 구현·부분 검증, 미실행 upstream 사례와 기존 실패는 전체 gate 실패로 남습니다. 아래 구현 순서를 유지합니다.
+기존 1,059개 정의·입력 바이트를 유지하며 Java와 실제 fixture URI에서 일치한 143개 및 변형 관계 3개를 추가했습니다. 현재 선택 코퍼스는 1,202개·관계 44개입니다. 전체 새 Java 수집과 최종 로컬 검증은 진행 중입니다. Node·Chromium 각 42개 시나리오의 개발 계약은 통과했으며 기존 regex 실패 2개는 유지합니다. 이전 1,059개 CI 실행이 약 24분 걸린 점과 코퍼스 증가를 반영해 M2 작업 시간 예산을 40분으로 늘렸습니다. 사례별 timeout·원시 비교·기존 개발 예외는 바꾸지 않았습니다.
 
-1. `import "pkl:ref"` namespace와 qualified 이름 해석, 선언 identity·module owner·상속 property 타입을 보존하는 메타데이터를 연결합니다.
-2. Reference의 domain·data·path·referent type과 합성 property/subscript 접근을 구현합니다. 접근 중 실제 referent 본문이 실행되지 않는지 확인합니다.
-3. 타입 정규화와 domain/referent 타입 검사를 구분하고, 렌더링·동등성·해시를 공통 VM·GC·Host 수명주기에 연결합니다.
-4. upstream `basic/reference.pkl`, `errors/reference1..27.pkl`, `api/reference.pkl`과 최소화한 Java 원시 비교를 연결합니다. 전체 reflection API 및 남은 언어 코퍼스의 완료 조건은 계속 유지합니다.
+`compatibility/m2-mappings.json`에는 요구사항·Rust 심볼·선택 사례를 연결한 부분 검토 6개를 기록했습니다. 원래 사례의 입력·adapter·실행 상태를 유지하며 부분 구현·부분 검증과 미실행 upstream 사례는 전체 gate 실패로 남습니다. 탐색에서 원본 `basic/reference.pkl`, `errors/reference1..27.pkl`, `api/reference.pkl`을 선택 API 식으로 실행했지만 원래 renderer·snippet suite를 실행한 것으로 대체하지 않습니다. 최종 탐색 후보 191개 중 168개가 일치하고 미구현·진단 차이 23개를 그대로 보존합니다. 일반 import·module inheritance, Map·Set·Duration·함수 타입, 일부 fixed 규칙·alias 진단·전체 reflection·원래 upstream 코퍼스는 남아 있으므로 **M2 전체는 진행 중**입니다. 성능·메모리 목표에 대한 새 달성 주장은 하지 않습니다.
 
 - 전체 문법, 이름 해석, IR·compiler, lazy evaluation, 객체·amendment·상속, closure, generator를 구현합니다.
 - 타입·제약·generic·union, `Reference<Domain, Type>`, reflection에 필요한 런타임 메타데이터를 구현합니다. 다중 행 문자열의 continuation 등 0.32 기능을 목록에 연결합니다.

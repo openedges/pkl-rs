@@ -1,0 +1,5 @@
+import "pkl:ref"
+class D extends ref.Domain { function renderReference(r): String = r.getData().toString() }
+local d = new D {}
+class H { p: List<String> | Listing<Int> }
+result = ref.Reference(d, H, null).p[-2] is ref.Reference<D, String | Int>

@@ -24,6 +24,8 @@ pub(crate) enum Atom {
     Structural(u64),
     Function(ObjectId),
     Class(ObjectId),
+    TypeAlias(ObjectId),
+    ReferenceType(String),
 }
 #[derive(Clone, Debug, PartialEq, Eq, PartialOrd, Ord)]
 pub(crate) struct StructuralKey {
@@ -56,6 +58,7 @@ fn atom(heap: &Heap, value: &Value) -> Result<Atom, RuntimeError> {
         Value::Bytes(v) => Atom::Bytes(v.clone()),
         Value::Function(v) => Atom::Function(*v),
         Value::Class(v) => Atom::Class(*v),
+        Value::TypeAlias(v) => Atom::TypeAlias(*v),
         Value::Object(v) => Atom::Structural(
             heap.get(*v)?
                 .structural_key
@@ -87,7 +90,7 @@ impl Vm {
             Value::Bytes(value) => Some(value.iter().fold(1i32, |hash, byte| {
                 hash.wrapping_mul(31).wrapping_add(i32::from(*byte as i8))
             })),
-            Value::Function(_) => None,
+            Value::Function(_) | Value::TypeAlias(_) => None,
             Value::Class(id) => {
                 self.heap.get(*id)?.class_definition.as_ref().map(|class| {
                     string_hash(&format!("{}#{}", self.program.module_name, class.name))
@@ -795,7 +798,37 @@ impl Vm {
                     (Value::Object(a), Value::Object(b)) => {
                         let x = self.heap.get(*a)?;
                         let y = self.heap.get(*b)?;
-                        if x.collection_kind != y.collection_kind
+                        if x.reference.is_some() || y.reference.is_some() {
+                            match (&x.reference, &y.reference) {
+                                (Some(x), Some(y)) => {
+                                    if !x.referent.equivalent(&y.referent)
+                                        || x.path.len() != y.path.len()
+                                    {
+                                        run.tasks.push(Task::Reject);
+                                    } else {
+                                        for (a, b) in x.path.iter().zip(&y.path).rev() {
+                                            run.tasks.push(Task::Compare(
+                                                a.clone(),
+                                                b.clone(),
+                                                false,
+                                            ));
+                                        }
+                                    }
+                                    run.tasks.push(Task::Compare(
+                                        x.data.clone(),
+                                        y.data.clone(),
+                                        false,
+                                    ));
+                                    run.tasks.push(Task::Compare(
+                                        x.domain.clone(),
+                                        y.domain.clone(),
+                                        false,
+                                    ));
+                                    None
+                                }
+                                _ => Some(false),
+                            }
+                        } else if x.collection_kind != y.collection_kind
                             || self.class_identity(*a)? != self.class_identity(*b)?
                             || x.is_module != y.is_module
                             || (matches!(
@@ -958,8 +991,18 @@ impl Vm {
                 if let Value::Object(id) = value
                     && run.forced.insert(id)
                 {
-                    for member in self.equality_members(id)?.into_iter().rev() {
-                        run.tasks.push(Task::Force(id, member, false));
+                    if let Some(reference) = self.heap.get_mut(id)?.reference.as_mut() {
+                        if !reference.forced {
+                            reference.forced = true;
+                            run.tasks
+                                .extend(reference.path.iter().rev().cloned().map(Task::Deep));
+                            run.tasks.push(Task::Deep(reference.data.clone()));
+                            run.tasks.push(Task::Deep(reference.domain.clone()));
+                        }
+                    } else {
+                        for member in self.equality_members(id)?.into_iter().rev() {
+                            run.tasks.push(Task::Force(id, member, false));
+                        }
                     }
                 }
             }
@@ -981,6 +1024,14 @@ impl Vm {
                 // Java completes recursive value forcing before computing member
                 // hashes. Nested Mapping keys can still be lazy at that point.
                 // Hashing then follows cache order (or class property order).
+                if let Some(reference) = self.heap.get(id)?.reference.as_ref() {
+                    run.tasks
+                        .extend(reference.path.iter().rev().cloned().map(Task::Prepare));
+                    run.tasks.push(Task::Prepare(reference.data.clone()));
+                    run.tasks.push(Task::Prepare(reference.domain.clone()));
+                    self.frames[frame_index].equality_run = Some(run);
+                    return Ok(());
+                }
                 for (key, value) in self.hash_entries(id)?.into_iter().rev() {
                     run.roots.push(value.clone());
                     run.tasks.push(Task::Prepare(value));
@@ -1060,6 +1111,41 @@ impl Vm {
             }
             Task::Build(id) => {
                 let object = self.heap.get(id)?;
+                if let Some(reference) = &object.reference {
+                    let mut members = vec![
+                        (false, Atom::Int(0), atom(&self.heap, &reference.domain)?),
+                        (false, Atom::Int(1), atom(&self.heap, &reference.data)?),
+                        (
+                            false,
+                            Atom::Int(2),
+                            Atom::ReferenceType(format!("{:?}", reference.referent)),
+                        ),
+                    ];
+                    for (index, value) in reference.path.iter().enumerate() {
+                        members.push((
+                            false,
+                            Atom::Int(index as i64 + 3),
+                            atom(&self.heap, value)?,
+                        ));
+                    }
+                    let key = StructuralKey {
+                        kind: 4,
+                        class: None,
+                        members,
+                    };
+                    let next = self.heap.next_structural_key;
+                    let value = *self.heap.structural_keys.entry(key).or_insert_with(|| {
+                        self.heap.next_structural_key += 1;
+                        next
+                    });
+                    let object = self.heap.get_mut(id)?;
+                    object.structural_key = Some(value);
+                    // PType hashes include JVM class/type identity; no portable Java numeric hash.
+                    object.java_hash = Some(None);
+                    run.active.remove(&id);
+                    self.frames[frame_index].equality_run = Some(run);
+                    return Ok(());
+                }
                 let kind = match object.collection_kind {
                     CollectionKind::Dynamic => 0,
                     CollectionKind::Listing => 1,

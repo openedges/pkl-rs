@@ -132,6 +132,11 @@ pub struct Object {
     /// Inner None marks a hash depending on JVM identity allocation.
     pub java_hash: Option<Option<i32>>,
     pub function: Option<Function>,
+    pub reference: Option<crate::vm::reference::Reference>,
+    pub native_function: Option<crate::vm::reference::NativeFunction>,
+    pub type_alias: Option<Arc<str>>,
+    pub builtin_type: Option<crate::vm::TypeCheck>,
+    pub ref_module: bool,
     pub is_module: bool,
     pub class_definition: Option<Class>,
     pub parent: Option<ObjectId>,
@@ -240,6 +245,50 @@ impl Heap {
         }
     }
 
+    pub(crate) fn find_type_alias(&self, name: &str) -> Option<ObjectId> {
+        self.slots.iter().enumerate().find_map(|(index, slot)| {
+            slot.object
+                .as_ref()
+                .filter(|o| o.type_alias.as_deref() == Some(name))
+                .map(|_| ObjectId {
+                    heap: self.identity,
+                    index,
+                    generation: slot.generation,
+                })
+        })
+    }
+
+    pub(crate) fn find_builtin_class(&self, ty: &crate::vm::TypeCheck) -> Option<ObjectId> {
+        self.slots.iter().enumerate().find_map(|(index, slot)| {
+            slot.object
+                .as_ref()
+                .filter(|o| o.builtin_type.as_ref().is_some_and(|t| t.equivalent(ty)))
+                .map(|_| ObjectId {
+                    heap: self.identity,
+                    index,
+                    generation: slot.generation,
+                })
+        })
+    }
+
+    pub(crate) fn find_class(&self, class_id: usize) -> Option<ObjectId> {
+        self.slots.iter().enumerate().find_map(|(index, slot)| {
+            slot.object
+                .as_ref()
+                .filter(|object| {
+                    object
+                        .class_definition
+                        .as_ref()
+                        .is_some_and(|class| class.id == class_id)
+                })
+                .map(|_| ObjectId {
+                    heap: self.identity,
+                    index,
+                    generation: slot.generation,
+                })
+        })
+    }
+
     pub fn get(&self, id: ObjectId) -> Result<&Object, RuntimeError> {
         if id.heap == self.identity
             && let Some(slot) = self.slots.get(id.index)
@@ -278,6 +327,15 @@ impl Heap {
             }
             marked[id.index] = true;
             pending.extend(object.parent);
+            if let Some(reference) = &object.reference {
+                pending.extend(reference.domain.heap_id());
+                pending.extend(reference.data.heap_id());
+                pending.extend(reference.path.iter().filter_map(Value::heap_id));
+                pending.extend(reference.classes.iter().copied());
+            }
+            if let Some(native) = &object.native_function {
+                pending.extend(native.receiver.heap_id());
+            }
             for member in &object.collection_members {
                 pending.extend(member.key.heap_id());
             }

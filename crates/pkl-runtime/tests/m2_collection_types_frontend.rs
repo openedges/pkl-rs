@@ -5,7 +5,10 @@ use pkl_runtime::source::Span;
 use pkl_runtime::syntax::{ExprKind, Type, TypeKind};
 
 fn named<'a>(ty: &'a Type, expected: &str) -> Vec<&'a Type> {
-    let TypeKind::Named { path, arguments } = &ty.kind else {
+    let TypeKind::Named {
+        path, arguments, ..
+    } = &ty.kind
+    else {
         panic!("expected named type {expected}")
     };
     assert_eq!(path, &[expected]);

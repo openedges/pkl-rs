@@ -8,6 +8,8 @@ pub struct Module {
     /// Numeric token locations for signed integers folded by the parser.
     /// The expression span still includes the unary minus and intervening trivia.
     pub folded_integer_spans: std::collections::BTreeMap<Span, Span>,
+    /// Full interpolation delimiters for implicit toString call-site frames.
+    pub interpolation_spans: std::collections::BTreeMap<Span, Span>,
 }
 
 #[derive(Clone, Debug, PartialEq)]
@@ -175,6 +177,7 @@ pub struct Type {
 pub enum TypeKind {
     Named {
         path: Vec<String>,
+        name_spans: Vec<Span>,
         arguments: Vec<Type>,
     },
     Unknown,
@@ -215,6 +218,11 @@ impl Expr {
 
 #[derive(Clone, Debug, PartialEq)]
 pub enum ExprKind {
+    /// A module import declaration, lowered to a local const module member.
+    /// Loading unsupported module schemes remains an explicit runtime error.
+    Import {
+        uri: String,
+    },
     Int(i64),
     Float(f64),
     Null,

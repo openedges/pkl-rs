@@ -1,0 +1,4 @@
+import "pkl:ref"
+class D extends ref.Domain { function renderReference(r): String = r.getData().toString() }
+local d = new D {}
+result = ref.Reference(d, String, null).isEmpty is ref.Reference<D, Boolean>

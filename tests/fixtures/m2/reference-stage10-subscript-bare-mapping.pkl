@@ -1,0 +1,7 @@
+import "pkl:ref"
+class D extends ref.Domain {
+  function renderReference(r): String = r.getData().toString()
+}
+local d = new D {}
+local r = ref.Reference(d, Mapping, null)["missing"]
+result = r is ref.Reference<D, String> && r.getPath()[0].isSubscript && !r.getPath()[0].isProperty && r.getPath()[0].property == null && r.getPath()[0].key == "missing"

@@ -226,6 +226,17 @@ Each test manifest records the case ID, source repository, revision and path, in
 
 Distinguish passes, failures, tests not run, unimplemented cases, and environment errors. Do not count skips or known failures as passes. Add minimal reproductions of failures to the required regression cases, and compare the test inventory with actual execution results to detect omissions.
 
+Reference regressions compare import identity, constructor kinds, declaration
+metadata, unforced referent bodies, normalized types, synthetic paths, equality,
+key behavior, and complete diagnostics, including frames from the pinned
+`pkl:ref` source. Native lifecycle tests exercise domain rendering across Host
+suspension, nested evaluation, GC, retry, cancellation, close, and timeout.
+Node and Chromium execute the same engine for Reference values and errors.
+Original upstream files evaluated through a selected API expression remain
+exploratory evidence; those calls do not replace their original renderer or
+snippet-suite contracts. Reviewed implementation/test links preserve these
+unexecuted cases and the full completion gate.
+
 ## Performance and Memory
 
 The [initial Java benchmark contract](docs/benchmarks.md) implements cold CLI, persistent evaluator, and fresh evaluator measurements for six fixtures. Use a quiet host with the pinned optimizing runtime:

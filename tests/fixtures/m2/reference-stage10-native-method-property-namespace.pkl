@@ -1,0 +1,6 @@
+import "pkl:ref"
+class D extends ref.Domain { function renderReference(r): String = "ok" }
+local d = new D {}
+class H { getData: Int; getPath: Boolean; toString: String }
+local r = ref.Reference(d, H, "data")
+result = r.getData is ref.Reference<D, Int> && r.getData() == "data" && r.getPath is ref.Reference<D, Boolean> && r.getPath().length == 0 && r.toString is ref.Reference<D, String> && r.toString() == "ok"

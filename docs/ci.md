@@ -15,7 +15,7 @@ corpus through native Rust, a Node addon, and real Chromium Wasm. It pins Node,
 Playwright and wasm-bindgen, builds artifacts, and uploads captures, artifacts,
 source snapshots and failures. Its architecture contract requires complete
 execution and cross-target consistency while preserving the exact known regex
-backend mismatches as failed compatibility cases. Three complete runtime
+backend mismatches as failed compatibility cases. Remaining runtime and lifecycle
 diagnostic byte mismatches are also recorded explicitly. A green M1 job means
 the experiments and known-gap accounting reproduced, not full conformance.
 Lifecycle diagnostics are retained and compared separately from the observation
@@ -36,6 +36,10 @@ gate runs additionally on manual full-corpus dispatch. A green M2 development
 job does not mean the language milestone is complete. The job also regenerates
 the identifier intervals against the pinned Java lexer/JDK and checks the exact
 Rust table bytes. Both evidence directories are retained in its artifact.
+The job has a 40-minute scheduling budget for the expanded Reference corpus;
+the preceding 1,059-case workload already took roughly 24 minutes in CI.
+Per-case timeouts, raw comparisons, and the two development exceptions are
+unchanged by this workload budget.
 
 The M1 job also checks the retained Graal compilation archive and rederives its
 diagnostic verdict from raw captures, source/artifact identities, correctness

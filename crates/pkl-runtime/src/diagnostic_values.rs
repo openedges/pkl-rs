@@ -55,12 +55,31 @@ pub(crate) fn type_name(value: &Value, heap: &Heap, module: &str) -> Result<Stri
         Value::Bytes(_) => "Bytes".into(),
         Value::Function(id) => function_name(*id, heap)?,
         Value::Class(_) => "Class".into(),
+        Value::TypeAlias(_) => "TypeAlias".into(),
         Value::Object(id) => {
-            if heap.get(*id)?.is_module {
+            if heap.get(*id)?.reference.is_some() {
+                "pkl.ref#Reference".into()
+            } else if heap.get(*id)?.ref_module {
+                "pkl.ref".into()
+            } else if heap.get(*id)?.is_module {
                 module.into()
             } else if heap.get(*id)?.collection_kind == CollectionKind::Dynamic {
-                class_name(*id, heap)?
-                    .map_or_else(|| "Dynamic".into(), |name| format!("{module}#{name}"))
+                let mut name = "Dynamic".to_owned();
+                for owner in ancestry(*id, heap)? {
+                    if let Some(class) = &heap.get(owner)?.class_definition {
+                        let defining_module = if matches!(
+                            class.id,
+                            crate::vm::reference::DOMAIN_ID | crate::vm::reference::ACCESS_ID
+                        ) {
+                            "pkl.ref"
+                        } else {
+                            module
+                        };
+                        name = format!("{defining_module}#{}", class.name);
+                        break;
+                    }
+                }
+                name
             } else {
                 object_name(*id, heap)?
             }
@@ -186,7 +205,20 @@ impl Renderer<'_> {
                 }
                 self.append("{}");
             }
+            Value::TypeAlias(id) => {
+                let name = self.heap.get(*id)?.type_alias.as_ref().ok_or_else(|| {
+                    RuntimeError::new(ErrorKind::InvalidBytecode, "type alias has no definition")
+                })?;
+                self.append(name);
+            }
             Value::Class(id) => {
+                if let Some(ty) = &self.heap.get(*id)?.builtin_type {
+                    self.append(&match ty {
+                        crate::vm::TypeCheck::Reference { .. } => "pkl.ref#Reference".into(),
+                        _ => crate::vm::reference::type_name(ty, self.module),
+                    });
+                    return Ok(());
+                }
                 let name = class_name(*id, self.heap)?.ok_or_else(|| {
                     RuntimeError::new(ErrorKind::InvalidBytecode, "class has no definition")
                 })?;
@@ -198,6 +230,54 @@ impl Renderer<'_> {
     }
 
     fn object(&mut self, id: ObjectId, implicit: bool) -> Result<(), RuntimeError> {
+        if let Some(reference) = &self.heap.get(id)?.reference {
+            self.append("Reference(");
+            self.value(&reference.domain, false)?;
+            self.append(", ");
+            self.append(&crate::vm::reference::type_name(
+                &reference.referent,
+                self.module,
+            ));
+            self.append(", ");
+            self.value(&reference.data, false)?;
+            self.append(")");
+            for access in &reference.path {
+                if self.stopped {
+                    break;
+                }
+                let Value::Object(access) = access else {
+                    return Err(RuntimeError::new(
+                        ErrorKind::InvalidBytecode,
+                        "Reference path contains a non-object access",
+                    ));
+                };
+                let component = |name: &str| -> Result<&Value, RuntimeError> {
+                    let key = CacheKey {
+                        entry: false,
+                        owner: None,
+                        name: name.into(),
+                        method: false,
+                    };
+                    match self.heap.get(*access)?.cache.get(&key) {
+                        Some(LazyState::Completed(value)) => Ok(value),
+                        _ => Err(RuntimeError::new(
+                            ErrorKind::InvalidBytecode,
+                            "Reference path component is not cached",
+                        )),
+                    }
+                };
+                if let Value::String(property) = component("property")? {
+                    self.append(".");
+                    self.identifier(property);
+                } else {
+                    let key = component("key")?;
+                    self.append("[");
+                    self.value(key, false)?;
+                    self.append("]");
+                }
+            }
+            return Ok(());
+        }
         if self.heap.get(id)?.collection_kind == CollectionKind::List {
             self.append("List(");
             for (index, member) in crate::vm::collections::ordered_members(self.heap, id)?
@@ -262,6 +342,7 @@ impl Renderer<'_> {
                 let object_like = match value {
                     Some(Value::Object(value)) => {
                         self.heap.get(*value)?.collection_kind != CollectionKind::List
+                            && self.heap.get(*value)?.reference.is_none()
                     }
                     Some(Value::Function(_)) => true,
                     _ => false,

@@ -1,0 +1,3 @@
+import "pkl:ref" as refs
+class D extends refs.Domain { function renderReference(r): String = "ok" }
+result = refs.Reference(new D {}, String, null).toString()

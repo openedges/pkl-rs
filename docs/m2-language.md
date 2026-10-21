@@ -29,8 +29,9 @@ mapping labels still require all linked cases to execute and pass. Linking an
 original upstream ID does not change its input, adapter, execution state, or
 output boundary. Selected reproductions therefore cannot silently replace the
 original snippet contract. Missing IDs, duplicate links, source drift, wrong
-baselines, and contradictory scope claims fail validation. The initial mapping
-input is empty; entries are added only after implementation and case review.
+baselines, and contradictory scope claims fail validation. Six reviewed entries
+link the bounded Reference, import, metadata, and diagnostic implementation to
+selected cases. Every entry remains partial and records its remaining scope.
 
 ```sh
 python3 tools/m2_manifest.py --check
@@ -115,6 +116,10 @@ source string, URI, inferred module name, and scalar property path; explicit
 module declarations take precedence over the inferred name.
 An optional fifth Boolean argument enables power assertions, with the same
 disabled default as the native probe and Java API.
+Returned Reference values also pass through their domain renderer, matching the
+Java expression-string boundary's automatic conversion and its separate error
+stack. This adapter still accepts property paths only. It does not supply Host
+I/O, general compound-value conversion, or the full expression API.
 
 The generated identifier tables reproduce the pinned lexer's UTF-16 code-unit
 predicates. `m2_identifier_tables.py` records the raw Java intervals and checks

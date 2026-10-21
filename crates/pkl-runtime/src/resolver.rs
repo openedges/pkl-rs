@@ -110,6 +110,24 @@ fn is_base_method(name: &str) -> bool {
     )
 }
 
+fn is_base_class(name: &str) -> bool {
+    matches!(
+        name,
+        "Any"
+            | "Null"
+            | "Boolean"
+            | "Int"
+            | "Float"
+            | "Number"
+            | "String"
+            | "Bytes"
+            | "Dynamic"
+            | "Listing"
+            | "Mapping"
+            | "List"
+    )
+}
+
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 pub enum Binding {
     /// Reverse index in the flat lexical environment; slot is currently 0.
@@ -135,6 +153,10 @@ pub enum Binding {
     ImplicitMethod,
     /// Pinned scalar constants, after lexical declarations have been checked.
     BaseConstant,
+    /// A class exported by pkl:base, after lexical value declarations.
+    BaseClass,
+    /// A supported pkl:base type alias value, after lexical declarations.
+    BaseTypeAlias,
     /// Missing lexical/base name in an immediate type-constraint scope.
     CustomThis,
     CustomMethod,
@@ -257,11 +279,25 @@ impl<'a> Resolver<'a> {
 
     fn members(&mut self, members: &'a [Member], object: bool) -> Result<(), Diagnostic> {
         let mut seen = std::collections::BTreeSet::new();
-        for member in members {
+        for (index, member) in members.iter().enumerate() {
             if !seen.insert((&member.name, is_method(member))) {
+                let span = if members[..index].iter().any(|previous| {
+                    previous.name == member.name
+                        && matches!(previous.expr.kind, ExprKind::Import { .. })
+                }) {
+                    Span::new(
+                        member.span.start,
+                        member
+                            .ty
+                            .as_ref()
+                            .map_or(member.name_span.end, |ty| ty.span.end),
+                    )
+                } else {
+                    member.name_span
+                };
                 return Err(Diagnostic::new(
                     DiagnosticKind::DuplicateMember,
-                    member.name_span,
+                    span,
                     format!("Duplicate definition of member `{}`.", member.name),
                 ));
             }
@@ -588,13 +624,16 @@ impl<'a> Resolver<'a> {
 
     fn type_expression(&mut self, ty: &'a Type) -> Result<(), Diagnostic> {
         match &ty.kind {
-            TypeKind::Named { path, arguments } => {
-                let parameter = self.scopes.iter().rev().any(|scope| match scope {
-                    Scope::TypeParameters(parameters) => {
-                        parameters.iter().any(|parameter| parameter.name == path[0])
-                    }
-                    _ => false,
-                });
+            TypeKind::Named {
+                path, arguments, ..
+            } => {
+                let parameter = path.len() == 1
+                    && self.scopes.iter().rev().any(|scope| match scope {
+                        Scope::TypeParameters(parameters) => {
+                            parameters.iter().any(|parameter| parameter.name == path[0])
+                        }
+                        _ => false,
+                    });
                 if path.len() > 2 {
                     return Err(Diagnostic::new(
                         DiagnosticKind::Syntax,
@@ -797,6 +836,8 @@ impl<'a> Resolver<'a> {
             }
             Binding::Lexical { .. }
             | Binding::BaseConstant
+            | Binding::BaseClass
+            | Binding::BaseTypeAlias
             | Binding::CustomThis
             | Binding::CustomMethod => false,
         };
@@ -849,6 +890,12 @@ impl<'a> Resolver<'a> {
                 let mut binding = self.binding(name, false);
                 if binding == Binding::ImplicitThis && matches!(name.as_str(), "NaN" | "Infinity") {
                     binding = Binding::BaseConstant;
+                }
+                if binding == Binding::ImplicitThis && is_base_class(name) {
+                    binding = Binding::BaseClass;
+                }
+                if binding == Binding::ImplicitThis && name == "NonNull" {
+                    binding = Binding::BaseTypeAlias;
                 }
                 // Base-module static resolution belongs to M2. Refuse the
                 // supported spelling rather than silently treating it as this.
@@ -1079,7 +1126,8 @@ impl<'a> Resolver<'a> {
                     ));
                 }
             }
-            ExprKind::Int(_)
+            ExprKind::Import { .. }
+            | ExprKind::Int(_)
             | ExprKind::Float(_)
             | ExprKind::Null
             | ExprKind::String(_)

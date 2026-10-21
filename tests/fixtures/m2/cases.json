@@ -13890,6 +13890,1782 @@
         "semantic:diagnostics"
       ],
       "expected_outcome": "success"
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-constructor-data",
+      "input": "tests/fixtures/m2/reference-stage10-constructor-data.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:constraints"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-constructor-domain",
+      "input": "tests/fixtures/m2/reference-stage10-constructor-domain.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:constraints"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-constructor-empty-path",
+      "input": "tests/fixtures/m2/reference-stage10-constructor-empty-path.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:constraints"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-constructor-class",
+      "input": "tests/fixtures/m2/reference-stage10-constructor-class.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:constraints"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "reference-stage10-domain-invalid",
+      "input": "tests/fixtures/m2/reference-stage10-domain-invalid.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:constraints",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "reference-stage10-class-invalid",
+      "input": "tests/fixtures/m2/reference-stage10-class-invalid.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:constraints",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "reference-stage10-new-reference-invalid",
+      "input": "tests/fixtures/m2/reference-stage10-new-reference-invalid.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:constraints",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-property-unforced",
+      "input": "tests/fixtures/m2/reference-stage10-property-unforced.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:lazy-evaluation",
+        "semantic:constraints"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-property-inherited",
+      "input": "tests/fixtures/m2/reference-stage10-property-inherited.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:lazy-evaluation",
+        "semantic:constraints"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-property-override",
+      "input": "tests/fixtures/m2/reference-stage10-property-override.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:constraints",
+        "semantic:unions"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-property-hidden",
+      "input": "tests/fixtures/m2/reference-stage10-property-hidden.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:constraints"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "reference-stage10-property-local",
+      "input": "tests/fixtures/m2/reference-stage10-property-local.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:constraints",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "reference-stage10-property-missing",
+      "input": "tests/fixtures/m2/reference-stage10-property-missing.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:constraints",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "reference-stage10-property-method",
+      "input": "tests/fixtures/m2/reference-stage10-property-method.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:constraints",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-builtin-string-length-reference-render",
+      "input": "tests/fixtures/m2/reference-stage10-builtin-string-length-reference-render.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:constraints"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-property-path",
+      "input": "tests/fixtures/m2/reference-stage10-property-path.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:constraints"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-subscript-bare-list",
+      "input": "tests/fixtures/m2/reference-stage10-subscript-bare-list.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:collections",
+        "semantic:constraints"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-subscript-bare-listing",
+      "input": "tests/fixtures/m2/reference-stage10-subscript-bare-listing.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:collections",
+        "semantic:constraints"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-subscript-bare-mapping",
+      "input": "tests/fixtures/m2/reference-stage10-subscript-bare-mapping.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:collections",
+        "semantic:constraints"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-subscript-bare-dynamic",
+      "input": "tests/fixtures/m2/reference-stage10-subscript-bare-dynamic.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:collections",
+        "semantic:constraints"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-subscript-typed-list",
+      "input": "tests/fixtures/m2/reference-stage10-subscript-typed-list.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:collections",
+        "semantic:constraints"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-subscript-typed-listing",
+      "input": "tests/fixtures/m2/reference-stage10-subscript-typed-listing.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:collections",
+        "semantic:constraints"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-subscript-typed-mapping",
+      "input": "tests/fixtures/m2/reference-stage10-subscript-typed-mapping.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:collections",
+        "semantic:constraints",
+        "semantic:unions"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "reference-stage10-subscript-invalid-list",
+      "input": "tests/fixtures/m2/reference-stage10-subscript-invalid-list.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:collections",
+        "semantic:constraints",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "reference-stage10-subscript-invalid-listing",
+      "input": "tests/fixtures/m2/reference-stage10-subscript-invalid-listing.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:collections",
+        "semantic:constraints",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "reference-stage10-subscript-keytype-mapping",
+      "input": "tests/fixtures/m2/reference-stage10-subscript-keytype-mapping.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:collections",
+        "semantic:constraints",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-subscript-keyliteral",
+      "input": "tests/fixtures/m2/reference-stage10-subscript-keyliteral.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:collections",
+        "semantic:constraints"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "reference-stage10-subscript-keyliteral-invalid",
+      "input": "tests/fixtures/m2/reference-stage10-subscript-keyliteral-invalid.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:collections",
+        "semantic:constraints",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-subscript-keyconstraint-erased",
+      "input": "tests/fixtures/m2/reference-stage10-subscript-keyconstraint-erased.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:collections",
+        "semantic:constraints"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "reference-stage10-subscript-keyclass-exact",
+      "input": "tests/fixtures/m2/reference-stage10-subscript-keyclass-exact.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:collections",
+        "semantic:constraints",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-subscript-key-null",
+      "input": "tests/fixtures/m2/reference-stage10-subscript-key-null.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:collections",
+        "semantic:constraints"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "reference-stage10-default-forbidden-dynamic",
+      "input": "tests/fixtures/m2/reference-stage10-default-forbidden-dynamic.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:constraints",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "reference-stage10-default-forbidden-listing",
+      "input": "tests/fixtures/m2/reference-stage10-default-forbidden-listing.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:constraints",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "reference-stage10-default-forbidden-mapping",
+      "input": "tests/fixtures/m2/reference-stage10-default-forbidden-mapping.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:constraints",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-dynamic-unknown",
+      "input": "tests/fixtures/m2/reference-stage10-dynamic-unknown.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:constraints"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-null-chain",
+      "input": "tests/fixtures/m2/reference-stage10-null-chain.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:constraints"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "reference-stage10-any-property-invalid",
+      "input": "tests/fixtures/m2/reference-stage10-any-property-invalid.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:constraints",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-constraints-erased",
+      "input": "tests/fixtures/m2/reference-stage10-constraints-erased.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:lazy-evaluation",
+        "semantic:constraints"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-alias-erased",
+      "input": "tests/fixtures/m2/reference-stage10-alias-erased.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:type-aliases",
+        "semantic:constraints"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-nullable",
+      "input": "tests/fixtures/m2/reference-stage10-nullable.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:constraints",
+        "semantic:unions"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-nullable-narrow-false",
+      "input": "tests/fixtures/m2/reference-stage10-nullable-narrow-false.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:constraints",
+        "semantic:unions"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-nullable-property",
+      "input": "tests/fixtures/m2/reference-stage10-nullable-property.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:constraints",
+        "semantic:unions"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-union-property",
+      "input": "tests/fixtures/m2/reference-stage10-union-property.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:constraints",
+        "semantic:unions"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-union-order",
+      "input": "tests/fixtures/m2/reference-stage10-union-order.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:constraints",
+        "semantic:unions"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "reference-stage10-union-property-invalid",
+      "input": "tests/fixtures/m2/reference-stage10-union-property-invalid.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:constraints",
+        "semantic:unions",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-nested-typeargs",
+      "input": "tests/fixtures/m2/reference-stage10-nested-typeargs.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:constraints",
+        "semantic:unions"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "reference-stage10-reference-constraint-forbidden",
+      "input": "tests/fixtures/m2/reference-stage10-reference-constraint-forbidden.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:constraints",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "reference-stage10-reference-nested-constraint-forbidden",
+      "input": "tests/fixtures/m2/reference-stage10-reference-nested-constraint-forbidden.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:constraints",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-reference-domain-false",
+      "input": "tests/fixtures/m2/reference-stage10-reference-domain-false.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:constraints"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-reference-covariant",
+      "input": "tests/fixtures/m2/reference-stage10-reference-covariant.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:constraints"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "reference-stage10-reference-cast-invalid",
+      "input": "tests/fixtures/m2/reference-stage10-reference-cast-invalid.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:constraints",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-literal-subtype",
+      "input": "tests/fixtures/m2/reference-stage10-literal-subtype.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:constraints"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-intalias-preserved",
+      "input": "tests/fixtures/m2/reference-stage10-intalias-preserved.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:constraints"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-intalias-float",
+      "input": "tests/fixtures/m2/reference-stage10-intalias-float.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:constraints"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-intalias-narrow-false",
+      "input": "tests/fixtures/m2/reference-stage10-intalias-narrow-false.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:constraints"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-equality-same",
+      "input": "tests/fixtures/m2/reference-stage10-equality-same.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:constraints"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-equality-type-false",
+      "input": "tests/fixtures/m2/reference-stage10-equality-type-false.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:constraints"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-equality-domain-structural",
+      "input": "tests/fixtures/m2/reference-stage10-equality-domain-structural.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:constraints"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-equality-path-false",
+      "input": "tests/fixtures/m2/reference-stage10-equality-path-false.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:constraints"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-equality-constraint-erased",
+      "input": "tests/fixtures/m2/reference-stage10-equality-constraint-erased.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:constraints"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-equality-data-false",
+      "input": "tests/fixtures/m2/reference-stage10-equality-data-false.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:constraints"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-render-to-string",
+      "input": "tests/fixtures/m2/reference-stage10-render-to-string.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:constraints"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-render-interpolation",
+      "input": "tests/fixtures/m2/reference-stage10-render-interpolation.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:constraints"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "reference-stage10-render-domain-throw",
+      "input": "tests/fixtures/m2/reference-stage10-render-domain-throw.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:lazy-evaluation",
+        "semantic:constraints",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-render-path",
+      "input": "tests/fixtures/m2/reference-stage10-render-path.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:constraints"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-external-length-type",
+      "input": "tests/fixtures/m2/reference-stage10-external-length-type.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:constraints"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-builtin-computed-string",
+      "input": "tests/fixtures/m2/reference-stage10-builtin-computed-string.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:constraints"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-data-not-forced",
+      "input": "tests/fixtures/m2/reference-stage10-data-not-forced.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:lazy-evaluation",
+        "semantic:constraints"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-domain-not-forced",
+      "input": "tests/fixtures/m2/reference-stage10-domain-not-forced.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:lazy-evaluation",
+        "semantic:constraints"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-domain-render-not-forced",
+      "input": "tests/fixtures/m2/reference-stage10-domain-render-not-forced.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:lazy-evaluation",
+        "semantic:constraints"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-equality-data-shared-initializer-unforced",
+      "input": "tests/fixtures/m2/reference-stage10-equality-data-shared-initializer-unforced.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:lazy-evaluation",
+        "semantic:constraints"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-equality-domain-shared-initializer-unforced",
+      "input": "tests/fixtures/m2/reference-stage10-equality-domain-shared-initializer-unforced.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:lazy-evaluation",
+        "semantic:constraints"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-member-untype-unknown",
+      "input": "tests/fixtures/m2/reference-stage10-member-untype-unknown.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:lazy-evaluation",
+        "semantic:constraints"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-member-inherited-value-override",
+      "input": "tests/fixtures/m2/reference-stage10-member-inherited-value-override.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:lazy-evaluation",
+        "semantic:constraints"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-module-metadata",
+      "input": "tests/fixtures/m2/reference-stage10-module-metadata.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:lazy-evaluation",
+        "semantic:constraints"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "reference-stage10-module-output-forbidden",
+      "input": "tests/fixtures/m2/reference-stage10-module-output-forbidden.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:constraints",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-access-null-key",
+      "input": "tests/fixtures/m2/reference-stage10-access-null-key.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:constraints"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "reference-stage10-access-invalid",
+      "input": "tests/fixtures/m2/reference-stage10-access-invalid.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:constraints",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "reference-stage10-namespace-local-duplicate",
+      "input": "tests/fixtures/m2/reference-stage10-namespace-local-duplicate.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:constraints",
+        "semantic:modules",
+        "semantic:name-resolution",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-namespace-parameter",
+      "input": "tests/fixtures/m2/reference-stage10-namespace-parameter.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:constraints",
+        "semantic:modules",
+        "semantic:name-resolution"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-relation-alias-left",
+      "input": "tests/fixtures/m2/reference-stage10-relation-alias-left.pkl",
+      "metamorphic_relation": {
+        "case_ids": [
+          "reference-stage10-relation-alias-left",
+          "reference-stage10-relation-alias-right"
+        ],
+        "domain": "Declaration alias wrapping a constrained String erases to String without running its constraint.",
+        "kind": "equal-stdout"
+      },
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:type-aliases",
+        "semantic:constraints"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-relation-alias-right",
+      "input": "tests/fixtures/m2/reference-stage10-relation-alias-right.pkl",
+      "metamorphic_relation": {
+        "case_ids": [
+          "reference-stage10-relation-alias-left",
+          "reference-stage10-relation-alias-right"
+        ],
+        "domain": "Declaration alias wrapping a constrained String erases to String without running its constraint.",
+        "kind": "equal-stdout"
+      },
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:constraints"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-relation-unforced-left",
+      "input": "tests/fixtures/m2/reference-stage10-relation-unforced-left.pkl",
+      "metamorphic_relation": {
+        "case_ids": [
+          "reference-stage10-relation-unforced-left",
+          "reference-stage10-relation-unforced-right"
+        ],
+        "domain": "Reference synthetic property metadata is unchanged by a throwing property initializer, which must remain unforced.",
+        "kind": "equal-stdout"
+      },
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:lazy-evaluation",
+        "semantic:constraints"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-relation-unforced-right",
+      "input": "tests/fixtures/m2/reference-stage10-relation-unforced-right.pkl",
+      "metamorphic_relation": {
+        "case_ids": [
+          "reference-stage10-relation-unforced-left",
+          "reference-stage10-relation-unforced-right"
+        ],
+        "domain": "Reference synthetic property metadata is unchanged by a throwing property initializer, which must remain unforced.",
+        "kind": "equal-stdout"
+      },
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:lazy-evaluation",
+        "semantic:constraints"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-relation-render-left",
+      "input": "tests/fixtures/m2/reference-stage10-relation-render-left.pkl",
+      "metamorphic_relation": {
+        "case_ids": [
+          "reference-stage10-relation-render-left",
+          "reference-stage10-relation-render-right"
+        ],
+        "domain": "Reference string interpolation delegates to the same domain renderer as explicit toString for this String-valued domain.",
+        "kind": "equal-stdout"
+      },
+      "requirements": [
+        "semantic:reference",
+        "semantic:constraints"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-relation-render-right",
+      "input": "tests/fixtures/m2/reference-stage10-relation-render-right.pkl",
+      "metamorphic_relation": {
+        "case_ids": [
+          "reference-stage10-relation-render-left",
+          "reference-stage10-relation-render-right"
+        ],
+        "domain": "Reference string interpolation delegates to the same domain renderer as explicit toString for this String-valued domain.",
+        "kind": "equal-stdout"
+      },
+      "requirements": [
+        "semantic:reference",
+        "semantic:constraints"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-access-property-key-null",
+      "input": "tests/fixtures/m2/reference-stage10-access-property-key-null.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:constraints"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-namespace-alias-valid",
+      "input": "tests/fixtures/m2/reference-stage10-namespace-alias-valid.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:constraints",
+        "semantic:modules",
+        "semantic:name-resolution"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "reference-stage10-namespace-property-duplicate",
+      "input": "tests/fixtures/m2/reference-stage10-namespace-property-duplicate.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:constraints",
+        "semantic:modules",
+        "semantic:name-resolution",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "reference-stage10-equality-data-different-initializers",
+      "input": "tests/fixtures/m2/reference-stage10-equality-data-different-initializers.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:lazy-evaluation",
+        "semantic:constraints",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "reference-stage10-equality-domain-different-initializers",
+      "input": "tests/fixtures/m2/reference-stage10-equality-domain-different-initializers.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:lazy-evaluation",
+        "semantic:constraints",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-reference-generic-alias",
+      "input": "tests/fixtures/m2/reference-stage10-reference-generic-alias.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "reference-stage10-reference-alias-constraint-forbidden",
+      "input": "tests/fixtures/m2/reference-stage10-reference-alias-constraint-forbidden.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-reference-domain-constraint-allowed",
+      "input": "tests/fixtures/m2/reference-stage10-reference-domain-constraint-allowed.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:constraints"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-union-subscript",
+      "input": "tests/fixtures/m2/reference-stage10-union-subscript.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:constraints",
+        "semantic:unions"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-reference-any-absorbs",
+      "input": "tests/fixtures/m2/reference-stage10-reference-any-absorbs.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:constraints",
+        "semantic:unions"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-reference-domain-bad-type",
+      "input": "tests/fixtures/m2/reference-stage10-reference-domain-bad-type.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:constraints"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-reference-nullable-domain",
+      "input": "tests/fixtures/m2/reference-stage10-reference-nullable-domain.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:constraints",
+        "semantic:unions"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-reference-nothing-false",
+      "input": "tests/fixtures/m2/reference-stage10-reference-nothing-false.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:constraints"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-reference-unknown-anytype",
+      "input": "tests/fixtures/m2/reference-stage10-reference-unknown-anytype.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:constraints"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "reference-stage10-metadata-unused-property-type",
+      "input": "tests/fixtures/m2/reference-stage10-metadata-unused-property-type.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "reference-stage10-metadata-unused-method-type",
+      "input": "tests/fixtures/m2/reference-stage10-metadata-unused-method-type.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-metadata-unused-method-body",
+      "input": "tests/fixtures/m2/reference-stage10-metadata-unused-method-body.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-metadata-unused-property-body",
+      "input": "tests/fixtures/m2/reference-stage10-metadata-unused-property-body.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "reference-stage10-metadata-unknown-type-before-data",
+      "input": "tests/fixtures/m2/reference-stage10-metadata-unknown-type-before-data.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "reference-stage10-metadata-constraint-type-initialization",
+      "input": "tests/fixtures/m2/reference-stage10-metadata-constraint-type-initialization.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-metadata-recursive-property",
+      "input": "tests/fixtures/m2/reference-stage10-metadata-recursive-property.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:unions"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "reference-stage10-metadata-inherited-unknown",
+      "input": "tests/fixtures/m2/reference-stage10-metadata-inherited-unknown.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "reference-stage10-metadata-local-unknown",
+      "input": "tests/fixtures/m2/reference-stage10-metadata-local-unknown.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "reference-stage10-metadata-hidden-unknown",
+      "input": "tests/fixtures/m2/reference-stage10-metadata-hidden-unknown.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-mapping-reference-key",
+      "input": "tests/fixtures/m2/reference-stage10-mapping-reference-key.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:collections"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "reference-stage10-mapping-reference-key-duplicate",
+      "input": "tests/fixtures/m2/reference-stage10-mapping-reference-key-duplicate.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:collections",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-mapping-reference-path-key",
+      "input": "tests/fixtures/m2/reference-stage10-mapping-reference-path-key.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:collections"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-mapping-reference-type-distinct",
+      "input": "tests/fixtures/m2/reference-stage10-mapping-reference-type-distinct.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:collections"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-mapping-reference-path-distinct",
+      "input": "tests/fixtures/m2/reference-stage10-mapping-reference-path-distinct.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:collections"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "reference-stage10-mapping-reference-hash-data",
+      "input": "tests/fixtures/m2/reference-stage10-mapping-reference-hash-data.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:lazy-evaluation",
+        "semantic:collections",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "reference-stage10-mapping-reference-hash-domain",
+      "input": "tests/fixtures/m2/reference-stage10-mapping-reference-hash-domain.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:lazy-evaluation",
+        "semantic:collections",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-mapping-reference-constraint-erased",
+      "input": "tests/fixtures/m2/reference-stage10-mapping-reference-constraint-erased.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:collections",
+        "semantic:constraints"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-equality-type-list",
+      "input": "tests/fixtures/m2/reference-stage10-equality-type-list.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:collections"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-mapping-key-type-list",
+      "input": "tests/fixtures/m2/reference-stage10-mapping-key-type-list.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:collections"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-equality-type-mapping",
+      "input": "tests/fixtures/m2/reference-stage10-equality-type-mapping.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:collections"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-mapping-key-type-mapping",
+      "input": "tests/fixtures/m2/reference-stage10-mapping-key-type-mapping.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:collections"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-equality-type-union",
+      "input": "tests/fixtures/m2/reference-stage10-equality-type-union.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:collections",
+        "semantic:unions"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-mapping-key-type-union",
+      "input": "tests/fixtures/m2/reference-stage10-mapping-key-type-union.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:collections",
+        "semantic:unions"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-equality-type-nullable",
+      "input": "tests/fixtures/m2/reference-stage10-equality-type-nullable.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:collections",
+        "semantic:unions"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-mapping-key-type-nullable",
+      "input": "tests/fixtures/m2/reference-stage10-mapping-key-type-nullable.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:collections",
+        "semantic:unions"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-equality-data-boxed-numeric",
+      "input": "tests/fixtures/m2/reference-stage10-equality-data-boxed-numeric.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:collections"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-equality-data-signed-zero",
+      "input": "tests/fixtures/m2/reference-stage10-equality-data-signed-zero.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:collections"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-equality-data-nan",
+      "input": "tests/fixtures/m2/reference-stage10-equality-data-nan.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:collections"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-synthetic-access-type",
+      "input": "tests/fixtures/m2/reference-stage10-synthetic-access-type.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-synthetic-path-type",
+      "input": "tests/fixtures/m2/reference-stage10-synthetic-path-type.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-native-reference-class",
+      "input": "tests/fixtures/m2/reference-stage10-native-reference-class.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-native-method-property-namespace",
+      "input": "tests/fixtures/m2/reference-stage10-native-method-property-namespace.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:constraints",
+        "semantic:modules",
+        "semantic:name-resolution"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-property-getclass",
+      "input": "tests/fixtures/m2/reference-stage10-property-getclass.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:types",
+        "semantic:type-tests-casts"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "reference-stage10-constructor-nonnull-alias",
+      "input": "tests/fixtures/m2/reference-stage10-constructor-nonnull-alias.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:type-aliases",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-metadata-nonnull-erasure",
+      "input": "tests/fixtures/m2/reference-stage10-metadata-nonnull-erasure.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:type-aliases"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-referent-nonnull-check",
+      "input": "tests/fixtures/m2/reference-stage10-referent-nonnull-check.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:type-aliases"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "reference-stage10-reference-amendment-invalid",
+      "input": "tests/fixtures/m2/reference-stage10-reference-amendment-invalid.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:objects",
+        "semantic:amendment",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "reference-stage10-reference-spread-invalid",
+      "input": "tests/fixtures/m2/reference-stage10-reference-spread-invalid.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "reference-stage10-reference-iteration-invalid",
+      "input": "tests/fixtures/m2/reference-stage10-reference-iteration-invalid.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "reference-stage10-reference-new-parent-invalid",
+      "input": "tests/fixtures/m2/reference-stage10-reference-new-parent-invalid.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:objects",
+        "semantic:amendment",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-adapter-reference-render-success",
+      "input": "tests/fixtures/m2/reference-stage10-adapter-reference-render-success.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:constraints"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "reference-stage10-adapter-reference-render-failure",
+      "input": "tests/fixtures/m2/reference-stage10-adapter-reference-render-failure.pkl",
+      "requirements": [
+        "semantic:reference",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
     }
   ]
 }

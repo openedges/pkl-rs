@@ -104,6 +104,7 @@ def run(output, measure=False, forks=2, samples=9, specialized=False):
               ROOT / "crates/pkl-runtime/Cargo.toml", ROOT / "tools/java/M1RuntimeProbe.java",
               Path(__file__), ROOT / "tools/tests/test_m1_runtime.py",
               *sorted((ROOT / "crates/pkl-runtime/src").rglob("*.rs")),
+              *sorted((ROOT / "crates/pkl-runtime/src").rglob("*.pkl")),
               *sorted((ROOT / "crates/pkl-runtime/examples").rglob("*.rs")),
               *sorted((ROOT / "tests/fixtures/m1/runtime").glob("*.pkl"))]
     input_identities = []

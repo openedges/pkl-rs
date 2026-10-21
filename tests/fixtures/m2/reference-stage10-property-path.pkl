@@ -1,0 +1,8 @@
+import "pkl:ref"
+class D extends ref.Domain {
+  function renderReference(r): String = r.getData().toString()
+}
+local d = new D {}
+class A { value: String }
+local r = ref.Reference(d, A, "root").value
+result = r.getPath().length == 1 && r.getPath()[0].property == "value" && r.getPath()[0].key == null && r.getPath()[0].isProperty && !r.getPath()[0].isSubscript && r.getData() == "root" && r.getDomain() == d

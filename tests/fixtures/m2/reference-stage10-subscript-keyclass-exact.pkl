@@ -1,0 +1,9 @@
+import "pkl:ref"
+class D extends ref.Domain {
+  function renderReference(r): String = r.getData().toString()
+}
+local d = new D {}
+open class K {}
+class Child extends K
+class H { p: Mapping<K, String> }
+result = ref.Reference(d, H, null).p[new Child {}]

@@ -73,7 +73,8 @@ def apply_mappings(requirements: list[dict], cases: list[dict], mappings: dict,
     checks provenance; it cannot prove that the implementation covers that scope.
     Execution and the unchanged full gate remain separate requirements.
     """
-    if (set(mappings) != {'schema_version', 'baseline', 'requirements'}
+    if (not isinstance(mappings, dict)
+            or set(mappings) != {'schema_version', 'baseline', 'requirements'}
             or type(mappings['schema_version']) is not int or mappings['schema_version'] != 1
             or mappings['baseline'] != {'version': baseline['version'], 'revision': baseline['revision']}
             or not isinstance(mappings['requirements'], list)):

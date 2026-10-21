@@ -17,6 +17,7 @@ pub mod probe;
 pub mod regex;
 pub mod resolver;
 pub mod source;
+mod stdlib_sources;
 pub mod syntax;
 pub mod value;
 pub mod vm;

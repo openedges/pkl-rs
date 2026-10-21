@@ -1,0 +1,7 @@
+import "pkl:ref"
+class D extends ref.Domain {
+  function renderReference(r): String = r.getData().toString()
+}
+local d = new D {}
+class Bad extends ref.Domain { function renderReference(r): String = throw("domain failed") }
+result = ref.Reference(new Bad {}, String, null).toString()

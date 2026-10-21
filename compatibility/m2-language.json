@@ -21310,6 +21310,2931 @@
       ]
     },
     {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-constructor-data",
+      "input": "tests/fixtures/m2/reference-stage10-constructor-data.pkl",
+      "input_sha256": "c1eb789d0a5d830157cea440c0d88d5b14efc287e91a61b53fba5790e426c384",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:constraints",
+        "specification:docs/modules/language-reference/pages/index.adoc:References"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-constructor-domain",
+      "input": "tests/fixtures/m2/reference-stage10-constructor-domain.pkl",
+      "input_sha256": "6fe38814b67fe22fbafb1a89fb0347c94f78dd6758a924afffb75bf85bc4e76b",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:constraints",
+        "specification:docs/modules/language-reference/pages/index.adoc:References"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-constructor-empty-path",
+      "input": "tests/fixtures/m2/reference-stage10-constructor-empty-path.pkl",
+      "input_sha256": "1336af215f2ea87cefc186d3ebb90a48ff768a7105e24b4ff3ab504b5aaebb6f",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:constraints",
+        "specification:docs/modules/language-reference/pages/index.adoc:References"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-constructor-class",
+      "input": "tests/fixtures/m2/reference-stage10-constructor-class.pkl",
+      "input_sha256": "86945fcc2eb53589e8650a22dd48111ec992546bff20dc9c50574d0442456bcd",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:constraints",
+        "specification:docs/modules/language-reference/pages/index.adoc:References"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "reference-stage10-domain-invalid",
+      "input": "tests/fixtures/m2/reference-stage10-domain-invalid.pkl",
+      "input_sha256": "708990a5eea28df6bcf551e0b5597e4cf4c4b5b3908355b10c73768c8a6f38af",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:constraints",
+        "semantic:diagnostics",
+        "specification:docs/modules/language-reference/pages/index.adoc:References"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "reference-stage10-class-invalid",
+      "input": "tests/fixtures/m2/reference-stage10-class-invalid.pkl",
+      "input_sha256": "25cee85b481dd28447e5c29ef7879a84f3372baeaf8330e2130c0812038085f2",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:constraints",
+        "semantic:diagnostics",
+        "specification:docs/modules/language-reference/pages/index.adoc:References"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "reference-stage10-new-reference-invalid",
+      "input": "tests/fixtures/m2/reference-stage10-new-reference-invalid.pkl",
+      "input_sha256": "a0ff523e1fce672781200f7a1f0bb4398478d679b94f9bea237fc01bf02dab5d",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:constraints",
+        "semantic:diagnostics",
+        "specification:docs/modules/language-reference/pages/index.adoc:References"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-property-unforced",
+      "input": "tests/fixtures/m2/reference-stage10-property-unforced.pkl",
+      "input_sha256": "18cd68daa079f18dd51aaea9a16fac1a53e2015f946d58e3f0f9fb55fdb991cb",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:lazy-evaluation",
+        "semantic:constraints",
+        "specification:docs/modules/language-reference/pages/index.adoc:References"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-property-inherited",
+      "input": "tests/fixtures/m2/reference-stage10-property-inherited.pkl",
+      "input_sha256": "90baf055b32593f23cac5d86d465f893d70d7c58a0d6ff5b476f11453d90863a",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:lazy-evaluation",
+        "semantic:constraints",
+        "specification:docs/modules/language-reference/pages/index.adoc:References"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-property-override",
+      "input": "tests/fixtures/m2/reference-stage10-property-override.pkl",
+      "input_sha256": "425e380f73ef7d32e7013161bbf01021b0903aa53a47d1f1d6e7a817cf90684e",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:constraints",
+        "semantic:unions",
+        "specification:docs/modules/language-reference/pages/index.adoc:References"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-property-hidden",
+      "input": "tests/fixtures/m2/reference-stage10-property-hidden.pkl",
+      "input_sha256": "701a60282383a503eab1c9b7164a5314c342cdba64cb6292a6946a1f7ad5267b",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:constraints",
+        "specification:docs/modules/language-reference/pages/index.adoc:References"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "reference-stage10-property-local",
+      "input": "tests/fixtures/m2/reference-stage10-property-local.pkl",
+      "input_sha256": "b50de661f29f1a35dd09210db394ed78061633c257190303290748903d3d03e9",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:constraints",
+        "semantic:diagnostics",
+        "specification:docs/modules/language-reference/pages/index.adoc:References"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "reference-stage10-property-missing",
+      "input": "tests/fixtures/m2/reference-stage10-property-missing.pkl",
+      "input_sha256": "ab5f94c61bafb9194757ab06c589da905a81a0cc69fce25000c050b45d6897b3",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:constraints",
+        "semantic:diagnostics",
+        "specification:docs/modules/language-reference/pages/index.adoc:References"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "reference-stage10-property-method",
+      "input": "tests/fixtures/m2/reference-stage10-property-method.pkl",
+      "input_sha256": "daee4da197affc10f647a1f7919430b7047c4180611644efece57259eb20bcd0",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:constraints",
+        "semantic:diagnostics",
+        "specification:docs/modules/language-reference/pages/index.adoc:References"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-builtin-string-length-reference-render",
+      "input": "tests/fixtures/m2/reference-stage10-builtin-string-length-reference-render.pkl",
+      "input_sha256": "fac2f3057741828e8ef538ed64cc794eb7490a7c877fe195bb0902ffde47beed",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:constraints",
+        "specification:docs/modules/language-reference/pages/index.adoc:References"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-property-path",
+      "input": "tests/fixtures/m2/reference-stage10-property-path.pkl",
+      "input_sha256": "d3d67f1e2bc5c934fd30b24bc2e5e700e3dc61639c91a75f98a581639a4dfe7d",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:constraints",
+        "specification:docs/modules/language-reference/pages/index.adoc:References"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-subscript-bare-list",
+      "input": "tests/fixtures/m2/reference-stage10-subscript-bare-list.pkl",
+      "input_sha256": "2775abb7b9efa4091e9e3f02d6315163370565538c6bf9c69b124a7cf42646d3",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:collections",
+        "semantic:constraints",
+        "specification:docs/modules/language-reference/pages/index.adoc:References"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-subscript-bare-listing",
+      "input": "tests/fixtures/m2/reference-stage10-subscript-bare-listing.pkl",
+      "input_sha256": "ac1c7810c75dd06ca2233f737da122ead192e0f95c56520237c83036c8190df0",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:collections",
+        "semantic:constraints",
+        "specification:docs/modules/language-reference/pages/index.adoc:References"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-subscript-bare-mapping",
+      "input": "tests/fixtures/m2/reference-stage10-subscript-bare-mapping.pkl",
+      "input_sha256": "2a566661f0f4a75140cf88ade272d2b6e3b36358c74661055c7b5d6d2b359e9b",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:collections",
+        "semantic:constraints",
+        "specification:docs/modules/language-reference/pages/index.adoc:References"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-subscript-bare-dynamic",
+      "input": "tests/fixtures/m2/reference-stage10-subscript-bare-dynamic.pkl",
+      "input_sha256": "d1d14fbdf45a87b67fa70d05490c161dc4a757597d402d1ef36bdc329dae7845",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:collections",
+        "semantic:constraints",
+        "specification:docs/modules/language-reference/pages/index.adoc:References"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-subscript-typed-list",
+      "input": "tests/fixtures/m2/reference-stage10-subscript-typed-list.pkl",
+      "input_sha256": "28ed800c1676cce1f9eb54644bde25d664f1875f332b3fb717ca201abf5e0195",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:collections",
+        "semantic:constraints",
+        "specification:docs/modules/language-reference/pages/index.adoc:References"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-subscript-typed-listing",
+      "input": "tests/fixtures/m2/reference-stage10-subscript-typed-listing.pkl",
+      "input_sha256": "deb4a6251db051e83054d561018fd5b134291c7eded419f864dd8420a30c22c1",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:collections",
+        "semantic:constraints",
+        "specification:docs/modules/language-reference/pages/index.adoc:References"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-subscript-typed-mapping",
+      "input": "tests/fixtures/m2/reference-stage10-subscript-typed-mapping.pkl",
+      "input_sha256": "22b3b4bbddb4c70fd9b593ca2e7c9c04b5522f68bc2b27b2de714c580c50a13e",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:collections",
+        "semantic:constraints",
+        "semantic:unions",
+        "specification:docs/modules/language-reference/pages/index.adoc:References"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "reference-stage10-subscript-invalid-list",
+      "input": "tests/fixtures/m2/reference-stage10-subscript-invalid-list.pkl",
+      "input_sha256": "a7186a0e2370b99906f0eb875ccfd8da23e356b77d1f89e19dbb2a5229c90ce8",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:collections",
+        "semantic:constraints",
+        "semantic:diagnostics",
+        "specification:docs/modules/language-reference/pages/index.adoc:References"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "reference-stage10-subscript-invalid-listing",
+      "input": "tests/fixtures/m2/reference-stage10-subscript-invalid-listing.pkl",
+      "input_sha256": "7e3d21efc050a26d0bac6c8abddc1487f9cca93c46c17dc502c1261fef683073",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:collections",
+        "semantic:constraints",
+        "semantic:diagnostics",
+        "specification:docs/modules/language-reference/pages/index.adoc:References"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "reference-stage10-subscript-keytype-mapping",
+      "input": "tests/fixtures/m2/reference-stage10-subscript-keytype-mapping.pkl",
+      "input_sha256": "2eead71ce3a7106f99f5faffe1b60344749dd93f3239155855673b5da49bec50",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:collections",
+        "semantic:constraints",
+        "semantic:diagnostics",
+        "specification:docs/modules/language-reference/pages/index.adoc:References"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-subscript-keyliteral",
+      "input": "tests/fixtures/m2/reference-stage10-subscript-keyliteral.pkl",
+      "input_sha256": "660438cba285be80cd236dc08713e16e386b5211218a246d2f5c7567d8f6115f",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:collections",
+        "semantic:constraints",
+        "specification:docs/modules/language-reference/pages/index.adoc:References"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "reference-stage10-subscript-keyliteral-invalid",
+      "input": "tests/fixtures/m2/reference-stage10-subscript-keyliteral-invalid.pkl",
+      "input_sha256": "7618c5e4fee433f10ecbde82e3ab897d7d65f3028f6b0062ab5fb561ca70f35c",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:collections",
+        "semantic:constraints",
+        "semantic:diagnostics",
+        "specification:docs/modules/language-reference/pages/index.adoc:References"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-subscript-keyconstraint-erased",
+      "input": "tests/fixtures/m2/reference-stage10-subscript-keyconstraint-erased.pkl",
+      "input_sha256": "3712dab489bd93a772a79f7159b299e31b160475970477df1b9986c49e0200a7",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:collections",
+        "semantic:constraints",
+        "specification:docs/modules/language-reference/pages/index.adoc:References"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "reference-stage10-subscript-keyclass-exact",
+      "input": "tests/fixtures/m2/reference-stage10-subscript-keyclass-exact.pkl",
+      "input_sha256": "89fdec6fa9092e081ca81b2e01d80fa7ed66d0f4c08ef9629f592e2865d30fb8",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:collections",
+        "semantic:constraints",
+        "semantic:diagnostics",
+        "specification:docs/modules/language-reference/pages/index.adoc:References"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-subscript-key-null",
+      "input": "tests/fixtures/m2/reference-stage10-subscript-key-null.pkl",
+      "input_sha256": "697bb422e8d0e9d4e46e911c26acade36ad4f2c1b1f2fb0a24364c2835d3e656",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:collections",
+        "semantic:constraints",
+        "specification:docs/modules/language-reference/pages/index.adoc:References"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "reference-stage10-default-forbidden-dynamic",
+      "input": "tests/fixtures/m2/reference-stage10-default-forbidden-dynamic.pkl",
+      "input_sha256": "c6fe2cb9994ba0cf05155b78960ada7fefd3141f8319973ec5012cfa496859c3",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:constraints",
+        "semantic:diagnostics",
+        "specification:docs/modules/language-reference/pages/index.adoc:References"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "reference-stage10-default-forbidden-listing",
+      "input": "tests/fixtures/m2/reference-stage10-default-forbidden-listing.pkl",
+      "input_sha256": "1835551d81dea13aac7faa9dd63a227d7145a19dba632d8dcdeae0d807886785",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:constraints",
+        "semantic:diagnostics",
+        "specification:docs/modules/language-reference/pages/index.adoc:References"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "reference-stage10-default-forbidden-mapping",
+      "input": "tests/fixtures/m2/reference-stage10-default-forbidden-mapping.pkl",
+      "input_sha256": "baa79420e2f0f2fa886582669878254b6e8709866fc1cc2a048462e102ab36e5",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:constraints",
+        "semantic:diagnostics",
+        "specification:docs/modules/language-reference/pages/index.adoc:References"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-dynamic-unknown",
+      "input": "tests/fixtures/m2/reference-stage10-dynamic-unknown.pkl",
+      "input_sha256": "afee14bffd264e5d61ad5a8a52ed6debb958176a6503cfdc06cfc5d9d14e301a",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:constraints",
+        "specification:docs/modules/language-reference/pages/index.adoc:References"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-null-chain",
+      "input": "tests/fixtures/m2/reference-stage10-null-chain.pkl",
+      "input_sha256": "fe1b44537c0ece5cc2ed4892f52098560288db952b7da57bd8a9ca9ebb29a0aa",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:constraints",
+        "specification:docs/modules/language-reference/pages/index.adoc:References"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "reference-stage10-any-property-invalid",
+      "input": "tests/fixtures/m2/reference-stage10-any-property-invalid.pkl",
+      "input_sha256": "b39aa2ae2d5ba1673c21c5a489665b40a1b3ca02c4cb2c3e248caf27fb0d9c89",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:constraints",
+        "semantic:diagnostics",
+        "specification:docs/modules/language-reference/pages/index.adoc:References"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-constraints-erased",
+      "input": "tests/fixtures/m2/reference-stage10-constraints-erased.pkl",
+      "input_sha256": "b8b9c0c8aec93754110f502a433c7fae5d5d61e984d10cf030dd7c101e56aea5",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:lazy-evaluation",
+        "semantic:constraints",
+        "specification:docs/modules/language-reference/pages/index.adoc:References"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-alias-erased",
+      "input": "tests/fixtures/m2/reference-stage10-alias-erased.pkl",
+      "input_sha256": "2586870db36210895569098cb50d1f3c3b7fb18d22c42dcc99ea8fd49772602a",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "specification:docs/modules/language-reference/pages/index.adoc:References"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-nullable",
+      "input": "tests/fixtures/m2/reference-stage10-nullable.pkl",
+      "input_sha256": "6488e69bf6f6cad6ff7dc6a03bda04a8b291f02279d1f360ba2be94562030730",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:constraints",
+        "semantic:unions",
+        "specification:docs/modules/language-reference/pages/index.adoc:References"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-nullable-narrow-false",
+      "input": "tests/fixtures/m2/reference-stage10-nullable-narrow-false.pkl",
+      "input_sha256": "052b5e0e08db8993f9cfb2320ee92200641cca1b19147be58ae23ef2323ed5b2",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:constraints",
+        "semantic:unions",
+        "specification:docs/modules/language-reference/pages/index.adoc:References"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-nullable-property",
+      "input": "tests/fixtures/m2/reference-stage10-nullable-property.pkl",
+      "input_sha256": "7a3bd4ce71830beaea22758b87e8fee2dba8bcd271f7a66d7c2c6ce29acd1ba7",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:constraints",
+        "semantic:unions",
+        "specification:docs/modules/language-reference/pages/index.adoc:References"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-union-property",
+      "input": "tests/fixtures/m2/reference-stage10-union-property.pkl",
+      "input_sha256": "2a4cf102b8a62daff4fa8ac87f7a62b20d98fbdad278d078a41030cf0198a744",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:constraints",
+        "semantic:unions",
+        "specification:docs/modules/language-reference/pages/index.adoc:References"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-union-order",
+      "input": "tests/fixtures/m2/reference-stage10-union-order.pkl",
+      "input_sha256": "47f343ac13be2fd9770a4f738a0bca346a2005a09ca13b541c991937c7007303",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:constraints",
+        "semantic:unions",
+        "specification:docs/modules/language-reference/pages/index.adoc:References"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "reference-stage10-union-property-invalid",
+      "input": "tests/fixtures/m2/reference-stage10-union-property-invalid.pkl",
+      "input_sha256": "2a8d36cd92309d5706cf540bb3922ef7514da17e2e6ab6a5426af64ef561e24b",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:constraints",
+        "semantic:unions",
+        "semantic:diagnostics",
+        "specification:docs/modules/language-reference/pages/index.adoc:References"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-nested-typeargs",
+      "input": "tests/fixtures/m2/reference-stage10-nested-typeargs.pkl",
+      "input_sha256": "bc7acc81accee817e37cc6266e98f988e4dd4ec0edf0c2f5a04774186e9309e0",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:constraints",
+        "semantic:unions",
+        "specification:docs/modules/language-reference/pages/index.adoc:References"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "reference-stage10-reference-constraint-forbidden",
+      "input": "tests/fixtures/m2/reference-stage10-reference-constraint-forbidden.pkl",
+      "input_sha256": "49f7abc21bf7793b60ebc877394e00d97ec14e28e532e61b1b90ac46299786c6",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:constraints",
+        "semantic:diagnostics",
+        "specification:docs/modules/language-reference/pages/index.adoc:References"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "reference-stage10-reference-nested-constraint-forbidden",
+      "input": "tests/fixtures/m2/reference-stage10-reference-nested-constraint-forbidden.pkl",
+      "input_sha256": "14ed421f04b13c96b229db03407784978c5bfa40c32eb21d1b92d97a3c6b1729",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:constraints",
+        "semantic:diagnostics",
+        "specification:docs/modules/language-reference/pages/index.adoc:References"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-reference-domain-false",
+      "input": "tests/fixtures/m2/reference-stage10-reference-domain-false.pkl",
+      "input_sha256": "823d6c781f8a767bc8aa494b878a8a50a0a4319303f89348734648741d425837",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:constraints",
+        "specification:docs/modules/language-reference/pages/index.adoc:References"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-reference-covariant",
+      "input": "tests/fixtures/m2/reference-stage10-reference-covariant.pkl",
+      "input_sha256": "07a5fddb265e4a105f0a8cab959b1a8ede0153f828c435ca5d2e9d53b6523263",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:constraints",
+        "specification:docs/modules/language-reference/pages/index.adoc:References"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "reference-stage10-reference-cast-invalid",
+      "input": "tests/fixtures/m2/reference-stage10-reference-cast-invalid.pkl",
+      "input_sha256": "b7d2ad1edd4cc5d4e663f3540a28cdc3d4c3b2610541f4a4944116d30f2d0950",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:constraints",
+        "semantic:diagnostics",
+        "specification:docs/modules/language-reference/pages/index.adoc:References"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-literal-subtype",
+      "input": "tests/fixtures/m2/reference-stage10-literal-subtype.pkl",
+      "input_sha256": "5ced5d2e79fc07ff97bd0d86ea66d3d7a2be264920225c2c1f09cde2280d8b3c",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:constraints",
+        "specification:docs/modules/language-reference/pages/index.adoc:References"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-intalias-preserved",
+      "input": "tests/fixtures/m2/reference-stage10-intalias-preserved.pkl",
+      "input_sha256": "d5911fed6544cddeb37df16912984600f8549910a3c9773e4d6bc80027fc950b",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:constraints",
+        "specification:docs/modules/language-reference/pages/index.adoc:References"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-intalias-float",
+      "input": "tests/fixtures/m2/reference-stage10-intalias-float.pkl",
+      "input_sha256": "794b0f2ec07a3d1a3381e799ed53f08622023f8876de78d09c9a0cd3a33e8e8e",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:constraints",
+        "specification:docs/modules/language-reference/pages/index.adoc:References"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-intalias-narrow-false",
+      "input": "tests/fixtures/m2/reference-stage10-intalias-narrow-false.pkl",
+      "input_sha256": "801940ba2dccbb41e8dfd5c94b65b1e084f511ba0f819a156a9da750f9e3a3b1",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:constraints",
+        "specification:docs/modules/language-reference/pages/index.adoc:References"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-equality-same",
+      "input": "tests/fixtures/m2/reference-stage10-equality-same.pkl",
+      "input_sha256": "e53e031c4d007c027bc008da57e314448274529165d4566cadfddc3a615345d7",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:constraints",
+        "specification:docs/modules/language-reference/pages/index.adoc:References"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-equality-type-false",
+      "input": "tests/fixtures/m2/reference-stage10-equality-type-false.pkl",
+      "input_sha256": "da817ae994110dd0431f5cd94e02cf2ace4fc9a4548217e182ee372bd8c54c94",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:constraints",
+        "specification:docs/modules/language-reference/pages/index.adoc:References"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-equality-domain-structural",
+      "input": "tests/fixtures/m2/reference-stage10-equality-domain-structural.pkl",
+      "input_sha256": "e75d45225d42c57d74a3b706c8e56888717ec37ef7942e40bfc08744178a41a5",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:constraints",
+        "specification:docs/modules/language-reference/pages/index.adoc:References"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-equality-path-false",
+      "input": "tests/fixtures/m2/reference-stage10-equality-path-false.pkl",
+      "input_sha256": "b54c1f92da8deabbbaea2ec5806ffacd91fe93ed8337cb86b0a886d44062ded2",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:constraints",
+        "specification:docs/modules/language-reference/pages/index.adoc:References"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-equality-constraint-erased",
+      "input": "tests/fixtures/m2/reference-stage10-equality-constraint-erased.pkl",
+      "input_sha256": "84ebae3cbff86c63b04831f4e11c1efd52c20afd7ae8a1a647bb82f03b4b96d1",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:constraints",
+        "specification:docs/modules/language-reference/pages/index.adoc:References"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-equality-data-false",
+      "input": "tests/fixtures/m2/reference-stage10-equality-data-false.pkl",
+      "input_sha256": "3f64a141e5abf3e6ac9aafd5d19e21ea82728d1e82dbe9f3bb1b71a678c3a4f9",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:constraints",
+        "specification:docs/modules/language-reference/pages/index.adoc:References"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-render-to-string",
+      "input": "tests/fixtures/m2/reference-stage10-render-to-string.pkl",
+      "input_sha256": "4f41f12e24a17bda85851c7ca40208a417372b9c42a0a521312ece9e2195a2cd",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:constraints",
+        "specification:docs/modules/language-reference/pages/index.adoc:References"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-render-interpolation",
+      "input": "tests/fixtures/m2/reference-stage10-render-interpolation.pkl",
+      "input_sha256": "91bdd0a41509f4d6e4145fd095ab63de944b48a5118ab7c91b5147e17418dba7",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:constraints",
+        "specification:docs/modules/language-reference/pages/index.adoc:References"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "reference-stage10-render-domain-throw",
+      "input": "tests/fixtures/m2/reference-stage10-render-domain-throw.pkl",
+      "input_sha256": "b37082193fb12a7ba0276270a302141c8423f5b7fd70608f9c27d9006c68a24c",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:lazy-evaluation",
+        "semantic:constraints",
+        "semantic:diagnostics",
+        "specification:docs/modules/language-reference/pages/index.adoc:References"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-render-path",
+      "input": "tests/fixtures/m2/reference-stage10-render-path.pkl",
+      "input_sha256": "7b5eee40046bb2e9428b508200a55464ba89a5efde3c9630ba28015701e0cd11",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:constraints",
+        "specification:docs/modules/language-reference/pages/index.adoc:References"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-external-length-type",
+      "input": "tests/fixtures/m2/reference-stage10-external-length-type.pkl",
+      "input_sha256": "825686af0f2de2fce723ef5f383819741a521074889efba8b13370eb58e94950",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:constraints",
+        "specification:docs/modules/language-reference/pages/index.adoc:References"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-builtin-computed-string",
+      "input": "tests/fixtures/m2/reference-stage10-builtin-computed-string.pkl",
+      "input_sha256": "848463ea368f9bc5946773e3953a3c99cabd82851f063e83ef6e420c9c16f5e3",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:constraints",
+        "specification:docs/modules/language-reference/pages/index.adoc:References"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-data-not-forced",
+      "input": "tests/fixtures/m2/reference-stage10-data-not-forced.pkl",
+      "input_sha256": "36bde2f1eb0e8d044747342bcc3bead85bba47fb4d0d1e77d515ca655152dde2",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:lazy-evaluation",
+        "semantic:constraints",
+        "specification:docs/modules/language-reference/pages/index.adoc:References"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-domain-not-forced",
+      "input": "tests/fixtures/m2/reference-stage10-domain-not-forced.pkl",
+      "input_sha256": "d7c5515a627d808621d53a22c140d5d3b2ac606814339c9b03017317539b112c",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:lazy-evaluation",
+        "semantic:constraints",
+        "specification:docs/modules/language-reference/pages/index.adoc:References"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-domain-render-not-forced",
+      "input": "tests/fixtures/m2/reference-stage10-domain-render-not-forced.pkl",
+      "input_sha256": "8ad6c82af5c934c71bf6dcb0fea617ecbd417a795516d9815ae00938cb95df2b",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:lazy-evaluation",
+        "semantic:constraints",
+        "specification:docs/modules/language-reference/pages/index.adoc:References"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-equality-data-shared-initializer-unforced",
+      "input": "tests/fixtures/m2/reference-stage10-equality-data-shared-initializer-unforced.pkl",
+      "input_sha256": "a22f71f4cbdc2d27a1bbedd403bc906a0d73cc53f06a1c501c54f53290c2ee3e",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:lazy-evaluation",
+        "semantic:constraints",
+        "specification:docs/modules/language-reference/pages/index.adoc:References"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-equality-domain-shared-initializer-unforced",
+      "input": "tests/fixtures/m2/reference-stage10-equality-domain-shared-initializer-unforced.pkl",
+      "input_sha256": "a49dee1e8d03956050ab74d6ba613faa37c38d353b922c9410a0145866d85e7c",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:lazy-evaluation",
+        "semantic:constraints",
+        "specification:docs/modules/language-reference/pages/index.adoc:References"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-member-untype-unknown",
+      "input": "tests/fixtures/m2/reference-stage10-member-untype-unknown.pkl",
+      "input_sha256": "c9c075c8609510885b7721885fad9e9cf2307f44a91a1eb99189799eb0c016b6",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:lazy-evaluation",
+        "semantic:constraints",
+        "specification:docs/modules/language-reference/pages/index.adoc:References"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-member-inherited-value-override",
+      "input": "tests/fixtures/m2/reference-stage10-member-inherited-value-override.pkl",
+      "input_sha256": "d8831f7f329ea212f1b89aaae189d9905923d6f32e6115270193968ea78315c4",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:lazy-evaluation",
+        "semantic:constraints",
+        "specification:docs/modules/language-reference/pages/index.adoc:References"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-module-metadata",
+      "input": "tests/fixtures/m2/reference-stage10-module-metadata.pkl",
+      "input_sha256": "e944891efd8871fbe3288feeda33e0c3dfeea9b5fb541a31212cc57de0480acb",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:lazy-evaluation",
+        "semantic:constraints",
+        "specification:docs/modules/language-reference/pages/index.adoc:References"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "reference-stage10-module-output-forbidden",
+      "input": "tests/fixtures/m2/reference-stage10-module-output-forbidden.pkl",
+      "input_sha256": "62ff59b51e7a212a65c72a552859818065fafb8a9f63da997790c7ce7730fd22",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:constraints",
+        "semantic:diagnostics",
+        "specification:docs/modules/language-reference/pages/index.adoc:References"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-access-null-key",
+      "input": "tests/fixtures/m2/reference-stage10-access-null-key.pkl",
+      "input_sha256": "284ea0bff675f58d4cd5a4d69e8faba56d0f43342706b75c8e53ae4d68c7fee9",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:constraints",
+        "specification:docs/modules/language-reference/pages/index.adoc:References"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "reference-stage10-access-invalid",
+      "input": "tests/fixtures/m2/reference-stage10-access-invalid.pkl",
+      "input_sha256": "0e08f19985e1900496c53375ece051225a63403976a068803e495b15f9845800",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:constraints",
+        "semantic:diagnostics",
+        "specification:docs/modules/language-reference/pages/index.adoc:References"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "reference-stage10-namespace-local-duplicate",
+      "input": "tests/fixtures/m2/reference-stage10-namespace-local-duplicate.pkl",
+      "input_sha256": "7f694b2936d69fc0343be3102ea7df710d46eaa51dc68aa0694809dae4033d4d",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:constraints",
+        "semantic:modules",
+        "semantic:name-resolution",
+        "semantic:diagnostics",
+        "specification:docs/modules/language-reference/pages/index.adoc:References",
+        "specification:docs/modules/language-reference/pages/index.adoc:Import Clauses"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-namespace-parameter",
+      "input": "tests/fixtures/m2/reference-stage10-namespace-parameter.pkl",
+      "input_sha256": "8256570dea012ac814037d3d41e6f6e4a6b0804ccee7c9b385af6f43f916e8b6",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:constraints",
+        "semantic:modules",
+        "semantic:name-resolution",
+        "specification:docs/modules/language-reference/pages/index.adoc:References",
+        "specification:docs/modules/language-reference/pages/index.adoc:Import Clauses"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-relation-alias-left",
+      "input": "tests/fixtures/m2/reference-stage10-relation-alias-left.pkl",
+      "input_sha256": "30e9f3dd6687afb3c11156ab5798c29e6aa33791bda3ba397f05401857ef15ce",
+      "metamorphic_relation": {
+        "case_ids": [
+          "reference-stage10-relation-alias-left",
+          "reference-stage10-relation-alias-right"
+        ],
+        "domain": "Declaration alias wrapping a constrained String erases to String without running its constraint.",
+        "kind": "equal-stdout"
+      },
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "specification:docs/modules/language-reference/pages/index.adoc:References"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-relation-alias-right",
+      "input": "tests/fixtures/m2/reference-stage10-relation-alias-right.pkl",
+      "input_sha256": "d822804965a86d189b9af30939cd2fc619b08609966fd2692af04f43eca5edfb",
+      "metamorphic_relation": {
+        "case_ids": [
+          "reference-stage10-relation-alias-left",
+          "reference-stage10-relation-alias-right"
+        ],
+        "domain": "Declaration alias wrapping a constrained String erases to String without running its constraint.",
+        "kind": "equal-stdout"
+      },
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:constraints",
+        "specification:docs/modules/language-reference/pages/index.adoc:References"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-relation-unforced-left",
+      "input": "tests/fixtures/m2/reference-stage10-relation-unforced-left.pkl",
+      "input_sha256": "bcdd5e9beedffa6af605fdd27f29dca7e2b6d1645e98aab644fe816177905755",
+      "metamorphic_relation": {
+        "case_ids": [
+          "reference-stage10-relation-unforced-left",
+          "reference-stage10-relation-unforced-right"
+        ],
+        "domain": "Reference synthetic property metadata is unchanged by a throwing property initializer, which must remain unforced.",
+        "kind": "equal-stdout"
+      },
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:lazy-evaluation",
+        "semantic:constraints",
+        "specification:docs/modules/language-reference/pages/index.adoc:References"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-relation-unforced-right",
+      "input": "tests/fixtures/m2/reference-stage10-relation-unforced-right.pkl",
+      "input_sha256": "d822804965a86d189b9af30939cd2fc619b08609966fd2692af04f43eca5edfb",
+      "metamorphic_relation": {
+        "case_ids": [
+          "reference-stage10-relation-unforced-left",
+          "reference-stage10-relation-unforced-right"
+        ],
+        "domain": "Reference synthetic property metadata is unchanged by a throwing property initializer, which must remain unforced.",
+        "kind": "equal-stdout"
+      },
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:lazy-evaluation",
+        "semantic:constraints",
+        "specification:docs/modules/language-reference/pages/index.adoc:References"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-relation-render-left",
+      "input": "tests/fixtures/m2/reference-stage10-relation-render-left.pkl",
+      "input_sha256": "b0e5dc53e18de7eb18f3ee270ee5cd466c30ffff97d504c4fac70d05b3703f2d",
+      "metamorphic_relation": {
+        "case_ids": [
+          "reference-stage10-relation-render-left",
+          "reference-stage10-relation-render-right"
+        ],
+        "domain": "Reference string interpolation delegates to the same domain renderer as explicit toString for this String-valued domain.",
+        "kind": "equal-stdout"
+      },
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:constraints",
+        "specification:docs/modules/language-reference/pages/index.adoc:References"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-relation-render-right",
+      "input": "tests/fixtures/m2/reference-stage10-relation-render-right.pkl",
+      "input_sha256": "107c4ed911136484a68a5a26fc57cca415786115798784de615bb0227041d11d",
+      "metamorphic_relation": {
+        "case_ids": [
+          "reference-stage10-relation-render-left",
+          "reference-stage10-relation-render-right"
+        ],
+        "domain": "Reference string interpolation delegates to the same domain renderer as explicit toString for this String-valued domain.",
+        "kind": "equal-stdout"
+      },
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:constraints",
+        "specification:docs/modules/language-reference/pages/index.adoc:References"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-access-property-key-null",
+      "input": "tests/fixtures/m2/reference-stage10-access-property-key-null.pkl",
+      "input_sha256": "b412acda35cad66daece8a256530d54fb62182d707866ca29a8cec6f57ca055a",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:constraints",
+        "specification:docs/modules/language-reference/pages/index.adoc:References"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-namespace-alias-valid",
+      "input": "tests/fixtures/m2/reference-stage10-namespace-alias-valid.pkl",
+      "input_sha256": "82c963ac720cf2ce6f90519ba2d70f395317232a4f0cd56c25a9923ca4e6214c",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:constraints",
+        "semantic:modules",
+        "semantic:name-resolution",
+        "specification:docs/modules/language-reference/pages/index.adoc:References",
+        "specification:docs/modules/language-reference/pages/index.adoc:Import Clauses"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "reference-stage10-namespace-property-duplicate",
+      "input": "tests/fixtures/m2/reference-stage10-namespace-property-duplicate.pkl",
+      "input_sha256": "4c99819d6cfcd76858b38d74958aeb7d637840647cc4ed357c02db983c75ed11",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:constraints",
+        "semantic:modules",
+        "semantic:name-resolution",
+        "semantic:diagnostics",
+        "specification:docs/modules/language-reference/pages/index.adoc:References",
+        "specification:docs/modules/language-reference/pages/index.adoc:Import Clauses"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "reference-stage10-equality-data-different-initializers",
+      "input": "tests/fixtures/m2/reference-stage10-equality-data-different-initializers.pkl",
+      "input_sha256": "02426809b4557c46ec8cab0339e8d4925f5139b6d28869509d632f6637a03f94",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:lazy-evaluation",
+        "semantic:constraints",
+        "semantic:diagnostics",
+        "specification:docs/modules/language-reference/pages/index.adoc:References"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "reference-stage10-equality-domain-different-initializers",
+      "input": "tests/fixtures/m2/reference-stage10-equality-domain-different-initializers.pkl",
+      "input_sha256": "8fe0f34c433771f543a32d7cee0a332d7479756961e49940db987053bf994325",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:lazy-evaluation",
+        "semantic:constraints",
+        "semantic:diagnostics",
+        "specification:docs/modules/language-reference/pages/index.adoc:References"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-reference-generic-alias",
+      "input": "tests/fixtures/m2/reference-stage10-reference-generic-alias.pkl",
+      "input_sha256": "b2f08472a4a15caf2fbccbba773601e22965352d6d06f0546bf82566bb9491c5",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "specification:docs/modules/language-reference/pages/index.adoc:References"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "reference-stage10-reference-alias-constraint-forbidden",
+      "input": "tests/fixtures/m2/reference-stage10-reference-alias-constraint-forbidden.pkl",
+      "input_sha256": "903a1083cc96a08536fe2085e082e81e2cb8ac75f65b690915614b38aee0606d",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:diagnostics",
+        "specification:docs/modules/language-reference/pages/index.adoc:References"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-reference-domain-constraint-allowed",
+      "input": "tests/fixtures/m2/reference-stage10-reference-domain-constraint-allowed.pkl",
+      "input_sha256": "943892e19ad6c172dd91095c23d4b0ac7c4619786ec3a046ca96b1d559331d63",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:constraints",
+        "specification:docs/modules/language-reference/pages/index.adoc:References"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-union-subscript",
+      "input": "tests/fixtures/m2/reference-stage10-union-subscript.pkl",
+      "input_sha256": "ce2c954a99cc7a19afd6119a9c6b4e7d865c6967511cadc80dbf80c155338ee0",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:constraints",
+        "semantic:unions",
+        "specification:docs/modules/language-reference/pages/index.adoc:References"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-reference-any-absorbs",
+      "input": "tests/fixtures/m2/reference-stage10-reference-any-absorbs.pkl",
+      "input_sha256": "ec3dc0f284e6ee111dae813ebba78594fc3ffeb71bb86d5925071dec1ea7cbd9",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:constraints",
+        "semantic:unions",
+        "specification:docs/modules/language-reference/pages/index.adoc:References"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-reference-domain-bad-type",
+      "input": "tests/fixtures/m2/reference-stage10-reference-domain-bad-type.pkl",
+      "input_sha256": "3ec5148750c6167d486701feaea900c8a9f4b675a4e61f4d015e4102fb713fd9",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:constraints",
+        "specification:docs/modules/language-reference/pages/index.adoc:References"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-reference-nullable-domain",
+      "input": "tests/fixtures/m2/reference-stage10-reference-nullable-domain.pkl",
+      "input_sha256": "1d54cc00a859c959e2efce54338240062a0f72c6b6ec60b1e7a0b7d59d0d0ea9",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:constraints",
+        "semantic:unions",
+        "specification:docs/modules/language-reference/pages/index.adoc:References"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-reference-nothing-false",
+      "input": "tests/fixtures/m2/reference-stage10-reference-nothing-false.pkl",
+      "input_sha256": "35b3a4dc0e9f1bf706a05d5b86614ec7b86c567c32b315e6ae25ac350630c30f",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:constraints",
+        "specification:docs/modules/language-reference/pages/index.adoc:References"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-reference-unknown-anytype",
+      "input": "tests/fixtures/m2/reference-stage10-reference-unknown-anytype.pkl",
+      "input_sha256": "bd9707ddee43dc20a6e3e0118964d94f4ba8ae00e53866249455f62a0b3f9fcb",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:constraints",
+        "specification:docs/modules/language-reference/pages/index.adoc:References"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "reference-stage10-metadata-unused-property-type",
+      "input": "tests/fixtures/m2/reference-stage10-metadata-unused-property-type.pkl",
+      "input_sha256": "c63e7f864de7b69135267630dde9420c33b3a738ac22a621ea73883f1167f741",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:diagnostics",
+        "specification:docs/modules/language-reference/pages/index.adoc:References"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "reference-stage10-metadata-unused-method-type",
+      "input": "tests/fixtures/m2/reference-stage10-metadata-unused-method-type.pkl",
+      "input_sha256": "a452ed3464087e22d9e54832ce7256707df7f365ea126089a04a9ee4ee5fe462",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:diagnostics",
+        "specification:docs/modules/language-reference/pages/index.adoc:References"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-metadata-unused-method-body",
+      "input": "tests/fixtures/m2/reference-stage10-metadata-unused-method-body.pkl",
+      "input_sha256": "be1363129804e75e44202e60aad42b9a0b1724fb57b5343227e7f717e0e32f58",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:lazy-evaluation",
+        "specification:docs/modules/language-reference/pages/index.adoc:References"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-metadata-unused-property-body",
+      "input": "tests/fixtures/m2/reference-stage10-metadata-unused-property-body.pkl",
+      "input_sha256": "cdbc0ef0d4dbad2695feebdff8b34ffb0c26d30a99119b8caf4d469a5ca2e0a4",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:lazy-evaluation",
+        "specification:docs/modules/language-reference/pages/index.adoc:References"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "reference-stage10-metadata-unknown-type-before-data",
+      "input": "tests/fixtures/m2/reference-stage10-metadata-unknown-type-before-data.pkl",
+      "input_sha256": "2b20df4665ab647cfac7aff96af38d0f3bfc1c812dbdc776cf4718d039d85929",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "specification:docs/modules/language-reference/pages/index.adoc:References"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "reference-stage10-metadata-constraint-type-initialization",
+      "input": "tests/fixtures/m2/reference-stage10-metadata-constraint-type-initialization.pkl",
+      "input_sha256": "447a50e07f071b7498816e48733821055ff86557c4e912241e77a3ba86dbf56f",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:diagnostics",
+        "specification:docs/modules/language-reference/pages/index.adoc:References"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-metadata-recursive-property",
+      "input": "tests/fixtures/m2/reference-stage10-metadata-recursive-property.pkl",
+      "input_sha256": "89637192cdb2d1f69ae08e52f8bb3be42960da8b3b168667b140a73efb798144",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:unions",
+        "specification:docs/modules/language-reference/pages/index.adoc:References"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "reference-stage10-metadata-inherited-unknown",
+      "input": "tests/fixtures/m2/reference-stage10-metadata-inherited-unknown.pkl",
+      "input_sha256": "cf7decf51d0b80e8688768aaf8baa09370d0044eb1b5f153794c04a752f2f823",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:diagnostics",
+        "specification:docs/modules/language-reference/pages/index.adoc:References"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "reference-stage10-metadata-local-unknown",
+      "input": "tests/fixtures/m2/reference-stage10-metadata-local-unknown.pkl",
+      "input_sha256": "5050312d8c53a50696605be77bc2372c67357e9ba179a779f2c70cbd138acc8d",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:diagnostics",
+        "specification:docs/modules/language-reference/pages/index.adoc:References"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "reference-stage10-metadata-hidden-unknown",
+      "input": "tests/fixtures/m2/reference-stage10-metadata-hidden-unknown.pkl",
+      "input_sha256": "726b6d2ea4c351ec789bce43aa4f0a9e8b3e4fb3daea4e7debb860a3d5994ff0",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:diagnostics",
+        "specification:docs/modules/language-reference/pages/index.adoc:References"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-mapping-reference-key",
+      "input": "tests/fixtures/m2/reference-stage10-mapping-reference-key.pkl",
+      "input_sha256": "673e287dc291ca31c11e2cfbb3c193e79f02409663f6776fe4ffba39cd037e6f",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:collections",
+        "specification:docs/modules/language-reference/pages/index.adoc:References"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "reference-stage10-mapping-reference-key-duplicate",
+      "input": "tests/fixtures/m2/reference-stage10-mapping-reference-key-duplicate.pkl",
+      "input_sha256": "c12275679109544e9d5ab9ca86d00480033df0e0a3e0c06a15fa5427667edbfe",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:collections",
+        "semantic:diagnostics",
+        "specification:docs/modules/language-reference/pages/index.adoc:References"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-mapping-reference-path-key",
+      "input": "tests/fixtures/m2/reference-stage10-mapping-reference-path-key.pkl",
+      "input_sha256": "60a6a05a179f83fc1470ad8a8c46a28fd16eae9f7c27198c023f11273340f834",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:collections",
+        "specification:docs/modules/language-reference/pages/index.adoc:References"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-mapping-reference-type-distinct",
+      "input": "tests/fixtures/m2/reference-stage10-mapping-reference-type-distinct.pkl",
+      "input_sha256": "f1bec80b975c59936d21dfb92d9628392629d8b9d9f81b70d7678763ff3d1949",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:collections",
+        "specification:docs/modules/language-reference/pages/index.adoc:References"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-mapping-reference-path-distinct",
+      "input": "tests/fixtures/m2/reference-stage10-mapping-reference-path-distinct.pkl",
+      "input_sha256": "e60c4a1457326063ad59801c9977bb84a25754d9023d302f459806034ff205b8",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:collections",
+        "specification:docs/modules/language-reference/pages/index.adoc:References"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "reference-stage10-mapping-reference-hash-data",
+      "input": "tests/fixtures/m2/reference-stage10-mapping-reference-hash-data.pkl",
+      "input_sha256": "c64644b67af367588c9dcd19d4cce496c33430837d76115e993cd876c28d84f5",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:lazy-evaluation",
+        "semantic:collections",
+        "semantic:diagnostics",
+        "specification:docs/modules/language-reference/pages/index.adoc:References"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "reference-stage10-mapping-reference-hash-domain",
+      "input": "tests/fixtures/m2/reference-stage10-mapping-reference-hash-domain.pkl",
+      "input_sha256": "4a5837905c2c11ee7ad6260c365fc2c86108cc7932c38ed8034a71a7cf37e3e0",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:lazy-evaluation",
+        "semantic:collections",
+        "semantic:diagnostics",
+        "specification:docs/modules/language-reference/pages/index.adoc:References"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-mapping-reference-constraint-erased",
+      "input": "tests/fixtures/m2/reference-stage10-mapping-reference-constraint-erased.pkl",
+      "input_sha256": "c2a3a9eab032f203f1fa9e79d0ad468a5aa9f9a4281050d5d673708ea3ca937c",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:collections",
+        "semantic:constraints",
+        "specification:docs/modules/language-reference/pages/index.adoc:References"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-equality-type-list",
+      "input": "tests/fixtures/m2/reference-stage10-equality-type-list.pkl",
+      "input_sha256": "314afb055695233694ef28f4278c01bb2b5fff9f823db82de50a83147808b575",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:collections",
+        "specification:docs/modules/language-reference/pages/index.adoc:References"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-mapping-key-type-list",
+      "input": "tests/fixtures/m2/reference-stage10-mapping-key-type-list.pkl",
+      "input_sha256": "63e5500491e6184107628e8ab895e0699c8142c70ce17f25cc500b45e950b157",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:collections",
+        "specification:docs/modules/language-reference/pages/index.adoc:References"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-equality-type-mapping",
+      "input": "tests/fixtures/m2/reference-stage10-equality-type-mapping.pkl",
+      "input_sha256": "5d240ec663fc5aabf6f0bb0393668e08e76a65ae3ecd0754218d81d5c0a72460",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:collections",
+        "specification:docs/modules/language-reference/pages/index.adoc:References"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-mapping-key-type-mapping",
+      "input": "tests/fixtures/m2/reference-stage10-mapping-key-type-mapping.pkl",
+      "input_sha256": "7732b7bf9d0ba2de4b71bcbcc1bb6442664ff0ad24c6eddea64c9ccd3b591646",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:collections",
+        "specification:docs/modules/language-reference/pages/index.adoc:References"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-equality-type-union",
+      "input": "tests/fixtures/m2/reference-stage10-equality-type-union.pkl",
+      "input_sha256": "338ab62f221c64d7cdc4013849f55a2b620e98dddf688f92e874030a44fd4279",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:collections",
+        "semantic:unions",
+        "specification:docs/modules/language-reference/pages/index.adoc:References"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-mapping-key-type-union",
+      "input": "tests/fixtures/m2/reference-stage10-mapping-key-type-union.pkl",
+      "input_sha256": "f9e2c2ce7f7f51d798327c2294b29740589e1f49ebd99934c72e7bf18e9dde63",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:collections",
+        "semantic:unions",
+        "specification:docs/modules/language-reference/pages/index.adoc:References"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-equality-type-nullable",
+      "input": "tests/fixtures/m2/reference-stage10-equality-type-nullable.pkl",
+      "input_sha256": "a825841dda6fd69cbf62b9c29aa9d774ad02998c7d0d0a7125e159056a0d5f54",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:collections",
+        "semantic:unions",
+        "specification:docs/modules/language-reference/pages/index.adoc:References"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-mapping-key-type-nullable",
+      "input": "tests/fixtures/m2/reference-stage10-mapping-key-type-nullable.pkl",
+      "input_sha256": "d6df86ff6722da184263fa6d804c0209aad17a86477fc897e483a12c565af1d2",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:collections",
+        "semantic:unions",
+        "specification:docs/modules/language-reference/pages/index.adoc:References"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-equality-data-boxed-numeric",
+      "input": "tests/fixtures/m2/reference-stage10-equality-data-boxed-numeric.pkl",
+      "input_sha256": "6546ce4a1f8d3df56046b2193508d49ded8f0c200294e04f1a442420f71ccacd",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:collections",
+        "specification:docs/modules/language-reference/pages/index.adoc:References"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-equality-data-signed-zero",
+      "input": "tests/fixtures/m2/reference-stage10-equality-data-signed-zero.pkl",
+      "input_sha256": "56fa07dfe0cf33b126a5c9b3d81f423733f351339032501dcfb25ca7e185f9c9",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:collections",
+        "specification:docs/modules/language-reference/pages/index.adoc:References"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-equality-data-nan",
+      "input": "tests/fixtures/m2/reference-stage10-equality-data-nan.pkl",
+      "input_sha256": "98e119c65e3df157279f7d193505b5a703cb957f21a17f89a9ae0eba19d6a974",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:collections",
+        "specification:docs/modules/language-reference/pages/index.adoc:References"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-synthetic-access-type",
+      "input": "tests/fixtures/m2/reference-stage10-synthetic-access-type.pkl",
+      "input_sha256": "bb9717982fe65c9fa464fd42e58c527690183456c66407aec16013a1d6d9a0eb",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "specification:docs/modules/language-reference/pages/index.adoc:References"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-synthetic-path-type",
+      "input": "tests/fixtures/m2/reference-stage10-synthetic-path-type.pkl",
+      "input_sha256": "a6aa0ad08a01ad384416ab34af6ef9073d3753f80c153b18fd07474e29523431",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "specification:docs/modules/language-reference/pages/index.adoc:References"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-native-reference-class",
+      "input": "tests/fixtures/m2/reference-stage10-native-reference-class.pkl",
+      "input_sha256": "4ffae3c511897b9f140f178d45326ed90f33b5295ebdef52310a211ad58ee39d",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "specification:docs/modules/language-reference/pages/index.adoc:References"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-native-method-property-namespace",
+      "input": "tests/fixtures/m2/reference-stage10-native-method-property-namespace.pkl",
+      "input_sha256": "092dd943e0b608a704bffffa6355b963d5ba63a1ebb402e2280cf67865998911",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:constraints",
+        "semantic:modules",
+        "semantic:name-resolution",
+        "specification:docs/modules/language-reference/pages/index.adoc:References",
+        "specification:docs/modules/language-reference/pages/index.adoc:Import Clauses"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-property-getclass",
+      "input": "tests/fixtures/m2/reference-stage10-property-getclass.pkl",
+      "input_sha256": "94f19f489aa5ca95033b4c1fc3ad55b74fc14e67bfcaa327a271cd69500aafec",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "specification:docs/modules/language-reference/pages/index.adoc:References"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "reference-stage10-constructor-nonnull-alias",
+      "input": "tests/fixtures/m2/reference-stage10-constructor-nonnull-alias.pkl",
+      "input_sha256": "a9669b55c9fb67c77a3db86c6cd975f65b23ef3b81d7bfafcb49c218492d802e",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:type-aliases",
+        "semantic:diagnostics",
+        "specification:docs/modules/language-reference/pages/index.adoc:References"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-metadata-nonnull-erasure",
+      "input": "tests/fixtures/m2/reference-stage10-metadata-nonnull-erasure.pkl",
+      "input_sha256": "f6186a88bcf51a84426df0820f5eaa4e5375597e483c0f53dc1222140145bf03",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:type-aliases",
+        "specification:docs/modules/language-reference/pages/index.adoc:References"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-referent-nonnull-check",
+      "input": "tests/fixtures/m2/reference-stage10-referent-nonnull-check.pkl",
+      "input_sha256": "9ca430145f35e33b71e0aa99872af627862cf1fffb8567e814e0d69ce4b23c99",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:reflection-metadata",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:type-aliases",
+        "specification:docs/modules/language-reference/pages/index.adoc:References"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "reference-stage10-reference-amendment-invalid",
+      "input": "tests/fixtures/m2/reference-stage10-reference-amendment-invalid.pkl",
+      "input_sha256": "b7bb69cf84abd4ab3f398243b209fe9c121dc557a0d1d9403c47cf53df8bae57",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:objects",
+        "semantic:amendment",
+        "semantic:diagnostics",
+        "specification:docs/modules/language-reference/pages/index.adoc:References"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "reference-stage10-reference-spread-invalid",
+      "input": "tests/fixtures/m2/reference-stage10-reference-spread-invalid.pkl",
+      "input_sha256": "1ce476bb675797a5c9d49971712b0a3f85a0b02ed5dd87fb2c83599432245265",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:diagnostics",
+        "specification:docs/modules/language-reference/pages/index.adoc:References"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "reference-stage10-reference-iteration-invalid",
+      "input": "tests/fixtures/m2/reference-stage10-reference-iteration-invalid.pkl",
+      "input_sha256": "4a919cecf537329e86723907b773245526bd58207ac1a9a348211aca002ec9e4",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:objects",
+        "semantic:generators",
+        "semantic:diagnostics",
+        "specification:docs/modules/language-reference/pages/index.adoc:References"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "reference-stage10-reference-new-parent-invalid",
+      "input": "tests/fixtures/m2/reference-stage10-reference-new-parent-invalid.pkl",
+      "input_sha256": "e9de1ad756d775cd5c7f2c09fcd6f6f6e5670186a20f82d8dc067fa15df2a42e",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:objects",
+        "semantic:amendment",
+        "semantic:diagnostics",
+        "specification:docs/modules/language-reference/pages/index.adoc:References"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "reference-stage10-adapter-reference-render-success",
+      "input": "tests/fixtures/m2/reference-stage10-adapter-reference-render-success.pkl",
+      "input_sha256": "fcd2bcbf7cc3e24e821a9758a80cfebfe77d261007f76fefca99d4c830e0eee6",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:constraints",
+        "specification:docs/modules/language-reference/pages/index.adoc:References"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "reference-stage10-adapter-reference-render-failure",
+      "input": "tests/fixtures/m2/reference-stage10-adapter-reference-render-failure.pkl",
+      "input_sha256": "2d15bd1be0c8e62c0580e21674a873ebd2786d81ec934d62959fae66b6d27c6a",
+      "required": true,
+      "requirements": [
+        "semantic:reference",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "specification:docs/modules/language-reference/pages/index.adoc:References"
+      ]
+    },
+    {
       "adapter": null,
       "execution": {
         "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
@@ -112722,9 +115647,9 @@
   "comparison_boundary": "evaluateExpressionString(ModuleSource.path(same absolute URI), expression) UTF-8 stdout; whole PklException.getMessage() UTF-8 stderr and exit 1; no trimming. Power assertions default to disabled; an explicit per-case power_assertions boolean enables the same option in both probes. Stringification alone is not typed value/API compatibility.",
   "completion": "Every required semantic/source requirement needs implementation/test mappings and complete passing execution. Pending/unmapped/unimplemented/mismatch remains a full-gate failure.",
   "counts": {
-    "cases": 2059,
+    "cases": 2202,
     "cases_by_execution": {
-      "ready": 1059,
+      "ready": 1202,
       "unimplemented": 960,
       "unmapped": 40
     },
@@ -113507,7 +116432,12 @@
           "equality-key-review-mapping-override-key-force-order",
           "equality-key-review-dynamic-override-key-force-order",
           "equality-key-review-mapping-override-value-before-key",
-          "equality-shadowed-list-constructor"
+          "equality-shadowed-list-constructor",
+          "reference-stage10-namespace-local-duplicate",
+          "reference-stage10-namespace-parameter",
+          "reference-stage10-namespace-alias-valid",
+          "reference-stage10-namespace-property-duplicate",
+          "reference-stage10-native-method-property-namespace"
         ],
         "state": "partial"
       }
@@ -114204,7 +117134,29 @@
           "equality-stage9-mapping-length-key-signed-zero",
           "equality-stage9-mapping-length-key-boxed-numeric",
           "equality-stage9-mapping-length-key-folded-int-collision",
-          "equality-stage9-mapping-length-key-entry-dynamic"
+          "equality-stage9-mapping-length-key-entry-dynamic",
+          "reference-stage10-property-unforced",
+          "reference-stage10-property-inherited",
+          "reference-stage10-constraints-erased",
+          "reference-stage10-render-domain-throw",
+          "reference-stage10-data-not-forced",
+          "reference-stage10-domain-not-forced",
+          "reference-stage10-domain-render-not-forced",
+          "reference-stage10-equality-data-shared-initializer-unforced",
+          "reference-stage10-equality-domain-shared-initializer-unforced",
+          "reference-stage10-member-untype-unknown",
+          "reference-stage10-member-inherited-value-override",
+          "reference-stage10-module-metadata",
+          "reference-stage10-relation-unforced-left",
+          "reference-stage10-relation-unforced-right",
+          "reference-stage10-equality-data-different-initializers",
+          "reference-stage10-equality-domain-different-initializers",
+          "reference-stage10-metadata-unused-method-body",
+          "reference-stage10-metadata-unused-property-body",
+          "reference-stage10-metadata-unknown-type-before-data",
+          "reference-stage10-mapping-reference-hash-data",
+          "reference-stage10-mapping-reference-hash-domain",
+          "reference-stage10-adapter-reference-render-failure"
         ],
         "state": "partial"
       }
@@ -114794,7 +117746,11 @@
           "equality-stage9-mapping-length-key-signed-zero",
           "equality-stage9-mapping-length-key-boxed-numeric",
           "equality-stage9-mapping-length-key-folded-int-collision",
-          "equality-stage9-mapping-length-key-entry-dynamic"
+          "equality-stage9-mapping-length-key-entry-dynamic",
+          "reference-stage10-reference-amendment-invalid",
+          "reference-stage10-reference-spread-invalid",
+          "reference-stage10-reference-iteration-invalid",
+          "reference-stage10-reference-new-parent-invalid"
         ],
         "state": "partial"
       }
@@ -114924,7 +117880,9 @@
           "equality-stage9-mapping-length-key-signed-zero",
           "equality-stage9-mapping-length-key-boxed-numeric",
           "equality-stage9-mapping-length-key-folded-int-collision",
-          "equality-stage9-mapping-length-key-entry-dynamic"
+          "equality-stage9-mapping-length-key-entry-dynamic",
+          "reference-stage10-reference-amendment-invalid",
+          "reference-stage10-reference-new-parent-invalid"
         ],
         "state": "partial"
       }
@@ -115403,7 +118361,9 @@
           "equality-generator-defers-duplicates",
           "equality-element-fifth-hashes-key",
           "equality-property-fifth-hashes-key",
-          "equality-spread-property-fifth-hashes-key"
+          "equality-spread-property-fifth-hashes-key",
+          "reference-stage10-reference-spread-invalid",
+          "reference-stage10-reference-iteration-invalid"
         ],
         "state": "partial"
       }
@@ -116131,7 +119091,41 @@
           "equality-stage9-mapping-length-key-signed-zero",
           "equality-stage9-mapping-length-key-boxed-numeric",
           "equality-stage9-mapping-length-key-folded-int-collision",
-          "equality-stage9-mapping-length-key-entry-dynamic"
+          "equality-stage9-mapping-length-key-entry-dynamic",
+          "reference-stage10-subscript-bare-list",
+          "reference-stage10-subscript-bare-listing",
+          "reference-stage10-subscript-bare-mapping",
+          "reference-stage10-subscript-bare-dynamic",
+          "reference-stage10-subscript-typed-list",
+          "reference-stage10-subscript-typed-listing",
+          "reference-stage10-subscript-typed-mapping",
+          "reference-stage10-subscript-invalid-list",
+          "reference-stage10-subscript-invalid-listing",
+          "reference-stage10-subscript-keytype-mapping",
+          "reference-stage10-subscript-keyliteral",
+          "reference-stage10-subscript-keyliteral-invalid",
+          "reference-stage10-subscript-keyconstraint-erased",
+          "reference-stage10-subscript-keyclass-exact",
+          "reference-stage10-subscript-key-null",
+          "reference-stage10-mapping-reference-key",
+          "reference-stage10-mapping-reference-key-duplicate",
+          "reference-stage10-mapping-reference-path-key",
+          "reference-stage10-mapping-reference-type-distinct",
+          "reference-stage10-mapping-reference-path-distinct",
+          "reference-stage10-mapping-reference-hash-data",
+          "reference-stage10-mapping-reference-hash-domain",
+          "reference-stage10-mapping-reference-constraint-erased",
+          "reference-stage10-equality-type-list",
+          "reference-stage10-mapping-key-type-list",
+          "reference-stage10-equality-type-mapping",
+          "reference-stage10-mapping-key-type-mapping",
+          "reference-stage10-equality-type-union",
+          "reference-stage10-mapping-key-type-union",
+          "reference-stage10-equality-type-nullable",
+          "reference-stage10-mapping-key-type-nullable",
+          "reference-stage10-equality-data-boxed-numeric",
+          "reference-stage10-equality-data-signed-zero",
+          "reference-stage10-equality-data-nan"
         ],
         "state": "partial"
       }
@@ -116423,7 +119417,67 @@
           "diagnostics-stage9-let-wildcard-alias",
           "diagnostics-stage9-let-inline-constraint-under-let",
           "diagnostics-stage9-let-inline-constraint-cast-mismatch",
-          "diagnostics-stage9-let-named-constraint-cast-mismatch"
+          "diagnostics-stage9-let-named-constraint-cast-mismatch",
+          "reference-stage10-constructor-class",
+          "reference-stage10-property-unforced",
+          "reference-stage10-property-inherited",
+          "reference-stage10-property-override",
+          "reference-stage10-property-hidden",
+          "reference-stage10-subscript-bare-list",
+          "reference-stage10-subscript-bare-listing",
+          "reference-stage10-subscript-bare-mapping",
+          "reference-stage10-subscript-bare-dynamic",
+          "reference-stage10-subscript-typed-list",
+          "reference-stage10-subscript-typed-listing",
+          "reference-stage10-subscript-typed-mapping",
+          "reference-stage10-subscript-keyliteral",
+          "reference-stage10-subscript-keyconstraint-erased",
+          "reference-stage10-dynamic-unknown",
+          "reference-stage10-null-chain",
+          "reference-stage10-constraints-erased",
+          "reference-stage10-alias-erased",
+          "reference-stage10-nullable",
+          "reference-stage10-nullable-narrow-false",
+          "reference-stage10-nullable-property",
+          "reference-stage10-union-property",
+          "reference-stage10-union-order",
+          "reference-stage10-nested-typeargs",
+          "reference-stage10-reference-constraint-forbidden",
+          "reference-stage10-reference-nested-constraint-forbidden",
+          "reference-stage10-reference-domain-false",
+          "reference-stage10-reference-covariant",
+          "reference-stage10-reference-cast-invalid",
+          "reference-stage10-literal-subtype",
+          "reference-stage10-intalias-preserved",
+          "reference-stage10-intalias-float",
+          "reference-stage10-intalias-narrow-false",
+          "reference-stage10-external-length-type",
+          "reference-stage10-builtin-computed-string",
+          "reference-stage10-member-untype-unknown",
+          "reference-stage10-member-inherited-value-override",
+          "reference-stage10-module-metadata",
+          "reference-stage10-relation-alias-left",
+          "reference-stage10-relation-alias-right",
+          "reference-stage10-relation-unforced-left",
+          "reference-stage10-relation-unforced-right",
+          "reference-stage10-reference-alias-constraint-forbidden",
+          "reference-stage10-reference-domain-constraint-allowed",
+          "reference-stage10-union-subscript",
+          "reference-stage10-reference-any-absorbs",
+          "reference-stage10-reference-domain-bad-type",
+          "reference-stage10-reference-nullable-domain",
+          "reference-stage10-reference-nothing-false",
+          "reference-stage10-reference-unknown-anytype",
+          "reference-stage10-metadata-unused-property-type",
+          "reference-stage10-metadata-unused-method-type",
+          "reference-stage10-metadata-unused-method-body",
+          "reference-stage10-metadata-unused-property-body",
+          "reference-stage10-metadata-recursive-property",
+          "reference-stage10-metadata-local-unknown",
+          "reference-stage10-native-method-property-namespace",
+          "reference-stage10-property-getclass",
+          "reference-stage10-metadata-nonnull-erasure",
+          "reference-stage10-referent-nonnull-check"
         ],
         "state": "partial"
       }
@@ -116474,7 +119528,14 @@
           "collection-type-union-generic-alias",
           "collection-type-union-substituted-argument",
           "diagnostics-stage9-let-alias-constraint-throw",
-          "diagnostics-stage9-let-wildcard-alias"
+          "diagnostics-stage9-let-wildcard-alias",
+          "reference-stage10-alias-erased",
+          "reference-stage10-relation-alias-left",
+          "reference-stage10-reference-generic-alias",
+          "reference-stage10-reference-alias-constraint-forbidden",
+          "reference-stage10-constructor-nonnull-alias",
+          "reference-stage10-metadata-nonnull-erasure",
+          "reference-stage10-referent-nonnull-check"
         ],
         "state": "partial"
       }
@@ -116630,7 +119691,110 @@
           "diagnostics-stage9-let-wildcard-alias",
           "diagnostics-stage9-let-inline-constraint-under-let",
           "diagnostics-stage9-let-inline-constraint-cast-mismatch",
-          "diagnostics-stage9-let-named-constraint-cast-mismatch"
+          "diagnostics-stage9-let-named-constraint-cast-mismatch",
+          "reference-stage10-constructor-data",
+          "reference-stage10-constructor-domain",
+          "reference-stage10-constructor-empty-path",
+          "reference-stage10-constructor-class",
+          "reference-stage10-domain-invalid",
+          "reference-stage10-class-invalid",
+          "reference-stage10-new-reference-invalid",
+          "reference-stage10-property-unforced",
+          "reference-stage10-property-inherited",
+          "reference-stage10-property-override",
+          "reference-stage10-property-hidden",
+          "reference-stage10-property-local",
+          "reference-stage10-property-missing",
+          "reference-stage10-property-method",
+          "reference-stage10-builtin-string-length-reference-render",
+          "reference-stage10-property-path",
+          "reference-stage10-subscript-bare-list",
+          "reference-stage10-subscript-bare-listing",
+          "reference-stage10-subscript-bare-mapping",
+          "reference-stage10-subscript-bare-dynamic",
+          "reference-stage10-subscript-typed-list",
+          "reference-stage10-subscript-typed-listing",
+          "reference-stage10-subscript-typed-mapping",
+          "reference-stage10-subscript-invalid-list",
+          "reference-stage10-subscript-invalid-listing",
+          "reference-stage10-subscript-keytype-mapping",
+          "reference-stage10-subscript-keyliteral",
+          "reference-stage10-subscript-keyliteral-invalid",
+          "reference-stage10-subscript-keyconstraint-erased",
+          "reference-stage10-subscript-keyclass-exact",
+          "reference-stage10-subscript-key-null",
+          "reference-stage10-default-forbidden-dynamic",
+          "reference-stage10-default-forbidden-listing",
+          "reference-stage10-default-forbidden-mapping",
+          "reference-stage10-dynamic-unknown",
+          "reference-stage10-null-chain",
+          "reference-stage10-any-property-invalid",
+          "reference-stage10-constraints-erased",
+          "reference-stage10-alias-erased",
+          "reference-stage10-nullable",
+          "reference-stage10-nullable-narrow-false",
+          "reference-stage10-nullable-property",
+          "reference-stage10-union-property",
+          "reference-stage10-union-order",
+          "reference-stage10-union-property-invalid",
+          "reference-stage10-nested-typeargs",
+          "reference-stage10-reference-constraint-forbidden",
+          "reference-stage10-reference-nested-constraint-forbidden",
+          "reference-stage10-reference-domain-false",
+          "reference-stage10-reference-covariant",
+          "reference-stage10-reference-cast-invalid",
+          "reference-stage10-literal-subtype",
+          "reference-stage10-intalias-preserved",
+          "reference-stage10-intalias-float",
+          "reference-stage10-intalias-narrow-false",
+          "reference-stage10-equality-same",
+          "reference-stage10-equality-type-false",
+          "reference-stage10-equality-domain-structural",
+          "reference-stage10-equality-path-false",
+          "reference-stage10-equality-constraint-erased",
+          "reference-stage10-equality-data-false",
+          "reference-stage10-render-to-string",
+          "reference-stage10-render-interpolation",
+          "reference-stage10-render-domain-throw",
+          "reference-stage10-render-path",
+          "reference-stage10-external-length-type",
+          "reference-stage10-builtin-computed-string",
+          "reference-stage10-data-not-forced",
+          "reference-stage10-domain-not-forced",
+          "reference-stage10-domain-render-not-forced",
+          "reference-stage10-equality-data-shared-initializer-unforced",
+          "reference-stage10-equality-domain-shared-initializer-unforced",
+          "reference-stage10-member-untype-unknown",
+          "reference-stage10-member-inherited-value-override",
+          "reference-stage10-module-metadata",
+          "reference-stage10-module-output-forbidden",
+          "reference-stage10-access-null-key",
+          "reference-stage10-access-invalid",
+          "reference-stage10-namespace-local-duplicate",
+          "reference-stage10-namespace-parameter",
+          "reference-stage10-relation-alias-left",
+          "reference-stage10-relation-alias-right",
+          "reference-stage10-relation-unforced-left",
+          "reference-stage10-relation-unforced-right",
+          "reference-stage10-relation-render-left",
+          "reference-stage10-relation-render-right",
+          "reference-stage10-access-property-key-null",
+          "reference-stage10-namespace-alias-valid",
+          "reference-stage10-namespace-property-duplicate",
+          "reference-stage10-equality-data-different-initializers",
+          "reference-stage10-equality-domain-different-initializers",
+          "reference-stage10-reference-generic-alias",
+          "reference-stage10-reference-alias-constraint-forbidden",
+          "reference-stage10-reference-domain-constraint-allowed",
+          "reference-stage10-union-subscript",
+          "reference-stage10-reference-any-absorbs",
+          "reference-stage10-reference-domain-bad-type",
+          "reference-stage10-reference-nullable-domain",
+          "reference-stage10-reference-nothing-false",
+          "reference-stage10-reference-unknown-anytype",
+          "reference-stage10-mapping-reference-constraint-erased",
+          "reference-stage10-native-method-property-namespace",
+          "reference-stage10-adapter-reference-render-success"
         ],
         "state": "partial"
       }
@@ -116808,7 +119972,8 @@
           "equality-power-wrapper-force",
           "equality-supplement-wrapper-identity-skip",
           "equality-supplement-wrapper-length-skip",
-          "equality-stage9-mapping-zero-listing-cache-type-check"
+          "equality-stage9-mapping-zero-listing-cache-type-check",
+          "reference-stage10-reference-generic-alias"
         ],
         "state": "partial"
       }
@@ -116852,7 +120017,24 @@
           "collection-type-union-generic-alias",
           "collection-type-union-substituted-argument",
           "collection-type-union-nullable-alternative",
-          "collection-type-union-nothing-alternative"
+          "collection-type-union-nothing-alternative",
+          "reference-stage10-property-override",
+          "reference-stage10-subscript-typed-mapping",
+          "reference-stage10-nullable",
+          "reference-stage10-nullable-narrow-false",
+          "reference-stage10-nullable-property",
+          "reference-stage10-union-property",
+          "reference-stage10-union-order",
+          "reference-stage10-union-property-invalid",
+          "reference-stage10-nested-typeargs",
+          "reference-stage10-union-subscript",
+          "reference-stage10-reference-any-absorbs",
+          "reference-stage10-reference-nullable-domain",
+          "reference-stage10-metadata-recursive-property",
+          "reference-stage10-equality-type-union",
+          "reference-stage10-mapping-key-type-union",
+          "reference-stage10-equality-type-nullable",
+          "reference-stage10-mapping-key-type-nullable"
         ],
         "state": "partial"
       }
@@ -116898,7 +120080,67 @@
           "diagnostics-stage9-let-wildcard-under-let",
           "diagnostics-stage9-let-inline-constraint-under-let",
           "diagnostics-stage9-let-inline-constraint-cast-mismatch",
-          "diagnostics-stage9-let-named-constraint-cast-mismatch"
+          "diagnostics-stage9-let-named-constraint-cast-mismatch",
+          "reference-stage10-constructor-class",
+          "reference-stage10-property-unforced",
+          "reference-stage10-property-inherited",
+          "reference-stage10-property-override",
+          "reference-stage10-property-hidden",
+          "reference-stage10-subscript-bare-list",
+          "reference-stage10-subscript-bare-listing",
+          "reference-stage10-subscript-bare-mapping",
+          "reference-stage10-subscript-bare-dynamic",
+          "reference-stage10-subscript-typed-list",
+          "reference-stage10-subscript-typed-listing",
+          "reference-stage10-subscript-typed-mapping",
+          "reference-stage10-subscript-keyliteral",
+          "reference-stage10-subscript-keyconstraint-erased",
+          "reference-stage10-dynamic-unknown",
+          "reference-stage10-null-chain",
+          "reference-stage10-constraints-erased",
+          "reference-stage10-alias-erased",
+          "reference-stage10-nullable",
+          "reference-stage10-nullable-narrow-false",
+          "reference-stage10-nullable-property",
+          "reference-stage10-union-property",
+          "reference-stage10-union-order",
+          "reference-stage10-nested-typeargs",
+          "reference-stage10-reference-constraint-forbidden",
+          "reference-stage10-reference-nested-constraint-forbidden",
+          "reference-stage10-reference-domain-false",
+          "reference-stage10-reference-covariant",
+          "reference-stage10-reference-cast-invalid",
+          "reference-stage10-literal-subtype",
+          "reference-stage10-intalias-preserved",
+          "reference-stage10-intalias-float",
+          "reference-stage10-intalias-narrow-false",
+          "reference-stage10-external-length-type",
+          "reference-stage10-builtin-computed-string",
+          "reference-stage10-member-untype-unknown",
+          "reference-stage10-member-inherited-value-override",
+          "reference-stage10-module-metadata",
+          "reference-stage10-relation-alias-left",
+          "reference-stage10-relation-alias-right",
+          "reference-stage10-relation-unforced-left",
+          "reference-stage10-relation-unforced-right",
+          "reference-stage10-reference-alias-constraint-forbidden",
+          "reference-stage10-reference-domain-constraint-allowed",
+          "reference-stage10-union-subscript",
+          "reference-stage10-reference-any-absorbs",
+          "reference-stage10-reference-domain-bad-type",
+          "reference-stage10-reference-nullable-domain",
+          "reference-stage10-reference-nothing-false",
+          "reference-stage10-reference-unknown-anytype",
+          "reference-stage10-metadata-unused-property-type",
+          "reference-stage10-metadata-unused-method-type",
+          "reference-stage10-metadata-unused-method-body",
+          "reference-stage10-metadata-unused-property-body",
+          "reference-stage10-metadata-recursive-property",
+          "reference-stage10-metadata-local-unknown",
+          "reference-stage10-native-method-property-namespace",
+          "reference-stage10-property-getclass",
+          "reference-stage10-metadata-nonnull-erasure",
+          "reference-stage10-referent-nonnull-check"
         ],
         "state": "partial"
       }
@@ -116907,15 +120149,189 @@
       "description": "0.32 Reference<Domain, Type>, domain/referent constraints and runtime identity",
       "id": "semantic:reference",
       "implementation": {
-        "links": [],
-        "state": "unimplemented"
+        "links": [
+          {
+            "path": "crates/pkl-runtime/src/vm/reference.rs",
+            "sha256": "ff7730ab07ea38442f2f24f40b4ce37d78e859f8ca53912a88b3bdd8e976c608",
+            "symbol": "Reference"
+          },
+          {
+            "path": "crates/pkl-runtime/src/vm/reference.rs",
+            "sha256": "ff7730ab07ea38442f2f24f40b4ce37d78e859f8ca53912a88b3bdd8e976c608",
+            "symbol": "reference_access"
+          },
+          {
+            "path": "crates/pkl-runtime/src/vm/reference.rs",
+            "sha256": "ff7730ab07ea38442f2f24f40b4ce37d78e859f8ca53912a88b3bdd8e976c608",
+            "symbol": "invoke_reference_native"
+          },
+          {
+            "path": "crates/pkl-runtime/src/vm/typecheck.rs",
+            "sha256": "3beaa553488a91144e237d7fe69d021385575f267062adef990ed1237d7fdab7",
+            "symbol": "step_type"
+          }
+        ],
+        "state": "partial"
       },
       "kind": "semantic-family",
-      "reason": "A selected probe does not establish implementation or complete edge-case coverage.",
+      "reason": "Reviewed source/test links; completion still requires the full recorded scope and executions.",
       "required": true,
+      "reviewed_mapping": {
+        "remaining": [
+          "Original upstream reference snippet and renderer/API suite contracts remain unexecuted; selected API-expression exploration is separate evidence.",
+          "Complete referent metadata for all builtin types, generic classes and remaining collection types is not implemented or verified.",
+          "Full reflection, compound-value renderers and cyclic or JVM identity-dependent key behavior remain open."
+        ],
+        "scope": "The pkl:ref bridge supports selected constructor, normalized referent type, synthetic property/subscript path, domain rendering, equality and key behavior through the shared VM. Linked native cases compare complete Java 0.32.0 process output at their actual fixture URIs.",
+        "source": "compatibility/m2-mappings.json"
+      },
       "tests": {
-        "case_ids": [],
-        "state": "unmapped"
+        "case_ids": [
+          "reference-stage10-constructor-data",
+          "reference-stage10-constructor-domain",
+          "reference-stage10-constructor-empty-path",
+          "reference-stage10-constructor-class",
+          "reference-stage10-domain-invalid",
+          "reference-stage10-class-invalid",
+          "reference-stage10-new-reference-invalid",
+          "reference-stage10-property-unforced",
+          "reference-stage10-property-inherited",
+          "reference-stage10-property-override",
+          "reference-stage10-property-hidden",
+          "reference-stage10-property-local",
+          "reference-stage10-property-missing",
+          "reference-stage10-property-method",
+          "reference-stage10-builtin-string-length-reference-render",
+          "reference-stage10-property-path",
+          "reference-stage10-subscript-bare-list",
+          "reference-stage10-subscript-bare-listing",
+          "reference-stage10-subscript-bare-mapping",
+          "reference-stage10-subscript-bare-dynamic",
+          "reference-stage10-subscript-typed-list",
+          "reference-stage10-subscript-typed-listing",
+          "reference-stage10-subscript-typed-mapping",
+          "reference-stage10-subscript-invalid-list",
+          "reference-stage10-subscript-invalid-listing",
+          "reference-stage10-subscript-keytype-mapping",
+          "reference-stage10-subscript-keyliteral",
+          "reference-stage10-subscript-keyliteral-invalid",
+          "reference-stage10-subscript-keyconstraint-erased",
+          "reference-stage10-subscript-keyclass-exact",
+          "reference-stage10-subscript-key-null",
+          "reference-stage10-default-forbidden-dynamic",
+          "reference-stage10-default-forbidden-listing",
+          "reference-stage10-default-forbidden-mapping",
+          "reference-stage10-dynamic-unknown",
+          "reference-stage10-null-chain",
+          "reference-stage10-any-property-invalid",
+          "reference-stage10-constraints-erased",
+          "reference-stage10-alias-erased",
+          "reference-stage10-nullable",
+          "reference-stage10-nullable-narrow-false",
+          "reference-stage10-nullable-property",
+          "reference-stage10-union-property",
+          "reference-stage10-union-order",
+          "reference-stage10-union-property-invalid",
+          "reference-stage10-nested-typeargs",
+          "reference-stage10-reference-constraint-forbidden",
+          "reference-stage10-reference-nested-constraint-forbidden",
+          "reference-stage10-reference-domain-false",
+          "reference-stage10-reference-covariant",
+          "reference-stage10-reference-cast-invalid",
+          "reference-stage10-literal-subtype",
+          "reference-stage10-intalias-preserved",
+          "reference-stage10-intalias-float",
+          "reference-stage10-intalias-narrow-false",
+          "reference-stage10-equality-same",
+          "reference-stage10-equality-type-false",
+          "reference-stage10-equality-domain-structural",
+          "reference-stage10-equality-path-false",
+          "reference-stage10-equality-constraint-erased",
+          "reference-stage10-equality-data-false",
+          "reference-stage10-render-to-string",
+          "reference-stage10-render-interpolation",
+          "reference-stage10-render-domain-throw",
+          "reference-stage10-render-path",
+          "reference-stage10-external-length-type",
+          "reference-stage10-builtin-computed-string",
+          "reference-stage10-data-not-forced",
+          "reference-stage10-domain-not-forced",
+          "reference-stage10-domain-render-not-forced",
+          "reference-stage10-equality-data-shared-initializer-unforced",
+          "reference-stage10-equality-domain-shared-initializer-unforced",
+          "reference-stage10-member-untype-unknown",
+          "reference-stage10-member-inherited-value-override",
+          "reference-stage10-module-metadata",
+          "reference-stage10-module-output-forbidden",
+          "reference-stage10-access-null-key",
+          "reference-stage10-access-invalid",
+          "reference-stage10-namespace-local-duplicate",
+          "reference-stage10-namespace-parameter",
+          "reference-stage10-relation-alias-left",
+          "reference-stage10-relation-alias-right",
+          "reference-stage10-relation-unforced-left",
+          "reference-stage10-relation-unforced-right",
+          "reference-stage10-relation-render-left",
+          "reference-stage10-relation-render-right",
+          "reference-stage10-access-property-key-null",
+          "reference-stage10-namespace-alias-valid",
+          "reference-stage10-namespace-property-duplicate",
+          "reference-stage10-equality-data-different-initializers",
+          "reference-stage10-equality-domain-different-initializers",
+          "reference-stage10-reference-generic-alias",
+          "reference-stage10-reference-alias-constraint-forbidden",
+          "reference-stage10-reference-domain-constraint-allowed",
+          "reference-stage10-union-subscript",
+          "reference-stage10-reference-any-absorbs",
+          "reference-stage10-reference-domain-bad-type",
+          "reference-stage10-reference-nullable-domain",
+          "reference-stage10-reference-nothing-false",
+          "reference-stage10-reference-unknown-anytype",
+          "reference-stage10-metadata-unused-property-type",
+          "reference-stage10-metadata-unused-method-type",
+          "reference-stage10-metadata-unused-method-body",
+          "reference-stage10-metadata-unused-property-body",
+          "reference-stage10-metadata-unknown-type-before-data",
+          "reference-stage10-metadata-constraint-type-initialization",
+          "reference-stage10-metadata-recursive-property",
+          "reference-stage10-metadata-inherited-unknown",
+          "reference-stage10-metadata-local-unknown",
+          "reference-stage10-metadata-hidden-unknown",
+          "reference-stage10-mapping-reference-key",
+          "reference-stage10-mapping-reference-key-duplicate",
+          "reference-stage10-mapping-reference-path-key",
+          "reference-stage10-mapping-reference-type-distinct",
+          "reference-stage10-mapping-reference-path-distinct",
+          "reference-stage10-mapping-reference-hash-data",
+          "reference-stage10-mapping-reference-hash-domain",
+          "reference-stage10-mapping-reference-constraint-erased",
+          "reference-stage10-equality-type-list",
+          "reference-stage10-mapping-key-type-list",
+          "reference-stage10-equality-type-mapping",
+          "reference-stage10-mapping-key-type-mapping",
+          "reference-stage10-equality-type-union",
+          "reference-stage10-mapping-key-type-union",
+          "reference-stage10-equality-type-nullable",
+          "reference-stage10-mapping-key-type-nullable",
+          "reference-stage10-equality-data-boxed-numeric",
+          "reference-stage10-equality-data-signed-zero",
+          "reference-stage10-equality-data-nan",
+          "reference-stage10-synthetic-access-type",
+          "reference-stage10-synthetic-path-type",
+          "reference-stage10-native-reference-class",
+          "reference-stage10-native-method-property-namespace",
+          "reference-stage10-property-getclass",
+          "reference-stage10-constructor-nonnull-alias",
+          "reference-stage10-metadata-nonnull-erasure",
+          "reference-stage10-referent-nonnull-check",
+          "reference-stage10-reference-amendment-invalid",
+          "reference-stage10-reference-spread-invalid",
+          "reference-stage10-reference-iteration-invalid",
+          "reference-stage10-reference-new-parent-invalid",
+          "reference-stage10-adapter-reference-render-success",
+          "reference-stage10-adapter-reference-render-failure"
+        ],
+        "state": "partial"
       }
     },
     {
@@ -116937,34 +120353,168 @@
       "description": "Shared class/module/member/type metadata needed by reflection",
       "id": "semantic:reflection-metadata",
       "implementation": {
-        "links": [],
-        "state": "unimplemented"
+        "links": [
+          {
+            "path": "crates/pkl-runtime/src/heap.rs",
+            "sha256": "08b6ffd2450d4341971d54433b45e902a69e5fdd1ffbe3e7294862de08854b13",
+            "symbol": "Member"
+          },
+          {
+            "path": "crates/pkl-runtime/src/heap.rs",
+            "sha256": "08b6ffd2450d4341971d54433b45e902a69e5fdd1ffbe3e7294862de08854b13",
+            "symbol": "Object"
+          },
+          {
+            "path": "crates/pkl-runtime/src/vm.rs",
+            "sha256": "e0f7a4ea05eecb7ad89002d8cafa2a813f5233cd3a5f40e28c03f6382a0def50",
+            "symbol": "initialize_member_types"
+          },
+          {
+            "path": "crates/pkl-runtime/src/vm/reference.rs",
+            "sha256": "ff7730ab07ea38442f2f24f40b4ce37d78e859f8ca53912a88b3bdd8e976c608",
+            "symbol": "reference_candidate"
+          }
+        ],
+        "state": "partial"
       },
       "kind": "semantic-family",
-      "reason": "A selected probe does not establish implementation or complete edge-case coverage.",
+      "reason": "Reviewed source/test links; completion still requires the full recorded scope and executions.",
       "required": true,
+      "reviewed_mapping": {
+        "remaining": [
+          "The full reflection API, module/class/type metadata inventory, dynamic nested declaration identity and generic class metadata remain unimplemented or unverified."
+        ],
+        "scope": "Selected class, inherited property and normalized type metadata are used for Reference access without forcing referent bodies.",
+        "source": "compatibility/m2-mappings.json"
+      },
       "tests": {
-        "case_ids": [],
-        "state": "unmapped"
+        "case_ids": [
+          "reference-stage10-property-unforced",
+          "reference-stage10-property-inherited",
+          "reference-stage10-property-override",
+          "reference-stage10-property-hidden",
+          "reference-stage10-property-local",
+          "reference-stage10-property-missing",
+          "reference-stage10-property-method",
+          "reference-stage10-builtin-string-length-reference-render",
+          "reference-stage10-property-path",
+          "reference-stage10-subscript-typed-list",
+          "reference-stage10-subscript-typed-listing",
+          "reference-stage10-subscript-typed-mapping",
+          "reference-stage10-subscript-keytype-mapping",
+          "reference-stage10-subscript-keyliteral",
+          "reference-stage10-subscript-keyliteral-invalid",
+          "reference-stage10-subscript-keyconstraint-erased",
+          "reference-stage10-subscript-keyclass-exact",
+          "reference-stage10-subscript-key-null",
+          "reference-stage10-default-forbidden-dynamic",
+          "reference-stage10-default-forbidden-listing",
+          "reference-stage10-default-forbidden-mapping",
+          "reference-stage10-constraints-erased",
+          "reference-stage10-alias-erased",
+          "reference-stage10-nullable",
+          "reference-stage10-nullable-narrow-false",
+          "reference-stage10-nullable-property",
+          "reference-stage10-union-property",
+          "reference-stage10-union-order",
+          "reference-stage10-union-property-invalid",
+          "reference-stage10-nested-typeargs",
+          "reference-stage10-reference-covariant",
+          "reference-stage10-literal-subtype",
+          "reference-stage10-intalias-preserved",
+          "reference-stage10-intalias-float",
+          "reference-stage10-intalias-narrow-false",
+          "reference-stage10-equality-path-false",
+          "reference-stage10-equality-constraint-erased",
+          "reference-stage10-render-path",
+          "reference-stage10-member-untype-unknown",
+          "reference-stage10-member-inherited-value-override",
+          "reference-stage10-relation-alias-left",
+          "reference-stage10-relation-alias-right",
+          "reference-stage10-relation-unforced-left",
+          "reference-stage10-relation-unforced-right",
+          "reference-stage10-reference-generic-alias",
+          "reference-stage10-union-subscript",
+          "reference-stage10-reference-any-absorbs",
+          "reference-stage10-metadata-unused-property-type",
+          "reference-stage10-metadata-unused-method-type",
+          "reference-stage10-metadata-unused-method-body",
+          "reference-stage10-metadata-unused-property-body",
+          "reference-stage10-metadata-unknown-type-before-data",
+          "reference-stage10-metadata-constraint-type-initialization",
+          "reference-stage10-metadata-recursive-property",
+          "reference-stage10-metadata-inherited-unknown",
+          "reference-stage10-metadata-local-unknown",
+          "reference-stage10-metadata-hidden-unknown",
+          "reference-stage10-mapping-reference-path-key",
+          "reference-stage10-mapping-reference-path-distinct",
+          "reference-stage10-mapping-reference-constraint-erased",
+          "reference-stage10-equality-type-list",
+          "reference-stage10-mapping-key-type-list",
+          "reference-stage10-equality-type-mapping",
+          "reference-stage10-mapping-key-type-mapping",
+          "reference-stage10-equality-type-union",
+          "reference-stage10-mapping-key-type-union",
+          "reference-stage10-equality-type-nullable",
+          "reference-stage10-mapping-key-type-nullable",
+          "reference-stage10-synthetic-access-type",
+          "reference-stage10-synthetic-path-type",
+          "reference-stage10-native-reference-class",
+          "reference-stage10-native-method-property-namespace",
+          "reference-stage10-property-getclass",
+          "reference-stage10-constructor-nonnull-alias",
+          "reference-stage10-metadata-nonnull-erasure",
+          "reference-stage10-referent-nonnull-check"
+        ],
+        "state": "partial"
       }
     },
     {
       "description": "Module declarations, extends/amends/import language semantics and module types; Host I/O remains M4",
       "id": "semantic:modules",
       "implementation": {
-        "links": [],
+        "links": [
+          {
+            "path": "crates/pkl-runtime/src/parser.rs",
+            "sha256": "78ed24882879ca603e227cf772f5159232e478f166358c809e34b6679af03567",
+            "symbol": "import"
+          },
+          {
+            "path": "crates/pkl-runtime/src/resolver.rs",
+            "sha256": "75ae7a336d327e2ca14ee6ed2aac9bc8f1380e058cf1cbdfc734f5f7c6f13e9c",
+            "symbol": "type_expression"
+          },
+          {
+            "path": "crates/pkl-runtime/src/vm.rs",
+            "sha256": "e0f7a4ea05eecb7ad89002d8cafa2a813f5233cd3a5f40e28c03f6382a0def50",
+            "symbol": "compile_type_at"
+          }
+        ],
         "state": "partial"
       },
       "kind": "semantic-family",
-      "reason": "A selected probe does not establish implementation or complete edge-case coverage.",
+      "reason": "Reviewed source/test links; completion still requires the full recorded scope and executions.",
       "required": true,
+      "reviewed_mapping": {
+        "remaining": [
+          "General module loading, extends/amends, imports beyond the pkl:ref bridge and complete module identity semantics remain open.",
+          "Original import/module snippets and full invalid syntax/name resolution corpus still require their original adapters and execution."
+        ],
+        "scope": "Local const import members, explicit and inferred pkl:ref aliases, qualified type lookup and namespace diagnostics have selected raw comparisons.",
+        "source": "compatibility/m2-mappings.json"
+      },
       "tests": {
         "case_ids": [
           "module-basic",
           "collection-module-dynamic-classification",
           "collection-module-iteration",
           "equality-stage9-class-qualified-hash-named",
-          "diagnostics-stage9-let-declared-unicode-multiline"
+          "diagnostics-stage9-let-declared-unicode-multiline",
+          "reference-stage10-namespace-local-duplicate",
+          "reference-stage10-namespace-parameter",
+          "reference-stage10-namespace-alias-valid",
+          "reference-stage10-namespace-property-duplicate",
+          "reference-stage10-native-method-property-namespace"
         ],
         "state": "partial"
       }
@@ -116973,12 +120523,36 @@
       "description": "Whole parser/resolver/runtime diagnostics, first errors, source underlines and logical call frames",
       "id": "semantic:diagnostics",
       "implementation": {
-        "links": [],
+        "links": [
+          {
+            "path": "crates/pkl-runtime/src/value.rs",
+            "sha256": "42b3355ac5ced85408de01c9eadd083209e69b1acc2e392815e6bab122fe70e1",
+            "symbol": "RuntimeSource"
+          },
+          {
+            "path": "crates/pkl-runtime/src/evaluation.rs",
+            "sha256": "b7319db3992124d8f7d29fff760254e61e88d1e1f7a08debf3287e25e93c7b6b",
+            "symbol": "runtime_error"
+          },
+          {
+            "path": "crates/pkl-runtime/src/diagnostic_values.rs",
+            "sha256": "6b6a8689780e846c0483a0954a9f66d11380c6c7f58db2b1e1e4eebb5ac40ae3",
+            "symbol": "Renderer"
+          }
+        ],
         "state": "partial"
       },
       "kind": "semantic-family",
-      "reason": "A selected probe does not establish implementation or complete edge-case coverage.",
+      "reason": "Reviewed source/test links; completion still requires the full recorded scope and executions.",
       "required": true,
+      "reviewed_mapping": {
+        "remaining": [
+          "Recursive frame compression, general imported source stacks, first-error combinations and the complete parser/resolver/runtime diagnostic corpus remain open.",
+          "Original selected cycle and remainder-zero failures remain failed."
+        ],
+        "scope": "Reference constructor, access, constraint and rendering errors retain complete message, authored frame, foreign standard-library source and URI bytes in selected comparisons.",
+        "source": "compatibility/m2-mappings.json"
+      },
       "tests": {
         "case_ids": [
           "error-missing-name",
@@ -117518,7 +121092,50 @@
           "equality-stage9-mapping-length-key-signed-zero",
           "equality-stage9-mapping-length-key-boxed-numeric",
           "equality-stage9-mapping-length-key-folded-int-collision",
-          "equality-stage9-mapping-length-key-entry-dynamic"
+          "equality-stage9-mapping-length-key-entry-dynamic",
+          "reference-stage10-domain-invalid",
+          "reference-stage10-class-invalid",
+          "reference-stage10-new-reference-invalid",
+          "reference-stage10-property-local",
+          "reference-stage10-property-missing",
+          "reference-stage10-property-method",
+          "reference-stage10-subscript-invalid-list",
+          "reference-stage10-subscript-invalid-listing",
+          "reference-stage10-subscript-keytype-mapping",
+          "reference-stage10-subscript-keyliteral-invalid",
+          "reference-stage10-subscript-keyclass-exact",
+          "reference-stage10-default-forbidden-dynamic",
+          "reference-stage10-default-forbidden-listing",
+          "reference-stage10-default-forbidden-mapping",
+          "reference-stage10-any-property-invalid",
+          "reference-stage10-union-property-invalid",
+          "reference-stage10-reference-constraint-forbidden",
+          "reference-stage10-reference-nested-constraint-forbidden",
+          "reference-stage10-reference-cast-invalid",
+          "reference-stage10-render-domain-throw",
+          "reference-stage10-module-output-forbidden",
+          "reference-stage10-access-invalid",
+          "reference-stage10-namespace-local-duplicate",
+          "reference-stage10-namespace-property-duplicate",
+          "reference-stage10-equality-data-different-initializers",
+          "reference-stage10-equality-domain-different-initializers",
+          "reference-stage10-reference-alias-constraint-forbidden",
+          "reference-stage10-metadata-unused-property-type",
+          "reference-stage10-metadata-unused-method-type",
+          "reference-stage10-metadata-unknown-type-before-data",
+          "reference-stage10-metadata-constraint-type-initialization",
+          "reference-stage10-metadata-inherited-unknown",
+          "reference-stage10-metadata-local-unknown",
+          "reference-stage10-metadata-hidden-unknown",
+          "reference-stage10-mapping-reference-key-duplicate",
+          "reference-stage10-mapping-reference-hash-data",
+          "reference-stage10-mapping-reference-hash-domain",
+          "reference-stage10-constructor-nonnull-alias",
+          "reference-stage10-reference-amendment-invalid",
+          "reference-stage10-reference-spread-invalid",
+          "reference-stage10-reference-iteration-invalid",
+          "reference-stage10-reference-new-parent-invalid",
+          "reference-stage10-adapter-reference-render-failure"
         ],
         "state": "partial"
       }
@@ -123829,19 +127446,49 @@
       "description": "Import Clauses",
       "id": "specification:docs/modules/language-reference/pages/index.adoc:Import Clauses",
       "implementation": {
-        "links": [],
-        "state": "unimplemented"
+        "links": [
+          {
+            "path": "crates/pkl-runtime/src/parser.rs",
+            "sha256": "78ed24882879ca603e227cf772f5159232e478f166358c809e34b6679af03567",
+            "symbol": "import"
+          },
+          {
+            "path": "crates/pkl-runtime/src/resolver.rs",
+            "sha256": "75ae7a336d327e2ca14ee6ed2aac9bc8f1380e058cf1cbdfc734f5f7c6f13e9c",
+            "symbol": "type_expression"
+          },
+          {
+            "path": "crates/pkl-runtime/src/vm.rs",
+            "sha256": "e0f7a4ea05eecb7ad89002d8cafa2a813f5233cd3a5f40e28c03f6382a0def50",
+            "symbol": "compile_type_at"
+          }
+        ],
+        "state": "partial"
       },
       "kind": "specification",
-      "reason": "Source-derived declaration/heading retained conservatively; semantic mapping requires review.",
+      "reason": "Reviewed source/test links; completion still requires the full recorded scope and executions.",
       "required": true,
+      "reviewed_mapping": {
+        "remaining": [
+          "General module loading, extends/amends, imports beyond the pkl:ref bridge and complete module identity semantics remain open.",
+          "Original import/module snippets and full invalid syntax/name resolution corpus still require their original adapters and execution."
+        ],
+        "scope": "Local const import members, explicit and inferred pkl:ref aliases, qualified type lookup and namespace diagnostics have selected raw comparisons.",
+        "source": "compatibility/m2-mappings.json"
+      },
       "source": {
         "line": 2451,
         "path": "docs/modules/language-reference/pages/index.adoc"
       },
       "tests": {
-        "case_ids": [],
-        "state": "unmapped"
+        "case_ids": [
+          "reference-stage10-namespace-local-duplicate",
+          "reference-stage10-namespace-parameter",
+          "reference-stage10-namespace-alias-valid",
+          "reference-stage10-namespace-property-duplicate",
+          "reference-stage10-native-method-property-namespace"
+        ],
+        "state": "partial"
       }
     },
     {
@@ -125026,19 +128673,193 @@
       "description": "References",
       "id": "specification:docs/modules/language-reference/pages/index.adoc:References",
       "implementation": {
-        "links": [],
-        "state": "unimplemented"
+        "links": [
+          {
+            "path": "crates/pkl-runtime/src/vm/reference.rs",
+            "sha256": "ff7730ab07ea38442f2f24f40b4ce37d78e859f8ca53912a88b3bdd8e976c608",
+            "symbol": "Reference"
+          },
+          {
+            "path": "crates/pkl-runtime/src/vm/reference.rs",
+            "sha256": "ff7730ab07ea38442f2f24f40b4ce37d78e859f8ca53912a88b3bdd8e976c608",
+            "symbol": "reference_access"
+          },
+          {
+            "path": "crates/pkl-runtime/src/vm/reference.rs",
+            "sha256": "ff7730ab07ea38442f2f24f40b4ce37d78e859f8ca53912a88b3bdd8e976c608",
+            "symbol": "invoke_reference_native"
+          },
+          {
+            "path": "crates/pkl-runtime/src/vm/typecheck.rs",
+            "sha256": "3beaa553488a91144e237d7fe69d021385575f267062adef990ed1237d7fdab7",
+            "symbol": "step_type"
+          }
+        ],
+        "state": "partial"
       },
       "kind": "specification",
-      "reason": "Source-derived declaration/heading retained conservatively; semantic mapping requires review.",
+      "reason": "Reviewed source/test links; completion still requires the full recorded scope and executions.",
       "required": true,
+      "reviewed_mapping": {
+        "remaining": [
+          "Original upstream reference snippet and renderer/API suite contracts remain unexecuted; selected API-expression exploration is separate evidence.",
+          "Complete referent metadata for all builtin types, generic classes and remaining collection types is not implemented or verified.",
+          "Full reflection, compound-value renderers and cyclic or JVM identity-dependent key behavior remain open."
+        ],
+        "scope": "The pkl:ref bridge supports selected constructor, normalized referent type, synthetic property/subscript path, domain rendering, equality and key behavior through the shared VM. Linked native cases compare complete Java 0.32.0 process output at their actual fixture URIs.",
+        "source": "compatibility/m2-mappings.json"
+      },
       "source": {
         "line": 5952,
         "path": "docs/modules/language-reference/pages/index.adoc"
       },
       "tests": {
-        "case_ids": [],
-        "state": "unmapped"
+        "case_ids": [
+          "reference-stage10-constructor-data",
+          "reference-stage10-constructor-domain",
+          "reference-stage10-constructor-empty-path",
+          "reference-stage10-constructor-class",
+          "reference-stage10-domain-invalid",
+          "reference-stage10-class-invalid",
+          "reference-stage10-new-reference-invalid",
+          "reference-stage10-property-unforced",
+          "reference-stage10-property-inherited",
+          "reference-stage10-property-override",
+          "reference-stage10-property-hidden",
+          "reference-stage10-property-local",
+          "reference-stage10-property-missing",
+          "reference-stage10-property-method",
+          "reference-stage10-builtin-string-length-reference-render",
+          "reference-stage10-property-path",
+          "reference-stage10-subscript-bare-list",
+          "reference-stage10-subscript-bare-listing",
+          "reference-stage10-subscript-bare-mapping",
+          "reference-stage10-subscript-bare-dynamic",
+          "reference-stage10-subscript-typed-list",
+          "reference-stage10-subscript-typed-listing",
+          "reference-stage10-subscript-typed-mapping",
+          "reference-stage10-subscript-invalid-list",
+          "reference-stage10-subscript-invalid-listing",
+          "reference-stage10-subscript-keytype-mapping",
+          "reference-stage10-subscript-keyliteral",
+          "reference-stage10-subscript-keyliteral-invalid",
+          "reference-stage10-subscript-keyconstraint-erased",
+          "reference-stage10-subscript-keyclass-exact",
+          "reference-stage10-subscript-key-null",
+          "reference-stage10-default-forbidden-dynamic",
+          "reference-stage10-default-forbidden-listing",
+          "reference-stage10-default-forbidden-mapping",
+          "reference-stage10-dynamic-unknown",
+          "reference-stage10-null-chain",
+          "reference-stage10-any-property-invalid",
+          "reference-stage10-constraints-erased",
+          "reference-stage10-alias-erased",
+          "reference-stage10-nullable",
+          "reference-stage10-nullable-narrow-false",
+          "reference-stage10-nullable-property",
+          "reference-stage10-union-property",
+          "reference-stage10-union-order",
+          "reference-stage10-union-property-invalid",
+          "reference-stage10-nested-typeargs",
+          "reference-stage10-reference-constraint-forbidden",
+          "reference-stage10-reference-nested-constraint-forbidden",
+          "reference-stage10-reference-domain-false",
+          "reference-stage10-reference-covariant",
+          "reference-stage10-reference-cast-invalid",
+          "reference-stage10-literal-subtype",
+          "reference-stage10-intalias-preserved",
+          "reference-stage10-intalias-float",
+          "reference-stage10-intalias-narrow-false",
+          "reference-stage10-equality-same",
+          "reference-stage10-equality-type-false",
+          "reference-stage10-equality-domain-structural",
+          "reference-stage10-equality-path-false",
+          "reference-stage10-equality-constraint-erased",
+          "reference-stage10-equality-data-false",
+          "reference-stage10-render-to-string",
+          "reference-stage10-render-interpolation",
+          "reference-stage10-render-domain-throw",
+          "reference-stage10-render-path",
+          "reference-stage10-external-length-type",
+          "reference-stage10-builtin-computed-string",
+          "reference-stage10-data-not-forced",
+          "reference-stage10-domain-not-forced",
+          "reference-stage10-domain-render-not-forced",
+          "reference-stage10-equality-data-shared-initializer-unforced",
+          "reference-stage10-equality-domain-shared-initializer-unforced",
+          "reference-stage10-member-untype-unknown",
+          "reference-stage10-member-inherited-value-override",
+          "reference-stage10-module-metadata",
+          "reference-stage10-module-output-forbidden",
+          "reference-stage10-access-null-key",
+          "reference-stage10-access-invalid",
+          "reference-stage10-namespace-local-duplicate",
+          "reference-stage10-namespace-parameter",
+          "reference-stage10-relation-alias-left",
+          "reference-stage10-relation-alias-right",
+          "reference-stage10-relation-unforced-left",
+          "reference-stage10-relation-unforced-right",
+          "reference-stage10-relation-render-left",
+          "reference-stage10-relation-render-right",
+          "reference-stage10-access-property-key-null",
+          "reference-stage10-namespace-alias-valid",
+          "reference-stage10-namespace-property-duplicate",
+          "reference-stage10-equality-data-different-initializers",
+          "reference-stage10-equality-domain-different-initializers",
+          "reference-stage10-reference-generic-alias",
+          "reference-stage10-reference-alias-constraint-forbidden",
+          "reference-stage10-reference-domain-constraint-allowed",
+          "reference-stage10-union-subscript",
+          "reference-stage10-reference-any-absorbs",
+          "reference-stage10-reference-domain-bad-type",
+          "reference-stage10-reference-nullable-domain",
+          "reference-stage10-reference-nothing-false",
+          "reference-stage10-reference-unknown-anytype",
+          "reference-stage10-metadata-unused-property-type",
+          "reference-stage10-metadata-unused-method-type",
+          "reference-stage10-metadata-unused-method-body",
+          "reference-stage10-metadata-unused-property-body",
+          "reference-stage10-metadata-unknown-type-before-data",
+          "reference-stage10-metadata-constraint-type-initialization",
+          "reference-stage10-metadata-recursive-property",
+          "reference-stage10-metadata-inherited-unknown",
+          "reference-stage10-metadata-local-unknown",
+          "reference-stage10-metadata-hidden-unknown",
+          "reference-stage10-mapping-reference-key",
+          "reference-stage10-mapping-reference-key-duplicate",
+          "reference-stage10-mapping-reference-path-key",
+          "reference-stage10-mapping-reference-type-distinct",
+          "reference-stage10-mapping-reference-path-distinct",
+          "reference-stage10-mapping-reference-hash-data",
+          "reference-stage10-mapping-reference-hash-domain",
+          "reference-stage10-mapping-reference-constraint-erased",
+          "reference-stage10-equality-type-list",
+          "reference-stage10-mapping-key-type-list",
+          "reference-stage10-equality-type-mapping",
+          "reference-stage10-mapping-key-type-mapping",
+          "reference-stage10-equality-type-union",
+          "reference-stage10-mapping-key-type-union",
+          "reference-stage10-equality-type-nullable",
+          "reference-stage10-mapping-key-type-nullable",
+          "reference-stage10-equality-data-boxed-numeric",
+          "reference-stage10-equality-data-signed-zero",
+          "reference-stage10-equality-data-nan",
+          "reference-stage10-synthetic-access-type",
+          "reference-stage10-synthetic-path-type",
+          "reference-stage10-native-reference-class",
+          "reference-stage10-native-method-property-namespace",
+          "reference-stage10-property-getclass",
+          "reference-stage10-constructor-nonnull-alias",
+          "reference-stage10-metadata-nonnull-erasure",
+          "reference-stage10-referent-nonnull-check",
+          "reference-stage10-reference-amendment-invalid",
+          "reference-stage10-reference-spread-invalid",
+          "reference-stage10-reference-iteration-invalid",
+          "reference-stage10-reference-new-parent-invalid",
+          "reference-stage10-adapter-reference-render-success",
+          "reference-stage10-adapter-reference-render-failure"
+        ],
+        "state": "partial"
       }
     },
     {
@@ -126092,10 +129913,10 @@
   "sources": {
     "compatibility/corpus.json": "0e95da22f965dede398f1a1f136703ba913d588aa51c1fb871cd97a11c84a0dd",
     "compatibility/inventory.json": "a9b21752adad9a269a54854c0dd298256757be88ad95c1388e30d7c78e407070",
-    "compatibility/m2-mappings.json": "4c60e116c4ba5cf33b1e2c2c71d12aa163ff0ce2ee0560fc9dd0e55deafdf79c",
+    "compatibility/m2-mappings.json": "b2e86863aef5d62d3c9ddd6362193e2f944366ecc4b1b7a4b4d58ecd9ff6bbf1",
     "compatibility/regressions.json": "09c064f65730d30f72bf87a45c88d47ecc0844e57966a999dc8e759f083af3da",
     "compatibility/rev1-inventory.json": "6061f202ba3f04565efed3617ac69d3c2fadc54eec1f562b67a4758b3d0a8ab5",
     "references.lock": "278f48fd7697459281aa78a706c9ca57222f36a8c0785d838a6449fbaf26d30b",
-    "tests/fixtures/m2/cases.json": "7831c59f1bf722d2b4af04fb6ee82fc239f346add3b5e19fc314186a8ad3b301"
+    "tests/fixtures/m2/cases.json": "e099d8c37499b9667fa9a6c88ffe8bf2e168503559a906386500df4c5939033a"
   }
 }

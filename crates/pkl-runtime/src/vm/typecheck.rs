@@ -123,6 +123,11 @@ struct CollectionState {
 }
 #[derive(Clone)]
 enum Task {
+    ReferenceDomainResult {
+        value: Value,
+        ty: TypeCheck,
+        span: Span,
+    },
     Check {
         ty: TypeCheck,
         span: Span,
@@ -215,6 +220,7 @@ impl TypeRun {
                         mismatch.roots(roots);
                     }
                 }
+                Task::ReferenceDomainResult { value, .. } => roots.push(value.clone()),
                 Task::RestoreEnvironment(environment) => environment_roots(environment, roots),
                 Task::PredicateResult { function, .. } => roots.push(Value::Function(*function)),
                 _ => {}
@@ -405,6 +411,7 @@ impl Vm {
                 // Inherited checks execute at a source-less Return instruction.
                 // Ordinary property checks already have this authored VM frame.
                 error.frames.push(RuntimeFrame {
+                    source: declaration.source.clone(),
                     span,
                     member: declaration.member.clone(),
                 });
@@ -451,6 +458,7 @@ impl Vm {
                     if let Mismatch::InsertedFrame { frame, .. } = &mismatch {
                         if error.frames.is_empty() {
                             error.frames.push(RuntimeFrame {
+                                source: None,
                                 span: diagnostic.span(),
                                 member: run.member.clone(),
                             });
@@ -469,6 +477,21 @@ impl Vm {
         };
         match task {
             Task::Check { ty, span } => match ty {
+                ty @ TypeCheck::Reference { .. } if matches!(&run.value,Value::Object(id) if self.heap.get(*id)?.reference.is_some()) =>
+                {
+                    let TypeCheck::Reference { domain, .. } = &ty else {
+                        unreachable!()
+                    };
+                    let domain = *domain.clone();
+                    let Value::Object(id) = run.value else {
+                        unreachable!()
+                    };
+                    let reference = self.heap.get(id)?.reference.as_ref().expect("reference");
+                    let value = std::mem::replace(&mut run.value, reference.domain.clone());
+                    run.tasks
+                        .push(Task::ReferenceDomainResult { value, ty, span });
+                    run.tasks.push(Task::Check { ty: domain, span });
+                }
                 TypeCheck::Alias(inner) | TypeCheck::GenericAlias(inner) => {
                     let environment = module_environment(&run.environment)?;
                     run.tasks.push(Task::RestoreEnvironment(std::mem::replace(
@@ -566,6 +589,28 @@ impl Vm {
                     });
                 }
             },
+            Task::ReferenceDomainResult { value, ty, span } => {
+                let TypeCheck::Reference { referent, .. } = &ty else {
+                    unreachable!()
+                };
+                let Value::Object(id) = value else {
+                    unreachable!()
+                };
+                let reference = self.heap.get(id)?.reference.as_ref().expect("reference");
+                let accepted = run.outcome.as_ref().is_some_and(Result::is_ok)
+                    && reference::is_subtype(
+                        &reference.referent,
+                        &reference::normalize(referent, &self.program.module_name),
+                        &self.heap,
+                    );
+                run.value = value.clone();
+                run.checked = value.clone();
+                run.outcome = Some(if accepted {
+                    Ok(value)
+                } else {
+                    Err(Mismatch::Simple { span, ty, value })
+                });
+            }
             Task::CollectionNext(state) => {
                 if state.index == state.items.len() {
                     self.finish_collection(&mut run, state)?;
@@ -600,6 +645,7 @@ impl Vm {
                         .and_then(|member| self.program.metadata.get(member.code))
                         .and_then(|metadata| {
                             metadata.declaration.map(|span| RuntimeFrame {
+                                source: metadata.source.clone(),
                                 span,
                                 member: metadata.member.clone(),
                             })

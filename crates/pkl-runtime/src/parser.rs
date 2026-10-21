@@ -112,7 +112,7 @@ enum StringPart {
     Escape(String),
     Newline,
     Continuation,
-    Expression(Span),
+    Expression(Span, Span),
 }
 
 #[derive(Clone, Debug)]
@@ -367,10 +367,10 @@ impl Lexer<'_> {
                                 Kind::Symbol(')') => {
                                     nesting -= 1;
                                     if nesting == 0 {
-                                        parts.push(StringPart::Expression(Span::new(
-                                            begin,
-                                            token.span.start,
-                                        )));
+                                        parts.push(StringPart::Expression(
+                                            Span::new(begin, token.span.start),
+                                            Span::new(position, token.span.end),
+                                        ));
                                         break;
                                     }
                                 }
@@ -421,11 +421,11 @@ impl Lexer<'_> {
                 StringPart::Text(value) | StringPart::Escape(value) => text.push_str(&value),
                 StringPart::Newline => text.push('\n'),
                 StringPart::Continuation => {}
-                StringPart::Expression(span) => {
+                StringPart::Expression(span, interpolation) => {
                     if !text.is_empty() {
                         rendered.push(StringPart::Text(std::mem::take(&mut text)));
                     }
-                    rendered.push(StringPart::Expression(span));
+                    rendered.push(StringPart::Expression(span, interpolation));
                 }
             }
         }
@@ -550,6 +550,7 @@ struct Parser<'a> {
     pending: Vec<Diagnostic>,
     member_path: Vec<String>,
     folded_integer_spans: std::collections::BTreeMap<Span, Span>,
+    interpolation_spans: std::collections::BTreeMap<Span, Span>,
 }
 
 impl<'a> Parser<'a> {
@@ -570,6 +571,7 @@ impl<'a> Parser<'a> {
             pending: Vec::new(),
             member_path: Vec::new(),
             folded_integer_spans: std::collections::BTreeMap::new(),
+            interpolation_spans: std::collections::BTreeMap::new(),
         })
     }
 
@@ -590,6 +592,7 @@ impl<'a> Parser<'a> {
             pending: Vec::new(),
             member_path: Vec::new(),
             folded_integer_spans: std::collections::BTreeMap::new(),
+            interpolation_spans: std::collections::BTreeMap::new(),
         })
     }
 
@@ -753,12 +756,72 @@ impl<'a> Parser<'a> {
         while self.token.kind != Kind::Eof
             && !(context != MemberContext::Module && self.is_symbol('}'))
         {
+            if context == MemberContext::Module && self.is_name("import") {
+                return Err(Diagnostic::new(
+                    DiagnosticKind::Syntax,
+                    self.token.span,
+                    "Keyword `import` is not allowed here.\n\nIf you must use this name as identifier, enclose it in backticks.",
+                ));
+            }
             members.push(self.member(context, initial.take())?);
             if self.is_symbol(';') {
                 self.advance()?;
             }
         }
         Ok(members)
+    }
+
+    fn import(&mut self) -> Result<Member, Diagnostic> {
+        let start = self.advance()?.span.start;
+        if self.is_symbol('*') {
+            return Err(Diagnostic::new(
+                DiagnosticKind::Unsupported,
+                Span::new(start, self.token.span.end),
+                "Glob module imports are not implemented.",
+            ));
+        }
+        let Kind::String(uri) = self.token.kind.clone() else {
+            return Err(self.unexpected(Some("string constant")));
+        };
+        let uri_span = self.advance()?.span;
+        let (name, _) = if self.is_name("as") {
+            self.advance()?;
+            self.identifier()?
+        } else {
+            // Module URI loading is deliberately bounded separately from parsing.
+            // Pkl's opaque standard-library URIs use the last dotted segment;
+            // hierarchical module URIs use the filename without its extension.
+            let name = if let Some(opaque) = uri.strip_prefix("pkl:") {
+                opaque.rsplit('.').next().unwrap_or(opaque)
+            } else {
+                let path = uri.rsplit('#').next().unwrap_or(&uri);
+                let filename = path.rsplit('/').next().unwrap_or(path);
+                filename.rsplit_once('.').map_or(filename, |(name, _)| name)
+            };
+            (name.to_owned(), uri_span)
+        };
+        let span = Span::new(start, self.previous_end);
+        Ok(Member {
+            name,
+            name_span: span,
+            expr: Expr {
+                kind: ExprKind::Import { uri },
+                span,
+            },
+            span,
+            local: true,
+            ty: None,
+            modifiers: vec![
+                Modifier {
+                    kind: ModifierKind::Local,
+                    span,
+                },
+                Modifier {
+                    kind: ModifierKind::Const,
+                    span,
+                },
+            ],
+        })
     }
 
     fn member(
@@ -1430,11 +1493,14 @@ impl<'a> Parser<'a> {
                 }
             }
             Kind::Name(_) | Kind::QuotedName(_) => {
-                let (name, _) = self.identifier()?;
+                let (name, name_span) = self.identifier()?;
                 let mut path = vec![name];
+                let mut name_spans = vec![name_span];
                 while self.is_symbol('.') {
                     self.advance()?;
-                    path.push(self.identifier()?.0);
+                    let (name, span) = self.identifier()?;
+                    path.push(name);
+                    name_spans.push(span);
                 }
                 let mut arguments = Vec::new();
                 if self.is_symbol('<') {
@@ -1448,7 +1514,11 @@ impl<'a> Parser<'a> {
                     }
                     self.expect('>')?;
                 }
-                TypeKind::Named { path, arguments }
+                TypeKind::Named {
+                    path,
+                    name_spans,
+                    arguments,
+                }
             }
             Kind::String(value) => {
                 self.advance()?;
@@ -1551,7 +1621,7 @@ impl<'a> Parser<'a> {
                             kind: ExprKind::String(value),
                             span,
                         }),
-                        StringPart::Expression(range) => {
+                        StringPart::Expression(range, interpolation) => {
                             let mut parser = Self::interpolation(self.lexer.source, range)?;
                             parser.member_path.clone_from(&self.member_path);
                             let expression = parser.expression_expected(0, Some(')'))?;
@@ -1559,6 +1629,10 @@ impl<'a> Parser<'a> {
                             self.pending.append(&mut parser.pending);
                             self.folded_integer_spans
                                 .append(&mut parser.folded_integer_spans);
+                            self.interpolation_spans
+                                .append(&mut parser.interpolation_spans);
+                            self.interpolation_spans
+                                .insert(expression.span, interpolation);
                             expressions.push(expression);
                         }
                         _ => unreachable!("string lexer returns rendered parts"),
@@ -1823,7 +1897,7 @@ fn multiline_parts(mut parts: Vec<StringPart>, span: Span) -> Result<Vec<StringP
                 }
                 line_start = false;
             }
-            StringPart::Expression(_) => {}
+            StringPart::Expression(_, _) => {}
         }
     }
     Ok(parts)
@@ -1863,7 +1937,18 @@ pub fn parse_module(source: &str) -> Result<Module, Diagnostic> {
     } else {
         (None, Some(modifiers))
     };
-    let members = parser.member_list(MemberContext::Module, initial)?;
+    let mut members = Vec::new();
+    let mut initial = initial;
+    if initial.as_ref().is_none_or(Vec::is_empty) {
+        while parser.is_name("import") {
+            members.push(parser.import()?);
+            initial = None;
+            if parser.is_symbol(';') {
+                parser.advance()?;
+            }
+        }
+    }
+    members.extend(parser.member_list(MemberContext::Module, initial)?);
     if let Some(mut error) = parser.pending.into_iter().next() {
         error.module_name = declaration
             .as_ref()
@@ -1875,6 +1960,7 @@ pub fn parse_module(source: &str) -> Result<Module, Diagnostic> {
         declaration,
         members,
         folded_integer_spans: parser.folded_integer_spans,
+        interpolation_spans: parser.interpolation_spans,
     })
 }
 

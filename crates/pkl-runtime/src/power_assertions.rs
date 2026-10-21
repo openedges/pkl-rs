@@ -196,7 +196,8 @@ fn expression_anchors(
     let mut anchor = Some(expression.span.start);
     match &expression.kind {
         ExprKind::Parenthesized(_) => unreachable!("handled above"),
-        ExprKind::Int(_)
+        ExprKind::Import { .. }
+        | ExprKind::Int(_)
         | ExprKind::Float(_)
         | ExprKind::Null
         | ExprKind::String(_)

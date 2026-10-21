@@ -24,6 +24,7 @@ pub enum Value {
     Object(ObjectId),
     Function(ObjectId),
     Class(ObjectId),
+    TypeAlias(ObjectId),
 }
 
 impl Value {
@@ -34,7 +35,9 @@ impl Value {
     /// Heap identity for every traced value variant.
     pub fn heap_id(&self) -> Option<ObjectId> {
         match self {
-            Self::Object(id) | Self::Function(id) | Self::Class(id) => Some(*id),
+            Self::Object(id) | Self::Function(id) | Self::Class(id) | Self::TypeAlias(id) => {
+                Some(*id)
+            }
             _ => None,
         }
     }
@@ -64,11 +67,23 @@ pub enum ErrorKind {
     Unsupported,
 }
 
+/// Detached source provenance for frames outside the primary module.
+#[derive(Clone, Debug, PartialEq, Eq)]
+pub struct RuntimeSource {
+    pub text: Arc<str>,
+    pub uri: Arc<str>,
+    pub module_name: Arc<str>,
+    /// Standard-library links use the displayed source line as a URL fragment.
+    pub line_anchors: bool,
+}
+
 /// A logical language frame, independent of Rust call-stack layout.
 #[derive(Clone, Debug, PartialEq, Eq)]
 pub struct RuntimeFrame {
     pub span: Span,
     pub member: Arc<str>,
+    /// None denotes the caller-provided module source at the public boundary.
+    pub source: Option<Arc<RuntimeSource>>,
 }
 
 /// Runtime failures carry authored source locations separately from their message.

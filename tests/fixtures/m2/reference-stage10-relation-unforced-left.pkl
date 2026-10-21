@@ -1,0 +1,6 @@
+import "pkl:ref"
+class D extends ref.Domain { function renderReference(r): String = r.getData().toString() }
+local d = new D {}
+class H { p: String = throw("not evaluated") }
+local r = ref.Reference(d, H, null).p
+result = "\(r.getPath()[0].property):\(r is ref.Reference<D, String>)"

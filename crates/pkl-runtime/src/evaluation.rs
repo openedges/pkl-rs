@@ -1,9 +1,9 @@
 //! Experimental scalar language boundary shared by development adapters.
-//! This does not implement the full evaluator API, compound stringification, or Host I/O.
+//! This does not implement the full evaluator API, general compound stringification, or Host I/O.
 use crate::diagnostic::{RenderFrame, render_error};
 use crate::source::{Source, SourceMap, Span};
 use crate::value::{ErrorKind, RuntimeError, Value};
-use crate::vm::{Vm, VmPoll};
+use crate::vm::{BlockMetadata, Instruction, Vm, VmPoll};
 
 /// Options shared by all experimental language adapters.
 #[derive(Clone, Copy, Debug, Default)]
@@ -12,7 +12,7 @@ pub struct EvaluationOptions {
     pub power_assertions: bool,
 }
 
-/// Evaluate a scalar property path and retain complete source diagnostic text.
+/// Evaluate a property path to a scalar or domain-rendered Reference string.
 /// The supplied URI and inferred module name are transport context, never rewritten
 /// after evaluation. Explicit module declarations override the inferred name.
 pub fn scalar_expression(
@@ -87,7 +87,17 @@ pub fn scalar_expression_with_options(
         crate::vm::compile_module(&resolved)
     }
     .map_err(|error| runtime_error(source, uri, name, expression, error, false))?;
-    std::sync::Arc::make_mut(&mut program).module_name = name.into();
+    let program_mut = std::sync::Arc::make_mut(&mut program);
+    program_mut.module_name = name.into();
+    // The Java expression-string boundary converts a returned Reference through
+    // its domain renderer after evaluating the requested expression.
+    let stringify = program_mut.blocks.len();
+    program_mut.blocks.push(vec![
+        Instruction::Input(0),
+        Instruction::ToString,
+        Instruction::Return,
+    ]);
+    program_mut.metadata.push(BlockMetadata::default());
     let entry = program.entry;
     let mut vm = Vm::new(program);
     vm.set_power_assertions(options.power_assertions);
@@ -108,8 +118,14 @@ pub fn scalar_expression_with_options(
         }
         Ok(value)
     };
-    let value =
+    let mut value =
         evaluate().map_err(|error| runtime_error(source, uri, name, expression, error, true))?;
+    if vm.is_reference(&value) {
+        value = vm
+            .start(stringify, vec![value])
+            .and_then(|()| poll(&mut vm))
+            .map_err(|error| runtime_error(source, uri, name, expression, error, false))?;
+    }
     match value {
         Value::Null => Ok("null".into()),
         Value::Bool(value) => Ok(value.to_string()),
@@ -151,36 +167,91 @@ fn runtime_error(
     mut error: RuntimeError,
     include_expression: bool,
 ) -> String {
+    let mut sources = SourceMap::default();
+    let repl_id = sources.add("repl:text", expression);
+    let mut foreign_sources = Vec::new();
+    let source_ids: Vec<_> = error
+        .frames
+        .iter()
+        .map(|frame| {
+            frame.source.as_ref().map(|foreign| {
+                if let Some((_, id)) = foreign_sources
+                    .iter()
+                    .find(|(seen, _)| std::sync::Arc::ptr_eq(seen, foreign))
+                {
+                    return *id;
+                }
+                let id = sources.add(foreign.uri.to_string(), foreign.text.to_string());
+                foreign_sources.push((foreign.clone(), id));
+                id
+            })
+        })
+        .collect();
+    let diagnostic_source = source_ids
+        .first()
+        .copied()
+        .flatten()
+        .and_then(|id| sources.get(id))
+        .unwrap_or(source);
     if let Some(span) = error.spread_hint.as_deref()
-        && let Some(operand) = source.slice(*span)
+        && let Some(operand) = diagnostic_source.slice(*span)
     {
         error.hint = Some(format!(
             "To guard against a nullable value, use `...?` instead of `...`.\nTry: `...?{operand}`"
         ));
     }
     if let Some(diagnostic) = &error.type_diagnostic {
-        let (message, hint) = diagnostic.render(source);
+        let (message, hint) = diagnostic.render(diagnostic_source);
         error.message = message;
         error.hint = hint;
     }
     if error.kind == ErrorKind::MissingType {
+        let module = error
+            .frames
+            .first()
+            .and_then(|frame| frame.source.as_ref())
+            .map_or(module, |source| source.module_name.as_ref());
         error.hint = Some(format!(
             "Searched in the following places:\n* Module `{module}` and any supermodules\n* Module `pkl#base`"
         ));
     }
-    let mut sources = SourceMap::default();
-    let repl_id = sources.add("repl:text", expression);
     let names: Vec<_> = error
         .frames
         .iter()
-        .map(|frame| format!("{module}{}", frame.member))
+        .map(|frame| {
+            let module = frame
+                .source
+                .as_ref()
+                .map_or(module, |source| source.module_name.as_ref());
+            format!("{module}{}", frame.member)
+        })
+        .collect();
+    let uris: Vec<_> = error
+        .frames
+        .iter()
+        .zip(&source_ids)
+        .map(|(frame, id)| {
+            if let Some(foreign) = &frame.source {
+                if foreign.line_anchors
+                    && let Some(position) = id
+                        .and_then(|id| sources.get(id))
+                        .and_then(|source| source.position(frame.span.start))
+                {
+                    return format!("{}#L{}", foreign.uri, position.line);
+                }
+                foreign.uri.to_string()
+            } else {
+                uri.to_owned()
+            }
+        })
         .collect();
     let mut frames: Vec<_> = error
         .frames
         .iter()
         .zip(&names)
-        .map(|(frame, name)| RenderFrame {
-            source,
+        .zip(uris.iter().zip(&source_ids))
+        .map(|((frame, name), (uri, id))| RenderFrame {
+            source: id.and_then(|id| sources.get(id)).unwrap_or(source),
             uri,
             member: name,
             span: frame.span,

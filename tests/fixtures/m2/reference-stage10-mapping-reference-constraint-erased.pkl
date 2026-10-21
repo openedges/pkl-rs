@@ -1,0 +1,9 @@
+import "pkl:ref"
+class D extends ref.Domain { function renderReference(r): String = "ok" }
+local d = new D {}
+class A { p: String(length > 3) }
+class B { p: String }
+local a = ref.Reference(d, A, null).p
+local b = ref.Reference(d, B, null).p
+local m = new Mapping { [a] = "present" }
+result = m[b]

@@ -1,0 +1,5 @@
+import "pkl:ref"
+class D extends ref.Domain { function renderReference(r): String = r.getData().toString() }
+local d = new D {}
+local a = new ref.Access { property = "name"; key = null }
+result = a.isProperty && !a.isSubscript && a.property == "name" && a.key == null

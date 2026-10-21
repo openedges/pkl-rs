@@ -1,0 +1,8 @@
+import "pkl:ref"
+class D extends ref.Domain {
+  function renderReference(r): String = r.getData().toString()
+}
+local d = new D {}
+class H { p: Listing<String> }
+class PathDomain extends ref.Domain { function renderReference(r): String = "\(r.getData())/\(r.getPath()[0].property)/\(r.getPath()[1].key)" }
+result = ref.Reference(new PathDomain {}, H, "root").p[-1].toString()
