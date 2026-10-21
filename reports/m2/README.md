@@ -17,8 +17,118 @@ override checks, and inherited modifier metadata. Stage 12 adds evaluator-owned
 class publication, retained partial classes, and persistent sequence comparisons.
 Stage 13 adds type-alias identity and publication, function metadata and arity checks,
 and exported arrow metadata equality. Stage 14 adds ordered type resolution, generic
-parameter scopes, and owner signature initialization.
+parameter scopes, and owner signature initialization. Stage 15 adds selected recursive
+constraint graphs and erased `Class<T>` arguments.
 These checkpoints do not complete the language milestone.
+
+## Stage 15 local verification checkpoint
+
+Implementation `7eca4046a4a40519d8a53348deb94ed98827b5a7` is committed and pushed.
+Runtime work used `gpt-6-astra / high`; Java evidence, platform verification, and
+independent review used `gpt-6.1-sol / high`.
+
+Stage 15 replaces infinite compile-time expansion of supported non-generic recursive
+constraints with a finite graph of shared constraint bytecode blocks. Unused
+declarations and short-circuited recursive uses can finish without executing the
+recursive branch. Selected direct and mutual finite recursion, alias declaration type
+scope, and native Host/GC lifecycle checks use the shared engine. Builtin `Class<T>`
+checks its single-argument arity and erases the argument without resolving it. Missing
+types, failed or cyclic aliases, constrained types, and invalid class signatures inside
+an erased argument therefore remain unforced. Generic aliases surrounding `Class<T>`
+retain their own ordinary argument-resolution behavior. This is bounded support;
+expanded type checks remain statically represented.
+
+The final recorded release artifact matches **41/41 additions** against pinned Java
+0.32.0, comprising **33 successful values and eight expected errors**, with complete
+status/stdout/stderr comparisons. Two equal-stdout relations bring the selected
+inventory to **1,513 cases and 52 relations**. The original 1,472 case definitions,
+input bytes, and 50 relation definitions remain unchanged. The independent fixture audit
+also confirms that all 2,472 prior inventory rows retain their execution states, inputs,
+required flags, and requirement links. The [fresh full
+acquisition](language-stage15-final-evidence.tar.gz) records **1,511 raw matches among
+1,513 independent cases**, retaining `error-cycle` as an oracle error and
+`error-remainder-zero` as a mismatch. All **52 metamorphic relations pass**. The
+[prior-selection replay](regressions-stage15-final-evidence.tar.gz) independently
+preserves the original 1,470 matches and two failures against retained Stage 14 Java
+bytes; it is separate from the fresh acquisition.
+
+The [final persistent capture](class-lifecycle-stage15-final-evidence.tar.gz) records
+**34 sequences, 68 fresh-evaluator executions, and 454 matching raw calls**. The two
+additions contribute 48 comparisons across failure/retry, finite recursive checks, alias
+publication, erased Class arguments, wrong values, and lazy arity failures. The original
+32 sequences, ordered call lists, and 406 raw outcomes are unchanged; the independent
+audit compares all 2,436 original Java/Rust status/stdout/stderr capture files byte for
+byte. Native Host/GC tests separately exercise suspension, recursive reentry, temporary
+retention and reclamation, cancellation/retry, and terminal cleanup. They remain an
+architectural contract rather than a raw Java Host-equivalence claim.
+
+The [seven required local checks](validation-stage15-final.json) pass, including **315
+Rust tests and 194 Python tests**, formatting, workspace Clippy, pinned references, Wasm
+compilation, and inventory freshness. One existing ignored Rust probe remains excluded
+from the passing count. Actual [Node and
+Chromium](platforms-stage15-final-evidence.tar.gz) each pass **54 scenarios**, including
+the two new Java-derived persistent sequences at the identical module URI. All 6,078
+primitive results agree across Rust targets; 6,076 match Java per target, preserving the
+two failed regex comparisons. The user-approved acceptance route is local verification.
+No Stage 15 remote CI result or unexecuted Linux/Windows result is claimed.
+
+The [final local summary](stage15-final-summary.json) records the bounded acceptance
+scope. The language acquisition retains 1,610 source snapshots. The [source
+proof](source-stage15-final-evidence.tar.gz) binds **2,091 captured source copies across
+1,725 unique paths** to the exact implementation commit. This acquisition contains no
+upstream submodule source snapshots; reference versions were checked separately by
+`cargo xtask verify` and the pinned oracle metadata.
+Raw command captures and build identities remain separate from this byte comparison;
+the audit does not execute captured evaluator binaries. Existing M1 regressions retain
+15 frontend matches, six runtime values and two complete diagnostics matching, one
+cycle diagnostic mismatch, two lifecycle protocol matches, and four complete lifecycle
+diagnostic mismatches.
+
+The [source-scope amendment](source-stage15-final-amendment-evidence.tar.gz) corrects
+an unconditional upstream-blob flag in the original packaging record; it does not
+change any captured source or result. It also preserves the first packaging attempt,
+whose guard incorrectly required the expanded inventory to match its old file bytes.
+The corrected guard verifies original rows and requirement links while allowing the
+recorded additions. All original sealed archives remain unchanged.
+
+The [exploration archive](exploration-stage15-evidence.tar.gz) preserves **3,995 files**
+and 46 final observations: 41 raw matches and the following **five known mismatches**.
+Its SHA-256 is `5c49edd4105cf5a9a68c8cee95e6696b87a74af703a1ca4769954ce2913f734a`
+(10,869,925 bytes). Original exploratory expectations, failed sequence drafts, the
+native lifecycle draft failure, frozen baseline inputs, build provenance, and the
+complete Java/Rust outputs remain intact. The final focused and exploratory replays use
+the same recorded release artifact, SHA-256
+`4a27dfe9a2bb8fd8e4b11e6e39f9900322d410aa0a17f3a59e3c03f0eff78fb6`.
+
+| Exploratory case | Remaining mismatch |
+| --- | --- |
+| `recursive-finite-rejection` | Both runtimes reject the value, but Java reports constraint `Value: 0` and Rust reports `Value: 2`. |
+| `recursive-as-in-constraint` | Java rejects the recursive cast constraint with `Value: -1`; Rust incorrectly succeeds with `3`. |
+| `recursive-this-after-is` | Both runtimes reject the value, but Java reports `Value: -1` and Rust reports `Value: 2`. |
+| `recursive-generic-shadow` | Java succeeds with `2`; Rust explicitly reports that recursive generic constraints are unimplemented. |
+| `recursive-lexical-capture` | Java rejects a non-const `threshold` property captured by an alias constraint; Rust incorrectly succeeds with `2`. |
+
+The first three failures expose Java's shared custom-`this` frame slot: a nested
+recursive check overwrites the enclosing constraint receiver and the diagnostic reads
+the overwritten slot. The current Rust constraint calls retain separate receiver values.
+Matching this behavior needs frame-slot identity and capture/lifecycle handling beyond
+reuse of bytecode block IDs. Recursive generic constraints need a parameterized
+recursive type representation; the current bounded graph explicitly rejects an active
+recursive use with generic substitutions. The non-const capture failure remains a
+lexical/const-scope semantic gap; the separate const-capture control succeeds in both
+runtimes. These failures are retained exploratory obligations, without new development
+exceptions or claims that stronger draft sequences passed.
+
+All 474 requirements, 15 partial reviewed mappings, 960 unimplemented accounting rows,
+40 unmapped rows, and previously unexecuted sequence groups remain explicit. The [gate
+captures](gates-stage15-final-evidence.tar.gz) preserve passing integrity and
+development checks and failing strict selected/full gates; the strict full gate retains
+**1,950 failure reasons**. The inventory has 2,513 overlapping accounting rows: 1,513
+ready, 960 unimplemented, and 40 unmapped. These are not feature completion rates.
+Complete generic/constraint semantics, strict Map/Set behavior, annotation and
+module/cache behavior, original upstream suites, product APIs, and speed/memory targets
+remain unfinished. **Stage 15 is closed within its bounded local development contract;
+M2 remains in progress.**
 
 ## Stage 14 checkpoint accepted with local verification
 
@@ -107,11 +217,11 @@ Unchanged baseline tooling is distinguished from fresh checks; Linux and Windows
 execution remains unverified for this implementation. No hosted ZIP is required
 when none exists. **Stage 14 is closed within its bounded local development contract.**
 
-**M2 remains in progress.** Recursive
-constraint/type resolution, erased `Class<T>` arguments, strict Map/Set, annotation
-syntax, general module loading/cache behavior, full reflection, and the remaining
-upstream corpus still require work. Full language/API compatibility and speed/memory
-parity are not established by this checkpoint.
+At the Stage 14 boundary, recursive constraint/type resolution and erased
+`Class<T>` arguments remained open; Stage 15 above addresses a bounded subset.
+Strict Map/Set, annotation syntax, general module loading/cache behavior, full
+reflection, and the remaining upstream corpus still require work. Full language/API
+compatibility and speed/memory parity are not established by these checkpoints.
 
 ## Stage 13 checkpoint
 

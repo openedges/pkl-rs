@@ -503,7 +503,6 @@ types, annotation syntax, full module initialization/caching, structural types,
 reflection, and the original upstream type/function suites remain unverified or
 unimplemented. Unsupported builtin generic types remain explicit gaps.
 
-
 ### Recursive constraint compilation
 
 Constraint bytecode can contain a back edge to an active constraint block. The
