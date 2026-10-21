@@ -1,0 +1,4 @@
+class C { p = 1 }
+typealias Identity<U> = U
+typealias A<T> = Int((new T {"bad"})[0] == "bad")
+result: A<Listing<Int>> = 1

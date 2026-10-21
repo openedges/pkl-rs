@@ -1,0 +1,11 @@
+class C { p = 1 }
+class D { p = 2 }
+class Broken { p = throw("generic constructor failure") }
+typealias Pick<T> = T?
+typealias A<T> = Int((new T {p = 7}).p == this)
+one: A<C> = 7
+two: A<D> = 7
+viaAlias: A<Pick<D>> = 7
+bad: A<Broken> = 7
+missing: A<Int> = 1
+stable = 42

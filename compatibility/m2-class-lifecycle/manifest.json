@@ -832,6 +832,34 @@
       "expressions": "types-stage20-nullable-nested-actuals.expressions",
       "group": "T20",
       "note": "Complete raw pinned Java nullable class and alias actual arguments, inferred collection defaults, distinct successful caches, throwing default retries and missing primitive defaults. Abstract missing-property diagnostics and direct new T remain retained exploratory failures."
+    },
+    {
+      "id": "types-stage21-direct-empty-actuals",
+      "source": "types-stage21-direct-empty-actuals.pkl",
+      "expressions": "types-stage21-direct-empty-actuals.expressions",
+      "group": "T21",
+      "note": "Complete raw pinned Java direct symbolic constructors with distinct class, nullable, alias and invalid actual arguments, lazy replacement and lambda capture. Ordered repeated failures and subsequent successful reads retain one evaluator; native Host/GC lifecycle coverage is separate."
+    },
+    {
+      "id": "types-stage21-direct-override-actuals",
+      "source": "types-stage21-direct-override-actuals.pkl",
+      "expressions": "types-stage21-direct-override-actuals.expressions",
+      "group": "T21",
+      "note": "Complete raw pinned Java direct symbolic constructors with distinct class, nullable, alias and invalid actual arguments, lazy replacement and lambda capture. Ordered repeated failures and subsequent successful reads retain one evaluator; native Host/GC lifecycle coverage is separate."
+    },
+    {
+      "id": "types-stage21-direct-closure-actuals",
+      "source": "types-stage21-direct-closure-actuals.pkl",
+      "expressions": "types-stage21-direct-closure-actuals.expressions",
+      "group": "T21",
+      "note": "Complete raw pinned Java direct symbolic constructors with distinct class, nullable, alias and invalid actual arguments, lazy replacement and lambda capture. Ordered repeated failures and subsequent successful reads retain one evaluator; native Host/GC lifecycle coverage is separate."
+    },
+    {
+      "id": "types-stage21-direct-invalid-actuals",
+      "source": "types-stage21-direct-invalid-actuals.pkl",
+      "expressions": "types-stage21-direct-invalid-actuals.expressions",
+      "group": "T21",
+      "note": "Complete raw pinned Java direct symbolic constructors with distinct class, nullable, alias and invalid actual arguments, lazy replacement and lambda capture. Ordered repeated failures and subsequent successful reads retain one evaluator; native Host/GC lifecycle coverage is separate."
     }
   ],
   "unexecuted_groups": [

@@ -81,6 +81,8 @@ class PlatformEvidenceTests(unittest.TestCase):
             'm2-nullable-default-listing-sequences',
             'm2-nullable-default-mapping-sequences',
             'm2-nullable-default-nested-sequences',
+            'm2-generic-constructors-sequences',
+            'm2-generic-constructors-closure-sequences',
         }
         names = sorted(m1_platforms.REQUIRED_SCENARIOS)
         valid = {'nodeChecks': names, 'browserChecks': names, 'browserErrors': [],

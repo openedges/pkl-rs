@@ -1,0 +1,4 @@
+class C { p = 42; marker = 0 }
+class D { p = 2; marker = 0 }
+typealias A<T> = Int(let (f = (unused) -> new T {}) f.apply(0).p == this)
+result: A<C> = 42

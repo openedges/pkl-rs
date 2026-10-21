@@ -1,0 +1,12 @@
+class C { p = 1 }
+abstract class Abs { p = 3 }
+typealias Identity<U> = U
+typealias A<T> = Int((new T {}).p > 0)
+good: A<C> = 1
+integer: A<Int> = 1
+text: A<Identity<String>> = 1
+empty: A<nothing> = 1
+unknownValue: A<unknown> = 1
+abstractValue: A<Abs> = 1
+noDefault: A<C|String> = 1
+stable = 42

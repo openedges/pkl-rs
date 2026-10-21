@@ -1,0 +1,9 @@
+class C { p = 1 }
+class D { p = 2 }
+abstract class Abs { p = 3 }
+class Broken { p = throw("direct default failure") }
+typealias Nullable = C?
+typealias Pick<U> = U?
+typealias Same<U> = U
+typealias A<T> = Int((new T {p = 7}).p == this)
+result: A<Same<C>> = 7

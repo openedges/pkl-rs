@@ -1,0 +1,7 @@
+class C { p = 1 }
+class D { p = 2 }
+typealias Box<U> = Listing<U>
+typealias Identity<U> = U
+typealias Positive = C(p > 4)
+typealias A<T> = Int((new T {p = throw("body failure")}).p > 0)
+result: A<Missing> = 1

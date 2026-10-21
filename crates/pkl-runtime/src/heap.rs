@@ -26,6 +26,8 @@ pub struct Environment {
     /// Lexical substitutions captured by reusable generic constraint bodies.
     /// Runtime values are immutable shared type DAGs; environment clones copy handles.
     pub type_arguments: BTreeMap<(usize, Arc<str>), crate::vm::TypeCheck>,
+    /// Source sections follow actual arguments without participating in type identity.
+    pub type_argument_sources: BTreeMap<(usize, Arc<str>), crate::vm::TypeArgumentSource>,
     /// Innermost first; immutable captured lexical object scopes.
     pub scopes: Vec<Scope>,
 }

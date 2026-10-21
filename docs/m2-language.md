@@ -211,6 +211,18 @@ cancellation, isolation, and terminal cleanup have separate lifecycle checks.
 Direct generic constructors and remaining shared-let and Reference differences
 remain outside this selected contract.
 
+Stage 21 adds selected direct generic constructors, including distinct class
+actuals, nullable and union defaults, deferred failures, captured functions,
+and complete errors for invalid actuals. Separate source-origin metadata keeps
+authored alias occurrences and forwarded parameters available to diagnostics.
+Collection-body controls preserve Java's absence of an added collection cast
+when obtaining the parent for `new T`. Persistent sequences alternate actual
+types and retry failed reads within the same evaluator. Native checks exercise
+Host reentry, GC, cancellation, isolation, terminal release, and 768-deep default
+construction on a 256 KiB evaluator stack. Lazy member frame names, unsupported
+builtin types, some missing-property diagnostics, and generator boundaries
+remain recorded exploratory failures rather than new development exceptions.
+
 A complete runtime type-resolution model, general imported types, annotation
 syntax, and full module initialization/caching remain open requirements. The
 persistent adapter requires an acquired module; module-entry failures do not

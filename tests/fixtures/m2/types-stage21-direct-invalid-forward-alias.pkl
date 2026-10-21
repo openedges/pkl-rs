@@ -1,0 +1,4 @@
+typealias Identity<U> = U
+typealias A<T> = Int((new T {}).p > 0)
+typealias B<U> = A<Identity<U>>
+result: B<Identity<Int>> = 1

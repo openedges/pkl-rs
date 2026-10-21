@@ -692,7 +692,33 @@ each wrapper construction consumes VM fuel and retains its payload as a GC root.
 These rules follow the pinned `VmNull`, nullable type node, and object literal
 implementations. Parent unwrapping still runs within one instruction, so these
 changes do not establish a uniform wall-time cancellation bound. General generic
-constructors and synchronous metadata resource bounds remain separate requirements.
+constructor cases and synchronous metadata resource bounds remain separate requirements.
+
+### Generic constructor parents
+
+A constructor such as `new T { ... }` inside a generic constraint resolves its
+parent from that invocation's actual type argument. It uses the resumable default
+constructor, then the ordinary amendment path. Intermediate defaults remain GC
+roots and descent, allocation, and unwind consume VM fuel. Captured functions
+retain the argument environment through Host suspension and retry. Inline and
+lambda constructor nodes receive cloned alias arguments; lazy member call
+targets retain the unbound interpretation used by Java. Their remaining logical
+frame-name differences are tracked separately.
+
+Obtaining a parent does not evaluate the type's constraints or introduce a
+collection cast. Pinned Java cases distinguish `new T` with an actual
+`Listing<Int>` or `Mapping<String, Int>` from an explicitly checked collection:
+the constructor can contain values outside those arguments. Class property
+annotations still apply when their members are evaluated. Empty and nonempty
+amendments retain the nullable-default rules above.
+
+Diagnostic origins travel separately from type identity. Generic argument
+source locations allow constructor failures to point to the actual type when
+Java reports an abstract or external class, while retaining the authored
+constructor context for other failures. These source locations do not become
+heap roots or participate in type equality. Selected constructor comparisons
+and lifecycle checks do not establish complete generic alias identity, imported
+type behavior, or resource and performance bounds.
 
 ### Recursive diagnostic frames
 

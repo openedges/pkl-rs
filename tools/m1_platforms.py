@@ -85,6 +85,8 @@ REQUIRED_SCENARIOS = {
     'm2-nullable-default-listing-sequences',
     'm2-nullable-default-mapping-sequences',
     'm2-nullable-default-nested-sequences',
+    'm2-generic-constructors-sequences',
+    'm2-generic-constructors-closure-sequences',
 }
 
 

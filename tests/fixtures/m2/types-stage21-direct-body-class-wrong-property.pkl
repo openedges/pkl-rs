@@ -1,0 +1,3 @@
+class C { p: Int = 1; fixed fixedP = 2; const constP = 3; function f() = 4 }
+typealias A<T> = Int((new T {p = "bad"}).p == "bad")
+result: A<C> = 1

@@ -2,6 +2,15 @@
 use super::*;
 
 impl TypeCheck {
+    pub(super) fn argument_source(&self, environment: &Environment) -> Option<TypeArgumentSource> {
+        let TypeCheck::Parameter { block, name } = self.resolved() else {
+            return None;
+        };
+        environment
+            .type_argument_sources
+            .get(&(*block, name.clone()))
+            .cloned()
+    }
     /// Resolve a finite type expression against the invocation that created it.
     /// Constraint bodies stay in Program; only their argument expressions are
     /// substituted, so changing recursive arguments never expand bytecode.
@@ -74,6 +83,11 @@ impl TypeCheck {
                     .iter()
                     .map(|constraint| {
                         let mut result = constraint.clone();
+                        for (name, argument) in &constraint.arguments {
+                            if let Some(source) = argument.argument_source(environment) {
+                                result.argument_sources.insert(name.clone(), source);
+                            }
+                        }
                         result.arguments = constraint
                             .arguments
                             .iter()
@@ -126,12 +140,22 @@ enum DefaultTask {
     Nullable,
     Collection(ObjectId),
     Publish(ObjectId),
+    Constructor(TypeCheck, TypeArgumentSource),
 }
 pub(super) struct GenericDefaultRun {
     tasks: Vec<DefaultTask>,
     value: Option<Value>,
 }
 impl GenericDefaultRun {
+    pub(super) fn constructor(ty: TypeCheck, source: TypeArgumentSource) -> Self {
+        Self {
+            tasks: vec![
+                DefaultTask::Constructor(ty.clone(), source),
+                DefaultTask::Visit(ty),
+            ],
+            value: None,
+        }
+    }
     pub(super) fn new(target: ObjectId, ty: TypeCheck) -> Self {
         Self {
             tasks: vec![DefaultTask::Publish(target), DefaultTask::Visit(ty)],
@@ -142,7 +166,7 @@ impl GenericDefaultRun {
         roots.extend(self.value.iter().cloned());
         roots.extend(self.tasks.iter().filter_map(|task| match task {
             DefaultTask::Collection(id) | DefaultTask::Publish(id) => Some(Value::Object(*id)),
-            DefaultTask::Visit(_) | DefaultTask::Nullable => None,
+            DefaultTask::Visit(_) | DefaultTask::Nullable | DefaultTask::Constructor(_, _) => None,
         }));
     }
 }
@@ -163,6 +187,50 @@ impl Vm {
             .pop()
             .ok_or_else(|| invalid("empty default run"))?
         {
+            DefaultTask::Constructor(ty, source) => {
+                if let Some(value) = run.value {
+                    self.stack.push(value);
+                    return Ok(());
+                }
+                let mut base = ty.unaliased();
+                while let TypeCheck::Constrained { base: inner, .. } = base {
+                    base = inner.unaliased();
+                }
+                if let TypeCheck::Class { id, .. } = base
+                    && let Some(class) = self.heap.find_class(*id)
+                    && let Some(class) = &self.heap.get(class)?.class_definition
+                    && class.abstract_
+                {
+                    let mut error = RuntimeError::new(
+                        ErrorKind::Type,
+                        format!(
+                            "Cannot instantiate abstract class `{}#{}`.",
+                            self.program.module_name, class.name
+                        ),
+                    );
+                    error.hint = Some("Abstract classes cannot be instantiated.\nInstead, instantiate a concrete subclass.".into());
+                    return Err(error.at(source.span));
+                }
+                if matches!(
+                    base,
+                    TypeCheck::Boolean
+                        | TypeCheck::Int
+                        | TypeCheck::Float
+                        | TypeCheck::String
+                        | TypeCheck::Bytes
+                        | TypeCheck::Reference { .. }
+                ) {
+                    return Err(collections::external_amendment_error(&type_name(
+                        base,
+                        &self.program.module_name,
+                    ))
+                    .at(source.span));
+                }
+                return Err(RuntimeError::new(
+                    ErrorKind::Type,
+                    format!("Cannot instantiate type `{}`.", source.text),
+                ));
+            }
             DefaultTask::Nullable => {
                 run.value = Some(self.heap.allocate_null(run.value.take()));
             }
@@ -257,7 +325,7 @@ impl Vm {
 }
 
 impl TypeCheck {
-    fn contains_parameter(&self) -> bool {
+    pub(super) fn contains_parameter(&self) -> bool {
         let mut pending = vec![self];
         let mut visited = BTreeSet::new();
         while let Some(ty) = pending.pop() {

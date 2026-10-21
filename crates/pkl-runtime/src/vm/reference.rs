@@ -1372,6 +1372,7 @@ pub(super) fn access_members(
         constraints: vec![ConstraintCode {
             block: constraint,
             arguments: BTreeMap::new(),
+            argument_sources: BTreeMap::new(),
             span: predicate_span,
             module_environment: false,
             source: Arc::from("key == null"),
@@ -1574,6 +1575,7 @@ mod generic_metadata_tests {
                 constraints: vec![ConstraintCode {
                     block: 0,
                     arguments: BTreeMap::new(),
+                    argument_sources: BTreeMap::new(),
                     source: Arc::from(source),
                     span: Span::new(0, 0),
                     module_environment: false,

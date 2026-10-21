@@ -24914,6 +24914,1495 @@
         "semantic:classes",
         "semantic:diagnostics"
       ]
+    },
+    {
+      "id": "types-stage21-direct-empty-class",
+      "input": "tests/fixtures/m2/types-stage21-direct-empty-class.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation"
+      ],
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "types-stage21-direct-empty-class",
+          "types-stage21-direct-empty-nullable",
+          "types-stage21-direct-empty-alias",
+          "types-stage21-direct-empty-identity-alias",
+          "types-stage21-direct-empty-union"
+        ],
+        "domain": "Direct symbolic construction retains the same class default through nullable, identity-alias and default-union actual arguments."
+      }
+    },
+    {
+      "id": "types-stage21-direct-override-class",
+      "input": "tests/fixtures/m2/types-stage21-direct-override-class.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:amendment"
+      ],
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "types-stage21-direct-override-class",
+          "types-stage21-direct-override-nullable",
+          "types-stage21-direct-override-alias",
+          "types-stage21-direct-override-generic-alias",
+          "types-stage21-direct-override-identity-alias",
+          "types-stage21-direct-override-union",
+          "types-stage21-direct-override-nullable-union",
+          "types-stage21-direct-override-primitive-nullable",
+          "types-stage21-direct-override-dynamic",
+          "types-stage21-direct-override-broken"
+        ],
+        "domain": "An authored property replacement returns the same value across class and Dynamic defaults while leaving the replaced throwing default unforced."
+      }
+    },
+    {
+      "id": "types-stage21-direct-empty-nullable",
+      "input": "tests/fixtures/m2/types-stage21-direct-empty-nullable.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:unions"
+      ],
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "types-stage21-direct-empty-class",
+          "types-stage21-direct-empty-nullable",
+          "types-stage21-direct-empty-alias",
+          "types-stage21-direct-empty-identity-alias",
+          "types-stage21-direct-empty-union"
+        ],
+        "domain": "Direct symbolic construction retains the same class default through nullable, identity-alias and default-union actual arguments."
+      }
+    },
+    {
+      "id": "types-stage21-direct-override-nullable",
+      "input": "tests/fixtures/m2/types-stage21-direct-override-nullable.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:unions",
+        "semantic:amendment"
+      ],
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "types-stage21-direct-override-class",
+          "types-stage21-direct-override-nullable",
+          "types-stage21-direct-override-alias",
+          "types-stage21-direct-override-generic-alias",
+          "types-stage21-direct-override-identity-alias",
+          "types-stage21-direct-override-union",
+          "types-stage21-direct-override-nullable-union",
+          "types-stage21-direct-override-primitive-nullable",
+          "types-stage21-direct-override-dynamic",
+          "types-stage21-direct-override-broken"
+        ],
+        "domain": "An authored property replacement returns the same value across class and Dynamic defaults while leaving the replaced throwing default unforced."
+      }
+    },
+    {
+      "id": "types-stage21-direct-empty-alias",
+      "input": "tests/fixtures/m2/types-stage21-direct-empty-alias.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:unions"
+      ],
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "types-stage21-direct-empty-class",
+          "types-stage21-direct-empty-nullable",
+          "types-stage21-direct-empty-alias",
+          "types-stage21-direct-empty-identity-alias",
+          "types-stage21-direct-empty-union"
+        ],
+        "domain": "Direct symbolic construction retains the same class default through nullable, identity-alias and default-union actual arguments."
+      }
+    },
+    {
+      "id": "types-stage21-direct-override-alias",
+      "input": "tests/fixtures/m2/types-stage21-direct-override-alias.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:unions",
+        "semantic:amendment"
+      ],
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "types-stage21-direct-override-class",
+          "types-stage21-direct-override-nullable",
+          "types-stage21-direct-override-alias",
+          "types-stage21-direct-override-generic-alias",
+          "types-stage21-direct-override-identity-alias",
+          "types-stage21-direct-override-union",
+          "types-stage21-direct-override-nullable-union",
+          "types-stage21-direct-override-primitive-nullable",
+          "types-stage21-direct-override-dynamic",
+          "types-stage21-direct-override-broken"
+        ],
+        "domain": "An authored property replacement returns the same value across class and Dynamic defaults while leaving the replaced throwing default unforced."
+      }
+    },
+    {
+      "id": "types-stage21-direct-empty-generic-alias",
+      "input": "tests/fixtures/m2/types-stage21-direct-empty-generic-alias.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:unions",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "types-stage21-direct-override-generic-alias",
+      "input": "tests/fixtures/m2/types-stage21-direct-override-generic-alias.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:unions",
+        "semantic:amendment"
+      ],
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "types-stage21-direct-override-class",
+          "types-stage21-direct-override-nullable",
+          "types-stage21-direct-override-alias",
+          "types-stage21-direct-override-generic-alias",
+          "types-stage21-direct-override-identity-alias",
+          "types-stage21-direct-override-union",
+          "types-stage21-direct-override-nullable-union",
+          "types-stage21-direct-override-primitive-nullable",
+          "types-stage21-direct-override-dynamic",
+          "types-stage21-direct-override-broken"
+        ],
+        "domain": "An authored property replacement returns the same value across class and Dynamic defaults while leaving the replaced throwing default unforced."
+      }
+    },
+    {
+      "id": "types-stage21-direct-empty-identity-alias",
+      "input": "tests/fixtures/m2/types-stage21-direct-empty-identity-alias.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:unions"
+      ],
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "types-stage21-direct-empty-class",
+          "types-stage21-direct-empty-nullable",
+          "types-stage21-direct-empty-alias",
+          "types-stage21-direct-empty-identity-alias",
+          "types-stage21-direct-empty-union"
+        ],
+        "domain": "Direct symbolic construction retains the same class default through nullable, identity-alias and default-union actual arguments."
+      }
+    },
+    {
+      "id": "types-stage21-direct-override-identity-alias",
+      "input": "tests/fixtures/m2/types-stage21-direct-override-identity-alias.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:unions",
+        "semantic:amendment"
+      ],
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "types-stage21-direct-override-class",
+          "types-stage21-direct-override-nullable",
+          "types-stage21-direct-override-alias",
+          "types-stage21-direct-override-generic-alias",
+          "types-stage21-direct-override-identity-alias",
+          "types-stage21-direct-override-union",
+          "types-stage21-direct-override-nullable-union",
+          "types-stage21-direct-override-primitive-nullable",
+          "types-stage21-direct-override-dynamic",
+          "types-stage21-direct-override-broken"
+        ],
+        "domain": "An authored property replacement returns the same value across class and Dynamic defaults while leaving the replaced throwing default unforced."
+      }
+    },
+    {
+      "id": "types-stage21-direct-empty-union",
+      "input": "tests/fixtures/m2/types-stage21-direct-empty-union.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:unions"
+      ],
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "types-stage21-direct-empty-class",
+          "types-stage21-direct-empty-nullable",
+          "types-stage21-direct-empty-alias",
+          "types-stage21-direct-empty-identity-alias",
+          "types-stage21-direct-empty-union"
+        ],
+        "domain": "Direct symbolic construction retains the same class default through nullable, identity-alias and default-union actual arguments."
+      }
+    },
+    {
+      "id": "types-stage21-direct-override-union",
+      "input": "tests/fixtures/m2/types-stage21-direct-override-union.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:unions",
+        "semantic:amendment"
+      ],
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "types-stage21-direct-override-class",
+          "types-stage21-direct-override-nullable",
+          "types-stage21-direct-override-alias",
+          "types-stage21-direct-override-generic-alias",
+          "types-stage21-direct-override-identity-alias",
+          "types-stage21-direct-override-union",
+          "types-stage21-direct-override-nullable-union",
+          "types-stage21-direct-override-primitive-nullable",
+          "types-stage21-direct-override-dynamic",
+          "types-stage21-direct-override-broken"
+        ],
+        "domain": "An authored property replacement returns the same value across class and Dynamic defaults while leaving the replaced throwing default unforced."
+      }
+    },
+    {
+      "id": "types-stage21-direct-empty-nullable-union",
+      "input": "tests/fixtures/m2/types-stage21-direct-empty-nullable-union.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:unions",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "types-stage21-direct-override-nullable-union",
+      "input": "tests/fixtures/m2/types-stage21-direct-override-nullable-union.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:unions",
+        "semantic:amendment"
+      ],
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "types-stage21-direct-override-class",
+          "types-stage21-direct-override-nullable",
+          "types-stage21-direct-override-alias",
+          "types-stage21-direct-override-generic-alias",
+          "types-stage21-direct-override-identity-alias",
+          "types-stage21-direct-override-union",
+          "types-stage21-direct-override-nullable-union",
+          "types-stage21-direct-override-primitive-nullable",
+          "types-stage21-direct-override-dynamic",
+          "types-stage21-direct-override-broken"
+        ],
+        "domain": "An authored property replacement returns the same value across class and Dynamic defaults while leaving the replaced throwing default unforced."
+      }
+    },
+    {
+      "id": "types-stage21-direct-empty-no-default-union",
+      "input": "tests/fixtures/m2/types-stage21-direct-empty-no-default-union.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:unions",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "types-stage21-direct-override-no-default-union",
+      "input": "tests/fixtures/m2/types-stage21-direct-override-no-default-union.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:unions",
+        "semantic:diagnostics",
+        "semantic:amendment"
+      ]
+    },
+    {
+      "id": "types-stage21-direct-empty-primitive",
+      "input": "tests/fixtures/m2/types-stage21-direct-empty-primitive.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "types-stage21-direct-override-primitive",
+      "input": "tests/fixtures/m2/types-stage21-direct-override-primitive.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:amendment"
+      ]
+    },
+    {
+      "id": "types-stage21-direct-override-primitive-nullable",
+      "input": "tests/fixtures/m2/types-stage21-direct-override-primitive-nullable.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:unions",
+        "semantic:amendment"
+      ],
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "types-stage21-direct-override-class",
+          "types-stage21-direct-override-nullable",
+          "types-stage21-direct-override-alias",
+          "types-stage21-direct-override-generic-alias",
+          "types-stage21-direct-override-identity-alias",
+          "types-stage21-direct-override-union",
+          "types-stage21-direct-override-nullable-union",
+          "types-stage21-direct-override-primitive-nullable",
+          "types-stage21-direct-override-dynamic",
+          "types-stage21-direct-override-broken"
+        ],
+        "domain": "An authored property replacement returns the same value across class and Dynamic defaults while leaving the replaced throwing default unforced."
+      }
+    },
+    {
+      "id": "types-stage21-direct-empty-string",
+      "input": "tests/fixtures/m2/types-stage21-direct-empty-string.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "types-stage21-direct-override-string",
+      "input": "tests/fixtures/m2/types-stage21-direct-override-string.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:amendment"
+      ]
+    },
+    {
+      "id": "types-stage21-direct-empty-boolean",
+      "input": "tests/fixtures/m2/types-stage21-direct-empty-boolean.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "types-stage21-direct-override-boolean",
+      "input": "tests/fixtures/m2/types-stage21-direct-override-boolean.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:amendment"
+      ]
+    },
+    {
+      "id": "types-stage21-direct-empty-list",
+      "input": "tests/fixtures/m2/types-stage21-direct-empty-list.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "types-stage21-direct-override-list",
+      "input": "tests/fixtures/m2/types-stage21-direct-override-list.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:amendment"
+      ]
+    },
+    {
+      "id": "types-stage21-direct-override-listing",
+      "input": "tests/fixtures/m2/types-stage21-direct-override-listing.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:collections",
+        "semantic:diagnostics",
+        "semantic:amendment"
+      ]
+    },
+    {
+      "id": "types-stage21-direct-override-mapping",
+      "input": "tests/fixtures/m2/types-stage21-direct-override-mapping.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:collections",
+        "semantic:diagnostics",
+        "semantic:amendment"
+      ]
+    },
+    {
+      "id": "types-stage21-direct-override-dynamic",
+      "input": "tests/fixtures/m2/types-stage21-direct-override-dynamic.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:amendment"
+      ],
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "types-stage21-direct-override-class",
+          "types-stage21-direct-override-nullable",
+          "types-stage21-direct-override-alias",
+          "types-stage21-direct-override-generic-alias",
+          "types-stage21-direct-override-identity-alias",
+          "types-stage21-direct-override-union",
+          "types-stage21-direct-override-nullable-union",
+          "types-stage21-direct-override-primitive-nullable",
+          "types-stage21-direct-override-dynamic",
+          "types-stage21-direct-override-broken"
+        ],
+        "domain": "An authored property replacement returns the same value across class and Dynamic defaults while leaving the replaced throwing default unforced."
+      }
+    },
+    {
+      "id": "types-stage21-direct-empty-abstract",
+      "input": "tests/fixtures/m2/types-stage21-direct-empty-abstract.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "types-stage21-direct-override-abstract",
+      "input": "tests/fixtures/m2/types-stage21-direct-override-abstract.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:amendment"
+      ]
+    },
+    {
+      "id": "types-stage21-direct-empty-broken",
+      "input": "tests/fixtures/m2/types-stage21-direct-empty-broken.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "types-stage21-direct-override-broken",
+      "input": "tests/fixtures/m2/types-stage21-direct-override-broken.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:amendment"
+      ],
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "types-stage21-direct-override-class",
+          "types-stage21-direct-override-nullable",
+          "types-stage21-direct-override-alias",
+          "types-stage21-direct-override-generic-alias",
+          "types-stage21-direct-override-identity-alias",
+          "types-stage21-direct-override-union",
+          "types-stage21-direct-override-nullable-union",
+          "types-stage21-direct-override-primitive-nullable",
+          "types-stage21-direct-override-dynamic",
+          "types-stage21-direct-override-broken"
+        ],
+        "domain": "An authored property replacement returns the same value across class and Dynamic defaults while leaving the replaced throwing default unforced."
+      }
+    },
+    {
+      "id": "types-stage21-direct-empty-nothing",
+      "input": "tests/fixtures/m2/types-stage21-direct-empty-nothing.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "types-stage21-direct-override-nothing",
+      "input": "tests/fixtures/m2/types-stage21-direct-override-nothing.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:amendment"
+      ]
+    },
+    {
+      "id": "types-stage21-direct-empty-unknown",
+      "input": "tests/fixtures/m2/types-stage21-direct-empty-unknown.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "types-stage21-direct-override-unknown",
+      "input": "tests/fixtures/m2/types-stage21-direct-override-unknown.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:amendment"
+      ]
+    },
+    {
+      "id": "types-stage21-direct-unused-broken",
+      "input": "tests/fixtures/m2/types-stage21-direct-unused-broken.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "id": "types-stage21-direct-unused-abstract",
+      "input": "tests/fixtures/m2/types-stage21-direct-unused-abstract.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "types-stage21-direct-lazy-body",
+      "input": "tests/fixtures/m2/types-stage21-direct-lazy-body.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:amendment"
+      ]
+    },
+    {
+      "id": "types-stage21-direct-body-failure",
+      "input": "tests/fixtures/m2/types-stage21-direct-body-failure.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:amendment"
+      ]
+    },
+    {
+      "id": "types-stage21-direct-let",
+      "input": "tests/fixtures/m2/types-stage21-direct-let.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:control-flow",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "types-stage21-direct-lambda",
+      "input": "tests/fixtures/m2/types-stage21-direct-lambda.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:functions"
+      ]
+    },
+    {
+      "id": "types-stage21-direct-default-union",
+      "input": "tests/fixtures/m2/types-stage21-direct-default-union.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:unions"
+      ]
+    },
+    {
+      "id": "types-stage21-direct-nullable-equality",
+      "input": "tests/fixtures/m2/types-stage21-direct-nullable-equality.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:unions",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "types-stage21-direct-nullable-is-class",
+      "input": "tests/fixtures/m2/types-stage21-direct-nullable-is-class.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:unions"
+      ]
+    },
+    {
+      "id": "types-stage21-direct-edge-constraint-parent",
+      "input": "tests/fixtures/m2/types-stage21-direct-edge-constraint-parent.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:amendment"
+      ],
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "types-stage21-direct-edge-constraint-parent",
+          "types-stage21-direct-edge-constraint-alias",
+          "types-stage21-direct-edge-alias-through-symbol"
+        ],
+        "domain": "Direct symbolic construction uses class defaults without enforcing the actual type constraint; an identity alias retains that behavior."
+      }
+    },
+    {
+      "id": "types-stage21-direct-edge-constraint-body",
+      "input": "tests/fixtures/m2/types-stage21-direct-edge-constraint-body.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:amendment"
+      ]
+    },
+    {
+      "id": "types-stage21-direct-edge-constraint-alias",
+      "input": "tests/fixtures/m2/types-stage21-direct-edge-constraint-alias.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:unions",
+        "semantic:amendment"
+      ],
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "types-stage21-direct-edge-constraint-parent",
+          "types-stage21-direct-edge-constraint-alias",
+          "types-stage21-direct-edge-alias-through-symbol"
+        ],
+        "domain": "Direct symbolic construction uses class defaults without enforcing the actual type constraint; an identity alias retains that behavior."
+      }
+    },
+    {
+      "id": "types-stage21-direct-edge-alias-through-symbol",
+      "input": "tests/fixtures/m2/types-stage21-direct-edge-alias-through-symbol.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:unions"
+      ],
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "types-stage21-direct-edge-constraint-parent",
+          "types-stage21-direct-edge-constraint-alias",
+          "types-stage21-direct-edge-alias-through-symbol"
+        ],
+        "domain": "Direct symbolic construction uses class defaults without enforcing the actual type constraint; an identity alias retains that behavior."
+      }
+    },
+    {
+      "id": "types-stage21-direct-edge-collection-explicit",
+      "input": "tests/fixtures/m2/types-stage21-direct-edge-collection-explicit.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:collections"
+      ]
+    },
+    {
+      "id": "types-stage21-direct-edge-collection-alias",
+      "input": "tests/fixtures/m2/types-stage21-direct-edge-collection-alias.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:unions",
+        "semantic:collections"
+      ]
+    },
+    {
+      "id": "types-stage21-direct-edge-mapping-explicit",
+      "input": "tests/fixtures/m2/types-stage21-direct-edge-mapping-explicit.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:collections"
+      ]
+    },
+    {
+      "id": "types-stage21-direct-edge-nested-actual",
+      "input": "tests/fixtures/m2/types-stage21-direct-edge-nested-actual.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:collections"
+      ]
+    },
+    {
+      "id": "types-stage21-direct-edge-string-literal",
+      "input": "tests/fixtures/m2/types-stage21-direct-edge-string-literal.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "types-stage21-direct-edge-unknown-actual",
+      "input": "tests/fixtures/m2/types-stage21-direct-edge-unknown-actual.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "types-stage21-direct-edge-wrong-alias-arity",
+      "input": "tests/fixtures/m2/types-stage21-direct-edge-wrong-alias-arity.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:unions",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "types-stage21-direct-closure-returning",
+      "input": "tests/fixtures/m2/types-stage21-direct-closure-returning.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:functions"
+      ]
+    },
+    {
+      "id": "types-stage21-direct-closure-nested-constructor",
+      "input": "tests/fixtures/m2/types-stage21-direct-closure-nested-constructor.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:collections",
+        "semantic:functions"
+      ]
+    },
+    {
+      "id": "types-stage21-direct-closure-let-factory",
+      "input": "tests/fixtures/m2/types-stage21-direct-closure-let-factory.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:functions",
+        "semantic:control-flow",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "types-stage21-direct-body-listing-wrong-value",
+      "input": "tests/fixtures/m2/types-stage21-direct-body-listing-wrong-value.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:collections",
+        "semantic:amendment"
+      ]
+    },
+    {
+      "id": "types-stage21-direct-body-listing-correct-value",
+      "input": "tests/fixtures/m2/types-stage21-direct-body-listing-correct-value.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:collections",
+        "semantic:amendment"
+      ]
+    },
+    {
+      "id": "types-stage21-direct-body-listing-wrong-lazy",
+      "input": "tests/fixtures/m2/types-stage21-direct-body-listing-wrong-lazy.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:collections",
+        "semantic:amendment"
+      ]
+    },
+    {
+      "id": "types-stage21-direct-body-mapping-wrong-value",
+      "input": "tests/fixtures/m2/types-stage21-direct-body-mapping-wrong-value.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:collections",
+        "semantic:amendment"
+      ]
+    },
+    {
+      "id": "types-stage21-direct-body-mapping-wrong-key",
+      "input": "tests/fixtures/m2/types-stage21-direct-body-mapping-wrong-key.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:collections",
+        "semantic:amendment"
+      ]
+    },
+    {
+      "id": "types-stage21-direct-body-mapping-correct",
+      "input": "tests/fixtures/m2/types-stage21-direct-body-mapping-correct.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:collections",
+        "semantic:amendment"
+      ]
+    },
+    {
+      "id": "types-stage21-direct-body-class-wrong-property",
+      "input": "tests/fixtures/m2/types-stage21-direct-body-class-wrong-property.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:amendment"
+      ]
+    },
+    {
+      "id": "types-stage21-direct-body-class-wrong-property-lazy",
+      "input": "tests/fixtures/m2/types-stage21-direct-body-class-wrong-property-lazy.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:amendment"
+      ]
+    },
+    {
+      "id": "types-stage21-direct-body-class-fixed",
+      "input": "tests/fixtures/m2/types-stage21-direct-body-class-fixed.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:amendment"
+      ]
+    },
+    {
+      "id": "types-stage21-direct-body-class-const",
+      "input": "tests/fixtures/m2/types-stage21-direct-body-class-const.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:amendment"
+      ]
+    },
+    {
+      "id": "types-stage21-direct-body-mapping-element",
+      "input": "tests/fixtures/m2/types-stage21-direct-body-mapping-element.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:collections",
+        "semantic:diagnostics",
+        "semantic:amendment"
+      ]
+    },
+    {
+      "id": "types-stage21-direct-invalid-nested-string",
+      "input": "tests/fixtures/m2/types-stage21-direct-invalid-nested-string.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "types-stage21-direct-invalid-nested-int",
+      "input": "tests/fixtures/m2/types-stage21-direct-invalid-nested-int.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "types-stage21-direct-invalid-nested-union",
+      "input": "tests/fixtures/m2/types-stage21-direct-invalid-nested-union.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:unions",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "types-stage21-direct-invalid-forward",
+      "input": "tests/fixtures/m2/types-stage21-direct-invalid-forward.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "types-stage21-direct-invalid-forward-alias",
+      "input": "tests/fixtures/m2/types-stage21-direct-invalid-forward-alias.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:unions",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "types-stage21-direct-invalid-forward-twice",
+      "input": "tests/fixtures/m2/types-stage21-direct-invalid-forward-twice.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "types-stage21-direct-authored-class-bare",
+      "input": "tests/fixtures/m2/types-stage21-direct-authored-class-bare.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:amendment"
+      ]
+    },
+    {
+      "id": "types-stage21-direct-authored-class-authored-alias",
+      "input": "tests/fixtures/m2/types-stage21-direct-authored-class-authored-alias.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:amendment",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "types-stage21-direct-authored-listing-bare",
+      "input": "tests/fixtures/m2/types-stage21-direct-authored-listing-bare.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:amendment",
+        "semantic:collections"
+      ]
+    },
+    {
+      "id": "types-stage21-direct-authored-listing-authored-alias",
+      "input": "tests/fixtures/m2/types-stage21-direct-authored-listing-authored-alias.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:amendment",
+        "semantic:collections",
+        "semantic:diagnostics"
+      ]
     }
   ],
   "schema_version": 1,

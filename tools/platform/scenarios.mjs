@@ -8,6 +8,7 @@ import { localResolutionGroups, localResolutionContext } from './local-resolutio
 import { genericTypesGroups, genericTypesContext } from './generic-types-cases.mjs';
 import { genericMetadataGroups, genericMetadataContext } from './generic-metadata-cases.mjs';
 import { genericDefaultsGroups, genericDefaultsContext } from './generic-defaults-cases.mjs';
+import { genericConstructorsGroups, genericConstructorsContext } from './generic-constructors-cases.mjs';
 
 // Identical assertions execute inside Node and an actual Chromium page.
 export async function scenarios(api) {
@@ -172,6 +173,21 @@ export async function scenarios(api) {
           const actual = api.evaluateLanguageSequence(fixture.source,
             genericDefaultsContext.uri, genericDefaultsContext.moduleName,
             fixture.expressions, genericDefaultsContext.powerAssertions);
+          eq(actual.length, fixture.expected.length);
+          for (let index = 0; index < actual.length; index++) {
+            eq(actual[index], fixture.expected[index]);
+          }
+        }
+      }
+    });
+  }
+  for (const group of genericConstructorsGroups) {
+    await check(group.scenario, () => {
+      for (const fixture of group.fixtures) {
+        for (let repetition = 0; repetition < 2; repetition++) {
+          const actual = api.evaluateLanguageSequence(fixture.source,
+            genericConstructorsContext.uri, genericConstructorsContext.moduleName,
+            fixture.expressions, genericConstructorsContext.powerAssertions);
           eq(actual.length, fixture.expected.length);
           for (let index = 0; index < actual.length; index++) {
             eq(actual[index], fixture.expected[index]);

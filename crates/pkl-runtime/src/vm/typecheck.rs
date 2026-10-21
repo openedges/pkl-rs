@@ -462,6 +462,24 @@ impl Vm {
             .get(constraint.block)
             .is_some_and(|metadata| metadata.constraint_root.is_some());
         for (name, argument) in &constraint.arguments {
+            if !shared_root {
+                if let Some(source) = argument
+                    .argument_source(&run.environment)
+                    .or_else(|| constraint.argument_sources.get(name).cloned())
+                {
+                    environment
+                        .type_argument_sources
+                        .insert((constraint.block, Arc::from(name.as_str())), source);
+                } else {
+                    environment
+                        .type_argument_sources
+                        .remove(&(constraint.block, Arc::from(name.as_str())));
+                }
+            } else {
+                environment
+                    .type_argument_sources
+                    .remove(&(constraint.block, Arc::from(name.as_str())));
+            }
             // VmTypeAlias.instantiate visits the cloned child tree, but a let
             // expression's call target is outside that tree. Its type variables
             // retain the alias declaration's unbound (unknown) interpretation.

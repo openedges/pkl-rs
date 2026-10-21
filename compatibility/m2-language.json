@@ -38467,6 +38467,2055 @@
       ]
     },
     {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage21-direct-empty-class",
+      "input": "tests/fixtures/m2/types-stage21-direct-empty-class.pkl",
+      "input_sha256": "fde2045a07b90422a7a51c9c531b6cb67ddc7dcfad3457ee5119a20c04a51465",
+      "metamorphic_relation": {
+        "case_ids": [
+          "types-stage21-direct-empty-class",
+          "types-stage21-direct-empty-nullable",
+          "types-stage21-direct-empty-alias",
+          "types-stage21-direct-empty-identity-alias",
+          "types-stage21-direct-empty-union"
+        ],
+        "domain": "Direct symbolic construction retains the same class default through nullable, identity-alias and default-union actual arguments.",
+        "kind": "equal-stdout"
+      },
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage21-direct-override-class",
+      "input": "tests/fixtures/m2/types-stage21-direct-override-class.pkl",
+      "input_sha256": "c773ab547c5af925b934c83b71c3ec8b1918ccf04652e07e429fbcdbec8970b3",
+      "metamorphic_relation": {
+        "case_ids": [
+          "types-stage21-direct-override-class",
+          "types-stage21-direct-override-nullable",
+          "types-stage21-direct-override-alias",
+          "types-stage21-direct-override-generic-alias",
+          "types-stage21-direct-override-identity-alias",
+          "types-stage21-direct-override-union",
+          "types-stage21-direct-override-nullable-union",
+          "types-stage21-direct-override-primitive-nullable",
+          "types-stage21-direct-override-dynamic",
+          "types-stage21-direct-override-broken"
+        ],
+        "domain": "An authored property replacement returns the same value across class and Dynamic defaults while leaving the replaced throwing default unforced.",
+        "kind": "equal-stdout"
+      },
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:amendment"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage21-direct-empty-nullable",
+      "input": "tests/fixtures/m2/types-stage21-direct-empty-nullable.pkl",
+      "input_sha256": "ae867cf095fc9c9e6d7c7a2229bbd7d93e6824ca0d74094c7e281de3015d8874",
+      "metamorphic_relation": {
+        "case_ids": [
+          "types-stage21-direct-empty-class",
+          "types-stage21-direct-empty-nullable",
+          "types-stage21-direct-empty-alias",
+          "types-stage21-direct-empty-identity-alias",
+          "types-stage21-direct-empty-union"
+        ],
+        "domain": "Direct symbolic construction retains the same class default through nullable, identity-alias and default-union actual arguments.",
+        "kind": "equal-stdout"
+      },
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:unions"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage21-direct-override-nullable",
+      "input": "tests/fixtures/m2/types-stage21-direct-override-nullable.pkl",
+      "input_sha256": "474d15fb67d1e62e6f4fd4cbf90cfaad30749227b93e233d2c676bb8583b0c60",
+      "metamorphic_relation": {
+        "case_ids": [
+          "types-stage21-direct-override-class",
+          "types-stage21-direct-override-nullable",
+          "types-stage21-direct-override-alias",
+          "types-stage21-direct-override-generic-alias",
+          "types-stage21-direct-override-identity-alias",
+          "types-stage21-direct-override-union",
+          "types-stage21-direct-override-nullable-union",
+          "types-stage21-direct-override-primitive-nullable",
+          "types-stage21-direct-override-dynamic",
+          "types-stage21-direct-override-broken"
+        ],
+        "domain": "An authored property replacement returns the same value across class and Dynamic defaults while leaving the replaced throwing default unforced.",
+        "kind": "equal-stdout"
+      },
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:unions",
+        "semantic:amendment"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage21-direct-empty-alias",
+      "input": "tests/fixtures/m2/types-stage21-direct-empty-alias.pkl",
+      "input_sha256": "68306a5a8ba42d16ac3c22e12c31b78a022a805d32aa4138c461cb7edfa5c7c2",
+      "metamorphic_relation": {
+        "case_ids": [
+          "types-stage21-direct-empty-class",
+          "types-stage21-direct-empty-nullable",
+          "types-stage21-direct-empty-alias",
+          "types-stage21-direct-empty-identity-alias",
+          "types-stage21-direct-empty-union"
+        ],
+        "domain": "Direct symbolic construction retains the same class default through nullable, identity-alias and default-union actual arguments.",
+        "kind": "equal-stdout"
+      },
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:unions"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage21-direct-override-alias",
+      "input": "tests/fixtures/m2/types-stage21-direct-override-alias.pkl",
+      "input_sha256": "54a6271a7d9414184b2e00b4c0abf550eef1caa01794cc958e67a4451445166e",
+      "metamorphic_relation": {
+        "case_ids": [
+          "types-stage21-direct-override-class",
+          "types-stage21-direct-override-nullable",
+          "types-stage21-direct-override-alias",
+          "types-stage21-direct-override-generic-alias",
+          "types-stage21-direct-override-identity-alias",
+          "types-stage21-direct-override-union",
+          "types-stage21-direct-override-nullable-union",
+          "types-stage21-direct-override-primitive-nullable",
+          "types-stage21-direct-override-dynamic",
+          "types-stage21-direct-override-broken"
+        ],
+        "domain": "An authored property replacement returns the same value across class and Dynamic defaults while leaving the replaced throwing default unforced.",
+        "kind": "equal-stdout"
+      },
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:unions",
+        "semantic:amendment"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage21-direct-empty-generic-alias",
+      "input": "tests/fixtures/m2/types-stage21-direct-empty-generic-alias.pkl",
+      "input_sha256": "46a4fa4c688731116232188b0a463fd726f9cae3793b6771c4003b17daa3faa2",
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:unions",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage21-direct-override-generic-alias",
+      "input": "tests/fixtures/m2/types-stage21-direct-override-generic-alias.pkl",
+      "input_sha256": "5daae313931d7e2190f43b6b2bbc074e9881888c2aafab675833350ee60eebd9",
+      "metamorphic_relation": {
+        "case_ids": [
+          "types-stage21-direct-override-class",
+          "types-stage21-direct-override-nullable",
+          "types-stage21-direct-override-alias",
+          "types-stage21-direct-override-generic-alias",
+          "types-stage21-direct-override-identity-alias",
+          "types-stage21-direct-override-union",
+          "types-stage21-direct-override-nullable-union",
+          "types-stage21-direct-override-primitive-nullable",
+          "types-stage21-direct-override-dynamic",
+          "types-stage21-direct-override-broken"
+        ],
+        "domain": "An authored property replacement returns the same value across class and Dynamic defaults while leaving the replaced throwing default unforced.",
+        "kind": "equal-stdout"
+      },
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:unions",
+        "semantic:amendment"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage21-direct-empty-identity-alias",
+      "input": "tests/fixtures/m2/types-stage21-direct-empty-identity-alias.pkl",
+      "input_sha256": "f2a95a0b283102bc82a5e114446e70d7c77ebc88452c250d22c947ab92f2d1d8",
+      "metamorphic_relation": {
+        "case_ids": [
+          "types-stage21-direct-empty-class",
+          "types-stage21-direct-empty-nullable",
+          "types-stage21-direct-empty-alias",
+          "types-stage21-direct-empty-identity-alias",
+          "types-stage21-direct-empty-union"
+        ],
+        "domain": "Direct symbolic construction retains the same class default through nullable, identity-alias and default-union actual arguments.",
+        "kind": "equal-stdout"
+      },
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:unions"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage21-direct-override-identity-alias",
+      "input": "tests/fixtures/m2/types-stage21-direct-override-identity-alias.pkl",
+      "input_sha256": "ad104e8c485b4cfea82070b4bc093f246926b16f3751678e7d24210a237f942f",
+      "metamorphic_relation": {
+        "case_ids": [
+          "types-stage21-direct-override-class",
+          "types-stage21-direct-override-nullable",
+          "types-stage21-direct-override-alias",
+          "types-stage21-direct-override-generic-alias",
+          "types-stage21-direct-override-identity-alias",
+          "types-stage21-direct-override-union",
+          "types-stage21-direct-override-nullable-union",
+          "types-stage21-direct-override-primitive-nullable",
+          "types-stage21-direct-override-dynamic",
+          "types-stage21-direct-override-broken"
+        ],
+        "domain": "An authored property replacement returns the same value across class and Dynamic defaults while leaving the replaced throwing default unforced.",
+        "kind": "equal-stdout"
+      },
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:unions",
+        "semantic:amendment"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage21-direct-empty-union",
+      "input": "tests/fixtures/m2/types-stage21-direct-empty-union.pkl",
+      "input_sha256": "989b4a95dbcecb28a75401f391207f3a700f4f3b30bb51e4805caab65643568c",
+      "metamorphic_relation": {
+        "case_ids": [
+          "types-stage21-direct-empty-class",
+          "types-stage21-direct-empty-nullable",
+          "types-stage21-direct-empty-alias",
+          "types-stage21-direct-empty-identity-alias",
+          "types-stage21-direct-empty-union"
+        ],
+        "domain": "Direct symbolic construction retains the same class default through nullable, identity-alias and default-union actual arguments.",
+        "kind": "equal-stdout"
+      },
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:unions"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage21-direct-override-union",
+      "input": "tests/fixtures/m2/types-stage21-direct-override-union.pkl",
+      "input_sha256": "3d510199225745e7eb311c4a64759199b6826326703fa6b458ba7bcc0228fd20",
+      "metamorphic_relation": {
+        "case_ids": [
+          "types-stage21-direct-override-class",
+          "types-stage21-direct-override-nullable",
+          "types-stage21-direct-override-alias",
+          "types-stage21-direct-override-generic-alias",
+          "types-stage21-direct-override-identity-alias",
+          "types-stage21-direct-override-union",
+          "types-stage21-direct-override-nullable-union",
+          "types-stage21-direct-override-primitive-nullable",
+          "types-stage21-direct-override-dynamic",
+          "types-stage21-direct-override-broken"
+        ],
+        "domain": "An authored property replacement returns the same value across class and Dynamic defaults while leaving the replaced throwing default unforced.",
+        "kind": "equal-stdout"
+      },
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:unions",
+        "semantic:amendment"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage21-direct-empty-nullable-union",
+      "input": "tests/fixtures/m2/types-stage21-direct-empty-nullable-union.pkl",
+      "input_sha256": "4fad6967a4bac7907348e41a20fa0faf8561803fa6b38fc5e2eb0b5617977f9e",
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:unions",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage21-direct-override-nullable-union",
+      "input": "tests/fixtures/m2/types-stage21-direct-override-nullable-union.pkl",
+      "input_sha256": "c62256a5d6c8f714fad1fa1a665efbdddafe2b17074c3675fb7a5742160e4f11",
+      "metamorphic_relation": {
+        "case_ids": [
+          "types-stage21-direct-override-class",
+          "types-stage21-direct-override-nullable",
+          "types-stage21-direct-override-alias",
+          "types-stage21-direct-override-generic-alias",
+          "types-stage21-direct-override-identity-alias",
+          "types-stage21-direct-override-union",
+          "types-stage21-direct-override-nullable-union",
+          "types-stage21-direct-override-primitive-nullable",
+          "types-stage21-direct-override-dynamic",
+          "types-stage21-direct-override-broken"
+        ],
+        "domain": "An authored property replacement returns the same value across class and Dynamic defaults while leaving the replaced throwing default unforced.",
+        "kind": "equal-stdout"
+      },
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:unions",
+        "semantic:amendment"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage21-direct-empty-no-default-union",
+      "input": "tests/fixtures/m2/types-stage21-direct-empty-no-default-union.pkl",
+      "input_sha256": "ef4f3f3a87556d81b06d88f8dec80d59593efce15deb07d86a2aecb9b95a478d",
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:unions",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage21-direct-override-no-default-union",
+      "input": "tests/fixtures/m2/types-stage21-direct-override-no-default-union.pkl",
+      "input_sha256": "2ffcae76e7b6608bb2ac0b818be724c65429f15999f0c580a73b0173550afafe",
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:unions",
+        "semantic:diagnostics",
+        "semantic:amendment"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage21-direct-empty-primitive",
+      "input": "tests/fixtures/m2/types-stage21-direct-empty-primitive.pkl",
+      "input_sha256": "716b471bb9a70949db2b2bfa1debfc69dce3af61d3ccb4f3be695c26d1752193",
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage21-direct-override-primitive",
+      "input": "tests/fixtures/m2/types-stage21-direct-override-primitive.pkl",
+      "input_sha256": "2e35a5dfbbc24a600181d41356ddda7f27fe538d1b2581486c0ced34683f5762",
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:amendment"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage21-direct-override-primitive-nullable",
+      "input": "tests/fixtures/m2/types-stage21-direct-override-primitive-nullable.pkl",
+      "input_sha256": "9889377a989c6748ed43da3b054fa5774f574583bd6e048d117e6e225d78acf2",
+      "metamorphic_relation": {
+        "case_ids": [
+          "types-stage21-direct-override-class",
+          "types-stage21-direct-override-nullable",
+          "types-stage21-direct-override-alias",
+          "types-stage21-direct-override-generic-alias",
+          "types-stage21-direct-override-identity-alias",
+          "types-stage21-direct-override-union",
+          "types-stage21-direct-override-nullable-union",
+          "types-stage21-direct-override-primitive-nullable",
+          "types-stage21-direct-override-dynamic",
+          "types-stage21-direct-override-broken"
+        ],
+        "domain": "An authored property replacement returns the same value across class and Dynamic defaults while leaving the replaced throwing default unforced.",
+        "kind": "equal-stdout"
+      },
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:unions",
+        "semantic:amendment"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage21-direct-empty-string",
+      "input": "tests/fixtures/m2/types-stage21-direct-empty-string.pkl",
+      "input_sha256": "0d3272198f622c68b6c43edbd84b6ca5936e4beba8a6f35fc80c4befd073580c",
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage21-direct-override-string",
+      "input": "tests/fixtures/m2/types-stage21-direct-override-string.pkl",
+      "input_sha256": "c58feb5247c69888661c291cea84df121756181c8efc4071b08f506883d17d98",
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:amendment"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage21-direct-empty-boolean",
+      "input": "tests/fixtures/m2/types-stage21-direct-empty-boolean.pkl",
+      "input_sha256": "bea7fcf2609de8e963bd5ad2ae8fc9c88878254805d58800843071d57ea39fc6",
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage21-direct-override-boolean",
+      "input": "tests/fixtures/m2/types-stage21-direct-override-boolean.pkl",
+      "input_sha256": "01f3d5c6f17a8adabb11ae111393a96f80e2b0d0d90f4cd613743bc0feae4e0d",
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:amendment"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage21-direct-empty-list",
+      "input": "tests/fixtures/m2/types-stage21-direct-empty-list.pkl",
+      "input_sha256": "be8d4b839596bdc3573ad8d9d3d3af100e922d276b1e6a2dcaf528de13f357a0",
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage21-direct-override-list",
+      "input": "tests/fixtures/m2/types-stage21-direct-override-list.pkl",
+      "input_sha256": "7b73fb44ca425ac74397df70c4ede4a16d9912113c8d0b71548922ed38eef5a8",
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:amendment"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage21-direct-override-listing",
+      "input": "tests/fixtures/m2/types-stage21-direct-override-listing.pkl",
+      "input_sha256": "64d0eae394a1705ad6f09b22a6b4c7bf0f6a2c82ae060f13897239cce17438e7",
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:collections",
+        "semantic:diagnostics",
+        "semantic:amendment"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage21-direct-override-mapping",
+      "input": "tests/fixtures/m2/types-stage21-direct-override-mapping.pkl",
+      "input_sha256": "c6479062e75bd21715268faceedc226336688929a34c06ccb0efadb346f0391e",
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:collections",
+        "semantic:diagnostics",
+        "semantic:amendment"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage21-direct-override-dynamic",
+      "input": "tests/fixtures/m2/types-stage21-direct-override-dynamic.pkl",
+      "input_sha256": "56090954279299343159e3db07e15a1e386d20099732288460623eca6c19ab4f",
+      "metamorphic_relation": {
+        "case_ids": [
+          "types-stage21-direct-override-class",
+          "types-stage21-direct-override-nullable",
+          "types-stage21-direct-override-alias",
+          "types-stage21-direct-override-generic-alias",
+          "types-stage21-direct-override-identity-alias",
+          "types-stage21-direct-override-union",
+          "types-stage21-direct-override-nullable-union",
+          "types-stage21-direct-override-primitive-nullable",
+          "types-stage21-direct-override-dynamic",
+          "types-stage21-direct-override-broken"
+        ],
+        "domain": "An authored property replacement returns the same value across class and Dynamic defaults while leaving the replaced throwing default unforced.",
+        "kind": "equal-stdout"
+      },
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:amendment"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage21-direct-empty-abstract",
+      "input": "tests/fixtures/m2/types-stage21-direct-empty-abstract.pkl",
+      "input_sha256": "25d94181a55fc3db00c4e4e988d725963a48ea29afb7bbfd282491bc09e91978",
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage21-direct-override-abstract",
+      "input": "tests/fixtures/m2/types-stage21-direct-override-abstract.pkl",
+      "input_sha256": "9023f3427bda172f4e9315e089d7985611a65d5bfc30fb881bbe877568313846",
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:amendment"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage21-direct-empty-broken",
+      "input": "tests/fixtures/m2/types-stage21-direct-empty-broken.pkl",
+      "input_sha256": "40cfa3498cdfcff45690433abd9b2127adc50869a6d89909ba7d19959aa2e92b",
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage21-direct-override-broken",
+      "input": "tests/fixtures/m2/types-stage21-direct-override-broken.pkl",
+      "input_sha256": "921976686bed4fde92dbe8f10f45966417c645dabc51fb603f34366d05e6e7d5",
+      "metamorphic_relation": {
+        "case_ids": [
+          "types-stage21-direct-override-class",
+          "types-stage21-direct-override-nullable",
+          "types-stage21-direct-override-alias",
+          "types-stage21-direct-override-generic-alias",
+          "types-stage21-direct-override-identity-alias",
+          "types-stage21-direct-override-union",
+          "types-stage21-direct-override-nullable-union",
+          "types-stage21-direct-override-primitive-nullable",
+          "types-stage21-direct-override-dynamic",
+          "types-stage21-direct-override-broken"
+        ],
+        "domain": "An authored property replacement returns the same value across class and Dynamic defaults while leaving the replaced throwing default unforced.",
+        "kind": "equal-stdout"
+      },
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:amendment"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage21-direct-empty-nothing",
+      "input": "tests/fixtures/m2/types-stage21-direct-empty-nothing.pkl",
+      "input_sha256": "55b297d5e557d35f6e87c5a4ce57991e27a2279a8cc2e48f30fe2ee88465b440",
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage21-direct-override-nothing",
+      "input": "tests/fixtures/m2/types-stage21-direct-override-nothing.pkl",
+      "input_sha256": "eb004178d12f1e994e124569f6bf3bd4f03380512bc43f5afaf56fbfe50d4654",
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:amendment"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage21-direct-empty-unknown",
+      "input": "tests/fixtures/m2/types-stage21-direct-empty-unknown.pkl",
+      "input_sha256": "3f67a9e15b09b695366d237eb4b702eed4720868ac66d4e33592a722e98a03b2",
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage21-direct-override-unknown",
+      "input": "tests/fixtures/m2/types-stage21-direct-override-unknown.pkl",
+      "input_sha256": "8ece431226dc8895c82b4905259b8e11722a717bef0f09a5ddb9e21b834ceb83",
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:amendment"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage21-direct-unused-broken",
+      "input": "tests/fixtures/m2/types-stage21-direct-unused-broken.pkl",
+      "input_sha256": "f49710582b9a6494b677a56a27509eeb953ca621cf32aab1f4c7552d6ae223b0",
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage21-direct-unused-abstract",
+      "input": "tests/fixtures/m2/types-stage21-direct-unused-abstract.pkl",
+      "input_sha256": "eead75e01dbdf3a5a8437eb59adfa10d28b05b54e60ec6d6be6bfd07dbbc661f",
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage21-direct-lazy-body",
+      "input": "tests/fixtures/m2/types-stage21-direct-lazy-body.pkl",
+      "input_sha256": "a8f3b82778fd7faf5d2599f8665212ec80e590223bccf1bcfc668c300fdfee4f",
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:amendment"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage21-direct-body-failure",
+      "input": "tests/fixtures/m2/types-stage21-direct-body-failure.pkl",
+      "input_sha256": "b1f10941d6a9ae6f725d142f1c31fed326afa72d7405f9c2dd67a3457e7f623c",
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:amendment"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage21-direct-let",
+      "input": "tests/fixtures/m2/types-stage21-direct-let.pkl",
+      "input_sha256": "237352547fea4397a71881c70347cbcca1fc1522167880516ebbcadb7d1ec11d",
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:control-flow",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage21-direct-lambda",
+      "input": "tests/fixtures/m2/types-stage21-direct-lambda.pkl",
+      "input_sha256": "e23da8d3b258f16a297449008d4f84e4ba24b6c434d206ae403a5af33d18805d",
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:functions"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage21-direct-default-union",
+      "input": "tests/fixtures/m2/types-stage21-direct-default-union.pkl",
+      "input_sha256": "9f6e31fd5f22763cafac14acfc0fd8ac92586fd602bf539afcccfbecfbfb9457",
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:unions"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage21-direct-nullable-equality",
+      "input": "tests/fixtures/m2/types-stage21-direct-nullable-equality.pkl",
+      "input_sha256": "299e6ade8d2803d80c66e3c4afcb31550e0ca8feb78d79b821869ed2e10516c3",
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:unions",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage21-direct-nullable-is-class",
+      "input": "tests/fixtures/m2/types-stage21-direct-nullable-is-class.pkl",
+      "input_sha256": "48aa90634e5aba6163ed067e67168891dd0c6f82f78641af3eb41b807d9e98d5",
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:unions"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage21-direct-edge-constraint-parent",
+      "input": "tests/fixtures/m2/types-stage21-direct-edge-constraint-parent.pkl",
+      "input_sha256": "625224a6489d44f6457943e62e6c5ac48113b22ea6454259e7ea610b81d90433",
+      "metamorphic_relation": {
+        "case_ids": [
+          "types-stage21-direct-edge-constraint-parent",
+          "types-stage21-direct-edge-constraint-alias",
+          "types-stage21-direct-edge-alias-through-symbol"
+        ],
+        "domain": "Direct symbolic construction uses class defaults without enforcing the actual type constraint; an identity alias retains that behavior.",
+        "kind": "equal-stdout"
+      },
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:amendment"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage21-direct-edge-constraint-body",
+      "input": "tests/fixtures/m2/types-stage21-direct-edge-constraint-body.pkl",
+      "input_sha256": "6ab356004da9aaa28112938e6febfdf5268d19387680655c465f8c09c008052d",
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:amendment"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage21-direct-edge-constraint-alias",
+      "input": "tests/fixtures/m2/types-stage21-direct-edge-constraint-alias.pkl",
+      "input_sha256": "4940877ac2e45f104e19dcfe2a84030d27d8134cba2120605e8256f78e8b2344",
+      "metamorphic_relation": {
+        "case_ids": [
+          "types-stage21-direct-edge-constraint-parent",
+          "types-stage21-direct-edge-constraint-alias",
+          "types-stage21-direct-edge-alias-through-symbol"
+        ],
+        "domain": "Direct symbolic construction uses class defaults without enforcing the actual type constraint; an identity alias retains that behavior.",
+        "kind": "equal-stdout"
+      },
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:unions",
+        "semantic:amendment"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage21-direct-edge-alias-through-symbol",
+      "input": "tests/fixtures/m2/types-stage21-direct-edge-alias-through-symbol.pkl",
+      "input_sha256": "821408d43541196ba7098784840ed8eff5f1f9208819d4cbf6c7a03dc5e25e98",
+      "metamorphic_relation": {
+        "case_ids": [
+          "types-stage21-direct-edge-constraint-parent",
+          "types-stage21-direct-edge-constraint-alias",
+          "types-stage21-direct-edge-alias-through-symbol"
+        ],
+        "domain": "Direct symbolic construction uses class defaults without enforcing the actual type constraint; an identity alias retains that behavior.",
+        "kind": "equal-stdout"
+      },
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:unions"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage21-direct-edge-collection-explicit",
+      "input": "tests/fixtures/m2/types-stage21-direct-edge-collection-explicit.pkl",
+      "input_sha256": "1c9ff9bd7ad00ba63f6facdfbbf78ce70e391d9b18976f05376965b8abc72862",
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:collections"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage21-direct-edge-collection-alias",
+      "input": "tests/fixtures/m2/types-stage21-direct-edge-collection-alias.pkl",
+      "input_sha256": "f23d07f26956765ef297efc2eb1cb61401fbe59f32d9f5057b9e17490876247b",
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:unions",
+        "semantic:collections"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage21-direct-edge-mapping-explicit",
+      "input": "tests/fixtures/m2/types-stage21-direct-edge-mapping-explicit.pkl",
+      "input_sha256": "d1ba8cbe3c1c5e24f7fefc1f0cc8838de5cf164ebaed2dad9abefa847e343ac9",
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:collections"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage21-direct-edge-nested-actual",
+      "input": "tests/fixtures/m2/types-stage21-direct-edge-nested-actual.pkl",
+      "input_sha256": "650e5300aeff4d16a70e5b772ef04f51a9830e3fed69e592c0ede1cd0d1eda8e",
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:collections"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage21-direct-edge-string-literal",
+      "input": "tests/fixtures/m2/types-stage21-direct-edge-string-literal.pkl",
+      "input_sha256": "3d6b21cd03a16927a423017f6e1bd0484bdc4acb093112c0a44115a15b8d3ce5",
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage21-direct-edge-unknown-actual",
+      "input": "tests/fixtures/m2/types-stage21-direct-edge-unknown-actual.pkl",
+      "input_sha256": "a72855ffd521ad27bfcee63ad080fc37502417a8e9be69555d7aa763548dacf7",
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage21-direct-edge-wrong-alias-arity",
+      "input": "tests/fixtures/m2/types-stage21-direct-edge-wrong-alias-arity.pkl",
+      "input_sha256": "55548a4847212c5f0c25cdd3b6b0d804804a838cbe2e27e965a197f0cc1f589e",
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:unions",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage21-direct-closure-returning",
+      "input": "tests/fixtures/m2/types-stage21-direct-closure-returning.pkl",
+      "input_sha256": "26497fc9bc71723838ab5fb62b8c5f2aa1b46eb3af74cc22cb0ebaec22262247",
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:functions"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage21-direct-closure-nested-constructor",
+      "input": "tests/fixtures/m2/types-stage21-direct-closure-nested-constructor.pkl",
+      "input_sha256": "79500a6a6be4db0229908115aad7b690e1ac654393bfb468658eeb9e28ca82da",
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:collections",
+        "semantic:functions"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage21-direct-closure-let-factory",
+      "input": "tests/fixtures/m2/types-stage21-direct-closure-let-factory.pkl",
+      "input_sha256": "1f231137204e84e144cb2e3aeabfbabe90a18d0ae81dfdad9d7845801c3c5858",
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:functions",
+        "semantic:control-flow",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage21-direct-body-listing-wrong-value",
+      "input": "tests/fixtures/m2/types-stage21-direct-body-listing-wrong-value.pkl",
+      "input_sha256": "c761e1f87c0edccc44a03347160bd2f13122d1eed17a4f8714cf931aade0773a",
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:collections",
+        "semantic:amendment"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage21-direct-body-listing-correct-value",
+      "input": "tests/fixtures/m2/types-stage21-direct-body-listing-correct-value.pkl",
+      "input_sha256": "369ef75b7d54beb57d963280e312e043b14c689a8f1c5540871f86276f1a7739",
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:collections",
+        "semantic:amendment"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage21-direct-body-listing-wrong-lazy",
+      "input": "tests/fixtures/m2/types-stage21-direct-body-listing-wrong-lazy.pkl",
+      "input_sha256": "f07f60c608da8d25367f8b4a64e07c59ad97a1619320a3f1b8562807bcec1e8b",
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:collections",
+        "semantic:amendment"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage21-direct-body-mapping-wrong-value",
+      "input": "tests/fixtures/m2/types-stage21-direct-body-mapping-wrong-value.pkl",
+      "input_sha256": "2174751662bf1c63fb7586bfbc127d8de913c7bfca44414a7a861b8e4aae9890",
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:collections",
+        "semantic:amendment"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage21-direct-body-mapping-wrong-key",
+      "input": "tests/fixtures/m2/types-stage21-direct-body-mapping-wrong-key.pkl",
+      "input_sha256": "cfc509590ef6f96df4176b1f09b0ffb11da698dbf2188b2ff60c920c84c533df",
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:collections",
+        "semantic:amendment"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage21-direct-body-mapping-correct",
+      "input": "tests/fixtures/m2/types-stage21-direct-body-mapping-correct.pkl",
+      "input_sha256": "cca9c2e40fcf526cb4dc4bcf1d15e7f0d5b61023f84b3fe3cc0824353921e740",
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:collections",
+        "semantic:amendment"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage21-direct-body-class-wrong-property",
+      "input": "tests/fixtures/m2/types-stage21-direct-body-class-wrong-property.pkl",
+      "input_sha256": "12a1e964396257593dbdc567cc46a71207363c4326dfa826971b3485e7cda774",
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:amendment"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage21-direct-body-class-wrong-property-lazy",
+      "input": "tests/fixtures/m2/types-stage21-direct-body-class-wrong-property-lazy.pkl",
+      "input_sha256": "2879fe30ee862da638239e65e2475fef3e4dd9569696f8c8296ddf1663ca563f",
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:amendment"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage21-direct-body-class-fixed",
+      "input": "tests/fixtures/m2/types-stage21-direct-body-class-fixed.pkl",
+      "input_sha256": "23af556ae7b024ba5b27d83834a66e74c195992e9a508a4b537972a61940c55c",
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:amendment"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage21-direct-body-class-const",
+      "input": "tests/fixtures/m2/types-stage21-direct-body-class-const.pkl",
+      "input_sha256": "f0041ea2d7dcc72adfcd28c25f55d5ed309fd28ccb73580b851202b0347b5570",
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:amendment"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage21-direct-body-mapping-element",
+      "input": "tests/fixtures/m2/types-stage21-direct-body-mapping-element.pkl",
+      "input_sha256": "d0937a14636b45462fe03dd6051e7de1d02e530bc2df3353c45bac9e70275062",
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:collections",
+        "semantic:diagnostics",
+        "semantic:amendment"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage21-direct-invalid-nested-string",
+      "input": "tests/fixtures/m2/types-stage21-direct-invalid-nested-string.pkl",
+      "input_sha256": "76acef88c5786d3590b759abff86653ebca8e50f7c9b173b154a54f4ad150200",
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage21-direct-invalid-nested-int",
+      "input": "tests/fixtures/m2/types-stage21-direct-invalid-nested-int.pkl",
+      "input_sha256": "8b5c0c85297372d0dc1a964936cba5626efb5526900d1d69940c1752d1c002c2",
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage21-direct-invalid-nested-union",
+      "input": "tests/fixtures/m2/types-stage21-direct-invalid-nested-union.pkl",
+      "input_sha256": "1338e35f17f110136adec5d4e68a4459cd5dcb0548cd03517385cf9645d64ec0",
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:unions",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage21-direct-invalid-forward",
+      "input": "tests/fixtures/m2/types-stage21-direct-invalid-forward.pkl",
+      "input_sha256": "90a8974405bcce018015e99ff2887c3c9aa1d40a48dde306b0c7d84084c0fa59",
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage21-direct-invalid-forward-alias",
+      "input": "tests/fixtures/m2/types-stage21-direct-invalid-forward-alias.pkl",
+      "input_sha256": "02377ede246aed4b9937c2455b08cbaae9bf982d46e544f97f4cc19d7240b757",
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:unions",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage21-direct-invalid-forward-twice",
+      "input": "tests/fixtures/m2/types-stage21-direct-invalid-forward-twice.pkl",
+      "input_sha256": "f57a988c48f07f8cf2edd6dc624b3ad57c225bf405f80d1eff8e00e210c431b2",
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage21-direct-authored-class-bare",
+      "input": "tests/fixtures/m2/types-stage21-direct-authored-class-bare.pkl",
+      "input_sha256": "bb5015141b4fdf88c10d7d930cee4a5a60d1da8ad5b9e25074b0e0a7d1a89681",
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:amendment"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage21-direct-authored-class-authored-alias",
+      "input": "tests/fixtures/m2/types-stage21-direct-authored-class-authored-alias.pkl",
+      "input_sha256": "4a83b23eb3da7cf9de3fca758fe61993007f90817d2c48f4df8d1dc5137a4717",
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:amendment",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "types-stage21-direct-authored-listing-bare",
+      "input": "tests/fixtures/m2/types-stage21-direct-authored-listing-bare.pkl",
+      "input_sha256": "32dcc78f182c107b1cd09ad6a2aac2d094ff56bca23c46c0257add42a736c2f7",
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:amendment",
+        "semantic:collections"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "types-stage21-direct-authored-listing-authored-alias",
+      "input": "tests/fixtures/m2/types-stage21-direct-authored-listing-authored-alias.pkl",
+      "input_sha256": "e50bed64f8021465c747f88ad43f2ea588f13fb244de12da539be321a6ad61ef",
+      "required": true,
+      "requirements": [
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:generics",
+        "semantic:classes",
+        "semantic:lazy-evaluation",
+        "semantic:amendment",
+        "semantic:collections",
+        "semantic:diagnostics"
+      ]
+    },
+    {
       "adapter": null,
       "execution": {
         "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
@@ -129879,9 +131928,9 @@
   "comparison_boundary": "evaluateExpressionString(ModuleSource.path(same absolute URI), expression) UTF-8 stdout; whole PklException.getMessage() UTF-8 stderr and exit 1; no trimming. Power assertions default to disabled; an explicit per-case power_assertions boolean enables the same option in both probes. Stringification alone is not typed value/API compatibility.",
   "completion": "Every required semantic/source requirement needs implementation/test mappings and complete passing execution. Pending/unmapped/unimplemented/mismatch remains a full-gate failure.",
   "counts": {
-    "cases": 2860,
+    "cases": 2940,
     "cases_by_execution": {
-      "ready": 1860,
+      "ready": 1940,
       "unimplemented": 960,
       "unmapped": 40
     },
@@ -130567,7 +132616,9 @@
           "types-stage18-following-const",
           "types-stage20-null-coalescing",
           "types-stage20-null-nonnull",
-          "types-stage20-null-propagation"
+          "types-stage20-null-propagation",
+          "types-stage21-direct-let",
+          "types-stage21-direct-closure-let-factory"
         ],
         "state": "partial"
       }
@@ -130924,52 +132975,52 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "27366898e91bbf38c046eb4eae438e1e54a79c2e560168e81e67f71fe22422f5",
+            "sha256": "76f1bfc3e306e5e5394ad7265b913d4553c8096c0b0aa30b4c00186761aff388",
             "symbol": "initialize_member_types"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "27366898e91bbf38c046eb4eae438e1e54a79c2e560168e81e67f71fe22422f5",
+            "sha256": "76f1bfc3e306e5e5394ad7265b913d4553c8096c0b0aa30b4c00186761aff388",
             "symbol": "validate_class_override"
           },
           {
             "path": "crates/pkl-runtime/src/vm/reference.rs",
-            "sha256": "6610416634ade15f996177c072ddfa4bac0b390d2b96cfeafcea9c0681ee87ec",
+            "sha256": "29fe7543472d85098a600792a5d5ba0ba8888552bab2e85464cb8ebb522a45e8",
             "symbol": "reference_candidate"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "27366898e91bbf38c046eb4eae438e1e54a79c2e560168e81e67f71fe22422f5",
+            "sha256": "76f1bfc3e306e5e5394ad7265b913d4553c8096c0b0aa30b4c00186761aff388",
             "symbol": "force_key"
           },
           {
             "path": "crates/pkl-runtime/src/heap.rs",
-            "sha256": "59936349a6d333550db62939abe582327cb80a17bcc8c13c5ff9c4353dca610b",
+            "sha256": "405f91275dc59d72c1710f4f8207aa43d2d017afd2e67aa33e02063dc59262ee",
             "symbol": "ExecutableState"
           },
           {
             "path": "crates/pkl-runtime/src/vm/typecheck.rs",
-            "sha256": "5bb07c0c1debd6a3ee900b387bb64103d66a2bad16e4b9bfdf0ce1fa1f288b61",
+            "sha256": "4543b9e14828a9fd055cc389c8b76f807cd773f3e99c6df15172670d44fdf60d",
             "symbol": "begin_type_node"
           },
           {
             "path": "crates/pkl-runtime/src/vm/generics.rs",
-            "sha256": "7d7af9f7e0cb9e46fa691ecdbad050544a38f029cf6558a174afe43b9a7059a6",
+            "sha256": "adcd0d2d3217d4254d57d08919ed8aa8111cd124a3fcac56a9c5ea7559546856",
             "symbol": "substituted"
           },
           {
             "path": "crates/pkl-runtime/src/vm/generics.rs",
-            "sha256": "7d7af9f7e0cb9e46fa691ecdbad050544a38f029cf6558a174afe43b9a7059a6",
+            "sha256": "adcd0d2d3217d4254d57d08919ed8aa8111cd124a3fcac56a9c5ea7559546856",
             "symbol": "default_depends_on_parameters"
           },
           {
             "path": "crates/pkl-runtime/src/vm/generics.rs",
-            "sha256": "7d7af9f7e0cb9e46fa691ecdbad050544a38f029cf6558a174afe43b9a7059a6",
+            "sha256": "adcd0d2d3217d4254d57d08919ed8aa8111cd124a3fcac56a9c5ea7559546856",
             "symbol": "step_generic_default"
           },
           {
             "path": "crates/pkl-runtime/src/vm/generics.rs",
-            "sha256": "7d7af9f7e0cb9e46fa691ecdbad050544a38f029cf6558a174afe43b9a7059a6",
+            "sha256": "adcd0d2d3217d4254d57d08919ed8aa8111cd124a3fcac56a9c5ea7559546856",
             "symbol": "validate_reference_arguments"
           }
         ],
@@ -130984,7 +133035,7 @@
           "Selected non-generic and finite generic const-read retries, shared generic let roots and let/for lexical barriers are covered; complete lexical-scope, general lazy generic resolution and runtime type-node identity still retain gaps.",
           "Nullable collection defaults, some missing/literal/default-root diagnostics, general inferred generic new construction and complete Reference argument diagnostic frames retain exploratory gaps; these are not counted as passing selected cases."
         ],
-        "scope": "Selected probes preserve unforced fixed initializers, class type-before-modifier errors, fixed override checks before body forcing, and fixed Reference metadata without evaluating referent bodies. Stage 16: Selected lazy member calls isolate receiver slots and alias const checks remain deferred until a lexical read executes. Stage 17: Evaluator-owned executable and type-use nodes preserve selected non-generic local const-property resolution across retries, distinct inline/lambda uses, shared let roots, recursive depth, inherited annotations, and lazy collection members; per-call receiver slots remain separate. Stage 18 adds finite recursive generic checks with lexical constraint-template substitutions, including changing actual arguments, parameter shadowing, root-parameter alias chains and inline/lambda argument captures. Generic local-writing let constraints retain their declaration call target and its unbound parameter interpretation; selected retry sharing is recorded separately from complete type-node identity. Stage 18 adds selected let-body and for-generator lexical const-depth boundaries while retaining enclosing const levels, plus their complete raw diagnostics and lambda controls. Selected generic collection-element amendments derive defaults after actual type substitution, retaining existing class objects, lazy bodies, nested collection shapes and first failure/retry behavior. Deferred Reference referent validation runs at the reached authored resolution site before the checked value; original diagnostic gaps remain separately recorded. Stage 19 adds bounded shared-metadata regressions for finite deep and branching actual arguments, observable class-argument swaps, inline/lambda/shared-let recursion, recursive Reference validation, and distinct wrapper actuals. Original Java stack errors, historical native abort evidence, full language semantics and performance remain separately accounted. Stage20 adds bounded nullable defaults, inferred collection amendments, null identity and repeated default failures; complete nullable and collection semantics remain unverified.",
+        "scope": "Selected probes preserve unforced fixed initializers, class type-before-modifier errors, fixed override checks before body forcing, and fixed Reference metadata without evaluating referent bodies. Stage 16: Selected lazy member calls isolate receiver slots and alias const checks remain deferred until a lexical read executes. Stage 17: Evaluator-owned executable and type-use nodes preserve selected non-generic local const-property resolution across retries, distinct inline/lambda uses, shared let roots, recursive depth, inherited annotations, and lazy collection members; per-call receiver slots remain separate. Stage 18 adds finite recursive generic checks with lexical constraint-template substitutions, including changing actual arguments, parameter shadowing, root-parameter alias chains and inline/lambda argument captures. Generic local-writing let constraints retain their declaration call target and its unbound parameter interpretation; selected retry sharing is recorded separately from complete type-node identity. Stage 18 adds selected let-body and for-generator lexical const-depth boundaries while retaining enclosing const levels, plus their complete raw diagnostics and lambda controls. Selected generic collection-element amendments derive defaults after actual type substitution, retaining existing class objects, lazy bodies, nested collection shapes and first failure/retry behavior. Deferred Reference referent validation runs at the reached authored resolution site before the checked value; original diagnostic gaps remain separately recorded. Stage 19 adds bounded shared-metadata regressions for finite deep and branching actual arguments, observable class-argument swaps, inline/lambda/shared-let recursion, recursive Reference validation, and distinct wrapper actuals. Original Java stack errors, historical native abort evidence, full language semantics and performance remain separately accounted. Stage20 adds bounded nullable defaults, inferred collection amendments, null identity and repeated default failures; complete nullable and collection semantics remain unverified. Stage21 adds bounded direct symbolic constructors, actual-argument diagnostics, lazy class defaults, collection body controls and persistent retries; complete constructors, lexical roots and builtin coverage remain unverified.",
         "source": "compatibility/m2-mappings.json"
       },
       "tests": {
@@ -131917,6 +133968,86 @@
           "types-stage20-null-key-reverse",
           "types-stage20-abstract-null",
           "types-stage20-abstract-lazy",
+          "types-stage21-direct-empty-class",
+          "types-stage21-direct-override-class",
+          "types-stage21-direct-empty-nullable",
+          "types-stage21-direct-override-nullable",
+          "types-stage21-direct-empty-alias",
+          "types-stage21-direct-override-alias",
+          "types-stage21-direct-empty-generic-alias",
+          "types-stage21-direct-override-generic-alias",
+          "types-stage21-direct-empty-identity-alias",
+          "types-stage21-direct-override-identity-alias",
+          "types-stage21-direct-empty-union",
+          "types-stage21-direct-override-union",
+          "types-stage21-direct-empty-nullable-union",
+          "types-stage21-direct-override-nullable-union",
+          "types-stage21-direct-empty-no-default-union",
+          "types-stage21-direct-override-no-default-union",
+          "types-stage21-direct-empty-primitive",
+          "types-stage21-direct-override-primitive",
+          "types-stage21-direct-override-primitive-nullable",
+          "types-stage21-direct-empty-string",
+          "types-stage21-direct-override-string",
+          "types-stage21-direct-empty-boolean",
+          "types-stage21-direct-override-boolean",
+          "types-stage21-direct-empty-list",
+          "types-stage21-direct-override-list",
+          "types-stage21-direct-override-listing",
+          "types-stage21-direct-override-mapping",
+          "types-stage21-direct-override-dynamic",
+          "types-stage21-direct-empty-abstract",
+          "types-stage21-direct-override-abstract",
+          "types-stage21-direct-empty-broken",
+          "types-stage21-direct-override-broken",
+          "types-stage21-direct-empty-nothing",
+          "types-stage21-direct-override-nothing",
+          "types-stage21-direct-empty-unknown",
+          "types-stage21-direct-override-unknown",
+          "types-stage21-direct-unused-broken",
+          "types-stage21-direct-unused-abstract",
+          "types-stage21-direct-lazy-body",
+          "types-stage21-direct-body-failure",
+          "types-stage21-direct-let",
+          "types-stage21-direct-lambda",
+          "types-stage21-direct-default-union",
+          "types-stage21-direct-nullable-equality",
+          "types-stage21-direct-nullable-is-class",
+          "types-stage21-direct-edge-constraint-parent",
+          "types-stage21-direct-edge-constraint-body",
+          "types-stage21-direct-edge-constraint-alias",
+          "types-stage21-direct-edge-alias-through-symbol",
+          "types-stage21-direct-edge-collection-explicit",
+          "types-stage21-direct-edge-collection-alias",
+          "types-stage21-direct-edge-mapping-explicit",
+          "types-stage21-direct-edge-nested-actual",
+          "types-stage21-direct-edge-string-literal",
+          "types-stage21-direct-edge-unknown-actual",
+          "types-stage21-direct-edge-wrong-alias-arity",
+          "types-stage21-direct-closure-returning",
+          "types-stage21-direct-closure-nested-constructor",
+          "types-stage21-direct-closure-let-factory",
+          "types-stage21-direct-body-listing-wrong-value",
+          "types-stage21-direct-body-listing-correct-value",
+          "types-stage21-direct-body-listing-wrong-lazy",
+          "types-stage21-direct-body-mapping-wrong-value",
+          "types-stage21-direct-body-mapping-wrong-key",
+          "types-stage21-direct-body-mapping-correct",
+          "types-stage21-direct-body-class-wrong-property",
+          "types-stage21-direct-body-class-wrong-property-lazy",
+          "types-stage21-direct-body-class-fixed",
+          "types-stage21-direct-body-class-const",
+          "types-stage21-direct-body-mapping-element",
+          "types-stage21-direct-invalid-nested-string",
+          "types-stage21-direct-invalid-nested-int",
+          "types-stage21-direct-invalid-nested-union",
+          "types-stage21-direct-invalid-forward",
+          "types-stage21-direct-invalid-forward-alias",
+          "types-stage21-direct-invalid-forward-twice",
+          "types-stage21-direct-authored-class-bare",
+          "types-stage21-direct-authored-class-authored-alias",
+          "types-stage21-direct-authored-listing-bare",
+          "types-stage21-direct-authored-listing-authored-alias",
           "types-stage17-inline-is-local",
           "types-stage17-inline-is-const",
           "types-stage17-inline-as-local",
@@ -132605,12 +134736,12 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "27366898e91bbf38c046eb4eae438e1e54a79c2e560168e81e67f71fe22422f5",
+            "sha256": "76f1bfc3e306e5e5394ad7265b913d4553c8096c0b0aa30b4c00186761aff388",
             "symbol": "validate_object_override"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "27366898e91bbf38c046eb4eae438e1e54a79c2e560168e81e67f71fe22422f5",
+            "sha256": "76f1bfc3e306e5e5394ad7265b913d4553c8096c0b0aa30b4c00186761aff388",
             "symbol": "inherited_member"
           }
         ],
@@ -132623,7 +134754,7 @@
         "remaining": [
           "General module amendments, function amendments, generic and cyclic object inheritance, and the complete amendment corpus remain open."
         ],
-        "scope": "Selected fixed instance amendments are rejected; extracting the fixed property value still permits amendment of that value. Empty receiver amendments preserve fixed values. Stage20 adds bounded nullable defaults, inferred collection amendments, null identity and repeated default failures; complete nullable and collection semantics remain unverified.",
+        "scope": "Selected fixed instance amendments are rejected; extracting the fixed property value still permits amendment of that value. Empty receiver amendments preserve fixed values. Stage20 adds bounded nullable defaults, inferred collection amendments, null identity and repeated default failures; complete nullable and collection semantics remain unverified. Stage21 adds bounded direct symbolic constructors, actual-argument diagnostics, lazy class defaults, collection body controls and persistent retries; complete constructors, lexical roots and builtin coverage remain unverified.",
         "source": "compatibility/m2-mappings.json"
       },
       "tests": {
@@ -132756,7 +134887,47 @@
           "types-stage20-nested-empty",
           "types-stage20-nested-nonempty",
           "types-stage20-nested-double-empty",
-          "types-stage20-primitive-empty"
+          "types-stage20-primitive-empty",
+          "types-stage21-direct-override-class",
+          "types-stage21-direct-override-nullable",
+          "types-stage21-direct-override-alias",
+          "types-stage21-direct-override-generic-alias",
+          "types-stage21-direct-override-identity-alias",
+          "types-stage21-direct-override-union",
+          "types-stage21-direct-override-nullable-union",
+          "types-stage21-direct-override-no-default-union",
+          "types-stage21-direct-override-primitive",
+          "types-stage21-direct-override-primitive-nullable",
+          "types-stage21-direct-override-string",
+          "types-stage21-direct-override-boolean",
+          "types-stage21-direct-override-list",
+          "types-stage21-direct-override-listing",
+          "types-stage21-direct-override-mapping",
+          "types-stage21-direct-override-dynamic",
+          "types-stage21-direct-override-abstract",
+          "types-stage21-direct-override-broken",
+          "types-stage21-direct-override-nothing",
+          "types-stage21-direct-override-unknown",
+          "types-stage21-direct-lazy-body",
+          "types-stage21-direct-body-failure",
+          "types-stage21-direct-edge-constraint-parent",
+          "types-stage21-direct-edge-constraint-body",
+          "types-stage21-direct-edge-constraint-alias",
+          "types-stage21-direct-body-listing-wrong-value",
+          "types-stage21-direct-body-listing-correct-value",
+          "types-stage21-direct-body-listing-wrong-lazy",
+          "types-stage21-direct-body-mapping-wrong-value",
+          "types-stage21-direct-body-mapping-wrong-key",
+          "types-stage21-direct-body-mapping-correct",
+          "types-stage21-direct-body-class-wrong-property",
+          "types-stage21-direct-body-class-wrong-property-lazy",
+          "types-stage21-direct-body-class-fixed",
+          "types-stage21-direct-body-class-const",
+          "types-stage21-direct-body-mapping-element",
+          "types-stage21-direct-authored-class-bare",
+          "types-stage21-direct-authored-class-authored-alias",
+          "types-stage21-direct-authored-listing-bare",
+          "types-stage21-direct-authored-listing-authored-alias"
         ],
         "state": "partial"
       }
@@ -132768,22 +134939,22 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/heap.rs",
-            "sha256": "59936349a6d333550db62939abe582327cb80a17bcc8c13c5ff9c4353dca610b",
+            "sha256": "405f91275dc59d72c1710f4f8207aa43d2d017afd2e67aa33e02063dc59262ee",
             "symbol": "Member"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "27366898e91bbf38c046eb4eae438e1e54a79c2e560168e81e67f71fe22422f5",
+            "sha256": "76f1bfc3e306e5e5394ad7265b913d4553c8096c0b0aa30b4c00186761aff388",
             "symbol": "validate_class_override"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "27366898e91bbf38c046eb4eae438e1e54a79c2e560168e81e67f71fe22422f5",
+            "sha256": "76f1bfc3e306e5e5394ad7265b913d4553c8096c0b0aa30b4c00186761aff388",
             "symbol": "validate_object_override"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "27366898e91bbf38c046eb4eae438e1e54a79c2e560168e81e67f71fe22422f5",
+            "sha256": "76f1bfc3e306e5e5394ad7265b913d4553c8096c0b0aa30b4c00186761aff388",
             "symbol": "initialize_member_types"
           }
         ],
@@ -132798,7 +134969,7 @@
           "Full modifier combinations, annotation metadata, generic class inheritance and the complete class/member error corpus remain outside this bounded selection.",
           "Caught upstream PklBugException duplicate hidden/local outputs and any recorded exploratory mismatches remain separate failures, without development exceptions."
         ],
-        "scope": "Selected class fixed properties preserve declaration fixedness through inheritance, reject instance assignment and amendment before forcing bodies, and retain member/type initialization error order. Raw comparisons cover only the linked fixtures at their actual URIs. Stage 14 adds selected authored type-resolution order, generic parameter scope and nested substitution, class/alias arity ordering, and owner signature diagnostics; persistent failed-declaration state has a separate sequence contract. Stage 15 adds selected non-generic recursive constraint block graphs and declaration type scope, plus builtin Class argument erasure and arity ordering. At Stage 15 recursive generic constraints remained open; Stage 16 adds bounded shared receiver-slot support. Stage 19 adds bounded shared-metadata regressions for finite deep and branching actual arguments, observable class-argument swaps, inline/lambda/shared-let recursion, recursive Reference validation, and distinct wrapper actuals. Original Java stack errors, historical native abort evidence, full language semantics and performance remain separately accounted. Stage20 adds bounded nullable defaults, inferred collection amendments, null identity and repeated default failures; complete nullable and collection semantics remain unverified.",
+        "scope": "Selected class fixed properties preserve declaration fixedness through inheritance, reject instance assignment and amendment before forcing bodies, and retain member/type initialization error order. Raw comparisons cover only the linked fixtures at their actual URIs. Stage 14 adds selected authored type-resolution order, generic parameter scope and nested substitution, class/alias arity ordering, and owner signature diagnostics; persistent failed-declaration state has a separate sequence contract. Stage 15 adds selected non-generic recursive constraint block graphs and declaration type scope, plus builtin Class argument erasure and arity ordering. At Stage 15 recursive generic constraints remained open; Stage 16 adds bounded shared receiver-slot support. Stage 19 adds bounded shared-metadata regressions for finite deep and branching actual arguments, observable class-argument swaps, inline/lambda/shared-let recursion, recursive Reference validation, and distinct wrapper actuals. Original Java stack errors, historical native abort evidence, full language semantics and performance remain separately accounted. Stage20 adds bounded nullable defaults, inferred collection amendments, null identity and repeated default failures; complete nullable and collection semantics remain unverified. Stage21 adds bounded direct symbolic constructors, actual-argument diagnostics, lazy class defaults, collection body controls and persistent retries; complete constructors, lexical roots and builtin coverage remain unverified.",
         "source": "compatibility/m2-mappings.json"
       },
       "tests": {
@@ -133059,7 +135230,87 @@
           "types-stage20-primitive-empty",
           "types-stage20-generic-nested-empty",
           "types-stage20-generic-nested-nonempty",
-          "types-stage20-abstract-lazy"
+          "types-stage20-abstract-lazy",
+          "types-stage21-direct-empty-class",
+          "types-stage21-direct-override-class",
+          "types-stage21-direct-empty-nullable",
+          "types-stage21-direct-override-nullable",
+          "types-stage21-direct-empty-alias",
+          "types-stage21-direct-override-alias",
+          "types-stage21-direct-empty-generic-alias",
+          "types-stage21-direct-override-generic-alias",
+          "types-stage21-direct-empty-identity-alias",
+          "types-stage21-direct-override-identity-alias",
+          "types-stage21-direct-empty-union",
+          "types-stage21-direct-override-union",
+          "types-stage21-direct-empty-nullable-union",
+          "types-stage21-direct-override-nullable-union",
+          "types-stage21-direct-empty-no-default-union",
+          "types-stage21-direct-override-no-default-union",
+          "types-stage21-direct-empty-primitive",
+          "types-stage21-direct-override-primitive",
+          "types-stage21-direct-override-primitive-nullable",
+          "types-stage21-direct-empty-string",
+          "types-stage21-direct-override-string",
+          "types-stage21-direct-empty-boolean",
+          "types-stage21-direct-override-boolean",
+          "types-stage21-direct-empty-list",
+          "types-stage21-direct-override-list",
+          "types-stage21-direct-override-listing",
+          "types-stage21-direct-override-mapping",
+          "types-stage21-direct-override-dynamic",
+          "types-stage21-direct-empty-abstract",
+          "types-stage21-direct-override-abstract",
+          "types-stage21-direct-empty-broken",
+          "types-stage21-direct-override-broken",
+          "types-stage21-direct-empty-nothing",
+          "types-stage21-direct-override-nothing",
+          "types-stage21-direct-empty-unknown",
+          "types-stage21-direct-override-unknown",
+          "types-stage21-direct-unused-broken",
+          "types-stage21-direct-unused-abstract",
+          "types-stage21-direct-lazy-body",
+          "types-stage21-direct-body-failure",
+          "types-stage21-direct-let",
+          "types-stage21-direct-lambda",
+          "types-stage21-direct-default-union",
+          "types-stage21-direct-nullable-equality",
+          "types-stage21-direct-nullable-is-class",
+          "types-stage21-direct-edge-constraint-parent",
+          "types-stage21-direct-edge-constraint-body",
+          "types-stage21-direct-edge-constraint-alias",
+          "types-stage21-direct-edge-alias-through-symbol",
+          "types-stage21-direct-edge-collection-explicit",
+          "types-stage21-direct-edge-collection-alias",
+          "types-stage21-direct-edge-mapping-explicit",
+          "types-stage21-direct-edge-nested-actual",
+          "types-stage21-direct-edge-string-literal",
+          "types-stage21-direct-edge-unknown-actual",
+          "types-stage21-direct-edge-wrong-alias-arity",
+          "types-stage21-direct-closure-returning",
+          "types-stage21-direct-closure-nested-constructor",
+          "types-stage21-direct-closure-let-factory",
+          "types-stage21-direct-body-listing-wrong-value",
+          "types-stage21-direct-body-listing-correct-value",
+          "types-stage21-direct-body-listing-wrong-lazy",
+          "types-stage21-direct-body-mapping-wrong-value",
+          "types-stage21-direct-body-mapping-wrong-key",
+          "types-stage21-direct-body-mapping-correct",
+          "types-stage21-direct-body-class-wrong-property",
+          "types-stage21-direct-body-class-wrong-property-lazy",
+          "types-stage21-direct-body-class-fixed",
+          "types-stage21-direct-body-class-const",
+          "types-stage21-direct-body-mapping-element",
+          "types-stage21-direct-invalid-nested-string",
+          "types-stage21-direct-invalid-nested-int",
+          "types-stage21-direct-invalid-nested-union",
+          "types-stage21-direct-invalid-forward",
+          "types-stage21-direct-invalid-forward-alias",
+          "types-stage21-direct-invalid-forward-twice",
+          "types-stage21-direct-authored-class-bare",
+          "types-stage21-direct-authored-class-authored-alias",
+          "types-stage21-direct-authored-listing-bare",
+          "types-stage21-direct-authored-listing-authored-alias"
         ],
         "state": "partial"
       }
@@ -133071,22 +135322,22 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/heap.rs",
-            "sha256": "59936349a6d333550db62939abe582327cb80a17bcc8c13c5ff9c4353dca610b",
+            "sha256": "405f91275dc59d72c1710f4f8207aa43d2d017afd2e67aa33e02063dc59262ee",
             "symbol": "Member"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "27366898e91bbf38c046eb4eae438e1e54a79c2e560168e81e67f71fe22422f5",
+            "sha256": "76f1bfc3e306e5e5394ad7265b913d4553c8096c0b0aa30b4c00186761aff388",
             "symbol": "validate_class_override"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "27366898e91bbf38c046eb4eae438e1e54a79c2e560168e81e67f71fe22422f5",
+            "sha256": "76f1bfc3e306e5e5394ad7265b913d4553c8096c0b0aa30b4c00186761aff388",
             "symbol": "validate_object_override"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "27366898e91bbf38c046eb4eae438e1e54a79c2e560168e81e67f71fe22422f5",
+            "sha256": "76f1bfc3e306e5e5394ad7265b913d4553c8096c0b0aa30b4c00186761aff388",
             "symbol": "initialize_member_types"
           },
           {
@@ -133394,27 +135645,27 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "27366898e91bbf38c046eb4eae438e1e54a79c2e560168e81e67f71fe22422f5",
+            "sha256": "76f1bfc3e306e5e5394ad7265b913d4553c8096c0b0aa30b4c00186761aff388",
             "symbol": "TypeCheck"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "27366898e91bbf38c046eb4eae438e1e54a79c2e560168e81e67f71fe22422f5",
+            "sha256": "76f1bfc3e306e5e5394ad7265b913d4553c8096c0b0aa30b4c00186761aff388",
             "symbol": "compile_type_at"
           },
           {
             "path": "crates/pkl-runtime/src/vm/reference.rs",
-            "sha256": "6610416634ade15f996177c072ddfa4bac0b390d2b96cfeafcea9c0681ee87ec",
+            "sha256": "29fe7543472d85098a600792a5d5ba0ba8888552bab2e85464cb8ebb522a45e8",
             "symbol": "subtype"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "27366898e91bbf38c046eb4eae438e1e54a79c2e560168e81e67f71fe22422f5",
+            "sha256": "76f1bfc3e306e5e5394ad7265b913d4553c8096c0b0aa30b4c00186761aff388",
             "symbol": "invoke_function"
           },
           {
             "path": "crates/pkl-runtime/src/heap.rs",
-            "sha256": "59936349a6d333550db62939abe582327cb80a17bcc8c13c5ff9c4353dca610b",
+            "sha256": "405f91275dc59d72c1710f4f8207aa43d2d017afd2e67aa33e02063dc59262ee",
             "symbol": "Function"
           },
           {
@@ -133438,7 +135689,7 @@
           "Function amendments, full callable/builtin behavior, imports and the original function suite contracts remain outside this bounded selection.",
           "The broader function, closure, diagnostic and reflection inventories are not completed by metadata comparisons."
         ],
-        "scope": "Function and Function0..5 class types and arrow annotations retain parameter/result metadata while selected runtime value checks use arity. Comparisons distinguish annotation checks from a lambda declaration's own argument checks and distinguish Reference type tests from exported-type equality. Stage 14 adds selected authored type-resolution order, generic parameter scope and nested substitution, class/alias arity ordering, and owner signature diagnostics; persistent failed-declaration state has a separate sequence contract. Stage 15 adds selected non-generic recursive constraint block graphs and declaration type scope, plus builtin Class argument erasure and arity ordering. At Stage 15 recursive generic constraints remained open; Stage 16 adds bounded shared receiver-slot support. Stage 16: Selected lambdas snapshot the custom receiver at creation; function and local-writing let roots isolate subsequent receiver mutations. Stage 17: Selected const-method barriers, lambda lookup depth, immediate outer lexical scope, and grouped-callee parser diagnostics follow the pinned Java behavior. Stage 18 adds selected let-body and for-generator lexical const-depth boundaries while retaining enclosing const levels, plus their complete raw diagnostics and lambda controls. Selected generic constraint lambdas retain invocation-specific type argument captures. Stage 19 adds bounded shared-metadata regressions for finite deep and branching actual arguments, observable class-argument swaps, inline/lambda/shared-let recursion, recursive Reference validation, and distinct wrapper actuals. Original Java stack errors, historical native abort evidence, full language semantics and performance remain separately accounted.",
+        "scope": "Function and Function0..5 class types and arrow annotations retain parameter/result metadata while selected runtime value checks use arity. Comparisons distinguish annotation checks from a lambda declaration's own argument checks and distinguish Reference type tests from exported-type equality. Stage 14 adds selected authored type-resolution order, generic parameter scope and nested substitution, class/alias arity ordering, and owner signature diagnostics; persistent failed-declaration state has a separate sequence contract. Stage 15 adds selected non-generic recursive constraint block graphs and declaration type scope, plus builtin Class argument erasure and arity ordering. At Stage 15 recursive generic constraints remained open; Stage 16 adds bounded shared receiver-slot support. Stage 16: Selected lambdas snapshot the custom receiver at creation; function and local-writing let roots isolate subsequent receiver mutations. Stage 17: Selected const-method barriers, lambda lookup depth, immediate outer lexical scope, and grouped-callee parser diagnostics follow the pinned Java behavior. Stage 18 adds selected let-body and for-generator lexical const-depth boundaries while retaining enclosing const levels, plus their complete raw diagnostics and lambda controls. Selected generic constraint lambdas retain invocation-specific type argument captures. Stage 19 adds bounded shared-metadata regressions for finite deep and branching actual arguments, observable class-argument swaps, inline/lambda/shared-let recursion, recursive Reference validation, and distinct wrapper actuals. Original Java stack errors, historical native abort evidence, full language semantics and performance remain separately accounted. Stage21 adds bounded direct symbolic constructors, actual-argument diagnostics, lazy class defaults, collection body controls and persistent retries; complete constructors, lexical roots and builtin coverage remain unverified.",
         "source": "compatibility/m2-mappings.json"
       },
       "tests": {
@@ -133695,6 +135946,10 @@
           "types-stage19-swap-default-lambda-0",
           "types-stage19-swap-default-lambda-1",
           "types-stage19-swap-default-lambda-32",
+          "types-stage21-direct-lambda",
+          "types-stage21-direct-closure-returning",
+          "types-stage21-direct-closure-nested-constructor",
+          "types-stage21-direct-closure-let-factory",
           "types-stage18-default-style-lambda"
         ],
         "state": "partial"
@@ -134876,7 +137131,23 @@
           "types-stage20-null-structural",
           "types-stage20-null-key",
           "types-stage20-null-key-reverse",
-          "types-stage20-abstract-lazy"
+          "types-stage20-abstract-lazy",
+          "types-stage21-direct-override-listing",
+          "types-stage21-direct-override-mapping",
+          "types-stage21-direct-edge-collection-explicit",
+          "types-stage21-direct-edge-collection-alias",
+          "types-stage21-direct-edge-mapping-explicit",
+          "types-stage21-direct-edge-nested-actual",
+          "types-stage21-direct-closure-nested-constructor",
+          "types-stage21-direct-body-listing-wrong-value",
+          "types-stage21-direct-body-listing-correct-value",
+          "types-stage21-direct-body-listing-wrong-lazy",
+          "types-stage21-direct-body-mapping-wrong-value",
+          "types-stage21-direct-body-mapping-wrong-key",
+          "types-stage21-direct-body-mapping-correct",
+          "types-stage21-direct-body-mapping-element",
+          "types-stage21-direct-authored-listing-bare",
+          "types-stage21-direct-authored-listing-authored-alias"
         ],
         "state": "partial"
       }
@@ -134888,62 +137159,62 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "27366898e91bbf38c046eb4eae438e1e54a79c2e560168e81e67f71fe22422f5",
+            "sha256": "76f1bfc3e306e5e5394ad7265b913d4553c8096c0b0aa30b4c00186761aff388",
             "symbol": "TypeCheck"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "27366898e91bbf38c046eb4eae438e1e54a79c2e560168e81e67f71fe22422f5",
+            "sha256": "76f1bfc3e306e5e5394ad7265b913d4553c8096c0b0aa30b4c00186761aff388",
             "symbol": "initialize_type_resolution"
           },
           {
             "path": "crates/pkl-runtime/src/vm/typecheck.rs",
-            "sha256": "5bb07c0c1debd6a3ee900b387bb64103d66a2bad16e4b9bfdf0ce1fa1f288b61",
+            "sha256": "4543b9e14828a9fd055cc389c8b76f807cd773f3e99c6df15172670d44fdf60d",
             "symbol": "step_type"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "27366898e91bbf38c046eb4eae438e1e54a79c2e560168e81e67f71fe22422f5",
+            "sha256": "76f1bfc3e306e5e5394ad7265b913d4553c8096c0b0aa30b4c00186761aff388",
             "symbol": "type_resolution_plan"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "27366898e91bbf38c046eb4eae438e1e54a79c2e560168e81e67f71fe22422f5",
+            "sha256": "76f1bfc3e306e5e5394ad7265b913d4553c8096c0b0aa30b4c00186761aff388",
             "symbol": "active_constraints"
           },
           {
             "path": "crates/pkl-runtime/src/heap.rs",
-            "sha256": "59936349a6d333550db62939abe582327cb80a17bcc8c13c5ff9c4353dca610b",
+            "sha256": "405f91275dc59d72c1710f4f8207aa43d2d017afd2e67aa33e02063dc59262ee",
             "symbol": "CustomThisSlot"
           },
           {
             "path": "crates/pkl-runtime/src/heap.rs",
-            "sha256": "59936349a6d333550db62939abe582327cb80a17bcc8c13c5ff9c4353dca610b",
+            "sha256": "405f91275dc59d72c1710f4f8207aa43d2d017afd2e67aa33e02063dc59262ee",
             "symbol": "ExecutableState"
           },
           {
             "path": "crates/pkl-runtime/src/vm/typecheck.rs",
-            "sha256": "5bb07c0c1debd6a3ee900b387bb64103d66a2bad16e4b9bfdf0ce1fa1f288b61",
+            "sha256": "4543b9e14828a9fd055cc389c8b76f807cd773f3e99c6df15172670d44fdf60d",
             "symbol": "begin_type_node"
           },
           {
             "path": "crates/pkl-runtime/src/vm/generics.rs",
-            "sha256": "7d7af9f7e0cb9e46fa691ecdbad050544a38f029cf6558a174afe43b9a7059a6",
+            "sha256": "adcd0d2d3217d4254d57d08919ed8aa8111cd124a3fcac56a9c5ea7559546856",
             "symbol": "substituted"
           },
           {
             "path": "crates/pkl-runtime/src/vm/generics.rs",
-            "sha256": "7d7af9f7e0cb9e46fa691ecdbad050544a38f029cf6558a174afe43b9a7059a6",
+            "sha256": "adcd0d2d3217d4254d57d08919ed8aa8111cd124a3fcac56a9c5ea7559546856",
             "symbol": "default_depends_on_parameters"
           },
           {
             "path": "crates/pkl-runtime/src/vm/generics.rs",
-            "sha256": "7d7af9f7e0cb9e46fa691ecdbad050544a38f029cf6558a174afe43b9a7059a6",
+            "sha256": "adcd0d2d3217d4254d57d08919ed8aa8111cd124a3fcac56a9c5ea7559546856",
             "symbol": "step_generic_default"
           },
           {
             "path": "crates/pkl-runtime/src/vm/generics.rs",
-            "sha256": "7d7af9f7e0cb9e46fa691ecdbad050544a38f029cf6558a174afe43b9a7059a6",
+            "sha256": "adcd0d2d3217d4254d57d08919ed8aa8111cd124a3fcac56a9c5ea7559546856",
             "symbol": "validate_reference_arguments"
           }
         ],
@@ -134958,7 +137229,7 @@
           "General lazy generic declaration resolution, full alias-root substitution identity, imported generic declarations and original suite adapters remain open. The Stage 18 changing-argument native-stack abort remains preserved as historical failure evidence. Shared metadata now has bounded extended execution and cleanup checks; exact Java stack diagnostics, wall-time bounds, and metadata/output resource bounds remain unverified.",
           "Nullable collection defaults, some missing/literal/default-root diagnostics, general inferred generic new construction and complete Reference argument diagnostic frames retain exploratory gaps; these are not counted as passing selected cases."
         ],
-        "scope": "The Stage 13 selection links named alias expansion, meta-class checks, function arity and exported type metadata to the shared VM. Existing upstream case definitions, adapters and execution states remain unchanged. Stage 14 adds selected authored type-resolution order, generic parameter scope and nested substitution, class/alias arity ordering, and owner signature diagnostics; persistent failed-declaration state has a separate sequence contract. Stage 15 adds selected non-generic recursive constraint block graphs and declaration type scope, plus builtin Class argument erasure and arity ordering. At Stage 15 recursive generic constraints remained open; Stage 16 adds bounded shared receiver-slot support. Stage 16: Selected nested is/as and recursive constraints retain receiver mutations, original successful values, predicate arguments and complete failure bytes. Stage 17: Evaluator-owned executable and type-use nodes preserve selected non-generic local const-property resolution across retries, distinct inline/lambda uses, shared let roots, recursive depth, inherited annotations, and lazy collection members; per-call receiver slots remain separate. Stage 18 adds finite recursive generic checks with lexical constraint-template substitutions, including changing actual arguments, parameter shadowing, root-parameter alias chains and inline/lambda argument captures. Generic local-writing let constraints retain their declaration call target and its unbound parameter interpretation; selected retry sharing is recorded separately from complete type-node identity. Selected generic collection-element amendments derive defaults after actual type substitution, retaining existing class objects, lazy bodies, nested collection shapes and first failure/retry behavior. Deferred Reference referent validation runs at the reached authored resolution site before the checked value; original diagnostic gaps remain separately recorded. Stage 19 adds bounded shared-metadata regressions for finite deep and branching actual arguments, observable class-argument swaps, inline/lambda/shared-let recursion, recursive Reference validation, and distinct wrapper actuals. Original Java stack errors, historical native abort evidence, full language semantics and performance remain separately accounted. Stage20 adds bounded nullable defaults, inferred collection amendments, null identity and repeated default failures; complete nullable and collection semantics remain unverified.",
+        "scope": "The Stage 13 selection links named alias expansion, meta-class checks, function arity and exported type metadata to the shared VM. Existing upstream case definitions, adapters and execution states remain unchanged. Stage 14 adds selected authored type-resolution order, generic parameter scope and nested substitution, class/alias arity ordering, and owner signature diagnostics; persistent failed-declaration state has a separate sequence contract. Stage 15 adds selected non-generic recursive constraint block graphs and declaration type scope, plus builtin Class argument erasure and arity ordering. At Stage 15 recursive generic constraints remained open; Stage 16 adds bounded shared receiver-slot support. Stage 16: Selected nested is/as and recursive constraints retain receiver mutations, original successful values, predicate arguments and complete failure bytes. Stage 17: Evaluator-owned executable and type-use nodes preserve selected non-generic local const-property resolution across retries, distinct inline/lambda uses, shared let roots, recursive depth, inherited annotations, and lazy collection members; per-call receiver slots remain separate. Stage 18 adds finite recursive generic checks with lexical constraint-template substitutions, including changing actual arguments, parameter shadowing, root-parameter alias chains and inline/lambda argument captures. Generic local-writing let constraints retain their declaration call target and its unbound parameter interpretation; selected retry sharing is recorded separately from complete type-node identity. Selected generic collection-element amendments derive defaults after actual type substitution, retaining existing class objects, lazy bodies, nested collection shapes and first failure/retry behavior. Deferred Reference referent validation runs at the reached authored resolution site before the checked value; original diagnostic gaps remain separately recorded. Stage 19 adds bounded shared-metadata regressions for finite deep and branching actual arguments, observable class-argument swaps, inline/lambda/shared-let recursion, recursive Reference validation, and distinct wrapper actuals. Original Java stack errors, historical native abort evidence, full language semantics and performance remain separately accounted. Stage20 adds bounded nullable defaults, inferred collection amendments, null identity and repeated default failures; complete nullable and collection semantics remain unverified. Stage21 adds bounded direct symbolic constructors, actual-argument diagnostics, lazy class defaults, collection body controls and persistent retries; complete constructors, lexical roots and builtin coverage remain unverified.",
         "source": "compatibility/m2-mappings.json"
       },
       "tests": {
@@ -135712,6 +137983,86 @@
           "types-stage20-null-key-reverse",
           "types-stage20-abstract-null",
           "types-stage20-abstract-lazy",
+          "types-stage21-direct-empty-class",
+          "types-stage21-direct-override-class",
+          "types-stage21-direct-empty-nullable",
+          "types-stage21-direct-override-nullable",
+          "types-stage21-direct-empty-alias",
+          "types-stage21-direct-override-alias",
+          "types-stage21-direct-empty-generic-alias",
+          "types-stage21-direct-override-generic-alias",
+          "types-stage21-direct-empty-identity-alias",
+          "types-stage21-direct-override-identity-alias",
+          "types-stage21-direct-empty-union",
+          "types-stage21-direct-override-union",
+          "types-stage21-direct-empty-nullable-union",
+          "types-stage21-direct-override-nullable-union",
+          "types-stage21-direct-empty-no-default-union",
+          "types-stage21-direct-override-no-default-union",
+          "types-stage21-direct-empty-primitive",
+          "types-stage21-direct-override-primitive",
+          "types-stage21-direct-override-primitive-nullable",
+          "types-stage21-direct-empty-string",
+          "types-stage21-direct-override-string",
+          "types-stage21-direct-empty-boolean",
+          "types-stage21-direct-override-boolean",
+          "types-stage21-direct-empty-list",
+          "types-stage21-direct-override-list",
+          "types-stage21-direct-override-listing",
+          "types-stage21-direct-override-mapping",
+          "types-stage21-direct-override-dynamic",
+          "types-stage21-direct-empty-abstract",
+          "types-stage21-direct-override-abstract",
+          "types-stage21-direct-empty-broken",
+          "types-stage21-direct-override-broken",
+          "types-stage21-direct-empty-nothing",
+          "types-stage21-direct-override-nothing",
+          "types-stage21-direct-empty-unknown",
+          "types-stage21-direct-override-unknown",
+          "types-stage21-direct-unused-broken",
+          "types-stage21-direct-unused-abstract",
+          "types-stage21-direct-lazy-body",
+          "types-stage21-direct-body-failure",
+          "types-stage21-direct-let",
+          "types-stage21-direct-lambda",
+          "types-stage21-direct-default-union",
+          "types-stage21-direct-nullable-equality",
+          "types-stage21-direct-nullable-is-class",
+          "types-stage21-direct-edge-constraint-parent",
+          "types-stage21-direct-edge-constraint-body",
+          "types-stage21-direct-edge-constraint-alias",
+          "types-stage21-direct-edge-alias-through-symbol",
+          "types-stage21-direct-edge-collection-explicit",
+          "types-stage21-direct-edge-collection-alias",
+          "types-stage21-direct-edge-mapping-explicit",
+          "types-stage21-direct-edge-nested-actual",
+          "types-stage21-direct-edge-string-literal",
+          "types-stage21-direct-edge-unknown-actual",
+          "types-stage21-direct-edge-wrong-alias-arity",
+          "types-stage21-direct-closure-returning",
+          "types-stage21-direct-closure-nested-constructor",
+          "types-stage21-direct-closure-let-factory",
+          "types-stage21-direct-body-listing-wrong-value",
+          "types-stage21-direct-body-listing-correct-value",
+          "types-stage21-direct-body-listing-wrong-lazy",
+          "types-stage21-direct-body-mapping-wrong-value",
+          "types-stage21-direct-body-mapping-wrong-key",
+          "types-stage21-direct-body-mapping-correct",
+          "types-stage21-direct-body-class-wrong-property",
+          "types-stage21-direct-body-class-wrong-property-lazy",
+          "types-stage21-direct-body-class-fixed",
+          "types-stage21-direct-body-class-const",
+          "types-stage21-direct-body-mapping-element",
+          "types-stage21-direct-invalid-nested-string",
+          "types-stage21-direct-invalid-nested-int",
+          "types-stage21-direct-invalid-nested-union",
+          "types-stage21-direct-invalid-forward",
+          "types-stage21-direct-invalid-forward-alias",
+          "types-stage21-direct-invalid-forward-twice",
+          "types-stage21-direct-authored-class-bare",
+          "types-stage21-direct-authored-class-authored-alias",
+          "types-stage21-direct-authored-listing-bare",
+          "types-stage21-direct-authored-listing-authored-alias",
           "types-stage13-alias-value",
           "types-stage13-alias-self-equal",
           "types-stage13-alias-distinct-equal",
@@ -135851,72 +138202,72 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "27366898e91bbf38c046eb4eae438e1e54a79c2e560168e81e67f71fe22422f5",
+            "sha256": "76f1bfc3e306e5e5394ad7265b913d4553c8096c0b0aa30b4c00186761aff388",
             "symbol": "BeginTypeAlias"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "27366898e91bbf38c046eb4eae438e1e54a79c2e560168e81e67f71fe22422f5",
+            "sha256": "76f1bfc3e306e5e5394ad7265b913d4553c8096c0b0aa30b4c00186761aff388",
             "symbol": "NamedAlias"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "27366898e91bbf38c046eb4eae438e1e54a79c2e560168e81e67f71fe22422f5",
+            "sha256": "76f1bfc3e306e5e5394ad7265b913d4553c8096c0b0aa30b4c00186761aff388",
             "symbol": "compile_type_at"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "27366898e91bbf38c046eb4eae438e1e54a79c2e560168e81e67f71fe22422f5",
+            "sha256": "76f1bfc3e306e5e5394ad7265b913d4553c8096c0b0aa30b4c00186761aff388",
             "symbol": "type_resolution_plan"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "27366898e91bbf38c046eb4eae438e1e54a79c2e560168e81e67f71fe22422f5",
+            "sha256": "76f1bfc3e306e5e5394ad7265b913d4553c8096c0b0aa30b4c00186761aff388",
             "symbol": "initialize_type_resolution"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "27366898e91bbf38c046eb4eae438e1e54a79c2e560168e81e67f71fe22422f5",
+            "sha256": "76f1bfc3e306e5e5394ad7265b913d4553c8096c0b0aa30b4c00186761aff388",
             "symbol": "active_constraints"
           },
           {
             "path": "crates/pkl-runtime/src/vm/typecheck.rs",
-            "sha256": "5bb07c0c1debd6a3ee900b387bb64103d66a2bad16e4b9bfdf0ce1fa1f288b61",
+            "sha256": "4543b9e14828a9fd055cc389c8b76f807cd773f3e99c6df15172670d44fdf60d",
             "symbol": "step_type"
           },
           {
             "path": "crates/pkl-runtime/src/heap.rs",
-            "sha256": "59936349a6d333550db62939abe582327cb80a17bcc8c13c5ff9c4353dca610b",
+            "sha256": "405f91275dc59d72c1710f4f8207aa43d2d017afd2e67aa33e02063dc59262ee",
             "symbol": "CustomThisSlot"
           },
           {
             "path": "crates/pkl-runtime/src/heap.rs",
-            "sha256": "59936349a6d333550db62939abe582327cb80a17bcc8c13c5ff9c4353dca610b",
+            "sha256": "405f91275dc59d72c1710f4f8207aa43d2d017afd2e67aa33e02063dc59262ee",
             "symbol": "ExecutableState"
           },
           {
             "path": "crates/pkl-runtime/src/vm/typecheck.rs",
-            "sha256": "5bb07c0c1debd6a3ee900b387bb64103d66a2bad16e4b9bfdf0ce1fa1f288b61",
+            "sha256": "4543b9e14828a9fd055cc389c8b76f807cd773f3e99c6df15172670d44fdf60d",
             "symbol": "begin_type_node"
           },
           {
             "path": "crates/pkl-runtime/src/vm/generics.rs",
-            "sha256": "7d7af9f7e0cb9e46fa691ecdbad050544a38f029cf6558a174afe43b9a7059a6",
+            "sha256": "adcd0d2d3217d4254d57d08919ed8aa8111cd124a3fcac56a9c5ea7559546856",
             "symbol": "substituted"
           },
           {
             "path": "crates/pkl-runtime/src/vm/generics.rs",
-            "sha256": "7d7af9f7e0cb9e46fa691ecdbad050544a38f029cf6558a174afe43b9a7059a6",
+            "sha256": "adcd0d2d3217d4254d57d08919ed8aa8111cd124a3fcac56a9c5ea7559546856",
             "symbol": "default_depends_on_parameters"
           },
           {
             "path": "crates/pkl-runtime/src/vm/generics.rs",
-            "sha256": "7d7af9f7e0cb9e46fa691ecdbad050544a38f029cf6558a174afe43b9a7059a6",
+            "sha256": "adcd0d2d3217d4254d57d08919ed8aa8111cd124a3fcac56a9c5ea7559546856",
             "symbol": "step_generic_default"
           },
           {
             "path": "crates/pkl-runtime/src/vm/generics.rs",
-            "sha256": "7d7af9f7e0cb9e46fa691ecdbad050544a38f029cf6558a174afe43b9a7059a6",
+            "sha256": "adcd0d2d3217d4254d57d08919ed8aa8111cd124a3fcac56a9c5ea7559546856",
             "symbol": "validate_reference_arguments"
           }
         ],
@@ -135934,7 +138285,7 @@
           "General lazy generic declaration resolution, full alias-root substitution identity, imported generic declarations and original suite adapters remain open. The Stage 18 changing-argument native-stack abort remains preserved as historical failure evidence. Shared metadata now has bounded extended execution and cleanup checks; exact Java stack diagnostics, wall-time bounds, and metadata/output resource bounds remain unverified.",
           "Nullable collection defaults, some missing/literal/default-root diagnostics, general inferred generic new construction and complete Reference argument diagnostic frames retain exploratory gaps; these are not counted as passing selected cases."
         ],
-        "scope": "Selected user alias values preserve declaration identity, qualified display, lazy initialization, published failure state, and expanded validation. Independent expressions cover alias values, cycles, generic arguments, Mapping keys and complete diagnostics; persistent failure/reaccess sequences and GC/Host tests have separate contracts. Stage 14 adds selected authored type-resolution order, generic parameter scope and nested substitution, class/alias arity ordering, and owner signature diagnostics; persistent failed-declaration state has a separate sequence contract. Stage 15 adds selected non-generic recursive constraint block graphs and declaration type scope, plus builtin Class argument erasure and arity ordering. At Stage 15 recursive generic constraints remained open; Stage 16 adds bounded shared receiver-slot support. Stage 16: Selected recursive and inline constraints share mutable auxiliary receiver slots within a logical call; alias lexical reads enforce the first-read const barrier. Stage 17: Evaluator-owned executable and type-use nodes preserve selected non-generic local const-property resolution across retries, distinct inline/lambda uses, shared let roots, recursive depth, inherited annotations, and lazy collection members; per-call receiver slots remain separate. Stage 18 adds finite recursive generic checks with lexical constraint-template substitutions, including changing actual arguments, parameter shadowing, root-parameter alias chains and inline/lambda argument captures. Generic local-writing let constraints retain their declaration call target and its unbound parameter interpretation; selected retry sharing is recorded separately from complete type-node identity. Selected generic collection-element amendments derive defaults after actual type substitution, retaining existing class objects, lazy bodies, nested collection shapes and first failure/retry behavior. Deferred Reference referent validation runs at the reached authored resolution site before the checked value; original diagnostic gaps remain separately recorded. Stage 19 adds bounded shared-metadata regressions for finite deep and branching actual arguments, observable class-argument swaps, inline/lambda/shared-let recursion, recursive Reference validation, and distinct wrapper actuals. Original Java stack errors, historical native abort evidence, full language semantics and performance remain separately accounted. Stage20 adds bounded nullable defaults, inferred collection amendments, null identity and repeated default failures; complete nullable and collection semantics remain unverified.",
+        "scope": "Selected user alias values preserve declaration identity, qualified display, lazy initialization, published failure state, and expanded validation. Independent expressions cover alias values, cycles, generic arguments, Mapping keys and complete diagnostics; persistent failure/reaccess sequences and GC/Host tests have separate contracts. Stage 14 adds selected authored type-resolution order, generic parameter scope and nested substitution, class/alias arity ordering, and owner signature diagnostics; persistent failed-declaration state has a separate sequence contract. Stage 15 adds selected non-generic recursive constraint block graphs and declaration type scope, plus builtin Class argument erasure and arity ordering. At Stage 15 recursive generic constraints remained open; Stage 16 adds bounded shared receiver-slot support. Stage 16: Selected recursive and inline constraints share mutable auxiliary receiver slots within a logical call; alias lexical reads enforce the first-read const barrier. Stage 17: Evaluator-owned executable and type-use nodes preserve selected non-generic local const-property resolution across retries, distinct inline/lambda uses, shared let roots, recursive depth, inherited annotations, and lazy collection members; per-call receiver slots remain separate. Stage 18 adds finite recursive generic checks with lexical constraint-template substitutions, including changing actual arguments, parameter shadowing, root-parameter alias chains and inline/lambda argument captures. Generic local-writing let constraints retain their declaration call target and its unbound parameter interpretation; selected retry sharing is recorded separately from complete type-node identity. Selected generic collection-element amendments derive defaults after actual type substitution, retaining existing class objects, lazy bodies, nested collection shapes and first failure/retry behavior. Deferred Reference referent validation runs at the reached authored resolution site before the checked value; original diagnostic gaps remain separately recorded. Stage 19 adds bounded shared-metadata regressions for finite deep and branching actual arguments, observable class-argument swaps, inline/lambda/shared-let recursion, recursive Reference validation, and distinct wrapper actuals. Original Java stack errors, historical native abort evidence, full language semantics and performance remain separately accounted. Stage20 adds bounded nullable defaults, inferred collection amendments, null identity and repeated default failures; complete nullable and collection semantics remain unverified. Stage21 adds bounded direct symbolic constructors, actual-argument diagnostics, lazy class defaults, collection body controls and persistent retries; complete constructors, lexical roots and builtin coverage remain unverified.",
         "source": "compatibility/m2-mappings.json"
       },
       "tests": {
@@ -136419,6 +138770,86 @@
           "types-stage20-generic-nested-empty",
           "types-stage20-generic-nested-nonempty",
           "types-stage20-abstract-lazy",
+          "types-stage21-direct-empty-class",
+          "types-stage21-direct-override-class",
+          "types-stage21-direct-empty-nullable",
+          "types-stage21-direct-override-nullable",
+          "types-stage21-direct-empty-alias",
+          "types-stage21-direct-override-alias",
+          "types-stage21-direct-empty-generic-alias",
+          "types-stage21-direct-override-generic-alias",
+          "types-stage21-direct-empty-identity-alias",
+          "types-stage21-direct-override-identity-alias",
+          "types-stage21-direct-empty-union",
+          "types-stage21-direct-override-union",
+          "types-stage21-direct-empty-nullable-union",
+          "types-stage21-direct-override-nullable-union",
+          "types-stage21-direct-empty-no-default-union",
+          "types-stage21-direct-override-no-default-union",
+          "types-stage21-direct-empty-primitive",
+          "types-stage21-direct-override-primitive",
+          "types-stage21-direct-override-primitive-nullable",
+          "types-stage21-direct-empty-string",
+          "types-stage21-direct-override-string",
+          "types-stage21-direct-empty-boolean",
+          "types-stage21-direct-override-boolean",
+          "types-stage21-direct-empty-list",
+          "types-stage21-direct-override-list",
+          "types-stage21-direct-override-listing",
+          "types-stage21-direct-override-mapping",
+          "types-stage21-direct-override-dynamic",
+          "types-stage21-direct-empty-abstract",
+          "types-stage21-direct-override-abstract",
+          "types-stage21-direct-empty-broken",
+          "types-stage21-direct-override-broken",
+          "types-stage21-direct-empty-nothing",
+          "types-stage21-direct-override-nothing",
+          "types-stage21-direct-empty-unknown",
+          "types-stage21-direct-override-unknown",
+          "types-stage21-direct-unused-broken",
+          "types-stage21-direct-unused-abstract",
+          "types-stage21-direct-lazy-body",
+          "types-stage21-direct-body-failure",
+          "types-stage21-direct-let",
+          "types-stage21-direct-lambda",
+          "types-stage21-direct-default-union",
+          "types-stage21-direct-nullable-equality",
+          "types-stage21-direct-nullable-is-class",
+          "types-stage21-direct-edge-constraint-parent",
+          "types-stage21-direct-edge-constraint-body",
+          "types-stage21-direct-edge-constraint-alias",
+          "types-stage21-direct-edge-alias-through-symbol",
+          "types-stage21-direct-edge-collection-explicit",
+          "types-stage21-direct-edge-collection-alias",
+          "types-stage21-direct-edge-mapping-explicit",
+          "types-stage21-direct-edge-nested-actual",
+          "types-stage21-direct-edge-string-literal",
+          "types-stage21-direct-edge-unknown-actual",
+          "types-stage21-direct-edge-wrong-alias-arity",
+          "types-stage21-direct-closure-returning",
+          "types-stage21-direct-closure-nested-constructor",
+          "types-stage21-direct-closure-let-factory",
+          "types-stage21-direct-body-listing-wrong-value",
+          "types-stage21-direct-body-listing-correct-value",
+          "types-stage21-direct-body-listing-wrong-lazy",
+          "types-stage21-direct-body-mapping-wrong-value",
+          "types-stage21-direct-body-mapping-wrong-key",
+          "types-stage21-direct-body-mapping-correct",
+          "types-stage21-direct-body-class-wrong-property",
+          "types-stage21-direct-body-class-wrong-property-lazy",
+          "types-stage21-direct-body-class-fixed",
+          "types-stage21-direct-body-class-const",
+          "types-stage21-direct-body-mapping-element",
+          "types-stage21-direct-invalid-nested-string",
+          "types-stage21-direct-invalid-nested-int",
+          "types-stage21-direct-invalid-nested-union",
+          "types-stage21-direct-invalid-forward",
+          "types-stage21-direct-invalid-forward-alias",
+          "types-stage21-direct-invalid-forward-twice",
+          "types-stage21-direct-authored-class-bare",
+          "types-stage21-direct-authored-class-authored-alias",
+          "types-stage21-direct-authored-listing-bare",
+          "types-stage21-direct-authored-listing-authored-alias",
           "types-stage17-const-method-local",
           "types-stage17-const-method-ordinary",
           "types-stage17-const-method-this",
@@ -136476,52 +138907,52 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/heap.rs",
-            "sha256": "59936349a6d333550db62939abe582327cb80a17bcc8c13c5ff9c4353dca610b",
+            "sha256": "405f91275dc59d72c1710f4f8207aa43d2d017afd2e67aa33e02063dc59262ee",
             "symbol": "CustomThisSlot"
           },
           {
             "path": "crates/pkl-runtime/src/vm/typecheck.rs",
-            "sha256": "5bb07c0c1debd6a3ee900b387bb64103d66a2bad16e4b9bfdf0ce1fa1f288b61",
+            "sha256": "4543b9e14828a9fd055cc389c8b76f807cd773f3e99c6df15172670d44fdf60d",
             "symbol": "step_type"
           },
           {
             "path": "crates/pkl-runtime/src/vm/typecheck.rs",
-            "sha256": "5bb07c0c1debd6a3ee900b387bb64103d66a2bad16e4b9bfdf0ce1fa1f288b61",
+            "sha256": "4543b9e14828a9fd055cc389c8b76f807cd773f3e99c6df15172670d44fdf60d",
             "symbol": "launch_constraint"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "27366898e91bbf38c046eb4eae438e1e54a79c2e560168e81e67f71fe22422f5",
+            "sha256": "76f1bfc3e306e5e5394ad7265b913d4553c8096c0b0aa30b4c00186761aff388",
             "symbol": "invoke_function"
           },
           {
             "path": "crates/pkl-runtime/src/heap.rs",
-            "sha256": "59936349a6d333550db62939abe582327cb80a17bcc8c13c5ff9c4353dca610b",
+            "sha256": "405f91275dc59d72c1710f4f8207aa43d2d017afd2e67aa33e02063dc59262ee",
             "symbol": "ExecutableState"
           },
           {
             "path": "crates/pkl-runtime/src/vm/typecheck.rs",
-            "sha256": "5bb07c0c1debd6a3ee900b387bb64103d66a2bad16e4b9bfdf0ce1fa1f288b61",
+            "sha256": "4543b9e14828a9fd055cc389c8b76f807cd773f3e99c6df15172670d44fdf60d",
             "symbol": "begin_type_node"
           },
           {
             "path": "crates/pkl-runtime/src/vm/generics.rs",
-            "sha256": "7d7af9f7e0cb9e46fa691ecdbad050544a38f029cf6558a174afe43b9a7059a6",
+            "sha256": "adcd0d2d3217d4254d57d08919ed8aa8111cd124a3fcac56a9c5ea7559546856",
             "symbol": "substituted"
           },
           {
             "path": "crates/pkl-runtime/src/vm/generics.rs",
-            "sha256": "7d7af9f7e0cb9e46fa691ecdbad050544a38f029cf6558a174afe43b9a7059a6",
+            "sha256": "adcd0d2d3217d4254d57d08919ed8aa8111cd124a3fcac56a9c5ea7559546856",
             "symbol": "default_depends_on_parameters"
           },
           {
             "path": "crates/pkl-runtime/src/vm/generics.rs",
-            "sha256": "7d7af9f7e0cb9e46fa691ecdbad050544a38f029cf6558a174afe43b9a7059a6",
+            "sha256": "adcd0d2d3217d4254d57d08919ed8aa8111cd124a3fcac56a9c5ea7559546856",
             "symbol": "step_generic_default"
           },
           {
             "path": "crates/pkl-runtime/src/vm/generics.rs",
-            "sha256": "7d7af9f7e0cb9e46fa691ecdbad050544a38f029cf6558a174afe43b9a7059a6",
+            "sha256": "adcd0d2d3217d4254d57d08919ed8aa8111cd124a3fcac56a9c5ea7559546856",
             "symbol": "validate_reference_arguments"
           }
         ],
@@ -136537,7 +138968,7 @@
           "Selected generic let-root and finite recursive checks now match retained raw comparisons. The original exploratory outcomes, unbounded recursion abort, other known mismatches and complete language/performance gates remain separately accounted.",
           "Nullable collection defaults, some missing/literal/default-root diagnostics, general inferred generic new construction and complete Reference argument diagnostic frames retain exploratory gaps; these are not counted as passing selected cases."
         ],
-        "scope": "Selected shared logical-call receiver slots, recursive and inline constraints, lambda snapshots, separate function/let/member roots, Boolean and predicate failures, union branches and power assertions compare complete Java bytes. Native Host/GC and persistent platform sequences provide separate lifecycle evidence. Stage 17: Evaluator-owned executable and type-use nodes preserve selected non-generic local const-property resolution across retries, distinct inline/lambda uses, shared let roots, recursive depth, inherited annotations, and lazy collection members; per-call receiver slots remain separate. Stage 18 adds finite recursive generic checks with lexical constraint-template substitutions, including changing actual arguments, parameter shadowing, root-parameter alias chains and inline/lambda argument captures. Generic local-writing let constraints retain their declaration call target and its unbound parameter interpretation; selected retry sharing is recorded separately from complete type-node identity. Selected generic collection-element amendments derive defaults after actual type substitution, retaining existing class objects, lazy bodies, nested collection shapes and first failure/retry behavior. Deferred Reference referent validation runs at the reached authored resolution site before the checked value; original diagnostic gaps remain separately recorded. Stage 19 adds bounded shared-metadata regressions for finite deep and branching actual arguments, observable class-argument swaps, inline/lambda/shared-let recursion, recursive Reference validation, and distinct wrapper actuals. Original Java stack errors, historical native abort evidence, full language semantics and performance remain separately accounted. Stage20 adds bounded nullable defaults, inferred collection amendments, null identity and repeated default failures; complete nullable and collection semantics remain unverified.",
+        "scope": "Selected shared logical-call receiver slots, recursive and inline constraints, lambda snapshots, separate function/let/member roots, Boolean and predicate failures, union branches and power assertions compare complete Java bytes. Native Host/GC and persistent platform sequences provide separate lifecycle evidence. Stage 17: Evaluator-owned executable and type-use nodes preserve selected non-generic local const-property resolution across retries, distinct inline/lambda uses, shared let roots, recursive depth, inherited annotations, and lazy collection members; per-call receiver slots remain separate. Stage 18 adds finite recursive generic checks with lexical constraint-template substitutions, including changing actual arguments, parameter shadowing, root-parameter alias chains and inline/lambda argument captures. Generic local-writing let constraints retain their declaration call target and its unbound parameter interpretation; selected retry sharing is recorded separately from complete type-node identity. Selected generic collection-element amendments derive defaults after actual type substitution, retaining existing class objects, lazy bodies, nested collection shapes and first failure/retry behavior. Deferred Reference referent validation runs at the reached authored resolution site before the checked value; original diagnostic gaps remain separately recorded. Stage 19 adds bounded shared-metadata regressions for finite deep and branching actual arguments, observable class-argument swaps, inline/lambda/shared-let recursion, recursive Reference validation, and distinct wrapper actuals. Original Java stack errors, historical native abort evidence, full language semantics and performance remain separately accounted. Stage20 adds bounded nullable defaults, inferred collection amendments, null identity and repeated default failures; complete nullable and collection semantics remain unverified. Stage21 adds bounded direct symbolic constructors, actual-argument diagnostics, lazy class defaults, collection body controls and persistent retries; complete constructors, lexical roots and builtin coverage remain unverified.",
         "source": "compatibility/m2-mappings.json"
       },
       "tests": {
@@ -137040,6 +139471,86 @@
           "types-stage20-generic-nested-empty",
           "types-stage20-generic-nested-nonempty",
           "types-stage20-abstract-lazy",
+          "types-stage21-direct-empty-class",
+          "types-stage21-direct-override-class",
+          "types-stage21-direct-empty-nullable",
+          "types-stage21-direct-override-nullable",
+          "types-stage21-direct-empty-alias",
+          "types-stage21-direct-override-alias",
+          "types-stage21-direct-empty-generic-alias",
+          "types-stage21-direct-override-generic-alias",
+          "types-stage21-direct-empty-identity-alias",
+          "types-stage21-direct-override-identity-alias",
+          "types-stage21-direct-empty-union",
+          "types-stage21-direct-override-union",
+          "types-stage21-direct-empty-nullable-union",
+          "types-stage21-direct-override-nullable-union",
+          "types-stage21-direct-empty-no-default-union",
+          "types-stage21-direct-override-no-default-union",
+          "types-stage21-direct-empty-primitive",
+          "types-stage21-direct-override-primitive",
+          "types-stage21-direct-override-primitive-nullable",
+          "types-stage21-direct-empty-string",
+          "types-stage21-direct-override-string",
+          "types-stage21-direct-empty-boolean",
+          "types-stage21-direct-override-boolean",
+          "types-stage21-direct-empty-list",
+          "types-stage21-direct-override-list",
+          "types-stage21-direct-override-listing",
+          "types-stage21-direct-override-mapping",
+          "types-stage21-direct-override-dynamic",
+          "types-stage21-direct-empty-abstract",
+          "types-stage21-direct-override-abstract",
+          "types-stage21-direct-empty-broken",
+          "types-stage21-direct-override-broken",
+          "types-stage21-direct-empty-nothing",
+          "types-stage21-direct-override-nothing",
+          "types-stage21-direct-empty-unknown",
+          "types-stage21-direct-override-unknown",
+          "types-stage21-direct-unused-broken",
+          "types-stage21-direct-unused-abstract",
+          "types-stage21-direct-lazy-body",
+          "types-stage21-direct-body-failure",
+          "types-stage21-direct-let",
+          "types-stage21-direct-lambda",
+          "types-stage21-direct-default-union",
+          "types-stage21-direct-nullable-equality",
+          "types-stage21-direct-nullable-is-class",
+          "types-stage21-direct-edge-constraint-parent",
+          "types-stage21-direct-edge-constraint-body",
+          "types-stage21-direct-edge-constraint-alias",
+          "types-stage21-direct-edge-alias-through-symbol",
+          "types-stage21-direct-edge-collection-explicit",
+          "types-stage21-direct-edge-collection-alias",
+          "types-stage21-direct-edge-mapping-explicit",
+          "types-stage21-direct-edge-nested-actual",
+          "types-stage21-direct-edge-string-literal",
+          "types-stage21-direct-edge-unknown-actual",
+          "types-stage21-direct-edge-wrong-alias-arity",
+          "types-stage21-direct-closure-returning",
+          "types-stage21-direct-closure-nested-constructor",
+          "types-stage21-direct-closure-let-factory",
+          "types-stage21-direct-body-listing-wrong-value",
+          "types-stage21-direct-body-listing-correct-value",
+          "types-stage21-direct-body-listing-wrong-lazy",
+          "types-stage21-direct-body-mapping-wrong-value",
+          "types-stage21-direct-body-mapping-wrong-key",
+          "types-stage21-direct-body-mapping-correct",
+          "types-stage21-direct-body-class-wrong-property",
+          "types-stage21-direct-body-class-wrong-property-lazy",
+          "types-stage21-direct-body-class-fixed",
+          "types-stage21-direct-body-class-const",
+          "types-stage21-direct-body-mapping-element",
+          "types-stage21-direct-invalid-nested-string",
+          "types-stage21-direct-invalid-nested-int",
+          "types-stage21-direct-invalid-nested-union",
+          "types-stage21-direct-invalid-forward",
+          "types-stage21-direct-invalid-forward-alias",
+          "types-stage21-direct-invalid-forward-twice",
+          "types-stage21-direct-authored-class-bare",
+          "types-stage21-direct-authored-class-authored-alias",
+          "types-stage21-direct-authored-listing-bare",
+          "types-stage21-direct-authored-listing-authored-alias",
           "types-stage17-const-method-local",
           "types-stage17-const-method-ordinary",
           "types-stage17-const-method-this",
@@ -137094,47 +139605,47 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "27366898e91bbf38c046eb4eae438e1e54a79c2e560168e81e67f71fe22422f5",
+            "sha256": "76f1bfc3e306e5e5394ad7265b913d4553c8096c0b0aa30b4c00186761aff388",
             "symbol": "NamedAlias"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "27366898e91bbf38c046eb4eae438e1e54a79c2e560168e81e67f71fe22422f5",
+            "sha256": "76f1bfc3e306e5e5394ad7265b913d4553c8096c0b0aa30b4c00186761aff388",
             "symbol": "compile_type_at"
           },
           {
             "path": "crates/pkl-runtime/src/vm/typecheck.rs",
-            "sha256": "5bb07c0c1debd6a3ee900b387bb64103d66a2bad16e4b9bfdf0ce1fa1f288b61",
+            "sha256": "4543b9e14828a9fd055cc389c8b76f807cd773f3e99c6df15172670d44fdf60d",
             "symbol": "step_type"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "27366898e91bbf38c046eb4eae438e1e54a79c2e560168e81e67f71fe22422f5",
+            "sha256": "76f1bfc3e306e5e5394ad7265b913d4553c8096c0b0aa30b4c00186761aff388",
             "symbol": "type_resolution_plan"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "27366898e91bbf38c046eb4eae438e1e54a79c2e560168e81e67f71fe22422f5",
+            "sha256": "76f1bfc3e306e5e5394ad7265b913d4553c8096c0b0aa30b4c00186761aff388",
             "symbol": "initialize_type_resolution"
           },
           {
             "path": "crates/pkl-runtime/src/vm/generics.rs",
-            "sha256": "7d7af9f7e0cb9e46fa691ecdbad050544a38f029cf6558a174afe43b9a7059a6",
+            "sha256": "adcd0d2d3217d4254d57d08919ed8aa8111cd124a3fcac56a9c5ea7559546856",
             "symbol": "substituted"
           },
           {
             "path": "crates/pkl-runtime/src/vm/generics.rs",
-            "sha256": "7d7af9f7e0cb9e46fa691ecdbad050544a38f029cf6558a174afe43b9a7059a6",
+            "sha256": "adcd0d2d3217d4254d57d08919ed8aa8111cd124a3fcac56a9c5ea7559546856",
             "symbol": "default_depends_on_parameters"
           },
           {
             "path": "crates/pkl-runtime/src/vm/generics.rs",
-            "sha256": "7d7af9f7e0cb9e46fa691ecdbad050544a38f029cf6558a174afe43b9a7059a6",
+            "sha256": "adcd0d2d3217d4254d57d08919ed8aa8111cd124a3fcac56a9c5ea7559546856",
             "symbol": "step_generic_default"
           },
           {
             "path": "crates/pkl-runtime/src/vm/generics.rs",
-            "sha256": "7d7af9f7e0cb9e46fa691ecdbad050544a38f029cf6558a174afe43b9a7059a6",
+            "sha256": "adcd0d2d3217d4254d57d08919ed8aa8111cd124a3fcac56a9c5ea7559546856",
             "symbol": "validate_reference_arguments"
           }
         ],
@@ -137149,7 +139660,7 @@
           "General lazy generic declaration resolution, full alias-root substitution identity, imported generic declarations and original suite adapters remain open. The Stage 18 changing-argument native-stack abort remains preserved as historical failure evidence. Shared metadata now has bounded extended execution and cleanup checks; exact Java stack diagnostics, wall-time bounds, and metadata/output resource bounds remain unverified.",
           "Nullable collection defaults, some missing/literal/default-root diagnostics, general inferred generic new construction and complete Reference argument diagnostic frames retain exploratory gaps; these are not counted as passing selected cases."
         ],
-        "scope": "Selected generic aliases retain declaration identity and metadata arguments independently of expanded checks, use unknown for omitted arguments, and preserve argument-count and expanded-value diagnostics. Stage 14 adds selected authored type-resolution order, generic parameter scope and nested substitution, class/alias arity ordering, and owner signature diagnostics; persistent failed-declaration state has a separate sequence contract. Stage 15 adds selected non-generic recursive constraint block graphs and declaration type scope, plus builtin Class argument erasure and arity ordering. At Stage 15 recursive generic constraints remained open; Stage 16 adds bounded shared receiver-slot support. Stage 18 adds finite recursive generic checks with lexical constraint-template substitutions, including changing actual arguments, parameter shadowing, root-parameter alias chains and inline/lambda argument captures. Generic local-writing let constraints retain their declaration call target and its unbound parameter interpretation; selected retry sharing is recorded separately from complete type-node identity. Selected generic collection-element amendments derive defaults after actual type substitution, retaining existing class objects, lazy bodies, nested collection shapes and first failure/retry behavior. Deferred Reference referent validation runs at the reached authored resolution site before the checked value; original diagnostic gaps remain separately recorded. Stage 19 adds bounded shared-metadata regressions for finite deep and branching actual arguments, observable class-argument swaps, inline/lambda/shared-let recursion, recursive Reference validation, and distinct wrapper actuals. Original Java stack errors, historical native abort evidence, full language semantics and performance remain separately accounted. Stage20 adds bounded nullable defaults, inferred collection amendments, null identity and repeated default failures; complete nullable and collection semantics remain unverified.",
+        "scope": "Selected generic aliases retain declaration identity and metadata arguments independently of expanded checks, use unknown for omitted arguments, and preserve argument-count and expanded-value diagnostics. Stage 14 adds selected authored type-resolution order, generic parameter scope and nested substitution, class/alias arity ordering, and owner signature diagnostics; persistent failed-declaration state has a separate sequence contract. Stage 15 adds selected non-generic recursive constraint block graphs and declaration type scope, plus builtin Class argument erasure and arity ordering. At Stage 15 recursive generic constraints remained open; Stage 16 adds bounded shared receiver-slot support. Stage 18 adds finite recursive generic checks with lexical constraint-template substitutions, including changing actual arguments, parameter shadowing, root-parameter alias chains and inline/lambda argument captures. Generic local-writing let constraints retain their declaration call target and its unbound parameter interpretation; selected retry sharing is recorded separately from complete type-node identity. Selected generic collection-element amendments derive defaults after actual type substitution, retaining existing class objects, lazy bodies, nested collection shapes and first failure/retry behavior. Deferred Reference referent validation runs at the reached authored resolution site before the checked value; original diagnostic gaps remain separately recorded. Stage 19 adds bounded shared-metadata regressions for finite deep and branching actual arguments, observable class-argument swaps, inline/lambda/shared-let recursion, recursive Reference validation, and distinct wrapper actuals. Original Java stack errors, historical native abort evidence, full language semantics and performance remain separately accounted. Stage20 adds bounded nullable defaults, inferred collection amendments, null identity and repeated default failures; complete nullable and collection semantics remain unverified. Stage21 adds bounded direct symbolic constructors, actual-argument diagnostics, lazy class defaults, collection body controls and persistent retries; complete constructors, lexical roots and builtin coverage remain unverified.",
         "source": "compatibility/m2-mappings.json"
       },
       "tests": {
@@ -137543,7 +140054,87 @@
           "types-stage20-default-nested-missing",
           "types-stage20-generic-nested-empty",
           "types-stage20-generic-nested-nonempty",
-          "types-stage20-abstract-lazy"
+          "types-stage20-abstract-lazy",
+          "types-stage21-direct-empty-class",
+          "types-stage21-direct-override-class",
+          "types-stage21-direct-empty-nullable",
+          "types-stage21-direct-override-nullable",
+          "types-stage21-direct-empty-alias",
+          "types-stage21-direct-override-alias",
+          "types-stage21-direct-empty-generic-alias",
+          "types-stage21-direct-override-generic-alias",
+          "types-stage21-direct-empty-identity-alias",
+          "types-stage21-direct-override-identity-alias",
+          "types-stage21-direct-empty-union",
+          "types-stage21-direct-override-union",
+          "types-stage21-direct-empty-nullable-union",
+          "types-stage21-direct-override-nullable-union",
+          "types-stage21-direct-empty-no-default-union",
+          "types-stage21-direct-override-no-default-union",
+          "types-stage21-direct-empty-primitive",
+          "types-stage21-direct-override-primitive",
+          "types-stage21-direct-override-primitive-nullable",
+          "types-stage21-direct-empty-string",
+          "types-stage21-direct-override-string",
+          "types-stage21-direct-empty-boolean",
+          "types-stage21-direct-override-boolean",
+          "types-stage21-direct-empty-list",
+          "types-stage21-direct-override-list",
+          "types-stage21-direct-override-listing",
+          "types-stage21-direct-override-mapping",
+          "types-stage21-direct-override-dynamic",
+          "types-stage21-direct-empty-abstract",
+          "types-stage21-direct-override-abstract",
+          "types-stage21-direct-empty-broken",
+          "types-stage21-direct-override-broken",
+          "types-stage21-direct-empty-nothing",
+          "types-stage21-direct-override-nothing",
+          "types-stage21-direct-empty-unknown",
+          "types-stage21-direct-override-unknown",
+          "types-stage21-direct-unused-broken",
+          "types-stage21-direct-unused-abstract",
+          "types-stage21-direct-lazy-body",
+          "types-stage21-direct-body-failure",
+          "types-stage21-direct-let",
+          "types-stage21-direct-lambda",
+          "types-stage21-direct-default-union",
+          "types-stage21-direct-nullable-equality",
+          "types-stage21-direct-nullable-is-class",
+          "types-stage21-direct-edge-constraint-parent",
+          "types-stage21-direct-edge-constraint-body",
+          "types-stage21-direct-edge-constraint-alias",
+          "types-stage21-direct-edge-alias-through-symbol",
+          "types-stage21-direct-edge-collection-explicit",
+          "types-stage21-direct-edge-collection-alias",
+          "types-stage21-direct-edge-mapping-explicit",
+          "types-stage21-direct-edge-nested-actual",
+          "types-stage21-direct-edge-string-literal",
+          "types-stage21-direct-edge-unknown-actual",
+          "types-stage21-direct-edge-wrong-alias-arity",
+          "types-stage21-direct-closure-returning",
+          "types-stage21-direct-closure-nested-constructor",
+          "types-stage21-direct-closure-let-factory",
+          "types-stage21-direct-body-listing-wrong-value",
+          "types-stage21-direct-body-listing-correct-value",
+          "types-stage21-direct-body-listing-wrong-lazy",
+          "types-stage21-direct-body-mapping-wrong-value",
+          "types-stage21-direct-body-mapping-wrong-key",
+          "types-stage21-direct-body-mapping-correct",
+          "types-stage21-direct-body-class-wrong-property",
+          "types-stage21-direct-body-class-wrong-property-lazy",
+          "types-stage21-direct-body-class-fixed",
+          "types-stage21-direct-body-class-const",
+          "types-stage21-direct-body-mapping-element",
+          "types-stage21-direct-invalid-nested-string",
+          "types-stage21-direct-invalid-nested-int",
+          "types-stage21-direct-invalid-nested-union",
+          "types-stage21-direct-invalid-forward",
+          "types-stage21-direct-invalid-forward-alias",
+          "types-stage21-direct-invalid-forward-twice",
+          "types-stage21-direct-authored-class-bare",
+          "types-stage21-direct-authored-class-authored-alias",
+          "types-stage21-direct-authored-listing-bare",
+          "types-stage21-direct-authored-listing-authored-alias"
         ],
         "state": "partial"
       }
@@ -137643,7 +140234,31 @@
           "types-stage20-null-key",
           "types-stage20-null-key-reverse",
           "types-stage20-abstract-null",
-          "types-stage20-abstract-lazy"
+          "types-stage20-abstract-lazy",
+          "types-stage21-direct-empty-nullable",
+          "types-stage21-direct-override-nullable",
+          "types-stage21-direct-empty-alias",
+          "types-stage21-direct-override-alias",
+          "types-stage21-direct-empty-generic-alias",
+          "types-stage21-direct-override-generic-alias",
+          "types-stage21-direct-empty-identity-alias",
+          "types-stage21-direct-override-identity-alias",
+          "types-stage21-direct-empty-union",
+          "types-stage21-direct-override-union",
+          "types-stage21-direct-empty-nullable-union",
+          "types-stage21-direct-override-nullable-union",
+          "types-stage21-direct-empty-no-default-union",
+          "types-stage21-direct-override-no-default-union",
+          "types-stage21-direct-override-primitive-nullable",
+          "types-stage21-direct-default-union",
+          "types-stage21-direct-nullable-equality",
+          "types-stage21-direct-nullable-is-class",
+          "types-stage21-direct-edge-constraint-alias",
+          "types-stage21-direct-edge-alias-through-symbol",
+          "types-stage21-direct-edge-collection-alias",
+          "types-stage21-direct-edge-wrong-alias-arity",
+          "types-stage21-direct-invalid-nested-union",
+          "types-stage21-direct-invalid-forward-alias"
         ],
         "state": "partial"
       }
@@ -137926,27 +140541,27 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/vm/reference.rs",
-            "sha256": "6610416634ade15f996177c072ddfa4bac0b390d2b96cfeafcea9c0681ee87ec",
+            "sha256": "29fe7543472d85098a600792a5d5ba0ba8888552bab2e85464cb8ebb522a45e8",
             "symbol": "Reference"
           },
           {
             "path": "crates/pkl-runtime/src/vm/reference.rs",
-            "sha256": "6610416634ade15f996177c072ddfa4bac0b390d2b96cfeafcea9c0681ee87ec",
+            "sha256": "29fe7543472d85098a600792a5d5ba0ba8888552bab2e85464cb8ebb522a45e8",
             "symbol": "reference_access"
           },
           {
             "path": "crates/pkl-runtime/src/vm/reference.rs",
-            "sha256": "6610416634ade15f996177c072ddfa4bac0b390d2b96cfeafcea9c0681ee87ec",
+            "sha256": "29fe7543472d85098a600792a5d5ba0ba8888552bab2e85464cb8ebb522a45e8",
             "symbol": "invoke_reference_native"
           },
           {
             "path": "crates/pkl-runtime/src/vm/typecheck.rs",
-            "sha256": "5bb07c0c1debd6a3ee900b387bb64103d66a2bad16e4b9bfdf0ce1fa1f288b61",
+            "sha256": "4543b9e14828a9fd055cc389c8b76f807cd773f3e99c6df15172670d44fdf60d",
             "symbol": "step_type"
           },
           {
             "path": "crates/pkl-runtime/src/vm/generics.rs",
-            "sha256": "7d7af9f7e0cb9e46fa691ecdbad050544a38f029cf6558a174afe43b9a7059a6",
+            "sha256": "adcd0d2d3217d4254d57d08919ed8aa8111cd124a3fcac56a9c5ea7559546856",
             "symbol": "validate_reference_arguments"
           }
         ],
@@ -138197,22 +140812,22 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/heap.rs",
-            "sha256": "59936349a6d333550db62939abe582327cb80a17bcc8c13c5ff9c4353dca610b",
+            "sha256": "405f91275dc59d72c1710f4f8207aa43d2d017afd2e67aa33e02063dc59262ee",
             "symbol": "Member"
           },
           {
             "path": "crates/pkl-runtime/src/heap.rs",
-            "sha256": "59936349a6d333550db62939abe582327cb80a17bcc8c13c5ff9c4353dca610b",
+            "sha256": "405f91275dc59d72c1710f4f8207aa43d2d017afd2e67aa33e02063dc59262ee",
             "symbol": "Object"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "27366898e91bbf38c046eb4eae438e1e54a79c2e560168e81e67f71fe22422f5",
+            "sha256": "76f1bfc3e306e5e5394ad7265b913d4553c8096c0b0aa30b4c00186761aff388",
             "symbol": "initialize_member_types"
           },
           {
             "path": "crates/pkl-runtime/src/vm/reference.rs",
-            "sha256": "6610416634ade15f996177c072ddfa4bac0b390d2b96cfeafcea9c0681ee87ec",
+            "sha256": "29fe7543472d85098a600792a5d5ba0ba8888552bab2e85464cb8ebb522a45e8",
             "symbol": "reference_candidate"
           }
         ],
@@ -138373,7 +140988,7 @@
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "27366898e91bbf38c046eb4eae438e1e54a79c2e560168e81e67f71fe22422f5",
+            "sha256": "76f1bfc3e306e5e5394ad7265b913d4553c8096c0b0aa30b4c00186761aff388",
             "symbol": "compile_type_at"
           }
         ],
@@ -138457,7 +141072,7 @@
           "Colored output, general imported source stacks, first-error combinations and the complete parser/resolver/runtime diagnostic corpus remain open; selected uncolored recursive compression is covered.",
           "Original selected cycle and remainder-zero failures remain failed."
         ],
-        "scope": "Reference constructor, access, constraint and rendering errors retain complete message, authored frame, foreign standard-library source and URI bytes in selected comparisons. Stage11 adds selected fixed declaration, inherited metadata and complete raw diagnostics through the shared VM. Stage 13 adds selected alias/function metadata, exported-type equality and complete raw diagnostic comparisons; original suite execution and remaining scope stay open. Stage 14 adds selected authored type-resolution order, generic parameter scope and nested substitution, class/alias arity ordering, and owner signature diagnostics; persistent failed-declaration state has a separate sequence contract. Stage 15 adds selected non-generic recursive constraint block graphs and declaration type scope, plus builtin Class argument erasure and arity ordering. At Stage 15 recursive generic constraints remained open; Stage 16 adds bounded shared receiver-slot support. Stage 16: Selected recursive frame compression, count-one loops, complete call spans and hint placement match Java uncolored diagnostics. Stage 17: Selected const-method barriers, lambda lookup depth, immediate outer lexical scope, and grouped-callee parser diagnostics follow the pinned Java behavior. Stage 18 adds selected let-body and for-generator lexical const-depth boundaries while retaining enclosing const levels, plus their complete raw diagnostics and lambda controls. Selected finite recursive generic and instantiated type-variable failures compare complete Java bytes with power assertions enabled and disabled. Stage 19 adds bounded shared-metadata regressions for finite deep and branching actual arguments, observable class-argument swaps, inline/lambda/shared-let recursion, recursive Reference validation, and distinct wrapper actuals. Original Java stack errors, historical native abort evidence, full language semantics and performance remain separately accounted. Stage20 adds bounded nullable defaults, inferred collection amendments, null identity and repeated default failures; complete nullable and collection semantics remain unverified.",
+        "scope": "Reference constructor, access, constraint and rendering errors retain complete message, authored frame, foreign standard-library source and URI bytes in selected comparisons. Stage11 adds selected fixed declaration, inherited metadata and complete raw diagnostics through the shared VM. Stage 13 adds selected alias/function metadata, exported-type equality and complete raw diagnostic comparisons; original suite execution and remaining scope stay open. Stage 14 adds selected authored type-resolution order, generic parameter scope and nested substitution, class/alias arity ordering, and owner signature diagnostics; persistent failed-declaration state has a separate sequence contract. Stage 15 adds selected non-generic recursive constraint block graphs and declaration type scope, plus builtin Class argument erasure and arity ordering. At Stage 15 recursive generic constraints remained open; Stage 16 adds bounded shared receiver-slot support. Stage 16: Selected recursive frame compression, count-one loops, complete call spans and hint placement match Java uncolored diagnostics. Stage 17: Selected const-method barriers, lambda lookup depth, immediate outer lexical scope, and grouped-callee parser diagnostics follow the pinned Java behavior. Stage 18 adds selected let-body and for-generator lexical const-depth boundaries while retaining enclosing const levels, plus their complete raw diagnostics and lambda controls. Selected finite recursive generic and instantiated type-variable failures compare complete Java bytes with power assertions enabled and disabled. Stage 19 adds bounded shared-metadata regressions for finite deep and branching actual arguments, observable class-argument swaps, inline/lambda/shared-let recursion, recursive Reference validation, and distinct wrapper actuals. Original Java stack errors, historical native abort evidence, full language semantics and performance remain separately accounted. Stage20 adds bounded nullable defaults, inferred collection amendments, null identity and repeated default failures; complete nullable and collection semantics remain unverified. Stage21 adds bounded direct symbolic constructors, actual-argument diagnostics, lazy class defaults, collection body controls and persistent retries; complete constructors, lexical roots and builtin coverage remain unverified.",
         "source": "compatibility/m2-mappings.json"
       },
       "tests": {
@@ -139366,7 +141981,48 @@
           "types-stage20-default-mapping-missing",
           "types-stage20-default-nested-missing",
           "types-stage20-null-nonnull",
-          "types-stage20-abstract-lazy"
+          "types-stage20-abstract-lazy",
+          "types-stage21-direct-empty-generic-alias",
+          "types-stage21-direct-empty-nullable-union",
+          "types-stage21-direct-empty-no-default-union",
+          "types-stage21-direct-override-no-default-union",
+          "types-stage21-direct-empty-primitive",
+          "types-stage21-direct-override-primitive",
+          "types-stage21-direct-empty-string",
+          "types-stage21-direct-override-string",
+          "types-stage21-direct-empty-boolean",
+          "types-stage21-direct-override-boolean",
+          "types-stage21-direct-empty-list",
+          "types-stage21-direct-override-list",
+          "types-stage21-direct-override-listing",
+          "types-stage21-direct-override-mapping",
+          "types-stage21-direct-empty-abstract",
+          "types-stage21-direct-override-abstract",
+          "types-stage21-direct-empty-broken",
+          "types-stage21-direct-empty-nothing",
+          "types-stage21-direct-override-nothing",
+          "types-stage21-direct-empty-unknown",
+          "types-stage21-direct-override-unknown",
+          "types-stage21-direct-unused-abstract",
+          "types-stage21-direct-body-failure",
+          "types-stage21-direct-let",
+          "types-stage21-direct-nullable-equality",
+          "types-stage21-direct-edge-string-literal",
+          "types-stage21-direct-edge-unknown-actual",
+          "types-stage21-direct-edge-wrong-alias-arity",
+          "types-stage21-direct-closure-let-factory",
+          "types-stage21-direct-body-class-wrong-property",
+          "types-stage21-direct-body-class-fixed",
+          "types-stage21-direct-body-class-const",
+          "types-stage21-direct-body-mapping-element",
+          "types-stage21-direct-invalid-nested-string",
+          "types-stage21-direct-invalid-nested-int",
+          "types-stage21-direct-invalid-nested-union",
+          "types-stage21-direct-invalid-forward",
+          "types-stage21-direct-invalid-forward-alias",
+          "types-stage21-direct-invalid-forward-twice",
+          "types-stage21-direct-authored-class-authored-alias",
+          "types-stage21-direct-authored-listing-authored-alias"
         ],
         "state": "partial"
       }
@@ -145357,22 +148013,22 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/heap.rs",
-            "sha256": "59936349a6d333550db62939abe582327cb80a17bcc8c13c5ff9c4353dca610b",
+            "sha256": "405f91275dc59d72c1710f4f8207aa43d2d017afd2e67aa33e02063dc59262ee",
             "symbol": "Member"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "27366898e91bbf38c046eb4eae438e1e54a79c2e560168e81e67f71fe22422f5",
+            "sha256": "76f1bfc3e306e5e5394ad7265b913d4553c8096c0b0aa30b4c00186761aff388",
             "symbol": "validate_class_override"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "27366898e91bbf38c046eb4eae438e1e54a79c2e560168e81e67f71fe22422f5",
+            "sha256": "76f1bfc3e306e5e5394ad7265b913d4553c8096c0b0aa30b4c00186761aff388",
             "symbol": "validate_object_override"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "27366898e91bbf38c046eb4eae438e1e54a79c2e560168e81e67f71fe22422f5",
+            "sha256": "76f1bfc3e306e5e5394ad7265b913d4553c8096c0b0aa30b4c00186761aff388",
             "symbol": "initialize_member_types"
           }
         ],
@@ -145810,7 +148466,7 @@
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "27366898e91bbf38c046eb4eae438e1e54a79c2e560168e81e67f71fe22422f5",
+            "sha256": "76f1bfc3e306e5e5394ad7265b913d4553c8096c0b0aa30b4c00186761aff388",
             "symbol": "compile_type_at"
           }
         ],
@@ -147027,22 +149683,22 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/vm/reference.rs",
-            "sha256": "6610416634ade15f996177c072ddfa4bac0b390d2b96cfeafcea9c0681ee87ec",
+            "sha256": "29fe7543472d85098a600792a5d5ba0ba8888552bab2e85464cb8ebb522a45e8",
             "symbol": "Reference"
           },
           {
             "path": "crates/pkl-runtime/src/vm/reference.rs",
-            "sha256": "6610416634ade15f996177c072ddfa4bac0b390d2b96cfeafcea9c0681ee87ec",
+            "sha256": "29fe7543472d85098a600792a5d5ba0ba8888552bab2e85464cb8ebb522a45e8",
             "symbol": "reference_access"
           },
           {
             "path": "crates/pkl-runtime/src/vm/reference.rs",
-            "sha256": "6610416634ade15f996177c072ddfa4bac0b390d2b96cfeafcea9c0681ee87ec",
+            "sha256": "29fe7543472d85098a600792a5d5ba0ba8888552bab2e85464cb8ebb522a45e8",
             "symbol": "invoke_reference_native"
           },
           {
             "path": "crates/pkl-runtime/src/vm/typecheck.rs",
-            "sha256": "5bb07c0c1debd6a3ee900b387bb64103d66a2bad16e4b9bfdf0ce1fa1f288b61",
+            "sha256": "4543b9e14828a9fd055cc389c8b76f807cd773f3e99c6df15172670d44fdf60d",
             "symbol": "step_type"
           }
         ],
@@ -148264,10 +150920,10 @@
   "sources": {
     "compatibility/corpus.json": "0e95da22f965dede398f1a1f136703ba913d588aa51c1fb871cd97a11c84a0dd",
     "compatibility/inventory.json": "a9b21752adad9a269a54854c0dd298256757be88ad95c1388e30d7c78e407070",
-    "compatibility/m2-mappings.json": "dbe5cad8ea38e3dfaad294272bc565e2030c65e9714aefa8d5db55e8f01367c8",
+    "compatibility/m2-mappings.json": "5d26c4097591adf63513fe6ce3cd4a4a1fb21a7045daf823dc6f4b7cee14aa44",
     "compatibility/regressions.json": "09c064f65730d30f72bf87a45c88d47ecc0844e57966a999dc8e759f083af3da",
     "compatibility/rev1-inventory.json": "6061f202ba3f04565efed3617ac69d3c2fadc54eec1f562b67a4758b3d0a8ab5",
     "references.lock": "278f48fd7697459281aa78a706c9ca57222f36a8c0785d838a6449fbaf26d30b",
-    "tests/fixtures/m2/cases.json": "118d364f77dcaa94a9f634ee96c267c0f82e99529d4c97d30090e0480f133a3e"
+    "tests/fixtures/m2/cases.json": "20edccc428aa616d7247de09bfd71ac60e938010d4ef7b42fca5ae0a4ecb012d"
   }
 }

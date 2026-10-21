@@ -1,0 +1,4 @@
+class C { p = 1 }
+typealias Identity<U> = U
+typealias A<T> = Int((new T {p = 2}).p == 2)
+result: A<C(p > 4)> = 1

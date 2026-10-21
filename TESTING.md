@@ -255,6 +255,16 @@ these internal lifetime checks. Finite generic instantiation and selected
 let/for boundaries are included; complete generic instantiation, alias-root
 identity, and the full lexical scope model remain outside this bounded contract.
 
+Direct generic constructor comparisons distinguish bare type parameters from
+explicit generic aliases, nullable defaults, actual-type diagnostic origins,
+and unused versus forced member failures. Ordered calls alternate successful
+and invalid actual types without resetting the evaluator. Native tests separately
+check Host reentry and failed-read retry, 24 nonterminal cancellations, captured
+functions, evaluator isolation, and terminal release. A process-isolated test
+constructs 768-deep defaults on a 256 KiB evaluator stack with a 60-second parent
+deadline; compilation runs on the ordinary stack. That test collects during
+bounded execution and does not establish peak-RSS or wall-time parity with Java.
+
 M1 experiments have narrower, explicit contracts:
 
 ```sh

@@ -56,6 +56,11 @@ pub enum Instruction {
     },
     /// Instantiate a collection element default after lexical type substitution.
     SetCollectionTypeDefault(TypeCheck),
+    /// Resolve a generic constructor's parent using this invocation's actual type.
+    GenericConstructorParent {
+        ty: TypeCheck,
+        source: TypeArgumentSource,
+    },
     AddCollectionProperty(Member),
     AddCollectionElement(Member),
     AddCollectionEntry {
@@ -273,9 +278,17 @@ pub struct ConstraintCode {
     block: usize,
     /// Actual arguments for this constraint template, possibly referring to an outer template.
     arguments: BTreeMap<String, TypeCheck>,
+    argument_sources: BTreeMap<String, TypeArgumentSource>,
     span: Span,
     module_environment: bool,
     source: Arc<str>,
+}
+
+/// Authored source of an instantiated type node, kept separate from type identity.
+#[derive(Clone, Debug)]
+pub struct TypeArgumentSource {
+    pub span: Span,
+    pub text: Arc<str>,
 }
 
 impl TypeCheck {
@@ -2321,6 +2334,7 @@ impl Vm {
             | Instruction::EndCollection
             | Instruction::SetCollectionDefault { .. }
             | Instruction::SetCollectionTypeDefault(_)
+            | Instruction::GenericConstructorParent { .. }
             | Instruction::AmendEmpty
             | Instruction::AddCollectionProperty(_)
             | Instruction::AddCollectionElement(_)
@@ -3514,7 +3528,9 @@ fn compile_module_configured(
         active_constraints: BTreeMap::new(),
         shared_constraint_roots: BTreeMap::new(),
         active_type_parameters: BTreeMap::new(),
+        constructor_parameters_bound: false,
         parameter_spans: BTreeMap::new(),
+        argument_spans: BTreeMap::new(),
         function_counts: BTreeMap::new(),
         entry_counts: BTreeMap::new(),
         function_names: BTreeMap::new(),
@@ -3593,7 +3609,11 @@ struct Compiler<'a> {
     /// Local-writing constraints retain their declaration call target across substitutions.
     shared_constraint_roots: BTreeMap<Span, usize>,
     active_type_parameters: BTreeMap<String, TypeCheck>,
+    /// Alias cloning visits inline/lambda nodes, but not lazy member call targets.
+    constructor_parameters_bound: bool,
     parameter_spans: BTreeMap<String, Span>,
+    /// Constructor parent nodes retain the authored actual, including alias syntax.
+    argument_spans: BTreeMap<String, Span>,
     function_counts: BTreeMap<String, usize>,
     entry_counts: BTreeMap<String, usize>,
     function_names: BTreeMap<Span, String>,
@@ -3706,6 +3726,16 @@ impl Compiler<'_> {
     }
 
     fn object_member(&mut self, member: &crate::syntax::Member) -> Result<Member, RuntimeError> {
+        let previous = std::mem::replace(&mut self.constructor_parameters_bound, false);
+        let result = self.object_member_body(member);
+        self.constructor_parameters_bound = previous;
+        result
+    }
+
+    fn object_member_body(
+        &mut self,
+        member: &crate::syntax::Member,
+    ) -> Result<Member, RuntimeError> {
         let previous_modifiers = std::mem::replace(&mut self.modifiers, member.modifiers.clone());
         self.validate_modifiers(member)?;
         let previous_member = self.member.clone();
@@ -4108,6 +4138,44 @@ impl Compiler<'_> {
                     }
                     self.collection_body(members, kind, has_default, output)?;
                     if matches!(check.unaliased(), TypeCheck::ParameterizedCollection { .. }) {
+                        output.push_at(Instruction::CheckType(check), self.type_source_span(ty));
+                    }
+                } else if check.contains_parameter() {
+                    let check = if self.constructor_parameters_bound {
+                        check
+                    } else {
+                        let mut environment = Environment::default();
+                        for parameter in self.active_type_parameters.values() {
+                            if let TypeCheck::Parameter { block, name } = parameter {
+                                environment
+                                    .type_arguments
+                                    .insert((*block, name.clone()), TypeCheck::Unknown);
+                            }
+                        }
+                        check.substituted(&environment)?
+                    };
+                    output.push_at(
+                        Instruction::GenericConstructorParent {
+                            ty: check.clone(),
+                            source: TypeArgumentSource {
+                                span: ty.span,
+                                text: Arc::from(
+                                    &self.resolved.module.source[ty.span.start..ty.span.end],
+                                ),
+                            },
+                        },
+                        expression.span,
+                    );
+                    self.collection_body(
+                        members,
+                        crate::heap::CollectionKind::Dynamic,
+                        true,
+                        output,
+                    )?;
+                    // The cast is syntax-directed: `new T` only selects a parent,
+                    // whereas explicit `new Alias<T>` also checks the result.
+                    if matches!(&ty.kind, crate::syntax::TypeKind::Named { arguments, .. } if !arguments.is_empty())
+                    {
                         output.push_at(Instruction::CheckType(check), self.type_source_span(ty));
                     }
                 } else {
@@ -5046,6 +5114,21 @@ impl Compiler<'_> {
         self.type_source_span_at(ty, &self.parameter_spans, &mut BTreeSet::new())
     }
 
+    fn type_argument_sources(&self) -> BTreeMap<String, TypeArgumentSource> {
+        self.argument_spans
+            .iter()
+            .map(|(name, span)| {
+                (
+                    name.clone(),
+                    TypeArgumentSource {
+                        span: *span,
+                        text: Arc::from(&self.resolved.module.source[span.start..span.end]),
+                    },
+                )
+            })
+            .collect()
+    }
+
     fn type_source_span_at(
         &self,
         ty: &crate::syntax::Type,
@@ -5129,6 +5212,7 @@ impl Compiler<'_> {
                         compiled.push(ConstraintCode {
                             block,
                             arguments: parameters.clone(),
+                            argument_sources: self.type_argument_sources(),
                             span: expression.span,
                             module_environment: self.constraint_module,
                             source,
@@ -5152,6 +5236,8 @@ impl Compiler<'_> {
                         })
                         .collect();
                     let previous = std::mem::replace(&mut self.active_type_parameters, symbolic);
+                    let previous_constructor_binding =
+                        std::mem::replace(&mut self.constructor_parameters_bound, true);
                     let mut code = Code::default();
                     // CustomThisScope interrupts consecutive let qualification.
                     let enclosing_lets = std::mem::take(&mut self.let_members);
@@ -5162,6 +5248,7 @@ impl Compiler<'_> {
                     self.type_scopes.extend(inner_scopes);
                     self.let_members = enclosing_lets;
                     self.active_type_parameters = previous;
+                    self.constructor_parameters_bound = previous_constructor_binding;
                     self.active_constraints.remove(&expression.span);
                     result?;
                     let writes_slots = code.let_scopes.iter().any(|scope| scope.writes_slot);
@@ -5193,6 +5280,7 @@ impl Compiler<'_> {
                     compiled.push(ConstraintCode {
                         block: target,
                         arguments: parameters.clone(),
+                        argument_sources: self.type_argument_sources(),
                         span: expression.span,
                         module_environment: self.constraint_module,
                         source,
@@ -5407,6 +5495,29 @@ impl Compiler<'_> {
                                 .collect();
                             let previous_spans =
                                 std::mem::replace(&mut self.parameter_spans, spans);
+                            let argument_spans = type_parameters
+                                .iter()
+                                .zip(arguments)
+                                .map(|(parameter, argument)| {
+                                    let span = match &argument.kind {
+                                        TypeKind::Named {
+                                            path, arguments, ..
+                                        } if path.len() == 1
+                                            && arguments.is_empty()
+                                            && parameters.contains_key(&path[0]) =>
+                                        {
+                                            self.argument_spans
+                                                .get(&path[0])
+                                                .copied()
+                                                .unwrap_or(argument.span)
+                                        }
+                                        _ => argument.span,
+                                    };
+                                    (parameter.name.clone(), span)
+                                })
+                                .collect();
+                            let previous_argument_spans =
+                                std::mem::replace(&mut self.argument_spans, argument_spans);
                             let previous_module =
                                 std::mem::replace(&mut self.constraint_module, true);
                             let previous_member =
@@ -5430,6 +5541,7 @@ impl Compiler<'_> {
                             self.constraint_module = previous_module;
                             self.member = previous_member;
                             self.parameter_spans = previous_spans;
+                            self.argument_spans = previous_argument_spans;
                             let result = result?;
                             aliases.remove(&member.expr.span);
                             TypeCheck::NamedAlias {

@@ -682,6 +682,15 @@ impl Vm {
                         .generic_default = Some(generics::GenericDefaultRun::new(target, ty));
                 }
             }
+            Instruction::GenericConstructorParent { ty, source } => {
+                let environment = &self.frames.last().expect("active frame").environment;
+                let source = ty.argument_source(environment).unwrap_or(source);
+                let ty = ty.substituted(environment)?;
+                self.frames
+                    .last_mut()
+                    .expect("active frame")
+                    .generic_default = Some(generics::GenericDefaultRun::constructor(ty, source));
+            }
 
             Instruction::EndCollection => self.end_collection()?,
             Instruction::AddCollectionProperty(member) => {
@@ -1605,6 +1614,18 @@ impl Compiler<'_> {
     }
 
     fn lazy_collection_member(
+        &mut self,
+        value: &crate::syntax::Expr,
+        key: Option<&crate::syntax::Expr>,
+        span: Span,
+    ) -> Result<Member, RuntimeError> {
+        let previous = std::mem::replace(&mut self.constructor_parameters_bound, false);
+        let result = self.lazy_collection_member_body(value, key, span);
+        self.constructor_parameters_bound = previous;
+        result
+    }
+
+    fn lazy_collection_member_body(
         &mut self,
         value: &crate::syntax::Expr,
         key: Option<&crate::syntax::Expr>,
