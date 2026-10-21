@@ -711,6 +711,8 @@ collection cast. Pinned Java cases distinguish `new T` with an actual
 the constructor can contain values outside those arguments. Class property
 annotations still apply when their members are evaluated. Empty and nonempty
 amendments retain the nullable-default rules above.
+Explicit generic alias syntax, such as `new Identity<T>`, additionally checks
+the constructed result against that alias's type.
 
 Diagnostic origins travel separately from type identity. Generic argument
 source locations allow constructor failures to point to the actual type when

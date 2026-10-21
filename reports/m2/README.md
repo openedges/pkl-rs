@@ -27,8 +27,89 @@ argument environments, shared generic let roots, selected collection defaults
 and Reference validation, and let/for const-scope boundaries. Stage 19 shares
 runtime generic argument graphs, reclaims them iteratively, schedules nested
 defaults, and makes deep Reference metadata traversal stack safe. Stage 20
-preserves nullable defaults through amendments and evaluator lifecycles.
+preserves nullable defaults through amendments and evaluator lifecycles. Stage 21
+adds selected direct generic constructors, argument-source diagnostics, and their
+shared-engine lifecycle checks.
 These checkpoints do not complete the language milestone.
+
+## Stage 21 local verification checkpoint
+
+Implementation `6530fc7066779781485e1e74dae47fff9a5ac819` is committed and pushed.
+Runtime implementation used `gpt-6-astra / high`; Java comparisons and independent
+lifecycle/platform review used `gpt-6.1-sol / high`. Root reviewed the production
+changes and coordinated local macOS verification. Production author review,
+independent source review, comparison review, and packaging review retain their
+separate scopes.
+
+Direct generic constructors now obtain their parent from the actual type's
+default through the existing resumable VM scheduler and amendment path. Bare
+`new T` selects a parent without adding a collection or constraint cast;
+explicit `new Alias<T>` additionally checks its result. Nullable defaults,
+class member checks, lazy failures, and captured functions retain their separate
+semantics. Argument source locations and authored alias spelling travel outside
+type identity, including forwarding and recursive uses. Inline/lambda nodes
+receive actual arguments while lazy member call targets retain Java's unbound
+interpretation; a remaining logical frame-name difference stays recorded.
+
+The [final summary](stage21-final-summary.json) records **1,940 independent
+expressions: 1,938 raw matches and the original cycle oracle error and integer
+`% 0` diagnostic mismatch**. All 80 additions match: 39 successes and 41 expected
+errors. All 72 metamorphic relations pass. The
+[persistent suite](class-lifecycle-stage21-final-evidence.tar.gz) runs 122
+sequences twice, with **2,026 matching calls**. The previous 1,860 definitions,
+69 relations, 118 sequences, 1,936 calls, and 18 lifecycle test files are
+preserved. No new development exception was added.
+
+All seven [required local checks](validation-stage21-final.json) pass:
+**406 Rust tests and 194 Python tests**, formatting, Clippy, Wasm compilation,
+reference pins, and manifest freshness. One existing ignored Rust probe remains
+excluded. Six [native lifecycle tests](native-constructors-stage21-final-evidence.tar.gz)
+cover Host child failure/retry, 24 nonterminal cancellations and retained-object
+counts, evaluator isolation, captured functions, and terminal release. Five use
+ordinary test-thread stacks; the sixth constructs 768-deep defaults on a 256 KiB
+evaluator thread in a child process with a 60-second parent deadline. Compilation
+uses the ordinary stack. These checks establish bounded lifetime behavior, not
+Java-equivalent resource limits or peak-RSS parity.
+
+[Actual Node and Chromium](platforms-stage21-final-evidence.tar.gz) each pass
+76 development scenarios. All 6,078 shared primitive results agree across
+engines; each target matches Java in 6,076 cases, preserving the two regex
+failures. The architecture contract passes and strict primitive compatibility
+fails. M1 frontend, runtime, and lifecycle comparisons retain their earlier
+successful results and known cycle/complete-diagnostic differences. No new
+hosted CI, Linux, or Windows execution is claimed.
+
+The [exploration archive](exploration-stage21-evidence.tar.gz) retains original
+inputs, failed hypotheses, superseded captures, helper sources, and final
+artifact replays. The final artifact matches the 80 new fixture URIs, four exact
+historical Stage 20 inputs at their original URIs, three recursive controls, and
+45 focused persistent calls. Broader 85-case exploration retains 71 raw matches
+and **14 mismatches**, including missing-property and builtin diagnostics,
+generator boundaries, a Listing-key message, and the lazy member frame name.
+These observations overlap the selected cases and are not additional coverage.
+A preparation build interrupted by concurrent edits and notes about uncaptured
+initial test failures remain separate from final passing evidence. An
+independent read-only audit verifies 5,806 original paths and all 5,810 archive
+inventory records, with no cache exclusions. Historical Stage 20 evidence is
+linked by hash rather than copied.
+
+The [source and gate audit](source-stage21-final-evidence.tar.gz) binds
+**5,133 captured source copies across 2,421 unique project paths**
+to the exact implementation commit. No upstream source copies are claimed;
+reference pins and oracle provenance are verified separately. All 474
+requirements and 16 partial mappings remain. The 2,940 overlapping accounting
+rows contain 1,940 ready, 960 unimplemented, and 40 unmapped entries. Integrity
+and development gates pass; strict selected and full gates fail with the same
+1,950 full-gate failure reasons. These counts are not completion percentages.
+The [post-seal audit](stage21-post-seal-audit.json) checks all ten final archives,
+source bindings, review records, gate outcomes, immutable packaging helper, and
+historical identities without running retained artifacts.
+
+**Stage 21 closes only the bounded generic-constructor development contract.**
+Remaining constructor and Reference diagnostics, strict Map/Set semantics,
+annotation and module behavior, Java stack-error bytes, synchronous metadata
+and parent-unwrapping latency, complete language/API/platform coverage, and
+execution-time/peak-RSS parity remain open.
 
 ## Stage 20 local verification checkpoint
 

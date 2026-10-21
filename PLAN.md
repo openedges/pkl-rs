@@ -337,12 +337,18 @@ Stage 15의 원래 입력·URI 그대로 재비교하여 shared-slot 실패 3개
 
 스물한 번째 단계는 generic constraint 안의 직접 `new T`가 실제 타입 인자의 기본값으로 부모를 선택하도록 구현합니다. 기존 VM 기본값 continuation·fuel·GC root와 amendment 경로를 재사용하며, bare `new T`와 명시적 `new Alias<T>`의 결과 타입 검사 차이를 Java 소스·원시 비교로 구분합니다. 별칭의 작성 위치와 원래 표기를 타입 identity와 분리해 보존하고, 인자 전달·재귀·실패 재시도에도 오류 위치를 유지합니다. inline·lambda와 지연 멤버 call target의 타입 인자 전달 경계도 구분합니다.
 
-핵심 구현은 `gpt-6-astra / high`, Java 비교 및 독립 수명주기·플랫폼 검증은 `gpt-6.1-sol / high`로 분담했습니다. 새 독립 식 80개는 성공 39개·예상 오류 41개이며, 기존 목록을 보존한 전체 선택은 1,940개 식·72개 변형 관계입니다. 별도 persistent 계약은 122개 목록·2,026개 호출입니다. 새 native 검사 6개는 Host 실패·재진입·재시도, 24회 취소, 실제 타입이 다른 evaluator, 반환 closure, terminal 해제와 256 KiB evaluator stack의 768단계 기본값 생성을 다룹니다. 최종 로컬 검증과 증거 대조를 진행 중이며 전체 M2 완료를 주장하지 않습니다.
+핵심 구현은 `gpt-6-astra / high`, Java 비교 및 독립 수명주기·플랫폼 검증은 `gpt-6.1-sol / high`로 분담했습니다. 새 독립 식 80개는 성공 39개·예상 오류 41개이며, 기존 목록을 보존한 전체 선택은 1,940개 식·72개 변형 관계입니다. 별도 persistent 계약은 122개 목록·2,026개 호출입니다. 새 native 검사 6개는 Host 실패·재진입·재시도, 24회 취소, 실제 타입이 다른 evaluator, 반환 closure, terminal 해제와 256 KiB evaluator stack의 768단계 기본값 생성을 다룹니다. 구현 커밋 `6530fc7066779781485e1e74dae47fff9a5ac819`를 푸시했습니다.
+
+[최종 로컬 요약](reports/m2/stage21-final-summary.json)은 1,940개 식 중 1,938개 원시 바이트 일치와 기존 순환 oracle 오류·정수 `% 0` 진단 차이를 기록합니다. 새 80개와 변형 관계 72개, 122개 순차 목록을 두 번 실행한 2,026개 호출이 모두 일치합니다. 기존 1,860개 정의·69개 관계·118개 목록·수명주기 파일 18개를 보존했으며 새 개발 예외는 추가하지 않았습니다. [필수 로컬 검사 7종](reports/m2/validation-stage21-final.json)이 통과했고 Rust 406개·Python 194개 성공과 기존 ignored probe 1개를 구분합니다. 실제 Node·Chromium 각각 76개 개발 시나리오와 공통 primitive 6,078개 일치·target별 Java 일치 6,076개·기존 regex 실패 2개를 유지합니다.
+
+[탐색 증거](reports/m2/exploration-stage21-evidence.tar.gz)는 원본 경로 5,806개·inventory payload 5,810개를 제외 없이 보존합니다. 최종 artifact로 새 80개·원래 Stage 20 URI의 실패 입력 4개·재귀 제어 사례 3개·순차 호출 45개를 재비교했습니다. 더 넓은 탐색 85개 중 일치 71개·불일치 14개는 선택 계약과 별도이며, builtin·missing-property·generator·Listing key·지연 멤버 frame 이름 차이를 유지합니다. 동시 수정 중 실패한 준비 build와 원시 출력이 별도 기록되지 않은 초기 테스트 실패도 최종 통과 증거와 구분합니다.
+
+[소스·gate 증거](reports/m2/source-stage21-final-evidence.tar.gz)는 소스 사본 5,133개·고유 경로 2,421개를 정확한 구현 커밋과 연결합니다. 참조 pin·oracle 출처는 별도 검증하며 upstream 소스 사본은 0개입니다. 요구사항 474개·부분 연결 16개와 accounting row 2,940개 중 ready 1,940개·미구현 960개·미연결 40개를 완료율로 계산하지 않습니다. 엄격한 전체 gate는 기존 실패 이유 1,950개를 유지합니다. **Stage 21의 제한된 generic-constructor 개발 계약만 마감했으며 M2 전체·제품 API·성능·메모리·릴리스 플랫폼 조건은 미완료입니다.**
 
 다음 구현은 남은 탐색 불일치의 의존성을 기준으로 진행합니다.
 
 1. 남은 Reference metadata 작업·진단 확장을 continuation과 자원 계약으로 검증하고 Java stack-overflow 진단 및 취소 지연을 별도로 다룹니다. 전체 지연 타입 해석·alias-root 대입 identity와 wrapper 중복 제거의 실제 인자 구분을 검증합니다. 남은 nullable/default·inline Reference·local typed-property·outer 진단, generic constructor의 지연 멤버 frame 이름·builtin·generator 경계를 원래 실패 입력으로 보완합니다. 이미 검증한 공유 타입 인자의 깊은 실행·동시 해제, inline·lambda·공유 let·분기 순서·재귀 깊이별 재시도, 타입 인자 캡처·기본값·Reference 검사 순서, Host/GC/취소/terminal 동작을 회귀 기준으로 유지합니다.
-2. 엄격한 Map·Set의 값 모델·타입·동등성·해시·강제 평가를 공통 VM·GC·Host 수명주기에 구현합니다. 기존 Mapping 검증이 이를 대체하지 않습니다. Duration metadata와 List/Listing의 `map`·`join`은 필요한 M3 의존성으로 함께 추적합니다.
+2. 엄격한 Map·Set의 값 모델·타입·동등성·해시·강제 평가를 공통 VM·GC·Host 수명주기에 구현합니다. 첫 범위는 strict `Map`의 생성·조회·기본값·타입 검사·동등성·해시이며, `Set`은 같은 해시 기반 위에 이어서 구현합니다. Java의 key→value→즉시 삽입/해시 순서, 중복 키의 최초 위치·최종 값, 삽입 순서와 내부 hash-map 강제 평가 순서를 원시 비교로 고정합니다. 기존 Mapping의 선언 cache와 첫 네 키 해시 지연은 이 계약을 대체하지 않습니다. builder·key/value를 continuation root로 보존하고 Host 중단·재진입·실패·취소를 함께 검증합니다. `Map.keys`·`entries`·고차 함수·변환 API, Duration metadata와 List/Listing의 `map`·`join`은 필요한 M3 의존성으로 추적합니다.
 3. annotation과 남은 클래스 초기화·modifier·재귀 타입·reflection 규칙을 확장합니다. 실제 source의 초기화 중 Host 중단·재진입, 미게시 local 선언의 Java 내부 오류와 순환 계층의 비종료 관찰은 원래 실패·미실행 상태를 보존하며 별도로 검증합니다.
 4. 모듈 클래스 상속·선언 출처·ModuleOutput override를 M2 의미론에 연결하고 실제 모듈 로딩·URI/source cache identity·Host는 M4 경로와 통합합니다. primitive missing-method 진단도 실제 멤버 목록을 사용하도록 보완합니다.
 
