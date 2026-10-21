@@ -94,6 +94,8 @@ requirements and 16 partial mappings; 2,798 overlapping accounting rows contain
 1,798 ready, 960 unimplemented, and 40 unmapped entries. Integrity and development
 gates pass. Strict selected and full gates retain their failures, including
 1,950 full-gate failure reasons. These counts are not a completion percentage.
+The [post-seal audit](stage18-seal-audit.json) rechecks archive identities, the
+executed packaging helper, four independent reviews, and six raw gate captures.
 
 Unbounded growth of owned type-argument metadata can still exhaust the native
 stack. The original `this is A<List<T>>` SIGABRT is preserved; bounded yielding

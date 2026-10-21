@@ -1,0 +1,31 @@
+{
+  "schema": 1,
+  "utc": "2026-10-21T11:09:02.268379+00:00",
+  "status": "pass",
+  "implementation_commit": "e918efdf718f0bebe1b5184e10421b1b1ffaa730",
+  "summary": {
+    "path": "reports/m2/stage18-final-summary.json",
+    "sha256": "e480344e27cb62c48497846ca72541c23b4630ce39f8203da95099bc3de94405"
+  },
+  "core_archives_with_verified_inventories": 12,
+  "additional_exploration_support_archives": 3,
+  "all_archive_hashes_and_sizes_rechecked": true,
+  "source_snapshot_copies": 4996,
+  "unique_project_source_files": 2244,
+  "source_archive_sha256": "f1b9400694d2d583eed1f413321b6f3223c7535d7b313f55aa503b01a407141c",
+  "executed_helper_sha256": "f5e4eec6f11e7614de37cdd57dfdbb8da469ba588c5ddb493188ea1e9f3e6699",
+  "source_archive_contains_exact_executed_helper": true,
+  "final_reviews_retained": 4,
+  "complete_raw_gate_captures": 6,
+  "gate_exit_codes": {
+    "report": 0,
+    "development": 0,
+    "subset": 1,
+    "full": 1,
+    "class-report": 0,
+    "class-contract": 0
+  },
+  "raw_git_request_response_and_commit_captured": true,
+  "captured_binaries_executed": false,
+  "scope": "Post-seal read-only packaging review. Original archive inventories were verified by sealing; exact hash/size rechecks bind this review to those unchanged archive bytes. Language/full-API/performance completion is not claimed."
+}
