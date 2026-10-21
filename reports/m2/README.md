@@ -13,8 +13,112 @@ Stage 9 adds stable hashes,
 partial map publication and retries, HashSet length counting, and let diagnostic
 scopes. Stage 10 adds deferred References, declaration/type metadata, and
 standard-library source frames. Stage 11 adds fixed declarations, ordered
-override checks, and inherited modifier metadata. These checkpoints do not
-complete the language milestone.
+override checks, and inherited modifier metadata. Stage 12 adds evaluator-owned
+class publication, retained partial classes, and persistent sequence comparisons.
+These checkpoints do not complete the language milestone.
+
+## Stage 12 checkpoint
+
+The Stage 11 lifecycle mismatch is resolved within the currently supported class
+declaration scope. A declaration publishes its evaluator-owned singleton before
+superclass resolution, publishes successful properties followed by methods, and
+retains its parent and completed declaration prefix after an initialization
+error. Later accesses return that partial class without restarting initialization.
+Ordinary failed lazy properties remain retryable. Published class handles are
+strong GC roots until terminal cleanup; temporary builders and unrelated values
+remain collectible. Missing typed property and method diagnostics enumerate the
+published definitions and inherited candidates.
+
+Implementation `50fc60b2aeac6fa9bb43c6c6043fc8f9976cb287` is pushed.
+Runtime, GC, and evaluation-order work
+used `gpt-6-astra / high`; evidence, lifecycle, and independent review work used
+`gpt-6.1-sol / high`.
+
+The [persistent sequence summary](stage12-class-lifecycle.json) and
+[verified raw archive](stage12-class-lifecycle-evidence.tar.gz) retain **18 unique
+sequences, 36 fresh-evaluator executions, and 194 matching raw call comparisons**.
+Each sequence keeps one Java evaluator and one Rust VM/module across successful
+and failed calls, then repeats in a fresh evaluator. The calls cover failed
+superclass, property type, modifier, and method initialization; retry identity;
+published and absent declarations; partial assignments; wrapper retry; recursive
+types; and partial Reference metadata without forcing referent bodies. The
+archive also retains the earlier 22 full-diagnostic mismatches, a source-drift
+rejection before comparison, Java-only explorations, and timeout observations.
+There is no new mismatch allowance.
+
+Final local checks include **270 passing Rust tests and 194 Python
+tests**; the existing ignored differential probe remains separate. Nineteen new
+Rust regressions comprise nine core, eight lifecycle, and two sequence-API tests;
+fifteen new Python tests cover protocol and provenance failure detection.
+Dedicated native tests verify exact retained graphs, temporary handle
+reclamation, isolated heaps, ordinary retries, and terminal release. These
+architecture assertions have a separate denominator from Java language calls.
+Actual Node and Chromium each pass **46 development scenarios**. All 6,078
+primitive results agree across Rust targets, with 6,076 Java matches and the two
+existing regex failures preserved.
+
+The **1,291 independent-expression definitions and inputs and 46 metamorphic
+relations are unchanged**. Both the replay against prior Java captures and the
+fresh Java/recorded-build acquisition retain 1,289 matches and the same two
+failures; all 46 relations pass. The language acquisition retains 1,382 source
+snapshots. Across the final language, class-sequence, and M1 regression captures,
+1,738 source copies spanning 1,462 unique paths match the exact implementation
+commit bytes.
+
+The [final local summary](stage12-final-summary.json) links the
+[fresh language acquisition](language-stage12-final-evidence.tar.gz),
+[required checks](validation-stage12-final-evidence.tar.gz), and
+[actual platform execution](platforms-stage12-final-evidence.tar.gz).
+The [source audit](source-stage12-final-evidence.tar.gz) retains exact-commit
+checks and an independent review of result IDs, retained execution metadata,
+and counts recomputed from raw captures. It adds no compatibility test cases.
+
+The [regression archive](regressions-stage12-final-evidence.tar.gz) retains
+15 frontend matches, six runtime value and two complete diagnostic matches,
+the existing runtime cycle diagnostic mismatch, two matching lifecycle
+protocols, and four complete lifecycle diagnostic mismatches. It also preserves
+the original-selection replay and a relocated class-contract recheck that
+executes no captured binaries. The [gate archive](gates-stage12-final-evidence.tar.gz)
+records passing integrity and development checks and failing strict selected
+and full completion gates.
+
+The [implementation CI](https://github.com/luuvish/pkl-rs/actions/runs/39548215484)
+completed all six jobs successfully. [Independent verification](ci-stage12-summary.json)
+checked both original GitHub ZIP digests and **1,746 captured source copies
+spanning 1,465 unique paths** against the exact implementation commit. It confirms
+the same 1,289 matching expressions and two existing failures, 46 relations,
+194 separate class calls, and 46 Node/Chromium development scenarios each.
+The [original CI package](ci-stage12-evidence.tar.gz) retains the captures and
+verification. Two [offline replays](ci-stage12-offline-evidence.tar.gz) pass
+without executing captured binaries; the final sealed 574-file package remains
+byte-identical. The [previous report's CI](https://github.com/luuvish/pkl-rs/actions/runs/39546025680)
+also completed all six jobs; its evidence belongs to the preceding commit.
+
+The [provisional archive](exploration-stage12-provisional-evidence.tar.gz) retains
+2,536 content files and 79 complete process pairs, including the interrupted
+first language acquisition, a failing Node candidate, and superseded checks and
+M1 captures. They are not counted as final passes. The separate
+[review-only archive](stage12-class-review-evidence.tar.gz) retains a call to a
+local declaration beyond the failed publication boundary: Java raises an
+internal `PklBugException`, while Rust reports a normal missing-property error.
+That diagnostic scope is outside the 18 selected sequences and remains open;
+it receives neither a pass nor a development exception.
+
+Actual Java annotation construction can call a Host reader and reenter the same
+partial class. Rust annotation syntax remains unsupported, so injected bytecode
+suspension tests establish scheduler behavior separately from that source path.
+Java-only observations also distinguish same-URI cache retention, changed source
+at the same URI, different URIs, and different evaluators; full Rust module-cache
+identity remains an M4 integration gap. Indirect cyclic superclass identity is
+compared, but Java property traversal timed out twice after 30 seconds, while
+Rust visited-set guards terminate traversal. This remains unverified traversal
+compatibility.
+
+Next priorities are alias identity and function-type metadata, strict Map/Set
+semantics, annotations and the remaining class/reflection rules, and module
+inheritance and loading/cache integration. **M2 remains in progress**. The full
+gate's 1,950 failure reasons and remaining required unimplemented and unexecuted
+scope remain open. No new performance or memory result is claimed.
 
 ## Stage 11 checkpoint
 

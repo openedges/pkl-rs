@@ -1,0 +1,127 @@
+{
+  "schema": 1,
+  "scope": "Bounded persistent class-publication evidence, separate from M2 single-expression inventory and Rust architecture lifecycle tests.",
+  "compatibility_complete": false,
+  "final": {
+    "directory": "stage12-class-lifecycle-03",
+    "report_sha256": "34beeebd9050787d22de7ba5ae680400e95b36de33f690b4bfacc6f4e6d6c68a",
+    "unique_sequences": 18,
+    "sequence_executions": 36,
+    "repetitions": 2,
+    "call_comparisons": 194,
+    "passing_calls": 194,
+    "comparison_channels": [
+      "status",
+      "stdout",
+      "stderr"
+    ],
+    "source_stability_before_execution": true,
+    "source_stability_after_execution": true,
+    "selected_contract_passes": true,
+    "oracle_version": "0.32.0",
+    "oracle_artifact_sha256": "c3b6f6215a08b31453b0fb0edd8c9da0aee31233f65abb8ab07f9c945151e059",
+    "candidate_sha256": "ac87a6e347f93bbd3043f8c8c27977940460a5e1400b5ee982f2ef4f0c1547aa"
+  },
+  "retained_rejected_candidate": {
+    "directory": "stage12-class-lifecycle-02",
+    "report_sha256": "1a5792e29aa86fc57009ee2e75d25966f58816ed56aac81ad80a5c197df531a7",
+    "call_comparisons": 194,
+    "passing_calls": 172,
+    "mismatches": 22,
+    "cause": "Eleven unique missing-property/missing-method full diagnostics, repeated in two fresh evaluators.",
+    "integrity": "Frozen acquisition checker passes; selected contract fails."
+  },
+  "retained_source_drift": {
+    "directory": "stage12-class-lifecycle-01",
+    "status": "rejected before comparisons because source changed during build"
+  },
+  "java_only_observations": {
+    "module_identity": {
+      "directory": "stage12-java-module-identity-01",
+      "same_uri_same_source_identity": true,
+      "same_uri_changed_source_identity": true,
+      "same_uri_changed_marker": "1",
+      "different_uri_identity": false,
+      "different_evaluator_identity": false,
+      "rust_module_cache_comparison": false
+    },
+    "actual_host_class_initialization": {
+      "directory": "stage12-java-host-path-02",
+      "source": "@Deprecated { ...(read(\"life:class\")) }\nclass Child { value = 1 }\ntrigger = Child == Child\n",
+      "callback_count": 1,
+      "inner_class_identity": "true",
+      "inner_partial_assignment": "77",
+      "first_result": "PklException: Cannot iterate over value of type String",
+      "retry_result": "true",
+      "rust_annotation_frontend": "unsupported",
+      "rust_compatibility_pass": false
+    },
+    "indirect_cycle_traversal": {
+      "directory": "stage12-java-observations-03/sequences/super-mutual",
+      "evaluator_executions": 2,
+      "successful_prefix": [
+        "isA=true",
+        "isB=true",
+        "isA=true"
+      ],
+      "final_call": "new A {}.missing",
+      "final_call_outcome": "timeout after30seconds in each evaluator; raw process exit-9 and incomplete call protocol retained",
+      "compatibility_pass": false
+    }
+  },
+  "exploratory_acquisitions": [
+    {
+      "directory": "stage12-java-observations-01",
+      "status": "driver aborted on existing per-case capture directory; no Pkl evaluation claimed"
+    },
+    {
+      "directory": "stage12-java-observations-02",
+      "status": "reserved keyword unknown caused Java parse errors; original fixture copies were not frozen, so no language result is promoted"
+    },
+    {
+      "directory": "stage12-java-observations-03",
+      "status": "Java-only ordered observations include two retained cyclic-traversal timeouts; no Rust comparisons"
+    },
+    {
+      "directory": "stage12-java-observations-04",
+      "status": "Java-only34sequence executions including inherited metadata candidate; no Rust comparisons"
+    },
+    {
+      "directory": "stage12-java-observations-05",
+      "status": "Java-only partial Reference acquisition; rejected source stability after execution"
+    }
+  ],
+  "remaining_scope": [
+    {
+      "group": "P09",
+      "reason": "Java-only module-cache probe stage12-java-module-identity-01 observes same URI/source identity retained, changed source at same URI ignored (marker remains1), distinct URI/evaluator identity separated. Rust multi-source module-cache parity is unimplemented; same-module identity is compared."
+    },
+    {
+      "group": "P10",
+      "reason": "Java observable sequence comparisons do not expose heap counts; Rust architectural GC coverage is separate."
+    },
+    {
+      "group": "P11",
+      "reason": "Real Java class-initialization read observed via @Deprecated { ...(read(\"life:class\")) } in stage12-java-host-path-01; Rust annotation frontend unsupported, so actual Host-in-class cross-language reentry remains unexecuted. Internal scheduler tests are separate."
+    },
+    {
+      "group": "P12",
+      "reason": "Terminal context/token/heap cleanup is covered by separate Rust lifecycle tests, not Java raw-byte equivalence."
+    },
+    {
+      "group": "P05",
+      "reason": "Indirect cyclic hierarchy property traversal new A {}.missing timed out after successful class identity calls in stage12-java-observations-03; traversal is observed oracle-timeout, not a compatibility pass."
+    }
+  ],
+  "excluded_original_files": [
+    "stage12-class-lifecycle-01/build/**",
+    "stage12-class-lifecycle-02/build/**",
+    "stage12-class-lifecycle-03/build/**"
+  ],
+  "exclusion_reason": "Rebuild intermediates omitted; complete cargo captures, source snapshots, compiled Java classes and copied candidate executables remain. Acquisition evidence inventories already exclude build/**.",
+  "verification_commands": [
+    "python3 -B tools/m2_class_lifecycle.py --verify-report <relocated>/stage12-class-lifecycle-03",
+    "python3 -B tools/m2_class_lifecycle.py --verify-contract <relocated>/stage12-class-lifecycle-03",
+    "python3 tools/evidence.py verify reports/m2/stage12-class-lifecycle-evidence.tar.gz"
+  ]
+}

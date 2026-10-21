@@ -1,0 +1,111 @@
+{
+  "checks": [
+    {
+      "command": [
+        "cargo",
+        "xtask",
+        "verify"
+      ],
+      "exit_code": 0,
+      "stderr_sha256": "34068eb826a5dc56ee76d3f1f57b9dddf3a4cddbc509e2cdda365573442957ca",
+      "stdout_sha256": "900802c9cf4f23bd9dbc0e79f58d3e21493ec0c990782bc5b690a7432148e9eb"
+    },
+    {
+      "command": [
+        "cargo",
+        "fmt",
+        "--all",
+        "--",
+        "--check"
+      ],
+      "exit_code": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "cargo",
+        "clippy",
+        "--workspace",
+        "--all-targets",
+        "--locked",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "exit_code": 0,
+      "stderr_sha256": "4a9e8c12b61d4d02cc231867cbf7e9d1a9ddd8f590004e8e07433b5d3bec807a",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "cargo",
+        "test",
+        "--workspace",
+        "--locked"
+      ],
+      "exit_code": 0,
+      "stderr_sha256": "5b5ba00c74bf900b3cfc9b409e4296018708ae9dc62b8a4253e2d59c4a3f0df1",
+      "stdout_sha256": "18a191100e1a1e8925a5a8dbda616bb7ecd1ae7e4615fd5de4678aacf550d535"
+    },
+    {
+      "command": [
+        "cargo",
+        "check",
+        "-p",
+        "pkl-runtime",
+        "--target",
+        "wasm32-unknown-unknown",
+        "--locked"
+      ],
+      "exit_code": 0,
+      "stderr_sha256": "497b0658f5fef9459ae40ce8d71ef107ce2d84f488eaa8e5d501db4b735143f0",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools/tests",
+        "-v"
+      ],
+      "exit_code": 0,
+      "stderr_sha256": "4a47191841e8d14a58c0e14e3234fed96075986d51c4d118b8f2283e883326e3",
+      "stdout_sha256": "a3580480708ddd14374b77d234db3417418823fdf128cc230ec8668d093ec50c"
+    },
+    {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/m2_manifest.py",
+        "--check"
+      ],
+      "exit_code": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "b6a5c6205dbedd9a182a8bda85abd17b33dd0b85acb3757103a7f8e6d181e50e"
+    }
+  ],
+  "evidence_sha256": {
+    "0.stderr.bin": "34068eb826a5dc56ee76d3f1f57b9dddf3a4cddbc509e2cdda365573442957ca",
+    "0.stdout.bin": "900802c9cf4f23bd9dbc0e79f58d3e21493ec0c990782bc5b690a7432148e9eb",
+    "1.stderr.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "1.stdout.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "2.stderr.bin": "4a9e8c12b61d4d02cc231867cbf7e9d1a9ddd8f590004e8e07433b5d3bec807a",
+    "2.stdout.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "3.stderr.bin": "5b5ba00c74bf900b3cfc9b409e4296018708ae9dc62b8a4253e2d59c4a3f0df1",
+    "3.stdout.bin": "18a191100e1a1e8925a5a8dbda616bb7ecd1ae7e4615fd5de4678aacf550d535",
+    "4.stderr.bin": "497b0658f5fef9459ae40ce8d71ef107ce2d84f488eaa8e5d501db4b735143f0",
+    "4.stdout.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "5.stderr.bin": "4a47191841e8d14a58c0e14e3234fed96075986d51c4d118b8f2283e883326e3",
+    "5.stdout.bin": "a3580480708ddd14374b77d234db3417418823fdf128cc230ec8668d093ec50c",
+    "6.stderr.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "6.stdout.bin": "b6a5c6205dbedd9a182a8bda85abd17b33dd0b85acb3757103a7f8e6d181e50e",
+    "report.json": "54f3fa6e67a5236977cd2f8266c3efed3b042740a983184b9de21fbc609f3816"
+  },
+  "python_passed": 194,
+  "rust_intentionally_ignored": 1,
+  "rust_passed": 270,
+  "scope": "M2 stage 12 development checks; full compatibility remains separate."
+}
