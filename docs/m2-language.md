@@ -51,6 +51,13 @@ Use a fresh output directory. The runner records a release build of
 pinned oracle, and retains source snapshots and raw process captures.
 `--candidate` is an explicit artifact override whose source binding is unverified.
 
+Acquisition defaults to one worker. `--workers 4` runs up to four cases concurrently;
+the accepted range is 1–32. Every case retains fresh Java and Rust processes,
+separate raw captures and the pinned environment. Results remain in manifest
+order, including failures and the independent remainder-error repeat. The report
+records the worker count. This option measures acquisition throughput; evaluator
+performance and memory comparisons require the separate benchmark contract.
+
 The Java boundary is `evaluateExpressionString` with a file module and an
 expression. Both processes receive the same absolute source path. Successful
 UTF-8 stdout, full uncolored `PklException.getMessage()` stderr, and exit codes are

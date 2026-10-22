@@ -1,9 +1,12 @@
 """Failure detection for full M2 accounting and selected raw differential evidence."""
 import copy
+from contextlib import redirect_stdout
+import io
 import json
 from pathlib import Path
 import sys
 import tempfile
+import threading
 import unittest
 from unittest.mock import patch
 
@@ -240,6 +243,119 @@ class MetamorphicTests(unittest.TestCase):
                 m2_language.check_relations(manifest, directory)
 
 
+class ConcurrentAcquisitionTests(unittest.TestCase):
+    def test_workers_overlap_with_bounded_concurrency_but_report_in_manifest_order(self):
+        selected = [dict(id=name) for name in ['first', 'second', 'third']]
+        rendezvous = threading.Barrier(2)
+        second_finished = threading.Event()
+        lock = threading.Lock()
+        active = 0
+        peak = 0
+        completed = []
+
+        def acquire(case, *unused):
+            nonlocal active, peak
+            with lock:
+                active += 1
+                peak = max(peak, active)
+            if case['id'] in ['first', 'second']:
+                rendezvous.wait(timeout=5)
+            if case['id'] == 'first':
+                self.assertTrue(second_finished.wait(timeout=5))
+            with lock:
+                completed.append(case['id'])
+                active -= 1
+            if case['id'] == 'second':
+                second_finished.set()
+            return dict(id=case['id'], status='pass')
+
+        stdout = io.StringIO()
+        with patch.object(m2_language, 'acquire_case', side_effect=acquire), redirect_stdout(stdout):
+            results = m2_language.acquire_cases(selected, Path('unused'), {}, Path('unused'), workers=2)
+        self.assertEqual(peak, 2)
+        self.assertLess(completed.index('second'), completed.index('first'))
+        self.assertEqual([row['id'] for row in results], ['first', 'second', 'third'])
+        self.assertEqual(stdout.getvalue(), 'first: pass\nsecond: pass\nthird: pass\n')
+
+    def test_default_is_serial_and_duplicate_directories_are_rejected_before_acquisition(self):
+        selected = [dict(id=name) for name in ['first', 'second']]
+        with patch.object(m2_language, 'acquire_case', side_effect=lambda case, *args: dict(id=case['id'], status='pass')) as acquire:
+            with redirect_stdout(io.StringIO()):
+                m2_language.acquire_cases(selected, Path('unused'), {}, Path('unused'))
+            self.assertEqual([call.args[0]['id'] for call in acquire.call_args_list], ['first', 'second'])
+            acquire.reset_mock()
+            with self.assertRaises(ValueError):
+                m2_language.acquire_cases(selected * 2, Path('unused'), {}, Path('unused'), workers=2)
+            acquire.assert_not_called()
+
+    def test_invalid_counts_fail_before_creating_evidence_and_cli_rejects_them(self):
+        for workers in [0, -1, m2_language.MAX_WORKERS + 1, True, 1.5, '2', None]:
+            with self.subTest(workers=workers), patch.object(m2_manifest, 'current_manifest') as manifest:
+                with self.assertRaises(ValueError):
+                    m2_language.execute(Path('unused'), None, workers)
+                manifest.assert_not_called()
+        for argument in ['0', '-1', str(m2_language.MAX_WORKERS + 1), '1.5', 'many']:
+            with self.subTest(argument=argument), patch.object(sys, 'argv', ['m2_language', '--output', 'unused', '--workers', argument]):
+                with redirect_stdout(io.StringIO()), patch('sys.stderr', new_callable=io.StringIO), self.assertRaises(SystemExit) as raised:
+                    m2_language.main()
+                self.assertEqual(raised.exception.code, 2)
+
+    def test_cli_forwards_default_and_explicit_workers_only_to_acquisition(self):
+        report = dict(status_counts={'pass': 1}, full_gate_failures=[])
+        for arguments, workers in [([], 1), (['--workers', '2'], 2)]:
+            with patch.object(sys, 'argv', ['m2_language', '--output', 'unused', '--record-only', *arguments]), patch.object(m2_language, 'execute', return_value=report) as execute, redirect_stdout(io.StringIO()):
+                self.assertEqual(m2_language.main(), 0)
+                execute.assert_called_once_with(Path('unused').resolve(), None, workers)
+        with patch.object(sys, 'argv', ['m2_language', '--verify-report', 'unused', '--workers', '2']), patch('sys.stderr', new_callable=io.StringIO), self.assertRaises(SystemExit) as raised:
+            m2_language.main()
+        self.assertEqual(raised.exception.code, 2)
+
+    def test_mismatch_timeout_oracle_failure_and_remainder_repeat_keep_raw_channels(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            (root / 'input.pkl').write_bytes(b'result = 42\n')
+            identifiers = ['mismatch', 'timeout', 'oracle-failure', 'error-remainder-zero']
+            selected = [dict(id=identifier, input='input.pkl', expression='result',
+                             expected_outcome='success') for identifier in identifiers]
+            selected[-1]['expected_outcome'] = 'failure'
+            environment = {'PINNED': 'unchanged'}
+            repeated = []
+
+            def java(metadata, frozen, identifier, source, expression, directory, power=False):
+                self.assertEqual(metadata['environment'], environment)
+                self.assertEqual(source, root / 'input.pkl')
+                repeated.append(identifier)
+                remainder = identifier.startswith('error-remainder-zero')
+                (directory / 'java.stdout.bin').write_bytes(b'' if remainder else b'42\n ')
+                (directory / 'java.stderr.bin').write_bytes(b'full error\n ' if remainder else b'')
+                (directory / 'java.outcome.bin').write_bytes(
+                    b'pkl-exception\torg.pkl.core.PklBugException\n' if remainder else
+                    b'' if identifier == 'oracle-failure' else b'success\n')
+                return dict(exit_code=1 if remainder else 0, timed_out=False)
+
+            def rust(command, directory, name, observed_environment):
+                self.assertEqual(observed_environment, environment)
+                remainder = directory.name == 'error-remainder-zero'
+                (directory / 'rust.stdout.bin').write_bytes(b'' if remainder else b'42\n')
+                (directory / 'rust.stderr.bin').write_bytes(b'other full error\n' if remainder else b'')
+                return dict(exit_code=1 if remainder else 0, timed_out=directory.name == 'timeout')
+
+            with patch.object(m2_language, 'ROOT', root), patch.object(m2_language, 'capture_java', side_effect=java), patch.object(m2_language, 'capture', side_effect=rust), redirect_stdout(io.StringIO()):
+                results = m2_language.acquire_cases(selected, root / 'output', {'environment': environment}, Path('binary'), workers=2)
+            self.assertEqual([r['status'] for r in results], ['mismatch', 'candidate-timeout', 'oracle-error', 'mismatch'])
+            self.assertCountEqual(repeated, identifiers + ['error-remainder-zero/java-repeat'])
+            self.assertIn('java_repeat', results[-1])
+            for identifier in identifiers:
+                self.assertEqual((root / 'output/cases' / identifier / 'input.pkl').read_bytes(), b'result = 42\n')
+            self.assertEqual((root / 'output/cases/mismatch/java.stdout.bin').read_bytes(), b'42\n ')
+            self.assertEqual((root / 'output/cases/error-remainder-zero/java-repeat/java.stderr.bin').read_bytes(), b'full error\n ')
+
+    def test_acquisition_exception_is_propagated(self):
+        with patch.object(m2_language, 'acquire_case', side_effect=OSError('capture failed')), redirect_stdout(io.StringIO()):
+            with self.assertRaisesRegex(OSError, 'capture failed'):
+                m2_language.acquire_cases([dict(id='one')], Path('unused'), {}, Path('unused'), workers=2)
+
+
 class EvidenceTests(unittest.TestCase):
     def setUp(self):
         self.temporary = tempfile.TemporaryDirectory()
@@ -294,6 +410,30 @@ class EvidenceTests(unittest.TestCase):
         result = m2_language.check_report(self.directory)
         self.assertTrue(m2_language.subset_passes(result))
         self.assertTrue(result['full_gate_failures'])
+
+    def test_execution_setting_is_optional_for_older_reports_and_validated_when_present(self):
+        m2_language.check_report(self.directory)
+        self.report['execution'] = dict(workers=2)
+        self.save()
+        m2_language.check_report(self.directory)
+        for setting in [dict(workers=0), dict(workers=True), dict(workers=33),
+                        dict(workers=2, omitted_failures=True), None]:
+            self.report['execution'] = setting
+            self.save()
+            with self.assertRaises(ValueError):
+                m2_language.check_report(self.directory)
+
+    def test_new_report_must_retain_manifest_result_order(self):
+        self.manifest['cases'].append(dict(self.manifest['cases'][0], id='two'))
+        data = m2_manifest.encoded(self.manifest)
+        (self.directory / 'sources' / m2_manifest.MANIFEST).write_bytes(data)
+        self.report['source_sha256'][str(m2_manifest.MANIFEST)] = m2_manifest.digest(data)
+        self.report['execution'] = dict(workers=2)
+        self.report['selected_count'] = 2
+        self.report['results'] = [dict(self.report['results'][0], id='two'), self.report['results'][0]]
+        self.refresh()
+        with self.assertRaisesRegex(ValueError, 'execution order differs'):
+            m2_language.check_report(self.directory)
 
     def test_missing_duplicate_and_unknown_results_fail(self):
         for rows in [[], self.report['results'] * 2, [dict(id='unknown')]]:

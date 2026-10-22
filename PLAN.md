@@ -506,6 +506,12 @@ Annotation·Deprecated·Since·Unlisted·AlsoKnownAs·DocExample·SourceCode의 
 
 일반 객체의 `toString()`과 `List.map`에 의존하는 원본 실패도 새 선택 목록과 플랫폼 실행에 유지합니다. SourceCode union의 직접 생성 대조군은 원래 map 사례를 대체하지 않습니다. 객체 내부를 평가하지 않는 문자열 변환 후보는 Java의 force 순서와 달라 기각했으며, 관련 실패를 개발 예외로 바꾸지 않습니다. 매개변수 annotation generator에서 관측한 Java 내부 오류는 언어 성공으로 계산하지 않습니다. M2의 9개 작업 영역과 전체 gate는 미완료 상태를 유지합니다.
 
+### Stage 36 — 객체 강제 평가와 문자열 변환 (진행 중)
+
+일반 객체의 `toString()`을 Java의 강제 평가·상속 순서·undefined 처리·캐시와 연결하고 있습니다. 별도 작업 공간에서 객체 키의 해시·동등성 비교, 사용자 메서드 호출과 Host 중단·재진입·GC·취소를 검증합니다. `trace`를 사용하는 원본 순차 사례와 오류 표시 중 Host 읽기 의존성은 별도 실패로 보존하며 전체 renderer 호환성으로 확대하지 않습니다.
+
+먼저 전체 코퍼스 취득 도구에 선택적 `--workers` 병렬 실행을 추가했습니다. 기본값은 1이며 각 사례의 독립 Java/Rust process·원시 바이트·manifest 순서·나머지 오류의 독립 재실행을 유지합니다. [도구 검증](reports/m2/stage36-tooling-checkpoint.json)에서 Python 208개와 현재 manifest 검사가 통과했고, 새로 실행한 직렬·병렬 6개 사례의 모든 원시 채널이 같았습니다. 이 결과는 검증 취득 처리량에 관한 것이며 evaluator 성능 목표 달성으로 계산하지 않습니다. 런타임 구현과 최종 전체 회귀 검사는 계속 진행 중입니다.
+
 다음 구현은 남은 탐색 불일치의 의존성을 기준으로 진행합니다.
 
 Stage 34에서 class·Listing 반환 타입과 상속 속성의 선택된 inferred parent 차이를 해결했습니다. 전체 module·Mixin·trace 문맥과 원래 upstream snippet 실행은 후속 의무로 유지합니다. 새 선택 목록의 Dynamic `toString()` 두 실패는 M3의 일반 객체 문자열 변환 의존성과 함께 추적하며 개발 예외나 성공으로 바꾸지 않습니다. 중첩 최소 정수 부호 반전 overflow 프레임과 empty collection의 unavailable source section은 각각 별도 관측으로 규칙을 확정합니다.

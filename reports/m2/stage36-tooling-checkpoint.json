@@ -1,0 +1,116 @@
+{
+  "scope": "Optional concurrent M2 language acquisition; shared runtime unchanged.",
+  "default_workers": 1,
+  "maximum_workers": 32,
+  "guarantees": [
+    "Fresh Java and Rust process per case with unchanged pinned options.",
+    "Independent capture directories and manifest-order reporting.",
+    "Raw mismatch, timeout, oracle-error and repeated remainder capture retained.",
+    "Existing two-argument execute API and older report verification retained."
+  ],
+  "verification": {
+    "scope": "Concurrent acquisition tooling checks; no runtime performance claim.",
+    "host": "macOS-27.0-arm64-arm-64bit-Mach-O",
+    "python": "3.14.8 (main, Sep 30 2026, 17:55:09) [Clang 21.0.0 (clang-2100.3.34.2)]",
+    "sources": {
+      "tools/m2_language.py": "b43e2f3b98b2a32a2e4175131d2dff89631a7fd56a958689eb94b7849c710762",
+      "tools/tests/test_m2_language.py": "d460091cc2bc31979d7d864cd61456e8603b1fac4391640d7904fdb27cae4f86",
+      "tools/m2_manifest.py": "ab2b2b66202070729e69924547dccc26bbb175526a699ac0477592cb30bf4cac",
+      "compatibility/m2-language.json": "3bd686386a38c805f5de9429cc300b66ec8439aa02abef411a5da366a526844a",
+      "docs/m2-language.md": "a2b3f25371025e702e823966d7bdad5e7df8efa76bc655d26ddb6f3ac42ad5e5",
+      "oracle.lock.json": "7b77395ff5b64f7a220db74975e4c3858a36b19c5c0f5bca92681e3b1bc6504b",
+      "references.lock": "278f48fd7697459281aa78a706c9ca57222f36a8c0785d838a6449fbaf26d30b"
+    },
+    "checks": [
+      {
+        "name": "python",
+        "command": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "-m",
+          "unittest",
+          "discover",
+          "-s",
+          "tools/tests",
+          "-v"
+        ],
+        "exit_code": 0,
+        "stdout_sha256": "ba321d9ed8e2c68d8b618b89c309f8b9b790d71518e5e5f7e6bf4dd2bd3bdb58",
+        "stderr_sha256": "0c95d39b7e60be2cadc90b1fa1d846e2b2767a336fbf49a891c7a57691c20454"
+      },
+      {
+        "name": "manifest",
+        "command": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "tools/m2_manifest.py",
+          "--check"
+        ],
+        "exit_code": 0,
+        "stdout_sha256": "89274c279731d2350a3c36cc064ab8b4e277a69a45b2c7956ef45782195b6689",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "name": "diff",
+        "command": [
+          "git",
+          "diff",
+          "--check"
+        ],
+        "exit_code": 0,
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    ],
+    "source_stability": true,
+    "passed": true,
+    "python_tests": 208
+  },
+  "fresh_serial_parallel": {
+    "cases": [
+      "int-zero",
+      "int-negative",
+      "error-missing-name",
+      "error-remainder-zero",
+      "power-constraint-false",
+      "reference-stage10-render-to-string"
+    ],
+    "statuses": [
+      {
+        "mismatch": 1,
+        "pass": 5
+      },
+      {
+        "mismatch": 1,
+        "pass": 5
+      }
+    ],
+    "all_raw_pairs_equal": true,
+    "execution_settings": [
+      {
+        "workers": 1
+      },
+      {
+        "workers": 3
+      }
+    ],
+    "candidate": {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/language-stage35-final-01/artifacts/language_probe",
+      "sha256": "04780a951968c9d59e97c4815d585ba2c6a0a2c939846438315ba9e7ea812b26",
+      "source_binding": "frozen Stage35 original artifact, not current Stage36 runtime"
+    }
+  },
+  "preserved_failures": [
+    "First integration driver used an invalid existing case ID; its assertion failure is retained.",
+    "Worktree full Python run retained three stale-manifest errors while runtime integration was ongoing; main verification used its current unchanged language manifest.",
+    "Original integration report inventories run.log before its closing summary. The closed supplemental inventory records that sole changed file; original report remains unchanged."
+  ],
+  "archive": {
+    "path": "reports/m2/stage36-tooling-evidence.tar.gz",
+    "bytes": 3122406,
+    "sha256": "9a74fc89a2a1ff75bd38a9daace0009a8f65932b1fdf663032c5e1b4a552417c",
+    "original_files": 169,
+    "inventory_files": 171,
+    "source_stability": true
+  },
+  "compatibility_complete": false,
+  "runtime_performance_claimed": false
+}

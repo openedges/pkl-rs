@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import argparse
 from collections import Counter
+from concurrent.futures import ThreadPoolExecutor
 import json
 import os
 from pathlib import Path
@@ -14,6 +15,20 @@ import m2_manifest as contract
 import oracle
 
 ROOT = contract.ROOT
+MAX_WORKERS = 32
+
+
+def validate_workers(workers):
+    if type(workers) is not int or not 1 <= workers <= MAX_WORKERS:
+        raise ValueError(f'workers must be an integer between 1 and {MAX_WORKERS}')
+    return workers
+
+
+def worker_argument(value):
+    try:
+        return validate_workers(int(value))
+    except ValueError as error:
+        raise argparse.ArgumentTypeError(f'workers must be an integer between 1 and {MAX_WORKERS}') from error
 
 
 def capture(command, directory, name, environment=None, timeout=120):
@@ -92,7 +107,48 @@ def source_paths(root=ROOT):
     return sorted(paths)
 
 
-def execute(output: Path, candidate: Path | None):
+def acquire_case(case, output, metadata, frozen):
+    directory = output / 'cases' / case['id']
+    directory.mkdir(parents=True)
+    source = ROOT / case['input']
+    (directory / 'input.pkl').write_bytes(source.read_bytes())
+    arguments = expression_arguments(source, case['expression'], case.get('power_assertions', False))
+    java = capture_java(metadata, frozen, case['id'], source, case['expression'], directory,
+                        case.get('power_assertions', False))
+    rust = capture([str(frozen), *arguments], directory, 'rust', metadata['environment'])
+    outcome = status(case, java, rust, *((directory / f'{name}.{channel}.bin').read_bytes()
+                                         for name in ('java', 'rust') for channel in ('stdout', 'stderr')),
+                     (directory / 'java.outcome.bin').read_bytes())
+    result = dict(id=case['id'], status=outcome, java=java, rust=rust)
+    if case['id'] == 'error-remainder-zero':
+        repeated = directory / 'java-repeat'
+        repeated.mkdir()
+        result['java_repeat'] = capture_java(metadata, frozen, case['id'] + '/java-repeat',
+                                             source, case['expression'], repeated,
+                                             case.get('power_assertions', False))
+    return result
+
+
+def acquire_cases(selected, output, metadata, frozen, workers=1):
+    validate_workers(workers)
+    identifiers = [case['id'] for case in selected]
+    if len(set(identifiers)) != len(identifiers):
+        raise ValueError('duplicate case capture directory')
+
+    def acquire(case):
+        return acquire_case(case, output, metadata, frozen)
+
+    results = []
+    # map yields in manifest order even when processes finish out of order.
+    with ThreadPoolExecutor(max_workers=workers) as executor:
+        for result in executor.map(acquire, selected):
+            results.append(result)
+            print(f"{result['id']}: {result['status']}", flush=True)
+    return results
+
+
+def execute(output: Path, candidate: Path | None, workers=1):
+    validate_workers(workers)
     manifest = contract.current_manifest()
     metadata = oracle.ensure_oracle(ROOT, fetch=False)
     output.mkdir(parents=True, exist_ok=False)
@@ -129,32 +185,12 @@ def execute(output: Path, candidate: Path | None):
                           output, 'javac', metadata['environment'])
     if compile_row['exit_code'] != 0:
         raise ValueError('Java oracle compile failed; raw evidence preserved')
-    results = []
     selected = [row for row in manifest['cases'] if row.get('adapter') == 'language-api-string']
-    for case in selected:
-        directory = output / 'cases' / case['id']
-        directory.mkdir(parents=True)
-        source = ROOT / case['input']
-        (directory / 'input.pkl').write_bytes(source.read_bytes())
-        arguments = expression_arguments(source, case['expression'], case.get('power_assertions', False))
-        java = capture_java(metadata, frozen, case['id'], source, case['expression'], directory,
-                            case.get('power_assertions', False))
-        rust = capture([str(frozen), *arguments], directory, 'rust', metadata['environment'])
-        outcome = status(case, java, rust, *( (directory / f'{name}.{channel}.bin').read_bytes()
-                                             for name in ('java', 'rust') for channel in ('stdout', 'stderr')),
-                         (directory / 'java.outcome.bin').read_bytes())
-        result = dict(id=case['id'], status=outcome, java=java, rust=rust)
-        if case['id'] == 'error-remainder-zero':
-            repeated = directory / 'java-repeat'
-            repeated.mkdir()
-            result['java_repeat'] = capture_java(metadata, frozen, case['id'] + '/java-repeat',
-                                                 source, case['expression'], repeated,
-                                                 case.get('power_assertions', False))
-        results.append(result)
-        print(f"{case['id']}: {outcome}", flush=True)
+    results = acquire_cases(selected, output, metadata, frozen, workers)
     relations = check_relations(manifest, output)
     report = dict(schema_version=2, scope=manifest['comparison_boundary'],
                   inventory_counts=manifest['counts'], selected_count=len(selected),
+                  execution=dict(workers=workers),
                   oracle=metadata, candidate=dict(path=str(candidate), sha256=candidate_hash,
                                  source_binding='recorded-build' if build else 'unbound-caller-supplied', build=build),
                   javac=dict(path=str(javac), sha256=oracle.sha256(javac)),
@@ -232,6 +268,10 @@ def verify_oracle(directory: Path, report):
 
 def check_report(directory: Path):
     report = json.loads((directory / 'report.json').read_bytes())
+    if 'execution' in report:
+        if not isinstance(report['execution'], dict) or set(report['execution']) != {'workers'}:
+            raise ValueError('invalid acquisition execution setting')
+        validate_workers(report['execution']['workers'])
     manifest = contract.current_manifest()
     verify_oracle(directory, report)
     if not report['source_stability'] or not report['artifact_stability']:
@@ -264,6 +304,8 @@ def check_report(directory: Path):
     ids = [row['id'] for row in report['results']]
     if set(ids) != set(selected) or len(ids) != len(selected) or report['selected_count'] != len(selected):
         raise ValueError('selected execution coverage incomplete or duplicate')
+    if 'execution' in report and ids != list(selected):
+        raise ValueError('selected execution order differs from manifest')
     for row in report['results']:
         case = selected[row['id']]
         folder = directory / 'cases' / row['id']
@@ -399,10 +441,14 @@ def main():
     action.add_argument('--verify-development', type=Path, help='development-only gate allowing explicitly recorded cycle/remainder failures; does not establish compatibility')
     parser.add_argument('--record-only', action='store_true', help='with --output, acquire and validate evidence without requiring compatibility success')
     parser.add_argument('--candidate', type=Path, help='override the default recorded release build; caller-supplied artifact has no verified source binding')
+    parser.add_argument('--workers', type=worker_argument, default=1,
+                        help=f'acquire up to this many cases concurrently (1-{MAX_WORKERS}, default 1); throughput only')
     args = parser.parse_args()
     if args.record_only and not args.output:
         parser.error('--record-only requires --output')
-    report = execute(args.output.resolve(), args.candidate.resolve() if args.candidate else None) if args.output else check_report(
+    if args.workers != 1 and not args.output:
+        parser.error('--workers requires --output')
+    report = execute(args.output.resolve(), args.candidate.resolve() if args.candidate else None, args.workers) if args.output else check_report(
         (args.verify_report or args.verify_subset or args.verify_full or args.verify_development).resolve())
     print(json.dumps(dict(selected=report['status_counts'], full_gate_failures=len(report['full_gate_failures'])), sort_keys=True))
     if args.verify_report or args.record_only:

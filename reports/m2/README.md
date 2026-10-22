@@ -45,6 +45,18 @@ Stage 33 aligns non-local const owners and method/lambda inferred-parent boundar
 Stage 34 uses return-type defaults and inherited property contexts for inferred parents.
 These checkpoints do not complete the language milestone.
 
+## Stage 36 acquisition tooling checkpoint
+
+The language runner accepts an optional `--workers` count while retaining fresh
+Java/Rust processes, separate raw captures and manifest-order results. Serial
+execution remains the default. The [tooling checkpoint](stage36-tooling-checkpoint.json)
+records 208 passing Python tests, current manifest validation, and six fresh
+serial/parallel cases with identical raw channels, including the existing
+remainder mismatch. The [raw archive](stage36-tooling-evidence.tar.gz) preserves
+the initial driver failure, worktree freshness failures and final main checks.
+This improves acquisition throughput; Stage 36 runtime work remains in progress
+and no evaluator speed or memory result is claimed.
+
 ## Stage 35 local verification checkpoint
 
 Declaration annotations now run through the shared parser, resolver and VM,
