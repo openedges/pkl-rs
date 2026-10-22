@@ -116,6 +116,26 @@ Selected differential checks establish only the behavior they execute. See
 [the M2 contract](m2-language.md) and [raw results](../reports/m2/README.md)
 for the remaining language and diagnostic obligations.
 
+### Authored expression traversal
+
+Ordinary authored expression paths use explicit parser, resolver and compiler
+continuations. Their traversal storage grows on the heap; expression-tree cloning
+and release also avoid recursion along those paths. Literal List keys use a flat
+structural token stream for resolution, equality and diagnostic rendering.
+Compiler continuations preserve child order, short-circuit targets, source spans
+and power-assertion observations.
+
+If, let, lambda and property-only object paths also use continuations. Type parsing
+uses a work stack with a logical-depth and constructed-height limit of 32. The
+65,536-step expression work budget is shared across interpolated expressions.
+Guard rejection and successful processing below a guard are separate obligations.
+The existing nested lexical-string guard still permits a native stack overflow on
+the recorded 256 KiB stack; that failure remains open. Deep type compilation,
+class/instance and mixed/generator body compilation retain recursive helpers.
+Derived AST Debug and PartialEq also remain recursive. The selected checks do not
+establish arbitrary authored depth, uniform compilation latency or complete Java
+resource-error compatibility.
+
 ### Constraint continuations
 
 Constraint checks use a continuation in the checking VM frame. Primitive

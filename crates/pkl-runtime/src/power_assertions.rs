@@ -187,90 +187,91 @@ fn expression_anchors(
     root: bool,
     anchors: &mut BTreeMap<Span, Option<usize>>,
 ) {
-    if let ExprKind::Parenthesized(inner) = &expression.kind {
-        anchors.insert(expression.span, None);
-        expression_anchors(inner, text, root, anchors);
-        return;
-    }
-    let mut children = Vec::new();
-    let mut anchor = Some(expression.span.start);
-    match &expression.kind {
-        ExprKind::Parenthesized(_) => unreachable!("handled above"),
-        ExprKind::Import { .. }
-        | ExprKind::Int(_)
-        | ExprKind::Float(_)
-        | ExprKind::Null
-        | ExprKind::String(_)
-        | ExprKind::Bool(_)
-        | ExprKind::Uninitialized
-        | ExprKind::EntryParent
-        | ExprKind::TypeAlias { .. }
-        | ExprKind::Class { .. } => anchor = None,
-        ExprKind::Function { body, .. } => {
-            anchor = None;
-            if root {
-                children.push(body.as_ref());
-            }
+    let mut work = vec![(expression, root)];
+    while let Some((expression, root)) = work.pop() {
+        if let ExprKind::Parenthesized(inner) = &expression.kind {
+            anchors.insert(expression.span, None);
+            work.push((inner, root));
+            continue;
         }
-        ExprKind::Let { value, body, .. } => {
-            anchor = None;
-            children.extend([value.as_ref(), body.as_ref()]);
-        }
-        ExprKind::Binary { left, right, .. } => {
-            anchor = Some(next_token(text, left.span.end, false));
-            children.extend([left.as_ref(), right.as_ref()]);
-        }
-        ExprKind::TypeCheck { value, .. } | ExprKind::TypeCast { value, .. } => {
-            anchor = Some(next_token(text, value.span.end, false));
-            children.push(value.as_ref());
-        }
-        ExprKind::NullableMember(receiver, _) | ExprKind::Member(receiver, _) => {
-            anchor = Some(next_token(text, receiver.span.end, true));
-            children.push(receiver.as_ref());
-        }
-        ExprKind::Subscript { receiver, key } => {
-            anchor = Some(next_token(text, receiver.span.end, false));
-            children.extend([receiver.as_ref(), key.as_ref()]);
-        }
-        ExprKind::Call { callee, arguments } => {
-            anchor = match &callee.kind {
-                ExprKind::NullableMember(receiver, _) | ExprKind::Member(receiver, _) => {
-                    Some(next_token(text, receiver.span.end, true))
+        let mut children = Vec::new();
+        let mut anchor = Some(expression.span.start);
+        match &expression.kind {
+            ExprKind::Parenthesized(_) => unreachable!("handled above"),
+            ExprKind::Import { .. }
+            | ExprKind::Int(_)
+            | ExprKind::Float(_)
+            | ExprKind::Null
+            | ExprKind::String(_)
+            | ExprKind::Bool(_)
+            | ExprKind::Uninitialized
+            | ExprKind::EntryParent
+            | ExprKind::TypeAlias { .. }
+            | ExprKind::Class { .. } => anchor = None,
+            ExprKind::Function { body, .. } => {
+                anchor = None;
+                if root {
+                    children.push(body.as_ref());
                 }
-                _ => Some(callee.span.start),
-            };
-            children.push(callee.as_ref());
-            children.extend(arguments);
+            }
+            ExprKind::Let { value, body, .. } => {
+                anchor = None;
+                children.extend([value.as_ref(), body.as_ref()]);
+            }
+            ExprKind::Binary { left, right, .. } => {
+                anchor = Some(next_token(text, left.span.end, false));
+                children.extend([left.as_ref(), right.as_ref()]);
+            }
+            ExprKind::TypeCheck { value, .. } | ExprKind::TypeCast { value, .. } => {
+                anchor = Some(next_token(text, value.span.end, false));
+                children.push(value.as_ref());
+            }
+            ExprKind::NullableMember(receiver, _) | ExprKind::Member(receiver, _) => {
+                anchor = Some(next_token(text, receiver.span.end, true));
+                children.push(receiver.as_ref());
+            }
+            ExprKind::Subscript { receiver, key } => {
+                anchor = Some(next_token(text, receiver.span.end, false));
+                children.extend([receiver.as_ref(), key.as_ref()]);
+            }
+            ExprKind::Call { callee, arguments } => {
+                anchor = match &callee.kind {
+                    ExprKind::NullableMember(receiver, _) | ExprKind::Member(receiver, _) => {
+                        Some(next_token(text, receiver.span.end, true))
+                    }
+                    _ => Some(callee.span.start),
+                };
+                children.push(callee.as_ref());
+                children.extend(arguments);
+            }
+            ExprKind::NonNull(value)
+            | ExprKind::Throw(value)
+            | ExprKind::Unary { operand: value, .. } => children.push(value.as_ref()),
+            ExprKind::If {
+                condition,
+                then_branch,
+                else_branch,
+            } => children.extend([
+                condition.as_ref(),
+                then_branch.as_ref(),
+                else_branch.as_ref(),
+            ]),
+            ExprKind::InterpolatedString(parts) => children.extend(parts),
+            ExprKind::Object { parent, members } => {
+                children.extend(parent.iter().map(AsRef::as_ref));
+                member_expressions(members, &mut children);
+            }
+            ExprKind::New { members, .. } => {
+                member_expressions(members, &mut children);
+            }
+            ExprKind::Name(_)
+            | ExprKind::This
+            | ExprKind::Outer
+            | ExprKind::Module
+            | ExprKind::Super => {}
         }
-        ExprKind::NonNull(value)
-        | ExprKind::Throw(value)
-        | ExprKind::Unary { operand: value, .. } => children.push(value.as_ref()),
-        ExprKind::If {
-            condition,
-            then_branch,
-            else_branch,
-        } => children.extend([
-            condition.as_ref(),
-            then_branch.as_ref(),
-            else_branch.as_ref(),
-        ]),
-        ExprKind::InterpolatedString(parts) => children.extend(parts),
-        ExprKind::Object { parent, members } => {
-            children.extend(parent.iter().map(AsRef::as_ref));
-            member_expressions(members, &mut children);
-        }
-        ExprKind::New { members, .. } => {
-            member_expressions(members, &mut children);
-        }
-        ExprKind::Name(_)
-        | ExprKind::This
-        | ExprKind::Outer
-        | ExprKind::Module
-        | ExprKind::Super => {}
-    }
-    anchors.insert(expression.span, anchor);
-    for child in children {
-        expression_anchors(child, text, false, anchors);
+        anchors.insert(expression.span, anchor);
+        work.extend(children.into_iter().rev().map(|child| (child, false)));
     }
 }
 

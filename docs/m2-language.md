@@ -253,11 +253,25 @@ Set values from other collections, preserves nested lazy List checks and eager
 Set checks, and covers bare types, aliases, defaults, nullable attached defaults,
 casts, union checking and normalized Reference metadata. Explicit empty generic
 argument lists now produce the pinned parser diagnostic, including List, Set,
-Map and alias controls. Original parser depth and node limits remain unchanged.
+Map and alias controls. Stage 24 left the original parser depth and node limits unchanged.
 Persistent sequences and native Host/GC checks retain independent contracts.
 Unselected controls preserve String-selected alias-union constructor diagnostic
 differences, unsupported member APIs and general compound outputs. These are
 remaining gaps, not additional development exceptions.
+
+Stage 25 addresses selected authored frontend depth. Ordinary expression parsing,
+resolution and emission use explicit work stacks, with iterative expression-tree
+copying and release. Constant List keys and power-assertion anchors have their own
+iterative traversals. The selected Java corpus and process-isolated native checks
+cover different contracts: exact output and diagnostics versus bounded stack and
+lifecycle behavior. Deep type compilation and nested lexical string interpolation
+retain separate limitations: nested lexical strings at depth 64 still abort on the
+recorded 256 KiB stack. Type-depth 24/31 checks cover parsing, copying and release,
+not full type compilation. If/let/lambda and property-only Dynamic object paths
+have separate accepted-depth 24/31 full-frontend checks. Class/instance and
+mixed/generator compiler paths, and recursive AST Debug/PartialEq, remain outside
+that success claim. The historical runtime depth-768 tests construct values after
+compilation and do not replace authored-source frontend validation.
 
 A complete runtime type-resolution model, general imported types, annotation
 syntax, and full module initialization/caching remain open requirements. The

@@ -13,7 +13,7 @@ fn operator_associativity_and_unary_precedence_follow_pkl() {
         op: BinaryOp::Power,
         left,
         right,
-    } = expression.kind
+    } = &expression.kind
     else {
         panic!("expected power")
     };
@@ -30,7 +30,7 @@ fn operator_associativity_and_unary_precedence_follow_pkl() {
         op: BinaryOp::NullCoalesce,
         left,
         ..
-    } = expression.kind
+    } = &expression.kind
     else {
         panic!("expected coalesce")
     };
@@ -38,7 +38,7 @@ fn operator_associativity_and_unary_precedence_follow_pkl() {
         op: BinaryOp::Or,
         left,
         right,
-    } = left.kind
+    } = &left.kind
     else {
         panic!("expected or")
     };
@@ -57,7 +57,7 @@ fn operator_associativity_and_unary_precedence_follow_pkl() {
         }
     ));
     let expression = parse_expression("a ?? b ?? c").unwrap();
-    let ExprKind::Binary { right, .. } = expression.kind else {
+    let ExprKind::Binary { right, .. } = &expression.kind else {
         panic!("coalesce")
     };
     assert!(matches!(
@@ -392,7 +392,7 @@ fn numeric_validation_waits_for_syntax_and_unary_postfix_precedence() {
     assert_eq!(error.member.as_deref(), Some("result"));
     let expression = parse_expression("-1.toString()").unwrap();
     assert!(
-        matches!(expression.kind, ExprKind::Unary { op: UnaryOp::Negate, operand } if matches!(operand.kind, ExprKind::Call { .. }))
+        matches!(&expression.kind, ExprKind::Unary { op: UnaryOp::Negate, operand } if matches!(operand.kind, ExprKind::Call { .. }))
     );
     let error = parse_expression("-9223372036854775808.member").unwrap_err();
     assert_eq!(error.span, Span::new(1, 20));
@@ -425,7 +425,7 @@ fn pipelines_are_left_associative_between_coalesce_and_logical_or() {
         op: BinaryOp::NullCoalesce,
         right,
         ..
-    } = expression.kind
+    } = &expression.kind
     else {
         panic!("coalesce")
     };
@@ -433,7 +433,7 @@ fn pipelines_are_left_associative_between_coalesce_and_logical_or() {
         op: BinaryOp::Pipe,
         left,
         right,
-    } = right.kind
+    } = &right.kind
     else {
         panic!("pipeline")
     };
@@ -456,7 +456,7 @@ fn pipelines_are_left_associative_between_coalesce_and_logical_or() {
         op: BinaryOp::Pipe,
         right,
         ..
-    } = expression.kind
+    } = &expression.kind
     else {
         panic!("pipeline")
     };

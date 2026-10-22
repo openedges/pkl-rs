@@ -34888,6 +34888,438 @@
         "semantic:type-aliases",
         "semantic:diagnostics"
       ]
+    },
+    {
+      "id": "frontend-stage25-parentheses-64",
+      "input": "tests/fixtures/m2/frontend-stage25-parentheses-64.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "frontend-stage25-parentheses-256",
+      "input": "tests/fixtures/m2/frontend-stage25-parentheses-256.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "frontend-stage25-list-128",
+      "input": "tests/fixtures/m2/frontend-stage25-list-128.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "frontend-stage25-set-128-equality",
+      "input": "tests/fixtures/m2/frontend-stage25-set-128-equality.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "frontend-stage25-map-128",
+      "input": "tests/fixtures/m2/frontend-stage25-map-128.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "frontend-stage25-binary-left-300",
+      "input": "tests/fixtures/m2/frontend-stage25-binary-left-300.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "frontend-stage25-binary-right-64",
+      "input": "tests/fixtures/m2/frontend-stage25-binary-right-64.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "frontend-stage25-power-right-64",
+      "input": "tests/fixtures/m2/frontend-stage25-power-right-64.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "frontend-stage25-postfix-128",
+      "input": "tests/fixtures/m2/frontend-stage25-postfix-128.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "frontend-stage25-shallow-list-600",
+      "input": "tests/fixtures/m2/frontend-stage25-shallow-list-600.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "frontend-stage25-shallow-members-600",
+      "input": "tests/fixtures/m2/frontend-stage25-shallow-members-600.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "frontend-stage25-precedence",
+      "input": "tests/fixtures/m2/frontend-stage25-precedence.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "frontend-stage25-subtraction",
+      "input": "tests/fixtures/m2/frontend-stage25-subtraction.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "frontend-stage25-division",
+      "input": "tests/fixtures/m2/frontend-stage25-division.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "frontend-stage25-power",
+      "input": "tests/fixtures/m2/frontend-stage25-power.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "frontend-stage25-conditional-lazy",
+      "input": "tests/fixtures/m2/frontend-stage25-conditional-lazy.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "frontend-stage25-first-binary-error",
+      "input": "tests/fixtures/m2/frontend-stage25-first-binary-error.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "frontend-stage25-first-list-error",
+      "input": "tests/fixtures/m2/frontend-stage25-first-list-error.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "frontend-stage25-let-lexical",
+      "input": "tests/fixtures/m2/frontend-stage25-let-lexical.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "frontend-stage25-postfix-binding",
+      "input": "tests/fixtures/m2/frontend-stage25-postfix-binding.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "frontend-stage25-first-deep-call-error",
+      "input": "tests/fixtures/m2/frontend-stage25-first-deep-call-error.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "set-stage23-deep-64-equality",
+      "input": "tests/fixtures/m2/set-stage23-deep-64-equality.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "set-stage23-deep-64-map-key",
+      "input": "tests/fixtures/m2/set-stage23-deep-64-map-key.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "frontend-stage25-unary-spaced-128",
+      "input": "tests/fixtures/m2/frontend-stage25-unary-spaced-128.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "frontend-stage25-lambda-capture-apply",
+      "input": "tests/fixtures/m2/frontend-stage25-lambda-capture-apply.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "frontend-stage25-conditional-shallow",
+      "input": "tests/fixtures/m2/frontend-stage25-conditional-shallow.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "frontend-stage25-let-shallow",
+      "input": "tests/fixtures/m2/frontend-stage25-let-shallow.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "frontend-stage25-lambda-shallow",
+      "input": "tests/fixtures/m2/frontend-stage25-lambda-shallow.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "frontend-stage25-object-shallow",
+      "input": "tests/fixtures/m2/frontend-stage25-object-shallow.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "frontend-stage25-missing-close-64",
+      "input": "tests/fixtures/m2/frontend-stage25-missing-close-64.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "frontend-stage25-bad-inner-64",
+      "input": "tests/fixtures/m2/frontend-stage25-bad-inner-64.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "frontend-stage25-first-call-arguments",
+      "input": "tests/fixtures/m2/frontend-stage25-first-call-arguments.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "frontend-stage25-short-circuit",
+      "input": "tests/fixtures/m2/frontend-stage25-short-circuit.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "frontend-stage25-coalesce-associativity",
+      "input": "tests/fixtures/m2/frontend-stage25-coalesce-associativity.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "frontend-stage25-nullable-member",
+      "input": "tests/fixtures/m2/frontend-stage25-nullable-member.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "frontend-stage25-nonnull-postfix",
+      "input": "tests/fixtures/m2/frontend-stage25-nonnull-postfix.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
     }
   ],
   "schema_version": 1,

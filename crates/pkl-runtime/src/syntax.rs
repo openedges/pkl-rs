@@ -216,7 +216,7 @@ pub enum TypeKind {
     },
 }
 
-#[derive(Clone, Debug, PartialEq)]
+#[derive(Debug, PartialEq)]
 pub struct Expr {
     pub kind: ExprKind,
     pub span: Span,
@@ -230,6 +230,366 @@ impl Expr {
             expression = inner;
         }
         expression
+    }
+}
+
+// Expression syntax uses explicit traversal for cloning and destruction.
+// Type syntax and generator member structure retain their parser bounds.
+impl Clone for Expr {
+    fn clone(&self) -> Self {
+        enum Work<'a> {
+            Visit(&'a Expr),
+            Finish(&'a Expr, usize),
+        }
+        let mut work = vec![Work::Visit(self)];
+        let mut values: Vec<Expr> = Vec::new();
+        while let Some(task) = work.pop() {
+            match task {
+                Work::Visit(expr) => {
+                    let children = expr.expression_children();
+                    work.push(Work::Finish(expr, values.len()));
+                    work.extend(children.into_iter().rev().map(Work::Visit));
+                }
+                Work::Finish(expr, start) => {
+                    let mut children = values.split_off(start).into_iter();
+                    let mut next = || children.next().expect("syntax clone child");
+                    use ExprKind as E;
+                    let kind = match &expr.kind {
+                        E::Parenthesized(_) => E::Parenthesized(Box::new(next())),
+                        E::NonNull(_) => E::NonNull(Box::new(next())),
+                        E::Throw(_) => E::Throw(Box::new(next())),
+                        E::Member(_, name) => E::Member(Box::new(next()), name.clone()),
+                        E::NullableMember(_, name) => {
+                            E::NullableMember(Box::new(next()), name.clone())
+                        }
+                        E::Unary { op, .. } => E::Unary {
+                            op: *op,
+                            operand: Box::new(next()),
+                        },
+                        E::Binary { op, .. } => E::Binary {
+                            op: *op,
+                            left: Box::new(next()),
+                            right: Box::new(next()),
+                        },
+                        E::Subscript { .. } => E::Subscript {
+                            receiver: Box::new(next()),
+                            key: Box::new(next()),
+                        },
+                        E::Call { arguments, .. } => E::Call {
+                            callee: Box::new(next()),
+                            arguments: (0..arguments.len()).map(|_| next()).collect(),
+                        },
+                        E::TypeCheck { ty, .. } => E::TypeCheck {
+                            value: Box::new(next()),
+                            ty: ty.clone(),
+                        },
+                        E::TypeCast { ty, .. } => E::TypeCast {
+                            value: Box::new(next()),
+                            ty: ty.clone(),
+                        },
+                        E::InterpolatedString(parts) => {
+                            E::InterpolatedString((0..parts.len()).map(|_| next()).collect())
+                        }
+                        E::If { .. } => E::If {
+                            condition: Box::new(next()),
+                            then_branch: Box::new(next()),
+                            else_branch: Box::new(next()),
+                        },
+                        E::Let { name, ty, .. } => E::Let {
+                            name: name.clone(),
+                            ty: ty.clone(),
+                            value: Box::new(next()),
+                            body: Box::new(next()),
+                        },
+                        E::Function {
+                            type_parameters,
+                            header_span,
+                            parameters,
+                            return_type,
+                            method,
+                            ..
+                        } => E::Function {
+                            type_parameters: type_parameters.clone(),
+                            header_span: *header_span,
+                            parameters: parameters.clone(),
+                            return_type: return_type.clone(),
+                            method: *method,
+                            body: Box::new(next()),
+                        },
+                        E::Object { parent, members } => E::Object {
+                            parent: parent.as_ref().map(|_| Box::new(next())),
+                            members: clone_object_members(members, &mut next),
+                        },
+                        E::New { ty, members } => E::New {
+                            ty: ty.clone(),
+                            members: clone_object_members(members, &mut next),
+                        },
+                        E::Class {
+                            type_parameters,
+                            superclass,
+                            members,
+                            header_span,
+                        } => E::Class {
+                            type_parameters: type_parameters.clone(),
+                            superclass: superclass.clone(),
+                            members: members
+                                .iter()
+                                .map(|member| clone_member(member, next()))
+                                .collect(),
+                            header_span: *header_span,
+                        },
+                        kind => kind.clone(),
+                    };
+                    values.push(Self {
+                        kind,
+                        span: expr.span,
+                    });
+                }
+            }
+        }
+        values.pop().expect("syntax clone root")
+    }
+}
+
+impl Expr {
+    pub(crate) fn expression_children(&self) -> Vec<&Expr> {
+        use ExprKind as E;
+        match &self.kind {
+            E::Parenthesized(value)
+            | E::NonNull(value)
+            | E::Throw(value)
+            | E::Member(value, _)
+            | E::NullableMember(value, _)
+            | E::Unary { operand: value, .. }
+            | E::TypeCheck { value, .. }
+            | E::TypeCast { value, .. } => vec![value],
+            E::Binary { left, right, .. } => vec![left, right],
+            E::Subscript { receiver, key } => vec![receiver, key],
+            E::Call { callee, arguments } => {
+                std::iter::once(callee.as_ref()).chain(arguments).collect()
+            }
+            E::InterpolatedString(parts) => parts.iter().collect(),
+            E::If {
+                condition,
+                then_branch,
+                else_branch,
+            } => vec![condition, then_branch, else_branch],
+            E::Let { value, body, .. } => vec![value, body],
+            E::Function { body, .. } => vec![body],
+            E::Object { parent, members } => {
+                let mut children = parent.iter().map(AsRef::as_ref).collect::<Vec<_>>();
+                object_expressions(members, &mut children);
+                children
+            }
+            E::New { members, .. } => {
+                let mut children = Vec::new();
+                object_expressions(members, &mut children);
+                children
+            }
+            E::Class { members, .. } => members.iter().map(|member| &member.expr).collect(),
+            _ => Vec::new(),
+        }
+    }
+}
+
+fn clone_member(member: &Member, expr: Expr) -> Member {
+    Member {
+        name: member.name.clone(),
+        name_span: member.name_span,
+        expr,
+        span: member.span,
+        local: member.local,
+        ty: member.ty.clone(),
+        modifiers: member.modifiers.clone(),
+        override_fixed_span: member.override_fixed_span,
+        override_const_span: member.override_const_span,
+    }
+}
+
+fn object_expressions<'a>(members: &'a [ObjectMember], expressions: &mut Vec<&'a Expr>) {
+    let mut work = members.iter().rev().collect::<Vec<_>>();
+    while let Some(member) = work.pop() {
+        match member {
+            ObjectMember::Property(member) => expressions.push(&member.expr),
+            ObjectMember::Element { value, .. } | ObjectMember::Spread { value, .. } => {
+                expressions.push(value)
+            }
+            ObjectMember::Entry { key, value, .. } => expressions.extend([key, value]),
+            ObjectMember::Predicate {
+                condition, value, ..
+            } => expressions.extend([condition, value]),
+            ObjectMember::When {
+                condition,
+                then_members,
+                else_members,
+                ..
+            } => {
+                expressions.push(condition);
+                work.extend(else_members.iter().rev());
+                work.extend(then_members.iter().rev());
+            }
+            ObjectMember::For {
+                iterable, members, ..
+            } => {
+                expressions.push(iterable);
+                work.extend(members.iter().rev());
+            }
+        }
+    }
+}
+
+fn clone_object_members(
+    members: &[ObjectMember],
+    next: &mut impl FnMut() -> Expr,
+) -> Vec<ObjectMember> {
+    members
+        .iter()
+        .map(|member| match member {
+            ObjectMember::Property(member) => ObjectMember::Property(clone_member(member, next())),
+            ObjectMember::Element { span, .. } => ObjectMember::Element {
+                value: next(),
+                span: *span,
+            },
+            ObjectMember::Entry { span, .. } => ObjectMember::Entry {
+                key: next(),
+                value: next(),
+                span: *span,
+            },
+            ObjectMember::Spread { nullable, span, .. } => ObjectMember::Spread {
+                value: next(),
+                nullable: *nullable,
+                span: *span,
+            },
+            ObjectMember::Predicate { span, .. } => ObjectMember::Predicate {
+                condition: next(),
+                value: next(),
+                span: *span,
+            },
+            ObjectMember::When {
+                then_members,
+                else_members,
+                span,
+                ..
+            } => ObjectMember::When {
+                condition: next(),
+                then_members: clone_object_members(then_members, next),
+                else_members: clone_object_members(else_members, next),
+                span: *span,
+            },
+            ObjectMember::For {
+                parameters,
+                members,
+                span,
+                ..
+            } => ObjectMember::For {
+                parameters: parameters.clone(),
+                iterable: next(),
+                members: clone_object_members(members, next),
+                span: *span,
+            },
+        })
+        .collect()
+}
+
+fn detach_members(members: Vec<ObjectMember>, expressions: &mut Vec<Expr>) {
+    let mut work = members;
+    while let Some(member) = work.pop() {
+        match member {
+            ObjectMember::Property(member) => expressions.push(member.expr),
+            ObjectMember::Element { value, .. } | ObjectMember::Spread { value, .. } => {
+                expressions.push(value)
+            }
+            ObjectMember::Entry { key, value, .. } => expressions.extend([key, value]),
+            ObjectMember::Predicate {
+                condition, value, ..
+            } => expressions.extend([condition, value]),
+            ObjectMember::When {
+                condition,
+                mut then_members,
+                mut else_members,
+                ..
+            } => {
+                expressions.push(condition);
+                work.append(&mut then_members);
+                work.append(&mut else_members);
+            }
+            ObjectMember::For {
+                iterable,
+                mut members,
+                ..
+            } => {
+                expressions.push(iterable);
+                work.append(&mut members);
+            }
+        }
+    }
+}
+
+impl Drop for Expr {
+    fn drop(&mut self) {
+        fn detach(kind: ExprKind, pending: &mut Vec<Expr>) {
+            use ExprKind as E;
+            match kind {
+                E::Parenthesized(value)
+                | E::NonNull(value)
+                | E::Throw(value)
+                | E::Member(value, _)
+                | E::NullableMember(value, _)
+                | E::Unary { operand: value, .. }
+                | E::TypeCheck { value, .. }
+                | E::TypeCast { value, .. } => pending.push(*value),
+                E::Binary { left, right, .. } => {
+                    pending.push(*left);
+                    pending.push(*right);
+                }
+                E::Subscript { receiver, key } => {
+                    pending.push(*receiver);
+                    pending.push(*key);
+                }
+                E::Call {
+                    callee,
+                    mut arguments,
+                } => {
+                    pending.push(*callee);
+                    pending.append(&mut arguments);
+                }
+                E::InterpolatedString(mut parts) => pending.append(&mut parts),
+                E::If {
+                    condition,
+                    then_branch,
+                    else_branch,
+                } => {
+                    pending.push(*condition);
+                    pending.push(*then_branch);
+                    pending.push(*else_branch);
+                }
+                E::Let { value, body, .. } => {
+                    pending.push(*value);
+                    pending.push(*body);
+                }
+                E::Function { body, .. } => pending.push(*body),
+                E::Class { members, .. } => {
+                    pending.extend(members.into_iter().map(|member| member.expr))
+                }
+                E::Object { parent, members } => {
+                    pending.extend(parent.map(|parent| *parent));
+                    detach_members(members, pending);
+                }
+                E::New { members, .. } => detach_members(members, pending),
+                _ => {}
+            }
+        }
+        let mut pending = Vec::new();
+        detach(
+            std::mem::replace(&mut self.kind, ExprKind::Null),
+            &mut pending,
+        );
+        while let Some(mut expression) = pending.pop() {
+            detach(
+                std::mem::replace(&mut expression.kind, ExprKind::Null),
+                &mut pending,
+            );
+        }
     }
 }
 

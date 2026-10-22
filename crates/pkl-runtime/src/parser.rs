@@ -7,6 +7,7 @@ use crate::syntax::{
     UnaryOp, Variance, modifier_flags,
 };
 
+mod type_parser;
 mod unicode_identifier;
 
 fn identifier_contains(ranges: &[(u32, u32)], character: char) -> bool {
@@ -537,6 +538,75 @@ enum MemberContext {
     Module,
     Class,
     Object,
+}
+
+struct ObjectBuild {
+    start: usize,
+    parent: Option<Expr>,
+    ty: Option<Type>,
+    members: Vec<ObjectMember>,
+    missing_delimiter: bool,
+    postfix: bool,
+}
+
+struct PropertyHead {
+    start: usize,
+    name: String,
+    name_span: Span,
+    local: bool,
+    modifiers: Vec<Modifier>,
+    ty: Option<Type>,
+    method: Option<MethodHead>,
+}
+
+struct MethodHead {
+    type_parameters: Vec<TypeParameter>,
+    parameters: Vec<Parameter>,
+    return_type: Option<Type>,
+    header_span: Span,
+}
+
+enum ObjectValue {
+    Property(Box<PropertyHead>),
+    Element(usize),
+    Spread(usize, bool),
+    Entry(usize, Expr, bool, bool),
+}
+
+enum ExpressionFrame {
+    Group(usize),
+    Throw(usize),
+    Unary(usize, UnaryOp),
+    Binary(Expr, BinaryOp),
+    Subscript(Expr),
+    Arguments(Expr, Vec<Expr>),
+    IfCondition(usize),
+    IfThen(usize, Expr),
+    IfElse(usize, Expr, Expr),
+    LetValue(usize, String, Option<Type>),
+    LetBody(usize, String, Option<Type>, Expr),
+    Function(usize, Span, Vec<Parameter>),
+    ObjectValue(Box<ObjectBuild>, ObjectValue),
+    ObjectKey(Box<ObjectBuild>, usize, bool),
+    WhenCondition(Box<ObjectBuild>, usize),
+    WhenThen(Box<ObjectBuild>, usize, Expr),
+    WhenElse(Box<ObjectBuild>, usize, Expr, Vec<ObjectMember>),
+    ForIterable(Box<ObjectBuild>, usize, Vec<Parameter>),
+    ForBody(Box<ObjectBuild>, usize, Vec<Parameter>, Expr),
+}
+struct ExpressionMachine {
+    frames: Vec<(u8, Option<String>, ExpressionFrame)>,
+    minimum: u8,
+    current: Option<Expr>,
+    object_build: Option<Box<ObjectBuild>>,
+    object_root: bool,
+    finish_expression: bool,
+}
+
+enum ExpressionFlow {
+    Continue,
+    Primary,
+    Done(Expr),
 }
 
 #[derive(Clone)]
@@ -1076,14 +1146,14 @@ impl<'a> Parser<'a> {
     }
 
     fn expression(&mut self, minimum_precedence: u8) -> Result<Expr, Diagnostic> {
-        // Bound parser recursion before consuming hostile nesting. This is an
-        // explicit prototype limitation, never successful partial parsing.
-        self.expressions += 1;
-        if self.depth >= 32 || self.expressions > 512 {
+        // Only unconverted grammar scopes consume the native call stack. The
+        // ordinary Pratt expression machine below stores its continuations on
+        // the heap; one shared work budget bounds both wide and deep inputs.
+        if self.depth >= 32 {
             return Err(Diagnostic::new(
                 DiagnosticKind::Unsupported,
                 self.token.span,
-                "M1 expression nesting or count limit exceeded.",
+                "Expression scope nesting limit exceeded.",
             ));
         }
         self.depth += 1;
@@ -1092,16 +1162,366 @@ impl<'a> Parser<'a> {
         result
     }
 
+    fn enter_expression_scope(&mut self) -> Result<(), Diagnostic> {
+        if self.depth >= 32 {
+            return Err(Diagnostic::new(
+                DiagnosticKind::Unsupported,
+                self.token.span,
+                "Expression scope nesting limit exceeded.",
+            ));
+        }
+        self.depth += 1;
+        Ok(())
+    }
+
+    fn expression_step(&mut self) -> Result<(), Diagnostic> {
+        self.expressions += 1;
+        if self.expressions > 65_536 {
+            return Err(Diagnostic::new(
+                DiagnosticKind::Unsupported,
+                self.token.span,
+                "Expression work limit exceeded.",
+            ));
+        }
+        Ok(())
+    }
+
     fn expression_inner(&mut self, minimum_precedence: u8) -> Result<Expr, Diagnostic> {
-        let mut left = self.primary()?;
+        self.expression_machine(minimum_precedence, None)
+    }
+
+    fn expression_machine(
+        &mut self,
+        minimum_precedence: u8,
+        initial_object: Option<Box<ObjectBuild>>,
+    ) -> Result<Expr, Diagnostic> {
+        let mut machine = ExpressionMachine {
+            frames: Vec::new(),
+            minimum: minimum_precedence,
+            current: None,
+            object_root: initial_object.is_some(),
+            finish_expression: false,
+            object_build: initial_object,
+        };
         loop {
-            self.expressions += 1;
-            if self.expressions > 512 {
-                return Err(Diagnostic::new(
-                    DiagnosticKind::Unsupported,
-                    self.token.span,
-                    "M1 expression count limit exceeded.",
+            match self.expression_machine_step(&mut machine)? {
+                ExpressionFlow::Continue => {}
+                ExpressionFlow::Primary => machine.current = Some(self.primary()?),
+                ExpressionFlow::Done(expression) => return Ok(expression),
+            }
+        }
+    }
+
+    fn expression_machine_step(
+        &mut self,
+        machine: &mut ExpressionMachine,
+    ) -> Result<ExpressionFlow, Diagnostic> {
+        if let Some(mut build) = machine.object_build.take() {
+            if self.is_symbol('}') || self.token.kind == Kind::Eof {
+                if self.token.kind == Kind::Eof && build.missing_delimiter {
+                    let mut error = self.unexpected(None);
+                    error.message = "Missing `}` delimiter.".to_owned();
+                    return Err(error);
+                }
+                let end = self.expect('}')?.span.end;
+                self.depth -= 1;
+                machine.current = Some(Expr {
+                    kind: if let Some(ty) = build.ty.take() {
+                        ExprKind::New {
+                            ty,
+                            members: std::mem::take(&mut build.members),
+                        }
+                    } else {
+                        ExprKind::Object {
+                            parent: build.parent.take().map(Box::new),
+                            members: std::mem::take(&mut build.members),
+                        }
+                    },
+                    span: Span::new(build.start, end),
+                });
+                if machine.object_root && machine.frames.is_empty() {
+                    return Ok(ExpressionFlow::Done(
+                        machine.current.take().expect("object syntax"),
+                    ));
+                }
+                if !build.postfix {
+                    if self.is_symbol('{')
+                        && machine.frames.last().is_some_and(|frame| {
+                            matches!(
+                                &frame.2,
+                                ExpressionFrame::ObjectValue(_, ObjectValue::Entry(_, _, _, true))
+                            )
+                        })
+                    {
+                        let parent = machine.current.take().expect("entry amendment");
+                        let start = parent.span.start;
+                        machine.object_build =
+                            Some(self.start_object(Some(parent), None, start, true, false)?);
+                        return Ok(ExpressionFlow::Continue);
+                    }
+                    machine.finish_expression = true;
+                }
+            } else {
+                let start = self.token.span.start;
+                if self.is_name("unknown") || self.is_name("nothing") {
+                    return Err(self.unexpected(Some("}")));
+                }
+                if self.is_name("when") {
+                    self.advance()?;
+                    self.expect('(')?;
+                    machine.frames.push((
+                        machine.minimum,
+                        self.expectation.replace(")".into()),
+                        ExpressionFrame::WhenCondition(build, start),
+                    ));
+                } else if self.is_name("for") {
+                    self.advance()?;
+                    self.expect('(')?;
+                    let mut parameters = vec![self.parameter()?];
+                    if self.is_symbol(',') {
+                        self.advance()?;
+                        parameters.push(self.parameter()?);
+                    }
+                    if !self.is_name("in") {
+                        return Err(self.unexpected(Some("in")));
+                    }
+                    self.advance()?;
+                    machine.frames.push((
+                        machine.minimum,
+                        self.expectation.replace(")".into()),
+                        ExpressionFrame::ForIterable(build, start, parameters),
+                    ));
+                } else if self.is_operator("...") || self.is_operator("...?") {
+                    let nullable = self.is_operator("...?");
+                    self.advance()?;
+                    machine.frames.push((
+                        machine.minimum,
+                        self.expectation.replace("}".into()),
+                        ExpressionFrame::ObjectValue(build, ObjectValue::Spread(start, nullable)),
+                    ));
+                } else if self.is_symbol('[') || self.is_operator("[[") {
+                    let predicate = self.is_operator("[[");
+                    self.advance()?;
+                    machine.frames.push((
+                        machine.minimum,
+                        self.expectation
+                            .replace(if predicate { "]]" } else { "]" }.into()),
+                        ExpressionFrame::ObjectKey(build, start, predicate),
+                    ));
+                } else if self.object_property()? {
+                    let head = self.object_property_head()?;
+                    if self.is_symbol('=') {
+                        self.advance()?;
+                        machine.frames.push((
+                            machine.minimum,
+                            self.expectation.replace("}".into()),
+                            ExpressionFrame::ObjectValue(
+                                build,
+                                ObjectValue::Property(Box::new(head)),
+                            ),
+                        ));
+                    } else if self.is_symbol('{') && head.ty.is_none() && head.method.is_none() {
+                        let parent = Expr {
+                            kind: ExprKind::Member(
+                                Box::new(Expr {
+                                    kind: ExprKind::Super,
+                                    span: head.name_span,
+                                }),
+                                head.name.clone(),
+                            ),
+                            span: head.name_span,
+                        };
+                        let child = self.start_object(
+                            Some(parent),
+                            None,
+                            head.name_span.start,
+                            true,
+                            false,
+                        )?;
+                        machine.frames.push((
+                            machine.minimum,
+                            self.expectation.clone(),
+                            ExpressionFrame::ObjectValue(
+                                build,
+                                ObjectValue::Property(Box::new(head)),
+                            ),
+                        ));
+                        machine.object_build = Some(child);
+                        machine.minimum = 0;
+                        return Ok(ExpressionFlow::Continue);
+                    } else {
+                        return Err(self.unexpected(Some("=")));
+                    }
+                } else {
+                    machine.frames.push((
+                        machine.minimum,
+                        self.expectation.replace("}".into()),
+                        ExpressionFrame::ObjectValue(build, ObjectValue::Element(start)),
+                    ));
+                }
+                machine.minimum = 0;
+                return Ok(ExpressionFlow::Continue);
+            }
+        }
+        if machine.current.is_none() {
+            self.expression_step()?;
+            let span = self.token.span;
+            if self.is_symbol('(') {
+                let mut candidate = self.clone();
+                let parameters = candidate.parameters();
+                if let Ok(parameters) = parameters
+                    && candidate.is_operator("->")
+                {
+                    let header = Span::new(span.start, candidate.previous_end);
+                    candidate.advance()?;
+                    *self = candidate;
+                    self.enter_expression_scope()?;
+                    machine.frames.push((
+                        machine.minimum,
+                        self.expectation.clone(),
+                        ExpressionFrame::Function(span.start, header, parameters),
+                    ));
+                    machine.minimum = 0;
+                    return Ok(ExpressionFlow::Continue);
+                } else {
+                    self.advance()?;
+                    machine.frames.push((
+                        machine.minimum,
+                        self.expectation.replace(")".into()),
+                        ExpressionFrame::Group(span.start),
+                    ));
+                    machine.minimum = 0;
+                    return Ok(ExpressionFlow::Continue);
+                }
+            }
+            if self.is_name("new") {
+                self.advance()?;
+                let ty = if self.is_symbol('{') {
+                    None
+                } else {
+                    Some(self.type_expression()?)
+                };
+                let missing_delimiter = ty.is_none();
+                machine.object_build =
+                    Some(self.start_object(None, ty, span.start, missing_delimiter, true)?);
+                return Ok(ExpressionFlow::Continue);
+            }
+            if self.is_name("if") {
+                self.enter_expression_scope()?;
+                self.advance()?;
+                self.expect('(')?;
+                machine.frames.push((
+                    machine.minimum,
+                    self.expectation.replace(")".into()),
+                    ExpressionFrame::IfCondition(span.start),
                 ));
+                machine.minimum = 0;
+                return Ok(ExpressionFlow::Continue);
+            }
+            if self.is_name("let") {
+                self.enter_expression_scope()?;
+                self.advance()?;
+                self.expect('(')?;
+                let name = if self.is_name("_") {
+                    self.advance()?;
+                    "_".to_owned()
+                } else {
+                    self.identifier()?.0
+                };
+                let ty = self.type_annotation()?;
+                self.expect('=')?;
+                machine.frames.push((
+                    machine.minimum,
+                    self.expectation.replace(")".into()),
+                    ExpressionFrame::LetValue(span.start, name, ty),
+                ));
+                machine.minimum = 0;
+                return Ok(ExpressionFlow::Continue);
+            }
+            if self.is_name("throw") {
+                self.advance()?;
+                self.expect('(')?;
+                machine.frames.push((
+                    machine.minimum,
+                    self.expectation.replace(")".into()),
+                    ExpressionFrame::Throw(span.start),
+                ));
+                machine.minimum = 0;
+                return Ok(ExpressionFlow::Continue);
+            }
+            if self.is_symbol('-') || self.is_symbol('!') {
+                let negate = self.is_symbol('-');
+                self.advance()?;
+                if negate && let Kind::Int(text) = self.token.kind.clone() {
+                    let mut following = self.clone();
+                    following.advance()?;
+                    if !following.is_symbol('.')
+                        && !following.is_operator("?.")
+                        && !following.is_operator("!!")
+                        && !following.is_symbol('[')
+                    {
+                        let token_span = self.token.span;
+                        let value = self.integer_literal(&text, true, token_span);
+                        let end = self.advance()?.span.end;
+                        self.folded_integer_spans
+                            .insert(Span::new(span.start, end), token_span);
+                        machine.current = Some(Expr {
+                            kind: ExprKind::Int(value),
+                            span: Span::new(span.start, end),
+                        });
+                    }
+                }
+                if machine.current.is_none() {
+                    machine.frames.push((
+                        machine.minimum,
+                        self.expectation.clone(),
+                        ExpressionFrame::Unary(
+                            span.start,
+                            if negate {
+                                UnaryOp::Negate
+                            } else {
+                                UnaryOp::Not
+                            },
+                        ),
+                    ));
+                    machine.minimum = 11;
+                    return Ok(ExpressionFlow::Continue);
+                }
+            } else if self.is_name("read") {
+                self.advance()?;
+                let callee = Expr {
+                    kind: ExprKind::Name("read".into()),
+                    span,
+                };
+                self.expect('(')?;
+                if self.is_symbol(')') {
+                    let end = self.advance()?.span.end;
+                    machine.current = Some(Expr {
+                        kind: ExprKind::Call {
+                            callee: Box::new(callee),
+                            arguments: Vec::new(),
+                        },
+                        span: Span::new(span.start, end),
+                    });
+                } else {
+                    machine.frames.push((
+                        machine.minimum,
+                        self.expectation.take(),
+                        ExpressionFrame::Arguments(callee, Vec::new()),
+                    ));
+                    machine.minimum = 0;
+                    return Ok(ExpressionFlow::Continue);
+                }
+            } else {
+                return Ok(ExpressionFlow::Primary);
+            }
+        }
+        self.expression_step()?;
+        let mut left = machine.current.take().expect("expression machine value");
+        'postfix: {
+            if machine.finish_expression {
+                machine.finish_expression = false;
+                break 'postfix;
             }
             if self.is_symbol('.') || self.is_operator("?.") {
                 let nullable = self.is_operator("?.");
@@ -1116,7 +1536,8 @@ impl<'a> Parser<'a> {
                     },
                     span: Span::new(start, span.end),
                 };
-                continue;
+                machine.current = Some(left);
+                return Ok(ExpressionFlow::Continue);
             }
             if self.is_operator("!!") {
                 let end = self.advance()?.span.end;
@@ -1125,23 +1546,21 @@ impl<'a> Parser<'a> {
                     kind: ExprKind::NonNull(Box::new(left)),
                     span,
                 };
-                continue;
+                machine.current = Some(left);
+                return Ok(ExpressionFlow::Continue);
             }
             if self.is_symbol('[') && self.same_line() {
                 self.advance()?;
-                let key = self.expression_expected(0, Some(']'))?;
-                let end = self.expect(']')?.span.end;
-                let span = Span::new(left.span.start, end);
-                left = Expr {
-                    kind: ExprKind::Subscript {
-                        receiver: Box::new(left),
-                        key: Box::new(key),
-                    },
-                    span,
-                };
-                continue;
+                machine.frames.push((
+                    machine.minimum,
+                    self.expectation.replace("]".into()),
+                    ExpressionFrame::Subscript(left),
+                ));
+                machine.minimum = 0;
+                machine.current = None;
+                return Ok(ExpressionFlow::Continue);
             }
-            if (self.is_name("is") || self.is_name("as")) && minimum_precedence <= 6 {
+            if (self.is_name("is") || self.is_name("as")) && machine.minimum <= 6 {
                 let cast = self.is_name("as");
                 self.advance()?;
                 let ty = self.type_expression()?;
@@ -1160,7 +1579,8 @@ impl<'a> Parser<'a> {
                     },
                     span,
                 };
-                continue;
+                machine.current = Some(left);
+                return Ok(ExpressionFlow::Continue);
             }
             if self.is_symbol('{') {
                 // Pkl requires an explicitly parenthesized amendment parent.
@@ -1171,8 +1591,10 @@ impl<'a> Parser<'a> {
                         "M1 amendment parent must be parenthesized.",
                     ));
                 }
-                left = self.object(Some(left))?;
-                continue;
+                let start = left.span.start;
+                machine.object_build =
+                    Some(self.start_object(Some(left), None, start, true, true)?);
+                return Ok(ExpressionFlow::Continue);
             }
             if self.is_symbol('(') && self.same_line() {
                 if !matches!(
@@ -1183,18 +1605,30 @@ impl<'a> Parser<'a> {
                 {
                     // Calls are only postfix syntax on unqualified or qualified
                     // names. Let the enclosing grammar report its own delimiter.
-                    break;
+                    break 'postfix;
                 }
-                let arguments = self.arguments()?;
-                let span = Span::new(left.span.start, self.previous_end);
-                left = Expr {
-                    kind: ExprKind::Call {
-                        callee: Box::new(left),
-                        arguments,
-                    },
-                    span,
-                };
-                continue;
+                self.advance()?;
+                if self.is_symbol(')') {
+                    let end = self.advance()?.span.end;
+                    let span = Span::new(left.span.start, end);
+                    left = Expr {
+                        kind: ExprKind::Call {
+                            callee: Box::new(left),
+                            arguments: Vec::new(),
+                        },
+                        span,
+                    };
+                    machine.current = Some(left);
+                } else {
+                    machine.frames.push((
+                        machine.minimum,
+                        self.expectation.take(),
+                        ExpressionFrame::Arguments(left, Vec::new()),
+                    ));
+                    machine.minimum = 0;
+                    machine.current = None;
+                }
+                return Ok(ExpressionFlow::Continue);
             }
             let (precedence, op, right_associative) = match self.token.kind {
                 Kind::Operator("??") => (1, BinaryOp::NullCoalesce, true),
@@ -1210,7 +1644,7 @@ impl<'a> Parser<'a> {
                 Kind::Symbol('+') => (8, BinaryOp::Add, false),
                 Kind::Symbol('-') => {
                     if !self.same_line() {
-                        break;
+                        break 'postfix;
                     }
                     (8, BinaryOp::Subtract, false)
                 }
@@ -1219,177 +1653,372 @@ impl<'a> Parser<'a> {
                 Kind::Operator("~/") => (9, BinaryOp::IntegerDivide, false),
                 Kind::Symbol('%') => (9, BinaryOp::Remainder, false),
                 Kind::Operator("**") => (10, BinaryOp::Power, true),
-                _ => break,
+                _ => break 'postfix,
             };
-            if precedence < minimum_precedence {
-                break;
+            if precedence < machine.minimum {
+                break 'postfix;
             }
             self.advance()?;
-            let right = self.expression(precedence + u8::from(!right_associative))?;
-            let span = Span::new(left.span.start, right.span.end);
-            left = Expr {
-                kind: ExprKind::Binary {
-                    op,
-                    left: Box::new(left),
-                    right: Box::new(right),
-                },
-                span,
-            };
+            machine.frames.push((
+                machine.minimum,
+                self.expectation.clone(),
+                ExpressionFrame::Binary(left, op),
+            ));
+            machine.minimum = precedence + u8::from(!right_associative);
+            return Ok(ExpressionFlow::Continue);
         }
-        Ok(left)
-    }
-
-    fn object(&mut self, parent: Option<Expr>) -> Result<Expr, Diagnostic> {
-        let start = parent
-            .as_ref()
-            .map_or(self.token.span.start, |expr| expr.span.start);
-        self.expect('{')?;
-        let members = self.object_members()?;
-        if self.token.kind == Kind::Eof {
-            let mut error = self.unexpected(None);
-            error.message = "Missing `}` delimiter.".to_owned();
-            return Err(error);
-        }
-        let end = self.expect('}')?.span.end;
-        Ok(Expr {
-            kind: ExprKind::Object {
-                parent: parent.map(Box::new),
-                members,
-            },
-            span: Span::new(start, end),
-        })
-    }
-
-    fn object_members(&mut self) -> Result<Vec<ObjectMember>, Diagnostic> {
-        let mut members = Vec::new();
-        while !self.is_symbol('}') && self.token.kind != Kind::Eof {
-            members.push(self.object_member()?);
-            if self.is_symbol(';') {
-                self.advance()?;
-            }
-        }
-        Ok(members)
-    }
-
-    fn generator_body(&mut self) -> Result<Vec<ObjectMember>, Diagnostic> {
-        self.expect('{')?;
-        let members = self.object_members()?;
-        self.expect('}')?;
-        Ok(members)
-    }
-
-    fn object_member(&mut self) -> Result<ObjectMember, Diagnostic> {
-        let start = self.token.span.start;
-        if self.is_name("unknown") || self.is_name("nothing") {
-            return Err(self.unexpected(Some("}")));
-        }
-        if self.is_name("when") {
-            self.advance()?;
-            self.expect('(')?;
-            let condition = self.expression_expected(0, Some(')'))?;
-            self.expect(')')?;
-            let then_members = self.generator_body()?;
-            let else_members = if self.is_name("else") {
-                self.advance()?;
-                self.generator_body()?
-            } else {
-                Vec::new()
-            };
-            return Ok(ObjectMember::When {
-                condition,
-                then_members,
-                else_members,
-                span: Span::new(start, self.previous_end),
-            });
-        }
-        if self.is_name("for") {
-            self.advance()?;
-            self.expect('(')?;
-            let mut parameters = vec![self.parameter()?];
-            if self.is_symbol(',') {
-                self.advance()?;
-                parameters.push(self.parameter()?);
-            }
-            if !self.is_name("in") {
-                return Err(self.unexpected(Some("in")));
-            }
-            self.advance()?;
-            let iterable = self.expression_expected(0, Some(')'))?;
-            self.expect(')')?;
-            let members = self.generator_body()?;
-            return Ok(ObjectMember::For {
-                parameters,
-                iterable,
-                members,
-                span: Span::new(start, self.previous_end),
-            });
-        }
-        if self.is_operator("...") || self.is_operator("...?") {
-            let nullable = self.is_operator("...?");
-            self.advance()?;
-            let value = self.expression_expected(0, Some('}'))?;
-            return Ok(ObjectMember::Spread {
-                span: Span::new(start, value.span.end),
-                value,
-                nullable,
-            });
-        }
-        if self.is_symbol('[') || self.is_operator("[[") {
-            let predicate = self.is_operator("[[");
-            self.advance()?;
-            let key = self.expression_with_expectation(
-                0,
-                Some(if predicate { "]]" } else { "]" }.to_owned()),
-            )?;
-            if predicate && !self.is_symbol(']') {
-                return Err(self.unexpected(Some("]]")));
-            }
-            let close = self.expect(']')?;
-            if predicate {
-                if !self.is_symbol(']') {
-                    let mut error = self.unexpected(Some("]]"));
-                    error.span = close.span;
-                    return Err(error);
+        let Some((parent_minimum, expectation, frame)) = machine.frames.pop() else {
+            return Ok(ExpressionFlow::Done(left));
+        };
+        machine.minimum = parent_minimum;
+        self.expectation = expectation;
+        let end = left.span.end;
+        left = match frame {
+            ExpressionFrame::Group(start) => {
+                let end = self.expect(')')?.span.end;
+                Expr {
+                    kind: ExprKind::Parenthesized(Box::new(left)),
+                    span: Span::new(start, end),
                 }
-                if self.token.span.start != close.span.end {
-                    return Err(Diagnostic::new(
-                        DiagnosticKind::Syntax,
-                        close.span,
-                        format!(
-                            "Unexpected token `{}`. Expected `]]`.",
-                            &self.lexer.source[close.span.start..self.token.span.end]
+            }
+            ExpressionFrame::Throw(start) => {
+                let end = self.expect(')')?.span.end;
+                Expr {
+                    kind: ExprKind::Throw(Box::new(left)),
+                    span: Span::new(start, end),
+                }
+            }
+            ExpressionFrame::Unary(start, op) => Expr {
+                kind: ExprKind::Unary {
+                    op,
+                    operand: Box::new(left),
+                },
+                span: Span::new(start, end),
+            },
+            ExpressionFrame::Binary(previous, op) => {
+                let start = previous.span.start;
+                Expr {
+                    kind: ExprKind::Binary {
+                        op,
+                        left: Box::new(previous),
+                        right: Box::new(left),
+                    },
+                    span: Span::new(start, end),
+                }
+            }
+            ExpressionFrame::Subscript(receiver) => {
+                let end = self.expect(']')?.span.end;
+                let start = receiver.span.start;
+                Expr {
+                    kind: ExprKind::Subscript {
+                        receiver: Box::new(receiver),
+                        key: Box::new(left),
+                    },
+                    span: Span::new(start, end),
+                }
+            }
+            ExpressionFrame::IfCondition(start) => {
+                self.expect(')')?;
+                machine.frames.push((
+                    machine.minimum,
+                    self.expectation.replace("else".into()),
+                    ExpressionFrame::IfThen(start, left),
+                ));
+                machine.minimum = 0;
+                return Ok(ExpressionFlow::Continue);
+            }
+            ExpressionFrame::IfThen(start, condition) => {
+                if !self.is_name("else") {
+                    return Err(self.unexpected(Some("else")));
+                }
+                self.advance()?;
+                machine.frames.push((
+                    machine.minimum,
+                    self.expectation.clone(),
+                    ExpressionFrame::IfElse(start, condition, left),
+                ));
+                machine.minimum = 0;
+                return Ok(ExpressionFlow::Continue);
+            }
+            ExpressionFrame::IfElse(start, condition, then_branch) => {
+                self.depth -= 1;
+                Expr {
+                    kind: ExprKind::If {
+                        condition: Box::new(condition),
+                        then_branch: Box::new(then_branch),
+                        else_branch: Box::new(left),
+                    },
+                    span: Span::new(start, end),
+                }
+            }
+            ExpressionFrame::LetValue(start, name, ty) => {
+                self.expect(')')?;
+                machine.frames.push((
+                    machine.minimum,
+                    self.expectation.take(),
+                    ExpressionFrame::LetBody(start, name, ty, left),
+                ));
+                machine.minimum = 0;
+                return Ok(ExpressionFlow::Continue);
+            }
+            ExpressionFrame::LetBody(start, name, ty, value) => {
+                self.depth -= 1;
+                Expr {
+                    kind: ExprKind::Let {
+                        name,
+                        ty,
+                        value: Box::new(value),
+                        body: Box::new(left),
+                    },
+                    span: Span::new(start, end),
+                }
+            }
+            ExpressionFrame::Function(start, header_span, parameters) => {
+                self.depth -= 1;
+                Expr {
+                    kind: ExprKind::Function {
+                        type_parameters: Vec::new(),
+                        header_span,
+                        parameters,
+                        return_type: None,
+                        body: Box::new(left),
+                        method: false,
+                    },
+                    span: Span::new(start, end),
+                }
+            }
+            ExpressionFrame::ObjectValue(mut build, value) => {
+                let span = Span::new(
+                    match &value {
+                        ObjectValue::Property(head) => head.start,
+                        ObjectValue::Element(start)
+                        | ObjectValue::Spread(start, _)
+                        | ObjectValue::Entry(start, _, _, _) => *start,
+                    },
+                    end,
+                );
+                let member = match value {
+                    ObjectValue::Property(head) => {
+                        ObjectMember::Property(self.finish_object_property(*head, left))
+                    }
+                    ObjectValue::Element(_) => ObjectMember::Element { value: left, span },
+                    ObjectValue::Spread(_, nullable) => ObjectMember::Spread {
+                        value: left,
+                        nullable,
+                        span,
+                    },
+                    ObjectValue::Entry(_, key, predicate, _) => {
+                        if predicate {
+                            ObjectMember::Predicate {
+                                condition: key,
+                                value: left,
+                                span,
+                            }
+                        } else {
+                            ObjectMember::Entry {
+                                key,
+                                value: left,
+                                span,
+                            }
+                        }
+                    }
+                };
+                build.members.push(member);
+                if self.is_symbol(';') {
+                    self.advance()?;
+                }
+                machine.object_build = Some(build);
+                return Ok(ExpressionFlow::Continue);
+            }
+            ExpressionFrame::ObjectKey(build, start, predicate) => {
+                if predicate && !self.is_symbol(']') {
+                    return Err(self.unexpected(Some("]]")));
+                }
+                let close = self.expect(']')?;
+                if predicate {
+                    if !self.is_symbol(']') {
+                        let mut error = self.unexpected(Some("]]"));
+                        error.span = close.span;
+                        return Err(error);
+                    }
+                    if self.token.span.start != close.span.end {
+                        return Err(Diagnostic::new(
+                            DiagnosticKind::Syntax,
+                            close.span,
+                            format!(
+                                "Unexpected token `{}`. Expected `]]`.",
+                                &self.lexer.source[close.span.start..self.token.span.end]
+                            ),
+                        ));
+                    }
+                    self.advance()?;
+                }
+                if self.is_symbol('=') {
+                    self.advance()?;
+                    machine.frames.push((
+                        machine.minimum,
+                        self.expectation.replace("}".into()),
+                        ExpressionFrame::ObjectValue(
+                            build,
+                            ObjectValue::Entry(start, left, predicate, false),
+                        ),
+                    ));
+                } else {
+                    let parent = Expr {
+                        kind: ExprKind::EntryParent,
+                        span: Span::new(start, self.previous_end),
+                    };
+                    machine.object_build =
+                        Some(self.start_object(Some(parent), None, start, true, false)?);
+                    machine.frames.push((
+                        machine.minimum,
+                        self.expectation.clone(),
+                        ExpressionFrame::ObjectValue(
+                            build,
+                            ObjectValue::Entry(start, left, predicate, true),
                         ),
                     ));
                 }
-                self.advance()?;
+                machine.minimum = 0;
+                return Ok(ExpressionFlow::Continue);
             }
-            let value = if self.is_symbol('=') {
-                self.advance()?;
-                self.expression_expected(0, Some('}'))?
-            } else {
-                let mut value = self.object(Some(Expr {
-                    kind: ExprKind::EntryParent,
+            ExpressionFrame::WhenCondition(build, start) => {
+                self.expect(')')?;
+                machine.object_build =
+                    Some(self.start_object(None, None, self.token.span.start, false, false)?);
+                machine.frames.push((
+                    machine.minimum,
+                    self.expectation.clone(),
+                    ExpressionFrame::WhenThen(build, start, left),
+                ));
+                machine.minimum = 0;
+                return Ok(ExpressionFlow::Continue);
+            }
+            ExpressionFrame::WhenThen(mut build, start, condition) => {
+                let then_members = Self::take_object_members(&mut left);
+                if self.is_name("else") {
+                    self.advance()?;
+                    machine.object_build =
+                        Some(self.start_object(None, None, self.token.span.start, false, false)?);
+                    machine.frames.push((
+                        machine.minimum,
+                        self.expectation.clone(),
+                        ExpressionFrame::WhenElse(build, start, condition, then_members),
+                    ));
+                    machine.minimum = 0;
+                } else {
+                    build.members.push(ObjectMember::When {
+                        condition,
+                        then_members,
+                        else_members: Vec::new(),
+                        span: Span::new(start, self.previous_end),
+                    });
+                    if self.is_symbol(';') {
+                        self.advance()?;
+                    }
+                    machine.object_build = Some(build);
+                }
+                return Ok(ExpressionFlow::Continue);
+            }
+            ExpressionFrame::WhenElse(mut build, start, condition, then_members) => {
+                build.members.push(ObjectMember::When {
+                    condition,
+                    then_members,
+                    else_members: Self::take_object_members(&mut left),
                     span: Span::new(start, self.previous_end),
-                }))?;
-                while self.is_symbol('{') {
-                    value = self.object(Some(value))?;
+                });
+                if self.is_symbol(';') {
+                    self.advance()?;
                 }
-                value
-            };
-            let span = Span::new(start, value.span.end);
-            return Ok(if predicate {
-                ObjectMember::Predicate {
-                    condition: key,
-                    value,
-                    span,
+                machine.object_build = Some(build);
+                return Ok(ExpressionFlow::Continue);
+            }
+            ExpressionFrame::ForIterable(build, start, parameters) => {
+                self.expect(')')?;
+                machine.object_build =
+                    Some(self.start_object(None, None, self.token.span.start, false, false)?);
+                machine.frames.push((
+                    machine.minimum,
+                    self.expectation.clone(),
+                    ExpressionFrame::ForBody(build, start, parameters, left),
+                ));
+                machine.minimum = 0;
+                return Ok(ExpressionFlow::Continue);
+            }
+            ExpressionFrame::ForBody(mut build, start, parameters, iterable) => {
+                build.members.push(ObjectMember::For {
+                    parameters,
+                    iterable,
+                    members: Self::take_object_members(&mut left),
+                    span: Span::new(start, self.previous_end),
+                });
+                if self.is_symbol(';') {
+                    self.advance()?;
                 }
-            } else {
-                ObjectMember::Entry { key, value, span }
-            });
+                machine.object_build = Some(build);
+                return Ok(ExpressionFlow::Continue);
+            }
+            ExpressionFrame::Arguments(callee, mut arguments) => {
+                arguments.push(left);
+                if self.is_symbol(',') {
+                    self.advance()?;
+                    if !self.is_symbol(')') {
+                        machine.frames.push((
+                            machine.minimum,
+                            self.expectation.take(),
+                            ExpressionFrame::Arguments(callee, arguments),
+                        ));
+                        machine.minimum = 0;
+                        return Ok(ExpressionFlow::Continue);
+                    }
+                }
+                if !self.is_symbol(')') {
+                    return Err(self.unexpected(Some(",` or `)")));
+                }
+                let end = self.advance()?.span.end;
+                let start = callee.span.start;
+                Expr {
+                    kind: ExprKind::Call {
+                        callee: Box::new(callee),
+                        arguments,
+                    },
+                    span: Span::new(start, end),
+                }
+            }
+        };
+        machine.current = Some(left);
+        Ok(ExpressionFlow::Continue)
+    }
+
+    fn start_object(
+        &mut self,
+        parent: Option<Expr>,
+        ty: Option<Type>,
+        start: usize,
+        missing_delimiter: bool,
+        postfix: bool,
+    ) -> Result<Box<ObjectBuild>, Diagnostic> {
+        self.enter_expression_scope()?;
+        self.expect('{')?;
+        Ok(Box::new(ObjectBuild {
+            start,
+            parent,
+            ty,
+            members: Vec::new(),
+            missing_delimiter,
+            postfix,
+        }))
+    }
+
+    fn take_object_members(expression: &mut Expr) -> Vec<ObjectMember> {
+        match &mut expression.kind {
+            ExprKind::Object { members, .. } => std::mem::take(members),
+            _ => unreachable!("generator body syntax"),
         }
-        // A bare identifier starts a property only before `=`, `:`, or an
-        // amendment body. In every other position it is an element expression.
-        let property = match &self.token.kind {
+    }
+
+    fn object_property(&mut self) -> Result<bool, Diagnostic> {
+        Ok(match &self.token.kind {
             Kind::Name(name) if is_keyword(name) => matches!(
                 name.as_str(),
                 "function"
@@ -1406,17 +2035,124 @@ impl<'a> Parser<'a> {
                 Kind::Symbol('=' | ':' | '{')
             ),
             _ => false,
-        };
-        if property {
-            return self
-                .member(MemberContext::Object, None)
-                .map(ObjectMember::Property);
-        }
-        let value = self.expression_expected(0, Some('}'))?;
-        Ok(ObjectMember::Element {
-            span: value.span,
-            value,
         })
+    }
+
+    fn object_property_head(&mut self) -> Result<PropertyHead, Diagnostic> {
+        let modifiers = self.modifiers()?;
+        let start = modifiers
+            .first()
+            .map_or(self.token.span.start, |modifier| modifier.span.start);
+        let local = modifiers
+            .iter()
+            .any(|modifier| modifier.kind == ModifierKind::Local);
+        let method = self.is_name("function");
+        if method {
+            self.advance()?;
+        }
+        let (name, name_span) = self.identifier()?;
+        self.member_path.push(name.clone());
+        let (ty, method) = if method {
+            let type_parameters = self.type_parameters()?;
+            let parameters = self.parameters()?;
+            let return_type = self.type_annotation()?;
+            let header_span = Span::new(start, self.previous_end);
+            (
+                None,
+                Some(MethodHead {
+                    type_parameters,
+                    parameters,
+                    return_type,
+                    header_span,
+                }),
+            )
+        } else {
+            (self.type_annotation()?, None)
+        };
+        Ok(PropertyHead {
+            start,
+            name,
+            name_span,
+            local,
+            modifiers,
+            ty,
+            method,
+        })
+    }
+
+    fn finish_object_property(&mut self, head: PropertyHead, mut expr: Expr) -> Member {
+        let PropertyHead {
+            start,
+            name,
+            name_span,
+            local,
+            modifiers,
+            ty,
+            method,
+        } = head;
+        let end = expr.span.end;
+        if let Some(MethodHead {
+            type_parameters,
+            parameters,
+            return_type,
+            header_span,
+        }) = method
+        {
+            expr = Expr {
+                kind: ExprKind::Function {
+                    type_parameters,
+                    parameters,
+                    return_type,
+                    header_span,
+                    body: Box::new(expr),
+                    method: true,
+                },
+                span: Span::new(start, end),
+            };
+        }
+        self.member_path.pop();
+        let header_end = ty.as_ref().map_or(name_span.end, |ty| ty.span.end);
+        let modifier_span = |word: &str| {
+            let source = self.lexer.source;
+            let begin = source[start..header_end]
+                .find(word)
+                .map(|offset| start + offset)
+                .or_else(|| {
+                    source[..start]
+                        .char_indices()
+                        .next_back()
+                        .map(|(index, _)| index)
+                })?;
+            let mut end = begin;
+            let mut units = 0;
+            for character in source[begin..].chars() {
+                if units >= word.len() {
+                    break;
+                }
+                units += character.len_utf16();
+                end += character.len_utf8();
+            }
+            Some(Span::new(begin, end))
+        };
+        Member {
+            name,
+            name_span,
+            expr,
+            span: Span::new(start, end),
+            local,
+            ty,
+            modifiers,
+            override_fixed_span: modifier_span("fixed"),
+            override_const_span: modifier_span("const"),
+        }
+    }
+
+    fn object(&mut self, parent: Option<Expr>) -> Result<Expr, Diagnostic> {
+        let start = parent
+            .as_ref()
+            .map_or(self.token.span.start, |expr| expr.span.start);
+        let build = self.start_object(parent, None, start, true, false)?;
+        self.expression_machine(0, Some(build))
     }
 
     fn parameter(&mut self) -> Result<Parameter, Diagnostic> {
@@ -1475,153 +2211,10 @@ impl<'a> Parser<'a> {
     }
 
     fn type_expression(&mut self) -> Result<Type, Diagnostic> {
-        if self.depth >= 32 {
-            return Err(Diagnostic::new(
-                DiagnosticKind::Unsupported,
-                self.token.span,
-                "Type nesting limit exceeded.",
-            ));
-        }
-        self.depth += 1;
+        let depth = self.depth;
         let result = self.type_inner();
-        self.depth -= 1;
+        self.depth = depth;
         result
-    }
-
-    fn type_inner(&mut self) -> Result<Type, Diagnostic> {
-        let start = self.token.span.start;
-        let mut default = None;
-        if self.is_symbol('*') {
-            self.advance()?;
-            default = Some(0);
-        }
-        let first = self.type_atom()?;
-        if !self.is_symbol('|') {
-            if default.is_some() {
-                return Err(self.unexpected(Some("|")));
-            }
-            return Ok(first);
-        }
-        let mut types = vec![first];
-        while self.is_symbol('|') {
-            self.advance()?;
-            if self.is_symbol('*') {
-                if default.is_some() {
-                    return Err(self.unexpected(Some("single union default")));
-                }
-                default = Some(types.len());
-                self.advance()?;
-            }
-            types.push(self.type_atom()?);
-        }
-        Ok(Type {
-            span: Span::new(start, self.previous_end),
-            kind: TypeKind::Union { types, default },
-        })
-    }
-
-    fn type_atom(&mut self) -> Result<Type, Diagnostic> {
-        let start = self.token.span.start;
-        let kind = match self.token.kind.clone() {
-            Kind::Name(name) if matches!(name.as_str(), "unknown" | "nothing" | "module") => {
-                self.advance()?;
-                match name.as_str() {
-                    "unknown" => TypeKind::Unknown,
-                    "nothing" => TypeKind::Nothing,
-                    _ => TypeKind::Module,
-                }
-            }
-            Kind::Name(_) | Kind::QuotedName(_) => {
-                let (name, name_span) = self.identifier()?;
-                let mut path = vec![name];
-                let mut name_spans = vec![name_span];
-                while self.is_symbol('.') {
-                    self.advance()?;
-                    let (name, span) = self.identifier()?;
-                    path.push(name);
-                    name_spans.push(span);
-                }
-                let mut arguments = Vec::new();
-                if self.is_symbol('<') {
-                    self.advance()?;
-                    if self.is_symbol('>') {
-                        let mut error = self.unexpected(None);
-                        error.message.push_str(" Expected a type.");
-                        return Err(error);
-                    }
-                    while !self.is_symbol('>') {
-                        arguments.push(self.type_expression()?);
-                        if !self.is_symbol(',') {
-                            break;
-                        }
-                        self.advance()?;
-                    }
-                    self.expect('>')?;
-                }
-                TypeKind::Named {
-                    path,
-                    name_spans,
-                    arguments,
-                }
-            }
-            Kind::String(value) => {
-                self.advance()?;
-                TypeKind::String(value)
-            }
-            Kind::Symbol('(') => {
-                self.advance()?;
-                let mut parameters = Vec::new();
-                while !self.is_symbol(')') {
-                    parameters.push(self.type_expression()?);
-                    if !self.is_symbol(',') {
-                        break;
-                    }
-                    self.advance()?;
-                }
-                self.expect(')')?;
-                if self.is_operator("->") {
-                    self.advance()?;
-                    let return_type = Box::new(self.type_expression()?);
-                    return Ok(Type {
-                        span: Span::new(start, return_type.span.end),
-                        kind: TypeKind::Function {
-                            parameters,
-                            return_type,
-                        },
-                    });
-                }
-                if parameters.len() != 1 {
-                    return Err(self.unexpected(Some("->")));
-                }
-                parameters.pop().unwrap().kind
-            }
-            _ => return Err(self.unexpected(Some("type"))),
-        };
-        let mut ty = Type {
-            kind,
-            span: Span::new(start, self.previous_end),
-        };
-        loop {
-            if self.is_symbol('?') {
-                let end = self.advance()?.span.end;
-                ty = Type {
-                    kind: TypeKind::Nullable(Box::new(ty)),
-                    span: Span::new(start, end),
-                };
-            } else if self.is_symbol('(') && self.same_line() {
-                let constraints = self.arguments()?;
-                ty = Type {
-                    kind: TypeKind::Constrained {
-                        base: Box::new(ty),
-                        constraints,
-                    },
-                    span: Span::new(start, self.previous_end),
-                };
-            } else {
-                break;
-            }
-        }
-        Ok(ty)
     }
 
     fn integer_literal(&mut self, text: &str, negative: bool, span: Span) -> i64 {
@@ -1667,9 +2260,12 @@ impl<'a> Parser<'a> {
                         }),
                         StringPart::Expression(range, interpolation) => {
                             let mut parser = Self::interpolation(self.lexer.source, range)?;
+                            parser.depth = self.depth;
+                            parser.expressions = self.expressions;
                             parser.member_path.clone_from(&self.member_path);
                             let expression = parser.expression_expected(0, Some(')'))?;
                             parser.expect(')')?;
+                            self.expressions = parser.expressions;
                             self.pending.append(&mut parser.pending);
                             self.folded_integer_spans
                                 .append(&mut parser.folded_integer_spans);
@@ -1693,27 +2289,6 @@ impl<'a> Parser<'a> {
                 self.advance()?;
                 ExprKind::Null
             }
-            Kind::Name(name) if name == "if" => {
-                self.advance()?;
-                self.expect('(')?;
-                let condition = self.expression_expected(0, Some(')'))?;
-                self.expect(')')?;
-                let then_branch = self.expression_with_expectation(0, Some("else".to_owned()))?;
-                if !self.is_name("else") {
-                    return Err(self.unexpected(Some("else")));
-                }
-                self.advance()?;
-                let else_branch = self.expression(0)?;
-                let end = else_branch.span.end;
-                return Ok(Expr {
-                    kind: ExprKind::If {
-                        condition: Box::new(condition),
-                        then_branch: Box::new(then_branch),
-                        else_branch: Box::new(else_branch),
-                    },
-                    span: Span::new(span.start, end),
-                });
-            }
             Kind::Name(name) if name == "outer" || name == "module" => {
                 self.advance()?;
                 if name == "outer" {
@@ -1721,31 +2296,6 @@ impl<'a> Parser<'a> {
                 } else {
                     ExprKind::Module
                 }
-            }
-            Kind::Name(name) if name == "read" => {
-                self.advance()?;
-                let arguments = self.arguments()?;
-                let end = self.previous_end;
-                return Ok(Expr {
-                    kind: ExprKind::Call {
-                        callee: Box::new(Expr {
-                            kind: ExprKind::Name(name),
-                            span,
-                        }),
-                        arguments,
-                    },
-                    span: Span::new(span.start, end),
-                });
-            }
-            Kind::Name(name) if name == "throw" => {
-                self.advance()?;
-                self.expect('(')?;
-                let value = self.expression_expected(0, Some(')'))?;
-                let end = self.expect(')')?.span.end;
-                return Ok(Expr {
-                    kind: ExprKind::Throw(Box::new(value)),
-                    span: Span::new(span.start, end),
-                });
             }
             Kind::Name(name) if name == "this" => {
                 self.advance()?;
@@ -1757,47 +2307,6 @@ impl<'a> Parser<'a> {
                     return Err(self.unexpected(Some(".")));
                 }
                 ExprKind::Super
-            }
-            Kind::Name(name) if name == "new" => {
-                self.advance()?;
-                if self.is_symbol('{') {
-                    let mut expr = self.object(None)?;
-                    expr.span.start = span.start;
-                    return Ok(expr);
-                }
-                let ty = self.type_expression()?;
-                self.expect('{')?;
-                let members = self.object_members()?;
-                let end = self.expect('}')?.span.end;
-                return Ok(Expr {
-                    kind: ExprKind::New { ty, members },
-                    span: Span::new(span.start, end),
-                });
-            }
-            Kind::Name(name) if name == "let" => {
-                self.advance()?;
-                self.expect('(')?;
-                let name = if self.is_name("_") {
-                    self.advance()?;
-                    "_".to_owned()
-                } else {
-                    self.identifier()?.0
-                };
-                let ty = self.type_annotation()?;
-                self.expect('=')?;
-                let value = self.expression_expected(0, Some(')'))?;
-                self.expect(')')?;
-                let body = self.expression_expected(0, None)?;
-                let end = body.span.end;
-                return Ok(Expr {
-                    kind: ExprKind::Let {
-                        name,
-                        ty,
-                        value: Box::new(value),
-                        body: Box::new(body),
-                    },
-                    span: Span::new(span.start, end),
-                });
             }
             Kind::QuotedName(name) => {
                 self.advance()?;
@@ -1813,72 +2322,6 @@ impl<'a> Parser<'a> {
                 }
                 self.advance()?;
                 ExprKind::Name(name)
-            }
-            Kind::Symbol('(') => {
-                let mut candidate = self.clone();
-                if let Ok(parameters) = candidate.parameters()
-                    && candidate.is_operator("->")
-                {
-                    let header_span = Span::new(span.start, candidate.previous_end);
-                    candidate.advance()?;
-                    *self = candidate;
-                    let body = self.expression(0)?;
-                    let end = body.span.end;
-                    return Ok(Expr {
-                        kind: ExprKind::Function {
-                            type_parameters: Vec::new(),
-                            header_span,
-                            parameters,
-                            return_type: None,
-                            body: Box::new(body),
-                            method: false,
-                        },
-                        span: Span::new(span.start, end),
-                    });
-                }
-                self.advance()?;
-                let expr = self.expression_expected(0, Some(')'))?;
-                let end = self.expect(')')?.span.end;
-                return Ok(Expr {
-                    kind: ExprKind::Parenthesized(Box::new(expr)),
-                    span: Span::new(span.start, end),
-                });
-            }
-            Kind::Symbol('-' | '!') => {
-                let negate = self.is_symbol('-');
-                self.advance()?;
-                if negate && let Kind::Int(text) = self.token.kind.clone() {
-                    let mut following = self.clone();
-                    following.advance()?;
-                    if !following.is_symbol('.')
-                        && !following.is_operator("?.")
-                        && !following.is_operator("!!")
-                        && !following.is_symbol('[')
-                    {
-                        let token_span = self.token.span;
-                        let value = self.integer_literal(&text, true, token_span);
-                        let end = self.advance()?.span.end;
-                        self.folded_integer_spans
-                            .insert(Span::new(span.start, end), token_span);
-                        return Ok(Expr {
-                            kind: ExprKind::Int(value),
-                            span: Span::new(span.start, end),
-                        });
-                    }
-                }
-                let operand = self.expression(11)?;
-                let end = operand.span.end;
-                return Ok(Expr {
-                    kind: ExprKind::Unary {
-                        op: if negate {
-                            UnaryOp::Negate
-                        } else {
-                            UnaryOp::Not
-                        },
-                        operand: Box::new(operand),
-                    },
-                    span: Span::new(span.start, end),
-                });
             }
             Kind::Symbol('[') => {
                 return Err(Diagnostic::new(

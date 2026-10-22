@@ -1035,6 +1035,27 @@
       "expressions": "collection-stage24-function-retries.expressions",
       "group": "T24",
       "note": "Raw pinned Java Collection type classification, nested lazy List versus eager Set checks, aliases, defaults and constructors, constraints, casts/unions, metadata and ordered successful/failed retries. Scalar source observations preserve the bounded property-path transport; native Host/GC lifecycle checks are separate."
+    },
+    {
+      "id": "frontend-stage25-deep-shapes",
+      "source": "frontend-stage25-deep-shapes.pkl",
+      "expressions": "frontend-stage25-deep-shapes.expressions",
+      "group": "T25",
+      "note": "Bounded authored ordinary-expression depth and width, AST shape, guarded scope boundaries and ordered first-error retries; complete pinned Java captures. Native stack, GC and real Host lifecycle assertions remain separate."
+    },
+    {
+      "id": "frontend-stage25-error-order",
+      "source": "frontend-stage25-error-order.pkl",
+      "expressions": "frontend-stage25-error-order.expressions",
+      "group": "T25",
+      "note": "Bounded authored ordinary-expression depth and width, AST shape, guarded scope boundaries and ordered first-error retries; complete pinned Java captures. Native stack, GC and real Host lifecycle assertions remain separate."
+    },
+    {
+      "id": "frontend-stage25-shape-boundaries",
+      "source": "frontend-stage25-shape-boundaries.pkl",
+      "expressions": "frontend-stage25-shape-boundaries.expressions",
+      "group": "T25",
+      "note": "Bounded authored ordinary-expression depth and width, AST shape, guarded scope boundaries and ordered first-error retries; complete pinned Java captures. Native stack, GC and real Host lifecycle assertions remain separate."
     }
   ],
   "unexecuted_groups": [

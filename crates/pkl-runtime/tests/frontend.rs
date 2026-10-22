@@ -22,7 +22,7 @@ fn unicode_coordinates_are_not_interchangeable() {
 #[test]
 fn bounded_parser_preserves_precedence_and_rejects_trailing_input() {
     let expression = parse_expression("1 + 2 * 3").unwrap();
-    let ExprKind::Binary { right, .. } = expression.kind else {
+    let ExprKind::Binary { right, .. } = &expression.kind else {
         panic!("expected addition")
     };
     assert!(matches!(right.kind, ExprKind::Binary { .. }));
@@ -134,7 +134,7 @@ fn eof_underlines_have_a_virtual_utf16_width_not_an_invalid_byte_span() {
 }
 
 #[test]
-fn base_module_properties_and_hostile_nesting_are_explicitly_unsupported() {
+fn unsupported_base_properties_and_iterative_ordinary_nesting_are_explicit() {
     for name in ["Regex", "VarArgs", "Int8"] {
         let module = parse_module(&format!("result = {name}")).unwrap();
         assert_eq!(
@@ -142,8 +142,23 @@ fn base_module_properties_and_hostile_nesting_are_explicitly_unsupported() {
             DiagnosticKind::Unsupported
         );
     }
-    assert!(parse_expression(&format!("{}1{}", "(".repeat(129), ")".repeat(129))).is_err());
-    assert!(parse_expression(&format!("value{}", ".member".repeat(600))).is_err());
+    let grouped = format!("{}1{}", "(".repeat(129), ")".repeat(129));
+    let expression = parse_expression(&grouped).unwrap();
+    assert_eq!(expression.unparenthesized().kind, ExprKind::Int(1));
+    assert_eq!(expression.span, Span::new(0, grouped.len()));
+
+    let chain = format!("value{}", ".member".repeat(600));
+    let expression = parse_expression(&chain).unwrap();
+    assert_eq!(expression.span, Span::new(0, chain.len()));
+    let mut receiver = &expression;
+    let mut members = 0;
+    while let ExprKind::Member(next, name) = &receiver.kind {
+        assert_eq!(name, "member");
+        receiver = next;
+        members += 1;
+    }
+    assert_eq!(members, 600);
+    assert!(matches!(&receiver.kind, ExprKind::Name(name) if name == "value"));
 }
 
 #[test]

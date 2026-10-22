@@ -93,6 +93,8 @@ REQUIRED_SCENARIOS = {
     'm2-strict-set-host-sequences',
     'm2-collection-type-sequences',
     'm2-collection-type-host-sequences',
+    'm2-frontend-depth-sequences',
+    'm2-frontend-depth-host-sequences',
 }
 
 

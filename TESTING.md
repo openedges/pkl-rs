@@ -306,6 +306,23 @@ deep metadata checks run on a 256 KiB stack; they do not exercise deeply authore
 parser input or establish Java speed or peak-RSS parity. Historical small-stack
 tests retain their original sources and execution conditions.
 
+Authored frontend regressions exercise source nesting separately from deep values
+constructed by the VM. Java comparisons retain the original deep Set equality and
+Map-key inputs, operator associativity, short-circuiting, wide expressions, error
+order and complete source diagnostics. Native process-isolated checks parse, clone,
+resolve, compile and release authored trees on the same 256 KiB thread stack, with
+a 60-second parent deadline. Partial parse/resolution/compilation failures must
+release completed subtrees on that stack as well. Instrumented compilation and
+constant-key comparison/rendering are separate reachable paths. Ordinary deep
+chains, shallow scope boundaries around them, retained recursive-boundary guards
+and accepted inputs near those guards require distinct checks. Deep type-boundary
+checks cover parsing, tree copying and release; compilation of deeply authored
+types and nested lexical string interpolation have separate observation records.
+The recorded depth-64 lexical-string stack overflow remains a known failure;
+removing it from a passing checkpoint never turns it into a successful guard test.
+These tests do not establish arbitrary syntax depth, Java stack-overflow diagnostics, uniform
+cancellation latency or workload-level speed and memory parity.
+
 M1 experiments have narrower, explicit contracts:
 
 ```sh

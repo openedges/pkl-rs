@@ -53985,6 +53985,690 @@
       ]
     },
     {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "frontend-stage25-parentheses-64",
+      "input": "tests/fixtures/m2/frontend-stage25-parentheses-64.pkl",
+      "input_sha256": "a67ab9834418c0d5a95110a1a14125ca6f87ec83de94a94319dc3d0b806a03f1",
+      "required": true,
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "frontend-stage25-parentheses-256",
+      "input": "tests/fixtures/m2/frontend-stage25-parentheses-256.pkl",
+      "input_sha256": "62523c8037facd4c877364fdf7e95278dfe06abd1dfee7e417334b4b89a49b02",
+      "required": true,
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "frontend-stage25-list-128",
+      "input": "tests/fixtures/m2/frontend-stage25-list-128.pkl",
+      "input_sha256": "4f19a2f141f7b4bbab258d3c88333eba2fa663f37530db8c216f3a1849310802",
+      "required": true,
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "frontend-stage25-set-128-equality",
+      "input": "tests/fixtures/m2/frontend-stage25-set-128-equality.pkl",
+      "input_sha256": "a4607036ef77d374dcb791f2464d0a00204d2783a9a155fda8f7d20ff899274b",
+      "required": true,
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "frontend-stage25-map-128",
+      "input": "tests/fixtures/m2/frontend-stage25-map-128.pkl",
+      "input_sha256": "761a693d914a3b7929557e9099c988c309a4df68509cd546a13ddcc3f38aceef",
+      "required": true,
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "frontend-stage25-binary-left-300",
+      "input": "tests/fixtures/m2/frontend-stage25-binary-left-300.pkl",
+      "input_sha256": "06fcaada9f4bb2ef88f5100aa0ab9de0f49f80701d7b68c61f57a09ab20cee43",
+      "required": true,
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "frontend-stage25-binary-right-64",
+      "input": "tests/fixtures/m2/frontend-stage25-binary-right-64.pkl",
+      "input_sha256": "91703db1430a3d392fce68adc8b9bd32c4bf12faedc4fdee049e49de7187ee1c",
+      "required": true,
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "frontend-stage25-power-right-64",
+      "input": "tests/fixtures/m2/frontend-stage25-power-right-64.pkl",
+      "input_sha256": "c6fc841cd7f6863a6d86baf7e65833e3e873def6105c91e7cc13c8fb37499abb",
+      "required": true,
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "frontend-stage25-postfix-128",
+      "input": "tests/fixtures/m2/frontend-stage25-postfix-128.pkl",
+      "input_sha256": "26b4e4b87aac49dadd03428eb2fefa1c6007c6d7f6f9d983402637f8d3a3c429",
+      "required": true,
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "frontend-stage25-shallow-list-600",
+      "input": "tests/fixtures/m2/frontend-stage25-shallow-list-600.pkl",
+      "input_sha256": "79795c9e48a7e04fb7580a996c9baaf84532f42cdbb53db653747c3e7e6bc6e5",
+      "required": true,
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "frontend-stage25-shallow-members-600",
+      "input": "tests/fixtures/m2/frontend-stage25-shallow-members-600.pkl",
+      "input_sha256": "c7c4c3df79289e69266390fd186139e6fb4762148e042d323fd1faf34dac0f31",
+      "required": true,
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "frontend-stage25-precedence",
+      "input": "tests/fixtures/m2/frontend-stage25-precedence.pkl",
+      "input_sha256": "e533127e08d849bbad2baabeb16a6449ac340fb9f009b93785d570844f7909e1",
+      "required": true,
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "frontend-stage25-subtraction",
+      "input": "tests/fixtures/m2/frontend-stage25-subtraction.pkl",
+      "input_sha256": "464e58a8882d14c752f135949e788d01ed3907e1b7d762f0f31c9c7acf704d05",
+      "required": true,
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "frontend-stage25-division",
+      "input": "tests/fixtures/m2/frontend-stage25-division.pkl",
+      "input_sha256": "8b07b75b39395654aa44ed5ad3275004a70f31ed868478ccd2f55dfbe567c10f",
+      "required": true,
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "frontend-stage25-power",
+      "input": "tests/fixtures/m2/frontend-stage25-power.pkl",
+      "input_sha256": "796f592524bbd12995a1ab8359cacda629ef715540f05aff395bbe76f6a5efea",
+      "required": true,
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "frontend-stage25-conditional-lazy",
+      "input": "tests/fixtures/m2/frontend-stage25-conditional-lazy.pkl",
+      "input_sha256": "c77955801f6d452d81c1a8e882b859ca7394472cae38c2467831b3864cc402cf",
+      "required": true,
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "frontend-stage25-first-binary-error",
+      "input": "tests/fixtures/m2/frontend-stage25-first-binary-error.pkl",
+      "input_sha256": "4a322fd1a1cac0824aea643b0f162d2f90630d6ab71d1f9b9760d36537cc6dc3",
+      "required": true,
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "frontend-stage25-first-list-error",
+      "input": "tests/fixtures/m2/frontend-stage25-first-list-error.pkl",
+      "input_sha256": "a2071c12e7337bc1399f2c72faa92a66d403db343a3a2052207fee1ba7267abb",
+      "required": true,
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "frontend-stage25-let-lexical",
+      "input": "tests/fixtures/m2/frontend-stage25-let-lexical.pkl",
+      "input_sha256": "f10cd00a07764914d91f2e35d5ccd32ede640cdd101069468773be86b3c9b400",
+      "required": true,
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "frontend-stage25-postfix-binding",
+      "input": "tests/fixtures/m2/frontend-stage25-postfix-binding.pkl",
+      "input_sha256": "81ed1b0551e8bc8bd94e9449f68dcec4defc3585dc3c9b98cf9a4750cb64cc81",
+      "required": true,
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "frontend-stage25-first-deep-call-error",
+      "input": "tests/fixtures/m2/frontend-stage25-first-deep-call-error.pkl",
+      "input_sha256": "640709ab54970c8df1ffeaf9ae95f358b029b9f551e9d91a73e2694f5bfb4a71",
+      "required": true,
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "set-stage23-deep-64-equality",
+      "input": "tests/fixtures/m2/set-stage23-deep-64-equality.pkl",
+      "input_sha256": "9efd1608618a3c07c8036277d15e53eaa2134fae9107e8ef0f351a021581185d",
+      "required": true,
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "set-stage23-deep-64-map-key",
+      "input": "tests/fixtures/m2/set-stage23-deep-64-map-key.pkl",
+      "input_sha256": "084bb2ac118c0ffc0592dd18be20eed4001b72c512d25bf547377519054e8b97",
+      "required": true,
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "frontend-stage25-unary-spaced-128",
+      "input": "tests/fixtures/m2/frontend-stage25-unary-spaced-128.pkl",
+      "input_sha256": "1a8b3205acd57a118bf7144d824425e52f6a876f547586b23b35a767b7827855",
+      "required": true,
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "frontend-stage25-lambda-capture-apply",
+      "input": "tests/fixtures/m2/frontend-stage25-lambda-capture-apply.pkl",
+      "input_sha256": "7ad740052dd083e424cbbe2374f13ea95cf6f930d3bbf8accb1bece0d6d35432",
+      "required": true,
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "frontend-stage25-conditional-shallow",
+      "input": "tests/fixtures/m2/frontend-stage25-conditional-shallow.pkl",
+      "input_sha256": "2da47f2f9791e721d1e35ef8839bb4115749274e1c0ae16ec54351d526a2d840",
+      "required": true,
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "frontend-stage25-let-shallow",
+      "input": "tests/fixtures/m2/frontend-stage25-let-shallow.pkl",
+      "input_sha256": "f1bbb944008387615ccd23ed0eb6e08cafad0385999b80fbca456d9723dd5fdc",
+      "required": true,
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "frontend-stage25-lambda-shallow",
+      "input": "tests/fixtures/m2/frontend-stage25-lambda-shallow.pkl",
+      "input_sha256": "4ec6f01af1e503a4d38b7081a91f7b8b2b2f3a867dd51a26ac95f5eb2d266c8f",
+      "required": true,
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "frontend-stage25-object-shallow",
+      "input": "tests/fixtures/m2/frontend-stage25-object-shallow.pkl",
+      "input_sha256": "47fa77206c9d1f57d1a852fe595824d9bb6858c848d3c88380c01ae92012f171",
+      "required": true,
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "frontend-stage25-missing-close-64",
+      "input": "tests/fixtures/m2/frontend-stage25-missing-close-64.pkl",
+      "input_sha256": "87274e06ee2d5eb51115ad930befcdb87b5cb2c42513b32af3c378df8aab04b0",
+      "required": true,
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "frontend-stage25-bad-inner-64",
+      "input": "tests/fixtures/m2/frontend-stage25-bad-inner-64.pkl",
+      "input_sha256": "8289ea420469e5268ee65371ebcd61bda203f6ad7dd889d9a02bb27047489c53",
+      "required": true,
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "frontend-stage25-first-call-arguments",
+      "input": "tests/fixtures/m2/frontend-stage25-first-call-arguments.pkl",
+      "input_sha256": "97b81473fff7ad6dbd6865c90626f4592f80b57b94b90d72808c9e7992aa2884",
+      "required": true,
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "frontend-stage25-short-circuit",
+      "input": "tests/fixtures/m2/frontend-stage25-short-circuit.pkl",
+      "input_sha256": "677bb73d5d87f008312bbb0ab042bb19f8d5dd22b61fdc187e017a252609637a",
+      "required": true,
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "frontend-stage25-coalesce-associativity",
+      "input": "tests/fixtures/m2/frontend-stage25-coalesce-associativity.pkl",
+      "input_sha256": "2a3e4772eedf606dfbeeaa336bc6b2c43f283c73ad699f95896274ca5003db45",
+      "required": true,
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "frontend-stage25-nullable-member",
+      "input": "tests/fixtures/m2/frontend-stage25-nullable-member.pkl",
+      "input_sha256": "211b762978bc78060bded02075a0dc2828f32f999e1f09f13279cb5af89914ae",
+      "required": true,
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "frontend-stage25-nonnull-postfix",
+      "input": "tests/fixtures/m2/frontend-stage25-nonnull-postfix.pkl",
+      "input_sha256": "4918dc062497955dc12df25d6132773396530b68e46225e143b656ade8862edd",
+      "required": true,
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
       "adapter": null,
       "execution": {
         "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
@@ -145397,9 +146081,9 @@
   "comparison_boundary": "evaluateExpressionString(ModuleSource.path(same absolute URI), expression) UTF-8 stdout; whole PklException.getMessage() UTF-8 stderr and exit 1; no trimming. Power assertions default to disabled; an explicit per-case power_assertions boolean enables the same option in both probes. Stringification alone is not typed value/API compatibility.",
   "completion": "Every required semantic/source requirement needs implementation/test mappings and complete passing execution. Pending/unmapped/unimplemented/mismatch remains a full-gate failure.",
   "counts": {
-    "cases": 3652,
+    "cases": 3688,
     "cases_by_execution": {
-      "ready": 2652,
+      "ready": 2688,
       "unimplemented": 960,
       "unmapped": 40
     },
@@ -145437,7 +146121,43 @@
           "equality-constant-parenthesized-scalar-span",
           "equality-constant-negative-space-span",
           "equality-constant-negative-zero-span",
-          "equality-constant-negative-interpolation-span"
+          "equality-constant-negative-interpolation-span",
+          "frontend-stage25-parentheses-64",
+          "frontend-stage25-parentheses-256",
+          "frontend-stage25-list-128",
+          "frontend-stage25-set-128-equality",
+          "frontend-stage25-map-128",
+          "frontend-stage25-binary-left-300",
+          "frontend-stage25-binary-right-64",
+          "frontend-stage25-power-right-64",
+          "frontend-stage25-postfix-128",
+          "frontend-stage25-shallow-list-600",
+          "frontend-stage25-shallow-members-600",
+          "frontend-stage25-precedence",
+          "frontend-stage25-subtraction",
+          "frontend-stage25-division",
+          "frontend-stage25-power",
+          "frontend-stage25-conditional-lazy",
+          "frontend-stage25-first-binary-error",
+          "frontend-stage25-first-list-error",
+          "frontend-stage25-let-lexical",
+          "frontend-stage25-postfix-binding",
+          "frontend-stage25-first-deep-call-error",
+          "set-stage23-deep-64-equality",
+          "set-stage23-deep-64-map-key",
+          "frontend-stage25-unary-spaced-128",
+          "frontend-stage25-lambda-capture-apply",
+          "frontend-stage25-conditional-shallow",
+          "frontend-stage25-let-shallow",
+          "frontend-stage25-lambda-shallow",
+          "frontend-stage25-object-shallow",
+          "frontend-stage25-missing-close-64",
+          "frontend-stage25-bad-inner-64",
+          "frontend-stage25-first-call-arguments",
+          "frontend-stage25-short-circuit",
+          "frontend-stage25-coalesce-associativity",
+          "frontend-stage25-nullable-member",
+          "frontend-stage25-nonnull-postfix"
         ],
         "state": "partial"
       }
@@ -146221,7 +146941,43 @@
           "set-stage23-collision-asymmetry-generator-second",
           "set-stage23-collision-asymmetry-generator-first-nested",
           "set-stage23-collision-asymmetry-generator-length",
-          "set-stage23-format-nested-list"
+          "set-stage23-format-nested-list",
+          "frontend-stage25-parentheses-64",
+          "frontend-stage25-parentheses-256",
+          "frontend-stage25-list-128",
+          "frontend-stage25-set-128-equality",
+          "frontend-stage25-map-128",
+          "frontend-stage25-binary-left-300",
+          "frontend-stage25-binary-right-64",
+          "frontend-stage25-power-right-64",
+          "frontend-stage25-postfix-128",
+          "frontend-stage25-shallow-list-600",
+          "frontend-stage25-shallow-members-600",
+          "frontend-stage25-precedence",
+          "frontend-stage25-subtraction",
+          "frontend-stage25-division",
+          "frontend-stage25-power",
+          "frontend-stage25-conditional-lazy",
+          "frontend-stage25-first-binary-error",
+          "frontend-stage25-first-list-error",
+          "frontend-stage25-let-lexical",
+          "frontend-stage25-postfix-binding",
+          "frontend-stage25-first-deep-call-error",
+          "set-stage23-deep-64-equality",
+          "set-stage23-deep-64-map-key",
+          "frontend-stage25-unary-spaced-128",
+          "frontend-stage25-lambda-capture-apply",
+          "frontend-stage25-conditional-shallow",
+          "frontend-stage25-let-shallow",
+          "frontend-stage25-lambda-shallow",
+          "frontend-stage25-object-shallow",
+          "frontend-stage25-missing-close-64",
+          "frontend-stage25-bad-inner-64",
+          "frontend-stage25-first-call-arguments",
+          "frontend-stage25-short-circuit",
+          "frontend-stage25-coalesce-associativity",
+          "frontend-stage25-nullable-member",
+          "frontend-stage25-nonnull-postfix"
         ],
         "state": "partial"
       }
@@ -146666,12 +147422,12 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "608073c4b29fd91330889b143badc507e347bff19c4a0b6343ce78728829098a",
+            "sha256": "aa3094f9ea2ef58df9a7db46fe05a7113f9267679dc4d00a4c73bc5ad16af3b9",
             "symbol": "initialize_member_types"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "608073c4b29fd91330889b143badc507e347bff19c4a0b6343ce78728829098a",
+            "sha256": "aa3094f9ea2ef58df9a7db46fe05a7113f9267679dc4d00a4c73bc5ad16af3b9",
             "symbol": "validate_class_override"
           },
           {
@@ -146681,7 +147437,7 @@
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "608073c4b29fd91330889b143badc507e347bff19c4a0b6343ce78728829098a",
+            "sha256": "aa3094f9ea2ef58df9a7db46fe05a7113f9267679dc4d00a4c73bc5ad16af3b9",
             "symbol": "force_key"
           },
           {
@@ -148578,12 +149334,12 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "608073c4b29fd91330889b143badc507e347bff19c4a0b6343ce78728829098a",
+            "sha256": "aa3094f9ea2ef58df9a7db46fe05a7113f9267679dc4d00a4c73bc5ad16af3b9",
             "symbol": "validate_object_override"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "608073c4b29fd91330889b143badc507e347bff19c4a0b6343ce78728829098a",
+            "sha256": "aa3094f9ea2ef58df9a7db46fe05a7113f9267679dc4d00a4c73bc5ad16af3b9",
             "symbol": "inherited_member"
           }
         ],
@@ -148789,17 +149545,17 @@
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "608073c4b29fd91330889b143badc507e347bff19c4a0b6343ce78728829098a",
+            "sha256": "aa3094f9ea2ef58df9a7db46fe05a7113f9267679dc4d00a4c73bc5ad16af3b9",
             "symbol": "validate_class_override"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "608073c4b29fd91330889b143badc507e347bff19c4a0b6343ce78728829098a",
+            "sha256": "aa3094f9ea2ef58df9a7db46fe05a7113f9267679dc4d00a4c73bc5ad16af3b9",
             "symbol": "validate_object_override"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "608073c4b29fd91330889b143badc507e347bff19c4a0b6343ce78728829098a",
+            "sha256": "aa3094f9ea2ef58df9a7db46fe05a7113f9267679dc4d00a4c73bc5ad16af3b9",
             "symbol": "initialize_member_types"
           }
         ],
@@ -149181,37 +149937,37 @@
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "608073c4b29fd91330889b143badc507e347bff19c4a0b6343ce78728829098a",
+            "sha256": "aa3094f9ea2ef58df9a7db46fe05a7113f9267679dc4d00a4c73bc5ad16af3b9",
             "symbol": "validate_class_override"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "608073c4b29fd91330889b143badc507e347bff19c4a0b6343ce78728829098a",
+            "sha256": "aa3094f9ea2ef58df9a7db46fe05a7113f9267679dc4d00a4c73bc5ad16af3b9",
             "symbol": "validate_object_override"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "608073c4b29fd91330889b143badc507e347bff19c4a0b6343ce78728829098a",
+            "sha256": "aa3094f9ea2ef58df9a7db46fe05a7113f9267679dc4d00a4c73bc5ad16af3b9",
             "symbol": "initialize_member_types"
           },
           {
             "path": "crates/pkl-runtime/src/resolver.rs",
-            "sha256": "6600efcb849cb89dc3de35400b04c5e2fa7da01a88ef733d5738ad6cf422bc4a",
+            "sha256": "14bf09f4f00b08673e73e92e38702d1bafcb91ed40787007b8d827103a7d7bf2",
             "symbol": "validate_modifiers"
           },
           {
             "path": "crates/pkl-runtime/src/resolver.rs",
-            "sha256": "6600efcb849cb89dc3de35400b04c5e2fa7da01a88ef733d5738ad6cf422bc4a",
+            "sha256": "14bf09f4f00b08673e73e92e38702d1bafcb91ed40787007b8d827103a7d7bf2",
             "symbol": "ConstLevel"
           },
           {
             "path": "crates/pkl-runtime/src/resolver.rs",
-            "sha256": "6600efcb849cb89dc3de35400b04c5e2fa7da01a88ef733d5738ad6cf422bc4a",
+            "sha256": "14bf09f4f00b08673e73e92e38702d1bafcb91ed40787007b8d827103a7d7bf2",
             "symbol": "ConstScope"
           },
           {
             "path": "crates/pkl-runtime/src/parser.rs",
-            "sha256": "24762e250235f582e44bc0f7c1cf29a0f7f635baa2308409e497277e167d553d",
+            "sha256": "cbd20e289328f1aac994a0d4c7b4595c9b2f73d46a2a112026377a838f36c8bb",
             "symbol": "arguments"
           }
         ],
@@ -149499,12 +150255,12 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "608073c4b29fd91330889b143badc507e347bff19c4a0b6343ce78728829098a",
+            "sha256": "aa3094f9ea2ef58df9a7db46fe05a7113f9267679dc4d00a4c73bc5ad16af3b9",
             "symbol": "TypeCheck"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "608073c4b29fd91330889b143badc507e347bff19c4a0b6343ce78728829098a",
+            "sha256": "aa3094f9ea2ef58df9a7db46fe05a7113f9267679dc4d00a4c73bc5ad16af3b9",
             "symbol": "compile_type_at"
           },
           {
@@ -149514,7 +150270,7 @@
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "608073c4b29fd91330889b143badc507e347bff19c4a0b6343ce78728829098a",
+            "sha256": "aa3094f9ea2ef58df9a7db46fe05a7113f9267679dc4d00a4c73bc5ad16af3b9",
             "symbol": "invoke_function"
           },
           {
@@ -149524,12 +150280,12 @@
           },
           {
             "path": "crates/pkl-runtime/src/resolver.rs",
-            "sha256": "6600efcb849cb89dc3de35400b04c5e2fa7da01a88ef733d5738ad6cf422bc4a",
+            "sha256": "14bf09f4f00b08673e73e92e38702d1bafcb91ed40787007b8d827103a7d7bf2",
             "symbol": "ConstScope"
           },
           {
             "path": "crates/pkl-runtime/src/parser.rs",
-            "sha256": "24762e250235f582e44bc0f7c1cf29a0f7f635baa2308409e497277e167d553d",
+            "sha256": "cbd20e289328f1aac994a0d4c7b4595c9b2f73d46a2a112026377a838f36c8bb",
             "symbol": "arguments"
           }
         ],
@@ -151791,12 +152547,12 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "608073c4b29fd91330889b143badc507e347bff19c4a0b6343ce78728829098a",
+            "sha256": "aa3094f9ea2ef58df9a7db46fe05a7113f9267679dc4d00a4c73bc5ad16af3b9",
             "symbol": "TypeCheck"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "608073c4b29fd91330889b143badc507e347bff19c4a0b6343ce78728829098a",
+            "sha256": "aa3094f9ea2ef58df9a7db46fe05a7113f9267679dc4d00a4c73bc5ad16af3b9",
             "symbol": "initialize_type_resolution"
           },
           {
@@ -151806,12 +152562,12 @@
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "608073c4b29fd91330889b143badc507e347bff19c4a0b6343ce78728829098a",
+            "sha256": "aa3094f9ea2ef58df9a7db46fe05a7113f9267679dc4d00a4c73bc5ad16af3b9",
             "symbol": "type_resolution_plan"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "608073c4b29fd91330889b143badc507e347bff19c4a0b6343ce78728829098a",
+            "sha256": "aa3094f9ea2ef58df9a7db46fe05a7113f9267679dc4d00a4c73bc5ad16af3b9",
             "symbol": "active_constraints"
           },
           {
@@ -153236,32 +153992,32 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "608073c4b29fd91330889b143badc507e347bff19c4a0b6343ce78728829098a",
+            "sha256": "aa3094f9ea2ef58df9a7db46fe05a7113f9267679dc4d00a4c73bc5ad16af3b9",
             "symbol": "BeginTypeAlias"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "608073c4b29fd91330889b143badc507e347bff19c4a0b6343ce78728829098a",
+            "sha256": "aa3094f9ea2ef58df9a7db46fe05a7113f9267679dc4d00a4c73bc5ad16af3b9",
             "symbol": "NamedAlias"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "608073c4b29fd91330889b143badc507e347bff19c4a0b6343ce78728829098a",
+            "sha256": "aa3094f9ea2ef58df9a7db46fe05a7113f9267679dc4d00a4c73bc5ad16af3b9",
             "symbol": "compile_type_at"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "608073c4b29fd91330889b143badc507e347bff19c4a0b6343ce78728829098a",
+            "sha256": "aa3094f9ea2ef58df9a7db46fe05a7113f9267679dc4d00a4c73bc5ad16af3b9",
             "symbol": "type_resolution_plan"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "608073c4b29fd91330889b143badc507e347bff19c4a0b6343ce78728829098a",
+            "sha256": "aa3094f9ea2ef58df9a7db46fe05a7113f9267679dc4d00a4c73bc5ad16af3b9",
             "symbol": "initialize_type_resolution"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "608073c4b29fd91330889b143badc507e347bff19c4a0b6343ce78728829098a",
+            "sha256": "aa3094f9ea2ef58df9a7db46fe05a7113f9267679dc4d00a4c73bc5ad16af3b9",
             "symbol": "active_constraints"
           },
           {
@@ -154002,7 +154758,7 @@
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "608073c4b29fd91330889b143badc507e347bff19c4a0b6343ce78728829098a",
+            "sha256": "aa3094f9ea2ef58df9a7db46fe05a7113f9267679dc4d00a4c73bc5ad16af3b9",
             "symbol": "invoke_function"
           },
           {
@@ -154721,12 +155477,12 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "608073c4b29fd91330889b143badc507e347bff19c4a0b6343ce78728829098a",
+            "sha256": "aa3094f9ea2ef58df9a7db46fe05a7113f9267679dc4d00a4c73bc5ad16af3b9",
             "symbol": "NamedAlias"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "608073c4b29fd91330889b143badc507e347bff19c4a0b6343ce78728829098a",
+            "sha256": "aa3094f9ea2ef58df9a7db46fe05a7113f9267679dc4d00a4c73bc5ad16af3b9",
             "symbol": "compile_type_at"
           },
           {
@@ -154736,12 +155492,12 @@
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "608073c4b29fd91330889b143badc507e347bff19c4a0b6343ce78728829098a",
+            "sha256": "aa3094f9ea2ef58df9a7db46fe05a7113f9267679dc4d00a4c73bc5ad16af3b9",
             "symbol": "type_resolution_plan"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "608073c4b29fd91330889b143badc507e347bff19c4a0b6343ce78728829098a",
+            "sha256": "aa3094f9ea2ef58df9a7db46fe05a7113f9267679dc4d00a4c73bc5ad16af3b9",
             "symbol": "initialize_type_resolution"
           },
           {
@@ -156115,7 +156871,7 @@
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "608073c4b29fd91330889b143badc507e347bff19c4a0b6343ce78728829098a",
+            "sha256": "aa3094f9ea2ef58df9a7db46fe05a7113f9267679dc4d00a4c73bc5ad16af3b9",
             "symbol": "initialize_member_types"
           },
           {
@@ -156305,17 +157061,17 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/parser.rs",
-            "sha256": "24762e250235f582e44bc0f7c1cf29a0f7f635baa2308409e497277e167d553d",
+            "sha256": "cbd20e289328f1aac994a0d4c7b4595c9b2f73d46a2a112026377a838f36c8bb",
             "symbol": "import"
           },
           {
             "path": "crates/pkl-runtime/src/resolver.rs",
-            "sha256": "6600efcb849cb89dc3de35400b04c5e2fa7da01a88ef733d5738ad6cf422bc4a",
-            "symbol": "type_expression"
+            "sha256": "14bf09f4f00b08673e73e92e38702d1bafcb91ed40787007b8d827103a7d7bf2",
+            "symbol": "visit"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "608073c4b29fd91330889b143badc507e347bff19c4a0b6343ce78728829098a",
+            "sha256": "aa3094f9ea2ef58df9a7db46fe05a7113f9267679dc4d00a4c73bc5ad16af3b9",
             "symbol": "compile_type_at"
           }
         ],
@@ -156380,12 +157136,12 @@
           },
           {
             "path": "crates/pkl-runtime/src/resolver.rs",
-            "sha256": "6600efcb849cb89dc3de35400b04c5e2fa7da01a88ef733d5738ad6cf422bc4a",
+            "sha256": "14bf09f4f00b08673e73e92e38702d1bafcb91ed40787007b8d827103a7d7bf2",
             "symbol": "ConstScope"
           },
           {
             "path": "crates/pkl-runtime/src/parser.rs",
-            "sha256": "24762e250235f582e44bc0f7c1cf29a0f7f635baa2308409e497277e167d553d",
+            "sha256": "cbd20e289328f1aac994a0d4c7b4595c9b2f73d46a2a112026377a838f36c8bb",
             "symbol": "arguments"
           }
         ],
@@ -157599,7 +158355,43 @@
           "collection-stage24-parser-multiline-collection-spaced",
           "collection-stage24-parser-multiline-map-spaced",
           "collection-stage24-parser-multiline-set-spaced",
-          "collection-stage24-parser-multiline-alias-spaced"
+          "collection-stage24-parser-multiline-alias-spaced",
+          "frontend-stage25-parentheses-64",
+          "frontend-stage25-parentheses-256",
+          "frontend-stage25-list-128",
+          "frontend-stage25-set-128-equality",
+          "frontend-stage25-map-128",
+          "frontend-stage25-binary-left-300",
+          "frontend-stage25-binary-right-64",
+          "frontend-stage25-power-right-64",
+          "frontend-stage25-postfix-128",
+          "frontend-stage25-shallow-list-600",
+          "frontend-stage25-shallow-members-600",
+          "frontend-stage25-precedence",
+          "frontend-stage25-subtraction",
+          "frontend-stage25-division",
+          "frontend-stage25-power",
+          "frontend-stage25-conditional-lazy",
+          "frontend-stage25-first-binary-error",
+          "frontend-stage25-first-list-error",
+          "frontend-stage25-let-lexical",
+          "frontend-stage25-postfix-binding",
+          "frontend-stage25-first-deep-call-error",
+          "set-stage23-deep-64-equality",
+          "set-stage23-deep-64-map-key",
+          "frontend-stage25-unary-spaced-128",
+          "frontend-stage25-lambda-capture-apply",
+          "frontend-stage25-conditional-shallow",
+          "frontend-stage25-let-shallow",
+          "frontend-stage25-lambda-shallow",
+          "frontend-stage25-object-shallow",
+          "frontend-stage25-missing-close-64",
+          "frontend-stage25-bad-inner-64",
+          "frontend-stage25-first-call-arguments",
+          "frontend-stage25-short-circuit",
+          "frontend-stage25-coalesce-associativity",
+          "frontend-stage25-nullable-member",
+          "frontend-stage25-nonnull-postfix"
         ],
         "state": "partial"
       }
@@ -157609,14 +158401,51 @@
       "id": "semantic:shared-engine",
       "implementation": {
         "links": [],
-        "state": "unimplemented"
+        "state": "partial"
       },
       "kind": "semantic-family",
       "reason": "A selected probe does not establish implementation or complete edge-case coverage.",
       "required": true,
       "tests": {
-        "case_ids": [],
-        "state": "unmapped"
+        "case_ids": [
+          "frontend-stage25-parentheses-64",
+          "frontend-stage25-parentheses-256",
+          "frontend-stage25-list-128",
+          "frontend-stage25-set-128-equality",
+          "frontend-stage25-map-128",
+          "frontend-stage25-binary-left-300",
+          "frontend-stage25-binary-right-64",
+          "frontend-stage25-power-right-64",
+          "frontend-stage25-postfix-128",
+          "frontend-stage25-shallow-list-600",
+          "frontend-stage25-shallow-members-600",
+          "frontend-stage25-precedence",
+          "frontend-stage25-subtraction",
+          "frontend-stage25-division",
+          "frontend-stage25-power",
+          "frontend-stage25-conditional-lazy",
+          "frontend-stage25-first-binary-error",
+          "frontend-stage25-first-list-error",
+          "frontend-stage25-let-lexical",
+          "frontend-stage25-postfix-binding",
+          "frontend-stage25-first-deep-call-error",
+          "set-stage23-deep-64-equality",
+          "set-stage23-deep-64-map-key",
+          "frontend-stage25-unary-spaced-128",
+          "frontend-stage25-lambda-capture-apply",
+          "frontend-stage25-conditional-shallow",
+          "frontend-stage25-let-shallow",
+          "frontend-stage25-lambda-shallow",
+          "frontend-stage25-object-shallow",
+          "frontend-stage25-missing-close-64",
+          "frontend-stage25-bad-inner-64",
+          "frontend-stage25-first-call-arguments",
+          "frontend-stage25-short-circuit",
+          "frontend-stage25-coalesce-associativity",
+          "frontend-stage25-nullable-member",
+          "frontend-stage25-nonnull-postfix"
+        ],
+        "state": "partial"
       }
     },
     {
@@ -163607,17 +164436,17 @@
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "608073c4b29fd91330889b143badc507e347bff19c4a0b6343ce78728829098a",
+            "sha256": "aa3094f9ea2ef58df9a7db46fe05a7113f9267679dc4d00a4c73bc5ad16af3b9",
             "symbol": "validate_class_override"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "608073c4b29fd91330889b143badc507e347bff19c4a0b6343ce78728829098a",
+            "sha256": "aa3094f9ea2ef58df9a7db46fe05a7113f9267679dc4d00a4c73bc5ad16af3b9",
             "symbol": "validate_object_override"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "608073c4b29fd91330889b143badc507e347bff19c4a0b6343ce78728829098a",
+            "sha256": "aa3094f9ea2ef58df9a7db46fe05a7113f9267679dc4d00a4c73bc5ad16af3b9",
             "symbol": "initialize_member_types"
           }
         ],
@@ -164045,17 +164874,17 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/parser.rs",
-            "sha256": "24762e250235f582e44bc0f7c1cf29a0f7f635baa2308409e497277e167d553d",
+            "sha256": "cbd20e289328f1aac994a0d4c7b4595c9b2f73d46a2a112026377a838f36c8bb",
             "symbol": "import"
           },
           {
             "path": "crates/pkl-runtime/src/resolver.rs",
-            "sha256": "6600efcb849cb89dc3de35400b04c5e2fa7da01a88ef733d5738ad6cf422bc4a",
-            "symbol": "type_expression"
+            "sha256": "14bf09f4f00b08673e73e92e38702d1bafcb91ed40787007b8d827103a7d7bf2",
+            "symbol": "visit"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "608073c4b29fd91330889b143badc507e347bff19c4a0b6343ce78728829098a",
+            "sha256": "aa3094f9ea2ef58df9a7db46fe05a7113f9267679dc4d00a4c73bc5ad16af3b9",
             "symbol": "compile_type_at"
           }
         ],
@@ -166509,10 +167338,10 @@
   "sources": {
     "compatibility/corpus.json": "0e95da22f965dede398f1a1f136703ba913d588aa51c1fb871cd97a11c84a0dd",
     "compatibility/inventory.json": "a9b21752adad9a269a54854c0dd298256757be88ad95c1388e30d7c78e407070",
-    "compatibility/m2-mappings.json": "c304378670e70a88eec51c098353315d44c0d1f62adbe63bab8ec71bb5f041c3",
+    "compatibility/m2-mappings.json": "8943edcf4ac73b29988b3bbf087a861220d523be8506a07158a52c7494c16b3e",
     "compatibility/regressions.json": "09c064f65730d30f72bf87a45c88d47ecc0844e57966a999dc8e759f083af3da",
     "compatibility/rev1-inventory.json": "6061f202ba3f04565efed3617ac69d3c2fadc54eec1f562b67a4758b3d0a8ab5",
     "references.lock": "278f48fd7697459281aa78a706c9ca57222f36a8c0785d838a6449fbaf26d30b",
-    "tests/fixtures/m2/cases.json": "cddba5b33de2d38e2a1d674fc36844584c2ebc9d621d0a8d78e2dde36880df77"
+    "tests/fixtures/m2/cases.json": "2174fc6e40f3644640625ece0fa580d89a5040d25b79bcc3c9df2d446a6f1134"
   }
 }
