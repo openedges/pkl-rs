@@ -14,6 +14,7 @@ import { strictSetGroups, strictSetContext } from './strict-set-cases.mjs';
 import { collectionTypeGroups, collectionTypeContext } from './collection-type-cases.mjs';
 import { frontendDepthGroups, frontendDepthContext } from './frontend-depth-cases.mjs';
 import { stringFrontendGroups, stringFrontendContext } from './string-frontend-cases.mjs';
+import { lexicalDiagnosticCases, lexicalDiagnosticRecoveries, lexicalDiagnosticContext } from './lexical-diagnostic-cases.mjs';
 
 // Identical assertions execute inside Node and an actual Chromium page.
 export async function scenarios(api) {
@@ -276,6 +277,18 @@ export async function scenarios(api) {
       }
     });
   }
+  await check('m2-lexical-diagnostic-recovery', () => {
+    for (let repetition = 0; repetition < 2; repetition++) {
+      for (let index = 0; index < lexicalDiagnosticCases.length; index++) {
+        const fixture = lexicalDiagnosticCases[index];
+        throws(() => api.evaluateLanguage(fixture.source, lexicalDiagnosticContext.uri,
+          lexicalDiagnosticContext.moduleName, fixture.expression), fixture.expectedError);
+        const recovery = lexicalDiagnosticRecoveries[index % lexicalDiagnosticRecoveries.length];
+        eq(api.evaluateLanguage(recovery.source, lexicalDiagnosticContext.uri,
+          lexicalDiagnosticContext.moduleName, recovery.expression), recovery.expectedValue);
+      }
+    }
+  });
   await check('m2-class-method-and-type-alias', () => {
     const source = 'typealias Count = Int\nclass Box { value: Count = 40; function add(n: Count): Count = value + n }\nbox = new Box {}\nresult = box.add(2)';
     eq(api.evaluateLanguage(source, 'file:///m2-platform.pkl', 'm2-platform', 'result'), '42');

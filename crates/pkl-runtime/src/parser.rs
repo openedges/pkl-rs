@@ -150,16 +150,18 @@ impl Lexer<'_> {
                     self.advance();
                 }
             } else if self.source[self.cursor..].starts_with("/*") {
-                let start = self.cursor;
                 self.cursor += 2;
-                let Some(end) = self.source[self.cursor..].find("*/") else {
+                let end = self.source[self.cursor..].find("*/");
+                self.cursor = end.map_or(self.source.len(), |end| self.cursor + end + 2);
+                // The pinned lexer reports EOF even when a block comment's
+                // closing delimiter is the final source token.
+                if self.cursor == self.source.len() {
                     return Err(Diagnostic::new(
                         DiagnosticKind::Syntax,
-                        Span::new(start, self.source.len()),
-                        "Unterminated block comment.",
+                        Span::new(self.cursor, self.cursor),
+                        "Unexpected end of file.",
                     ));
-                };
-                self.cursor += end + 2;
+                }
             } else {
                 break;
             }
@@ -2102,56 +2104,6 @@ impl<'a> Parser<'a> {
         };
         Ok(Expr { kind, span })
     }
-}
-
-fn multiline_parts(mut parts: Vec<StringPart>, span: Span) -> Result<Vec<StringPart>, Diagnostic> {
-    let error = |message| Diagnostic::new(DiagnosticKind::Syntax, span, message);
-    if parts.first() != Some(&StringPart::Newline) {
-        return Err(error("String content must begin on a new line."));
-    }
-    if parts.len() == 1 {
-        return Ok(Vec::new());
-    }
-    let indent = match parts.last() {
-        Some(StringPart::Newline) => String::new(),
-        Some(StringPart::Text(text))
-            if text.chars().all(|ch| ch == ' ' || ch == '\t')
-                && parts.get(parts.len() - 2) == Some(&StringPart::Newline) =>
-        {
-            let indent = text.clone();
-            parts.pop();
-            indent
-        }
-        _ => return Err(error("Closing string delimiter must begin on a new line.")),
-    };
-    parts.pop(); // final source newline, which is not string content
-    if parts.is_empty() {
-        return Ok(Vec::new());
-    }
-    parts.remove(0); // opening newline
-    let mut line_start = true;
-    for part in &mut parts {
-        match part {
-            StringPart::Text(text) => {
-                if line_start {
-                    let Some(stripped) = text.strip_prefix(&indent) else {
-                        return Err(error("String indentation must match the last line."));
-                    };
-                    *text = stripped.to_owned();
-                }
-                line_start = false;
-            }
-            StringPart::Newline | StringPart::Continuation => line_start = true,
-            StringPart::Escape(_) => {
-                if line_start && !indent.is_empty() {
-                    return Err(error("String indentation must match the last line."));
-                }
-                line_start = false;
-            }
-            StringPart::Expression(_, _) => {}
-        }
-    }
-    Ok(parts)
 }
 
 fn integer(text: &str, negative: bool, span: Span) -> Result<i64, Diagnostic> {

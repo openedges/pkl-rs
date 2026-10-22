@@ -2,7 +2,7 @@
 use std::collections::BTreeMap;
 use std::sync::Arc;
 
-use super::{Diagnostic, DiagnosticKind, Kind, Lexer, Parser, Span, StringPart, multiline_parts};
+use super::{Diagnostic, DiagnosticKind, Kind, Lexer, Parser, Span, StringPart};
 
 // EOF validation parses an interpolation to preserve its first syntax error.
 // Replaying already failed child strings prevents that validation from entering
@@ -12,13 +12,28 @@ pub(super) type StringErrors = Arc<BTreeMap<(usize, usize), (usize, Diagnostic)>
 
 struct StringScan {
     start: usize,
-    hashes: usize,
     multiline: bool,
     delimiter: String,
     escape: String,
-    parts: Vec<StringPart>,
+    parts: Vec<SpannedStringPart>,
     text: String,
     interpolation: Option<InterpolationScan>,
+}
+
+struct SpannedStringPart {
+    part: StringPart,
+    span: Span,
+}
+
+impl StringScan {
+    fn flush_text(&mut self, end: usize, include_empty: bool) {
+        if include_empty || !self.text.is_empty() {
+            self.parts.push(SpannedStringPart {
+                span: Span::new(end - self.text.len(), end),
+                part: StringPart::Text(std::mem::take(&mut self.text)),
+            });
+        }
+    }
 }
 
 struct InterpolationScan {
@@ -79,14 +94,31 @@ impl Lexer<'_> {
                                 self.string_errors.clone(),
                             )
                         })
-                        .and_then(|mut parser| parser.expression_expected(0, Some(')')));
-                    Err(result.err().unwrap_or_else(|| {
-                        Diagnostic::new(
+                        .and_then(|mut parser| {
+                            parser.expression_expected(0, Some(')'))?;
+                            parser.expect(')')?;
+                            Ok(())
+                        });
+                    let mut error = result.err().unwrap_or_else(|| {
+                        let mut error = Diagnostic::new(
                             DiagnosticKind::Syntax,
-                            range,
-                            "Missing `)` delimiter in interpolation.",
-                        )
-                    }))
+                            Span::new(range.end, range.end),
+                            "Unexpected token `EOF`. Expected `)`.",
+                        );
+                        error.highlight_length_utf16 = Some(1);
+                        error
+                    });
+                    if error.span.start == self.source.len()
+                        && error.highlight_length_utf16 == Some(1)
+                    {
+                        // ParserImpl expects a one-unit span after the final
+                        // token. At true EOF that lies outside the Source; the
+                        // Java exception renders its unavailable section at
+                        // the beginning of the module. Whitespace after the
+                        // token keeps the source section available.
+                        error.span = Span::new(0, 0);
+                    }
+                    Err(error)
                 }
                 Err(error) => Err(self
                     .validate_interpolations(expression_ranges(&frame.parts))
@@ -159,7 +191,6 @@ impl Lexer<'_> {
         }
         Ok(StringScan {
             start,
-            hashes,
             multiline,
             delimiter: format!(
                 "{}{}",
@@ -188,10 +219,14 @@ impl Lexer<'_> {
                 Kind::Symbol(')') => {
                     interpolation.nesting -= 1;
                     if interpolation.nesting == 0 {
-                        frame.parts.push(StringPart::Expression(
-                            Span::new(interpolation.begin, token.span.start),
-                            Span::new(interpolation.start, token.span.end),
-                        ));
+                        let span = Span::new(interpolation.start, token.span.end);
+                        frame.parts.push(SpannedStringPart {
+                            part: StringPart::Expression(
+                                Span::new(interpolation.begin, token.span.start),
+                                span,
+                            ),
+                            span,
+                        });
                         frame.interpolation = None;
                     }
                 }
@@ -206,19 +241,17 @@ impl Lexer<'_> {
             return Ok(StringFlow::Continue);
         }
         if self.source[self.cursor..].starts_with(&frame.delimiter) {
+            // Java emits an empty text token before delimiters and escapes.
+            // Its location participates in multiline validation and indentation.
+            frame.flush_text(self.cursor, true);
             self.cursor += frame.delimiter.len();
-            if !frame.text.is_empty() {
-                frame
-                    .parts
-                    .push(StringPart::Text(std::mem::take(&mut frame.text)));
-            }
             return Ok(StringFlow::Done);
         }
         let position = self.cursor;
         let Some(ch) = self.advance() else {
             return Err(Diagnostic::new(
                 DiagnosticKind::Syntax,
-                Span::new(frame.start, self.cursor),
+                Span::new(self.cursor, self.cursor),
                 format!("Missing `{}` delimiter.", frame.delimiter),
             ));
         };
@@ -227,37 +260,26 @@ impl Lexer<'_> {
                 return Err(Diagnostic::new(
                     DiagnosticKind::Syntax,
                     Span::new(position, self.cursor),
-                    "String content must remain on one line.",
+                    format!("Missing `{}` delimiter.", frame.delimiter),
                 ));
             }
             if ch == '\r' && self.peek() == Some('\n') {
                 self.advance();
             }
-            if !frame.text.is_empty() {
-                frame
-                    .parts
-                    .push(StringPart::Text(std::mem::take(&mut frame.text)));
-            }
-            frame.parts.push(StringPart::Newline);
-        } else if ch == '\\'
-            && self.source[position..].starts_with(&frame.escape)
-            && self.source[position + 1..]
-                .chars()
-                .take_while(|ch| *ch == '#')
-                .count()
-                == frame.hashes
-        {
+            frame.flush_text(position, false);
+            frame.parts.push(SpannedStringPart {
+                part: StringPart::Newline,
+                span: Span::new(position, self.cursor),
+            });
+        } else if ch == '\\' && self.source[position..].starts_with(&frame.escape) {
             self.cursor = position + frame.escape.len();
-            if !frame.text.is_empty() {
-                frame
-                    .parts
-                    .push(StringPart::Text(std::mem::take(&mut frame.text)));
-            }
+            frame.flush_text(position, true);
+            let escaped_start = self.cursor;
             let escaped = self.advance().ok_or_else(|| {
                 Diagnostic::new(
                     DiagnosticKind::Syntax,
-                    Span::new(position, self.cursor),
-                    "Missing string escape character.",
+                    Span::new(self.cursor, self.cursor),
+                    "Unexpected end of file.",
                 )
             })?;
             let decoded = match escaped {
@@ -304,22 +326,63 @@ impl Lexer<'_> {
                     });
                     return Ok(StringFlow::Continue);
                 }
-                '\n' | '\r' if frame.multiline => {
+                '\n' | '\r' => {
                     if escaped == '\r' && self.peek() == Some('\n') {
                         self.advance();
                     }
-                    frame.parts.push(StringPart::Continuation);
+                    if !frame.multiline {
+                        let mut error = Diagnostic::new(
+                            DiagnosticKind::Syntax,
+                            Span::new(position, self.cursor),
+                            "Invalid line continuation escape sequence.\n\nLine continuations are only allowed in multi-line strings.",
+                        );
+                        error.highlight_length_utf16 =
+                            Some(self.source[position..self.cursor].encode_utf16().count());
+                        return Err(error);
+                    }
+                    frame.parts.push(SpannedStringPart {
+                        part: StringPart::Continuation,
+                        span: Span::new(position, self.cursor),
+                    });
                     return Ok(StringFlow::Continue);
                 }
                 _ => {
+                    let end = self.cursor;
+                    if matches!(escaped, ' ' | '\t') {
+                        while self.peek().is_some_and(|ch| matches!(ch, ' ' | '\t')) {
+                            self.advance();
+                        }
+                        if self.advance().is_some_and(|ch| matches!(ch, '\n' | '\r')) {
+                            let mut error = Diagnostic::new(
+                                DiagnosticKind::Syntax,
+                                Span::new(escaped_start - 1, self.cursor),
+                                "Invalid line continuation escape sequence.\n\nWhitespace between the continuation escape and following newline is not allowed.",
+                            );
+                            // Java keeps the whitespace/newline token width
+                            // even when rendering strips trailing whitespace.
+                            error.highlight_length_utf16 = Some(
+                                self.source[escaped_start - 1..self.cursor]
+                                    .encode_utf16()
+                                    .count(),
+                            );
+                            return Err(error);
+                        }
+                    }
                     return Err(Diagnostic::new(
                         DiagnosticKind::Syntax,
-                        Span::new(position, self.cursor),
-                        "Invalid string escape.",
+                        // Java uses the last hash rather than the backslash
+                        // when an active raw-string escape is invalid.
+                        Span::new(escaped_start - 1, end),
+                        format!(
+                            "Invalid character escape sequence `\\{escaped}`.\n\nValid character escape sequences are:  \\n  \\r  \\t  \\\"  \\\\ \\<newline>"
+                        ),
                     ));
                 }
             };
-            frame.parts.push(StringPart::Escape(decoded));
+            frame.parts.push(SpannedStringPart {
+                part: StringPart::Escape(decoded),
+                span: Span::new(position, self.cursor),
+            });
         } else {
             frame.text.push(ch);
         }
@@ -340,7 +403,7 @@ impl Lexer<'_> {
         let mut rendered = Vec::new();
         let mut text = String::new();
         for part in parts {
-            match part {
+            match part.part {
                 StringPart::Text(value) | StringPart::Escape(value) => text.push_str(&value),
                 StringPart::Newline => text.push('\n'),
                 StringPart::Continuation => {}
@@ -363,9 +426,92 @@ impl Lexer<'_> {
     }
 }
 
-fn expression_ranges(parts: &[StringPart]) -> impl Iterator<Item = Span> + '_ {
-    parts.iter().filter_map(|part| match part {
+fn expression_ranges(parts: &[SpannedStringPart]) -> impl Iterator<Item = Span> + '_ {
+    parts.iter().filter_map(|part| match &part.part {
         StringPart::Expression(range, _) => Some(*range),
         _ => None,
     })
+}
+
+// Pkl 0.32.0 ParserImpl validates the complete token sequence after parsing
+// interpolation expressions. Preserve token spans, including empty text parts,
+// because an opening-line or indentation diagnostic can point at those tokens.
+fn multiline_parts(
+    mut parts: Vec<SpannedStringPart>,
+    span: Span,
+) -> Result<Vec<SpannedStringPart>, Diagnostic> {
+    if !matches!(
+        parts.first().map(|part| &part.part),
+        Some(StringPart::Newline)
+    ) {
+        return Err(Diagnostic::new(
+            DiagnosticKind::Syntax,
+            parts.first().map_or(span, |part| part.span),
+            "The content of a multi-line string must begin on a new line.",
+        ));
+    }
+    if parts.len() == 1 {
+        return Ok(Vec::new());
+    }
+    let indent = match parts.last().map(|part| &part.part) {
+        Some(StringPart::Newline) => String::new(),
+        Some(StringPart::Text(text))
+            if text.chars().all(|ch| ch == ' ' || ch == '\t')
+                && matches!(
+                    parts.get(parts.len() - 2).map(|part| &part.part),
+                    Some(StringPart::Newline)
+                ) =>
+        {
+            let indent = text.clone();
+            parts.pop();
+            indent
+        }
+        _ => {
+            return Err(Diagnostic::new(
+                DiagnosticKind::Syntax,
+                span,
+                "The closing delimiter of a multi-line string must begin on a new line.",
+            ));
+        }
+    };
+    parts.pop(); // final source newline, which is not string content
+    if parts.is_empty() {
+        return Ok(Vec::new());
+    }
+    parts.remove(0); // opening newline
+    let mut line_start = true;
+    for part in &mut parts {
+        match &mut part.part {
+            StringPart::Text(text) => {
+                if line_start {
+                    let Some(stripped) = text.strip_prefix(&indent) else {
+                        let leading = text
+                            .bytes()
+                            .take_while(|ch| matches!(ch, b' ' | b'\t'))
+                            .count();
+                        return Err(Diagnostic::new(
+                            DiagnosticKind::Syntax,
+                            Span::new(part.span.start + leading, part.span.end),
+                            "Line must match or exceed indentation of the String's last line.",
+                        ));
+                    };
+                    *text = stripped.to_owned();
+                }
+                line_start = false;
+            }
+            StringPart::Newline | StringPart::Continuation => line_start = true,
+            StringPart::Escape(_) => {
+                if line_start && !indent.is_empty() {
+                    return Err(Diagnostic::new(
+                        DiagnosticKind::Syntax,
+                        part.span,
+                        "Line must match or exceed indentation of the String's last line.",
+                    ));
+                }
+                line_start = false;
+            }
+            StringPart::Expression(_, _) => {}
+        }
+    }
+    Ok(parts)
 }

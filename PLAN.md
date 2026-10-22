@@ -407,6 +407,9 @@ Stage 15의 원래 입력·URI 그대로 재비교하여 shared-slot 실패 3개
 
 [독립 최종 감사](reports/m2/stage26-post-seal-audit.json)는 원본 파일 67,236개·archive·Git 소스·리뷰·gate·원시 결과·테스트 집계를 확인했습니다. 첫 봉인 도구의 메타데이터 필드 비교 오류와 첫 감사의 순차 native 출력 형식 가정 오류는 실패 기록을 보존하고 수정했습니다. 보충 감사는 원본 부모/자식 출력 블록을 검증하며 이미 봉인한 10개 archive를 변경하지 않았습니다. [완료 기록](reports/m2/stage26-completion-captures.json)은 실패·성공 감사 process와 보충 도구·준비 diff·리뷰의 원본 26개를 별도로 보존합니다. **Stage 26의 제한된 문자열 프런트엔드 개발 계약은 마감했으며 M2 전체·제품 API·릴리스 플랫폼·속도·peak RSS 목표는 계속 미완료입니다.**
 
+
+스물일곱 번째 단계는 Stage 26에서 보존한 비자원성 문자열 구문 진단 불일치 15개를 대상으로 진행합니다. 핵심 lexer·parser와 진단의 메시지·원시 source span·오류 우선순위는 `gpt-6-astra / xhigh`, Java 원시 비교와 독립 native·플랫폼 검증은 각각 `gpt-6.1-sol / high`에 배정합니다. invalid escape, 끝나지 않은 문자열·comment, 다중 행의 시작·끝 개행과 들여쓰기 오류를 기존 입력 및 새 경계 사례로 비교합니다. 기존 깊이 한도와 작은 스택 조건, 미해결 Java 내부 오류와 oracle 실패는 그대로 유지합니다. 구문 분석에 실패한 module은 persistent evaluator를 만들 수 없으므로, 플랫폼의 오류 후 정상 입력 검사는 새 evaluator 호출의 adapter 회복으로 구분하며 동일 evaluator의 순차 실행으로 설명하지 않습니다. 구현과 Java 입력에서 가져온 회귀 사례 107개(성공 5개·예상 오류 102개)를 추가했고 기존 2,724개 정의와 151개 순차 목록을 보존했습니다. 고정 release 실행 파일의 탐색 158개는 원시 일치 144개·불일치 12개·oracle 오류 2개이며, 원래 진단 차이 15개가 해결됐습니다. 전체 선택 입력 2,831개와 필수 로컬 검사·기존 순차 계약·Node/Chromium 검증을 진행 중입니다. 최종 검증과 독립 검토를 마친 뒤 검증된 범위만 마감합니다.
+
 다음 구현은 남은 탐색 불일치의 의존성을 기준으로 진행합니다.
 
 1. 남은 Reference metadata 작업·진단 확장을 continuation과 자원 계약으로 검증하고 Java stack-overflow 진단 및 취소 지연을 별도로 다룹니다. 전체 지연 타입 해석·alias-root 대입 identity와 wrapper 중복 제거의 실제 인자 구분을 검증합니다. 남은 nullable/default·inline Reference·local typed-property·outer 진단, generic constructor의 지연 멤버 frame 이름·builtin·generator 경계를 원래 실패 입력으로 보완합니다. Stage 24에서 보존한 String 선택 별칭 union 생성자의 `Cannot instantiate type` 진단·지연 시점·오류 우선순위도 여기에 포함합니다. wrapper identity를 바꾸기 전에는 Java에서 관찰 가능한 캐시·성공 predicate 호출 횟수 근거를 먼저 확보합니다. 이미 검증한 공유 타입 인자의 깊은 실행·동시 해제, inline·lambda·공유 let·분기 순서·재귀 깊이별 재시도, 타입 인자 캡처·기본값·Reference 검사 순서, Host/GC/취소/terminal 동작을 회귀 기준으로 유지합니다.

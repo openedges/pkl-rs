@@ -55353,6 +55353,2039 @@
       ]
     },
     {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "string-stage27-retained-inner-invalid-escape",
+      "input": "tests/fixtures/m2/string-stage27-retained-inner-invalid-escape.pkl",
+      "input_sha256": "d7c321b1e45448483f4dc120a5bd04885b3fede658969894b8fbec831c3030bb",
+      "required": true,
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "string-stage27-retained-first-lexical-error",
+      "input": "tests/fixtures/m2/string-stage27-retained-first-lexical-error.pkl",
+      "input_sha256": "25c80ceee0821452adbd73e573526d8013277d71ae2bd5acae76d7e0aeca80ca",
+      "required": true,
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "string-stage27-retained-unterminated-inner-string",
+      "input": "tests/fixtures/m2/string-stage27-retained-unterminated-inner-string.pkl",
+      "input_sha256": "9d1e7068b589e8e9bb91a1fed24b6cd65d091bfc5d9f3ade3dd96bc2483ee14f",
+      "required": true,
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "string-stage27-retained-unterminated-comment",
+      "input": "tests/fixtures/m2/string-stage27-retained-unterminated-comment.pkl",
+      "input_sha256": "c42e3ac70697abc8a03befa805c790f8c965843a0242de27e382f64fb7b360be",
+      "required": true,
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "string-stage27-retained-nested-syntax-before-later-escape",
+      "input": "tests/fixtures/m2/string-stage27-retained-nested-syntax-before-later-escape.pkl",
+      "input_sha256": "1aec1522c839ac88bffb0de97f16dca5bcc7ceb0d3adc0e833a948a3d41d8611",
+      "required": true,
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "string-stage27-retained-inner-lexical-before-missing-close",
+      "input": "tests/fixtures/m2/string-stage27-retained-inner-lexical-before-missing-close.pkl",
+      "input_sha256": "f628190f932933de0bd1d16e1cd208d4166b317f3a1b86f4db4e59ced308e808",
+      "required": true,
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "string-stage27-retained-boundary-unclosed-interpolation",
+      "input": "tests/fixtures/m2/string-stage27-retained-boundary-unclosed-interpolation.pkl",
+      "input_sha256": "b03f8220a454881fb01a0264707de4fe935844d94496d8f76a7d683a6ce2afab",
+      "required": true,
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "string-stage27-retained-boundary-unclosed-inner-string",
+      "input": "tests/fixtures/m2/string-stage27-retained-boundary-unclosed-inner-string.pkl",
+      "input_sha256": "343096eee338ca60f374eafbfe0863ed4117c00b5146ed4f82284e69050c8a1c",
+      "required": true,
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "string-stage27-retained-boundary-unclosed-comment",
+      "input": "tests/fixtures/m2/string-stage27-retained-boundary-unclosed-comment.pkl",
+      "input_sha256": "8bc78f2482607438b6c1e7db2f1d80113fb1b69b9d48c9b7d4dcfbae2cb0d650",
+      "required": true,
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "string-stage27-retained-multiline-opening-24",
+      "input": "tests/fixtures/m2/string-stage27-retained-multiline-opening-24.pkl",
+      "input_sha256": "f1677b3c4dfc5d531e7cc30617dbf5f789f14d2527621805bd1c21e197f74aff",
+      "required": true,
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "string-stage27-retained-multiline-opening-31",
+      "input": "tests/fixtures/m2/string-stage27-retained-multiline-opening-31.pkl",
+      "input_sha256": "7b68aa3127d15c5ea16d2c93bf51b6dc82f545cf87c736b38856b3a73c41541d",
+      "required": true,
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "string-stage27-retained-multiline-closing-24",
+      "input": "tests/fixtures/m2/string-stage27-retained-multiline-closing-24.pkl",
+      "input_sha256": "7c29f7aa72aa9f26114dcc81fceff7ab39d33db1fef717995af65a4708458a24",
+      "required": true,
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "string-stage27-retained-multiline-closing-31",
+      "input": "tests/fixtures/m2/string-stage27-retained-multiline-closing-31.pkl",
+      "input_sha256": "7c7d58bd077d4e59a3fb96c222c0fba08df6ac3d1bed519816a2c36382e8a830",
+      "required": true,
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "string-stage27-retained-multiline-indent-24",
+      "input": "tests/fixtures/m2/string-stage27-retained-multiline-indent-24.pkl",
+      "input_sha256": "6c9d2e2405f5e16d3735199c86b394bb72dae3202380d3919aa5969af679426e",
+      "required": true,
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "string-stage27-retained-multiline-indent-31",
+      "input": "tests/fixtures/m2/string-stage27-retained-multiline-indent-31.pkl",
+      "input_sha256": "3437ddc22d29895bad3658a93147b7a17cc8b6f808ed6cb5aa46b6650d60afce",
+      "required": true,
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "string-stage27-escape-ordinary-q",
+      "input": "tests/fixtures/m2/string-stage27-escape-ordinary-q.pkl",
+      "input_sha256": "012225468beb3397a67c2468f06e27afada4d2fce09d3d51376fd2bb14e6475c",
+      "required": true,
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "string-stage27-escape-ordinary-zero",
+      "input": "tests/fixtures/m2/string-stage27-escape-ordinary-zero.pkl",
+      "input_sha256": "69d41e5fb4bfaaba711025c79962c812fe6d436fd1bf5b2503820c70fdf9a2d4",
+      "required": true,
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "string-stage27-escape-ordinary-hash",
+      "input": "tests/fixtures/m2/string-stage27-escape-ordinary-hash.pkl",
+      "input_sha256": "436f4c62225f76082687a15d8229295dbf91b28b48b55be6c1d3e188057cab9d",
+      "required": true,
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "string-stage27-escape-raw-one",
+      "input": "tests/fixtures/m2/string-stage27-escape-raw-one.pkl",
+      "input_sha256": "54455a50fa10eae8bcf04eca648c9284866fdd9ef5134f7b4b53a4c4bdc9df6c",
+      "required": true,
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "string-stage27-escape-raw-two",
+      "input": "tests/fixtures/m2/string-stage27-escape-raw-two.pkl",
+      "input_sha256": "d2ed754c2a208e21968c7106be27c24e748391a8715f55d4d42aa2680bc09786",
+      "required": true,
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "string-stage27-escape-raw-inactive",
+      "input": "tests/fixtures/m2/string-stage27-escape-raw-inactive.pkl",
+      "input_sha256": "5cb0eaf39b8e794eb1a9f762bf7cb75cd23bb508875ceb5142ad165aeef7292b",
+      "required": true,
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "string-stage27-escape-multiline",
+      "input": "tests/fixtures/m2/string-stage27-escape-multiline.pkl",
+      "input_sha256": "80ef1e9bd982329a37a5dac9c72ae83d4cf92c681b08c549fa77156a36c2e414",
+      "required": true,
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "string-stage27-escape-hash-multiline",
+      "input": "tests/fixtures/m2/string-stage27-escape-hash-multiline.pkl",
+      "input_sha256": "52b5737921ace906c7213592abfc128c3c8ccf4a20222d5ded0b51327de02dd2",
+      "required": true,
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "string-stage27-escape-emoji-span",
+      "input": "tests/fixtures/m2/string-stage27-escape-emoji-span.pkl",
+      "input_sha256": "096b2350c63793a3edab01d3b50e25f07bbf5f788239c0d823162ea520d33d04",
+      "required": true,
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "string-stage27-escape-combining-span",
+      "input": "tests/fixtures/m2/string-stage27-escape-combining-span.pkl",
+      "input_sha256": "d080baab63da216164c4b85ad16e040fd3706438c99d531a773b351ec9c3226a",
+      "required": true,
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "string-stage27-escape-tab-span",
+      "input": "tests/fixtures/m2/string-stage27-escape-tab-span.pkl",
+      "input_sha256": "56427acb52127945e35835fc3135561d304465a6abedc76b4a044a51bdbf98d2",
+      "required": true,
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "string-stage27-escape-cjk-span",
+      "input": "tests/fixtures/m2/string-stage27-escape-cjk-span.pkl",
+      "input_sha256": "effa340ae0768f70b930f50fc347561aab1a0ff0651576626452d92d517830cb",
+      "required": true,
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "string-stage27-escape-nested-emoji-span",
+      "input": "tests/fixtures/m2/string-stage27-escape-nested-emoji-span.pkl",
+      "input_sha256": "e4c0f72b7ee1651cd67b02bea9ef9257014d58464fbdad437a55ad693a70327d",
+      "required": true,
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "string-stage27-multiline-opening",
+      "input": "tests/fixtures/m2/string-stage27-multiline-opening.pkl",
+      "input_sha256": "cf545dc86aecac8ee4683c49dec0f59b3de33948c96cac862a1e6087326196d8",
+      "required": true,
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "string-stage27-multiline-opening-space",
+      "input": "tests/fixtures/m2/string-stage27-multiline-opening-space.pkl",
+      "input_sha256": "fa4840044d02fa62d4eb1133d50e25defe2de8a4d626cf7351335e24459beb48",
+      "required": true,
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "string-stage27-multiline-opening-tab",
+      "input": "tests/fixtures/m2/string-stage27-multiline-opening-tab.pkl",
+      "input_sha256": "7b3fb30a281f158836826beda38a391724509eabcc2366cd51e7e5d326cfecd8",
+      "required": true,
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "string-stage27-multiline-closing",
+      "input": "tests/fixtures/m2/string-stage27-multiline-closing.pkl",
+      "input_sha256": "3f5671d6b644d8170f1ee78ef46631cbca21ea36dce3cb4ae562bf528bbd0c5f",
+      "required": true,
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "string-stage27-multiline-closing-emoji",
+      "input": "tests/fixtures/m2/string-stage27-multiline-closing-emoji.pkl",
+      "input_sha256": "c1b218bf55258482eb9e2635733b74b7505ce1e3697a3d2771600746bd6ac278",
+      "required": true,
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "string-stage27-multiline-indent",
+      "input": "tests/fixtures/m2/string-stage27-multiline-indent.pkl",
+      "input_sha256": "6b74eae41feb05dede5c33735882ebbe1c24b7126fbf81ba840fb85ee9d03820",
+      "required": true,
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "string-stage27-multiline-indent-one",
+      "input": "tests/fixtures/m2/string-stage27-multiline-indent-one.pkl",
+      "input_sha256": "106623f4f03b86da18c55ab2f909d75c5941c081549eeedd4697f35bcfad67b4",
+      "required": true,
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "string-stage27-multiline-indent-blank",
+      "input": "tests/fixtures/m2/string-stage27-multiline-indent-blank.pkl",
+      "input_sha256": "6ef35cf9650bfaac4276d7de0cd4711da68b6cf4c0121139ee66d9b4f0e88cd9",
+      "required": true,
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "string-stage27-multiline-indent-tab",
+      "input": "tests/fixtures/m2/string-stage27-multiline-indent-tab.pkl",
+      "input_sha256": "368b3921e8a7087f309a4e50474f2a992b2ada4cad1fa264296baa1eb69b656e",
+      "required": true,
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "string-stage27-multiline-indent-emoji",
+      "input": "tests/fixtures/m2/string-stage27-multiline-indent-emoji.pkl",
+      "input_sha256": "8d0e6988ae6b9e1d2f764cb70754233a037c89df5948d909f6eb1454fbd00957",
+      "required": true,
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "string-stage27-multiline-interpolation-indent",
+      "input": "tests/fixtures/m2/string-stage27-multiline-interpolation-indent.pkl",
+      "input_sha256": "717eee1c55cd0ea723f28d10e72c18f2142787774bf7b560533a844da71bbf6a",
+      "required": true,
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "string-stage27-multiline-nested-opening",
+      "input": "tests/fixtures/m2/string-stage27-multiline-nested-opening.pkl",
+      "input_sha256": "82a234d554e144e5391e3bf86c4e320a4c3d0bcb88503fa95eab1183754589fa",
+      "required": true,
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "string-stage27-multiline-nested-closing",
+      "input": "tests/fixtures/m2/string-stage27-multiline-nested-closing.pkl",
+      "input_sha256": "9adbeb780ed91c541b5dd956260a863a851211ee5c9d9fe6b48f601cc64d3e13",
+      "required": true,
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "string-stage27-syntax-before-escape",
+      "input": "tests/fixtures/m2/string-stage27-syntax-before-escape.pkl",
+      "input_sha256": "f12a57dd64316139245b0fbb538012d9b8f441fb8afcd3e46344a45ea34090da",
+      "required": true,
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "string-stage27-syntax-before-comment",
+      "input": "tests/fixtures/m2/string-stage27-syntax-before-comment.pkl",
+      "input_sha256": "13ab40ebd3944409be57e287ec375c5cdf6e3b5a25cad2e02aaa68184799bb8e",
+      "required": true,
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "string-stage27-syntax-before-eof",
+      "input": "tests/fixtures/m2/string-stage27-syntax-before-eof.pkl",
+      "input_sha256": "5066b60c4ec56fea196469d7ab9f21a2b5839c05aabf34d7160f522d521eb125",
+      "required": true,
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "string-stage27-syntax-before-multiline-opening",
+      "input": "tests/fixtures/m2/string-stage27-syntax-before-multiline-opening.pkl",
+      "input_sha256": "05a9eef587dd0b64db5b64ecbf883f0be818e9d0139d664856abee34ebd485eb",
+      "required": true,
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "string-stage27-syntax-before-multiline-indent",
+      "input": "tests/fixtures/m2/string-stage27-syntax-before-multiline-indent.pkl",
+      "input_sha256": "042d7469f2bf74e7fcfc0016d3854b7ed7be9ce4647bd8a760cb83c512072f98",
+      "required": true,
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "string-stage27-lexical-before-syntax",
+      "input": "tests/fixtures/m2/string-stage27-lexical-before-syntax.pkl",
+      "input_sha256": "578cddd67ac0ed0566e65c7cc34c6b7c5ab47fea95cd82e20581103e9ce1a308",
+      "required": true,
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "string-stage27-raw-syntax-before-escape",
+      "input": "tests/fixtures/m2/string-stage27-raw-syntax-before-escape.pkl",
+      "input_sha256": "4045cdc8c160e193f853ec94819b240253c5104dc5ec9af34233cd2abefaed4a",
+      "required": true,
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "string-stage27-multiline-syntax-before-escape",
+      "input": "tests/fixtures/m2/string-stage27-multiline-syntax-before-escape.pkl",
+      "input_sha256": "e1aceed4037ecc29df11151409f9890915f3ceb60c1c6405aaddea193d0f0ff9",
+      "required": true,
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "string-stage27-outer-invalid-before-escape",
+      "input": "tests/fixtures/m2/string-stage27-outer-invalid-before-escape.pkl",
+      "input_sha256": "7e530562d4e18ab07f8c8d7dc60baa43d17838519888417ad7f82ce246a7c037",
+      "required": true,
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "string-stage27-operand-escape-before-eof",
+      "input": "tests/fixtures/m2/string-stage27-operand-escape-before-eof.pkl",
+      "input_sha256": "8112d085b3c474738101d17fe24ea4e390b6ba607ca87c45fbbffaae78734678",
+      "required": true,
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "string-stage27-unicode-scalar-controls",
+      "input": "tests/fixtures/m2/string-stage27-unicode-scalar-controls.pkl",
+      "input_sha256": "5f33299bd8a96d2e575c60806347ad0a3e3ba4eefe1af851ca933f186cd21c95",
+      "required": true,
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "string-stage27-valid-escapes",
+      "input": "tests/fixtures/m2/string-stage27-valid-escapes.pkl",
+      "input_sha256": "293c5e7ea8a033bae7c8e814e5589fd50dff90d6bb35730320516a20ff421bb8",
+      "required": true,
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "string-stage27-valid-hash-escapes",
+      "input": "tests/fixtures/m2/string-stage27-valid-hash-escapes.pkl",
+      "input_sha256": "efef924f9f484b99f61fd2c383c060c4226a6333ef224e949da3d5f1f4b4955f",
+      "required": true,
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "string-stage27-valid-multiline-continuation",
+      "input": "tests/fixtures/m2/string-stage27-valid-multiline-continuation.pkl",
+      "input_sha256": "5dbc42931a7f5ea16a1c16bb677bfa53c2b14e14aca738924b5308c657fd0672",
+      "required": true,
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "string-stage27-multiline-continuation-spaces",
+      "input": "tests/fixtures/m2/string-stage27-multiline-continuation-spaces.pkl",
+      "input_sha256": "b0c67fea1f95269e47e23fdb56141f2df886b9e4a05cf679a1a49aeb1479062d",
+      "required": true,
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "string-stage27-multiline-continuation-tab",
+      "input": "tests/fixtures/m2/string-stage27-multiline-continuation-tab.pkl",
+      "input_sha256": "a3db0562e11e7da82c46f499fc1ceb3e0695bce33fcd539defb2ac92ba69c005",
+      "required": true,
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "string-stage27-comment-closed",
+      "input": "tests/fixtures/m2/string-stage27-comment-closed.pkl",
+      "input_sha256": "9e9b41bca4e8fe1ea4e666c8ef9a02fd30467e5cd1780d4e706397877f8671a5",
+      "required": true,
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "string-stage27-eof-ordinary",
+      "input": "tests/fixtures/m2/string-stage27-eof-ordinary.pkl",
+      "input_sha256": "114c4009065e26d2dad190d6c8dc90af8122d0d3a3561b846c111599da456fc9",
+      "required": true,
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "string-stage27-newline-ordinary",
+      "input": "tests/fixtures/m2/string-stage27-newline-ordinary.pkl",
+      "input_sha256": "167c2e00ac7ebb5cc683184d99dd59dfc9b7a1e28656abfb23d96e3e706dc7bd",
+      "required": true,
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "string-stage27-crlf-ordinary",
+      "input": "tests/fixtures/m2/string-stage27-crlf-ordinary.pkl",
+      "input_sha256": "6ab96b5f69853f372b778896873de5dc9ffdf5f70a65101f18d2cd2a5a06c03b",
+      "required": true,
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "string-stage27-cr-ordinary",
+      "input": "tests/fixtures/m2/string-stage27-cr-ordinary.pkl",
+      "input_sha256": "2b523cf481eacebba0c91cccb05d6a1193e8faa9e4163b66d33d3593c64459aa",
+      "required": true,
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "string-stage27-eof-raw-one",
+      "input": "tests/fixtures/m2/string-stage27-eof-raw-one.pkl",
+      "input_sha256": "91647c393397b0069fc3c8872418e047bb79dc2efddf0017cbb5f88c08a64c5c",
+      "required": true,
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "string-stage27-eof-raw-two",
+      "input": "tests/fixtures/m2/string-stage27-eof-raw-two.pkl",
+      "input_sha256": "42b9f98ee8ed7b92bdafeb81e6a141eb76ce8074eb3c8b1fd8d8cb9e676e5f8c",
+      "required": true,
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "string-stage27-newline-raw-two",
+      "input": "tests/fixtures/m2/string-stage27-newline-raw-two.pkl",
+      "input_sha256": "de7c92e850b7051edbfa57daf2934c9d34baf36d0bd6cc54b496017c1575d26b",
+      "required": true,
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "string-stage27-eof-multiline",
+      "input": "tests/fixtures/m2/string-stage27-eof-multiline.pkl",
+      "input_sha256": "99e177ddec1c48c14ed991c176c08192cd3e0d50e21a75d4c54c359307490846",
+      "required": true,
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "string-stage27-eof-hash-multiline",
+      "input": "tests/fixtures/m2/string-stage27-eof-hash-multiline.pkl",
+      "input_sha256": "4ad98adff35ff5213f7e3a3d3ed05d53d81329f116ede9fb07101e803a253b6b",
+      "required": true,
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "string-stage27-eof-interpolation",
+      "input": "tests/fixtures/m2/string-stage27-eof-interpolation.pkl",
+      "input_sha256": "59b621edcc06faffd6a26f817323aa686a6895bb0080aa1cdd4d4ce00cceb464",
+      "required": true,
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "string-stage27-eof-nested-string",
+      "input": "tests/fixtures/m2/string-stage27-eof-nested-string.pkl",
+      "input_sha256": "e369cebcb2b995938390586d72166238feaa906589653a944f812debf2d5798a",
+      "required": true,
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "string-stage27-eof-escape",
+      "input": "tests/fixtures/m2/string-stage27-eof-escape.pkl",
+      "input_sha256": "dfbc610e5d94eba02e736b3c41c93217c2526133e11d730374038441ed6f1be8",
+      "required": true,
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "string-stage27-eof-comment",
+      "input": "tests/fixtures/m2/string-stage27-eof-comment.pkl",
+      "input_sha256": "7155de44568f88da914cb43cbec9515b9c4d24291962d485f55033808ed2c81a",
+      "required": true,
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "string-stage27-newline-comment",
+      "input": "tests/fixtures/m2/string-stage27-newline-comment.pkl",
+      "input_sha256": "f7ed13d3e42fb06ec76c873e421de935dda4836978fd09d297962cea94a5a34e",
+      "required": true,
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "string-stage27-nested-comment",
+      "input": "tests/fixtures/m2/string-stage27-nested-comment.pkl",
+      "input_sha256": "5f2c93c7e69e8a25ad14b2f2ec7694333ada8bf650cb51b57a5b811525f985cd",
+      "required": true,
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "string-stage27-unicode-comment",
+      "input": "tests/fixtures/m2/string-stage27-unicode-comment.pkl",
+      "input_sha256": "8d844ac8cfe958453cf47096eb8fd2e27bc5f50436dc3de2d85dbd1e170a35f3",
+      "required": true,
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "string-stage27-crlf-comment",
+      "input": "tests/fixtures/m2/string-stage27-crlf-comment.pkl",
+      "input_sha256": "80fee4849d0b1109b04dee29ac8c3e4db74fb433694e37ec3f7815109acd13cb",
+      "required": true,
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "string-stage27-line-comment-eof",
+      "input": "tests/fixtures/m2/string-stage27-line-comment-eof.pkl",
+      "input_sha256": "f6eed726025f1f724d296ac5e704e90e25ff1f047545b1eff44eaa14a435ea97",
+      "required": true,
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "string-stage27-eof-interpolation-empty",
+      "input": "tests/fixtures/m2/string-stage27-eof-interpolation-empty.pkl",
+      "input_sha256": "c2ab5e2537c45c693882026e4c586db4fdecdf0efb48f5616a63470c7a2e3c69",
+      "required": true,
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "string-stage27-eof-interpolation-one",
+      "input": "tests/fixtures/m2/string-stage27-eof-interpolation-one.pkl",
+      "input_sha256": "118426ef7faa3c1fed271aa633fa8ea715be614c38e4b45fef7d64970d0c46e1",
+      "required": true,
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "string-stage27-eof-interpolation-operator",
+      "input": "tests/fixtures/m2/string-stage27-eof-interpolation-operator.pkl",
+      "input_sha256": "377514769762348682bc81ecb357be96b94563feb156ddfd58eb61770021b4a8",
+      "required": true,
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "string-stage27-eof-interpolation-newline",
+      "input": "tests/fixtures/m2/string-stage27-eof-interpolation-newline.pkl",
+      "input_sha256": "c11454a60d29c1196babb67cdb12e07985327443d4348c72b411d8962957a858",
+      "required": true,
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "string-stage27-eof-interpolation-true",
+      "input": "tests/fixtures/m2/string-stage27-eof-interpolation-true.pkl",
+      "input_sha256": "d47c531676584e4c771c1a680e28099eedd92a32745cae51f0ac875f9052dad1",
+      "required": true,
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "string-stage27-eof-interpolation-second-line",
+      "input": "tests/fixtures/m2/string-stage27-eof-interpolation-second-line.pkl",
+      "input_sha256": "a9206465dd2e42a9828b7bf4f3dcf5d041daf8fc6ebf8b400bc455c43fff9463",
+      "required": true,
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "string-stage27-eof-interpolation-raw",
+      "input": "tests/fixtures/m2/string-stage27-eof-interpolation-raw.pkl",
+      "input_sha256": "e0f039ae723b84d7244911c945392e85febf5571bd773de8945cf3606bf5a8c7",
+      "required": true,
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "string-stage27-eof-interpolation-emoji",
+      "input": "tests/fixtures/m2/string-stage27-eof-interpolation-emoji.pkl",
+      "input_sha256": "ad81e2a5737cd7057a86a39907c88e504d3ab36958fb824bd1894f6a9bb7076e",
+      "required": true,
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "string-stage27-eof-interpolation-multiline",
+      "input": "tests/fixtures/m2/string-stage27-eof-interpolation-multiline.pkl",
+      "input_sha256": "4b0e82bbeb3934cfda477f26152ec73e265d1ade972a15482afba12fe8229aaf",
+      "required": true,
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "string-stage27-eof-interpolation-closed-comment",
+      "input": "tests/fixtures/m2/string-stage27-eof-interpolation-closed-comment.pkl",
+      "input_sha256": "17340916fe2f4c2f6d83f4454d75eaaa7c5f62ce2b02bd73a3925efc92b7db3e",
+      "required": true,
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "string-stage27-continuation-ordinary-lf-space",
+      "input": "tests/fixtures/m2/string-stage27-continuation-ordinary-lf-space.pkl",
+      "input_sha256": "82d1a0471da5579bff0a1e0306e914c46925b9fe90d5750f33ae4934547cddc6",
+      "required": true,
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "string-stage27-continuation-ordinary-lf-tab",
+      "input": "tests/fixtures/m2/string-stage27-continuation-ordinary-lf-tab.pkl",
+      "input_sha256": "5d8f7d71553aee92198d77389e69cf58456c880b29bc06c7bf852a62da5cfcb7",
+      "required": true,
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "string-stage27-continuation-ordinary-crlf-space",
+      "input": "tests/fixtures/m2/string-stage27-continuation-ordinary-crlf-space.pkl",
+      "input_sha256": "d4adfd10bd1b7c0c160232d1accccaf8b321611e76f3ba0dd81400e82618ce39",
+      "required": true,
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "string-stage27-continuation-ordinary-crlf-tab",
+      "input": "tests/fixtures/m2/string-stage27-continuation-ordinary-crlf-tab.pkl",
+      "input_sha256": "e83551194ca30306fd37e18407fed111ef7c0e51983cbec1c64ae3d917406e30",
+      "required": true,
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "string-stage27-continuation-raw-lf-space",
+      "input": "tests/fixtures/m2/string-stage27-continuation-raw-lf-space.pkl",
+      "input_sha256": "8a473b624171266d8da721cf54ffb4d8bcfff8db5dc2fd0c22fcebfd7c16ec43",
+      "required": true,
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "string-stage27-continuation-raw-lf-tab",
+      "input": "tests/fixtures/m2/string-stage27-continuation-raw-lf-tab.pkl",
+      "input_sha256": "8deadc10a5d434e6cfbe2d3b9ae1283ce04f7375707967c750748d351d08481c",
+      "required": true,
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "string-stage27-continuation-raw-crlf-space",
+      "input": "tests/fixtures/m2/string-stage27-continuation-raw-crlf-space.pkl",
+      "input_sha256": "7cec43b14d255f9aa4e83f7aefca655d9c15bada7d2c70e7a9dc0be7bc264daf",
+      "required": true,
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "string-stage27-continuation-raw-crlf-tab",
+      "input": "tests/fixtures/m2/string-stage27-continuation-raw-crlf-tab.pkl",
+      "input_sha256": "72dcedb27f55508cd2c96ae6ca8b973334d69977b25efd40e8fdfbe2e5ddf4a7",
+      "required": true,
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "string-stage27-continuation-multiline-lf-space",
+      "input": "tests/fixtures/m2/string-stage27-continuation-multiline-lf-space.pkl",
+      "input_sha256": "b0c67fea1f95269e47e23fdb56141f2df886b9e4a05cf679a1a49aeb1479062d",
+      "required": true,
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "string-stage27-continuation-multiline-lf-tab",
+      "input": "tests/fixtures/m2/string-stage27-continuation-multiline-lf-tab.pkl",
+      "input_sha256": "a3db0562e11e7da82c46f499fc1ceb3e0695bce33fcd539defb2ac92ba69c005",
+      "required": true,
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "string-stage27-continuation-multiline-crlf-space",
+      "input": "tests/fixtures/m2/string-stage27-continuation-multiline-crlf-space.pkl",
+      "input_sha256": "6e0406f625713432c8248b4e8a7c957cd8b7f4933edd49e4d2dabe11cfe07d32",
+      "required": true,
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "string-stage27-continuation-multiline-crlf-tab",
+      "input": "tests/fixtures/m2/string-stage27-continuation-multiline-crlf-tab.pkl",
+      "input_sha256": "13d417df723cec18f90b25ff81b2f0c68037dc0a1e73b7bb8d402e2535ab21a2",
+      "required": true,
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "string-stage27-continuation-hash-multiline-lf-space",
+      "input": "tests/fixtures/m2/string-stage27-continuation-hash-multiline-lf-space.pkl",
+      "input_sha256": "3202673cf10c57bf8b633e9e4b9eaa4db7ef7e60c0fc2b8f6752443384a45d1f",
+      "required": true,
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "string-stage27-continuation-hash-multiline-lf-tab",
+      "input": "tests/fixtures/m2/string-stage27-continuation-hash-multiline-lf-tab.pkl",
+      "input_sha256": "a2b9fce2d31d58f1a1c23602692d753d4933442d10171a6e88b92416246b0f63",
+      "required": true,
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "string-stage27-continuation-hash-multiline-crlf-space",
+      "input": "tests/fixtures/m2/string-stage27-continuation-hash-multiline-crlf-space.pkl",
+      "input_sha256": "e3ab2164e8ba8ce1deba086625a9c9c2a8319264b524e481f075dc49406a5a2f",
+      "required": true,
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "string-stage27-continuation-hash-multiline-crlf-tab",
+      "input": "tests/fixtures/m2/string-stage27-continuation-hash-multiline-crlf-tab.pkl",
+      "input_sha256": "626b237c32003cbe05db85c75073fa253cd52613dd65a1c61cddca67948a5c4f",
+      "required": true,
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "string-stage27-direct-newline-ordinary-lf",
+      "input": "tests/fixtures/m2/string-stage27-direct-newline-ordinary-lf.pkl",
+      "input_sha256": "d0d7b3726ecf659d1328032bd7ef6498caa1f19a0bd7bf3e5bf38d752f0d5415",
+      "required": true,
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "string-stage27-direct-newline-ordinary-crlf",
+      "input": "tests/fixtures/m2/string-stage27-direct-newline-ordinary-crlf.pkl",
+      "input_sha256": "b7b9980d2c7c6fb3e1300b1d1db370283d6fb3e423d4618e895358a425cd032b",
+      "required": true,
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "string-stage27-direct-newline-raw-lf",
+      "input": "tests/fixtures/m2/string-stage27-direct-newline-raw-lf.pkl",
+      "input_sha256": "d1ce4e8699e3544947434103e8870348ea32a20fdce8362875fded3838b2049e",
+      "required": true,
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "string-stage27-direct-newline-raw-crlf",
+      "input": "tests/fixtures/m2/string-stage27-direct-newline-raw-crlf.pkl",
+      "input_sha256": "21e4dc0de5245e5e135800fe73f013fe5d7922468c82d1b3d02a43e244c496d6",
+      "required": true,
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "string-stage27-escape-raw-extra-hash",
+      "input": "tests/fixtures/m2/string-stage27-escape-raw-extra-hash.pkl",
+      "input_sha256": "65ec12cca9725295c04aac989c87aa04f1d5826042c9057bd9279897665efc51",
+      "required": true,
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
       "adapter": null,
       "execution": {
         "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
@@ -146765,9 +148798,9 @@
   "comparison_boundary": "evaluateExpressionString(ModuleSource.path(same absolute URI), expression) UTF-8 stdout; whole PklException.getMessage() UTF-8 stderr and exit 1; no trimming. Power assertions default to disabled; an explicit per-case power_assertions boolean enables the same option in both probes. Stringification alone is not typed value/API compatibility.",
   "completion": "Every required semantic/source requirement needs implementation/test mappings and complete passing execution. Pending/unmapped/unimplemented/mismatch remains a full-gate failure.",
   "counts": {
-    "cases": 3724,
+    "cases": 3831,
     "cases_by_execution": {
-      "ready": 2724,
+      "ready": 2831,
       "unimplemented": 960,
       "unmapped": 40
     },
@@ -146877,7 +148910,114 @@
           "string-stage26-multiline-syntax-before-later-escape",
           "string-stage26-outer-syntax-before-inner-escape",
           "string-stage26-unicode-before-syntax-error",
-          "string-stage26-boundary-syntax-before-later-escape"
+          "string-stage26-boundary-syntax-before-later-escape",
+          "string-stage27-retained-inner-invalid-escape",
+          "string-stage27-retained-first-lexical-error",
+          "string-stage27-retained-unterminated-inner-string",
+          "string-stage27-retained-unterminated-comment",
+          "string-stage27-retained-nested-syntax-before-later-escape",
+          "string-stage27-retained-inner-lexical-before-missing-close",
+          "string-stage27-retained-boundary-unclosed-interpolation",
+          "string-stage27-retained-boundary-unclosed-inner-string",
+          "string-stage27-retained-boundary-unclosed-comment",
+          "string-stage27-retained-multiline-opening-24",
+          "string-stage27-retained-multiline-opening-31",
+          "string-stage27-retained-multiline-closing-24",
+          "string-stage27-retained-multiline-closing-31",
+          "string-stage27-retained-multiline-indent-24",
+          "string-stage27-retained-multiline-indent-31",
+          "string-stage27-escape-ordinary-q",
+          "string-stage27-escape-ordinary-zero",
+          "string-stage27-escape-ordinary-hash",
+          "string-stage27-escape-raw-one",
+          "string-stage27-escape-raw-two",
+          "string-stage27-escape-raw-inactive",
+          "string-stage27-escape-multiline",
+          "string-stage27-escape-hash-multiline",
+          "string-stage27-escape-emoji-span",
+          "string-stage27-escape-combining-span",
+          "string-stage27-escape-tab-span",
+          "string-stage27-escape-cjk-span",
+          "string-stage27-escape-nested-emoji-span",
+          "string-stage27-multiline-opening",
+          "string-stage27-multiline-opening-space",
+          "string-stage27-multiline-opening-tab",
+          "string-stage27-multiline-closing",
+          "string-stage27-multiline-closing-emoji",
+          "string-stage27-multiline-indent",
+          "string-stage27-multiline-indent-one",
+          "string-stage27-multiline-indent-blank",
+          "string-stage27-multiline-indent-tab",
+          "string-stage27-multiline-indent-emoji",
+          "string-stage27-multiline-interpolation-indent",
+          "string-stage27-multiline-nested-opening",
+          "string-stage27-multiline-nested-closing",
+          "string-stage27-syntax-before-escape",
+          "string-stage27-syntax-before-comment",
+          "string-stage27-syntax-before-eof",
+          "string-stage27-syntax-before-multiline-opening",
+          "string-stage27-syntax-before-multiline-indent",
+          "string-stage27-lexical-before-syntax",
+          "string-stage27-raw-syntax-before-escape",
+          "string-stage27-multiline-syntax-before-escape",
+          "string-stage27-outer-invalid-before-escape",
+          "string-stage27-operand-escape-before-eof",
+          "string-stage27-unicode-scalar-controls",
+          "string-stage27-valid-escapes",
+          "string-stage27-valid-hash-escapes",
+          "string-stage27-valid-multiline-continuation",
+          "string-stage27-multiline-continuation-spaces",
+          "string-stage27-multiline-continuation-tab",
+          "string-stage27-comment-closed",
+          "string-stage27-eof-ordinary",
+          "string-stage27-newline-ordinary",
+          "string-stage27-crlf-ordinary",
+          "string-stage27-cr-ordinary",
+          "string-stage27-eof-raw-one",
+          "string-stage27-eof-raw-two",
+          "string-stage27-newline-raw-two",
+          "string-stage27-eof-multiline",
+          "string-stage27-eof-hash-multiline",
+          "string-stage27-eof-interpolation",
+          "string-stage27-eof-nested-string",
+          "string-stage27-eof-escape",
+          "string-stage27-eof-comment",
+          "string-stage27-newline-comment",
+          "string-stage27-nested-comment",
+          "string-stage27-unicode-comment",
+          "string-stage27-crlf-comment",
+          "string-stage27-line-comment-eof",
+          "string-stage27-eof-interpolation-empty",
+          "string-stage27-eof-interpolation-one",
+          "string-stage27-eof-interpolation-operator",
+          "string-stage27-eof-interpolation-newline",
+          "string-stage27-eof-interpolation-true",
+          "string-stage27-eof-interpolation-second-line",
+          "string-stage27-eof-interpolation-raw",
+          "string-stage27-eof-interpolation-emoji",
+          "string-stage27-eof-interpolation-multiline",
+          "string-stage27-eof-interpolation-closed-comment",
+          "string-stage27-continuation-ordinary-lf-space",
+          "string-stage27-continuation-ordinary-lf-tab",
+          "string-stage27-continuation-ordinary-crlf-space",
+          "string-stage27-continuation-ordinary-crlf-tab",
+          "string-stage27-continuation-raw-lf-space",
+          "string-stage27-continuation-raw-lf-tab",
+          "string-stage27-continuation-raw-crlf-space",
+          "string-stage27-continuation-raw-crlf-tab",
+          "string-stage27-continuation-multiline-lf-space",
+          "string-stage27-continuation-multiline-lf-tab",
+          "string-stage27-continuation-multiline-crlf-space",
+          "string-stage27-continuation-multiline-crlf-tab",
+          "string-stage27-continuation-hash-multiline-lf-space",
+          "string-stage27-continuation-hash-multiline-lf-tab",
+          "string-stage27-continuation-hash-multiline-crlf-space",
+          "string-stage27-continuation-hash-multiline-crlf-tab",
+          "string-stage27-direct-newline-ordinary-lf",
+          "string-stage27-direct-newline-ordinary-crlf",
+          "string-stage27-direct-newline-raw-lf",
+          "string-stage27-direct-newline-raw-crlf",
+          "string-stage27-escape-raw-extra-hash"
         ],
         "state": "partial"
       }
@@ -147733,7 +149873,114 @@
           "string-stage26-multiline-syntax-before-later-escape",
           "string-stage26-outer-syntax-before-inner-escape",
           "string-stage26-unicode-before-syntax-error",
-          "string-stage26-boundary-syntax-before-later-escape"
+          "string-stage26-boundary-syntax-before-later-escape",
+          "string-stage27-retained-inner-invalid-escape",
+          "string-stage27-retained-first-lexical-error",
+          "string-stage27-retained-unterminated-inner-string",
+          "string-stage27-retained-unterminated-comment",
+          "string-stage27-retained-nested-syntax-before-later-escape",
+          "string-stage27-retained-inner-lexical-before-missing-close",
+          "string-stage27-retained-boundary-unclosed-interpolation",
+          "string-stage27-retained-boundary-unclosed-inner-string",
+          "string-stage27-retained-boundary-unclosed-comment",
+          "string-stage27-retained-multiline-opening-24",
+          "string-stage27-retained-multiline-opening-31",
+          "string-stage27-retained-multiline-closing-24",
+          "string-stage27-retained-multiline-closing-31",
+          "string-stage27-retained-multiline-indent-24",
+          "string-stage27-retained-multiline-indent-31",
+          "string-stage27-escape-ordinary-q",
+          "string-stage27-escape-ordinary-zero",
+          "string-stage27-escape-ordinary-hash",
+          "string-stage27-escape-raw-one",
+          "string-stage27-escape-raw-two",
+          "string-stage27-escape-raw-inactive",
+          "string-stage27-escape-multiline",
+          "string-stage27-escape-hash-multiline",
+          "string-stage27-escape-emoji-span",
+          "string-stage27-escape-combining-span",
+          "string-stage27-escape-tab-span",
+          "string-stage27-escape-cjk-span",
+          "string-stage27-escape-nested-emoji-span",
+          "string-stage27-multiline-opening",
+          "string-stage27-multiline-opening-space",
+          "string-stage27-multiline-opening-tab",
+          "string-stage27-multiline-closing",
+          "string-stage27-multiline-closing-emoji",
+          "string-stage27-multiline-indent",
+          "string-stage27-multiline-indent-one",
+          "string-stage27-multiline-indent-blank",
+          "string-stage27-multiline-indent-tab",
+          "string-stage27-multiline-indent-emoji",
+          "string-stage27-multiline-interpolation-indent",
+          "string-stage27-multiline-nested-opening",
+          "string-stage27-multiline-nested-closing",
+          "string-stage27-syntax-before-escape",
+          "string-stage27-syntax-before-comment",
+          "string-stage27-syntax-before-eof",
+          "string-stage27-syntax-before-multiline-opening",
+          "string-stage27-syntax-before-multiline-indent",
+          "string-stage27-lexical-before-syntax",
+          "string-stage27-raw-syntax-before-escape",
+          "string-stage27-multiline-syntax-before-escape",
+          "string-stage27-outer-invalid-before-escape",
+          "string-stage27-operand-escape-before-eof",
+          "string-stage27-unicode-scalar-controls",
+          "string-stage27-valid-escapes",
+          "string-stage27-valid-hash-escapes",
+          "string-stage27-valid-multiline-continuation",
+          "string-stage27-multiline-continuation-spaces",
+          "string-stage27-multiline-continuation-tab",
+          "string-stage27-comment-closed",
+          "string-stage27-eof-ordinary",
+          "string-stage27-newline-ordinary",
+          "string-stage27-crlf-ordinary",
+          "string-stage27-cr-ordinary",
+          "string-stage27-eof-raw-one",
+          "string-stage27-eof-raw-two",
+          "string-stage27-newline-raw-two",
+          "string-stage27-eof-multiline",
+          "string-stage27-eof-hash-multiline",
+          "string-stage27-eof-interpolation",
+          "string-stage27-eof-nested-string",
+          "string-stage27-eof-escape",
+          "string-stage27-eof-comment",
+          "string-stage27-newline-comment",
+          "string-stage27-nested-comment",
+          "string-stage27-unicode-comment",
+          "string-stage27-crlf-comment",
+          "string-stage27-line-comment-eof",
+          "string-stage27-eof-interpolation-empty",
+          "string-stage27-eof-interpolation-one",
+          "string-stage27-eof-interpolation-operator",
+          "string-stage27-eof-interpolation-newline",
+          "string-stage27-eof-interpolation-true",
+          "string-stage27-eof-interpolation-second-line",
+          "string-stage27-eof-interpolation-raw",
+          "string-stage27-eof-interpolation-emoji",
+          "string-stage27-eof-interpolation-multiline",
+          "string-stage27-eof-interpolation-closed-comment",
+          "string-stage27-continuation-ordinary-lf-space",
+          "string-stage27-continuation-ordinary-lf-tab",
+          "string-stage27-continuation-ordinary-crlf-space",
+          "string-stage27-continuation-ordinary-crlf-tab",
+          "string-stage27-continuation-raw-lf-space",
+          "string-stage27-continuation-raw-lf-tab",
+          "string-stage27-continuation-raw-crlf-space",
+          "string-stage27-continuation-raw-crlf-tab",
+          "string-stage27-continuation-multiline-lf-space",
+          "string-stage27-continuation-multiline-lf-tab",
+          "string-stage27-continuation-multiline-crlf-space",
+          "string-stage27-continuation-multiline-crlf-tab",
+          "string-stage27-continuation-hash-multiline-lf-space",
+          "string-stage27-continuation-hash-multiline-lf-tab",
+          "string-stage27-continuation-hash-multiline-crlf-space",
+          "string-stage27-continuation-hash-multiline-crlf-tab",
+          "string-stage27-direct-newline-ordinary-lf",
+          "string-stage27-direct-newline-ordinary-crlf",
+          "string-stage27-direct-newline-raw-lf",
+          "string-stage27-direct-newline-raw-crlf",
+          "string-stage27-escape-raw-extra-hash"
         ],
         "state": "partial"
       }
@@ -150723,7 +152970,7 @@
           },
           {
             "path": "crates/pkl-runtime/src/parser.rs",
-            "sha256": "b3c118a364c65648a24f8b10065c27f9c5b5791cf4d2b1a172ee1a8f2c315604",
+            "sha256": "53f57a94a3448f908c0aaa63f6eb507caafb271f6f068e88d8218a8967f3b1e2",
             "symbol": "arguments"
           }
         ],
@@ -151041,7 +153288,7 @@
           },
           {
             "path": "crates/pkl-runtime/src/parser.rs",
-            "sha256": "b3c118a364c65648a24f8b10065c27f9c5b5791cf4d2b1a172ee1a8f2c315604",
+            "sha256": "53f57a94a3448f908c0aaa63f6eb507caafb271f6f068e88d8218a8967f3b1e2",
             "symbol": "arguments"
           }
         ],
@@ -157817,7 +160064,7 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/parser.rs",
-            "sha256": "b3c118a364c65648a24f8b10065c27f9c5b5791cf4d2b1a172ee1a8f2c315604",
+            "sha256": "53f57a94a3448f908c0aaa63f6eb507caafb271f6f068e88d8218a8967f3b1e2",
             "symbol": "import"
           },
           {
@@ -157897,7 +160144,7 @@
           },
           {
             "path": "crates/pkl-runtime/src/parser.rs",
-            "sha256": "b3c118a364c65648a24f8b10065c27f9c5b5791cf4d2b1a172ee1a8f2c315604",
+            "sha256": "53f57a94a3448f908c0aaa63f6eb507caafb271f6f068e88d8218a8967f3b1e2",
             "symbol": "arguments"
           }
         ],
@@ -159183,7 +161430,114 @@
           "string-stage26-multiline-syntax-before-later-escape",
           "string-stage26-outer-syntax-before-inner-escape",
           "string-stage26-unicode-before-syntax-error",
-          "string-stage26-boundary-syntax-before-later-escape"
+          "string-stage26-boundary-syntax-before-later-escape",
+          "string-stage27-retained-inner-invalid-escape",
+          "string-stage27-retained-first-lexical-error",
+          "string-stage27-retained-unterminated-inner-string",
+          "string-stage27-retained-unterminated-comment",
+          "string-stage27-retained-nested-syntax-before-later-escape",
+          "string-stage27-retained-inner-lexical-before-missing-close",
+          "string-stage27-retained-boundary-unclosed-interpolation",
+          "string-stage27-retained-boundary-unclosed-inner-string",
+          "string-stage27-retained-boundary-unclosed-comment",
+          "string-stage27-retained-multiline-opening-24",
+          "string-stage27-retained-multiline-opening-31",
+          "string-stage27-retained-multiline-closing-24",
+          "string-stage27-retained-multiline-closing-31",
+          "string-stage27-retained-multiline-indent-24",
+          "string-stage27-retained-multiline-indent-31",
+          "string-stage27-escape-ordinary-q",
+          "string-stage27-escape-ordinary-zero",
+          "string-stage27-escape-ordinary-hash",
+          "string-stage27-escape-raw-one",
+          "string-stage27-escape-raw-two",
+          "string-stage27-escape-raw-inactive",
+          "string-stage27-escape-multiline",
+          "string-stage27-escape-hash-multiline",
+          "string-stage27-escape-emoji-span",
+          "string-stage27-escape-combining-span",
+          "string-stage27-escape-tab-span",
+          "string-stage27-escape-cjk-span",
+          "string-stage27-escape-nested-emoji-span",
+          "string-stage27-multiline-opening",
+          "string-stage27-multiline-opening-space",
+          "string-stage27-multiline-opening-tab",
+          "string-stage27-multiline-closing",
+          "string-stage27-multiline-closing-emoji",
+          "string-stage27-multiline-indent",
+          "string-stage27-multiline-indent-one",
+          "string-stage27-multiline-indent-blank",
+          "string-stage27-multiline-indent-tab",
+          "string-stage27-multiline-indent-emoji",
+          "string-stage27-multiline-interpolation-indent",
+          "string-stage27-multiline-nested-opening",
+          "string-stage27-multiline-nested-closing",
+          "string-stage27-syntax-before-escape",
+          "string-stage27-syntax-before-comment",
+          "string-stage27-syntax-before-eof",
+          "string-stage27-syntax-before-multiline-opening",
+          "string-stage27-syntax-before-multiline-indent",
+          "string-stage27-lexical-before-syntax",
+          "string-stage27-raw-syntax-before-escape",
+          "string-stage27-multiline-syntax-before-escape",
+          "string-stage27-outer-invalid-before-escape",
+          "string-stage27-operand-escape-before-eof",
+          "string-stage27-unicode-scalar-controls",
+          "string-stage27-valid-escapes",
+          "string-stage27-valid-hash-escapes",
+          "string-stage27-valid-multiline-continuation",
+          "string-stage27-multiline-continuation-spaces",
+          "string-stage27-multiline-continuation-tab",
+          "string-stage27-comment-closed",
+          "string-stage27-eof-ordinary",
+          "string-stage27-newline-ordinary",
+          "string-stage27-crlf-ordinary",
+          "string-stage27-cr-ordinary",
+          "string-stage27-eof-raw-one",
+          "string-stage27-eof-raw-two",
+          "string-stage27-newline-raw-two",
+          "string-stage27-eof-multiline",
+          "string-stage27-eof-hash-multiline",
+          "string-stage27-eof-interpolation",
+          "string-stage27-eof-nested-string",
+          "string-stage27-eof-escape",
+          "string-stage27-eof-comment",
+          "string-stage27-newline-comment",
+          "string-stage27-nested-comment",
+          "string-stage27-unicode-comment",
+          "string-stage27-crlf-comment",
+          "string-stage27-line-comment-eof",
+          "string-stage27-eof-interpolation-empty",
+          "string-stage27-eof-interpolation-one",
+          "string-stage27-eof-interpolation-operator",
+          "string-stage27-eof-interpolation-newline",
+          "string-stage27-eof-interpolation-true",
+          "string-stage27-eof-interpolation-second-line",
+          "string-stage27-eof-interpolation-raw",
+          "string-stage27-eof-interpolation-emoji",
+          "string-stage27-eof-interpolation-multiline",
+          "string-stage27-eof-interpolation-closed-comment",
+          "string-stage27-continuation-ordinary-lf-space",
+          "string-stage27-continuation-ordinary-lf-tab",
+          "string-stage27-continuation-ordinary-crlf-space",
+          "string-stage27-continuation-ordinary-crlf-tab",
+          "string-stage27-continuation-raw-lf-space",
+          "string-stage27-continuation-raw-lf-tab",
+          "string-stage27-continuation-raw-crlf-space",
+          "string-stage27-continuation-raw-crlf-tab",
+          "string-stage27-continuation-multiline-lf-space",
+          "string-stage27-continuation-multiline-lf-tab",
+          "string-stage27-continuation-multiline-crlf-space",
+          "string-stage27-continuation-multiline-crlf-tab",
+          "string-stage27-continuation-hash-multiline-lf-space",
+          "string-stage27-continuation-hash-multiline-lf-tab",
+          "string-stage27-continuation-hash-multiline-crlf-space",
+          "string-stage27-continuation-hash-multiline-crlf-tab",
+          "string-stage27-direct-newline-ordinary-lf",
+          "string-stage27-direct-newline-ordinary-crlf",
+          "string-stage27-direct-newline-raw-lf",
+          "string-stage27-direct-newline-raw-crlf",
+          "string-stage27-escape-raw-extra-hash"
         ],
         "state": "partial"
       }
@@ -159271,7 +161625,114 @@
           "string-stage26-multiline-syntax-before-later-escape",
           "string-stage26-outer-syntax-before-inner-escape",
           "string-stage26-unicode-before-syntax-error",
-          "string-stage26-boundary-syntax-before-later-escape"
+          "string-stage26-boundary-syntax-before-later-escape",
+          "string-stage27-retained-inner-invalid-escape",
+          "string-stage27-retained-first-lexical-error",
+          "string-stage27-retained-unterminated-inner-string",
+          "string-stage27-retained-unterminated-comment",
+          "string-stage27-retained-nested-syntax-before-later-escape",
+          "string-stage27-retained-inner-lexical-before-missing-close",
+          "string-stage27-retained-boundary-unclosed-interpolation",
+          "string-stage27-retained-boundary-unclosed-inner-string",
+          "string-stage27-retained-boundary-unclosed-comment",
+          "string-stage27-retained-multiline-opening-24",
+          "string-stage27-retained-multiline-opening-31",
+          "string-stage27-retained-multiline-closing-24",
+          "string-stage27-retained-multiline-closing-31",
+          "string-stage27-retained-multiline-indent-24",
+          "string-stage27-retained-multiline-indent-31",
+          "string-stage27-escape-ordinary-q",
+          "string-stage27-escape-ordinary-zero",
+          "string-stage27-escape-ordinary-hash",
+          "string-stage27-escape-raw-one",
+          "string-stage27-escape-raw-two",
+          "string-stage27-escape-raw-inactive",
+          "string-stage27-escape-multiline",
+          "string-stage27-escape-hash-multiline",
+          "string-stage27-escape-emoji-span",
+          "string-stage27-escape-combining-span",
+          "string-stage27-escape-tab-span",
+          "string-stage27-escape-cjk-span",
+          "string-stage27-escape-nested-emoji-span",
+          "string-stage27-multiline-opening",
+          "string-stage27-multiline-opening-space",
+          "string-stage27-multiline-opening-tab",
+          "string-stage27-multiline-closing",
+          "string-stage27-multiline-closing-emoji",
+          "string-stage27-multiline-indent",
+          "string-stage27-multiline-indent-one",
+          "string-stage27-multiline-indent-blank",
+          "string-stage27-multiline-indent-tab",
+          "string-stage27-multiline-indent-emoji",
+          "string-stage27-multiline-interpolation-indent",
+          "string-stage27-multiline-nested-opening",
+          "string-stage27-multiline-nested-closing",
+          "string-stage27-syntax-before-escape",
+          "string-stage27-syntax-before-comment",
+          "string-stage27-syntax-before-eof",
+          "string-stage27-syntax-before-multiline-opening",
+          "string-stage27-syntax-before-multiline-indent",
+          "string-stage27-lexical-before-syntax",
+          "string-stage27-raw-syntax-before-escape",
+          "string-stage27-multiline-syntax-before-escape",
+          "string-stage27-outer-invalid-before-escape",
+          "string-stage27-operand-escape-before-eof",
+          "string-stage27-unicode-scalar-controls",
+          "string-stage27-valid-escapes",
+          "string-stage27-valid-hash-escapes",
+          "string-stage27-valid-multiline-continuation",
+          "string-stage27-multiline-continuation-spaces",
+          "string-stage27-multiline-continuation-tab",
+          "string-stage27-comment-closed",
+          "string-stage27-eof-ordinary",
+          "string-stage27-newline-ordinary",
+          "string-stage27-crlf-ordinary",
+          "string-stage27-cr-ordinary",
+          "string-stage27-eof-raw-one",
+          "string-stage27-eof-raw-two",
+          "string-stage27-newline-raw-two",
+          "string-stage27-eof-multiline",
+          "string-stage27-eof-hash-multiline",
+          "string-stage27-eof-interpolation",
+          "string-stage27-eof-nested-string",
+          "string-stage27-eof-escape",
+          "string-stage27-eof-comment",
+          "string-stage27-newline-comment",
+          "string-stage27-nested-comment",
+          "string-stage27-unicode-comment",
+          "string-stage27-crlf-comment",
+          "string-stage27-line-comment-eof",
+          "string-stage27-eof-interpolation-empty",
+          "string-stage27-eof-interpolation-one",
+          "string-stage27-eof-interpolation-operator",
+          "string-stage27-eof-interpolation-newline",
+          "string-stage27-eof-interpolation-true",
+          "string-stage27-eof-interpolation-second-line",
+          "string-stage27-eof-interpolation-raw",
+          "string-stage27-eof-interpolation-emoji",
+          "string-stage27-eof-interpolation-multiline",
+          "string-stage27-eof-interpolation-closed-comment",
+          "string-stage27-continuation-ordinary-lf-space",
+          "string-stage27-continuation-ordinary-lf-tab",
+          "string-stage27-continuation-ordinary-crlf-space",
+          "string-stage27-continuation-ordinary-crlf-tab",
+          "string-stage27-continuation-raw-lf-space",
+          "string-stage27-continuation-raw-lf-tab",
+          "string-stage27-continuation-raw-crlf-space",
+          "string-stage27-continuation-raw-crlf-tab",
+          "string-stage27-continuation-multiline-lf-space",
+          "string-stage27-continuation-multiline-lf-tab",
+          "string-stage27-continuation-multiline-crlf-space",
+          "string-stage27-continuation-multiline-crlf-tab",
+          "string-stage27-continuation-hash-multiline-lf-space",
+          "string-stage27-continuation-hash-multiline-lf-tab",
+          "string-stage27-continuation-hash-multiline-crlf-space",
+          "string-stage27-continuation-hash-multiline-crlf-tab",
+          "string-stage27-direct-newline-ordinary-lf",
+          "string-stage27-direct-newline-ordinary-crlf",
+          "string-stage27-direct-newline-raw-lf",
+          "string-stage27-direct-newline-raw-crlf",
+          "string-stage27-escape-raw-extra-hash"
         ],
         "state": "partial"
       }
@@ -165702,7 +168163,7 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/parser.rs",
-            "sha256": "b3c118a364c65648a24f8b10065c27f9c5b5791cf4d2b1a172ee1a8f2c315604",
+            "sha256": "53f57a94a3448f908c0aaa63f6eb507caafb271f6f068e88d8218a8967f3b1e2",
             "symbol": "import"
           },
           {
@@ -168170,6 +170631,6 @@
     "compatibility/regressions.json": "09c064f65730d30f72bf87a45c88d47ecc0844e57966a999dc8e759f083af3da",
     "compatibility/rev1-inventory.json": "6061f202ba3f04565efed3617ac69d3c2fadc54eec1f562b67a4758b3d0a8ab5",
     "references.lock": "278f48fd7697459281aa78a706c9ca57222f36a8c0785d838a6449fbaf26d30b",
-    "tests/fixtures/m2/cases.json": "38b34348b999c140118571d5c4ce7bf0089f64a626bf9fbf54f1a675372966df"
+    "tests/fixtures/m2/cases.json": "cb9741c593057e2eeb6d340c2ecda2b2b2338f098ebbaae17447157003eef516"
   }
 }

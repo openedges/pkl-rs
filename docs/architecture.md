@@ -129,12 +129,23 @@ If, let, lambda and property-only object paths also use continuations. Type pars
 uses a work stack with a logical-depth and constructed-height limit of 32. The
 65,536-step expression work budget is shared across interpolated expressions.
 Guard rejection and successful processing below a guard are separate obligations.
-The existing nested lexical-string guard still permits a native stack overflow on
-the recorded 256 KiB stack; that failure remains open. Deep type compilation,
+String scanning and interpolation parsing also use explicit work frames. Stage 26
+checks accepted depths 24/31 and safe rejection of the original depth-64 input on
+256 KiB stacks. The nesting limit remains 32, and its rejection differs from Java.
+Auxiliary lexical error validation can reparse ranges synchronously. Deep type compilation,
 class/instance and mixed/generator body compilation retain recursive helpers.
 Derived AST Debug and PartialEq also remain recursive. The selected checks do not
 establish arbitrary authored depth, uniform compilation latency or complete Java
 resource-error compatibility.
+
+Scanned string parts retain byte spans, including empty text tokens used by
+Java's multiline validation. Stage 27 aligns selected invalid-escape, EOF,
+continuation and multiline diagnostics with Pkl 0.32.0, preserving interpolation
+error order and explicit UTF-16 underline widths. Cached lexical failures retain
+their original consumed end and source-end provenance. Parse-time recovery tests
+use fresh evaluators because a failed module setup cannot produce a retained one.
+Malformed Unicode diagnostics and Java's out-of-range scalar bug remain separate
+compatibility gaps.
 
 ### Constraint continuations
 
