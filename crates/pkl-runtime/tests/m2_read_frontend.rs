@@ -6,11 +6,23 @@ use pkl_runtime::resolver::resolve_module;
 use pkl_runtime::source::{SourceMap, Span};
 use pkl_runtime::syntax::ExprKind;
 use pkl_runtime::value::Value;
-use pkl_runtime::vm::{Instruction, Program, ReadRequest, Vm, VmPoll, compile_module};
+use pkl_runtime::vm::{
+    BlockMetadata, Instruction, Program, ReadRequest, Vm, VmPoll, compile_module,
+};
 
 fn program(text: &str) -> Arc<Program> {
     let module = parse_module(text).unwrap();
     compile_module(&resolve_module(&module).unwrap()).unwrap()
+}
+
+fn authored_blocks(program: &Program) -> impl Iterator<Item = (&Vec<Instruction>, &BlockMetadata)> {
+    // compile_module leaves the primary source implicit. Builtin definitions
+    // carry their own RuntimeSource and spans into that separate source text.
+    program
+        .blocks
+        .iter()
+        .zip(&program.metadata)
+        .filter(|(_, metadata)| metadata.source.is_none())
 }
 
 fn settle(vm: &mut Vm, requests: &mut Vec<ReadRequest>) -> Value {
@@ -45,7 +57,7 @@ fn read_nullable_compiles_a_keyword_operand_with_full_authored_span() {
     );
     let compiled = program(text);
     let mut found = Vec::new();
-    for (block, metadata) in compiled.blocks.iter().zip(&compiled.metadata) {
+    for (block, metadata) in authored_blocks(&compiled) {
         for (index, instruction) in block.iter().enumerate() {
             if matches!(instruction, Instruction::ReadResourceOrNull) {
                 found.push(metadata.spans[index].unwrap());
@@ -89,16 +101,12 @@ fn quoted_read_names_remain_ordinary_user_methods() {
     for name in ["read", "read?"] {
         let text = format!("function `{name}`(x)=x+1\nresult=`{name}`(41)\n");
         let compiled = program(&text);
-        assert!(
-            compiled
-                .blocks
-                .iter()
-                .flatten()
-                .all(|instruction| !matches!(
-                    instruction,
-                    Instruction::ReadResource | Instruction::ReadResourceOrNull
-                ))
-        );
+        assert!(authored_blocks(&compiled).flat_map(|(block, _)| block).all(
+            |instruction| !matches!(
+                instruction,
+                Instruction::ReadResource | Instruction::ReadResourceOrNull
+            )
+        ));
         let mut vm = Vm::new(compiled.clone());
         let mut requests = Vec::new();
         vm.start(compiled.entry, vec![]).unwrap();
@@ -157,7 +165,7 @@ fn nested_nullable_reads_keep_distinct_instruction_source_spans() {
     let text = "result=read?(read?(\"prop:missing\"))\n";
     let compiled = program(text);
     let mut actual = Vec::new();
-    for (block, metadata) in compiled.blocks.iter().zip(&compiled.metadata) {
+    for (block, metadata) in authored_blocks(&compiled) {
         for (index, instruction) in block.iter().enumerate() {
             if matches!(instruction, Instruction::ReadResourceOrNull) {
                 let span = metadata.spans[index].unwrap();

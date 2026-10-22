@@ -1,6 +1,8 @@
 //! Equality and structural-key continuations use the shared Host/heap lifecycle.
 //! Expected forcing gates come from pinned VmObject/VmListing/VmDynamic sources;
 //! these Host callback checks are lifecycle tests, not Java byte comparisons.
+//! Retained module graphs include their one builtin Module parent; executable
+//! nodes, transient-object deltas and terminal-zero assertions remain separate.
 use std::sync::Arc;
 
 use pkl_runtime::host::{HostPoll, HostSession};
@@ -105,7 +107,7 @@ fn typed_defaults_and_warmed_comparisons_retain_pending_state_across_reentry_and
     // successful cache insertion order, so warming `later` makes Mapping's
     // key hashing observable before the earlier scalar difference.
     for (source, child_result, parent_result, retained) in [
-        (TYPED_DEFAULT_SOURCE, Value::Int(42), Value::Bool(true), 4),
+        (TYPED_DEFAULT_SOURCE, Value::Int(42), Value::Bool(true), 5),
         (
             WARMED_COMPARISON_SOURCE,
             Value::Bool(false),
@@ -158,8 +160,8 @@ fn typed_defaults_and_warmed_comparisons_retain_pending_state_across_reentry_and
             .resume(&outer, Ok(Value::string("same")), 3)
             .unwrap();
         assert_eq!(ready(&mut session, 3), Ok(parent_result));
-        // The class-bearing source retains only its module, Base, Key and
-        // Hidden; the class-free source still releases the entire graph.
+        // The class-bearing source retains its module, builtin Module parent, Base,
+        // Key and Hidden; the class-free source still releases the entire graph.
         assert_eq!(session.collect(&[]).live, retained);
         assert_eq!(session.collect(&[]).live, retained);
         session.close();
@@ -362,10 +364,10 @@ fn key_comparison_forces_wrappers_with_temporary_declaration_receivers() {
     session.collect(&[]);
     session.resume(&outer, Ok(Value::string("ok")), 3).unwrap();
     assert_eq!(ready(&mut session, 3), Ok(Value::Bool(true)));
-    // Only Check and its captured module remain, proving the temporary class
+    // Only Check, its captured module and builtin Module parent remain; temporary class
     // receivers, wrapper Listings and structural-key Mapping were released.
-    assert_eq!(retained_values(session.collect(&[]), 4), 2);
-    assert_eq!(retained_values(session.collect(&[]), 4), 2);
+    assert_eq!(retained_values(session.collect(&[]), 4), 3);
+    assert_eq!(retained_values(session.collect(&[]), 4), 3);
     session.close();
     assert_eq!(session.heap_stats().live, 0);
     assert_eq!(session.heap_stats().slots, 0);

@@ -1,0 +1,270 @@
+{
+  "base_commit": "b0afbb6a81a4f8a65a398bb16d2e99d5c7386aaf",
+  "compatibility_complete": false,
+  "development_comparisons": {
+    "full45_trace": {
+      "architecture_passed": true,
+      "candidate": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage40/target/m2/stage40-trace-development-02/build/release/examples/trace_host_probe",
+        "sha256": "48c0bfdb8f317cb1ede0cb0105e0c8e974cb70f549daf19dd57ca767ac0198de",
+        "source_binding": "recorded-build"
+      },
+      "compatibility_complete": false,
+      "native": {
+        "oracle-error": 32,
+        "pass": 58
+      },
+      "portable": {
+        "browser": {
+          "oracle-error": 32,
+          "pass": 58
+        },
+        "node": {
+          "oracle-error": 32,
+          "pass": 58
+        }
+      }
+    },
+    "native_original30": {
+      "bytes": 291600,
+      "path": "target/m2/stage40-original30-native-02/report.json",
+      "sha256": "c864fa8c23a470858cf068da5ee830c2f2e415db1fade802cc6af587486da4bf"
+    },
+    "native_original30_independent_audit": {
+      "bytes": 3526,
+      "path": "target/m2/stage40-original30-native-audit-02/report.json",
+      "sha256": "3a16b04a708a884789b91dbdab158546071654f598533f8f76fd05d18348f77c"
+    },
+    "original30_per_portable_target": {
+      "browser": {
+        "mismatch": 2,
+        "oracle-contract-mismatch": 2,
+        "pass": 26,
+        "unsupported": 30
+      },
+      "node": {
+        "mismatch": 2,
+        "oracle-contract-mismatch": 2,
+        "pass": 26,
+        "unsupported": 30
+      }
+    },
+    "pcf192_per_portable_target": {
+      "browser": {
+        "pass": 384
+      },
+      "node": {
+        "pass": 384
+      }
+    },
+    "standard_platforms": {
+      "browser_scenarios": 92,
+      "compatibility": "fail",
+      "contract": "pass",
+      "known_gaps": [
+        "regex-unicode-15-vs-16",
+        "regex-zero-width-supplementary"
+      ],
+      "node_scenarios": 92,
+      "oracle_passed": {
+        "browser": 6076,
+        "node": 6076,
+        "rust": 6076
+      },
+      "shared_engine_passed": 6078,
+      "total": 6078
+    },
+    "summary": {
+      "bytes": 4886,
+      "path": "target/m2/stage40-b-checkpoint02-summary-01/report.json",
+      "sha256": "d50bc50bea1f55035b556d1a5235e996a4387dc613b4e3556c0d4bf9f8bd6eb9"
+    }
+  },
+  "evidence_publication": "The required-check archive contains its complete sources and raw logs. Other referenced reports and captures remain preserved locally; their publication and final regression closeout are pending.",
+  "inventory_counts": {
+    "cases": 4527,
+    "cases_by_execution": {
+      "ready": 3628,
+      "unimplemented": 859,
+      "unmapped": 40
+    },
+    "requirements": 475,
+    "requirements_by_kind": {
+      "language_parser": 137,
+      "language_token": 109,
+      "semantic-family": 31,
+      "specification": 198
+    }
+  },
+  "performance_target_claimed": false,
+  "preserved_failures": [
+    {
+      "bytes": 4639,
+      "path": "target/m2/stage40-required-checks-01/report.json",
+      "sha256": "29b7d8409092cda7f83a9653a393b7c6a915b4c50c3a7e049e0db3c0fcbe0717"
+    },
+    {
+      "bytes": 528,
+      "path": "target/m2/stage40-workspace-diagnostics-01/process.json",
+      "sha256": "5646a8f842ab9f4835d448cf61bb3ae2656913ffedc26f0d6db9be280c3f1e1a"
+    }
+  ],
+  "remaining": [
+    "Complete full selected 3629-attempt native language acquisition and actual integrity/development/selected/full gates.",
+    "Complete persistent-evaluator regression acquisition and contract verification.",
+    "Complete final checkpoint comparison audit and publish the remaining local raw comparison archives with final source bindings.",
+    "Original30 retain 15 distinct unsupported dependencies, one read* parser mismatch and blocked import1b oracle execution prerequisites.",
+    "Standard comparisons retain two regex mismatches; full45 trace retains 32 Java oracle-error executions per target.",
+    "Native development probe does not merge inherited process environment into explicit --env-var maps.",
+    "M2 module loading/inheritance/cache, remaining language rules, diagnostics and original corpus obligations remain open; product APIs, release platforms and speed/memory parity are not established."
+  ],
+  "required_checks": {
+    "archive": {
+      "bytes": 1228486,
+      "path": "reports/m2/stage40-required-checks.tar.gz",
+      "sha256": "0cfab5d64439c16f7962d060d527965dbdd4dfd949191c40d3d043068ae3ec92"
+    },
+    "captured_report": {
+      "bytes": 22108,
+      "path": "target/m2/stage40-required-checks-02/report.json",
+      "sha256": "aa239389f3f2bb95c789a15df0f3d7b902b84b17f390850ce6ea4ba90cc8983c"
+    },
+    "commands": [
+      {
+        "command": [
+          "rustc",
+          "--version",
+          "--verbose"
+        ],
+        "exit_code": 0,
+        "name": "rustc-version"
+      },
+      {
+        "command": [
+          "cargo",
+          "--version"
+        ],
+        "exit_code": 0,
+        "name": "cargo-version"
+      },
+      {
+        "command": [
+          "uname",
+          "-a"
+        ],
+        "exit_code": 0,
+        "name": "host"
+      },
+      {
+        "command": [
+          "cargo",
+          "xtask",
+          "verify"
+        ],
+        "exit_code": 0,
+        "name": "references"
+      },
+      {
+        "command": [
+          "cargo",
+          "fmt",
+          "--all",
+          "--",
+          "--check"
+        ],
+        "exit_code": 0,
+        "name": "format"
+      },
+      {
+        "command": [
+          "cargo",
+          "clippy",
+          "--workspace",
+          "--all-targets",
+          "--locked",
+          "--",
+          "-D",
+          "warnings"
+        ],
+        "exit_code": 0,
+        "name": "clippy"
+      },
+      {
+        "command": [
+          "cargo",
+          "test",
+          "--workspace",
+          "--locked"
+        ],
+        "exit_code": 0,
+        "name": "tests"
+      },
+      {
+        "command": [
+          "cargo",
+          "check",
+          "-p",
+          "pkl-runtime",
+          "--target",
+          "wasm32-unknown-unknown",
+          "--locked"
+        ],
+        "exit_code": 0,
+        "name": "wasm-check"
+      }
+    ],
+    "executed_test_artifacts": 74,
+    "source_changes": [],
+    "source_files": 3897
+  },
+  "required_rust_checks_passed": true,
+  "rust_count_is_distinct_test_count": false,
+  "rust_harness_pass_invocations": 601,
+  "rust_ignored_invocations": 1,
+  "schema": 1,
+  "scope": "Stage40 implementation checkpoint: shared module output, PCF continuations and UTF-16 preservation. Full native language and persistent-evaluator regressions are still being acquired; Stage40 and M2 are not closed.",
+  "source_difference_from_comparison_candidate": {
+    "added_test_files": 1,
+    "changed_original_paths": 18,
+    "non_test_implementation_changed": false,
+    "original_source_paths": 154,
+    "qualification": "Whole-file hashes differ. Fifteen integration targets update exact retained Module-parent counts, read_frontend restricts primary-source span checks, output.rs adds a cfg(test) module, and reference.rs changes whitespace within cfg(test). The new private module checks graph ownership and release. Required checks above ran the current files.",
+    "report": {
+      "bytes": 11927,
+      "path": "target/m2/stage40-checkpoint02-source-diff-02/report.json",
+      "sha256": "9a3d42937f345d5122db195afbde564bb0b8893daa67987cce534254f3fe4f0c"
+    },
+    "unchanged_original_paths": 136
+  },
+  "tool_checks": {
+    "additional_uppercase_generator_tests": {
+      "report": {
+        "bytes": 534,
+        "path": "target/m2/stage40-uppercase-checks-02/report.json",
+        "sha256": "d8fcc560dda232a4c42c4eb9371702038687ad5a06886d119075c042d27d5ccc"
+      },
+      "tests": 5
+    },
+    "javascript_consumer_tests": {
+      "report": {
+        "bytes": 2565,
+        "path": "target/m2/stage40-pcf-portable-consumer-validation-01/report.json",
+        "sha256": "13a65d5cc5a6820ea65c90342f45bf3af5236f8e4dadc5f23102555a629deb83"
+      },
+      "tests": 22
+    },
+    "manifest": {
+      "bytes": 1574,
+      "path": "target/m2/stage40-manifest-refresh-03/report.json",
+      "sha256": "bb63e4515b3e3936205671de132fd140b4ae4c32a023751cfdee7818a91245de"
+    },
+    "prior_full_python_suite": {
+      "report": {
+        "bytes": 682,
+        "path": "target/m2/stage40-tooling-checks-01/report.json",
+        "sha256": "f9efb9d18be396e18970ffe7c402a2de3a987a26e107705f88def881a58929b4"
+      },
+      "tests": 249
+    }
+  }
+}

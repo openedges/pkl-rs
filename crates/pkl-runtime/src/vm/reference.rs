@@ -33,6 +33,9 @@ pub(crate) fn base_type(name: &str) -> Option<TypeCheck> {
             result: Box::new(TypeCheck::Unknown),
             syntax: false,
         },
+        "Pair" => TypeCheck::Pair {
+            arguments: Vec::new(),
+        },
         "Any" => TypeCheck::Any,
         "Null" => TypeCheck::Null,
         "Boolean" => TypeCheck::Boolean,
@@ -122,7 +125,7 @@ pub(crate) fn type_name_value<'a>(ty: &'a TypeCheck, module: &str) -> PklString 
             TypeCheck::Class { id: MODULE_ID, .. } => output.push_str(module),
             TypeCheck::Class { id: ACCESS_ID, .. } => output.push_str("pkl.ref#Access"),
             TypeCheck::Class { id, name } => {
-                if super::annotations::builtin_name(*id).is_some() {
+                if super::builtins::name(*id).is_some() {
                     output.push_str(name);
                 } else {
                     output.push_str(&format!("{module}#{name}"));
@@ -142,6 +145,14 @@ pub(crate) fn type_name_value<'a>(ty: &'a TypeCheck, module: &str) -> PklString 
                 sequence.push(Part::Text(">".into()));
             }
             TypeCheck::Collection(kind) => output.push_str(&format!("{kind:?}")),
+            TypeCheck::Pair { arguments } => {
+                output.push_str("Pair");
+                if !arguments.is_empty() {
+                    output.push('<');
+                    list(arguments.iter().map(|(t, _)| t).collect(), ", ");
+                    sequence.push(Part::Text(">".into()));
+                }
+            }
             TypeCheck::CollectionBase { arguments } => {
                 output.push_str("Collection");
                 if !arguments.is_empty() {
@@ -208,6 +219,7 @@ pub(crate) fn normalize(ty: &TypeCheck, module: &str) -> TypeCheck {
             | TypeCheck::Nullable(inner) => vec![inner],
             TypeCheck::Union { types, .. } => types.iter().collect(),
             TypeCheck::ParameterizedCollection { arguments, .. }
+            | TypeCheck::Pair { arguments }
             | TypeCheck::CollectionBase { arguments } => {
                 arguments.iter().map(|(ty, _)| ty).collect()
             }
@@ -251,6 +263,13 @@ pub(crate) fn normalize(ty: &TypeCheck, module: &str) -> TypeCheck {
                             1
                         }
                     ],
+                },
+                TypeCheck::Pair { .. } => TypeCheck::Pair {
+                    arguments: if args.is_empty() {
+                        vec![(TypeCheck::Unknown, Span::new(0, 0)); 2]
+                    } else {
+                        args.into_iter().map(|ty| (ty, Span::new(0, 0))).collect()
+                    },
                 },
                 TypeCheck::CollectionBase { .. } => TypeCheck::CollectionBase {
                     arguments: if args.is_empty() {
@@ -351,6 +370,7 @@ pub(crate) fn metadata_key(ty: &TypeCheck) -> String {
                 .collect(),
             TypeCheck::Union { types, .. } => types.iter().collect(),
             TypeCheck::ParameterizedCollection { arguments, .. }
+            | TypeCheck::Pair { arguments }
             | TypeCheck::CollectionBase { arguments } => {
                 arguments.iter().map(|(ty, _)| ty).collect()
             }
@@ -379,6 +399,7 @@ pub(crate) fn metadata_key(ty: &TypeCheck) -> String {
                 TypeCheck::ParameterizedCollection { kind, .. } => {
                     format!("collection:{kind:?}:{args:?}")
                 }
+                TypeCheck::Pair { .. } => format!("pair:{args:?}"),
                 TypeCheck::CollectionBase { .. } => format!("collection:Collection:{args:?}"),
                 TypeCheck::Reference { .. } => format!("reference:{args:?}"),
                 TypeCheck::StringLiteral(value) => {
@@ -424,6 +445,7 @@ fn function_syntax_flags(root: &TypeCheck) -> BTreeMap<usize, bool> {
                 .chain(std::iter::once(result.as_ref()))
                 .collect(),
             TypeCheck::ParameterizedCollection { arguments, .. }
+            | TypeCheck::Pair { arguments }
             | TypeCheck::CollectionBase { arguments } => {
                 arguments.iter().map(|(ty, _)| ty).collect()
             }
@@ -565,6 +587,7 @@ fn subtype(a: &TypeCheck, b: &TypeCheck, heap: &Heap) -> bool {
                     (a, b),
                     (TypeCheck::Function { .. }, TypeCheck::Function { .. })
                         | (TypeCheck::Reference { .. }, TypeCheck::Reference { .. })
+                        | (TypeCheck::Pair { .. }, TypeCheck::Pair { .. })
                         | (
                             TypeCheck::ParameterizedCollection { .. },
                             TypeCheck::ParameterizedCollection { .. }
@@ -618,7 +641,8 @@ fn subtype(a: &TypeCheck, b: &TypeCheck, heap: &Heap) -> bool {
                         | TypeCheck::Collection(_)
                         | TypeCheck::ParameterizedCollection { .. }
                         | TypeCheck::CollectionBase { .. }
-                        | TypeCheck::Reference { .. },
+                        | TypeCheck::Reference { .. }
+                        | TypeCheck::Pair { .. },
                         TypeCheck::Any,
                     ) => true,
                     (TypeCheck::Class { id, .. }, TypeCheck::RefDomain) => {
@@ -672,6 +696,20 @@ fn subtype(a: &TypeCheck, b: &TypeCheck, heap: &Heap) -> bool {
                             continue;
                         }
                         false
+                    }
+                    (TypeCheck::Pair { arguments: a }, TypeCheck::Pair { arguments: b }) => {
+                        if b.is_empty() {
+                            true
+                        } else if a.len() == b.len() {
+                            tasks.push(Task::Group {
+                                pairs: a.iter().zip(b).map(|((a, _), (b, _))| (a, b)).collect(),
+                                next: 0,
+                                all: true,
+                            });
+                            continue;
+                        } else {
+                            false
+                        }
                     }
                     (TypeCheck::StringLiteral(_), TypeCheck::String)
                     | (TypeCheck::Int | TypeCheck::Float, TypeCheck::Number) => true,
@@ -753,10 +791,10 @@ impl Vm {
             return Value::Class(id);
         }
         let (id, name, abstract_) = match ty {
-            TypeCheck::Class { id, .. } if super::annotations::builtin_name(id).is_some() => (
+            TypeCheck::Class { id, .. } if super::builtins::name(id).is_some() => (
                 id,
-                super::annotations::builtin_name(id).unwrap().to_owned(),
-                id == super::annotations::ANNOTATION_ID,
+                super::builtins::name(id).unwrap().to_owned(),
+                super::builtins::abstract_class(id),
             ),
             TypeCheck::Class { id: ACCESS_ID, .. } => (ACCESS_ID, "Access".to_owned(), false),
             TypeCheck::RefDomain => (DOMAIN_ID, "Domain".to_owned(), true),
@@ -784,6 +822,7 @@ impl Vm {
                         TypeCheck::Collection(CollectionKind::Map) => 25,
                         TypeCheck::Collection(CollectionKind::Set) => 26,
                         TypeCheck::CollectionBase { .. } => 27,
+                        TypeCheck::Pair { .. } => 28,
                         _ => 2,
                     },
                 super::type_name(&ty, &self.program.module_name),
@@ -794,22 +833,13 @@ impl Vm {
             self.program.access_members.clone()
         } else {
             self.program
-                .annotation_members
+                .builtin_members
                 .get(&id)
                 .cloned()
                 .unwrap_or_default()
         };
-        let parent = if super::annotations::builtin_name(id).is_some()
-            && id != super::annotations::ANNOTATION_ID
-        {
-            self.builtin_class(TypeCheck::Class {
-                id: super::annotations::ANNOTATION_ID,
-                name: Arc::from("Annotation"),
-            })
-            .heap_id()
-        } else {
-            None
-        };
+        let parent = super::builtins::parent(id)
+            .and_then(|parent| self.builtin_class(super::builtins::ty(parent)).heap_id());
         let object = self.heap.allocate(Object {
             parent,
             class_superclass_initialized: true,
@@ -818,7 +848,7 @@ impl Vm {
             class_definition: Some(Class {
                 id,
                 name: Arc::from(name),
-                open: false,
+                open: super::builtins::open_class(id),
                 abstract_,
             }),
             ..Object::default()
@@ -1017,7 +1047,7 @@ impl Vm {
         Ok(())
     }
 
-    fn reference_get_class(&mut self, value: &Value) -> Result<Value, RuntimeError> {
+    pub(super) fn reference_get_class(&mut self, value: &Value) -> Result<Value, RuntimeError> {
         let ty = match value {
             Value::Null | Value::NullWithDefault(_) => TypeCheck::Null,
             Value::Bool(_) => TypeCheck::Boolean,
@@ -1052,7 +1082,11 @@ impl Vm {
             }
             Value::Object(id) => {
                 let object = self.heap.get(*id)?;
-                if object.reference.is_some() {
+                if object.pair.is_some() {
+                    TypeCheck::Pair {
+                        arguments: Vec::new(),
+                    }
+                } else if object.reference.is_some() {
                     TypeCheck::Reference {
                         domain: Box::new(TypeCheck::Any),
                         referent: Box::new(TypeCheck::Any),
@@ -1663,6 +1697,7 @@ mod generic_metadata_tests {
         let alias = |declaration| {
             TypeCheck::NamedAlias {
                 declaration,
+                default_origin: None,
                 name: Arc::from("Alias"),
                 arguments: vec![TypeCheck::String],
                 expanded: Box::new(TypeCheck::Int),

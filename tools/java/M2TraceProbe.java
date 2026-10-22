@@ -5,6 +5,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.Optional;
 import java.util.regex.Pattern;
@@ -24,6 +25,7 @@ public final class M2TraceProbe {
   static Evaluator evaluator;
   static ModuleSource source;
   static String action, loggerCallback, readerCallback;
+  static boolean outputBytes;
   static int logs, reads, loggerDepth, readerDepth;
 
   static void write(String name, String value) throws IOException {
@@ -37,20 +39,26 @@ public final class M2TraceProbe {
   }
 
   static void capture(String expression, String prefix) {
-    String value = "", error = "", errorClass = "", status = "success\n";
+    capture(expression, prefix, false);
+  }
+
+  static void capture(String expression, String prefix, boolean output) {
+    byte[] value = new byte[0];
+    String error = "", errorClass = "", status = "success\n";
     try {
-      value = evaluator.evaluateExpressionString(source, expression);
+      value = output ? evaluator.evaluateOutputBytes(source)
+          : evaluator.evaluateExpressionString(source, expression).getBytes(StandardCharsets.UTF_8);
     } catch (PklException exception) {
       status = exception instanceof PklBugException ? "oracle-error\n" : "error\n";
       error = exception.getMessage();
       errorClass = exception.getClass().getName();
     } catch (Throwable exception) {
       status = "oracle-error\n";
-      error = exception.toString();
+      error = output && exception.getMessage() != null ? exception.getMessage() : exception.toString();
       errorClass = exception.getClass().getName();
     }
     try {
-      write(prefix + ".stdout.bin", value);
+      Files.write(out.resolve(prefix + ".stdout.bin"), value);
       write(prefix + ".stderr.bin", error);
       write(prefix + ".status.bin", status);
       write(prefix + ".error-class.bin", errorClass);
@@ -122,13 +130,27 @@ public final class M2TraceProbe {
   public static void main(String[] args) throws Exception {
     if (args.length != 3) throw new IllegalArgumentException("CASE_DIRECTORY COMPACT|PRETTY ACTION");
     out = Path.of(args[0]);
+    var operation = Files.exists(out.resolve("operation.txt"))
+        ? Files.readString(out.resolve("operation.txt")) : "expression";
+    if (!operation.equals("expression") && !operation.equals("output-bytes"))
+      throw new IllegalArgumentException("unsupported operation");
+    outputBytes = operation.equals("output-bytes");
     action = args[2];
     loggerCallback = Files.readString(out.resolve("logger-callback.txt"));
     readerCallback = Files.readString(out.resolve("reader-callback.txt"));
     var builder = EvaluatorBuilder.preconfigured().setColor(false).setModuleCacheDir(null)
         .setPowerAssertionsEnabled(false).setEnvironmentVariables(Map.of()).setExternalProperties(Map.of())
-        .setAllowedResources(List.of(Pattern.compile("life:.*")))
-        .setResourceReaders(List.of(new Reader())).setTraceMode(TraceMode.valueOf(args[1]));
+        .setTraceMode(TraceMode.valueOf(args[1]));
+    if (outputBytes) {
+      // Output defaults really use the preconfigured prop reader. The original
+      // expression-only fixtures keep their exact life-only reader profile.
+      var allowed = new ArrayList<>(builder.getAllowedResources());
+      allowed.add(Pattern.compile("life:.*"));
+      builder.setAllowedResources(allowed).addResourceReader(new Reader());
+    } else {
+      builder.setAllowedResources(List.of(Pattern.compile("life:.*")))
+          .setResourceReaders(List.of(new Reader()));
+    }
     if (!action.equals("noop")) builder.setLogger(new CaptureLogger());
     try (var eval = builder.build()) {
       evaluator = eval;
@@ -136,7 +158,7 @@ public final class M2TraceProbe {
           Files.readString(out.resolve("input.pkl")));
       var expressions = Files.readAllLines(out.resolve("expressions.txt"));
       for (int index = 0; index < expressions.size(); index++) {
-        capture(expressions.get(index), "outer-" + index);
+        capture(expressions.get(index), "outer-" + index, outputBytes);
       }
     }
     System.out.println("logs=" + logs + " reads=" + reads);

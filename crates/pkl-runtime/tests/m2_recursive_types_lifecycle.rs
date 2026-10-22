@@ -1,4 +1,6 @@
 //! Recursive source constraints use the existing Host scheduler and traced heap.
+//! Retained module graphs include their one builtin Module parent; executable
+//! nodes, transient-object deltas and terminal-zero assertions remain separate.
 use std::sync::Arc;
 
 use pkl_runtime::heap::LazyState;
@@ -145,7 +147,7 @@ fn recursive_constraints_reenter_retry_and_keep_suspended_values_alive() {
         }
     }
     assert_eq!(host_ready(&mut session, 4), Ok(Value::Int(42)));
-    assert_eq!(retained_values(session.collect(&[]), 30), 2);
+    assert_eq!(retained_values(session.collect(&[]), 30), 3);
     session.close();
     assert_eq!(session.heap_stats().slots, 0);
 }
@@ -169,7 +171,7 @@ fn cancelling_recursive_check_reclaims_temporaries_and_preserves_retry_identity(
         vm.member_state(object, "outerResult").unwrap(),
         LazyState::Unevaluated
     );
-    assert_eq!(retained_values(vm.collect(&[]), 5), 2);
+    assert_eq!(retained_values(vm.collect(&[]), 5), 3);
     vm.start_member(object, "identity").unwrap();
     assert_eq!(vm_ready(&mut vm), Ok(alias));
     vm.start_member(object, "outerResult").unwrap();
@@ -183,7 +185,7 @@ fn cancelling_recursive_check_reclaims_temporaries_and_preserves_retry_identity(
         vm.resume(request, Ok(Value::string("ok"))).unwrap();
     }
     assert_eq!(vm_ready(&mut vm), Ok(Value::Int(42)));
-    assert_eq!(retained_values(vm.collect(&[]), 17), 2);
+    assert_eq!(retained_values(vm.collect(&[]), 17), 3);
     vm.close();
     assert_eq!(vm.heap_stats().slots, 0);
 }

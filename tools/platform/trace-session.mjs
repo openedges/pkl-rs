@@ -5,6 +5,14 @@ export function runTraceCase(api, fixture, budget = 32) {
   const architecture = { collections: 0, logs: 0, reads: 0, terminalSlots: null,
     sessionCreated: false, setupFailed: false, retainedEventBytesStable: true };
   let session, loggerDepth = 0, readerDepth = 0;
+  const operation = fixture.operation ?? 'expression';
+  if (!['expression', 'output-bytes'].includes(operation)) throw Error('unknown source operation');
+  const output = operation === 'output-bytes';
+  if (output && fixture.resource_profile !== 'preconfigured-plus-life')
+    throw Error('output operation requires its preconfigured resource readers');
+  if (output && (Object.hasOwn(fixture, 'expressions') || !Number.isInteger(fixture.calls) || fixture.calls < 1 || fixture.calls > 1024))
+    throw Error('output operation requires ordered calls without guest expressions');
+  const calls = output ? Array.from({ length: fixture.calls }) : fixture.expressions;
   const units = text => Uint16Array.from({ length: text.length }, (_, index) => text.charCodeAt(index));
   // Java UTF-8 capture replaces isolated UTF-16 surrogates with '?'. Raw units
   // are captured independently, so this encoding boundary cannot hide loss.
@@ -54,26 +62,36 @@ export function runTraceCase(api, fixture, budget = 32) {
       writeUnits(prefix + `.source-${index}.code-units.bin`, line);
     });
   };
-  const paths = [...fixture.expressions];
+  const paths = output ? [] : [...fixture.expressions];
   const add = path => path ? paths.push(path) - 1 : null;
   const loggerPath = add(fixture.logger_callback);
   const readerPath = add(fixture.reader_callback);
   const afterClosePath = fixture.action === 'close-reenter' ? add('stable') : null;
   const errorEvent = error => ({ kind: 'error', error: units(error instanceof Error ? error.message : String(error)) });
   const saveResult = (prefix, event) => {
-    if (!['value', 'error'].includes(event.kind)) throw Error('expected completed expression, got ' + event.kind);
-    if (!((event.kind === 'value' ? event.value : event.error) instanceof Uint16Array))
+    if (!['value', 'bytes', 'error'].includes(event.kind)) throw Error('expected completed operation, got ' + event.kind);
+    const raw = event.kind === 'bytes' ? event.bytes : event.errorBytes;
+    if (raw != null && !(raw instanceof Uint8Array)) throw Error('completion must contain lossless Uint8Array bytes');
+    if (event.kind === 'bytes' && raw == null) throw Error('missing completed output bytes');
+    if (raw == null && !((event.kind === 'value' ? event.value : event.error) instanceof Uint16Array))
       throw Error('completion must contain lossless UTF-16 units');
-    const status = event.kind === 'value' ? 'success' : 'error';
+    const status = event.kind === 'error' ? 'error' : 'success';
     write(prefix + '.status.bin', status + '\n');
-    write(prefix + '.stdout.bin', event.kind === 'value' ? event.value : '');
-    write(prefix + '.stderr.bin', event.kind === 'error' ? event.error : '');
+    if (event.kind === 'bytes') {
+      payloads[prefix + '.stdout.bin'] = Array.from(raw);
+      retained.push({ value: raw, expected: Array.from(raw) });
+    } else write(prefix + '.stdout.bin', event.kind === 'value' ? event.value : '');
+    if (event.kind === 'error' && raw != null) {
+      payloads[prefix + '.stderr.bin'] = Array.from(raw);
+      retained.push({ value: raw, expected: Array.from(raw) });
+    } else write(prefix + '.stderr.bin', event.kind === 'error' ? event.error : '');
     protocol.push(`result=${prefix} status=${status}`);
   };
   function capture(index, prefix, parent = null) {
     let event;
     try {
-      if (parent == null) session.startPath(index, 0);
+      if (parent == null && output) session.startOutputBytes(0);
+      else if (parent == null) session.startPath(index, 0);
       else session.reenterPath(parent, index, 0);
     } catch (error) { event = errorEvent(error); }
     // Transport failures while driving an active evaluation are infrastructure
@@ -87,8 +105,12 @@ export function runTraceCase(api, fixture, budget = 32) {
       session.collect();
       architecture.collections++;
       if (event.kind === 'yield') continue;
-      if (['module', 'value', 'error'].includes(event.kind)) return event;
+      if (['module', 'value', 'bytes', 'error'].includes(event.kind)) return event;
       if (event.kind === 'read') {
+        if (output && !event.uri.startsWith('life:')) {
+          session.respondConfigured(event.token, 0);
+          continue;
+        }
         const index = architecture.reads++;
         protocol.push(`read-enter=${index} uri=${event.uri}`);
         readerDepth++;
@@ -121,10 +143,19 @@ export function runTraceCase(api, fixture, budget = 32) {
       'acknowledgeLog', 'closeFromCallback', 'close', 'heapSlots', 'setupFailed']) {
       if (typeof api.SourceSession.prototype[name] !== 'function') throw Error('SourceSession method is unavailable: ' + name);
     }
+    if (output) {
+      if (typeof api.SourceSession.forOutput !== 'function') throw Error('SourceSession output factory is unavailable');
+      for (const name of ['startOutputBytes', 'reenterOutputBytes', 'respondConfigured'])
+        if (typeof api.SourceSession.prototype[name] !== 'function') throw Error('SourceSession output method is unavailable: ' + name);
+    }
     let compileError;
     try {
-      session = new api.SourceSession(fixture.sourceText, 'file:///stage37-trace.pkl', 'stage37-trace',
-        paths, fixture.mode, fixture.action !== 'noop', false, false);
+      session = output
+        ? api.SourceSession.forOutput(fixture.sourceText, 'file:///stage37-trace.pkl', 'stage37-trace', paths,
+          ['eval', '--no-cache', '--no-project', '--settings', 'pkl:settings', 'stage37-trace.pkl'],
+          fixture.mode, fixture.action !== 'noop', false, false)
+        : new api.SourceSession(fixture.sourceText, 'file:///stage37-trace.pkl', 'stage37-trace',
+          paths, fixture.mode, fixture.action !== 'noop', false, false);
       architecture.sessionCreated = true;
     } catch (error) {
       // The current development constructor returns a rendered Pkl diagnostic.
@@ -134,9 +165,9 @@ export function runTraceCase(api, fixture, budget = 32) {
       architecture.setupFailed = true;
     }
     if (compileError) {
-      fixture.expressions.forEach((_, index) => saveResult(`outer-${index}`, compileError));
+      calls.forEach((_, index) => saveResult(`outer-${index}`, compileError));
     } else {
-      fixture.expressions.forEach((_, index) => {
+      calls.forEach((_, index) => {
         // Module setup and the first expression belong to one admitted call.
         // Callback close must allow that existing call to finish.
         capture(index, `outer-${index}`);

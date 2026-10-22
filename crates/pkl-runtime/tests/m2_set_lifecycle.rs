@@ -1,5 +1,7 @@
 //! Strict Set builders and hash/equality work retain roots across VM and Host transitions.
 //! These native lifetime checks are separate from pinned Java byte comparisons.
+//! Retained module graphs include their one builtin Module parent; executable
+//! nodes, transient-object deltas and terminal-zero assertions remain separate.
 use std::process::{Command, Stdio};
 use std::sync::Arc;
 use std::time::{Duration, Instant};
@@ -267,7 +269,7 @@ fn repeated_nonterminal_cancel_reclaims_set_builder_and_hash_operands() {
         );
         let stats = vm.collect(std::slice::from_ref(&module));
         let live = (stats.live - stats.executable_live, stats.executable_live);
-        assert_eq!(live.0, 1);
+        assert_eq!(live.0, 2);
         if let Some(expected) = retained {
             assert_eq!(live, expected);
         } else {
@@ -445,9 +447,9 @@ function again() = new Check {}.check(set)
         assert_eq!(
             (stats.live - stats.executable_live, stats.executable_live),
             if check_type.starts_with("Items") {
-                (6, 7)
+                (7, 7)
             } else {
-                (5, 5)
+                (6, 5)
             }
         );
         let mut retained = None;

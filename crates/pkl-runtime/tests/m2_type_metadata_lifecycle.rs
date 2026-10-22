@@ -1,5 +1,7 @@
 //! Evaluator ownership, GC roots, and Host cleanup for alias/function metadata.
 //! These scheduler and heap assertions are separate from raw Java comparisons.
+//! Retained module graphs include their one builtin Module parent; executable
+//! nodes, transient-object deltas and terminal-zero assertions remain separate.
 use std::sync::Arc;
 
 use pkl_runtime::heap::LazyState;
@@ -62,27 +64,27 @@ fn alias_singleton_roots_its_declaration_graph_and_releases_temporary_values() {
     let module = vm_ready(&mut vm).unwrap();
     let alias = member(&mut vm, &module, "Answer").unwrap();
     assert!(matches!(alias, Value::TypeAlias(_)));
-    assert_eq!(vm.collect(&[]).live, 2);
+    assert_eq!(vm.collect(&[]).live, 3);
     assert_eq!(member(&mut vm, &module, "result"), Ok(Value::Int(42)));
     // The singleton's declaration module now also retains the captured object.
-    assert_eq!(retained_values(vm.collect(&[]), 5), 3);
+    assert_eq!(retained_values(vm.collect(&[]), 5), 4);
     vm.start(scalar, vec![]).unwrap();
     assert_eq!(vm_ready(&mut vm), Ok(Value::Int(7)));
-    assert_eq!(retained_values(vm.collect(&[]), 5), 3);
+    assert_eq!(retained_values(vm.collect(&[]), 5), 4);
     assert_eq!(member(&mut vm, &module, "Answer"), Ok(alias.clone()));
     vm.start_member(module.as_object().unwrap(), "temporary")
         .unwrap();
     let temporary = vm_ready(&mut vm).unwrap();
     // A completed module property deliberately remains in the declaration graph.
-    assert_eq!(retained_values(vm.collect(&[]), 5), 4);
+    assert_eq!(retained_values(vm.collect(&[]), 5), 5);
     assert_eq!(member(&mut vm, &module, "Answer"), Ok(alias));
     vm.start(transient_entry, vec![]).unwrap();
     let transient = vm_ready(&mut vm).unwrap();
-    assert_eq!(retained_values(vm.collect(&[]), 5), 5);
+    assert_eq!(retained_values(vm.collect(&[]), 5), 6);
     vm.start(scalar, vec![]).unwrap();
     assert_eq!(vm_ready(&mut vm), Ok(Value::Int(7)));
     let collected = vm.collect(&[]);
-    assert_eq!(retained_values(collected, 5), 4);
+    assert_eq!(retained_values(collected, 5), 5);
     assert!(collected.reclaimed > 0);
     assert_eq!(
         vm.start(scalar, vec![transient]).unwrap_err().kind,
@@ -125,8 +127,8 @@ fn immutable_program_shares_no_alias_handles_between_evaluators() {
         member(&mut left, &second_module, "Callback"),
         Ok(left_alias)
     );
-    assert_eq!(left.collect(&[]).live, 2);
-    assert_eq!(right.collect(&[]).live, 2);
+    assert_eq!(left.collect(&[]).live, 3);
+    assert_eq!(right.collect(&[]).live, 3);
     left.close();
     right.close();
     assert_eq!(left.heap_stats().slots, 0);

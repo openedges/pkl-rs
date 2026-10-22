@@ -598,6 +598,28 @@ Stage 38의 문서 마감 커밋 `200b422`에서 분리한 작업 공간에서 �
 
 [마지막 독립 감사](reports/m2/stage39-post-seal-audit.json)는 최종 native archive의 원본 32,724개, Git 소스 대응과 실제 gate 종료 상태를 확인했습니다. 기존 stdout은 모두 같으며, stderr 차이는 원시 바이트 그대로 보존합니다. 감사 원본·terminal 기록·게시 도구는 [완료 캡처](reports/m2/stage39-completion-captures.json)에 포함합니다.
 
+### Stage 40 — 실제 모듈 출력과 PCF 실행
+
+Stage 39 구현 체크포인트 `5526ec8`에서 별도 작업 공간을 만들었습니다. Stage 39의 최종 로컬 검증·문서 마감 커밋 `b0afbb6`을 fast-forward로 반영했으며, 실제 Stage 40 소스 구현은 이 별도 브랜치에서 계속합니다. 공통 VM·builtin·얕은 강제 평가·PCF renderer는 `gpt-6-astra / xhigh`, 공통 session operation과 native·Wasm·N-API 연결은 `gpt-6.1-sol / high`, 원본 Java 취득·평가 순서·독립 비교는 별도의 `gpt-6.1-sol / high`에 배정합니다. 주 에이전트가 문서·최종 통합·검사·Git 변경을 담당합니다.
+
+목표는 실제 모듈에서 `output`을 읽고 정확한 `ModuleOutput` 타입을 확인한 뒤 `bytes`를 평가하는 경로입니다. hidden output 기본 객체와 `value = outer`, 사용자 text·bytes·value·renderer 재정의는 기존 lazy 멤버 모델로 실행합니다. 같은 Host context·deadline·GC root·취소·close 규칙을 공유하며, 중간 renderer 결과는 성공 전에 stdout으로 내보내지 않습니다. 기존 frontend 준비 API와 실제 출력 API의 검증 범위를 구분합니다.
+
+PCF 출력에는 얕은 강제 평가와 converter·property transformer·member 방문을 재개할 수 있는 VM 상태가 필요합니다. 기존 deep force·객체 문자열화의 동작을 보존하며, 옵션·변환기의 최초 오류와 순서, undefined 경로·진단, UTF-16 문자열·정확한 UTF-8 출력 바이트를 검증합니다. 고정 Java의 두 번 반복 관찰에서는 얕은 force 중 callback의 deep force가 완료된 뒤 외부 읽기가 실패하면 부모의 forced bit는 해제되지만, callback이 게시한 멤버 캐시와 자식의 forced bit는 유지됩니다. 같은 evaluator의 정상 재시도는 캐시를 재사용합니다. 이 관찰을 취소·close 이후 재사용 가능성으로 확대하지 않으며, 별도 대조군의 Java 내부 오류도 보존합니다. 초기화 logger callback에서 close한 뒤 실제 `evaluateOutputBytes`를 호출한 별도 원본에서는 첫 호출의 Java `PklBugException`과 다음 호출의 취소 오류를 관찰했습니다. 기존 일반 식의 close 성공을 출력 성공으로 확대하지 않으며, 이 원본은 실제 출력 operation을 사용하는 Host 비교의 미해결 의무로 유지합니다.
+
+첫 원본 묶음은 `basic/comments`, `basic/semicolon`, `basic/imported`, `parser/methodTrailingCommas`, `parser/constraintsTrailingComma`, `parser/trailingCommas`, `parser/spread`, `api/pcfRenderer1`, `errors/undefinedProperty1`, `errors/undefinedProperty4`의 전체 `.pkl` 입력 10개입니다. 원래 ID·argv·cwd·환경·resources·출력 네 채널을 유지합니다. 추가 의존성이 드러난 사례도 실패 목록에 남겨 구현하며 예상 통과 사례만 골라 분모를 줄이지 않습니다. 기존 원본 오류 72개와 선택 식·순차 평가·trace·Host 계약도 회귀 기준으로 유지합니다.
+
+읽기 전용 설계에 기록한 원본 30개는 계속 추적합니다. 이어서 로컬·내장 모듈 로딩, identity·캐시·초기 빈 모듈 게시·실패 캐시, `extends`·`amends`, `snippetTest.pkl`과 `pkl:test`의 실제 실행을 연결합니다. Mixin·reflection·추가 renderer·전체 파일 출력과 나머지 원본 의무도 남습니다. 일부 출력 경로가 생겼다는 이유로 PCF 전체, M3·M4 또는 M2 전체를 완료 처리하지 않습니다.
+
+개발 후보에는 실제 `Pair` 값과 property converter, 함수 amendment·Mixin의 지연 실행을 추가했습니다. 첫 고정 native 후보의 출력·변환기·annotation·Pair 대조군 69개는 일치합니다. 추가 함수 amendment 대조군 13개 중 처음에는 4개가 달랐으며, 선언 출처·오류 frame을 수정한 후보에서는 13개 모두 일치합니다. primitive 멤버 조회와 공통 오류 span도 수정했고 별도 primitive 대조군 19개가 일치합니다. builtin 객체 template가 기존 사용자 template 번호를 바꾸던 회귀는 별도 namespace로 수정했습니다. 원래 실패와 수정 전 실행 파일은 계속 보존합니다.
+
+서로게이트를 포함한 Host 문자열을 실제 Java `evaluateOutputBytes`로 취득한 192개 입력은 반복 결과가 같으며, 공통 Rust session의 전체 출력 바이트·중간 GC·종료 뒤 결과 소유권 비교도 통과했습니다. 같은 입력을 실제 Node·Chromium에서 각각 두 번 실행한 384회도 모두 일치합니다. 별도의 순수 formatter 18,576개 비교는 구성요소 증거이며 전체 평가나 제품 API 검증으로 합산하지 않습니다. `String.toUpperCase`는 고정 JDK의 `Locale.ROOT` 표를 사용합니다. 전체 Unicode code point 1,114,112개와 고립 surrogate의 Java UTF-16 결과를 실제 Rust 문자열 구성요소와 바이트 비교했고, 생성 도구가 입력 변경을 탐지하면 표를 게시하지 않는 회귀 검사도 추가했습니다.
+
+수정 후 원본 30개를 두 번씩 실행한 native·Node·Chromium 결과는 각 환경에서 일치 26회·미구현 30회·불일치 2회·원래 oracle 실행 조건 불충족 2회입니다. `constraintsTrailingComma`, `pcfRenderer2b`, `pcfRenderer8`은 수정 후 일치하며, 남은 불일치는 `read*` 문법입니다. 원본 `import1b`의 JVM classpath 조건과 Java 내부 오류를 성공으로 바꾸지 않습니다. 표준 플랫폼 비교는 공통 결과 6,078개·Java 일치 6,076개·기존 정규식 차이 2개를 유지하며, 실제 Node·Chromium의 각 92개 수명주기 시나리오는 통과했습니다. 출력 경로를 포함한 trace 45개는 환경마다 반복 실행 90회 중 일치 58회·Java oracle 오류 32회이고, 무결성 gate와 엄격한 호환성 gate를 구분합니다.
+
+목록 생성·freshness 검사는 실행 가능 3,628개·미구현 859개·미연결 40개를 기록합니다. 선택 실행 3,629개에는 원래 JVM classpath 조건을 충족하지 못한 `import1b` 시도도 포함됩니다. native 개발 probe의 환경 읽기는 명시적인 `--env-var`만 전달하며, Java CLI의 상속 process environment 병합은 아직 구현하지 않았습니다. 이는 실제 제품 CLI 호환성의 남은 조건으로 유지합니다.
+
+통합 Rust 검사에서 실제 builtin Module 부모 객체가 추가된 뒤의 heap 개수 단언과 사용자 코드만 검사하던 read frontend 테스트를 보완했습니다. 별도 객체 그래프 검사로 module의 실제 부모, 클래스 capture, lazy output, GC 회수와 close 후 해제를 확인한 뒤 baseline을 수정했으며, executable·일시 객체 차이·종료 시 0개 조건은 유지합니다. [구현 체크포인트](reports/m2/stage40-implementation-checkpoint.json)의 수정 후 필수 Rust 검사 5개는 모두 통과했습니다. [검사 원본](reports/m2/stage40-required-checks.tar.gz)은 소스 3,897개와 실행 로그를 포함한 파일 3,924개를 보존합니다. 고정 플랫폼 후보 이후 변경한 전체 파일 해시는 다르지만, 차이는 테스트·테스트 내부 공백이며 비테스트 구현은 같습니다. 전체 선택 코퍼스·순차 평가 회귀와 나머지 증거 게시·최종 마감은 진행 중입니다. **Stage 40과 M2 전체는 아직 완료되지 않았습니다.**
+
 ## M3 — 표준 라이브러리와 출력
 
 - 고정된 Pkl 표준 라이브러리 소스를 활용하고 모든 external builtin과 공개 멤버를 구현합니다. 등록 목록과 공개 API 목록을 기계적으로 대조합니다.

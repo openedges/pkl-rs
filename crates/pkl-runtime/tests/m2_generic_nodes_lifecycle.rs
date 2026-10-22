@@ -1,5 +1,7 @@
 //! Parameterized recursive checks keep type arguments and roots across Host transitions.
 //! Native lifecycle guarantees are separate from pinned Java byte comparisons.
+//! Retained module graphs include their one builtin Module parent; executable
+//! nodes, transient-object deltas and terminal-zero assertions remain separate.
 use std::sync::Arc;
 
 use pkl_runtime::heap::LazyState;
@@ -194,8 +196,8 @@ fn changing_recursive_arguments_remain_finite_and_repeated_cancel_reclaims_activ
         );
         let stats = vm.collect(std::slice::from_ref(&module));
         // Separate ordinary values from persistent executable/type-use nodes.
-        // Only the module and initialized Grow alias survive a canceled call.
-        assert_eq!(stats.live - stats.executable_live, 2);
+        // Only the module, its Module parent and initialized Grow alias survive a canceled call.
+        assert_eq!(stats.live - stats.executable_live, 3);
         assert!(stats.executable_live > 0);
         if let Some(expected) = retained {
             assert_eq!(stats.executable_live, expected);
@@ -457,7 +459,7 @@ fn generic_default_objects_keep_class_parents_and_receivers_across_host_retry_an
     assert_eq!(host_ready(&mut session, 4), Ok(Value::Int(42)));
     // The temporary amended defaults and Mapping objects have no persistent value cache.
     let stats = session.collect(&[]);
-    assert_eq!(stats.live - stats.executable_live, 3);
+    assert_eq!(stats.live - stats.executable_live, 4);
     session.close();
     assert_eq!(session.heap_stats().slots, 0);
 }

@@ -361,8 +361,158 @@
       "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/wrongDocComment.pkl",
       "input_sha256": "0ba502295863f0c51d115d93ce2ae76702fd9b6f6c64d60b9d03b5063a8b9bc3",
       "upstream_case_sha256": "e9b747612495b04e13b130e0aa55895ab4c256357329f1c10a4e5e7bd28f8be0"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/comments.pkl",
+      "input_sha256": "cdd0ae20dcb2a49c117ac669e079ac2c41354d8520e061ddc9653055bf3bea2e",
+      "upstream_case_sha256": "c6d47ba8be3b52047e3864ed8a945fa9fea84d8269471064fc99dede9b3991d3"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/semicolon.pkl",
+      "input_sha256": "259d752337288dbd89214d1937948e3e2dbca030587bf868343bfc7ede7730cd",
+      "upstream_case_sha256": "abad734097c07bcd89dfc1aae5c2d54acec67d2eddbee1e0c116e855476523ff"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/imported.pkl",
+      "input_sha256": "c565a3ebf049042dcee5b2fc456f5f28b0a633b977b1aa20db43b7c69765787b",
+      "upstream_case_sha256": "373186859d651a78f484502eb3af6f8be7078dd380eb39be5e294674ea1c2ac9"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/methodTrailingCommas.pkl",
+      "input_sha256": "5f381f782b19c58bc4589b9a9199767eb8e828370927b89b4bd19fb44167c210",
+      "upstream_case_sha256": "a98feff8a9432a57b72d5c5f0df10379d02781bf23553fa59e65687525e36230"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/constraintsTrailingComma.pkl",
+      "input_sha256": "cd81315bbd63590ef22afa209b6040055b9b2deb4fb8686bcb66818583270c9e",
+      "upstream_case_sha256": "3a7ddf7047d01f8f13c31441a0510880095c15d5db6e1e2e357f317369fd8d3e"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/trailingCommas.pkl",
+      "input_sha256": "9c03b9cf5757a1e19f9e982be0164027e3d3b88489dbfdb7630b9d3b0c41dedc",
+      "upstream_case_sha256": "65f735ef5015ea4262fa6a6143711ea791345d64374a7d5a681e7a9f7e80bf06"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/spread.pkl",
+      "input_sha256": "636c3f9f688dddee63f167bd00b5929df8dee9561e3ec370b28a93cbc28b1988",
+      "upstream_case_sha256": "6bb2828f975a3f286708bda082dfd89b033017085adbadadfd1ae354479ce585"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/pcfRenderer1.pkl",
+      "input_sha256": "470541f6f77653a46b71e754c8ccff3967575c78fbfed1b5f240eac8fd57ceb6",
+      "upstream_case_sha256": "baf17e03164f68041967ece3766bf581db1cca29442a634c3b97f7cc2534c6e1"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/pcfRenderer8.pkl",
+      "input_sha256": "142f861c5c45096c9c582832a4df2a5406172afa3bb25d7a0f840346670acf90",
+      "upstream_case_sha256": "24ec391301d11c6c735fa5308cc826fc1d28cfc9122ff847ff5c25b6ee9ae792"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/undefinedProperty1.pkl",
+      "input_sha256": "f151b651b8c47f844f2a8c9ca1a2e4d17bb0992d75d3ffbc397b48dfd6b02af3",
+      "upstream_case_sha256": "ebbdaa1db8ae942c1e40f39fef4df587374733e4863e5c150500ed25ecee3d75"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/undefinedProperty4.pkl",
+      "input_sha256": "043f6f60ed72ee6618e127b0d34b33c916afb68498ddddf68aa3bd4b3721a205",
+      "upstream_case_sha256": "7e82eae5c3d89ce5bfcf5bf93e17b5bcfb6479cf7ef84de8890c3da8761d3493"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/import1.pkl",
+      "input_sha256": "1d4a4ae668a766375b90b7fcc43afe7cd1dc8ee6488869aca01e0e97882d6d4a",
+      "upstream_case_sha256": "2ef3f7f39ee919fe6a926fe6f8050212e31e3518835b3cebdda10e9e35d8d344"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/import1b.pkl",
+      "input_sha256": "7aaf723e09544493f6981867d05209f712e31a27652a86c2af2b6e214226b98c",
+      "upstream_case_sha256": "f6425afaa980f2e5c39835b018335e16a3c7ebf81ba73a5dffa72d75c2eafd73"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/import2.pkl",
+      "input_sha256": "8d030a9afdfa39b08230ce4e1be03c9f5d7dc46862e82f52f5b656a1e782bf9e",
+      "upstream_case_sha256": "ff3431b616c9009f13ebae00f193e1bbee4915588971eed3977f2c879e27eb28"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/import3.pkl",
+      "input_sha256": "6c57085f865663ccc3729c02a0d0a4e3feba88cc18c78669e92ef589dbf952f8",
+      "upstream_case_sha256": "42d6124647563f3885efebba7afc918c625d7f240d467eb1ff728346e57f71ba"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/extendModule1.pkl",
+      "input_sha256": "efaa1499067829bce0637f4ef78c0bca9c48bb11f148cf6b824f26993d3d0e35",
+      "upstream_case_sha256": "2e10ad32f4fd50c3aee840f55def8bf52e38b94acac8f3ff42e4f414efb0a630"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/amendModule1.pkl",
+      "input_sha256": "b42f51dc784cfd1c875afdb33db507bfd9b0dde4fd4276ad7129ebf0082796ce",
+      "upstream_case_sha256": "71683d0fc22a7f6588bd274e51cac886e433b47da0dfb7544d50c896d89cc7be"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/recursiveModule1.pkl",
+      "input_sha256": "73a6e0d11b575df36c45ba6d1313347d46a6f10b7caf3881e68e5d96761581ce",
+      "upstream_case_sha256": "b523c26207341b9cbfad6860e0def5875422c794dd25c54d590f5c70e0bb5fdd"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/recursiveModule2.pkl",
+      "input_sha256": "a0b843f9313eb386673e8989e1a6ed9cd318a74b04e8ec803e2ab3e0ae757cac",
+      "upstream_case_sha256": "473d416f3bf63132f9fe07089a75bb3de5c29990ef7e735bd0d7ebf527b0ee89"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/filename with spaces.pkl",
+      "input_sha256": "ac38bf68333be901cc1e71bc9b439520f3e311bc6112dafceb01d7e821608087",
+      "upstream_case_sha256": "b02f4948645b18b3949ba4cc927b973abac4e54a7036f2c4b902c256cd0d4588"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/日本語.pkl",
+      "input_sha256": "ce3f51e36ea5d6fee3a6f77a9e483a0889cd341f10711bc7b084dfc07c0529e7",
+      "upstream_case_sha256": "841cde5058b5c89a07a7bf9fa0894aaa0abb60e436533f60f693298abc1d4dad"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/moduleOutput.pkl",
+      "input_sha256": "3d04c6da9335211b0d1f0586ae9917266a74590f13042b5ca38ccd327683e353",
+      "upstream_case_sha256": "91b941e053c66611040e7b86634218450346c4a0740163be81ca1c5306391835"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/newline.pkl",
+      "input_sha256": "7f132f7babc19ff302c08906afb03bbcd3be5a67831b2f4a8722e1f9e6789d96",
+      "upstream_case_sha256": "aa433bd1eb7880cadb37f56bdfea6ebdbf0739f49bd0196e5cdad0c7b0786d00"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/boolean.pkl",
+      "input_sha256": "997f0647c2c57c06a1e60ac18f1e0e128b9bfe415677d93ed527fa6706bd2076",
+      "upstream_case_sha256": "756cf88f8e045e977cf7ff8c4549196505176c0bdac8d3f5c8c86f019ad19e20"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/read.pkl",
+      "input_sha256": "9af0950aaaa9057093659b97105e69231dc3d55f09d3bc7710cbe2b7ab5fb001",
+      "upstream_case_sha256": "8f27fe8198a279a6a6feee46fcfc1b612cce2e9be5d3fb6c9b843821883f68fc"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/lambdaTrailingCommas.pkl",
+      "input_sha256": "9a037e753e348abac16c43b00a606ed8fe9ae35e6c88d74996d6c92287a0891f",
+      "upstream_case_sha256": "dd3f15ebe515c2b98448d8e7d70023486d4194178336aa30d0648d477564d811"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/lineCommentBetween.pkl",
+      "input_sha256": "92b50167ea8b9624ac5c7bf4153cbef77d83ec0a5e975ac191b7d45cc8117caf",
+      "upstream_case_sha256": "6b503b138d6278893e4da50c2ac865e617e491c748ad8cf578fc74adc299d818"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/pcfRenderer2b.pkl",
+      "input_sha256": "1195ee09fa9539561a369e95dacfcf5aaf5427db81d0f942ba9abce297fac9a2",
+      "upstream_case_sha256": "20f716ccfd17b982bce1ce40cc2f96785b0b8ab7d2bc491f597a2032adf5dbee"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/pcfRenderer9.pkl",
+      "input_sha256": "c3718ee0c368eb13c819a114f8038da22e145e32b07ddf0b8843b31a1c3e00a5",
+      "upstream_case_sha256": "408d979ee39b9d065d6a88652f3094e60865b3d5372e7eb2ee152b05a3d516cf"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/moduleOutput2.pkl",
+      "input_sha256": "be3b5aa79eaa7b71d237c280985d27e7d86823f0e260e56610ef3c5dd7add3cb",
+      "upstream_case_sha256": "4d17fc3000d2fd57fe4ac1913dacd49058ac5dce586f49a7e228b2fc0a4c0d68"
     }
   ],
   "schema_version": 1,
-  "scope": "Original module eval CLI contracts with a shared frontend rejection boundary. General ModuleOutput/renderer success remains unsupported and cannot pass by parsing alone."
+  "scope": "Reviewed unchanged original module-eval process contracts: Stage39 parser/error72 plus Stage40 output/module/renderer dependency30. Registration makes the actual shared output operation executable, not necessarily compatible; unsupported dependencies and raw mismatches remain failures. Upstream golden files remain provenance only."
 }

@@ -206,7 +206,9 @@ pub struct SourceEvent {
     pub token: Option<String>,
     pub uri: Option<String>,
     pub value: Option<Vec<u16>>,
+    pub bytes: Option<Vec<u8>>,
     pub error: Option<Vec<u16>>,
+    pub error_bytes: Option<Vec<u8>>,
     pub log: Option<SourceLog>,
 }
 impl SourceEvent {
@@ -216,7 +218,9 @@ impl SourceEvent {
             token: None,
             uri: None,
             value: None,
+            bytes: None,
             error: None,
+            error_bytes: None,
             log: None,
         }
     }
@@ -227,6 +231,9 @@ impl SourceEvent {
 /// same evaluator can be reentered without holding a Rust mutable borrow.
 pub struct SourceProbe {
     session: crate::evaluation::session::SourceSession,
+    output: bool,
+    properties: Vec<(String, String)>,
+    environment: Vec<(String, String)>,
 }
 impl SourceProbe {
     #[allow(clippy::too_many_arguments)]
@@ -240,30 +247,80 @@ impl SourceProbe {
         host_frame_transformer: bool,
         power_assertions: bool,
     ) -> Result<Self, String> {
-        use crate::logging::{LogDelivery, TraceMode};
-        let trace_mode = match trace_mode {
-            "compact" | "COMPACT" => TraceMode::Compact,
-            "pretty" | "PRETTY" => TraceMode::Pretty,
-            _ => return Err("expected trace mode compact or pretty".into()),
-        };
         Ok(Self {
             session: crate::evaluation::session::SourceSession::compile(
                 source,
                 uri,
                 module_name,
                 paths,
-                crate::evaluation::session::SourceSessionOptions {
-                    evaluation: crate::evaluation::EvaluationOptions { power_assertions },
+                Self::options(
                     trace_mode,
-                    log_delivery: if host_logger {
-                        LogDelivery::Host
-                    } else {
-                        LogDelivery::Noop
-                    },
+                    host_logger,
                     host_frame_transformer,
-                },
+                    power_assertions,
+                )?,
             )?,
+            output: false,
+            properties: Vec::new(),
+            environment: Vec::new(),
         })
+    }
+    pub fn options(
+        trace_mode: &str,
+        host_logger: bool,
+        host_frame_transformer: bool,
+        power_assertions: bool,
+    ) -> Result<crate::evaluation::session::SourceSessionOptions, String> {
+        use crate::logging::{LogDelivery, TraceMode};
+        Ok(crate::evaluation::session::SourceSessionOptions {
+            evaluation: crate::evaluation::EvaluationOptions { power_assertions },
+            trace_mode: match trace_mode {
+                "compact" | "COMPACT" => TraceMode::Compact,
+                "pretty" | "PRETTY" => TraceMode::Pretty,
+                _ => return Err("expected trace mode compact or pretty".into()),
+            },
+            log_delivery: if host_logger {
+                LogDelivery::Host
+            } else {
+                LogDelivery::Noop
+            },
+            host_frame_transformer,
+        })
+    }
+    pub fn new_output(
+        input: crate::evaluation::frontend::ModuleSourceInput<'_>,
+        paths: &[String],
+        module_options: &crate::evaluation::frontend::ModuleEvalOptions,
+        session_options: crate::evaluation::session::SourceSessionOptions,
+    ) -> Result<Self, crate::evaluation::frontend::ModuleFrontendResult> {
+        Ok(Self {
+            session: crate::evaluation::session::SourceSession::compile_output(
+                input,
+                paths,
+                module_options,
+                session_options,
+            )?,
+            output: true,
+            properties: module_options.properties.clone(),
+            environment: module_options.environment.clone(),
+        })
+    }
+    pub fn start_output_bytes(
+        &mut self,
+        now: u32,
+        timeout: Option<u32>,
+    ) -> Result<(), RuntimeError> {
+        self.session
+            .start_output_bytes(now.into(), timeout.map(Into::into))
+    }
+    pub fn reenter_output_bytes(
+        &mut self,
+        token: &str,
+        now: u32,
+        timeout: Option<u32>,
+    ) -> Result<(), RuntimeError> {
+        self.session
+            .reenter_output_bytes(token, now.into(), timeout.map(Into::into))
     }
     pub fn start_module(&mut self, now: u32, timeout: Option<u32>) -> Result<(), RuntimeError> {
         self.session
@@ -336,6 +393,11 @@ impl SourceProbe {
                 event
             }
             HostPoll::Ready(Ok(Value::Object(_))) => SourceEvent::new("module"),
+            HostPoll::Ready(Ok(Value::Bytes(bytes))) => {
+                let mut event = SourceEvent::new("bytes");
+                event.bytes = Some(bytes.to_vec());
+                event
+            }
             HostPoll::Ready(Ok(value)) => {
                 let value = crate::evaluation::session::SourceSession::result_string(value)?;
                 let mut event = SourceEvent::new("value");
@@ -346,9 +408,12 @@ impl SourceProbe {
                 if previous_depth > 0 && self.session.context_depth() == previous_depth {
                     return Err(error);
                 }
-                let message = self.session.format_error(error);
                 let mut event = SourceEvent::new("error");
-                event.error = Some(message.encode_utf16().collect());
+                if self.output {
+                    event.error_bytes = Some(self.session.output_session_error_bytes(error));
+                } else {
+                    event.error = Some(self.session.format_error(error).encode_utf16().collect());
+                }
                 event
             }
         };
@@ -356,6 +421,10 @@ impl SourceProbe {
     }
     pub fn respond(&mut self, token: &str, value: Value, now: u32) -> Result<(), RuntimeError> {
         self.session.resume(token, Ok(value), now.into())
+    }
+    pub fn respond_configured(&mut self, token: &str, now: u32) -> Result<(), RuntimeError> {
+        self.session
+            .resume_default_read(token, &self.properties, &self.environment, now.into())
     }
     pub fn reject(&mut self, token: &str, message: &str, now: u32) -> Result<(), RuntimeError> {
         self.session.resume(

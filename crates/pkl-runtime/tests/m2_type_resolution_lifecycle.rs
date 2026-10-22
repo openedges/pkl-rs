@@ -1,5 +1,7 @@
 //! Ordered source type resolution and evaluator ownership. These heap/scheduler
 //! contracts complement, and do not replace, raw pinned Java comparisons.
+//! Retained module graphs include their one builtin Module parent; executable
+//! nodes, transient-object deltas and terminal-zero assertions remain separate.
 use std::sync::Arc;
 
 use pkl_runtime::heap::LazyState;
@@ -47,7 +49,7 @@ fn first_missing_type_leaves_later_declarations_unpublished_and_collectible() {
     let mut vm = Vm::new(program.clone());
     vm.start(program.entry, vec![]).unwrap();
     let module = ready(&mut vm).unwrap();
-    assert_eq!(vm.collect(std::slice::from_ref(&module)).live, 1);
+    assert_eq!(vm.collect(std::slice::from_ref(&module)).live, 2);
     for _ in 0..2 {
         let error = member(&mut vm, &module, "before").unwrap_err();
         assert_eq!(error.kind, ErrorKind::MissingType);
@@ -57,20 +59,20 @@ fn first_missing_type_leaves_later_declarations_unpublished_and_collectible() {
                 .unwrap(),
             LazyState::Unevaluated
         );
-        assert_eq!(vm.collect(std::slice::from_ref(&module)).live, 1);
+        assert_eq!(vm.collect(std::slice::from_ref(&module)).live, 2);
     }
     let error = member(&mut vm, &module, "after").unwrap_err();
     assert_eq!(error.kind, ErrorKind::MissingType);
     assert_eq!(error.message, "Cannot find type `MissingInside`.");
     // Failure publishes exactly one alias singleton and its module environment.
-    assert_eq!(vm.collect(std::slice::from_ref(&module)).live, 2);
+    assert_eq!(vm.collect(std::slice::from_ref(&module)).live, 3);
     let alias = member(&mut vm, &module, "Poison").unwrap();
     assert!(matches!(alias, Value::TypeAlias(_)));
     assert_eq!(member(&mut vm, &module, "Poison"), Ok(alias.clone()));
     assert_eq!(member(&mut vm, &module, "temporary"), Ok(Value::Int(42)));
     assert_eq!(member(&mut vm, &module, "scalar"), Ok(Value::Int(7)));
     // The temporary source object does not become a declaration root.
-    assert_eq!(vm.collect(std::slice::from_ref(&module)).live, 2);
+    assert_eq!(vm.collect(std::slice::from_ref(&module)).live, 3);
     assert_eq!(member(&mut vm, &module, "Poison"), Ok(alias));
     vm.close();
     assert_eq!(vm.heap_stats().live, 0);
@@ -91,13 +93,13 @@ fn failed_generic_shadow_preserves_only_its_own_published_alias() {
             .unwrap(),
         LazyState::Unevaluated
     );
-    assert_eq!(vm.collect(std::slice::from_ref(&module)).live, 2);
+    assert_eq!(vm.collect(std::slice::from_ref(&module)).live, 3);
     let shadow = member(&mut vm, &module, "Shadow").unwrap();
     assert!(matches!(shadow, Value::TypeAlias(_)));
     assert_eq!(member(&mut vm, &module, "Shadow"), Ok(shadow));
     let error = member(&mut vm, &module, "Poison").unwrap_err();
     assert_eq!(error.message, "Cannot find type `MissingInside`.");
-    assert_eq!(vm.collect(std::slice::from_ref(&module)).live, 3);
+    assert_eq!(vm.collect(std::slice::from_ref(&module)).live, 4);
     vm.close();
     assert_eq!(vm.heap_stats().slots, 0);
 }
@@ -117,8 +119,8 @@ fn shared_program_does_not_share_failure_publication_or_generic_bindings() {
             .message,
         "Cannot find type `MissingGeneric`."
     );
-    assert_eq!(left.collect(std::slice::from_ref(&left_module)).live, 2);
-    assert_eq!(right.collect(std::slice::from_ref(&right_module)).live, 1);
+    assert_eq!(left.collect(std::slice::from_ref(&left_module)).live, 3);
+    assert_eq!(right.collect(std::slice::from_ref(&right_module)).live, 2);
     assert_eq!(
         right
             .member_state(right_module.as_object().unwrap(), "Shadow")
@@ -139,7 +141,7 @@ fn shared_program_does_not_share_failure_publication_or_generic_bindings() {
             .message,
         "Cannot find type `MissingFirst`."
     );
-    assert_eq!(right.collect(std::slice::from_ref(&right_module)).live, 1);
+    assert_eq!(right.collect(std::slice::from_ref(&right_module)).live, 2);
     left.close();
     right.close();
     assert_eq!(left.heap_stats().slots, 0);
@@ -382,9 +384,9 @@ fn nonterminal_cancel_keeps_alias_roots_and_retries_nested_bindings() {
                 LazyState::Unevaluated
             );
             assert_eq!(member(&mut vm, &module, "identity"), Ok(alias.clone()));
-            // Nested, Gate, and their declaration module survive cancellation;
+            // Nested, Gate, their declaration module and its Module parent survive cancellation;
             // the captured object and collection check temporaries do not.
-            assert_eq!(retained_values(vm.collect(&[]), 8), 3);
+            assert_eq!(retained_values(vm.collect(&[]), 8), 4);
             cancelled_request = Some(pending);
         } else {
             assert_ne!(Some(pending), cancelled_request);
@@ -399,7 +401,7 @@ fn nonterminal_cancel_keeps_alias_roots_and_retries_nested_bindings() {
         }
     }
     assert_eq!(member(&mut vm, &module, "identity"), Ok(alias));
-    assert_eq!(retained_values(vm.collect(&[]), 8), 3);
+    assert_eq!(retained_values(vm.collect(&[]), 8), 4);
     vm.close();
     assert_eq!(vm.heap_stats().slots, 0);
 }

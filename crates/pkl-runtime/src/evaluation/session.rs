@@ -1,5 +1,9 @@
 //! Development-only parsed-source Host session. Paths are fixed before execution;
 //! this is not a general REPL or module loader.
+use super::frontend::{
+    DiagnosticProfile, FailureDisposition, FrontendPhase, ModuleEvalOptions, ModuleFrontendResult,
+    ModuleSourceInput, prepare_module, render_module_runtime_failure,
+};
 use super::{EvaluationOptions, compile_program, runtime_error};
 use crate::{
     heap::HeapStats,
@@ -7,7 +11,7 @@ use crate::{
     logging::{EvaluationContext, LogDelivery, LoggerFailure, TraceMode},
     source::{Source, SourceMap, Span},
     value::{ErrorKind, PklString, RuntimeError, RuntimeSource, Value},
-    vm::{BlockMetadata, Instruction},
+    vm::{BlockMetadata, Instruction, Program},
 };
 use std::sync::Arc;
 
@@ -24,6 +28,17 @@ enum Call {
     Module,
     Path(usize),
     InitialPath(usize),
+    OutputBytes,
+    InitialOutputBytes,
+}
+
+impl Call {
+    fn expression(self) -> Option<usize> {
+        match self {
+            Self::Path(index) | Self::InitialPath(index) => Some(index),
+            _ => None,
+        }
+    }
 }
 
 /// Owns one actual compiled source, module receiver, heap and Host context stack.
@@ -35,6 +50,8 @@ pub struct SourceSession {
     name: String,
     paths: Vec<String>,
     entries: Vec<usize>,
+    output_entry: Option<usize>,
+    output_profile: DiagnosticProfile,
     module_entry: usize,
     module: Option<Value>,
     module_started: bool,
@@ -55,13 +72,53 @@ impl SourceSession {
         let mut sources = SourceMap::default();
         let id = sources.add(uri, text);
         let source = sources.get(id).expect("inserted source").clone();
-        let (mut program, name) = compile_program(
+        let (program, name) = compile_program(
             &source,
             uri,
             module_name,
             property_paths.first().map_or("", String::as_str),
             options.evaluation,
         )?;
+        Self::from_program(program, source, uri, name, property_paths, options, None)
+    }
+
+    /// Prepare real module output and optional callback property paths on one
+    /// Program, receiver and Host. Output does not use expression-string ToString.
+    pub fn compile_output(
+        input: ModuleSourceInput<'_>,
+        property_paths: &[String],
+        module_options: &ModuleEvalOptions,
+        options: SourceSessionOptions,
+    ) -> Result<Self, ModuleFrontendResult> {
+        let prepared = prepare_module(input, module_options)?;
+        Self::from_program(
+            prepared.program,
+            prepared.source,
+            input.uri,
+            prepared.name,
+            property_paths,
+            options,
+            Some(module_options.diagnostic_profile),
+        )
+        .map_err(|message| ModuleFrontendResult {
+            phase: FrontendPhase::Configuration,
+            disposition: FailureDisposition::Unsupported,
+            reason: Some("source-session-callback-expression"),
+            stdout: Vec::new(),
+            stderr: crate::diagnostic::render_error(&message, &[], None).into_bytes(),
+            exit_code: 2,
+        })
+    }
+
+    fn from_program(
+        mut program: Arc<Program>,
+        source: Source,
+        uri: &str,
+        name: String,
+        property_paths: &[String],
+        options: SourceSessionOptions,
+        output_profile: Option<DiagnosticProfile>,
+    ) -> Result<Self, String> {
         let module_entry = program.entry;
         let program_mut = Arc::make_mut(&mut program);
         let mut entries = Vec::with_capacity(property_paths.len());
@@ -106,6 +163,22 @@ impl SourceSession {
             };
             program_mut.metadata.push(metadata);
         }
+        let output_entry = output_profile.map(|_| {
+            let entry = program_mut.blocks.len();
+            program_mut.blocks.push(vec![
+                Instruction::Input(0),
+                Instruction::GetMember("output".into()),
+                Instruction::CheckModuleOutput,
+                Instruction::GetMember("bytes".into()),
+                Instruction::Return,
+            ]);
+            program_mut.metadata.push(BlockMetadata {
+                module_receiver_input: Some(0),
+                ..Default::default()
+            });
+            entry
+        });
+        let text = source.text();
         let context = EvaluationContext {
             primary_source: Some(Arc::new(RuntimeSource {
                 text: text.into(),
@@ -126,6 +199,8 @@ impl SourceSession {
             name,
             paths: property_paths.to_vec(),
             entries,
+            output_entry,
+            output_profile: output_profile.unwrap_or(DiagnosticProfile::ApiIdentity),
             module_entry,
             module: None,
             module_started: false,
@@ -161,18 +236,54 @@ impl SourceSession {
     ) -> Result<(), RuntimeError> {
         self.open()?;
         let entry = self.entry(index)?;
+        self.start_operation(
+            entry,
+            Call::Path(index),
+            Call::InitialPath(index),
+            now_ms,
+            timeout_ms,
+        )
+    }
+
+    /// Run module initialization and the output continuation in one admitted
+    /// evaluation. A callback close may finish this operation but not start one.
+    pub fn start_output_bytes(
+        &mut self,
+        now_ms: u64,
+        timeout_ms: Option<u64>,
+    ) -> Result<(), RuntimeError> {
+        self.open()?;
+        let entry = self.output_entry()?;
+        self.start_operation(
+            entry,
+            Call::OutputBytes,
+            Call::InitialOutputBytes,
+            now_ms,
+            timeout_ms,
+        )
+    }
+
+    fn start_operation(
+        &mut self,
+        entry: usize,
+        call: Call,
+        initial_call: Call,
+        now_ms: u64,
+        timeout_ms: Option<u64>,
+    ) -> Result<(), RuntimeError> {
+        self.open()?;
         if !self.module_started {
             self.host
                 .start_then(self.module_entry, Vec::new(), entry, now_ms, timeout_ms)?;
             self.module_started = true;
-            self.calls.push(Call::InitialPath(index));
+            self.calls.push(initial_call);
             self.last_expression = None;
             return Ok(());
         }
         if let Some(error) = &self.setup_failure {
             self.host.start_failed(error.clone(), now_ms, timeout_ms)?;
-            self.calls.push(Call::Path(index));
-            self.last_expression = Some(index);
+            self.calls.push(call);
+            self.last_expression = call.expression();
             return Ok(());
         }
         let module = self
@@ -180,8 +291,8 @@ impl SourceSession {
             .clone()
             .ok_or_else(|| error("module setup has not completed"))?;
         self.host.start(entry, vec![module], now_ms, timeout_ms)?;
-        self.calls.push(Call::Path(index));
-        self.last_expression = Some(index);
+        self.calls.push(call);
+        self.last_expression = call.expression();
         Ok(())
     }
 
@@ -194,6 +305,29 @@ impl SourceSession {
     ) -> Result<(), RuntimeError> {
         self.open()?;
         let entry = self.entry(index)?;
+        self.reenter_operation(parent_token, entry, Call::Path(index), now_ms, timeout_ms)
+    }
+
+    pub fn reenter_output_bytes(
+        &mut self,
+        parent_token: &str,
+        now_ms: u64,
+        timeout_ms: Option<u64>,
+    ) -> Result<(), RuntimeError> {
+        self.open()?;
+        let entry = self.output_entry()?;
+        self.reenter_operation(parent_token, entry, Call::OutputBytes, now_ms, timeout_ms)
+    }
+
+    fn reenter_operation(
+        &mut self,
+        parent_token: &str,
+        entry: usize,
+        call: Call,
+        now_ms: u64,
+        timeout_ms: Option<u64>,
+    ) -> Result<(), RuntimeError> {
+        self.open()?;
         // This is the VM's actual bootstrap receiver, never a second allocation
         // or a fabricated completed module. Publication semantics are bounded by
         // the shared VM's primary-module query.
@@ -204,8 +338,8 @@ impl SourceSession {
             .ok_or_else(|| error("same-module callback receiver is not yet published"))?;
         self.host
             .reenter(parent_token, entry, vec![module], now_ms, timeout_ms)?;
-        self.calls.push(Call::Path(index));
-        self.last_expression = Some(index);
+        self.calls.push(call);
+        self.last_expression = call.expression();
         Ok(())
     }
 
@@ -252,6 +386,7 @@ impl SourceSession {
                         }
                     }
                     Call::Path(index) => self.last_expression = Some(index),
+                    Call::OutputBytes | Call::InitialOutputBytes => self.last_expression = None,
                     Call::InitialPath(index) => {
                         self.last_expression =
                             (self.module.is_some() && !self.initialization_failed).then_some(index);
@@ -274,6 +409,18 @@ impl SourceSession {
         now_ms: u64,
     ) -> Result<(), RuntimeError> {
         self.host.resume(token, completion, now_ms)
+    }
+    /// Use the shared URI policy and the actual pending request, rather than
+    /// rebuilding a resource request from the Host transport's display URI.
+    pub fn resume_default_read(
+        &mut self,
+        token: &str,
+        properties: &[(String, String)],
+        environment: &[(String, String)],
+        now_ms: u64,
+    ) -> Result<(), RuntimeError> {
+        self.host
+            .resume_default_read(token, properties, environment, now_ms)
     }
     pub fn acknowledge_log(
         &mut self,
@@ -335,6 +482,33 @@ impl SourceSession {
             _ => Err(error("source expression did not return a string")),
         }
     }
+    pub fn result_bytes(value: Value) -> Result<Arc<[u8]>, RuntimeError> {
+        match value {
+            Value::Bytes(bytes) => Ok(bytes),
+            _ => Err(RuntimeError::new(
+                ErrorKind::InvalidBytecode,
+                "module output operation did not return bytes",
+            )),
+        }
+    }
+    pub fn output_failure(&self, error: RuntimeError) -> ModuleFrontendResult {
+        render_module_runtime_failure(
+            &self.source,
+            &self.uri,
+            &self.name,
+            self.output_profile,
+            error,
+        )
+    }
+    /// A callback property path still belongs to the expression-string API,
+    /// even when its suspended parent is an output operation.
+    pub fn output_session_error_bytes(&self, error: RuntimeError) -> Vec<u8> {
+        if self.last_expression.is_some() {
+            self.format_error(error).into_bytes()
+        } else {
+            self.output_failure(error).stderr
+        }
+    }
     fn open(&self) -> Result<(), RuntimeError> {
         if self.host.is_closed() {
             Err(RuntimeError::new(ErrorKind::Closed, "evaluator is closed"))
@@ -347,6 +521,14 @@ impl SourceSession {
             .get(index)
             .copied()
             .ok_or_else(|| error("source property-path index is out of range"))
+    }
+    fn output_entry(&self) -> Result<usize, RuntimeError> {
+        self.output_entry.ok_or_else(|| {
+            RuntimeError::new(
+                ErrorKind::Unsupported,
+                "this source session was not compiled for module output",
+            )
+        })
     }
     fn release_module(&mut self) {
         self.module = None;

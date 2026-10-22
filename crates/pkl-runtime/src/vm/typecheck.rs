@@ -122,7 +122,16 @@ struct CollectionState {
     replacements: Vec<(Arc<str>, Value)>,
 }
 #[derive(Clone)]
+struct PairState {
+    value: Value,
+    checked: Value,
+    components: [Value; 2],
+    arguments: Vec<(TypeCheck, Span)>,
+    index: usize,
+}
+#[derive(Clone)]
 enum Task {
+    PairResult(PairState),
     ReferenceDomainResult {
         value: Value,
         ty: TypeCheck,
@@ -235,6 +244,10 @@ impl TypeRun {
                     roots.push(Value::Function(*function));
                     roots.push(value.clone());
                 }
+                Task::PairResult(state) => {
+                    roots.extend([state.value.clone(), state.checked.clone()]);
+                    roots.extend(state.components.iter().cloned());
+                }
                 Task::TraceResult {
                     predicate_value, ..
                 } => roots.extend(predicate_value.iter().cloned()),
@@ -263,6 +276,7 @@ pub(super) fn needs_custom_this(ty: &TypeCheck) -> bool {
         | TypeCheck::GenericAlias(expanded) => needs_custom_this(expanded),
         TypeCheck::Reference { domain, .. } => needs_custom_this(domain),
         TypeCheck::ParameterizedCollection { arguments, .. }
+        | TypeCheck::Pair { arguments }
         | TypeCheck::CollectionBase { arguments } => {
             arguments.iter().any(|(ty, _)| needs_custom_this(ty))
         }
@@ -540,6 +554,9 @@ impl Vm {
             generic_default: None,
             equality_run: None,
             deep_force: None,
+            pcf_render: None,
+            function_owner: None,
+            amendment_end: None,
             prepared_hashes: None,
             key_search: None,
             return_to_type: true,
@@ -648,7 +665,69 @@ impl Vm {
             return Ok(());
         };
         match task {
+            Task::PairResult(mut state) => {
+                let outcome = run
+                    .outcome
+                    .take()
+                    .ok_or_else(|| invalid("Pair type child outcome"))?;
+                match outcome {
+                    Err(error) => {
+                        run.value = state.value;
+                        run.checked = state.checked;
+                        run.outcome = Some(Err(error));
+                    }
+                    Ok(value) => {
+                        state.components[state.index] = value;
+                        if state.index == 0 {
+                            state.index = 1;
+                            run.value = state.components[1].clone();
+                            run.checked = run.value.clone();
+                            let (ty, span) = state.arguments[1].clone();
+                            run.tasks.push(Task::PairResult(state));
+                            self.push_type_child(&mut run, ty, span, 1)?;
+                        } else {
+                            let Value::Object(id) = state.value else {
+                                return Err(invalid("Pair original value"));
+                            };
+                            let result = if run.eager
+                                || self.heap.get(id)?.pair.as_deref() == Some(&state.components)
+                            {
+                                state.value.clone()
+                            } else {
+                                self.make_pair(
+                                    state.components[0].clone(),
+                                    state.components[1].clone(),
+                                )
+                            };
+                            run.value = state.value;
+                            run.checked = state.checked;
+                            run.outcome = Some(Ok(result));
+                        }
+                    }
+                }
+            }
             Task::Check { ty, span } => match ty.into_resolved() {
+                TypeCheck::Pair { arguments }
+                    if !arguments.is_empty()
+                        && matches!(&run.value,Value::Object(id) if self.heap.get(*id)?.pair.is_some()) =>
+                {
+                    let Value::Object(id) = run.value else {
+                        unreachable!()
+                    };
+                    let components = *self.heap.get(id)?.pair.clone().unwrap();
+                    let state = PairState {
+                        value: run.value.clone(),
+                        checked: run.checked.clone(),
+                        components,
+                        arguments,
+                        index: 0,
+                    };
+                    run.value = state.components[0].clone();
+                    run.checked = run.value.clone();
+                    let (ty, span) = state.arguments[0].clone();
+                    run.tasks.push(Task::PairResult(state));
+                    self.push_type_child(&mut run, ty, span, 0)?;
+                }
                 ty @ TypeCheck::Reference { .. } if matches!(&run.value,Value::Object(id) if self.heap.get(*id)?.reference.is_some()) =>
                 {
                     let TypeCheck::Reference { domain, .. } = &ty else {

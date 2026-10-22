@@ -183,8 +183,7 @@ def build_manifest(root: Path = ROOT) -> dict:
         executable = row['id'] in module_cases
         cases.append(dict(id=row['id'], required=True, adapter=m2_module_eval.ADAPTER if executable else None, input='external/pkl/' + row['source']['path'],
                           input_sha256=row['source']['sha256'], requirements=[],
-                          execution=dict(state='ready' if executable else 'unimplemented', reason=None if executable else row['execution']['reason'] or
-                                         'Full upstream snippet/output contract adapter and Rust renderer are unimplemented.'),
+                          execution=m2_module_eval.execution_state(row, executable),
                           upstream_case=row))
     for row in rev1['files']:
         if row['kind'] != 'regression-candidate':
@@ -200,7 +199,7 @@ def build_manifest(root: Path = ROOT) -> dict:
     apply_mappings(requirements, cases, load(MAPPINGS, root), inventory['baseline'], root)
     result = dict(schema_version=1, baseline=inventory['baseline'],
                   scope='Complete M2 language requirement accounting with a conservative superset of all pinned language snippets; initial executable probes are a separate selection.',
-                  module_comparison_boundary='Original module eval argv/cwd/env/resources in one physical staged workspace; complete stdout/stderr/exit/files and unexpected workspace writes. Parser success is unsupported ModuleOutput evaluation, never eval success. No golden replay or diagnostic normalization.',
+                  module_comparison_boundary='Original module eval argv/cwd/env/resources in one physical staged workspace; actual output.bytes completion and complete stdout/stderr/exit/files, with unexpected workspace writes retained. Frontend-only preparation is separate. Registered blocked fixture contracts are attempted but remain unimplemented and cannot pass the full gate. No golden replay, toString substitute or diagnostic normalization.',
                   comparison_boundary='evaluateExpressionString(ModuleSource.path(same absolute URI), expression) UTF-8 stdout; whole PklException.getMessage() UTF-8 stderr and exit 1; no trimming. Power assertions default to disabled; an explicit per-case power_assertions boolean enables the same option in both probes. Stringification alone is not typed value/API compatibility.',
                   sources={path: digest((root / path).read_bytes()) for path in INPUTS},
                   requirements=requirements, cases=cases,
@@ -229,7 +228,7 @@ def validate_manifest(manifest: dict, root: Path = ROOT):
     for row in manifest['cases']:
         if row.get('adapter') == m2_module_eval.ADAPTER:
             if (row['id'] not in registered or row.get('upstream_case') != originals[row['id']]
-                    or row['execution'] != dict(state='ready', reason=None)
+                    or row['execution'] != m2_module_eval.execution_state(originals[row['id']], True)
                     or row['input_sha256'] != registered[row['id']]['input_sha256']):
                 raise ValueError('module-eval original execution contract differs')
         if row['id'] in registered and row.get('adapter') != m2_module_eval.ADAPTER:

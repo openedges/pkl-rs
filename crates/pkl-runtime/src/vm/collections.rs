@@ -220,6 +220,7 @@ pub(crate) fn hidden_property(
 pub(crate) struct RenderMember {
     pub descriptor: CollectionMember,
     pub skip: bool,
+    pub code: Option<usize>,
 }
 
 /// VmObject.iterateMembers visits every nonlocal declaration parent first.
@@ -263,6 +264,7 @@ pub(crate) fn render_members(
                 }
             };
             result.push(RenderMember {
+                code: Some(member.code),
                 descriptor,
                 skip: member.hidden()
                     || member.external()
@@ -763,6 +765,13 @@ impl Vm {
         name: &str,
     ) -> Result<bool, RuntimeError> {
         let object = self.heap.get(receiver)?;
+        if let Some(pair) = &object.pair
+            && matches!(name, "first" | "key" | "second" | "value")
+        {
+            let value = pair[usize::from(matches!(name, "second" | "value"))].clone();
+            self.stack.push(value);
+            return Ok(true);
+        }
         if object.collection_kind == CollectionKind::Dynamic
             || object.is_module
             || !matches!(name, "length" | "isEmpty")
@@ -1178,6 +1187,9 @@ impl Vm {
         let empty_amendment = matches!(instruction, Instruction::AmendEmpty);
         // Reuse construction without nesting this large dispatcher's native frame.
         let instruction = if empty_amendment {
+            if matches!(self.stack.last(), Some(Value::Function(_))) {
+                return Ok(());
+            }
             if let Some(Value::NullWithDefault(id)) = self.stack.last() {
                 let value = self.heap.null_default(*id)?;
                 *self.stack.last_mut().expect("null parent") = value;
@@ -2273,6 +2285,11 @@ impl Compiler<'_> {
                     | crate::syntax::ObjectMember::Predicate { .. }
             )
         });
+        let amendment = has_parent.then(|| {
+            let index = output.len();
+            output.push(Instruction::BeginFunctionAmendment { end: 0 });
+            index
+        });
         output.push(Instruction::BeginCollection {
             kind,
             has_parent,
@@ -2307,6 +2324,11 @@ impl Compiler<'_> {
         output.push(Instruction::EndCollection);
         self.initialize_member_types(&properties, output)?;
         self.type_scopes.pop();
+        if let Some(index) = amendment {
+            let end = output.len();
+            output[index] = Instruction::BeginFunctionAmendment { end };
+            output.push(Instruction::EndFunctionAmendment);
+        }
         Ok(())
     }
 
@@ -2365,6 +2387,7 @@ impl Compiler<'_> {
         }
         code.push(Instruction::Return);
         let block = self.block(code, Some(span));
+        self.program.metadata[block].member_span = Some(span);
         self.program.metadata[block].value_span = Some(if self.constant_member_body(value) {
             self.constant_member_value_span(
                 value,

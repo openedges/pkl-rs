@@ -976,7 +976,24 @@ impl Vm {
                     (Value::Object(a), Value::Object(b)) => {
                         let x = self.heap.get(*a)?;
                         let y = self.heap.get(*b)?;
-                        if x.reference.is_some() || y.reference.is_some() {
+                        if x.pair.is_some() || y.pair.is_some() {
+                            match (&x.pair, &y.pair) {
+                                (Some(x), Some(y)) => {
+                                    run.tasks.push(Task::Compare(
+                                        x[1].clone(),
+                                        y[1].clone(),
+                                        false,
+                                    ));
+                                    run.tasks.push(Task::Compare(
+                                        x[0].clone(),
+                                        y[0].clone(),
+                                        false,
+                                    ));
+                                    None
+                                }
+                                _ => Some(false),
+                            }
+                        } else if x.reference.is_some() || y.reference.is_some() {
                             match (&x.reference, &y.reference) {
                                 (Some(x), Some(y)) => {
                                     if reference::metadata_key(&x.referent)
@@ -1244,10 +1261,12 @@ impl Vm {
                     }
                     run.tasks.push(Task::Build(id));
                     run.tasks.push(Task::HashMembers(id));
-                    if !matches!(
-                        self.heap.get(id)?.collection_kind,
-                        CollectionKind::List | CollectionKind::Map | CollectionKind::Set
-                    ) {
+                    if self.heap.get(id)?.pair.is_none()
+                        && !matches!(
+                            self.heap.get(id)?.collection_kind,
+                            CollectionKind::List | CollectionKind::Map | CollectionKind::Set
+                        )
+                    {
                         run.tasks.push(Task::Deep(Value::Object(id)));
                     }
                 }
@@ -1256,6 +1275,12 @@ impl Vm {
                 // Java completes recursive value forcing before computing member
                 // hashes. Nested Mapping keys can still be lazy at that point.
                 // Hashing then follows cache order (or class property order).
+                if let Some(pair) = &self.heap.get(id)?.pair {
+                    run.tasks
+                        .extend(pair.iter().rev().cloned().map(Task::Prepare));
+                    self.frames[frame_index].equality_run = Some(run);
+                    return Ok(());
+                }
                 if let Some(reference) = self.heap.get(id)?.reference.as_ref() {
                     run.tasks
                         .extend(reference.path.iter().rev().cloned().map(Task::Prepare));
@@ -1338,6 +1363,31 @@ impl Vm {
             }
             Task::Build(id) => {
                 let object = self.heap.get(id)?;
+                if let Some(pair) = object.pair.clone() {
+                    let key = StructuralKey {
+                        kind: 7,
+                        class: None,
+                        members: vec![
+                            (false, Atom::Int(0), atom(&self.heap, &pair[0])?),
+                            (false, Atom::Int(1), atom(&self.heap, &pair[1])?),
+                        ],
+                    };
+                    let hash = self
+                        .java_hash(&pair[0])?
+                        .zip(self.java_hash(&pair[1])?)
+                        .map(|(a, b)| a.wrapping_mul(31).wrapping_add(b));
+                    let next = self.heap.next_structural_key;
+                    let value = *self.heap.structural_keys.entry(key).or_insert_with(|| {
+                        self.heap.next_structural_key += 1;
+                        next
+                    });
+                    let object = self.heap.get_mut(id)?;
+                    object.structural_key = Some(value);
+                    object.java_hash = Some(hash);
+                    run.active.remove(&id);
+                    self.frames[frame_index].equality_run = Some(run);
+                    return Ok(());
+                }
                 if let Some(reference) = &object.reference {
                     let mut members = vec![
                         (false, Atom::Int(0), atom(&self.heap, &reference.domain)?),

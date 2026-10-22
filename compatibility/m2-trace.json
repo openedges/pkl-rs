@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "scope": "Actual-source trace/read/logger callback raw comparisons. Includes original Java internal errors and unsupported dependencies; no development exceptions. Complete module loader, REPL and custom transformer contracts remain separate.",
+  "scope": "Actual-source trace/read/logger callback raw comparisons. Includes original Java internal errors and unsupported dependencies; no development exceptions. Complete module loader, REPL and custom transformer contracts remain separate. Stage40 additionally retains a required actual evaluateOutputBytes logger-close sequence; expression dispatch remains the default and output oracle bugs are never counted as passes.",
   "uri": "file:///stage37-trace.pkl",
   "module_name": "stage37-trace",
   "repetitions": 2,
@@ -713,6 +713,60 @@
         "acquisition": "stage37-bootstrap-close-oracle-01",
         "case": "bootstrap-member-annotation-close-reenter",
         "input_sha256": "560ba75647331ef590640594e397eed6a74bdf76ae1e3e71341974ccfc7a589b"
+      }
+    },
+    {
+      "id": "output-bootstrap-member-annotation-close",
+      "source": "tests/fixtures/m2-trace/stage40-output-bootstrap-member-annotation-close.pkl",
+      "operation": "output-bytes",
+      "calls": 2,
+      "resource_profile": "preconfigured-plus-life",
+      "mode": "COMPACT",
+      "action": "close",
+      "logger_callback": "",
+      "reader_callback": "",
+      "origin": {
+        "acquisition": "stage40-output-close-oracle-01",
+        "case": "bootstrap-member-annotation-close-output",
+        "input_sha256": "80a89b8791fbba5c3b0d100337b61a5d03af339a55246a737d1588ba277ae5e6",
+        "original_source_uri": "file:///stage40-output-close.pkl",
+        "report_sha256": "5c42fffa15dd0757275815253ad212090e22178424c15eb673705513cbd8afb0",
+        "closure_sha256": "887d7cca876d017a6a3c9f08e2792a20516a8d47e42e8cc883aa0c649b926d13",
+        "scope": "Original exact source raised PklBugException then cancelled-context oracle error. Required output-operation comparison remains unresolved; fresh common trace URI acquisition is required and original diagnostics are never rewritten."
+      }
+    },
+    {
+      "id": "output-reader-callback-error",
+      "source": "tests/fixtures/m2-trace/stage40-output-reader-callback-error.pkl",
+      "operation": "output-bytes",
+      "calls": 2,
+      "resource_profile": "preconfigured-plus-life",
+      "mode": "COMPACT",
+      "action": "capture",
+      "logger_callback": "",
+      "reader_callback": "bad",
+      "origin": {
+        "acquisition": "stage40-output-callback-capture-01",
+        "case": "output-reader-callback-error",
+        "input_sha256": "2ab64e3cd06d8237393addcb495b86ce7d75a91a1c2f328f527804ce1fb379a1",
+        "scope": "Authored actual output/read callback regression. Fresh pinned Java captures establish complete nested expression diagnostics and subsequent outer bytes; native values are never expected results."
+      }
+    },
+    {
+      "id": "output-raw-bytes",
+      "source": "tests/fixtures/m2-trace/stage40-output-raw-bytes.pkl",
+      "operation": "output-bytes",
+      "calls": 2,
+      "resource_profile": "preconfigured-plus-life",
+      "mode": "COMPACT",
+      "action": "capture",
+      "logger_callback": "",
+      "reader_callback": "",
+      "origin": {
+        "acquisition": "stage40-output-raw-bytes-capture-01",
+        "case": "output-raw-bytes",
+        "input_sha256": "96b535a2e0d74706880597e99e101e4b3fc015a65bd2a06b1b227a10d868f514",
+        "scope": "Authored actual output byte-vector control with NUL, non-ASCII and CRLF, repeated calls and owned-event lifetime. Only fresh pinned Java output supplies expected bytes."
       }
     }
   ]

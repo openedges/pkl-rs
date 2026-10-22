@@ -10,13 +10,21 @@ use crate::heap::{
 use crate::logging::{EvaluationContext, LogRequest, LoggerFailure};
 use crate::source::Span;
 use crate::value::{ErrorKind, ObjectId, PklString, RuntimeError, RuntimeFrame, Value};
+pub(crate) mod amendment;
 pub(crate) mod annotations;
+pub(crate) mod builtins;
 pub mod collections;
 mod compiler_expressions;
+mod converters;
 pub(crate) mod equality;
 mod forcing;
 mod generics;
+mod output;
+mod pair;
+mod pcf_format;
+mod primitives;
 pub(crate) mod reference;
+mod rendering;
 mod strings;
 mod tracing;
 mod typecheck;
@@ -25,6 +33,12 @@ use typecheck::{TypeDestination, TypeRun};
 #[derive(Clone, Debug)]
 pub enum Instruction {
     LoadRefModule,
+    CheckModuleOutput,
+    EncodeUtf8,
+    OutputRenderer,
+    RenderPcf {
+        document: bool,
+    },
     CheckAnnotationClass,
     PublishModuleMember {
         code: usize,
@@ -131,6 +145,17 @@ pub enum Instruction {
     },
     ToString,
     StringRepeat,
+    StringEncode,
+    Primitive(primitives::Operation),
+    MakePair,
+    PairConstructor,
+    BeginFunctionAmendment {
+        end: usize,
+    },
+    EndFunctionAmendment,
+    InvokeAmendedParent,
+    ContinueFunctionAmendment,
+    CheckMixinArgument,
     Observe(Span),
     TestType(TypeCheck),
     JumpIfNull(usize),
@@ -204,6 +229,9 @@ pub enum Instruction {
     MakeInstance {
         template: usize,
     },
+    MakeBuiltinInstance {
+        template: usize,
+    },
     DefaultClassInstance,
     Undefined(Arc<str>),
     AbstractMember {
@@ -256,6 +284,7 @@ pub enum TypeCheck {
         name: Arc<str>,
         arguments: Vec<TypeCheck>,
         expanded: Box<TypeCheck>,
+        default_origin: Option<RuntimeFrame>,
     },
     /// Function annotations validate arity; their parameter/result types are metadata.
     Function {
@@ -288,6 +317,9 @@ pub enum TypeCheck {
     /// Abstract `Collection` type, distinct from every concrete heap kind.
     /// An empty argument list is the bare class; a parameterized use has one.
     CollectionBase {
+        arguments: Vec<(TypeCheck, Span)>,
+    },
+    Pair {
         arguments: Vec<(TypeCheck, Span)>,
     },
     ParameterizedCollection {
@@ -423,6 +455,10 @@ impl TypeCheck {
                 (Self::StringLiteral(a), Self::StringLiteral(b)) => a == b,
                 (Self::Class { id: a, .. }, Self::Class { id: b, .. }) => a == b,
                 (Self::Collection(a), Self::Collection(b)) => a == b,
+                (Self::Pair { arguments: a }, Self::Pair { arguments: b }) => {
+                    pending.extend(a.iter().zip(b).map(|((a, _), (b, _))| (a, b)));
+                    a.len() == b.len()
+                }
                 (Self::CollectionBase { arguments: a }, Self::CollectionBase { arguments: b }) => {
                     // CollectionTypeNode is equivalent only to the same node.
                     a.is_empty() && b.is_empty()
@@ -590,6 +626,9 @@ impl TypeCheck {
             Self::Number => matches!(value, Value::Int(_) | Value::Float(_)),
             Self::String => matches!(value, Value::String(_)),
             Self::Bytes => matches!(value, Value::Bytes(_)),
+            Self::Pair { .. } => {
+                matches!(value, Value::Object(id) if heap.get(*id).is_ok_and(|o|o.pair.is_some()))
+            }
             Self::Collection(kind) => {
                 matches!(value, Value::Object(id) if heap.get(*id).is_ok_and(|object| object.collection_kind == *kind && !object.is_module && object.reference.is_none() && !object.ref_module) && collections::typed_class(heap, *id).is_ok_and(|class| class.is_none()))
             }
@@ -649,6 +688,7 @@ pub struct BlockMetadata {
     pub spans: Vec<Option<Span>>,
     pub member: PklString,
     pub declaration: Option<Span>,
+    pub member_span: Option<Span>,
     pub value_span: Option<Span>,
     pub property_typecheck: Option<usize>,
     /// Local properties authored in object bodies check in their member root.
@@ -682,12 +722,18 @@ pub struct Program {
     pub blocks: Vec<Vec<Instruction>>,
     pub metadata: Vec<BlockMetadata>,
     pub objects: Vec<Vec<Member>>,
+    builtin_objects: Vec<Vec<Member>>,
     pub entry: usize,
     pub(crate) reference_render_block: usize,
     pub(crate) typed_string_block: usize,
     pub(crate) string_repeat_block: usize,
+    pub(crate) string_encode_block: usize,
+    pub(crate) pair_constructor_block: usize,
+    primitive_methods: BTreeMap<(Arc<str>, Arc<str>), usize>,
+    pub(crate) amended_function_block: usize,
+    pub(crate) identity_mixin_block: usize,
     pub(crate) access_members: Vec<Member>,
-    pub(crate) annotation_members: BTreeMap<usize, Vec<Member>>,
+    pub(crate) builtin_members: BTreeMap<usize, Vec<Member>>,
     pub(crate) constraint_origins: BTreeMap<usize, (Vec<RuntimeFrame>, Vec<RuntimeFrame>)>,
 }
 
@@ -742,8 +788,19 @@ impl Program {
             ..BlockMetadata::default()
         };
         let access_members = reference::access_members(&mut blocks, &mut metadata);
-        let annotation_members = annotations::builtin_members(&mut blocks, &mut metadata);
+        let mut builtin_members = annotations::builtin_members(&mut blocks, &mut metadata);
+        let mut objects = Vec::new();
+        builtin_members.extend(output::builtin_members(
+            &mut blocks,
+            &mut metadata,
+            &mut objects,
+        ));
         let string_repeat_block = strings::repeat_block(&mut blocks, &mut metadata);
+        let string_encode_block = strings::encode_block(&mut blocks, &mut metadata);
+        let pair_constructor_block = pair::constructor_block(&mut blocks, &mut metadata);
+        let primitive_methods = primitives::blocks(&mut blocks, &mut metadata);
+        let (amended_function_block, identity_mixin_block) =
+            amendment::blocks(&mut blocks, &mut metadata);
         Self {
             module_name: Arc::from(""),
             module_template: None,
@@ -751,12 +808,18 @@ impl Program {
             metadata,
             blocks,
             objects: Vec::new(),
+            builtin_objects: objects,
             entry: 0,
             reference_render_block,
             typed_string_block,
             string_repeat_block,
+            string_encode_block,
+            pair_constructor_block,
+            primitive_methods,
+            amended_function_block,
+            identity_mixin_block,
             access_members,
-            annotation_members,
+            builtin_members,
             constraint_origins: BTreeMap::new(),
         }
     }
@@ -806,6 +869,9 @@ struct Frame {
     generic_default: Option<generics::GenericDefaultRun>,
     equality_run: Option<equality::EqualityRun>,
     deep_force: Option<forcing::ForceRun>,
+    pcf_render: Option<rendering::RenderRun>,
+    function_owner: Option<ObjectId>,
+    amendment_end: Option<usize>,
     prepared_hashes: Option<Vec<Value>>,
     key_search: Option<equality::KeySearch>,
     return_to_type: bool,
@@ -1010,6 +1076,9 @@ impl Vm {
             generic_default: None,
             equality_run: None,
             deep_force: None,
+            pcf_render: None,
+            function_owner: None,
+            amendment_end: None,
             prepared_hashes: None,
             key_search: None,
             return_to_type: false,
@@ -1391,6 +1460,10 @@ impl Vm {
                 if let Some(run) = &frame.key_search {
                     run.roots(&mut roots);
                 }
+                roots.extend(frame.function_owner.map(Value::Function));
+                if let Some(run) = &frame.pcf_render {
+                    run.roots(&mut roots);
+                }
                 if let Some(run) = &frame.deep_force {
                     run.roots(&mut roots);
                 }
@@ -1429,6 +1502,9 @@ impl Vm {
     fn fail(&mut self, mut error: RuntimeError) {
         if error.undefined_value && self.catch_force_undefined() {
             return;
+        }
+        if error.undefined_value && error.hint.is_none() {
+            error.hint = self.pcf_undefined_hint();
         }
         self.reset_force_marks(0);
         // Inferred properties read their class prototype without type checks.
@@ -1575,6 +1651,16 @@ impl Vm {
             error.hint = self.implicit_method_suggestions(frame, name);
         }
         for (frame_index, frame) in diagnostic_frames.iter().enumerate().rev() {
+            if frame.block == self.program.amended_function_block
+                && let Some(owner) = frame.function_owner
+                && let Ok(object) = self.heap.get(owner)
+                && let Some(origin) = object
+                    .amendment
+                    .as_ref()
+                    .and_then(|amendment| amendment.origin.clone())
+            {
+                error.frames.push(origin);
+            }
             if let Some(metadata) = self.program.metadata.get(frame.block)
                 && let Some(Some(span)) = metadata.spans.get(frame.pc.saturating_sub(1))
             {
@@ -1999,7 +2085,7 @@ impl Vm {
             ));
         }
         let mut inherited_types = Vec::new();
-        if !local && !method {
+        if !local && !method && member.ty.is_none() {
             let mut parent = self.heap.get(owner)?.parent;
             let mut visited = BTreeSet::new();
             while let Some(id) = parent {
@@ -2017,6 +2103,9 @@ impl Vm {
                         );
                         inherited_types.push((ty.clone(), span, name, id));
                     }
+                }
+                if !inherited_types.is_empty() {
+                    break;
                 }
                 parent = object.parent;
             }
@@ -2071,6 +2160,9 @@ impl Vm {
             generic_default: None,
             equality_run: None,
             deep_force: None,
+            pcf_render: None,
+            function_owner: None,
+            amendment_end: None,
             prepared_hashes: None,
             key_search: None,
             return_to_type: false,
@@ -2871,6 +2963,9 @@ impl Vm {
             generic_default: None,
             equality_run: None,
             deep_force: None,
+            pcf_render: None,
+            function_owner: Some(id),
+            amendment_end: None,
             prepared_hashes: None,
             key_search: None,
             return_to_type: false,
@@ -2906,6 +3001,13 @@ impl Vm {
         {
             return self.step_deep_force();
         }
+        if self
+            .frames
+            .last()
+            .is_some_and(|frame| frame.pcf_render.is_some())
+        {
+            return self.step_pcf();
+        }
         let frame = self
             .frames
             .last_mut()
@@ -2921,6 +3023,13 @@ impl Vm {
                 .clone()
         };
         frame.pc += 1;
+        let instruction = if matches!(instruction, Instruction::EndFunctionAmendment)
+            && frame.amendment_end == Some(frame.pc - 1)
+        {
+            Instruction::Return
+        } else {
+            instruction
+        };
         let frame_index = self.frames.len() - 1;
         let result = if matches!(
             &instruction,
@@ -2970,6 +3079,16 @@ impl Vm {
     fn step_instruction(&mut self, instruction: Instruction) -> Result<(), RuntimeError> {
         let frame = self.frames.last_mut().expect("active frame");
         match instruction {
+            Instruction::CheckModuleOutput => self.check_module_output()?,
+            Instruction::EncodeUtf8 => {
+                let Value::String(value) = self.pop()? else {
+                    return Err(invalid("UTF-8 encoding operand"));
+                };
+                self.stack
+                    .push(Value::Bytes(value.to_java_utf8().into_bytes().into()));
+            }
+            Instruction::OutputRenderer => self.output_renderer()?,
+            Instruction::RenderPcf { document } => self.begin_pcf(document)?,
             Instruction::PublishModuleMember { code } => {
                 let owner = self
                     .stack
@@ -3313,6 +3432,23 @@ impl Vm {
                 return Err(RuntimeError::new(ErrorKind::Type, message.to_java_utf8()));
             }
             Instruction::StringRepeat => self.repeat_string()?,
+            Instruction::StringEncode => self.encode_string()?,
+            Instruction::Primitive(operation) => self.primitive(operation)?,
+            Instruction::BeginFunctionAmendment { end } => self.begin_function_amendment(end)?,
+            Instruction::EndFunctionAmendment => {}
+            Instruction::InvokeAmendedParent => self.invoke_amended_parent()?,
+            Instruction::ContinueFunctionAmendment => self.continue_function_amendment()?,
+            Instruction::CheckMixinArgument => self.check_mixin_argument()?,
+            Instruction::PairConstructor => {
+                let value = self.pair_constructor();
+                self.stack.push(value);
+            }
+            Instruction::MakePair => {
+                let second = self.pop()?;
+                let first = self.pop()?;
+                let value = self.make_pair(first, second);
+                self.stack.push(value);
+            }
             Instruction::ToString => {
                 let value = self.pop()?;
                 if let Value::Object(id) = value
@@ -3427,6 +3563,16 @@ impl Vm {
                     Instruction::GetConstMember(_) | Instruction::GetConstMethod(_)
                 );
                 let receiver = self.pop()?;
+                if self.primitive_member(&receiver, name, method)? {
+                    return Ok(());
+                }
+                if method
+                    && name.as_ref() == "encodeToBytes"
+                    && matches!(receiver, Value::String(_))
+                {
+                    self.string_encode_method(receiver);
+                    return Ok(());
+                }
                 if method && name.as_ref() == "repeat" && matches!(receiver, Value::String(_)) {
                     self.string_repeat_method(receiver);
                 } else if !method
@@ -3536,6 +3682,9 @@ impl Vm {
                     .this_value
                     .clone()
                     .unwrap_or(Value::Object(self.scope(0)?.receiver));
+                if self.primitive_member(&receiver, name, method)? {
+                    return Ok(());
+                }
                 let receiver = receiver.as_object()?;
                 if method || !self.collection_builtin(receiver, name)? {
                     self.force(receiver, receiver, name.clone(), false, true, method)?;
@@ -3790,7 +3939,9 @@ impl Vm {
                 };
                 self.heap.get_mut(id)?.class_initializing = false;
             }
-            Instruction::MakeInstance { template } => {
+            Instruction::MakeInstance { template }
+            | Instruction::MakeBuiltinInstance { template } => {
+                let builtin = matches!(instruction, Instruction::MakeBuiltinInstance { .. });
                 let Value::Class(parent) = self.pop()? else {
                     return Err(RuntimeError::new(ErrorKind::Type, "Expected a class."));
                 };
@@ -3803,7 +3954,7 @@ impl Vm {
                                 ..
                             }
                     )
-                    && !matches!(ty.resolved(), TypeCheck::Class { id, .. } if annotations::builtin_name(*id).is_some())
+                    && !matches!(ty.resolved(), TypeCheck::Class { id, .. } if builtins::name(*id).is_some())
                 {
                     let name = reference::type_name(ty, &self.program.module_name);
                     let name = if matches!(ty.resolved(), TypeCheck::Reference { .. }) {
@@ -3831,7 +3982,7 @@ impl Vm {
                         ErrorKind::Type,
                         format!(
                             "Cannot instantiate abstract class `{}`.",
-                            if annotations::builtin_name(class.id).is_some() {
+                            if builtins::name(class.id).is_some() {
                                 class.name.to_string()
                             } else {
                                 format!("{}#{}", self.program.module_name, class.name)
@@ -3841,12 +3992,14 @@ impl Vm {
                     error.hint = Some("Abstract classes cannot be instantiated.\nInstead, instantiate a concrete subclass.".into());
                     return Err(error);
                 }
-                let members = self
-                    .program
-                    .objects
-                    .get(template)
-                    .ok_or_else(|| invalid("invalid instance template"))?
-                    .clone();
+                let members = if builtin {
+                    &self.program.builtin_objects
+                } else {
+                    &self.program.objects
+                }
+                .get(template)
+                .ok_or_else(|| invalid("invalid instance template"))?
+                .clone();
                 self.validate_object_members(parent, &members)?;
                 if members.is_empty() {
                     self.stack.push(Value::Object(parent));
@@ -3890,6 +4043,8 @@ impl Vm {
             } => {
                 let parent = if has_parent {
                     Some(self.pop()?.as_object()?)
+                } else if self.program.module_template == Some(template) {
+                    self.builtin_class(builtins::ty(output::MODULE)).heap_id()
                 } else {
                     None
                 };
@@ -3907,7 +4062,9 @@ impl Vm {
                         .ok_or_else(|| invalid("invalid object template"))?
                         .clone()
                 };
-                if let Some(parent) = parent {
+                if let Some(parent) = parent
+                    && self.program.module_template != Some(template)
+                {
                     self.validate_object_members(parent, &members)?;
                     if members.is_empty() {
                         self.stack.push(Value::Object(parent));
@@ -3922,6 +4079,15 @@ impl Vm {
                     .clone();
                 let object = self.heap.allocate(Object {
                     is_module: self.program.module_template == Some(template),
+                    class_definition: (self.program.module_template == Some(template)).then(|| {
+                        Class {
+                            id: reference::MODULE_ID,
+                            name: self.program.module_name.clone(),
+                            open: false,
+                            abstract_: false,
+                        }
+                    }),
+                    class_superclass_initialized: self.program.module_template == Some(template),
                     module_initializing: self.program.module_template == Some(template),
                     published_module_members: if self.program.module_template == Some(template) {
                         members.iter().map(|m| m.code).collect()
@@ -4772,6 +4938,7 @@ fn reference_constrained_type(check: &TypeCheck) -> Option<&TypeCheck> {
                 expanded: inner, ..
             } => pending.push(inner),
             TypeCheck::ParameterizedCollection { arguments, .. }
+            | TypeCheck::Pair { arguments }
             | TypeCheck::CollectionBase { arguments } => {
                 pending.extend(arguments.iter().rev().map(|(ty, _)| ty))
             }
@@ -5026,6 +5193,7 @@ impl Compiler<'_> {
             .iter()
             .any(|m| m.kind == crate::syntax::ModifierKind::Hidden);
         self.program.metadata[code].value_span = Some(self.property_value_span(member));
+        self.program.metadata[code].member_span = Some(member.span);
         self.program.metadata[code].initialization_error = initialization_error;
         self.program.metadata[code].property_typecheck = property_typecheck;
         self.program.metadata[code].amendment = member.is_amendment();
@@ -5090,6 +5258,7 @@ impl Compiler<'_> {
             spans: code.spans,
             member: self.member.clone(),
             declaration,
+            member_span: None,
             value_span: None,
             property_typecheck: None,
             inline_property_typecheck: false,
@@ -5372,7 +5541,7 @@ impl Compiler<'_> {
                     Binding::BaseClass => {
                         let ty = reference::base_type(&name)
                             .or_else(|| {
-                                annotations::builtin_id(&name).map(|id| TypeCheck::Class {
+                                builtins::id(&name).map(|id| TypeCheck::Class {
                                     id,
                                     name: name.clone(),
                                 })
@@ -5405,6 +5574,9 @@ impl Compiler<'_> {
                             local: *local,
                         })
                     }
+                    Binding::ImplicitMethod if name.as_ref() == "Pair" => {
+                        output.push(Instruction::PairConstructor)
+                    }
                     Binding::ImplicitMethod => output.push(Instruction::GetImplicitMethod(name)),
                     Binding::ImplicitThis => output.push(Instruction::GetImplicitProperty(name)),
                     Binding::CustomThis => {
@@ -5429,7 +5601,12 @@ impl Compiler<'_> {
                     output,
                 )?;
                 if let Some(parent) = parent {
-                    output.spans[begin] = Some(parent.unparenthesized().span);
+                    let constructor = begin
+                        + usize::from(matches!(
+                            output[begin],
+                            Instruction::BeginFunctionAmendment { .. }
+                        ));
+                    output.spans[constructor] = Some(parent.unparenthesized().span);
                 }
             }
             _ => unreachable!("expression continuation handles this syntax"),
@@ -5543,7 +5720,7 @@ fn type_name(ty: &TypeCheck, module: &str) -> String {
             TypeCheck::RefDomain => "pkl.ref#Domain".into(),
             TypeCheck::Reference { .. } => "pkl.ref#Reference".into(),
             TypeCheck::Class { id, name } => {
-                if annotations::builtin_name(*id).is_some() {
+                if builtins::name(*id).is_some() {
                     name.to_string()
                 } else {
                     format!("{module}#{name}")
@@ -5552,6 +5729,7 @@ fn type_name(ty: &TypeCheck, module: &str) -> String {
             TypeCheck::Collection(kind) | TypeCheck::ParameterizedCollection { kind, .. } => {
                 format!("{kind:?}")
             }
+            TypeCheck::Pair { .. } => "Pair".into(),
             TypeCheck::CollectionBase { .. } => "Collection".into(),
             TypeCheck::StringLiteral(value) => format!("{:?}", value.to_java_utf8()),
             TypeCheck::Nullable(inner) => {
@@ -6335,6 +6513,7 @@ impl Compiler<'_> {
                                         .to_owned(),
                                 ),
                                 arguments: metadata_arguments,
+                                default_origin: None,
                                 expanded: Box::new(if arguments.is_empty() {
                                     TypeCheck::Alias(Box::new(result))
                                 } else {
@@ -6351,6 +6530,46 @@ impl Compiler<'_> {
                         }
                     }
                 } else {
+                    if path[0] == "Mixin" {
+                        if arguments.len() > 1 {
+                            return Err(RuntimeError::new(
+                                ErrorKind::Type,
+                                format!("Expected 1 type argument(s) but got {}.", arguments.len()),
+                            ));
+                        }
+                        let argument = arguments
+                            .first()
+                            .map(|t| self.compile_type_at(t, limit, aliases, parameters))
+                            .transpose()?
+                            .unwrap_or(TypeCheck::Unknown);
+                        let mut mixin = amendment::mixin_type(argument);
+                        if let TypeCheck::NamedAlias { default_origin, .. } = &mut mixin {
+                            *default_origin = arguments.first().map(|argument| RuntimeFrame {
+                                source: None,
+                                span: self.type_source_span(argument),
+                                member: self.member.clone(),
+                            });
+                        }
+                        return Ok(mixin);
+                    }
+                    if path[0] == "Pair" {
+                        if !arguments.is_empty() && arguments.len() != 2 {
+                            return Err(RuntimeError::new(
+                                ErrorKind::Type,
+                                format!("Expected 2 type argument(s) but got {}.", arguments.len()),
+                            ));
+                        }
+                        let arguments = arguments
+                            .iter()
+                            .map(|argument| {
+                                Ok((
+                                    self.compile_type_at(argument, limit, aliases, parameters)?,
+                                    self.type_source_span(argument),
+                                ))
+                            })
+                            .collect::<Result<Vec<_>, RuntimeError>>()?;
+                        return Ok(TypeCheck::Pair { arguments });
+                    }
                     if path[0] == "Class" {
                         if arguments.len() > 1 {
                             return Err(RuntimeError::new(
@@ -6461,8 +6680,8 @@ impl Compiler<'_> {
                         return Ok(TypeCheck::ParameterizedCollection { kind, arguments });
                     }
                     match path[0].as_str() {
-                        name if annotations::builtin_id(name).is_some() => TypeCheck::Class {
-                            id: annotations::builtin_id(name).expect("annotation class"),
+                        name if builtins::id(name).is_some() => TypeCheck::Class {
+                            id: builtins::id(name).expect("annotation class"),
                             name: Arc::from(name),
                         },
                         "Class" | "TypeAlias" => TypeCheck::MetaClass(Arc::from(path[0].as_str())),
@@ -6540,7 +6759,7 @@ impl Compiler<'_> {
         if matches!(
             check.unaliased(),
             TypeCheck::RefDomain | TypeCheck::Reference { .. }
-        ) || matches!(check.unaliased(), TypeCheck::Class { id, .. } if *id == reference::ACCESS_ID || annotations::builtin_name(*id).is_some())
+        ) || matches!(check.unaliased(), TypeCheck::Class { id, .. } if *id == reference::ACCESS_ID || builtins::name(*id).is_some())
         {
             output.push_at(Instruction::BuiltinClass(check.clone()), span);
             return Ok(());
@@ -6639,6 +6858,18 @@ impl Compiler<'_> {
             } => return self.default_type_with_origin(&types[*index], output, span, origin),
             TypeCheck::Constrained { base, .. } => {
                 return self.default_type_with_origin(base, output, span, origin);
+            }
+            TypeCheck::NamedAlias { declaration, .. } if *declaration == amendment::MIXIN_ID => {
+                output.push_at(
+                    Instruction::GenericConstructorParent {
+                        ty: check.clone(),
+                        source: TypeArgumentSource {
+                            span,
+                            text: "Mixin".into(),
+                        },
+                    },
+                    span,
+                );
             }
             TypeCheck::Alias(inner)
             | TypeCheck::GenericAlias(inner)

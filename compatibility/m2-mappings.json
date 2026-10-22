@@ -1,14 +1,11 @@
 {
-  "schema_version": 1,
   "baseline": {
-    "version": "0.32.0",
-    "revision": "e51fb2f91774265666f94980ec630db794a4db2d"
+    "revision": "e51fb2f91774265666f94980ec630db794a4db2d",
+    "version": "0.32.0"
   },
   "requirements": [
     {
-      "requirement": "semantic:reference",
       "implementation": {
-        "state": "partial",
         "links": [
           {
             "path": "crates/pkl-runtime/src/vm/reference.rs",
@@ -30,10 +27,18 @@
             "path": "crates/pkl-runtime/src/vm/generics.rs",
             "symbol": "validate_reference_arguments"
           }
-        ]
+        ],
+        "state": "partial"
       },
+      "remaining": [
+        "Original upstream reference snippet and renderer/API suite contracts remain unexecuted; selected API-expression exploration is separate evidence.",
+        "Complete referent metadata for all builtin types, generic classes and remaining collection types is not implemented or verified.",
+        "Full reflection, compound-value renderers and cyclic or JVM identity-dependent key behavior remain open.",
+        "Generic Reference referent rejection is restored after parameter substitution, while known complete-frame mismatches in these exploratory cases remain open."
+      ],
+      "requirement": "semantic:reference",
+      "scope": "The pkl:ref bridge supports selected constructor, normalized referent type, synthetic property/subscript path, domain rendering, equality and key behavior through the shared VM. Linked native cases compare complete Java 0.32.0 process output at their actual fixture URIs. Stage11 adds selected fixed declaration, inherited metadata and complete raw diagnostics through the shared VM. Stage 13 adds selected alias/function metadata, exported-type equality and complete raw diagnostic comparisons; original suite execution and remaining scope stay open. Stage 19 adds bounded shared-metadata regressions for finite deep and branching actual arguments, observable class-argument swaps, inline/lambda/shared-let recursion, recursive Reference validation, and distinct wrapper actuals. Original Java stack errors, historical native abort evidence, full language semantics and performance remain separately accounted.",
       "tests": {
-        "state": "partial",
         "case_ids": [
           "reference-stage10-constructor-data",
           "reference-stage10-constructor-domain",
@@ -239,20 +244,12 @@
           "types-stage19-grow-reference-27",
           "types-stage19-grow-reference-28",
           "types-stage19-grow-reference-30"
-        ]
-      },
-      "scope": "The pkl:ref bridge supports selected constructor, normalized referent type, synthetic property/subscript path, domain rendering, equality and key behavior through the shared VM. Linked native cases compare complete Java 0.32.0 process output at their actual fixture URIs. Stage11 adds selected fixed declaration, inherited metadata and complete raw diagnostics through the shared VM. Stage 13 adds selected alias/function metadata, exported-type equality and complete raw diagnostic comparisons; original suite execution and remaining scope stay open. Stage 19 adds bounded shared-metadata regressions for finite deep and branching actual arguments, observable class-argument swaps, inline/lambda/shared-let recursion, recursive Reference validation, and distinct wrapper actuals. Original Java stack errors, historical native abort evidence, full language semantics and performance remain separately accounted.",
-      "remaining": [
-        "Original upstream reference snippet and renderer/API suite contracts remain unexecuted; selected API-expression exploration is separate evidence.",
-        "Complete referent metadata for all builtin types, generic classes and remaining collection types is not implemented or verified.",
-        "Full reflection, compound-value renderers and cyclic or JVM identity-dependent key behavior remain open.",
-        "Generic Reference referent rejection is restored after parameter substitution, while known complete-frame mismatches in these exploratory cases remain open."
-      ]
+        ],
+        "state": "partial"
+      }
     },
     {
-      "requirement": "semantic:reflection-metadata",
       "implementation": {
-        "state": "partial",
         "links": [
           {
             "path": "crates/pkl-runtime/src/heap.rs",
@@ -278,10 +275,15 @@
             "path": "crates/pkl-runtime/src/vm/generics.rs",
             "symbol": "step_generic_default"
           }
-        ]
+        ],
+        "state": "partial"
       },
+      "remaining": [
+        "The full reflection API, module/class/type metadata inventory, dynamic nested declaration identity and generic class metadata remain unimplemented or unverified."
+      ],
+      "requirement": "semantic:reflection-metadata",
+      "scope": "Selected class, inherited property and normalized type metadata are used for Reference access without forcing referent bodies. Stage11 adds selected fixed declaration, inherited metadata and complete raw diagnostics through the shared VM. Stage 13 adds selected alias/function metadata, exported-type equality and complete raw diagnostic comparisons; original suite execution and remaining scope stay open. Stage 24 additionally covers bounded Collection List/Set classification, eager versus lazy nested validation, aliases/defaults, nullable constructor timing, selected metadata and complete diagnostics.",
       "tests": {
-        "state": "partial",
         "case_ids": [
           "reference-stage10-property-unforced",
           "reference-stage10-property-inherited",
@@ -429,17 +431,12 @@
           "collection-stage24-reference-collection-int-ispositive-as-collection-any",
           "collection-stage24-reference-collection-int-ispositive-as-list-int",
           "collection-stage24-reference-collection-int-ispositive-as-set-int"
-        ]
-      },
-      "scope": "Selected class, inherited property and normalized type metadata are used for Reference access without forcing referent bodies. Stage11 adds selected fixed declaration, inherited metadata and complete raw diagnostics through the shared VM. Stage 13 adds selected alias/function metadata, exported-type equality and complete raw diagnostic comparisons; original suite execution and remaining scope stay open. Stage 24 additionally covers bounded Collection List/Set classification, eager versus lazy nested validation, aliases/defaults, nullable constructor timing, selected metadata and complete diagnostics.",
-      "remaining": [
-        "The full reflection API, module/class/type metadata inventory, dynamic nested declaration identity and generic class metadata remain unimplemented or unverified."
-      ]
+        ],
+        "state": "partial"
+      }
     },
     {
-      "requirement": "semantic:modules",
       "implementation": {
-        "state": "partial",
         "links": [
           {
             "path": "crates/pkl-runtime/src/parser.rs",
@@ -452,29 +449,73 @@
           {
             "path": "crates/pkl-runtime/src/vm.rs",
             "symbol": "compile_type_at"
+          },
+          {
+            "path": "crates/pkl-runtime/src/evaluation/session.rs",
+            "symbol": "start_output_bytes"
+          },
+          {
+            "path": "crates/pkl-runtime/src/evaluation/frontend.rs",
+            "symbol": "evaluate_module_output"
+          },
+          {
+            "path": "crates/pkl-runtime/src/vm.rs",
+            "symbol": "CheckModuleOutput"
           }
-        ]
+        ],
+        "state": "partial"
       },
+      "remaining": [
+        "General module loading, extends/amends, imports beyond the pkl:ref bridge and complete module identity semantics remain open.",
+        "Original import/module snippets and full invalid syntax/name resolution corpus still require their original adapters and execution.",
+        "Output.files/multiple outputs and complete renderer/converter/transformer/reflection dependencies remain partial or unsupported; every original selected failure stays in the full gate.",
+        "The selected output kernel does not establish whole-language, public evaluator API or performance compatibility."
+      ],
+      "requirement": "semantic:modules",
+      "scope": "Local const import members, explicit and inferred pkl:ref aliases, qualified type lookup and namespace diagnostics have selected raw comparisons. Stage40 adds an actual single-module output.bytes operation with typed preparation, real ModuleOutput checking and shared Host lifecycle. All reviewed original30 output/module contracts are executable without source/expression wrappers; readiness is not a pass claim.",
       "tests": {
-        "state": "partial",
         "case_ids": [
           "reference-stage10-namespace-local-duplicate",
           "reference-stage10-namespace-parameter",
           "reference-stage10-namespace-alias-valid",
           "reference-stage10-namespace-property-duplicate",
-          "reference-stage10-native-method-property-namespace"
-        ]
-      },
-      "scope": "Local const import members, explicit and inferred pkl:ref aliases, qualified type lookup and namespace diagnostics have selected raw comparisons.",
-      "remaining": [
-        "General module loading, extends/amends, imports beyond the pkl:ref bridge and complete module identity semantics remain open.",
-        "Original import/module snippets and full invalid syntax/name resolution corpus still require their original adapters and execution."
-      ]
+          "reference-stage10-native-method-property-namespace",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/comments.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/semicolon.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/imported.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/methodTrailingCommas.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/constraintsTrailingComma.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/trailingCommas.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/spread.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/pcfRenderer1.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/pcfRenderer8.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/undefinedProperty1.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/undefinedProperty4.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/import1.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/import1b.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/import2.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/import3.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/extendModule1.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/amendModule1.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/recursiveModule1.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/recursiveModule2.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/filename with spaces.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/日本語.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/moduleOutput.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/newline.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/boolean.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/read.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/lambdaTrailingCommas.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/lineCommentBetween.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/pcfRenderer2b.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/pcfRenderer9.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/moduleOutput2.pkl"
+        ],
+        "state": "partial"
+      }
     },
     {
-      "requirement": "semantic:diagnostics",
       "implementation": {
-        "state": "partial",
         "links": [
           {
             "path": "crates/pkl-runtime/src/value.rs",
@@ -535,11 +576,25 @@
           {
             "path": "crates/pkl-runtime/src/evaluation/frontend.rs",
             "symbol": "evaluate_module_frontend"
+          },
+          {
+            "path": "crates/pkl-runtime/src/evaluation/session.rs",
+            "symbol": "output_failure"
           }
-        ]
+        ],
+        "state": "partial"
       },
+      "remaining": [
+        "Colored output, general imported source stacks, first-error combinations and the complete parser/resolver/runtime diagnostic corpus remain open; selected uncolored recursive compression is covered.",
+        "Original selected cycle and remainder-zero failures remain failed.",
+        "Exploratory double-negated minimum-integer overflow frames and invalid non-local object annotation frame names remain known differences outside the Stage 31 selected additions.",
+        "Full module, amendment, inheritance and object API semantics and the original upstream suite remain incomplete.",
+        "Cyclic rendering oracle failures, identity-dependent keys, complete diagnostic-time forcing/Host suspension and finite truncation side effects remain unresolved or unverified.",
+        "The new persistent originals use trace; complete trace logging and its original sequence contract remain required."
+      ],
+      "requirement": "semantic:diagnostics",
+      "scope": "Reference constructor, access, constraint and rendering errors retain complete message, authored frame, foreign standard-library source and URI bytes in selected comparisons. Stage11 adds selected fixed declaration, inherited metadata and complete raw diagnostics through the shared VM. Stage 13 adds selected alias/function metadata, exported-type equality and complete raw diagnostic comparisons; original suite execution and remaining scope stay open. Stage 14 adds selected authored type-resolution order, generic parameter scope and nested substitution, class/alias arity ordering, and owner signature diagnostics; persistent failed-declaration state has a separate sequence contract. Stage 15 adds selected non-generic recursive constraint block graphs and declaration type scope, plus builtin Class argument erasure and arity ordering. At Stage 15 recursive generic constraints remained open; Stage 16 adds bounded shared receiver-slot support. Stage 16: Selected recursive frame compression, count-one loops, complete call spans and hint placement match Java uncolored diagnostics. Stage 17: Selected const-method barriers, lambda lookup depth, immediate outer lexical scope, and grouped-callee parser diagnostics follow the pinned Java behavior. Stage 18 adds selected let-body and for-generator lexical const-depth boundaries while retaining enclosing const levels, plus their complete raw diagnostics and lambda controls. Selected finite recursive generic and instantiated type-variable failures compare complete Java bytes with power assertions enabled and disabled. Stage 19 adds bounded shared-metadata regressions for finite deep and branching actual arguments, observable class-argument swaps, inline/lambda/shared-let recursion, recursive Reference validation, and distinct wrapper actuals. Original Java stack errors, historical native abort evidence, full language semantics and performance remain separately accounted. Stage20 adds bounded nullable defaults, inferred collection amendments, null identity and repeated default failures; complete nullable and collection semantics remain unverified. Stage21 adds bounded direct symbolic constructors, actual-argument diagnostics, lazy class defaults, collection body controls and persistent retries; complete constructors, lexical roots and builtin coverage remain unverified. Stage22 adds bounded strict Map construction, boxed/hash-prefix key semantics, lazy nested generic values, insertion-order iteration and HAMT-ordered equality/hash forcing; complete Map APIs and language coverage remain unverified. Stage23 adds bounded strict Set construction, immediate element hashing and deduplication, boxed/cache-sensitive membership, Set defaults and generic aliases, eager nested element checks, structural equality/hash, insertion-order generation/spreading and raw null/default diagnostic controls; complete Set APIs and language coverage remain unverified. Stage 24 additionally covers bounded Collection List/Set classification, eager versus lazy nested validation, aliases/defaults, nullable constructor timing, selected metadata and complete diagnostics. Stage 30 preserves UTF-16 diagnostic member paths through parser/resolver/compiler counters, block metadata, runtime frames and recursive compression. Selected sibling entry/function numbering and detached lifecycle names distinguish unmatched surrogates from literal question marks before Java UTF-8 output. Typed-property diagnostic controls distinguish inline checks for object-local declarations from module/class-local separate call frames; alias use does not change the declaration category. Stage 31 distinguishes folded numeric-token value frames for local properties from authored body sections retained by selected public class constant properties. Selected complete diagnostics cover signed integer/float literals, whitespace/comments/multiline syntax, radix and minimum-integer literals, grouping, direct constraints and aliases; operand, argument/return, cast, overflow-literal and first-error controls retain their separate source ownership. Success controls preserve minimum integers and negative-zero arithmetic. These selected observations do not establish the complete numeric or diagnostic surface. Additional scalar-constant controls distinguish grouping removal in computed local bodies from source reconstruction for selected non-local property, overridden property, Mapping entry and Listing element value frames. Grouped string, Boolean and null constants preserve the same wrapper distinction. Original failed baseline and first-candidate grouped Listing observations remain preserved alongside the selected reconstruction regression; later observations do not relabel those historical failures. Stage 32 adds bounded forbidden non-local object property type-annotation diagnostic ownership, nested declaration paths, earlier-error controls and valid module/class/object-local annotations; complete frontend diagnostics remain separately unverified. Stage 33 adds bounded const-modifier ownership before property-scope entry, method inferred-new versus lambda first-error selection, explicit-parent and earlier-error controls, and successful Dynamic/untyped method and unused-body controls. Non-Dynamic typed method return inference remains outside this repair. Stage 36 adds resumable object deep forcing and object.toString rendering with persistent force marks, owner-specific hidden declarations, inherited member order, undefined-member handling, and renderer key hashing/equality. Selected scalar comparisons and separate stateful/Host observations retain their own raw contracts. Additional source-derived controls cover user-defined toString interpolation, hidden builtin defaults and inherited equal/colliding object keys. Modifier-addition controls distinguish Java IMPORT, CLASS and TYPE_ALIAS bits when filtering rendered declarations. Stage38 adds original generic implicit/explicit missing-method, suggestions, call-span and argument-order controls; failures remain visible until differential verification. Stage38 additionally checks lexical candidate ordering across property/method and scope boundaries, stable similarity/arity ranking, and explicit-receiver contrast against nine fresh Java observations. Original module eval frontend failures are exercised through their unchanged argv/cwd/env/resource contracts with the bundled CLI frame profile; complete output evaluation remains unsupported. Stage40 adds actual module-output operation failures without expression-string conversion or a synthetic REPL boundary; the unchanged original output/module dependency contracts remain selected even when unsupported.",
       "tests": {
-        "state": "partial",
         "case_ids": [
           "reference-stage10-domain-invalid",
           "reference-stage10-class-invalid",
@@ -1508,23 +1563,43 @@
           "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/invalidCharacter.pkl",
           "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/spacesBetweenDocComments.pkl",
           "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/typeAnnotationInAmends.pkl",
-          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/wrongDocComment.pkl"
-        ]
-      },
-      "scope": "Reference constructor, access, constraint and rendering errors retain complete message, authored frame, foreign standard-library source and URI bytes in selected comparisons. Stage11 adds selected fixed declaration, inherited metadata and complete raw diagnostics through the shared VM. Stage 13 adds selected alias/function metadata, exported-type equality and complete raw diagnostic comparisons; original suite execution and remaining scope stay open. Stage 14 adds selected authored type-resolution order, generic parameter scope and nested substitution, class/alias arity ordering, and owner signature diagnostics; persistent failed-declaration state has a separate sequence contract. Stage 15 adds selected non-generic recursive constraint block graphs and declaration type scope, plus builtin Class argument erasure and arity ordering. At Stage 15 recursive generic constraints remained open; Stage 16 adds bounded shared receiver-slot support. Stage 16: Selected recursive frame compression, count-one loops, complete call spans and hint placement match Java uncolored diagnostics. Stage 17: Selected const-method barriers, lambda lookup depth, immediate outer lexical scope, and grouped-callee parser diagnostics follow the pinned Java behavior. Stage 18 adds selected let-body and for-generator lexical const-depth boundaries while retaining enclosing const levels, plus their complete raw diagnostics and lambda controls. Selected finite recursive generic and instantiated type-variable failures compare complete Java bytes with power assertions enabled and disabled. Stage 19 adds bounded shared-metadata regressions for finite deep and branching actual arguments, observable class-argument swaps, inline/lambda/shared-let recursion, recursive Reference validation, and distinct wrapper actuals. Original Java stack errors, historical native abort evidence, full language semantics and performance remain separately accounted. Stage20 adds bounded nullable defaults, inferred collection amendments, null identity and repeated default failures; complete nullable and collection semantics remain unverified. Stage21 adds bounded direct symbolic constructors, actual-argument diagnostics, lazy class defaults, collection body controls and persistent retries; complete constructors, lexical roots and builtin coverage remain unverified. Stage22 adds bounded strict Map construction, boxed/hash-prefix key semantics, lazy nested generic values, insertion-order iteration and HAMT-ordered equality/hash forcing; complete Map APIs and language coverage remain unverified. Stage23 adds bounded strict Set construction, immediate element hashing and deduplication, boxed/cache-sensitive membership, Set defaults and generic aliases, eager nested element checks, structural equality/hash, insertion-order generation/spreading and raw null/default diagnostic controls; complete Set APIs and language coverage remain unverified. Stage 24 additionally covers bounded Collection List/Set classification, eager versus lazy nested validation, aliases/defaults, nullable constructor timing, selected metadata and complete diagnostics. Stage 30 preserves UTF-16 diagnostic member paths through parser/resolver/compiler counters, block metadata, runtime frames and recursive compression. Selected sibling entry/function numbering and detached lifecycle names distinguish unmatched surrogates from literal question marks before Java UTF-8 output. Typed-property diagnostic controls distinguish inline checks for object-local declarations from module/class-local separate call frames; alias use does not change the declaration category. Stage 31 distinguishes folded numeric-token value frames for local properties from authored body sections retained by selected public class constant properties. Selected complete diagnostics cover signed integer/float literals, whitespace/comments/multiline syntax, radix and minimum-integer literals, grouping, direct constraints and aliases; operand, argument/return, cast, overflow-literal and first-error controls retain their separate source ownership. Success controls preserve minimum integers and negative-zero arithmetic. These selected observations do not establish the complete numeric or diagnostic surface. Additional scalar-constant controls distinguish grouping removal in computed local bodies from source reconstruction for selected non-local property, overridden property, Mapping entry and Listing element value frames. Grouped string, Boolean and null constants preserve the same wrapper distinction. Original failed baseline and first-candidate grouped Listing observations remain preserved alongside the selected reconstruction regression; later observations do not relabel those historical failures. Stage 32 adds bounded forbidden non-local object property type-annotation diagnostic ownership, nested declaration paths, earlier-error controls and valid module/class/object-local annotations; complete frontend diagnostics remain separately unverified. Stage 33 adds bounded const-modifier ownership before property-scope entry, method inferred-new versus lambda first-error selection, explicit-parent and earlier-error controls, and successful Dynamic/untyped method and unused-body controls. Non-Dynamic typed method return inference remains outside this repair. Stage 36 adds resumable object deep forcing and object.toString rendering with persistent force marks, owner-specific hidden declarations, inherited member order, undefined-member handling, and renderer key hashing/equality. Selected scalar comparisons and separate stateful/Host observations retain their own raw contracts. Additional source-derived controls cover user-defined toString interpolation, hidden builtin defaults and inherited equal/colliding object keys. Modifier-addition controls distinguish Java IMPORT, CLASS and TYPE_ALIAS bits when filtering rendered declarations. Stage38 adds original generic implicit/explicit missing-method, suggestions, call-span and argument-order controls; failures remain visible until differential verification. Stage38 additionally checks lexical candidate ordering across property/method and scope boundaries, stable similarity/arity ranking, and explicit-receiver contrast against nine fresh Java observations. Original module eval frontend failures are exercised through their unchanged argv/cwd/env/resource contracts with the bundled CLI frame profile; complete output evaluation remains unsupported.",
-      "remaining": [
-        "Colored output, general imported source stacks, first-error combinations and the complete parser/resolver/runtime diagnostic corpus remain open; selected uncolored recursive compression is covered.",
-        "Original selected cycle and remainder-zero failures remain failed.",
-        "Exploratory double-negated minimum-integer overflow frames and invalid non-local object annotation frame names remain known differences outside the Stage 31 selected additions.",
-        "Full module, amendment, inheritance and object API semantics and the original upstream suite remain incomplete.",
-        "Cyclic rendering oracle failures, identity-dependent keys, complete diagnostic-time forcing/Host suspension and finite truncation side effects remain unresolved or unverified.",
-        "The new persistent originals use trace; complete trace logging and its original sequence contract remain required."
-      ]
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/wrongDocComment.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/comments.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/semicolon.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/imported.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/methodTrailingCommas.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/constraintsTrailingComma.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/trailingCommas.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/spread.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/pcfRenderer1.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/pcfRenderer8.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/undefinedProperty1.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/undefinedProperty4.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/import1.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/import1b.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/import2.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/import3.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/extendModule1.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/amendModule1.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/recursiveModule1.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/recursiveModule2.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/filename with spaces.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/日本語.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/moduleOutput.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/newline.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/boolean.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/read.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/lambdaTrailingCommas.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/lineCommentBetween.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/pcfRenderer2b.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/pcfRenderer9.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/moduleOutput2.pkl"
+        ],
+        "state": "partial"
+      }
     },
     {
-      "requirement": "specification:docs/modules/language-reference/pages/index.adoc:References",
       "implementation": {
-        "state": "partial",
         "links": [
           {
             "path": "crates/pkl-runtime/src/vm/reference.rs",
@@ -1542,10 +1617,17 @@
             "path": "crates/pkl-runtime/src/vm/typecheck.rs",
             "symbol": "step_type"
           }
-        ]
+        ],
+        "state": "partial"
       },
+      "remaining": [
+        "Original upstream reference snippet and renderer/API suite contracts remain unexecuted; selected API-expression exploration is separate evidence.",
+        "Complete referent metadata for all builtin types, generic classes and remaining collection types is not implemented or verified.",
+        "Full reflection, compound-value renderers and cyclic or JVM identity-dependent key behavior remain open."
+      ],
+      "requirement": "specification:docs/modules/language-reference/pages/index.adoc:References",
+      "scope": "The pkl:ref bridge supports selected constructor, normalized referent type, synthetic property/subscript path, domain rendering, equality and key behavior through the shared VM. Linked native cases compare complete Java 0.32.0 process output at their actual fixture URIs.",
       "tests": {
-        "state": "partial",
         "case_ids": [
           "reference-stage10-constructor-data",
           "reference-stage10-constructor-domain",
@@ -1690,19 +1772,12 @@
           "reference-stage10-reference-new-parent-invalid",
           "reference-stage10-adapter-reference-render-success",
           "reference-stage10-adapter-reference-render-failure"
-        ]
-      },
-      "scope": "The pkl:ref bridge supports selected constructor, normalized referent type, synthetic property/subscript path, domain rendering, equality and key behavior through the shared VM. Linked native cases compare complete Java 0.32.0 process output at their actual fixture URIs.",
-      "remaining": [
-        "Original upstream reference snippet and renderer/API suite contracts remain unexecuted; selected API-expression exploration is separate evidence.",
-        "Complete referent metadata for all builtin types, generic classes and remaining collection types is not implemented or verified.",
-        "Full reflection, compound-value renderers and cyclic or JVM identity-dependent key behavior remain open."
-      ]
+        ],
+        "state": "partial"
+      }
     },
     {
-      "requirement": "specification:docs/modules/language-reference/pages/index.adoc:Import Clauses",
       "implementation": {
-        "state": "partial",
         "links": [
           {
             "path": "crates/pkl-runtime/src/parser.rs",
@@ -1716,28 +1791,28 @@
             "path": "crates/pkl-runtime/src/vm.rs",
             "symbol": "compile_type_at"
           }
-        ]
+        ],
+        "state": "partial"
       },
+      "remaining": [
+        "General module loading, extends/amends, imports beyond the pkl:ref bridge and complete module identity semantics remain open.",
+        "Original import/module snippets and full invalid syntax/name resolution corpus still require their original adapters and execution."
+      ],
+      "requirement": "specification:docs/modules/language-reference/pages/index.adoc:Import Clauses",
+      "scope": "Local const import members, explicit and inferred pkl:ref aliases, qualified type lookup and namespace diagnostics have selected raw comparisons.",
       "tests": {
-        "state": "partial",
         "case_ids": [
           "reference-stage10-namespace-local-duplicate",
           "reference-stage10-namespace-parameter",
           "reference-stage10-namespace-alias-valid",
           "reference-stage10-namespace-property-duplicate",
           "reference-stage10-native-method-property-namespace"
-        ]
-      },
-      "scope": "Local const import members, explicit and inferred pkl:ref aliases, qualified type lookup and namespace diagnostics have selected raw comparisons.",
-      "remaining": [
-        "General module loading, extends/amends, imports beyond the pkl:ref bridge and complete module identity semantics remain open.",
-        "Original import/module snippets and full invalid syntax/name resolution corpus still require their original adapters and execution."
-      ]
+        ],
+        "state": "partial"
+      }
     },
     {
-      "requirement": "semantic:modifiers",
       "implementation": {
-        "state": "partial",
         "links": [
           {
             "path": "crates/pkl-runtime/src/heap.rs",
@@ -1775,10 +1850,18 @@
             "path": "crates/pkl-runtime/src/resolver/diagnostic_owner.rs",
             "symbol": "OwnerScopes"
           }
-        ]
+        ],
+        "state": "partial"
       },
+      "remaining": [
+        "Module extends/amends and the original upstream fixed-property snippet suite contracts remain unimplemented or unexecuted.",
+        "Full modifier combinations, annotation metadata, generic class inheritance and the complete class/member error corpus remain outside this bounded selection.",
+        "Caught upstream PklBugException duplicate hidden/local outputs and any recorded exploratory mismatches remain separate failures, without development exceptions.",
+        "Selected non-generic and finite generic const-read retries, shared generic let roots and let/for lexical barriers are covered; complete lexical-scope, general lazy generic resolution and runtime type-node identity still retain gaps."
+      ],
+      "requirement": "semantic:modifiers",
+      "scope": "Selected class fixed properties preserve declaration fixedness through inheritance, reject instance assignment and amendment before forcing bodies, and retain member/type initialization error order. Raw comparisons cover only the linked fixtures at their actual URIs. Stage 16: Selected alias lexical property/method reads apply a deferred module const barrier, including unused and short-circuited reads. Stage 17: Selected const-method barriers, lambda lookup depth, immediate outer lexical scope, and grouped-callee parser diagnostics follow the pinned Java behavior. Stage 18 adds selected let-body and for-generator lexical const-depth boundaries while retaining enclosing const levels, plus their complete raw diagnostics and lambda controls. Stage 32 adds bounded forbidden non-local object property type-annotation diagnostic ownership, nested declaration paths, earlier-error controls and valid module/class/object-local annotations; complete frontend diagnostics remain separately unverified. Stage 33 adds bounded const-modifier ownership before property-scope entry, method inferred-new versus lambda first-error selection, explicit-parent and earlier-error controls, and successful Dynamic/untyped method and unused-body controls. Non-Dynamic typed method return inference remains outside this repair.",
       "tests": {
-        "state": "partial",
         "case_ids": [
           "fixed-stage11-module-fixed-value",
           "fixed-stage11-class-fixed-value",
@@ -1995,20 +2078,12 @@
           "diagnostic-stage33-module-const-control",
           "diagnostic-stage33-function-const-before-parent",
           "diagnostic-stage33-local-const-unused-control"
-        ]
-      },
-      "scope": "Selected class fixed properties preserve declaration fixedness through inheritance, reject instance assignment and amendment before forcing bodies, and retain member/type initialization error order. Raw comparisons cover only the linked fixtures at their actual URIs. Stage 16: Selected alias lexical property/method reads apply a deferred module const barrier, including unused and short-circuited reads. Stage 17: Selected const-method barriers, lambda lookup depth, immediate outer lexical scope, and grouped-callee parser diagnostics follow the pinned Java behavior. Stage 18 adds selected let-body and for-generator lexical const-depth boundaries while retaining enclosing const levels, plus their complete raw diagnostics and lambda controls. Stage 32 adds bounded forbidden non-local object property type-annotation diagnostic ownership, nested declaration paths, earlier-error controls and valid module/class/object-local annotations; complete frontend diagnostics remain separately unverified. Stage 33 adds bounded const-modifier ownership before property-scope entry, method inferred-new versus lambda first-error selection, explicit-parent and earlier-error controls, and successful Dynamic/untyped method and unused-body controls. Non-Dynamic typed method return inference remains outside this repair.",
-      "remaining": [
-        "Module extends/amends and the original upstream fixed-property snippet suite contracts remain unimplemented or unexecuted.",
-        "Full modifier combinations, annotation metadata, generic class inheritance and the complete class/member error corpus remain outside this bounded selection.",
-        "Caught upstream PklBugException duplicate hidden/local outputs and any recorded exploratory mismatches remain separate failures, without development exceptions.",
-        "Selected non-generic and finite generic const-read retries, shared generic let roots and let/for lexical barriers are covered; complete lexical-scope, general lazy generic resolution and runtime type-node identity still retain gaps."
-      ]
+        ],
+        "state": "partial"
+      }
     },
     {
-      "requirement": "semantic:classes",
       "implementation": {
-        "state": "partial",
         "links": [
           {
             "path": "crates/pkl-runtime/src/heap.rs",
@@ -2026,10 +2101,17 @@
             "path": "crates/pkl-runtime/src/vm.rs",
             "symbol": "initialize_member_types"
           }
-        ]
+        ],
+        "state": "partial"
       },
+      "remaining": [
+        "Module extends/amends and the original upstream fixed-property snippet suite contracts remain unimplemented or unexecuted.",
+        "Full modifier combinations, annotation metadata, generic class inheritance and the complete class/member error corpus remain outside this bounded selection.",
+        "Caught upstream PklBugException duplicate hidden/local outputs and any recorded exploratory mismatches remain separate failures, without development exceptions."
+      ],
+      "requirement": "semantic:classes",
+      "scope": "Selected class fixed properties preserve declaration fixedness through inheritance, reject instance assignment and amendment before forcing bodies, and retain member/type initialization error order. Raw comparisons cover only the linked fixtures at their actual URIs. Stage 14 adds selected authored type-resolution order, generic parameter scope and nested substitution, class/alias arity ordering, and owner signature diagnostics; persistent failed-declaration state has a separate sequence contract. Stage 15 adds selected non-generic recursive constraint block graphs and declaration type scope, plus builtin Class argument erasure and arity ordering. At Stage 15 recursive generic constraints remained open; Stage 16 adds bounded shared receiver-slot support. Stage 19 adds bounded shared-metadata regressions for finite deep and branching actual arguments, observable class-argument swaps, inline/lambda/shared-let recursion, recursive Reference validation, and distinct wrapper actuals. Original Java stack errors, historical native abort evidence, full language semantics and performance remain separately accounted. Stage20 adds bounded nullable defaults, inferred collection amendments, null identity and repeated default failures; complete nullable and collection semantics remain unverified. Stage21 adds bounded direct symbolic constructors, actual-argument diagnostics, lazy class defaults, collection body controls and persistent retries; complete constructors, lexical roots and builtin coverage remain unverified. Stage22 adds bounded strict Map construction, boxed/hash-prefix key semantics, lazy nested generic values, insertion-order iteration and HAMT-ordered equality/hash forcing; complete Map APIs and language coverage remain unverified. Stage23 adds bounded strict Set construction, immediate element hashing and deduplication, boxed/cache-sensitive membership, Set defaults and generic aliases, eager nested element checks, structural equality/hash, insertion-order generation/spreading and raw null/default diagnostic controls; complete Set APIs and language coverage remain unverified. Stage 32 adds bounded forbidden non-local object property type-annotation diagnostic ownership, nested declaration paths, earlier-error controls and valid module/class/object-local annotations; complete frontend diagnostics remain separately unverified. Stage 33 adds bounded const-modifier ownership before property-scope entry, method inferred-new versus lambda first-error selection, explicit-parent and earlier-error controls, and successful Dynamic/untyped method and unused-body controls. Non-Dynamic typed method return inference remains outside this repair.",
       "tests": {
-        "state": "partial",
         "case_ids": [
           "fixed-stage11-class-fixed-value",
           "fixed-stage11-fixed-derived-late-binding",
@@ -2297,19 +2379,12 @@
           "set-stage23-class-type-bad",
           "diagnostic-stage32-class-control",
           "diagnostic-stage33-class-const-control"
-        ]
-      },
-      "scope": "Selected class fixed properties preserve declaration fixedness through inheritance, reject instance assignment and amendment before forcing bodies, and retain member/type initialization error order. Raw comparisons cover only the linked fixtures at their actual URIs. Stage 14 adds selected authored type-resolution order, generic parameter scope and nested substitution, class/alias arity ordering, and owner signature diagnostics; persistent failed-declaration state has a separate sequence contract. Stage 15 adds selected non-generic recursive constraint block graphs and declaration type scope, plus builtin Class argument erasure and arity ordering. At Stage 15 recursive generic constraints remained open; Stage 16 adds bounded shared receiver-slot support. Stage 19 adds bounded shared-metadata regressions for finite deep and branching actual arguments, observable class-argument swaps, inline/lambda/shared-let recursion, recursive Reference validation, and distinct wrapper actuals. Original Java stack errors, historical native abort evidence, full language semantics and performance remain separately accounted. Stage20 adds bounded nullable defaults, inferred collection amendments, null identity and repeated default failures; complete nullable and collection semantics remain unverified. Stage21 adds bounded direct symbolic constructors, actual-argument diagnostics, lazy class defaults, collection body controls and persistent retries; complete constructors, lexical roots and builtin coverage remain unverified. Stage22 adds bounded strict Map construction, boxed/hash-prefix key semantics, lazy nested generic values, insertion-order iteration and HAMT-ordered equality/hash forcing; complete Map APIs and language coverage remain unverified. Stage23 adds bounded strict Set construction, immediate element hashing and deduplication, boxed/cache-sensitive membership, Set defaults and generic aliases, eager nested element checks, structural equality/hash, insertion-order generation/spreading and raw null/default diagnostic controls; complete Set APIs and language coverage remain unverified. Stage 32 adds bounded forbidden non-local object property type-annotation diagnostic ownership, nested declaration paths, earlier-error controls and valid module/class/object-local annotations; complete frontend diagnostics remain separately unverified. Stage 33 adds bounded const-modifier ownership before property-scope entry, method inferred-new versus lambda first-error selection, explicit-parent and earlier-error controls, and successful Dynamic/untyped method and unused-body controls. Non-Dynamic typed method return inference remains outside this repair.",
-      "remaining": [
-        "Module extends/amends and the original upstream fixed-property snippet suite contracts remain unimplemented or unexecuted.",
-        "Full modifier combinations, annotation metadata, generic class inheritance and the complete class/member error corpus remain outside this bounded selection.",
-        "Caught upstream PklBugException duplicate hidden/local outputs and any recorded exploratory mismatches remain separate failures, without development exceptions."
-      ]
+        ],
+        "state": "partial"
+      }
     },
     {
-      "requirement": "semantic:amendment",
       "implementation": {
-        "state": "partial",
         "links": [
           {
             "path": "crates/pkl-runtime/src/vm.rs",
@@ -2319,10 +2394,15 @@
             "path": "crates/pkl-runtime/src/vm.rs",
             "symbol": "inherited_member"
           }
-        ]
+        ],
+        "state": "partial"
       },
+      "remaining": [
+        "General module amendments, function amendments, generic and cyclic object inheritance, and the complete amendment corpus remain open."
+      ],
+      "requirement": "semantic:amendment",
+      "scope": "Selected fixed instance amendments are rejected; extracting the fixed property value still permits amendment of that value. Empty receiver amendments preserve fixed values. Stage20 adds bounded nullable defaults, inferred collection amendments, null identity and repeated default failures; complete nullable and collection semantics remain unverified. Stage21 adds bounded direct symbolic constructors, actual-argument diagnostics, lazy class defaults, collection body controls and persistent retries; complete constructors, lexical roots and builtin coverage remain unverified. Stage22 adds bounded strict Map construction, boxed/hash-prefix key semantics, lazy nested generic values, insertion-order iteration and HAMT-ordered equality/hash forcing; complete Map APIs and language coverage remain unverified. Stage23 adds bounded strict Set construction, immediate element hashing and deduplication, boxed/cache-sensitive membership, Set defaults and generic aliases, eager nested element checks, structural equality/hash, insertion-order generation/spreading and raw null/default diagnostic controls; complete Set APIs and language coverage remain unverified. Stage 32 adds bounded forbidden non-local object property type-annotation diagnostic ownership, nested declaration paths, earlier-error controls and valid module/class/object-local annotations; complete frontend diagnostics remain separately unverified.",
       "tests": {
-        "state": "partial",
         "case_ids": [
           "fixed-stage11-instance-amend-object",
           "fixed-stage11-instance-amend-assignment",
@@ -2382,17 +2462,12 @@
           "set-stage23-inherited-element",
           "diagnostic-stage32-amendment",
           "diagnostic-stage32-nested-amendment"
-        ]
-      },
-      "scope": "Selected fixed instance amendments are rejected; extracting the fixed property value still permits amendment of that value. Empty receiver amendments preserve fixed values. Stage20 adds bounded nullable defaults, inferred collection amendments, null identity and repeated default failures; complete nullable and collection semantics remain unverified. Stage21 adds bounded direct symbolic constructors, actual-argument diagnostics, lazy class defaults, collection body controls and persistent retries; complete constructors, lexical roots and builtin coverage remain unverified. Stage22 adds bounded strict Map construction, boxed/hash-prefix key semantics, lazy nested generic values, insertion-order iteration and HAMT-ordered equality/hash forcing; complete Map APIs and language coverage remain unverified. Stage23 adds bounded strict Set construction, immediate element hashing and deduplication, boxed/cache-sensitive membership, Set defaults and generic aliases, eager nested element checks, structural equality/hash, insertion-order generation/spreading and raw null/default diagnostic controls; complete Set APIs and language coverage remain unverified. Stage 32 adds bounded forbidden non-local object property type-annotation diagnostic ownership, nested declaration paths, earlier-error controls and valid module/class/object-local annotations; complete frontend diagnostics remain separately unverified.",
-      "remaining": [
-        "General module amendments, function amendments, generic and cyclic object inheritance, and the complete amendment corpus remain open."
-      ]
+        ],
+        "state": "partial"
+      }
     },
     {
-      "requirement": "semantic:lazy-evaluation",
       "implementation": {
-        "state": "partial",
         "links": [
           {
             "path": "crates/pkl-runtime/src/vm.rs",
@@ -2446,10 +2521,20 @@
             "path": "crates/pkl-runtime/src/diagnostic_values.rs",
             "symbol": "RenderRun"
           }
-        ]
+        ],
+        "state": "partial"
       },
+      "remaining": [
+        "Complete lazy error ordering, successful memoization, retry semantics, cycles and failure-path diagnostics require the original inventory and broader differential execution.",
+        "Selected non-generic and finite generic const-read retries, shared generic let roots and let/for lexical barriers are covered; complete lexical-scope, general lazy generic resolution and runtime type-node identity still retain gaps.",
+        "Nullable collection defaults, some missing/literal/default-root diagnostics, general inferred generic new construction and complete Reference argument diagnostic frames retain exploratory gaps; these are not counted as passing selected cases.",
+        "Full module, amendment, inheritance and object API semantics and the original upstream suite remain incomplete.",
+        "Cyclic rendering oracle failures, identity-dependent keys, complete diagnostic-time forcing/Host suspension and finite truncation side effects remain unresolved or unverified.",
+        "The new persistent originals use trace; complete trace logging and its original sequence contract remain required."
+      ],
+      "requirement": "semantic:lazy-evaluation",
+      "scope": "Selected probes preserve unforced fixed initializers, class type-before-modifier errors, fixed override checks before body forcing, and fixed Reference metadata without evaluating referent bodies. Stage 16: Selected lazy member calls isolate receiver slots and alias const checks remain deferred until a lexical read executes. Stage 17: Evaluator-owned executable and type-use nodes preserve selected non-generic local const-property resolution across retries, distinct inline/lambda uses, shared let roots, recursive depth, inherited annotations, and lazy collection members; per-call receiver slots remain separate. Stage 18 adds finite recursive generic checks with lexical constraint-template substitutions, including changing actual arguments, parameter shadowing, root-parameter alias chains and inline/lambda argument captures. Generic local-writing let constraints retain their declaration call target and its unbound parameter interpretation; selected retry sharing is recorded separately from complete type-node identity. Stage 18 adds selected let-body and for-generator lexical const-depth boundaries while retaining enclosing const levels, plus their complete raw diagnostics and lambda controls. Selected generic collection-element amendments derive defaults after actual type substitution, retaining existing class objects, lazy bodies, nested collection shapes and first failure/retry behavior. Deferred Reference referent validation runs at the reached authored resolution site before the checked value; original diagnostic gaps remain separately recorded. Stage 19 adds bounded shared-metadata regressions for finite deep and branching actual arguments, observable class-argument swaps, inline/lambda/shared-let recursion, recursive Reference validation, and distinct wrapper actuals. Original Java stack errors, historical native abort evidence, full language semantics and performance remain separately accounted. Stage20 adds bounded nullable defaults, inferred collection amendments, null identity and repeated default failures; complete nullable and collection semantics remain unverified. Stage21 adds bounded direct symbolic constructors, actual-argument diagnostics, lazy class defaults, collection body controls and persistent retries; complete constructors, lexical roots and builtin coverage remain unverified. Stage22 adds bounded strict Map construction, boxed/hash-prefix key semantics, lazy nested generic values, insertion-order iteration and HAMT-ordered equality/hash forcing; complete Map APIs and language coverage remain unverified. Five late Stage22 scalar witnesses retain the observed Paguro HashCollisionNode find/assoc asymmetry after Listing cache warm-up, including distinct table entries and insertion-order length. Stage23 adds bounded strict Set construction, immediate element hashing and deduplication, boxed/cache-sensitive membership, Set defaults and generic aliases, eager nested element checks, structural equality/hash, insertion-order generation/spreading and raw null/default diagnostic controls; complete Set APIs and language coverage remain unverified. Stage 32 adds bounded forbidden non-local object property type-annotation diagnostic ownership, nested declaration paths, earlier-error controls and valid module/class/object-local annotations; complete frontend diagnostics remain separately unverified. Stage 33 adds bounded const-modifier ownership before property-scope entry, method inferred-new versus lambda first-error selection, explicit-parent and earlier-error controls, and successful Dynamic/untyped method and unused-body controls. Non-Dynamic typed method return inference remains outside this repair. Stage 36 adds resumable object deep forcing and object.toString rendering with persistent force marks, owner-specific hidden declarations, inherited member order, undefined-member handling, and renderer key hashing/equality. Selected scalar comparisons and separate stateful/Host observations retain their own raw contracts. Additional source-derived controls cover user-defined toString interpolation, hidden builtin defaults and inherited equal/colliding object keys. Modifier-addition controls distinguish Java IMPORT, CLASS and TYPE_ALIAS bits when filtering rendered declarations.",
       "tests": {
-        "state": "partial",
         "case_ids": [
           "fixed-stage11-fixed-unused-initializer",
           "fixed-stage11-fixed-unused-bad-type",
@@ -3055,22 +3140,12 @@
           "object-string-stage36-review-modifier-import-bit",
           "object-string-stage36-review-modifier-class-bit",
           "object-string-stage36-review-modifier-type-alias-bit"
-        ]
-      },
-      "scope": "Selected probes preserve unforced fixed initializers, class type-before-modifier errors, fixed override checks before body forcing, and fixed Reference metadata without evaluating referent bodies. Stage 16: Selected lazy member calls isolate receiver slots and alias const checks remain deferred until a lexical read executes. Stage 17: Evaluator-owned executable and type-use nodes preserve selected non-generic local const-property resolution across retries, distinct inline/lambda uses, shared let roots, recursive depth, inherited annotations, and lazy collection members; per-call receiver slots remain separate. Stage 18 adds finite recursive generic checks with lexical constraint-template substitutions, including changing actual arguments, parameter shadowing, root-parameter alias chains and inline/lambda argument captures. Generic local-writing let constraints retain their declaration call target and its unbound parameter interpretation; selected retry sharing is recorded separately from complete type-node identity. Stage 18 adds selected let-body and for-generator lexical const-depth boundaries while retaining enclosing const levels, plus their complete raw diagnostics and lambda controls. Selected generic collection-element amendments derive defaults after actual type substitution, retaining existing class objects, lazy bodies, nested collection shapes and first failure/retry behavior. Deferred Reference referent validation runs at the reached authored resolution site before the checked value; original diagnostic gaps remain separately recorded. Stage 19 adds bounded shared-metadata regressions for finite deep and branching actual arguments, observable class-argument swaps, inline/lambda/shared-let recursion, recursive Reference validation, and distinct wrapper actuals. Original Java stack errors, historical native abort evidence, full language semantics and performance remain separately accounted. Stage20 adds bounded nullable defaults, inferred collection amendments, null identity and repeated default failures; complete nullable and collection semantics remain unverified. Stage21 adds bounded direct symbolic constructors, actual-argument diagnostics, lazy class defaults, collection body controls and persistent retries; complete constructors, lexical roots and builtin coverage remain unverified. Stage22 adds bounded strict Map construction, boxed/hash-prefix key semantics, lazy nested generic values, insertion-order iteration and HAMT-ordered equality/hash forcing; complete Map APIs and language coverage remain unverified. Five late Stage22 scalar witnesses retain the observed Paguro HashCollisionNode find/assoc asymmetry after Listing cache warm-up, including distinct table entries and insertion-order length. Stage23 adds bounded strict Set construction, immediate element hashing and deduplication, boxed/cache-sensitive membership, Set defaults and generic aliases, eager nested element checks, structural equality/hash, insertion-order generation/spreading and raw null/default diagnostic controls; complete Set APIs and language coverage remain unverified. Stage 32 adds bounded forbidden non-local object property type-annotation diagnostic ownership, nested declaration paths, earlier-error controls and valid module/class/object-local annotations; complete frontend diagnostics remain separately unverified. Stage 33 adds bounded const-modifier ownership before property-scope entry, method inferred-new versus lambda first-error selection, explicit-parent and earlier-error controls, and successful Dynamic/untyped method and unused-body controls. Non-Dynamic typed method return inference remains outside this repair. Stage 36 adds resumable object deep forcing and object.toString rendering with persistent force marks, owner-specific hidden declarations, inherited member order, undefined-member handling, and renderer key hashing/equality. Selected scalar comparisons and separate stateful/Host observations retain their own raw contracts. Additional source-derived controls cover user-defined toString interpolation, hidden builtin defaults and inherited equal/colliding object keys. Modifier-addition controls distinguish Java IMPORT, CLASS and TYPE_ALIAS bits when filtering rendered declarations.",
-      "remaining": [
-        "Complete lazy error ordering, successful memoization, retry semantics, cycles and failure-path diagnostics require the original inventory and broader differential execution.",
-        "Selected non-generic and finite generic const-read retries, shared generic let roots and let/for lexical barriers are covered; complete lexical-scope, general lazy generic resolution and runtime type-node identity still retain gaps.",
-        "Nullable collection defaults, some missing/literal/default-root diagnostics, general inferred generic new construction and complete Reference argument diagnostic frames retain exploratory gaps; these are not counted as passing selected cases.",
-        "Full module, amendment, inheritance and object API semantics and the original upstream suite remain incomplete.",
-        "Cyclic rendering oracle failures, identity-dependent keys, complete diagnostic-time forcing/Host suspension and finite truncation side effects remain unresolved or unverified.",
-        "The new persistent originals use trace; complete trace logging and its original sequence contract remain required."
-      ]
+        ],
+        "state": "partial"
+      }
     },
     {
-      "requirement": "specification:docs/modules/language-reference/pages/index.adoc:Fixed properties",
       "implementation": {
-        "state": "partial",
         "links": [
           {
             "path": "crates/pkl-runtime/src/heap.rs",
@@ -3088,10 +3163,17 @@
             "path": "crates/pkl-runtime/src/vm.rs",
             "symbol": "initialize_member_types"
           }
-        ]
+        ],
+        "state": "partial"
       },
+      "remaining": [
+        "Module extends/amends and the original upstream fixed-property snippet suite contracts remain unimplemented or unexecuted.",
+        "Full modifier combinations, annotation metadata, generic class inheritance and the complete class/member error corpus remain outside this bounded selection.",
+        "Caught upstream PklBugException duplicate hidden/local outputs and any recorded exploratory mismatches remain separate failures, without development exceptions."
+      ],
+      "requirement": "specification:docs/modules/language-reference/pages/index.adoc:Fixed properties",
+      "scope": "Selected class fixed properties preserve declaration fixedness through inheritance, reject instance assignment and amendment before forcing bodies, and retain member/type initialization error order. Raw comparisons cover only the linked fixtures at their actual URIs.",
       "tests": {
-        "state": "partial",
         "case_ids": [
           "fixed-stage11-module-fixed-value",
           "fixed-stage11-class-fixed-value",
@@ -3182,19 +3264,12 @@
           "fixed-stage11-carry-const-in-identifier",
           "fixed-stage11-carry-const-in-comment",
           "fixed-stage11-carry-const-multiline-backtick"
-        ]
-      },
-      "scope": "Selected class fixed properties preserve declaration fixedness through inheritance, reject instance assignment and amendment before forcing bodies, and retain member/type initialization error order. Raw comparisons cover only the linked fixtures at their actual URIs.",
-      "remaining": [
-        "Module extends/amends and the original upstream fixed-property snippet suite contracts remain unimplemented or unexecuted.",
-        "Full modifier combinations, annotation metadata, generic class inheritance and the complete class/member error corpus remain outside this bounded selection.",
-        "Caught upstream PklBugException duplicate hidden/local outputs and any recorded exploratory mismatches remain separate failures, without development exceptions."
-      ]
+        ],
+        "state": "partial"
+      }
     },
     {
-      "requirement": "semantic:type-aliases",
       "implementation": {
-        "state": "partial",
         "links": [
           {
             "path": "crates/pkl-runtime/src/vm.rs",
@@ -3252,10 +3327,20 @@
             "path": "crates/pkl-runtime/src/vm/generics.rs",
             "symbol": "validate_reference_arguments"
           }
-        ]
+        ],
+        "state": "partial"
       },
+      "remaining": [
+        "Complete imported/module-scoped alias behavior, annotation initialization, full reflection and the original upstream alias suites remain unimplemented or unexecuted.",
+        "Exploratory mismatches and upstream internal errors retain their original outcomes; these selected mappings do not grant completion.",
+        "A full runtime type-node resolution model and mixed unresolved-name/dependency error ordering remain unverified; Stage 18 covers selected recursive generic-parameter shadowing and alias-root chains.",
+        "Selected non-generic and finite generic const-read retries, shared generic let roots and let/for lexical barriers are covered; complete lexical-scope, general lazy generic resolution and runtime type-node identity still retain gaps.",
+        "General lazy generic declaration resolution, full alias-root substitution identity, imported generic declarations and original suite adapters remain open. The Stage 18 changing-argument native-stack abort remains preserved as historical failure evidence. Shared metadata now has bounded extended execution and cleanup checks; exact Java stack diagnostics, wall-time bounds, and metadata/output resource bounds remain unverified.",
+        "Nullable collection defaults, some missing/literal/default-root diagnostics, general inferred generic new construction and complete Reference argument diagnostic frames retain exploratory gaps; these are not counted as passing selected cases."
+      ],
+      "requirement": "semantic:type-aliases",
+      "scope": "Selected user alias values preserve declaration identity, qualified display, lazy initialization, published failure state, and expanded validation. Independent expressions cover alias values, cycles, generic arguments, Mapping keys and complete diagnostics; persistent failure/reaccess sequences and GC/Host tests have separate contracts. Stage 14 adds selected authored type-resolution order, generic parameter scope and nested substitution, class/alias arity ordering, and owner signature diagnostics; persistent failed-declaration state has a separate sequence contract. Stage 15 adds selected non-generic recursive constraint block graphs and declaration type scope, plus builtin Class argument erasure and arity ordering. At Stage 15 recursive generic constraints remained open; Stage 16 adds bounded shared receiver-slot support. Stage 16: Selected recursive and inline constraints share mutable auxiliary receiver slots within a logical call; alias lexical reads enforce the first-read const barrier. Stage 17: Evaluator-owned executable and type-use nodes preserve selected non-generic local const-property resolution across retries, distinct inline/lambda uses, shared let roots, recursive depth, inherited annotations, and lazy collection members; per-call receiver slots remain separate. Stage 18 adds finite recursive generic checks with lexical constraint-template substitutions, including changing actual arguments, parameter shadowing, root-parameter alias chains and inline/lambda argument captures. Generic local-writing let constraints retain their declaration call target and its unbound parameter interpretation; selected retry sharing is recorded separately from complete type-node identity. Selected generic collection-element amendments derive defaults after actual type substitution, retaining existing class objects, lazy bodies, nested collection shapes and first failure/retry behavior. Deferred Reference referent validation runs at the reached authored resolution site before the checked value; original diagnostic gaps remain separately recorded. Stage 19 adds bounded shared-metadata regressions for finite deep and branching actual arguments, observable class-argument swaps, inline/lambda/shared-let recursion, recursive Reference validation, and distinct wrapper actuals. Original Java stack errors, historical native abort evidence, full language semantics and performance remain separately accounted. Stage20 adds bounded nullable defaults, inferred collection amendments, null identity and repeated default failures; complete nullable and collection semantics remain unverified. Stage21 adds bounded direct symbolic constructors, actual-argument diagnostics, lazy class defaults, collection body controls and persistent retries; complete constructors, lexical roots and builtin coverage remain unverified. Stage22 adds bounded strict Map construction, boxed/hash-prefix key semantics, lazy nested generic values, insertion-order iteration and HAMT-ordered equality/hash forcing; complete Map APIs and language coverage remain unverified. Stage23 adds bounded strict Set construction, immediate element hashing and deduplication, boxed/cache-sensitive membership, Set defaults and generic aliases, eager nested element checks, structural equality/hash, insertion-order generation/spreading and raw null/default diagnostic controls; complete Set APIs and language coverage remain unverified. Stage 24 additionally covers bounded Collection List/Set classification, eager versus lazy nested validation, aliases/defaults, nullable constructor timing, selected metadata and complete diagnostics.",
       "tests": {
-        "state": "partial",
         "case_ids": [
           "types-stage13-alias-value",
           "types-stage13-alias-self-equal",
@@ -3867,22 +3952,12 @@
           "collection-stage24-parser-alias-empty-scalar",
           "collection-stage24-parser-alias-trailing-scalar",
           "collection-stage24-parser-multiline-alias-spaced"
-        ]
-      },
-      "scope": "Selected user alias values preserve declaration identity, qualified display, lazy initialization, published failure state, and expanded validation. Independent expressions cover alias values, cycles, generic arguments, Mapping keys and complete diagnostics; persistent failure/reaccess sequences and GC/Host tests have separate contracts. Stage 14 adds selected authored type-resolution order, generic parameter scope and nested substitution, class/alias arity ordering, and owner signature diagnostics; persistent failed-declaration state has a separate sequence contract. Stage 15 adds selected non-generic recursive constraint block graphs and declaration type scope, plus builtin Class argument erasure and arity ordering. At Stage 15 recursive generic constraints remained open; Stage 16 adds bounded shared receiver-slot support. Stage 16: Selected recursive and inline constraints share mutable auxiliary receiver slots within a logical call; alias lexical reads enforce the first-read const barrier. Stage 17: Evaluator-owned executable and type-use nodes preserve selected non-generic local const-property resolution across retries, distinct inline/lambda uses, shared let roots, recursive depth, inherited annotations, and lazy collection members; per-call receiver slots remain separate. Stage 18 adds finite recursive generic checks with lexical constraint-template substitutions, including changing actual arguments, parameter shadowing, root-parameter alias chains and inline/lambda argument captures. Generic local-writing let constraints retain their declaration call target and its unbound parameter interpretation; selected retry sharing is recorded separately from complete type-node identity. Selected generic collection-element amendments derive defaults after actual type substitution, retaining existing class objects, lazy bodies, nested collection shapes and first failure/retry behavior. Deferred Reference referent validation runs at the reached authored resolution site before the checked value; original diagnostic gaps remain separately recorded. Stage 19 adds bounded shared-metadata regressions for finite deep and branching actual arguments, observable class-argument swaps, inline/lambda/shared-let recursion, recursive Reference validation, and distinct wrapper actuals. Original Java stack errors, historical native abort evidence, full language semantics and performance remain separately accounted. Stage20 adds bounded nullable defaults, inferred collection amendments, null identity and repeated default failures; complete nullable and collection semantics remain unverified. Stage21 adds bounded direct symbolic constructors, actual-argument diagnostics, lazy class defaults, collection body controls and persistent retries; complete constructors, lexical roots and builtin coverage remain unverified. Stage22 adds bounded strict Map construction, boxed/hash-prefix key semantics, lazy nested generic values, insertion-order iteration and HAMT-ordered equality/hash forcing; complete Map APIs and language coverage remain unverified. Stage23 adds bounded strict Set construction, immediate element hashing and deduplication, boxed/cache-sensitive membership, Set defaults and generic aliases, eager nested element checks, structural equality/hash, insertion-order generation/spreading and raw null/default diagnostic controls; complete Set APIs and language coverage remain unverified. Stage 24 additionally covers bounded Collection List/Set classification, eager versus lazy nested validation, aliases/defaults, nullable constructor timing, selected metadata and complete diagnostics.",
-      "remaining": [
-        "Complete imported/module-scoped alias behavior, annotation initialization, full reflection and the original upstream alias suites remain unimplemented or unexecuted.",
-        "Exploratory mismatches and upstream internal errors retain their original outcomes; these selected mappings do not grant completion.",
-        "A full runtime type-node resolution model and mixed unresolved-name/dependency error ordering remain unverified; Stage 18 covers selected recursive generic-parameter shadowing and alias-root chains.",
-        "Selected non-generic and finite generic const-read retries, shared generic let roots and let/for lexical barriers are covered; complete lexical-scope, general lazy generic resolution and runtime type-node identity still retain gaps.",
-        "General lazy generic declaration resolution, full alias-root substitution identity, imported generic declarations and original suite adapters remain open. The Stage 18 changing-argument native-stack abort remains preserved as historical failure evidence. Shared metadata now has bounded extended execution and cleanup checks; exact Java stack diagnostics, wall-time bounds, and metadata/output resource bounds remain unverified.",
-        "Nullable collection defaults, some missing/literal/default-root diagnostics, general inferred generic new construction and complete Reference argument diagnostic frames retain exploratory gaps; these are not counted as passing selected cases."
-      ]
+        ],
+        "state": "partial"
+      }
     },
     {
-      "requirement": "semantic:functions",
       "implementation": {
-        "state": "partial",
         "links": [
           {
             "path": "crates/pkl-runtime/src/vm.rs",
@@ -3916,10 +3991,16 @@
             "path": "crates/pkl-runtime/src/resolver/diagnostic_owner.rs",
             "symbol": "OwnerScopes"
           }
-        ]
+        ],
+        "state": "partial"
       },
+      "remaining": [
+        "Function amendments, full callable/builtin behavior, imports and the original function suite contracts remain outside this bounded selection.",
+        "The broader function, closure, diagnostic and reflection inventories are not completed by metadata comparisons."
+      ],
+      "requirement": "semantic:functions",
+      "scope": "Function and Function0..5 class types and arrow annotations retain parameter/result metadata while selected runtime value checks use arity. Comparisons distinguish annotation checks from a lambda declaration's own argument checks and distinguish Reference type tests from exported-type equality. Stage 14 adds selected authored type-resolution order, generic parameter scope and nested substitution, class/alias arity ordering, and owner signature diagnostics; persistent failed-declaration state has a separate sequence contract. Stage 15 adds selected non-generic recursive constraint block graphs and declaration type scope, plus builtin Class argument erasure and arity ordering. At Stage 15 recursive generic constraints remained open; Stage 16 adds bounded shared receiver-slot support. Stage 16: Selected lambdas snapshot the custom receiver at creation; function and local-writing let roots isolate subsequent receiver mutations. Stage 17: Selected const-method barriers, lambda lookup depth, immediate outer lexical scope, and grouped-callee parser diagnostics follow the pinned Java behavior. Stage 18 adds selected let-body and for-generator lexical const-depth boundaries while retaining enclosing const levels, plus their complete raw diagnostics and lambda controls. Selected generic constraint lambdas retain invocation-specific type argument captures. Stage 19 adds bounded shared-metadata regressions for finite deep and branching actual arguments, observable class-argument swaps, inline/lambda/shared-let recursion, recursive Reference validation, and distinct wrapper actuals. Original Java stack errors, historical native abort evidence, full language semantics and performance remain separately accounted. Stage21 adds bounded direct symbolic constructors, actual-argument diagnostics, lazy class defaults, collection body controls and persistent retries; complete constructors, lexical roots and builtin coverage remain unverified. Stage22 adds bounded strict Map construction, boxed/hash-prefix key semantics, lazy nested generic values, insertion-order iteration and HAMT-ordered equality/hash forcing; complete Map APIs and language coverage remain unverified. Stage 24 additionally covers bounded Collection List/Set classification, eager versus lazy nested validation, aliases/defaults, nullable constructor timing, selected metadata and complete diagnostics. Stage 32 adds bounded forbidden non-local object property type-annotation diagnostic ownership, nested declaration paths, earlier-error controls and valid module/class/object-local annotations; complete frontend diagnostics remain separately unverified. Stage 33 adds bounded const-modifier ownership before property-scope entry, method inferred-new versus lambda first-error selection, explicit-parent and earlier-error controls, and successful Dynamic/untyped method and unused-body controls. Non-Dynamic typed method return inference remains outside this repair.",
       "tests": {
-        "state": "partial",
         "case_ids": [
           "types-stage13-reference-function-equal",
           "types-stage13-reference-function-parameter-different",
@@ -4159,18 +4240,12 @@
           "diagnostic-stage33-function-if-let-paren-valid",
           "diagnostic-stage33-function-unused-lazy-control",
           "diagnostic-stage33-function-typed-valid"
-        ]
-      },
-      "scope": "Function and Function0..5 class types and arrow annotations retain parameter/result metadata while selected runtime value checks use arity. Comparisons distinguish annotation checks from a lambda declaration's own argument checks and distinguish Reference type tests from exported-type equality. Stage 14 adds selected authored type-resolution order, generic parameter scope and nested substitution, class/alias arity ordering, and owner signature diagnostics; persistent failed-declaration state has a separate sequence contract. Stage 15 adds selected non-generic recursive constraint block graphs and declaration type scope, plus builtin Class argument erasure and arity ordering. At Stage 15 recursive generic constraints remained open; Stage 16 adds bounded shared receiver-slot support. Stage 16: Selected lambdas snapshot the custom receiver at creation; function and local-writing let roots isolate subsequent receiver mutations. Stage 17: Selected const-method barriers, lambda lookup depth, immediate outer lexical scope, and grouped-callee parser diagnostics follow the pinned Java behavior. Stage 18 adds selected let-body and for-generator lexical const-depth boundaries while retaining enclosing const levels, plus their complete raw diagnostics and lambda controls. Selected generic constraint lambdas retain invocation-specific type argument captures. Stage 19 adds bounded shared-metadata regressions for finite deep and branching actual arguments, observable class-argument swaps, inline/lambda/shared-let recursion, recursive Reference validation, and distinct wrapper actuals. Original Java stack errors, historical native abort evidence, full language semantics and performance remain separately accounted. Stage21 adds bounded direct symbolic constructors, actual-argument diagnostics, lazy class defaults, collection body controls and persistent retries; complete constructors, lexical roots and builtin coverage remain unverified. Stage22 adds bounded strict Map construction, boxed/hash-prefix key semantics, lazy nested generic values, insertion-order iteration and HAMT-ordered equality/hash forcing; complete Map APIs and language coverage remain unverified. Stage 24 additionally covers bounded Collection List/Set classification, eager versus lazy nested validation, aliases/defaults, nullable constructor timing, selected metadata and complete diagnostics. Stage 32 adds bounded forbidden non-local object property type-annotation diagnostic ownership, nested declaration paths, earlier-error controls and valid module/class/object-local annotations; complete frontend diagnostics remain separately unverified. Stage 33 adds bounded const-modifier ownership before property-scope entry, method inferred-new versus lambda first-error selection, explicit-parent and earlier-error controls, and successful Dynamic/untyped method and unused-body controls. Non-Dynamic typed method return inference remains outside this repair.",
-      "remaining": [
-        "Function amendments, full callable/builtin behavior, imports and the original function suite contracts remain outside this bounded selection.",
-        "The broader function, closure, diagnostic and reflection inventories are not completed by metadata comparisons."
-      ]
+        ],
+        "state": "partial"
+      }
     },
     {
-      "requirement": "semantic:types",
       "implementation": {
-        "state": "partial",
         "links": [
           {
             "path": "crates/pkl-runtime/src/vm.rs",
@@ -4220,10 +4295,17 @@
             "path": "crates/pkl-runtime/src/vm/generics.rs",
             "symbol": "validate_reference_arguments"
           }
-        ]
+        ],
+        "state": "partial"
       },
+      "remaining": [
+        "The complete type, structural/generic class, constraint, recursive and imported-type corpus still requires implementation and original-adapter execution.",
+        "General lazy generic declaration resolution, full alias-root substitution identity, imported generic declarations and original suite adapters remain open. The Stage 18 changing-argument native-stack abort remains preserved as historical failure evidence. Shared metadata now has bounded extended execution and cleanup checks; exact Java stack diagnostics, wall-time bounds, and metadata/output resource bounds remain unverified.",
+        "Nullable collection defaults, some missing/literal/default-root diagnostics, general inferred generic new construction and complete Reference argument diagnostic frames retain exploratory gaps; these are not counted as passing selected cases."
+      ],
+      "requirement": "semantic:types",
+      "scope": "The Stage 13 selection links named alias expansion, meta-class checks, function arity and exported type metadata to the shared VM. Existing upstream case definitions, adapters and execution states remain unchanged. Stage 14 adds selected authored type-resolution order, generic parameter scope and nested substitution, class/alias arity ordering, and owner signature diagnostics; persistent failed-declaration state has a separate sequence contract. Stage 15 adds selected non-generic recursive constraint block graphs and declaration type scope, plus builtin Class argument erasure and arity ordering. At Stage 15 recursive generic constraints remained open; Stage 16 adds bounded shared receiver-slot support. Stage 16: Selected nested is/as and recursive constraints retain receiver mutations, original successful values, predicate arguments and complete failure bytes. Stage 17: Evaluator-owned executable and type-use nodes preserve selected non-generic local const-property resolution across retries, distinct inline/lambda uses, shared let roots, recursive depth, inherited annotations, and lazy collection members; per-call receiver slots remain separate. Stage 18 adds finite recursive generic checks with lexical constraint-template substitutions, including changing actual arguments, parameter shadowing, root-parameter alias chains and inline/lambda argument captures. Generic local-writing let constraints retain their declaration call target and its unbound parameter interpretation; selected retry sharing is recorded separately from complete type-node identity. Selected generic collection-element amendments derive defaults after actual type substitution, retaining existing class objects, lazy bodies, nested collection shapes and first failure/retry behavior. Deferred Reference referent validation runs at the reached authored resolution site before the checked value; original diagnostic gaps remain separately recorded. Stage 19 adds bounded shared-metadata regressions for finite deep and branching actual arguments, observable class-argument swaps, inline/lambda/shared-let recursion, recursive Reference validation, and distinct wrapper actuals. Original Java stack errors, historical native abort evidence, full language semantics and performance remain separately accounted. Stage20 adds bounded nullable defaults, inferred collection amendments, null identity and repeated default failures; complete nullable and collection semantics remain unverified. Stage21 adds bounded direct symbolic constructors, actual-argument diagnostics, lazy class defaults, collection body controls and persistent retries; complete constructors, lexical roots and builtin coverage remain unverified. Stage22 adds bounded strict Map construction, boxed/hash-prefix key semantics, lazy nested generic values, insertion-order iteration and HAMT-ordered equality/hash forcing; complete Map APIs and language coverage remain unverified. Stage23 adds bounded strict Set construction, immediate element hashing and deduplication, boxed/cache-sensitive membership, Set defaults and generic aliases, eager nested element checks, structural equality/hash, insertion-order generation/spreading and raw null/default diagnostic controls; complete Set APIs and language coverage remain unverified. Stage 24 additionally covers bounded Collection List/Set classification, eager versus lazy nested validation, aliases/defaults, nullable constructor timing, selected metadata and complete diagnostics. Stage 32 adds bounded forbidden non-local object property type-annotation diagnostic ownership, nested declaration paths, earlier-error controls and valid module/class/object-local annotations; complete frontend diagnostics remain separately unverified. Stage 33 adds bounded const-modifier ownership before property-scope entry, method inferred-new versus lambda first-error selection, explicit-parent and earlier-error controls, and successful Dynamic/untyped method and unused-body controls. Non-Dynamic typed method return inference remains outside this repair.",
       "tests": {
-        "state": "partial",
         "case_ids": [
           "types-stage13-alias-value",
           "types-stage13-alias-self-equal",
@@ -5307,19 +5389,12 @@
           "diagnostic-stage33-object-local-typed-valid",
           "diagnostic-stage33-function-if-let-paren-valid",
           "diagnostic-stage33-function-typed-valid"
-        ]
-      },
-      "scope": "The Stage 13 selection links named alias expansion, meta-class checks, function arity and exported type metadata to the shared VM. Existing upstream case definitions, adapters and execution states remain unchanged. Stage 14 adds selected authored type-resolution order, generic parameter scope and nested substitution, class/alias arity ordering, and owner signature diagnostics; persistent failed-declaration state has a separate sequence contract. Stage 15 adds selected non-generic recursive constraint block graphs and declaration type scope, plus builtin Class argument erasure and arity ordering. At Stage 15 recursive generic constraints remained open; Stage 16 adds bounded shared receiver-slot support. Stage 16: Selected nested is/as and recursive constraints retain receiver mutations, original successful values, predicate arguments and complete failure bytes. Stage 17: Evaluator-owned executable and type-use nodes preserve selected non-generic local const-property resolution across retries, distinct inline/lambda uses, shared let roots, recursive depth, inherited annotations, and lazy collection members; per-call receiver slots remain separate. Stage 18 adds finite recursive generic checks with lexical constraint-template substitutions, including changing actual arguments, parameter shadowing, root-parameter alias chains and inline/lambda argument captures. Generic local-writing let constraints retain their declaration call target and its unbound parameter interpretation; selected retry sharing is recorded separately from complete type-node identity. Selected generic collection-element amendments derive defaults after actual type substitution, retaining existing class objects, lazy bodies, nested collection shapes and first failure/retry behavior. Deferred Reference referent validation runs at the reached authored resolution site before the checked value; original diagnostic gaps remain separately recorded. Stage 19 adds bounded shared-metadata regressions for finite deep and branching actual arguments, observable class-argument swaps, inline/lambda/shared-let recursion, recursive Reference validation, and distinct wrapper actuals. Original Java stack errors, historical native abort evidence, full language semantics and performance remain separately accounted. Stage20 adds bounded nullable defaults, inferred collection amendments, null identity and repeated default failures; complete nullable and collection semantics remain unverified. Stage21 adds bounded direct symbolic constructors, actual-argument diagnostics, lazy class defaults, collection body controls and persistent retries; complete constructors, lexical roots and builtin coverage remain unverified. Stage22 adds bounded strict Map construction, boxed/hash-prefix key semantics, lazy nested generic values, insertion-order iteration and HAMT-ordered equality/hash forcing; complete Map APIs and language coverage remain unverified. Stage23 adds bounded strict Set construction, immediate element hashing and deduplication, boxed/cache-sensitive membership, Set defaults and generic aliases, eager nested element checks, structural equality/hash, insertion-order generation/spreading and raw null/default diagnostic controls; complete Set APIs and language coverage remain unverified. Stage 24 additionally covers bounded Collection List/Set classification, eager versus lazy nested validation, aliases/defaults, nullable constructor timing, selected metadata and complete diagnostics. Stage 32 adds bounded forbidden non-local object property type-annotation diagnostic ownership, nested declaration paths, earlier-error controls and valid module/class/object-local annotations; complete frontend diagnostics remain separately unverified. Stage 33 adds bounded const-modifier ownership before property-scope entry, method inferred-new versus lambda first-error selection, explicit-parent and earlier-error controls, and successful Dynamic/untyped method and unused-body controls. Non-Dynamic typed method return inference remains outside this repair.",
-      "remaining": [
-        "The complete type, structural/generic class, constraint, recursive and imported-type corpus still requires implementation and original-adapter execution.",
-        "General lazy generic declaration resolution, full alias-root substitution identity, imported generic declarations and original suite adapters remain open. The Stage 18 changing-argument native-stack abort remains preserved as historical failure evidence. Shared metadata now has bounded extended execution and cleanup checks; exact Java stack diagnostics, wall-time bounds, and metadata/output resource bounds remain unverified.",
-        "Nullable collection defaults, some missing/literal/default-root diagnostics, general inferred generic new construction and complete Reference argument diagnostic frames retain exploratory gaps; these are not counted as passing selected cases."
-      ]
+        ],
+        "state": "partial"
+      }
     },
     {
-      "requirement": "semantic:generics",
       "implementation": {
-        "state": "partial",
         "links": [
           {
             "path": "crates/pkl-runtime/src/vm.rs",
@@ -5357,10 +5432,17 @@
             "path": "crates/pkl-runtime/src/vm/generics.rs",
             "symbol": "validate_reference_arguments"
           }
-        ]
+        ],
+        "state": "partial"
       },
+      "remaining": [
+        "Complete generic classes, variance, imported generic declarations and the original generic suite contracts remain unimplemented or unverified.",
+        "General lazy generic declaration resolution, full alias-root substitution identity, imported generic declarations and original suite adapters remain open. The Stage 18 changing-argument native-stack abort remains preserved as historical failure evidence. Shared metadata now has bounded extended execution and cleanup checks; exact Java stack diagnostics, wall-time bounds, and metadata/output resource bounds remain unverified.",
+        "Nullable collection defaults, some missing/literal/default-root diagnostics, general inferred generic new construction and complete Reference argument diagnostic frames retain exploratory gaps; these are not counted as passing selected cases."
+      ],
+      "requirement": "semantic:generics",
+      "scope": "Selected generic aliases retain declaration identity and metadata arguments independently of expanded checks, use unknown for omitted arguments, and preserve argument-count and expanded-value diagnostics. Stage 14 adds selected authored type-resolution order, generic parameter scope and nested substitution, class/alias arity ordering, and owner signature diagnostics; persistent failed-declaration state has a separate sequence contract. Stage 15 adds selected non-generic recursive constraint block graphs and declaration type scope, plus builtin Class argument erasure and arity ordering. At Stage 15 recursive generic constraints remained open; Stage 16 adds bounded shared receiver-slot support. Stage 18 adds finite recursive generic checks with lexical constraint-template substitutions, including changing actual arguments, parameter shadowing, root-parameter alias chains and inline/lambda argument captures. Generic local-writing let constraints retain their declaration call target and its unbound parameter interpretation; selected retry sharing is recorded separately from complete type-node identity. Selected generic collection-element amendments derive defaults after actual type substitution, retaining existing class objects, lazy bodies, nested collection shapes and first failure/retry behavior. Deferred Reference referent validation runs at the reached authored resolution site before the checked value; original diagnostic gaps remain separately recorded. Stage 19 adds bounded shared-metadata regressions for finite deep and branching actual arguments, observable class-argument swaps, inline/lambda/shared-let recursion, recursive Reference validation, and distinct wrapper actuals. Original Java stack errors, historical native abort evidence, full language semantics and performance remain separately accounted. Stage20 adds bounded nullable defaults, inferred collection amendments, null identity and repeated default failures; complete nullable and collection semantics remain unverified. Stage21 adds bounded direct symbolic constructors, actual-argument diagnostics, lazy class defaults, collection body controls and persistent retries; complete constructors, lexical roots and builtin coverage remain unverified. Stage22 adds bounded strict Map construction, boxed/hash-prefix key semantics, lazy nested generic values, insertion-order iteration and HAMT-ordered equality/hash forcing; complete Map APIs and language coverage remain unverified. Stage23 adds bounded strict Set construction, immediate element hashing and deduplication, boxed/cache-sensitive membership, Set defaults and generic aliases, eager nested element checks, structural equality/hash, insertion-order generation/spreading and raw null/default diagnostic controls; complete Set APIs and language coverage remain unverified.",
       "tests": {
-        "state": "partial",
         "case_ids": [
           "types-stage13-alias-generic-value",
           "types-stage13-alias-generic-omitted",
@@ -5704,19 +5786,12 @@
           "set-stage23-constructor-listing-default",
           "set-stage23-constructor-listing-actual",
           "set-stage23-constructor-listing-wrong"
-        ]
-      },
-      "scope": "Selected generic aliases retain declaration identity and metadata arguments independently of expanded checks, use unknown for omitted arguments, and preserve argument-count and expanded-value diagnostics. Stage 14 adds selected authored type-resolution order, generic parameter scope and nested substitution, class/alias arity ordering, and owner signature diagnostics; persistent failed-declaration state has a separate sequence contract. Stage 15 adds selected non-generic recursive constraint block graphs and declaration type scope, plus builtin Class argument erasure and arity ordering. At Stage 15 recursive generic constraints remained open; Stage 16 adds bounded shared receiver-slot support. Stage 18 adds finite recursive generic checks with lexical constraint-template substitutions, including changing actual arguments, parameter shadowing, root-parameter alias chains and inline/lambda argument captures. Generic local-writing let constraints retain their declaration call target and its unbound parameter interpretation; selected retry sharing is recorded separately from complete type-node identity. Selected generic collection-element amendments derive defaults after actual type substitution, retaining existing class objects, lazy bodies, nested collection shapes and first failure/retry behavior. Deferred Reference referent validation runs at the reached authored resolution site before the checked value; original diagnostic gaps remain separately recorded. Stage 19 adds bounded shared-metadata regressions for finite deep and branching actual arguments, observable class-argument swaps, inline/lambda/shared-let recursion, recursive Reference validation, and distinct wrapper actuals. Original Java stack errors, historical native abort evidence, full language semantics and performance remain separately accounted. Stage20 adds bounded nullable defaults, inferred collection amendments, null identity and repeated default failures; complete nullable and collection semantics remain unverified. Stage21 adds bounded direct symbolic constructors, actual-argument diagnostics, lazy class defaults, collection body controls and persistent retries; complete constructors, lexical roots and builtin coverage remain unverified. Stage22 adds bounded strict Map construction, boxed/hash-prefix key semantics, lazy nested generic values, insertion-order iteration and HAMT-ordered equality/hash forcing; complete Map APIs and language coverage remain unverified. Stage23 adds bounded strict Set construction, immediate element hashing and deduplication, boxed/cache-sensitive membership, Set defaults and generic aliases, eager nested element checks, structural equality/hash, insertion-order generation/spreading and raw null/default diagnostic controls; complete Set APIs and language coverage remain unverified.",
-      "remaining": [
-        "Complete generic classes, variance, imported generic declarations and the original generic suite contracts remain unimplemented or unverified.",
-        "General lazy generic declaration resolution, full alias-root substitution identity, imported generic declarations and original suite adapters remain open. The Stage 18 changing-argument native-stack abort remains preserved as historical failure evidence. Shared metadata now has bounded extended execution and cleanup checks; exact Java stack diagnostics, wall-time bounds, and metadata/output resource bounds remain unverified.",
-        "Nullable collection defaults, some missing/literal/default-root diagnostics, general inferred generic new construction and complete Reference argument diagnostic frames retain exploratory gaps; these are not counted as passing selected cases."
-      ]
+        ],
+        "state": "partial"
+      }
     },
     {
-      "requirement": "semantic:constraints",
       "implementation": {
-        "state": "partial",
         "links": [
           {
             "path": "crates/pkl-runtime/src/heap.rs",
@@ -5758,10 +5833,18 @@
             "path": "crates/pkl-runtime/src/vm/generics.rs",
             "symbol": "validate_reference_arguments"
           }
-        ]
+        ],
+        "state": "partial"
       },
+      "remaining": [
+        "The complete original constraint suites, imported constraints and full runtime type-node identity semantics remain unimplemented or unverified.",
+        "General lazy generic declaration resolution, full alias-root substitution identity, imported generic declarations and original suite adapters remain open. The Stage 18 changing-argument native-stack abort remains preserved as historical failure evidence. Shared metadata now has bounded extended execution and cleanup checks; exact Java stack diagnostics, wall-time bounds, and metadata/output resource bounds remain unverified.",
+        "Selected generic let-root and finite recursive checks now match retained raw comparisons. The original exploratory outcomes, unbounded recursion abort, other known mismatches and complete language/performance gates remain separately accounted.",
+        "Nullable collection defaults, some missing/literal/default-root diagnostics, general inferred generic new construction and complete Reference argument diagnostic frames retain exploratory gaps; these are not counted as passing selected cases."
+      ],
+      "requirement": "semantic:constraints",
+      "scope": "Selected shared logical-call receiver slots, recursive and inline constraints, lambda snapshots, separate function/let/member roots, Boolean and predicate failures, union branches and power assertions compare complete Java bytes. Native Host/GC and persistent platform sequences provide separate lifecycle evidence. Stage 17: Evaluator-owned executable and type-use nodes preserve selected non-generic local const-property resolution across retries, distinct inline/lambda uses, shared let roots, recursive depth, inherited annotations, and lazy collection members; per-call receiver slots remain separate. Stage 18 adds finite recursive generic checks with lexical constraint-template substitutions, including changing actual arguments, parameter shadowing, root-parameter alias chains and inline/lambda argument captures. Generic local-writing let constraints retain their declaration call target and its unbound parameter interpretation; selected retry sharing is recorded separately from complete type-node identity. Selected generic collection-element amendments derive defaults after actual type substitution, retaining existing class objects, lazy bodies, nested collection shapes and first failure/retry behavior. Deferred Reference referent validation runs at the reached authored resolution site before the checked value; original diagnostic gaps remain separately recorded. Stage 19 adds bounded shared-metadata regressions for finite deep and branching actual arguments, observable class-argument swaps, inline/lambda/shared-let recursion, recursive Reference validation, and distinct wrapper actuals. Original Java stack errors, historical native abort evidence, full language semantics and performance remain separately accounted. Stage20 adds bounded nullable defaults, inferred collection amendments, null identity and repeated default failures; complete nullable and collection semantics remain unverified. Stage21 adds bounded direct symbolic constructors, actual-argument diagnostics, lazy class defaults, collection body controls and persistent retries; complete constructors, lexical roots and builtin coverage remain unverified. Stage23 adds bounded strict Set construction, immediate element hashing and deduplication, boxed/cache-sensitive membership, Set defaults and generic aliases, eager nested element checks, structural equality/hash, insertion-order generation/spreading and raw null/default diagnostic controls; complete Set APIs and language coverage remain unverified. Stage 24 additionally covers bounded Collection List/Set classification, eager versus lazy nested validation, aliases/defaults, nullable constructor timing, selected metadata and complete diagnostics. Stage 32 adds bounded forbidden non-local object property type-annotation diagnostic ownership, nested declaration paths, earlier-error controls and valid module/class/object-local annotations; complete frontend diagnostics remain separately unverified.",
       "tests": {
-        "state": "partial",
         "case_ids": [
           "types-stage16-const-unused",
           "types-stage16-const-identity",
@@ -6178,45 +6261,44 @@
           "collection-stage24-nullable-inferred-outer-throw-empty",
           "collection-stage24-nullable-inferred-outer-throw-body",
           "diagnostic-stage32-typed-type-predicate"
-        ]
-      },
-      "scope": "Selected shared logical-call receiver slots, recursive and inline constraints, lambda snapshots, separate function/let/member roots, Boolean and predicate failures, union branches and power assertions compare complete Java bytes. Native Host/GC and persistent platform sequences provide separate lifecycle evidence. Stage 17: Evaluator-owned executable and type-use nodes preserve selected non-generic local const-property resolution across retries, distinct inline/lambda uses, shared let roots, recursive depth, inherited annotations, and lazy collection members; per-call receiver slots remain separate. Stage 18 adds finite recursive generic checks with lexical constraint-template substitutions, including changing actual arguments, parameter shadowing, root-parameter alias chains and inline/lambda argument captures. Generic local-writing let constraints retain their declaration call target and its unbound parameter interpretation; selected retry sharing is recorded separately from complete type-node identity. Selected generic collection-element amendments derive defaults after actual type substitution, retaining existing class objects, lazy bodies, nested collection shapes and first failure/retry behavior. Deferred Reference referent validation runs at the reached authored resolution site before the checked value; original diagnostic gaps remain separately recorded. Stage 19 adds bounded shared-metadata regressions for finite deep and branching actual arguments, observable class-argument swaps, inline/lambda/shared-let recursion, recursive Reference validation, and distinct wrapper actuals. Original Java stack errors, historical native abort evidence, full language semantics and performance remain separately accounted. Stage20 adds bounded nullable defaults, inferred collection amendments, null identity and repeated default failures; complete nullable and collection semantics remain unverified. Stage21 adds bounded direct symbolic constructors, actual-argument diagnostics, lazy class defaults, collection body controls and persistent retries; complete constructors, lexical roots and builtin coverage remain unverified. Stage23 adds bounded strict Set construction, immediate element hashing and deduplication, boxed/cache-sensitive membership, Set defaults and generic aliases, eager nested element checks, structural equality/hash, insertion-order generation/spreading and raw null/default diagnostic controls; complete Set APIs and language coverage remain unverified. Stage 24 additionally covers bounded Collection List/Set classification, eager versus lazy nested validation, aliases/defaults, nullable constructor timing, selected metadata and complete diagnostics. Stage 32 adds bounded forbidden non-local object property type-annotation diagnostic ownership, nested declaration paths, earlier-error controls and valid module/class/object-local annotations; complete frontend diagnostics remain separately unverified.",
-      "remaining": [
-        "The complete original constraint suites, imported constraints and full runtime type-node identity semantics remain unimplemented or unverified.",
-        "General lazy generic declaration resolution, full alias-root substitution identity, imported generic declarations and original suite adapters remain open. The Stage 18 changing-argument native-stack abort remains preserved as historical failure evidence. Shared metadata now has bounded extended execution and cleanup checks; exact Java stack diagnostics, wall-time bounds, and metadata/output resource bounds remain unverified.",
-        "Selected generic let-root and finite recursive checks now match retained raw comparisons. The original exploratory outcomes, unbounded recursion abort, other known mismatches and complete language/performance gates remain separately accounted.",
-        "Nullable collection defaults, some missing/literal/default-root diagnostics, general inferred generic new construction and complete Reference argument diagnostic frames retain exploratory gaps; these are not counted as passing selected cases."
-      ]
+        ],
+        "state": "partial"
+      }
     },
     {
+      "implementation": {
+        "links": [
+          {
+            "path": "crates/pkl-runtime/src/parser.rs",
+            "symbol": "annotations"
+          },
+          {
+            "path": "crates/pkl-runtime/src/resolver.rs",
+            "symbol": "Annotations"
+          },
+          {
+            "path": "crates/pkl-runtime/src/vm/annotations.rs",
+            "symbol": "append_annotation"
+          },
+          {
+            "path": "crates/pkl-runtime/src/vm/annotations.rs",
+            "symbol": "member_annotations"
+          },
+          {
+            "path": "crates/pkl-runtime/src/heap.rs",
+            "symbol": "Object"
+          }
+        ],
+        "state": "partial"
+      },
+      "remaining": [
+        "Complete annotation/reflection metadata, including builtin member annotations, ModuleInfo version behavior and converters, remain separately required.",
+        "Full module initialization/retry/cache semantics, deprecation warning transport and original upstream snippet/output execution remain incomplete.",
+        "All annotation syntax, initialization/error-order and diagnostic cases must execute against the pinned oracle; supporting selected cases alone do not prove full coverage."
+      ],
       "requirement": "semantic:annotations",
-      "implementation": {
-        "state": "partial",
-        "links": [
-          {
-            "path": "crates/pkl-runtime/src/parser.rs",
-            "symbol": "annotations"
-          },
-          {
-            "path": "crates/pkl-runtime/src/resolver.rs",
-            "symbol": "Annotations"
-          },
-          {
-            "path": "crates/pkl-runtime/src/vm/annotations.rs",
-            "symbol": "append_annotation"
-          },
-          {
-            "path": "crates/pkl-runtime/src/vm/annotations.rs",
-            "symbol": "member_annotations"
-          },
-          {
-            "path": "crates/pkl-runtime/src/heap.rs",
-            "symbol": "Object"
-          }
-        ]
-      },
+      "scope": "Stage35 adds parsed declaration annotations, annotation-class validation, lexical/const scope, lazy object bodies and ordered module/class/alias/property/method initialization. Successful class/alias annotation prefixes and published member metadata remain evaluator-owned and GC-traced. Selected scalar comparisons are supplemented by separate persistent and source-language Host observations; neither substitutes for the original upstream contracts. Annotation, Deprecated, Since, Unlisted, AlsoKnownAs, DocExample and SourceCode fields use pinned defaults and lazy type checks.",
       "tests": {
-        "state": "partial",
         "case_ids": [
           "annotation-stage35-module-bare",
           "annotation-stage35-module-lazy-body",
@@ -6323,44 +6405,44 @@
           "annotation-stage35-builtin-custom-annotation-hierarchy",
           "annotation-stage35-builtin-source-code-null-defaults",
           "annotation-stage35-builtin-source-code-union-direct"
-        ]
+        ],
+        "state": "partial"
+      }
+    },
+    {
+      "implementation": {
+        "links": [
+          {
+            "path": "crates/pkl-runtime/src/parser.rs",
+            "symbol": "annotations"
+          },
+          {
+            "path": "crates/pkl-runtime/src/resolver.rs",
+            "symbol": "Annotations"
+          },
+          {
+            "path": "crates/pkl-runtime/src/vm/annotations.rs",
+            "symbol": "append_annotation"
+          },
+          {
+            "path": "crates/pkl-runtime/src/vm/annotations.rs",
+            "symbol": "member_annotations"
+          },
+          {
+            "path": "crates/pkl-runtime/src/heap.rs",
+            "symbol": "Object"
+          }
+        ],
+        "state": "partial"
       },
-      "scope": "Stage35 adds parsed declaration annotations, annotation-class validation, lexical/const scope, lazy object bodies and ordered module/class/alias/property/method initialization. Successful class/alias annotation prefixes and published member metadata remain evaluator-owned and GC-traced. Selected scalar comparisons are supplemented by separate persistent and source-language Host observations; neither substitutes for the original upstream contracts. Annotation, Deprecated, Since, Unlisted, AlsoKnownAs, DocExample and SourceCode fields use pinned defaults and lazy type checks.",
       "remaining": [
         "Complete annotation/reflection metadata, including builtin member annotations, ModuleInfo version behavior and converters, remain separately required.",
         "Full module initialization/retry/cache semantics, deprecation warning transport and original upstream snippet/output execution remain incomplete.",
         "All annotation syntax, initialization/error-order and diagnostic cases must execute against the pinned oracle; supporting selected cases alone do not prove full coverage."
-      ]
-    },
-    {
+      ],
       "requirement": "language_parser:pkl-parser/src/main/java/org/pkl/parser/GenericParserImpl.java:parseAnnotation:37c150ddca16",
-      "implementation": {
-        "state": "partial",
-        "links": [
-          {
-            "path": "crates/pkl-runtime/src/parser.rs",
-            "symbol": "annotations"
-          },
-          {
-            "path": "crates/pkl-runtime/src/resolver.rs",
-            "symbol": "Annotations"
-          },
-          {
-            "path": "crates/pkl-runtime/src/vm/annotations.rs",
-            "symbol": "append_annotation"
-          },
-          {
-            "path": "crates/pkl-runtime/src/vm/annotations.rs",
-            "symbol": "member_annotations"
-          },
-          {
-            "path": "crates/pkl-runtime/src/heap.rs",
-            "symbol": "Object"
-          }
-        ]
-      },
+      "scope": "Stage35 adds parsed declaration annotations, annotation-class validation, lexical/const scope, lazy object bodies and ordered module/class/alias/property/method initialization. Successful class/alias annotation prefixes and published member metadata remain evaluator-owned and GC-traced. Selected scalar comparisons are supplemented by separate persistent and source-language Host observations; neither substitutes for the original upstream contracts. Annotation, Deprecated, Since, Unlisted, AlsoKnownAs, DocExample and SourceCode fields use pinned defaults and lazy type checks.",
       "tests": {
-        "state": "partial",
         "case_ids": [
           "annotation-stage35-module-bare",
           "annotation-stage35-module-lazy-body",
@@ -6467,44 +6549,44 @@
           "annotation-stage35-builtin-custom-annotation-hierarchy",
           "annotation-stage35-builtin-source-code-null-defaults",
           "annotation-stage35-builtin-source-code-union-direct"
-        ]
+        ],
+        "state": "partial"
+      }
+    },
+    {
+      "implementation": {
+        "links": [
+          {
+            "path": "crates/pkl-runtime/src/parser.rs",
+            "symbol": "annotations"
+          },
+          {
+            "path": "crates/pkl-runtime/src/resolver.rs",
+            "symbol": "Annotations"
+          },
+          {
+            "path": "crates/pkl-runtime/src/vm/annotations.rs",
+            "symbol": "append_annotation"
+          },
+          {
+            "path": "crates/pkl-runtime/src/vm/annotations.rs",
+            "symbol": "member_annotations"
+          },
+          {
+            "path": "crates/pkl-runtime/src/heap.rs",
+            "symbol": "Object"
+          }
+        ],
+        "state": "partial"
       },
-      "scope": "Stage35 adds parsed declaration annotations, annotation-class validation, lexical/const scope, lazy object bodies and ordered module/class/alias/property/method initialization. Successful class/alias annotation prefixes and published member metadata remain evaluator-owned and GC-traced. Selected scalar comparisons are supplemented by separate persistent and source-language Host observations; neither substitutes for the original upstream contracts. Annotation, Deprecated, Since, Unlisted, AlsoKnownAs, DocExample and SourceCode fields use pinned defaults and lazy type checks.",
       "remaining": [
         "Complete annotation/reflection metadata, including builtin member annotations, ModuleInfo version behavior and converters, remain separately required.",
         "Full module initialization/retry/cache semantics, deprecation warning transport and original upstream snippet/output execution remain incomplete.",
         "All annotation syntax, initialization/error-order and diagnostic cases must execute against the pinned oracle; supporting selected cases alone do not prove full coverage."
-      ]
-    },
-    {
+      ],
       "requirement": "language_parser:pkl-parser/src/main/java/org/pkl/parser/ParserImpl.java:parseAnnotation:9da252487b91",
-      "implementation": {
-        "state": "partial",
-        "links": [
-          {
-            "path": "crates/pkl-runtime/src/parser.rs",
-            "symbol": "annotations"
-          },
-          {
-            "path": "crates/pkl-runtime/src/resolver.rs",
-            "symbol": "Annotations"
-          },
-          {
-            "path": "crates/pkl-runtime/src/vm/annotations.rs",
-            "symbol": "append_annotation"
-          },
-          {
-            "path": "crates/pkl-runtime/src/vm/annotations.rs",
-            "symbol": "member_annotations"
-          },
-          {
-            "path": "crates/pkl-runtime/src/heap.rs",
-            "symbol": "Object"
-          }
-        ]
-      },
+      "scope": "Stage35 adds parsed declaration annotations, annotation-class validation, lexical/const scope, lazy object bodies and ordered module/class/alias/property/method initialization. Successful class/alias annotation prefixes and published member metadata remain evaluator-owned and GC-traced. Selected scalar comparisons are supplemented by separate persistent and source-language Host observations; neither substitutes for the original upstream contracts. Annotation, Deprecated, Since, Unlisted, AlsoKnownAs, DocExample and SourceCode fields use pinned defaults and lazy type checks.",
       "tests": {
-        "state": "partial",
         "case_ids": [
           "annotation-stage35-module-bare",
           "annotation-stage35-module-lazy-body",
@@ -6611,44 +6693,44 @@
           "annotation-stage35-builtin-custom-annotation-hierarchy",
           "annotation-stage35-builtin-source-code-null-defaults",
           "annotation-stage35-builtin-source-code-union-direct"
-        ]
+        ],
+        "state": "partial"
+      }
+    },
+    {
+      "implementation": {
+        "links": [
+          {
+            "path": "crates/pkl-runtime/src/parser.rs",
+            "symbol": "annotations"
+          },
+          {
+            "path": "crates/pkl-runtime/src/resolver.rs",
+            "symbol": "Annotations"
+          },
+          {
+            "path": "crates/pkl-runtime/src/vm/annotations.rs",
+            "symbol": "append_annotation"
+          },
+          {
+            "path": "crates/pkl-runtime/src/vm/annotations.rs",
+            "symbol": "member_annotations"
+          },
+          {
+            "path": "crates/pkl-runtime/src/heap.rs",
+            "symbol": "Object"
+          }
+        ],
+        "state": "partial"
       },
-      "scope": "Stage35 adds parsed declaration annotations, annotation-class validation, lexical/const scope, lazy object bodies and ordered module/class/alias/property/method initialization. Successful class/alias annotation prefixes and published member metadata remain evaluator-owned and GC-traced. Selected scalar comparisons are supplemented by separate persistent and source-language Host observations; neither substitutes for the original upstream contracts. Annotation, Deprecated, Since, Unlisted, AlsoKnownAs, DocExample and SourceCode fields use pinned defaults and lazy type checks.",
       "remaining": [
         "Complete annotation/reflection metadata, including builtin member annotations, ModuleInfo version behavior and converters, remain separately required.",
         "Full module initialization/retry/cache semantics, deprecation warning transport and original upstream snippet/output execution remain incomplete.",
         "All annotation syntax, initialization/error-order and diagnostic cases must execute against the pinned oracle; supporting selected cases alone do not prove full coverage."
-      ]
-    },
-    {
+      ],
       "requirement": "specification:docs/modules/language-reference/pages/index.adoc:Annotations",
-      "implementation": {
-        "state": "partial",
-        "links": [
-          {
-            "path": "crates/pkl-runtime/src/parser.rs",
-            "symbol": "annotations"
-          },
-          {
-            "path": "crates/pkl-runtime/src/resolver.rs",
-            "symbol": "Annotations"
-          },
-          {
-            "path": "crates/pkl-runtime/src/vm/annotations.rs",
-            "symbol": "append_annotation"
-          },
-          {
-            "path": "crates/pkl-runtime/src/vm/annotations.rs",
-            "symbol": "member_annotations"
-          },
-          {
-            "path": "crates/pkl-runtime/src/heap.rs",
-            "symbol": "Object"
-          }
-        ]
-      },
+      "scope": "Stage35 adds parsed declaration annotations, annotation-class validation, lexical/const scope, lazy object bodies and ordered module/class/alias/property/method initialization. Successful class/alias annotation prefixes and published member metadata remain evaluator-owned and GC-traced. Selected scalar comparisons are supplemented by separate persistent and source-language Host observations; neither substitutes for the original upstream contracts. Annotation, Deprecated, Since, Unlisted, AlsoKnownAs, DocExample and SourceCode fields use pinned defaults and lazy type checks.",
       "tests": {
-        "state": "partial",
         "case_ids": [
           "annotation-stage35-module-bare",
           "annotation-stage35-module-lazy-body",
@@ -6755,19 +6837,12 @@
           "annotation-stage35-builtin-custom-annotation-hierarchy",
           "annotation-stage35-builtin-source-code-null-defaults",
           "annotation-stage35-builtin-source-code-union-direct"
-        ]
-      },
-      "scope": "Stage35 adds parsed declaration annotations, annotation-class validation, lexical/const scope, lazy object bodies and ordered module/class/alias/property/method initialization. Successful class/alias annotation prefixes and published member metadata remain evaluator-owned and GC-traced. Selected scalar comparisons are supplemented by separate persistent and source-language Host observations; neither substitutes for the original upstream contracts. Annotation, Deprecated, Since, Unlisted, AlsoKnownAs, DocExample and SourceCode fields use pinned defaults and lazy type checks.",
-      "remaining": [
-        "Complete annotation/reflection metadata, including builtin member annotations, ModuleInfo version behavior and converters, remain separately required.",
-        "Full module initialization/retry/cache semantics, deprecation warning transport and original upstream snippet/output execution remain incomplete.",
-        "All annotation syntax, initialization/error-order and diagnostic cases must execute against the pinned oracle; supporting selected cases alone do not prove full coverage."
-      ]
+        ],
+        "state": "partial"
+      }
     },
     {
-      "requirement": "semantic:objects",
       "implementation": {
-        "state": "partial",
         "links": [
           {
             "path": "crates/pkl-runtime/src/vm/forcing.rs",
@@ -6781,10 +6856,17 @@
             "path": "crates/pkl-runtime/src/diagnostic_values.rs",
             "symbol": "RenderRun"
           }
-        ]
+        ],
+        "state": "partial"
       },
+      "remaining": [
+        "Full module, amendment, inheritance and object API semantics and the original upstream suite remain incomplete.",
+        "Cyclic rendering oracle failures, identity-dependent keys, complete diagnostic-time forcing/Host suspension and finite truncation side effects remain unresolved or unverified.",
+        "The new persistent originals use trace; complete trace logging and its original sequence contract remain required."
+      ],
+      "requirement": "semantic:objects",
+      "scope": "Stage 36 adds resumable object deep forcing and object.toString rendering with persistent force marks, owner-specific hidden declarations, inherited member order, undefined-member handling, and renderer key hashing/equality. Selected scalar comparisons and separate stateful/Host observations retain their own raw contracts. Additional source-derived controls cover user-defined toString interpolation, hidden builtin defaults and inherited equal/colliding object keys. Modifier-addition controls distinguish Java IMPORT, CLASS and TYPE_ALIAS bits when filtering rendered declarations.",
       "tests": {
-        "state": "partial",
         "case_ids": [
           "object-string-stage36-dynamic-amend-force-child-first",
           "object-string-stage36-dynamic-amend-render-order",
@@ -6869,19 +6951,12 @@
           "object-string-stage36-review-modifier-import-bit",
           "object-string-stage36-review-modifier-class-bit",
           "object-string-stage36-review-modifier-type-alias-bit"
-        ]
-      },
-      "scope": "Stage 36 adds resumable object deep forcing and object.toString rendering with persistent force marks, owner-specific hidden declarations, inherited member order, undefined-member handling, and renderer key hashing/equality. Selected scalar comparisons and separate stateful/Host observations retain their own raw contracts. Additional source-derived controls cover user-defined toString interpolation, hidden builtin defaults and inherited equal/colliding object keys. Modifier-addition controls distinguish Java IMPORT, CLASS and TYPE_ALIAS bits when filtering rendered declarations.",
-      "remaining": [
-        "Full module, amendment, inheritance and object API semantics and the original upstream suite remain incomplete.",
-        "Cyclic rendering oracle failures, identity-dependent keys, complete diagnostic-time forcing/Host suspension and finite truncation side effects remain unresolved or unverified.",
-        "The new persistent originals use trace; complete trace logging and its original sequence contract remain required."
-      ]
+        ],
+        "state": "partial"
+      }
     },
     {
-      "requirement": "semantic:tracing",
       "implementation": {
-        "state": "partial",
         "links": [
           {
             "path": "crates/pkl-runtime/src/vm/tracing.rs",
@@ -6895,10 +6970,17 @@
             "path": "crates/pkl-runtime/src/evaluation/session.rs",
             "symbol": "SourceSession"
           }
-        ]
+        ],
+        "state": "partial"
       },
+      "remaining": [
+        "The complete original upstream trace and logger contracts, frame transformers, warning delivery and full diagnostics remain required.",
+        "Original same-evaluator trace sequences and all selected native/Node/browser source-session contracts require final acquisitions from the exact implementation.",
+        "Java internal errors, unsupported dependencies, resource caching and other mismatches remain recorded; partial raw matches do not close this requirement."
+      ],
+      "requirement": "semantic:tracing",
+      "scope": "Trace expressions now use shared resumable force/render, lossless UTF-16 messages and source frames, and typed logger acknowledgement. Scalar cases are distinct from actual-source logger/read callback protocols and lifecycle observations.",
       "tests": {
-        "state": "partial",
         "case_ids": [
           "trace-stage37-scalar-cache",
           "trace-stage37-operand-let",
@@ -6938,19 +7020,12 @@
           "trace-stage37-repeat-lone-surrogate",
           "trace-stage37-repeat-supplementary-normal",
           "trace-stage37-repeat-arity-two-before-constraint"
-        ]
-      },
-      "scope": "Trace expressions now use shared resumable force/render, lossless UTF-16 messages and source frames, and typed logger acknowledgement. Scalar cases are distinct from actual-source logger/read callback protocols and lifecycle observations.",
-      "remaining": [
-        "The complete original upstream trace and logger contracts, frame transformers, warning delivery and full diagnostics remain required.",
-        "Original same-evaluator trace sequences and all selected native/Node/browser source-session contracts require final acquisitions from the exact implementation.",
-        "Java internal errors, unsupported dependencies, resource caching and other mismatches remain recorded; partial raw matches do not close this requirement."
-      ]
+        ],
+        "state": "partial"
+      }
     },
     {
-      "requirement": "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
       "implementation": {
-        "state": "partial",
         "links": [
           {
             "path": "crates/pkl-runtime/src/parser.rs",
@@ -6964,10 +7039,16 @@
             "path": "crates/pkl-runtime/src/host/resources.rs",
             "symbol": "default_result"
           }
-        ]
+        ],
+        "state": "partial"
       },
+      "remaining": [
+        "Complete resource readers, configured policy, loader/cache and Host absence transport remain open.",
+        "Complete URI and lossless UTF-16 diagnostic behavior, original upstream suites and all parser/error contexts remain unverified."
+      ],
+      "requirement": "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+      "scope": "Stage38 authored read/read? keyword and operand parsing, empty env/property profile, URI validation/normalization and raw diagnostic controls. Cases preserve Java-observed failures, including surrogate and internal-error boundaries; final differential acquisition is required.",
       "tests": {
-        "state": "partial",
         "case_ids": [
           "read-stage38-life-opaque",
           "read-stage38-life-upper",
@@ -7048,35 +7129,35 @@
           "read-stage38-shadow-read-contextual-new-boundary",
           "read-stage38-power-power-read-null-comparison",
           "read-stage38-power-power-read-lexical-operand"
-        ]
+        ],
+        "state": "partial"
+      }
+    },
+    {
+      "implementation": {
+        "links": [
+          {
+            "path": "crates/pkl-runtime/src/parser.rs",
+            "symbol": "ReadResource"
+          },
+          {
+            "path": "crates/pkl-runtime/src/vm/compiler_expressions.rs",
+            "symbol": "ReadResourceOrNull"
+          },
+          {
+            "path": "crates/pkl-runtime/src/host/resources.rs",
+            "symbol": "default_result"
+          }
+        ],
+        "state": "partial"
       },
-      "scope": "Stage38 authored read/read? keyword and operand parsing, empty env/property profile, URI validation/normalization and raw diagnostic controls. Cases preserve Java-observed failures, including surrogate and internal-error boundaries; final differential acquisition is required.",
       "remaining": [
         "Complete resource readers, configured policy, loader/cache and Host absence transport remain open.",
         "Complete URI and lossless UTF-16 diagnostic behavior, original upstream suites and all parser/error contexts remain unverified."
-      ]
-    },
-    {
+      ],
       "requirement": "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ_QUESTION",
-      "implementation": {
-        "state": "partial",
-        "links": [
-          {
-            "path": "crates/pkl-runtime/src/parser.rs",
-            "symbol": "ReadResource"
-          },
-          {
-            "path": "crates/pkl-runtime/src/vm/compiler_expressions.rs",
-            "symbol": "ReadResourceOrNull"
-          },
-          {
-            "path": "crates/pkl-runtime/src/host/resources.rs",
-            "symbol": "default_result"
-          }
-        ]
-      },
+      "scope": "Stage38 authored read/read? keyword and operand parsing, empty env/property profile, URI validation/normalization and raw diagnostic controls. Cases preserve Java-observed failures, including surrogate and internal-error boundaries; final differential acquisition is required.",
       "tests": {
-        "state": "partial",
         "case_ids": [
           "read-stage38-env-missing-nullable",
           "read-stage38-prop-missing-nullable",
@@ -7106,35 +7187,35 @@
           "read-stage38-shadow-quoted-missing-nullable-read",
           "read-stage38-power-power-read-null-comparison",
           "read-stage38-power-power-read-lexical-operand"
-        ]
+        ],
+        "state": "partial"
+      }
+    },
+    {
+      "implementation": {
+        "links": [
+          {
+            "path": "crates/pkl-runtime/src/parser.rs",
+            "symbol": "ReadResource"
+          },
+          {
+            "path": "crates/pkl-runtime/src/vm/compiler_expressions.rs",
+            "symbol": "ReadResourceOrNull"
+          },
+          {
+            "path": "crates/pkl-runtime/src/host/resources.rs",
+            "symbol": "default_result"
+          }
+        ],
+        "state": "partial"
       },
-      "scope": "Stage38 authored read/read? keyword and operand parsing, empty env/property profile, URI validation/normalization and raw diagnostic controls. Cases preserve Java-observed failures, including surrogate and internal-error boundaries; final differential acquisition is required.",
       "remaining": [
         "Complete resource readers, configured policy, loader/cache and Host absence transport remain open.",
         "Complete URI and lossless UTF-16 diagnostic behavior, original upstream suites and all parser/error contexts remain unverified."
-      ]
-    },
-    {
+      ],
       "requirement": "specification:docs/modules/language-reference/pages/index.adoc:Nullable Reads",
-      "implementation": {
-        "state": "partial",
-        "links": [
-          {
-            "path": "crates/pkl-runtime/src/parser.rs",
-            "symbol": "ReadResource"
-          },
-          {
-            "path": "crates/pkl-runtime/src/vm/compiler_expressions.rs",
-            "symbol": "ReadResourceOrNull"
-          },
-          {
-            "path": "crates/pkl-runtime/src/host/resources.rs",
-            "symbol": "default_result"
-          }
-        ]
-      },
+      "scope": "Stage38 authored read/read? keyword and operand parsing, empty env/property profile, URI validation/normalization and raw diagnostic controls. Cases preserve Java-observed failures, including surrogate and internal-error boundaries; final differential acquisition is required.",
       "tests": {
-        "state": "partial",
         "case_ids": [
           "read-stage38-env-missing-nullable",
           "read-stage38-prop-missing-nullable",
@@ -7164,31 +7245,31 @@
           "read-stage38-shadow-quoted-missing-nullable-read",
           "read-stage38-power-power-read-null-comparison",
           "read-stage38-power-power-read-lexical-operand"
-        ]
-      },
-      "scope": "Stage38 authored read/read? keyword and operand parsing, empty env/property profile, URI validation/normalization and raw diagnostic controls. Cases preserve Java-observed failures, including surrogate and internal-error boundaries; final differential acquisition is required.",
-      "remaining": [
-        "Complete resource readers, configured policy, loader/cache and Host absence transport remain open.",
-        "Complete URI and lossless UTF-16 diagnostic behavior, original upstream suites and all parser/error contexts remain unverified."
-      ]
+        ],
+        "state": "partial"
+      }
     },
     {
+      "implementation": {
+        "links": [
+          {
+            "path": "crates/pkl-runtime/src/parser.rs",
+            "symbol": "parse_module"
+          },
+          {
+            "path": "crates/pkl-runtime/src/evaluation/frontend.rs",
+            "symbol": "evaluate_module_frontend"
+          }
+        ],
+        "state": "partial"
+      },
+      "remaining": [
+        "Complete original valid and invalid grammar corpus, AST validation and error ordering.",
+        "Actual ModuleOutput.bytes and renderer success, imported modules and settings/project variants."
+      ],
       "requirement": "language_parser:pkl-parser/src/main/java/org/pkl/parser/Parser.java:parseModule:08e2ccccf9a8",
-      "implementation": {
-        "state": "partial",
-        "links": [
-          {
-            "path": "crates/pkl-runtime/src/parser.rs",
-            "symbol": "parse_module"
-          },
-          {
-            "path": "crates/pkl-runtime/src/evaluation/frontend.rs",
-            "symbol": "evaluate_module_frontend"
-          }
-        ]
-      },
+      "scope": "Original delimiter and parser error module eval contracts execute the shared frontend with exact CLI diagnostic bytes. Ready describes executable original contracts, not passing results or complete module/output evaluation.",
       "tests": {
-        "state": "partial",
         "case_ids": [
           "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingClassDelimiter.pkl",
           "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingConstrainedTypeSeparator.pkl",
@@ -7262,18 +7343,12 @@
           "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/spacesBetweenDocComments.pkl",
           "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/typeAnnotationInAmends.pkl",
           "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/wrongDocComment.pkl"
-        ]
-      },
-      "scope": "Original delimiter and parser error module eval contracts execute the shared frontend with exact CLI diagnostic bytes. Ready describes executable original contracts, not passing results or complete module/output evaluation.",
-      "remaining": [
-        "Complete original valid and invalid grammar corpus, AST validation and error ordering.",
-        "Actual ModuleOutput.bytes and renderer success, imported modules and settings/project variants."
-      ]
+        ],
+        "state": "partial"
+      }
     },
     {
-      "requirement": "language_parser:pkl-parser/src/main/java/org/pkl/parser/ParserImpl.java:parseModule:1faaeadbbd30",
       "implementation": {
-        "state": "partial",
         "links": [
           {
             "path": "crates/pkl-runtime/src/parser.rs",
@@ -7283,10 +7358,16 @@
             "path": "crates/pkl-runtime/src/evaluation/frontend.rs",
             "symbol": "evaluate_module_frontend"
           }
-        ]
+        ],
+        "state": "partial"
       },
+      "remaining": [
+        "Complete original valid and invalid grammar corpus, AST validation and error ordering.",
+        "Actual ModuleOutput.bytes and renderer success, imported modules and settings/project variants."
+      ],
+      "requirement": "language_parser:pkl-parser/src/main/java/org/pkl/parser/ParserImpl.java:parseModule:1faaeadbbd30",
+      "scope": "Original delimiter and parser error module eval contracts execute the shared frontend with exact CLI diagnostic bytes. Ready describes executable original contracts, not passing results or complete module/output evaluation.",
       "tests": {
-        "state": "partial",
         "case_ids": [
           "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingClassDelimiter.pkl",
           "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingConstrainedTypeSeparator.pkl",
@@ -7360,13 +7441,10 @@
           "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/spacesBetweenDocComments.pkl",
           "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/typeAnnotationInAmends.pkl",
           "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/wrongDocComment.pkl"
-        ]
-      },
-      "scope": "Original delimiter and parser error module eval contracts execute the shared frontend with exact CLI diagnostic bytes. Ready describes executable original contracts, not passing results or complete module/output evaluation.",
-      "remaining": [
-        "Complete original valid and invalid grammar corpus, AST validation and error ordering.",
-        "Actual ModuleOutput.bytes and renderer success, imported modules and settings/project variants."
-      ]
+        ],
+        "state": "partial"
+      }
     }
-  ]
+  ],
+  "schema_version": 1
 }

@@ -1,4 +1,4 @@
-// Compare the shared module frontend byte API to fresh original CLI payloads.
+// Compare explicit shared module frontend/output byte APIs to original CLI payloads.
 // This is not native CLI process/files compatibility or complete module eval.
 import { createRequire } from 'node:module';
 import { createServer } from 'node:http';
@@ -73,7 +73,7 @@ export function moduleOracleOutcome(result, files, stderr) {
     ? 'ordinary-language-error' : 'internal-or-process-error';
 }
 
-export function compareModulePayload(expected, actual, oracleOutcome) {
+export function compareModulePayload(expected, actual, oracleOutcome, options = {}) {
   const channels = actual ? {
     stdout: Buffer.from(actual.stdout).equals(expected.stdout),
     stderr: Buffer.from(actual.stderr).equals(expected.stderr),
@@ -82,16 +82,26 @@ export function compareModulePayload(expected, actual, oracleOutcome) {
   const rawMatch = Object.values(channels).every(Boolean);
   // An oracle bug, timeout, unsupported implementation, or transport failure
   // never becomes an ordinary compatibility pass because raw bytes coincide.
+  const outputSuccess = options.operation === 'output-bytes' && actual?.exitCode === 0 && actual.disposition == null;
+  const upstreamExpectedExitMatch = options.upstreamExpectedExit == null ? null
+    : options.upstreamExpectedExit.includes(expected.exitCode);
   const status = !actual ? 'acquisition-failed' : oracleOutcome !== 'ordinary-language-error' && oracleOutcome !== 'value'
-    ? 'oracle-error' : actual.disposition !== 'language-error' ? actual.disposition === 'unsupported' ? 'unsupported' : 'non-language-failure'
+    ? 'oracle-error' : upstreamExpectedExitMatch === false ? 'oracle-contract-mismatch'
+    : actual.disposition !== 'language-error' && !outputSuccess ? actual.disposition === 'unsupported' ? 'unsupported' : 'non-language-failure'
     : rawMatch ? 'pass' : 'mismatch';
-  return { channels, rawMatch, status };
+  return { channels, rawMatch, status, upstreamExpectedExitMatch };
 }
 
 export async function compareModuleEval(args) {
+  let operation = 'frontend';
+  if (args[0] === '--operation') {
+    operation = args[1]; args = args.slice(2);
+    if (!['frontend', 'output-bytes'].includes(operation)) throw Error('unknown module operation');
+  }
+  const outputOperation = operation === 'output-bytes';
   const preflightOnly = args.length === 2 && args[0] === '--verify-oracle';
   if (!preflightOnly && (args.length !== 4 || args.some(arg => !arg)))
-    throw Error('usage: compare-module-eval.mjs OUTPUT WASM_DIR NAPI_BINARY JAVA_ACQUISITION | --verify-oracle JAVA_ACQUISITION');
+    throw Error('usage: compare-module-eval.mjs [--operation frontend|output-bytes] OUTPUT WASM_DIR NAPI_BINARY JAVA_ACQUISITION | [--operation frontend|output-bytes] --verify-oracle JAVA_ACQUISITION');
   const [output, wasm, addon, oracleRoot] = preflightOnly ? [null, null, null, resolve(args[1])] : args.map(arg => resolve(arg));
   const require = createRequire(resolve(root, 'tools/platform/package.json'));
   const chromium = preflightOnly ? null : require('playwright').chromium;
@@ -106,7 +116,7 @@ export async function compareModuleEval(args) {
       || lock.packages[''].devDependencies.playwright !== pin
       || lock.packages['node_modules/playwright'].version !== pin
       || lock.packages['node_modules/playwright-core'].version !== pin) throw Error('Playwright pin mismatch');
-  const originalPath = resolve(oracleRoot, 'original72.json');
+  const originalPath = resolve(oracleRoot, outputOperation ? 'original30.json' : 'original72.json');
   const oracleReportPath = resolve(oracleRoot, 'report.json');
   const original = JSON.parse(await readFile(originalPath));
   const oracle = JSON.parse(await readFile(oracleReportPath));
@@ -123,14 +133,14 @@ export async function compareModuleEval(args) {
   const inventoryPath = resolve(oracleRoot, 'inventory.json');
   const inventory = JSON.parse(await readFile(inventoryPath));
   const phaseLinkPath = resolve(oracleRoot, 'phase-link.json');
-  const phaseLink = JSON.parse(await readFile(phaseLinkPath));
-  const phaseReportPath = phaseLink.reportPath;
-  const phaseReport = JSON.parse(await readFile(phaseReportPath));
-  if (hash(await readFile(phaseReportPath)) !== phaseLink.reportSha256
+  const phaseLink = outputOperation ? null : JSON.parse(await readFile(phaseLinkPath));
+  const phaseReportPath = phaseLink?.reportPath;
+  const phaseReport = outputOperation ? null : JSON.parse(await readFile(phaseReportPath));
+  if (!outputOperation && (hash(await readFile(phaseReportPath)) !== phaseLink.reportSha256
       || phaseReport.caseCount !== original.length || phaseReport.artifactSha256 !== profile.artifactSha256
-      || phaseReport.originalCliProfileSha256 !== hash(await readFile(profilePath)))
+      || phaseReport.originalCliProfileSha256 !== hash(await readFile(profilePath))))
     throw Error('supplemental phase observation binding differs');
-  const phaseById = new Map(phaseReport.records.map(row => [row.id, row]));
+  const phaseById = new Map((phaseReport?.records ?? []).map(row => [row.id, row]));
 
   const baselinePath = resolve(oracleRoot, 'workspace-baseline.json');
   const baseline = JSON.parse(await readFile(baselinePath));
@@ -154,7 +164,7 @@ export async function compareModuleEval(args) {
     if (!path.startsWith(oracleRoot + sep) || inventoryNames.has(entry.path)) throw Error('unsafe/duplicate Java inventory entry');
     inventoryNames.add(entry.path);
     const bytes = await readFile(path);
-    if (bytes.length !== entry.bytes || hash(bytes) !== entry.sha256) throw Error('Java closure payload differs: ' + entry.path);
+    if (bytes.length !== (entry.bytes ?? entry.size) || hash(bytes) !== entry.sha256) throw Error('Java closure payload differs: ' + entry.path);
   }
   if (profile.lockSha256 !== hash(await readFile(oracleLockPath)) || profile.artifactSha256 !== oracleLock.artifact.sha256
       || !same(profile.reference, oracleLock.source) || hash(await readFile(profile.artifact)) !== oracleLock.artifact.sha256
@@ -163,18 +173,19 @@ export async function compareModuleEval(args) {
       || hash(await readFile(resolve(profile.jdk.properties['java.home'], 'release'))) !== profile.jdk.release_sha256
       || Object.entries(oracleLock.jdk.properties).some(([key, value]) => profile.jdk.properties[key] !== value))
     throw Error('pinned Java oracle identity differs');
-  if (!Array.isArray(registry.cases) || !same(original.map(row => row.id), registry.cases.map(row => row.id)))
+  const registered = registry.cases?.slice(outputOperation ? 72 : 0, outputOperation ? 102 : 72);
+  if (!Array.isArray(registered) || !same(original.map(row => row.id), registered.map(row => row.id)))
     throw Error('original IDs differ from reviewed registry');
   const corpusById = new Map(corpus.cases.map(row => [row.id, row]));
   for (const [index, row] of original.entries()) {
-    const declaration = registry.cases[index];
+    const declaration = registered[index];
     if (row.input_sha256 !== declaration.input_sha256 || compatHash(row.upstream_case) !== declaration.upstream_case_sha256
         || !same(row.upstream_case, corpusById.get(row.id)) || row.upstream_case.command.at(-1) !== row.input)
       throw Error('original upstream contract differs: ' + row.id);
   }
-  if (!Array.isArray(original) || original.length !== 72 || new Set(original.map(row => row.id)).size !== original.length
+  if (!Array.isArray(original) || original.length !== (outputOperation ? 30 : 72) || new Set(original.map(row => row.id)).size !== original.length
       || oracle.caseCount !== original.length || oracle.processCount !== 2 * original.length
-      || !oracle.workspaceRestored || !oracle.artifactStable) throw Error('expected closed complete original72 CLI acquisition');
+      || !oracle.workspaceRestored || !oracle.artifactStable) throw Error('expected closed complete original CLI acquisition');
   const hashes = {};
   async function record(path) {
     if (path.startsWith(oracleRoot + sep) && path !== closurePath && path !== inventoryPath
@@ -217,11 +228,11 @@ export async function compareModuleEval(args) {
     if (!Buffer.from(sourceText, 'utf8').equals(bytes)) throw Error('source UTF8 roundtrip differs: ' + row.id);
     const directory = hash(Buffer.from(row.id, 'utf8')).slice(0, 24);
     const phase = phaseById.get(row.id);
-    if (!phase || phase.input !== row.input || phase.inputSha256 !== row.input_sha256
-        || phase.outcome !== 'org.pkl.parser.ParserError') throw Error('supplemental phase input differs: ' + row.id);
-    const expectedFrontendPhase = phase.throwSite?.includes('org.pkl.parser.Lexer.') ? 'lexing'
+    if (!outputOperation && (!phase || phase.input !== row.input || phase.inputSha256 !== row.input_sha256
+        || phase.outcome !== 'org.pkl.parser.ParserError')) throw Error('supplemental phase input differs: ' + row.id);
+    const expectedFrontendPhase = outputOperation ? null : phase.throwSite?.includes('org.pkl.parser.Lexer.') ? 'lexing'
       : phase.throwSite?.includes('org.pkl.parser.ParserImpl.') ? 'parsing' : null;
-    if (expectedFrontendPhase === null) throw Error('unknown supplemental parser throw site');
+    if (!outputOperation && expectedFrontendPhase === null) throw Error('unknown supplemental parser throw site');
     let uri;
     for (const repeat of [0, 1]) {
       const caseRoot = resolve(oracleRoot, 'cases', directory, String(repeat));
@@ -237,10 +248,11 @@ export async function compareModuleEval(args) {
           || JSON.stringify(result) !== JSON.stringify(process.result)) throw Error('Java process binding mismatch: ' + row.id);
       if (uri != null && uri !== process.moduleUri) throw Error('repeat URI differs: ' + row.id);
       uri = process.moduleUri;
-      if (phase.moduleUri !== uri) throw Error('supplemental phase URI differs: ' + row.id);
+      if (!outputOperation && phase.moduleUri !== uri) throw Error('supplemental phase URI differs: ' + row.id);
       const files = await capturedFiles(resolve(caseRoot, 'files'));
       validateModuleFilesystem(row, baseline, process, result, files);
-      const payload = { exitCode: result.exit_code, declaredOracleOutcome: process.outcome, files };
+      const payload = { exitCode: result.exit_code, declaredOracleOutcome: process.outcome, files,
+        upstreamExpectedExit: row.upstream_case.expected_exit };
       for (const channel of ['stdout', 'stderr']) {
         const path = resolve(caseRoot, channel + '.bin'); payload[channel] = await readFile(path);
         if (hash(payload[channel]) !== result.sha256[channel]) throw Error('Java channel checksum mismatch: ' + path);
@@ -250,28 +262,30 @@ export async function compareModuleEval(args) {
       await record(processPath); await record(resultPath);
       expected.set(row.id + ':' + repeat, payload);
     }
-    fixtures.push({ id: row.id, directory, expectedFrontendPhase, sourceText, sourceSha256: row.input_sha256, uri,
+    fixtures.push({ id: row.id, operation, directory, expectedFrontendPhase, sourceText, sourceSha256: row.input_sha256, uri,
       moduleName: basename(row.input, '.pkl'), arguments: row.upstream_case.command });
     await record(sourcePath); await record(resolve(root, row.input));
   }
   if (preflightOnly) {
     const result = { preflightOnly: true, oracleVerified: true, caseCount: fixtures.length, processCount: expected.size,
       oracleReportSha256: hash(await readFile(oracleReportPath)), closureSha256: hash(await readFile(closurePath)),
-      inventoryFilesVerified: inventory.files.length, supplementalPhaseReportSha256: phaseLink.reportSha256,
+      operation, inventoryFilesVerified: inventory.files.length, supplementalPhaseReportSha256: phaseLink?.reportSha256 ?? null,
       artifactAndInputHashes: hashes, scope: 'Offline original Java evidence validation only; no candidate API, process or browser execution.' };
     console.log(json(result)); return result;
   }
   await mkdir(output, { recursive: false });
   for (const path of [script, resolve(dirname(script), 'module-eval-session.mjs'), originalPath, oracleReportPath,
-    profilePath, closurePath, inventoryPath, phaseLinkPath, phaseReportPath, baselinePath, acquisitionManifestPath, registryPath, corpusPath, oracleLockPath, manifestPath, lockPath, addon]) await record(path);
+    profilePath, closurePath, inventoryPath, ...(!outputOperation ? [phaseLinkPath, phaseReportPath] : []), baselinePath, acquisitionManifestPath, registryPath, corpusPath, oracleLockPath, manifestPath, lockPath, addon]) await record(path);
   await tree(wasm);
   await writeFile(resolve(output, 'fixtures.json'), json(fixtures));
   await writeFile(resolve(output, 'compare-module-eval.mjs'), await readFile(script));
   await writeFile(resolve(output, 'module-eval-session.mjs'), await readFile(resolve(dirname(script), 'module-eval-session.mjs')));
-  const report = { schema: 1, scope: 'Original72 shared frontend byte-vector API on actual Node/Chromium, two calls each. Whole stdout/stderr/exitCode compared to original CLI; native process/files and successful output evaluation remain separate obligations.',
+  const report = { schema: 1, operation, scope: outputOperation
+    ? 'Original30 actual module-output byte-vector API on Node/Chromium, two calls each. Whole stdout/stderr/exitCode compared to original CLI; native process/files remain separate obligations. Unexpected original Java exit status cannot pass even when raw channels match.'
+    : 'Original72 shared frontend byte-vector API on actual Node/Chromium, two calls each. Whole stdout/stderr/exitCode compared to original CLI; native process/files and successful output evaluation remain separate obligations.',
     excludedNativeChannels: ['native process execution and OS exit status', 'generated files and workspace mutations'],
     argv: process.argv, cwd: process.cwd(), oracleReportPath, oracleReportSha256: hash(await readFile(oracleReportPath)),
-    phaseObservation: { reportPath: phaseReportPath, reportSha256: phaseLink.reportSha256, scope: 'Supplemental Parser API phase; independent of raw CLI comparison status.' },
+    phaseObservation: outputOperation ? null : { reportPath: phaseReportPath, reportSha256: phaseLink.reportSha256, scope: 'Supplemental Parser API phase; independent of raw CLI comparison status.' },
     caseCount: fixtures.length, repetitions: 2, node: process.version, nodeVersions: process.versions,
     nodeExecutable: process.execPath, nodeExecutableSha256: hash(await readFile(process.execPath)),
     playwright, playwrightCore, playwrightPin: pin, artifactAndInputHashes: hashes, targets: {}, infrastructureErrors: [], browserErrors: [] };
@@ -283,7 +297,9 @@ export async function compareModuleEval(args) {
       seen.add(key);
       const fixture = fixtures.find(item => item.id === row.id);
       const origin = expected.get(key);
-      const compared = compareModulePayload(origin, row.result, origin.oracleOutcome);
+      if (row.operation !== operation) throw Error('portable operation differs: ' + key);
+      const compared = compareModulePayload(origin, row.result, origin.oracleOutcome,
+        { operation, upstreamExpectedExit: outputOperation ? origin.upstreamExpectedExit : null });
       const directory = resolve(output, target, fixture.directory, String(row.repeat));
       await mkdir(directory, { recursive: true });
       const channels = {};
@@ -298,14 +314,18 @@ export async function compareModuleEval(args) {
         if (!path.startsWith(resolve(directory, 'java.files') + sep)) throw Error('unsafe Java generated filename');
         await mkdir(dirname(path), { recursive: true }); await writeFile(path, bytes);
       }
-      const result = { id: row.id, repeat: row.repeat, uri: fixture.uri, status: compared.status, rawMatch: compared.rawMatch,
+      const result = { id: row.id, repeat: row.repeat, operation, uri: fixture.uri, status: compared.status, rawMatch: compared.rawMatch,
+        upstreamExpectedExit: outputOperation ? origin.upstreamExpectedExit : null,
+        upstreamExpectedExitMatch: compared.upstreamExpectedExitMatch,
         oracleOutcome: origin.oracleOutcome, acquisitionError: row.acquisitionError,
         declaredOracleOutcome: origin.declaredOracleOutcome,
         excludedJavaFiles: Object.fromEntries(Object.entries(origin.files).map(([name, bytes]) => [name, hash(bytes)])),
         expectedExitCode: origin.exitCode, actualExitCode: row.result?.exitCode ?? null,
         exitCodeEqual: compared.channels.exitCode, phase: row.result?.phase ?? null,
-        expectedFrontendPhase: fixture.expectedFrontendPhase, phaseMatch: row.result?.phase === fixture.expectedFrontendPhase,
+        expectedFrontendPhase: fixture.expectedFrontendPhase,
+        phaseMatch: outputOperation ? null : row.result?.phase === fixture.expectedFrontendPhase,
         disposition: row.result?.disposition ?? null, reason: row.result?.reason ?? null,
+        dispositionPresent: row.result?.dispositionPresent ?? null, dispositionKind: row.result?.dispositionKind ?? null,
         reasonPresent: row.result?.reasonPresent ?? null, reasonKind: row.result?.reasonKind ?? null, channels };
       await writeFile(resolve(directory, 'result.json'), json(result)); results.push(result);
     }
@@ -346,7 +366,7 @@ export async function compareModuleEval(args) {
   for (const [path, expectedHash] of Object.entries(hashes)) if (hash(await readFile(path)) !== expectedHash) report.changedInputs.push(path);
   report.compatibilityComplete = !report.infrastructureErrors.length && !report.browserErrors.length && !report.changedInputs.length
     && ['node', 'browser'].every(target => report.targets[target]?.complete && report.targets[target].results.every(row => row.status === 'pass'));
-  report.phaseObservationsMatched = ['node', 'browser'].every(target => report.targets[target]?.complete
+  report.phaseObservationsMatched = outputOperation ? null : ['node', 'browser'].every(target => report.targets[target]?.complete
     && report.targets[target].results.every(row => row.phaseMatch));
   await writeFile(resolve(output, 'execution.json'), json(report));
   console.log(json({ compatibilityComplete: report.compatibilityComplete, phaseObservationsMatched: report.phaseObservationsMatched,

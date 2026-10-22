@@ -63,10 +63,19 @@ class TraceComparisonTests(unittest.TestCase):
 
     def test_checked_in_manifest_preserves_original_sources(self):
         manifest = m2_trace.load_manifest(m2_trace.ROOT / 'compatibility/m2-trace.json')
-        self.assertEqual(len(manifest['cases']), 42)
+        self.assertEqual(len(manifest['cases']), 45)
         self.assertTrue({'edge-compact-limit', 'compile-grouped-contextual-new',
                          'compile-empty-trace-parse', 'read-same-pending-property'}
                         <= {case['id'] for case in manifest['cases']})
+
+    def test_output_calls_are_explicit_and_never_fake_guest_expressions(self):
+        case = dict(operation='output-bytes', calls=2, resource_profile='preconfigured-plus-life')
+        self.assertEqual(m2_trace.call_expressions(case), ['', ''])
+        self.assertEqual(m2_trace.call_expressions(dict(expressions=['result'])), ['result'])
+        for change in [dict(calls=True), dict(calls=0), dict(calls=1025),
+                       dict(expressions=['output.bytes']), dict(resource_profile='life-only'),
+                       dict(operation='unsupported')]:
+            with self.assertRaises(ValueError): m2_trace.call_expressions({**case, **change})
 
 
 if __name__ == '__main__':

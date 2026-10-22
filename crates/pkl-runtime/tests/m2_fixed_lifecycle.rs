@@ -1,5 +1,7 @@
 //! Fixed declarations share the ordinary Host scheduler and tracing lifecycle.
 //! Java byte compatibility for selected sources is recorded separately.
+//! Retained module graphs include their one builtin Module parent; executable
+//! nodes, transient-object deltas and terminal-zero assertions remain separate.
 use std::sync::Arc;
 
 use pkl_runtime::host::{HostPoll, HostSession};
@@ -123,8 +125,8 @@ fn inherited_fixed_values_keep_the_amended_receiver_across_gc_reentry_and_retry(
     // Published classes retain their captured module and its completed caches.
     // Reference path temporaries have been collected; this is the exact steady
     // retained closure for this source, not a general nonzero allowance.
-    assert_eq!(session.collect(&[]).live, 11);
-    assert_eq!(session.collect(&[]).live, 11);
+    assert_eq!(session.collect(&[]).live, 12);
+    assert_eq!(session.collect(&[]).live, 12);
     session.close();
     assert_eq!(session.heap_stats().live, 0);
     assert_eq!(session.heap_stats().slots, 0);
@@ -165,8 +167,8 @@ fn inherited_hidden_fixed_reference_metadata_stays_deferred_during_render_retry(
     // Published classes retain their captured module and its completed caches.
     // Reference path temporaries have been collected; this is the exact steady
     // retained closure for this source, not a general nonzero allowance.
-    assert_eq!(session.collect(&[]).live, 11);
-    assert_eq!(session.collect(&[]).live, 11);
+    assert_eq!(session.collect(&[]).live, 12);
+    assert_eq!(session.collect(&[]).live, 12);
     session.close();
     assert_eq!(session.heap_stats().live, 0);
     assert_eq!(session.heap_stats().slots, 0);

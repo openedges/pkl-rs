@@ -77893,16 +77893,19 @@
       }
     },
     {
-      "adapter": null,
+      "adapter": "language-module-eval",
       "execution": {
-        "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
-        "state": "unimplemented"
+        "reason": null,
+        "state": "ready"
       },
       "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/moduleOutput.pkl",
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/api/moduleOutput.pkl",
       "input_sha256": "3d04c6da9335211b0d1f0586ae9917266a74590f13042b5ca38ccd327683e353",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "semantic:modules",
+        "semantic:diagnostics"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -77987,16 +77990,19 @@
       }
     },
     {
-      "adapter": null,
+      "adapter": "language-module-eval",
       "execution": {
-        "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
-        "state": "unimplemented"
+        "reason": null,
+        "state": "ready"
       },
       "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/moduleOutput2.pkl",
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/api/moduleOutput2.pkl",
       "input_sha256": "be3b5aa79eaa7b71d237c280985d27e7d86823f0e260e56610ef3c5dd7add3cb",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "semantic:modules",
+        "semantic:diagnostics"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -78928,16 +78934,19 @@
       }
     },
     {
-      "adapter": null,
+      "adapter": "language-module-eval",
       "execution": {
-        "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
-        "state": "unimplemented"
+        "reason": null,
+        "state": "ready"
       },
       "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/pcfRenderer1.pkl",
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/api/pcfRenderer1.pkl",
       "input_sha256": "470541f6f77653a46b71e754c8ccff3967575c78fbfed1b5f240eac8fd57ceb6",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "semantic:modules",
+        "semantic:diagnostics"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -79116,16 +79125,19 @@
       }
     },
     {
-      "adapter": null,
+      "adapter": "language-module-eval",
       "execution": {
-        "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
-        "state": "unimplemented"
+        "reason": null,
+        "state": "ready"
       },
       "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/pcfRenderer2b.pkl",
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/api/pcfRenderer2b.pkl",
       "input_sha256": "1195ee09fa9539561a369e95dacfcf5aaf5427db81d0f942ba9abce297fac9a2",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "semantic:modules",
+        "semantic:diagnostics"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -79680,16 +79692,19 @@
       }
     },
     {
-      "adapter": null,
+      "adapter": "language-module-eval",
       "execution": {
-        "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
-        "state": "unimplemented"
+        "reason": null,
+        "state": "ready"
       },
       "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/pcfRenderer8.pkl",
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/api/pcfRenderer8.pkl",
       "input_sha256": "142f861c5c45096c9c582832a4df2a5406172afa3bb25d7a0f840346670acf90",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "semantic:modules",
+        "semantic:diagnostics"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -79775,16 +79790,19 @@
       }
     },
     {
-      "adapter": null,
+      "adapter": "language-module-eval",
       "execution": {
-        "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
-        "state": "unimplemented"
+        "reason": null,
+        "state": "ready"
       },
       "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/pcfRenderer9.pkl",
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/api/pcfRenderer9.pkl",
       "input_sha256": "c3718ee0c368eb13c819a114f8038da22e145e32b07ddf0b8843b31a1c3e00a5",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "semantic:modules",
+        "semantic:diagnostics"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -88709,16 +88727,19 @@
       }
     },
     {
-      "adapter": null,
+      "adapter": "language-module-eval",
       "execution": {
-        "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
-        "state": "unimplemented"
+        "reason": null,
+        "state": "ready"
       },
       "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/boolean.pkl",
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/basic/boolean.pkl",
       "input_sha256": "997f0647c2c57c06a1e60ac18f1e0e128b9bfe415677d93ed527fa6706bd2076",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "semantic:modules",
+        "semantic:diagnostics"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -88897,16 +88918,19 @@
       }
     },
     {
-      "adapter": null,
+      "adapter": "language-module-eval",
       "execution": {
-        "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
-        "state": "unimplemented"
+        "reason": null,
+        "state": "ready"
       },
       "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/comments.pkl",
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/basic/comments.pkl",
       "input_sha256": "cdd0ae20dcb2a49c117ac669e079ac2c41354d8520e061ddc9653055bf3bea2e",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "semantic:modules",
+        "semantic:diagnostics"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -90594,16 +90618,19 @@
       }
     },
     {
-      "adapter": null,
+      "adapter": "language-module-eval",
       "execution": {
-        "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
-        "state": "unimplemented"
+        "reason": null,
+        "state": "ready"
       },
       "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/import1.pkl",
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/basic/import1.pkl",
       "input_sha256": "1d4a4ae668a766375b90b7fcc43afe7cd1dc8ee6488869aca01e0e97882d6d4a",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "semantic:modules",
+        "semantic:diagnostics"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -90688,7 +90715,7 @@
       }
     },
     {
-      "adapter": null,
+      "adapter": "language-module-eval",
       "execution": {
         "reason": "Requires upstream JVM test classpath/modulepath fixture adapter.",
         "state": "unimplemented"
@@ -90697,7 +90724,10 @@
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/basic/import1b.pkl",
       "input_sha256": "7aaf723e09544493f6981867d05209f712e31a27652a86c2af2b6e214226b98c",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "semantic:modules",
+        "semantic:diagnostics"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -90782,16 +90812,19 @@
       }
     },
     {
-      "adapter": null,
+      "adapter": "language-module-eval",
       "execution": {
-        "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
-        "state": "unimplemented"
+        "reason": null,
+        "state": "ready"
       },
       "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/import2.pkl",
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/basic/import2.pkl",
       "input_sha256": "8d030a9afdfa39b08230ce4e1be03c9f5d7dc46862e82f52f5b656a1e782bf9e",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "semantic:modules",
+        "semantic:diagnostics"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -90876,16 +90909,19 @@
       }
     },
     {
-      "adapter": null,
+      "adapter": "language-module-eval",
       "execution": {
-        "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
-        "state": "unimplemented"
+        "reason": null,
+        "state": "ready"
       },
       "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/import3.pkl",
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/basic/import3.pkl",
       "input_sha256": "6c57085f865663ccc3729c02a0d0a4e3feba88cc18c78669e92ef589dbf952f8",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "semantic:modules",
+        "semantic:diagnostics"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -91064,16 +91100,19 @@
       }
     },
     {
-      "adapter": null,
+      "adapter": "language-module-eval",
       "execution": {
-        "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
-        "state": "unimplemented"
+        "reason": null,
+        "state": "ready"
       },
       "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/imported.pkl",
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/basic/imported.pkl",
       "input_sha256": "c565a3ebf049042dcee5b2fc456f5f28b0a633b977b1aa20db43b7c69765787b",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "semantic:modules",
+        "semantic:diagnostics"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -96520,16 +96559,19 @@
       }
     },
     {
-      "adapter": null,
+      "adapter": "language-module-eval",
       "execution": {
-        "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
-        "state": "unimplemented"
+        "reason": null,
+        "state": "ready"
       },
       "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/read.pkl",
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/basic/read.pkl",
       "input_sha256": "9af0950aaaa9057093659b97105e69231dc3d55f09d3bc7710cbe2b7ab5fb001",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "semantic:modules",
+        "semantic:diagnostics"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -96802,16 +96844,19 @@
       }
     },
     {
-      "adapter": null,
+      "adapter": "language-module-eval",
       "execution": {
-        "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
-        "state": "unimplemented"
+        "reason": null,
+        "state": "ready"
       },
       "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/semicolon.pkl",
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/basic/semicolon.pkl",
       "input_sha256": "259d752337288dbd89214d1937948e3e2dbca030587bf868343bfc7ede7730cd",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "semantic:modules",
+        "semantic:diagnostics"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -133392,16 +133437,19 @@
       }
     },
     {
-      "adapter": null,
+      "adapter": "language-module-eval",
       "execution": {
-        "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
-        "state": "unimplemented"
+        "reason": null,
+        "state": "ready"
       },
       "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/undefinedProperty1.pkl",
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/undefinedProperty1.pkl",
       "input_sha256": "f151b651b8c47f844f2a8c9ca1a2e4d17bb0992d75d3ffbc397b48dfd6b02af3",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "semantic:modules",
+        "semantic:diagnostics"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -133677,16 +133725,19 @@
       }
     },
     {
-      "adapter": null,
+      "adapter": "language-module-eval",
       "execution": {
-        "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
-        "state": "unimplemented"
+        "reason": null,
+        "state": "ready"
       },
       "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/undefinedProperty4.pkl",
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/undefinedProperty4.pkl",
       "input_sha256": "043f6f60ed72ee6618e127b0d34b33c916afb68498ddddf68aa3bd4b3721a205",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "semantic:modules",
+        "semantic:diagnostics"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -145177,16 +145228,19 @@
       }
     },
     {
-      "adapter": null,
+      "adapter": "language-module-eval",
       "execution": {
-        "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
-        "state": "unimplemented"
+        "reason": null,
+        "state": "ready"
       },
       "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/amendModule1.pkl",
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/modules/amendModule1.pkl",
       "input_sha256": "b42f51dc784cfd1c875afdb33db507bfd9b0dde4fd4276ad7129ebf0082796ce",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "semantic:modules",
+        "semantic:diagnostics"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -146215,16 +146269,19 @@
       }
     },
     {
-      "adapter": null,
+      "adapter": "language-module-eval",
       "execution": {
-        "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
-        "state": "unimplemented"
+        "reason": null,
+        "state": "ready"
       },
       "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/extendModule1.pkl",
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/modules/extendModule1.pkl",
       "input_sha256": "efaa1499067829bce0637f4ef78c0bca9c48bb11f148cf6b824f26993d3d0e35",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "semantic:modules",
+        "semantic:diagnostics"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -146593,16 +146650,19 @@
       }
     },
     {
-      "adapter": null,
+      "adapter": "language-module-eval",
       "execution": {
-        "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
-        "state": "unimplemented"
+        "reason": null,
+        "state": "ready"
       },
       "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/filename with spaces.pkl",
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/modules/filename with spaces.pkl",
       "input_sha256": "ac38bf68333be901cc1e71bc9b439520f3e311bc6112dafceb01d7e821608087",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "semantic:modules",
+        "semantic:diagnostics"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -148013,16 +148073,19 @@
       }
     },
     {
-      "adapter": null,
+      "adapter": "language-module-eval",
       "execution": {
-        "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
-        "state": "unimplemented"
+        "reason": null,
+        "state": "ready"
       },
       "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/recursiveModule1.pkl",
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/modules/recursiveModule1.pkl",
       "input_sha256": "73a6e0d11b575df36c45ba6d1313347d46a6f10b7caf3881e68e5d96761581ce",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "semantic:modules",
+        "semantic:diagnostics"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -148107,16 +148170,19 @@
       }
     },
     {
-      "adapter": null,
+      "adapter": "language-module-eval",
       "execution": {
-        "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
-        "state": "unimplemented"
+        "reason": null,
+        "state": "ready"
       },
       "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/recursiveModule2.pkl",
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/modules/recursiveModule2.pkl",
       "input_sha256": "a0b843f9313eb386673e8989e1a6ed9cd318a74b04e8ec803e2ab3e0ae757cac",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "semantic:modules",
+        "semantic:diagnostics"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -148850,16 +148916,19 @@
       }
     },
     {
-      "adapter": null,
+      "adapter": "language-module-eval",
       "execution": {
-        "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
-        "state": "unimplemented"
+        "reason": null,
+        "state": "ready"
       },
       "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/日本語.pkl",
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/modules/日本語.pkl",
       "input_sha256": "ce3f51e36ea5d6fee3a6f77a9e483a0889cd341f10711bc7b084dfc07c0529e7",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "semantic:modules",
+        "semantic:diagnostics"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -153299,16 +153368,19 @@
       }
     },
     {
-      "adapter": null,
+      "adapter": "language-module-eval",
       "execution": {
-        "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
-        "state": "unimplemented"
+        "reason": null,
+        "state": "ready"
       },
       "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/constraintsTrailingComma.pkl",
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/parser/constraintsTrailingComma.pkl",
       "input_sha256": "cd81315bbd63590ef22afa209b6040055b9b2deb4fb8686bcb66818583270c9e",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "semantic:modules",
+        "semantic:diagnostics"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -153492,16 +153564,19 @@
       }
     },
     {
-      "adapter": null,
+      "adapter": "language-module-eval",
       "execution": {
-        "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
-        "state": "unimplemented"
+        "reason": null,
+        "state": "ready"
       },
       "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/lambdaTrailingCommas.pkl",
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/parser/lambdaTrailingCommas.pkl",
       "input_sha256": "9a037e753e348abac16c43b00a606ed8fe9ae35e6c88d74996d6c92287a0891f",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "semantic:modules",
+        "semantic:diagnostics"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -153575,16 +153650,19 @@
       }
     },
     {
-      "adapter": null,
+      "adapter": "language-module-eval",
       "execution": {
-        "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
-        "state": "unimplemented"
+        "reason": null,
+        "state": "ready"
       },
       "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/lineCommentBetween.pkl",
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/parser/lineCommentBetween.pkl",
       "input_sha256": "92b50167ea8b9624ac5c7bf4153cbef77d83ec0a5e975ac191b7d45cc8117caf",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "semantic:modules",
+        "semantic:diagnostics"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -153669,16 +153747,19 @@
       }
     },
     {
-      "adapter": null,
+      "adapter": "language-module-eval",
       "execution": {
-        "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
-        "state": "unimplemented"
+        "reason": null,
+        "state": "ready"
       },
       "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/methodTrailingCommas.pkl",
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/parser/methodTrailingCommas.pkl",
       "input_sha256": "5f381f782b19c58bc4589b9a9199767eb8e828370927b89b4bd19fb44167c210",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "semantic:modules",
+        "semantic:diagnostics"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -153763,16 +153844,19 @@
       }
     },
     {
-      "adapter": null,
+      "adapter": "language-module-eval",
       "execution": {
-        "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
-        "state": "unimplemented"
+        "reason": null,
+        "state": "ready"
       },
       "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/newline.pkl",
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/parser/newline.pkl",
       "input_sha256": "7f132f7babc19ff302c08906afb03bbcd3be5a67831b2f4a8722e1f9e6789d96",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "semantic:modules",
+        "semantic:diagnostics"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -153956,16 +154040,19 @@
       }
     },
     {
-      "adapter": null,
+      "adapter": "language-module-eval",
       "execution": {
-        "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
-        "state": "unimplemented"
+        "reason": null,
+        "state": "ready"
       },
       "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/spread.pkl",
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/parser/spread.pkl",
       "input_sha256": "636c3f9f688dddee63f167bd00b5929df8dee9561e3ec370b28a93cbc28b1988",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "semantic:modules",
+        "semantic:diagnostics"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -154050,16 +154137,19 @@
       }
     },
     {
-      "adapter": null,
+      "adapter": "language-module-eval",
       "execution": {
-        "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
-        "state": "unimplemented"
+        "reason": null,
+        "state": "ready"
       },
       "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/trailingCommas.pkl",
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/parser/trailingCommas.pkl",
       "input_sha256": "9c03b9cf5757a1e19f9e982be0164027e3d3b88489dbfdb7630b9d3b0c41dedc",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "semantic:modules",
+        "semantic:diagnostics"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -163374,8 +163464,8 @@
   "counts": {
     "cases": 4527,
     "cases_by_execution": {
-      "ready": 3599,
-      "unimplemented": 888,
+      "ready": 3628,
+      "unimplemented": 859,
       "unmapped": 40
     },
     "requirements": 475,
@@ -163386,7 +163476,7 @@
       "specification": 198
     }
   },
-  "module_comparison_boundary": "Original module eval argv/cwd/env/resources in one physical staged workspace; complete stdout/stderr/exit/files and unexpected workspace writes. Parser success is unsupported ModuleOutput evaluation, never eval success. No golden replay or diagnostic normalization.",
+  "module_comparison_boundary": "Original module eval argv/cwd/env/resources in one physical staged workspace; actual output.bytes completion and complete stdout/stderr/exit/files, with unexpected workspace writes retained. Frontend-only preparation is separate. Registered blocked fixture contracts are attempted but remain unimplemented and cannot pass the full gate. No golden replay, toString substitute or diagnostic normalization.",
   "requirements": [
     {
       "description": "All tokens, whitespace, nested comments, quoted and blank identifiers, Unicode and source positions",
@@ -165714,67 +165804,67 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "189dc0408cf1bbecde81651273ff1f719f49003351c203d8aca32b8a82861a93",
+            "sha256": "7564e6bf8464f965735802a7385be23d763cc14b921565c2d4adab4e70687058",
             "symbol": "initialize_member_types"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "189dc0408cf1bbecde81651273ff1f719f49003351c203d8aca32b8a82861a93",
+            "sha256": "7564e6bf8464f965735802a7385be23d763cc14b921565c2d4adab4e70687058",
             "symbol": "validate_class_override"
           },
           {
             "path": "crates/pkl-runtime/src/vm/reference.rs",
-            "sha256": "3c44a82b453b930c0eee7064e131da356f6d3fdda895c1b9166035a23042f960",
+            "sha256": "9a08502647ef93adef9c4aea2e2ae2806934b538091b34d7f07e807d66174888",
             "symbol": "reference_candidate"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "189dc0408cf1bbecde81651273ff1f719f49003351c203d8aca32b8a82861a93",
+            "sha256": "7564e6bf8464f965735802a7385be23d763cc14b921565c2d4adab4e70687058",
             "symbol": "force_key"
           },
           {
             "path": "crates/pkl-runtime/src/heap.rs",
-            "sha256": "708a0bd29aec376916b1434edf8308c7ec84cbcfc69370a844068c1f6c056d39",
+            "sha256": "beb61bc3627ca93eb66cb8d53c353d6d57ea404ea2041f852ce67d3b4f3b642d",
             "symbol": "ExecutableState"
           },
           {
             "path": "crates/pkl-runtime/src/vm/typecheck.rs",
-            "sha256": "0f17a8ef1c171de5bc9fc7d8af611168eeacb15626514a517a9ad5c41889ac2d",
+            "sha256": "80dd0232fae010d3dca4748035d0f8f22aa1a1c50e4f8c6fd2f0a088bdf8c70f",
             "symbol": "begin_type_node"
           },
           {
             "path": "crates/pkl-runtime/src/vm/generics.rs",
-            "sha256": "5449406e74efb5c11325c2e7a2bc1b9c64ae9fc9c1ef87fa9c9e76e660b67647",
+            "sha256": "95c2d5965d3cb02f90684aad8ff7d529b3ca84159e53d39aa34e1668945ee5a2",
             "symbol": "substituted"
           },
           {
             "path": "crates/pkl-runtime/src/vm/generics.rs",
-            "sha256": "5449406e74efb5c11325c2e7a2bc1b9c64ae9fc9c1ef87fa9c9e76e660b67647",
+            "sha256": "95c2d5965d3cb02f90684aad8ff7d529b3ca84159e53d39aa34e1668945ee5a2",
             "symbol": "default_depends_on_parameters"
           },
           {
             "path": "crates/pkl-runtime/src/vm/generics.rs",
-            "sha256": "5449406e74efb5c11325c2e7a2bc1b9c64ae9fc9c1ef87fa9c9e76e660b67647",
+            "sha256": "95c2d5965d3cb02f90684aad8ff7d529b3ca84159e53d39aa34e1668945ee5a2",
             "symbol": "step_generic_default"
           },
           {
             "path": "crates/pkl-runtime/src/vm/generics.rs",
-            "sha256": "5449406e74efb5c11325c2e7a2bc1b9c64ae9fc9c1ef87fa9c9e76e660b67647",
+            "sha256": "95c2d5965d3cb02f90684aad8ff7d529b3ca84159e53d39aa34e1668945ee5a2",
             "symbol": "validate_reference_arguments"
           },
           {
             "path": "crates/pkl-runtime/src/vm/forcing.rs",
-            "sha256": "739cb1da198b1341a67247e5bc96fb96c95272f9a2e80f5585322077063d82e4",
+            "sha256": "aa40a45f909651442e1eb74b37e898c4cfb0160bbe1df20b4cc307089e888be1",
             "symbol": "ForceRun"
           },
           {
             "path": "crates/pkl-runtime/src/vm/forcing.rs",
-            "sha256": "739cb1da198b1341a67247e5bc96fb96c95272f9a2e80f5585322077063d82e4",
+            "sha256": "aa40a45f909651442e1eb74b37e898c4cfb0160bbe1df20b4cc307089e888be1",
             "symbol": "step_deep_force"
           },
           {
             "path": "crates/pkl-runtime/src/diagnostic_values.rs",
-            "sha256": "390943c09715e6ff48aa416ad44653558afa26e610a9be6518e07fccbbbc12e5",
+            "sha256": "f0dd38521837eb49d4b26597c673ec353e6ce6e98d2a5e408c17e14fa0616f73",
             "symbol": "RenderRun"
           }
         ],
@@ -167317,17 +167407,17 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/vm/forcing.rs",
-            "sha256": "739cb1da198b1341a67247e5bc96fb96c95272f9a2e80f5585322077063d82e4",
+            "sha256": "aa40a45f909651442e1eb74b37e898c4cfb0160bbe1df20b4cc307089e888be1",
             "symbol": "ForceRun"
           },
           {
             "path": "crates/pkl-runtime/src/vm/forcing.rs",
-            "sha256": "739cb1da198b1341a67247e5bc96fb96c95272f9a2e80f5585322077063d82e4",
+            "sha256": "aa40a45f909651442e1eb74b37e898c4cfb0160bbe1df20b4cc307089e888be1",
             "symbol": "step_deep_force"
           },
           {
             "path": "crates/pkl-runtime/src/diagnostic_values.rs",
-            "sha256": "390943c09715e6ff48aa416ad44653558afa26e610a9be6518e07fccbbbc12e5",
+            "sha256": "f0dd38521837eb49d4b26597c673ec353e6ce6e98d2a5e408c17e14fa0616f73",
             "symbol": "RenderRun"
           }
         ],
@@ -168296,12 +168386,12 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "189dc0408cf1bbecde81651273ff1f719f49003351c203d8aca32b8a82861a93",
+            "sha256": "7564e6bf8464f965735802a7385be23d763cc14b921565c2d4adab4e70687058",
             "symbol": "validate_object_override"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "189dc0408cf1bbecde81651273ff1f719f49003351c203d8aca32b8a82861a93",
+            "sha256": "7564e6bf8464f965735802a7385be23d763cc14b921565c2d4adab4e70687058",
             "symbol": "inherited_member"
           }
         ],
@@ -168504,22 +168594,22 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/heap.rs",
-            "sha256": "708a0bd29aec376916b1434edf8308c7ec84cbcfc69370a844068c1f6c056d39",
+            "sha256": "beb61bc3627ca93eb66cb8d53c353d6d57ea404ea2041f852ce67d3b4f3b642d",
             "symbol": "Member"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "189dc0408cf1bbecde81651273ff1f719f49003351c203d8aca32b8a82861a93",
+            "sha256": "7564e6bf8464f965735802a7385be23d763cc14b921565c2d4adab4e70687058",
             "symbol": "validate_class_override"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "189dc0408cf1bbecde81651273ff1f719f49003351c203d8aca32b8a82861a93",
+            "sha256": "7564e6bf8464f965735802a7385be23d763cc14b921565c2d4adab4e70687058",
             "symbol": "validate_object_override"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "189dc0408cf1bbecde81651273ff1f719f49003351c203d8aca32b8a82861a93",
+            "sha256": "7564e6bf8464f965735802a7385be23d763cc14b921565c2d4adab4e70687058",
             "symbol": "initialize_member_types"
           }
         ],
@@ -168908,37 +168998,37 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/heap.rs",
-            "sha256": "708a0bd29aec376916b1434edf8308c7ec84cbcfc69370a844068c1f6c056d39",
+            "sha256": "beb61bc3627ca93eb66cb8d53c353d6d57ea404ea2041f852ce67d3b4f3b642d",
             "symbol": "Member"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "189dc0408cf1bbecde81651273ff1f719f49003351c203d8aca32b8a82861a93",
+            "sha256": "7564e6bf8464f965735802a7385be23d763cc14b921565c2d4adab4e70687058",
             "symbol": "validate_class_override"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "189dc0408cf1bbecde81651273ff1f719f49003351c203d8aca32b8a82861a93",
+            "sha256": "7564e6bf8464f965735802a7385be23d763cc14b921565c2d4adab4e70687058",
             "symbol": "validate_object_override"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "189dc0408cf1bbecde81651273ff1f719f49003351c203d8aca32b8a82861a93",
+            "sha256": "7564e6bf8464f965735802a7385be23d763cc14b921565c2d4adab4e70687058",
             "symbol": "initialize_member_types"
           },
           {
             "path": "crates/pkl-runtime/src/resolver.rs",
-            "sha256": "7e44c1f799c1fc9441ae22a48994591f38508325b44c5c8e740989e431365727",
+            "sha256": "0fb5e767e0c54d12bf8ced4bb55b99780d5113a370271627d67f759c20364a21",
             "symbol": "validate_modifiers"
           },
           {
             "path": "crates/pkl-runtime/src/resolver.rs",
-            "sha256": "7e44c1f799c1fc9441ae22a48994591f38508325b44c5c8e740989e431365727",
+            "sha256": "0fb5e767e0c54d12bf8ced4bb55b99780d5113a370271627d67f759c20364a21",
             "symbol": "ConstLevel"
           },
           {
             "path": "crates/pkl-runtime/src/resolver.rs",
-            "sha256": "7e44c1f799c1fc9441ae22a48994591f38508325b44c5c8e740989e431365727",
+            "sha256": "0fb5e767e0c54d12bf8ced4bb55b99780d5113a370271627d67f759c20364a21",
             "symbol": "ConstScope"
           },
           {
@@ -169254,32 +169344,32 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "189dc0408cf1bbecde81651273ff1f719f49003351c203d8aca32b8a82861a93",
+            "sha256": "7564e6bf8464f965735802a7385be23d763cc14b921565c2d4adab4e70687058",
             "symbol": "TypeCheck"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "189dc0408cf1bbecde81651273ff1f719f49003351c203d8aca32b8a82861a93",
+            "sha256": "7564e6bf8464f965735802a7385be23d763cc14b921565c2d4adab4e70687058",
             "symbol": "compile_type_at"
           },
           {
             "path": "crates/pkl-runtime/src/vm/reference.rs",
-            "sha256": "3c44a82b453b930c0eee7064e131da356f6d3fdda895c1b9166035a23042f960",
+            "sha256": "9a08502647ef93adef9c4aea2e2ae2806934b538091b34d7f07e807d66174888",
             "symbol": "subtype"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "189dc0408cf1bbecde81651273ff1f719f49003351c203d8aca32b8a82861a93",
+            "sha256": "7564e6bf8464f965735802a7385be23d763cc14b921565c2d4adab4e70687058",
             "symbol": "invoke_function"
           },
           {
             "path": "crates/pkl-runtime/src/heap.rs",
-            "sha256": "708a0bd29aec376916b1434edf8308c7ec84cbcfc69370a844068c1f6c056d39",
+            "sha256": "beb61bc3627ca93eb66cb8d53c353d6d57ea404ea2041f852ce67d3b4f3b642d",
             "symbol": "Function"
           },
           {
             "path": "crates/pkl-runtime/src/resolver.rs",
-            "sha256": "7e44c1f799c1fc9441ae22a48994591f38508325b44c5c8e740989e431365727",
+            "sha256": "0fb5e767e0c54d12bf8ced4bb55b99780d5113a370271627d67f759c20364a21",
             "symbol": "ConstScope"
           },
           {
@@ -171724,62 +171814,62 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "189dc0408cf1bbecde81651273ff1f719f49003351c203d8aca32b8a82861a93",
+            "sha256": "7564e6bf8464f965735802a7385be23d763cc14b921565c2d4adab4e70687058",
             "symbol": "TypeCheck"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "189dc0408cf1bbecde81651273ff1f719f49003351c203d8aca32b8a82861a93",
+            "sha256": "7564e6bf8464f965735802a7385be23d763cc14b921565c2d4adab4e70687058",
             "symbol": "initialize_type_resolution"
           },
           {
             "path": "crates/pkl-runtime/src/vm/typecheck.rs",
-            "sha256": "0f17a8ef1c171de5bc9fc7d8af611168eeacb15626514a517a9ad5c41889ac2d",
+            "sha256": "80dd0232fae010d3dca4748035d0f8f22aa1a1c50e4f8c6fd2f0a088bdf8c70f",
             "symbol": "step_type"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "189dc0408cf1bbecde81651273ff1f719f49003351c203d8aca32b8a82861a93",
+            "sha256": "7564e6bf8464f965735802a7385be23d763cc14b921565c2d4adab4e70687058",
             "symbol": "type_resolution_plan"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "189dc0408cf1bbecde81651273ff1f719f49003351c203d8aca32b8a82861a93",
+            "sha256": "7564e6bf8464f965735802a7385be23d763cc14b921565c2d4adab4e70687058",
             "symbol": "active_constraints"
           },
           {
             "path": "crates/pkl-runtime/src/heap.rs",
-            "sha256": "708a0bd29aec376916b1434edf8308c7ec84cbcfc69370a844068c1f6c056d39",
+            "sha256": "beb61bc3627ca93eb66cb8d53c353d6d57ea404ea2041f852ce67d3b4f3b642d",
             "symbol": "CustomThisSlot"
           },
           {
             "path": "crates/pkl-runtime/src/heap.rs",
-            "sha256": "708a0bd29aec376916b1434edf8308c7ec84cbcfc69370a844068c1f6c056d39",
+            "sha256": "beb61bc3627ca93eb66cb8d53c353d6d57ea404ea2041f852ce67d3b4f3b642d",
             "symbol": "ExecutableState"
           },
           {
             "path": "crates/pkl-runtime/src/vm/typecheck.rs",
-            "sha256": "0f17a8ef1c171de5bc9fc7d8af611168eeacb15626514a517a9ad5c41889ac2d",
+            "sha256": "80dd0232fae010d3dca4748035d0f8f22aa1a1c50e4f8c6fd2f0a088bdf8c70f",
             "symbol": "begin_type_node"
           },
           {
             "path": "crates/pkl-runtime/src/vm/generics.rs",
-            "sha256": "5449406e74efb5c11325c2e7a2bc1b9c64ae9fc9c1ef87fa9c9e76e660b67647",
+            "sha256": "95c2d5965d3cb02f90684aad8ff7d529b3ca84159e53d39aa34e1668945ee5a2",
             "symbol": "substituted"
           },
           {
             "path": "crates/pkl-runtime/src/vm/generics.rs",
-            "sha256": "5449406e74efb5c11325c2e7a2bc1b9c64ae9fc9c1ef87fa9c9e76e660b67647",
+            "sha256": "95c2d5965d3cb02f90684aad8ff7d529b3ca84159e53d39aa34e1668945ee5a2",
             "symbol": "default_depends_on_parameters"
           },
           {
             "path": "crates/pkl-runtime/src/vm/generics.rs",
-            "sha256": "5449406e74efb5c11325c2e7a2bc1b9c64ae9fc9c1ef87fa9c9e76e660b67647",
+            "sha256": "95c2d5965d3cb02f90684aad8ff7d529b3ca84159e53d39aa34e1668945ee5a2",
             "symbol": "step_generic_default"
           },
           {
             "path": "crates/pkl-runtime/src/vm/generics.rs",
-            "sha256": "5449406e74efb5c11325c2e7a2bc1b9c64ae9fc9c1ef87fa9c9e76e660b67647",
+            "sha256": "95c2d5965d3cb02f90684aad8ff7d529b3ca84159e53d39aa34e1668945ee5a2",
             "symbol": "validate_reference_arguments"
           }
         ],
@@ -173480,72 +173570,72 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "189dc0408cf1bbecde81651273ff1f719f49003351c203d8aca32b8a82861a93",
+            "sha256": "7564e6bf8464f965735802a7385be23d763cc14b921565c2d4adab4e70687058",
             "symbol": "BeginTypeAlias"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "189dc0408cf1bbecde81651273ff1f719f49003351c203d8aca32b8a82861a93",
+            "sha256": "7564e6bf8464f965735802a7385be23d763cc14b921565c2d4adab4e70687058",
             "symbol": "NamedAlias"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "189dc0408cf1bbecde81651273ff1f719f49003351c203d8aca32b8a82861a93",
+            "sha256": "7564e6bf8464f965735802a7385be23d763cc14b921565c2d4adab4e70687058",
             "symbol": "compile_type_at"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "189dc0408cf1bbecde81651273ff1f719f49003351c203d8aca32b8a82861a93",
+            "sha256": "7564e6bf8464f965735802a7385be23d763cc14b921565c2d4adab4e70687058",
             "symbol": "type_resolution_plan"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "189dc0408cf1bbecde81651273ff1f719f49003351c203d8aca32b8a82861a93",
+            "sha256": "7564e6bf8464f965735802a7385be23d763cc14b921565c2d4adab4e70687058",
             "symbol": "initialize_type_resolution"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "189dc0408cf1bbecde81651273ff1f719f49003351c203d8aca32b8a82861a93",
+            "sha256": "7564e6bf8464f965735802a7385be23d763cc14b921565c2d4adab4e70687058",
             "symbol": "active_constraints"
           },
           {
             "path": "crates/pkl-runtime/src/vm/typecheck.rs",
-            "sha256": "0f17a8ef1c171de5bc9fc7d8af611168eeacb15626514a517a9ad5c41889ac2d",
+            "sha256": "80dd0232fae010d3dca4748035d0f8f22aa1a1c50e4f8c6fd2f0a088bdf8c70f",
             "symbol": "step_type"
           },
           {
             "path": "crates/pkl-runtime/src/heap.rs",
-            "sha256": "708a0bd29aec376916b1434edf8308c7ec84cbcfc69370a844068c1f6c056d39",
+            "sha256": "beb61bc3627ca93eb66cb8d53c353d6d57ea404ea2041f852ce67d3b4f3b642d",
             "symbol": "CustomThisSlot"
           },
           {
             "path": "crates/pkl-runtime/src/heap.rs",
-            "sha256": "708a0bd29aec376916b1434edf8308c7ec84cbcfc69370a844068c1f6c056d39",
+            "sha256": "beb61bc3627ca93eb66cb8d53c353d6d57ea404ea2041f852ce67d3b4f3b642d",
             "symbol": "ExecutableState"
           },
           {
             "path": "crates/pkl-runtime/src/vm/typecheck.rs",
-            "sha256": "0f17a8ef1c171de5bc9fc7d8af611168eeacb15626514a517a9ad5c41889ac2d",
+            "sha256": "80dd0232fae010d3dca4748035d0f8f22aa1a1c50e4f8c6fd2f0a088bdf8c70f",
             "symbol": "begin_type_node"
           },
           {
             "path": "crates/pkl-runtime/src/vm/generics.rs",
-            "sha256": "5449406e74efb5c11325c2e7a2bc1b9c64ae9fc9c1ef87fa9c9e76e660b67647",
+            "sha256": "95c2d5965d3cb02f90684aad8ff7d529b3ca84159e53d39aa34e1668945ee5a2",
             "symbol": "substituted"
           },
           {
             "path": "crates/pkl-runtime/src/vm/generics.rs",
-            "sha256": "5449406e74efb5c11325c2e7a2bc1b9c64ae9fc9c1ef87fa9c9e76e660b67647",
+            "sha256": "95c2d5965d3cb02f90684aad8ff7d529b3ca84159e53d39aa34e1668945ee5a2",
             "symbol": "default_depends_on_parameters"
           },
           {
             "path": "crates/pkl-runtime/src/vm/generics.rs",
-            "sha256": "5449406e74efb5c11325c2e7a2bc1b9c64ae9fc9c1ef87fa9c9e76e660b67647",
+            "sha256": "95c2d5965d3cb02f90684aad8ff7d529b3ca84159e53d39aa34e1668945ee5a2",
             "symbol": "step_generic_default"
           },
           {
             "path": "crates/pkl-runtime/src/vm/generics.rs",
-            "sha256": "5449406e74efb5c11325c2e7a2bc1b9c64ae9fc9c1ef87fa9c9e76e660b67647",
+            "sha256": "95c2d5965d3cb02f90684aad8ff7d529b3ca84159e53d39aa34e1668945ee5a2",
             "symbol": "validate_reference_arguments"
           }
         ],
@@ -174258,52 +174348,52 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/heap.rs",
-            "sha256": "708a0bd29aec376916b1434edf8308c7ec84cbcfc69370a844068c1f6c056d39",
+            "sha256": "beb61bc3627ca93eb66cb8d53c353d6d57ea404ea2041f852ce67d3b4f3b642d",
             "symbol": "CustomThisSlot"
           },
           {
             "path": "crates/pkl-runtime/src/vm/typecheck.rs",
-            "sha256": "0f17a8ef1c171de5bc9fc7d8af611168eeacb15626514a517a9ad5c41889ac2d",
+            "sha256": "80dd0232fae010d3dca4748035d0f8f22aa1a1c50e4f8c6fd2f0a088bdf8c70f",
             "symbol": "step_type"
           },
           {
             "path": "crates/pkl-runtime/src/vm/typecheck.rs",
-            "sha256": "0f17a8ef1c171de5bc9fc7d8af611168eeacb15626514a517a9ad5c41889ac2d",
+            "sha256": "80dd0232fae010d3dca4748035d0f8f22aa1a1c50e4f8c6fd2f0a088bdf8c70f",
             "symbol": "launch_constraint"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "189dc0408cf1bbecde81651273ff1f719f49003351c203d8aca32b8a82861a93",
+            "sha256": "7564e6bf8464f965735802a7385be23d763cc14b921565c2d4adab4e70687058",
             "symbol": "invoke_function"
           },
           {
             "path": "crates/pkl-runtime/src/heap.rs",
-            "sha256": "708a0bd29aec376916b1434edf8308c7ec84cbcfc69370a844068c1f6c056d39",
+            "sha256": "beb61bc3627ca93eb66cb8d53c353d6d57ea404ea2041f852ce67d3b4f3b642d",
             "symbol": "ExecutableState"
           },
           {
             "path": "crates/pkl-runtime/src/vm/typecheck.rs",
-            "sha256": "0f17a8ef1c171de5bc9fc7d8af611168eeacb15626514a517a9ad5c41889ac2d",
+            "sha256": "80dd0232fae010d3dca4748035d0f8f22aa1a1c50e4f8c6fd2f0a088bdf8c70f",
             "symbol": "begin_type_node"
           },
           {
             "path": "crates/pkl-runtime/src/vm/generics.rs",
-            "sha256": "5449406e74efb5c11325c2e7a2bc1b9c64ae9fc9c1ef87fa9c9e76e660b67647",
+            "sha256": "95c2d5965d3cb02f90684aad8ff7d529b3ca84159e53d39aa34e1668945ee5a2",
             "symbol": "substituted"
           },
           {
             "path": "crates/pkl-runtime/src/vm/generics.rs",
-            "sha256": "5449406e74efb5c11325c2e7a2bc1b9c64ae9fc9c1ef87fa9c9e76e660b67647",
+            "sha256": "95c2d5965d3cb02f90684aad8ff7d529b3ca84159e53d39aa34e1668945ee5a2",
             "symbol": "default_depends_on_parameters"
           },
           {
             "path": "crates/pkl-runtime/src/vm/generics.rs",
-            "sha256": "5449406e74efb5c11325c2e7a2bc1b9c64ae9fc9c1ef87fa9c9e76e660b67647",
+            "sha256": "95c2d5965d3cb02f90684aad8ff7d529b3ca84159e53d39aa34e1668945ee5a2",
             "symbol": "step_generic_default"
           },
           {
             "path": "crates/pkl-runtime/src/vm/generics.rs",
-            "sha256": "5449406e74efb5c11325c2e7a2bc1b9c64ae9fc9c1ef87fa9c9e76e660b67647",
+            "sha256": "95c2d5965d3cb02f90684aad8ff7d529b3ca84159e53d39aa34e1668945ee5a2",
             "symbol": "validate_reference_arguments"
           }
         ],
@@ -174995,47 +175085,47 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "189dc0408cf1bbecde81651273ff1f719f49003351c203d8aca32b8a82861a93",
+            "sha256": "7564e6bf8464f965735802a7385be23d763cc14b921565c2d4adab4e70687058",
             "symbol": "NamedAlias"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "189dc0408cf1bbecde81651273ff1f719f49003351c203d8aca32b8a82861a93",
+            "sha256": "7564e6bf8464f965735802a7385be23d763cc14b921565c2d4adab4e70687058",
             "symbol": "compile_type_at"
           },
           {
             "path": "crates/pkl-runtime/src/vm/typecheck.rs",
-            "sha256": "0f17a8ef1c171de5bc9fc7d8af611168eeacb15626514a517a9ad5c41889ac2d",
+            "sha256": "80dd0232fae010d3dca4748035d0f8f22aa1a1c50e4f8c6fd2f0a088bdf8c70f",
             "symbol": "step_type"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "189dc0408cf1bbecde81651273ff1f719f49003351c203d8aca32b8a82861a93",
+            "sha256": "7564e6bf8464f965735802a7385be23d763cc14b921565c2d4adab4e70687058",
             "symbol": "type_resolution_plan"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "189dc0408cf1bbecde81651273ff1f719f49003351c203d8aca32b8a82861a93",
+            "sha256": "7564e6bf8464f965735802a7385be23d763cc14b921565c2d4adab4e70687058",
             "symbol": "initialize_type_resolution"
           },
           {
             "path": "crates/pkl-runtime/src/vm/generics.rs",
-            "sha256": "5449406e74efb5c11325c2e7a2bc1b9c64ae9fc9c1ef87fa9c9e76e660b67647",
+            "sha256": "95c2d5965d3cb02f90684aad8ff7d529b3ca84159e53d39aa34e1668945ee5a2",
             "symbol": "substituted"
           },
           {
             "path": "crates/pkl-runtime/src/vm/generics.rs",
-            "sha256": "5449406e74efb5c11325c2e7a2bc1b9c64ae9fc9c1ef87fa9c9e76e660b67647",
+            "sha256": "95c2d5965d3cb02f90684aad8ff7d529b3ca84159e53d39aa34e1668945ee5a2",
             "symbol": "default_depends_on_parameters"
           },
           {
             "path": "crates/pkl-runtime/src/vm/generics.rs",
-            "sha256": "5449406e74efb5c11325c2e7a2bc1b9c64ae9fc9c1ef87fa9c9e76e660b67647",
+            "sha256": "95c2d5965d3cb02f90684aad8ff7d529b3ca84159e53d39aa34e1668945ee5a2",
             "symbol": "step_generic_default"
           },
           {
             "path": "crates/pkl-runtime/src/vm/generics.rs",
-            "sha256": "5449406e74efb5c11325c2e7a2bc1b9c64ae9fc9c1ef87fa9c9e76e660b67647",
+            "sha256": "95c2d5965d3cb02f90684aad8ff7d529b3ca84159e53d39aa34e1668945ee5a2",
             "symbol": "validate_reference_arguments"
           }
         ],
@@ -176109,27 +176199,27 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/vm/reference.rs",
-            "sha256": "3c44a82b453b930c0eee7064e131da356f6d3fdda895c1b9166035a23042f960",
+            "sha256": "9a08502647ef93adef9c4aea2e2ae2806934b538091b34d7f07e807d66174888",
             "symbol": "Reference"
           },
           {
             "path": "crates/pkl-runtime/src/vm/reference.rs",
-            "sha256": "3c44a82b453b930c0eee7064e131da356f6d3fdda895c1b9166035a23042f960",
+            "sha256": "9a08502647ef93adef9c4aea2e2ae2806934b538091b34d7f07e807d66174888",
             "symbol": "reference_access"
           },
           {
             "path": "crates/pkl-runtime/src/vm/reference.rs",
-            "sha256": "3c44a82b453b930c0eee7064e131da356f6d3fdda895c1b9166035a23042f960",
+            "sha256": "9a08502647ef93adef9c4aea2e2ae2806934b538091b34d7f07e807d66174888",
             "symbol": "invoke_reference_native"
           },
           {
             "path": "crates/pkl-runtime/src/vm/typecheck.rs",
-            "sha256": "0f17a8ef1c171de5bc9fc7d8af611168eeacb15626514a517a9ad5c41889ac2d",
+            "sha256": "80dd0232fae010d3dca4748035d0f8f22aa1a1c50e4f8c6fd2f0a088bdf8c70f",
             "symbol": "step_type"
           },
           {
             "path": "crates/pkl-runtime/src/vm/generics.rs",
-            "sha256": "5449406e74efb5c11325c2e7a2bc1b9c64ae9fc9c1ef87fa9c9e76e660b67647",
+            "sha256": "95c2d5965d3cb02f90684aad8ff7d529b3ca84159e53d39aa34e1668945ee5a2",
             "symbol": "validate_reference_arguments"
           }
         ],
@@ -176374,7 +176464,7 @@
           },
           {
             "path": "crates/pkl-runtime/src/resolver.rs",
-            "sha256": "7e44c1f799c1fc9441ae22a48994591f38508325b44c5c8e740989e431365727",
+            "sha256": "0fb5e767e0c54d12bf8ced4bb55b99780d5113a370271627d67f759c20364a21",
             "symbol": "Annotations"
           },
           {
@@ -176389,7 +176479,7 @@
           },
           {
             "path": "crates/pkl-runtime/src/heap.rs",
-            "sha256": "708a0bd29aec376916b1434edf8308c7ec84cbcfc69370a844068c1f6c056d39",
+            "sha256": "beb61bc3627ca93eb66cb8d53c353d6d57ea404ea2041f852ce67d3b4f3b642d",
             "symbol": "Object"
           }
         ],
@@ -176525,32 +176615,32 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/heap.rs",
-            "sha256": "708a0bd29aec376916b1434edf8308c7ec84cbcfc69370a844068c1f6c056d39",
+            "sha256": "beb61bc3627ca93eb66cb8d53c353d6d57ea404ea2041f852ce67d3b4f3b642d",
             "symbol": "Member"
           },
           {
             "path": "crates/pkl-runtime/src/heap.rs",
-            "sha256": "708a0bd29aec376916b1434edf8308c7ec84cbcfc69370a844068c1f6c056d39",
+            "sha256": "beb61bc3627ca93eb66cb8d53c353d6d57ea404ea2041f852ce67d3b4f3b642d",
             "symbol": "Object"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "189dc0408cf1bbecde81651273ff1f719f49003351c203d8aca32b8a82861a93",
+            "sha256": "7564e6bf8464f965735802a7385be23d763cc14b921565c2d4adab4e70687058",
             "symbol": "initialize_member_types"
           },
           {
             "path": "crates/pkl-runtime/src/vm/reference.rs",
-            "sha256": "3c44a82b453b930c0eee7064e131da356f6d3fdda895c1b9166035a23042f960",
+            "sha256": "9a08502647ef93adef9c4aea2e2ae2806934b538091b34d7f07e807d66174888",
             "symbol": "reference_candidate"
           },
           {
             "path": "crates/pkl-runtime/src/vm/typecheck.rs",
-            "sha256": "0f17a8ef1c171de5bc9fc7d8af611168eeacb15626514a517a9ad5c41889ac2d",
+            "sha256": "80dd0232fae010d3dca4748035d0f8f22aa1a1c50e4f8c6fd2f0a088bdf8c70f",
             "symbol": "step_type"
           },
           {
             "path": "crates/pkl-runtime/src/vm/generics.rs",
-            "sha256": "5449406e74efb5c11325c2e7a2bc1b9c64ae9fc9c1ef87fa9c9e76e660b67647",
+            "sha256": "95c2d5965d3cb02f90684aad8ff7d529b3ca84159e53d39aa34e1668945ee5a2",
             "symbol": "step_generic_default"
           }
         ],
@@ -176734,13 +176824,28 @@
           },
           {
             "path": "crates/pkl-runtime/src/resolver.rs",
-            "sha256": "7e44c1f799c1fc9441ae22a48994591f38508325b44c5c8e740989e431365727",
+            "sha256": "0fb5e767e0c54d12bf8ced4bb55b99780d5113a370271627d67f759c20364a21",
             "symbol": "visit"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "189dc0408cf1bbecde81651273ff1f719f49003351c203d8aca32b8a82861a93",
+            "sha256": "7564e6bf8464f965735802a7385be23d763cc14b921565c2d4adab4e70687058",
             "symbol": "compile_type_at"
+          },
+          {
+            "path": "crates/pkl-runtime/src/evaluation/session.rs",
+            "sha256": "ede109940381c249ddcd28c92257d37bd7fa9f0e4a38dca8c91ccb3d1ccbaa79",
+            "symbol": "start_output_bytes"
+          },
+          {
+            "path": "crates/pkl-runtime/src/evaluation/frontend.rs",
+            "sha256": "63441c029c5fa5457237c5c31109591236973603eba47e6300a82fa84c2e8a2c",
+            "symbol": "evaluate_module_output"
+          },
+          {
+            "path": "crates/pkl-runtime/src/vm.rs",
+            "sha256": "7564e6bf8464f965735802a7385be23d763cc14b921565c2d4adab4e70687058",
+            "symbol": "CheckModuleOutput"
           }
         ],
         "state": "partial"
@@ -176751,9 +176856,11 @@
       "reviewed_mapping": {
         "remaining": [
           "General module loading, extends/amends, imports beyond the pkl:ref bridge and complete module identity semantics remain open.",
-          "Original import/module snippets and full invalid syntax/name resolution corpus still require their original adapters and execution."
+          "Original import/module snippets and full invalid syntax/name resolution corpus still require their original adapters and execution.",
+          "Output.files/multiple outputs and complete renderer/converter/transformer/reflection dependencies remain partial or unsupported; every original selected failure stays in the full gate.",
+          "The selected output kernel does not establish whole-language, public evaluator API or performance compatibility."
         ],
-        "scope": "Local const import members, explicit and inferred pkl:ref aliases, qualified type lookup and namespace diagnostics have selected raw comparisons.",
+        "scope": "Local const import members, explicit and inferred pkl:ref aliases, qualified type lookup and namespace diagnostics have selected raw comparisons. Stage40 adds an actual single-module output.bytes operation with typed preparation, real ModuleOutput checking and shared Host lifecycle. All reviewed original30 output/module contracts are executable without source/expression wrappers; readiness is not a pass claim.",
         "source": "compatibility/m2-mappings.json"
       },
       "tests": {
@@ -176767,7 +176874,37 @@
           "reference-stage10-namespace-parameter",
           "reference-stage10-namespace-alias-valid",
           "reference-stage10-namespace-property-duplicate",
-          "reference-stage10-native-method-property-namespace"
+          "reference-stage10-native-method-property-namespace",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/comments.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/semicolon.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/imported.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/methodTrailingCommas.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/constraintsTrailingComma.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/trailingCommas.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/spread.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/pcfRenderer1.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/pcfRenderer8.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/undefinedProperty1.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/undefinedProperty4.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/import1.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/import1b.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/import2.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/import3.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/extendModule1.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/amendModule1.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/recursiveModule1.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/recursiveModule2.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/filename with spaces.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/日本語.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/moduleOutput.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/newline.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/boolean.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/read.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/lambdaTrailingCommas.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/lineCommentBetween.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/pcfRenderer2b.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/pcfRenderer9.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/moduleOutput2.pkl"
         ],
         "state": "partial"
       }
@@ -176784,12 +176921,12 @@
           },
           {
             "path": "crates/pkl-runtime/src/evaluation.rs",
-            "sha256": "216999115e70f812e5a93ea18173eb35f98c1eedfffa57edfee91b9f57a4593b",
+            "sha256": "34455d175278a51cc3a2d7a472a6984805038ae96614b44c17345008a2ca4935",
             "symbol": "runtime_error"
           },
           {
             "path": "crates/pkl-runtime/src/diagnostic_values.rs",
-            "sha256": "390943c09715e6ff48aa416ad44653558afa26e610a9be6518e07fccbbbc12e5",
+            "sha256": "f0dd38521837eb49d4b26597c673ec353e6ce6e98d2a5e408c17e14fa0616f73",
             "symbol": "Renderer"
           },
           {
@@ -176804,7 +176941,7 @@
           },
           {
             "path": "crates/pkl-runtime/src/resolver.rs",
-            "sha256": "7e44c1f799c1fc9441ae22a48994591f38508325b44c5c8e740989e431365727",
+            "sha256": "0fb5e767e0c54d12bf8ced4bb55b99780d5113a370271627d67f759c20364a21",
             "symbol": "ConstScope"
           },
           {
@@ -176824,7 +176961,7 @@
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "189dc0408cf1bbecde81651273ff1f719f49003351c203d8aca32b8a82861a93",
+            "sha256": "7564e6bf8464f965735802a7385be23d763cc14b921565c2d4adab4e70687058",
             "symbol": "executable_value_span"
           },
           {
@@ -176834,23 +176971,28 @@
           },
           {
             "path": "crates/pkl-runtime/src/vm/forcing.rs",
-            "sha256": "739cb1da198b1341a67247e5bc96fb96c95272f9a2e80f5585322077063d82e4",
+            "sha256": "aa40a45f909651442e1eb74b37e898c4cfb0160bbe1df20b4cc307089e888be1",
             "symbol": "ForceRun"
           },
           {
             "path": "crates/pkl-runtime/src/vm/forcing.rs",
-            "sha256": "739cb1da198b1341a67247e5bc96fb96c95272f9a2e80f5585322077063d82e4",
+            "sha256": "aa40a45f909651442e1eb74b37e898c4cfb0160bbe1df20b4cc307089e888be1",
             "symbol": "step_deep_force"
           },
           {
             "path": "crates/pkl-runtime/src/diagnostic_values.rs",
-            "sha256": "390943c09715e6ff48aa416ad44653558afa26e610a9be6518e07fccbbbc12e5",
+            "sha256": "f0dd38521837eb49d4b26597c673ec353e6ce6e98d2a5e408c17e14fa0616f73",
             "symbol": "RenderRun"
           },
           {
             "path": "crates/pkl-runtime/src/evaluation/frontend.rs",
-            "sha256": "22890894d5c93a12bf4649a08ec1d41101b329f8c778086e48decdddadc290e7",
+            "sha256": "63441c029c5fa5457237c5c31109591236973603eba47e6300a82fa84c2e8a2c",
             "symbol": "evaluate_module_frontend"
+          },
+          {
+            "path": "crates/pkl-runtime/src/evaluation/session.rs",
+            "sha256": "ede109940381c249ddcd28c92257d37bd7fa9f0e4a38dca8c91ccb3d1ccbaa79",
+            "symbol": "output_failure"
           }
         ],
         "state": "partial"
@@ -176867,7 +177009,7 @@
           "Cyclic rendering oracle failures, identity-dependent keys, complete diagnostic-time forcing/Host suspension and finite truncation side effects remain unresolved or unverified.",
           "The new persistent originals use trace; complete trace logging and its original sequence contract remain required."
         ],
-        "scope": "Reference constructor, access, constraint and rendering errors retain complete message, authored frame, foreign standard-library source and URI bytes in selected comparisons. Stage11 adds selected fixed declaration, inherited metadata and complete raw diagnostics through the shared VM. Stage 13 adds selected alias/function metadata, exported-type equality and complete raw diagnostic comparisons; original suite execution and remaining scope stay open. Stage 14 adds selected authored type-resolution order, generic parameter scope and nested substitution, class/alias arity ordering, and owner signature diagnostics; persistent failed-declaration state has a separate sequence contract. Stage 15 adds selected non-generic recursive constraint block graphs and declaration type scope, plus builtin Class argument erasure and arity ordering. At Stage 15 recursive generic constraints remained open; Stage 16 adds bounded shared receiver-slot support. Stage 16: Selected recursive frame compression, count-one loops, complete call spans and hint placement match Java uncolored diagnostics. Stage 17: Selected const-method barriers, lambda lookup depth, immediate outer lexical scope, and grouped-callee parser diagnostics follow the pinned Java behavior. Stage 18 adds selected let-body and for-generator lexical const-depth boundaries while retaining enclosing const levels, plus their complete raw diagnostics and lambda controls. Selected finite recursive generic and instantiated type-variable failures compare complete Java bytes with power assertions enabled and disabled. Stage 19 adds bounded shared-metadata regressions for finite deep and branching actual arguments, observable class-argument swaps, inline/lambda/shared-let recursion, recursive Reference validation, and distinct wrapper actuals. Original Java stack errors, historical native abort evidence, full language semantics and performance remain separately accounted. Stage20 adds bounded nullable defaults, inferred collection amendments, null identity and repeated default failures; complete nullable and collection semantics remain unverified. Stage21 adds bounded direct symbolic constructors, actual-argument diagnostics, lazy class defaults, collection body controls and persistent retries; complete constructors, lexical roots and builtin coverage remain unverified. Stage22 adds bounded strict Map construction, boxed/hash-prefix key semantics, lazy nested generic values, insertion-order iteration and HAMT-ordered equality/hash forcing; complete Map APIs and language coverage remain unverified. Stage23 adds bounded strict Set construction, immediate element hashing and deduplication, boxed/cache-sensitive membership, Set defaults and generic aliases, eager nested element checks, structural equality/hash, insertion-order generation/spreading and raw null/default diagnostic controls; complete Set APIs and language coverage remain unverified. Stage 24 additionally covers bounded Collection List/Set classification, eager versus lazy nested validation, aliases/defaults, nullable constructor timing, selected metadata and complete diagnostics. Stage 30 preserves UTF-16 diagnostic member paths through parser/resolver/compiler counters, block metadata, runtime frames and recursive compression. Selected sibling entry/function numbering and detached lifecycle names distinguish unmatched surrogates from literal question marks before Java UTF-8 output. Typed-property diagnostic controls distinguish inline checks for object-local declarations from module/class-local separate call frames; alias use does not change the declaration category. Stage 31 distinguishes folded numeric-token value frames for local properties from authored body sections retained by selected public class constant properties. Selected complete diagnostics cover signed integer/float literals, whitespace/comments/multiline syntax, radix and minimum-integer literals, grouping, direct constraints and aliases; operand, argument/return, cast, overflow-literal and first-error controls retain their separate source ownership. Success controls preserve minimum integers and negative-zero arithmetic. These selected observations do not establish the complete numeric or diagnostic surface. Additional scalar-constant controls distinguish grouping removal in computed local bodies from source reconstruction for selected non-local property, overridden property, Mapping entry and Listing element value frames. Grouped string, Boolean and null constants preserve the same wrapper distinction. Original failed baseline and first-candidate grouped Listing observations remain preserved alongside the selected reconstruction regression; later observations do not relabel those historical failures. Stage 32 adds bounded forbidden non-local object property type-annotation diagnostic ownership, nested declaration paths, earlier-error controls and valid module/class/object-local annotations; complete frontend diagnostics remain separately unverified. Stage 33 adds bounded const-modifier ownership before property-scope entry, method inferred-new versus lambda first-error selection, explicit-parent and earlier-error controls, and successful Dynamic/untyped method and unused-body controls. Non-Dynamic typed method return inference remains outside this repair. Stage 36 adds resumable object deep forcing and object.toString rendering with persistent force marks, owner-specific hidden declarations, inherited member order, undefined-member handling, and renderer key hashing/equality. Selected scalar comparisons and separate stateful/Host observations retain their own raw contracts. Additional source-derived controls cover user-defined toString interpolation, hidden builtin defaults and inherited equal/colliding object keys. Modifier-addition controls distinguish Java IMPORT, CLASS and TYPE_ALIAS bits when filtering rendered declarations. Stage38 adds original generic implicit/explicit missing-method, suggestions, call-span and argument-order controls; failures remain visible until differential verification. Stage38 additionally checks lexical candidate ordering across property/method and scope boundaries, stable similarity/arity ranking, and explicit-receiver contrast against nine fresh Java observations. Original module eval frontend failures are exercised through their unchanged argv/cwd/env/resource contracts with the bundled CLI frame profile; complete output evaluation remains unsupported.",
+        "scope": "Reference constructor, access, constraint and rendering errors retain complete message, authored frame, foreign standard-library source and URI bytes in selected comparisons. Stage11 adds selected fixed declaration, inherited metadata and complete raw diagnostics through the shared VM. Stage 13 adds selected alias/function metadata, exported-type equality and complete raw diagnostic comparisons; original suite execution and remaining scope stay open. Stage 14 adds selected authored type-resolution order, generic parameter scope and nested substitution, class/alias arity ordering, and owner signature diagnostics; persistent failed-declaration state has a separate sequence contract. Stage 15 adds selected non-generic recursive constraint block graphs and declaration type scope, plus builtin Class argument erasure and arity ordering. At Stage 15 recursive generic constraints remained open; Stage 16 adds bounded shared receiver-slot support. Stage 16: Selected recursive frame compression, count-one loops, complete call spans and hint placement match Java uncolored diagnostics. Stage 17: Selected const-method barriers, lambda lookup depth, immediate outer lexical scope, and grouped-callee parser diagnostics follow the pinned Java behavior. Stage 18 adds selected let-body and for-generator lexical const-depth boundaries while retaining enclosing const levels, plus their complete raw diagnostics and lambda controls. Selected finite recursive generic and instantiated type-variable failures compare complete Java bytes with power assertions enabled and disabled. Stage 19 adds bounded shared-metadata regressions for finite deep and branching actual arguments, observable class-argument swaps, inline/lambda/shared-let recursion, recursive Reference validation, and distinct wrapper actuals. Original Java stack errors, historical native abort evidence, full language semantics and performance remain separately accounted. Stage20 adds bounded nullable defaults, inferred collection amendments, null identity and repeated default failures; complete nullable and collection semantics remain unverified. Stage21 adds bounded direct symbolic constructors, actual-argument diagnostics, lazy class defaults, collection body controls and persistent retries; complete constructors, lexical roots and builtin coverage remain unverified. Stage22 adds bounded strict Map construction, boxed/hash-prefix key semantics, lazy nested generic values, insertion-order iteration and HAMT-ordered equality/hash forcing; complete Map APIs and language coverage remain unverified. Stage23 adds bounded strict Set construction, immediate element hashing and deduplication, boxed/cache-sensitive membership, Set defaults and generic aliases, eager nested element checks, structural equality/hash, insertion-order generation/spreading and raw null/default diagnostic controls; complete Set APIs and language coverage remain unverified. Stage 24 additionally covers bounded Collection List/Set classification, eager versus lazy nested validation, aliases/defaults, nullable constructor timing, selected metadata and complete diagnostics. Stage 30 preserves UTF-16 diagnostic member paths through parser/resolver/compiler counters, block metadata, runtime frames and recursive compression. Selected sibling entry/function numbering and detached lifecycle names distinguish unmatched surrogates from literal question marks before Java UTF-8 output. Typed-property diagnostic controls distinguish inline checks for object-local declarations from module/class-local separate call frames; alias use does not change the declaration category. Stage 31 distinguishes folded numeric-token value frames for local properties from authored body sections retained by selected public class constant properties. Selected complete diagnostics cover signed integer/float literals, whitespace/comments/multiline syntax, radix and minimum-integer literals, grouping, direct constraints and aliases; operand, argument/return, cast, overflow-literal and first-error controls retain their separate source ownership. Success controls preserve minimum integers and negative-zero arithmetic. These selected observations do not establish the complete numeric or diagnostic surface. Additional scalar-constant controls distinguish grouping removal in computed local bodies from source reconstruction for selected non-local property, overridden property, Mapping entry and Listing element value frames. Grouped string, Boolean and null constants preserve the same wrapper distinction. Original failed baseline and first-candidate grouped Listing observations remain preserved alongside the selected reconstruction regression; later observations do not relabel those historical failures. Stage 32 adds bounded forbidden non-local object property type-annotation diagnostic ownership, nested declaration paths, earlier-error controls and valid module/class/object-local annotations; complete frontend diagnostics remain separately unverified. Stage 33 adds bounded const-modifier ownership before property-scope entry, method inferred-new versus lambda first-error selection, explicit-parent and earlier-error controls, and successful Dynamic/untyped method and unused-body controls. Non-Dynamic typed method return inference remains outside this repair. Stage 36 adds resumable object deep forcing and object.toString rendering with persistent force marks, owner-specific hidden declarations, inherited member order, undefined-member handling, and renderer key hashing/equality. Selected scalar comparisons and separate stateful/Host observations retain their own raw contracts. Additional source-derived controls cover user-defined toString interpolation, hidden builtin defaults and inherited equal/colliding object keys. Modifier-addition controls distinguish Java IMPORT, CLASS and TYPE_ALIAS bits when filtering rendered declarations. Stage38 adds original generic implicit/explicit missing-method, suggestions, call-span and argument-order controls; failures remain visible until differential verification. Stage38 additionally checks lexical candidate ordering across property/method and scope boundaries, stable similarity/arity ranking, and explicit-receiver contrast against nine fresh Java observations. Original module eval frontend failures are exercised through their unchanged argv/cwd/env/resource contracts with the bundled CLI frame profile; complete output evaluation remains unsupported. Stage40 adds actual module-output operation failures without expression-string conversion or a synthetic REPL boundary; the unchanged original output/module dependency contracts remain selected even when unsupported.",
         "source": "compatibility/m2-mappings.json"
       },
       "tests": {
@@ -178974,7 +179116,37 @@
           "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/invalidCharacter.pkl",
           "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/spacesBetweenDocComments.pkl",
           "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/typeAnnotationInAmends.pkl",
-          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/wrongDocComment.pkl"
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/wrongDocComment.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/comments.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/semicolon.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/imported.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/methodTrailingCommas.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/constraintsTrailingComma.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/trailingCommas.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/spread.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/pcfRenderer1.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/pcfRenderer8.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/undefinedProperty1.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/undefinedProperty4.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/import1.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/import1b.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/import2.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/import3.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/extendModule1.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/amendModule1.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/recursiveModule1.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/recursiveModule2.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/filename with spaces.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/日本語.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/moduleOutput.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/newline.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/boolean.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/read.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/lambdaTrailingCommas.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/lineCommentBetween.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/pcfRenderer2b.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/pcfRenderer9.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/moduleOutput2.pkl"
         ],
         "state": "partial"
       }
@@ -178996,7 +179168,7 @@
           },
           {
             "path": "crates/pkl-runtime/src/evaluation/session.rs",
-            "sha256": "a14bd38c22f40be75de53308bb2823f79f14b9fc0989be36d63abea217597875",
+            "sha256": "ede109940381c249ddcd28c92257d37bd7fa9f0e4a38dca8c91ccb3d1ccbaa79",
             "symbol": "SourceSession"
           }
         ],
@@ -180126,7 +180298,7 @@
           },
           {
             "path": "crates/pkl-runtime/src/resolver.rs",
-            "sha256": "7e44c1f799c1fc9441ae22a48994591f38508325b44c5c8e740989e431365727",
+            "sha256": "0fb5e767e0c54d12bf8ced4bb55b99780d5113a370271627d67f759c20364a21",
             "symbol": "Annotations"
           },
           {
@@ -180141,7 +180313,7 @@
           },
           {
             "path": "crates/pkl-runtime/src/heap.rs",
-            "sha256": "708a0bd29aec376916b1434edf8308c7ec84cbcfc69370a844068c1f6c056d39",
+            "sha256": "beb61bc3627ca93eb66cb8d53c353d6d57ea404ea2041f852ce67d3b4f3b642d",
             "symbol": "Object"
           }
         ],
@@ -181711,7 +181883,7 @@
           },
           {
             "path": "crates/pkl-runtime/src/evaluation/frontend.rs",
-            "sha256": "22890894d5c93a12bf4649a08ec1d41101b329f8c778086e48decdddadc290e7",
+            "sha256": "63441c029c5fa5457237c5c31109591236973603eba47e6300a82fa84c2e8a2c",
             "symbol": "evaluate_module_frontend"
           }
         ],
@@ -181879,7 +182051,7 @@
           },
           {
             "path": "crates/pkl-runtime/src/resolver.rs",
-            "sha256": "7e44c1f799c1fc9441ae22a48994591f38508325b44c5c8e740989e431365727",
+            "sha256": "0fb5e767e0c54d12bf8ced4bb55b99780d5113a370271627d67f759c20364a21",
             "symbol": "Annotations"
           },
           {
@@ -181894,7 +182066,7 @@
           },
           {
             "path": "crates/pkl-runtime/src/heap.rs",
-            "sha256": "708a0bd29aec376916b1434edf8308c7ec84cbcfc69370a844068c1f6c056d39",
+            "sha256": "beb61bc3627ca93eb66cb8d53c353d6d57ea404ea2041f852ce67d3b4f3b642d",
             "symbol": "Object"
           }
         ],
@@ -182514,7 +182686,7 @@
           },
           {
             "path": "crates/pkl-runtime/src/evaluation/frontend.rs",
-            "sha256": "22890894d5c93a12bf4649a08ec1d41101b329f8c778086e48decdddadc290e7",
+            "sha256": "63441c029c5fa5457237c5c31109591236973603eba47e6300a82fa84c2e8a2c",
             "symbol": "evaluate_module_frontend"
           }
         ],
@@ -184582,12 +184754,12 @@
           },
           {
             "path": "crates/pkl-runtime/src/vm/compiler_expressions.rs",
-            "sha256": "295afbeec602b24b65d492ff74cffc63484a3f625be13bdd5006fe843ff397f6",
+            "sha256": "b3725ec0ba64aefbe430e83a0b729f4e4d2926b1f0cff12f4e17879c8302d93d",
             "symbol": "ReadResourceOrNull"
           },
           {
             "path": "crates/pkl-runtime/src/host/resources.rs",
-            "sha256": "1eb939fc774287d4e929f72edcadb0f23edb38cf42efd96c800fc20dc4d77691",
+            "sha256": "21f3abe8191ca3751063a0b9aeca3459e507efb7ff630dc1b3168febf3093a1e",
             "symbol": "default_result"
           }
         ],
@@ -184705,12 +184877,12 @@
           },
           {
             "path": "crates/pkl-runtime/src/vm/compiler_expressions.rs",
-            "sha256": "295afbeec602b24b65d492ff74cffc63484a3f625be13bdd5006fe843ff397f6",
+            "sha256": "b3725ec0ba64aefbe430e83a0b729f4e4d2926b1f0cff12f4e17879c8302d93d",
             "symbol": "ReadResourceOrNull"
           },
           {
             "path": "crates/pkl-runtime/src/host/resources.rs",
-            "sha256": "1eb939fc774287d4e929f72edcadb0f23edb38cf42efd96c800fc20dc4d77691",
+            "sha256": "21f3abe8191ca3751063a0b9aeca3459e507efb7ff630dc1b3168febf3093a1e",
             "symbol": "default_result"
           }
         ],
@@ -185803,7 +185975,7 @@
           },
           {
             "path": "crates/pkl-runtime/src/resolver.rs",
-            "sha256": "7e44c1f799c1fc9441ae22a48994591f38508325b44c5c8e740989e431365727",
+            "sha256": "0fb5e767e0c54d12bf8ced4bb55b99780d5113a370271627d67f759c20364a21",
             "symbol": "Annotations"
           },
           {
@@ -185818,7 +185990,7 @@
           },
           {
             "path": "crates/pkl-runtime/src/heap.rs",
-            "sha256": "708a0bd29aec376916b1434edf8308c7ec84cbcfc69370a844068c1f6c056d39",
+            "sha256": "beb61bc3627ca93eb66cb8d53c353d6d57ea404ea2041f852ce67d3b4f3b642d",
             "symbol": "Object"
           }
         ],
@@ -186699,22 +186871,22 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/heap.rs",
-            "sha256": "708a0bd29aec376916b1434edf8308c7ec84cbcfc69370a844068c1f6c056d39",
+            "sha256": "beb61bc3627ca93eb66cb8d53c353d6d57ea404ea2041f852ce67d3b4f3b642d",
             "symbol": "Member"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "189dc0408cf1bbecde81651273ff1f719f49003351c203d8aca32b8a82861a93",
+            "sha256": "7564e6bf8464f965735802a7385be23d763cc14b921565c2d4adab4e70687058",
             "symbol": "validate_class_override"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "189dc0408cf1bbecde81651273ff1f719f49003351c203d8aca32b8a82861a93",
+            "sha256": "7564e6bf8464f965735802a7385be23d763cc14b921565c2d4adab4e70687058",
             "symbol": "validate_object_override"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "189dc0408cf1bbecde81651273ff1f719f49003351c203d8aca32b8a82861a93",
+            "sha256": "7564e6bf8464f965735802a7385be23d763cc14b921565c2d4adab4e70687058",
             "symbol": "initialize_member_types"
           }
         ],
@@ -187147,12 +187319,12 @@
           },
           {
             "path": "crates/pkl-runtime/src/resolver.rs",
-            "sha256": "7e44c1f799c1fc9441ae22a48994591f38508325b44c5c8e740989e431365727",
+            "sha256": "0fb5e767e0c54d12bf8ced4bb55b99780d5113a370271627d67f759c20364a21",
             "symbol": "visit"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "189dc0408cf1bbecde81651273ff1f719f49003351c203d8aca32b8a82861a93",
+            "sha256": "7564e6bf8464f965735802a7385be23d763cc14b921565c2d4adab4e70687058",
             "symbol": "compile_type_at"
           }
         ],
@@ -188108,12 +188280,12 @@
           },
           {
             "path": "crates/pkl-runtime/src/vm/compiler_expressions.rs",
-            "sha256": "295afbeec602b24b65d492ff74cffc63484a3f625be13bdd5006fe843ff397f6",
+            "sha256": "b3725ec0ba64aefbe430e83a0b729f4e4d2926b1f0cff12f4e17879c8302d93d",
             "symbol": "ReadResourceOrNull"
           },
           {
             "path": "crates/pkl-runtime/src/host/resources.rs",
-            "sha256": "1eb939fc774287d4e929f72edcadb0f23edb38cf42efd96c800fc20dc4d77691",
+            "sha256": "21f3abe8191ca3751063a0b9aeca3459e507efb7ff630dc1b3168febf3093a1e",
             "symbol": "default_result"
           }
         ],
@@ -188422,22 +188594,22 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/vm/reference.rs",
-            "sha256": "3c44a82b453b930c0eee7064e131da356f6d3fdda895c1b9166035a23042f960",
+            "sha256": "9a08502647ef93adef9c4aea2e2ae2806934b538091b34d7f07e807d66174888",
             "symbol": "Reference"
           },
           {
             "path": "crates/pkl-runtime/src/vm/reference.rs",
-            "sha256": "3c44a82b453b930c0eee7064e131da356f6d3fdda895c1b9166035a23042f960",
+            "sha256": "9a08502647ef93adef9c4aea2e2ae2806934b538091b34d7f07e807d66174888",
             "symbol": "reference_access"
           },
           {
             "path": "crates/pkl-runtime/src/vm/reference.rs",
-            "sha256": "3c44a82b453b930c0eee7064e131da356f6d3fdda895c1b9166035a23042f960",
+            "sha256": "9a08502647ef93adef9c4aea2e2ae2806934b538091b34d7f07e807d66174888",
             "symbol": "invoke_reference_native"
           },
           {
             "path": "crates/pkl-runtime/src/vm/typecheck.rs",
-            "sha256": "0f17a8ef1c171de5bc9fc7d8af611168eeacb15626514a517a9ad5c41889ac2d",
+            "sha256": "80dd0232fae010d3dca4748035d0f8f22aa1a1c50e4f8c6fd2f0a088bdf8c70f",
             "symbol": "step_type"
           }
         ],
@@ -189659,8 +189831,8 @@
   "sources": {
     "compatibility/corpus.json": "0e95da22f965dede398f1a1f136703ba913d588aa51c1fb871cd97a11c84a0dd",
     "compatibility/inventory.json": "a9b21752adad9a269a54854c0dd298256757be88ad95c1388e30d7c78e407070",
-    "compatibility/m2-mappings.json": "2f85e256d7e986a731cf1ef7b795d3d77bcaf585c6ac339cc7128c982208646f",
-    "compatibility/m2-module-eval.json": "fc14b82e9f783a30fab735cf04379adde5883dc09df0cb0afa005268363626e0",
+    "compatibility/m2-mappings.json": "c2617557199ae338f64315fce2028a10d58e57b9a193a1a33de3b63eb7c5660a",
+    "compatibility/m2-module-eval.json": "4d556596ef007c0f3f87f9b99a0a604952c8ef3b825a76f1fc85a8cdcb19bd41",
     "compatibility/regressions.json": "09c064f65730d30f72bf87a45c88d47ecc0844e57966a999dc8e759f083af3da",
     "compatibility/rev1-inventory.json": "6061f202ba3f04565efed3617ac69d3c2fadc54eec1f562b67a4758b3d0a8ab5",
     "references.lock": "278f48fd7697459281aa78a706c9ca57222f36a8c0785d838a6449fbaf26d30b",

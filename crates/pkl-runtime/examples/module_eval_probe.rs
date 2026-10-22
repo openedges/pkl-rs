@@ -1,6 +1,6 @@
-//! Development-only original module-eval frontend boundary, not a product CLI.
+//! Development-only original module-output operation, not a complete product CLI.
 use pkl_runtime::evaluation::frontend::{
-    ModuleSourceInput, arguments::parse_module_eval_args, evaluate_module_frontend,
+    ModuleSourceInput, arguments::parse_module_eval_args, evaluate_module_output,
 };
 use std::{io::Write, path::Path};
 
@@ -54,7 +54,7 @@ fn run(arguments: &[String]) -> Result<i32, ProbeError> {
         .ok_or_else(|| {
             ProbeError::Unsupported("module-eval adapter requires a UTF-8 module name".into())
         })?;
-    let result = evaluate_module_frontend(
+    let result = evaluate_module_output(
         ModuleSourceInput {
             text: &text,
             uri: &uri,

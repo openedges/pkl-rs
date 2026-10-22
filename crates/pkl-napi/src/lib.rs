@@ -104,6 +104,49 @@ pub fn evaluate_module_frontend(
     })
 }
 
+/// Actual shared module-output bytes. The legacy frontend-only export remains
+/// separate; platform code neither walks objects nor renders their values.
+#[napi(object)]
+pub struct ModuleOutputOutcome {
+    pub phase: String,
+    pub disposition: Option<String>,
+    pub reason: Option<String>,
+    pub stdout: Uint8Array,
+    pub stderr: Uint8Array,
+    pub exit_code: i32,
+}
+
+#[napi]
+pub fn evaluate_module_output(
+    source: Utf16String,
+    uri: Utf16String,
+    module_name: Utf16String,
+    arguments: Vec<Utf16String>,
+) -> Result<ModuleOutputOutcome> {
+    use pkl_runtime::evaluation::frontend::{ModuleSourceInput, arguments::parse_module_eval_args};
+    let arguments = arguments.iter().map(string).collect::<Result<Vec<_>>>()?;
+    let invocation = parse_module_eval_args(&arguments).map_err(error)?;
+    let source = string(&source)?;
+    let uri = string(&uri)?;
+    let module_name = string(&module_name)?;
+    let result = pkl_runtime::evaluation::frontend::evaluate_module_output(
+        ModuleSourceInput {
+            text: &source,
+            uri: &uri,
+            inferred_name: &module_name,
+        },
+        &invocation.options,
+    );
+    Ok(ModuleOutputOutcome {
+        phase: result.phase.as_str().to_owned(),
+        disposition: result.disposition.map(|value| value.as_str().to_owned()),
+        reason: result.reason.map(str::to_owned),
+        stdout: Uint8Array::new(result.stdout),
+        stderr: Uint8Array::new(result.stderr),
+        exit_code: result.exit_code,
+    })
+}
+
 /// Development-only ordered calls on one evaluator, retaining failures as data.
 #[napi]
 pub fn evaluate_language_sequence(
@@ -240,7 +283,9 @@ pub struct SourceEvent {
     pub token: Option<String>,
     pub uri: Option<String>,
     pub value: Option<napi::bindgen_prelude::Uint16Array>,
+    pub bytes: Option<Uint8Array>,
     pub error: Option<napi::bindgen_prelude::Uint16Array>,
+    pub error_bytes: Option<Uint8Array>,
     pub log: Option<SourceLog>,
 }
 impl From<probe::SourceEvent> for SourceEvent {
@@ -251,7 +296,9 @@ impl From<probe::SourceEvent> for SourceEvent {
             token: event.token,
             uri: event.uri,
             value: event.value.map(Uint16Array::new),
+            bytes: event.bytes.map(Uint8Array::new),
             error: event.error.map(Uint16Array::new),
+            error_bytes: event.error_bytes.map(Uint8Array::new),
             log: event.log.map(|log| SourceLog {
                 level: log.level.into(),
                 message: Uint16Array::new(log.message),
@@ -275,6 +322,62 @@ pub struct SourceSession {
 }
 #[napi]
 impl SourceSession {
+    /// Output API identity profile; the separate synchronous CLI-style export
+    /// accepts original CLI arguments and reports complete byte channels.
+    #[napi(factory)]
+    #[allow(clippy::too_many_arguments)]
+    pub fn for_output(
+        source: Utf16String,
+        uri: Utf16String,
+        module_name: Utf16String,
+        paths: Vec<Utf16String>,
+        arguments: Vec<Utf16String>,
+        trace_mode: Option<Utf16String>,
+        host_logger: Option<bool>,
+        host_frame_transformer: Option<bool>,
+        power_assertions: Option<bool>,
+    ) -> Result<Self> {
+        use pkl_runtime::evaluation::frontend::{
+            DiagnosticProfile, ModuleSourceInput, arguments::parse_module_eval_args,
+        };
+        let arguments = arguments.iter().map(string).collect::<Result<Vec<_>>>()?;
+        let mut invocation = parse_module_eval_args(&arguments).map_err(error)?;
+        invocation.options.diagnostic_profile = DiagnosticProfile::ApiIdentity;
+        let paths = paths.iter().map(string).collect::<Result<Vec<_>>>()?;
+        let mode = trace_mode
+            .as_ref()
+            .map(string)
+            .transpose()?
+            .unwrap_or_else(|| "compact".into());
+        let options = probe::SourceProbe::options(
+            &mode,
+            host_logger.unwrap_or(false),
+            host_frame_transformer.unwrap_or(false),
+            power_assertions.unwrap_or(false),
+        )
+        .map_err(error)?;
+        let source = string(&source)?;
+        let uri = string(&uri)?;
+        let name = string(&module_name)?;
+        Ok(Self {
+            inner: probe::SourceProbe::new_output(
+                ModuleSourceInput {
+                    text: &source,
+                    uri: &uri,
+                    inferred_name: &name,
+                },
+                &paths,
+                &invocation.options,
+                options,
+            )
+            .map_err(|failure| {
+                error(
+                    String::from_utf8(failure.stderr)
+                        .expect("shared diagnostic renderer emits UTF-8"),
+                )
+            })?,
+        })
+    }
     #[napi(constructor)]
     #[allow(clippy::too_many_arguments)]
     pub fn new(
@@ -311,6 +414,33 @@ impl SourceSession {
     pub fn start_module(&mut self, now: f64, timeout: Option<f64>) -> Result<()> {
         self.inner
             .start_module(unsigned(now)?, timeout.map(unsigned).transpose()?)
+            .map_err(error)
+    }
+    #[napi]
+    pub fn start_output_bytes(&mut self, now: f64, timeout: Option<f64>) -> Result<()> {
+        self.inner
+            .start_output_bytes(unsigned(now)?, timeout.map(unsigned).transpose()?)
+            .map_err(error)
+    }
+    #[napi]
+    pub fn reenter_output_bytes(
+        &mut self,
+        token: Utf16String,
+        now: f64,
+        timeout: Option<f64>,
+    ) -> Result<()> {
+        self.inner
+            .reenter_output_bytes(
+                &string(&token)?,
+                unsigned(now)?,
+                timeout.map(unsigned).transpose()?,
+            )
+            .map_err(error)
+    }
+    #[napi]
+    pub fn respond_configured(&mut self, token: Utf16String, now: f64) -> Result<()> {
+        self.inner
+            .respond_configured(&string(&token)?, unsigned(now)?)
             .map_err(error)
     }
     #[napi]

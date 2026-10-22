@@ -499,6 +499,9 @@ impl Compiler<'_> {
                                 })
                                 .collect::<Vec<_>>();
                             self.type_scopes.push(properties.clone());
+                            if has_parent {
+                                output.push(Instruction::BeginFunctionAmendment { end: 0 });
+                            }
                             output.push(Instruction::BeginCollection {
                                 kind,
                                 has_parent,
@@ -520,9 +523,19 @@ impl Compiler<'_> {
                         output.push(Instruction::EndCollection);
                         self.initialize_member_types(&properties, output)?;
                         self.type_scopes.pop();
+                        if matches!(output[begin], Instruction::BeginFunctionAmendment { .. }) {
+                            let end = output.len();
+                            output[begin] = Instruction::BeginFunctionAmendment { end };
+                            output.push(Instruction::EndFunctionAmendment);
+                        }
                         if let Some(parent) = parent {
-                            output.spans[begin] = Some(parent);
-                            pending_spans.retain(|index| *index != begin);
+                            let constructor = begin
+                                + usize::from(matches!(
+                                    output[begin],
+                                    Instruction::BeginFunctionAmendment { .. }
+                                ));
+                            output.spans[constructor] = Some(parent);
+                            pending_spans.retain(|index| *index != constructor);
                         }
                     }
                     Work::PropertyBegin(member) => {
@@ -638,6 +651,7 @@ impl Compiler<'_> {
                             .any(|m| m.kind == crate::syntax::ModifierKind::Hidden);
                         self.program.metadata[code].value_span =
                             Some(self.property_value_span(member));
+                        self.program.metadata[code].member_span = Some(member.span);
                         self.program.metadata[code].initialization_error = initialization_error;
                         self.program.metadata[code].property_typecheck = property_typecheck;
                         self.program.metadata[code].inline_property_typecheck = member.local;
@@ -874,6 +888,18 @@ impl Compiler<'_> {
                     }
                 };
                 self.initialize_type_resolution(ty, output);
+                if matches!(&check,TypeCheck::NamedAlias{declaration,..} if *declaration==amendment::MIXIN_ID)
+                {
+                    self.default_type(&check, output, ty.span)?;
+                    self.schedule_collection(
+                        members,
+                        crate::heap::CollectionKind::Dynamic,
+                        true,
+                        output,
+                        work,
+                    )?;
+                    return Ok(());
+                }
                 if check.collection_base_default() {
                     self.default_type(&check, output, ty.span)?;
                     self.schedule_collection(

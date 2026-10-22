@@ -22,8 +22,10 @@ class RegistryTests(unittest.TestCase):
         corpus = m2_manifest.load(Path('compatibility/corpus.json'))
         registry = m2_manifest.load(m2_manifest.MODULE_ADAPTERS)
         valid = module.registry_cases(root, corpus, registry)
-        self.assertEqual(len(valid), 72)
-        for change in ('argv', 'environment', 'duplicate', 'source'):
+        self.assertEqual(len(valid), 102)
+        selected = [case for case in corpus['cases'] if case['id'] in valid]
+        self.assertEqual({case['expected_outcome'] for case in selected}, {'success', 'observe'})
+        for change in ('argv', 'environment', 'duplicate', 'source', 'outcome', 'resource'):
             changed = copy.deepcopy(corpus)
             selected = next(c for c in changed['cases'] if c['id'] in valid)
             entries = copy.deepcopy(registry)
@@ -33,10 +35,33 @@ class RegistryTests(unittest.TestCase):
                 selected['environment']['LANG'] = 'C'
             elif change == 'duplicate':
                 entries['cases'].append(entries['cases'][0])
+            elif change == 'outcome':
+                selected['expected_exit'] = [1] if selected['expected_exit'] == [0] else [0]
+            elif change == 'resource':
+                selected['resources'] = []
             else:
                 entries['cases'][0]['input_sha256'] = '0' * 64
-            with self.assertRaises(ValueError):
+            with self.subTest(change=change), self.assertRaises(ValueError):
                 module.registry_cases(root, changed, entries)
+
+    def test_registered_blocked_fixture_is_attempted_but_never_promoted_to_ready(self):
+        manifest = m2_manifest.build_manifest()
+        identifier = 'pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/import1b.pkl'
+        case = next(row for row in manifest['cases'] if row['id'] == identifier)
+        self.assertEqual(case['upstream_case']['execution']['status'], 'blocked')
+        self.assertEqual(case['execution'], dict(state='unimplemented', reason=case['upstream_case']['execution']['reason']))
+        self.assertIn(case, m2_language.selected_cases(manifest, [module.ADAPTER]))
+        self.assertEqual(manifest['counts']['cases_by_execution'], dict(ready=3628, unimplemented=859, unmapped=40))
+        selected = m2_language.selected_cases(manifest)
+        self.assertEqual(len(selected), 3629)
+        # Even a forged complete set of passing statuses cannot close this
+        # original success obligation while the modulepath fixture is blocked.
+        self.assertIn('required case incomplete: ' + identifier,
+                      m2_manifest.full_gate_failures(manifest, [dict(id=row['id'], status='pass') for row in selected]))
+        forged = copy.deepcopy(manifest)
+        next(row for row in forged['cases'] if row['id'] == identifier)['execution'] = dict(state='ready', reason=None)
+        with self.assertRaisesRegex(ValueError, 'original execution contract differs'):
+            m2_manifest.validate_manifest(forged)
 
 
 class ModuleExecutionTests(unittest.TestCase):
@@ -209,6 +234,38 @@ class ModuleExecutionTests(unittest.TestCase):
             self.assertEqual(module.status(dict(exit_code=1, timed_out=False), dict(exit_code=code, timed_out=False), expected, actual), status)
         bug = dict(expected, stderr=b'An unexpected error has occurred.\nfull raw bug\n')
         self.assertEqual(module.status(dict(exit_code=1, timed_out=False), dict(exit_code=1, timed_out=False), bug, bug), 'oracle-error')
+
+    def test_success_output_is_lossless_bytes_and_failed_partial_output_never_matches(self):
+        self.binary.write_text(f'#!{sys.executable}\nimport sys\nsys.stdout.buffer.write(bytes([0,255,65,13,10]))\n')
+        row = module.acquire_case(self.root, self.workspace, self.case, self.metadata,
+                                  self.binary, self.root / 'binary-success')
+        folder = self.root / 'binary-success/cases' / row['directory']
+        self.assertEqual(row['status'], 'pass')
+        self.assertEqual((folder / 'rust/stdout.bin').read_bytes(), b'\x00\xffA\r\n')
+        self.assertEqual((folder / 'rust/stderr.bin').read_bytes(), b'')
+        error = dict(stdout=b'', stderr='–– Pkl Error ––\nactual failure\n'.encode(),
+                     exit_code=1, files={}, timed_out=False)
+        partial = dict(error, stdout=b'unpublished renderer prefix')
+        self.assertEqual(module.status(dict(exit_code=1, timed_out=False),
+                                       dict(exit_code=1, timed_out=False), error, partial), 'mismatch')
+
+    def test_raw_equal_ordinary_errors_do_not_satisfy_original_success_contract(self):
+        case = copy.deepcopy(self.case)
+        case['id'] = 'original:expected-success'
+        case['upstream_case']['id'] = case['id']
+        case['upstream_case']['expected_exit'] = [0]
+        row = module.acquire_case(self.root, self.workspace, case, self.metadata,
+                                  self.binary, self.root / 'expected-success')
+        self.assertTrue(row['raw_channels_match'])
+        self.assertFalse(row['upstream_expected_exit_match'])
+        self.assertEqual(row['status'], 'oracle-contract-mismatch')
+        directory = self.root / 'expected-success'
+        module.verify_case(self.root, self.workspace, case, row, directory,
+                           self.metadata, self.binary, self.baseline)
+        forged = dict(row, status='pass', upstream_expected_exit_match=True)
+        with self.assertRaisesRegex(ValueError, 'raw comparison status changed'):
+            module.verify_case(self.root, self.workspace, case, forged, directory,
+                               self.metadata, self.binary, self.baseline)
 
 
 if __name__ == '__main__':

@@ -1,5 +1,7 @@
 //! Direct generic constructors retain their actual types across VM and Host transitions.
 //! These native lifetime checks are separate from pinned Java byte comparisons.
+//! Retained module graphs include their one builtin Module parent; executable
+//! nodes, transient-object deltas and terminal-zero assertions remain separate.
 use std::process::{Command, Stdio};
 use std::sync::Arc;
 use std::time::{Duration, Instant};
@@ -179,9 +181,9 @@ fn repeated_nonterminal_cancel_reclaims_direct_constructor_instances_without_los
         );
         let stats = vm.collect(std::slice::from_ref(&module));
         let live = (stats.live - stats.executable_live, stats.executable_live);
-        // Only the module, two class declarations, and two alias declarations survive.
+        // Only the module, its Module parent, two classes and two aliases survive.
         // Instances and their amendment environments are temporary.
-        assert_eq!(live.0, 5);
+        assert_eq!(live.0, 6);
         assert!(live.1 > 0);
         if let Some(expected) = retained {
             assert_eq!(live, expected);

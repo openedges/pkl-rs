@@ -29,8 +29,10 @@ impl TypeCheck {
                 name,
                 arguments,
                 expanded,
+                default_origin,
             } => NamedAlias {
                 declaration: *declaration,
+                default_origin: default_origin.clone(),
                 name: name.clone(),
                 arguments: arguments.iter().map(sub).collect::<Result<_, _>>()?,
                 expanded: Box::new(sub(expanded)?),
@@ -53,6 +55,12 @@ impl TypeCheck {
             },
             ParameterizedCollection { kind, arguments } => ParameterizedCollection {
                 kind: *kind,
+                arguments: arguments
+                    .iter()
+                    .map(|(ty, span)| Ok((sub(ty)?, *span)))
+                    .collect::<Result<_, RuntimeError>>()?,
+            },
+            Pair { arguments } => Pair {
                 arguments: arguments
                     .iter()
                     .map(|(ty, span)| Ok((sub(ty)?, *span)))
@@ -278,6 +286,17 @@ impl Vm {
                     run.tasks.push(DefaultTask::Visit(*inner));
                 }
                 TypeCheck::StringLiteral(value) => run.value = Some(Value::String(value)),
+                TypeCheck::NamedAlias {
+                    declaration,
+                    arguments,
+                    default_origin,
+                    ..
+                } if declaration == amendment::MIXIN_ID => {
+                    run.value = Some(self.identity_mixin(
+                        arguments.into_iter().next().unwrap_or(TypeCheck::Unknown),
+                        default_origin.or_else(|| run.origin.clone()),
+                    ));
+                }
                 TypeCheck::NamedAlias { expanded, .. }
                 | TypeCheck::Alias(expanded)
                 | TypeCheck::GenericAlias(expanded)
@@ -406,6 +425,7 @@ impl TypeCheck {
             | Self::GenericAlias(inner)
             | Self::Constrained { base: inner, .. } => Box::new(std::iter::once(inner.as_ref())),
             Self::ParameterizedCollection { arguments, .. }
+            | Self::Pair { arguments }
             | Self::CollectionBase { arguments } => Box::new(arguments.iter().map(|(ty, _)| ty)),
             Self::Union { types, .. } => Box::new(types.iter()),
             _ => Box::new(std::iter::empty()),
@@ -544,6 +564,7 @@ impl Drop for SharedTypeCheck {
                 | TypeCheck::Alias(inner)
                 | TypeCheck::GenericAlias(inner) => pending.push(*inner),
                 TypeCheck::ParameterizedCollection { arguments, .. }
+                | TypeCheck::Pair { arguments }
                 | TypeCheck::CollectionBase { arguments } => {
                     pending.extend(arguments.into_iter().map(|(ty, _)| ty));
                 }

@@ -74,7 +74,9 @@ pub(crate) fn type_name(value: &Value, heap: &Heap, module: &str) -> Result<Stri
         Value::Class(_) => "Class".into(),
         Value::TypeAlias(_) => "TypeAlias".into(),
         Value::Object(id) => {
-            if heap.get(*id)?.reference.is_some() {
+            if heap.get(*id)?.pair.is_some() {
+                "Pair".into()
+            } else if heap.get(*id)?.reference.is_some() {
                 "pkl.ref#Reference".into()
             } else if heap.get(*id)?.ref_module {
                 "pkl.ref".into()
@@ -92,7 +94,7 @@ pub(crate) fn type_name(value: &Value, heap: &Heap, module: &str) -> Result<Stri
                         } else {
                             module
                         };
-                        name = if crate::vm::annotations::builtin_name(class.id).is_some() {
+                        name = if crate::vm::builtins::name(class.id).is_some() {
                             class.name.to_string()
                         } else {
                             format!("{defining_module}#{}", class.name)
@@ -458,6 +460,16 @@ impl Renderer<'_> {
             ));
         }
         self.tasks.push(RenderTask::Exit(id));
+        if let Some(pair) = &self.heap.get(id)?.pair {
+            self.schedule([
+                RenderTask::Text("Pair(".into()),
+                RenderTask::Value(pair[0].clone(), false, depth),
+                RenderTask::Text(", ".into()),
+                RenderTask::Value(pair[1].clone(), false, depth),
+                RenderTask::Text(")".into()),
+            ]);
+            return Ok(());
+        }
         if let Some(reference) = &self.heap.get(id)?.reference {
             let mut tasks = vec![
                 RenderTask::Text("Reference(".into()),
@@ -521,6 +533,7 @@ impl Renderer<'_> {
                 .map(|descriptor| crate::vm::collections::RenderMember {
                     descriptor,
                     skip: false,
+                    code: None,
                 })
                 .collect()
         } else {

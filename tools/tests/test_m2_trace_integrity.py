@@ -181,6 +181,12 @@ class TraceEvidenceIntegrityTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             m2_trace.verify_report(self.output)
 
+    def test_operation_marker_cannot_change_expression_dispatch_after_refreshing_inventory(self):
+        self.write('cases/one/0/rust/operation.txt', b'output-bytes')
+        self.save(refresh_inventory=True)
+        with self.assertRaisesRegex(ValueError, 'operation input changed'):
+            m2_trace.verify_report(self.output)
+
     def test_changed_callback_inputs_are_rejected_after_refreshing_inventory(self):
         for name in ['logger', 'reader']:
             with self.subTest(callback=name):

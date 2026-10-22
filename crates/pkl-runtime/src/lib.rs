@@ -20,6 +20,7 @@ pub mod regex;
 pub mod resolver;
 pub mod source;
 mod stdlib_sources;
+mod string_case;
 pub mod syntax;
 pub mod value;
 pub mod vm;

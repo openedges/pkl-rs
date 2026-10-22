@@ -112,6 +112,14 @@ not accepted as unquoted identifiers even when their Unicode code point is
 a Java identifier character. Source spans remain UTF-8, with explicit UTF-16
 conversion for error columns and underlines.
 
+Actual module output uses the same prepared program, evaluator-owned module,
+and Host continuation stack. The operation reads `output`, checks its exact
+`ModuleOutput` type, and evaluates `bytes`. Source-backed output classes use
+ordinary lazy members; PCF traversal and converter calls retain their state
+across Host suspension. Completed byte buffers outlive evaluator closure.
+The frontend-only API remains a separate diagnostic development boundary.
+See the [module comparison contract](m2-module-frontend.md) for its scope.
+
 Selected differential checks establish only the behavior they execute. See
 [the M2 contract](m2-language.md) and [raw results](../reports/m2/README.md)
 for the remaining language and diagnostic obligations.

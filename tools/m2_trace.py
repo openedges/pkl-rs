@@ -21,6 +21,25 @@ def sha(path):
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
+def call_expressions(case):
+    """Output calls have no guest expression; blank protocol entries count calls."""
+    operation = case.get('operation', 'expression')
+    if operation == 'expression':
+        if 'calls' in case or not case.get('expressions') or any(
+                not isinstance(expr, str) or not expr or '\n' in expr or '\r' in expr
+                for expr in case['expressions']):
+            raise ValueError('expected nonempty one-line expressions')
+        return case['expressions']
+    if operation != 'output-bytes' or 'expressions' in case:
+        raise ValueError('unknown operation or output call with guest expressions')
+    if case.get('resource_profile') != 'preconfigured-plus-life':
+        raise ValueError('output operation requires its preconfigured resource readers')
+    count = case.get('calls')
+    if type(count) is not int or not 1 <= count <= 1024:
+        raise ValueError('output operation requires 1-1024 ordered calls')
+    return [''] * count
+
+
 def load_manifest(path):
     manifest = json.loads(path.read_bytes())
     if manifest.get('schema') != 1 or manifest.get('repetitions') != 2:
@@ -34,9 +53,7 @@ def load_manifest(path):
         seen.add(case['id'])
         if case['mode'] not in {'COMPACT', 'PRETTY'} or case['action'] not in {'capture', 'noop', 'throw', 'close', 'close-reenter'}:
             raise ValueError('unsupported trace driver configuration')
-        if not case['expressions'] or any(not isinstance(expr, str) or not expr or '\n' in expr or '\r' in expr for expr in case['expressions']):
-            raise ValueError('expected nonempty one-line expressions')
-        for expression in [*case['expressions'], case['logger_callback'], case['reader_callback']]:
+        for expression in [*call_expressions(case), case['logger_callback'], case['reader_callback']]:
             if expression and not re.fullmatch(r'[^\W\d]\w*(?:\.[^\W\d]\w*)*', expression):
                 raise ValueError('development source session accepts property paths only')
         source = (ROOT / case['source']).resolve()
@@ -157,7 +174,7 @@ def verify_report(output):
         comparison = compare_payloads(base / 'java', base / 'rust')
         if any(row[key] != value for key, value in comparison.items()):
             raise ValueError('raw trace comparison changed')
-        missing = {target: missing_calls(base / target, case['expressions']) for target in ['java', 'rust']}
+        missing = {target: missing_calls(base / target, call_expressions(case)) for target in ['java', 'rust']}
         if missing != row['missing_calls']:
             raise ValueError('trace call coverage changed')
         for target, process in row['processes'].items():
@@ -166,8 +183,12 @@ def verify_report(output):
                 raise ValueError('trace process provenance changed')
             if sha(directory / 'input.pkl') != case['origin']['input_sha256']:
                 raise ValueError('trace source input changed')
-            if (directory / 'expressions.txt').read_bytes() != ('\n'.join(case['expressions']) + '\n').encode():
+            if (directory / 'expressions.txt').read_bytes() != ('\n'.join(call_expressions(case)) + '\n').encode():
                 raise ValueError('trace expression input changed')
+            operation = directory / 'operation.txt'
+            if (case.get('operation', 'expression') != 'expression' or operation.exists()) and (
+                    not operation.is_file() or operation.read_bytes() != case.get('operation', 'expression').encode()):
+                raise ValueError('trace operation input changed')
             for callback in ['logger', 'reader']:
                 if (directory / (callback + '-callback.txt')).read_bytes() != case[callback + '_callback'].encode():
                     raise ValueError('trace callback input changed')
@@ -261,7 +282,9 @@ def run(output, manifest_path, candidate, selected):
                 directories[target] = directory
                 directory.mkdir(parents=True)
                 shutil.copyfile(ROOT / case['source'], directory / 'input.pkl')
-                (directory / 'expressions.txt').write_bytes(('\n'.join(case['expressions']) + '\n').encode())
+                (directory / 'expressions.txt').write_bytes(('\n'.join(call_expressions(case)) + '\n').encode())
+                if case.get('operation', 'expression') != 'expression':
+                    (directory / 'operation.txt').write_bytes(case['operation'].encode())
                 for name in ['logger', 'reader']:
                     (directory / (name + '-callback.txt')).write_bytes(case[name + '_callback'].encode())
                 command = [*(java if target == 'java' else [str(artifact)]), str(directory), case['mode'], case['action']]
@@ -270,7 +293,7 @@ def run(output, manifest_path, candidate, selected):
                 (directory / 'protocol.bin').write_bytes(Path(process['stdout']['path']).read_bytes())
                 (directory / 'process-stderr.bin').write_bytes(Path(process['stderr']['path']).read_bytes())
             comparison = compare_payloads(directories['java'], directories['rust'])
-            missing = {target: missing_calls(directory, case['expressions']) for target, directory in directories.items()}
+            missing = {target: missing_calls(directory, call_expressions(case)) for target, directory in directories.items()}
             executed = not any(missing.values()) and all(process['status'] == 'executed' and process['exit_code'] == 0 for process in processes.values())
             status = ('acquisition-failed' if not executed else 'oracle-error' if comparison['oracle_errors']
                       else 'pass' if comparison['raw_equal'] else 'mismatch')

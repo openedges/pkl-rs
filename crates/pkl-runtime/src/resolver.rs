@@ -114,7 +114,18 @@ fn is_base_method(name: &str) -> bool {
 fn is_base_class(name: &str) -> bool {
     matches!(
         name,
-        "Annotation"
+        "Module"
+            | "FileOutput"
+            | "ModuleOutput"
+            | "BaseValueRenderer"
+            | "ValueRenderer"
+            | "BytesRenderer"
+            | "PcfRenderer"
+            | "ConvertProperty"
+            | "RenderDirective"
+            | "PcfRenderDirective"
+            | "Pair"
+            | "Annotation"
             | "Deprecated"
             | "Since"
             | "Unlisted"
@@ -1351,12 +1362,14 @@ impl<'a> Resolver<'a> {
             }
         }
         if has(M::Local) && matches!(member.expr.kind, ExprKind::Uninitialized) {
-            return Err(Diagnostic::language(
+            let mut error = Diagnostic::language(
                 DiagnosticOrigin::Resolver,
                 DiagnosticKind::Syntax,
-                member.ty.as_ref().map_or(member.span, |ty| ty.span),
+                Span::new(member.span.end, member.span.end),
                 "Missing property value.",
-            ));
+            );
+            error.member = Some(crate::value::PklString::join(&self.diagnostic_path, ".").into());
+            return Err(error);
         }
         Ok(())
     }

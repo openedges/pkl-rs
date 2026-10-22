@@ -553,3 +553,56 @@ result = obj.absent
     let obj = member(&mut vm, &module, "obj").unwrap();
     assert!(!vm.heap.get(obj.as_object().unwrap()).unwrap().forced);
 }
+
+#[test]
+fn failed_output_shallow_force_clears_reentrant_deep_mark_but_keeps_child_cache() {
+    let (p, entries) = callback_program(
+        r#"
+obj = new Dynamic { x = read("life:outer"); nested = new Dynamic { y = 7 } }
+callback = obj.toString()
+output { value = obj }
+"#,
+        &["callback"],
+    );
+    let entry = p.entry;
+    let mut vm = Vm::new(p);
+    vm.start(entry, vec![]).unwrap();
+    let module = ready(&mut vm).unwrap();
+    let object = member(&mut vm, &module, "obj").unwrap();
+    let output = member(&mut vm, &module, "output").unwrap();
+    vm.start_member(output.as_object().unwrap(), "bytes")
+        .unwrap();
+    let format = read(&mut vm);
+    vm.resume(format, Ok(Value::Null)).unwrap();
+    let outer = read(&mut vm);
+    vm.reenter(outer, entries[0], vec![module.clone()]).unwrap();
+    let inner = read(&mut vm);
+    vm.resume(inner, Ok(Value::string("inner"))).unwrap();
+    assert!(matches!(ready(&mut vm), Ok(Value::String(_))));
+    vm.finish_reentry();
+    let object_id = object.as_object().unwrap();
+    assert!(vm.heap.get(object_id).unwrap().forced);
+    vm.resume(
+        outer,
+        Err(RuntimeError::new(ErrorKind::Unsupported, "reader failure")),
+    )
+    .unwrap();
+    assert_eq!(ready(&mut vm).unwrap_err().message, "reader failure");
+    assert!(!vm.heap.get(object_id).unwrap().forced);
+    let child = member(&mut vm, &object, "nested")
+        .unwrap()
+        .as_object()
+        .unwrap();
+    assert!(vm.heap.get(child).unwrap().forced);
+    assert_eq!(member(&mut vm, &object, "x"), Ok(Value::string("inner")));
+    // Retry consumes successful callback caches without issuing a new read.
+    assert_eq!(
+        member(&mut vm, &output, "bytes"),
+        Ok(Value::Bytes(Arc::from(
+            b"x = \"inner\"\nnested {\n  y = 7\n}\n".as_slice()
+        )))
+    );
+    assert!(!vm.heap.get(object_id).unwrap().forced);
+    vm.close();
+    assert_eq!(vm.heap_stats().slots, 0);
+}

@@ -111,3 +111,58 @@ test('retains optional Node versus null Wasm reason metadata independently of di
   assert.deepEqual(rows.map(row => row.result.reason), [null, null, null, 'dependency']);
   assert(rows.every(row => compareModulePayload(expected, row.result, 'ordinary-language-error').status === 'pass'));
 });
+
+test('explicit output operation delivers exact binary vectors without calling the frontend prefix', () => {
+  const calls = [];
+  const output = { ...fixture, operation: 'output-bytes' };
+  const value = { phase: 'module-output', stdout: Uint8Array.from([0, 255, 13, 10]), stderr: new Uint8Array(), exitCode: 0 };
+  const rows = evaluateModuleFixtures({
+    evaluateModuleFrontend() { throw Error('wrong operation'); },
+    evaluateModuleOutput(...args) { calls.push(args); return value; },
+  }, [output]);
+  assert.equal(calls.length, 2);
+  assert.deepEqual(calls[0], [fixture.sourceText, fixture.uri, fixture.moduleName, fixture.arguments]);
+  for (const row of rows) {
+    assert.equal(row.operation, 'output-bytes'); assert.equal(row.acquisitionError, null);
+    assert.deepEqual(row.result.stdout, [0, 255, 13, 10]);
+    assert.equal(compareModulePayload({ stdout: Buffer.from([0, 255, 13, 10]), stderr: Buffer.alloc(0), exitCode: 0 },
+      row.result, 'value', { operation: 'output-bytes', upstreamExpectedExit: [0] }).status, 'pass');
+  }
+  assert.throws(() => evaluateModuleFixtures({ evaluateModuleFrontend() {} }, [output]), /evaluateModuleOutput/);
+  assert.throws(() => evaluateModuleFixtures({}, [{ ...fixture, operation: 'made-up' }]), /unknown module operation/);
+});
+
+test('output success preserves absent, undefined and null dispositions; failures require typed matching status', () => {
+  const value = { phase: 'module-output', stdout: new Uint8Array(), stderr: new Uint8Array(), exitCode: 0 };
+  const values = [value, { ...value, disposition: undefined }, { ...value, disposition: null }];
+  let index = 0;
+  const rows = evaluateModuleFixtures({ evaluateModuleOutput() { return values[index++]; } },
+    [{ ...fixture, operation: 'output-bytes' }], 3);
+  assert.deepEqual(rows.map(row => row.result.dispositionPresent), [false, true, true]);
+  assert.deepEqual(rows.map(row => row.result.dispositionKind), ['absent', 'undefined', 'null']);
+  for (const [exitCode, disposition] of [[1, 'language-error'], [2, 'unsupported'], [3, 'limit-exceeded'], [4, 'internal-failure']]) {
+    const valid = evaluateModuleFixtures({ evaluateModuleOutput() { return { ...value, exitCode, disposition }; } },
+      [{ ...fixture, operation: 'output-bytes' }], 1);
+    assert.equal(valid[0].acquisitionError, null);
+    const invalid = evaluateModuleFixtures({ evaluateModuleOutput() { return { ...value, exitCode, disposition: null }; } },
+      [{ ...fixture, operation: 'output-bytes' }], 1);
+    assert(invalid[0].acquisitionError);
+  }
+  for (const malformed of [{ ...value, disposition: 'language-error' }, { ...value, phase: 'parsing' },
+    { ...value, exitCode: 5 }, { ...value, stdout: [1] }]) {
+    const rows = evaluateModuleFixtures({ evaluateModuleOutput() { return malformed; } }, [{ ...fixture, operation: 'output-bytes' }]);
+    assert(rows.every(row => row.acquisitionError));
+  }
+});
+
+test('output raw equality cannot turn unexpected upstream exit or Java bug into compatibility success', () => {
+  const options = { operation: 'output-bytes', upstreamExpectedExit: [0] };
+  const compared = compareModulePayload(expected, outcome(), 'ordinary-language-error', options);
+  assert.equal(compared.rawMatch, true); assert.equal(compared.upstreamExpectedExitMatch, false);
+  assert.equal(compared.status, 'oracle-contract-mismatch');
+  const bug = compareModulePayload(expected, outcome(), 'internal-or-process-error', options);
+  assert.equal(bug.rawMatch, true); assert.equal(bug.status, 'oracle-error');
+  // The legacy prefix call does not invent successful output from missing failure metadata.
+  assert.equal(compareModulePayload({ stdout: Buffer.alloc(0), stderr: Buffer.alloc(0), exitCode: 0 },
+    { stdout: [], stderr: [], exitCode: 0, disposition: null }, 'value').status, 'non-language-failure');
+});

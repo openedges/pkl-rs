@@ -1,0 +1,2 @@
+bad=throw("callback failure")
+output { text=read("life:output") }

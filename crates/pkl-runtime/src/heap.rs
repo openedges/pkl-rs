@@ -175,6 +175,9 @@ pub struct Object {
     /// Numeric Java hash, independent of canonical equality identity.
     /// Inner None marks a hash depending on JVM identity allocation.
     pub java_hash: Option<Option<i32>>,
+    pub pair: Option<Box<[Value; 2]>>,
+    pub amendment: Option<crate::vm::amendment::Amendment>,
+    pub mixin: Option<(crate::vm::TypeCheck, Option<crate::value::RuntimeFrame>)>,
     pub function: Option<Function>,
     pub reference: Option<crate::vm::reference::Reference>,
     pub native_function: Option<crate::vm::reference::NativeFunction>,
@@ -590,6 +593,12 @@ impl Heap {
                 Entry::Object(object) => object,
             };
             pending.extend(object.parent);
+            if let Some(amendment) = &object.amendment {
+                pending.extend(amendment.parent.heap_id());
+            }
+            if let Some(pair) = &object.pair {
+                pending.extend(pair.iter().filter_map(Value::heap_id));
+            }
             pending.extend(object.annotations.iter().filter_map(Value::heap_id));
             pending.extend(
                 object

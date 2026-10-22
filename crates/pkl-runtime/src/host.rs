@@ -224,6 +224,30 @@ impl HostSession {
         self.vm.resume(request, result)
     }
 
+    /// Complete a pending resource read through the shared configured policy.
+    pub fn resume_default_read(
+        &mut self,
+        token: &str,
+        properties: &[(String, String)],
+        environment: &[(String, String)],
+        now_ms: u64,
+    ) -> Result<(), RuntimeError> {
+        self.open()?;
+        self.clock(now_ms)?;
+        if self.expire(now_ms) {
+            return Err(self.terminal.clone().unwrap());
+        }
+        let id = self.request_id(token)?;
+        let Some(Some(PendingRequest::Read(request))) = self.vm.pending_requests().pop() else {
+            return Err(stale());
+        };
+        if request.id != id {
+            return Err(stale());
+        }
+        let result = resources::configured_result(&request, properties, environment);
+        self.vm.resume(id, result)
+    }
+
     pub fn acknowledge_log(
         &mut self,
         token: &str,

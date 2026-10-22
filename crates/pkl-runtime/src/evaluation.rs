@@ -240,8 +240,28 @@ pub fn runtime_error(
     uri: &str,
     module: &str,
     expression: &str,
+    error: RuntimeError,
+    expression_end: Option<usize>,
+) -> String {
+    runtime_error_with_profile(
+        source,
+        uri,
+        module,
+        expression,
+        error,
+        expression_end,
+        frontend::DiagnosticProfile::ApiIdentity,
+    )
+}
+
+pub(crate) fn runtime_error_with_profile(
+    source: &Source,
+    uri: &str,
+    module: &str,
+    expression: &str,
     mut error: RuntimeError,
     expression_end: Option<usize>,
+    profile: frontend::DiagnosticProfile,
 ) -> String {
     let mut sources = SourceMap::default();
     let repl_id = sources.add("repl:text", expression);
@@ -307,7 +327,7 @@ pub fn runtime_error(
         .iter()
         .zip(&source_ids)
         .map(|(frame, id)| {
-            if let Some(foreign) = &frame.source {
+            let location = if let Some(foreign) = &frame.source {
                 if foreign.line_anchors
                     && let Some(position) = id
                         .and_then(|id| sources.get(id))
@@ -318,6 +338,18 @@ pub fn runtime_error(
                 foreign.uri.to_string()
             } else {
                 uri.to_owned()
+            };
+            if profile == frontend::DiagnosticProfile::CliBundledSettings
+                && location.starts_with("file:")
+            {
+                let line = id
+                    .and_then(|id| sources.get(id))
+                    .unwrap_or(source)
+                    .position(frame.span.start)
+                    .map_or(1, |position| position.line);
+                format!("{location}, line {line}")
+            } else {
+                location
             }
         })
         .collect();
@@ -336,12 +368,24 @@ pub fn runtime_error(
             highlight_length_utf16: None,
         })
         .collect();
+    let fallback_uri =
+        if profile == frontend::DiagnosticProfile::CliBundledSettings && uri.starts_with("file:") {
+            format!(
+                "{uri}, line {}",
+                error
+                    .span
+                    .and_then(|span| source.position(span.start))
+                    .map_or(1, |position| position.line)
+            )
+        } else {
+            uri.to_owned()
+        };
     if frames.is_empty()
         && let Some(span) = error.span
     {
         frames.push(RenderFrame {
             source,
-            uri,
+            uri: &fallback_uri,
             member: &module_member,
             span,
             highlight_length_utf16: None,

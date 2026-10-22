@@ -148,3 +148,102 @@ impl Vm {
         Ok(())
     }
 }
+
+pub(super) fn encode_block(
+    blocks: &mut Vec<Vec<Instruction>>,
+    metadata: &mut Vec<BlockMetadata>,
+) -> usize {
+    let source = crate::stdlib_sources::base();
+    let declaration = "external function encodeToBytes(charset: Charset): Bytes";
+    let start = source
+        .text
+        .find(declaration)
+        .expect("String.encodeToBytes declaration");
+    let alias = source.text.find("typealias Charset = ").unwrap() + "typealias Charset = ".len();
+    let mut cursor = alias;
+    let mut spans = Vec::new();
+    let mut types = Vec::new();
+    for charset in ["UTF-8", "UTF-16", "ISO-8859-1"] {
+        let literal = format!("\"{charset}\"");
+        let p = cursor + source.text[cursor..].find(&literal).unwrap();
+        cursor = p + literal.len();
+        spans.push(Span::new(p, cursor));
+        types.push(TypeCheck::StringLiteral(charset.into()));
+    }
+    let block = blocks.len();
+    blocks.push(vec![
+        Instruction::LoadLocal(0),
+        Instruction::CheckType(TypeCheck::Union {
+            types,
+            labels: spans.clone(),
+            spans,
+            default: None,
+        }),
+        Instruction::StringEncode,
+        Instruction::Return,
+    ]);
+    metadata.push(BlockMetadata {
+        source: Some(source),
+        member: "#String.encodeToBytes".into(),
+        declaration: Some(Span::new(start, start + declaration.len())),
+        spans: vec![None, Some(Span::new(alias, cursor)), None, None],
+        ..Default::default()
+    });
+    block
+}
+impl Vm {
+    pub(super) fn string_encode_method(&mut self, receiver: Value) {
+        let id = self.heap.allocate(Object {
+            function: Some(Function {
+                block: self.program.string_encode_block,
+                arity: 1,
+                method: true,
+                captured_this: Some(receiver),
+            }),
+            ..Default::default()
+        });
+        self.stack.push(Value::Function(id));
+    }
+    pub(super) fn encode_string(&mut self) -> Result<(), RuntimeError> {
+        let Value::String(charset) = self.pop()? else {
+            return Err(invalid("String.encodeToBytes charset"));
+        };
+        let Some(Value::String(text)) = self
+            .frames
+            .last()
+            .and_then(|f| f.environment.this_value.as_ref())
+        else {
+            return Err(invalid("String.encodeToBytes receiver"));
+        };
+        let bytes = match charset.as_str() {
+            Some("UTF-8") => text.to_java_utf8().into_bytes(),
+            Some("UTF-16") => {
+                let mut out = Vec::new();
+                if !text.is_empty() {
+                    out.extend([0xfe, 0xff]);
+                }
+                for value in char::decode_utf16(text.encode_utf16()) {
+                    let mut units = [0; 2];
+                    for u in value
+                        .unwrap_or(char::REPLACEMENT_CHARACTER)
+                        .encode_utf16(&mut units)
+                    {
+                        out.extend(u.to_be_bytes());
+                    }
+                }
+                out
+            }
+            Some("ISO-8859-1") => char::decode_utf16(text.encode_utf16())
+                .map(|value| {
+                    value
+                        .ok()
+                        .filter(|v| (*v as u32) <= 255)
+                        .map_or(b'?', |v| v as u8)
+                })
+                .collect(),
+            _ => return Err(invalid("checked Charset value")),
+        };
+        self.stack.push(Value::Bytes(bytes.into()));
+        Ok(())
+    }
+}

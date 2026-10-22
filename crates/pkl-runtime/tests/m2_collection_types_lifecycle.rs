@@ -1,4 +1,6 @@
 //! Wrapper continuation roots and Host lifecycle, separate from Java resource semantics.
+//! Retained module graphs include their one builtin Module parent; executable
+//! nodes, transient-object deltas and terminal-zero assertions remain separate.
 use std::sync::Arc;
 
 use pkl_runtime::host::{HostPoll, HostSession};
@@ -242,10 +244,10 @@ fn nested_wrappers_keep_temporary_check_receivers_across_gc_and_reentry() {
         .unwrap();
     assert_eq!(ready(&mut session, 4), Ok(Value::string("outer")));
     assert_eq!(session.context_depth(), 0);
-    // Only Check and its captured module survive. Temporary receivers,
+    // Only Check, its captured module and builtin Module parent survive. Temporary receivers,
     // Listings, Mappings and wrappers must all have been reclaimed.
-    assert_eq!(retained_values(session.collect(&[]), 9), 2);
-    assert_eq!(retained_values(session.collect(&[]), 9), 2);
+    assert_eq!(retained_values(session.collect(&[]), 9), 3);
+    assert_eq!(retained_values(session.collect(&[]), 9), 3);
     session.close();
     assert_eq!(session.heap_stats().live, 0);
     assert_eq!(session.heap_stats().slots, 0);
@@ -292,10 +294,10 @@ fn failed_wrapper_predicate_retries_without_publishing_a_successful_member() {
         .resume(&outer, Ok(Value::string("outer")), 4)
         .unwrap();
     assert_eq!(ready(&mut session, 4), Ok(Value::string("outer")));
-    // Only Check and its captured module survive. Temporary receivers,
+    // Only Check, its captured module and builtin Module parent survive. Temporary receivers,
     // Listings, Mappings and wrappers must all have been reclaimed.
-    assert_eq!(retained_values(session.collect(&[]), 9), 2);
-    assert_eq!(retained_values(session.collect(&[]), 9), 2);
+    assert_eq!(retained_values(session.collect(&[]), 9), 3);
+    assert_eq!(retained_values(session.collect(&[]), 9), 3);
     session.close();
     assert_eq!(session.heap_stats().live, 0);
     assert_eq!(session.heap_stats().slots, 0);

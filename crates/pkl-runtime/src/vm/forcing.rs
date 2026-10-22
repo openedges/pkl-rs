@@ -29,6 +29,7 @@ pub(super) struct ForceRun {
     pending_render_key: Option<Value>,
     pending_render_comparison: Option<(Value, Value)>,
     allow_undefined: bool,
+    recurse: bool,
     finish: FinishAction,
     renderer: Option<crate::diagnostic_values::RenderRun>,
     tasks: Vec<Task>,
@@ -106,6 +107,7 @@ impl Vm {
             pending_render_key: None,
             pending_render_comparison: None,
             allow_undefined: true,
+            recurse: true,
             finish,
             renderer: None,
             tasks: vec![Task::Value(root.clone())],
@@ -117,6 +119,12 @@ impl Vm {
     }
     /// Hashing/equality use the same persistent force operation with undefined forbidden.
     pub(super) fn force_value_frame(&mut self, root: Value) -> Result<(), RuntimeError> {
+        self.force_frame(root, true)
+    }
+    pub(super) fn force_shallow_frame(&mut self, root: Value) -> Result<(), RuntimeError> {
+        self.force_frame(root, false)
+    }
+    fn force_frame(&mut self, root: Value, recurse: bool) -> Result<(), RuntimeError> {
         if self.frames.len() >= 4096 {
             return Err(RuntimeError::new(
                 ErrorKind::Cycle,
@@ -139,11 +147,15 @@ impl Vm {
             type_run: None,
             generic_default: None,
             equality_run: None,
+            pcf_render: None,
+            function_owner: None,
+            amendment_end: None,
             deep_force: Some(ForceRun {
                 pending_render_key: None,
                 pending_render_comparison: None,
                 root: root.clone(),
                 allow_undefined: false,
+                recurse,
                 finish: FinishAction::ReturnValue,
                 renderer: None,
                 tasks: vec![Task::Value(root)],
@@ -176,7 +188,9 @@ impl Vm {
     fn advance_deep_force(&mut self, run: &mut ForceRun) -> Result<bool, RuntimeError> {
         if run.awaiting.take().is_some() {
             let value = self.pop()?;
-            run.tasks.push(Task::Value(value));
+            if run.recurse {
+                run.tasks.push(Task::Value(value));
+            }
         }
         let Some(task) = run.tasks.pop() else {
             if matches!(run.finish, FinishAction::ReturnValue)
@@ -240,7 +254,14 @@ impl Vm {
         };
         match task {
             Task::Value(Value::Object(id)) => {
-                if let Some(reference) = self.heap.get_mut(id)?.reference.as_mut() {
+                if let Some(pair) = self.heap.get(id)?.pair.clone() {
+                    if !self.heap.get(id)?.forced {
+                        self.heap.get_mut(id)?.forced = true;
+                        run.active.push(id);
+                        run.tasks.push(Task::Finish(id));
+                        run.tasks.extend(pair.into_iter().rev().map(Task::Value));
+                    }
+                } else if let Some(reference) = self.heap.get_mut(id)?.reference.as_mut() {
                     if !reference.forced {
                         reference.forced = true;
                         run.tasks
@@ -249,7 +270,9 @@ impl Vm {
                         run.tasks.push(Task::Value(reference.domain.clone()));
                     }
                 } else if !self.heap.get(id)?.forced {
-                    self.heap.get_mut(id)?.forced = true;
+                    if run.recurse {
+                        self.heap.get_mut(id)?.forced = true;
+                    }
                     run.active.push(id);
                     run.tasks.push(Task::Finish(id));
                     let kind = self.heap.get(id)?.collection_kind;
@@ -328,6 +351,7 @@ impl Vm {
                                 pending_render_key: None,
                                 pending_render_comparison: None,
                                 allow_undefined: false,
+                                recurse: true,
                                 finish: FinishAction::ReturnValue,
                                 renderer: None,
                                 root: Value::Null,

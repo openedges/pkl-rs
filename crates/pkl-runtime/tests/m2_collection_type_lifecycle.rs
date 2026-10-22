@@ -1,5 +1,7 @@
 //! Abstract Collection checks retain concrete values and executable metadata.
 //! Native GC/Host contracts are separate from pinned Java byte comparisons.
+//! Retained module graphs include their one builtin Module parent; executable
+//! nodes, transient-object deltas and terminal-zero assertions remain separate.
 use std::sync::Arc;
 
 use pkl_runtime::heap::LazyState;
@@ -271,7 +273,7 @@ fn repeated_nonterminal_cancel_reclaims_active_collection_type_checks() {
             );
             let stats = vm.collect(std::slice::from_ref(&module));
             let live = (stats.live - stats.executable_live, stats.executable_live);
-            assert_eq!(live, (if constructor == "List" { 7 } else { 4 }, 7));
+            assert_eq!(live, (if constructor == "List" { 8 } else { 5 }, 7));
             if let Some(expected) = retained {
                 assert_eq!(live, expected);
             } else {

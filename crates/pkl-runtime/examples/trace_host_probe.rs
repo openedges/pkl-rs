@@ -86,16 +86,23 @@ fn save_result(out: &Path, prefix: &str, event: SourceEvent) {
     let (status, stdout, stderr) = match event.kind {
         "value" => (
             "success\n",
-            text(event.value.expect("value")),
-            String::new(),
+            text(event.value.expect("value")).into_bytes(),
+            Vec::new(),
         ),
-        "error" => ("error\n", String::new(), text(event.error.expect("error"))),
+        "bytes" => ("success\n", event.bytes.expect("bytes"), Vec::new()),
+        "error" => (
+            "error\n",
+            Vec::new(),
+            event
+                .error_bytes
+                .unwrap_or_else(|| text(event.error.expect("error")).into_bytes()),
+        ),
         kind => panic!("expected expression completion, got {kind}"),
     };
     for (channel, bytes) in [
         ("status", status.as_bytes()),
-        ("stdout", stdout.as_bytes()),
-        ("stderr", stderr.as_bytes()),
+        ("stdout", stdout.as_slice()),
+        ("stderr", stderr.as_slice()),
         ("error-class", b""),
     ] {
         write(out, &format!("{prefix}.{channel}.bin"), bytes);
@@ -118,6 +125,7 @@ struct Driver {
     reads: usize,
     collections: usize,
     budget: u32,
+    output: bool,
 }
 impl Driver {
     fn poll(&mut self) -> SourceEvent {
@@ -137,6 +145,8 @@ impl Driver {
     fn capture(&mut self, index: u32, prefix: &str, parent: Option<&str>) {
         let start = if let Some(token) = parent {
             self.probe.reenter_path(token, index, 0, None)
+        } else if self.output {
+            self.probe.start_output_bytes(0, None)
         } else {
             self.probe.start_path(index, 0, None)
         };
@@ -147,7 +157,9 @@ impl Driver {
                 token: None,
                 uri: None,
                 value: None,
+                bytes: None,
                 error: Some(error.message.encode_utf16().collect()),
+                error_bytes: None,
                 log: None,
             },
         };
@@ -157,10 +169,16 @@ impl Driver {
         loop {
             let event = self.poll();
             match event.kind {
-                "module" | "value" | "error" => return event,
+                "module" | "value" | "bytes" | "error" => return event,
                 "read" => {
                     let token = event.token.expect("read token");
                     let uri = event.uri.expect("read URI");
+                    if self.output && !uri.starts_with("life:") {
+                        self.probe
+                            .respond_configured(&token, 0)
+                            .expect("configured resource completion");
+                        continue;
+                    }
                     let id = self.reads;
                     self.reads += 1;
                     println!("read-enter={id} uri={uri}");
@@ -220,6 +238,16 @@ fn main() {
         "case-directory compact|pretty|COMPACT|PRETTY capture|noop|throw|close|close-reenter [budget [uri module-name]]"
     );
     let out = PathBuf::from(&args[1]);
+    let operation = match fs::read_to_string(out.join("operation.txt")) {
+        Ok(value) => value,
+        Err(error) if error.kind() == std::io::ErrorKind::NotFound => "expression".into(),
+        Err(error) => panic!("operation input: {error}"),
+    };
+    assert!(
+        matches!(operation.as_str(), "expression" | "output-bytes"),
+        "unsupported operation"
+    );
+    let output = operation == "output-bytes";
     let source = fs::read_to_string(out.join("input.pkl")).expect("source");
     let expressions: Vec<String> = fs::read_to_string(out.join("expressions.txt"))
         .expect("expressions")
@@ -232,7 +260,11 @@ fn main() {
         .get(4)
         .map_or(32, |s| s.parse::<u32>().expect("budget"));
     assert!(budget > 0, "budget must be positive");
-    let mut paths = expressions.clone();
+    let mut paths = if output {
+        Vec::new()
+    } else {
+        expressions.clone()
+    };
     let mut add = |path: &str| {
         if path.is_empty() {
             None
@@ -249,16 +281,39 @@ fn main() {
         .get(5)
         .map_or("file:///stage37-trace.pkl", String::as_str);
     let name = args.get(6).map_or("stage37-trace", String::as_str);
-    let probe = match SourceProbe::new(
-        &source,
-        uri,
-        name,
-        &paths,
-        &args[2],
-        args[3] != "noop",
-        false,
-        false,
-    ) {
+    let prepared = if output {
+        use pkl_runtime::evaluation::frontend::{
+            DiagnosticProfile, ModuleEvalOptions, ModuleSourceInput,
+        };
+        SourceProbe::new_output(
+            ModuleSourceInput {
+                text: &source,
+                uri,
+                inferred_name: name,
+            },
+            &paths,
+            &ModuleEvalOptions {
+                diagnostic_profile: DiagnosticProfile::ApiIdentity,
+                ..Default::default()
+            },
+            SourceProbe::options(&args[2], args[3] != "noop", false, false).expect("trace options"),
+        )
+        .map_err(|failure| {
+            String::from_utf8(failure.stderr).expect("shared diagnostic renderer emits UTF-8")
+        })
+    } else {
+        SourceProbe::new(
+            &source,
+            uri,
+            name,
+            &paths,
+            &args[2],
+            args[3] != "noop",
+            false,
+            false,
+        )
+    };
+    let probe = match prepared {
         Ok(probe) => probe,
         Err(error) => {
             for index in 0..expressions.len() {
@@ -270,7 +325,9 @@ fn main() {
                         token: None,
                         uri: None,
                         value: None,
+                        bytes: None,
                         error: Some(error.encode_utf16().collect()),
+                        error_bytes: None,
                         log: None,
                     },
                 );
@@ -293,6 +350,7 @@ fn main() {
         reads: 0,
         collections: 0,
         budget,
+        output,
     };
     for index in 0..expressions.len() {
         driver.capture(index as u32, &format!("outer-{index}"), None);

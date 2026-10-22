@@ -103,6 +103,53 @@ pub fn evaluate_module_frontend(
     Ok(outcome)
 }
 
+/// Actual shared module-output bytes; PCF and encoding stay in pkl-runtime.
+#[wasm_bindgen(js_name = evaluateModuleOutput)]
+pub fn evaluate_module_output(
+    source: JsString,
+    uri: JsString,
+    module_name: JsString,
+    arguments: js_sys::Array,
+) -> Result<js_sys::Object, JsValue> {
+    use pkl_runtime::evaluation::frontend::{ModuleSourceInput, arguments::parse_module_eval_args};
+    let arguments = arguments
+        .iter()
+        .map(|value| string(&JsString::from(value)))
+        .collect::<Result<Vec<_>, _>>()?;
+    let invocation = parse_module_eval_args(&arguments).map_err(error)?;
+    let source = string(&source)?;
+    let uri = string(&uri)?;
+    let module_name = string(&module_name)?;
+    let result = pkl_runtime::evaluation::frontend::evaluate_module_output(
+        ModuleSourceInput {
+            text: &source,
+            uri: &uri,
+            inferred_name: &module_name,
+        },
+        &invocation.options,
+    );
+    let outcome = js_sys::Object::new();
+    for (name, value) in [
+        ("phase", JsValue::from_str(result.phase.as_str())),
+        (
+            "disposition",
+            result
+                .disposition
+                .map_or(JsValue::NULL, |value| JsValue::from_str(value.as_str())),
+        ),
+        (
+            "reason",
+            result.reason.map_or(JsValue::NULL, JsValue::from_str),
+        ),
+        ("stdout", Uint8Array::from(result.stdout.as_slice()).into()),
+        ("stderr", Uint8Array::from(result.stderr.as_slice()).into()),
+        ("exitCode", JsValue::from(result.exit_code)),
+    ] {
+        js_sys::Reflect::set(&outcome, &JsValue::from_str(name), &value)?;
+    }
+    Ok(outcome)
+}
+
 /// Development-only ordered calls on one evaluator, retaining failures as data.
 #[wasm_bindgen(js_name = evaluateLanguageSequence)]
 pub fn evaluate_language_sequence(
@@ -251,8 +298,18 @@ fn source_event(event: probe::SourceEvent) -> Result<JsValue, JsValue> {
     if let Some(value) = event.value {
         set(&object, "value", Uint16Array::from(value.as_slice()).into())?;
     }
+    if let Some(value) = event.bytes {
+        set(&object, "bytes", Uint8Array::from(value.as_slice()).into())?;
+    }
     if let Some(value) = event.error {
         set(&object, "error", Uint16Array::from(value.as_slice()).into())?;
+    }
+    if let Some(value) = event.error_bytes {
+        set(
+            &object,
+            "errorBytes",
+            Uint8Array::from(value.as_slice()).into(),
+        )?;
     }
     if let Some(log) = event.log {
         let record = Object::new();
@@ -300,6 +357,66 @@ pub struct SourceSession {
 }
 #[wasm_bindgen]
 impl SourceSession {
+    #[wasm_bindgen(js_name = forOutput)]
+    #[allow(clippy::too_many_arguments)]
+    pub fn for_output(
+        source: JsString,
+        uri: JsString,
+        module_name: JsString,
+        paths: js_sys::Array,
+        arguments: js_sys::Array,
+        trace_mode: Option<JsString>,
+        host_logger: Option<bool>,
+        host_frame_transformer: Option<bool>,
+        power_assertions: Option<bool>,
+    ) -> Result<SourceSession, JsValue> {
+        use pkl_runtime::evaluation::frontend::{
+            DiagnosticProfile, ModuleSourceInput, arguments::parse_module_eval_args,
+        };
+        let arguments = arguments
+            .iter()
+            .map(|v| string(&JsString::from(v)))
+            .collect::<Result<Vec<_>, _>>()?;
+        let mut invocation = parse_module_eval_args(&arguments).map_err(error)?;
+        invocation.options.diagnostic_profile = DiagnosticProfile::ApiIdentity;
+        let paths = paths
+            .iter()
+            .map(|v| string(&JsString::from(v)))
+            .collect::<Result<Vec<_>, _>>()?;
+        let mode = trace_mode
+            .as_ref()
+            .map(string)
+            .transpose()?
+            .unwrap_or_else(|| "compact".into());
+        let options = probe::SourceProbe::options(
+            &mode,
+            host_logger.unwrap_or(false),
+            host_frame_transformer.unwrap_or(false),
+            power_assertions.unwrap_or(false),
+        )
+        .map_err(error)?;
+        let source = string(&source)?;
+        let uri = string(&uri)?;
+        let name = string(&module_name)?;
+        Ok(Self {
+            inner: probe::SourceProbe::new_output(
+                ModuleSourceInput {
+                    text: &source,
+                    uri: &uri,
+                    inferred_name: &name,
+                },
+                &paths,
+                &invocation.options,
+                options,
+            )
+            .map_err(|failure| {
+                error(
+                    String::from_utf8(failure.stderr)
+                        .expect("shared diagnostic renderer emits UTF-8"),
+                )
+            })?,
+        })
+    }
     #[wasm_bindgen(constructor)]
     #[allow(clippy::too_many_arguments)]
     pub fn new(
@@ -339,6 +456,33 @@ impl SourceSession {
     pub fn start_module(&mut self, now: f64, timeout: Option<f64>) -> Result<(), JsValue> {
         self.inner
             .start_module(unsigned(now)?, timeout.map(unsigned).transpose()?)
+            .map_err(error)
+    }
+    #[wasm_bindgen(js_name = startOutputBytes)]
+    pub fn start_output_bytes(&mut self, now: f64, timeout: Option<f64>) -> Result<(), JsValue> {
+        self.inner
+            .start_output_bytes(unsigned(now)?, timeout.map(unsigned).transpose()?)
+            .map_err(error)
+    }
+    #[wasm_bindgen(js_name = reenterOutputBytes)]
+    pub fn reenter_output_bytes(
+        &mut self,
+        token: JsString,
+        now: f64,
+        timeout: Option<f64>,
+    ) -> Result<(), JsValue> {
+        self.inner
+            .reenter_output_bytes(
+                &string(&token)?,
+                unsigned(now)?,
+                timeout.map(unsigned).transpose()?,
+            )
+            .map_err(error)
+    }
+    #[wasm_bindgen(js_name = respondConfigured)]
+    pub fn respond_configured(&mut self, token: JsString, now: f64) -> Result<(), JsValue> {
+        self.inner
+            .respond_configured(&string(&token)?, unsigned(now)?)
             .map_err(error)
     }
     #[wasm_bindgen(js_name = startPath)]

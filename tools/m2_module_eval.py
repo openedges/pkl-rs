@@ -28,7 +28,7 @@ def registry_cases(root, corpus, registry):
         if identifier in found or identifier not in originals:
             raise ValueError('duplicate or unknown original module-eval case')
         case = originals[identifier]
-        if (case['suite'] != 'language-snippet' or case['execution']['status'] != 'ready'
+        if (case['suite'] != 'language-snippet' or case['execution']['status'] not in ('ready', 'blocked')
                 or entry['input_sha256'] != case['source']['sha256']
                 or entry['upstream_case_sha256'] != compat.digest(compat.encoded(case))):
             raise ValueError('original module-eval contract changed: ' + identifier)
@@ -39,7 +39,15 @@ def registry_cases(root, corpus, registry):
     return found
 
 
-def status(java, rust, expected, actual):
+def execution_state(original, registered):
+    """An explicit attempt never fulfills an unresolved original fixture setup."""
+    ready = registered and original['execution']['status'] == 'ready'
+    return dict(state='ready' if ready else 'unimplemented',
+                reason=None if ready else original['execution']['reason'] or
+                'Full upstream snippet/output contract adapter and Rust renderer are unimplemented.')
+
+
+def status(java, rust, expected, actual, expected_exit=None):
     if expected.get('workspace_changes'):
         return 'oracle-error'
     if actual.get('workspace_changes'):
@@ -49,6 +57,10 @@ def status(java, rust, expected, actual):
     # CLI internal failures are observations, never ordinary compatible errors.
     if java['exit_code'] == 1 and not expected['stderr'].startswith('–– Pkl Error ––\n'.encode()):
         return 'oracle-error'
+    if expected_exit is not None and java['exit_code'] not in expected_exit:
+        # Raw agreement with a setup-dependent Java failure cannot close an
+        # original contract that requires successful output evaluation.
+        return 'oracle-contract-mismatch'
     if rust['timed_out']:
         return 'candidate-timeout'
     # Explicit development-probe protocol, not product CLI exit semantics.
@@ -111,8 +123,12 @@ def acquire_case(root, workspace, case, metadata, binary, output):
     (folder / 'input.pkl').write_bytes((workspace / case['input']).read_bytes())
     java, expected = capture_process(root, workspace, case, metadata['command'], metadata['environment'], folder / 'java')
     rust, actual = capture_process(root, workspace, case, [str(binary)], metadata['environment'], folder / 'rust')
+    expected_exit = case['upstream_case']['expected_exit']
     return dict(id=case['id'], adapter=ADAPTER, directory=folder.name,
-                status=status(java, rust, expected, actual), java=java, rust=rust)
+                status=status(java, rust, expected, actual, expected_exit),
+                raw_channels_match=not compat.differences(expected, actual),
+                upstream_expected_exit_match=not java['timed_out'] and java['exit_code'] in expected_exit,
+                java=java, rust=rust)
 
 
 def validate_resource_set(baseline, sources):
@@ -202,5 +218,12 @@ def verify_case(root, workspace, case, row, output, metadata, binary, baseline):
                 or {n: compat.digest(data) for n, data in captured['files'].items()} != process['files_sha256']):
             raise ValueError('module-eval exit/files/workspace channels changed')
         captures[runtime] = captured
-    if row['status'] != status(row['java'], row['rust'], captures['java'], captures['rust']):
+    if row['status'] != status(row['java'], row['rust'], captures['java'], captures['rust'], original['expected_exit']):
         raise ValueError('module-eval raw comparison status changed')
+    # These fields are additive to reports from the original error-only adapter.
+    # Classification above always enforces the expectation even for older rows.
+    for field, expected in [
+            ('raw_channels_match', not compat.differences(captures['java'], captures['rust'])),
+            ('upstream_expected_exit_match', not row['java']['timed_out'] and row['java']['exit_code'] in original['expected_exit'])]:
+        if field in row and row[field] is not expected:
+            raise ValueError('module-eval raw/contract match metadata changed')

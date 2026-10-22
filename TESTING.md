@@ -109,14 +109,17 @@ The full gate must fail while required language implementations, mappings,
 adapters, or passing executions are missing. It cannot be replaced with the
 selected-case gate.
 
-The [original module frontend contract](docs/m2-module-frontend.md) describes the
+The [original module contract](docs/m2-module-frontend.md) describes the
 additional `language-module-eval` adapter, included in default language
 acquisition. It preserves original upstream argv, environment, resources, and
 physical paths, comparing complete native process and generated-file channels.
 Focused adapter selection leaves all omitted cases required by the full gate.
-Node and browser frontend byte vectors are checked separately from native
-process execution. Successful parsing without module-output evaluation remains
-an explicit unsupported result.
+Node and browser byte vectors are checked separately from native process
+execution. The native probe evaluates actual module output. Portable output
+comparisons explicitly select `output-bytes`; the retained frontend-only API
+continues to report successful preparation as unsupported output evaluation.
+An original case's unmet execution prerequisites or expected exit status cannot
+be satisfied by raw agreement with a setup-dependent Java failure.
 
 Class and type-alias initialization have a separate persistent-evaluator contract:
 

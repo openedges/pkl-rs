@@ -5,6 +5,14 @@ use crate::value::{ErrorKind, RuntimeError, Value};
 use crate::vm::ReadRequest;
 
 pub(crate) fn default_result(request: &ReadRequest) -> Result<Value, RuntimeError> {
+    configured_result(request, &[], &[])
+}
+
+pub(crate) fn configured_result(
+    request: &ReadRequest,
+    properties: &[(String, String)],
+    environment: &[(String, String)],
+) -> Result<Value, RuntimeError> {
     let uri = ResourceUri::from_authored(&request.uri)?
         .resolve(request.module_uri.as_deref())?
         .normalize();
@@ -29,7 +37,38 @@ pub(crate) fn default_result(request: &ReadRequest) -> Result<Value, RuntimeErro
         ));
     }
     if matches!(scheme, "env" | "prop") {
-        // The scalar oracle explicitly configures empty maps, not process/JVM defaults.
+        // URI.getSchemeSpecificPart decodes escapes; property/environment maps
+        // are explicit evaluator inputs, never process environment lookups.
+        let raw = uri
+            .text
+            .split_once(':')
+            .expect("absolute URI")
+            .1
+            .split('#')
+            .next()
+            .unwrap();
+        let mut bytes = Vec::with_capacity(raw.len());
+        let mut index = 0;
+        while index < raw.len() {
+            if raw.as_bytes()[index] == b'%' {
+                bytes.push(
+                    u8::from_str_radix(&raw[index + 1..index + 3], 16).expect("validated escape"),
+                );
+                index += 3;
+            } else {
+                bytes.push(raw.as_bytes()[index]);
+                index += 1;
+            }
+        }
+        let key = String::from_utf8_lossy(&bytes);
+        let entries = if scheme == "prop" {
+            properties
+        } else {
+            environment
+        };
+        if let Some((_, value)) = entries.iter().rev().find(|(name, _)| name == key.as_ref()) {
+            return Ok(Value::string(value.as_str()));
+        }
         if request.nullable {
             return Ok(Value::Null);
         }
