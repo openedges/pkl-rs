@@ -1,0 +1,1262 @@
+{
+  "schema": 1,
+  "utc": "2026-10-22T04:26:42.883694+00:00",
+  "status": "pass",
+  "implementation_commit": "fc45bea329c4fdbc536eaef5070a0c03ed642d5a",
+  "scope": "Independent read-only archive/source/Git/gate/helper provenance audit. The auditor authored the ordinary-expression frontend implementation and independently reviewed the final type parser/resolver; this postseal check does not rerun evaluator artifacts or independently establish whole-language compatibility.",
+  "host": "macOS-27.0-arm64-arm-64bit-Mach-O",
+  "summary": {
+    "path": "reports/m2/stage25-final-summary.json",
+    "sha256": "4c32b3627d6391dfe879d55643191179d364bad0f3030ed8ae956f62f3ed3dcb",
+    "bytes": 88297
+  },
+  "packaging_process": {
+    "path": "target/m2/stage25-package-captured-final-01/process.json",
+    "sha256": "829ef58315312f960c6edb36f1a32e737af3188f6b280f021a44a8f3dc317a5c",
+    "exit_code": 0,
+    "helper_stable": true,
+    "preflight_verified": true
+  },
+  "archives": [
+    {
+      "name": "class-lifecycle",
+      "path": "reports/m2/class-lifecycle-stage25-final-evidence.tar.gz",
+      "sha256": "0261ee5bb4832bb8b30374eaec19840c59e389af3e53c044c07ae47f3af80c9c",
+      "bytes": 2284198,
+      "inventory_files": 22965,
+      "hash_size_inventory_verified": true
+    },
+    {
+      "name": "exploration",
+      "path": "reports/m2/exploration-stage25-evidence.tar.gz",
+      "sha256": "8b240db91dbbdf308ea6a1ebfcfbf1afb44c53781d5c7115d5a9f97cdeb5cf57",
+      "bytes": 6167195,
+      "inventory_files": 21767,
+      "hash_size_inventory_verified": true
+    },
+    {
+      "name": "exploration-support-1",
+      "path": "reports/m2/exploration-stage25-part02-evidence.tar.gz",
+      "sha256": "c74749dbb4f32d2cb00f330a41a732ac6b87e379a6f520c9c7abf8738ac71f04",
+      "bytes": 10641057,
+      "inventory_files": 1242,
+      "hash_size_inventory_verified": true
+    },
+    {
+      "name": "exploration-support-2",
+      "path": "reports/m2/exploration-stage25-part03-evidence.tar.gz",
+      "sha256": "de4b9550d4fce6ffd1132aadb2b6a2e1eb2eb90c00c974a3344553a22fa98687",
+      "bytes": 10636854,
+      "inventory_files": 3456,
+      "hash_size_inventory_verified": true
+    },
+    {
+      "name": "exploration-support-3",
+      "path": "reports/m2/exploration-stage25-part04-evidence.tar.gz",
+      "sha256": "828e1f5c4420a2990a10f3c142813505fce065e5b5092a62ca92839fc9909e46",
+      "bytes": 8416630,
+      "inventory_files": 169,
+      "hash_size_inventory_verified": true
+    },
+    {
+      "name": "exploration-support-4",
+      "path": "reports/m2/exploration-stage25-part05-evidence.tar.gz",
+      "sha256": "1666767d7470ed9d0b1783d48abf986e6345f74e3db89fc9f9b77122d6d23f55",
+      "bytes": 10326761,
+      "inventory_files": 2702,
+      "hash_size_inventory_verified": true
+    },
+    {
+      "name": "exploration-support-5",
+      "path": "reports/m2/exploration-stage25-part06-evidence.tar.gz",
+      "sha256": "486f36ce280288f56193e25b570ca703bf2d84757ac63fe4aba949af44eee51a",
+      "bytes": 1782514,
+      "inventory_files": 2977,
+      "hash_size_inventory_verified": true
+    },
+    {
+      "name": "frontend",
+      "path": "reports/m2/frontend-stage25-final-evidence.tar.gz",
+      "sha256": "5d99f46ca17c89c5d9f060987341dbaa0073082be49a6adc54eb81144a433512",
+      "bytes": 241060,
+      "inventory_files": 136,
+      "hash_size_inventory_verified": true
+    },
+    {
+      "name": "language",
+      "path": "reports/m2/language-stage25-final-evidence.tar.gz",
+      "sha256": "17e65e685cc13b1b40d78907fa29f5ba85e5f3cc5d7318e1d2ea8736f24137ca",
+      "bytes": 5145762,
+      "inventory_files": 24335,
+      "hash_size_inventory_verified": true
+    },
+    {
+      "name": "lifecycle",
+      "path": "reports/m2/lifecycle-stage25-final-evidence.tar.gz",
+      "sha256": "814bb83f8709ea4f3cb7aa6a054c1c2b7fd1d5a89ce827abb9845b8ca4693e34",
+      "bytes": 1088390,
+      "inventory_files": 164,
+      "hash_size_inventory_verified": true
+    },
+    {
+      "name": "native-frontend",
+      "path": "reports/m2/native-frontend-stage25-final-evidence.tar.gz",
+      "sha256": "d65b9c54dde07e21a7be052dad97b6abd42217b7d5569a708bd6fede1226c3b9",
+      "bytes": 2744291,
+      "inventory_files": 55,
+      "hash_size_inventory_verified": true
+    },
+    {
+      "name": "platforms",
+      "path": "reports/m2/platforms-stage25-final-evidence.tar.gz",
+      "sha256": "8699a43215d4294d6b3716fe812349c8c192de9be4be85de9e04000f0a8a200a",
+      "bytes": 3779401,
+      "inventory_files": 119,
+      "hash_size_inventory_verified": true
+    },
+    {
+      "name": "runtime",
+      "path": "reports/m2/runtime-stage25-final-evidence.tar.gz",
+      "sha256": "974edc260f991e84bcb910c2097baf1bef7d4e684032a573706f0debdc6db749",
+      "bytes": 1890474,
+      "inventory_files": 132,
+      "hash_size_inventory_verified": true
+    },
+    {
+      "name": "source",
+      "path": "reports/m2/source-stage25-final-evidence.tar.gz",
+      "sha256": "05608f60d3942f7090f583b717147d4369dc503725bd77496f01533bdd2dbdbf",
+      "bytes": 5970573,
+      "inventory_files": 3282,
+      "hash_size_inventory_verified": true
+    },
+    {
+      "name": "validation",
+      "path": "reports/m2/validation-stage25-final-evidence.tar.gz",
+      "sha256": "c67d7160815cc499403edd26eeb3c94bd0ad1d858094d7fd80d62cc7f57333d7",
+      "bytes": 2734205,
+      "inventory_files": 3269,
+      "hash_size_inventory_verified": true
+    }
+  ],
+  "new_archive_count": 15,
+  "historical_dependencies": [
+    {
+      "path": "reports/m2/class-lifecycle-stage24-final-evidence.tar.gz",
+      "sha256": "9c48d14a9f4d1418432aa583a516b1eba5ab823d8bf7fb9b308f7526f71f5b77",
+      "bytes": 2204355
+    },
+    {
+      "path": "reports/m2/exploration-stage24-evidence.tar.gz",
+      "sha256": "ff0d6d0b35c17e5da0b4c1496012d96144b7822757d9019de2e7e1a56d25c9cd",
+      "bytes": 9110782
+    },
+    {
+      "path": "reports/m2/exploration-stage24-part02-evidence.tar.gz",
+      "sha256": "b41e4b125f8f019ff09495beef4dbacea20388da11edc7e01691e17298d14e4a",
+      "bytes": 9588773
+    },
+    {
+      "path": "reports/m2/exploration-stage24-part03-evidence.tar.gz",
+      "sha256": "fef7c70ec13b2f6b6782aaadf91ed156fd46259c7fe8c432078c100afbfcc27e",
+      "bytes": 9848463
+    },
+    {
+      "path": "reports/m2/exploration-stage24-part04-evidence.tar.gz",
+      "sha256": "bccf3e3209b06af98b297d97db668fefdc1b189212402d372909cd2ce99b3efd",
+      "bytes": 9442813
+    },
+    {
+      "path": "reports/m2/exploration-stage24-part05-evidence.tar.gz",
+      "sha256": "e41985337ad7a07ad85f19fa4cc2be1ad22297a50a3dbe15a0651b440facf8c4",
+      "bytes": 9842423
+    },
+    {
+      "path": "reports/m2/exploration-stage24-part06-evidence.tar.gz",
+      "sha256": "f9b473bbfc4f50badfb838c93faeacab608b2774fe5205cd75e6df3be7e533ac",
+      "bytes": 9554714
+    },
+    {
+      "path": "reports/m2/exploration-stage24-part07-evidence.tar.gz",
+      "sha256": "7cfddfa20dcfed6ecf058ab48d8ad04c6632d3e8516e5cd51557213e68f50177",
+      "bytes": 4835663
+    },
+    {
+      "path": "reports/m2/frontend-stage24-final-evidence.tar.gz",
+      "sha256": "9bbdc0e1ca71924fb0821968144d614592537a7fd485a9706a6e2cd3f1a7e273",
+      "bytes": 229066
+    },
+    {
+      "path": "reports/m2/language-stage24-final-evidence.tar.gz",
+      "sha256": "aa8b2ad0d2e2e82670952be82078801b78b4922cd835acb200e9d9fd0996fd8d",
+      "bytes": 5044785
+    },
+    {
+      "path": "reports/m2/lifecycle-stage24-final-evidence.tar.gz",
+      "sha256": "2a8657cccde029303e41084b19ef50e9b85f124e6bec7fd6ed4c224d034ddb9a",
+      "bytes": 1071760
+    },
+    {
+      "path": "reports/m2/native-collection-type-stage24-final-evidence.tar.gz",
+      "sha256": "9cb0639acc452820b5d43fcdd63caeb9b11ba86f1cb9e094e077855bb88180df",
+      "bytes": 2569843
+    },
+    {
+      "path": "reports/m2/platforms-stage24-final-evidence.tar.gz",
+      "sha256": "c8df40855b8a6c7cb2375568d508d9be78f18f66425d4f7aa7748d64b1215656",
+      "bytes": 3706264
+    },
+    {
+      "path": "reports/m2/runtime-stage24-final-evidence.tar.gz",
+      "sha256": "f11fcfd46b36b8c2f2a38e7de2679dd0e8e9ce654e06a552a25c0eaae3a8c090",
+      "bytes": 1839009
+    },
+    {
+      "path": "reports/m2/source-stage24-final-evidence.tar.gz",
+      "sha256": "4898f0d6bf1fb066d93fa4eb377443fd8b89e6fe97c23529f24828971a7d12f9",
+      "bytes": 5930641
+    },
+    {
+      "path": "reports/m2/validation-stage24-final-evidence.tar.gz",
+      "sha256": "f8a156408f1d5157d3219bf800a2fcf9487113d613013d1506e3889b85de3643",
+      "bytes": 2694760
+    },
+    {
+      "path": "reports/m2/class-lifecycle-stage23-final-evidence.tar.gz",
+      "sha256": "08c60df471b93015360cd7e708d121fade68cc930e6cdb35baba31dd61964b18",
+      "bytes": 2120193
+    },
+    {
+      "path": "reports/m2/exploration-stage23-evidence.tar.gz",
+      "sha256": "b38c86629dd2ecbfdbb0abf6b1bc61cf7eb535b8c3ad50c2047ccb136fdc0c05",
+      "bytes": 40557082
+    },
+    {
+      "path": "reports/m2/exploration-stage23-superseded-evidence.tar.gz",
+      "sha256": "b443d937d5f75b1c7ad1d8be7736b1c02251358efb746b934cdfc8124ffcabec",
+      "bytes": 27632479
+    },
+    {
+      "path": "reports/m2/exploration-stage23-native-preliminary-evidence.tar.gz",
+      "sha256": "c25c189eeefa24a8a13646c799a0e6d625c78a9e2af5aba28c11715690db19eb",
+      "bytes": 15462171
+    },
+    {
+      "path": "reports/m2/frontend-stage23-final-evidence.tar.gz",
+      "sha256": "2b96b48523dcad124f239a5cc248b86aa68137743fd0d0bd89f4804e0c895aea",
+      "bytes": 227766
+    },
+    {
+      "path": "reports/m2/language-stage23-final-evidence.tar.gz",
+      "sha256": "b9a45c71e654446f070c5e3ab4496f0561496b1f21bb3f8a3684e908d0df3854",
+      "bytes": 4768228
+    },
+    {
+      "path": "reports/m2/lifecycle-stage23-final-evidence.tar.gz",
+      "sha256": "3d3e508b6224c0004fa8a0bd2f33fd54569b4befdbc0816b18e184de3db1231f",
+      "bytes": 1066786
+    },
+    {
+      "path": "reports/m2/native-set-stage23-final-evidence.tar.gz",
+      "sha256": "856f0e9ae6aa120e6628848656a4ea2664a2a1e571b6173ce4b80aff4cf74e3a",
+      "bytes": 2601909
+    },
+    {
+      "path": "reports/m2/platforms-stage23-final-evidence.tar.gz",
+      "sha256": "13974097fef188d7542253b93c84b4c594bba3ac6fea8004bcce8f6cd8bb7025",
+      "bytes": 3696368
+    },
+    {
+      "path": "reports/m2/runtime-stage23-final-evidence.tar.gz",
+      "sha256": "2e27fc3178c435ad3cceafd4b3eb9c1c401001fedba5f09b6e17dbf0054b5ef7",
+      "bytes": 1833767
+    },
+    {
+      "path": "reports/m2/source-stage23-final-evidence.tar.gz",
+      "sha256": "3fafdc032d966bba023cd58d6ab7f98ab145116f139fcb2229206347a9e75a0a",
+      "bytes": 5660384
+    },
+    {
+      "path": "reports/m2/validation-stage23-final-evidence.tar.gz",
+      "sha256": "c521783e975e9817763478d063da8c9689c51023017672c676c69cd73d287d7d",
+      "bytes": 2598219
+    },
+    {
+      "path": "reports/m2/class-lifecycle-stage22-final-evidence.tar.gz",
+      "sha256": "151ce45936f5d69b15805fd8d9ceb6ae0c4053da0dac3a2a4db0693398503e96",
+      "bytes": 1995418
+    },
+    {
+      "path": "reports/m2/exploration-stage22-evidence.tar.gz",
+      "sha256": "f150ea2abd416b8256ceb00b47a7bd22f5e12bb0fca13e07778c19915cf189dc",
+      "bytes": 38713060
+    },
+    {
+      "path": "reports/m2/exploration-stage22-superseded-evidence.tar.gz",
+      "sha256": "ce21b1ebce213b35a9524c42f91896e07d8a96a8c5e183b69e787a0023986ee8",
+      "bytes": 38499578
+    },
+    {
+      "path": "reports/m2/exploration-stage22-superseded-final01-evidence.tar.gz",
+      "sha256": "454e795f3ec5019c105cb701e46bce93cae25351b142d1a2d78abeef4efab178",
+      "bytes": 43595972
+    },
+    {
+      "path": "reports/m2/frontend-stage22-final-evidence.tar.gz",
+      "sha256": "4516a61c4239b00bfe1bef7b8e484de621041790a409e09c4d84748ee918f844",
+      "bytes": 201017
+    },
+    {
+      "path": "reports/m2/language-stage22-final-evidence.tar.gz",
+      "sha256": "c281b23e880f7ba309640aee49698114e51d02adffeb5ea81d4bd6f0001ced41",
+      "bytes": 4499419
+    },
+    {
+      "path": "reports/m2/lifecycle-stage22-final-evidence.tar.gz",
+      "sha256": "dcb74892813034412bb29e82a8aeabe1ba317a1fcd207a86d6a3b5ab9cf56d42",
+      "bytes": 1005226
+    },
+    {
+      "path": "reports/m2/native-map-stage22-final-evidence.tar.gz",
+      "sha256": "58a883297c284bb1c6cf1c5381e408e31c5f8fb3f4c37c2ca1374d22153b9ff8",
+      "bytes": 2513651
+    },
+    {
+      "path": "reports/m2/platforms-stage22-final-evidence.tar.gz",
+      "sha256": "44fce5bb1fa13c6ea9b04eed8af89772b37373b112e3a6476527340412975fe8",
+      "bytes": 3595974
+    },
+    {
+      "path": "reports/m2/runtime-stage22-final-evidence.tar.gz",
+      "sha256": "b10bb929369dec50ac357e7e5686a030cffc193ccae1a822f92827e01db369a5",
+      "bytes": 1742081
+    },
+    {
+      "path": "reports/m2/source-stage22-final-evidence.tar.gz",
+      "sha256": "7ea3e6ce3940ec449e74c8c15e3c0170a38f7b441c2db961b576addafd3bb5a0",
+      "bytes": 5426817
+    },
+    {
+      "path": "reports/m2/validation-stage22-final-evidence.tar.gz",
+      "sha256": "7cb170dc6a5550f2a0e4723c6a3ce5dfef25670fc1d34e9be78c1dd0d589398d",
+      "bytes": 2495625
+    },
+    {
+      "path": "reports/m2/class-lifecycle-stage21-final-evidence.tar.gz",
+      "sha256": "3533ae15b05b89cceb772060d25140c9aaf45b637d1c0601c062b1d6df9dd2d3",
+      "bytes": 1909283
+    },
+    {
+      "path": "reports/m2/exploration-stage21-evidence.tar.gz",
+      "sha256": "fd54513b04ace99de74202dca5168a0dbec398c0e3860f9104837be125e03939",
+      "bytes": 42338168
+    },
+    {
+      "path": "reports/m2/frontend-stage21-final-evidence.tar.gz",
+      "sha256": "d4b7fa2dc1eec98b9a6056889ba85fa37453b69c3720459f761e72fbb458f389",
+      "bytes": 195823
+    },
+    {
+      "path": "reports/m2/language-stage21-final-evidence.tar.gz",
+      "sha256": "b88120cf2f98b706590666287b80370e81b9d08171c46a8c353402e437ea23e1",
+      "bytes": 4272822
+    },
+    {
+      "path": "reports/m2/lifecycle-stage21-final-evidence.tar.gz",
+      "sha256": "d19a032e262295e89970796a101f4a58e71c3ca30dceb55a56d7026a16d2a1ed",
+      "bytes": 969687
+    },
+    {
+      "path": "reports/m2/native-constructors-stage21-final-evidence.tar.gz",
+      "sha256": "081596745cd7e824190ef869af86be962c558c4fa54e47d42c7b0784b25d5442",
+      "bytes": 2421453
+    },
+    {
+      "path": "reports/m2/platforms-stage21-final-evidence.tar.gz",
+      "sha256": "6d60bfac560c6439dd80bce1514116f8a54e67166c0cac265a2f1caff71a9efe",
+      "bytes": 3541118
+    },
+    {
+      "path": "reports/m2/runtime-stage21-final-evidence.tar.gz",
+      "sha256": "55c3ee3271a9bda568284b49f6c4108a4dbc4b754ca966f981855290e405e770",
+      "bytes": 1682432
+    },
+    {
+      "path": "reports/m2/source-stage21-final-evidence.tar.gz",
+      "sha256": "f12f2645774c18a067f022b36389d5d2ed13fdb8fb8e0600e15709c982b7a2f2",
+      "bytes": 5226479
+    },
+    {
+      "path": "reports/m2/validation-stage21-final-evidence.tar.gz",
+      "sha256": "e974e234891e1bd7dc7e3d396ae3ff4e68bbd31f336e7d209555a4bd67b605c2",
+      "bytes": 2423723
+    },
+    {
+      "path": "reports/m2/class-lifecycle-stage20-final-evidence.tar.gz",
+      "sha256": "97fdfbb8a1d104b9379a29999b16f14573a2511da3788b0fba56258e2d35d95a",
+      "bytes": 1856440
+    },
+    {
+      "path": "reports/m2/exploration-stage20-evidence.tar.gz",
+      "sha256": "1b50d34afc2a1e4fcd78c5110d2d75f0506de4117eec9a079bcd31b5bc661be3",
+      "bytes": 31739779
+    },
+    {
+      "path": "reports/m2/exploration-stage20-superseded-evidence.tar.gz",
+      "sha256": "554cd772ca835e4e2c01d6c3de5f2115137c6a202ac30fcf71f4f001c935b18e",
+      "bytes": 15640533
+    },
+    {
+      "path": "reports/m2/frontend-stage20-final-evidence.tar.gz",
+      "sha256": "f913d311d3fffcbf160973100288c7d168db1bf1f5cb8539087f8b229c37a4ad",
+      "bytes": 194013
+    },
+    {
+      "path": "reports/m2/language-stage20-final-evidence.tar.gz",
+      "sha256": "1638a56a67a4fb1ebadeb0abaacf6d0e49537b50720c4d2969889e46ff694cf8",
+      "bytes": 4168452
+    },
+    {
+      "path": "reports/m2/lifecycle-stage20-final-evidence.tar.gz",
+      "sha256": "a64f3adb801b5a475ffd6b2582f4d87011b9aa80e79dcd34abdf63a6722df173",
+      "bytes": 954224
+    },
+    {
+      "path": "reports/m2/native-defaults-stage20-final-evidence.tar.gz",
+      "sha256": "0cc9705780529c94e59c3fda9784cf100f13249628fc1c4a3eac6ee632a86e12",
+      "bytes": 2348247
+    },
+    {
+      "path": "reports/m2/platforms-stage20-final-evidence.tar.gz",
+      "sha256": "6850492399889be64afe85b5abc4fd098c15e85e6845d82f6d4d47b6399463e3",
+      "bytes": 3505628
+    },
+    {
+      "path": "reports/m2/runtime-stage20-final-evidence.tar.gz",
+      "sha256": "e041ba7d098e05a55ebce66079efaff397b174c527a4fb5256d829949eb9a539",
+      "bytes": 1647848
+    },
+    {
+      "path": "reports/m2/source-stage20-final-evidence.tar.gz",
+      "sha256": "6bbf63cfd882075bce1335f5c41a0689f58d5ecbf6276d93c4cede68edaacad3",
+      "bytes": 5137505
+    },
+    {
+      "path": "reports/m2/validation-stage20-final-evidence.tar.gz",
+      "sha256": "eb3ad807c6b82eb912343faeff50876bcd0d129ff88c6cfbc6f4bd4fbf595b5c",
+      "bytes": 2387186
+    },
+    {
+      "path": "reports/m2/class-lifecycle-stage19-final-evidence.tar.gz",
+      "sha256": "59c2307e382115467653f93c724bae058a453a0ef257a52b3021c5d9be0f2217",
+      "bytes": 1826768
+    },
+    {
+      "path": "reports/m2/exploration-stage19-evidence.tar.gz",
+      "sha256": "5aea00bbddf3d5a18a3b610de7fe447d34c36d7963525cfa1e70006fa650ec77",
+      "bytes": 448580
+    },
+    {
+      "path": "reports/m2/exploration-stage19-support-01-evidence.tar.gz",
+      "sha256": "c27e29bc0a8092bf9803a868b9b2e2e1da6782fdf1722648512c927b41bad9c8",
+      "bytes": 7431252
+    },
+    {
+      "path": "reports/m2/frontend-stage19-final-evidence.tar.gz",
+      "sha256": "b233f996c77b0afade6fd2042fd172b8a5ac642d1622daaad87e930e2aba7267",
+      "bytes": 192767
+    },
+    {
+      "path": "reports/m2/language-stage19-final-evidence.tar.gz",
+      "sha256": "2c2e3b2d082ab21414bf08f1eb36230dd4142fcc2a8ee8d465b8747f45fa7ab9",
+      "bytes": 4125872
+    },
+    {
+      "path": "reports/m2/lifecycle-stage19-final-evidence.tar.gz",
+      "sha256": "469c0d707e8a0964831c696d4015c5171323b35342e5748a7e78b3c24837cd1d",
+      "bytes": 951385
+    },
+    {
+      "path": "reports/m2/native-generics-stage19-final-evidence.tar.gz",
+      "sha256": "e317d548e64e4535dacc5c88cf1d6d7aa37b9ebf89d8cd53ed455e9196a2e1f3",
+      "bytes": 2422874
+    },
+    {
+      "path": "reports/m2/platforms-stage19-final-evidence.tar.gz",
+      "sha256": "255797a2361f1292758cdbb78c8bdf8c20c89704858dbcabba49d93143b1bfc5",
+      "bytes": 3497456
+    },
+    {
+      "path": "reports/m2/prior-selection-stage19-final-evidence.tar.gz",
+      "sha256": "c3b6c9f7efbb8f9d60d0aa3477727eaec6b0895a356b523d502eab398007351b",
+      "bytes": 2004187
+    },
+    {
+      "path": "reports/m2/release-build-stage19-final-evidence.tar.gz",
+      "sha256": "6d24016af93366319fb5242f8c9f80a57da6332198274a427bbae423b1f10dc0",
+      "bytes": 1959564
+    },
+    {
+      "path": "reports/m2/runtime-stage19-final-evidence.tar.gz",
+      "sha256": "f94ee9c288fbd5157c16c0d987f85763d02b788dfabe350b161613279a3a79ce",
+      "bytes": 1646051
+    },
+    {
+      "path": "reports/m2/source-stage19-final-evidence.tar.gz",
+      "sha256": "512117386589bee1b68ed1355dc8d0525775abae6324cceab54dd1e69b10da61",
+      "bytes": 5034776
+    },
+    {
+      "path": "reports/m2/validation-stage19-final-evidence.tar.gz",
+      "sha256": "eb7395ff6e4e2b4dbacaab6329fa7d4257f7bca33bb2b1322b62c8c6f4615dca",
+      "bytes": 2369149
+    },
+    {
+      "path": "reports/m2/class-lifecycle-stage18-final-evidence.tar.gz",
+      "sha256": "50c67d1a47083956d08d5c5444ebdf54bcf5e6b4ac0be010641f2ea7efdeb6de",
+      "bytes": 1752505
+    },
+    {
+      "path": "reports/m2/exploration-stage18-evidence.tar.gz",
+      "sha256": "9e226b18304278a74db30bbb0462a87054121ae93cfc224fbfc90fc7385cff5c",
+      "bytes": 1814949
+    },
+    {
+      "path": "reports/m2/exploration-stage18-support-01-evidence.tar.gz",
+      "sha256": "c85deece0cc11e9b2d85fa9fe911e581d73990623b7b12985fac363d64101780",
+      "bytes": 46292188
+    },
+    {
+      "path": "reports/m2/exploration-stage18-support-02-evidence.tar.gz",
+      "sha256": "9a3f4eed701edc76430de2e779738e3c3dada3aa85e3d3af81cb68dafcad6f17",
+      "bytes": 45885557
+    },
+    {
+      "path": "reports/m2/exploration-stage18-support-03-evidence.tar.gz",
+      "sha256": "b20759c38d2f6e92c9ef213b02fb11ec64e1982c3247cacd8f6251552b834253",
+      "bytes": 21104951
+    },
+    {
+      "path": "reports/m2/frontend-stage18-final-evidence.tar.gz",
+      "sha256": "cb4fd2efe0baebf59bd04bdadcf129665f91cc3cf1b98c1f750c1c954ec414a1",
+      "bytes": 185701
+    },
+    {
+      "path": "reports/m2/language-stage18-final-evidence.tar.gz",
+      "sha256": "841bde3b331b3782c9e8daa721396663cc09411b35b60ca2647b1bf6209eb54c",
+      "bytes": 4056803
+    },
+    {
+      "path": "reports/m2/lifecycle-stage18-final-evidence.tar.gz",
+      "sha256": "2822ab537ed13bd8a7336c2be84a48ca579159bdc7c3a609b1073c3acefe5df5",
+      "bytes": 904626
+    },
+    {
+      "path": "reports/m2/native-generics-stage18-final-evidence.tar.gz",
+      "sha256": "13f3a3c497a4c626435e15218e1a7017be1fe141da469ae27c5490b3d6e9bc65",
+      "bytes": 2316514
+    },
+    {
+      "path": "reports/m2/platforms-stage18-final-evidence.tar.gz",
+      "sha256": "129649a7dff6a54ca417ddccba0e4290779c621193e75649be2a879797446adc",
+      "bytes": 3425421
+    },
+    {
+      "path": "reports/m2/prior-selection-stage18-final-evidence.tar.gz",
+      "sha256": "d2c7cf51991bad4154bbe12e864b561f07a9caa5251b25387ad07865e0416332",
+      "bytes": 1893909
+    },
+    {
+      "path": "reports/m2/release-build-stage18-final-evidence.tar.gz",
+      "sha256": "0231e85476567f430a7a27abab614f456360d19b7b9f536eb27851443af00298",
+      "bytes": 1878992
+    },
+    {
+      "path": "reports/m2/runtime-stage18-final-evidence.tar.gz",
+      "sha256": "f9a402ed01e6d42f6809933bff22a44c1aeb318065dc82892603edf086a769e6",
+      "bytes": 1568345
+    },
+    {
+      "path": "reports/m2/source-stage18-final-evidence.tar.gz",
+      "sha256": "f1b9400694d2d583eed1f413321b6f3223c7535d7b313f55aa503b01a407141c",
+      "bytes": 5495125
+    },
+    {
+      "path": "reports/m2/validation-stage18-final-evidence.tar.gz",
+      "sha256": "72b4913fb9bfa6b537e060e8f544b75fbaf8ef302d46cad6c307616653a701c5",
+      "bytes": 2344824
+    },
+    {
+      "path": "reports/m2/class-lifecycle-stage17-final-evidence.tar.gz",
+      "sha256": "afe409da39467d8e7209d225a04a6c5dbf47c0f8fd560a15bddf67f48de52a22",
+      "bytes": 1471054
+    },
+    {
+      "path": "reports/m2/exploration-stage17-evidence.tar.gz",
+      "sha256": "0bac7fcf0f4860d7463913671e35270e08355888c31d0df15979fae8a8defdd9",
+      "bytes": 40915589
+    },
+    {
+      "path": "reports/m2/exploration-stage17-history-01-evidence.tar.gz",
+      "sha256": "792963ccfdb64df3d7683340a91f53f6333144ca4e3d160bf1fed3f17f915113",
+      "bytes": 38356107
+    },
+    {
+      "path": "reports/m2/exploration-stage17-history-02-evidence.tar.gz",
+      "sha256": "6915d3724c2a96ab272039c3b334eec4f872d647ae3c7206e436f4a3b1fa9285",
+      "bytes": 38961690
+    },
+    {
+      "path": "reports/m2/exploration-stage17-history-03-evidence.tar.gz",
+      "sha256": "e42ec9e4655531eb82207a66c5ae728ab99dc934e04ad6156ca9bdf542811229",
+      "bytes": 32294731
+    },
+    {
+      "path": "reports/m2/exploration-stage17-history-04-evidence.tar.gz",
+      "sha256": "5e6a4ea6172ff5ba1a68660b2a82ddd25f0b03c1d72bd399e50c553767edb7dd",
+      "bytes": 35794996
+    },
+    {
+      "path": "reports/m2/gates-stage17-final-evidence.tar.gz",
+      "sha256": "f4307bf3ec4ae777ae4c935774a5c07f6b6c1e3ff2eab4a10cf547f9d469c6a4",
+      "bytes": 938
+    },
+    {
+      "path": "reports/m2/language-stage17-final-evidence.tar.gz",
+      "sha256": "0b9f25ccec620ff0bc1cb216e053aabc863858265c0229d01b8012f41a6a05b6",
+      "bytes": 3883852
+    },
+    {
+      "path": "reports/m2/platforms-stage17-final-evidence.tar.gz",
+      "sha256": "6ead24db1a84e03970d7c5fe47b5664c8ae4fd1b949f4484bedc036014710f10",
+      "bytes": 3367449
+    },
+    {
+      "path": "reports/m2/regressions-stage17-final-evidence.tar.gz",
+      "sha256": "f0709e8fd8d44d2b73903e238c0f0c665c62fc84b62fc4ada348b578caf75e22",
+      "bytes": 21456570
+    },
+    {
+      "path": "reports/m2/source-stage17-final-evidence.tar.gz",
+      "sha256": "a012d2be480a070f5c67c4743702fe4529c8f7cf9617e2e2fff00cc8a115fc4d",
+      "bytes": 4103478
+    },
+    {
+      "path": "reports/m2/validation-stage17-final-evidence.tar.gz",
+      "sha256": "92069c17bc7451a4e092808b7f557b4ba5e0ae50078e85e6b4cc63e1b8c14a62",
+      "bytes": 16967
+    },
+    {
+      "path": "reports/m2/stage24-final-summary.json",
+      "sha256": "9180145097ecaf5fb00e50547aca986828d094a8b8321f26576d5ad24f1613dd",
+      "bytes": 68066
+    }
+  ],
+  "historical_summary_hashes": {
+    "reports/m2/stage24-final-summary.json": "9180145097ecaf5fb00e50547aca986828d094a8b8321f26576d5ad24f1613dd",
+    "reports/m2/stage23-final-summary.json": "ffb3e40f3b28dec562e0d20f89216d53df08cd6c6b5f195f81817cad42a43b06",
+    "reports/m2/stage22-final-summary.json": "750aea177a6364373b67aa280c959a14d45ea4fe8d9b135ac9cc592ab5ad5a75",
+    "reports/m2/stage21-final-summary.json": "821100192c6cfc6ed83869582f2af49bebdd88567d6cb492fd5448522719acea",
+    "reports/m2/stage20-final-summary.json": "e68afa30ba397c211a78ac1ef4aaabe955b2ad8875e926f40977c871fcc7865c",
+    "reports/m2/stage19-final-summary.json": "2714acf295b74dd5a69dd750f91d8b48f53d26a0926798762177a727dee60e66",
+    "reports/m2/stage18-final-summary.json": "e480344e27cb62c48497846ca72541c23b4630ce39f8203da95099bc3de94405",
+    "reports/m2/stage17-final-summary.json": "387089a325531d3c63b34405d883861ead0cdeb3ace6b186dc8a0c3a13083c22"
+  },
+  "source_binding": {
+    "source_snapshot_copies": 6813,
+    "unique_source_files": 3245,
+    "helper_snapshot_copies": 0,
+    "upstream_source_snapshot_copies": 0,
+    "all_raw_git_objects_verified": true,
+    "all_implementation_and_suite_source_payloads_verified": true,
+    "archive_source_root_enumeration_verified": true
+  },
+  "reviews": {
+    "stage25-frontend-review-final-01.json": {
+      "implementation_commit": "fc45bea329c4fdbc536eaef5070a0c03ed642d5a",
+      "path": "target/m2/stage25-frontend-review-final-01.json",
+      "scope": "Independent review of the root-authored iterative type parser and lifecycle-authored final resolver continuation scheduler, limited to preservation of the previous traversal, source spans, scope restoration and first-error ordering within the bounded Stage25 contract. This is not a review of this reviewer's expression parser, AST lifetime, constant-key, power-assertion or compiler changes, and not full Java language compatibility.",
+      "sha256": "1bbbc607ee81d1c71a49e686e75c8e2d8e2e820e41d7db1108aa030447547606",
+      "source_count": 2
+    },
+    "stage25-lifecycle-review-final-01.json": {
+      "implementation_commit": "fc45bea329c4fdbc536eaef5070a0c03ed642d5a",
+      "path": "target/m2/stage25-lifecycle-review-final-01.json",
+      "scope": "Independent production review for the selected Stage25 frontend checkpoint; not complete language compatibility, all-grammar stack safety, or performance certification",
+      "sha256": "44808982831addc787c4ba8364fe4bcb39a33be36e70475203af6fb9520d305f",
+      "source_count": 7
+    },
+    "stage25-root-review-final-01.json": {
+      "implementation_commit": "fc45bea329c4fdbc536eaef5070a0c03ed642d5a",
+      "path": "target/m2/stage25-root-review-final-01.json",
+      "scope": "Independent review of other agents' bounded frontend implementation, resolver, native lifecycle tests and platform wiring; preservation checks. Not complete language compatibility, arbitrary grammar depth, or performance certification.",
+      "sha256": "29f032cdbc93e03cf531987d9105a89d5da5ebc13327f16796e83b68a2156e14",
+      "source_count": 13
+    }
+  },
+  "validation_accounting": {
+    "rust_passed": 437,
+    "rust_harness_passed": 442,
+    "rust_isolated_child_duplicate_passed": 5,
+    "rust_isolated_child_tests": [
+      "authored_chains_parse_clone_resolve_compile_and_drop_on_small_stack",
+      "authored_power_assertion_compiler_and_cleanup_use_small_stack",
+      "authored_partial_parse_resolve_and_compile_errors_release_on_small_stack",
+      "authored_scope_type_and_shared_work_guards_release_on_small_stack",
+      "authored_frontend_program_survives_host_reentry_retry_cancel_and_terminal_release"
+    ],
+    "rust_intentionally_ignored": 1,
+    "python_passed": 194,
+    "required_commands": 7
+  },
+  "selected_contract": {
+    "baseline_commit": "a22051329ef90fb76f8428852ee2cc2c14360ea3",
+    "original_cases": 2652,
+    "current_cases": 2688,
+    "added_cases": 36,
+    "added_expected_outcomes": {
+      "success": 30,
+      "failure": 6
+    },
+    "unchanged_original_fixture_files": 2946,
+    "original_sequences": 147,
+    "current_sequences": 150,
+    "persistent_executions": 300,
+    "persistent_comparisons": 2592,
+    "original_platform_scenarios": 82,
+    "current_platform_scenarios": 84,
+    "known_language_failures": {
+      "error-cycle": "oracle-error",
+      "error-remainder-zero": "mismatch"
+    },
+    "raw_new_and_known_controls": [
+      {
+        "id": "error-cycle",
+        "expected_outcome": "failure",
+        "status": "oracle-error",
+        "input_sha256": "4224d1d5e1abe9d89c353862ed612923e79ec9f0929013bf964026449e8095ba",
+        "java_outcome_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "id": "error-remainder-zero",
+        "expected_outcome": "failure",
+        "status": "mismatch",
+        "input_sha256": "d7f2c40bdc290143438f2ee579c2b2d03b96b52265934c39b517c909fd3a3112",
+        "java_outcome_sha256": "937cc2827528278989a4008d6a26c92d7f4b616cc3e8faf442acc5b7f1ce1517"
+      },
+      {
+        "id": "frontend-stage25-parentheses-64",
+        "expected_outcome": "success",
+        "status": "pass",
+        "input_sha256": "a67ab9834418c0d5a95110a1a14125ca6f87ec83de94a94319dc3d0b806a03f1",
+        "java_outcome_sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+      },
+      {
+        "id": "frontend-stage25-parentheses-256",
+        "expected_outcome": "success",
+        "status": "pass",
+        "input_sha256": "62523c8037facd4c877364fdf7e95278dfe06abd1dfee7e417334b4b89a49b02",
+        "java_outcome_sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+      },
+      {
+        "id": "frontend-stage25-list-128",
+        "expected_outcome": "success",
+        "status": "pass",
+        "input_sha256": "4f19a2f141f7b4bbab258d3c88333eba2fa663f37530db8c216f3a1849310802",
+        "java_outcome_sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+      },
+      {
+        "id": "frontend-stage25-set-128-equality",
+        "expected_outcome": "success",
+        "status": "pass",
+        "input_sha256": "a4607036ef77d374dcb791f2464d0a00204d2783a9a155fda8f7d20ff899274b",
+        "java_outcome_sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+      },
+      {
+        "id": "frontend-stage25-map-128",
+        "expected_outcome": "success",
+        "status": "pass",
+        "input_sha256": "761a693d914a3b7929557e9099c988c309a4df68509cd546a13ddcc3f38aceef",
+        "java_outcome_sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+      },
+      {
+        "id": "frontend-stage25-binary-left-300",
+        "expected_outcome": "success",
+        "status": "pass",
+        "input_sha256": "06fcaada9f4bb2ef88f5100aa0ab9de0f49f80701d7b68c61f57a09ab20cee43",
+        "java_outcome_sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+      },
+      {
+        "id": "frontend-stage25-binary-right-64",
+        "expected_outcome": "success",
+        "status": "pass",
+        "input_sha256": "91703db1430a3d392fce68adc8b9bd32c4bf12faedc4fdee049e49de7187ee1c",
+        "java_outcome_sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+      },
+      {
+        "id": "frontend-stage25-power-right-64",
+        "expected_outcome": "success",
+        "status": "pass",
+        "input_sha256": "c6fc841cd7f6863a6d86baf7e65833e3e873def6105c91e7cc13c8fb37499abb",
+        "java_outcome_sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+      },
+      {
+        "id": "frontend-stage25-postfix-128",
+        "expected_outcome": "success",
+        "status": "pass",
+        "input_sha256": "26b4e4b87aac49dadd03428eb2fefa1c6007c6d7f6f9d983402637f8d3a3c429",
+        "java_outcome_sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+      },
+      {
+        "id": "frontend-stage25-shallow-list-600",
+        "expected_outcome": "success",
+        "status": "pass",
+        "input_sha256": "79795c9e48a7e04fb7580a996c9baaf84532f42cdbb53db653747c3e7e6bc6e5",
+        "java_outcome_sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+      },
+      {
+        "id": "frontend-stage25-shallow-members-600",
+        "expected_outcome": "success",
+        "status": "pass",
+        "input_sha256": "c7c4c3df79289e69266390fd186139e6fb4762148e042d323fd1faf34dac0f31",
+        "java_outcome_sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+      },
+      {
+        "id": "frontend-stage25-precedence",
+        "expected_outcome": "success",
+        "status": "pass",
+        "input_sha256": "e533127e08d849bbad2baabeb16a6449ac340fb9f009b93785d570844f7909e1",
+        "java_outcome_sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+      },
+      {
+        "id": "frontend-stage25-subtraction",
+        "expected_outcome": "success",
+        "status": "pass",
+        "input_sha256": "464e58a8882d14c752f135949e788d01ed3907e1b7d762f0f31c9c7acf704d05",
+        "java_outcome_sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+      },
+      {
+        "id": "frontend-stage25-division",
+        "expected_outcome": "success",
+        "status": "pass",
+        "input_sha256": "8b07b75b39395654aa44ed5ad3275004a70f31ed868478ccd2f55dfbe567c10f",
+        "java_outcome_sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+      },
+      {
+        "id": "frontend-stage25-power",
+        "expected_outcome": "success",
+        "status": "pass",
+        "input_sha256": "796f592524bbd12995a1ab8359cacda629ef715540f05aff395bbe76f6a5efea",
+        "java_outcome_sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+      },
+      {
+        "id": "frontend-stage25-conditional-lazy",
+        "expected_outcome": "success",
+        "status": "pass",
+        "input_sha256": "c77955801f6d452d81c1a8e882b859ca7394472cae38c2467831b3864cc402cf",
+        "java_outcome_sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+      },
+      {
+        "id": "frontend-stage25-first-binary-error",
+        "expected_outcome": "failure",
+        "status": "pass",
+        "input_sha256": "4a322fd1a1cac0824aea643b0f162d2f90630d6ab71d1f9b9760d36537cc6dc3",
+        "java_outcome_sha256": "36d78792e56327594711020ed2848fa989834ce17b2cc5d2702f914d023842cf"
+      },
+      {
+        "id": "frontend-stage25-first-list-error",
+        "expected_outcome": "failure",
+        "status": "pass",
+        "input_sha256": "a2071c12e7337bc1399f2c72faa92a66d403db343a3a2052207fee1ba7267abb",
+        "java_outcome_sha256": "36d78792e56327594711020ed2848fa989834ce17b2cc5d2702f914d023842cf"
+      },
+      {
+        "id": "frontend-stage25-let-lexical",
+        "expected_outcome": "success",
+        "status": "pass",
+        "input_sha256": "f10cd00a07764914d91f2e35d5ccd32ede640cdd101069468773be86b3c9b400",
+        "java_outcome_sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+      },
+      {
+        "id": "frontend-stage25-postfix-binding",
+        "expected_outcome": "success",
+        "status": "pass",
+        "input_sha256": "81ed1b0551e8bc8bd94e9449f68dcec4defc3585dc3c9b98cf9a4750cb64cc81",
+        "java_outcome_sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+      },
+      {
+        "id": "frontend-stage25-first-deep-call-error",
+        "expected_outcome": "failure",
+        "status": "pass",
+        "input_sha256": "640709ab54970c8df1ffeaf9ae95f358b029b9f551e9d91a73e2694f5bfb4a71",
+        "java_outcome_sha256": "36d78792e56327594711020ed2848fa989834ce17b2cc5d2702f914d023842cf"
+      },
+      {
+        "id": "set-stage23-deep-64-equality",
+        "expected_outcome": "success",
+        "status": "pass",
+        "input_sha256": "9efd1608618a3c07c8036277d15e53eaa2134fae9107e8ef0f351a021581185d",
+        "java_outcome_sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+      },
+      {
+        "id": "set-stage23-deep-64-map-key",
+        "expected_outcome": "success",
+        "status": "pass",
+        "input_sha256": "084bb2ac118c0ffc0592dd18be20eed4001b72c512d25bf547377519054e8b97",
+        "java_outcome_sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+      },
+      {
+        "id": "frontend-stage25-unary-spaced-128",
+        "expected_outcome": "success",
+        "status": "pass",
+        "input_sha256": "1a8b3205acd57a118bf7144d824425e52f6a876f547586b23b35a767b7827855",
+        "java_outcome_sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+      },
+      {
+        "id": "frontend-stage25-lambda-capture-apply",
+        "expected_outcome": "success",
+        "status": "pass",
+        "input_sha256": "7ad740052dd083e424cbbe2374f13ea95cf6f930d3bbf8accb1bece0d6d35432",
+        "java_outcome_sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+      },
+      {
+        "id": "frontend-stage25-conditional-shallow",
+        "expected_outcome": "success",
+        "status": "pass",
+        "input_sha256": "2da47f2f9791e721d1e35ef8839bb4115749274e1c0ae16ec54351d526a2d840",
+        "java_outcome_sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+      },
+      {
+        "id": "frontend-stage25-let-shallow",
+        "expected_outcome": "success",
+        "status": "pass",
+        "input_sha256": "f1bbb944008387615ccd23ed0eb6e08cafad0385999b80fbca456d9723dd5fdc",
+        "java_outcome_sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+      },
+      {
+        "id": "frontend-stage25-lambda-shallow",
+        "expected_outcome": "success",
+        "status": "pass",
+        "input_sha256": "4ec6f01af1e503a4d38b7081a91f7b8b2b2f3a867dd51a26ac95f5eb2d266c8f",
+        "java_outcome_sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+      },
+      {
+        "id": "frontend-stage25-object-shallow",
+        "expected_outcome": "success",
+        "status": "pass",
+        "input_sha256": "47fa77206c9d1f57d1a852fe595824d9bb6858c848d3c88380c01ae92012f171",
+        "java_outcome_sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+      },
+      {
+        "id": "frontend-stage25-missing-close-64",
+        "expected_outcome": "failure",
+        "status": "pass",
+        "input_sha256": "87274e06ee2d5eb51115ad930befcdb87b5cb2c42513b32af3c378df8aab04b0",
+        "java_outcome_sha256": "36d78792e56327594711020ed2848fa989834ce17b2cc5d2702f914d023842cf"
+      },
+      {
+        "id": "frontend-stage25-bad-inner-64",
+        "expected_outcome": "failure",
+        "status": "pass",
+        "input_sha256": "8289ea420469e5268ee65371ebcd61bda203f6ad7dd889d9a02bb27047489c53",
+        "java_outcome_sha256": "36d78792e56327594711020ed2848fa989834ce17b2cc5d2702f914d023842cf"
+      },
+      {
+        "id": "frontend-stage25-first-call-arguments",
+        "expected_outcome": "failure",
+        "status": "pass",
+        "input_sha256": "97b81473fff7ad6dbd6865c90626f4592f80b57b94b90d72808c9e7992aa2884",
+        "java_outcome_sha256": "36d78792e56327594711020ed2848fa989834ce17b2cc5d2702f914d023842cf"
+      },
+      {
+        "id": "frontend-stage25-short-circuit",
+        "expected_outcome": "success",
+        "status": "pass",
+        "input_sha256": "677bb73d5d87f008312bbb0ab042bb19f8d5dd22b61fdc187e017a252609637a",
+        "java_outcome_sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+      },
+      {
+        "id": "frontend-stage25-coalesce-associativity",
+        "expected_outcome": "success",
+        "status": "pass",
+        "input_sha256": "2a3e4772eedf606dfbeeaa336bc6b2c43f283c73ad699f95896274ca5003db45",
+        "java_outcome_sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+      },
+      {
+        "id": "frontend-stage25-nullable-member",
+        "expected_outcome": "success",
+        "status": "pass",
+        "input_sha256": "211b762978bc78060bded02075a0dc2828f32f999e1f09f13279cb5af89914ae",
+        "java_outcome_sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+      },
+      {
+        "id": "frontend-stage25-nonnull-postfix",
+        "expected_outcome": "success",
+        "status": "pass",
+        "input_sha256": "4918dc062497955dc12df25d6132773396530b68e46225e143b656ade8862edd",
+        "java_outcome_sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5"
+      }
+    ],
+    "baseline_manifest_git_proof": {
+      "command": [
+        "git",
+        "cat-file",
+        "--batch"
+      ],
+      "commit": "a22051329ef90fb76f8428852ee2cc2c14360ea3",
+      "paths": 3,
+      "request_sha256": "f0007c087fcf3021e3b94aee455dd2c1970cb88422bb3f088c809c00365e7ba0",
+      "stdout_sha256": "eeadad8fe65f94e55e192c99523076f774d66867f6c805f5e62154bff0ea9e59",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "baseline_input_git_proof": {
+      "command": [
+        "git",
+        "cat-file",
+        "--batch"
+      ],
+      "commit": "a22051329ef90fb76f8428852ee2cc2c14360ea3",
+      "paths": 2946,
+      "request_sha256": "8b9d82f30e25bf32a51c0b5de709dcb6f73beadaea24caa52834c9c3ab65a0dd",
+      "stdout_sha256": "e55bc7fde97c15ae6ce2af6d59cee9ab872476ada6304a9479719baf73c668b8",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "exploration_links": {
+    "index_path": "target/m2/stage25-exploration-index.json",
+    "index_sha256": "be33127cc9d71666e707051e33f62649115ac90ccd4c3aab25738cbe363d570c",
+    "audit_path": "target/m2/stage25-exploration-independent-audit.json",
+    "audit_sha256": "f9874700232ddbc5dd04b4e626c559a808a9d57aacdd47001e20334fd9927410",
+    "original_paths": 32289,
+    "inventory_files": 32313,
+    "excluded_cache_files": 0,
+    "scope": "Exact index/audit/archive identities and accounting are checked here. The separately recorded independent exploration audit verifies explicit root closure and justified Cargo-cache exclusions. No recursive target/m2 discovery or retained execution is performed.",
+    "omitted_build_cache_roots": 2,
+    "omitted_build_caches": [
+      {
+        "path": "target/m2/class-lifecycle-stage25-final-01/build",
+        "payload_enumerated": false,
+        "reason": "Rebuildable Cargo intermediate cache only; source snapshots, raw build commands/output, compiler origins and all executed frozen artifacts are preserved outside this directory."
+      },
+      {
+        "path": "target/m2/stage25-focused-build-01/build",
+        "payload_enumerated": false,
+        "reason": "Rebuildable Cargo intermediate cache only; source snapshots, raw build commands/output, compiler origins and all executed frozen artifacts are preserved outside this directory."
+      }
+    ],
+    "omitted_cache_payload_sizes_and_hashes_claimed": false,
+    "separately_packaged_core_roots": [
+      {
+        "report": {
+          "bytes": 9386813,
+          "path": "target/m2/language-stage25-final-02/report.json",
+          "sha256": "c98e9631529e2bffefc47eaafe02a39035cdffc13f05c911811e9c351cfe3f86"
+        },
+        "root": "target/m2/language-stage25-final-02",
+        "scope": "Authoritative core suite separately archived by the final packager; payload not duplicated into exploration."
+      },
+      {
+        "report": {
+          "bytes": 9699343,
+          "path": "target/m2/class-lifecycle-stage25-final-02/report.json",
+          "sha256": "4c821063fdb0e2c869869ef6d4eebf0bd366b5088b62c107aca7fde97d1c17df"
+        },
+        "root": "target/m2/class-lifecycle-stage25-final-02",
+        "scope": "Authoritative core suite separately archived by the final packager; payload not duplicated into exploration."
+      },
+      {
+        "report": {
+          "bytes": 869275,
+          "path": "target/m2/validation-stage25-final-02/report.json",
+          "sha256": "401d86cde4ac6b034ccb254e12429242872dbd146fba9c1be741ec33d0d16225"
+        },
+        "root": "target/m2/validation-stage25-final-02",
+        "scope": "Authoritative core suite separately archived by the final packager; payload not duplicated into exploration."
+      },
+      {
+        "report": {
+          "bytes": 52993,
+          "path": "target/m2/frontend-stage25-final-02/report.json",
+          "sha256": "30249a34f30292c0bb0a9b96a50b0624d38d59175eb63626837dda0fcfcc4ca0"
+        },
+        "root": "target/m2/frontend-stage25-final-02",
+        "scope": "Authoritative core suite separately archived by the final packager; payload not duplicated into exploration."
+      },
+      {
+        "report": {
+          "bytes": 62096,
+          "path": "target/m2/runtime-stage25-final-01/report.json",
+          "sha256": "dbe9753af0762466fc6f808b7d714c814e5bbd7af24dfe0f6acb4fd2da4a6714"
+        },
+        "root": "target/m2/runtime-stage25-final-01",
+        "scope": "Authoritative core suite separately archived by the final packager; payload not duplicated into exploration."
+      },
+      {
+        "report": {
+          "bytes": 68047,
+          "path": "target/m2/lifecycle-stage25-final-01/report.json",
+          "sha256": "4d5c6d522984ef8d53953e6f485345cfc99508806f3d93b9ddb52d1b89123898"
+        },
+        "root": "target/m2/lifecycle-stage25-final-01",
+        "scope": "Authoritative core suite separately archived by the final packager; payload not duplicated into exploration."
+      },
+      {
+        "report": {
+          "bytes": 3367804,
+          "path": "target/m2/platforms-stage25-final-01/report.json",
+          "sha256": "dd5ac7acd340389e29c1b4da1ad5a17f9d5bcda8e99f3fcf56a02a606750441e"
+        },
+        "root": "target/m2/platforms-stage25-final-01",
+        "scope": "Authoritative core suite separately archived by the final packager; payload not duplicated into exploration."
+      },
+      {
+        "report": {
+          "bytes": 13250,
+          "path": "target/m2/native-frontend-stage25-final-02/report.json",
+          "sha256": "9fe11b670201020ff2cc484b3d3f487849040268bd491f1c3ff6b51c844ec786"
+        },
+        "root": "target/m2/native-frontend-stage25-final-02",
+        "scope": "Authoritative core suite separately archived by the final packager; payload not duplicated into exploration."
+      }
+    ]
+  },
+  "audit_preparation": {
+    "path": "target/m2/stage25-post-seal-audit-preparation-01/manifest.json",
+    "sha256": "8efc58c624c6cd1b2c2f585d51296336c98c5afa2fc5f2d1c93698d04fa0beba",
+    "files": [
+      {
+        "path": "target/m2/stage25_post_seal_audit.py",
+        "sha256": "4bd4b107ad699fc420c3ac42a8711909f5923f0e7af12c04aeae593bbdced25f",
+        "bytes": 36663,
+        "donor_path": "target/m2/stage25-post-seal-audit-preparation-01/stage24_post_seal_audit.py",
+        "donor_sha256": "8e96870b8af4dd98981c2058837da679332a183b55bbbf449a7b640bd573bf78",
+        "substitutions": 23
+      },
+      {
+        "path": "target/m2/stage25_run_post_seal_audit.py",
+        "sha256": "3a01f7645a29d317bcd77180bc112ab283e2f3d7577068430ad65f8c39429aa9",
+        "bytes": 3155,
+        "donor_path": "target/m2/stage25-post-seal-audit-preparation-01/stage24_run_post_seal_audit.py",
+        "donor_sha256": "1bbea80e4433296915af007c5f6fc4e5eb293ead0ab3978021e3f9b622608ae7",
+        "substitutions": 5
+      }
+    ]
+  },
+  "packaging_review": {
+    "helper_sha256": "87bb5a10928b6cb8f29ef97420d87790b447957ce5d5faeda8861afbbde47c5f",
+    "path": "target/m2/stage25-packager-review-final-02.json",
+    "scope": "Independent review of the exact Stage25 final packager and immutable per-attempt runner: raw channel/status verification, retained command/artifact identities, exact Git source binding, native top-level counts and workspace child deduplication, fixed historical summary bytes, bounded inventory-link migrations, current exploration-review binding, no captured binary execution, fresh output paths and final failure gates. This review does not establish evaluator semantics, complete compatibility, performance targets or unverified platforms.",
+    "sha256": "076acd9cba8be2618930b2fc127a5ff8fd4d61c8a56ea4ddecb04445b3f84838"
+  },
+  "packaging_review_clarification": "The packaging code review predates final suite acquisition. Sealing independently validates all completed suites and source bindings; this postseal audit verifies their archived inventories, raw source/Git proof, gate outcomes and exact approved helper/runner provenance. No captured evaluator or old helper is executed.",
+  "evidence_review": {
+    "binding_scope": "Focused raw-comparison review and final artifact/source identities; not an independent production source review.",
+    "path": "target/m2/stage25-evidence-review-final-01.json",
+    "scope": "36selected authored frontend scalar fixture URIs and3persistent sequences/30orderedcalls repeated twice match complete Java0.32.0status/stdout/stderr with exact root final-02frozen helpers. Broad68observations retain12mismatches; full2688input/88relation and150sequence root acquisitions are separate denominators.",
+    "sha256": "38e32045e692b3bb5634d323d8a885a7c0a086886fd43f5b936019972ba43468"
+  },
+  "exploration_independent_audit": {
+    "excluded_cache_files": 0,
+    "inventory_files": 32313,
+    "original_paths": 32289,
+    "path": "target/m2/stage25-exploration-independent-audit.json",
+    "scope": "Independent read-only audit of sealed Stage25 exploration archive bytes, evidence/original inventories, retained original-root closure, explicitly catalogued cache omissions, helper/config provenance and historical dependency identities. Reviewer authored resolver continuations, native frontend tests and platform wiring, but did not author the exploration configuration/sealer or Java captures. This is an independent archive/provenance audit, not an independent semantic review of authored inputs.",
+    "sha256": "f9874700232ddbc5dd04b4e626c559a808a9d57aacdd47001e20334fd9927410"
+  },
+  "gates": [
+    {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/m2_language.py",
+        "--verify-report",
+        "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/language-stage25-final-02"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "gate": "report",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "f117c4076be66925fcaf4b7d9ce9aa8fb9e538c8ff0319de1db75e037c3b4cc3"
+    },
+    {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/m2_language.py",
+        "--verify-development",
+        "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/language-stage25-final-02"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "gate": "development",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "f117c4076be66925fcaf4b7d9ce9aa8fb9e538c8ff0319de1db75e037c3b4cc3"
+    },
+    {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/m2_language.py",
+        "--verify-subset",
+        "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/language-stage25-final-02"
+      ],
+      "exit_code": 1,
+      "expected_exit_code": 1,
+      "gate": "subset",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "f117c4076be66925fcaf4b7d9ce9aa8fb9e538c8ff0319de1db75e037c3b4cc3"
+    },
+    {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/m2_language.py",
+        "--verify-full",
+        "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/language-stage25-final-02"
+      ],
+      "exit_code": 1,
+      "expected_exit_code": 1,
+      "gate": "full",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "f117c4076be66925fcaf4b7d9ce9aa8fb9e538c8ff0319de1db75e037c3b4cc3"
+    },
+    {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/m2_class_lifecycle.py",
+        "--verify-report",
+        "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/class-lifecycle-stage25-final-02"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "gate": "class-report",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "ea3523a98c2c29ff3246b5f89586255e8db08bf614f3680b0e552ba91dddaa52"
+    },
+    {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/m2_class_lifecycle.py",
+        "--verify-contract",
+        "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/class-lifecycle-stage25-final-02"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "gate": "class-contract",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "ea3523a98c2c29ff3246b5f89586255e8db08bf614f3680b0e552ba91dddaa52"
+    }
+  ],
+  "retained_binaries_executed": false,
+  "retained_helpers_executed": false,
+  "compatibility_complete": false,
+  "performance_targets_established": false,
+  "limitations": [
+    "Historical dependencies were verified by exact sizes/hashes without recursively re-executing or re-auditing their internal inventories.",
+    "Raw gate output and exact source provenance are checked; selected added/known-failure raw-byte verdicts are recomputed without executing evaluators. Other recorded semantic outcomes are not recomputed.",
+    "The independent exploration audit owns original-path closure and explicit Cargo-cache exclusion verification; this auditor binds that report, index and all new archive inventories.",
+    "Known nested lexical-string small-stack failures, deep type compilation, mixed/generator helpers, complete Java semantics, release platforms and performance targets remain outside this provenance audit."
+  ],
+  "audit_helper": {
+    "path": "target/m2/stage25-post-seal-audit-process-01/auditor.py",
+    "sha256": "4bd4b107ad699fc420c3ac42a8711909f5923f0e7af12c04aeae593bbdced25f",
+    "bytes": 36663,
+    "source_utf8": "\"\"\"Read-only post-seal Stage25 byte/provenance audit; never run retained artifacts.\"\"\"\nfrom pathlib import Path\nimport ast,datetime,hashlib,json,platform,re,subprocess,sys,tarfile\nfrom collections import Counter\nROOT=Path.cwd();COMMIT=sys.argv[1]\ndef need(condition,message):\n if not condition:raise AssertionError(message)\ndef sha_bytes(data):return hashlib.sha256(data).hexdigest()\ndef sha(path):\n h=hashlib.sha256()\n with path.open('rb') as stream:\n  for data in iter(lambda:stream.read(1024*1024),b''):h.update(data)\n return h.hexdigest()\ndef read(path):return json.loads(path.read_bytes())\ndef identity(row):\n p=ROOT/row['path'];need(p.is_file() and not p.is_symlink(),'missing/linked file '+row['path']);need(sha(p)==row['sha256'],'file hash '+row['path'])\n if 'bytes'in row:need(p.stat().st_size==row['bytes'],'file size '+row['path'])\n return dict(path=row['path'],sha256=row['sha256'],bytes=p.stat().st_size)\ndef git(command,data=None):\n p=subprocess.run(['git',*command],cwd=ROOT,input=data,capture_output=True);need(p.returncode==0,'read-only Git command failed');return p\nsummary_path=ROOT/'reports/m2/stage25-final-summary.json';summary=read(summary_path)\nneed(summary['implementation_commit']==COMMIT,'wrong implementation commit')\nneed(summary['status']=='ready' and not summary['missing_or_running_suites'],'incomplete final summary')\nneed(not summary['compatibility_complete'] and not summary['performance_targets_established'] and not summary['captured_binaries_executed_by_packaging'],'scope flag changed')\nBASELINE='a22051329ef90fb76f8428852ee2cc2c14360ea3'\nSUITES=['language','validation','platforms','frontend','runtime','lifecycle','class-lifecycle','native-frontend']\narguments=summary['packaging_helper']['invocation'][1:];options={}\nneed(len(arguments)%2==0,'unexpected final packager argument shape')\nfor flag,value in zip(arguments[::2],arguments[1::2]):\n need(flag in ['--commit','--output',*['--'+name for name in SUITES]] and flag not in options,'unknown/duplicate final packager option '+flag);options[flag]=value\nneed(options.get('--commit')==COMMIT,'packager command commit differs')\nif '--output'in options:need(Path(options['--output']).resolve()==summary_path,'packager summary output differs')\ndirectories={name:Path(options.get('--'+name,ROOT/('target/m2/'+name+'-stage25-final-01'))).resolve()for name in SUITES}\nneed(all(path.is_relative_to(ROOT/'target/m2') for path in directories.values()),'suite directory outside expected evidence root')\nneed(len(set(directories.values()))==len(SUITES),'suite directories overlap')\ndef suite_prefix(suite):return directories[suite].relative_to(ROOT).as_posix()+'/'\npreparation_path=ROOT/'target/m2/stage25-post-seal-audit-preparation-01/manifest.json';preparation=read(preparation_path)\nneed((Path(__file__).parent/'preparation-manifest.json').read_bytes()==preparation_path.read_bytes(),'immutable auditor preparation snapshot differs')\npreparation_checks=[]\nfor filename,row in preparation['files'].items():\n donor=ROOT/row['donor_path'];need(sha(donor)==row['donor_sha256']and donor.stat().st_size==row['donor_bytes'],'audit donor identity '+filename)\n reconstructed=donor.read_text()\n for change in row['ordered_substitutions']:\n  need(reconstructed.count(change['old'])==change['count'],'audit substitution count '+filename);reconstructed=reconstructed.replace(change['old'],change['new'])\n need(sha_bytes(reconstructed.encode())==row['sha256'],'audit exact substitution reconstruction '+filename)\n need((ROOT/row['output_path']).read_bytes()==reconstructed.encode(),'prepared auditor source changed '+filename)\n identity(dict(path=row['diff_path'],sha256=row['diff_sha256']))\n preparation_checks.append(dict(path=row['output_path'],sha256=row['sha256'],bytes=row['bytes'],donor_path=row['donor_path'],donor_sha256=row['donor_sha256'],substitutions=len(row['ordered_substitutions'])))\nneed(sha(Path(__file__))==preparation['files']['stage25_post_seal_audit.py']['sha256'],'executed auditor differs from reconstructed source')\nneed(sha(Path(__file__).parent/'runner.py')==preparation['files']['stage25_run_post_seal_audit.py']['sha256'],'executed auditor runner differs from reconstructed source')\nidentity(preparation['donor_audit_report'])\nneed(read(ROOT/preparation['donor_audit_report']['path'])['audit_helper']['source_utf8'].encode()==(ROOT/preparation['files']['stage25_post_seal_audit.py']['donor_path']).read_bytes(),'Stage24 audited donor bytes differ')\nrecords=summary['archives'];expected_archives={'language','validation','platforms','frontend','runtime','lifecycle','class-lifecycle','native-frontend','source','exploration'}|{'exploration-support-'+str(i+1) for i,_ in enumerate(summary['exploration'].get('additional_archives',[]))}\nneed(set(records)==expected_archives and len({r['path'] for r in records.values()})==len(records),'new archives missing or double-counted')\narchives=[];inventories={};source={};suite_reports={}\nfor name,row in records.items():\n identity(row)\n with tarfile.open(ROOT/row['path'],'r:gz') as archive:\n  members=archive.getmembers();names=[x.name for x in members]\n  need(len(names)==len(set(names)) and 'EVIDENCE.json'in names,'missing/duplicate inventory '+name)\n  member_by_name={member.name:member for member in members}\n  need(all(x.isfile() and not Path(x.name).is_absolute() and '..'not in Path(x.name).parts for x in members),'unsafe archive member '+name)\n  inventory=json.load(archive.extractfile('EVIDENCE.json'));rows=inventory['files'];mapping={r['path']:r for r in rows}\n  need(len(rows)==len(mapping) and set(mapping)==set(names)-{'EVIDENCE.json'},'incomplete inventory '+name)\n  for record in rows:\n   data=archive.extractfile(member_by_name[record['path']]).read();need(len(data)==record['bytes'] and sha_bytes(data)==record['sha256'],'archive payload '+name+':'+record['path'])\n   if name=='source' and not record['path'].startswith('implementation-sources/') and not record['path'].startswith('helper-history/'):source[record['path']]=data\n  if 'files_including_inventory'in row:need(len(members)==row['files_including_inventory'],'archive file count '+name)\n  if name in ['language','class-lifecycle','platforms','validation']:suite_reports[name]=json.load(archive.extractfile('report.json'))\n  inventories[name]=mapping;archives.append(dict(name=name,**identity(row),inventory_files=len(rows),hash_size_inventory_verified=True))\nbinding=json.loads(source['source-verification.json']);need(binding['implementation_commit']==COMMIT,'source binding commit')\nneed(binding['upstream_source_snapshot_copies']==0 and not binding['upstream_blob_proof_claimed'],'unproven upstream source claim')\nrequest=source['git-proof/request.bin'];response=source['git-proof/stdout.bin'];stderr=source['git-proof/stderr.bin']\nneed(sha_bytes(request)==binding['git_request_sha256'] and sha_bytes(response)==binding['git_response_sha256'],'raw Git proof identity')\nproof=json.loads(source['git-proof/process.json']);need(proof['command']==['git','cat-file','--batch'] and proof['exit_code']==0,'raw Git process contract')\nfor field,raw in [('request',request),('stdout',response),('stderr',stderr)]:need(sha_bytes(raw)==proof['sha256'][field],'raw Git process channel '+field)\ncurrent_git=git(['cat-file','--batch'],request);need(current_git.stdout==response and current_git.stderr==stderr,'raw source proof differs from immutable current Git objects')\nrequested=request.decode().splitlines();need(request.endswith(b'\\n'),'Git proof request truncated');names=[s.removeprefix(COMMIT+':')for s in requested]\nneed(all(s.startswith(COMMIT+':')for s in requested) and names==sorted(set(names)),'Git proof request closure/order')\nposition=0;blobs={};git_payloads={}\nfor name in names:\n end=response.index(b'\\n',position);fields=response[position:end].split();need(len(fields)==3 and fields[1]==b'blob','Git blob header '+name);size=int(fields[2]);data=response[end+1:end+1+size];position=end+size+2\n need(response[position-1:position]==b'\\n' and len(data)==size,'Git blob truncation '+name)\n oid=hashlib.sha1(b'blob '+str(size).encode()+b'\\0'+data).hexdigest();need(oid==fields[0].decode(),'Git object hash '+name)\n blobs[name]=dict(git_blob=oid,sha256=sha_bytes(data),bytes=size);git_payloads[name]=data\n need((ROOT/name).read_bytes()==data,'current project source differs from exact implementation Git bytes '+name)\nneed(position==len(response),'extra Git proof bytes')\ncommit=source['git-proof/commit.stdout.bin'];commit_process=json.loads(source['git-proof/commit.process.json'])\nneed(commit_process['command']==['git','cat-file','-p',COMMIT]and commit_process['exit_code']==0,'commit proof process')\nneed(sha_bytes(commit)==commit_process['stdout_sha256']and sha_bytes(source['git-proof/commit.stderr.bin'])==commit_process['stderr_sha256'],'commit proof channels')\nneed(hashlib.sha1(b'commit '+str(len(commit)).encode()+b'\\0'+commit).hexdigest()==COMMIT,'commit object hash')\nneed(git(['cat-file','-p',COMMIT]).stdout==commit,'commit proof differs from current Git')\ngit(['merge-base','--is-ancestor',BASELINE,COMMIT])\ncopy_paths=set()\nfor row in binding['copies']:\n name=row['path'];copy_paths.add(name);expected=blobs[name]\n need(all(row[k]==expected[k]for k in ['git_blob','sha256','bytes']),'source copy Git identity '+name)\n member='implementation-sources/'+name;need(inventories['source'][member]['sha256']==row['sha256']and inventories['source'][member]['bytes']==row['bytes'],'implementation source copy '+name)\n prefix=suite_prefix(row['suite']);need(row['snapshot'].startswith(prefix),'unexpected suite source snapshot path '+row['snapshot']);member=row['snapshot'][len(prefix):]\n need(inventories[row['suite']][member]['sha256']==row['sha256']and inventories[row['suite']][member]['bytes']==row['bytes'],'archived suite source copy '+row['snapshot'])\n identity(dict(path=row['snapshot'],sha256=row['sha256'],bytes=row['bytes']))\nneed(copy_paths==set(blobs)and len(copy_paths)==binding['unique_source_files']and len(binding['copies'])==binding['source_snapshot_copies'],'source closure counts')\nfor row in binding['untracked_helpers_with_separate_hashes']:\n identity(dict(path=row['snapshot'],sha256=row['sha256'],bytes=row['bytes']));prefix=suite_prefix(row['suite']);need(row['snapshot'].startswith(prefix),'helper snapshot prefix');member=row['snapshot'][len(prefix):];need(inventories[row['suite']][member]['sha256']==row['sha256'],'archived helper snapshot identity')\n# Independently enumerate source roots in archived suite inventories, including helpers.\narchived_snapshots={(suite,name) for suite,mapping in inventories.items() if suite not in ['source','exploration'] and not suite.startswith('exploration-support-') for name in mapping if name.startswith('sources/') or name.startswith('oracle-native/sources/')}\nbound_snapshots=set()\nfor row in [*binding['copies'],*binding['untracked_helpers_with_separate_hashes']]:\n prefix=suite_prefix(row['suite'])\n need(row['snapshot'].startswith(prefix),'source snapshot suite prefix')\n key=(row['suite'],row['snapshot'][len(prefix):]);need(key not in bound_snapshots,'duplicate source snapshot binding');bound_snapshots.add(key)\nneed(archived_snapshots==bound_snapshots,'archive source snapshot enumeration differs from binding table')\nneed({name.removeprefix('implementation-sources/') for name in inventories['source'] if name.startswith('implementation-sources/')}==set(blobs),'implementation source archive closure differs from Git requests')\nsummary_binding={k:v for k,v in binding.items()if k not in ['copies','untracked_helpers_with_separate_hashes']};summary_binding['helper_snapshot_copies']=len(binding['untracked_helpers_with_separate_hashes']);need(summary['source_binding']==summary_binding,'summary source binding differs')\nhelper=summary['packaging_helper'];executed=ROOT/helper['executed_path'];need(sha(executed)==helper['sha256']==sha_bytes(source['package_stage25_final.py']),'executed/copied packaging helper bytes')\nneed(executed.stat().st_mode&0o222==0,'executed helper not read-only')\nexecution=executed.parent.parent;process_path=execution/'process.json';process=read(process_path);invocation=read(execution/'invocation.json')\nneed(process['exit_code']==0 and not process['timed_out']and process['helper']['stable'],'final packaging process did not complete stably')\nneed(process['helper']['sha256_before']==helper['sha256']==process['helper']['sha256_after']==invocation['helper']['sha256'],'immutable packaging helper hashes')\nneed(process['helper']['bytes']==executed.stat().st_size==invocation['helper']['bytes'],'immutable packaging helper size')\nneed(process['command']==invocation['command']and process['command'][1:]==helper['invocation'],'immutable invocation command')\nneed(source['packaging-execution-preflight/invocation.json']==(execution/'invocation.json').read_bytes(),'archived preflight identity')\nneed(source['packaging-execution-preflight/runner.py']==(execution/'runner.py').read_bytes(),'archived immutable runner identity')\nneed(process['python_sha256']==invocation['python_sha256']==sha(Path(process['python'])),'packaging Python identity')\nfor channel in ['stdout','stderr']:\n raw=(execution/(channel+'.bin')).read_bytes();need(sha_bytes(raw)==process[channel+'_sha256']and len(raw)==process[channel+'_bytes'],'packaging raw '+channel)\nsealed=json.loads((execution/'stdout.bin').read_bytes().splitlines()[-1]);need(sealed['status']=='sealed'and sealed['implementation_commit']==COMMIT and sealed['archives']==records,'packaging stdout sealed record')\npackager_review=summary['packaging_review'];identity(packager_review)\npackager_review_raw=source[Path(packager_review['path']).name]\nneed(sha_bytes(packager_review_raw)==packager_review['sha256'],'archived packaging review bytes')\npackager_review_data=json.loads(packager_review_raw)\nneed(packager_review_data['status']=='pass' and packager_review_data['scope']==packager_review['scope'],'packaging review status/scope')\nneed(packager_review['helper_sha256']==packager_review_data['helper_sha256']==helper['sha256'],'packaging review does not bind executed immutable helper')\nneed(sha(ROOT/packager_review_data['runner_path'])==packager_review_data['runner_sha256']==sha_bytes(source['packaging-execution-preflight/runner.py']),'packaging review does not bind executed/copied runner')\nreviews=summary['reviews'];need(len(reviews)==3,'review closure')\nfor name,row in reviews.items():\n identity(row);raw=source[Path(row['path']).name];need(sha_bytes(raw)==row['sha256'],'archived production review '+name);data=json.loads(raw);need(data['status']=='pass'and row['implementation_commit']==COMMIT and row['scope']==data['scope'],'review status/scope '+name)\n need(row['source_count']==len(data['source_sha256']),'review source count '+name)\n for path,digest in data['source_sha256'].items():need(blobs[path]['sha256']==digest,'review source binding '+path)\nfor key in ['evidence_review','exploration_independent_audit']:\n row=summary[key];identity(row);raw=source[Path(row['path']).name];need(sha_bytes(raw)==row['sha256'],'archived '+key);data=json.loads(raw);need(row['scope']==data['scope'],'review/audit scope differs '+key)\n if key=='evidence_review':need(data['status']=='pass-for-focused-final-artifact-replays','focused evidence status')\n else:need(data['status']=='pass'and not data['captured_artifacts_executed'],'independent exploration status')\ngates=json.loads(source['gates/report.json']);need(gates==summary['gates'],'raw gate record differs')\nneed([(r['gate'],r['expected_exit_code'])for r in gates]==[('report',0),('development',0),('subset',1),('full',1),('class-report',0),('class-contract',0)],'gate inventory/expected statuses')\nfor row in gates:\n need(row['exit_code']==row['expected_exit_code'],'recorded gate outcome '+row['gate'])\n for channel in ['stdout','stderr']:need(sha_bytes(source['gates/'+row['gate']+'.'+channel+'.bin'])==row[channel+'_sha256'],'raw gate channel '+row['gate'])\n if row['gate']in ['report','development','subset','full']:\n  output=json.loads(source['gates/'+row['gate']+'.stdout.bin']);need(output['selected']==summary['completed_suites']['language']['status_counts']and output['full_gate_failures']==summary['completed_suites']['language']['full_gate_failure_count'],'raw language gate accounting')\nneed(json.loads(source['immutable-lifecycle-baseline.json'])==summary['preservation'],'immutable baseline preservation record')\n# Independently compare selected manifests/input bytes and counts against immutable Stage24 Git data.\ndef committed(path):\n need(path in git_payloads,'required contract source absent from final Git closure: '+path)\n return git_payloads[path]\ndef baseline_blobs(paths):\n request=('\\n'.join(BASELINE+':'+name for name in sorted(set(paths)))+'\\n').encode();result=git(['cat-file','--batch'],request);position=0;out={}\n for name in sorted(set(paths)):\n  end=result.stdout.index(b'\\n',position);fields=result.stdout[position:end].split();need(len(fields)==3 and fields[1]==b'blob','baseline Git source absent '+name);size=int(fields[2]);raw=result.stdout[end+1:end+1+size];position=end+size+2\n  need(len(raw)==size and result.stdout[position-1:position]==b'\\n','baseline Git source truncation '+name)\n  need(hashlib.sha1(b'blob '+str(size).encode()+b'\\0'+raw).hexdigest()==fields[0].decode(),'baseline Git blob hash '+name);out[name]=raw\n need(position==len(result.stdout),'extra baseline Git bytes')\n return out,dict(command=['git','cat-file','--batch'],commit=BASELINE,paths=len(out),request_sha256=sha_bytes(request),stdout_sha256=sha_bytes(result.stdout),stderr_sha256=sha_bytes(result.stderr))\nmanifest_paths=['tests/fixtures/m2/cases.json','compatibility/m2-class-lifecycle/manifest.json','tools/m1_platforms.py']\nbaseline_manifest,baseline_manifest_proof=baseline_blobs(manifest_paths)\nold_cases=json.loads(baseline_manifest[manifest_paths[0]])['cases'];new_cases=json.loads(committed(manifest_paths[0]))['cases']\nneed(len({r['id']for r in new_cases})==len(new_cases),'duplicate selected case id')\nneed(new_cases[:len(old_cases)]==old_cases,'original selected definitions/order changed')\nadded=new_cases[len(old_cases):];need(len(old_cases)==2652 and len(new_cases)==2688 and len(added)==36,'Stage25 selected counts changed')\nneed(Counter(r['expected_outcome']for r in added)=={'success':30,'failure':6},'Stage25 expected-outcome accounting changed')\nold_sequences=json.loads(baseline_manifest[manifest_paths[1]]);new_sequences=json.loads(committed(manifest_paths[1]))\nneed(new_sequences['sequences'][:len(old_sequences['sequences'])]==old_sequences['sequences'],'original sequence definitions/order changed')\nfor key in ['schema','module_name','power_assertions','uri']:need(new_sequences[key]==old_sequences[key],'persistent boundary changed '+key)\nneed(all(row in new_sequences['unexecuted_groups']for row in old_sequences['unexecuted_groups']),'original unexecuted persistent scope removed')\nneed(len(old_sequences['sequences'])==147 and len(new_sequences['sequences'])==150,'persistent sequence counts changed')\noriginal_paths={r['input']for r in old_cases}\nfor row in old_sequences['sequences']:\n for field in ['source','expressions']:original_paths.add('compatibility/m2-class-lifecycle/'+row[field])\noriginal_inputs,baseline_inputs_proof=baseline_blobs(original_paths)\nfor path,raw in original_inputs.items():need(committed(path)==raw,'original selected/persistent fixture changed '+path)\nfor row in added:need(row['input']in git_payloads,'new fixture absent from exact Git closure '+row['input'])\ndef scenarios(raw):\n tree=ast.parse(raw)\n rows=[ast.literal_eval(node.value)for node in tree.body if isinstance(node,ast.Assign)and any(isinstance(target,ast.Name)and target.id=='REQUIRED_SCENARIOS'for target in node.targets)]\n need(len(rows)==1,'platform required-scenario definition missing/ambiguous');return rows[0]\nold_scenarios=scenarios(baseline_manifest['tools/m1_platforms.py']);new_scenarios=scenarios(committed('tools/m1_platforms.py'))\nneed(old_scenarios<=new_scenarios and len(old_scenarios)==82 and len(new_scenarios)==84,'platform scenario preservation/count differs')\npreservation=summary['preservation']\nfor key,value in dict(commit=BASELINE,original_selected=2652,current_selected=2688,added_selected=36,added_selected_outcomes={'success':30,'failure':6},original_sequences=147,current_sequences=150,original_platform_scenarios=82,current_platform_scenarios=84).items():need(preservation[key]==value,'summary preservation count differs '+key)\nlanguage=suite_reports['language'];need([r['id']for r in language['results']]==[r['id']for r in new_cases],'selected language report coverage/order differs')\nstatus_counts=dict(Counter(r['status']for r in language['results']));need(language['selected_count']==len(new_cases)and language['status_counts']==status_counts,'language result accounting differs')\nneed(summary['completed_suites']['language']['status_counts']==status_counts and summary['completed_suites']['language']['selected_count']==len(new_cases),'summary language accounting differs')\nknown_failures={r['id']:r['status']for r in language['results']if r['status']!='pass'}\nneed(set(known_failures)=={'error-cycle','error-remainder-zero'}and known_failures['error-remainder-zero']=='mismatch'and known_failures['error-cycle']in ['oracle-error','mismatch'],'known language failures removed/relabelled')\nresult_by_id={r['id']:r for r in language['results']};added_ids={r['id']for r in added};raw_controls=[]\nwith tarfile.open(ROOT/records['language']['path'],'r:gz')as archive:\n for case in new_cases:\n  if case['id']not in added_ids|set(known_failures):continue\n  row=result_by_id[case['id']];prefix='cases/'+case['id']+'/'\n  need(archive.extractfile(prefix+'input.pkl').read()==committed(case['input']),'archived control input differs '+case['id'])\n  channels={}\n  for engine in ['java','rust']:\n   need(json.load(archive.extractfile(prefix+engine+'.process.json'))==row[engine],'control process metadata differs '+case['id'])\n   for channel in ['stdout','stderr']:\n    raw=archive.extractfile(prefix+engine+'.'+channel+'.bin').read();need(sha_bytes(raw)==row[engine][channel+'_sha256'],'control raw channel hash '+case['id']);channels[(engine,channel)]=raw\n  outcome=archive.extractfile(prefix+'java.outcome.bin').read();need(sha_bytes(outcome)==row['java']['outcome_sha256'],'control oracle outcome hash '+case['id'])\n  java=row['java'];rust=row['rust'];expected=0 if case['expected_outcome']=='success'else 1\n  prefix_bytes=b'pkl-exception\\torg.pkl.core.';exception_name=outcome[len(prefix_bytes):-1]\n  valid_exception=outcome.startswith(prefix_bytes)and outcome.endswith(b'\\n')and bool(exception_name)and all(ch in b'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_$'for ch in exception_name)\n  if java['timed_out']or java['exit_code']!=expected:status='oracle-error'\n  elif expected==0 and (channels[('java','stderr')]or outcome!=b'success\\n'):status='oracle-error'\n  elif expected==1 and (channels[('java','stdout')]or not channels[('java','stderr')]or not valid_exception):status='oracle-error'\n  elif rust['timed_out']:status='candidate-timeout'\n  elif (java['exit_code'],channels[('java','stdout')],channels[('java','stderr')])==(rust['exit_code'],channels[('rust','stdout')],channels[('rust','stderr')]):status='pass'\n  else:status='mismatch'\n  need(status==row['status'],'control raw verdict differs '+case['id']);need(case['id']not in added_ids or status=='pass','new selected case failed '+case['id'])\n  raw_controls.append(dict(id=case['id'],expected_outcome=case['expected_outcome'],status=status,input_sha256=sha_bytes(committed(case['input'])),java_outcome_sha256=sha_bytes(outcome)))\npersistent=suite_reports['class-lifecycle'];need(persistent['repetitions']==2,'persistent repetition count changed')\nexpected_sequence_keys=[(r['id'],repetition)for r in new_sequences['sequences']for repetition in range(2)]\nneed([(r['id'],r['repetition'])for r in persistent['cases']]==expected_sequence_keys,'persistent report coverage/order differs')\nsequence_calls={r['id']:len(committed('compatibility/m2-class-lifecycle/'+r['expressions']).decode().splitlines())for r in new_sequences['sequences']}\nfor row in persistent['cases']:need(len(row['observations']['comparisons'])==sequence_calls[row['id']],'persistent comparison count differs '+row['id'])\nneed(sum(sequence_calls.values())*2==2592,'persistent total comparison count changed')\nfor key,value in dict(unique_sequences=150,executions=300,comparisons=2592).items():need(summary['completed_suites']['class-lifecycle'][key]==value,'summary persistent count differs '+key)\nselected_contract=dict(baseline_commit=BASELINE,original_cases=2652,current_cases=2688,added_cases=36,added_expected_outcomes={'success':30,'failure':6},unchanged_original_fixture_files=len(original_paths),original_sequences=147,current_sequences=150,persistent_executions=300,persistent_comparisons=2592,original_platform_scenarios=82,current_platform_scenarios=84,known_language_failures=known_failures,raw_new_and_known_controls=raw_controls,baseline_manifest_git_proof=baseline_manifest_proof,baseline_input_git_proof=baseline_inputs_proof)\n# Check validation command/raw-output accounting without running any command from a retained report.\nvalidation=suite_reports['validation'];need(validation['source_stability']and validation['source_sha256_before']==validation['source_sha256_after'],'validation source drift')\nrequired_checks=[['cargo','xtask','verify'],['cargo','fmt','--all','--','--check'],['cargo','clippy','--workspace','--all-targets','--locked','--','-D','warnings'],['cargo','test','--workspace','--locked'],['cargo','check','-p','pkl-runtime','--target','wasm32-unknown-unknown','--locked']]\nneed(len(validation['checks'])==7 and [row['command']for row in validation['checks'][:5]]==required_checks,'validation command inventory differs')\nneed(validation['checks'][5]['command'][1:]==['-m','unittest','discover','-s','tools/tests','-v']and validation['checks'][6]['command'][1:]==['tools/m2_manifest.py','--check'],'Python/inventory validation commands differ')\nvalidation_outputs=[]\nwith tarfile.open(ROOT/records['validation']['path'],'r:gz')as archive:\n for number,row in enumerate(validation['checks']):\n  need(row['exit_code']==0 and not row.get('timed_out',False),'validation command did not succeed '+str(number));outputs=[]\n  for channel in ['stdout','stderr']:\n   raw=archive.extractfile(str(number)+'.'+channel+'.bin').read();need(sha_bytes(raw)==row[channel+'_sha256'],'validation raw channel identity differs');outputs.append(raw.decode())\n  validation_outputs.append(''.join(outputs))\ntext=validation_outputs[3];test_source=committed('crates/pkl-runtime/tests/m2_frontend_lifecycle.rs').decode()\nrust_summaries=re.findall(r'test result: ok\\. (\\d+) passed; (\\d+) failed; (\\d+) ignored;',text)\nneed(rust_summaries and all(int(row[1])==0 for row in rust_summaries),'Rust test summary failure/missing')\nchild_names=re.findall(r'#\\[test\\]\\s*fn\\s+(\\w+)\\s*\\(',test_source);markers=re.findall(r'^authored frontend completed: (\\w+); stack=262144; depth=768$',text,re.M)\nneed(len(child_names)==len(set(child_names))==5 and Counter(markers)==Counter(child_names),'isolated child source/completion inventory differs')\nfor name in child_names:need(len(re.findall(r'^test '+re.escape(name)+r' \\.\\.\\. ok$',text,re.M))==2,'child and parent success output coverage differs '+name)\nneed(len(re.findall(r'test result: ok\\. 1 passed; 0 failed; 0 ignored; 0 measured; 4 filtered out;',text))==5,'isolated child harness duplicate count differs')\nharness=sum(int(row[0])for row in rust_summaries);python=re.findall(r'Ran (\\d+) tests? in ',validation_outputs[5])\nneed(len(python)==1 and re.search(r'\\nOK\\s*$',validation_outputs[5]),'Python test summary failure/missing')\nvalidation_accounting=dict(rust_passed=harness-5,rust_harness_passed=harness,rust_isolated_child_duplicate_passed=5,rust_isolated_child_tests=child_names,rust_intentionally_ignored=sum(int(row[2])for row in rust_summaries),python_passed=int(python[0]),required_commands=7)\nneed(summary['completed_suites']['validation']==validation_accounting,'validation summary accounting differs from raw output')\nexploration=summary['exploration'];need(sha(ROOT/exploration['index_path'])==exploration['index_sha256'],'exploration index identity')\nneed(records['exploration']['sha256']==exploration['main']['sha256'],'exploration main archive alias')\nfor i,row in enumerate(exploration.get('additional_archives',[])):need(records['exploration-support-'+str(i+1)]['sha256']==row['sha256'],'exploration support alias')\nindex_raw=(ROOT/exploration['index_path']).read_bytes();index=json.loads(index_raw)\nneed(source['stage25-exploration-index.json']==index_raw,'archived exploration index differs')\nneed({key:value for key,value in exploration.items()if key not in ['index_path','index_sha256']}==index,'summary exploration record differs from index')\nindependent=json.loads(source[Path(summary['exploration_independent_audit']['path']).name])\nfor key in ['original_paths','inventory_files','excluded_cache_files']:need(independent[key]==summary['exploration_independent_audit'][key],'exploration audit accounting differs '+key)\nexploration_links=dict(index_path=exploration['index_path'],index_sha256=exploration['index_sha256'],audit_path=summary['exploration_independent_audit']['path'],audit_sha256=summary['exploration_independent_audit']['sha256'],original_paths=independent['original_paths'],inventory_files=independent['inventory_files'],excluded_cache_files=independent['excluded_cache_files'],scope='Exact index/audit/archive identities and accounting are checked here. The separately recorded independent exploration audit verifies explicit root closure and justified Cargo-cache exclusions. No recursive target/m2 discovery or retained execution is performed.')\nneed(index['captured_artifacts_executed']is False and index['all_original_paths_sizes_and_hashes_verified']is True,'exploration provenance flags differ')\nfor key in ['omitted_build_caches','separately_packaged_core_roots']:need(independent[key]==index[key],'independent exploration metadata differs '+key)\nneed(independent['omitted_build_cache_roots']==len(index['omitted_build_caches']),'omitted Cargo-root count differs')\nneed(independent['excluded_cache_files']==sum(row['excluded_cache_files']for row in [index['main'],*index['additional_archives']]),'enumerated excluded-file accounting differs')\nomitted_paths=[row['path']for row in index['omitted_build_caches']]\nneed(len(omitted_paths)==len(set(omitted_paths)),'duplicate omitted Cargo root')\nfor row in index['omitted_build_caches']:\n path=Path(row['path']);need(not path.is_absolute()and '..'not in path.parts and path.name=='build'and row['payload_enumerated']is False and bool(row['reason']),'invalid/unjustified Cargo cache omission metadata')\n need('bytes'not in row and 'sha256'not in row,'unobserved Cargo cache payload identity claimed')\nfor row in index['separately_packaged_core_roots']:\n directory=(ROOT/row['root']).resolve();matches=[name for name,path in directories.items()if path==directory];need(len(matches)==1,'separate core root differs from final invocation')\n suite=matches[0];report_row=row['report'];need(report_row['path']==row['root']+'/report.json','separate core report path differs')\n identity(report_row);need(inventories[suite]['report.json']['sha256']==report_row['sha256']and inventories[suite]['report.json']['bytes']==report_row['bytes'],'separate core report differs from final archive')\nneed({(ROOT/row['root']).resolve()for row in index['separately_packaged_core_roots']}==set(directories.values()),'separately packaged core suite closure differs')\nfor label,row in independent['helper_provenance'].items():\n identity(row)\n if label=='audit_helper':need(sha_bytes(source['stage25_exploration_independent_audit.py'])==row['sha256'],'exploration audit helper archive bytes differ')\n if label=='reviewed_inventory_implementation':need(blobs[row['path']]['sha256']==row['sha256'],'reviewed inventory implementation differs from Git closure')\nexploration_links.update(omitted_build_cache_roots=len(omitted_paths),omitted_build_caches=index['omitted_build_caches'],omitted_cache_payload_sizes_and_hashes_claimed=False,separately_packaged_core_roots=index['separately_packaged_core_roots'])\nhistory_rows={};history_summaries={}\ndef collect(value):\n if isinstance(value,dict):\n  if all(k in value for k in ['path','sha256','bytes']):\n   identity_row={k:value[k]for k in ['path','sha256','bytes']};prior=history_rows.setdefault(value['path'],identity_row);need(prior==identity_row,'conflicting historical identity '+value['path'])\n  if 'summary_path'in value and 'summary_sha256'in value:\n   prior=history_summaries.setdefault(value['summary_path'],value['summary_sha256']);need(prior==value['summary_sha256'],'conflicting historical summary')\n  for child in value.values():collect(child)\n elif isinstance(value,list):\n  for child in value:collect(child)\ncollect(summary['historical_dependencies']);collect(exploration.get('history_dependencies',[]))\nhistorical=[identity(row)for row in history_rows.values()]\nfor path,digest in history_summaries.items():need(sha(ROOT/path)==digest,'historical summary identity '+path)\ncode=Path(__file__).read_bytes();report=dict(schema=1,utc=datetime.datetime.now(datetime.timezone.utc).isoformat(),status='pass',implementation_commit=COMMIT,scope='Independent read-only archive/source/Git/gate/helper provenance audit. The auditor authored the ordinary-expression frontend implementation and independently reviewed the final type parser/resolver; this postseal check does not rerun evaluator artifacts or independently establish whole-language compatibility.',host=platform.platform(),summary=dict(path=str(summary_path.relative_to(ROOT)),sha256=sha(summary_path),bytes=summary_path.stat().st_size),packaging_process=dict(path=str(process_path.relative_to(ROOT)),sha256=sha(process_path),exit_code=process['exit_code'],helper_stable=True,preflight_verified=True),archives=archives,new_archive_count=len(archives),historical_dependencies=historical,historical_summary_hashes=history_summaries,source_binding=dict(source_snapshot_copies=len(binding['copies']),unique_source_files=len(blobs),helper_snapshot_copies=len(binding['untracked_helpers_with_separate_hashes']),upstream_source_snapshot_copies=0,all_raw_git_objects_verified=True,all_implementation_and_suite_source_payloads_verified=True,archive_source_root_enumeration_verified=True),reviews=reviews,validation_accounting=validation_accounting,selected_contract=selected_contract,exploration_links=exploration_links,audit_preparation=dict(path=str(preparation_path.relative_to(ROOT)),sha256=sha(preparation_path),files=preparation_checks),packaging_review=packager_review,packaging_review_clarification='The packaging code review predates final suite acquisition. Sealing independently validates all completed suites and source bindings; this postseal audit verifies their archived inventories, raw source/Git proof, gate outcomes and exact approved helper/runner provenance. No captured evaluator or old helper is executed.',evidence_review=summary['evidence_review'],exploration_independent_audit=summary['exploration_independent_audit'],gates=gates,retained_binaries_executed=False,retained_helpers_executed=False,compatibility_complete=False,performance_targets_established=False,limitations=['Historical dependencies were verified by exact sizes/hashes without recursively re-executing or re-auditing their internal inventories.','Raw gate output and exact source provenance are checked; selected added/known-failure raw-byte verdicts are recomputed without executing evaluators. Other recorded semantic outcomes are not recomputed.', 'The independent exploration audit owns original-path closure and explicit Cargo-cache exclusion verification; this auditor binds that report, index and all new archive inventories.', 'Known nested lexical-string small-stack failures, deep type compilation, mixed/generator helpers, complete Java semantics, release platforms and performance targets remain outside this provenance audit.'],audit_helper=dict(path=str(Path(__file__).resolve().relative_to(ROOT)),sha256=sha_bytes(code),bytes=len(code),source_utf8=code.decode()))\noutput=ROOT/'reports/m2/stage25-post-seal-audit.json'\nwith output.open('x')as stream:json.dump(report,stream,indent=2);stream.write('\\n')\nprint(json.dumps(dict(status='pass',new_archives=len(archives),historical_identities=len(historical),historical_summaries=len(history_summaries),source_snapshot_copies=len(binding['copies']),unique_source_files=len(blobs),output=str(output.relative_to(ROOT)),sha256=sha(output)),indent=2))\n"
+  }
+}

@@ -32,8 +32,121 @@ adds selected direct generic constructors, argument-source diagnostics, and thei
 shared-engine lifecycle checks. Stage 22 adds selected strict Map construction,
 lookup, typing, equality, hashing, iteration and stringification. Stage 23 adds
 selected strict Set semantics, multiline strings and lifecycle checks. Stage 24 adds
-bounded abstract Collection type checks, defaults and metadata.
+bounded abstract Collection type checks, defaults and metadata. Stage 25 adds
+continuations for selected authored frontend paths and small-stack checks.
 These checkpoints do not complete the language milestone.
+
+## Stage 25 local verification checkpoint
+
+Implementation `fc45bea329c4fdbc536eaef5070a0c03ed642d5a` is committed and pushed.
+The [final summary](stage25-final-summary.json) and
+[independent final audit](stage25-post-seal-audit.json) close this bounded checkpoint.
+
+The parser, resolver and compiler use explicit work stacks for ordinary expressions
+and selected if/let/lambda/property-only object paths. Expression cloning and
+release, constant List-key processing and power-assertion anchors avoid recursion
+along the selected paths. Type parsing has a work stack and a composed height
+limit; the 65,536-step expression budget is shared across interpolated expressions.
+This removes the former ordinary-expression depth-32/node-512 restrictions without
+claiming arbitrary grammar depth. Scope and type limits remain 32.
+
+Core frontend implementation used `gpt-6-astra / xhigh`; Java evidence and
+resolver/native/platform work used separate `gpt-6.1-sol / high` agents. Root
+implemented type parsing and integration. Independent reviews explicitly exclude
+the reviewer's own changes. An omitted `Uninitialized` resolver leaf found during
+review was fixed and covered by existing tests plus a native default-property
+control.
+
+The full language comparison records **2,688 independent expressions: 2,686 raw
+matches, the original cycle oracle error, and the original integer `% 0`
+diagnostic mismatch**. All 36 additions and all **88 metamorphic relations** pass.
+The strict full gate still has 1,950 failure reasons. Requirement accounting keeps
+474 requirements and 3,688 case rows: 2,688 ready, 960 unimplemented and 40 unmapped.
+These overlapping inventories do not measure feature completion.
+
+All seven [required local checks](validation-stage25-final.json) pass:
+**437 distinct Rust tests and 194 Python tests**, with the original ignored probe
+reported separately. Rust output contains
+442 harness passes because each of the five isolated native child tests is also
+reported by its parent; those five duplicate reports are explicitly excluded from
+the distinct test count.
+
+The five native tests use unchanged **256 KiB stacks and 60-second parent
+deadlines**. They exercise authored ordinary depth 768, 1,024 independent properties,
+accepted if/let/lambda/property-only Dynamic depth 24/31, 64 amendment parents,
+partial-tree cleanup, work/scope/type guards, instrumented compilation and constant
+List-key diagnostics. A compiled authored program also exercises real Host
+suspension, reentry, failed-read retry, cancellation and terminal release with GC
+at every yield and pending read. Type depth 24/31 checks cover parse/Module
+clone/drop only.
+
+The complete persistent suite matches **2,592 calls across 150 sequences run
+twice**. Actual Node and Chromium each pass **84 development scenarios**; the two
+new groups compare 60 calls per target against complete Java payloads. All 6,078
+shared primitive results agree; each target matches Java in 6,076 cases and retains
+the same two regex failures. These development scenarios do not establish complete
+bindings. Native Host/GC and stack tests have separate contracts. Existing M1
+frontend/runtime/lifecycle successes and cycle/complete-diagnostic differences are
+preserved. No new hosted CI, Linux or Windows execution is claimed. The logged
+full-Chrome executable identity is distinct from the headless-shell selection
+inferred from pinned Playwright code; observed browser execution does not directly
+prove that recorded executable was the launched binary.
+
+Focused final artifacts match all **36 new selected expressions** (30 successes,
+6 expected errors), including the original depth-64 Set equality and Map-key inputs,
+and all 60 new persistent calls. Broader exploration preserves **56 matches and
+12 mismatches among 68 observations**, overlapping the 36 selected cases. Guarded
+scope depth, an invalid direct-lambda input, existing type diagnostics, object-body
+syntax and generator duplicate/type-error ordering retain their original outcomes.
+These observations add no development exception.
+
+The original 2,652 selected input definitions and bytes, 88 metamorphic relations,
+147 sequence definitions and 82 platform scenarios remain preserved. All 22 prior
+lifecycle test files are byte-identical. Two other existing test files required
+nine mechanical borrow adaptations for explicit Expr destruction. Two obsolete
+ordinary-depth rejection assertions intentionally became success checks on the
+same 129-parenthesis/600-member inputs, verifying literal value, full spans and
+every member in the chain. Their original drafts, compiler failure and correction
+are preserved separately; this is not a claim that all old tests are unchanged.
+The new selection conservatively derives a partial `semantic:shared-engine` family
+record, with empty implementation links and no new reviewed mapping or completed
+requirement. The 16 reviewed mappings remain partial; two resolver source-symbol
+links now point to their continuation implementation.
+
+**Nested lexical strings at depth 64 still overflow the same 256 KiB stack.**
+The original SIGABRT and the explicit checkpoint exclusion remain recorded; no
+larger-stack success replaces that failure. Drafted accepted nested-string and
+full deep-type compilation checks were not run and are not passes. Full type
+compilation, class/instance and mixed/generator body compiler helpers, generator
+and Type AST recursion, and derived AST Debug/PartialEq retain separate limits.
+Earlier native failures, failed test builds, and source-drift acquisitions stopped
+as inconclusive remain preserved. Source-bound final captures are distinguished
+from those earlier attempts. This checkpoint does not establish complete language
+compatibility, exact Java resource errors, uniform latency or workload speed and
+peak-RSS parity.
+
+The final summary records **15 archives totaling 73,849,365 bytes**. The
+[source and gate evidence](source-stage25-final-evidence.tar.gz) binds 6,813 source
+snapshot copies and 3,245 unique project files to the exact implementation commit.
+Six exploration archives retain 32,289 original paths; their inventories contain
+32,313 files including partition metadata. Two explicitly named Cargo build-cache
+directories were omitted without traversing their contents; their payload counts,
+sizes and hashes are unknown. No enumerated ordinary file was excluded. Eight
+authoritative suite directories are separately archived. Historical evidence stays
+an exact-hash dependency. Completed exploration configuration/sealing outer captures
+remain in `target/m2`; the configuration, sealer, index and independent audit are
+retained in the sealed evidence.
+
+The independent final audit verifies archive inventories, exact Git source bytes,
+review and helper provenance, raw gate results, the 36 new and two known-failure
+controls, test accounting and historical identities. It executes no retained
+evaluator or helper. The [completion companion](stage25-completion-captures.json)
+preserves 13 exact files from the completed packaging and audit processes, including
+their runners, invocations, raw outputs, helpers and the audit preparation manifest.
+Those completion bytes are separate from the sealed archives.
+
+**Stage 25's bounded authored frontend checkpoint is closed. M2, complete product
+APIs, release platforms and speed/peak-RSS targets remain incomplete.**
 
 ## Stage 24 local verification checkpoint
 
