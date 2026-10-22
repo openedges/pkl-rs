@@ -233,9 +233,9 @@ struct Resolver<'a> {
     object_receiver_lambdas: Vec<bool>,
     receiver_is_lambda: bool,
     const_scopes: Vec<ConstScope>,
-    entry_counts: BTreeMap<String, usize>,
+    entry_counts: BTreeMap<crate::value::PklString, usize>,
     member_path: Vec<String>,
-    diagnostic_path: Vec<String>,
+    diagnostic_path: Vec<crate::value::PklString>,
 }
 
 // Resolver continuations own temporary scope state, never authored AST nodes.
@@ -264,7 +264,7 @@ enum Work<'a> {
     },
     EntryValue(&'a Expr, &'a Expr),
     PredicateValue(&'a Expr, &'a Expr),
-    EndPredicate(String),
+    EndPredicate(crate::value::PklString),
     ForHeader(&'a ObjectMember, usize, std::collections::BTreeSet<&'a str>),
     ForBody(&'a [Parameter], &'a [ObjectMember], Span),
     EndFor,
@@ -463,7 +463,7 @@ impl<'a> Resolver<'a> {
                 }
                 Work::Member(member, object) => {
                     self.member_path.push(member.name.clone());
-                    self.diagnostic_path.push(member.name.clone());
+                    self.diagnostic_path.push(member.name.clone().into());
                     let previous = self.const_level;
                     if modifier_flags(&member.modifiers) & ModifierKind::Const.flag() != 0 {
                         self.const_level = ConstLevel::All;
@@ -490,7 +490,8 @@ impl<'a> Resolver<'a> {
                         );
                         let enclosing = &self.diagnostic_path[..self.diagnostic_path.len() - 1];
                         if !enclosing.is_empty() {
-                            error.member = Some(enclosing.join(".").into());
+                            error.member =
+                                Some(crate::value::PklString::join(enclosing, ".").into());
                         }
                         return Err(error);
                     }
@@ -521,7 +522,10 @@ impl<'a> Resolver<'a> {
                                 "Object members must be separated by whitespace, newline, or semicolon.\nObject entries must be separated by newline or semicolon.",
                             );
                             if !self.diagnostic_path.is_empty() {
-                                error.member = Some(self.diagnostic_path.join(".").into());
+                                error.member = Some(
+                                    crate::value::PklString::join(&self.diagnostic_path, ".")
+                                        .into(),
+                                );
                             }
                             return Err(error);
                         }
@@ -612,7 +616,12 @@ impl<'a> Resolver<'a> {
                 Work::PredicateValue(condition, value) => {
                     let label = self.entry_label(Some(condition));
                     let previous = self.diagnostic_path.pop().unwrap_or_default();
-                    self.diagnostic_path.push(format!("{previous}[{label}]"));
+                    self.diagnostic_path.push(
+                        previous
+                            .concat(&"[".into())
+                            .concat(&label)
+                            .concat(&"]".into()),
+                    );
                     work.push(Work::EndPredicate(previous));
                     work.push(Work::Expression(value, false));
                 }
@@ -634,7 +643,10 @@ impl<'a> Resolver<'a> {
                                 format!("Duplicate definition of member `{}`.", parameter.name),
                             );
                             if !self.diagnostic_path.is_empty() {
-                                error.member = Some(self.diagnostic_path.join(".").into());
+                                error.member = Some(
+                                    crate::value::PklString::join(&self.diagnostic_path, ".")
+                                        .into(),
+                                );
                             }
                             return Err(error);
                         }
@@ -694,7 +706,7 @@ impl<'a> Resolver<'a> {
                 Work::LetBody(name, body, contextual_new) => {
                     let nested = matches!(self.scopes.last(), Some(Scope::Let(_)));
                     if !nested {
-                        self.diagnostic_path.push("<let expr>".to_owned());
+                        self.diagnostic_path.push("<let expr>".into());
                     }
                     self.scopes.push(Scope::Let(name));
                     self.const_scopes.push(ConstScope {
@@ -1022,21 +1034,25 @@ impl<'a> Resolver<'a> {
         Ok(())
     }
 
-    fn entry_label(&mut self, key: Option<&Expr>) -> String {
+    fn entry_label(&mut self, key: Option<&Expr>) -> crate::value::PklString {
         let literal = key.and_then(|key| match &key.kind {
-            ExprKind::String(value) => Some(format!("\"{value}\"")),
-            ExprKind::Int(value) => Some(value.to_string()),
-            ExprKind::Float(value) => Some(crate::numeric::double_to_string(*value)),
-            ExprKind::Bool(value) => Some(value.to_string()),
+            ExprKind::String(value) => Some(
+                crate::value::PklString::from("\"")
+                    .concat(value)
+                    .concat(&"\"".into()),
+            ),
+            ExprKind::Int(value) => Some(value.to_string().into()),
+            ExprKind::Float(value) => Some(crate::numeric::double_to_string(*value).into()),
+            ExprKind::Bool(value) => Some(value.to_string().into()),
             _ => None,
         });
         literal.unwrap_or_else(|| {
             let count = self
                 .entry_counts
-                .entry(self.diagnostic_path.join("."))
+                .entry(crate::value::PklString::join(&self.diagnostic_path, "."))
                 .or_default();
             *count += 1;
-            format!("#{count}")
+            format!("#{count}").into()
         })
     }
 
@@ -1085,7 +1101,7 @@ impl<'a> Resolver<'a> {
             // declaration scope, so the enclosing class or property owns it.
             let enclosing = &self.diagnostic_path[..self.diagnostic_path.len() - 1];
             if !enclosing.is_empty() {
-                error.member = Some(enclosing.join(".").into());
+                error.member = Some(crate::value::PklString::join(enclosing, ".").into());
             }
             error
         })?;
@@ -1136,7 +1152,7 @@ impl<'a> Resolver<'a> {
                 *header_span,
                 format!("Method `{}` is missing a body.", member.name),
             );
-            error.member = Some(self.diagnostic_path.join(".").into());
+            error.member = Some(crate::value::PklString::join(&self.diagnostic_path, ".").into());
             return Err(error);
         }
         if has(M::Abstract) {
@@ -1163,7 +1179,8 @@ impl<'a> Resolver<'a> {
                     header_span,
                     "Abstract members cannot have a body.",
                 );
-                error.member = Some(self.diagnostic_path.join(".").into());
+                error.member =
+                    Some(crate::value::PklString::join(&self.diagnostic_path, ".").into());
                 return Err(error);
             }
         }
@@ -1261,7 +1278,7 @@ impl<'a> Resolver<'a> {
     fn const_error(&self, expression: &Expr, message: impl Into<String>) -> Diagnostic {
         let mut error = Diagnostic::new(DiagnosticKind::Syntax, expression.span, message);
         if !self.diagnostic_path.is_empty() {
-            error.member = Some(self.diagnostic_path.join(".").into());
+            error.member = Some(crate::value::PklString::join(&self.diagnostic_path, ".").into());
         }
         error
     }

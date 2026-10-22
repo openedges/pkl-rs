@@ -169,7 +169,7 @@ pub(super) struct TypeRun {
     value: Value,
     checked: Value,
     pub(super) environment: Environment,
-    pub(super) member: Arc<str>,
+    pub(super) member: PklString,
     tasks: Vec<Task>,
     outcome: Option<Result<Value, Mismatch>>,
     pub(super) returned: Option<Value>,
@@ -398,7 +398,7 @@ impl Vm {
             .map(|frame| frame.member.clone())
             .or_else(|| frame.diagnostic_member.clone())
             .or_else(|| metadata.map(|metadata| metadata.member.clone()))
-            .unwrap_or_else(|| Arc::from(""));
+            .unwrap_or_default();
         frame.type_run = Some(TypeRun {
             node,
             value: value.clone(),

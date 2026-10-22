@@ -1,0 +1,3 @@
+class C { local bad: Int = "wrong"; checked = bad }
+x = new C {}
+result = x.checked

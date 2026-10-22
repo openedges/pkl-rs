@@ -128,7 +128,7 @@ pub struct CollectionCast {
     pub(crate) node: Option<TypeNodeId>,
     pub ty: crate::vm::TypeCheck,
     pub span: crate::source::Span,
-    pub member: Arc<str>,
+    pub member: crate::value::PklString,
     pub environment: Environment,
 }
 
@@ -823,7 +823,7 @@ mod tests {
                 node: Some(node),
                 ty: crate::vm::TypeCheck::Int,
                 span: crate::source::Span::new(0, 1),
-                member: Arc::from("#values"),
+                member: "#values".into(),
                 environment: Environment::default(),
             }),
             ..Object::default()

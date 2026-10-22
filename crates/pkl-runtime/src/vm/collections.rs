@@ -226,7 +226,7 @@ impl Vm {
             );
             error.frames.push(RuntimeFrame {
                 span,
-                member: Arc::from("#Set.contains"),
+                member: "#Set.contains".into(),
                 source: Some(source),
             });
             return Err(error);
@@ -2148,18 +2148,25 @@ impl Compiler<'_> {
     ) -> Result<Member, RuntimeError> {
         let previous = self.member.clone();
         let literal = key.and_then(|key| match &key.kind {
-            crate::syntax::ExprKind::String(value) => Some(format!("\"{value}\"")),
-            crate::syntax::ExprKind::Int(value) => Some(value.to_string()),
-            crate::syntax::ExprKind::Float(value) => Some(crate::numeric::double_to_string(*value)),
-            crate::syntax::ExprKind::Bool(value) => Some(value.to_string()),
+            crate::syntax::ExprKind::String(value) => {
+                Some(PklString::from("\"").concat(value).concat(&"\"".into()))
+            }
+            crate::syntax::ExprKind::Int(value) => Some(value.to_string().into()),
+            crate::syntax::ExprKind::Float(value) => {
+                Some(crate::numeric::double_to_string(*value).into())
+            }
+            crate::syntax::ExprKind::Bool(value) => Some(value.to_string().into()),
             _ => None,
         });
         let label = literal.unwrap_or_else(|| {
             let count = self.entry_counts.entry(previous.clone()).or_default();
             *count += 1;
-            format!("#{count}")
+            format!("#{count}").into()
         });
-        self.member = format!("{previous}[{label}]");
+        self.member = previous
+            .concat(&"[".into())
+            .concat(&label)
+            .concat(&"]".into());
         let mut code = Code::default();
         if let crate::syntax::ExprKind::Object {
             parent: None,

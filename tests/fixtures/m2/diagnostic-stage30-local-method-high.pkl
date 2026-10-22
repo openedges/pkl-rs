@@ -1,0 +1,2 @@
+x = new Mapping { ["\u{d800}"] = new { local function fail() = throw("method"); bad = fail() } }
+result = x["\u{d800}"].bad

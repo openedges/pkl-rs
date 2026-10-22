@@ -250,7 +250,13 @@ fn const_requirements_are_recorded_on_reads_across_scope_barriers() {
 fn semantic_diagnostics_preserve_declared_module_and_identifier_spans() {
     let error = parse_module("module example.named\nresult = 9223372036854775808").unwrap_err();
     assert_eq!(error.module_name.as_deref(), Some("example.named"));
-    assert_eq!(error.member.as_deref(), Some("result"));
+    assert_eq!(
+        error
+            .member
+            .as_deref()
+            .and_then(pkl_runtime::value::PklString::as_str),
+        Some("result")
+    );
     let source = "module example.named\nresult = 1\nlocal result = 2";
     let error = resolve_module(&parse_module(source).unwrap()).unwrap_err();
     assert_eq!(error.message, "Duplicate definition of member `result`.");
@@ -307,7 +313,13 @@ fn unused_nonabstract_methods_still_require_a_body() {
     ] {
         let error = resolve_module(&parse_module(source).unwrap()).unwrap_err();
         assert_eq!(error.message, "Method `value` is missing a body.");
-        assert_eq!(error.member.as_deref(), Some("value"));
+        assert_eq!(
+            error
+                .member
+                .as_deref()
+                .and_then(pkl_runtime::value::PklString::as_str),
+            Some("value")
+        );
         assert_eq!(
             &source[error.span.start..error.span.end],
             source.lines().next().unwrap()

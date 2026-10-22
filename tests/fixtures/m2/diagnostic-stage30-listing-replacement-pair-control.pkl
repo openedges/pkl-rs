@@ -1,0 +1,2 @@
+x = new Mapping { ["\u{fffd}"] = new Listing { throw("replacement") }; ["\u{d800}\u{dc00}"] = new Listing { throw("pair") }; ["?"] = new Listing { throw("question") } }
+result = x["?"][0]

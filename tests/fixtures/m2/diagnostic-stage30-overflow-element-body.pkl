@@ -1,0 +1,2 @@
+x = new Listing { 9223372036854775808 }
+result = x[0]

@@ -179,7 +179,10 @@ fn generic_reference_constraint_validation_keeps_alias_bodies_and_the_declaratio
         error
             .frames
             .iter()
-            .map(|frame| (frame.member.as_ref(), frame.span))
+            .map(|frame| (
+                frame.member.as_str().expect("well-formed frame label"),
+                frame.span
+            ))
             .collect::<Vec<_>>(),
         vec![
             ("#Ref", span(source, "ref.Reference<ref.Domain, T>")),
@@ -229,7 +232,10 @@ fn direct_reference_constraint_validation_omits_only_the_outer_referent_alias_fr
         error
             .frames
             .iter()
-            .map(|frame| (frame.member.as_ref(), frame.span))
+            .map(|frame| (
+                frame.member.as_str().expect("well-formed frame label"),
+                frame.span
+            ))
             .collect::<Vec<_>>(),
         vec![
             ("#Second", span(source, "String(isEmpty)")),

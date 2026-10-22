@@ -1,0 +1,3 @@
+local k = "k"
+x = new Mapping { ["\u{d800}"] = new Mapping { [k] = throw("first") }; ["?"] = new Mapping { [k] = throw("second") } }
+result = x["\u{d800}"]["k"]

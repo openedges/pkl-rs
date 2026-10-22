@@ -99,18 +99,15 @@ fn suspended_rendering_preserves_reference_metadata_during_reentry_gc_and_retry(
     session.resume(&failed, Err(failure.clone()), 3).unwrap();
     let error = ready(&mut session, 3).unwrap_err();
     let interpolation = SOURCE.find(r"\(reference)").unwrap();
-    assert!(
-        error
-            .frames
-            .iter()
-            .any(|frame| frame.member.as_ref() == "#rendered"
-                && frame.source.is_none()
-                && frame.span
-                    == pkl_runtime::source::Span::new(
-                        interpolation,
-                        interpolation + r"\(reference)".len()
-                    ))
-    );
+    assert!(error.frames.iter().any(
+        |frame| frame.member.as_str().expect("well-formed frame label") == "#rendered"
+            && frame.source.is_none()
+            && frame.span
+                == pkl_runtime::source::Span::new(
+                    interpolation,
+                    interpolation + r"\(reference)".len()
+                )
+    ));
     assert_eq!((error.kind, error.message), (failure.kind, failure.message));
     assert_eq!(session.context_depth(), 1);
     session

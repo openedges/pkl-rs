@@ -335,7 +335,13 @@ fn invalid_object_method_belongs_to_enclosing_member_before_method_scope() {
     ] {
         let error = resolve_module(&parse_module(source).unwrap()).unwrap_err();
         assert_eq!(error.kind, DiagnosticKind::Syntax);
-        assert_eq!(error.member.as_deref(), Some(member));
+        assert_eq!(
+            error
+                .member
+                .as_deref()
+                .and_then(pkl_runtime::value::PklString::as_str),
+            Some(member)
+        );
         assert!(source[error.span.start..error.span.end].starts_with("function positive("));
     }
 }
@@ -389,7 +395,13 @@ fn numeric_validation_waits_for_syntax_and_unary_postfix_precedence() {
     let error = parse_module("result = -0X10").unwrap_err();
     assert_eq!(error.message, "Int literal `0X10` is too large.");
     assert_eq!(error.span, Span::new(10, 14));
-    assert_eq!(error.member.as_deref(), Some("result"));
+    assert_eq!(
+        error
+            .member
+            .as_deref()
+            .and_then(pkl_runtime::value::PklString::as_str),
+        Some("result")
+    );
     let expression = parse_expression("-1.toString()").unwrap();
     assert!(
         matches!(&expression.kind, ExprKind::Unary { op: UnaryOp::Negate, operand } if matches!(operand.kind, ExprKind::Call { .. }))
@@ -498,7 +510,13 @@ fn grouping_preserves_authored_and_executable_spans_separately() {
     let error = resolve_module(&parse_module(source).unwrap()).unwrap_err();
     assert_eq!(error.message, "Cannot tell which parent to amend.");
     assert_eq!(&source[error.span.start..error.span.end], "new");
-    assert_eq!(error.member.as_deref(), Some("c"));
+    assert_eq!(
+        error
+            .member
+            .as_deref()
+            .and_then(pkl_runtime::value::PklString::as_str),
+        Some("c")
+    );
     resolve_module(&parse_module("class C {} c: C = new {}").unwrap()).unwrap();
 }
 
@@ -509,7 +527,13 @@ fn semantic_diagnostics_flatten_consecutive_let_scopes_only_after_binding() {
         "result = let (x = 1) let (y = x) (new {})",
     ] {
         let error = resolve_module(&parse_module(source).unwrap()).unwrap_err();
-        assert_eq!(error.member.as_deref(), Some("result.<let expr>"));
+        assert_eq!(
+            error
+                .member
+                .as_deref()
+                .and_then(pkl_runtime::value::PklString::as_str),
+            Some("result.<let expr>")
+        );
         assert_eq!(error.message, "Cannot tell which parent to amend.");
         assert!(
             error
@@ -520,5 +544,11 @@ fn semantic_diagnostics_flatten_consecutive_let_scopes_only_after_binding() {
     }
     let source = "result = let (x: Int(new {}) = 1) x";
     let error = resolve_module(&parse_module(source).unwrap()).unwrap_err();
-    assert_eq!(error.member.as_deref(), Some("result"));
+    assert_eq!(
+        error
+            .member
+            .as_deref()
+            .and_then(pkl_runtime::value::PklString::as_str),
+        Some("result")
+    );
 }

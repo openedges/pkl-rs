@@ -22,7 +22,7 @@ enum Group {
 #[derive(PartialEq, Eq)]
 struct FrameKey<'a> {
     uri: &'a str,
-    member: &'a str,
+    member: &'a crate::value::PklString,
     source_lines: Vec<&'a str>,
     start_line: usize,
     start_column: usize,
@@ -256,11 +256,12 @@ mod tests {
         use crate::source::{SourceMap, Span};
         let mut sources = SourceMap::default();
         let id = sources.add("source", "foo");
+        let member = "f".into();
         let frames: Vec<_> = (0..3)
             .map(|_| RenderFrame {
                 source: sources.get(id).unwrap(),
                 uri: "repl:text",
-                member: "f",
+                member: &member,
                 span: Span::new(0, 3),
                 highlight_length_utf16: None,
             })
@@ -276,8 +277,9 @@ mod tests {
         use crate::source::{SourceMap, Span};
         let mut sources = SourceMap::default();
         let id = sources.add("source", "foo");
-        let frames: Vec<_> = ["A", "B", "A"]
-            .into_iter()
+        let members: Vec<crate::value::PklString> = ["A", "B", "A"].map(Into::into).into();
+        let frames: Vec<_> = members
+            .iter()
             .map(|member| RenderFrame {
                 source: sources.get(id).unwrap(),
                 uri: "repl:text",
@@ -299,10 +301,11 @@ mod tests {
         let first = sources.add("first", "foo\nbar");
         let same = sources.add("second", "foo\r\nbar");
         let different = sources.add("third", "foo\nbaz");
+        let member = "f".into();
         let frame = |id, end| RenderFrame {
             source: sources.get(id).unwrap(),
             uri: "repl:text",
-            member: "f",
+            member: &member,
             span: Span::new(0, end),
             highlight_length_utf16: None,
         };
@@ -311,5 +314,67 @@ mod tests {
         let mut other_uri = frame(first, 7);
         other_uri.uri = "repl:other";
         assert!(key(&frame(first, 7)) != key(&other_uri));
+    }
+
+    #[test]
+    fn compression_compares_utf16_member_names_before_writer_replacement() {
+        use crate::source::{SourceMap, Span};
+        use crate::value::PklString;
+        let mut sources = SourceMap::default();
+        let id = sources.add("source", "foo");
+        // Java StackFrame.equals compares String code units. These three
+        // distinct names all become the same text only at the UTF-8 writer.
+        let members = [
+            PklString::from_utf16(vec![0xd800]),
+            PklString::from_utf16(vec![0xdc00]),
+            "?".into(),
+        ];
+        let frames: Vec<_> = members
+            .iter()
+            .map(|member| RenderFrame {
+                source: sources.get(id).unwrap(),
+                uri: "repl:text",
+                member,
+                span: Span::new(0, 3),
+                highlight_length_utf16: None,
+            })
+            .collect();
+        assert_eq!(
+            compress(&frames.iter().map(key).collect::<Vec<_>>()),
+            vec![Group::Frame(0), Group::Frame(1), Group::Frame(2)]
+        );
+        assert_eq!(
+            super::super::render_error("failure", &frames, None),
+            "–– Pkl Error ––\nfailure\n\n1 | foo\n    ^^^\nat ? (repl:text)\n\n1 | foo\n    ^^^\nat ? (repl:text)\n\n1 | foo\n    ^^^\nat ? (repl:text)\n"
+        );
+        // Pinned StackTraceRenderer keeps a two-frame repeated pattern distinct
+        // from six identical names, despite the identical UTF-8 frame text.
+        let alternating = [0, 2, 0, 2, 0, 2].map(|index| key(&frames[index]));
+        assert_eq!(
+            compress(&alternating),
+            vec![Group::Loop {
+                frames: vec![Group::Frame(4), Group::Frame(5)],
+                count: 3,
+            }]
+        );
+        let collapsed = [2; 6].map(|index| key(&frames[index]));
+        assert_eq!(
+            compress(&collapsed),
+            vec![Group::Loop {
+                frames: vec![Group::Frame(5)],
+                count: 6,
+            }]
+        );
+        let paired = [
+            PklString::from_utf16(vec![0xd800, 0xdc00]),
+            "\u{10000}".into(),
+        ];
+        assert_eq!(
+            compress(&paired),
+            vec![Group::Loop {
+                frames: vec![Group::Frame(1)],
+                count: 2,
+            }]
+        );
     }
 }

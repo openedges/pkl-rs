@@ -436,6 +436,8 @@ Node·Chromium은 각각 88개 개발 시나리오를 통과했습니다. 새 �
 
 [최종 요약](reports/m2/stage29-final-summary.json)·[독립 감사](reports/m2/stage29-post-seal-audit.json)·[완료 캡처](reports/m2/stage29-completion-captures.json)로 이 단계를 마감했습니다. 원본 59,795개를 105개 명시 경로에서 수집한 증거 묶음을 검증하고, 최종 검증 묶음 7개의 소스 사본 7,401개를 구현 커밋의 서로 다른 파일 3,553개와 연결했습니다. 직접 build cache 3개는 열거 전에 제외했고 이전 단계의 직접 의존 자료 14개는 identity로 참조합니다. 원시 결과·초기 실패 기록을 보존했으며 macOS 로컬 검증을 CI·Linux·Windows 검증으로 표시하지 않습니다. 전체 gate의 실패 이유 1,950개, 부분 mapping 16개, 기존 runtime·lifecycle 차이와 미실행 범위를 유지하며 M2 전체·제품 API·속도·메모리 목표는 미완료입니다.
 
+서른 번째 단계는 진단 멤버 이름과 논리적 호출 프레임의 UTF-16 식별성을 보존합니다. 핵심 의미론은 `gpt-6-astra / xhigh`, Java 원시 결과와 독립 native·플랫폼 검증은 각각 `gpt-6.1-sol / high`에 배정했습니다. 서로 다른 surrogate와 `?`가 조기에 같은 이름으로 바뀌면서 중첩 entry·lambda의 번호와 재귀 프레임 압축에 영향을 주는 경로를 검증합니다. compiler·resolver의 진단 이름과 카운터, runtime frame, 압축 비교를 손실 없는 표현으로 연결하고 마지막 UTF-8 출력에서만 Java 대체 규칙을 적용합니다. 전체 진단·공개 JS 문자열 전달·surrogate URI·자원 오류는 별도 범위로 유지하며 최종 검증과 마감은 진행 중입니다.
+
 다음 구현은 남은 탐색 불일치의 의존성을 기준으로 진행합니다.
 
 1. 남은 Reference metadata 작업·진단 확장을 continuation과 자원 계약으로 검증하고 Java stack-overflow 진단 및 취소 지연을 별도로 다룹니다. 전체 지연 타입 해석·alias-root 대입 identity와 wrapper 중복 제거의 실제 인자 구분을 검증합니다. 남은 nullable/default·inline Reference·local typed-property·outer 진단, generic constructor의 지연 멤버 frame 이름·builtin·generator 경계를 원래 실패 입력으로 보완합니다. Stage 24에서 보존한 String 선택 별칭 union 생성자의 `Cannot instantiate type` 진단·지연 시점·오류 우선순위도 여기에 포함합니다. wrapper identity를 바꾸기 전에는 Java에서 관찰 가능한 캐시·성공 predicate 호출 횟수 근거를 먼저 확보합니다. 이미 검증한 공유 타입 인자의 깊은 실행·동시 해제, inline·lambda·공유 let·분기 순서·재귀 깊이별 재시도, 타입 인자 캡처·기본값·Reference 검사 순서, Host/GC/취소/terminal 동작을 회귀 기준으로 유지합니다.

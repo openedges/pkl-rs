@@ -17,9 +17,9 @@ enum Work<'a> {
     IfElse(&'a Expr, usize),
     JumpEnd(usize),
     LetValue(&'a Expr),
-    LetEnd(&'a Expr, usize, String),
+    LetEnd(&'a Expr, usize, PklString),
     FunctionBegin(&'a Expr),
-    FunctionEnd(&'a Expr, String, Code, Vec<usize>),
+    FunctionEnd(&'a Expr, PklString, Code, Vec<usize>),
     ObjectBody(
         &'a [crate::syntax::ObjectMember],
         crate::heap::CollectionKind,
@@ -33,7 +33,7 @@ enum Work<'a> {
 
 struct PropertyCompilation<'a> {
     member: &'a crate::syntax::Member,
-    previous_member: String,
+    previous_member: PklString,
     previous_modifiers: Vec<crate::syntax::Modifier>,
     previous_bound: bool,
     collection_scope: Vec<crate::syntax::Member>,
@@ -253,7 +253,7 @@ impl Compiler<'_> {
                         output.push(Instruction::PushLocal);
                         let previous = self.member.clone();
                         if self.let_members.last() != Some(&self.member) {
-                            self.member.push_str(".<let expr>");
+                            self.member = self.member.concat(&".<let expr>".into());
                         }
                         self.let_members.push(self.member.clone());
                         work.push(Work::LetEnd(expression, output.len(), previous));
@@ -269,7 +269,7 @@ impl Compiler<'_> {
                             frame: RuntimeFrame {
                                 source: None,
                                 span: expression.span,
-                                member: Arc::from(self.member.as_str()),
+                                member: self.member.clone(),
                             },
                         });
                         self.let_members.pop();
@@ -300,7 +300,7 @@ impl Compiler<'_> {
                                     let count =
                                         self.function_counts.entry(previous.clone()).or_default();
                                     *count += 1;
-                                    format!("{previous}.<function#{count}>")
+                                    previous.concat(&format!(".<function#{count}>").into())
                                 })
                                 .clone();
                         }
@@ -437,9 +437,9 @@ impl Compiler<'_> {
                         self.validate_modifiers(member)?;
                         let previous_member = self.member.clone();
                         self.member = if previous_member.is_empty() {
-                            format!("#{}", member.name)
+                            format!("#{}", member.name).into()
                         } else {
-                            format!("{previous_member}.{}", member.name)
+                            previous_member.concat(&format!(".{}", member.name).into())
                         };
                         let mut initialization_error = None;
                         let compiled_type = member.ty.as_ref().map(|ty| {
@@ -631,6 +631,7 @@ impl Compiler<'_> {
                         );
                         self.program.metadata[code].initialization_error = initialization_error;
                         self.program.metadata[code].property_typecheck = property_typecheck;
+                        self.program.metadata[code].inline_property_typecheck = member.local;
                         self.program.metadata[code].amendment = member.is_amendment();
                         self.program.metadata[code].fixed_span = member.override_fixed_span;
                         self.program.metadata[code].const_span = member.override_const_span;
@@ -971,7 +972,7 @@ impl Compiler<'_> {
                                     "Number of `Map()` arguments must be a multiple of two: `Map(key1, value1, key2, value2, ..., keyN, valueN)`").at(span);
                                 error.frames.push(RuntimeFrame {
                                     span,
-                                    member: Arc::from(self.member.as_str()),
+                                    member: self.member.clone(),
                                     source: None,
                                 });
                                 return Err(error);

@@ -1,0 +1,2 @@
+x = new Mapping { ["\u{d800}"] = (a) -> throw("first"); ["?"] = (b) -> throw("second"); ["\u{dc00}"] = (c) -> throw("third") }
+result = x["\u{dc00}"].apply(0)

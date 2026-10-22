@@ -108,7 +108,7 @@ pub struct RuntimeSource {
 #[derive(Clone, Debug, PartialEq, Eq)]
 pub struct RuntimeFrame {
     pub span: Span,
-    pub member: Arc<str>,
+    pub member: PklString,
     /// None denotes the caller-provided module source at the public boundary.
     pub source: Option<Arc<RuntimeSource>>,
 }

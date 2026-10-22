@@ -38808,6 +38808,284 @@
         "semantic:shared-engine",
         "semantic:diagnostics"
       ]
+    },
+    {
+      "id": "diagnostic-stage30-listing-question",
+      "input": "tests/fixtures/m2/diagnostic-stage30-listing-question.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:strings",
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:collections"
+      ]
+    },
+    {
+      "id": "diagnostic-stage30-listing-low",
+      "input": "tests/fixtures/m2/diagnostic-stage30-listing-low.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:strings",
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:collections"
+      ]
+    },
+    {
+      "id": "diagnostic-stage30-dynamic-question",
+      "input": "tests/fixtures/m2/diagnostic-stage30-dynamic-question.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:strings",
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:collections"
+      ]
+    },
+    {
+      "id": "diagnostic-stage30-dynamic-high",
+      "input": "tests/fixtures/m2/diagnostic-stage30-dynamic-high.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:strings",
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:collections"
+      ]
+    },
+    {
+      "id": "diagnostic-stage30-lambda-question",
+      "input": "tests/fixtures/m2/diagnostic-stage30-lambda-question.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:strings",
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:closures"
+      ]
+    },
+    {
+      "id": "diagnostic-stage30-lambda-low",
+      "input": "tests/fixtures/m2/diagnostic-stage30-lambda-low.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:strings",
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:closures"
+      ]
+    },
+    {
+      "id": "diagnostic-stage30-entry-nested",
+      "input": "tests/fixtures/m2/diagnostic-stage30-entry-nested.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:strings",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "diagnostic-stage30-entry-let",
+      "input": "tests/fixtures/m2/diagnostic-stage30-entry-let.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:strings",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "diagnostic-stage30-entry-reversed",
+      "input": "tests/fixtures/m2/diagnostic-stage30-entry-reversed.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:strings",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "diagnostic-stage30-entry-pair",
+      "input": "tests/fixtures/m2/diagnostic-stage30-entry-pair.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:strings",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "diagnostic-stage30-listing-replacement-pair-control",
+      "input": "tests/fixtures/m2/diagnostic-stage30-listing-replacement-pair-control.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:strings",
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:collections"
+      ]
+    },
+    {
+      "id": "diagnostic-stage30-overflow-high",
+      "input": "tests/fixtures/m2/diagnostic-stage30-overflow-high.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:strings",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "diagnostic-stage30-listing-high-control",
+      "input": "tests/fixtures/m2/diagnostic-stage30-listing-high-control.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:strings",
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:collections"
+      ]
+    },
+    {
+      "id": "diagnostic-stage30-local-method-high",
+      "input": "tests/fixtures/m2/diagnostic-stage30-local-method-high.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:strings",
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:functions"
+      ]
+    },
+    {
+      "id": "diagnostic-stage30-local-typed-high",
+      "input": "tests/fixtures/m2/diagnostic-stage30-local-typed-high.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:strings",
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:types"
+      ]
+    },
+    {
+      "id": "diagnostic-stage30-local-typed-ascii",
+      "input": "tests/fixtures/m2/diagnostic-stage30-local-typed-ascii.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:strings",
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:types"
+      ]
+    },
+    {
+      "id": "diagnostic-stage30-class-typed-ascii",
+      "input": "tests/fixtures/m2/diagnostic-stage30-class-typed-ascii.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:strings",
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:types",
+        "semantic:classes"
+      ]
+    },
+    {
+      "id": "diagnostic-stage30-overflow-dynamic-body",
+      "input": "tests/fixtures/m2/diagnostic-stage30-overflow-dynamic-body.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:strings",
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:numeric-literals",
+        "semantic:collections"
+      ]
+    },
+    {
+      "id": "diagnostic-stage30-overflow-element-body",
+      "input": "tests/fixtures/m2/diagnostic-stage30-overflow-element-body.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:strings",
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:numeric-literals",
+        "semantic:collections"
+      ]
+    },
+    {
+      "id": "diagnostic-stage30-overflow-key-expression",
+      "input": "tests/fixtures/m2/diagnostic-stage30-overflow-key-expression.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:strings",
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:numeric-literals",
+        "semantic:collections"
+      ]
+    },
+    {
+      "id": "diagnostic-stage30-module-local-typed-ascii",
+      "input": "tests/fixtures/m2/diagnostic-stage30-module-local-typed-ascii.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:strings",
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:types"
+      ]
+    },
+    {
+      "id": "diagnostic-stage30-class-local-typed-ascii",
+      "input": "tests/fixtures/m2/diagnostic-stage30-class-local-typed-ascii.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:strings",
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:types",
+        "semantic:classes"
+      ]
+    },
+    {
+      "id": "diagnostic-stage30-object-local-typed-alias-function",
+      "input": "tests/fixtures/m2/diagnostic-stage30-object-local-typed-alias-function.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:strings",
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:functions"
+      ]
     }
   ],
   "schema_version": 1,

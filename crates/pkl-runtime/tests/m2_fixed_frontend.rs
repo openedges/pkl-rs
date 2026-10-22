@@ -115,7 +115,13 @@ fn abstract_fixed_amendments_are_distinct_from_assignment_bodies() {
         error.span,
         Span::new(start, start + "abstract fixed value".len())
     );
-    assert_eq!(error.member.as_deref(), Some("Child.value"));
+    assert_eq!(
+        error
+            .member
+            .as_deref()
+            .and_then(pkl_runtime::value::PklString::as_str),
+        Some("Child.value")
+    );
 }
 
 #[test]
@@ -133,7 +139,14 @@ fn fixed_modifier_validation_runs_in_the_enclosing_declaration_scope() {
         ),
     ] {
         let error = resolve_module(&parse_module(source).unwrap()).unwrap_err();
-        assert_eq!(error.member.as_deref(), Some(owner), "{source}");
+        assert_eq!(
+            error
+                .member
+                .as_deref()
+                .and_then(pkl_runtime::value::PklString::as_str),
+            Some(owner),
+            "{source}"
+        );
         let start = source.find("fixed").unwrap();
         assert_eq!(error.span, Span::new(start, start + 5));
     }

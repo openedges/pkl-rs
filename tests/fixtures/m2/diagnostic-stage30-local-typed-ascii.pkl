@@ -1,0 +1,2 @@
+x = new { local bad: Int = "wrong"; checked = bad }
+result = x.checked

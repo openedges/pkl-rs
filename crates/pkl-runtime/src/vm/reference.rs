@@ -1410,7 +1410,7 @@ fn constructor_error(message: String, fragment: &str) -> RuntimeError {
     let mut error = RuntimeError::new(ErrorKind::Type, message).at(span);
     error.frames.push(RuntimeFrame {
         span,
-        member: Arc::from("#Reference"),
+        member: "#Reference".into(),
         source: Some(source),
     });
     error
@@ -1446,7 +1446,7 @@ pub(super) fn access_members(
             Some(predicate_span),
             None,
         ],
-        member: Arc::from("#Access.property"),
+        member: "#Access.property".into(),
         ..BlockMetadata::default()
     });
     let property_type = TypeCheck::Nullable(Box::new(TypeCheck::Constrained {
@@ -1515,7 +1515,7 @@ pub(super) fn access_members(
         metadata.push(BlockMetadata {
             source: Some(source.clone()),
             spans,
-            member: Arc::from(format!("#Access.{name}")),
+            member: format!("#Access.{name}").into(),
             declaration: Some(declaration),
             ..BlockMetadata::default()
         });

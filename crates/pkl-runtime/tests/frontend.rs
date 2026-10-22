@@ -170,7 +170,13 @@ fn contextual_new_is_not_silently_accepted_as_a_qualified_receiver() {
     assert_eq!(error.kind, DiagnosticKind::Syntax);
     assert_eq!(error.message, "Cannot tell which parent to amend.");
     assert_eq!(&source[error.span.start..error.span.end], "new");
-    assert_eq!(error.member.as_deref(), Some("result.<let expr>"));
+    assert_eq!(
+        error
+            .member
+            .as_deref()
+            .and_then(pkl_runtime::value::PklString::as_str),
+        Some("result.<let expr>")
+    );
 }
 
 #[test]

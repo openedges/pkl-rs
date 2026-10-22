@@ -57,6 +57,7 @@ impl<'a> Parser<'a> {
                                 parser.depth = self.depth;
                                 parser.expressions = self.expressions;
                                 parser.member_path.clone_from(&self.member_path);
+                                parser.entry_counts.clone_from(&self.entry_counts);
                                 parser.expectation = Some(")".into());
                                 parser.enter_expression_scope()?;
                                 frames.push(InterpolationFrame {
@@ -99,6 +100,7 @@ impl<'a> Parser<'a> {
                         self.expect(')')?;
                         let mut frame = frames.pop().expect("completed interpolation");
                         frame.parser.expressions = self.expressions;
+                        frame.parser.entry_counts = std::mem::take(&mut self.entry_counts);
                         frame.parser.pending.append(&mut self.pending);
                         frame
                             .parser

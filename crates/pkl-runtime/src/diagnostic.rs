@@ -3,6 +3,7 @@ mod frames;
 mod highlight;
 
 use crate::source::{Source, SourceId, Span};
+use crate::value::PklString;
 use std::fmt;
 
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
@@ -17,7 +18,7 @@ pub enum DiagnosticKind {
 pub struct LogicalFrame {
     pub source: SourceId,
     pub span: Span,
-    pub member: String,
+    pub member: PklString,
 }
 
 /// A detached observation from a completed constraint trace.
@@ -158,7 +159,7 @@ pub struct Diagnostic {
     /// Authored member path for delayed AST validation (e.g. `result` or `C.x`).
     /// The evaluation boundary inserts `#` between the module and this path.
     /// Syntax errors retain a module frame and leave this unset.
-    pub member: Option<Box<str>>,
+    pub member: Option<Box<PklString>>,
     /// Explicit module identity for AST validation after its header was parsed.
     pub module_name: Option<Box<str>>,
     pub frames: Box<[LogicalFrame]>,
@@ -209,7 +210,7 @@ impl std::error::Error for Diagnostic {}
 pub struct RenderFrame<'a> {
     pub source: &'a Source,
     pub uri: &'a str,
-    pub member: &'a str,
+    pub member: &'a PklString,
     pub span: Span,
     pub highlight_length_utf16: Option<usize>,
 }

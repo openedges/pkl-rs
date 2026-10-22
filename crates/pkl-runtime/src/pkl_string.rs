@@ -15,6 +15,17 @@ enum Repr {
 }
 
 impl PklString {
+    pub(crate) fn join(values: &[Self], separator: &str) -> Self {
+        let mut builder = PklStringBuilder::default();
+        for (index, value) in values.iter().enumerate() {
+            if index > 0 {
+                builder.push_str(separator);
+            }
+            builder.push_value(value);
+        }
+        builder.finish()
+    }
+
     pub fn from_utf16(units: impl Into<Vec<u16>>) -> Self {
         let units = units.into();
         match String::from_utf16(&units) {
@@ -89,6 +100,12 @@ impl PklString {
                 .map(|unit| unit.unwrap_or('?'))
                 .collect(),
         }
+    }
+}
+
+impl Default for PklString {
+    fn default() -> Self {
+        "".into()
     }
 }
 

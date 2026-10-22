@@ -17,6 +17,7 @@ import { stringFrontendGroups, stringFrontendContext } from './string-frontend-c
 import { lexicalDiagnosticCases, lexicalDiagnosticRecoveries, lexicalDiagnosticContext } from './lexical-diagnostic-cases.mjs';
 import { unicodeDiagnosticCases, unicodeDiagnosticRecoveries, unicodeDiagnosticContext } from './unicode-diagnostic-cases.mjs';
 import { stringRepresentationCases, stringRepresentationContext } from './string-representation-cases.mjs';
+import { diagnosticFrameIdentityCases, diagnosticFrameIdentityContext } from './diagnostic-frame-identity-cases.mjs';
 
 // Identical assertions execute inside Node and an actual Chromium page.
 export async function scenarios(api) {
@@ -308,6 +309,20 @@ export async function scenarios(api) {
       for (const fixture of stringRepresentationCases) {
         const evaluate = () => api.evaluateLanguage(fixture.source,
           stringRepresentationContext.uri, stringRepresentationContext.moduleName,
+          fixture.expression);
+        if (Object.hasOwn(fixture, 'expectedError')) {
+          throws(evaluate, fixture.expectedError);
+        } else {
+          eq(evaluate(), fixture.expectedValue);
+        }
+      }
+    }
+  });
+  await check('m2-lossless-diagnostic-frame-identity', () => {
+    for (let repetition = 0; repetition < 2; repetition++) {
+      for (const fixture of diagnosticFrameIdentityCases) {
+        const evaluate = () => api.evaluateLanguage(fixture.source,
+          diagnosticFrameIdentityContext.uri, diagnosticFrameIdentityContext.moduleName,
           fixture.expression);
         if (Object.hasOwn(fixture, 'expectedError')) {
           throws(evaluate, fixture.expectedError);

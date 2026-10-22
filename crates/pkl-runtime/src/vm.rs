@@ -178,7 +178,7 @@ pub enum Instruction {
     DefaultClassInstance,
     Undefined(Arc<str>),
     AbstractMember {
-        name: Arc<str>,
+        name: PklString,
         method: bool,
     },
     Unsupported(Arc<str>),
@@ -615,10 +615,13 @@ pub struct BlockMetadata {
     pub source: Option<Arc<crate::value::RuntimeSource>>,
     pub hidden: bool,
     pub spans: Vec<Option<Span>>,
-    pub member: Arc<str>,
+    pub member: PklString,
     pub declaration: Option<Span>,
     pub value_span: Option<Span>,
     pub property_typecheck: Option<usize>,
+    /// Local properties authored in object bodies check in their member root.
+    /// Module/class properties use a separate PropertyTypeNode call, even local ones.
+    pub inline_property_typecheck: bool,
     pub(crate) amendment: bool,
     pub(crate) fixed_span: Option<Span>,
     pub(crate) const_span: Option<Span>,
@@ -688,7 +691,7 @@ impl Program {
                 Some(Span::new(return_start, return_start + 6)),
                 None,
             ],
-            member: Arc::from("#Reference.toString"),
+            member: "#Reference.toString".into(),
             ..BlockMetadata::default()
         };
         let access_members = reference::access_members(&mut blocks, &mut metadata);
@@ -727,7 +730,7 @@ struct Force {
     name: Arc<str>,
     cache: Option<CacheKey>,
     method: bool,
-    inherited_types: Vec<(TypeCheck, Span, Arc<str>, ObjectId)>,
+    inherited_types: Vec<(TypeCheck, Span, PklString, ObjectId)>,
     collection_casts: Vec<crate::heap::CollectionCast>,
     skip_typecheck: bool,
 }
@@ -745,7 +748,7 @@ struct Frame {
     prepared_hashes: Option<Vec<Value>>,
     key_search: Option<equality::KeySearch>,
     return_to_type: bool,
-    diagnostic_member: Option<Arc<str>>,
+    diagnostic_member: Option<PklString>,
     callsite_hidden: bool,
     builders: Vec<ObjectId>,
 }
@@ -1278,7 +1281,11 @@ impl Vm {
                             .unwrap_or_else(|| metadata.member.clone()),
                     });
                 }
+                // Object-local checks run inside LocalTypedPropertyNode.
+                // Module/class declarations use a separate PropertyTypeNode
+                // call even when local, adding the authored value frame.
                 if frame.force.is_some()
+                    && !metadata.inline_property_typecheck
                     && metadata.property_typecheck == Some(frame.pc.saturating_sub(1))
                     && matches!(
                         self.program.blocks[frame.block].get(frame.pc.saturating_sub(1)),
@@ -1652,7 +1659,7 @@ impl Vm {
                 }) {
                     if let (Some(ty), Some(span)) = (&inherited.ty, inherited.type_span) {
                         let name = self.program.metadata.get(inherited.code).map_or_else(
-                            || inherited.name.clone(),
+                            || inherited.name.clone().into(),
                             |metadata| metadata.member.clone(),
                         );
                         inherited_types.push((ty.clone(), span, name, id));
@@ -3676,7 +3683,7 @@ fn compile_module_configured(
         resolved,
         program: Program::new(Vec::new()),
         options,
-        member: String::new(),
+        member: PklString::default(),
         let_members: Vec::new(),
         type_scopes: Vec::new(),
         modifiers: Vec::new(),
@@ -3703,7 +3710,7 @@ fn compile_module_configured(
             .map(|parts| parts.join("."))
             .unwrap_or_default(),
     );
-    let template = compiler.object(&resolved.module.members)?;
+    let template = compiler.object_template(&resolved.module.members, false, false)?;
     compiler.program.module_template = Some(template);
     let mut entry = Code::default();
     entry.push(Instruction::MakeObject {
@@ -3753,8 +3760,8 @@ struct Compiler<'a> {
     resolved: &'a crate::resolver::ResolvedModule,
     program: Program,
     options: CompileOptions,
-    member: String,
-    let_members: Vec<String>,
+    member: PklString,
+    let_members: Vec<PklString>,
     type_scopes: Vec<Vec<crate::syntax::Member>>,
     modifiers: Vec<crate::syntax::Modifier>,
     constraint_module: bool,
@@ -3772,9 +3779,9 @@ struct Compiler<'a> {
     parameter_spans: BTreeMap<String, Span>,
     /// Constructor parent nodes retain the authored actual, including alias syntax.
     argument_spans: BTreeMap<String, Span>,
-    function_counts: BTreeMap<String, usize>,
-    entry_counts: BTreeMap<String, usize>,
-    function_names: BTreeMap<Span, String>,
+    function_counts: BTreeMap<PklString, usize>,
+    entry_counts: BTreeMap<PklString, usize>,
+    function_names: BTreeMap<Span, PklString>,
     instrument: bool,
 }
 
@@ -3829,13 +3836,14 @@ fn reference_constrained_type(check: &TypeCheck) -> Option<&TypeCheck> {
 
 impl Compiler<'_> {
     fn object(&mut self, members: &[crate::syntax::Member]) -> Result<usize, RuntimeError> {
-        self.object_template(members, false)
+        self.object_template(members, false, true)
     }
 
     fn object_template(
         &mut self,
         members: &[crate::syntax::Member],
         class: bool,
+        object_body: bool,
     ) -> Result<usize, RuntimeError> {
         self.type_scopes.push(members.to_vec());
         let mut result = Vec::new();
@@ -3844,13 +3852,17 @@ impl Compiler<'_> {
             let previous_member = self.member.clone();
             let previous_modifiers = self.modifiers.clone();
             match self.object_member(member) {
-                Ok(compiled) => result.push(compiled),
+                Ok(compiled) => {
+                    self.program.metadata[compiled.code].inline_property_typecheck =
+                        object_body && member.local;
+                    result.push(compiled);
+                }
                 Err(error) if class => {
                     // A later declaration's unresolved type must not outrun an earlier
                     // declaration's override error. Replay failures during class
                     // initialization, without running any property initializer.
                     self.type_scopes.truncate(scope_count);
-                    self.member = format!("{previous_member}.{}", member.name);
+                    self.member = previous_member.concat(&format!(".{}", member.name).into());
                     let mut code = Code::default();
                     code.push_at(
                         Instruction::Fail(error.clone()),
@@ -3899,9 +3911,9 @@ impl Compiler<'_> {
         self.validate_modifiers(member)?;
         let previous_member = self.member.clone();
         self.member = if previous_member.is_empty() {
-            format!("#{}", member.name)
+            format!("#{}", member.name).into()
         } else {
-            format!("{previous_member}.{}", member.name)
+            previous_member.concat(&format!(".{}", member.name).into())
         };
         let mut initialization_error = None;
         let compiled_type = member.ty.as_ref().map(|ty| {
@@ -4103,10 +4115,11 @@ impl Compiler<'_> {
             source: None,
             hidden: false,
             spans: code.spans,
-            member: Arc::from(self.member.as_str()),
+            member: self.member.clone(),
             declaration,
             value_span: None,
             property_typecheck: None,
+            inline_property_typecheck: false,
             amendment: false,
             fixed_span: None,
             const_span: None,
@@ -4149,7 +4162,12 @@ impl Compiler<'_> {
                 }
                 let class = Class {
                     id: expression.span.start,
-                    name: Arc::from(self.member.trim_start_matches('#')),
+                    name: Arc::from(
+                        self.member
+                            .as_str()
+                            .expect("classes are declared in module scope")
+                            .trim_start_matches('#'),
+                    ),
                     open: crate::syntax::modifier_flags(&self.modifiers)
                         & crate::syntax::ModifierKind::Open.flag()
                         != 0,
@@ -4166,7 +4184,7 @@ impl Compiler<'_> {
                     self.member.clone(),
                     self.modifiers.clone(),
                 );
-                let template = match self.object_template(members, true) {
+                let template = match self.object_template(members, true, false) {
                     Ok(template) => template,
                     Err(error) => {
                         self.program.blocks.truncate(checkpoint.0);
@@ -4272,7 +4290,12 @@ impl Compiler<'_> {
                                 [member.name_span.start..member.name_span.end]
                         )
                     })
-                    .unwrap_or_else(|| self.member.clone());
+                    .unwrap_or_else(|| {
+                        self.member
+                            .as_str()
+                            .expect("type aliases are declared in module scope")
+                            .to_owned()
+                    });
                 output.push(Instruction::BeginTypeAlias {
                     declaration: expression.span.start,
                     name: Arc::from(declaration_name),
@@ -4305,7 +4328,7 @@ impl Compiler<'_> {
             }
             ExprKind::EntryParent => output.push(Instruction::EntryParent),
             ExprKind::Uninitialized => output.push(Instruction::AbstractMember {
-                name: Arc::from(self.member.as_str()),
+                name: self.member.clone(),
                 method: true,
             }),
             ExprKind::Int(value) => output.push(Instruction::Constant(Value::Int(*value))),
@@ -4859,7 +4882,7 @@ impl Compiler<'_> {
                 };
                 error.frames.push(RuntimeFrame {
                     span,
-                    member: Arc::from(""),
+                    member: "".into(),
                     source: None,
                 });
             }
@@ -5022,7 +5045,7 @@ impl Compiler<'_> {
                     metadata.inline_constraint = !writes_slots;
                     let mut origin = vec![RuntimeFrame {
                         span: ty.span,
-                        member: Arc::from(self.member.as_str()),
+                        member: self.member.clone(),
                         source: None,
                     }];
                     origin.extend(self.alias_frames.iter().rev().cloned());
@@ -5279,11 +5302,13 @@ impl Compiler<'_> {
                                 std::mem::replace(&mut self.argument_spans, argument_spans);
                             let previous_module =
                                 std::mem::replace(&mut self.constraint_module, true);
-                            let previous_member =
-                                std::mem::replace(&mut self.member, format!("#{}", member.name));
+                            let previous_member = std::mem::replace(
+                                &mut self.member,
+                                format!("#{}", member.name).into(),
+                            );
                             self.alias_frames.push(RuntimeFrame {
                                 span: ty.span,
-                                member: Arc::from(previous_member.as_str()),
+                                member: previous_member.clone(),
                                 source: None,
                             });
                             let result = self
@@ -5291,7 +5316,7 @@ impl Compiler<'_> {
                                 .map_err(|mut error| {
                                     error.frames.push(RuntimeFrame {
                                         span: aliased.span,
-                                        member: Arc::from(format!("#{}", member.name)),
+                                        member: format!("#{}", member.name).into(),
                                         source: None,
                                     });
                                     error
@@ -5554,7 +5579,7 @@ impl Compiler<'_> {
         {
             output.push_at(
                 Instruction::AbstractMember {
-                    name: Arc::from(self.member.as_str()),
+                    name: self.member.clone(),
                     method: false,
                 },
                 member.span,

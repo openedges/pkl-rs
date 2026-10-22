@@ -72,8 +72,11 @@ collection `toString` paths preserve those units. The development probes apply
 Java's UTF-8 writer replacement only when producing their output. Matching that
 byte boundary does not establish lossless public JavaScript string transport.
 Unmatched-surrogate module/resource URIs and Java's out-of-range escape internal
-error remain separate gaps. The complete string API and arbitrary surrogate
-diagnostic-frame identity also require further verification.
+error remain separate gaps. Diagnostic member paths retain these units through
+scope counters, runtime frames and recursive compression, before the Java UTF-8
+writer conversion. Selected nested entry/function numbering and compression
+controls verify this identity separately from displayed bytes. The complete
+string API and diagnostic corpus still require further verification.
 
 The default uses Java's API setting with power assertions disabled. Selected
 cases can opt in with `"power_assertions": true`; the runner then passes

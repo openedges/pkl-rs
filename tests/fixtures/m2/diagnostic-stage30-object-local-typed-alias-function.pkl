@@ -1,0 +1,3 @@
+typealias Fn = (Int) -> String
+x = new { local bad: Fn = () -> "bad"; checked = bad }
+result = x.checked

@@ -1,0 +1,2 @@
+value = new Mapping { ["\u{d800}"] = let (x = 1) throw("stop") }
+result = value["\u{d800}"]

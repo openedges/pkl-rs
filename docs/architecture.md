@@ -849,3 +849,18 @@ source lines and UTF-16 positions, before display transformations. Loop margins
 and the first hint are rendered together. Selected recursive and mutual-alias
 failures exercise this path with power assertions enabled and disabled; general
 stack overflow, colored output and the complete diagnostic corpus remain open.
+
+Diagnostic member paths retain `PklString` values from parser/resolver/compiler scope
+tracking through block metadata, suspended runtime frames and compression keys.
+Counters for numbered entries and functions use the same lossless parent name.
+An unmatched surrogate and a literal `?` therefore have independent child
+numbering and distinct compression identities, even when the final Java UTF-8
+writer displays both as `?`. Valid surrogate pairs and literal supplementary
+characters remain equal. Source URIs and ordinary identifiers keep their existing
+UTF-8 representation. Detached errors own their names without retaining heap roots.
+Delayed integer-literal validation records its authored entry or element scope
+without changing when the error is reported. Local typed-property checks in
+anonymous object bodies run inline in the property frame. Module and class
+declarations retain the separate value-call frame, including local declarations.
+Compiler metadata records this declaration origin; the local lookup flag alone
+does not determine diagnostic call structure.

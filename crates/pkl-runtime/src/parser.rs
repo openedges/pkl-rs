@@ -6,6 +6,7 @@ use crate::syntax::{
     ModuleParent, ModuleParentKind, ObjectMember, Parameter, Type, TypeKind, TypeParameter,
     UnaryOp, Variance, modifier_flags,
 };
+use crate::value::PklString;
 
 mod string_lexer;
 mod string_parser;
@@ -378,9 +379,9 @@ struct MethodHead {
 
 enum ObjectValue {
     Property(Box<PropertyHead>),
-    Element(usize),
+    Element(usize, Option<PklString>),
     Spread(usize, bool),
-    Entry(usize, Expr, bool, bool),
+    Entry(usize, Expr, bool, bool, Option<PklString>),
 }
 
 enum ExpressionFrame {
@@ -428,7 +429,8 @@ struct Parser<'a> {
     expectation: Option<String>,
     expressions: usize,
     pending: Vec<Diagnostic>,
-    member_path: Vec<String>,
+    member_path: Vec<PklString>,
+    entry_counts: std::collections::BTreeMap<PklString, usize>,
     folded_integer_spans: std::collections::BTreeMap<Span, Span>,
     interpolation_spans: std::collections::BTreeMap<Span, Span>,
 }
@@ -450,6 +452,7 @@ impl<'a> Parser<'a> {
             expressions: 0,
             pending: Vec::new(),
             member_path: Vec::new(),
+            entry_counts: std::collections::BTreeMap::new(),
             folded_integer_spans: std::collections::BTreeMap::new(),
             interpolation_spans: std::collections::BTreeMap::new(),
         })
@@ -475,6 +478,7 @@ impl<'a> Parser<'a> {
             expressions: 0,
             pending: Vec::new(),
             member_path: Vec::new(),
+            entry_counts: std::collections::BTreeMap::new(),
             folded_integer_spans: std::collections::BTreeMap::new(),
             interpolation_spans: std::collections::BTreeMap::new(),
         })
@@ -770,7 +774,7 @@ impl<'a> Parser<'a> {
             return Err(self.unexpected(Some("}")));
         }
         let (name, name_span) = self.identifier()?;
-        self.member_path.push(name.clone());
+        self.member_path.push(name.clone().into());
         let (expr, ty) = if class {
             let type_parameters = self.type_parameters()?;
             let superclass = if self.is_name("extends") {
@@ -1064,7 +1068,10 @@ impl<'a> Parser<'a> {
                         && machine.frames.last().is_some_and(|frame| {
                             matches!(
                                 &frame.2,
-                                ExpressionFrame::ObjectValue(_, ObjectValue::Entry(_, _, _, true))
+                                ExpressionFrame::ObjectValue(
+                                    _,
+                                    ObjectValue::Entry(_, _, _, true, _)
+                                )
                             )
                         })
                     {
@@ -1168,10 +1175,11 @@ impl<'a> Parser<'a> {
                         return Err(self.unexpected(Some("=")));
                     }
                 } else {
+                    let previous = self.enter_entry_path(None);
                     machine.frames.push((
                         machine.minimum,
                         self.expectation.replace("}".into()),
-                        ExpressionFrame::ObjectValue(build, ObjectValue::Element(start)),
+                        ExpressionFrame::ObjectValue(build, ObjectValue::Element(start, previous)),
                     ));
                 }
                 machine.minimum = 0;
@@ -1606,9 +1614,9 @@ impl<'a> Parser<'a> {
                 let span = Span::new(
                     match &value {
                         ObjectValue::Property(head) => head.start,
-                        ObjectValue::Element(start)
+                        ObjectValue::Element(start, _)
                         | ObjectValue::Spread(start, _)
-                        | ObjectValue::Entry(start, _, _, _) => *start,
+                        | ObjectValue::Entry(start, _, _, _, _) => *start,
                     },
                     end,
                 );
@@ -1616,13 +1624,17 @@ impl<'a> Parser<'a> {
                     ObjectValue::Property(head) => {
                         ObjectMember::Property(self.finish_object_property(*head, left))
                     }
-                    ObjectValue::Element(_) => ObjectMember::Element { value: left, span },
+                    ObjectValue::Element(_, previous) => {
+                        self.exit_entry_path(previous);
+                        ObjectMember::Element { value: left, span }
+                    }
                     ObjectValue::Spread(_, nullable) => ObjectMember::Spread {
                         value: left,
                         nullable,
                         span,
                     },
-                    ObjectValue::Entry(_, key, predicate, _) => {
+                    ObjectValue::Entry(_, key, predicate, _, previous) => {
+                        self.exit_entry_path(previous);
                         if predicate {
                             ObjectMember::Predicate {
                                 condition: key,
@@ -1668,6 +1680,7 @@ impl<'a> Parser<'a> {
                     }
                     self.advance()?;
                 }
+                let previous = self.enter_entry_path(Some(&left));
                 if self.is_symbol('=') {
                     self.advance()?;
                     machine.frames.push((
@@ -1675,7 +1688,7 @@ impl<'a> Parser<'a> {
                         self.expectation.replace("}".into()),
                         ExpressionFrame::ObjectValue(
                             build,
-                            ObjectValue::Entry(start, left, predicate, false),
+                            ObjectValue::Entry(start, left, predicate, false, previous),
                         ),
                     ));
                 } else {
@@ -1690,7 +1703,7 @@ impl<'a> Parser<'a> {
                         self.expectation.clone(),
                         ExpressionFrame::ObjectValue(
                             build,
-                            ObjectValue::Entry(start, left, predicate, true),
+                            ObjectValue::Entry(start, left, predicate, true, previous),
                         ),
                     ));
                 }
@@ -1866,7 +1879,7 @@ impl<'a> Parser<'a> {
             self.advance()?;
         }
         let (name, name_span) = self.identifier()?;
-        self.member_path.push(name.clone());
+        self.member_path.push(name.clone().into());
         let (ty, method) = if method {
             let type_parameters = self.type_parameters()?;
             let parameters = self.parameters()?;
@@ -2032,12 +2045,51 @@ impl<'a> Parser<'a> {
         result
     }
 
+    // Integer validation is deferred until syntax succeeds, but its authored
+    // entry scope must be retained when the value is parsed. Key expressions
+    // are visited before entering this scope, as in SymbolTable.
+    fn enter_entry_path(&mut self, key: Option<&Expr>) -> Option<PklString> {
+        let literal = key.and_then(|key| match &key.kind {
+            ExprKind::String(value) => {
+                Some(PklString::from("\"").concat(value).concat(&"\"".into()))
+            }
+            ExprKind::Int(value) => Some(value.to_string().into()),
+            ExprKind::Float(value) => Some(crate::numeric::double_to_string(*value).into()),
+            ExprKind::Bool(value) => Some(value.to_string().into()),
+            _ => None,
+        });
+        let label = literal.unwrap_or_else(|| {
+            let count = self
+                .entry_counts
+                .entry(PklString::join(&self.member_path, "."))
+                .or_default();
+            *count += 1;
+            format!("#{count}").into()
+        });
+        let previous = self.member_path.pop();
+        let parent = previous.clone().unwrap_or_default();
+        self.member_path.push(
+            parent
+                .concat(&"[".into())
+                .concat(&label)
+                .concat(&"]".into()),
+        );
+        previous
+    }
+
+    fn exit_entry_path(&mut self, previous: Option<PklString>) {
+        self.member_path.pop();
+        if let Some(previous) = previous {
+            self.member_path.push(previous);
+        }
+    }
+
     fn integer_literal(&mut self, text: &str, negative: bool, span: Span) -> i64 {
         match integer(text, negative, span) {
             Ok(value) => value,
             Err(mut diagnostic) => {
                 if !self.member_path.is_empty() {
-                    diagnostic.member = Some(self.member_path.join(".").into());
+                    diagnostic.member = Some(Box::new(PklString::join(&self.member_path, ".")));
                 }
                 self.pending.push(diagnostic);
                 0 // Never escapes public parsing while pending errors exist.

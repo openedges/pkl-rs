@@ -1,0 +1,2 @@
+value = new Mapping { ["\u{dc00}\u{d800}"] = throw("stop") }
+result = value["\u{dc00}\u{d800}"]

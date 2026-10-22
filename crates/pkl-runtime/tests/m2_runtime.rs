@@ -618,7 +618,7 @@ fn inherited_and_alias_type_failures_retain_definition_and_value_sources() {
         error
             .frames
             .iter()
-            .map(|frame| frame.member.as_ref())
+            .map(|frame| frame.member.as_str().expect("well-formed frame label"))
             .collect::<Vec<_>>(),
         ["#A.x", "#B.x", "#result"]
     );
@@ -690,8 +690,20 @@ fn super_property_skips_its_annotation_until_the_overriding_value_is_checked() {
     let source = "open class A { x: Int = \"bad\" }\nclass B extends A { x = super.x + \"!\" }\nb = new B {}\nresult = b.x";
     let error = evaluate(source).unwrap_err();
     assert!(error.message.ends_with("Value: \"bad!\""), "{error}");
-    assert_eq!(error.frames[0].member.as_ref(), "#A.x");
-    assert_eq!(error.frames[1].member.as_ref(), "#B.x");
+    assert_eq!(
+        error.frames[0]
+            .member
+            .as_str()
+            .expect("well-formed frame label"),
+        "#A.x"
+    );
+    assert_eq!(
+        error.frames[1]
+            .member
+            .as_str()
+            .expect("well-formed frame label"),
+        "#B.x"
+    );
 }
 
 #[test]
@@ -707,7 +719,13 @@ fn unknown_typed_object_properties_report_headers_and_visible_property_candidate
         &source[error.frames[0].span.start..error.frames[0].span.end],
         "extra"
     );
-    assert_eq!(error.frames[0].member.as_ref(), "#b");
+    assert_eq!(
+        error.frames[0]
+            .member
+            .as_str()
+            .expect("well-formed frame label"),
+        "#b"
+    );
 
     let error = evaluate("class C { answer = 42 }\nc = new C { answr = 2 }\nresult = c.answer")
         .unwrap_err();
@@ -747,7 +765,13 @@ fn abstract_members_fail_lazily_before_defaults_and_keep_qualified_identity() {
             error.message,
             format!("Cannot invoke abstract {kind} `example.named#Base.value`.")
         );
-        assert_eq!(error.frames[0].member.as_ref(), "#Base.value");
+        assert_eq!(
+            error.frames[0]
+                .member
+                .as_str()
+                .expect("well-formed frame label"),
+            "#Base.value"
+        );
     }
     let error = evaluate("module example.named\nclass C {}\nresult: C = 1").unwrap_err();
     assert!(
@@ -1064,17 +1088,35 @@ fn inherited_constraint_fatal_errors_keep_declaration_and_override_value_frames(
         "open class A{value:Int(1 ~/ 0 > 0)=5}\nclass B extends A{value=6}\nresult=(new B{}).value";
     let error = evaluate(source).unwrap_err();
     assert_eq!(error.kind, ErrorKind::Arithmetic);
-    assert_eq!(error.frames[0].member.as_ref(), "#A.value");
+    assert_eq!(
+        error.frames[0]
+            .member
+            .as_str()
+            .expect("well-formed frame label"),
+        "#A.value"
+    );
     assert_eq!(
         &source[error.frames[0].span.start..error.frames[0].span.end],
         "1 ~/ 0"
     );
-    assert_eq!(error.frames[1].member.as_ref(), "#B.value");
+    assert_eq!(
+        error.frames[1]
+            .member
+            .as_str()
+            .expect("well-formed frame label"),
+        "#B.value"
+    );
     assert_eq!(
         &source[error.frames[1].span.start..error.frames[1].span.end],
         "6"
     );
-    assert_eq!(error.frames[2].member.as_ref(), "#result");
+    assert_eq!(
+        error.frames[2]
+            .member
+            .as_str()
+            .expect("well-formed frame label"),
+        "#result"
+    );
     assert_eq!(
         evaluate("result=1 |> new Dynamic{}").unwrap_err().message,
         "Operator `|>` is not defined for operand types `Int` and `Dynamic`.\nLeft operand : 1\nRight operand: new Dynamic {}"
@@ -1122,7 +1164,7 @@ fn inherited_invalid_constraint_results_preserve_fatal_validation_frames() {
                 .iter()
                 .map(|frame| {
                     (
-                        frame.member.as_ref(),
+                        frame.member.as_str().expect("well-formed frame label"),
                         &source[frame.span.start..frame.span.end],
                     )
                 })

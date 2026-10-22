@@ -332,8 +332,16 @@ Native checks inspect actual units through Host suspension, reentry, failed-read
 retry, collection, cancellation and terminal release. The Node and Chromium
 scenarios compare complete Java-derived output payloads. These output adapters
 observe Java's UTF-8 writer; they do not establish lossless public JavaScript
-string transport. Surrogate URI handling, arbitrary diagnostic-frame identity,
-and full string builtins remain separate requirements.
+string transport. Diagnostic frame regressions additionally distinguish unmatched
+surrogates from literal question marks in nested entry/function counters and
+recursive compression. Native tests inspect internal names through Host reentry,
+failed retries, collection and detached errors after evaluator closure; Java
+captures provide the independent numbering and compression reference. Delayed
+integer-literal errors retain their entry/element scope. Typed-property controls
+distinguish object-local inline checks from module/class declarations, including
+local declarations and aliases that retain their separate call frames. Surrogate
+URI handling, the complete diagnostic corpus and full string builtins remain
+separate requirements.
 
 M1 experiments have narrower, explicit contracts:
 

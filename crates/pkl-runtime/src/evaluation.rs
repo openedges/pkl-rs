@@ -2,7 +2,7 @@
 //! This does not implement the full evaluator API, general compound stringification, or Host I/O.
 use crate::diagnostic::{RenderFrame, render_error};
 use crate::source::{Source, SourceMap, Span};
-use crate::value::{ErrorKind, RuntimeError, Value};
+use crate::value::{ErrorKind, PklString, RuntimeError, Value};
 use crate::vm::{BlockMetadata, Instruction, Vm, VmPoll};
 
 /// Options shared by all experimental language adapters.
@@ -59,10 +59,10 @@ pub fn scalar_expressions_with_options(
     let source = sources.get(source_id).expect("source inserted");
     let module = crate::parser::parse_module(source.text()).map_err(|error| {
         let name = error.module_name.as_deref().unwrap_or(name);
-        let member = error
-            .member
-            .as_ref()
-            .map_or_else(|| name.to_owned(), |suffix| format!("{name}#{suffix}"));
+        let member = error.member.as_ref().map_or_else(
+            || name.into(),
+            |suffix| PklString::from(format!("{name}#")).concat(suffix),
+        );
         render_error(
             &error.message,
             &[RenderFrame {
@@ -82,10 +82,10 @@ pub fn scalar_expressions_with_options(
         .map(|parts| parts.join("."));
     let name = declared_name.as_deref().unwrap_or(name);
     let resolved = crate::resolver::resolve_module(&module).map_err(|error| {
-        let member = error
-            .member
-            .as_ref()
-            .map_or_else(|| name.to_owned(), |suffix| format!("{name}#{suffix}"));
+        let member = error.member.as_ref().map_or_else(
+            || name.into(),
+            |suffix| PklString::from(format!("{name}#")).concat(suffix),
+        );
         render_error(
             &error.message,
             &[RenderFrame {
@@ -268,7 +268,7 @@ fn runtime_error(
                 .source
                 .as_ref()
                 .map_or(module, |source| source.module_name.as_ref());
-            format!("{module}{}", frame.member)
+            PklString::from(module).concat(&frame.member)
         })
         .collect();
     let uris: Vec<_> = error
@@ -290,6 +290,8 @@ fn runtime_error(
             }
         })
         .collect();
+    let module_member = PklString::from(module);
+    let expression_member = PklString::default();
     let mut frames: Vec<_> = error
         .frames
         .iter()
@@ -309,7 +311,7 @@ fn runtime_error(
         frames.push(RenderFrame {
             source,
             uri,
-            member: module,
+            member: &module_member,
             span,
             highlight_length_utf16: None,
         });
@@ -318,7 +320,7 @@ fn runtime_error(
         frames.push(RenderFrame {
             source: sources.get(repl_id).expect("expression source inserted"),
             uri: "repl:text",
-            member: "",
+            member: &expression_member,
             span: Span::new(0, end),
             highlight_length_utf16: None,
         });

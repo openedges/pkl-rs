@@ -80,7 +80,13 @@ fn constant_list_duplicates_are_rejected_even_in_unused_properties() {
         );
         let start = source.rfind(key).unwrap();
         assert_eq!(error.span, Span::new(start, start + key.len()));
-        assert_eq!(error.member.as_deref(), Some("unused"));
+        assert_eq!(
+            error
+                .member
+                .as_deref()
+                .and_then(pkl_runtime::value::PklString::as_str),
+            Some("unused")
+        );
     }
 }
 

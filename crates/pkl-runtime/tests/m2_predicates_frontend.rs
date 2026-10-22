@@ -139,7 +139,10 @@ fn predicate_values_do_not_infer_a_parent_from_the_matched_entry() {
         assert_eq!(error.span, span(source, "new"));
         assert_eq!(error.message, "Cannot tell which parent to amend.");
         assert_eq!(
-            error.member.as_deref(),
+            error
+                .member
+                .as_deref()
+                .and_then(pkl_runtime::value::PklString::as_str),
             Some(if source.contains("let (") {
                 "result[true].<let expr>"
             } else {
@@ -153,7 +156,13 @@ fn predicate_values_do_not_infer_a_parent_from_the_matched_entry() {
 fn dynamic_predicate_body_diagnostics_keep_authored_entry_numbering() {
     let source = "result = (source) { 1; [key] = 2; [[this == 1]] = new {} }";
     let error = resolve_module(&parse_module(source).unwrap()).unwrap_err();
-    assert_eq!(error.member.as_deref(), Some("result[#3]"));
+    assert_eq!(
+        error
+            .member
+            .as_deref()
+            .and_then(pkl_runtime::value::PklString::as_str),
+        Some("result[#3]")
+    );
 }
 
 #[test]
