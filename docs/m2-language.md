@@ -37,6 +37,7 @@ remaining scope.
 ```sh
 python3 tools/m2_manifest.py --check
 python3 tools/m2_identifier_tables.py --output target/m2/identifiers-new
+python3 tools/m2_unicode_escape_tables.py --output target/m2/unicode-escapes-new
 python3 -m unittest discover -s tools/tests -p 'test_m2_*.py' -v
 python3 tools/m2_language.py --output target/m2/language-new --record-only
 python3 tools/m2_language.py --verify-report target/m2/language-new
@@ -130,6 +131,14 @@ I/O, general compound-value conversion, or the full expression API.
 The generated identifier tables reproduce the pinned lexer's UTF-16 code-unit
 predicates. `m2_identifier_tables.py` records the raw Java intervals and checks
 the generated Rust bytes. CI repeats this check against the pinned JDK.
+
+Unicode escape scanning and conversion use a separate generated table.
+`m2_unicode_escape_tables.py` records all BMP UTF-16 units accepted by Java's
+`Character.isLetterOrDigit` and their `Character.digit(unit, 16)` values, then
+verifies the generated Rust bytes. Its evidence includes the pinned JDK,
+probe sources, raw output, and source stability. Use a fresh output directory;
+`--write` regenerates the table after reviewing a deliberate predicate change.
+These predicates do not establish complete Unicode string compatibility.
 
 M1's platform and Host contracts remain regression requirements. New language
 features must retain captured values across VM suspension and collection and use

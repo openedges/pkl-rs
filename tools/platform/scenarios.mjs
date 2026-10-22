@@ -15,6 +15,7 @@ import { collectionTypeGroups, collectionTypeContext } from './collection-type-c
 import { frontendDepthGroups, frontendDepthContext } from './frontend-depth-cases.mjs';
 import { stringFrontendGroups, stringFrontendContext } from './string-frontend-cases.mjs';
 import { lexicalDiagnosticCases, lexicalDiagnosticRecoveries, lexicalDiagnosticContext } from './lexical-diagnostic-cases.mjs';
+import { unicodeDiagnosticCases, unicodeDiagnosticRecoveries, unicodeDiagnosticContext } from './unicode-diagnostic-cases.mjs';
 
 // Identical assertions execute inside Node and an actual Chromium page.
 export async function scenarios(api) {
@@ -286,6 +287,18 @@ export async function scenarios(api) {
         const recovery = lexicalDiagnosticRecoveries[index % lexicalDiagnosticRecoveries.length];
         eq(api.evaluateLanguage(recovery.source, lexicalDiagnosticContext.uri,
           lexicalDiagnosticContext.moduleName, recovery.expression), recovery.expectedValue);
+      }
+    }
+  });
+  await check('m2-unicode-diagnostic-recovery', () => {
+    for (let repetition = 0; repetition < 2; repetition++) {
+      for (let index = 0; index < unicodeDiagnosticCases.length; index++) {
+        const fixture = unicodeDiagnosticCases[index];
+        throws(() => api.evaluateLanguage(fixture.source, unicodeDiagnosticContext.uri,
+          unicodeDiagnosticContext.moduleName, fixture.expression), fixture.expectedError);
+        const recovery = unicodeDiagnosticRecoveries[index % unicodeDiagnosticRecoveries.length];
+        eq(api.evaluateLanguage(recovery.source, unicodeDiagnosticContext.uri,
+          unicodeDiagnosticContext.moduleName, recovery.expression), recovery.expectedValue);
       }
     }
   });

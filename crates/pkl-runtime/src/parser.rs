@@ -10,6 +10,7 @@ use crate::syntax::{
 mod string_lexer;
 mod string_parser;
 mod type_parser;
+mod unicode_escape;
 mod unicode_identifier;
 
 fn identifier_contains(ranges: &[(u32, u32)], character: char) -> bool {
@@ -114,6 +115,7 @@ enum Kind {
 enum StringPart {
     Text(String),
     Escape(String),
+    Unicode,
     Newline,
     Continuation,
     Expression(Span, Span),

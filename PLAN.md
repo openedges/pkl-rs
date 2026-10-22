@@ -418,6 +418,8 @@ Stage 15의 원래 입력·URI 그대로 재비교하여 shared-slot 실패 3개
 
 [독립 감사](reports/m2/stage27-post-seal-audit.json)는 새 archive 10개·38,213,047 bytes, 구현 커밋의 소스 사본 7,131개·고유 파일 3,396개와 원본 취득 파일 60,233개를 확인했습니다. 명시한 Cargo build cache 3개는 내부를 열거하지 않으며 Stage 26의 archive·요약·감사·완료 기록은 직접 불변 의존성으로 유지합니다. [완료 기록](reports/m2/stage27-completion-captures.json)은 봉인·감사의 원본 process 파일 12개를 보존합니다. 초기 실패·중간 비교와 의도적인 whitespace·CRLF 입력도 유지합니다. **Stage 27의 제한된 lexical 진단 개발 계약은 마감했으며 M2 전체·제품 API·릴리스 플랫폼·속도·peak RSS 목표는 미완료입니다.**
 
+스물여덟 번째 단계는 빈·비16진수·여는 brace 누락 Unicode escape의 진단과 지연 검사 순서를 진행합니다. 핵심 parser는 `gpt-6-astra / xhigh`, Java 차등 증거와 native·플랫폼 검증은 각각 `gpt-6.1-sol / high`에 배정했습니다. 고정 Java의 UTF-16 `Character.isLetterOrDigit`·`Character.digit` 표를 생성하고 비ASCII 숫자·긴 선행 0·일반/raw/multiline 경계를 검사합니다. surrogate 표현·범위 초과 Java 내부 오류는 독립적인 미해결 관찰로 보존하며, 기존 선택 코퍼스·순차 계약·깊이 제한을 변경하지 않습니다. 로컬 검증과 독립 감사가 끝나기 전에는 이 단계를 완료로 보고하지 않습니다.
+
 다음 구현은 남은 탐색 불일치의 의존성을 기준으로 진행합니다.
 
 1. 남은 Reference metadata 작업·진단 확장을 continuation과 자원 계약으로 검증하고 Java stack-overflow 진단 및 취소 지연을 별도로 다룹니다. 전체 지연 타입 해석·alias-root 대입 identity와 wrapper 중복 제거의 실제 인자 구분을 검증합니다. 남은 nullable/default·inline Reference·local typed-property·outer 진단, generic constructor의 지연 멤버 frame 이름·builtin·generator 경계를 원래 실패 입력으로 보완합니다. Stage 24에서 보존한 String 선택 별칭 union 생성자의 `Cannot instantiate type` 진단·지연 시점·오류 우선순위도 여기에 포함합니다. wrapper identity를 바꾸기 전에는 Java에서 관찰 가능한 캐시·성공 predicate 호출 횟수 근거를 먼저 확보합니다. 이미 검증한 공유 타입 인자의 깊은 실행·동시 해제, inline·lambda·공유 let·분기 순서·재귀 깊이별 재시도, 타입 인자 캡처·기본값·Reference 검사 순서, Host/GC/취소/terminal 동작을 회귀 기준으로 유지합니다.

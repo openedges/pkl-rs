@@ -2,7 +2,7 @@
 use std::collections::BTreeMap;
 use std::sync::Arc;
 
-use super::{Diagnostic, DiagnosticKind, Kind, Lexer, Parser, Span, StringPart};
+use super::{Diagnostic, DiagnosticKind, Kind, Lexer, Parser, Span, StringPart, unicode_escape};
 
 // EOF validation parses an interpolation to preserve its first syntax error.
 // Replaying already failed child strings prevents that validation from entering
@@ -17,6 +17,7 @@ struct StringScan {
     escape: String,
     parts: Vec<SpannedStringPart>,
     text: String,
+    pending_unicode: Option<usize>,
     interpolation: Option<InterpolationScan>,
 }
 
@@ -75,12 +76,13 @@ impl Lexer<'_> {
                 Ok(StringFlow::Done) => {
                     let frame = frames.pop().expect("completed string scan");
                     let start = frame.start;
-                    let result = self.finish_string(frame);
+                    let mut consumed_end = self.cursor;
+                    let result = self.finish_string(frame, &mut consumed_end);
                     if frames.is_empty() {
                         return result;
                     }
                     if let Err(error) = result {
-                        self.remember_string_error(start, error);
+                        self.remember_string_error_through(start, consumed_end, error);
                     }
                     continue;
                 }
@@ -166,8 +168,17 @@ impl Lexer<'_> {
     }
 
     fn remember_string_error(&mut self, start: usize, error: Diagnostic) {
+        self.remember_string_error_through(start, self.cursor, error);
+    }
+
+    fn remember_string_error_through(
+        &mut self,
+        start: usize,
+        consumed_end: usize,
+        error: Diagnostic,
+    ) {
         Arc::make_mut(&mut self.string_errors)
-            .insert((start, self.source.len()), (self.cursor, error));
+            .insert((start, self.source.len()), (consumed_end, error));
     }
 
     fn start_string(&mut self, start: usize, first: char) -> Result<StringScan, Diagnostic> {
@@ -200,6 +211,7 @@ impl Lexer<'_> {
             escape: format!("\\{}", "#".repeat(hashes)),
             parts: Vec::new(),
             text: String::new(),
+            pending_unicode: None,
             interpolation: None,
         })
     }
@@ -244,11 +256,13 @@ impl Lexer<'_> {
             // Java emits an empty text token before delimiters and escapes.
             // Its location participates in multiline validation and indentation.
             frame.flush_text(self.cursor, true);
+            self.validate_pending_unicode(frame)?;
             self.cursor += frame.delimiter.len();
             return Ok(StringFlow::Done);
         }
         let position = self.cursor;
         let Some(ch) = self.advance() else {
+            self.validate_pending_unicode(frame)?;
             return Err(Diagnostic::new(
                 DiagnosticKind::Syntax,
                 Span::new(self.cursor, self.cursor),
@@ -272,8 +286,10 @@ impl Lexer<'_> {
                 span: Span::new(position, self.cursor),
             });
         } else if ch == '\\' && self.source[position..].starts_with(&frame.escape) {
-            self.cursor = position + frame.escape.len();
+            self.cursor = position;
             frame.flush_text(position, true);
+            self.validate_pending_unicode(frame)?;
+            self.cursor += frame.escape.len();
             let escaped_start = self.cursor;
             let escaped = self.advance().ok_or_else(|| {
                 Diagnostic::new(
@@ -289,34 +305,42 @@ impl Lexer<'_> {
                 '"' => "\"".to_owned(),
                 '\\' => "\\".to_owned(),
                 'u' => {
-                    if self.advance() != Some('{') {
-                        return Err(Diagnostic::new(
-                            DiagnosticKind::Syntax,
-                            Span::new(position, self.cursor),
-                            "Expected `{` in Unicode escape.",
-                        ));
+                    if self.peek() != Some('{') {
+                        let got = match self.peek() {
+                            Some(character) if character as u32 > 0xffff => "?".to_owned(),
+                            Some(character) => character.to_string(),
+                            None => "EOF".into(),
+                        };
+                        return Err(self.unexpected_unicode_character(&got, "{"));
                     }
-                    let begin = self.cursor;
-                    while self.peek().is_some_and(|ch| ch.is_ascii_hexdigit()) {
+                    self.advance();
+                    while self.peek().is_some_and(|character| {
+                        super::identifier_contains(
+                            unicode_escape::LETTER_OR_DIGIT_RANGES,
+                            character,
+                        )
+                    }) {
                         self.advance();
                     }
-                    let end = self.cursor;
-                    if self.advance() != Some('}') {
+                    if self.peek() != Some('}') {
                         return Err(Diagnostic::new(
                             DiagnosticKind::Syntax,
                             Span::new(position, self.cursor),
-                            "Invalid Unicode escape.",
+                            format!(
+                                "Unterminated Unicode escape sequence `{}`.\n\nUnicode escape sequences must end with `}}`.",
+                                &self.source[position..self.cursor]
+                            ),
                         ));
                     }
-                    let point = u32::from_str_radix(&self.source[begin..end], 16).ok();
-                    let Some(character) = point.and_then(char::from_u32) else {
-                        return Err(Diagnostic::new(
-                            DiagnosticKind::Unsupported,
-                            Span::new(position, self.cursor),
-                            "Unicode escape is outside the supported scalar range.",
-                        ));
-                    };
-                    character.to_string()
+                    self.advance();
+                    if !frame.multiline {
+                        frame.pending_unicode = Some(frame.parts.len());
+                    }
+                    frame.parts.push(SpannedStringPart {
+                        part: StringPart::Unicode,
+                        span: Span::new(position, self.cursor),
+                    });
+                    return Ok(StringFlow::Continue);
                 }
                 '(' => {
                     frame.interpolation = Some(InterpolationScan {
@@ -389,22 +413,130 @@ impl Lexer<'_> {
         Ok(StringFlow::Continue)
     }
 
-    fn finish_string(&self, frame: StringScan) -> Result<Kind, Diagnostic> {
+    fn validate_pending_unicode(&self, frame: &mut StringScan) -> Result<(), Diagnostic> {
+        if let Some(index) = frame.pending_unicode.take() {
+            // ParserImpl decodes an ordinary Unicode token after reading its
+            // following text token. A newline in that text is a lexical error
+            // first; an empty text token before another escape still succeeds.
+            let part = &mut frame.parts[index];
+            part.part = StringPart::Escape(decode_unicode(self.source, part.span)?);
+        }
+        Ok(())
+    }
+
+    fn unexpected_unicode_character(&self, got: &str, expected: &str) -> Diagnostic {
+        let span = self.peek().map_or_else(
+            || Span::new(self.cursor - 1, self.cursor - 1),
+            |character| Span::new(self.cursor, self.cursor + character.len_utf8()),
+        );
+        let mut error = Diagnostic::new(
+            DiagnosticKind::Syntax,
+            span,
+            format!("Unexpected character `{got}`. Did you mean `{expected}`?"),
+        );
+        // The Java lexer tests one UTF-16 code unit, including the first
+        // surrogate of a supplementary character. EOF has an empty span.
+        error.highlight_length_utf16 = Some(1);
+        error
+    }
+
+    fn unicode_lookahead(&mut self) -> Result<(), Diagnostic> {
+        // This cursor inspects only the token after a multiline delimiter.
+        // Cached failures describe whole strings and cannot replace the Java
+        // STRING_START token, whose contents have not yet been scanned.
+        self.string_errors = Default::default();
+        loop {
+            let token = self.next_token(true).map_err(|error| {
+                match &self.source[error.span.start..error.span.end] {
+                    "&" if error.kind == DiagnosticKind::Unsupported => {
+                        self.unexpected_unicode_character("&", "&&")
+                    }
+                    "~" if error.kind == DiagnosticKind::Unsupported => {
+                        self.unexpected_unicode_character("~", "~/")
+                    }
+                    _ => error,
+                }
+            })?;
+            let Kind::StringStart(first) = token.kind else {
+                if matches!(token.kind, Kind::Symbol(';')) {
+                    continue;
+                }
+                return Ok(());
+            };
+            if first == '#' {
+                if self.peek() == Some('!') {
+                    while self.peek().is_some_and(|ch| ch != '\n' && ch != '\r') {
+                        self.advance();
+                    }
+                    return Ok(());
+                }
+                while self.peek() == Some('#') {
+                    self.advance();
+                }
+                if self.peek().is_none() {
+                    return Err(Diagnostic::new(
+                        DiagnosticKind::Syntax,
+                        Span::new(token.span.start, self.cursor),
+                        "Unexpected end of file.",
+                    ));
+                }
+                if self.peek() != Some('"') {
+                    let character = self.peek().expect("visible string prefix character");
+                    let got = if character as u32 > 0xffff {
+                        "?".to_owned()
+                    } else {
+                        character.to_string()
+                    };
+                    return Err(self.unexpected_unicode_character(&got, "\""));
+                }
+                self.advance();
+            }
+            if self.source[self.cursor..].starts_with("\"\"") {
+                self.cursor += 2;
+            }
+            return Ok(());
+        }
+    }
+
+    fn finish_string(
+        &self,
+        frame: StringScan,
+        consumed_end: &mut usize,
+    ) -> Result<Kind, Diagnostic> {
         let mut parts = frame.parts;
         if frame.multiline {
             let ranges: Vec<_> = expression_ranges(&parts).collect();
-            parts =
-                multiline_parts(parts, Span::new(frame.start, self.cursor)).map_err(|error| {
-                    self.validate_interpolations(ranges.into_iter())
-                        .err()
-                        .unwrap_or(error)
-                })?;
+            let end = self.cursor;
+            let result = (|| {
+                if parts
+                    .iter()
+                    .any(|part| matches!(part.part, StringPart::Unicode))
+                {
+                    // Before validating multiline content ParserImpl consumes
+                    // STRING_END and lexes one following token. Ordinary
+                    // strings already validated their Unicode tokens earlier.
+                    // Do not scan a following string's whole content here.
+                    let mut lookahead = self.clone();
+                    let result = lookahead.unicode_lookahead();
+                    // The scan resumes at STRING_END, while failure replay
+                    // also requires visibility of the inspected lookahead.
+                    *consumed_end = lookahead.cursor;
+                    result?;
+                }
+                multiline_parts(self.source, parts, Span::new(frame.start, end))
+            })();
+            parts = result.map_err(|error| {
+                self.validate_interpolations(ranges.into_iter())
+                    .err()
+                    .unwrap_or(error)
+            })?;
         }
         let mut rendered = Vec::new();
         let mut text = String::new();
         for part in parts {
             match part.part {
                 StringPart::Text(value) | StringPart::Escape(value) => text.push_str(&value),
+                StringPart::Unicode => unreachable!("Unicode tokens have been decoded"),
                 StringPart::Newline => text.push('\n'),
                 StringPart::Continuation => {}
                 StringPart::Expression(span, interpolation) => {
@@ -437,6 +569,7 @@ fn expression_ranges(parts: &[SpannedStringPart]) -> impl Iterator<Item = Span> 
 // interpolation expressions. Preserve token spans, including empty text parts,
 // because an opening-line or indentation diagnostic can point at those tokens.
 fn multiline_parts(
+    source: &str,
     mut parts: Vec<SpannedStringPart>,
     span: Span,
 ) -> Result<Vec<SpannedStringPart>, Diagnostic> {
@@ -500,7 +633,7 @@ fn multiline_parts(
                 line_start = false;
             }
             StringPart::Newline | StringPart::Continuation => line_start = true,
-            StringPart::Escape(_) => {
+            StringPart::Escape(_) | StringPart::Unicode => {
                 if line_start && !indent.is_empty() {
                     return Err(Diagnostic::new(
                         DiagnosticKind::Syntax,
@@ -508,10 +641,56 @@ fn multiline_parts(
                         "Line must match or exceed indentation of the String's last line.",
                     ));
                 }
+                if matches!(part.part, StringPart::Unicode) {
+                    part.part = StringPart::Escape(decode_unicode(source, part.span)?);
+                }
                 line_start = false;
             }
             StringPart::Expression(_, _) => {}
         }
     }
     Ok(parts)
+}
+
+fn decode_unicode(source: &str, span: Span) -> Result<String, Diagnostic> {
+    let text = &source[span.start..span.end];
+    let brace = text.find('{').expect("lexed Unicode opening brace");
+    let digits = &text[brace + 1..text.len() - 1];
+    // Integer.parseInt accepts Java Character.digit values and arbitrary
+    // leading zeroes, but rejects values above signed i32::MAX. Its advertised
+    // 1–6 character limit is not an independent validation rule.
+    let point = (!digits.is_empty()).then_some(0_i32).and_then(|point| {
+        digits.chars().try_fold(point, |value, character| {
+            let character = character as u32;
+            let index =
+                unicode_escape::HEX_DIGIT_RANGES.partition_point(|(_, end, _)| *end < character);
+            let (start, end, first) = *unicode_escape::HEX_DIGIT_RANGES.get(index)?;
+            if character < start || character > end {
+                return None;
+            }
+            value
+                .checked_mul(16)?
+                .checked_add((first + character - start) as i32)
+        })
+    });
+    let Some(point) = point else {
+        let prefix = &text[..brace];
+        return Err(Diagnostic::new(
+            DiagnosticKind::Syntax,
+            span,
+            format!(
+                "Invalid Unicode escape sequence `{text}`.\n\nValid Unicode escape sequences are {prefix}{{0}} to {prefix}{{10FFFF}} (1-6 hexadecimal characters)."
+            ),
+        ));
+    };
+    let Some(character) = char::from_u32(point as u32) else {
+        // Java represents lone surrogates and has a distinct internal error for
+        // larger code points. Preserve both as explicit unsupported gaps.
+        return Err(Diagnostic::new(
+            DiagnosticKind::Unsupported,
+            span,
+            "Unicode escape is outside the supported scalar range.",
+        ));
+    };
+    Ok(character.to_string())
 }
