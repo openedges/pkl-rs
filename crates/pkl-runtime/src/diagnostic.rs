@@ -318,27 +318,64 @@ pub(crate) fn property_suggestions(
     })
 }
 
-/// Match MemberLookupSuggestions across property and method namespaces.
+/// A candidate in member lookup order, before stable similarity ranking.
+pub(crate) enum MemberSuggestion<'a> {
+    Property(&'a str),
+    Method {
+        name: &'a str,
+        signature: &'a str,
+        arity: usize,
+    },
+}
+
+/// Explicit receivers search all properties before methods.
 pub(crate) fn member_suggestions(
     name: &str,
     arity: isize,
     properties: &[String],
     methods: &[(String, String, usize)],
 ) -> Option<String> {
-    let mut seen = std::collections::BTreeSet::new();
-    let candidates = properties.iter().map(|name| (name, name, -1)).chain(
-        methods
+    ordered_member_suggestions(
+        name,
+        arity,
+        properties
             .iter()
-            .map(|(name, signature, count)| (name, signature, *count as isize)),
-    );
+            .map(|name| MemberSuggestion::Property(name))
+            .chain(
+                methods
+                    .iter()
+                    .map(|(name, signature, arity)| MemberSuggestion::Method {
+                        name,
+                        signature,
+                        arity: *arity,
+                    }),
+            ),
+    )
+}
+
+/// Match MemberLookupSuggestions without losing scope order across namespaces.
+pub(crate) fn ordered_member_suggestions<'a>(
+    name: &str,
+    arity: isize,
+    candidates: impl IntoIterator<Item = MemberSuggestion<'a>>,
+) -> Option<String> {
+    let mut seen = std::collections::BTreeSet::new();
     let mut ranked = Vec::new();
-    for (candidate, signature, count) in candidates {
+    for candidate in candidates {
+        let (candidate, signature, count) = match candidate {
+            MemberSuggestion::Property(name) => (name, name, -1),
+            MemberSuggestion::Method {
+                name,
+                signature,
+                arity,
+            } => (name, signature, arity as isize),
+        };
         let similarity = string_similarity(candidate, name);
         if similarity < 0.77 || !seen.insert((count >= 0, candidate)) {
             continue;
         }
         let signature = if similarity < 1.0 || arity == 0 {
-            signature.clone()
+            signature.to_owned()
         } else if arity >= 0 {
             format!("{signature}.apply(...)")
         } else {

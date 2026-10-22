@@ -1,0 +1,148 @@
+{
+  "archives": [
+    {
+      "group": "oracle",
+      "archive": "reports/m2/stage38-oracle-evidence.tar.gz",
+      "bytes": 1473082,
+      "sha256": "0972e288ffc55f59eb4144b40c7fef572b3787b4d23bc8a2c99c809380dc2879",
+      "original_files": 4342,
+      "roots": 15,
+      "inventory_sha256": "2358442e58d8566073eef60226a13332da8abe81b0522b75663fd4e837e2947b",
+      "verified": true
+    },
+    {
+      "group": "development",
+      "archive": "reports/m2/stage38-development-evidence.tar.gz",
+      "bytes": 69841310,
+      "sha256": "6bdf9f6d3bdb6c42e6913a4234152c689a45325235b3f5b30f44a191e4366d2f",
+      "original_files": 20248,
+      "roots": 32,
+      "inventory_sha256": "8eb23c1d210dbb9450925b021edab69831786cb007cb809f46584b4fbd8459d2",
+      "verified": true
+    }
+  ],
+  "all_verified": true,
+  "schema": 1,
+  "scope": "Immutable Stage 38 Java observations and pre-order-fix development results. This is not a final checkpoint or full M2 compatibility result.",
+  "selection_report_sha256": "2244fc714fb637f9bd290d60c4e4c6d86ad749abbe552ea606fffb33a4a130d4",
+  "excluded_before_traversal": [
+    "build",
+    "target",
+    "node_modules",
+    ".cache",
+    "__pycache__",
+    "directories ending in -cargo"
+  ],
+  "compatibility_complete": false,
+  "selection_correction": {
+    "reason": "The original archive helper incorrectly excluded every directory named build, omitting 12 subprocess capture files declared in four original closure manifests. The original files and two archives were unchanged.",
+    "supplement": "reports/m2/stage38-candidate-evidence.tar.gz",
+    "supplement_sha256": "fc7ad0449d6e79142ead8b19ff379368e5281da97762b582b55021024adc4b8f",
+    "repair_files": [
+      {
+        "closure_origin_id": "stage38-final-native-01",
+        "closure_path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-final-native-01/closure.json",
+        "closure_sha256": "3e7e0301383ae671ac935eecdeec6afe5d35274b1107f1fa59ff009c486ba3d4",
+        "origin": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-final-native-01/build/result.json",
+        "reason": "Original closure-declared subprocess build capture omitted by old generic build-directory exclusion",
+        "sha256": "428f9ec16ab436ec51554256e04cf7a4d284484262731f41b833154a7fd19c74"
+      },
+      {
+        "closure_origin_id": "stage38-final-native-01",
+        "closure_path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-final-native-01/closure.json",
+        "closure_sha256": "3e7e0301383ae671ac935eecdeec6afe5d35274b1107f1fa59ff009c486ba3d4",
+        "origin": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-final-native-01/build/stderr.bin",
+        "reason": "Original closure-declared subprocess build capture omitted by old generic build-directory exclusion",
+        "sha256": "d2b8b57881010a795a647ccf7c6f01e326006da0b064b9bf475da922f84f4e89"
+      },
+      {
+        "closure_origin_id": "stage38-final-native-01",
+        "closure_path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-final-native-01/closure.json",
+        "closure_sha256": "3e7e0301383ae671ac935eecdeec6afe5d35274b1107f1fa59ff009c486ba3d4",
+        "origin": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-final-native-01/build/stdout.bin",
+        "reason": "Original closure-declared subprocess build capture omitted by old generic build-directory exclusion",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "closure_origin_id": "stage38-review-native-01",
+        "closure_path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-review-native-01/closure.json",
+        "closure_sha256": "1d32cbdcb6718eee01444d5f468d311953e63afc6425fb301b5cf589759fcc6b",
+        "origin": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-review-native-01/build/result.json",
+        "reason": "Original closure-declared subprocess build capture omitted by old generic build-directory exclusion",
+        "sha256": "5a3a1c5b1636fca66c2a0bcd442e6eedbce6158a756d3ab472e4e87c011efa52"
+      },
+      {
+        "closure_origin_id": "stage38-review-native-01",
+        "closure_path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-review-native-01/closure.json",
+        "closure_sha256": "1d32cbdcb6718eee01444d5f468d311953e63afc6425fb301b5cf589759fcc6b",
+        "origin": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-review-native-01/build/stderr.bin",
+        "reason": "Original closure-declared subprocess build capture omitted by old generic build-directory exclusion",
+        "sha256": "b78ef252c321cf9002271d4844ab30edce38e9ec0018a8ed31091477f9b218b9"
+      },
+      {
+        "closure_origin_id": "stage38-review-native-01",
+        "closure_path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-review-native-01/closure.json",
+        "closure_sha256": "1d32cbdcb6718eee01444d5f468d311953e63afc6425fb301b5cf589759fcc6b",
+        "origin": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-review-native-01/build/stdout.bin",
+        "reason": "Original closure-declared subprocess build capture omitted by old generic build-directory exclusion",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "closure_origin_id": "stage38-review-native-02",
+        "closure_path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-review-native-02/closure.json",
+        "closure_sha256": "9eb4744232683ae623eb91f7e7d3a6050286b9509f94d7d16cc30dd3e835c912",
+        "origin": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-review-native-02/build/result.json",
+        "reason": "Original closure-declared subprocess build capture omitted by old generic build-directory exclusion",
+        "sha256": "9c18206abdf73936b1243effdce1f9851bf2810342b1da1e5403dae3ac705267"
+      },
+      {
+        "closure_origin_id": "stage38-review-native-02",
+        "closure_path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-review-native-02/closure.json",
+        "closure_sha256": "9eb4744232683ae623eb91f7e7d3a6050286b9509f94d7d16cc30dd3e835c912",
+        "origin": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-review-native-02/build/stderr.bin",
+        "reason": "Original closure-declared subprocess build capture omitted by old generic build-directory exclusion",
+        "sha256": "4e1747f06174da878e415f6fc3553df4e5ea0917b40e3522e0bbde912b129326"
+      },
+      {
+        "closure_origin_id": "stage38-review-native-02",
+        "closure_path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-review-native-02/closure.json",
+        "closure_sha256": "9eb4744232683ae623eb91f7e7d3a6050286b9509f94d7d16cc30dd3e835c912",
+        "origin": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-review-native-02/build/stdout.bin",
+        "reason": "Original closure-declared subprocess build capture omitted by old generic build-directory exclusion",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "closure_origin_id": "stage38-review-native-03",
+        "closure_path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-review-native-03/closure.json",
+        "closure_sha256": "1b02b1f2217f669e19bc657c01dffb8e0ebcfc90f27e8e9642aa6429dae6ad56",
+        "origin": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-review-native-03/build/result.json",
+        "reason": "Original closure-declared subprocess build capture omitted by old generic build-directory exclusion",
+        "sha256": "90b80947746408b6c2cde4b508c627628c07548335e392dc39bf1965e9f1b07e"
+      },
+      {
+        "closure_origin_id": "stage38-review-native-03",
+        "closure_path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-review-native-03/closure.json",
+        "closure_sha256": "1b02b1f2217f669e19bc657c01dffb8e0ebcfc90f27e8e9642aa6429dae6ad56",
+        "origin": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-review-native-03/build/stderr.bin",
+        "reason": "Original closure-declared subprocess build capture omitted by old generic build-directory exclusion",
+        "sha256": "04f2e51d7c92e3ef6a19e4f3ebb7e515f1ab07035fde4c85475be441bbd5dee3"
+      },
+      {
+        "closure_origin_id": "stage38-review-native-03",
+        "closure_path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-review-native-03/closure.json",
+        "closure_sha256": "1b02b1f2217f669e19bc657c01dffb8e0ebcfc90f27e8e9642aa6429dae6ad56",
+        "origin": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-review-native-03/build/stdout.bin",
+        "reason": "Original closure-declared subprocess build capture omitted by old generic build-directory exclusion",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    ],
+    "union_verification": {
+      "report": "reports/m2/stage38-candidate-captures.json",
+      "sha256": "886ccd071a51289088bbd99f1c65f3cc928611a34420364db2ab9d83c7f4d2c1",
+      "closed_original_manifests": 56,
+      "declared_files_covered": 37571,
+      "missing_files": 0,
+      "passed": true
+    }
+  }
+}

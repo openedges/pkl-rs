@@ -1,0 +1,743 @@
+{
+  "archive": {
+    "MiB": 26.52403450012207,
+    "bytes": 27812466,
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-candidate-seal-01/stage38-candidate-evidence.tar.gz",
+    "sha256": "fc7ad0449d6e79142ead8b19ff379368e5281da97762b582b55021024adc4b8f"
+  },
+  "excluded_before_traversal": {
+    "default_root_cargo": [
+      "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/debug",
+      "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/release",
+      "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/wasm32-unknown-unknown"
+    ],
+    "exact_caches": [
+      "stage38-core-cargo",
+      "stage38-frontend-cargo",
+      "stage38-review-cargo"
+    ],
+    "nested_cache_names": [
+      ".cache",
+      ".git",
+      ".pytest_cache",
+      "__pycache__",
+      "node_modules",
+      "target"
+    ],
+    "retained_build_directories": "Captured subprocess build logs are evidence, not Cargo caches."
+  },
+  "host": {
+    "platform": "macOS-27.0-arm64-arm-64bit-Mach-O",
+    "python": "3.14.8 (main, Sep 30 2026, 17:55:09) [Clang 21.0.0 (clang-2100.3.34.2)]"
+  },
+  "immutable_snapshots_without_original_closure": [
+    {
+      "closure": null,
+      "declared_files": null,
+      "root": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage38-setup-01",
+      "scope": "No original closure; captured immutable bounded snapshot without backfilled claims"
+    },
+    {
+      "closure": null,
+      "declared_files": null,
+      "root": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-corpus-addition-01",
+      "scope": "No original closure; captured immutable bounded snapshot without backfilled claims"
+    },
+    {
+      "closure": null,
+      "declared_files": null,
+      "root": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-corpus-addition-02",
+      "scope": "No original closure; captured immutable bounded snapshot without backfilled claims"
+    },
+    {
+      "closure": null,
+      "declared_files": null,
+      "root": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-corpus-addition-03",
+      "scope": "No original closure; captured immutable bounded snapshot without backfilled claims"
+    },
+    {
+      "closure": null,
+      "declared_files": null,
+      "root": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-corpus-java-01",
+      "scope": "No original closure; captured immutable bounded snapshot without backfilled claims"
+    },
+    {
+      "closure": null,
+      "declared_files": null,
+      "root": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-core-validation-01",
+      "scope": "No original closure; captured immutable bounded snapshot without backfilled claims"
+    },
+    {
+      "closure": null,
+      "declared_files": null,
+      "root": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-core-validation-02",
+      "scope": "No original closure; captured immutable bounded snapshot without backfilled claims"
+    },
+    {
+      "closure": null,
+      "declared_files": null,
+      "root": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-core-validation-03",
+      "scope": "No original closure; captured immutable bounded snapshot without backfilled claims"
+    },
+    {
+      "closure": null,
+      "declared_files": null,
+      "root": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-final-harness-01",
+      "scope": "No original closure; captured immutable bounded snapshot without backfilled claims"
+    },
+    {
+      "closure": null,
+      "declared_files": null,
+      "root": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-review-harness-01",
+      "scope": "No original closure; captured immutable bounded snapshot without backfilled claims"
+    },
+    {
+      "closure": null,
+      "declared_files": null,
+      "root": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-core-order-validation-01",
+      "scope": "No original closure; captured immutable bounded snapshot without backfilled claims"
+    },
+    {
+      "closure": null,
+      "declared_files": null,
+      "root": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-corpus-addition-04",
+      "scope": "No original closure; captured immutable bounded snapshot without backfilled claims"
+    },
+    {
+      "closure": null,
+      "declared_files": null,
+      "root": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-corpus-tools-01",
+      "scope": "No original closure; captured immutable bounded snapshot without backfilled claims"
+    },
+    {
+      "closure": null,
+      "declared_files": null,
+      "root": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-docs-draft-01",
+      "scope": "No original closure; captured immutable bounded snapshot without backfilled claims"
+    },
+    {
+      "closure": null,
+      "declared_files": null,
+      "root": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-final-harness-02",
+      "scope": "No original closure; captured immutable bounded snapshot without backfilled claims"
+    },
+    {
+      "closure": null,
+      "declared_files": null,
+      "root": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-manifest-freeze-01",
+      "scope": "No original closure; captured immutable bounded snapshot without backfilled claims"
+    },
+    {
+      "closure": null,
+      "declared_files": null,
+      "root": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-uri-primitive-oracle-01",
+      "scope": "No original closure; captured immutable bounded snapshot without backfilled claims"
+    }
+  ],
+  "inventory": {
+    "duplicate_origins": 0,
+    "loose_logs": 26,
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-candidate-seal-01/inventory.json",
+    "payload_files": 13661,
+    "raw_bytes": 163803027,
+    "roots": 26,
+    "sha256": "1a13555637de306487a5d86a86c8212f1b9b79252468ac33989f59e812f133bf"
+  },
+  "omission_and_repair": {
+    "adapterdesign_final_decision": "Excluded at initial cutoff and parent explicitly confirmed futurecloseout-bundle placement after design closed.",
+    "nested_cache_omissions": [],
+    "omitted_evidence_entries": [
+      {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-candidate-seal-01",
+        "reason": "Live seal output/tooling; metadata added explicitly, no recursive self-inclusion",
+        "traversed": false
+      },
+      {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-core-cargo",
+        "reason": "Cargo build cache excluded before traversal",
+        "traversed": false
+      },
+      {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-core-validation-01",
+        "reason": "Already in unchanged MAIN oracle/development archive inventory; referenced, not duplicated",
+        "traversed": false
+      },
+      {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-core-validation-02",
+        "reason": "Already in unchanged MAIN oracle/development archive inventory; referenced, not duplicated",
+        "traversed": false
+      },
+      {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-core-validation-03",
+        "reason": "Already in unchanged MAIN oracle/development archive inventory; referenced, not duplicated",
+        "traversed": false
+      },
+      {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-core-validation-04",
+        "reason": "Already in unchanged MAIN oracle/development archive inventory; referenced, not duplicated",
+        "traversed": false
+      },
+      {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-corpus-addition-01",
+        "reason": "Already in unchanged MAIN oracle/development archive inventory; referenced, not duplicated",
+        "traversed": false
+      },
+      {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-corpus-addition-01.stderr.log",
+        "reason": "Already in unchanged MAIN oracle/development archive inventory; referenced, not duplicated",
+        "traversed": false
+      },
+      {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-corpus-addition-01.stdout.log",
+        "reason": "Already in unchanged MAIN oracle/development archive inventory; referenced, not duplicated",
+        "traversed": false
+      },
+      {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-corpus-addition-02",
+        "reason": "Already in unchanged MAIN oracle/development archive inventory; referenced, not duplicated",
+        "traversed": false
+      },
+      {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-corpus-addition-02.stderr.log",
+        "reason": "Already in unchanged MAIN oracle/development archive inventory; referenced, not duplicated",
+        "traversed": false
+      },
+      {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-corpus-addition-02.stdout.log",
+        "reason": "Already in unchanged MAIN oracle/development archive inventory; referenced, not duplicated",
+        "traversed": false
+      },
+      {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-corpus-addition-03",
+        "reason": "Already in unchanged MAIN oracle/development archive inventory; referenced, not duplicated",
+        "traversed": false
+      },
+      {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-corpus-addition-03.stderr.log",
+        "reason": "Already in unchanged MAIN oracle/development archive inventory; referenced, not duplicated",
+        "traversed": false
+      },
+      {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-corpus-addition-03.stdout.log",
+        "reason": "Already in unchanged MAIN oracle/development archive inventory; referenced, not duplicated",
+        "traversed": false
+      },
+      {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-corpus-independent-audit-01",
+        "reason": "Already in unchanged MAIN oracle/development archive inventory; referenced, not duplicated",
+        "traversed": false
+      },
+      {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-corpus-java-01",
+        "reason": "Already in unchanged MAIN oracle/development archive inventory; referenced, not duplicated",
+        "traversed": false
+      },
+      {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-corpus-java-01.stderr.log",
+        "reason": "Already in unchanged MAIN oracle/development archive inventory; referenced, not duplicated",
+        "traversed": false
+      },
+      {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-corpus-java-01.stdout.log",
+        "reason": "Already in unchanged MAIN oracle/development archive inventory; referenced, not duplicated",
+        "traversed": false
+      },
+      {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-final-code-review-01",
+        "reason": "Already in unchanged MAIN oracle/development archive inventory; referenced, not duplicated",
+        "traversed": false
+      },
+      {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-final-harness-01",
+        "reason": "Already in unchanged MAIN oracle/development archive inventory; referenced, not duplicated",
+        "traversed": false
+      },
+      {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-final-language-audit-01",
+        "reason": "B live/future MAIN final language audit, explicitly excluded",
+        "traversed": false
+      },
+      {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-final-native-01",
+        "reason": "Already in unchanged MAIN oracle/development archive inventory; referenced, not duplicated",
+        "traversed": false
+      },
+      {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-final-native-01.stderr.log",
+        "reason": "Already in unchanged MAIN oracle/development archive inventory; referenced, not duplicated",
+        "traversed": false
+      },
+      {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-final-native-01.stdout.log",
+        "reason": "Already in unchanged MAIN oracle/development archive inventory; referenced, not duplicated",
+        "traversed": false
+      },
+      {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-final-native-audit-01",
+        "reason": "Already in unchanged MAIN oracle/development archive inventory; referenced, not duplicated",
+        "traversed": false
+      },
+      {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-final-native-audit-01.stderr.log",
+        "reason": "Already in unchanged MAIN oracle/development archive inventory; referenced, not duplicated",
+        "traversed": false
+      },
+      {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-final-native-audit-01.stdout.log",
+        "reason": "Already in unchanged MAIN oracle/development archive inventory; referenced, not duplicated",
+        "traversed": false
+      },
+      {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-final-uri-edges-01",
+        "reason": "Already in unchanged MAIN oracle/development archive inventory; referenced, not duplicated",
+        "traversed": false
+      },
+      {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-final-uri-edges-01.stderr.log",
+        "reason": "Already in unchanged MAIN oracle/development archive inventory; referenced, not duplicated",
+        "traversed": false
+      },
+      {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-final-uri-edges-01.stdout.log",
+        "reason": "Already in unchanged MAIN oracle/development archive inventory; referenced, not duplicated",
+        "traversed": false
+      },
+      {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-frontend-cargo",
+        "reason": "Cargo build cache excluded before traversal",
+        "traversed": false
+      },
+      {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-frontend-validation-01",
+        "reason": "Already in unchanged MAIN oracle/development archive inventory; referenced, not duplicated",
+        "traversed": false
+      },
+      {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-frontend-validation-02",
+        "reason": "Already in unchanged MAIN oracle/development archive inventory; referenced, not duplicated",
+        "traversed": false
+      },
+      {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-frontend-validation-02.stderr.log",
+        "reason": "Already in unchanged MAIN oracle/development archive inventory; referenced, not duplicated",
+        "traversed": false
+      },
+      {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-frontend-validation-02.stdout.log",
+        "reason": "Already in unchanged MAIN oracle/development archive inventory; referenced, not duplicated",
+        "traversed": false
+      },
+      {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-frontend-validation-03",
+        "reason": "Already in unchanged MAIN oracle/development archive inventory; referenced, not duplicated",
+        "traversed": false
+      },
+      {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-frontend-validation-03.stderr.log",
+        "reason": "Already in unchanged MAIN oracle/development archive inventory; referenced, not duplicated",
+        "traversed": false
+      },
+      {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-frontend-validation-03.stdout.log",
+        "reason": "Already in unchanged MAIN oracle/development archive inventory; referenced, not duplicated",
+        "traversed": false
+      },
+      {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-method-diagnostic-native-baseline-01",
+        "reason": "Already in unchanged MAIN oracle/development archive inventory; referenced, not duplicated",
+        "traversed": false
+      },
+      {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-method-diagnostic-oracle-01",
+        "reason": "Already in unchanged MAIN oracle/development archive inventory; referenced, not duplicated",
+        "traversed": false
+      },
+      {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-method-diagnostic-oracle-01.stderr.log",
+        "reason": "Already in unchanged MAIN oracle/development archive inventory; referenced, not duplicated",
+        "traversed": false
+      },
+      {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-method-diagnostic-oracle-01.stdout.log",
+        "reason": "Already in unchanged MAIN oracle/development archive inventory; referenced, not duplicated",
+        "traversed": false
+      },
+      {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-platform-driver-review-01",
+        "reason": "Already in unchanged MAIN oracle/development archive inventory; referenced, not duplicated",
+        "traversed": false
+      },
+      {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-platform-driver-review-02",
+        "reason": "Already in unchanged MAIN oracle/development archive inventory; referenced, not duplicated",
+        "traversed": false
+      },
+      {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-platform-oracle-01",
+        "reason": "Already in unchanged MAIN oracle/development archive inventory; referenced, not duplicated",
+        "traversed": false
+      },
+      {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-platform-review-final-01",
+        "reason": "Already in unchanged MAIN oracle/development archive inventory; referenced, not duplicated",
+        "traversed": false
+      },
+      {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-platform-review-final-02",
+        "reason": "Already in unchanged MAIN oracle/development archive inventory; referenced, not duplicated",
+        "traversed": false
+      },
+      {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-platforms-final-01",
+        "reason": "Already in unchanged MAIN oracle/development archive inventory; referenced, not duplicated",
+        "traversed": false
+      },
+      {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-portable-processes-final-01",
+        "reason": "Already in unchanged MAIN oracle/development archive inventory; referenced, not duplicated",
+        "traversed": false
+      },
+      {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-portable-processes-final-02",
+        "reason": "Already in unchanged MAIN oracle/development archive inventory; referenced, not duplicated",
+        "traversed": false
+      },
+      {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-read-frontend-oracle-01",
+        "reason": "Already in unchanged MAIN oracle/development archive inventory; referenced, not duplicated",
+        "traversed": false
+      },
+      {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-read-frontend-oracle-01.stderr.log",
+        "reason": "Already in unchanged MAIN oracle/development archive inventory; referenced, not duplicated",
+        "traversed": false
+      },
+      {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-read-frontend-oracle-01.stdout.log",
+        "reason": "Already in unchanged MAIN oracle/development archive inventory; referenced, not duplicated",
+        "traversed": false
+      },
+      {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-read-power-oracle-01",
+        "reason": "Already in unchanged MAIN oracle/development archive inventory; referenced, not duplicated",
+        "traversed": false
+      },
+      {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-read-power-oracle-01.stderr.log",
+        "reason": "Already in unchanged MAIN oracle/development archive inventory; referenced, not duplicated",
+        "traversed": false
+      },
+      {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-read-power-oracle-01.stdout.log",
+        "reason": "Already in unchanged MAIN oracle/development archive inventory; referenced, not duplicated",
+        "traversed": false
+      },
+      {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-read-shadow-oracle-01",
+        "reason": "Already in unchanged MAIN oracle/development archive inventory; referenced, not duplicated",
+        "traversed": false
+      },
+      {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-read-shadow-oracle-01.stderr.log",
+        "reason": "Already in unchanged MAIN oracle/development archive inventory; referenced, not duplicated",
+        "traversed": false
+      },
+      {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-read-shadow-oracle-01.stdout.log",
+        "reason": "Already in unchanged MAIN oracle/development archive inventory; referenced, not duplicated",
+        "traversed": false
+      },
+      {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-read91-platform-final-01",
+        "reason": "Already in unchanged MAIN oracle/development archive inventory; referenced, not duplicated",
+        "traversed": false
+      },
+      {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-read91-platform-final-02",
+        "reason": "Already in unchanged MAIN oracle/development archive inventory; referenced, not duplicated",
+        "traversed": false
+      },
+      {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-repeat20-platform-final-01",
+        "reason": "Already in unchanged MAIN oracle/development archive inventory; referenced, not duplicated",
+        "traversed": false
+      },
+      {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-repeat20-platform-final-02",
+        "reason": "Already in unchanged MAIN oracle/development archive inventory; referenced, not duplicated",
+        "traversed": false
+      },
+      {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-review-cargo",
+        "reason": "Cargo build cache excluded before traversal",
+        "traversed": false
+      },
+      {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-review-harness-01",
+        "reason": "Already in unchanged MAIN oracle/development archive inventory; referenced, not duplicated",
+        "traversed": false
+      },
+      {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-review-native-01",
+        "reason": "Already in unchanged MAIN oracle/development archive inventory; referenced, not duplicated",
+        "traversed": false
+      },
+      {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-review-native-02",
+        "reason": "Already in unchanged MAIN oracle/development archive inventory; referenced, not duplicated",
+        "traversed": false
+      },
+      {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-review-native-03",
+        "reason": "Already in unchanged MAIN oracle/development archive inventory; referenced, not duplicated",
+        "traversed": false
+      },
+      {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-review-sequence-oracle-01",
+        "reason": "Already in unchanged MAIN oracle/development archive inventory; referenced, not duplicated",
+        "traversed": false
+      },
+      {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-review-uri-edges-01",
+        "reason": "Already in unchanged MAIN oracle/development archive inventory; referenced, not duplicated",
+        "traversed": false
+      },
+      {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-review-uri-edges-native-01",
+        "reason": "Already in unchanged MAIN oracle/development archive inventory; referenced, not duplicated",
+        "traversed": false
+      },
+      {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-trace18-platform-final-01",
+        "reason": "Already in unchanged MAIN oracle/development archive inventory; referenced, not duplicated",
+        "traversed": false
+      },
+      {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-trace18-platform-final-02",
+        "reason": "Already in unchanged MAIN oracle/development archive inventory; referenced, not duplicated",
+        "traversed": false
+      },
+      {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-trace42-platform-final-01",
+        "reason": "Already in unchanged MAIN oracle/development archive inventory; referenced, not duplicated",
+        "traversed": false
+      },
+      {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-upstream-error-adapter-design-01",
+        "reason": "Stage39 adapter planning was writing at initial scope cutoff; excluded by explicit archive boundary pending parent decision",
+        "traversed": false
+      }
+    ],
+    "post_cutoff_direct_entries_not_included": [],
+    "reason": "Old archives excluded every directory named build. Twelve original-closure-declared subprocess capture files were omitted; this supplemental payload restores coverage. No old archive was modified.",
+    "repairs": [
+      {
+        "closure_origin_id": "stage38-final-native-01",
+        "closure_path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-final-native-01/closure.json",
+        "closure_sha256": "3e7e0301383ae671ac935eecdeec6afe5d35274b1107f1fa59ff009c486ba3d4",
+        "origin": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-final-native-01/build/result.json",
+        "reason": "Original closure-declared subprocess build capture omitted by old generic build-directory exclusion",
+        "sha256": "428f9ec16ab436ec51554256e04cf7a4d284484262731f41b833154a7fd19c74"
+      },
+      {
+        "closure_origin_id": "stage38-final-native-01",
+        "closure_path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-final-native-01/closure.json",
+        "closure_sha256": "3e7e0301383ae671ac935eecdeec6afe5d35274b1107f1fa59ff009c486ba3d4",
+        "origin": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-final-native-01/build/stderr.bin",
+        "reason": "Original closure-declared subprocess build capture omitted by old generic build-directory exclusion",
+        "sha256": "d2b8b57881010a795a647ccf7c6f01e326006da0b064b9bf475da922f84f4e89"
+      },
+      {
+        "closure_origin_id": "stage38-final-native-01",
+        "closure_path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-final-native-01/closure.json",
+        "closure_sha256": "3e7e0301383ae671ac935eecdeec6afe5d35274b1107f1fa59ff009c486ba3d4",
+        "origin": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-final-native-01/build/stdout.bin",
+        "reason": "Original closure-declared subprocess build capture omitted by old generic build-directory exclusion",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "closure_origin_id": "stage38-review-native-01",
+        "closure_path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-review-native-01/closure.json",
+        "closure_sha256": "1d32cbdcb6718eee01444d5f468d311953e63afc6425fb301b5cf589759fcc6b",
+        "origin": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-review-native-01/build/result.json",
+        "reason": "Original closure-declared subprocess build capture omitted by old generic build-directory exclusion",
+        "sha256": "5a3a1c5b1636fca66c2a0bcd442e6eedbce6158a756d3ab472e4e87c011efa52"
+      },
+      {
+        "closure_origin_id": "stage38-review-native-01",
+        "closure_path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-review-native-01/closure.json",
+        "closure_sha256": "1d32cbdcb6718eee01444d5f468d311953e63afc6425fb301b5cf589759fcc6b",
+        "origin": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-review-native-01/build/stderr.bin",
+        "reason": "Original closure-declared subprocess build capture omitted by old generic build-directory exclusion",
+        "sha256": "b78ef252c321cf9002271d4844ab30edce38e9ec0018a8ed31091477f9b218b9"
+      },
+      {
+        "closure_origin_id": "stage38-review-native-01",
+        "closure_path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-review-native-01/closure.json",
+        "closure_sha256": "1d32cbdcb6718eee01444d5f468d311953e63afc6425fb301b5cf589759fcc6b",
+        "origin": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-review-native-01/build/stdout.bin",
+        "reason": "Original closure-declared subprocess build capture omitted by old generic build-directory exclusion",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "closure_origin_id": "stage38-review-native-02",
+        "closure_path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-review-native-02/closure.json",
+        "closure_sha256": "9eb4744232683ae623eb91f7e7d3a6050286b9509f94d7d16cc30dd3e835c912",
+        "origin": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-review-native-02/build/result.json",
+        "reason": "Original closure-declared subprocess build capture omitted by old generic build-directory exclusion",
+        "sha256": "9c18206abdf73936b1243effdce1f9851bf2810342b1da1e5403dae3ac705267"
+      },
+      {
+        "closure_origin_id": "stage38-review-native-02",
+        "closure_path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-review-native-02/closure.json",
+        "closure_sha256": "9eb4744232683ae623eb91f7e7d3a6050286b9509f94d7d16cc30dd3e835c912",
+        "origin": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-review-native-02/build/stderr.bin",
+        "reason": "Original closure-declared subprocess build capture omitted by old generic build-directory exclusion",
+        "sha256": "4e1747f06174da878e415f6fc3553df4e5ea0917b40e3522e0bbde912b129326"
+      },
+      {
+        "closure_origin_id": "stage38-review-native-02",
+        "closure_path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-review-native-02/closure.json",
+        "closure_sha256": "9eb4744232683ae623eb91f7e7d3a6050286b9509f94d7d16cc30dd3e835c912",
+        "origin": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-review-native-02/build/stdout.bin",
+        "reason": "Original closure-declared subprocess build capture omitted by old generic build-directory exclusion",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "closure_origin_id": "stage38-review-native-03",
+        "closure_path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-review-native-03/closure.json",
+        "closure_sha256": "1b02b1f2217f669e19bc657c01dffb8e0ebcfc90f27e8e9642aa6429dae6ad56",
+        "origin": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-review-native-03/build/result.json",
+        "reason": "Original closure-declared subprocess build capture omitted by old generic build-directory exclusion",
+        "sha256": "90b80947746408b6c2cde4b508c627628c07548335e392dc39bf1965e9f1b07e"
+      },
+      {
+        "closure_origin_id": "stage38-review-native-03",
+        "closure_path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-review-native-03/closure.json",
+        "closure_sha256": "1b02b1f2217f669e19bc657c01dffb8e0ebcfc90f27e8e9642aa6429dae6ad56",
+        "origin": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-review-native-03/build/stderr.bin",
+        "reason": "Original closure-declared subprocess build capture omitted by old generic build-directory exclusion",
+        "sha256": "04f2e51d7c92e3ef6a19e4f3ebb7e515f1ab07035fde4c85475be441bbd5dee3"
+      },
+      {
+        "closure_origin_id": "stage38-review-native-03",
+        "closure_path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-review-native-03/closure.json",
+        "closure_sha256": "1b02b1f2217f669e19bc657c01dffb8e0ebcfc90f27e8e9642aa6429dae6ad56",
+        "origin": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-review-native-03/build/stdout.bin",
+        "reason": "Original closure-declared subprocess build capture omitted by old generic build-directory exclusion",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    ]
+  },
+  "passed": true,
+  "previous_archives": {
+    "development": {
+      "archive": "/Users/cody.ij.hwang/Projects/pkl-rs/reports/m2/stage38-development-evidence.tar.gz",
+      "archive_sha256": "6bdf9f6d3bdb6c42e6913a4234152c689a45325235b3f5b30f44a191e4366d2f",
+      "files": 20248,
+      "inventory": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage38-origins-seal-01/development-inventory.json",
+      "inventory_sha256": "8eb23c1d210dbb9450925b021edab69831786cb007cb809f46584b4fbd8459d2",
+      "roots": [
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-core-validation-01",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-core-validation-02",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-core-validation-03",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-core-validation-04",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-final-code-review-01",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-final-harness-01",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-final-native-01",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-final-native-audit-01",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-final-uri-edges-01",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-frontend-validation-01",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-frontend-validation-02",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-frontend-validation-03",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-method-diagnostic-native-baseline-01",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-platform-driver-review-01",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-platform-driver-review-02",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-platform-review-final-01",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-platform-review-final-02",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-platforms-final-01",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-portable-processes-final-01",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-portable-processes-final-02",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-read91-platform-final-01",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-read91-platform-final-02",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-repeat20-platform-final-01",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-repeat20-platform-final-02",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-review-harness-01",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-review-native-01",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-review-native-02",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-review-native-03",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-review-uri-edges-native-01",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-trace18-platform-final-01",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-trace18-platform-final-02",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-trace42-platform-final-01"
+      ]
+    },
+    "oracle": {
+      "archive": "/Users/cody.ij.hwang/Projects/pkl-rs/reports/m2/stage38-oracle-evidence.tar.gz",
+      "archive_sha256": "0972e288ffc55f59eb4144b40c7fef572b3787b4d23bc8a2c99c809380dc2879",
+      "files": 4342,
+      "inventory": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage38-origins-seal-01/oracle-inventory.json",
+      "inventory_sha256": "2358442e58d8566073eef60226a13332da8abe81b0522b75663fd4e837e2947b",
+      "roots": [
+        "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage38-setup-01",
+        "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage38-default-host-design-01",
+        "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage38-default-host-oracle-01",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-corpus-addition-01",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-corpus-addition-02",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-corpus-addition-03",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-corpus-independent-audit-01",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-corpus-java-01",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-method-diagnostic-oracle-01",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-platform-oracle-01",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-read-frontend-oracle-01",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-read-power-oracle-01",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-read-shadow-oracle-01",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-review-sequence-oracle-01",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-review-uri-edges-01"
+      ]
+    }
+  },
+  "processes": [
+    {
+      "command": [
+        "python3",
+        "target/m2/stage38-candidate-seal-01/seal.py"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38",
+      "exit_code": 0,
+      "handle": 56900
+    },
+    {
+      "command": [
+        "python3",
+        "target/m2/stage38-candidate-seal-01/verify_extracted.py"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38",
+      "exit_code": 0,
+      "handle": 32736
+    }
+  ],
+  "schema": 1,
+  "scope": "Final corrected-candidate WORKTREE evidence plus immutable correction history; MAIN final3527/checks completion and overallM2/M4 compatibility are not assessed.",
+  "tool_sources": {
+    "creator_sha256": "815ed041aec6a5e8ed03d7db840105ea4f8a12e9b5a3bef4bbf6f9e36f118fd0",
+    "verifier_sha256": "052f75fae78f5942894d32ecffe5a5378502e3abe1440acf0b549ca12fb4291c",
+    "verifier_source": "from pathlib import Path,PurePosixPath\nimport json,hashlib,tarfile,os,shutil\nO=Path.cwd()/'target/m2/stage38-candidate-seal-01';rd=lambda p:json.loads(p.read_bytes())\ndef sha(p):\n h=hashlib.sha256()\n with p.open('rb') as f:\n  for b in iter(lambda:f.read(1048576),b''):h.update(b)\n return h.hexdigest()\ncreation=rd(O/'creation.json');inventory=rd(O/'inventory.json');archive=Path(creation['archive']);assert sha(archive)==creation['archive_sha256'];assert sha(O/'inventory.json')==creation['inventory_sha256'];assert sha(O/'root-manifest.json')==creation['root_manifest_sha256'];assert sha(O/'closure-union-coverage.json')==creation['union_coverage_sha256'];scratch=O/'extracted';scratch.mkdir(exist_ok=False)\nexpected={p:v['sha256'] for p,v in inventory['files'].items()};expected.update({'seal/'+n:sha(O/n) for n in ['root-manifest.json','inventory.json','closure-union-coverage.json','seal.py']})\nwith tarfile.open(archive,'r:gz') as tar:\n members=tar.getmembers();names=[m.name for m in members];assert len(names)==len(set(names)) and set(names)==set(expected)\n for member in members:\n  path=PurePosixPath(member.name);assert member.isfile() and not path.is_absolute() and '..' not in path.parts\n tar.extractall(scratch,filter='data')\nobserved=set();verified_bytes=0\nfor directory,dirs,names in os.walk(scratch,topdown=True,followlinks=False):\n for name in dirs:assert not (Path(directory)/name).is_symlink()\n for name in names:\n  p=Path(directory)/name;relative=p.relative_to(scratch).as_posix();assert p.is_file() and not p.is_symlink();assert relative in expected and sha(p)==expected[relative];observed.add(relative);verified_bytes+=p.stat().st_size\nassert observed==set(expected)\n# Re-read inventories independently: all old archived declarations and new\n# declarations must have matching membership/hashes; no source path rewriting.\nmanifest=rd(scratch/'seal/root-manifest.json');union={};dependency_checks=[]\nfor name,dependency in manifest['dependencies'].items():\n ip=Path(dependency['inventory']);ap=Path(dependency['archive']);assert sha(ip)==dependency['inventory_sha256'] and sha(ap)==dependency['archive_sha256'];old=rd(ip)\n for entry in old['files'].values():assert entry['origin'] not in union;union[entry['origin']]=entry['sha256']\n dependency_checks.append(dict(name=name,inventory_sha256=sha(ip),archive_sha256=sha(ap),files=len(old['files'])))\nfor arc,entry in inventory['files'].items():assert entry['origin'] not in union;union[entry['origin']]=entry['sha256'];assert sha(Path(entry['origin']))==entry['sha256']\ncoverage=rd(scratch/'seal/closure-union-coverage.json');declared_total=0;closure_count=0\nfor row in coverage['roots']:\n if row['closure'] is None:continue\n p=Path(row['closure']);assert sha(p)==row['closure_sha256'];r=rd(p);items=r.get('files_sha256',r.get('files',{}));pairs=list(items.items()) if isinstance(items,dict) else [(x['path'],x) for x in items];checked=0\n for relative,value in pairs:\n  expected_hash=value if isinstance(value,str) else value['sha256'];original=Path(relative)\n  if not original.is_absolute():original=(p.parent.parents[2]/original) if original.parts[:2]==('target','m2') else p.parent/original\n  assert union[str(original)]==expected_hash;checked+=1\n assert checked==row['declared_files']==row['covered_files'];assert not row['missing_files'];declared_total+=checked;closure_count+=1\nassert len(coverage['repair_files'])==12 and coverage['passed'];assert archive.stat().st_size<=90*1024*1024\nreport=dict(passed=True,scope='Independent extraction/file-SHA and original-closure union verification; no evaluator execution, MAIN finalcheck or overall M2 completion claim.',archive_sha256=sha(archive),archive_bytes=archive.stat().st_size,payload_files=len(inventory['files']),extracted_files_verified=len(observed),extracted_bytes_verified=verified_bytes,original_input_files_stable=True,previous_dependencies_verified=dependency_checks,closed_original_manifests_verified=closure_count,declared_original_files_covered=declared_total,supplemental_repairs=12,duplicate_payload_origins=0,script_sha256=sha(Path(__file__)),generated_extraction_scratch_removed=True)\n# This is a generated duplicate workspace only; preserve original inputs/tar.\nshutil.rmtree(scratch);(O/'verification.json').write_text(json.dumps(report,indent=2,sort_keys=True)+'\\n');print(json.dumps(report,indent=2))\n"
+  },
+  "union_coverage": {
+    "closed_original_manifests": 56,
+    "declared_original_files_covered": 37571,
+    "missing_files": 0,
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-candidate-seal-01/closure-union-coverage.json",
+    "repair_count": 12,
+    "sha256": "f4bdde92f325792722704620958e115c9d3c52bfa08c98bb1a3554eed5a61c30"
+  },
+  "verification": {
+    "extracted_bytes_verified": 169619872,
+    "extracted_files_verified": 13665,
+    "original_inputs_stable": true,
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-candidate-seal-01/verification.json",
+    "scratch_removed": true,
+    "sha256": "ba27945dc22aff8feb56054a78c1a51f589b2295f1330f1318869c16199f0fef"
+  }
+}

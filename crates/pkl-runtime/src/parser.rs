@@ -80,6 +80,7 @@ fn is_keyword(name: &str) -> bool {
             | "out"
             | "outer"
             | "read"
+            | "read?"
             | "super"
             | "this"
             | "throw"
@@ -196,6 +197,11 @@ impl Lexer<'_> {
             Kind::QuotedName(self.source[begin..end].to_owned())
         } else if is_identifier_start(ch) {
             while self.peek().is_some_and(is_identifier_part) {
+                self.advance();
+            }
+            // The pinned lexer makes `read?` one keyword only when adjacent.
+            // A quoted name or a separated `?` retains its ordinary grammar.
+            if &self.source[start..self.cursor] == "read" && self.peek() == Some('?') {
                 self.advance();
             }
             Kind::Name(self.source[start..self.cursor].to_owned())
@@ -388,6 +394,8 @@ enum ExpressionFrame {
     Group(usize),
     Throw(usize),
     Trace(usize),
+    ReadResource(usize),
+    ReadResourceOrNull(usize),
     Unary(usize, UnaryOp),
     Binary(Expr, BinaryOp),
     Subscript(Expr),
@@ -550,6 +558,13 @@ impl<'a> Parser<'a> {
             return Err(self.unexpected(Some("identifier")));
         };
         if matches!(self.token.kind, Kind::Name(_)) && (is_keyword(name) || name == "_") {
+            if name == "read?" {
+                return Err(Diagnostic::new(
+                    DiagnosticKind::Syntax,
+                    self.token.span,
+                    "Keyword `read_question` is not allowed here.\n\nIf you must use this name as identifier, enclose it in backticks.",
+                ));
+            }
             return Err(Diagnostic::new(
                 DiagnosticKind::Unsupported,
                 self.token.span,
@@ -1335,6 +1350,17 @@ impl<'a> Parser<'a> {
                 machine.minimum = 0;
                 return Ok(ExpressionFlow::Continue);
             }
+            if self.is_name("read?") {
+                self.advance()?;
+                self.expect('(')?;
+                machine.frames.push((
+                    machine.minimum,
+                    self.expectation.replace(")".into()),
+                    ExpressionFrame::ReadResourceOrNull(span.start),
+                ));
+                machine.minimum = 0;
+                return Ok(ExpressionFlow::Continue);
+            }
             if self.is_symbol('-') || self.is_symbol('!') {
                 let negate = self.is_symbol('-');
                 self.advance()?;
@@ -1375,29 +1401,14 @@ impl<'a> Parser<'a> {
                 }
             } else if self.is_name("read") {
                 self.advance()?;
-                let callee = Expr {
-                    kind: ExprKind::Name("read".into()),
-                    span,
-                };
                 self.expect('(')?;
-                if self.is_symbol(')') {
-                    let end = self.advance()?.span.end;
-                    machine.current = Some(Expr {
-                        kind: ExprKind::Call {
-                            callee: Box::new(callee),
-                            arguments: Vec::new(),
-                        },
-                        span: Span::new(span.start, end),
-                    });
-                } else {
-                    machine.frames.push((
-                        machine.minimum,
-                        self.expectation.take(),
-                        ExpressionFrame::Arguments(callee, Vec::new()),
-                    ));
-                    machine.minimum = 0;
-                    return Ok(ExpressionFlow::Continue);
-                }
+                machine.frames.push((
+                    machine.minimum,
+                    self.expectation.replace(")".into()),
+                    ExpressionFrame::ReadResource(span.start),
+                ));
+                machine.minimum = 0;
+                return Ok(ExpressionFlow::Continue);
             } else {
                 return Ok(ExpressionFlow::Primary);
             }
@@ -1578,6 +1589,20 @@ impl<'a> Parser<'a> {
                 let end = self.expect(')')?.span.end;
                 Expr {
                     kind: ExprKind::Trace(Box::new(left)),
+                    span: Span::new(start, end),
+                }
+            }
+            ExpressionFrame::ReadResourceOrNull(start) => {
+                let end = self.expect(')')?.span.end;
+                Expr {
+                    kind: ExprKind::ReadResourceOrNull(Box::new(left)),
+                    span: Span::new(start, end),
+                }
+            }
+            ExpressionFrame::ReadResource(start) => {
+                let end = self.expect(')')?.span.end;
+                Expr {
+                    kind: ExprKind::ReadResource(Box::new(left)),
                     span: Span::new(start, end),
                 }
             }

@@ -1411,10 +1411,31 @@
           "object-string-stage36-review-string-entry-hash-collision",
           "object-string-stage36-review-modifier-import-bit",
           "object-string-stage36-review-modifier-class-bit",
-          "object-string-stage36-review-modifier-type-alias-bit"
+          "object-string-stage36-review-modifier-type-alias-bit",
+          "method-stage38-implicit-empty",
+          "method-stage38-implicit-nonempty",
+          "method-stage38-implicit-typo-method",
+          "method-stage38-implicit-typo-arity",
+          "method-stage38-implicit-property",
+          "method-stage38-implicit-local-method",
+          "method-stage38-implicit-inherited-method",
+          "method-stage38-implicit-class-method",
+          "method-stage38-implicit-class-empty",
+          "method-stage38-explicit-module-empty",
+          "method-stage38-explicit-module-nonempty",
+          "method-stage38-implicit-base-constructor",
+          "method-stage38-order-lexical-method-base-property-tie",
+          "method-stage38-order-local-method-base-property-tie",
+          "method-stage38-order-outer-method-base-property-tie",
+          "method-stage38-order-nearest-method-shadow-tie",
+          "method-stage38-order-equal-similarity-arity-rank",
+          "method-stage38-order-equal-rank-declaration-order",
+          "method-stage38-order-explicit-module-excludes-base-properties",
+          "method-stage38-order-same-scope-property-before-method",
+          "method-stage38-order-nested-method-before-outer-property"
         ]
       },
-      "scope": "Reference constructor, access, constraint and rendering errors retain complete message, authored frame, foreign standard-library source and URI bytes in selected comparisons. Stage11 adds selected fixed declaration, inherited metadata and complete raw diagnostics through the shared VM. Stage 13 adds selected alias/function metadata, exported-type equality and complete raw diagnostic comparisons; original suite execution and remaining scope stay open. Stage 14 adds selected authored type-resolution order, generic parameter scope and nested substitution, class/alias arity ordering, and owner signature diagnostics; persistent failed-declaration state has a separate sequence contract. Stage 15 adds selected non-generic recursive constraint block graphs and declaration type scope, plus builtin Class argument erasure and arity ordering. At Stage 15 recursive generic constraints remained open; Stage 16 adds bounded shared receiver-slot support. Stage 16: Selected recursive frame compression, count-one loops, complete call spans and hint placement match Java uncolored diagnostics. Stage 17: Selected const-method barriers, lambda lookup depth, immediate outer lexical scope, and grouped-callee parser diagnostics follow the pinned Java behavior. Stage 18 adds selected let-body and for-generator lexical const-depth boundaries while retaining enclosing const levels, plus their complete raw diagnostics and lambda controls. Selected finite recursive generic and instantiated type-variable failures compare complete Java bytes with power assertions enabled and disabled. Stage 19 adds bounded shared-metadata regressions for finite deep and branching actual arguments, observable class-argument swaps, inline/lambda/shared-let recursion, recursive Reference validation, and distinct wrapper actuals. Original Java stack errors, historical native abort evidence, full language semantics and performance remain separately accounted. Stage20 adds bounded nullable defaults, inferred collection amendments, null identity and repeated default failures; complete nullable and collection semantics remain unverified. Stage21 adds bounded direct symbolic constructors, actual-argument diagnostics, lazy class defaults, collection body controls and persistent retries; complete constructors, lexical roots and builtin coverage remain unverified. Stage22 adds bounded strict Map construction, boxed/hash-prefix key semantics, lazy nested generic values, insertion-order iteration and HAMT-ordered equality/hash forcing; complete Map APIs and language coverage remain unverified. Stage23 adds bounded strict Set construction, immediate element hashing and deduplication, boxed/cache-sensitive membership, Set defaults and generic aliases, eager nested element checks, structural equality/hash, insertion-order generation/spreading and raw null/default diagnostic controls; complete Set APIs and language coverage remain unverified. Stage 24 additionally covers bounded Collection List/Set classification, eager versus lazy nested validation, aliases/defaults, nullable constructor timing, selected metadata and complete diagnostics. Stage 30 preserves UTF-16 diagnostic member paths through parser/resolver/compiler counters, block metadata, runtime frames and recursive compression. Selected sibling entry/function numbering and detached lifecycle names distinguish unmatched surrogates from literal question marks before Java UTF-8 output. Typed-property diagnostic controls distinguish inline checks for object-local declarations from module/class-local separate call frames; alias use does not change the declaration category. Stage 31 distinguishes folded numeric-token value frames for local properties from authored body sections retained by selected public class constant properties. Selected complete diagnostics cover signed integer/float literals, whitespace/comments/multiline syntax, radix and minimum-integer literals, grouping, direct constraints and aliases; operand, argument/return, cast, overflow-literal and first-error controls retain their separate source ownership. Success controls preserve minimum integers and negative-zero arithmetic. These selected observations do not establish the complete numeric or diagnostic surface. Additional scalar-constant controls distinguish grouping removal in computed local bodies from source reconstruction for selected non-local property, overridden property, Mapping entry and Listing element value frames. Grouped string, Boolean and null constants preserve the same wrapper distinction. Original failed baseline and first-candidate grouped Listing observations remain preserved alongside the selected reconstruction regression; later observations do not relabel those historical failures. Stage 32 adds bounded forbidden non-local object property type-annotation diagnostic ownership, nested declaration paths, earlier-error controls and valid module/class/object-local annotations; complete frontend diagnostics remain separately unverified. Stage 33 adds bounded const-modifier ownership before property-scope entry, method inferred-new versus lambda first-error selection, explicit-parent and earlier-error controls, and successful Dynamic/untyped method and unused-body controls. Non-Dynamic typed method return inference remains outside this repair. Stage 36 adds resumable object deep forcing and object.toString rendering with persistent force marks, owner-specific hidden declarations, inherited member order, undefined-member handling, and renderer key hashing/equality. Selected scalar comparisons and separate stateful/Host observations retain their own raw contracts. Additional source-derived controls cover user-defined toString interpolation, hidden builtin defaults and inherited equal/colliding object keys. Modifier-addition controls distinguish Java IMPORT, CLASS and TYPE_ALIAS bits when filtering rendered declarations.",
+      "scope": "Reference constructor, access, constraint and rendering errors retain complete message, authored frame, foreign standard-library source and URI bytes in selected comparisons. Stage11 adds selected fixed declaration, inherited metadata and complete raw diagnostics through the shared VM. Stage 13 adds selected alias/function metadata, exported-type equality and complete raw diagnostic comparisons; original suite execution and remaining scope stay open. Stage 14 adds selected authored type-resolution order, generic parameter scope and nested substitution, class/alias arity ordering, and owner signature diagnostics; persistent failed-declaration state has a separate sequence contract. Stage 15 adds selected non-generic recursive constraint block graphs and declaration type scope, plus builtin Class argument erasure and arity ordering. At Stage 15 recursive generic constraints remained open; Stage 16 adds bounded shared receiver-slot support. Stage 16: Selected recursive frame compression, count-one loops, complete call spans and hint placement match Java uncolored diagnostics. Stage 17: Selected const-method barriers, lambda lookup depth, immediate outer lexical scope, and grouped-callee parser diagnostics follow the pinned Java behavior. Stage 18 adds selected let-body and for-generator lexical const-depth boundaries while retaining enclosing const levels, plus their complete raw diagnostics and lambda controls. Selected finite recursive generic and instantiated type-variable failures compare complete Java bytes with power assertions enabled and disabled. Stage 19 adds bounded shared-metadata regressions for finite deep and branching actual arguments, observable class-argument swaps, inline/lambda/shared-let recursion, recursive Reference validation, and distinct wrapper actuals. Original Java stack errors, historical native abort evidence, full language semantics and performance remain separately accounted. Stage20 adds bounded nullable defaults, inferred collection amendments, null identity and repeated default failures; complete nullable and collection semantics remain unverified. Stage21 adds bounded direct symbolic constructors, actual-argument diagnostics, lazy class defaults, collection body controls and persistent retries; complete constructors, lexical roots and builtin coverage remain unverified. Stage22 adds bounded strict Map construction, boxed/hash-prefix key semantics, lazy nested generic values, insertion-order iteration and HAMT-ordered equality/hash forcing; complete Map APIs and language coverage remain unverified. Stage23 adds bounded strict Set construction, immediate element hashing and deduplication, boxed/cache-sensitive membership, Set defaults and generic aliases, eager nested element checks, structural equality/hash, insertion-order generation/spreading and raw null/default diagnostic controls; complete Set APIs and language coverage remain unverified. Stage 24 additionally covers bounded Collection List/Set classification, eager versus lazy nested validation, aliases/defaults, nullable constructor timing, selected metadata and complete diagnostics. Stage 30 preserves UTF-16 diagnostic member paths through parser/resolver/compiler counters, block metadata, runtime frames and recursive compression. Selected sibling entry/function numbering and detached lifecycle names distinguish unmatched surrogates from literal question marks before Java UTF-8 output. Typed-property diagnostic controls distinguish inline checks for object-local declarations from module/class-local separate call frames; alias use does not change the declaration category. Stage 31 distinguishes folded numeric-token value frames for local properties from authored body sections retained by selected public class constant properties. Selected complete diagnostics cover signed integer/float literals, whitespace/comments/multiline syntax, radix and minimum-integer literals, grouping, direct constraints and aliases; operand, argument/return, cast, overflow-literal and first-error controls retain their separate source ownership. Success controls preserve minimum integers and negative-zero arithmetic. These selected observations do not establish the complete numeric or diagnostic surface. Additional scalar-constant controls distinguish grouping removal in computed local bodies from source reconstruction for selected non-local property, overridden property, Mapping entry and Listing element value frames. Grouped string, Boolean and null constants preserve the same wrapper distinction. Original failed baseline and first-candidate grouped Listing observations remain preserved alongside the selected reconstruction regression; later observations do not relabel those historical failures. Stage 32 adds bounded forbidden non-local object property type-annotation diagnostic ownership, nested declaration paths, earlier-error controls and valid module/class/object-local annotations; complete frontend diagnostics remain separately unverified. Stage 33 adds bounded const-modifier ownership before property-scope entry, method inferred-new versus lambda first-error selection, explicit-parent and earlier-error controls, and successful Dynamic/untyped method and unused-body controls. Non-Dynamic typed method return inference remains outside this repair. Stage 36 adds resumable object deep forcing and object.toString rendering with persistent force marks, owner-specific hidden declarations, inherited member order, undefined-member handling, and renderer key hashing/equality. Selected scalar comparisons and separate stateful/Host observations retain their own raw contracts. Additional source-derived controls cover user-defined toString interpolation, hidden builtin defaults and inherited equal/colliding object keys. Modifier-addition controls distinguish Java IMPORT, CLASS and TYPE_ALIAS bits when filtering rendered declarations. Stage38 adds original generic implicit/explicit missing-method, suggestions, call-span and argument-order controls; failures remain visible until differential verification. Stage38 additionally checks lexical candidate ordering across property/method and scope boundaries, stable similarity/arity ranking, and explicit-receiver contrast against nine fresh Java observations.",
       "remaining": [
         "Colored output, general imported source stacks, first-error combinations and the complete parser/resolver/runtime diagnostic corpus remain open; selected uncolored recursive compression is covered.",
         "Original selected cycle and remainder-zero failures remain failed.",
@@ -6848,6 +6869,231 @@
         "The complete original upstream trace and logger contracts, frame transformers, warning delivery and full diagnostics remain required.",
         "Original same-evaluator trace sequences and all selected native/Node/browser source-session contracts require final acquisitions from the exact implementation.",
         "Java internal errors, unsupported dependencies, resource caching and other mismatches remain recorded; partial raw matches do not close this requirement."
+      ]
+    },
+    {
+      "requirement": "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+      "implementation": {
+        "state": "partial",
+        "links": [
+          {
+            "path": "crates/pkl-runtime/src/parser.rs",
+            "symbol": "ReadResource"
+          },
+          {
+            "path": "crates/pkl-runtime/src/vm/compiler_expressions.rs",
+            "symbol": "ReadResourceOrNull"
+          },
+          {
+            "path": "crates/pkl-runtime/src/host/resources.rs",
+            "symbol": "default_result"
+          }
+        ]
+      },
+      "tests": {
+        "state": "partial",
+        "case_ids": [
+          "read-stage38-life-opaque",
+          "read-stage38-life-upper",
+          "read-stage38-life-mixed",
+          "read-stage38-life-hierarchical-normalized",
+          "read-stage38-life-opaque-not-normalized",
+          "read-stage38-life-encoded-dot",
+          "read-stage38-env-uppercase",
+          "read-stage38-env-mixed",
+          "read-stage38-env-prefix-boundary",
+          "read-stage38-prop-prefix-boundary",
+          "read-stage38-http-denied",
+          "read-stage38-http-normalized-denied",
+          "read-stage38-http-uppercase",
+          "read-stage38-malformed-space",
+          "read-stage38-malformed-percent",
+          "read-stage38-malformed-percent-pair",
+          "read-stage38-malformed-http-bracket",
+          "read-stage38-malformed-leading-digit",
+          "read-stage38-malformed-leading-underscore",
+          "read-stage38-empty-life-ssp",
+          "read-stage38-empty-env-ssp",
+          "read-stage38-backslash-after-colon",
+          "read-stage38-uri-unpaired-surrogate",
+          "read-stage38-env-missing",
+          "read-stage38-env-missing-nullable",
+          "read-stage38-prop-missing",
+          "read-stage38-prop-missing-nullable",
+          "read-stage38-env-hierarchical-missing",
+          "read-stage38-env-hierarchical-missing-nullable",
+          "read-stage38-prop-normalized-hierarchical",
+          "read-stage38-prop-normalized-hierarchical-nullable",
+          "read-stage38-nullable-denied-life",
+          "read-stage38-nullable-denied-http",
+          "read-stage38-nullable-malformed",
+          "read-stage38-read-type-before-uri",
+          "read-stage38-read-null-type-before-uri",
+          "read-stage38-operand-throw-before-uri",
+          "read-stage38-noop-trace-object-frame",
+          "read-stage38-noop-trace-strict-list-frame",
+          "read-stage38-ordinary-object-read-frame",
+          "read-stage38-noop-trace-nested-member-frame",
+          "read-stage38-profile-env-path",
+          "read-stage38-profile-env-path-nullable",
+          "read-stage38-profile-env-home",
+          "read-stage38-profile-env-home-nullable",
+          "read-stage38-profile-prop-user-home",
+          "read-stage38-profile-prop-user-home-nullable",
+          "read-stage38-profile-prop-java-version",
+          "read-stage38-profile-prop-java-version-nullable",
+          "read-stage38-edge-http-opaque",
+          "read-stage38-edge-http-invalid-host",
+          "read-stage38-edge-http-nonnumeric-port",
+          "read-stage38-edge-http-large-port",
+          "read-stage38-edge-http-fragment",
+          "read-stage38-edge-read-lazy-dynamic-type",
+          "read-stage38-edge-read-list-type",
+          "read-stage38-frontend-single-operand",
+          "read-stage38-frontend-space-before-open",
+          "read-stage38-frontend-newline-before-open",
+          "read-stage38-frontend-comment-before-open",
+          "read-stage38-frontend-spaced-keyword",
+          "read-stage38-frontend-empty-operand",
+          "read-stage38-frontend-extra-operand",
+          "read-stage38-frontend-bare-keyword",
+          "read-stage38-frontend-quoted-nullable-method",
+          "read-stage38-frontend-quoted-read-method",
+          "read-stage38-frontend-keyword-with-quoted-shadow",
+          "read-stage38-frontend-qualified-nullable-keyword",
+          "read-stage38-frontend-contextual-new-boundary",
+          "read-stage38-frontend-operand-local-scope",
+          "read-stage38-frontend-nested-null-operand",
+          "read-stage38-shadow-nullable-keyword-with-quoted-shadow",
+          "read-stage38-shadow-quoted-missing-read",
+          "read-stage38-shadow-quoted-missing-nullable-read",
+          "read-stage38-shadow-empty-read-operand",
+          "read-stage38-shadow-extra-read-operand",
+          "read-stage38-shadow-read-contextual-new-boundary",
+          "read-stage38-power-power-read-null-comparison",
+          "read-stage38-power-power-read-lexical-operand"
+        ]
+      },
+      "scope": "Stage38 authored read/read? keyword and operand parsing, empty env/property profile, URI validation/normalization and raw diagnostic controls. Cases preserve Java-observed failures, including surrogate and internal-error boundaries; final differential acquisition is required.",
+      "remaining": [
+        "Complete resource readers, configured policy, loader/cache and Host absence transport remain open.",
+        "Complete URI and lossless UTF-16 diagnostic behavior, original upstream suites and all parser/error contexts remain unverified."
+      ]
+    },
+    {
+      "requirement": "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ_QUESTION",
+      "implementation": {
+        "state": "partial",
+        "links": [
+          {
+            "path": "crates/pkl-runtime/src/parser.rs",
+            "symbol": "ReadResource"
+          },
+          {
+            "path": "crates/pkl-runtime/src/vm/compiler_expressions.rs",
+            "symbol": "ReadResourceOrNull"
+          },
+          {
+            "path": "crates/pkl-runtime/src/host/resources.rs",
+            "symbol": "default_result"
+          }
+        ]
+      },
+      "tests": {
+        "state": "partial",
+        "case_ids": [
+          "read-stage38-env-missing-nullable",
+          "read-stage38-prop-missing-nullable",
+          "read-stage38-env-hierarchical-missing-nullable",
+          "read-stage38-prop-normalized-hierarchical-nullable",
+          "read-stage38-nullable-denied-life",
+          "read-stage38-nullable-denied-http",
+          "read-stage38-nullable-malformed",
+          "read-stage38-read-null-type-before-uri",
+          "read-stage38-profile-env-path-nullable",
+          "read-stage38-profile-env-home-nullable",
+          "read-stage38-profile-prop-user-home-nullable",
+          "read-stage38-profile-prop-java-version-nullable",
+          "read-stage38-frontend-single-operand",
+          "read-stage38-frontend-space-before-open",
+          "read-stage38-frontend-newline-before-open",
+          "read-stage38-frontend-comment-before-open",
+          "read-stage38-frontend-empty-operand",
+          "read-stage38-frontend-extra-operand",
+          "read-stage38-frontend-bare-keyword",
+          "read-stage38-frontend-quoted-nullable-method",
+          "read-stage38-frontend-qualified-nullable-keyword",
+          "read-stage38-frontend-contextual-new-boundary",
+          "read-stage38-frontend-operand-local-scope",
+          "read-stage38-frontend-nested-null-operand",
+          "read-stage38-shadow-nullable-keyword-with-quoted-shadow",
+          "read-stage38-shadow-quoted-missing-nullable-read",
+          "read-stage38-power-power-read-null-comparison",
+          "read-stage38-power-power-read-lexical-operand"
+        ]
+      },
+      "scope": "Stage38 authored read/read? keyword and operand parsing, empty env/property profile, URI validation/normalization and raw diagnostic controls. Cases preserve Java-observed failures, including surrogate and internal-error boundaries; final differential acquisition is required.",
+      "remaining": [
+        "Complete resource readers, configured policy, loader/cache and Host absence transport remain open.",
+        "Complete URI and lossless UTF-16 diagnostic behavior, original upstream suites and all parser/error contexts remain unverified."
+      ]
+    },
+    {
+      "requirement": "specification:docs/modules/language-reference/pages/index.adoc:Nullable Reads",
+      "implementation": {
+        "state": "partial",
+        "links": [
+          {
+            "path": "crates/pkl-runtime/src/parser.rs",
+            "symbol": "ReadResource"
+          },
+          {
+            "path": "crates/pkl-runtime/src/vm/compiler_expressions.rs",
+            "symbol": "ReadResourceOrNull"
+          },
+          {
+            "path": "crates/pkl-runtime/src/host/resources.rs",
+            "symbol": "default_result"
+          }
+        ]
+      },
+      "tests": {
+        "state": "partial",
+        "case_ids": [
+          "read-stage38-env-missing-nullable",
+          "read-stage38-prop-missing-nullable",
+          "read-stage38-env-hierarchical-missing-nullable",
+          "read-stage38-prop-normalized-hierarchical-nullable",
+          "read-stage38-nullable-denied-life",
+          "read-stage38-nullable-denied-http",
+          "read-stage38-nullable-malformed",
+          "read-stage38-read-null-type-before-uri",
+          "read-stage38-profile-env-path-nullable",
+          "read-stage38-profile-env-home-nullable",
+          "read-stage38-profile-prop-user-home-nullable",
+          "read-stage38-profile-prop-java-version-nullable",
+          "read-stage38-frontend-single-operand",
+          "read-stage38-frontend-space-before-open",
+          "read-stage38-frontend-newline-before-open",
+          "read-stage38-frontend-comment-before-open",
+          "read-stage38-frontend-empty-operand",
+          "read-stage38-frontend-extra-operand",
+          "read-stage38-frontend-bare-keyword",
+          "read-stage38-frontend-quoted-nullable-method",
+          "read-stage38-frontend-qualified-nullable-keyword",
+          "read-stage38-frontend-contextual-new-boundary",
+          "read-stage38-frontend-operand-local-scope",
+          "read-stage38-frontend-nested-null-operand",
+          "read-stage38-shadow-nullable-keyword-with-quoted-shadow",
+          "read-stage38-shadow-quoted-missing-nullable-read",
+          "read-stage38-power-power-read-null-comparison",
+          "read-stage38-power-power-read-lexical-operand"
+        ]
+      },
+      "scope": "Stage38 authored read/read? keyword and operand parsing, empty env/property profile, URI validation/normalization and raw diagnostic controls. Cases preserve Java-observed failures, including surrogate and internal-error boundaries; final differential acquisition is required.",
+      "remaining": [
+        "Complete resource readers, configured policy, loader/cache and Host absence transport remain open.",
+        "Complete URI and lossless UTF-16 diagnostic behavior, original upstream suites and all parser/error contexts remain unverified."
       ]
     }
   ]

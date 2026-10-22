@@ -46,7 +46,69 @@ Stage 34 uses return-type defaults and inherited property contexts for inferred 
 Stage 35 adds annotations and declaration initialization. Stage 36 connects common
 object forcing and string conversion. Stage 37 adds trace/logger events and keeps
 initialization and first-path evaluation within one admitted Host context.
+Stage 38 adds resource-read syntax, the shared scalar default policy,
+and generic method-lookup diagnostics.
 These checkpoints do not complete the language milestone.
+
+## Stage 38 local verification checkpoint
+
+The [resource-read contract](../../docs/m2-resource-reads.md) describes dedicated
+`read`/`read?` expressions, nullable absence, declaration-source URI handling and
+the current empty environment/property profile. Permitted I/O readers and
+lossless unmatched-surrogate URI transport remain unfinished.
+
+Independent review found and preserved a portable comparison-boundary error and
+a cross-scope method-suggestion ordering difference. The corrected portable
+driver retains original Java UTF-8 bytes separately from exact JS string-unit
+comparison. The corrected runtime matches 45 focused Java observations,
+including nine new general ordering controls.
+
+The [final summary](stage38-final-summary.json) records 3,527 selected cases:
+3,518 matches, eight mismatches and one cycle oracle error. All original 3,427
+definitions, input bytes and order are preserved. Two former trace/resource
+diagnostic mismatches now pass; the other 3,425 native raw outcomes are unchanged.
+Java cycle-error byte variation is retained separately. All 88 metamorphic
+relations and 2,782 persistent calls match. Report integrity passes, while
+development, strict selected and full language gates fail; the full gate has
+1,959 reasons. The 960 unimplemented and 40 unmapped rows remain unchanged.
+
+Actual Node and Chromium each match 87 of 91 resource/method cases, retaining
+one unmatched-surrogate URI mismatch and three explicit Java internal errors.
+All nine method-order cases and 18 trace expressions match. The separate 20
+repeat cases retain two legacy mismatches. Each target's 42 actual-source trace
+definitions run twice, with 54 passing and 30 oracle-error experiments. Standard
+shared-engine comparisons match 6,078 cases; 6,076 match Java, retaining two
+regex gaps. These overlapping case, call and repetition counts are not additive
+feature coverage. Source-path scalar HTTP internal errors retain their legacy
+mismatch classification; the portable driver reports them as oracle errors.
+
+Required local Rust, Wasm, manifest and seven portable-driver checks pass. The
+first complete Python run failed one test that expects child startup and output
+within 200 ms. The unchanged single test and unchanged full 235-test discovery
+subsequently pass. Exact original child progress was not retained, so scheduling
+is a plausible cause rather than a proven diagnosis. Both runs remain available.
+
+[Origin captures](stage38-origin-captures.json) identify two verified archives:
+[Java observations](stage38-oracle-evidence.tar.gz) and
+[development evidence before the ordering correction](stage38-development-evidence.tar.gz).
+Their inventories preserve original failures, intermediate source/artifact
+identities and the earlier comparator contract. The original helper mistakenly
+excluded four subprocess capture directories named `build`, omitting 12 files.
+The [candidate archive](stage38-candidate-evidence.tar.gz) retains those exact
+files and the corrected final worktree evidence. Its [independent verification](stage38-candidate-captures.json)
+confirms union coverage of all 37,571 files declared by 56 available original
+closure manifests. The two original archives remain unchanged.
+
+The [final archive](stage38-final-evidence.tar.gz) preserves final MAIN results,
+prior integrated attempts, the Python failure/retry, independent audits and
+closeout helpers. Only explicitly identified Cargo cache trees are pruned before
+traversal. The [source binding](stage38-source-binding.json) connects final native,
+Node and Chromium source snapshots to the implementation commit.
+
+**M2 remains in progress.** Allowed resource I/O, complete URI transport,
+module loading/cache and remaining language, API, release-platform and performance
+conditions remain open. The next work targets 72 original upstream frontend
+error `eval` contracts, preserving stdout, stderr, exit codes and generated files.
 
 ## Stage 37 local verification checkpoint
 

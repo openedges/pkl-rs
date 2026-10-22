@@ -1,0 +1,2 @@
+obj=new Dynamic {function `read?`(x)=x}
+result=obj.read?(1)

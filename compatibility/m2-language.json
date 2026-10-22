@@ -69708,6 +69708,1970 @@
       ]
     },
     {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "read-stage38-life-opaque",
+      "input": "tests/fixtures/m2/read-stage38-life-opaque.pkl",
+      "input_sha256": "4fadf8ba098bf345f6788192a17023b95295dec2ff4b2d58c58134197240c0c9",
+      "required": true,
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "read-stage38-life-upper",
+      "input": "tests/fixtures/m2/read-stage38-life-upper.pkl",
+      "input_sha256": "4de195b49f4bb33481ba0fa5a67553ff96ae44f3580e2668fa1340709a26c98b",
+      "required": true,
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "read-stage38-life-mixed",
+      "input": "tests/fixtures/m2/read-stage38-life-mixed.pkl",
+      "input_sha256": "5f20ce9d9fc96966f91371112c14fb1dc47e163c2061f5f4a6d1c46e0f68a0db",
+      "required": true,
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "read-stage38-life-hierarchical-normalized",
+      "input": "tests/fixtures/m2/read-stage38-life-hierarchical-normalized.pkl",
+      "input_sha256": "00dc7126efceccd32bae5eb78bcf234cb703b52cd0f56b9aa437d797eae44287",
+      "required": true,
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "read-stage38-life-opaque-not-normalized",
+      "input": "tests/fixtures/m2/read-stage38-life-opaque-not-normalized.pkl",
+      "input_sha256": "4aead4e6566e0126e69746c4955babb652f736485964b9dc2cb73bcb4d8a25e4",
+      "required": true,
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "read-stage38-life-encoded-dot",
+      "input": "tests/fixtures/m2/read-stage38-life-encoded-dot.pkl",
+      "input_sha256": "7cc37f572b7b6b93741604b5312c5ab0a741ce526c7bbd8e1d417e99a7e384ac",
+      "required": true,
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "read-stage38-env-uppercase",
+      "input": "tests/fixtures/m2/read-stage38-env-uppercase.pkl",
+      "input_sha256": "8e7512ec64566ade5a81c21dd44f0a3aca4e82c78e6e90708f52aa458bde4f8f",
+      "required": true,
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "read-stage38-env-mixed",
+      "input": "tests/fixtures/m2/read-stage38-env-mixed.pkl",
+      "input_sha256": "03c3d3b5a91cceca2d7e46782c37301cd9a75ae5103831232ef646f257e6fc83",
+      "required": true,
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "read-stage38-env-prefix-boundary",
+      "input": "tests/fixtures/m2/read-stage38-env-prefix-boundary.pkl",
+      "input_sha256": "79a8c3927d5a81659cffe9b7892853fb82a5686b4ae0526123d4f03590f3ef60",
+      "required": true,
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "read-stage38-prop-prefix-boundary",
+      "input": "tests/fixtures/m2/read-stage38-prop-prefix-boundary.pkl",
+      "input_sha256": "a04d56087e0223cd3269da57c443318ceed0f496cb8060583fcae4a029cf8d12",
+      "required": true,
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "read-stage38-http-denied",
+      "input": "tests/fixtures/m2/read-stage38-http-denied.pkl",
+      "input_sha256": "2bca65bbf512b658e8ef344e6fe849460f65ceeddfb1173b5a29d3721ea56d8c",
+      "required": true,
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "read-stage38-http-normalized-denied",
+      "input": "tests/fixtures/m2/read-stage38-http-normalized-denied.pkl",
+      "input_sha256": "50deda77ab9b8139cfb26d01d04a14e7013c8a10d3922829017c9572d351dbd2",
+      "required": true,
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "read-stage38-http-uppercase",
+      "input": "tests/fixtures/m2/read-stage38-http-uppercase.pkl",
+      "input_sha256": "e8c413bdf79c4b3934e3039abdafe75248e1c71be1d3d478bee148d341158826",
+      "required": true,
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "read-stage38-malformed-space",
+      "input": "tests/fixtures/m2/read-stage38-malformed-space.pkl",
+      "input_sha256": "ecee3681b6f8065355214071840b9eeb88fb49ba3e8351e8bb69d9ef9100505e",
+      "required": true,
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "read-stage38-malformed-percent",
+      "input": "tests/fixtures/m2/read-stage38-malformed-percent.pkl",
+      "input_sha256": "4f414208516f8c538d05d46c9d42986020fe899a8b3e21afbb38260c9db88da3",
+      "required": true,
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "read-stage38-malformed-percent-pair",
+      "input": "tests/fixtures/m2/read-stage38-malformed-percent-pair.pkl",
+      "input_sha256": "a338cc51ded2a5342db4e4a3cd4c59b6b8859902dd2a203d357cd7a674a631fc",
+      "required": true,
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "read-stage38-malformed-http-bracket",
+      "input": "tests/fixtures/m2/read-stage38-malformed-http-bracket.pkl",
+      "input_sha256": "52653c16e2089f1637ccbeb189d5a0b08cc9494937c1fe87946a245d892e5094",
+      "required": true,
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "read-stage38-malformed-leading-digit",
+      "input": "tests/fixtures/m2/read-stage38-malformed-leading-digit.pkl",
+      "input_sha256": "c6e8d377cba5012fc8de98a9852717ef65b08cea52aa5c1180a2209fcee1203d",
+      "required": true,
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "read-stage38-malformed-leading-underscore",
+      "input": "tests/fixtures/m2/read-stage38-malformed-leading-underscore.pkl",
+      "input_sha256": "055f280a01933354b8565acebaafe6851005ad125e4ea83cb323dbf8e5e7764a",
+      "required": true,
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "read-stage38-empty-life-ssp",
+      "input": "tests/fixtures/m2/read-stage38-empty-life-ssp.pkl",
+      "input_sha256": "ad1ab41985b6545bc565f171d042331bf32f2f7a570c07921da3324b1e3a65bf",
+      "required": true,
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "read-stage38-empty-env-ssp",
+      "input": "tests/fixtures/m2/read-stage38-empty-env-ssp.pkl",
+      "input_sha256": "d7b2c738feee62b0c48bbeb40895e8accc298322ebae61b0d5d89b6cad743410",
+      "required": true,
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "read-stage38-backslash-after-colon",
+      "input": "tests/fixtures/m2/read-stage38-backslash-after-colon.pkl",
+      "input_sha256": "26de2948534e544a9e6b4fdbde43663483feb09042f670b59ae9eb88c5b68077",
+      "required": true,
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "read-stage38-uri-unpaired-surrogate",
+      "input": "tests/fixtures/m2/read-stage38-uri-unpaired-surrogate.pkl",
+      "input_sha256": "3150c07c32b218cf65452f4664d4efd17eb19bc3c3489d6529201c072c53e548",
+      "required": true,
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:strings"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "read-stage38-env-missing",
+      "input": "tests/fixtures/m2/read-stage38-env-missing.pkl",
+      "input_sha256": "9328e1752be8c1a00460793e6299bcd8acbcceae30b79ba5631933f6c599d1dd",
+      "required": true,
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "read-stage38-env-missing-nullable",
+      "input": "tests/fixtures/m2/read-stage38-env-missing-nullable.pkl",
+      "input_sha256": "577dadd219cbca117dbc3f8fe11fed750fdd5463768c0e1ed183b22547e282b3",
+      "required": true,
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ_QUESTION",
+        "specification:docs/modules/language-reference/pages/index.adoc:Nullable Reads"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "read-stage38-prop-missing",
+      "input": "tests/fixtures/m2/read-stage38-prop-missing.pkl",
+      "input_sha256": "b225a6d414a4b21130761b45f8c436c9ba8937b4928464405c0ace75947c04f8",
+      "required": true,
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "read-stage38-prop-missing-nullable",
+      "input": "tests/fixtures/m2/read-stage38-prop-missing-nullable.pkl",
+      "input_sha256": "fb4e9eff61c19260bde7439c348ee3fd830926dc7a55c7902e65d457a00921b4",
+      "required": true,
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ_QUESTION",
+        "specification:docs/modules/language-reference/pages/index.adoc:Nullable Reads"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "read-stage38-env-hierarchical-missing",
+      "input": "tests/fixtures/m2/read-stage38-env-hierarchical-missing.pkl",
+      "input_sha256": "0dc2bf4c8057c3832d4de40d5dc90d65fa28af681889ecb1e712b5ef239e2e61",
+      "required": true,
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "read-stage38-env-hierarchical-missing-nullable",
+      "input": "tests/fixtures/m2/read-stage38-env-hierarchical-missing-nullable.pkl",
+      "input_sha256": "5564a3f116d51f331989d25f4d6ef1449cbcb2eab3163da5de7b82abe02aa57c",
+      "required": true,
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ_QUESTION",
+        "specification:docs/modules/language-reference/pages/index.adoc:Nullable Reads"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "read-stage38-prop-normalized-hierarchical",
+      "input": "tests/fixtures/m2/read-stage38-prop-normalized-hierarchical.pkl",
+      "input_sha256": "0744c7bf99147e398bacb42a585fc3ff8827769d54f1376a533022ddc8dbcca2",
+      "required": true,
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "read-stage38-prop-normalized-hierarchical-nullable",
+      "input": "tests/fixtures/m2/read-stage38-prop-normalized-hierarchical-nullable.pkl",
+      "input_sha256": "3aeab4ea48e5d3dbec3b6e032a826bb3611c5aa353471ecd14f4a15b1f19e6a9",
+      "required": true,
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ_QUESTION",
+        "specification:docs/modules/language-reference/pages/index.adoc:Nullable Reads"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "read-stage38-nullable-denied-life",
+      "input": "tests/fixtures/m2/read-stage38-nullable-denied-life.pkl",
+      "input_sha256": "6c9a92d7d4c215ddbecb621168ed5c1d1efe2e7091ae4995ff92019af2de84f7",
+      "required": true,
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ_QUESTION",
+        "specification:docs/modules/language-reference/pages/index.adoc:Nullable Reads"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "read-stage38-nullable-denied-http",
+      "input": "tests/fixtures/m2/read-stage38-nullable-denied-http.pkl",
+      "input_sha256": "bda079fb7c7279940a5bc1f82ffbf29dc5387294e01a8f25a19bc74a04921371",
+      "required": true,
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ_QUESTION",
+        "specification:docs/modules/language-reference/pages/index.adoc:Nullable Reads"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "read-stage38-nullable-malformed",
+      "input": "tests/fixtures/m2/read-stage38-nullable-malformed.pkl",
+      "input_sha256": "82278a55a9b991576fc83535d0c91b2f212daa4a190cfce1ba08c9823ee10e26",
+      "required": true,
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ_QUESTION",
+        "specification:docs/modules/language-reference/pages/index.adoc:Nullable Reads"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "read-stage38-read-type-before-uri",
+      "input": "tests/fixtures/m2/read-stage38-read-type-before-uri.pkl",
+      "input_sha256": "901000efec41f8a12f618040a0cc0509c603020f2b6028b2a72bf02ccc140322",
+      "required": true,
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "read-stage38-read-null-type-before-uri",
+      "input": "tests/fixtures/m2/read-stage38-read-null-type-before-uri.pkl",
+      "input_sha256": "85a4ff1bbd07b67ab5543bd7e64f3c76b67a639f935f0f7f562145e4178f6e56",
+      "required": true,
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ_QUESTION",
+        "specification:docs/modules/language-reference/pages/index.adoc:Nullable Reads"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "read-stage38-operand-throw-before-uri",
+      "input": "tests/fixtures/m2/read-stage38-operand-throw-before-uri.pkl",
+      "input_sha256": "aa4a669aa72b9145080fb4eb34d731a91afe3fbcebb32bb781566d0232a63c51",
+      "required": true,
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "read-stage38-noop-trace-object-frame",
+      "input": "tests/fixtures/m2/read-stage38-noop-trace-object-frame.pkl",
+      "input_sha256": "0fb1bde6314350b2289d01e6f68583e852848329f24f67389984c22729995542",
+      "required": true,
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:tracing"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "read-stage38-noop-trace-strict-list-frame",
+      "input": "tests/fixtures/m2/read-stage38-noop-trace-strict-list-frame.pkl",
+      "input_sha256": "5907cd912b90a899ef09238f32d5a2e2edf5be69bfd9dfd5df18737cdc1ffa25",
+      "required": true,
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:tracing"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "read-stage38-ordinary-object-read-frame",
+      "input": "tests/fixtures/m2/read-stage38-ordinary-object-read-frame.pkl",
+      "input_sha256": "f3361228663f1f84c0fa8131f27047f8751625df8815718e9fbdb155a51a94b4",
+      "required": true,
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "read-stage38-noop-trace-nested-member-frame",
+      "input": "tests/fixtures/m2/read-stage38-noop-trace-nested-member-frame.pkl",
+      "input_sha256": "07ba7a9da6fa461f8cf3145c0f3c4f78dedb948e768053e7333b9587f6ce25b8",
+      "required": true,
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:tracing"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "read-stage38-profile-env-path",
+      "input": "tests/fixtures/m2/read-stage38-profile-env-path.pkl",
+      "input_sha256": "777236761eba5859527adab4c8a2b234dfeaf084df60ab3f12857da781569435",
+      "required": true,
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "read-stage38-profile-env-path-nullable",
+      "input": "tests/fixtures/m2/read-stage38-profile-env-path-nullable.pkl",
+      "input_sha256": "a4188ad72c298c13168215c6f9402bc4489424d42a67c53f99ee758685568fc2",
+      "required": true,
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ_QUESTION",
+        "specification:docs/modules/language-reference/pages/index.adoc:Nullable Reads"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "read-stage38-profile-env-home",
+      "input": "tests/fixtures/m2/read-stage38-profile-env-home.pkl",
+      "input_sha256": "557f1662d55bcb1f6c104823b6480b691d9408ed265e2626e21a3f20af5ea84f",
+      "required": true,
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "read-stage38-profile-env-home-nullable",
+      "input": "tests/fixtures/m2/read-stage38-profile-env-home-nullable.pkl",
+      "input_sha256": "996ddf80bc909aa97f0072b11df3ac4d1afb2d795cb3b7d9f98c9e27959aaed1",
+      "required": true,
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ_QUESTION",
+        "specification:docs/modules/language-reference/pages/index.adoc:Nullable Reads"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "read-stage38-profile-prop-user-home",
+      "input": "tests/fixtures/m2/read-stage38-profile-prop-user-home.pkl",
+      "input_sha256": "d33c8f44125f003628612246f9bb1076ab93d62c43c9467cee4d3ce199210bfc",
+      "required": true,
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "read-stage38-profile-prop-user-home-nullable",
+      "input": "tests/fixtures/m2/read-stage38-profile-prop-user-home-nullable.pkl",
+      "input_sha256": "48c4718c842cc3f3c31044f8aa4eec0f3ce0d2ada4bf384a27fb6a5264bc9194",
+      "required": true,
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ_QUESTION",
+        "specification:docs/modules/language-reference/pages/index.adoc:Nullable Reads"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "read-stage38-profile-prop-java-version",
+      "input": "tests/fixtures/m2/read-stage38-profile-prop-java-version.pkl",
+      "input_sha256": "bb133836220878fca96d2cd2817f189725a349177288b05eacb5c6631cf1ae34",
+      "required": true,
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "read-stage38-profile-prop-java-version-nullable",
+      "input": "tests/fixtures/m2/read-stage38-profile-prop-java-version-nullable.pkl",
+      "input_sha256": "ce9e90fdbdaa66ecca4903c8edab35893ceb9dd165d111ac97ee094b85a2e150",
+      "required": true,
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ_QUESTION",
+        "specification:docs/modules/language-reference/pages/index.adoc:Nullable Reads"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "read-stage38-edge-http-opaque",
+      "input": "tests/fixtures/m2/read-stage38-edge-http-opaque.pkl",
+      "input_sha256": "dece9f9dc853fbf747a0514d36b640e94321b2150135b541cb0f1aab0ab30f2d",
+      "required": true,
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "read-stage38-edge-http-invalid-host",
+      "input": "tests/fixtures/m2/read-stage38-edge-http-invalid-host.pkl",
+      "input_sha256": "61e0c2867ada4b09f526288b099c62355f70454b679b5e062b559ccb934e2651",
+      "required": true,
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "read-stage38-edge-http-nonnumeric-port",
+      "input": "tests/fixtures/m2/read-stage38-edge-http-nonnumeric-port.pkl",
+      "input_sha256": "069e92f0e76e0d2b3bffb183bfd460fca2ed95648b2c420f36804a3d946c54f4",
+      "required": true,
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "read-stage38-edge-http-large-port",
+      "input": "tests/fixtures/m2/read-stage38-edge-http-large-port.pkl",
+      "input_sha256": "631b7ef2dfcd4b3d6bd55070397fdd35268d94b31c164f9ecb10ca0d63945136",
+      "required": true,
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "read-stage38-edge-http-fragment",
+      "input": "tests/fixtures/m2/read-stage38-edge-http-fragment.pkl",
+      "input_sha256": "bb9e4989b6c9830cfbb6404cc13470fc8bbc2ae68fe860c6c3b80525ed25bba7",
+      "required": true,
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "read-stage38-edge-read-lazy-dynamic-type",
+      "input": "tests/fixtures/m2/read-stage38-edge-read-lazy-dynamic-type.pkl",
+      "input_sha256": "6bf8339ed2f96358eeae933876ee74f078b4f9e018642e6ab6de7839b998024c",
+      "required": true,
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "read-stage38-edge-read-list-type",
+      "input": "tests/fixtures/m2/read-stage38-edge-read-list-type.pkl",
+      "input_sha256": "77e9c038227e325ba4bd9eb4a85d35f56a4fbf14cc83fc69cd49d7e1d16ab924",
+      "required": true,
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "read-stage38-frontend-single-operand",
+      "input": "tests/fixtures/m2/read-stage38-frontend-single-operand.pkl",
+      "input_sha256": "577dadd219cbca117dbc3f8fe11fed750fdd5463768c0e1ed183b22547e282b3",
+      "required": true,
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ_QUESTION",
+        "specification:docs/modules/language-reference/pages/index.adoc:Nullable Reads"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "read-stage38-frontend-space-before-open",
+      "input": "tests/fixtures/m2/read-stage38-frontend-space-before-open.pkl",
+      "input_sha256": "05ef3068efe575decfd62f83cee81a0f004d34e74f8d352df1c0dcfd2764c360",
+      "required": true,
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ_QUESTION",
+        "specification:docs/modules/language-reference/pages/index.adoc:Nullable Reads"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "read-stage38-frontend-newline-before-open",
+      "input": "tests/fixtures/m2/read-stage38-frontend-newline-before-open.pkl",
+      "input_sha256": "7ce8681d172f33f343e3d27e77e8a74b13bda140ccb306b8c809372112629a72",
+      "required": true,
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ_QUESTION",
+        "specification:docs/modules/language-reference/pages/index.adoc:Nullable Reads"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "read-stage38-frontend-comment-before-open",
+      "input": "tests/fixtures/m2/read-stage38-frontend-comment-before-open.pkl",
+      "input_sha256": "984f1ab40b30ff3c48b0f0571e80d4d8ef9fcf4e697b5cabc23bc66bcf03ca87",
+      "required": true,
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ_QUESTION",
+        "specification:docs/modules/language-reference/pages/index.adoc:Nullable Reads"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "read-stage38-frontend-spaced-keyword",
+      "input": "tests/fixtures/m2/read-stage38-frontend-spaced-keyword.pkl",
+      "input_sha256": "b11d307d3e9a3d7c73f7b82b83dc276ad58c22835e2cc1e4d2f4b50a214c992e",
+      "required": true,
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "read-stage38-frontend-empty-operand",
+      "input": "tests/fixtures/m2/read-stage38-frontend-empty-operand.pkl",
+      "input_sha256": "992aaa5bf6f50f146e8ebe179699ca1c5557b4b3f2387630967db067c27ac81f",
+      "required": true,
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ_QUESTION",
+        "specification:docs/modules/language-reference/pages/index.adoc:Nullable Reads"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "read-stage38-frontend-extra-operand",
+      "input": "tests/fixtures/m2/read-stage38-frontend-extra-operand.pkl",
+      "input_sha256": "5f5ad6a42cf364d853394c0f53f088fcdf3babc3ecb45a2884ac6f618d4e94b3",
+      "required": true,
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ_QUESTION",
+        "specification:docs/modules/language-reference/pages/index.adoc:Nullable Reads"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "read-stage38-frontend-bare-keyword",
+      "input": "tests/fixtures/m2/read-stage38-frontend-bare-keyword.pkl",
+      "input_sha256": "c0fed4fa458613dc4cbf656f120fae1b0a9a8988b3fb60db89c101757c3bb8fe",
+      "required": true,
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ_QUESTION",
+        "specification:docs/modules/language-reference/pages/index.adoc:Nullable Reads"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "read-stage38-frontend-quoted-nullable-method",
+      "input": "tests/fixtures/m2/read-stage38-frontend-quoted-nullable-method.pkl",
+      "input_sha256": "9630778d6a4c1bcf7da08b2bcff58ac5f389244da16ba41f9b8e56e0c9f7e89f",
+      "required": true,
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ_QUESTION",
+        "specification:docs/modules/language-reference/pages/index.adoc:Nullable Reads"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "read-stage38-frontend-quoted-read-method",
+      "input": "tests/fixtures/m2/read-stage38-frontend-quoted-read-method.pkl",
+      "input_sha256": "881dab1f9bd703532ffb639f6cb6c40b47c7310db3da900a93f82a49acc653e4",
+      "required": true,
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "read-stage38-frontend-keyword-with-quoted-shadow",
+      "input": "tests/fixtures/m2/read-stage38-frontend-keyword-with-quoted-shadow.pkl",
+      "input_sha256": "2fbe591c1a28b51bf434e77cb7ef1b7a757bf20fe9b8299e999b91b15e6b140a",
+      "required": true,
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "read-stage38-frontend-qualified-nullable-keyword",
+      "input": "tests/fixtures/m2/read-stage38-frontend-qualified-nullable-keyword.pkl",
+      "input_sha256": "937b0f7c8019b93eb9924be4716639efd12f8a22f0a76a804f89be21be72fca1",
+      "required": true,
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ_QUESTION",
+        "specification:docs/modules/language-reference/pages/index.adoc:Nullable Reads"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "read-stage38-frontend-contextual-new-boundary",
+      "input": "tests/fixtures/m2/read-stage38-frontend-contextual-new-boundary.pkl",
+      "input_sha256": "b0c6ddf25fec7c8dce0d8ca161227d91c65fcfa36106303f7ff1d88b6e76bc74",
+      "required": true,
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ_QUESTION",
+        "specification:docs/modules/language-reference/pages/index.adoc:Nullable Reads"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "read-stage38-frontend-operand-local-scope",
+      "input": "tests/fixtures/m2/read-stage38-frontend-operand-local-scope.pkl",
+      "input_sha256": "3fe7681b3db3cca2c2d8bc5117ddd2e145191b7449d6d47f17c45894e03e95c9",
+      "required": true,
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ_QUESTION",
+        "specification:docs/modules/language-reference/pages/index.adoc:Nullable Reads"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "read-stage38-frontend-nested-null-operand",
+      "input": "tests/fixtures/m2/read-stage38-frontend-nested-null-operand.pkl",
+      "input_sha256": "084565cdef7d424fa1b72f5427a73a8b0ac3ed2ae076eb50445d267e2d36902d",
+      "required": true,
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ_QUESTION",
+        "specification:docs/modules/language-reference/pages/index.adoc:Nullable Reads"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "read-stage38-shadow-nullable-keyword-with-quoted-shadow",
+      "input": "tests/fixtures/m2/read-stage38-shadow-nullable-keyword-with-quoted-shadow.pkl",
+      "input_sha256": "668530d44af11e8f42122efab12f80e208caa335854c672a5c550690819aa7bf",
+      "required": true,
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ_QUESTION",
+        "specification:docs/modules/language-reference/pages/index.adoc:Nullable Reads"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "read-stage38-shadow-quoted-missing-read",
+      "input": "tests/fixtures/m2/read-stage38-shadow-quoted-missing-read.pkl",
+      "input_sha256": "92fce8edc6c605d2fc38c384d751f5f242bc1f8a0f6a1476a6f711b3a43b7cd2",
+      "required": true,
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "read-stage38-shadow-quoted-missing-nullable-read",
+      "input": "tests/fixtures/m2/read-stage38-shadow-quoted-missing-nullable-read.pkl",
+      "input_sha256": "5fa3463b11c0dbd75092292e19c9e2d0e63f89ea57834c386609a071faf3d4e9",
+      "required": true,
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ_QUESTION",
+        "specification:docs/modules/language-reference/pages/index.adoc:Nullable Reads"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "read-stage38-shadow-empty-read-operand",
+      "input": "tests/fixtures/m2/read-stage38-shadow-empty-read-operand.pkl",
+      "input_sha256": "3d1fe773d0db9d113c95213dce44dad97b895722a2fe2c8a6541b4094988d130",
+      "required": true,
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "read-stage38-shadow-extra-read-operand",
+      "input": "tests/fixtures/m2/read-stage38-shadow-extra-read-operand.pkl",
+      "input_sha256": "996007e0d2621bb489fb16fe03c9f7d207f8ea37742a08e07856864ab2cf51b4",
+      "required": true,
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "read-stage38-shadow-read-contextual-new-boundary",
+      "input": "tests/fixtures/m2/read-stage38-shadow-read-contextual-new-boundary.pkl",
+      "input_sha256": "992e24869415eb33baf361705fd11c3cebd1d5e30ff8761921d7fc37b93aa692",
+      "required": true,
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "read-stage38-power-power-read-null-comparison",
+      "input": "tests/fixtures/m2/read-stage38-power-power-read-null-comparison.pkl",
+      "input_sha256": "86de26b04776cc95755c714f2407364065a800fabd63c9d678885cc2792547e3",
+      "power_assertions": true,
+      "required": true,
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ_QUESTION",
+        "specification:docs/modules/language-reference/pages/index.adoc:Nullable Reads",
+        "semantic:constraints"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "read-stage38-power-power-read-lexical-operand",
+      "input": "tests/fixtures/m2/read-stage38-power-power-read-lexical-operand.pkl",
+      "input_sha256": "3731fa3289dff83fa1e937d106a5656a20032d34d9a9b46e3c7ccfd247d1ebda",
+      "power_assertions": true,
+      "required": true,
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ_QUESTION",
+        "specification:docs/modules/language-reference/pages/index.adoc:Nullable Reads",
+        "semantic:constraints"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "method-stage38-implicit-empty",
+      "input": "tests/fixtures/m2/method-stage38-implicit-empty.pkl",
+      "input_sha256": "ca79ef5af9173628d1a623cb442795d0593f5c90ba05cc57f7c4b8faf694ec29",
+      "required": true,
+      "requirements": [
+        "semantic:functions",
+        "semantic:name-resolution",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "method-stage38-implicit-nonempty",
+      "input": "tests/fixtures/m2/method-stage38-implicit-nonempty.pkl",
+      "input_sha256": "c2fae66b19304f9ed350c58f343bf65083227adb63c673404c62951a7da1dac4",
+      "required": true,
+      "requirements": [
+        "semantic:functions",
+        "semantic:name-resolution",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "method-stage38-implicit-typo-method",
+      "input": "tests/fixtures/m2/method-stage38-implicit-typo-method.pkl",
+      "input_sha256": "913f7a373b9e159f3e2bde979a91427d60cde05e47b7386ac427b27e44bfe479",
+      "required": true,
+      "requirements": [
+        "semantic:functions",
+        "semantic:name-resolution",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "method-stage38-implicit-typo-arity",
+      "input": "tests/fixtures/m2/method-stage38-implicit-typo-arity.pkl",
+      "input_sha256": "ddcfa94e6e9502b2dc3562e046af311bdb39274672a53caa8e3173527a16ee05",
+      "required": true,
+      "requirements": [
+        "semantic:functions",
+        "semantic:name-resolution",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "method-stage38-implicit-property",
+      "input": "tests/fixtures/m2/method-stage38-implicit-property.pkl",
+      "input_sha256": "b3ce5a52065d6e801586431cf475eb2d755a2d3f746a17e2611194282630f505",
+      "required": true,
+      "requirements": [
+        "semantic:functions",
+        "semantic:name-resolution",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "method-stage38-implicit-local-method",
+      "input": "tests/fixtures/m2/method-stage38-implicit-local-method.pkl",
+      "input_sha256": "baa3f8592eec58bfcf341a6ec06697acf2914602d2995cc2e314636d56065022",
+      "required": true,
+      "requirements": [
+        "semantic:functions",
+        "semantic:name-resolution",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "method-stage38-implicit-inherited-method",
+      "input": "tests/fixtures/m2/method-stage38-implicit-inherited-method.pkl",
+      "input_sha256": "3d69c05ae2a5e199df6930c486fc095b5966f82ddb743fba743ab2ebacdf341a",
+      "required": true,
+      "requirements": [
+        "semantic:functions",
+        "semantic:name-resolution",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "method-stage38-implicit-class-method",
+      "input": "tests/fixtures/m2/method-stage38-implicit-class-method.pkl",
+      "input_sha256": "6148054821fd392de83221db3c6ebb3c874d6748853d35f96889decd642e0f2e",
+      "required": true,
+      "requirements": [
+        "semantic:functions",
+        "semantic:name-resolution",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "method-stage38-implicit-class-empty",
+      "input": "tests/fixtures/m2/method-stage38-implicit-class-empty.pkl",
+      "input_sha256": "4c498b9cc64b45c8aaf1bf69a05339a9e400de6e31009a10f21db753d1ba274f",
+      "required": true,
+      "requirements": [
+        "semantic:functions",
+        "semantic:name-resolution",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "method-stage38-explicit-module-empty",
+      "input": "tests/fixtures/m2/method-stage38-explicit-module-empty.pkl",
+      "input_sha256": "10b0ac5a7358fd13766f01f095d7c923c0768de4b912e49881ec1ad2c2e269b2",
+      "required": true,
+      "requirements": [
+        "semantic:functions",
+        "semantic:name-resolution",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "method-stage38-explicit-module-nonempty",
+      "input": "tests/fixtures/m2/method-stage38-explicit-module-nonempty.pkl",
+      "input_sha256": "e611c248851ad343f1a889240db842abcd4f62bcc4c7f67d54a4fbd1aed68eb9",
+      "required": true,
+      "requirements": [
+        "semantic:functions",
+        "semantic:name-resolution",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "method-stage38-implicit-base-constructor",
+      "input": "tests/fixtures/m2/method-stage38-implicit-base-constructor.pkl",
+      "input_sha256": "9d07eab87692751bfd1fc3695fb0b02e21211ac90fe85d76afc8c491420d76b4",
+      "required": true,
+      "requirements": [
+        "semantic:functions",
+        "semantic:name-resolution",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "method-stage38-order-lexical-method-base-property-tie",
+      "input": "tests/fixtures/m2/method-stage38-order-lexical-method-base-property-tie.pkl",
+      "input_sha256": "476736a53ec030fb7daede5cd0471683df8eefb19ca27b66044174768b397c05",
+      "required": true,
+      "requirements": [
+        "semantic:functions",
+        "semantic:name-resolution",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "method-stage38-order-local-method-base-property-tie",
+      "input": "tests/fixtures/m2/method-stage38-order-local-method-base-property-tie.pkl",
+      "input_sha256": "3bf48f71172dbc3edaf56c715269d15c6e9479ad4fc8d52e4da4d170a0a6e2b9",
+      "required": true,
+      "requirements": [
+        "semantic:functions",
+        "semantic:name-resolution",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "method-stage38-order-outer-method-base-property-tie",
+      "input": "tests/fixtures/m2/method-stage38-order-outer-method-base-property-tie.pkl",
+      "input_sha256": "f9d55c232a09bd827980dbf29b0ade215b24ec13db44193108208013793c989e",
+      "required": true,
+      "requirements": [
+        "semantic:functions",
+        "semantic:name-resolution",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "method-stage38-order-nearest-method-shadow-tie",
+      "input": "tests/fixtures/m2/method-stage38-order-nearest-method-shadow-tie.pkl",
+      "input_sha256": "b1e0ac023d46dee484a80e9df66acbb8b31940c9f6557bb2deebe1f31fc36503",
+      "required": true,
+      "requirements": [
+        "semantic:functions",
+        "semantic:name-resolution",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "method-stage38-order-equal-similarity-arity-rank",
+      "input": "tests/fixtures/m2/method-stage38-order-equal-similarity-arity-rank.pkl",
+      "input_sha256": "540d65cef44366f5a2cec28fc928e4e10662de0bc241d4324fe7764b14f4a3f2",
+      "required": true,
+      "requirements": [
+        "semantic:functions",
+        "semantic:name-resolution",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "method-stage38-order-equal-rank-declaration-order",
+      "input": "tests/fixtures/m2/method-stage38-order-equal-rank-declaration-order.pkl",
+      "input_sha256": "0012f80037de1700b00c65dc54814c898f0c0a7ced8e76fa0b3140d5d32f429d",
+      "required": true,
+      "requirements": [
+        "semantic:functions",
+        "semantic:name-resolution",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "method-stage38-order-explicit-module-excludes-base-properties",
+      "input": "tests/fixtures/m2/method-stage38-order-explicit-module-excludes-base-properties.pkl",
+      "input_sha256": "106d549a1b21a90727d6ebb481fe4d840c95743abda64f20d7daf99e87f5f65d",
+      "required": true,
+      "requirements": [
+        "semantic:functions",
+        "semantic:name-resolution",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "method-stage38-order-same-scope-property-before-method",
+      "input": "tests/fixtures/m2/method-stage38-order-same-scope-property-before-method.pkl",
+      "input_sha256": "1052f478524d7ced5229ff8e1922f47f332d33b8d1cbcdd84fcddf1c0f41ff72",
+      "required": true,
+      "requirements": [
+        "semantic:functions",
+        "semantic:name-resolution",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "method-stage38-order-nested-method-before-outer-property",
+      "input": "tests/fixtures/m2/method-stage38-order-nested-method-before-outer-property.pkl",
+      "input_sha256": "152e7dbc378b1d94fd2a75cd0e20772615bf9e046665f2f6213aff1d1da49e19",
+      "required": true,
+      "requirements": [
+        "semantic:functions",
+        "semantic:name-resolution",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
       "adapter": null,
       "execution": {
         "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
@@ -161120,9 +163084,9 @@
   "comparison_boundary": "evaluateExpressionString(ModuleSource.path(same absolute URI), expression) UTF-8 stdout; whole PklException.getMessage() UTF-8 stderr and exit 1; no trimming. Power assertions default to disabled; an explicit per-case power_assertions boolean enables the same option in both probes. Stringification alone is not typed value/API compatibility.",
   "completion": "Every required semantic/source requirement needs implementation/test mappings and complete passing execution. Pending/unmapped/unimplemented/mismatch remains a full-gate failure.",
   "counts": {
-    "cases": 4427,
+    "cases": 4527,
     "cases_by_execution": {
-      "ready": 3427,
+      "ready": 3527,
       "unimplemented": 960,
       "unmapped": 40
     },
@@ -161679,7 +163643,8 @@
           "trace-stage37-repeat-supplementary-overflow",
           "trace-stage37-repeat-lone-surrogate",
           "trace-stage37-repeat-supplementary-normal",
-          "trace-stage37-repeat-arity-two-before-constraint"
+          "trace-stage37-repeat-arity-two-before-constraint",
+          "read-stage38-uri-unpaired-surrogate"
         ],
         "state": "partial"
       }
@@ -162745,7 +164710,86 @@
           "diagnostic-stage31-mapping-direct-negative",
           "diagnostic-stage31-mapping-direct-grouped",
           "diagnostic-stage31-listing-direct-negative",
-          "diagnostic-stage31-listing-direct-grouped"
+          "diagnostic-stage31-listing-direct-grouped",
+          "read-stage38-life-opaque",
+          "read-stage38-life-upper",
+          "read-stage38-life-mixed",
+          "read-stage38-life-hierarchical-normalized",
+          "read-stage38-life-opaque-not-normalized",
+          "read-stage38-life-encoded-dot",
+          "read-stage38-env-uppercase",
+          "read-stage38-env-mixed",
+          "read-stage38-env-prefix-boundary",
+          "read-stage38-prop-prefix-boundary",
+          "read-stage38-http-denied",
+          "read-stage38-http-normalized-denied",
+          "read-stage38-http-uppercase",
+          "read-stage38-malformed-space",
+          "read-stage38-malformed-percent",
+          "read-stage38-malformed-percent-pair",
+          "read-stage38-malformed-http-bracket",
+          "read-stage38-malformed-leading-digit",
+          "read-stage38-malformed-leading-underscore",
+          "read-stage38-empty-life-ssp",
+          "read-stage38-empty-env-ssp",
+          "read-stage38-backslash-after-colon",
+          "read-stage38-uri-unpaired-surrogate",
+          "read-stage38-env-missing",
+          "read-stage38-env-missing-nullable",
+          "read-stage38-prop-missing",
+          "read-stage38-prop-missing-nullable",
+          "read-stage38-env-hierarchical-missing",
+          "read-stage38-env-hierarchical-missing-nullable",
+          "read-stage38-prop-normalized-hierarchical",
+          "read-stage38-prop-normalized-hierarchical-nullable",
+          "read-stage38-nullable-denied-life",
+          "read-stage38-nullable-denied-http",
+          "read-stage38-nullable-malformed",
+          "read-stage38-read-type-before-uri",
+          "read-stage38-read-null-type-before-uri",
+          "read-stage38-operand-throw-before-uri",
+          "read-stage38-noop-trace-object-frame",
+          "read-stage38-noop-trace-strict-list-frame",
+          "read-stage38-ordinary-object-read-frame",
+          "read-stage38-noop-trace-nested-member-frame",
+          "read-stage38-profile-env-path",
+          "read-stage38-profile-env-path-nullable",
+          "read-stage38-profile-env-home",
+          "read-stage38-profile-env-home-nullable",
+          "read-stage38-profile-prop-user-home",
+          "read-stage38-profile-prop-user-home-nullable",
+          "read-stage38-profile-prop-java-version",
+          "read-stage38-profile-prop-java-version-nullable",
+          "read-stage38-edge-http-opaque",
+          "read-stage38-edge-http-invalid-host",
+          "read-stage38-edge-http-nonnumeric-port",
+          "read-stage38-edge-http-large-port",
+          "read-stage38-edge-http-fragment",
+          "read-stage38-edge-read-lazy-dynamic-type",
+          "read-stage38-edge-read-list-type",
+          "read-stage38-frontend-single-operand",
+          "read-stage38-frontend-space-before-open",
+          "read-stage38-frontend-newline-before-open",
+          "read-stage38-frontend-comment-before-open",
+          "read-stage38-frontend-spaced-keyword",
+          "read-stage38-frontend-empty-operand",
+          "read-stage38-frontend-extra-operand",
+          "read-stage38-frontend-bare-keyword",
+          "read-stage38-frontend-quoted-nullable-method",
+          "read-stage38-frontend-quoted-read-method",
+          "read-stage38-frontend-keyword-with-quoted-shadow",
+          "read-stage38-frontend-qualified-nullable-keyword",
+          "read-stage38-frontend-contextual-new-boundary",
+          "read-stage38-frontend-operand-local-scope",
+          "read-stage38-frontend-nested-null-operand",
+          "read-stage38-shadow-nullable-keyword-with-quoted-shadow",
+          "read-stage38-shadow-quoted-missing-read",
+          "read-stage38-shadow-quoted-missing-nullable-read",
+          "read-stage38-shadow-empty-read-operand",
+          "read-stage38-shadow-extra-read-operand",
+          "read-stage38-shadow-read-contextual-new-boundary",
+          "read-stage38-power-power-read-null-comparison",
+          "read-stage38-power-power-read-lexical-operand"
         ],
         "state": "partial"
       }
@@ -163348,7 +165392,28 @@
           "annotation-stage35-review-deprecated-typed-spread",
           "annotation-stage35-review-deprecated-const-spread",
           "annotation-stage35-review-member-eager-const-when",
-          "annotation-stage35-review-member-lazy-const-control"
+          "annotation-stage35-review-member-lazy-const-control",
+          "method-stage38-implicit-empty",
+          "method-stage38-implicit-nonempty",
+          "method-stage38-implicit-typo-method",
+          "method-stage38-implicit-typo-arity",
+          "method-stage38-implicit-property",
+          "method-stage38-implicit-local-method",
+          "method-stage38-implicit-inherited-method",
+          "method-stage38-implicit-class-method",
+          "method-stage38-implicit-class-empty",
+          "method-stage38-explicit-module-empty",
+          "method-stage38-explicit-module-nonempty",
+          "method-stage38-implicit-base-constructor",
+          "method-stage38-order-lexical-method-base-property-tie",
+          "method-stage38-order-local-method-base-property-tie",
+          "method-stage38-order-outer-method-base-property-tie",
+          "method-stage38-order-nearest-method-shadow-tie",
+          "method-stage38-order-equal-similarity-arity-rank",
+          "method-stage38-order-equal-rank-declaration-order",
+          "method-stage38-order-explicit-module-excludes-base-properties",
+          "method-stage38-order-same-scope-property-before-method",
+          "method-stage38-order-nested-method-before-outer-property"
         ],
         "state": "partial"
       }
@@ -163360,12 +165425,12 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "10bdc962b690c2eb54def22c90bda05421e2a83b0450cddfe4a4272f8967b9c8",
+            "sha256": "189dc0408cf1bbecde81651273ff1f719f49003351c203d8aca32b8a82861a93",
             "symbol": "initialize_member_types"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "10bdc962b690c2eb54def22c90bda05421e2a83b0450cddfe4a4272f8967b9c8",
+            "sha256": "189dc0408cf1bbecde81651273ff1f719f49003351c203d8aca32b8a82861a93",
             "symbol": "validate_class_override"
           },
           {
@@ -163375,7 +165440,7 @@
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "10bdc962b690c2eb54def22c90bda05421e2a83b0450cddfe4a4272f8967b9c8",
+            "sha256": "189dc0408cf1bbecde81651273ff1f719f49003351c203d8aca32b8a82861a93",
             "symbol": "force_key"
           },
           {
@@ -165942,12 +168007,12 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "10bdc962b690c2eb54def22c90bda05421e2a83b0450cddfe4a4272f8967b9c8",
+            "sha256": "189dc0408cf1bbecde81651273ff1f719f49003351c203d8aca32b8a82861a93",
             "symbol": "validate_object_override"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "10bdc962b690c2eb54def22c90bda05421e2a83b0450cddfe4a4272f8967b9c8",
+            "sha256": "189dc0408cf1bbecde81651273ff1f719f49003351c203d8aca32b8a82861a93",
             "symbol": "inherited_member"
           }
         ],
@@ -166155,17 +168220,17 @@
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "10bdc962b690c2eb54def22c90bda05421e2a83b0450cddfe4a4272f8967b9c8",
+            "sha256": "189dc0408cf1bbecde81651273ff1f719f49003351c203d8aca32b8a82861a93",
             "symbol": "validate_class_override"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "10bdc962b690c2eb54def22c90bda05421e2a83b0450cddfe4a4272f8967b9c8",
+            "sha256": "189dc0408cf1bbecde81651273ff1f719f49003351c203d8aca32b8a82861a93",
             "symbol": "validate_object_override"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "10bdc962b690c2eb54def22c90bda05421e2a83b0450cddfe4a4272f8967b9c8",
+            "sha256": "189dc0408cf1bbecde81651273ff1f719f49003351c203d8aca32b8a82861a93",
             "symbol": "initialize_member_types"
           }
         ],
@@ -166559,37 +168624,37 @@
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "10bdc962b690c2eb54def22c90bda05421e2a83b0450cddfe4a4272f8967b9c8",
+            "sha256": "189dc0408cf1bbecde81651273ff1f719f49003351c203d8aca32b8a82861a93",
             "symbol": "validate_class_override"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "10bdc962b690c2eb54def22c90bda05421e2a83b0450cddfe4a4272f8967b9c8",
+            "sha256": "189dc0408cf1bbecde81651273ff1f719f49003351c203d8aca32b8a82861a93",
             "symbol": "validate_object_override"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "10bdc962b690c2eb54def22c90bda05421e2a83b0450cddfe4a4272f8967b9c8",
+            "sha256": "189dc0408cf1bbecde81651273ff1f719f49003351c203d8aca32b8a82861a93",
             "symbol": "initialize_member_types"
           },
           {
             "path": "crates/pkl-runtime/src/resolver.rs",
-            "sha256": "96a501cdf76382a9f7517e2d4a704531d08d78054257a3977fc94b5048d4c020",
+            "sha256": "08462255198ada43fcc2e7b90253abed2533de5f10b6d62785aedbf09de418af",
             "symbol": "validate_modifiers"
           },
           {
             "path": "crates/pkl-runtime/src/resolver.rs",
-            "sha256": "96a501cdf76382a9f7517e2d4a704531d08d78054257a3977fc94b5048d4c020",
+            "sha256": "08462255198ada43fcc2e7b90253abed2533de5f10b6d62785aedbf09de418af",
             "symbol": "ConstLevel"
           },
           {
             "path": "crates/pkl-runtime/src/resolver.rs",
-            "sha256": "96a501cdf76382a9f7517e2d4a704531d08d78054257a3977fc94b5048d4c020",
+            "sha256": "08462255198ada43fcc2e7b90253abed2533de5f10b6d62785aedbf09de418af",
             "symbol": "ConstScope"
           },
           {
             "path": "crates/pkl-runtime/src/parser.rs",
-            "sha256": "83da7a1ddb3e611111484efd00bc147f7c275dc22db4507c17ace65a558406d7",
+            "sha256": "db7a66d35f549b8d2104ef332fda8adc610c82b0eda52590551e9dec28f2cfc2",
             "symbol": "arguments"
           },
           {
@@ -166900,12 +168965,12 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "10bdc962b690c2eb54def22c90bda05421e2a83b0450cddfe4a4272f8967b9c8",
+            "sha256": "189dc0408cf1bbecde81651273ff1f719f49003351c203d8aca32b8a82861a93",
             "symbol": "TypeCheck"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "10bdc962b690c2eb54def22c90bda05421e2a83b0450cddfe4a4272f8967b9c8",
+            "sha256": "189dc0408cf1bbecde81651273ff1f719f49003351c203d8aca32b8a82861a93",
             "symbol": "compile_type_at"
           },
           {
@@ -166915,7 +168980,7 @@
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "10bdc962b690c2eb54def22c90bda05421e2a83b0450cddfe4a4272f8967b9c8",
+            "sha256": "189dc0408cf1bbecde81651273ff1f719f49003351c203d8aca32b8a82861a93",
             "symbol": "invoke_function"
           },
           {
@@ -166925,12 +168990,12 @@
           },
           {
             "path": "crates/pkl-runtime/src/resolver.rs",
-            "sha256": "96a501cdf76382a9f7517e2d4a704531d08d78054257a3977fc94b5048d4c020",
+            "sha256": "08462255198ada43fcc2e7b90253abed2533de5f10b6d62785aedbf09de418af",
             "symbol": "ConstScope"
           },
           {
             "path": "crates/pkl-runtime/src/parser.rs",
-            "sha256": "83da7a1ddb3e611111484efd00bc147f7c275dc22db4507c17ace65a558406d7",
+            "sha256": "db7a66d35f549b8d2104ef332fda8adc610c82b0eda52590551e9dec28f2cfc2",
             "symbol": "arguments"
           },
           {
@@ -167348,6 +169413,27 @@
           "property-parent-stage34-shorthand-nested",
           "property-parent-stage34-origin-inherited-nested-listing-any",
           "property-parent-stage34-origin-listing-any",
+          "method-stage38-implicit-empty",
+          "method-stage38-implicit-nonempty",
+          "method-stage38-implicit-typo-method",
+          "method-stage38-implicit-typo-arity",
+          "method-stage38-implicit-property",
+          "method-stage38-implicit-local-method",
+          "method-stage38-implicit-inherited-method",
+          "method-stage38-implicit-class-method",
+          "method-stage38-implicit-class-empty",
+          "method-stage38-explicit-module-empty",
+          "method-stage38-explicit-module-nonempty",
+          "method-stage38-implicit-base-constructor",
+          "method-stage38-order-lexical-method-base-property-tie",
+          "method-stage38-order-local-method-base-property-tie",
+          "method-stage38-order-outer-method-base-property-tie",
+          "method-stage38-order-nearest-method-shadow-tie",
+          "method-stage38-order-equal-similarity-arity-rank",
+          "method-stage38-order-equal-rank-declaration-order",
+          "method-stage38-order-explicit-module-excludes-base-properties",
+          "method-stage38-order-same-scope-property-before-method",
+          "method-stage38-order-nested-method-before-outer-property",
           "types-stage18-default-style-lambda"
         ],
         "state": "partial"
@@ -169349,12 +171435,12 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "10bdc962b690c2eb54def22c90bda05421e2a83b0450cddfe4a4272f8967b9c8",
+            "sha256": "189dc0408cf1bbecde81651273ff1f719f49003351c203d8aca32b8a82861a93",
             "symbol": "TypeCheck"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "10bdc962b690c2eb54def22c90bda05421e2a83b0450cddfe4a4272f8967b9c8",
+            "sha256": "189dc0408cf1bbecde81651273ff1f719f49003351c203d8aca32b8a82861a93",
             "symbol": "initialize_type_resolution"
           },
           {
@@ -169364,12 +171450,12 @@
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "10bdc962b690c2eb54def22c90bda05421e2a83b0450cddfe4a4272f8967b9c8",
+            "sha256": "189dc0408cf1bbecde81651273ff1f719f49003351c203d8aca32b8a82861a93",
             "symbol": "type_resolution_plan"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "10bdc962b690c2eb54def22c90bda05421e2a83b0450cddfe4a4272f8967b9c8",
+            "sha256": "189dc0408cf1bbecde81651273ff1f719f49003351c203d8aca32b8a82861a93",
             "symbol": "active_constraints"
           },
           {
@@ -171105,32 +173191,32 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "10bdc962b690c2eb54def22c90bda05421e2a83b0450cddfe4a4272f8967b9c8",
+            "sha256": "189dc0408cf1bbecde81651273ff1f719f49003351c203d8aca32b8a82861a93",
             "symbol": "BeginTypeAlias"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "10bdc962b690c2eb54def22c90bda05421e2a83b0450cddfe4a4272f8967b9c8",
+            "sha256": "189dc0408cf1bbecde81651273ff1f719f49003351c203d8aca32b8a82861a93",
             "symbol": "NamedAlias"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "10bdc962b690c2eb54def22c90bda05421e2a83b0450cddfe4a4272f8967b9c8",
+            "sha256": "189dc0408cf1bbecde81651273ff1f719f49003351c203d8aca32b8a82861a93",
             "symbol": "compile_type_at"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "10bdc962b690c2eb54def22c90bda05421e2a83b0450cddfe4a4272f8967b9c8",
+            "sha256": "189dc0408cf1bbecde81651273ff1f719f49003351c203d8aca32b8a82861a93",
             "symbol": "type_resolution_plan"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "10bdc962b690c2eb54def22c90bda05421e2a83b0450cddfe4a4272f8967b9c8",
+            "sha256": "189dc0408cf1bbecde81651273ff1f719f49003351c203d8aca32b8a82861a93",
             "symbol": "initialize_type_resolution"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "10bdc962b690c2eb54def22c90bda05421e2a83b0450cddfe4a4272f8967b9c8",
+            "sha256": "189dc0408cf1bbecde81651273ff1f719f49003351c203d8aca32b8a82861a93",
             "symbol": "active_constraints"
           },
           {
@@ -171898,7 +173984,7 @@
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "10bdc962b690c2eb54def22c90bda05421e2a83b0450cddfe4a4272f8967b9c8",
+            "sha256": "189dc0408cf1bbecde81651273ff1f719f49003351c203d8aca32b8a82861a93",
             "symbol": "invoke_function"
           },
           {
@@ -172564,6 +174650,8 @@
           "collection-stage24-nullable-inferred-outer-throw-empty",
           "collection-stage24-nullable-inferred-outer-throw-body",
           "diagnostic-stage32-typed-type-predicate",
+          "read-stage38-power-power-read-null-comparison",
+          "read-stage38-power-power-read-lexical-operand",
           "types-stage17-const-method-local",
           "types-stage17-const-method-ordinary",
           "types-stage17-const-method-this",
@@ -172618,12 +174706,12 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "10bdc962b690c2eb54def22c90bda05421e2a83b0450cddfe4a4272f8967b9c8",
+            "sha256": "189dc0408cf1bbecde81651273ff1f719f49003351c203d8aca32b8a82861a93",
             "symbol": "NamedAlias"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "10bdc962b690c2eb54def22c90bda05421e2a83b0450cddfe4a4272f8967b9c8",
+            "sha256": "189dc0408cf1bbecde81651273ff1f719f49003351c203d8aca32b8a82861a93",
             "symbol": "compile_type_at"
           },
           {
@@ -172633,12 +174721,12 @@
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "10bdc962b690c2eb54def22c90bda05421e2a83b0450cddfe4a4272f8967b9c8",
+            "sha256": "189dc0408cf1bbecde81651273ff1f719f49003351c203d8aca32b8a82861a93",
             "symbol": "type_resolution_plan"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "10bdc962b690c2eb54def22c90bda05421e2a83b0450cddfe4a4272f8967b9c8",
+            "sha256": "189dc0408cf1bbecde81651273ff1f719f49003351c203d8aca32b8a82861a93",
             "symbol": "initialize_type_resolution"
           },
           {
@@ -173992,12 +176080,12 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/parser.rs",
-            "sha256": "83da7a1ddb3e611111484efd00bc147f7c275dc22db4507c17ace65a558406d7",
+            "sha256": "db7a66d35f549b8d2104ef332fda8adc610c82b0eda52590551e9dec28f2cfc2",
             "symbol": "annotations"
           },
           {
             "path": "crates/pkl-runtime/src/resolver.rs",
-            "sha256": "96a501cdf76382a9f7517e2d4a704531d08d78054257a3977fc94b5048d4c020",
+            "sha256": "08462255198ada43fcc2e7b90253abed2533de5f10b6d62785aedbf09de418af",
             "symbol": "Annotations"
           },
           {
@@ -174158,7 +176246,7 @@
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "10bdc962b690c2eb54def22c90bda05421e2a83b0450cddfe4a4272f8967b9c8",
+            "sha256": "189dc0408cf1bbecde81651273ff1f719f49003351c203d8aca32b8a82861a93",
             "symbol": "initialize_member_types"
           },
           {
@@ -174352,17 +176440,17 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/parser.rs",
-            "sha256": "83da7a1ddb3e611111484efd00bc147f7c275dc22db4507c17ace65a558406d7",
+            "sha256": "db7a66d35f549b8d2104ef332fda8adc610c82b0eda52590551e9dec28f2cfc2",
             "symbol": "import"
           },
           {
             "path": "crates/pkl-runtime/src/resolver.rs",
-            "sha256": "96a501cdf76382a9f7517e2d4a704531d08d78054257a3977fc94b5048d4c020",
+            "sha256": "08462255198ada43fcc2e7b90253abed2533de5f10b6d62785aedbf09de418af",
             "symbol": "visit"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "10bdc962b690c2eb54def22c90bda05421e2a83b0450cddfe4a4272f8967b9c8",
+            "sha256": "189dc0408cf1bbecde81651273ff1f719f49003351c203d8aca32b8a82861a93",
             "symbol": "compile_type_at"
           }
         ],
@@ -174407,7 +176495,7 @@
           },
           {
             "path": "crates/pkl-runtime/src/evaluation.rs",
-            "sha256": "69b2d97b133dc02c2173f552400f3d4338a1e2549cebc41366d8b9e40d952487",
+            "sha256": "e27bf6018944b04154becc615db679e55e0c05d3bb81cfd5a1d656d7ad3f6938",
             "symbol": "runtime_error"
           },
           {
@@ -174427,12 +176515,12 @@
           },
           {
             "path": "crates/pkl-runtime/src/resolver.rs",
-            "sha256": "96a501cdf76382a9f7517e2d4a704531d08d78054257a3977fc94b5048d4c020",
+            "sha256": "08462255198ada43fcc2e7b90253abed2533de5f10b6d62785aedbf09de418af",
             "symbol": "ConstScope"
           },
           {
             "path": "crates/pkl-runtime/src/parser.rs",
-            "sha256": "83da7a1ddb3e611111484efd00bc147f7c275dc22db4507c17ace65a558406d7",
+            "sha256": "db7a66d35f549b8d2104ef332fda8adc610c82b0eda52590551e9dec28f2cfc2",
             "symbol": "arguments"
           },
           {
@@ -174447,7 +176535,7 @@
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "10bdc962b690c2eb54def22c90bda05421e2a83b0450cddfe4a4272f8967b9c8",
+            "sha256": "189dc0408cf1bbecde81651273ff1f719f49003351c203d8aca32b8a82861a93",
             "symbol": "executable_value_span"
           },
           {
@@ -174485,7 +176573,7 @@
           "Cyclic rendering oracle failures, identity-dependent keys, complete diagnostic-time forcing/Host suspension and finite truncation side effects remain unresolved or unverified.",
           "The new persistent originals use trace; complete trace logging and its original sequence contract remain required."
         ],
-        "scope": "Reference constructor, access, constraint and rendering errors retain complete message, authored frame, foreign standard-library source and URI bytes in selected comparisons. Stage11 adds selected fixed declaration, inherited metadata and complete raw diagnostics through the shared VM. Stage 13 adds selected alias/function metadata, exported-type equality and complete raw diagnostic comparisons; original suite execution and remaining scope stay open. Stage 14 adds selected authored type-resolution order, generic parameter scope and nested substitution, class/alias arity ordering, and owner signature diagnostics; persistent failed-declaration state has a separate sequence contract. Stage 15 adds selected non-generic recursive constraint block graphs and declaration type scope, plus builtin Class argument erasure and arity ordering. At Stage 15 recursive generic constraints remained open; Stage 16 adds bounded shared receiver-slot support. Stage 16: Selected recursive frame compression, count-one loops, complete call spans and hint placement match Java uncolored diagnostics. Stage 17: Selected const-method barriers, lambda lookup depth, immediate outer lexical scope, and grouped-callee parser diagnostics follow the pinned Java behavior. Stage 18 adds selected let-body and for-generator lexical const-depth boundaries while retaining enclosing const levels, plus their complete raw diagnostics and lambda controls. Selected finite recursive generic and instantiated type-variable failures compare complete Java bytes with power assertions enabled and disabled. Stage 19 adds bounded shared-metadata regressions for finite deep and branching actual arguments, observable class-argument swaps, inline/lambda/shared-let recursion, recursive Reference validation, and distinct wrapper actuals. Original Java stack errors, historical native abort evidence, full language semantics and performance remain separately accounted. Stage20 adds bounded nullable defaults, inferred collection amendments, null identity and repeated default failures; complete nullable and collection semantics remain unverified. Stage21 adds bounded direct symbolic constructors, actual-argument diagnostics, lazy class defaults, collection body controls and persistent retries; complete constructors, lexical roots and builtin coverage remain unverified. Stage22 adds bounded strict Map construction, boxed/hash-prefix key semantics, lazy nested generic values, insertion-order iteration and HAMT-ordered equality/hash forcing; complete Map APIs and language coverage remain unverified. Stage23 adds bounded strict Set construction, immediate element hashing and deduplication, boxed/cache-sensitive membership, Set defaults and generic aliases, eager nested element checks, structural equality/hash, insertion-order generation/spreading and raw null/default diagnostic controls; complete Set APIs and language coverage remain unverified. Stage 24 additionally covers bounded Collection List/Set classification, eager versus lazy nested validation, aliases/defaults, nullable constructor timing, selected metadata and complete diagnostics. Stage 30 preserves UTF-16 diagnostic member paths through parser/resolver/compiler counters, block metadata, runtime frames and recursive compression. Selected sibling entry/function numbering and detached lifecycle names distinguish unmatched surrogates from literal question marks before Java UTF-8 output. Typed-property diagnostic controls distinguish inline checks for object-local declarations from module/class-local separate call frames; alias use does not change the declaration category. Stage 31 distinguishes folded numeric-token value frames for local properties from authored body sections retained by selected public class constant properties. Selected complete diagnostics cover signed integer/float literals, whitespace/comments/multiline syntax, radix and minimum-integer literals, grouping, direct constraints and aliases; operand, argument/return, cast, overflow-literal and first-error controls retain their separate source ownership. Success controls preserve minimum integers and negative-zero arithmetic. These selected observations do not establish the complete numeric or diagnostic surface. Additional scalar-constant controls distinguish grouping removal in computed local bodies from source reconstruction for selected non-local property, overridden property, Mapping entry and Listing element value frames. Grouped string, Boolean and null constants preserve the same wrapper distinction. Original failed baseline and first-candidate grouped Listing observations remain preserved alongside the selected reconstruction regression; later observations do not relabel those historical failures. Stage 32 adds bounded forbidden non-local object property type-annotation diagnostic ownership, nested declaration paths, earlier-error controls and valid module/class/object-local annotations; complete frontend diagnostics remain separately unverified. Stage 33 adds bounded const-modifier ownership before property-scope entry, method inferred-new versus lambda first-error selection, explicit-parent and earlier-error controls, and successful Dynamic/untyped method and unused-body controls. Non-Dynamic typed method return inference remains outside this repair. Stage 36 adds resumable object deep forcing and object.toString rendering with persistent force marks, owner-specific hidden declarations, inherited member order, undefined-member handling, and renderer key hashing/equality. Selected scalar comparisons and separate stateful/Host observations retain their own raw contracts. Additional source-derived controls cover user-defined toString interpolation, hidden builtin defaults and inherited equal/colliding object keys. Modifier-addition controls distinguish Java IMPORT, CLASS and TYPE_ALIAS bits when filtering rendered declarations.",
+        "scope": "Reference constructor, access, constraint and rendering errors retain complete message, authored frame, foreign standard-library source and URI bytes in selected comparisons. Stage11 adds selected fixed declaration, inherited metadata and complete raw diagnostics through the shared VM. Stage 13 adds selected alias/function metadata, exported-type equality and complete raw diagnostic comparisons; original suite execution and remaining scope stay open. Stage 14 adds selected authored type-resolution order, generic parameter scope and nested substitution, class/alias arity ordering, and owner signature diagnostics; persistent failed-declaration state has a separate sequence contract. Stage 15 adds selected non-generic recursive constraint block graphs and declaration type scope, plus builtin Class argument erasure and arity ordering. At Stage 15 recursive generic constraints remained open; Stage 16 adds bounded shared receiver-slot support. Stage 16: Selected recursive frame compression, count-one loops, complete call spans and hint placement match Java uncolored diagnostics. Stage 17: Selected const-method barriers, lambda lookup depth, immediate outer lexical scope, and grouped-callee parser diagnostics follow the pinned Java behavior. Stage 18 adds selected let-body and for-generator lexical const-depth boundaries while retaining enclosing const levels, plus their complete raw diagnostics and lambda controls. Selected finite recursive generic and instantiated type-variable failures compare complete Java bytes with power assertions enabled and disabled. Stage 19 adds bounded shared-metadata regressions for finite deep and branching actual arguments, observable class-argument swaps, inline/lambda/shared-let recursion, recursive Reference validation, and distinct wrapper actuals. Original Java stack errors, historical native abort evidence, full language semantics and performance remain separately accounted. Stage20 adds bounded nullable defaults, inferred collection amendments, null identity and repeated default failures; complete nullable and collection semantics remain unverified. Stage21 adds bounded direct symbolic constructors, actual-argument diagnostics, lazy class defaults, collection body controls and persistent retries; complete constructors, lexical roots and builtin coverage remain unverified. Stage22 adds bounded strict Map construction, boxed/hash-prefix key semantics, lazy nested generic values, insertion-order iteration and HAMT-ordered equality/hash forcing; complete Map APIs and language coverage remain unverified. Stage23 adds bounded strict Set construction, immediate element hashing and deduplication, boxed/cache-sensitive membership, Set defaults and generic aliases, eager nested element checks, structural equality/hash, insertion-order generation/spreading and raw null/default diagnostic controls; complete Set APIs and language coverage remain unverified. Stage 24 additionally covers bounded Collection List/Set classification, eager versus lazy nested validation, aliases/defaults, nullable constructor timing, selected metadata and complete diagnostics. Stage 30 preserves UTF-16 diagnostic member paths through parser/resolver/compiler counters, block metadata, runtime frames and recursive compression. Selected sibling entry/function numbering and detached lifecycle names distinguish unmatched surrogates from literal question marks before Java UTF-8 output. Typed-property diagnostic controls distinguish inline checks for object-local declarations from module/class-local separate call frames; alias use does not change the declaration category. Stage 31 distinguishes folded numeric-token value frames for local properties from authored body sections retained by selected public class constant properties. Selected complete diagnostics cover signed integer/float literals, whitespace/comments/multiline syntax, radix and minimum-integer literals, grouping, direct constraints and aliases; operand, argument/return, cast, overflow-literal and first-error controls retain their separate source ownership. Success controls preserve minimum integers and negative-zero arithmetic. These selected observations do not establish the complete numeric or diagnostic surface. Additional scalar-constant controls distinguish grouping removal in computed local bodies from source reconstruction for selected non-local property, overridden property, Mapping entry and Listing element value frames. Grouped string, Boolean and null constants preserve the same wrapper distinction. Original failed baseline and first-candidate grouped Listing observations remain preserved alongside the selected reconstruction regression; later observations do not relabel those historical failures. Stage 32 adds bounded forbidden non-local object property type-annotation diagnostic ownership, nested declaration paths, earlier-error controls and valid module/class/object-local annotations; complete frontend diagnostics remain separately unverified. Stage 33 adds bounded const-modifier ownership before property-scope entry, method inferred-new versus lambda first-error selection, explicit-parent and earlier-error controls, and successful Dynamic/untyped method and unused-body controls. Non-Dynamic typed method return inference remains outside this repair. Stage 36 adds resumable object deep forcing and object.toString rendering with persistent force marks, owner-specific hidden declarations, inherited member order, undefined-member handling, and renderer key hashing/equality. Selected scalar comparisons and separate stateful/Host observations retain their own raw contracts. Additional source-derived controls cover user-defined toString interpolation, hidden builtin defaults and inherited equal/colliding object keys. Modifier-addition controls distinguish Java IMPORT, CLASS and TYPE_ALIAS bits when filtering rendered declarations. Stage38 adds original generic implicit/explicit missing-method, suggestions, call-span and argument-order controls; failures remain visible until differential verification. Stage38 additionally checks lexical candidate ordering across property/method and scope boundaries, stable similarity/arity ranking, and explicit-receiver contrast against nine fresh Java observations.",
         "source": "compatibility/m2-mappings.json"
       },
       "tests": {
@@ -176420,7 +178508,107 @@
           "trace-stage37-repeat-supplementary-overflow",
           "trace-stage37-repeat-lone-surrogate",
           "trace-stage37-repeat-supplementary-normal",
-          "trace-stage37-repeat-arity-two-before-constraint"
+          "trace-stage37-repeat-arity-two-before-constraint",
+          "read-stage38-life-opaque",
+          "read-stage38-life-upper",
+          "read-stage38-life-mixed",
+          "read-stage38-life-hierarchical-normalized",
+          "read-stage38-life-opaque-not-normalized",
+          "read-stage38-life-encoded-dot",
+          "read-stage38-env-uppercase",
+          "read-stage38-env-mixed",
+          "read-stage38-env-prefix-boundary",
+          "read-stage38-prop-prefix-boundary",
+          "read-stage38-http-denied",
+          "read-stage38-http-normalized-denied",
+          "read-stage38-http-uppercase",
+          "read-stage38-malformed-space",
+          "read-stage38-malformed-percent",
+          "read-stage38-malformed-percent-pair",
+          "read-stage38-malformed-http-bracket",
+          "read-stage38-malformed-leading-digit",
+          "read-stage38-malformed-leading-underscore",
+          "read-stage38-empty-life-ssp",
+          "read-stage38-empty-env-ssp",
+          "read-stage38-backslash-after-colon",
+          "read-stage38-uri-unpaired-surrogate",
+          "read-stage38-env-missing",
+          "read-stage38-env-missing-nullable",
+          "read-stage38-prop-missing",
+          "read-stage38-prop-missing-nullable",
+          "read-stage38-env-hierarchical-missing",
+          "read-stage38-env-hierarchical-missing-nullable",
+          "read-stage38-prop-normalized-hierarchical",
+          "read-stage38-prop-normalized-hierarchical-nullable",
+          "read-stage38-nullable-denied-life",
+          "read-stage38-nullable-denied-http",
+          "read-stage38-nullable-malformed",
+          "read-stage38-read-type-before-uri",
+          "read-stage38-read-null-type-before-uri",
+          "read-stage38-operand-throw-before-uri",
+          "read-stage38-noop-trace-object-frame",
+          "read-stage38-noop-trace-strict-list-frame",
+          "read-stage38-ordinary-object-read-frame",
+          "read-stage38-noop-trace-nested-member-frame",
+          "read-stage38-profile-env-path",
+          "read-stage38-profile-env-path-nullable",
+          "read-stage38-profile-env-home",
+          "read-stage38-profile-env-home-nullable",
+          "read-stage38-profile-prop-user-home",
+          "read-stage38-profile-prop-user-home-nullable",
+          "read-stage38-profile-prop-java-version",
+          "read-stage38-profile-prop-java-version-nullable",
+          "read-stage38-edge-http-opaque",
+          "read-stage38-edge-http-invalid-host",
+          "read-stage38-edge-http-nonnumeric-port",
+          "read-stage38-edge-http-large-port",
+          "read-stage38-edge-http-fragment",
+          "read-stage38-edge-read-lazy-dynamic-type",
+          "read-stage38-edge-read-list-type",
+          "read-stage38-frontend-single-operand",
+          "read-stage38-frontend-space-before-open",
+          "read-stage38-frontend-newline-before-open",
+          "read-stage38-frontend-comment-before-open",
+          "read-stage38-frontend-spaced-keyword",
+          "read-stage38-frontend-empty-operand",
+          "read-stage38-frontend-extra-operand",
+          "read-stage38-frontend-bare-keyword",
+          "read-stage38-frontend-quoted-nullable-method",
+          "read-stage38-frontend-quoted-read-method",
+          "read-stage38-frontend-keyword-with-quoted-shadow",
+          "read-stage38-frontend-qualified-nullable-keyword",
+          "read-stage38-frontend-contextual-new-boundary",
+          "read-stage38-frontend-operand-local-scope",
+          "read-stage38-frontend-nested-null-operand",
+          "read-stage38-shadow-nullable-keyword-with-quoted-shadow",
+          "read-stage38-shadow-quoted-missing-read",
+          "read-stage38-shadow-quoted-missing-nullable-read",
+          "read-stage38-shadow-empty-read-operand",
+          "read-stage38-shadow-extra-read-operand",
+          "read-stage38-shadow-read-contextual-new-boundary",
+          "read-stage38-power-power-read-null-comparison",
+          "read-stage38-power-power-read-lexical-operand",
+          "method-stage38-implicit-empty",
+          "method-stage38-implicit-nonempty",
+          "method-stage38-implicit-typo-method",
+          "method-stage38-implicit-typo-arity",
+          "method-stage38-implicit-property",
+          "method-stage38-implicit-local-method",
+          "method-stage38-implicit-inherited-method",
+          "method-stage38-implicit-class-method",
+          "method-stage38-implicit-class-empty",
+          "method-stage38-explicit-module-empty",
+          "method-stage38-explicit-module-nonempty",
+          "method-stage38-implicit-base-constructor",
+          "method-stage38-order-lexical-method-base-property-tie",
+          "method-stage38-order-local-method-base-property-tie",
+          "method-stage38-order-outer-method-base-property-tie",
+          "method-stage38-order-nearest-method-shadow-tie",
+          "method-stage38-order-equal-similarity-arity-rank",
+          "method-stage38-order-equal-rank-declaration-order",
+          "method-stage38-order-explicit-module-excludes-base-properties",
+          "method-stage38-order-same-scope-property-before-method",
+          "method-stage38-order-nested-method-before-outer-property"
         ],
         "state": "partial"
       }
@@ -176480,6 +178668,9 @@
           "trace-stage37-pretty-multiline",
           "trace-stage37-pretty-crlf",
           "trace-stage37-compact-limit",
+          "read-stage38-noop-trace-object-frame",
+          "read-stage38-noop-trace-strict-list-frame",
+          "read-stage38-noop-trace-nested-member-frame",
           "trace-stage37-repeat-zero",
           "trace-stage37-repeat-one",
           "trace-stage37-repeat-normal",
@@ -177290,7 +179481,107 @@
           "trace-stage37-repeat-supplementary-overflow",
           "trace-stage37-repeat-lone-surrogate",
           "trace-stage37-repeat-supplementary-normal",
-          "trace-stage37-repeat-arity-two-before-constraint"
+          "trace-stage37-repeat-arity-two-before-constraint",
+          "read-stage38-life-opaque",
+          "read-stage38-life-upper",
+          "read-stage38-life-mixed",
+          "read-stage38-life-hierarchical-normalized",
+          "read-stage38-life-opaque-not-normalized",
+          "read-stage38-life-encoded-dot",
+          "read-stage38-env-uppercase",
+          "read-stage38-env-mixed",
+          "read-stage38-env-prefix-boundary",
+          "read-stage38-prop-prefix-boundary",
+          "read-stage38-http-denied",
+          "read-stage38-http-normalized-denied",
+          "read-stage38-http-uppercase",
+          "read-stage38-malformed-space",
+          "read-stage38-malformed-percent",
+          "read-stage38-malformed-percent-pair",
+          "read-stage38-malformed-http-bracket",
+          "read-stage38-malformed-leading-digit",
+          "read-stage38-malformed-leading-underscore",
+          "read-stage38-empty-life-ssp",
+          "read-stage38-empty-env-ssp",
+          "read-stage38-backslash-after-colon",
+          "read-stage38-uri-unpaired-surrogate",
+          "read-stage38-env-missing",
+          "read-stage38-env-missing-nullable",
+          "read-stage38-prop-missing",
+          "read-stage38-prop-missing-nullable",
+          "read-stage38-env-hierarchical-missing",
+          "read-stage38-env-hierarchical-missing-nullable",
+          "read-stage38-prop-normalized-hierarchical",
+          "read-stage38-prop-normalized-hierarchical-nullable",
+          "read-stage38-nullable-denied-life",
+          "read-stage38-nullable-denied-http",
+          "read-stage38-nullable-malformed",
+          "read-stage38-read-type-before-uri",
+          "read-stage38-read-null-type-before-uri",
+          "read-stage38-operand-throw-before-uri",
+          "read-stage38-noop-trace-object-frame",
+          "read-stage38-noop-trace-strict-list-frame",
+          "read-stage38-ordinary-object-read-frame",
+          "read-stage38-noop-trace-nested-member-frame",
+          "read-stage38-profile-env-path",
+          "read-stage38-profile-env-path-nullable",
+          "read-stage38-profile-env-home",
+          "read-stage38-profile-env-home-nullable",
+          "read-stage38-profile-prop-user-home",
+          "read-stage38-profile-prop-user-home-nullable",
+          "read-stage38-profile-prop-java-version",
+          "read-stage38-profile-prop-java-version-nullable",
+          "read-stage38-edge-http-opaque",
+          "read-stage38-edge-http-invalid-host",
+          "read-stage38-edge-http-nonnumeric-port",
+          "read-stage38-edge-http-large-port",
+          "read-stage38-edge-http-fragment",
+          "read-stage38-edge-read-lazy-dynamic-type",
+          "read-stage38-edge-read-list-type",
+          "read-stage38-frontend-single-operand",
+          "read-stage38-frontend-space-before-open",
+          "read-stage38-frontend-newline-before-open",
+          "read-stage38-frontend-comment-before-open",
+          "read-stage38-frontend-spaced-keyword",
+          "read-stage38-frontend-empty-operand",
+          "read-stage38-frontend-extra-operand",
+          "read-stage38-frontend-bare-keyword",
+          "read-stage38-frontend-quoted-nullable-method",
+          "read-stage38-frontend-quoted-read-method",
+          "read-stage38-frontend-keyword-with-quoted-shadow",
+          "read-stage38-frontend-qualified-nullable-keyword",
+          "read-stage38-frontend-contextual-new-boundary",
+          "read-stage38-frontend-operand-local-scope",
+          "read-stage38-frontend-nested-null-operand",
+          "read-stage38-shadow-nullable-keyword-with-quoted-shadow",
+          "read-stage38-shadow-quoted-missing-read",
+          "read-stage38-shadow-quoted-missing-nullable-read",
+          "read-stage38-shadow-empty-read-operand",
+          "read-stage38-shadow-extra-read-operand",
+          "read-stage38-shadow-read-contextual-new-boundary",
+          "read-stage38-power-power-read-null-comparison",
+          "read-stage38-power-power-read-lexical-operand",
+          "method-stage38-implicit-empty",
+          "method-stage38-implicit-nonempty",
+          "method-stage38-implicit-typo-method",
+          "method-stage38-implicit-typo-arity",
+          "method-stage38-implicit-property",
+          "method-stage38-implicit-local-method",
+          "method-stage38-implicit-inherited-method",
+          "method-stage38-implicit-class-method",
+          "method-stage38-implicit-class-empty",
+          "method-stage38-explicit-module-empty",
+          "method-stage38-explicit-module-nonempty",
+          "method-stage38-implicit-base-constructor",
+          "method-stage38-order-lexical-method-base-property-tie",
+          "method-stage38-order-local-method-base-property-tie",
+          "method-stage38-order-outer-method-base-property-tie",
+          "method-stage38-order-nearest-method-shadow-tie",
+          "method-stage38-order-equal-similarity-arity-rank",
+          "method-stage38-order-equal-rank-declaration-order",
+          "method-stage38-order-explicit-module-excludes-base-properties",
+          "method-stage38-order-same-scope-property-before-method",
+          "method-stage38-order-nested-method-before-outer-property"
         ],
         "state": "partial"
       }
@@ -177464,12 +179755,12 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/parser.rs",
-            "sha256": "83da7a1ddb3e611111484efd00bc147f7c275dc22db4507c17ace65a558406d7",
+            "sha256": "db7a66d35f549b8d2104ef332fda8adc610c82b0eda52590551e9dec28f2cfc2",
             "symbol": "annotations"
           },
           {
             "path": "crates/pkl-runtime/src/resolver.rs",
-            "sha256": "96a501cdf76382a9f7517e2d4a704531d08d78054257a3977fc94b5048d4c020",
+            "sha256": "08462255198ada43fcc2e7b90253abed2533de5f10b6d62785aedbf09de418af",
             "symbol": "Annotations"
           },
           {
@@ -179125,12 +181416,12 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/parser.rs",
-            "sha256": "83da7a1ddb3e611111484efd00bc147f7c275dc22db4507c17ace65a558406d7",
+            "sha256": "db7a66d35f549b8d2104ef332fda8adc610c82b0eda52590551e9dec28f2cfc2",
             "symbol": "annotations"
           },
           {
             "path": "crates/pkl-runtime/src/resolver.rs",
-            "sha256": "96a501cdf76382a9f7517e2d4a704531d08d78054257a3977fc94b5048d4c020",
+            "sha256": "08462255198ada43fcc2e7b90253abed2533de5f10b6d62785aedbf09de418af",
             "symbol": "Annotations"
           },
           {
@@ -181733,38 +184024,195 @@
       "description": "READ",
       "id": "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
       "implementation": {
-        "links": [],
-        "state": "unimplemented"
+        "links": [
+          {
+            "path": "crates/pkl-runtime/src/parser.rs",
+            "sha256": "db7a66d35f549b8d2104ef332fda8adc610c82b0eda52590551e9dec28f2cfc2",
+            "symbol": "ReadResource"
+          },
+          {
+            "path": "crates/pkl-runtime/src/vm/compiler_expressions.rs",
+            "sha256": "295afbeec602b24b65d492ff74cffc63484a3f625be13bdd5006fe843ff397f6",
+            "symbol": "ReadResourceOrNull"
+          },
+          {
+            "path": "crates/pkl-runtime/src/host/resources.rs",
+            "sha256": "1eb939fc774287d4e929f72edcadb0f23edb38cf42efd96c800fc20dc4d77691",
+            "symbol": "default_result"
+          }
+        ],
+        "state": "partial"
       },
       "kind": "language_token",
-      "reason": "Source-derived declaration/heading retained conservatively; semantic mapping requires review.",
+      "reason": "Reviewed source/test links; completion still requires the full recorded scope and executions.",
       "required": true,
+      "reviewed_mapping": {
+        "remaining": [
+          "Complete resource readers, configured policy, loader/cache and Host absence transport remain open.",
+          "Complete URI and lossless UTF-16 diagnostic behavior, original upstream suites and all parser/error contexts remain unverified."
+        ],
+        "scope": "Stage38 authored read/read? keyword and operand parsing, empty env/property profile, URI validation/normalization and raw diagnostic controls. Cases preserve Java-observed failures, including surrogate and internal-error boundaries; final differential acquisition is required.",
+        "source": "compatibility/m2-mappings.json"
+      },
       "source": {
         "line": 48,
         "path": "pkl-parser/src/main/java/org/pkl/parser/Token.java"
       },
       "tests": {
-        "case_ids": [],
-        "state": "unmapped"
+        "case_ids": [
+          "read-stage38-life-opaque",
+          "read-stage38-life-upper",
+          "read-stage38-life-mixed",
+          "read-stage38-life-hierarchical-normalized",
+          "read-stage38-life-opaque-not-normalized",
+          "read-stage38-life-encoded-dot",
+          "read-stage38-env-uppercase",
+          "read-stage38-env-mixed",
+          "read-stage38-env-prefix-boundary",
+          "read-stage38-prop-prefix-boundary",
+          "read-stage38-http-denied",
+          "read-stage38-http-normalized-denied",
+          "read-stage38-http-uppercase",
+          "read-stage38-malformed-space",
+          "read-stage38-malformed-percent",
+          "read-stage38-malformed-percent-pair",
+          "read-stage38-malformed-http-bracket",
+          "read-stage38-malformed-leading-digit",
+          "read-stage38-malformed-leading-underscore",
+          "read-stage38-empty-life-ssp",
+          "read-stage38-empty-env-ssp",
+          "read-stage38-backslash-after-colon",
+          "read-stage38-uri-unpaired-surrogate",
+          "read-stage38-env-missing",
+          "read-stage38-env-missing-nullable",
+          "read-stage38-prop-missing",
+          "read-stage38-prop-missing-nullable",
+          "read-stage38-env-hierarchical-missing",
+          "read-stage38-env-hierarchical-missing-nullable",
+          "read-stage38-prop-normalized-hierarchical",
+          "read-stage38-prop-normalized-hierarchical-nullable",
+          "read-stage38-nullable-denied-life",
+          "read-stage38-nullable-denied-http",
+          "read-stage38-nullable-malformed",
+          "read-stage38-read-type-before-uri",
+          "read-stage38-read-null-type-before-uri",
+          "read-stage38-operand-throw-before-uri",
+          "read-stage38-noop-trace-object-frame",
+          "read-stage38-noop-trace-strict-list-frame",
+          "read-stage38-ordinary-object-read-frame",
+          "read-stage38-noop-trace-nested-member-frame",
+          "read-stage38-profile-env-path",
+          "read-stage38-profile-env-path-nullable",
+          "read-stage38-profile-env-home",
+          "read-stage38-profile-env-home-nullable",
+          "read-stage38-profile-prop-user-home",
+          "read-stage38-profile-prop-user-home-nullable",
+          "read-stage38-profile-prop-java-version",
+          "read-stage38-profile-prop-java-version-nullable",
+          "read-stage38-edge-http-opaque",
+          "read-stage38-edge-http-invalid-host",
+          "read-stage38-edge-http-nonnumeric-port",
+          "read-stage38-edge-http-large-port",
+          "read-stage38-edge-http-fragment",
+          "read-stage38-edge-read-lazy-dynamic-type",
+          "read-stage38-edge-read-list-type",
+          "read-stage38-frontend-single-operand",
+          "read-stage38-frontend-space-before-open",
+          "read-stage38-frontend-newline-before-open",
+          "read-stage38-frontend-comment-before-open",
+          "read-stage38-frontend-spaced-keyword",
+          "read-stage38-frontend-empty-operand",
+          "read-stage38-frontend-extra-operand",
+          "read-stage38-frontend-bare-keyword",
+          "read-stage38-frontend-quoted-nullable-method",
+          "read-stage38-frontend-quoted-read-method",
+          "read-stage38-frontend-keyword-with-quoted-shadow",
+          "read-stage38-frontend-qualified-nullable-keyword",
+          "read-stage38-frontend-contextual-new-boundary",
+          "read-stage38-frontend-operand-local-scope",
+          "read-stage38-frontend-nested-null-operand",
+          "read-stage38-shadow-nullable-keyword-with-quoted-shadow",
+          "read-stage38-shadow-quoted-missing-read",
+          "read-stage38-shadow-quoted-missing-nullable-read",
+          "read-stage38-shadow-empty-read-operand",
+          "read-stage38-shadow-extra-read-operand",
+          "read-stage38-shadow-read-contextual-new-boundary",
+          "read-stage38-power-power-read-null-comparison",
+          "read-stage38-power-power-read-lexical-operand"
+        ],
+        "state": "partial"
       }
     },
     {
       "description": "READ_QUESTION",
       "id": "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ_QUESTION",
       "implementation": {
-        "links": [],
-        "state": "unimplemented"
+        "links": [
+          {
+            "path": "crates/pkl-runtime/src/parser.rs",
+            "sha256": "db7a66d35f549b8d2104ef332fda8adc610c82b0eda52590551e9dec28f2cfc2",
+            "symbol": "ReadResource"
+          },
+          {
+            "path": "crates/pkl-runtime/src/vm/compiler_expressions.rs",
+            "sha256": "295afbeec602b24b65d492ff74cffc63484a3f625be13bdd5006fe843ff397f6",
+            "symbol": "ReadResourceOrNull"
+          },
+          {
+            "path": "crates/pkl-runtime/src/host/resources.rs",
+            "sha256": "1eb939fc774287d4e929f72edcadb0f23edb38cf42efd96c800fc20dc4d77691",
+            "symbol": "default_result"
+          }
+        ],
+        "state": "partial"
       },
       "kind": "language_token",
-      "reason": "Source-derived declaration/heading retained conservatively; semantic mapping requires review.",
+      "reason": "Reviewed source/test links; completion still requires the full recorded scope and executions.",
       "required": true,
+      "reviewed_mapping": {
+        "remaining": [
+          "Complete resource readers, configured policy, loader/cache and Host absence transport remain open.",
+          "Complete URI and lossless UTF-16 diagnostic behavior, original upstream suites and all parser/error contexts remain unverified."
+        ],
+        "scope": "Stage38 authored read/read? keyword and operand parsing, empty env/property profile, URI validation/normalization and raw diagnostic controls. Cases preserve Java-observed failures, including surrogate and internal-error boundaries; final differential acquisition is required.",
+        "source": "compatibility/m2-mappings.json"
+      },
       "source": {
         "line": 50,
         "path": "pkl-parser/src/main/java/org/pkl/parser/Token.java"
       },
       "tests": {
-        "case_ids": [],
-        "state": "unmapped"
+        "case_ids": [
+          "read-stage38-env-missing-nullable",
+          "read-stage38-prop-missing-nullable",
+          "read-stage38-env-hierarchical-missing-nullable",
+          "read-stage38-prop-normalized-hierarchical-nullable",
+          "read-stage38-nullable-denied-life",
+          "read-stage38-nullable-denied-http",
+          "read-stage38-nullable-malformed",
+          "read-stage38-read-null-type-before-uri",
+          "read-stage38-profile-env-path-nullable",
+          "read-stage38-profile-env-home-nullable",
+          "read-stage38-profile-prop-user-home-nullable",
+          "read-stage38-profile-prop-java-version-nullable",
+          "read-stage38-frontend-single-operand",
+          "read-stage38-frontend-space-before-open",
+          "read-stage38-frontend-newline-before-open",
+          "read-stage38-frontend-comment-before-open",
+          "read-stage38-frontend-empty-operand",
+          "read-stage38-frontend-extra-operand",
+          "read-stage38-frontend-bare-keyword",
+          "read-stage38-frontend-quoted-nullable-method",
+          "read-stage38-frontend-qualified-nullable-keyword",
+          "read-stage38-frontend-contextual-new-boundary",
+          "read-stage38-frontend-operand-local-scope",
+          "read-stage38-frontend-nested-null-operand",
+          "read-stage38-shadow-nullable-keyword-with-quoted-shadow",
+          "read-stage38-shadow-quoted-missing-nullable-read",
+          "read-stage38-power-power-read-null-comparison",
+          "read-stage38-power-power-read-lexical-operand"
+        ],
+        "state": "partial"
       }
     },
     {
@@ -182800,12 +185248,12 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/parser.rs",
-            "sha256": "83da7a1ddb3e611111484efd00bc147f7c275dc22db4507c17ace65a558406d7",
+            "sha256": "db7a66d35f549b8d2104ef332fda8adc610c82b0eda52590551e9dec28f2cfc2",
             "symbol": "annotations"
           },
           {
             "path": "crates/pkl-runtime/src/resolver.rs",
-            "sha256": "96a501cdf76382a9f7517e2d4a704531d08d78054257a3977fc94b5048d4c020",
+            "sha256": "08462255198ada43fcc2e7b90253abed2533de5f10b6d62785aedbf09de418af",
             "symbol": "Annotations"
           },
           {
@@ -183706,17 +186154,17 @@
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "10bdc962b690c2eb54def22c90bda05421e2a83b0450cddfe4a4272f8967b9c8",
+            "sha256": "189dc0408cf1bbecde81651273ff1f719f49003351c203d8aca32b8a82861a93",
             "symbol": "validate_class_override"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "10bdc962b690c2eb54def22c90bda05421e2a83b0450cddfe4a4272f8967b9c8",
+            "sha256": "189dc0408cf1bbecde81651273ff1f719f49003351c203d8aca32b8a82861a93",
             "symbol": "validate_object_override"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "10bdc962b690c2eb54def22c90bda05421e2a83b0450cddfe4a4272f8967b9c8",
+            "sha256": "189dc0408cf1bbecde81651273ff1f719f49003351c203d8aca32b8a82861a93",
             "symbol": "initialize_member_types"
           }
         ],
@@ -184144,17 +186592,17 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/parser.rs",
-            "sha256": "83da7a1ddb3e611111484efd00bc147f7c275dc22db4507c17ace65a558406d7",
+            "sha256": "db7a66d35f549b8d2104ef332fda8adc610c82b0eda52590551e9dec28f2cfc2",
             "symbol": "import"
           },
           {
             "path": "crates/pkl-runtime/src/resolver.rs",
-            "sha256": "96a501cdf76382a9f7517e2d4a704531d08d78054257a3977fc94b5048d4c020",
+            "sha256": "08462255198ada43fcc2e7b90253abed2533de5f10b6d62785aedbf09de418af",
             "symbol": "visit"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "10bdc962b690c2eb54def22c90bda05421e2a83b0450cddfe4a4272f8967b9c8",
+            "sha256": "189dc0408cf1bbecde81651273ff1f719f49003351c203d8aca32b8a82861a93",
             "symbol": "compile_type_at"
           }
         ],
@@ -185102,19 +187550,72 @@
       "description": "Nullable Reads",
       "id": "specification:docs/modules/language-reference/pages/index.adoc:Nullable Reads",
       "implementation": {
-        "links": [],
-        "state": "unimplemented"
+        "links": [
+          {
+            "path": "crates/pkl-runtime/src/parser.rs",
+            "sha256": "db7a66d35f549b8d2104ef332fda8adc610c82b0eda52590551e9dec28f2cfc2",
+            "symbol": "ReadResource"
+          },
+          {
+            "path": "crates/pkl-runtime/src/vm/compiler_expressions.rs",
+            "sha256": "295afbeec602b24b65d492ff74cffc63484a3f625be13bdd5006fe843ff397f6",
+            "symbol": "ReadResourceOrNull"
+          },
+          {
+            "path": "crates/pkl-runtime/src/host/resources.rs",
+            "sha256": "1eb939fc774287d4e929f72edcadb0f23edb38cf42efd96c800fc20dc4d77691",
+            "symbol": "default_result"
+          }
+        ],
+        "state": "partial"
       },
       "kind": "specification",
-      "reason": "Source-derived declaration/heading retained conservatively; semantic mapping requires review.",
+      "reason": "Reviewed source/test links; completion still requires the full recorded scope and executions.",
       "required": true,
+      "reviewed_mapping": {
+        "remaining": [
+          "Complete resource readers, configured policy, loader/cache and Host absence transport remain open.",
+          "Complete URI and lossless UTF-16 diagnostic behavior, original upstream suites and all parser/error contexts remain unverified."
+        ],
+        "scope": "Stage38 authored read/read? keyword and operand parsing, empty env/property profile, URI validation/normalization and raw diagnostic controls. Cases preserve Java-observed failures, including surrogate and internal-error boundaries; final differential acquisition is required.",
+        "source": "compatibility/m2-mappings.json"
+      },
       "source": {
         "line": 3124,
         "path": "docs/modules/language-reference/pages/index.adoc"
       },
       "tests": {
-        "case_ids": [],
-        "state": "unmapped"
+        "case_ids": [
+          "read-stage38-env-missing-nullable",
+          "read-stage38-prop-missing-nullable",
+          "read-stage38-env-hierarchical-missing-nullable",
+          "read-stage38-prop-normalized-hierarchical-nullable",
+          "read-stage38-nullable-denied-life",
+          "read-stage38-nullable-denied-http",
+          "read-stage38-nullable-malformed",
+          "read-stage38-read-null-type-before-uri",
+          "read-stage38-profile-env-path-nullable",
+          "read-stage38-profile-env-home-nullable",
+          "read-stage38-profile-prop-user-home-nullable",
+          "read-stage38-profile-prop-java-version-nullable",
+          "read-stage38-frontend-single-operand",
+          "read-stage38-frontend-space-before-open",
+          "read-stage38-frontend-newline-before-open",
+          "read-stage38-frontend-comment-before-open",
+          "read-stage38-frontend-empty-operand",
+          "read-stage38-frontend-extra-operand",
+          "read-stage38-frontend-bare-keyword",
+          "read-stage38-frontend-quoted-nullable-method",
+          "read-stage38-frontend-qualified-nullable-keyword",
+          "read-stage38-frontend-contextual-new-boundary",
+          "read-stage38-frontend-operand-local-scope",
+          "read-stage38-frontend-nested-null-operand",
+          "read-stage38-shadow-nullable-keyword-with-quoted-shadow",
+          "read-stage38-shadow-quoted-missing-nullable-read",
+          "read-stage38-power-power-read-null-comparison",
+          "read-stage38-power-power-read-lexical-operand"
+        ],
+        "state": "partial"
       }
     },
     {
@@ -186608,10 +189109,10 @@
   "sources": {
     "compatibility/corpus.json": "0e95da22f965dede398f1a1f136703ba913d588aa51c1fb871cd97a11c84a0dd",
     "compatibility/inventory.json": "a9b21752adad9a269a54854c0dd298256757be88ad95c1388e30d7c78e407070",
-    "compatibility/m2-mappings.json": "4712d93bd50dabf0e084fde0aa014089f9a67ef218df1b05003b657be070e0e4",
+    "compatibility/m2-mappings.json": "82022a3459e7676bdb2c0889352727698dc19210f9c57307e92f61eeed9d9ed2",
     "compatibility/regressions.json": "09c064f65730d30f72bf87a45c88d47ecc0844e57966a999dc8e759f083af3da",
     "compatibility/rev1-inventory.json": "6061f202ba3f04565efed3617ac69d3c2fadc54eec1f562b67a4758b3d0a8ab5",
     "references.lock": "278f48fd7697459281aa78a706c9ca57222f36a8c0785d838a6449fbaf26d30b",
-    "tests/fixtures/m2/cases.json": "b890dd292b2032353c7d7b9015af45d4dc3c9440fbdcc9c909dc787e98158bc8"
+    "tests/fixtures/m2/cases.json": "2556eb98385b82f3514445789aa5ed38064dd23bf1882926f084b811ffadf03c"
   }
 }

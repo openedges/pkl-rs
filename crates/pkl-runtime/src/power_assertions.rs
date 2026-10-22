@@ -247,6 +247,8 @@ fn expression_anchors(
             ExprKind::NonNull(value)
             | ExprKind::Throw(value)
             | ExprKind::Trace(value)
+            | ExprKind::ReadResource(value)
+            | ExprKind::ReadResourceOrNull(value)
             | ExprKind::Unary { operand: value, .. } => children.push(value.as_ref()),
             ExprKind::If {
                 condition,

@@ -262,6 +262,8 @@ impl Clone for Expr {
                         E::NonNull(_) => E::NonNull(Box::new(next())),
                         E::Throw(_) => E::Throw(Box::new(next())),
                         E::Trace(_) => E::Trace(Box::new(next())),
+                        E::ReadResource(_) => E::ReadResource(Box::new(next())),
+                        E::ReadResourceOrNull(_) => E::ReadResourceOrNull(Box::new(next())),
                         E::Member(_, name) => E::Member(Box::new(next()), name.clone()),
                         E::NullableMember(_, name) => {
                             E::NullableMember(Box::new(next()), name.clone())
@@ -372,6 +374,8 @@ impl Expr {
             | E::NonNull(value)
             | E::Throw(value)
             | E::Trace(value)
+            | E::ReadResource(value)
+            | E::ReadResourceOrNull(value)
             | E::Member(value, _)
             | E::NullableMember(value, _)
             | E::Unary { operand: value, .. }
@@ -549,6 +553,8 @@ impl Drop for Expr {
                 | E::NonNull(value)
                 | E::Throw(value)
                 | E::Trace(value)
+                | E::ReadResource(value)
+                | E::ReadResourceOrNull(value)
                 | E::Member(value, _)
                 | E::NullableMember(value, _)
                 | E::Unary { operand: value, .. }
@@ -635,6 +641,8 @@ pub enum ExprKind {
     NonNull(Box<Expr>),
     Throw(Box<Expr>),
     Trace(Box<Expr>),
+    ReadResource(Box<Expr>),
+    ReadResourceOrNull(Box<Expr>),
     TypeCheck {
         value: Box<Expr>,
         ty: Type,

@@ -211,7 +211,11 @@ fn poll(vm: &mut Vm) -> Result<Value, RuntimeError> {
     for _ in 0..1024 {
         match vm.poll(1024) {
             VmPoll::Ready(result) => return result,
-            VmPoll::Pending(_) | VmPoll::Log(_) => {
+            VmPoll::Pending(request) => {
+                let result = crate::host::resources::default_result(&request);
+                vm.resume(request.id, result)?;
+            }
+            VmPoll::Log(_) => {
                 vm.cancel();
                 return Err(RuntimeError::new(
                     ErrorKind::Unsupported,

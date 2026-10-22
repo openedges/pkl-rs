@@ -116,6 +116,27 @@ Selected differential checks establish only the behavior they execute. See
 [the M2 contract](m2-language.md) and [raw results](../reports/m2/README.md)
 for the remaining language and diagnostic obligations.
 
+### Resource reads and implicit method diagnostics
+
+`read` and `read?` have dedicated expression nodes and VM instructions. Their
+operands follow the ordinary iterative traversal and power-assertion paths;
+quoted method names continue through normal method lookup. A pending read
+retains its authored URI, declaration-source URI and nullable flag. The scalar
+development profile resolves and checks the URI, then completes the request
+through `Vm::resume`, preserving the current continuation and diagnostic frames.
+Its environment/property maps are explicitly empty, and permitted I/O readers
+are still unimplemented. Custom Host callbacks retain their separate contract.
+See the [resource-read contract](m2-resource-reads.md) for the remaining URI,
+absence-transport and resource-cache obligations.
+
+Implicit method suggestions retain each lexical scope's property/method groups
+before enclosing and base candidates, followed by receiver candidates. Similarity
+and arity ranking is stable, and deduplication preserves the earliest visible
+candidate of each kind and name. Explicit receivers keep their existing
+property-before-method search contract. Candidate collection reads declaration
+metadata without forcing values; diagnostic builtin signatures do not imply
+that their callable bodies are implemented.
+
 ### Authored expression traversal
 
 Ordinary authored expression paths use explicit parser, resolver and compiler

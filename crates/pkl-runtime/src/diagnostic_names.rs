@@ -90,6 +90,34 @@ pub(crate) const TYPED_METHODS: &[(&str, &str, usize)] = &[
     ("toMap", "toMap()", 0),
 ];
 
+/// Pinned Module methods, including Any/Typed inheritance. These are diagnostic
+/// signatures only; listing a candidate does not implement its callable body.
+pub(crate) const MODULE_METHODS: &[(&str, &str, usize)] = &[
+    ("getClass", "getClass()", 0),
+    ("toString", "toString()", 0),
+    ("ifNonNull", "ifNonNull(transform)", 1),
+    ("hasProperty", "hasProperty(name)", 1),
+    ("getProperty", "getProperty(name)", 1),
+    ("getPropertyOrNull", "getPropertyOrNull(name)", 1),
+    ("toDynamic", "toDynamic()", 0),
+    ("toMap", "toMap()", 0),
+    ("relativePathTo", "relativePathTo(other)", 1),
+];
+
+/// Top-level functions in pinned base.pkl, in declaration order.
+pub(crate) const BASE_METHODS: &[(&str, &str, usize)] = &[
+    ("Regex", "Regex(pattern)", 1),
+    ("Undefined", "Undefined()", 0),
+    ("TODO", "TODO()", 0),
+    ("Null", "Null(defaultValue)", 1),
+    ("Pair", "Pair(first, second)", 2),
+    ("IntSeq", "IntSeq(start, end)", 2),
+    ("List", "List(elements)", 1),
+    ("Set", "Set(elements)", 1),
+    ("Map", "Map(keysAndValues)", 1),
+    ("Bytes", "Bytes(values)", 1),
+];
+
 /// Pinned Any and Dynamic method signatures, in inherited declaration order.
 /// Diagnostic candidates do not imply that every method body is implemented.
 pub(crate) const DYNAMIC_METHODS: &[(&str, &str, usize)] = &[

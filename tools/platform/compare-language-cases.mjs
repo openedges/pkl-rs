@@ -8,6 +8,56 @@ import { createHash } from 'node:crypto';
 
 const script = fileURLToPath(import.meta.url);
 
+
+// The same function runs against N-API and browser Wasm; every failure is captured.
+export function evaluateLanguageFixtures(api, fixtures, settings, count) {
+  const rows = [];
+  for (let repetition = 0; repetition < count; repetition++) {
+    for (const fixture of fixtures) {
+      let status, payload;
+      try {
+        payload = api.evaluateLanguage(fixture.source, settings.uri, settings.moduleName,
+          fixture.expression, Object.hasOwn(fixture, 'powerAssertions') ? fixture.powerAssertions : settings.powerAssertions);
+        status = typeof payload === 'string' ? 'value' : 'harness_error';
+        if (status === 'harness_error') payload = 'Unexpected non-string return: ' + String(payload);
+      } catch (error) {
+        status = error instanceof Error ? 'error' : 'harness_error';
+        payload = error instanceof Error ? error.message : String(error);
+      }
+      rows.push({ id: fixture.id, repetition, status, payload });
+    }
+  }
+  return rows;
+}
+
+export function compareLanguagePayload(fixture, actualStatus, payload) {
+  const expectedStatus = Object.hasOwn(fixture, 'expectedError') ? 'error' : 'value';
+  const expected = Buffer.from(fixture.expectedError ?? fixture.expectedValue, 'utf8');
+  const actual = Buffer.from(payload, 'utf8');
+  const actualCodeUnits = Buffer.alloc(payload.length * 2);
+  for (let index = 0; index < payload.length; index++) actualCodeUnits.writeUInt16BE(payload.charCodeAt(index), index * 2);
+  const expectedCodeUnits = Object.hasOwn(fixture, 'expectedCodeUnitsHex') ? Buffer.from(fixture.expectedCodeUnitsHex, 'hex') : null;
+  // Java's getBytes(UTF_8) and Node's UTF8 encoder replace unpaired units
+  // differently. Code-unit fixtures describe the JS string API, while the
+  // original Java serialization remains a separate, unmodified byte channel.
+  let expectedJsString = '';
+  if (expectedCodeUnits !== null) {
+    for (let index = 0; index < expectedCodeUnits.length; index += 2)
+      expectedJsString += String.fromCharCode(expectedCodeUnits.readUInt16BE(index));
+  }
+  const expectedNodeUtf8 = expectedCodeUnits === null ? expected : Buffer.from(expectedJsString, 'utf8');
+  const originalJavaUtf8Match = actual.equals(expected);
+  const nodeUtf8Match = actual.equals(expectedNodeUtf8);
+  const codeUnitsMatch = expectedCodeUnits === null ? null : actualCodeUnits.equals(expectedCodeUnits);
+  const javaVsNodeSerializationDivergence = !expected.equals(expectedNodeUtf8);
+  const rawMatch = actualStatus === expectedStatus && nodeUtf8Match && codeUnitsMatch !== false;
+  return { expectedStatus, expected, actual, expectedCodeUnits, actualCodeUnits, expectedNodeUtf8,
+    comparisonBoundary: expectedCodeUnits === null ? 'raw-utf8' : 'js-string-api',
+    utf8Match: originalJavaUtf8Match, originalJavaUtf8Match, nodeUtf8Match, codeUnitsMatch,
+    javaVsNodeSerializationDivergence, rawMatch,
+    status: fixture.oracleError === true ? 'oracle-error' : rawMatch ? 'pass' : 'mismatch' };
+}
+
 export async function compareLanguageCases(args) {
   const root = resolve(dirname(script), '../..');
   const [outputArg, wasmArg, addonArg, fixtureArg] = args;
@@ -27,6 +77,13 @@ export async function compareLanguageCases(args) {
     throw Error('expected nonempty distinct language fixtures with safe identifiers');
   if (!context || typeof context.uri !== 'string' || typeof context.moduleName !== 'string' || typeof context.powerAssertions !== 'boolean')
     throw Error('expected an explicit language evaluation context');
+  if (cases.some(row => Object.hasOwn(row, 'powerAssertions') && typeof row.powerAssertions !== 'boolean'))
+    throw Error('fixture powerAssertions override must be boolean');
+  if (cases.some(row => Object.hasOwn(row, 'oracleError') && typeof row.oracleError !== 'boolean'))
+    throw Error('fixture oracleError marker must be boolean');
+  if (cases.some(row => Object.hasOwn(row, 'expectedCodeUnitsHex')
+      && (typeof row.expectedCodeUnitsHex !== 'string' || row.expectedCodeUnitsHex.length % 4 !== 0 || !/^[0-9a-fA-F]*$/.test(row.expectedCodeUnitsHex))))
+    throw Error('fixture expectedCodeUnitsHex must contain complete UTF16 units');
   const caseIds = cases.map(row => row.id);
   const packagePath = resolve(root, 'tools/platform/package.json');
   const lockPath = resolve(root, 'tools/platform/package-lock.json');
@@ -73,33 +130,13 @@ export async function compareLanguageCases(args) {
   if (invocation !== script) await recordFile(invocation);
   const browserErrors = [];
   const infrastructureErrors = [];
-  const report = { schema: 1, scope: `All ${cases.length} selected language cases, two fresh evaluator calls per case on Node and Chromium; full UTF-8 values/errors without normalization.`,
+  const report = { schema: 1, scope: `All ${cases.length} selected language cases, two fresh evaluator calls per case on Node and Chromium; full payloads without normalization; code-unit fixtures compare JS strings and retain original Java UTF8 serialization separately.`,
     caseCount: cases.length, caseIds, caseIdsSha256: sha(Buffer.from(JSON.stringify(caseIds), 'utf8')),
     argv: process.argv, cwd: process.cwd(), context, repetitions, sourceHashes, artifactHashes,
     fixtureSha256: sha(await readFile(fixturePath)), node: process.version, nodeVersions: process.versions,
     nodeExecutable: process.execPath, nodeExecutableSha256: sha(await readFile(process.execPath)),
     playwright, playwrightCore, playwrightPin: pin, browserErrors, infrastructureErrors, targets: {} };
 
-  // The same function runs against N-API and browser Wasm; every failure is captured.
-  function evaluateAll(api, fixtures, settings, count) {
-    const rows = [];
-    for (let repetition = 0; repetition < count; repetition++) {
-      for (const fixture of fixtures) {
-        let status, payload;
-        try {
-          payload = api.evaluateLanguage(fixture.source, settings.uri, settings.moduleName,
-            fixture.expression, settings.powerAssertions);
-          status = typeof payload === 'string' ? 'value' : 'harness_error';
-          if (status === 'harness_error') payload = 'Unexpected non-string return: ' + String(payload);
-        } catch (error) {
-          status = error instanceof Error ? 'error' : 'harness_error';
-          payload = error instanceof Error ? error.message : String(error);
-        }
-        rows.push({ id: fixture.id, repetition, status, payload });
-      }
-    }
-    return rows;
-  }
 
   async function saveTarget(target, rows) {
     const dir = resolve(output, target);
@@ -113,31 +150,50 @@ export async function compareLanguageCases(args) {
       const pair = `${row.id}\u0000${row.repetition}`;
       if (!expectedPairs.has(pair) || observedPairs.has(pair)) throw Error('unexpected or duplicate execution pair: ' + pair);
       observedPairs.add(pair);
-      const expectedStatus = Object.hasOwn(fixture, 'expectedError') ? 'error' : 'value';
-      const expected = Buffer.from(fixture.expectedError ?? fixture.expectedValue, 'utf8');
-      const actual = Buffer.from(row.payload, 'utf8');
-      const match = row.status === expectedStatus && actual.equals(expected);
+      const compared = compareLanguagePayload(fixture, row.status, row.payload);
+      const { expectedStatus, expected, actual, expectedCodeUnits, actualCodeUnits, expectedNodeUtf8 } = compared;
       const prefix = `${row.id}.repeat-${row.repetition}`;
       await writeFile(resolve(dir, prefix + '.expected.bin'), expected);
       await writeFile(resolve(dir, prefix + '.actual.bin'), actual);
-      const result = { id: row.id, repetition: row.repetition, status: match ? 'pass' : 'mismatch',
+      if (expectedCodeUnits !== null) {
+        await writeFile(resolve(dir, prefix + '.expected-node-utf8.bin'), expectedNodeUtf8);
+        await writeFile(resolve(dir, prefix + '.expected.code-units.bin'), expectedCodeUnits);
+        await writeFile(resolve(dir, prefix + '.actual.code-units.bin'), actualCodeUnits);
+      }
+      const result = { id: row.id, repetition: row.repetition,
+        powerAssertions: Object.hasOwn(fixture, 'powerAssertions') ? fixture.powerAssertions : context.powerAssertions,
+        status: compared.status, rawMatch: compared.rawMatch, comparisonBoundary: compared.comparisonBoundary,
+        utf8Match: compared.utf8Match, originalJavaUtf8Match: compared.originalJavaUtf8Match,
+        nodeUtf8Match: compared.nodeUtf8Match, javaVsNodeSerializationDivergence: compared.javaVsNodeSerializationDivergence,
+        codeUnitsMatch: compared.codeUnitsMatch, oracleError: fixture.oracleError === true,
         expectedStatus, actualStatus: row.status, expectedSha256: sha(expected), actualSha256: sha(actual),
         expectedBytes: expected.length, actualBytes: actual.length,
+        originalJavaUtf8Sha256: sha(expected), originalJavaUtf8File: `${target}/${prefix}.expected.bin`,
+        expectedNodeUtf8Sha256: expectedCodeUnits === null ? null : sha(expectedNodeUtf8),
+        expectedNodeUtf8File: expectedCodeUnits === null ? null : `${target}/${prefix}.expected-node-utf8.bin`,
+        expectedCodeUnitsSha256: expectedCodeUnits === null ? null : sha(expectedCodeUnits),
+        actualCodeUnitsSha256: expectedCodeUnits === null ? null : sha(actualCodeUnits),
+        expectedCodeUnitsFile: expectedCodeUnits === null ? null : `${target}/${prefix}.expected.code-units.bin`,
+        actualCodeUnitsFile: expectedCodeUnits === null ? null : `${target}/${prefix}.actual.code-units.bin`,
         expectedFile: `${target}/${prefix}.expected.bin`, actualFile: `${target}/${prefix}.actual.bin` };
       await writeFile(resolve(dir, prefix + '.json'), json(result));
       results.push(result);
     }
-    const mismatchIds = cases.filter(fixture => results.some(row => row.id === fixture.id && row.status !== 'pass')).map(fixture => fixture.id);
+    const mismatchIds = cases.filter(fixture => results.some(row => row.id === fixture.id && row.status === 'mismatch')).map(fixture => fixture.id);
+    const oracleErrorIds = cases.filter(fixture => fixture.oracleError === true).map(fixture => fixture.id);
+    const passingCases = cases.filter(fixture => results.filter(row => row.id === fixture.id).every(row => row.status === 'pass')).length;
     const complete = observedPairs.size === expectedPairs.size;
     return { complete, executions: rows.length, passingExecutions: results.filter(row => row.status === 'pass').length,
       mismatchingExecutions: results.filter(row => row.status === 'mismatch').length,
-      passingCases: complete ? cases.length - mismatchIds.length : 0, mismatchingCases: mismatchIds.length,
-      mismatchIds, results };
+      oracleErrorExecutions: results.filter(row => row.status === 'oracle-error').length,
+      matchingOracleErrorExecutions: results.filter(row => row.status === 'oracle-error' && row.rawMatch).length,
+      passingCases: complete ? passingCases : 0, mismatchingCases: mismatchIds.length,
+      oracleErrorCases: oracleErrorIds.length, oracleErrorIds, mismatchIds, results };
   }
 
   try {
     const native = require(addon);
-    report.targets.node = await saveTarget('node', evaluateAll(native, cases, context, repetitions));
+    report.targets.node = await saveTarget('node', evaluateLanguageFixtures(native, cases, context, repetitions));
   } catch (error) { infrastructureErrors.push({ target: 'node', message: error.message, stack: error.stack }); }
 
   const server = createServer(async (request, response) => {
@@ -170,7 +226,7 @@ export async function compareLanguageCases(args) {
       await api.default();
       const run = (0, eval)('(' + evaluateSource + ')');
       return run(api, fixtures, settings, count);
-    }, { fixtures: cases, settings: context, count: repetitions, evaluateSource: evaluateAll.toString() });
+    }, { fixtures: cases, settings: context, count: repetitions, evaluateSource: evaluateLanguageFixtures.toString() });
     report.targets.browser = await saveTarget('browser', rows);
   } catch (error) { infrastructureErrors.push({ target: 'browser', message: error.message, stack: error.stack }); }
   finally {
@@ -200,12 +256,14 @@ export async function compareLanguageCases(args) {
   if (report.stability.changed.length) infrastructureErrors.push({ target: 'all',
     message: 'Sources or artifacts changed during comparison', paths: report.stability.changed });
   report.status = infrastructureErrors.length || browserErrors.length
-    || !['node', 'browser'].every(target => report.targets[target]?.complete && report.targets[target].mismatchingExecutions === 0)
+    || !['node', 'browser'].every(target => report.targets[target]?.complete && report.targets[target].mismatchingExecutions === 0
+      && report.targets[target].oracleErrorExecutions === 0)
     ? 'failed' : 'passed';
   await writeFile(resolve(output, 'execution.json'), json(report));
   console.log(json({ status: report.status, output, targets: Object.fromEntries(Object.entries(report.targets).map(([target, result]) =>
     [target, { complete: result.complete, executions: result.executions, passingCases: result.passingCases,
-      mismatchingCases: result.mismatchingCases, mismatchIds: result.mismatchIds }])), browserErrors, infrastructureErrors }));
+      mismatchingCases: result.mismatchingCases, oracleErrorCases: result.oracleErrorCases,
+      oracleErrorIds: result.oracleErrorIds, mismatchIds: result.mismatchIds }])), browserErrors, infrastructureErrors }));
   if (report.status !== 'passed') process.exitCode = 1;
   return report;
 }

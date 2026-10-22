@@ -9,6 +9,12 @@ The [trace development contract](m2-tracing.md) separately records actual-source
 logger callbacks, source-session lifecycles, and lossless platform transport.
 Its focused comparisons do not replace the whole-language completion gate.
 
+The [resource-read development contract](m2-resource-reads.md) records `read` and
+`read?` parsing, default scalar resource policy, nullable absence, declaration
+source URIs, and the distinction between Java byte captures and lossless
+portable string comparisons. Permitted I/O readers and complete URI semantics
+remain open.
+
 `compatibility/m2-language.json` keeps semantic families, pinned source
 declarations, upstream language snippets, selected historical regressions, and
 unmapped historical candidates visible. Declaration and heading counts are

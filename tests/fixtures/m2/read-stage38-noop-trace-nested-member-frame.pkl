@@ -1,0 +1,2 @@
+obj=new Dynamic { child=new Dynamic { x=read("life:text") } }
+result=trace(obj).toString()

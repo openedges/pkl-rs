@@ -280,9 +280,13 @@ impl Compiler<'_> {
                                 )
                             })
                         {
-                            output
-                                .method_arities
-                                .insert(lookup_start + lookup, arguments.len());
+                            let lookup = lookup_start + lookup;
+                            output.method_arities.insert(lookup, arguments.len());
+                            if matches!(callee.kind, ExprKind::Name(_)) {
+                                // The pinned implicit InvokeMethodVirtualNode
+                                // owns the full call, including its arguments.
+                                output.spans[lookup] = Some(expression.span);
+                            }
                         }
                         work.push(Work::CallEnd(arguments.len(), method, nullable_branch));
                         work.extend(arguments.iter().rev().map(Work::Visit));
@@ -1017,6 +1021,14 @@ impl Compiler<'_> {
                 ));
                 work.push(Work::Visit(value));
             }
+            ExprKind::ReadResourceOrNull(value) => {
+                work.push(Work::Emit(Instruction::ReadResourceOrNull, None));
+                work.push(Work::Visit(value));
+            }
+            ExprKind::ReadResource(value) => {
+                work.push(Work::Emit(Instruction::ReadResource, None));
+                work.push(Work::Visit(value));
+            }
             ExprKind::TypeCheck { value, ty } | ExprKind::TypeCast { value, ty } => {
                 if let Some(check) = self.resolve_expression_type(ty, output) {
                     work.push(if matches!(expression.kind, ExprKind::TypeCast { .. }) {
@@ -1150,17 +1162,6 @@ impl Compiler<'_> {
                                 None,
                             ));
                             work.extend(arguments.iter().rev().map(Work::Visit));
-                            return Ok(());
-                        }
-                        "read" => {
-                            if arguments.len() != 1 {
-                                return Err(RuntimeError::new(
-                                    ErrorKind::Type,
-                                    "read expects one argument",
-                                ));
-                            }
-                            work.push(Work::Emit(Instruction::ReadResource, None));
-                            work.push(Work::Visit(&arguments[0]));
                             return Ok(());
                         }
                         _ => {}

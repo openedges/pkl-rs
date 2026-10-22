@@ -490,6 +490,23 @@ exploratory evidence; those calls do not replace their original renderer or
 snippet-suite contracts. Reviewed implementation/test links preserve these
 unexecuted cases and the full completion gate.
 
+Resource-read regressions preserve keyword and quoted-method distinctions,
+operand forcing, nullable absence, URI validation and policy order, declaration
+source resolution, and complete diagnostics. The original controlled filesystem
+matrix retains unsupported I/O and unmatched-surrogate cases. Source-path
+language probes acquire their own Java diagnostics at the identical recorded
+URI; fixed portable URI observations do not substitute for those captures.
+
+Portable fixtures with Java UTF-16 captures compare exact code-unit bytes and
+Node UTF-8 derived from those captured units. Original Java UTF-8 bytes remain
+separate evidence, with cross-encoder differences reported explicitly. The API
+returns JS strings; this comparison does not claim that Java and Node serialize
+an unmatched surrogate to identical UTF-8 bytes. Legacy fixtures without unit
+captures keep their raw UTF-8 contract. An explicitly marked Java internal error
+always remains `oracle-error`, even when its payload matches. Per-case power
+assertion flags override the shared context and are recorded in each execution.
+See the [resource-read contract](docs/m2-resource-reads.md).
+
 ## Performance and Memory
 
 The [initial Java benchmark contract](docs/benchmarks.md) implements cold CLI, persistent evaluator, and fresh evaluator measurements for six fixtures. Use a quiet host with the pinned optimizing runtime:

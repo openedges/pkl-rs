@@ -948,6 +948,8 @@ impl<'a> Resolver<'a> {
                     ExprKind::Parenthesized(value)
                     | ExprKind::NonNull(value)
                     | ExprKind::Throw(value)
+                    | ExprKind::ReadResource(value)
+                    | ExprKind::ReadResourceOrNull(value)
                     | ExprKind::Unary { operand: value, .. } => {
                         work.push(Work::Expression(value, false))
                     }
@@ -967,10 +969,7 @@ impl<'a> Resolver<'a> {
                         );
                         if let ExprKind::Name(name) = &callee.kind {
                             let mut binding = self.binding(name, true);
-                            if binding == Binding::ImplicitMethod
-                                && self.is_custom_this_scope()
-                                && name != "read"
-                            {
+                            if binding == Binding::ImplicitMethod && self.is_custom_this_scope() {
                                 if is_base_method(name) {
                                     return Err(Diagnostic::new(
                                         DiagnosticKind::Unsupported,

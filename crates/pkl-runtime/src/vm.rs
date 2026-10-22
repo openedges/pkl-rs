@@ -234,6 +234,7 @@ pub enum Instruction {
     Jump(usize),
     JumpIfFalse(usize),
     ReadResource,
+    ReadResourceOrNull,
     Return,
 }
 
@@ -764,7 +765,13 @@ impl Program {
 #[derive(Clone, Debug, PartialEq, Eq)]
 pub struct ReadRequest {
     pub id: u64,
+    /// Authored operand, before a Host profile's URI parsing and resolution.
     pub uri: Arc<str>,
+    /// The read expression's declaration source URI, independent of its receiver
+    /// or caller. This is not a general canonical ModuleKey for imported modules.
+    pub module_uri: Option<Arc<str>>,
+    /// Only an absent resource becomes null; parse, policy and reader errors propagate.
+    pub nullable: bool,
 }
 
 #[derive(Clone, Debug, PartialEq)]
@@ -1554,6 +1561,19 @@ impl Vm {
             error.message = format!("Cannot find property `{name}`.");
             error.hint = crate::diagnostic::property_suggestions(name, names, true);
         }
+        if error.kind == ErrorKind::MissingMember
+            && let Some(frame) = self.frames.last()
+            && let Some(
+                Instruction::GetMethodProperty { name, .. } | Instruction::GetImplicitMethod(name),
+            ) = self
+                .program
+                .blocks
+                .get(frame.block)
+                .and_then(|code| code.get(frame.pc.saturating_sub(1)))
+        {
+            error.message = format!("Cannot find method `{name}`.");
+            error.hint = self.implicit_method_suggestions(frame, name);
+        }
         for (frame_index, frame) in diagnostic_frames.iter().enumerate().rev() {
             if let Some(metadata) = self.program.metadata.get(frame.block)
                 && let Some(Some(span)) = metadata.spans.get(frame.pc.saturating_sub(1))
@@ -2122,6 +2142,111 @@ impl Vm {
         Ok(())
     }
 
+    /// Match lexical candidate visibility without evaluating candidate members.
+    fn implicit_method_suggestions(&self, frame: &Frame, name: &str) -> Option<String> {
+        use crate::diagnostic::MemberSuggestion;
+
+        let mut candidates = Vec::new();
+        // Lexical owners include local declarations; receiver ancestry below does not.
+        for scope in &frame.environment.scopes {
+            let Ok(object) = self.heap.get(scope.owner) else {
+                continue;
+            };
+            let mut declared_methods = Vec::new();
+            for member in object.members.iter().filter(|member| {
+                !member.entry
+                    && (!object.module_initializing
+                        || object.published_module_members.contains(&member.code))
+            }) {
+                if !member.method
+                    || (member.local && !object.is_module && object.class_definition.is_none())
+                {
+                    candidates.push(MemberSuggestion::Property(&member.name));
+                } else if let Some((signature, arity)) = self
+                    .program
+                    .metadata
+                    .get(member.code)
+                    .and_then(|metadata| metadata.method_signature.as_ref())
+                {
+                    declared_methods.push(MemberSuggestion::Method {
+                        name: &member.name,
+                        signature,
+                        arity: *arity,
+                    });
+                }
+            }
+            if object.is_module {
+                candidates.push(MemberSuggestion::Property("output"));
+            }
+            // Each lexical owner's properties precede its declared methods; both
+            // precede candidates from enclosing owners and the base module.
+            candidates.extend(declared_methods);
+        }
+        candidates.extend(
+            crate::diagnostic_names::BASE_PROPERTIES
+                .iter()
+                .map(|name| MemberSuggestion::Property(name)),
+        );
+        candidates.extend(
+            crate::diagnostic_names::MODULE_METHODS
+                .iter()
+                .chain(crate::diagnostic_names::BASE_METHODS)
+                .map(|(name, signature, arity)| MemberSuggestion::Method {
+                    name,
+                    signature,
+                    arity: *arity,
+                }),
+        );
+        let receiver = frame
+            .environment
+            .this_value
+            .as_ref()
+            .and_then(|value| value.as_object().ok())
+            .or_else(|| frame.environment.scopes.first().map(|scope| scope.receiver));
+        let mut current = receiver;
+        let mut visited = BTreeSet::new();
+        let mut receiver_methods = Vec::new();
+        while let Some(id) = current {
+            if !visited.insert(id) {
+                break;
+            }
+            let Ok(object) = self.heap.get(id) else {
+                break;
+            };
+            for member in object.members.iter().filter(|member| {
+                !member.entry
+                    && !member.local
+                    && (!object.module_initializing
+                        || object.published_module_members.contains(&member.code))
+            }) {
+                if !member.method {
+                    candidates.push(MemberSuggestion::Property(&member.name));
+                } else if let Some((signature, arity)) = self
+                    .program
+                    .metadata
+                    .get(member.code)
+                    .and_then(|metadata| metadata.method_signature.as_ref())
+                {
+                    receiver_methods.push(MemberSuggestion::Method {
+                        name: &member.name,
+                        signature,
+                        arity: *arity,
+                    });
+                }
+            }
+            current = object.parent;
+        }
+        candidates.extend(receiver_methods);
+        let arity = self
+            .program
+            .metadata
+            .get(frame.block)
+            .and_then(|metadata| metadata.method_arities.get(&frame.pc.saturating_sub(1)))
+            .copied()
+            .unwrap_or(0);
+        crate::diagnostic::ordered_member_suggestions(name, arity as isize, candidates)
+    }
+
     /// VmExceptionBuilder enumerates the live prototype, never the full template.
     fn missing_member(
         &self,
@@ -2138,6 +2263,68 @@ impl Vm {
                     self.program.module_name
                 ),
             );
+            if method {
+                let mut properties = vec!["output".to_owned()];
+                let mut methods = Vec::new();
+                let mut current = Some(receiver);
+                let mut seen = BTreeSet::new();
+                while let Some(id) = current {
+                    if !seen.insert(id) {
+                        return Err(RuntimeError::new(ErrorKind::Cycle, "cyclic parent chain"));
+                    }
+                    let object = self.heap.get(id)?;
+                    for member in object.members.iter().filter(|member| {
+                        !member.local
+                            && !member.entry
+                            && (!object.module_initializing
+                                || object.published_module_members.contains(&member.code))
+                    }) {
+                        if !member.method {
+                            properties.push(member.name.to_string());
+                        } else if let Some((signature, arity)) = self
+                            .program
+                            .metadata
+                            .get(member.code)
+                            .and_then(|metadata| metadata.method_signature.as_ref())
+                        {
+                            methods.push((member.name.to_string(), signature.clone(), *arity));
+                        }
+                    }
+                    current = object.parent;
+                }
+                methods.extend(crate::diagnostic_names::MODULE_METHODS.iter().map(
+                    |(name, signature, arity)| {
+                        ((*name).to_owned(), (*signature).to_owned(), *arity)
+                    },
+                ));
+                let arity = self
+                    .frames
+                    .last()
+                    .and_then(|frame| {
+                        self.program.metadata.get(frame.block).and_then(|metadata| {
+                            metadata.method_arities.get(&frame.pc.saturating_sub(1))
+                        })
+                    })
+                    .copied()
+                    .unwrap_or(0);
+                error.hint = crate::diagnostic::member_suggestions(
+                    name,
+                    arity as isize,
+                    &properties,
+                    &methods,
+                )
+                .or_else(|| {
+                    let mut names: Vec<_> = methods.into_iter().map(|method| method.0).collect();
+                    names.sort_by(|a, b| a.encode_utf16().cmp(b.encode_utf16()));
+                    names.dedup();
+                    Some(format!(
+                        "Available methods in module `{}`:\n{}",
+                        self.program.module_name,
+                        names.join("\n")
+                    ))
+                });
+                return Ok(error);
+            }
             let mut names = self
                 .heap
                 .get(receiver)?
@@ -3985,15 +4172,33 @@ impl Vm {
                     )?);
                 }
             },
-            Instruction::ReadResource => {
+            Instruction::ReadResource | Instruction::ReadResourceOrNull => {
+                let nullable = matches!(instruction, Instruction::ReadResourceOrNull);
                 if self.callback_closing {
                     return Err(RuntimeError::new(ErrorKind::Closed, "evaluator is closing"));
                 }
-                let Value::String(uri) = self.pop()? else {
-                    return Err(RuntimeError::new(
-                        ErrorKind::Type,
-                        "resource URI must be a String",
-                    ));
+                let uri = match self.pop()? {
+                    Value::String(uri) => uri,
+                    operand => {
+                        let operator = if nullable { "read?" } else { "read" };
+                        return Err(RuntimeError::new(
+                            ErrorKind::Type,
+                            format!(
+                                "Operator `{operator}` is not defined for operand type `{}`.\nOperand: {}",
+                                crate::diagnostic_values::type_name(
+                                    &operand,
+                                    &self.heap,
+                                    &self.program.module_name
+                                )?,
+                                crate::diagnostic_values::render(
+                                    &operand,
+                                    &self.heap,
+                                    &self.program.module_name,
+                                    80
+                                )?,
+                            ),
+                        ));
+                    }
                 };
                 let Some(uri) = uri.as_str() else {
                     return Err(RuntimeError::new(
@@ -4006,7 +4211,19 @@ impl Vm {
                 self.next_request = id
                     .checked_add(1)
                     .ok_or_else(|| invalid("Host request IDs exhausted"))?;
-                self.state = State::Waiting(PendingRequest::Read(ReadRequest { id, uri }));
+                let module_uri = self
+                    .frames
+                    .last()
+                    .and_then(|frame| self.program.metadata.get(frame.block))
+                    .and_then(|metadata| metadata.source.as_ref())
+                    .or(self.context.primary_source.as_ref())
+                    .map(|source| source.uri.clone());
+                self.state = State::Waiting(PendingRequest::Read(ReadRequest {
+                    id,
+                    uri,
+                    module_uri,
+                    nullable,
+                }));
             }
             Instruction::Return => {
                 let base = self.frames.last().expect("active frame").base;

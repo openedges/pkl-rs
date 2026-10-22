@@ -1,4 +1,5 @@
 //! Cooperative Host boundary. Platform adapters supply a monotonic clock and I/O.
+pub(crate) mod resources;
 use crate::{
     logging::{EvaluationContext, LogEvent, LoggerFailure},
     value::{ErrorKind, RuntimeError, Value},

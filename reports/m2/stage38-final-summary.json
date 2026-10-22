@@ -1,0 +1,912 @@
+{
+  "schema": 1,
+  "scope": "Stage 38 dedicated resource reads, bounded default scalar resource policy, generic method diagnostics and explicit portable string comparison. This checkpoint is closed; complete M2 remains unproven.",
+  "compatibility_complete": false,
+  "performance_target_claimed": false,
+  "base_commit": "40425ed8b6d01d88038ee3f226556533cd46ae2d",
+  "validation": {
+    "report": {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage38-checks-final-02/report.json",
+      "bytes": 570243,
+      "sha256": "3bfbf04cd86a4156f5acb0462db38b436d4866b5f6fbd00e9e686391492688f3"
+    },
+    "host": "macOS-27.0-arm64-arm-64bit-Mach-O",
+    "checks": [
+      {
+        "name": "rust-version",
+        "command": [
+          "rustc",
+          "-Vv"
+        ],
+        "exit_code": 0,
+        "elapsed_seconds": 1.123737096786499,
+        "stdout_sha256": "e2211d4c0760a2a3b03eab88e42f8848952b7aa2ed649277a8fdbf3ce1838fd4",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "name": "references",
+        "command": [
+          "cargo",
+          "xtask",
+          "verify"
+        ],
+        "exit_code": 0,
+        "elapsed_seconds": 1.1113202571868896,
+        "stdout_sha256": "900802c9cf4f23bd9dbc0e79f58d3e21493ec0c990782bc5b690a7432148e9eb",
+        "stderr_sha256": "c3713728f29a3e41ea55dabeba439d5f8576b6a2af4588fc2f19c5f36416868f"
+      },
+      {
+        "name": "format",
+        "command": [
+          "cargo",
+          "fmt",
+          "--all",
+          "--",
+          "--check"
+        ],
+        "exit_code": 0,
+        "elapsed_seconds": 1.1493568420410156,
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "name": "clippy",
+        "command": [
+          "cargo",
+          "clippy",
+          "--workspace",
+          "--all-targets",
+          "--locked",
+          "--",
+          "-D",
+          "warnings"
+        ],
+        "exit_code": 0,
+        "elapsed_seconds": 4.718484163284302,
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_sha256": "c51a2bb1e5da3a8e4c8f5d921eae00117002a64249b35ccd7f729667fb15930a"
+      },
+      {
+        "name": "rust-tests",
+        "command": [
+          "cargo",
+          "test",
+          "--workspace",
+          "--locked"
+        ],
+        "exit_code": 0,
+        "elapsed_seconds": 137.03888392448425,
+        "stdout_sha256": "ff67eae571f353df31ca5eb1226ffad65dac65a6f4c42e6240e87a87239f483d",
+        "stderr_sha256": "9528165283b26308c5abbb71388f11c022e3dbea1399754ea6522477365d87d5"
+      },
+      {
+        "name": "wasm-check",
+        "command": [
+          "cargo",
+          "check",
+          "-p",
+          "pkl-runtime",
+          "--target",
+          "wasm32-unknown-unknown",
+          "--locked"
+        ],
+        "exit_code": 0,
+        "elapsed_seconds": 0.7875709533691406,
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_sha256": "7ea9ff7442106040f95bc079f85de985b086e1fed897d88dec87dd8425c35ee1"
+      },
+      {
+        "name": "python-tests",
+        "command": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "-m",
+          "unittest",
+          "discover",
+          "-s",
+          "tools/tests",
+          "-v"
+        ],
+        "exit_code": 1,
+        "elapsed_seconds": 816.9041130542755,
+        "stdout_sha256": "b525b7b8cb7f81cb4155c66da879417f5af8ee9a47af2a474a4531f647272a17",
+        "stderr_sha256": "f73d1d9e2330dbf1a2cbc1480bb6913723d0fc9e9e216a543b1b2bea78f5ed96"
+      },
+      {
+        "name": "manifest",
+        "command": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "tools/m2_manifest.py",
+          "--check"
+        ],
+        "exit_code": 0,
+        "elapsed_seconds": 2.8498690128326416,
+        "stdout_sha256": "fdfddc70a40ae29d010bde3157a44b5d338fe268ff1853f36402abc2136dcffd",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "name": "portable-driver-tests",
+        "command": [
+          "node",
+          "--test",
+          "tools/platform/compare-language-cases.test.mjs"
+        ],
+        "exit_code": 0,
+        "elapsed_seconds": 1.9410662651062012,
+        "stdout_sha256": "7de71388b5d45cd3b2d83f9e3edaa0321e7fec00dae17fdfd9741f8c586acd95",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    ],
+    "initial_full_check_passed": false,
+    "python_retry_report": {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage38-python-recheck-01/report.json",
+      "bytes": 1283,
+      "sha256": "def57908545afa5aac25635d39a123a4e6bba4b9d63769c69e6fd0e666f97a88"
+    },
+    "python_retry": {
+      "schema": 1,
+      "scope": "Unchanged full Python discovery after final02 timeout-fixture failure; original failure retained.",
+      "original_report": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage38-checks-final-02/report.json",
+      "original_report_sha256": "3bfbf04cd86a4156f5acb0462db38b436d4866b5f6fbd00e9e686391492688f3",
+      "source_snapshot_report": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage38-checks-final-02/report.json",
+      "source_changes_before": [],
+      "host": "macOS-27.0-arm64-arm-64bit-Mach-O",
+      "python": "3.14.8 (main, Sep 30 2026, 17:55:09) [Clang 21.0.0 (clang-2100.3.34.2)]",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools/tests",
+        "-v"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs",
+      "helper_sha256": "740a112118d299b381943ad8d706453a7a9346d90f49f81cca85a941dff0757d",
+      "started_epoch": 1792702429.1428869,
+      "exit_code": 0,
+      "elapsed_seconds": 98.36687111854553,
+      "source_changes_after": [],
+      "stdout": {
+        "bytes": 303,
+        "sha256": "0332c168bd26ea44e89fd74bd7f57fad0ab1c1186c99b5dd16a0993df553fa3e"
+      },
+      "stderr": {
+        "bytes": 37114,
+        "sha256": "f19a4536dc6e6463db575425febff395d4a822a41099937fbf64f329daa85984"
+      },
+      "passed": true
+    },
+    "required_checks_passed_after_unchanged_python_retry": true,
+    "source_stability": true,
+    "source_files": 4219,
+    "python_tests": 235,
+    "portable_driver_tests": 7,
+    "rust_harness_pass_invocations": 563,
+    "rust_ignored_invocations": 1,
+    "rust_count_is_distinct_test_count": false,
+    "failure_note": "The original 235-test run failed one 200ms child-startup timeout fixture with empty stdout. The unchanged single test passed; the unchanged full discovery passed later. Exact original child progress was not retained, so a scheduling cause is not proven. Original failure and retry are separate evidence.",
+    "diagnosis": {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-timeout-check-review-01/report.json",
+      "bytes": 2884,
+      "sha256": "f8d66a821eaae5adba3d472acc87cb8e915a6c44418699c00c52385c2121c6f0"
+    }
+  },
+  "full_language": {
+    "report": {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage38-language-final-03/report.json",
+      "bytes": 12271153,
+      "sha256": "066d4508e243931b3021ab7a42bdca7840877b62abd74570b118751308ebcc73"
+    },
+    "selected": 3527,
+    "status_counts": {
+      "mismatch": 8,
+      "oracle-error": 1,
+      "pass": 3518
+    },
+    "failures": [
+      {
+        "id": "error-cycle",
+        "status": "oracle-error"
+      },
+      {
+        "id": "error-remainder-zero",
+        "status": "mismatch"
+      },
+      {
+        "id": "annotation-stage35-builtin-source-code-union-and-string",
+        "status": "mismatch"
+      },
+      {
+        "id": "trace-stage37-repeat-empty-cast-negative",
+        "status": "mismatch"
+      },
+      {
+        "id": "trace-stage37-repeat-empty-max-count",
+        "status": "mismatch"
+      },
+      {
+        "id": "read-stage38-uri-unpaired-surrogate",
+        "status": "mismatch"
+      },
+      {
+        "id": "read-stage38-edge-http-opaque",
+        "status": "mismatch"
+      },
+      {
+        "id": "read-stage38-edge-http-invalid-host",
+        "status": "mismatch"
+      },
+      {
+        "id": "read-stage38-edge-http-nonnumeric-port",
+        "status": "mismatch"
+      }
+    ],
+    "metamorphic_relations": 88,
+    "metamorphic_counts": {
+      "pass": 88
+    },
+    "full_gate_failure_reasons": 1959,
+    "inventory": {
+      "cases": 4527,
+      "cases_by_execution": {
+        "ready": 3527,
+        "unimplemented": 960,
+        "unmapped": 40
+      },
+      "requirements": 475,
+      "requirements_by_kind": {
+        "language_parser": 137,
+        "language_token": 109,
+        "semantic-family": 31,
+        "specification": 198
+      }
+    },
+    "source_stability": true,
+    "artifact_stability": true,
+    "candidate": {
+      "build": {
+        "command": [
+          "cargo",
+          "build",
+          "-p",
+          "pkl-runtime",
+          "--example",
+          "language_probe",
+          "--locked",
+          "--release",
+          "--target-dir",
+          "/Users/cody.ij.hwang/Projects/pkl-rs/target"
+        ],
+        "exit_code": 0,
+        "stderr_sha256": "6d7179975b76960d3eade9a7cc7a3c841f7a4aae689e7d0ab87f188a74b6d57c",
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "timed_out": false
+      },
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/release/examples/language_probe",
+      "sha256": "0727fe1dc725b56e6646defea4150e1bed9be3e2881ec3de064dd81d9ff1c421",
+      "source_binding": "recorded-build"
+    },
+    "regression_audit": {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-final-language-audit-01/report.json",
+      "bytes": 6505,
+      "sha256": "71bfaf2b5a0f32d24c5e44fe72213e43b54a22cb0ab53e00f9a13a0e8c77184c"
+    },
+    "regression_summary": {
+      "pre-order3518": {
+        "prior_selected": 3518,
+        "status_changes": [],
+        "raw_unchanged": {
+          "java": 3517,
+          "rust": 3518
+        },
+        "raw_changes": {
+          "java": [
+            "error-cycle"
+          ],
+          "rust": []
+        },
+        "java_outcome_changes": []
+      },
+      "stage37original3427": {
+        "prior_selected": 3427,
+        "status_changes": [
+          {
+            "id": "trace-stage37-noop-force-read",
+            "old": "mismatch",
+            "new": "pass"
+          },
+          {
+            "id": "trace-stage37-strict-list-force",
+            "old": "mismatch",
+            "new": "pass"
+          }
+        ],
+        "raw_unchanged": {
+          "java": 3426,
+          "rust": 3425
+        },
+        "raw_changes": {
+          "java": [
+            "error-cycle"
+          ],
+          "rust": [
+            "trace-stage37-noop-force-read",
+            "trace-stage37-strict-list-force"
+          ]
+        },
+        "java_outcome_changes": []
+      }
+    },
+    "gates": [
+      {
+        "mode": "report",
+        "exit_code": 0,
+        "timed_out": false
+      },
+      {
+        "mode": "development",
+        "exit_code": 1,
+        "timed_out": false
+      },
+      {
+        "mode": "subset",
+        "exit_code": 1,
+        "timed_out": false
+      },
+      {
+        "mode": "full",
+        "exit_code": 1,
+        "timed_out": false
+      }
+    ],
+    "new100_outcomes": {
+      "failure": 84,
+      "success": 16
+    },
+    "exactly_two_power_cases": [
+      "read-stage38-power-power-read-null-comparison",
+      "read-stage38-power-power-read-lexical-operand"
+    ],
+    "original_Java_cycle_variation_preserved": true,
+    "legacy_classification": {
+      "ids": [
+        "read-stage38-edge-http-opaque",
+        "read-stage38-edge-http-invalid-host",
+        "read-stage38-edge-http-nonnumeric-port"
+      ],
+      "scalar_status": "mismatch",
+      "portable_status": "oracle-error",
+      "ordinary_Pkl_failure_compatibility_claim": false
+    }
+  },
+  "persistent": {
+    "report": {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage38-persistent-final-02/report.json",
+      "sha256": "0efab1ca9301192e515f6b25bda3877e1f658fe93b388261b83113b3ccfc4bce"
+    },
+    "definitions": 167,
+    "fresh_sequence_runs": 334,
+    "paired_calls": 2782,
+    "call_status_counts": {
+      "pass": 2782
+    },
+    "source_stability_before_after": true,
+    "candidate_sha256": "82e033b7b13b9ca9b230da644d569d5682dcc9fee0a5bb8d17b8424e6b698e9e",
+    "acquisition_exit": 0,
+    "record_only": true,
+    "full_compatibility": false
+  },
+  "native_trace": {
+    "report": {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage38-trace-final-02/report.json",
+      "sha256": "38129e9ee1dc1e4959c2a382f780ace911e865b312338fcd638028deb7a0cc80"
+    },
+    "definitions": 42,
+    "fresh_experiments": 84,
+    "experiment_status_counts": {
+      "pass": 54,
+      "oracle-error": 30
+    },
+    "calls_each_runtime": 192,
+    "logs_each_runtime": 88,
+    "source_stability": true,
+    "artifact_stability": true,
+    "candidate_sha256": "c59b9fe4309535fb2bcf17a8e1167885e159578119aa6cdde3dc6693df00e85a",
+    "acquisition_exit": 0,
+    "record_only": true,
+    "full_compatibility": false
+  },
+  "standard_platforms": {
+    "report": {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-platforms-final-03/report.json",
+      "sha256": "4885c57412b6fe3d4fe4d3f86c72f5eecbf3372565ab3bd937df4c9edf727ac2"
+    },
+    "audit_report": {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-platform-review-final-03/report.json",
+      "sha256": "94bcfd9192a4b2e9600acd3bfb62827ff2f76f917f480a82fdbfa56baf3fa26a"
+    },
+    "scenarios_each_node_browser": 92,
+    "shared_comparisons": 6078,
+    "shared_engine_matches": 6078,
+    "java_matches_each_rust_node_browser": 6076,
+    "architecture_contract": "pass",
+    "strict_compatibility": "fail",
+    "source_stability": true,
+    "artifact_stability": true,
+    "node": "v26.10.0",
+    "chromium": "156.0.8078.4",
+    "playwright": "1.64.1",
+    "artifacts": {
+      "pkl_napi.node": "de7da173ec8b879962b97a57b7b4d449bb928a31ed00dbd5e2d2a1131516df91",
+      "semantics_probe": "686e1c5ca5d71defb41437f11dd405bfe0da025e068abeb251082d57fe36a516",
+      "wasm/pkl_wasm_bg.wasm.d.ts": "37270fe48a4be88e42ceaa539396911d3fc55bb68803c7fa0f82478067233deb",
+      "wasm/pkl_wasm_bg.wasm": "3a37a7e0e840efd47b9c6f6288ca50b483561ae10f1af5f4fbd2ee306357a640",
+      "wasm/pkl_wasm.js": "2644e84a966e52344accf3537a12245b3776a9705a3dec6eaadcef702a7c1d08",
+      "wasm/pkl_wasm.d.ts": "28f14c182db3b65f2e60b900a36cb0935d3671d4cfe974517850bdfd65c1033e"
+    }
+  },
+  "additional_platforms": {
+    "read91": {
+      "report": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-read91-platform-final-03/execution.json",
+        "sha256": "3531af6eea316779e5e51a6a8988b459a55bdf5849f7c80e8129a7f3dadc4aa6"
+      },
+      "targets": {
+        "node": {
+          "case_definitions": 91,
+          "executions": 182,
+          "execution_statuses": {
+            "pass": 174,
+            "mismatch": 2,
+            "oracle-error": 6
+          },
+          "distinct_case_statuses": {
+            "passingCases": 87,
+            "mismatchingCases": 1,
+            "oracleErrorCases": 3
+          },
+          "mismatch_ids": [
+            "read-stage38-uri-unpaired-surrogate"
+          ],
+          "oracle_error_ids": [
+            "read-stage38-edge-http-opaque",
+            "read-stage38-edge-http-invalid-host",
+            "read-stage38-edge-http-nonnumeric-port"
+          ]
+        },
+        "browser": {
+          "case_definitions": 91,
+          "executions": 182,
+          "execution_statuses": {
+            "pass": 174,
+            "mismatch": 2,
+            "oracle-error": 6
+          },
+          "distinct_case_statuses": {
+            "passingCases": 87,
+            "mismatchingCases": 1,
+            "oracleErrorCases": 3
+          },
+          "mismatch_ids": [
+            "read-stage38-uri-unpaired-surrogate"
+          ],
+          "oracle_error_ids": [
+            "read-stage38-edge-http-opaque",
+            "read-stage38-edge-http-invalid-host",
+            "read-stage38-edge-http-nonnumeric-port"
+          ]
+        }
+      }
+    },
+    "method-order9": {
+      "report": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-method-order9-platform-final-03/execution.json",
+        "sha256": "53ebcfa9f93e92c658aa91993ed51d679db76465cc2229e321f3a31c41ffa158"
+      },
+      "targets": {
+        "node": {
+          "case_definitions": 9,
+          "executions": 18,
+          "execution_statuses": {
+            "pass": 18
+          },
+          "distinct_case_statuses": {
+            "passingCases": 9,
+            "mismatchingCases": 0,
+            "oracleErrorCases": 0
+          },
+          "mismatch_ids": [],
+          "oracle_error_ids": []
+        },
+        "browser": {
+          "case_definitions": 9,
+          "executions": 18,
+          "execution_statuses": {
+            "pass": 18
+          },
+          "distinct_case_statuses": {
+            "passingCases": 9,
+            "mismatchingCases": 0,
+            "oracleErrorCases": 0
+          },
+          "mismatch_ids": [],
+          "oracle_error_ids": []
+        }
+      }
+    },
+    "trace18": {
+      "report": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-trace18-platform-final-03/execution.json",
+        "sha256": "dbb422d07fe6bad29c5eae6f13eed92906bae3854206626e34cb9cfc24734f48"
+      },
+      "targets": {
+        "node": {
+          "case_definitions": 18,
+          "executions": 36,
+          "execution_statuses": {
+            "pass": 36
+          },
+          "distinct_case_statuses": {
+            "passingCases": 18,
+            "mismatchingCases": 0,
+            "oracleErrorCases": 0
+          },
+          "mismatch_ids": [],
+          "oracle_error_ids": []
+        },
+        "browser": {
+          "case_definitions": 18,
+          "executions": 36,
+          "execution_statuses": {
+            "pass": 36
+          },
+          "distinct_case_statuses": {
+            "passingCases": 18,
+            "mismatchingCases": 0,
+            "oracleErrorCases": 0
+          },
+          "mismatch_ids": [],
+          "oracle_error_ids": []
+        }
+      }
+    },
+    "repeat20": {
+      "report": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-repeat20-platform-final-03/execution.json",
+        "sha256": "bae3d34e29d5970d18a48a38e3f3e8549887e14e51dac200e8bc1ec3c1f264c4"
+      },
+      "targets": {
+        "node": {
+          "case_definitions": 20,
+          "executions": 40,
+          "execution_statuses": {
+            "pass": 36,
+            "mismatch": 4
+          },
+          "distinct_case_statuses": {
+            "passingCases": 18,
+            "mismatchingCases": 2,
+            "oracleErrorCases": 0
+          },
+          "mismatch_ids": [
+            "trace-stage37-repeat-empty-cast-negative",
+            "trace-stage37-repeat-empty-max-count"
+          ],
+          "oracle_error_ids": []
+        },
+        "browser": {
+          "case_definitions": 20,
+          "executions": 40,
+          "execution_statuses": {
+            "pass": 36,
+            "mismatch": 4
+          },
+          "distinct_case_statuses": {
+            "passingCases": 18,
+            "mismatchingCases": 2,
+            "oracleErrorCases": 0
+          },
+          "mismatch_ids": [
+            "trace-stage37-repeat-empty-cast-negative",
+            "trace-stage37-repeat-empty-max-count"
+          ],
+          "oracle_error_ids": []
+        }
+      }
+    },
+    "trace42": {
+      "report": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-trace42-platform-final-03/execution.json",
+        "sha256": "8e0b60e03285acbbb0755e03de5de652e4a98bcf907d7c933022245d4904a997"
+      },
+      "targets": {
+        "node": {
+          "case_definitions": 42,
+          "executions": 84,
+          "execution_statuses": {
+            "pass": 54,
+            "oracle-error": 30
+          },
+          "architecture": {
+            "created_sessions": 80,
+            "constructor_failures": 4,
+            "zero_terminal_heaps": 80,
+            "retained_event_snapshots_stable": true
+          }
+        },
+        "browser": {
+          "case_definitions": 42,
+          "executions": 84,
+          "execution_statuses": {
+            "pass": 54,
+            "oracle-error": 30
+          },
+          "architecture": {
+            "created_sessions": 80,
+            "constructor_failures": 4,
+            "zero_terminal_heaps": 80,
+            "retained_event_snapshots_stable": true
+          }
+        }
+      }
+    }
+  },
+  "denominator_note": "Case definitions, sequence calls, trace experiments, portable repetitions and shared primitive comparisons overlap and measure different boundaries.",
+  "offline_gates": {
+    "persistent-report": {
+      "report": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/closeout-stage38-01/processes/persistent-report/process.json",
+        "bytes": 526,
+        "sha256": "61381adb74f9f71ec1e1b472ba86d0d8ae3f0cac709989854b195aaecfedd031"
+      },
+      "exit_code": 0
+    },
+    "persistent-contract": {
+      "report": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/closeout-stage38-01/processes/persistent-contract/process.json",
+        "bytes": 532,
+        "sha256": "69e6cac50db652a62453c1721f755e81121c20cdba4c7273115b28db7e31da43"
+      },
+      "exit_code": 0
+    },
+    "trace-report": {
+      "report": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/closeout-stage38-01/processes/trace-report/process.json",
+        "bytes": 513,
+        "sha256": "a8473ee535622eee12046612f0e5b55b16fc0aba598829757b1afedc54c69774"
+      },
+      "exit_code": 0
+    },
+    "trace-contract": {
+      "report": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/closeout-stage38-01/processes/trace-contract/process.json",
+        "bytes": 512,
+        "sha256": "fe0e8c7275357b9bec117775d66afad43c823fe324046ed957b0ebca07f8280e"
+      },
+      "exit_code": 1
+    }
+  },
+  "source_binding": {
+    "report": {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/closeout-stage38-01/precommit-02/report.json",
+      "bytes": 951154,
+      "sha256": "bbb1033a29cd973540a93afaa519c909de23222213ca2ae09dbd6ce58fef6aa9"
+    },
+    "distinct_source_paths": 4219,
+    "current_and_snapshots_match": true,
+    "committed_binding": "reports/m2/stage38-source-binding.json"
+  },
+  "archive": {
+    "path": "reports/m2/stage38-final-evidence.tar.gz",
+    "bytes": 31250278,
+    "sha256": "8a4dca38a8e8935cdf437bad2469bb7b8dffc1fa1bb2048987fcd3dcc8ffaeb4",
+    "original_files": 132839,
+    "inventory_files": 132840,
+    "inventory_sha256": "06d640cdda78bf121f2d448636ae9e855b7a3622d9218a0a75e115a450b24ee4",
+    "exact_membership_verified": true,
+    "extracted_bytes_verified": true,
+    "original_bytes_unchanged": true,
+    "excluded_before_traversal": [
+      "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage38-persistent-final-01/build",
+      "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage38-persistent-final-02/build",
+      "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage38-trace-final-01/build",
+      "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage38-trace-final-02/build"
+    ]
+  },
+  "origin_captures": {
+    "archives": [
+      {
+        "group": "oracle",
+        "archive": "reports/m2/stage38-oracle-evidence.tar.gz",
+        "bytes": 1473082,
+        "sha256": "0972e288ffc55f59eb4144b40c7fef572b3787b4d23bc8a2c99c809380dc2879",
+        "original_files": 4342,
+        "roots": 15,
+        "inventory_sha256": "2358442e58d8566073eef60226a13332da8abe81b0522b75663fd4e837e2947b",
+        "verified": true
+      },
+      {
+        "group": "development",
+        "archive": "reports/m2/stage38-development-evidence.tar.gz",
+        "bytes": 69841310,
+        "sha256": "6bdf9f6d3bdb6c42e6913a4234152c689a45325235b3f5b30f44a191e4366d2f",
+        "original_files": 20248,
+        "roots": 32,
+        "inventory_sha256": "8eb23c1d210dbb9450925b021edab69831786cb007cb809f46584b4fbd8459d2",
+        "verified": true
+      }
+    ],
+    "all_verified": true,
+    "schema": 1,
+    "scope": "Immutable Stage 38 Java observations and pre-order-fix development results. This is not a final checkpoint or full M2 compatibility result.",
+    "selection_report_sha256": "2244fc714fb637f9bd290d60c4e4c6d86ad749abbe552ea606fffb33a4a130d4",
+    "excluded_before_traversal": [
+      "build",
+      "target",
+      "node_modules",
+      ".cache",
+      "__pycache__",
+      "directories ending in -cargo"
+    ],
+    "compatibility_complete": false,
+    "selection_correction": {
+      "reason": "The original archive helper incorrectly excluded every directory named build, omitting 12 subprocess capture files declared in four original closure manifests. The original files and two archives were unchanged.",
+      "supplement": "reports/m2/stage38-candidate-evidence.tar.gz",
+      "supplement_sha256": "fc7ad0449d6e79142ead8b19ff379368e5281da97762b582b55021024adc4b8f",
+      "repair_files": [
+        {
+          "closure_origin_id": "stage38-final-native-01",
+          "closure_path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-final-native-01/closure.json",
+          "closure_sha256": "3e7e0301383ae671ac935eecdeec6afe5d35274b1107f1fa59ff009c486ba3d4",
+          "origin": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-final-native-01/build/result.json",
+          "reason": "Original closure-declared subprocess build capture omitted by old generic build-directory exclusion",
+          "sha256": "428f9ec16ab436ec51554256e04cf7a4d284484262731f41b833154a7fd19c74"
+        },
+        {
+          "closure_origin_id": "stage38-final-native-01",
+          "closure_path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-final-native-01/closure.json",
+          "closure_sha256": "3e7e0301383ae671ac935eecdeec6afe5d35274b1107f1fa59ff009c486ba3d4",
+          "origin": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-final-native-01/build/stderr.bin",
+          "reason": "Original closure-declared subprocess build capture omitted by old generic build-directory exclusion",
+          "sha256": "d2b8b57881010a795a647ccf7c6f01e326006da0b064b9bf475da922f84f4e89"
+        },
+        {
+          "closure_origin_id": "stage38-final-native-01",
+          "closure_path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-final-native-01/closure.json",
+          "closure_sha256": "3e7e0301383ae671ac935eecdeec6afe5d35274b1107f1fa59ff009c486ba3d4",
+          "origin": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-final-native-01/build/stdout.bin",
+          "reason": "Original closure-declared subprocess build capture omitted by old generic build-directory exclusion",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "closure_origin_id": "stage38-review-native-01",
+          "closure_path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-review-native-01/closure.json",
+          "closure_sha256": "1d32cbdcb6718eee01444d5f468d311953e63afc6425fb301b5cf589759fcc6b",
+          "origin": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-review-native-01/build/result.json",
+          "reason": "Original closure-declared subprocess build capture omitted by old generic build-directory exclusion",
+          "sha256": "5a3a1c5b1636fca66c2a0bcd442e6eedbce6158a756d3ab472e4e87c011efa52"
+        },
+        {
+          "closure_origin_id": "stage38-review-native-01",
+          "closure_path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-review-native-01/closure.json",
+          "closure_sha256": "1d32cbdcb6718eee01444d5f468d311953e63afc6425fb301b5cf589759fcc6b",
+          "origin": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-review-native-01/build/stderr.bin",
+          "reason": "Original closure-declared subprocess build capture omitted by old generic build-directory exclusion",
+          "sha256": "b78ef252c321cf9002271d4844ab30edce38e9ec0018a8ed31091477f9b218b9"
+        },
+        {
+          "closure_origin_id": "stage38-review-native-01",
+          "closure_path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-review-native-01/closure.json",
+          "closure_sha256": "1d32cbdcb6718eee01444d5f468d311953e63afc6425fb301b5cf589759fcc6b",
+          "origin": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-review-native-01/build/stdout.bin",
+          "reason": "Original closure-declared subprocess build capture omitted by old generic build-directory exclusion",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "closure_origin_id": "stage38-review-native-02",
+          "closure_path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-review-native-02/closure.json",
+          "closure_sha256": "9eb4744232683ae623eb91f7e7d3a6050286b9509f94d7d16cc30dd3e835c912",
+          "origin": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-review-native-02/build/result.json",
+          "reason": "Original closure-declared subprocess build capture omitted by old generic build-directory exclusion",
+          "sha256": "9c18206abdf73936b1243effdce1f9851bf2810342b1da1e5403dae3ac705267"
+        },
+        {
+          "closure_origin_id": "stage38-review-native-02",
+          "closure_path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-review-native-02/closure.json",
+          "closure_sha256": "9eb4744232683ae623eb91f7e7d3a6050286b9509f94d7d16cc30dd3e835c912",
+          "origin": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-review-native-02/build/stderr.bin",
+          "reason": "Original closure-declared subprocess build capture omitted by old generic build-directory exclusion",
+          "sha256": "4e1747f06174da878e415f6fc3553df4e5ea0917b40e3522e0bbde912b129326"
+        },
+        {
+          "closure_origin_id": "stage38-review-native-02",
+          "closure_path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-review-native-02/closure.json",
+          "closure_sha256": "9eb4744232683ae623eb91f7e7d3a6050286b9509f94d7d16cc30dd3e835c912",
+          "origin": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-review-native-02/build/stdout.bin",
+          "reason": "Original closure-declared subprocess build capture omitted by old generic build-directory exclusion",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "closure_origin_id": "stage38-review-native-03",
+          "closure_path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-review-native-03/closure.json",
+          "closure_sha256": "1b02b1f2217f669e19bc657c01dffb8e0ebcfc90f27e8e9642aa6429dae6ad56",
+          "origin": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-review-native-03/build/result.json",
+          "reason": "Original closure-declared subprocess build capture omitted by old generic build-directory exclusion",
+          "sha256": "90b80947746408b6c2cde4b508c627628c07548335e392dc39bf1965e9f1b07e"
+        },
+        {
+          "closure_origin_id": "stage38-review-native-03",
+          "closure_path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-review-native-03/closure.json",
+          "closure_sha256": "1b02b1f2217f669e19bc657c01dffb8e0ebcfc90f27e8e9642aa6429dae6ad56",
+          "origin": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-review-native-03/build/stderr.bin",
+          "reason": "Original closure-declared subprocess build capture omitted by old generic build-directory exclusion",
+          "sha256": "04f2e51d7c92e3ef6a19e4f3ebb7e515f1ab07035fde4c85475be441bbd5dee3"
+        },
+        {
+          "closure_origin_id": "stage38-review-native-03",
+          "closure_path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-review-native-03/closure.json",
+          "closure_sha256": "1b02b1f2217f669e19bc657c01dffb8e0ebcfc90f27e8e9642aa6429dae6ad56",
+          "origin": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-review-native-03/build/stdout.bin",
+          "reason": "Original closure-declared subprocess build capture omitted by old generic build-directory exclusion",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      ],
+      "union_verification": {
+        "report": "reports/m2/stage38-candidate-captures.json",
+        "sha256": "886ccd071a51289088bbd99f1c65f3cc928611a34420364db2ab9d83c7f4d2c1",
+        "closed_original_manifests": 56,
+        "declared_files_covered": 37571,
+        "missing_files": 0,
+        "passed": true
+      }
+    }
+  },
+  "candidate_captures": {
+    "report": {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/reports/m2/stage38-candidate-captures.json",
+      "bytes": 45240,
+      "sha256": "886ccd071a51289088bbd99f1c65f3cc928611a34420364db2ab9d83c7f4d2c1"
+    },
+    "archive": {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/reports/m2/stage38-candidate-evidence.tar.gz",
+      "bytes": 27812466,
+      "sha256": "fc7ad0449d6e79142ead8b19ff379368e5281da97762b582b55021024adc4b8f"
+    }
+  },
+  "independent_audits": [
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-final-language-audit-01/report.json",
+      "bytes": 6505,
+      "sha256": "71bfaf2b5a0f32d24c5e44fe72213e43b54a22cb0ab53e00f9a13a0e8c77184c"
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-closeout-review-01/report.json",
+      "bytes": 22161,
+      "sha256": "784c2df6a38c1fbdf7aa177d5202b8593cbff924b497c50a8446954ec7454069"
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-platform-review-final-03/report.json",
+      "bytes": 6451,
+      "sha256": "94bcfd9192a4b2e9600acd3bfb62827ff2f76f917f480a82fdbfa56baf3fa26a"
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-main-integration-audit-01/report.json",
+      "bytes": 4510,
+      "sha256": "ca33201ea2ce3a25c37cfeaee274769f850cc138d37e6397d88597dac6d8c175"
+    }
+  ],
+  "next_scope_design": {
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-upstream-error-adapter-design-01/report.json",
+    "bytes": 1832,
+    "sha256": "c346563142d9fb7a46fd8100129ebe160cd85527367efa60e8403e1e68ec3c32"
+  },
+  "remaining": [
+    "All nine M2 workstreams retain unmet completion conditions; selected pass rates do not measure overall progress.",
+    "Original cycle error, remainder-zero, mapped-list SourceCode and legacy String.repeat failures remain. D800 URI and three HTTP Java internal-error inputs remain failures.",
+    "The source-path harness retains three HTTP PklBugException cases as mismatches; the portable harness explicitly classifies them as oracle errors. Neither is a pass.",
+    "Allowed resource file/network/package I/O, complete URI parsing and lone UTF16 surrogate URI transport, module loading/cache and general optional Host absence remain open.",
+    "Persistent unexecuted groups, full syntax/type/reflection/collection/diagnostic semantics and original upstream corpus mapping remain open.",
+    "The 960 unimplemented and 40 unmapped accounting rows are unchanged. The next scope connects 72 original upstream frontend error eval contracts.",
+    "Local macOS and actual Node/Chromium evidence does not establish Linux/Windows/release platform or speed/peak-RSS goals."
+  ]
+}

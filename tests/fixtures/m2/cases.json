@@ -44851,6 +44851,1270 @@
         "semantic:diagnostics",
         "semantic:shared-engine"
       ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "read-stage38-life-opaque",
+      "input": "tests/fixtures/m2/read-stage38-life-opaque.pkl",
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "read-stage38-life-upper",
+      "input": "tests/fixtures/m2/read-stage38-life-upper.pkl",
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "read-stage38-life-mixed",
+      "input": "tests/fixtures/m2/read-stage38-life-mixed.pkl",
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "read-stage38-life-hierarchical-normalized",
+      "input": "tests/fixtures/m2/read-stage38-life-hierarchical-normalized.pkl",
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "read-stage38-life-opaque-not-normalized",
+      "input": "tests/fixtures/m2/read-stage38-life-opaque-not-normalized.pkl",
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "read-stage38-life-encoded-dot",
+      "input": "tests/fixtures/m2/read-stage38-life-encoded-dot.pkl",
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "read-stage38-env-uppercase",
+      "input": "tests/fixtures/m2/read-stage38-env-uppercase.pkl",
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "read-stage38-env-mixed",
+      "input": "tests/fixtures/m2/read-stage38-env-mixed.pkl",
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "read-stage38-env-prefix-boundary",
+      "input": "tests/fixtures/m2/read-stage38-env-prefix-boundary.pkl",
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "read-stage38-prop-prefix-boundary",
+      "input": "tests/fixtures/m2/read-stage38-prop-prefix-boundary.pkl",
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "read-stage38-http-denied",
+      "input": "tests/fixtures/m2/read-stage38-http-denied.pkl",
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "read-stage38-http-normalized-denied",
+      "input": "tests/fixtures/m2/read-stage38-http-normalized-denied.pkl",
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "read-stage38-http-uppercase",
+      "input": "tests/fixtures/m2/read-stage38-http-uppercase.pkl",
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "read-stage38-malformed-space",
+      "input": "tests/fixtures/m2/read-stage38-malformed-space.pkl",
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "read-stage38-malformed-percent",
+      "input": "tests/fixtures/m2/read-stage38-malformed-percent.pkl",
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "read-stage38-malformed-percent-pair",
+      "input": "tests/fixtures/m2/read-stage38-malformed-percent-pair.pkl",
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "read-stage38-malformed-http-bracket",
+      "input": "tests/fixtures/m2/read-stage38-malformed-http-bracket.pkl",
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "read-stage38-malformed-leading-digit",
+      "input": "tests/fixtures/m2/read-stage38-malformed-leading-digit.pkl",
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "read-stage38-malformed-leading-underscore",
+      "input": "tests/fixtures/m2/read-stage38-malformed-leading-underscore.pkl",
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "read-stage38-empty-life-ssp",
+      "input": "tests/fixtures/m2/read-stage38-empty-life-ssp.pkl",
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "read-stage38-empty-env-ssp",
+      "input": "tests/fixtures/m2/read-stage38-empty-env-ssp.pkl",
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "read-stage38-backslash-after-colon",
+      "input": "tests/fixtures/m2/read-stage38-backslash-after-colon.pkl",
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "read-stage38-uri-unpaired-surrogate",
+      "input": "tests/fixtures/m2/read-stage38-uri-unpaired-surrogate.pkl",
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:strings"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "read-stage38-env-missing",
+      "input": "tests/fixtures/m2/read-stage38-env-missing.pkl",
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "read-stage38-env-missing-nullable",
+      "input": "tests/fixtures/m2/read-stage38-env-missing-nullable.pkl",
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ_QUESTION",
+        "specification:docs/modules/language-reference/pages/index.adoc:Nullable Reads"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "read-stage38-prop-missing",
+      "input": "tests/fixtures/m2/read-stage38-prop-missing.pkl",
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "read-stage38-prop-missing-nullable",
+      "input": "tests/fixtures/m2/read-stage38-prop-missing-nullable.pkl",
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ_QUESTION",
+        "specification:docs/modules/language-reference/pages/index.adoc:Nullable Reads"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "read-stage38-env-hierarchical-missing",
+      "input": "tests/fixtures/m2/read-stage38-env-hierarchical-missing.pkl",
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "read-stage38-env-hierarchical-missing-nullable",
+      "input": "tests/fixtures/m2/read-stage38-env-hierarchical-missing-nullable.pkl",
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ_QUESTION",
+        "specification:docs/modules/language-reference/pages/index.adoc:Nullable Reads"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "read-stage38-prop-normalized-hierarchical",
+      "input": "tests/fixtures/m2/read-stage38-prop-normalized-hierarchical.pkl",
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "read-stage38-prop-normalized-hierarchical-nullable",
+      "input": "tests/fixtures/m2/read-stage38-prop-normalized-hierarchical-nullable.pkl",
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ_QUESTION",
+        "specification:docs/modules/language-reference/pages/index.adoc:Nullable Reads"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "read-stage38-nullable-denied-life",
+      "input": "tests/fixtures/m2/read-stage38-nullable-denied-life.pkl",
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ_QUESTION",
+        "specification:docs/modules/language-reference/pages/index.adoc:Nullable Reads"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "read-stage38-nullable-denied-http",
+      "input": "tests/fixtures/m2/read-stage38-nullable-denied-http.pkl",
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ_QUESTION",
+        "specification:docs/modules/language-reference/pages/index.adoc:Nullable Reads"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "read-stage38-nullable-malformed",
+      "input": "tests/fixtures/m2/read-stage38-nullable-malformed.pkl",
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ_QUESTION",
+        "specification:docs/modules/language-reference/pages/index.adoc:Nullable Reads"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "read-stage38-read-type-before-uri",
+      "input": "tests/fixtures/m2/read-stage38-read-type-before-uri.pkl",
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "read-stage38-read-null-type-before-uri",
+      "input": "tests/fixtures/m2/read-stage38-read-null-type-before-uri.pkl",
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ_QUESTION",
+        "specification:docs/modules/language-reference/pages/index.adoc:Nullable Reads"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "read-stage38-operand-throw-before-uri",
+      "input": "tests/fixtures/m2/read-stage38-operand-throw-before-uri.pkl",
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "read-stage38-noop-trace-object-frame",
+      "input": "tests/fixtures/m2/read-stage38-noop-trace-object-frame.pkl",
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:tracing"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "read-stage38-noop-trace-strict-list-frame",
+      "input": "tests/fixtures/m2/read-stage38-noop-trace-strict-list-frame.pkl",
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:tracing"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "read-stage38-ordinary-object-read-frame",
+      "input": "tests/fixtures/m2/read-stage38-ordinary-object-read-frame.pkl",
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "read-stage38-noop-trace-nested-member-frame",
+      "input": "tests/fixtures/m2/read-stage38-noop-trace-nested-member-frame.pkl",
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:tracing"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "read-stage38-profile-env-path",
+      "input": "tests/fixtures/m2/read-stage38-profile-env-path.pkl",
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "read-stage38-profile-env-path-nullable",
+      "input": "tests/fixtures/m2/read-stage38-profile-env-path-nullable.pkl",
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ_QUESTION",
+        "specification:docs/modules/language-reference/pages/index.adoc:Nullable Reads"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "read-stage38-profile-env-home",
+      "input": "tests/fixtures/m2/read-stage38-profile-env-home.pkl",
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "read-stage38-profile-env-home-nullable",
+      "input": "tests/fixtures/m2/read-stage38-profile-env-home-nullable.pkl",
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ_QUESTION",
+        "specification:docs/modules/language-reference/pages/index.adoc:Nullable Reads"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "read-stage38-profile-prop-user-home",
+      "input": "tests/fixtures/m2/read-stage38-profile-prop-user-home.pkl",
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "read-stage38-profile-prop-user-home-nullable",
+      "input": "tests/fixtures/m2/read-stage38-profile-prop-user-home-nullable.pkl",
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ_QUESTION",
+        "specification:docs/modules/language-reference/pages/index.adoc:Nullable Reads"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "read-stage38-profile-prop-java-version",
+      "input": "tests/fixtures/m2/read-stage38-profile-prop-java-version.pkl",
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "read-stage38-profile-prop-java-version-nullable",
+      "input": "tests/fixtures/m2/read-stage38-profile-prop-java-version-nullable.pkl",
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ_QUESTION",
+        "specification:docs/modules/language-reference/pages/index.adoc:Nullable Reads"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "read-stage38-edge-http-opaque",
+      "input": "tests/fixtures/m2/read-stage38-edge-http-opaque.pkl",
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "read-stage38-edge-http-invalid-host",
+      "input": "tests/fixtures/m2/read-stage38-edge-http-invalid-host.pkl",
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "read-stage38-edge-http-nonnumeric-port",
+      "input": "tests/fixtures/m2/read-stage38-edge-http-nonnumeric-port.pkl",
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "read-stage38-edge-http-large-port",
+      "input": "tests/fixtures/m2/read-stage38-edge-http-large-port.pkl",
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "read-stage38-edge-http-fragment",
+      "input": "tests/fixtures/m2/read-stage38-edge-http-fragment.pkl",
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "read-stage38-edge-read-lazy-dynamic-type",
+      "input": "tests/fixtures/m2/read-stage38-edge-read-lazy-dynamic-type.pkl",
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "read-stage38-edge-read-list-type",
+      "input": "tests/fixtures/m2/read-stage38-edge-read-list-type.pkl",
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "read-stage38-frontend-single-operand",
+      "input": "tests/fixtures/m2/read-stage38-frontend-single-operand.pkl",
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ_QUESTION",
+        "specification:docs/modules/language-reference/pages/index.adoc:Nullable Reads"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "read-stage38-frontend-space-before-open",
+      "input": "tests/fixtures/m2/read-stage38-frontend-space-before-open.pkl",
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ_QUESTION",
+        "specification:docs/modules/language-reference/pages/index.adoc:Nullable Reads"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "read-stage38-frontend-newline-before-open",
+      "input": "tests/fixtures/m2/read-stage38-frontend-newline-before-open.pkl",
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ_QUESTION",
+        "specification:docs/modules/language-reference/pages/index.adoc:Nullable Reads"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "read-stage38-frontend-comment-before-open",
+      "input": "tests/fixtures/m2/read-stage38-frontend-comment-before-open.pkl",
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ_QUESTION",
+        "specification:docs/modules/language-reference/pages/index.adoc:Nullable Reads"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "read-stage38-frontend-spaced-keyword",
+      "input": "tests/fixtures/m2/read-stage38-frontend-spaced-keyword.pkl",
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "read-stage38-frontend-empty-operand",
+      "input": "tests/fixtures/m2/read-stage38-frontend-empty-operand.pkl",
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ_QUESTION",
+        "specification:docs/modules/language-reference/pages/index.adoc:Nullable Reads"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "read-stage38-frontend-extra-operand",
+      "input": "tests/fixtures/m2/read-stage38-frontend-extra-operand.pkl",
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ_QUESTION",
+        "specification:docs/modules/language-reference/pages/index.adoc:Nullable Reads"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "read-stage38-frontend-bare-keyword",
+      "input": "tests/fixtures/m2/read-stage38-frontend-bare-keyword.pkl",
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ_QUESTION",
+        "specification:docs/modules/language-reference/pages/index.adoc:Nullable Reads"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "read-stage38-frontend-quoted-nullable-method",
+      "input": "tests/fixtures/m2/read-stage38-frontend-quoted-nullable-method.pkl",
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ_QUESTION",
+        "specification:docs/modules/language-reference/pages/index.adoc:Nullable Reads"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "read-stage38-frontend-quoted-read-method",
+      "input": "tests/fixtures/m2/read-stage38-frontend-quoted-read-method.pkl",
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "read-stage38-frontend-keyword-with-quoted-shadow",
+      "input": "tests/fixtures/m2/read-stage38-frontend-keyword-with-quoted-shadow.pkl",
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "read-stage38-frontend-qualified-nullable-keyword",
+      "input": "tests/fixtures/m2/read-stage38-frontend-qualified-nullable-keyword.pkl",
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ_QUESTION",
+        "specification:docs/modules/language-reference/pages/index.adoc:Nullable Reads"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "read-stage38-frontend-contextual-new-boundary",
+      "input": "tests/fixtures/m2/read-stage38-frontend-contextual-new-boundary.pkl",
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ_QUESTION",
+        "specification:docs/modules/language-reference/pages/index.adoc:Nullable Reads"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "read-stage38-frontend-operand-local-scope",
+      "input": "tests/fixtures/m2/read-stage38-frontend-operand-local-scope.pkl",
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ_QUESTION",
+        "specification:docs/modules/language-reference/pages/index.adoc:Nullable Reads"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "read-stage38-frontend-nested-null-operand",
+      "input": "tests/fixtures/m2/read-stage38-frontend-nested-null-operand.pkl",
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ_QUESTION",
+        "specification:docs/modules/language-reference/pages/index.adoc:Nullable Reads"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "read-stage38-shadow-nullable-keyword-with-quoted-shadow",
+      "input": "tests/fixtures/m2/read-stage38-shadow-nullable-keyword-with-quoted-shadow.pkl",
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ_QUESTION",
+        "specification:docs/modules/language-reference/pages/index.adoc:Nullable Reads"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "read-stage38-shadow-quoted-missing-read",
+      "input": "tests/fixtures/m2/read-stage38-shadow-quoted-missing-read.pkl",
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "read-stage38-shadow-quoted-missing-nullable-read",
+      "input": "tests/fixtures/m2/read-stage38-shadow-quoted-missing-nullable-read.pkl",
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ_QUESTION",
+        "specification:docs/modules/language-reference/pages/index.adoc:Nullable Reads"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "read-stage38-shadow-empty-read-operand",
+      "input": "tests/fixtures/m2/read-stage38-shadow-empty-read-operand.pkl",
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "read-stage38-shadow-extra-read-operand",
+      "input": "tests/fixtures/m2/read-stage38-shadow-extra-read-operand.pkl",
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "read-stage38-shadow-read-contextual-new-boundary",
+      "input": "tests/fixtures/m2/read-stage38-shadow-read-contextual-new-boundary.pkl",
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "read-stage38-power-power-read-null-comparison",
+      "input": "tests/fixtures/m2/read-stage38-power-power-read-null-comparison.pkl",
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ_QUESTION",
+        "specification:docs/modules/language-reference/pages/index.adoc:Nullable Reads",
+        "semantic:constraints"
+      ],
+      "power_assertions": true
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "read-stage38-power-power-read-lexical-operand",
+      "input": "tests/fixtures/m2/read-stage38-power-power-read-lexical-operand.pkl",
+      "requirements": [
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "language_token:pkl-parser/src/main/java/org/pkl/parser/Token.java:READ_QUESTION",
+        "specification:docs/modules/language-reference/pages/index.adoc:Nullable Reads",
+        "semantic:constraints"
+      ],
+      "power_assertions": true
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "method-stage38-implicit-empty",
+      "input": "tests/fixtures/m2/method-stage38-implicit-empty.pkl",
+      "requirements": [
+        "semantic:functions",
+        "semantic:name-resolution",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "method-stage38-implicit-nonempty",
+      "input": "tests/fixtures/m2/method-stage38-implicit-nonempty.pkl",
+      "requirements": [
+        "semantic:functions",
+        "semantic:name-resolution",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "method-stage38-implicit-typo-method",
+      "input": "tests/fixtures/m2/method-stage38-implicit-typo-method.pkl",
+      "requirements": [
+        "semantic:functions",
+        "semantic:name-resolution",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "method-stage38-implicit-typo-arity",
+      "input": "tests/fixtures/m2/method-stage38-implicit-typo-arity.pkl",
+      "requirements": [
+        "semantic:functions",
+        "semantic:name-resolution",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "method-stage38-implicit-property",
+      "input": "tests/fixtures/m2/method-stage38-implicit-property.pkl",
+      "requirements": [
+        "semantic:functions",
+        "semantic:name-resolution",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "method-stage38-implicit-local-method",
+      "input": "tests/fixtures/m2/method-stage38-implicit-local-method.pkl",
+      "requirements": [
+        "semantic:functions",
+        "semantic:name-resolution",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "method-stage38-implicit-inherited-method",
+      "input": "tests/fixtures/m2/method-stage38-implicit-inherited-method.pkl",
+      "requirements": [
+        "semantic:functions",
+        "semantic:name-resolution",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "method-stage38-implicit-class-method",
+      "input": "tests/fixtures/m2/method-stage38-implicit-class-method.pkl",
+      "requirements": [
+        "semantic:functions",
+        "semantic:name-resolution",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "method-stage38-implicit-class-empty",
+      "input": "tests/fixtures/m2/method-stage38-implicit-class-empty.pkl",
+      "requirements": [
+        "semantic:functions",
+        "semantic:name-resolution",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "method-stage38-explicit-module-empty",
+      "input": "tests/fixtures/m2/method-stage38-explicit-module-empty.pkl",
+      "requirements": [
+        "semantic:functions",
+        "semantic:name-resolution",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "method-stage38-explicit-module-nonempty",
+      "input": "tests/fixtures/m2/method-stage38-explicit-module-nonempty.pkl",
+      "requirements": [
+        "semantic:functions",
+        "semantic:name-resolution",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "method-stage38-implicit-base-constructor",
+      "input": "tests/fixtures/m2/method-stage38-implicit-base-constructor.pkl",
+      "requirements": [
+        "semantic:functions",
+        "semantic:name-resolution",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "method-stage38-order-lexical-method-base-property-tie",
+      "input": "tests/fixtures/m2/method-stage38-order-lexical-method-base-property-tie.pkl",
+      "requirements": [
+        "semantic:functions",
+        "semantic:name-resolution",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "method-stage38-order-local-method-base-property-tie",
+      "input": "tests/fixtures/m2/method-stage38-order-local-method-base-property-tie.pkl",
+      "requirements": [
+        "semantic:functions",
+        "semantic:name-resolution",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "method-stage38-order-outer-method-base-property-tie",
+      "input": "tests/fixtures/m2/method-stage38-order-outer-method-base-property-tie.pkl",
+      "requirements": [
+        "semantic:functions",
+        "semantic:name-resolution",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "method-stage38-order-nearest-method-shadow-tie",
+      "input": "tests/fixtures/m2/method-stage38-order-nearest-method-shadow-tie.pkl",
+      "requirements": [
+        "semantic:functions",
+        "semantic:name-resolution",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "method-stage38-order-equal-similarity-arity-rank",
+      "input": "tests/fixtures/m2/method-stage38-order-equal-similarity-arity-rank.pkl",
+      "requirements": [
+        "semantic:functions",
+        "semantic:name-resolution",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "method-stage38-order-equal-rank-declaration-order",
+      "input": "tests/fixtures/m2/method-stage38-order-equal-rank-declaration-order.pkl",
+      "requirements": [
+        "semantic:functions",
+        "semantic:name-resolution",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "method-stage38-order-explicit-module-excludes-base-properties",
+      "input": "tests/fixtures/m2/method-stage38-order-explicit-module-excludes-base-properties.pkl",
+      "requirements": [
+        "semantic:functions",
+        "semantic:name-resolution",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "method-stage38-order-same-scope-property-before-method",
+      "input": "tests/fixtures/m2/method-stage38-order-same-scope-property-before-method.pkl",
+      "requirements": [
+        "semantic:functions",
+        "semantic:name-resolution",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "method-stage38-order-nested-method-before-outer-property",
+      "input": "tests/fixtures/m2/method-stage38-order-nested-method-before-outer-property.pkl",
+      "requirements": [
+        "semantic:functions",
+        "semantic:name-resolution",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
     }
   ],
   "schema_version": 1,
