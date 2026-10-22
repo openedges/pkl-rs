@@ -909,6 +909,62 @@
       "expressions": "map-stage22-prefix-cache.expressions",
       "group": "T22",
       "note": "Complete raw pinned Java strict Map construction, immediate hash insertion, boxed keys, lazy nested value wrappers, HAMT hash/equality order and hash-prefix routing after Listing cache warm-up. Ordered repeated failures and successful reads share one evaluator. Native Host/GC lifecycle evidence remains separate."
+    },
+    {
+      "id": "set-stage23-constructor-retries",
+      "source": "set-stage23-constructor-retries.pkl",
+      "expressions": "set-stage23-constructor-retries.expressions",
+      "group": "T23",
+      "note": "Complete raw pinned Java strict Set construction, immediate contains/hash/deduplication, boxed elements, structural nested keys, eager generic element checks, insertion-order iteration and cache-sensitive membership/equality. Ordered retries and successful reads share one evaluator. Native Host/GC lifecycle evidence remains separate."
+    },
+    {
+      "id": "set-stage23-boxed-elements",
+      "source": "set-stage23-boxed-elements.pkl",
+      "expressions": "set-stage23-boxed-elements.expressions",
+      "group": "T23",
+      "note": "Complete raw pinned Java strict Set construction, immediate contains/hash/deduplication, boxed elements, structural nested keys, eager generic element checks, insertion-order iteration and cache-sensitive membership/equality. Ordered retries and successful reads share one evaluator. Native Host/GC lifecycle evidence remains separate."
+    },
+    {
+      "id": "set-stage23-generic-wrappers",
+      "source": "set-stage23-generic-wrappers.pkl",
+      "expressions": "set-stage23-generic-wrappers.expressions",
+      "group": "T23",
+      "note": "Complete raw pinned Java strict Set construction, immediate contains/hash/deduplication, boxed elements, structural nested keys, eager generic element checks, insertion-order iteration and cache-sensitive membership/equality. Ordered retries and successful reads share one evaluator. Native Host/GC lifecycle evidence remains separate."
+    },
+    {
+      "id": "set-stage23-structural-elements",
+      "source": "set-stage23-structural-elements.pkl",
+      "expressions": "set-stage23-structural-elements.expressions",
+      "group": "T23",
+      "note": "Complete raw pinned Java strict Set construction, immediate contains/hash/deduplication, boxed elements, structural nested keys, eager generic element checks, insertion-order iteration and cache-sensitive membership/equality. Ordered retries and successful reads share one evaluator. Native Host/GC lifecycle evidence remains separate."
+    },
+    {
+      "id": "set-stage23-empty-query",
+      "source": "set-stage23-empty-query.pkl",
+      "expressions": "set-stage23-empty-query.expressions",
+      "group": "T23",
+      "note": "Complete raw pinned Java strict Set construction, immediate contains/hash/deduplication, boxed elements, structural nested keys, eager generic element checks, insertion-order iteration and cache-sensitive membership/equality. Ordered retries and successful reads share one evaluator. Native Host/GC lifecycle evidence remains separate."
+    },
+    {
+      "id": "set-stage23-prefix-cache",
+      "source": "set-stage23-prefix-cache.pkl",
+      "expressions": "set-stage23-prefix-cache.expressions",
+      "group": "T23",
+      "note": "Complete raw pinned Java strict Set construction, immediate contains/hash/deduplication, boxed elements, structural nested keys, eager generic element checks, insertion-order iteration and cache-sensitive membership/equality. Ordered retries and successful reads share one evaluator. Native Host/GC lifecycle evidence remains separate."
+    },
+    {
+      "id": "set-stage23-hash-equality-retries",
+      "source": "set-stage23-hash-equality-retries.pkl",
+      "expressions": "set-stage23-hash-equality-retries.expressions",
+      "group": "T23",
+      "note": "Complete raw pinned Java strict Set construction, immediate contains/hash/deduplication, boxed elements, structural nested keys, eager generic element checks, insertion-order iteration and cache-sensitive membership/equality. Ordered retries and successful reads share one evaluator. Native Host/GC lifecycle evidence remains separate."
+    },
+    {
+      "id": "set-stage23-iteration-scalars",
+      "source": "set-stage23-iteration-scalars.pkl",
+      "expressions": "set-stage23-iteration-scalars.expressions",
+      "group": "T23",
+      "note": "Complete raw pinned Java strict Set construction, immediate contains/hash/deduplication, boxed elements, structural nested keys, eager generic element checks, insertion-order iteration and cache-sensitive membership/equality. Ordered retries and successful reads share one evaluator. Native Host/GC lifecycle evidence remains separate."
     }
   ],
   "unexecuted_groups": [

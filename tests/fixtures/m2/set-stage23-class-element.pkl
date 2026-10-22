@@ -1,0 +1,2 @@
+class C {p=1}
+result=Set(new C {},new C {}).length

@@ -1,0 +1,1 @@
+result = Set(new Listing {default=throw("default");1}).contains(new Listing {1})

@@ -1,0 +1,3 @@
+a=new Listing { 0; 1 }
+b=new Listing { 0; 1 }
+result = let (v=a[0]) Set(a,b).contains(b)

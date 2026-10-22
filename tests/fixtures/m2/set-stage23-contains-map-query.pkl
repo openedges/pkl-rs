@@ -1,0 +1,1 @@
+result = Set(1).contains(Map("x",new Dynamic {p=throw("hash map")}))

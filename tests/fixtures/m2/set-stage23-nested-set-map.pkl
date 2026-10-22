@@ -1,0 +1,1 @@
+result = Set(Map("a",Set(1,2))).contains(Map("a",Set(2,1)))

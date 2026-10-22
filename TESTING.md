@@ -275,8 +275,23 @@ builders, query keys, value comparison, Host reentry, failed-read retry,
 cancellation, evaluator isolation, stale handles, and terminal cleanup. Nested
 Map hashing also runs at depth 768 on a 256 KiB evaluator stack in a child
 process with a 60-second parent deadline. JVM identity-dependent hash order,
-general compound output, Set, and the remaining Map APIs stay outside this
+general compound output and the remaining Map APIs stay outside this
 bounded development contract.
+
+Strict Set comparisons additionally distinguish lookup from insertion hashing,
+duplicate elimination, table order from element order, eager element checking,
+and non-forcing multiline strings. Scalar observations cover generated and
+spread elements; original general compound result failures remain recorded
+outside the adapter's selected scope. Native tests cover pending construction,
+query and comparison, nested Host failure and retry, repeated cancellation,
+evaluator isolation, and terminal release. Ordinary cases collect at each yield.
+The separate 768-deep Set test uses a 256 KiB evaluator stack, a 60-second child
+deadline, one instruction per poll, collection every 128 polls, and a 4,000,000
+event cap. Earlier every-yield timeout and 200,000-event-cap failures are retained;
+these different conditions do not establish the same resource contract or Java
+performance parity. Alias tests distinguish retained ordinary values from
+executable metadata, verify repeated-call plateaus, and require zero terminal
+heap entries. Existing small-stack Map and generic tests keep their conditions.
 
 M1 experiments have narrower, explicit contracts:
 

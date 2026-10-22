@@ -1,0 +1,8 @@
+bad=new Dynamic {p=throw("set hash first")}
+left=Set(bad)
+right=Set(new Dynamic {p=1})
+equal=left==right
+hashed=Map(left,1)
+collision=Set("BB","Aa","BB")
+collisionEqual=collision==Set("Aa","BB")
+stable=42

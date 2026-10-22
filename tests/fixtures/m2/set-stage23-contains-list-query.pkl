@@ -1,0 +1,1 @@
+result = Set(1).contains(List(new Dynamic {p=throw("hash list")}))

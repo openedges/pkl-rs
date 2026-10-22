@@ -12,7 +12,7 @@ pub struct EvaluationOptions {
     pub power_assertions: bool,
 }
 
-/// Evaluate a property path to a scalar, strict Map, or domain-rendered Reference string.
+/// Evaluate a property path to a scalar, strict Map/Set, or domain-rendered Reference string.
 /// The supplied URI and inferred module name are transport context, never rewritten
 /// after evaluation. Explicit module declarations override the inferred name.
 pub fn scalar_expression(
@@ -107,7 +107,7 @@ pub fn scalar_expressions_with_options(
     let program_mut = std::sync::Arc::make_mut(&mut program);
     program_mut.module_name = name.into();
     // The Java expression-string boundary converts a returned Reference through
-    // its domain renderer and a strict Map through its non-forcing value renderer.
+    // its domain renderer and a strict Map/Set through its non-forcing value renderer.
     let stringify = program_mut.blocks.len();
     program_mut.blocks.push(vec![
         Instruction::Input(0),
@@ -152,6 +152,7 @@ pub fn scalar_expressions_with_options(
             .and_then(|mut value| {
                 if vm.is_reference(&value)
                     || vm.is_map(&value)
+                    || vm.is_set(&value)
                     || matches!(value, Value::TypeAlias(_))
                 {
                     value = vm

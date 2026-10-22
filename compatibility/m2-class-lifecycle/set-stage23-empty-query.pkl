@@ -1,0 +1,6 @@
+element=new Dynamic {p=throw("query hash")}
+empty=Set()
+nonempty=Set(1)
+emptyFound=empty.contains(element)
+nonemptyFound=nonempty.contains(element)
+stable=42

@@ -1,0 +1,9 @@
+a=new Listing {0;1}
+b=new Listing {0;1}
+values=Set(a,b)
+containsA=values.contains(a)
+containsB=values.contains(b)
+compared=values==Set(b,a)
+key=Map(values,7).getOrNull(Set(b,a))
+warm=a[0]
+stable=42

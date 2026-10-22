@@ -1,0 +1,9 @@
+parent=new Dynamic {a=1;b=throw("parent unused")}
+child=(parent){b=2}
+values=Set(child,List(1,2),Map("a",1,"b",2),Set(1,2))
+dynamicFound=values.contains(new Dynamic {a=1;b=2})
+listFound=values.contains(List(1,2))
+mapFound=values.contains(Map("b",2,"a",1))
+setFound=values.contains(Set(2,1))
+boxedMissing=values.contains(List(1.0,2))
+stable=42

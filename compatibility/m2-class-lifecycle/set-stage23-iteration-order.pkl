@@ -1,0 +1,6 @@
+values=Set("b","a","b")
+indices=new Listing {for (i,v in values) {"\(i)=\(v)"}}
+spread=new Listing {...values}
+empty=new Listing {...Set()}
+wrong=new Mapping {...values}
+stable=42

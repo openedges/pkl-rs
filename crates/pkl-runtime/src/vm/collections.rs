@@ -162,6 +162,177 @@ pub(super) fn external_amendment_error(name: &str) -> RuntimeError {
 }
 
 impl Vm {
+    fn set_candidates(
+        &self,
+        id: ObjectId,
+        value: &Value,
+        assoc: bool,
+    ) -> Result<Vec<Value>, RuntimeError> {
+        let object = self.heap.get(id)?;
+        let hash = self.java_hash(value)?;
+        let indices = if assoc {
+            object.map_index().assoc_candidates(hash)
+        } else {
+            object.map_index().candidates(hash)
+        };
+        Ok(indices
+            .into_iter()
+            .map(|index| object.set_entries[index].clone())
+            .collect())
+    }
+
+    fn set_contains(&self, id: ObjectId, value: &Value) -> Result<bool, RuntimeError> {
+        // Paguro's empty root returns before hashing even a primitive probe.
+        if self.heap.get(id)?.set_entries.is_empty() {
+            return Ok(false);
+        }
+        Ok(self
+            .set_candidates(id, value, false)?
+            .iter()
+            .any(|candidate| same_key(&self.heap, value, candidate)))
+    }
+
+    fn prepare_set_lookup(&mut self, id: ObjectId, value: &Value) -> Result<bool, RuntimeError> {
+        if self.heap.get(id)?.set_entries.is_empty() {
+            return Ok(false);
+        }
+        if self.prepare_keys(vec![value.clone()])? {
+            return Ok(true);
+        }
+        self.search_key(value, self.set_candidates(id, value, false)?)
+    }
+
+    pub(super) fn invoke_set_contains(
+        &mut self,
+        callable: ObjectId,
+        native: reference::NativeFunction,
+        arguments: Vec<Value>,
+    ) -> Result<(), RuntimeError> {
+        if arguments.len() != 1 {
+            let source = crate::stdlib_sources::base();
+            let declaration = source
+                .text
+                .find("external class Set<")
+                .expect("pinned Set class");
+            let fragment = "external function contains(element: Any): Boolean";
+            let start = declaration
+                + source.text[declaration..]
+                    .find(fragment)
+                    .expect("pinned Set.contains");
+            let span = Span::new(start, start + fragment.len());
+            let mut error = RuntimeError::new(
+                ErrorKind::Type,
+                format!("Expected 1 function arguments but got {}.", arguments.len()),
+            );
+            error.frames.push(RuntimeFrame {
+                span,
+                member: Arc::from("#Set.contains"),
+                source: Some(source),
+            });
+            return Err(error);
+        }
+        let id = native.receiver.as_object()?;
+        if self.prepare_set_lookup(id, &arguments[0])? {
+            self.frames
+                .last_mut()
+                .expect("active frame")
+                .equality_run
+                .as_mut()
+                .expect("Set lookup")
+                .hide_callsite = false;
+            self.stack.push(Value::Function(callable));
+            self.stack.extend(arguments);
+            return Ok(());
+        }
+        self.stack
+            .push(Value::Bool(self.set_contains(id, &arguments[0])?));
+        Ok(())
+    }
+
+    fn prepare_set_element(&mut self) -> Result<(), RuntimeError> {
+        let value = self.pop()?;
+        let id = self.builder()?;
+        if self.prepare_set_lookup(id, &value)? {
+            self.stack.push(value);
+            return Ok(());
+        }
+        let present = self.set_contains(id, &value)?;
+        self.stack.extend([value, Value::Bool(present)]);
+        Ok(())
+    }
+
+    fn add_set_element(&mut self) -> Result<(), RuntimeError> {
+        let present = self.pop()?;
+        let value = self.pop()?;
+        if present == Value::Bool(true) {
+            return Ok(());
+        }
+        let id = self.builder()?;
+        if self.prepare_keys(vec![value.clone()])?
+            || self.search_key(&value, self.set_candidates(id, &value, true)?)?
+        {
+            self.stack.extend([value, present]);
+            return Ok(());
+        }
+        let replacing = self
+            .set_candidates(id, &value, true)?
+            .iter()
+            .any(|candidate| same_key(&self.heap, &value, candidate));
+        if !replacing {
+            let object = self.heap.get(id)?;
+            let old = object
+                .map_index()
+                .rehash(self.java_hash(&value)?)
+                .into_iter()
+                .map(|index| object.set_entries[index].clone())
+                .collect();
+            if self.prepare_keys(old)? {
+                self.stack.extend([value, present]);
+                return Ok(());
+            }
+            let mut hashes = self
+                .heap
+                .get(id)?
+                .set_entries
+                .iter()
+                .map(|value| self.java_hash(value))
+                .collect::<Result<Vec<_>, _>>()?;
+            hashes.push(self.java_hash(&value)?);
+            let object = self.heap.get_mut(id)?;
+            object
+                .map_index
+                .get_or_insert_with(Box::default)
+                .insert(hashes, true);
+            object.set_entries.push(value.clone());
+        }
+        self.add_collection_member(
+            Member {
+                entry: true,
+                name: Arc::from(""),
+                code: usize::MAX,
+                local: false,
+                method: false,
+                ty: None,
+                type_span: None,
+                constant: false,
+                fixed: false,
+            },
+            None,
+            CollectionMemberKind::Element,
+            Some(value),
+        )
+    }
+
+    pub(super) fn set_hash_elements(&self, id: ObjectId) -> Result<Vec<Value>, RuntimeError> {
+        let object = self.heap.get(id)?;
+        Ok(object
+            .map_index()
+            .ordered()
+            .into_iter()
+            .map(|index| object.set_entries[index].clone())
+            .collect())
+    }
+
     fn map_candidates(&self, id: ObjectId, key: &Value) -> Result<Vec<Value>, RuntimeError> {
         let object = self.heap.get(id)?;
         Ok(object
@@ -383,18 +554,30 @@ impl Vm {
         Ok(())
     }
 
-    fn check_map_spread(&self) -> Result<(), RuntimeError> {
+    fn check_strict_spread(&self) -> Result<(), RuntimeError> {
         let value = self
             .stack
             .last()
             .ok_or_else(|| invalid("missing spread source"))?;
-        if !self.is_map(value) {
+        let Value::Object(source) = value else {
             return Ok(());
-        }
+        };
+        let source_kind = self.heap.get(*source)?.collection_kind;
+        let (allowed, hint) = match source_kind {
+            CollectionKind::Map => (
+                CollectionKind::Mapping,
+                "`Map` can only be spread into objects of type `Dynamic` and `Mapping`.",
+            ),
+            CollectionKind::List | CollectionKind::Set => (
+                CollectionKind::Listing,
+                "`List` and `Set` can only be spread into objects of type `Dynamic` and `Listing`.",
+            ),
+            _ => return Ok(()),
+        };
         let target = self.builder()?;
         let kind = self.heap.get(target)?.collection_kind;
         let class = typed_class(&self.heap, target)?;
-        if matches!(kind, CollectionKind::Dynamic | CollectionKind::Mapping) && class.is_none() {
+        if (kind == CollectionKind::Dynamic || kind == allowed) && class.is_none() {
             return Ok(());
         }
         let label = class.map_or_else(
@@ -404,12 +587,11 @@ impl Vm {
         let mut error = RuntimeError::new(
             ErrorKind::Type,
             format!(
-                "Cannot spread value of type `Map` into object of type `{label}`.\nValue: {}",
+                "Cannot spread value of type `{source_kind:?}` into object of type `{label}`.\nValue: {}",
                 crate::diagnostic_values::render(value, &self.heap, &self.program.module_name, 80)?
             ),
         );
-        error.hint =
-            Some("`Map` can only be spread into objects of type `Dynamic` and `Mapping`.".into());
+        error.hint = Some(hint.into());
         Err(error)
     }
 
@@ -892,7 +1074,7 @@ impl Vm {
                     }
                     if matches!(
                         object.collection_kind,
-                        CollectionKind::List | CollectionKind::Map
+                        CollectionKind::List | CollectionKind::Map | CollectionKind::Set
                     ) {
                         return Err(external_amendment_error(&format!(
                             "{:?}",
@@ -1055,6 +1237,31 @@ impl Vm {
                 } else {
                     self.pop()?.as_object()?
                 };
+                if self.heap.get(receiver)?.collection_kind == CollectionKind::Set {
+                    return Err(RuntimeError::new(
+                        ErrorKind::Type,
+                        format!(
+                            "Operator `[]` is not defined for operand types `Set` and `{}`.\nLeft operand : {}\nRight operand: {}",
+                            crate::diagnostic_values::type_name(
+                                &key,
+                                &self.heap,
+                                &self.program.module_name
+                            )?,
+                            crate::diagnostic_values::render(
+                                &Value::Object(receiver),
+                                &self.heap,
+                                &self.program.module_name,
+                                80
+                            )?,
+                            crate::diagnostic_values::render(
+                                &key,
+                                &self.heap,
+                                &self.program.module_name,
+                                80
+                            )?
+                        ),
+                    ));
+                }
                 if !is_super && self.heap.get(receiver)?.collection_kind == CollectionKind::Map {
                     if self.prepare_map_lookup(receiver, &key)? {
                         self.stack.extend([Value::Object(receiver), key]);
@@ -1476,7 +1683,7 @@ impl Vm {
                     source_member.kind != CollectionMemberKind::Property
                 } else {
                     match target_kind {
-                        CollectionKind::Listing | CollectionKind::List => {
+                        CollectionKind::Listing | CollectionKind::List | CollectionKind::Set => {
                             source_member.kind != CollectionMemberKind::Element
                         }
                         CollectionKind::Mapping | CollectionKind::Map => {
@@ -1730,9 +1937,11 @@ impl Vm {
                         .kind = kind;
                 }
             }
+            Instruction::PrepareSetElement => self.prepare_set_element()?,
+            Instruction::AddSetElement => self.add_set_element()?,
             Instruction::PrepareMapEntry => self.prepare_map_entry()?,
             Instruction::AddMapEntry => self.add_map_entry()?,
-            Instruction::CheckMapSpread => self.check_map_spread()?,
+            Instruction::CheckMapSpread => self.check_strict_spread()?,
             Instruction::MakeList { length } => {
                 let mut values = Vec::with_capacity(length);
                 for _ in 0..length {

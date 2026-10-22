@@ -1,0 +1,3 @@
+class C{p=1}
+x:C?
+result:Set<Int?> = Set(x,null)

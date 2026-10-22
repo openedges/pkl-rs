@@ -134,6 +134,7 @@ fn is_base_class(name: &str) -> bool {
             | "Listing"
             | "Mapping"
             | "List"
+            | "Set"
             | "Map"
     )
 }

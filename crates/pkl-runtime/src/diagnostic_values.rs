@@ -1,4 +1,4 @@
-//! Bounded, non-forcing value snapshots for diagnostics.
+//! Non-forcing value snapshots for diagnostics and selected collection strings.
 use crate::heap::{CacheKey, CollectionKind, CollectionMemberKind, Heap, LazyState};
 use crate::value::{ErrorKind, ObjectId, RuntimeError, Value};
 use std::collections::BTreeSet;
@@ -36,6 +36,7 @@ fn object_name(id: ObjectId, heap: &Heap) -> Result<String, RuntimeError> {
         CollectionKind::Mapping => "Mapping".into(),
         CollectionKind::List => "List".into(),
         CollectionKind::Map => "Map".into(),
+        CollectionKind::Set => "Set".into(),
     })
 }
 
@@ -51,7 +52,7 @@ fn function_name(id: ObjectId, heap: &Heap) -> Result<String, RuntimeError> {
                 .as_ref()
                 .map(|function| match function.name.as_ref() {
                     "Reference" => 3,
-                    "containsKey" | "getOrNull" => 1,
+                    "contains" | "containsKey" | "getOrNull" => 1,
                     _ => 0,
                 })
         })
@@ -109,12 +110,34 @@ pub(crate) fn render(
     module: &str,
     limit: usize,
 ) -> Result<String, RuntimeError> {
+    render_with_layout(value, heap, module, limit, false)
+}
+
+/// Collection.toString uses a multiline layout, whereas diagnostics and Map
+/// use the single-line layout. Neither layout forces uncached object members.
+pub(crate) fn render_multiline(
+    value: &Value,
+    heap: &Heap,
+    module: &str,
+) -> Result<String, RuntimeError> {
+    render_with_layout(value, heap, module, i32::MAX as usize, true)
+}
+
+fn render_with_layout(
+    value: &Value,
+    heap: &Heap,
+    module: &str,
+    limit: usize,
+    multiline: bool,
+) -> Result<String, RuntimeError> {
     let mut renderer = Renderer {
         heap,
         module,
         units: Vec::new(),
         limit: limit.max(3),
         stopped: false,
+        multiline,
+        depth: 0,
     };
     renderer.value(value, false)?;
     // Java's UTF-8 writer replaces an unmatched surrogate with '?'. The
@@ -130,6 +153,8 @@ struct Renderer<'a> {
     units: Vec<u16>,
     limit: usize,
     stopped: bool,
+    multiline: bool,
+    depth: usize,
 }
 
 impl Renderer<'_> {
@@ -298,11 +323,14 @@ impl Renderer<'_> {
             return Ok(());
         }
         let kind = self.heap.get(id)?.collection_kind;
-        if matches!(kind, CollectionKind::List | CollectionKind::Map) {
-            self.append(if kind == CollectionKind::Map {
-                "Map("
-            } else {
-                "List("
+        if matches!(
+            kind,
+            CollectionKind::List | CollectionKind::Map | CollectionKind::Set
+        ) {
+            self.append(match kind {
+                CollectionKind::Map => "Map(",
+                CollectionKind::Set => "Set(",
+                _ => "List(",
             });
             for (index, member) in crate::vm::collections::ordered_members(self.heap, id)?
                 .into_iter()
@@ -338,14 +366,18 @@ impl Renderer<'_> {
             self.append(" ");
         }
         self.append("{");
+        self.depth += 1;
         let mut any = false;
         for member in crate::vm::collections::ordered_members(self.heap, id)? {
             if self.stopped {
                 return Ok(());
             }
             if !any {
-                self.append(" ");
+                self.append(if self.multiline { "\n" } else { " " });
                 any = true;
+            }
+            if self.multiline {
+                self.append(&"  ".repeat(self.depth));
             }
             let key = CacheKey {
                 entry: member.kind != CollectionMemberKind::Property,
@@ -371,7 +403,7 @@ impl Renderer<'_> {
                     Some(Value::Object(value)) => {
                         !matches!(
                             self.heap.get(*value)?.collection_kind,
-                            CollectionKind::List | CollectionKind::Map
+                            CollectionKind::List | CollectionKind::Map | CollectionKind::Set
                         ) && self.heap.get(*value)?.reference.is_none()
                     }
                     Some(Value::Function(_)) => true,
@@ -383,11 +415,15 @@ impl Renderer<'_> {
                 Some(value) => self.value(value, member.kind != CollectionMemberKind::Element)?,
                 None => self.append("?"),
             }
-            self.append("; ");
+            self.append(if self.multiline { "\n" } else { "; " });
         }
-        if any && !self.stopped {
+        self.depth -= 1;
+        if any && !self.stopped && !self.multiline {
             self.units.truncate(self.units.len() - 2);
             self.append(" ");
+        }
+        if any && self.multiline {
+            self.append(&"  ".repeat(self.depth));
         }
         self.append("}");
         Ok(())

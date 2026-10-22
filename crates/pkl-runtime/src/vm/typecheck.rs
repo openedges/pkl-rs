@@ -709,7 +709,9 @@ impl Vm {
                     if !arguments.iter().all(|(ty, _)| ty.noop())
                         && (matches!(
                             kind,
-                            crate::heap::CollectionKind::List | crate::heap::CollectionKind::Map
+                            crate::heap::CollectionKind::List
+                                | crate::heap::CollectionKind::Map
+                                | crate::heap::CollectionKind::Set
                         ) || run.eager
                             || kind == crate::heap::CollectionKind::Mapping)
                     {
@@ -1149,7 +1151,7 @@ impl Vm {
         };
         let item = state.items[state.index].clone();
         let mut run = run;
-        run.eager = state.eager;
+        run.eager = state.eager || state.kind == crate::heap::CollectionKind::Set;
         run.tasks.push(Task::CollectionValueReady(state));
         self.frames.last_mut().expect("type frame").type_run = Some(run);
         let depth = self.frames.len();
@@ -1198,7 +1200,7 @@ impl Vm {
         let Value::Object(id) = state.value else {
             unreachable!()
         };
-        let result = if state.eager {
+        let result = if state.eager || state.kind == crate::heap::CollectionKind::Set {
             Value::Object(id)
         } else if matches!(
             state.kind,

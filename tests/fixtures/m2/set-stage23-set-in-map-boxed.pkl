@@ -1,0 +1,1 @@
+result = Set(Map("x",Set(1))).contains(Map("x",Set(1.0)))

@@ -1,0 +1,1 @@
+result = Set(new Mapping {default=throw("default");[1]=2}).contains(new Mapping {[1]=2})

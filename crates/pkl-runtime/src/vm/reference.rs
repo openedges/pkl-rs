@@ -46,6 +46,7 @@ pub(crate) fn base_type(name: &str) -> Option<TypeCheck> {
         "Mapping" => TypeCheck::Collection(CollectionKind::Mapping),
         "List" => TypeCheck::Collection(CollectionKind::List),
         "Map" => TypeCheck::Collection(CollectionKind::Map),
+        "Set" => TypeCheck::Collection(CollectionKind::Set),
         _ => return None,
     })
 }
@@ -212,7 +213,8 @@ pub(crate) fn normalize(ty: &TypeCheck, module: &str) -> TypeCheck {
                     kind @ (CollectionKind::List
                     | CollectionKind::Listing
                     | CollectionKind::Mapping
-                    | CollectionKind::Map),
+                    | CollectionKind::Map
+                    | CollectionKind::Set),
                 ) => TypeCheck::ParameterizedCollection {
                     kind: *kind,
                     arguments: vec![
@@ -706,6 +708,7 @@ impl Vm {
                         TypeCheck::Collection(CollectionKind::Mapping) => 21,
                         TypeCheck::Collection(CollectionKind::List) => 22,
                         TypeCheck::Collection(CollectionKind::Map) => 25,
+                        TypeCheck::Collection(CollectionKind::Set) => 26,
                         _ => 2,
                     },
                 super::type_name(&ty, &self.program.module_name),
@@ -817,16 +820,25 @@ impl Vm {
             return Ok(());
         }
         if native.name.as_ref() == "scalarToString" {
-            let text = match &native.receiver {
-                Value::TypeAlias(_) | Value::Class(_) | Value::Function(_) | Value::Object(_) => {
-                    crate::diagnostic_values::render(
+            let text = if self.is_set(&native.receiver) {
+                crate::diagnostic_values::render_multiline(
+                    &native.receiver,
+                    &self.heap,
+                    &self.program.module_name,
+                )?
+            } else {
+                match &native.receiver {
+                    Value::TypeAlias(_)
+                    | Value::Class(_)
+                    | Value::Function(_)
+                    | Value::Object(_) => crate::diagnostic_values::render(
                         &native.receiver,
                         &self.heap,
                         &self.program.module_name,
                         usize::MAX,
-                    )?
+                    )?,
+                    value => scalar_string(value)?,
                 }
-                value => scalar_string(value)?,
             };
             self.stack.push(Value::string(text));
             return Ok(());
@@ -932,7 +944,7 @@ impl Vm {
                             .as_ref()
                             .map(|f| match f.name.as_ref() {
                                 "Reference" => 3,
-                                "containsKey" | "getOrNull" => 1,
+                                "containsKey" | "getOrNull" | "contains" => 1,
                                 _ => 0,
                             })
                     })

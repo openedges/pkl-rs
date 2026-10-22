@@ -102,7 +102,7 @@ bytecode. VM errors retain these logical frames before unwinding. A shared
 scalar evaluation boundary combines them with source URIs and module names
 and renders complete uncolored diagnostics. Native `language_probe`, Node
 `evaluateLanguage`, and Wasm `evaluateLanguage` use this boundary. These are
-development adapters with scalar and selected Reference/type-alias/strict Map
+development adapters with scalar and selected Reference/type-alias/strict Map/Set
 property-path results; full expression APIs, general compound rendering, and
 external module loading remain separate requirements.
 
@@ -266,8 +266,21 @@ Nested lazy collection casts can return wrappers; replacing such values creates
 a distinct Map and clears inherited structural/hash metadata. Empty Map defaults
 do not construct a default value for `V`. Map stringification reads completed
 values without forcing nested objects, through the shared diagnostic value
-renderer. General compound stringification, Set, and the remaining Map APIs
+renderer. General compound stringification and the remaining Map APIs
 remain separate work.
+
+Strict Set uses the same hash-trie index with separate table keys and
+insertion-order elements. Constructor lookup precedes insertion; a duplicate
+skips insertion, while a new element is prepared again in a separate bytecode
+instruction. Both representations and pending builder/query continuations are
+GC roots. Equality and structural hashing use the table, while public iteration
+uses element order without rehashing. `Set<T>` eagerly checks elements and
+retains the original Set rather than replacing its keys with lazy wrappers.
+Set strings use the multiline non-forcing value renderer; Map strings and
+diagnostic snapshots retain their single-line layout. Higher-order Set APIs and
+JVM identity-dependent ordering remain separate work. Nested Map iteration can
+rehash keys while Java renders a value; the cache-only snapshot renderer does
+not yet reproduce every such side effect.
 
 ### Member predicates
 

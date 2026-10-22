@@ -1,0 +1,3 @@
+a=new Dynamic {p=throw("parent");q=2}
+b=(a){p=1}
+result=Set(b).contains(new Dynamic {p=1;q=2})

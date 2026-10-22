@@ -1,0 +1,1 @@
+result = Set().contains(Set(new Dynamic {p=throw("hash nested set")}))

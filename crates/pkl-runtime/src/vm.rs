@@ -91,6 +91,9 @@ pub enum Instruction {
     /// Hash and insert one strict Map pair before evaluating the next pair.
     PrepareMapEntry,
     AddMapEntry,
+    /// Hash and deduplicate one strict Set element before the next argument.
+    PrepareSetElement,
+    AddSetElement,
     LoadThis,
     LoadCustomThis,
     LoadOuter,
@@ -511,7 +514,7 @@ impl TypeCheck {
                 ("TypeAlias", Value::TypeAlias(_)) | ("Class", Value::Class(_))
             ),
             Self::Function { parameters, .. } => {
-                matches!(value, Value::Function(id) if heap.get(*id).is_ok_and(|object| parameters.as_ref().is_none_or(|parameters| object.function.as_ref().is_some_and(|function| function.arity == parameters.len()) || object.native_function.as_ref().is_some_and(|function| parameters.len() == match function.name.as_ref() { "Reference" => 3, "containsKey" | "getOrNull" => 1, _ => 0 }))))
+                matches!(value, Value::Function(id) if heap.get(*id).is_ok_and(|object| parameters.as_ref().is_none_or(|parameters| object.function.as_ref().is_some_and(|function| function.arity == parameters.len()) || object.native_function.as_ref().is_some_and(|function| parameters.len() == match function.name.as_ref() { "Reference" => 3, "containsKey" | "getOrNull" | "contains" => 1, _ => 0 }))))
             }
             Self::RefDomain => Self::Class {
                 id: reference::DOMAIN_ID,
@@ -901,8 +904,10 @@ impl Vm {
         self.inputs.clear();
         self.stack.clear();
         self.state = State::Running;
-        if self.heap.get(receiver)?.collection_kind == crate::heap::CollectionKind::Map
-            && self.collection_builtin(receiver, name)?
+        if matches!(
+            self.heap.get(receiver)?.collection_kind,
+            crate::heap::CollectionKind::Map | crate::heap::CollectionKind::Set
+        ) && self.collection_builtin(receiver, name)?
         {
             self.finish_top()?;
             return Ok(());
@@ -1007,6 +1012,10 @@ impl Vm {
     pub fn is_closed(&self) -> bool {
         matches!(self.state, State::Closed)
     }
+    pub(crate) fn is_set(&self, value: &Value) -> bool {
+        matches!(value, Value::Object(id) if self.heap.get(*id).is_ok_and(|object| object.collection_kind == crate::heap::CollectionKind::Set))
+    }
+
     pub(crate) fn is_map(&self, value: &Value) -> bool {
         matches!(value, Value::Object(id) if self.heap.get(*id).is_ok_and(|object| object.collection_kind == crate::heap::CollectionKind::Map))
     }
@@ -2145,6 +2154,9 @@ impl Vm {
         method: bool,
     ) -> Result<(), RuntimeError> {
         if let Some(native) = self.heap.get(id)?.native_function.clone() {
+            if native.name.as_ref() == "contains" {
+                return self.invoke_set_contains(id, native, arguments);
+            }
             if matches!(native.name.as_ref(), "containsKey" | "getOrNull") {
                 return self.invoke_map_lookup(id, native, arguments);
             }
@@ -2274,6 +2286,8 @@ impl Vm {
                 | Instruction::EntryParent
                 | Instruction::MakeList { .. }
                 | Instruction::PrepareMapEntry
+                | Instruction::PrepareSetElement
+                | Instruction::AddSetElement
                 | Instruction::AddMapEntry
         ) {
             self.collection_instruction(instruction)
@@ -2414,6 +2428,8 @@ impl Vm {
             | Instruction::EntryParent
             | Instruction::MakeList { .. }
             | Instruction::PrepareMapEntry
+            | Instruction::PrepareSetElement
+            | Instruction::AddSetElement
             | Instruction::AddMapEntry => {
                 return Err(invalid("collection instruction bypassed scheduler"));
             }
@@ -2545,6 +2561,13 @@ impl Vm {
                     && self.heap.get(id)?.reference.is_some()
                 {
                     self.render_reference(id)?;
+                } else if self.is_set(&value) {
+                    let text = crate::diagnostic_values::render_multiline(
+                        &value,
+                        &self.heap,
+                        &self.program.module_name,
+                    )?;
+                    self.stack.push(Value::string(text));
                 } else if matches!(
                     value,
                     Value::TypeAlias(_) | Value::Class(_) | Value::Function(_)
@@ -2642,12 +2665,23 @@ impl Vm {
                     self.stack.push(receiver);
                 } else if method
                     && name.as_ref() == "toString"
-                    && (receiver.as_object().is_err() || self.is_map(&receiver))
+                    && (receiver.as_object().is_err()
+                        || self.is_map(&receiver)
+                        || self.is_set(&receiver))
                 {
                     let function = self.native_reference_method(receiver, "scalarToString");
                     self.stack.push(function);
                 } else {
                     let receiver = receiver.as_object()?;
+                    if method
+                        && self.heap.get(receiver)?.collection_kind
+                            == crate::heap::CollectionKind::Set
+                        && name.as_ref() == "contains"
+                    {
+                        let function = self.native_reference_method(Value::Object(receiver), name);
+                        self.stack.push(function);
+                        return Ok(());
+                    }
                     if method
                         && self.heap.get(receiver)?.collection_kind
                             == crate::heap::CollectionKind::Map
@@ -3884,7 +3918,10 @@ impl Compiler<'_> {
                 self.compile_type(ty)?.unaliased()
         {
             let kind = *kind;
-            if kind == crate::heap::CollectionKind::Map {
+            if matches!(
+                kind,
+                crate::heap::CollectionKind::Map | crate::heap::CollectionKind::Set
+            ) {
                 let span = member.expr.span;
                 let span = if self.resolved.module.source[span.start..].starts_with("new") {
                     Span::new(span.start, span.start + 3)
@@ -3892,7 +3929,7 @@ impl Compiler<'_> {
                     span
                 };
                 instructions.push_at(
-                    Instruction::Fail(collections::external_amendment_error("Map")),
+                    Instruction::Fail(collections::external_amendment_error(&format!("{kind:?}"))),
                     span,
                 );
             } else {
@@ -3928,7 +3965,13 @@ impl Compiler<'_> {
             .modifiers
             .iter()
             .any(|m| m.kind == crate::syntax::ModifierKind::Hidden);
-        self.program.metadata[code].value_span = Some(member.expr.span);
+        self.program.metadata[code].value_span = Some(
+            if matches!(member.expr.kind, crate::syntax::ExprKind::Uninitialized) {
+                member.name_span
+            } else {
+                member.expr.span
+            },
+        );
         self.program.metadata[code].initialization_error = initialization_error;
         self.program.metadata[code].property_typecheck = property_typecheck;
         self.program.metadata[code].amendment = member.is_amendment();
@@ -4225,9 +4268,14 @@ impl Compiler<'_> {
                 | TypeCheck::ParameterizedCollection { kind, .. } = check.unaliased()
                 {
                     let kind = *kind;
-                    if kind == crate::heap::CollectionKind::Map {
+                    if matches!(
+                        kind,
+                        crate::heap::CollectionKind::Map | crate::heap::CollectionKind::Set
+                    ) {
                         output.push_at(
-                            Instruction::Fail(collections::external_amendment_error("Map")),
+                            Instruction::Fail(collections::external_amendment_error(&format!(
+                                "{kind:?}"
+                            ))),
                             expression.span,
                         );
                         return Ok(());
@@ -4592,6 +4640,22 @@ impl Compiler<'_> {
                     output.push(Instruction::EndCollection);
                     return Ok(());
                 }
+                if matches!(&callee.kind, ExprKind::Name(name) if name == "Set")
+                    && self.resolved.names.get(&callee.span) == Some(&Binding::ImplicitMethod)
+                {
+                    output.push(Instruction::BeginCollection {
+                        kind: crate::heap::CollectionKind::Set,
+                        has_parent: false,
+                        specialized: false,
+                    });
+                    for argument in arguments {
+                        self.expression(argument, output)?;
+                        output.push_at(Instruction::PrepareSetElement, expression.span);
+                        output.push_at(Instruction::AddSetElement, expression.span);
+                    }
+                    output.push(Instruction::EndCollection);
+                    return Ok(());
+                }
                 if matches!(&callee.kind, ExprKind::Name(name) if name == "List")
                     && self.resolved.names.get(&callee.span) == Some(&Binding::ImplicitMethod)
                 {
@@ -4864,9 +4928,13 @@ fn type_error_at_width(
     };
     Ok(RuntimeError::new(
         ErrorKind::Type,
-        format!(
-            "Expected value of type `{expected}`, but got type `{actual_type}`.\nValue: {value}"
-        ),
+        if actual.is_null() {
+            format!("Expected value of type `{expected}`, but got `null`.")
+        } else {
+            format!(
+                "Expected value of type `{expected}`, but got type `{actual_type}`.\nValue: {value}"
+            )
+        },
     ))
 }
 
@@ -5748,6 +5816,7 @@ impl Compiler<'_> {
                             "Mapping" => crate::heap::CollectionKind::Mapping,
                             "List" => crate::heap::CollectionKind::List,
                             "Map" => crate::heap::CollectionKind::Map,
+                            "Set" => crate::heap::CollectionKind::Set,
                             _ if crate::diagnostic_names::BASE_PROPERTIES
                                 .contains(&path[0].as_str()) =>
                             {
@@ -5822,6 +5891,7 @@ impl Compiler<'_> {
                         "Mapping" => TypeCheck::Collection(crate::heap::CollectionKind::Mapping),
                         "List" => TypeCheck::Collection(crate::heap::CollectionKind::List),
                         "Map" => TypeCheck::Collection(crate::heap::CollectionKind::Map),
+                        "Set" => TypeCheck::Collection(crate::heap::CollectionKind::Set),
                         _ if crate::diagnostic_names::BASE_PROPERTIES
                             .contains(&path[0].as_str()) =>
                         {
@@ -5964,7 +6034,10 @@ impl Compiler<'_> {
                         specialized: true,
                     });
                     if let TypeCheck::ParameterizedCollection { arguments, .. } = check
-                        && *kind != crate::heap::CollectionKind::Map
+                        && !matches!(
+                            kind,
+                            crate::heap::CollectionKind::Map | crate::heap::CollectionKind::Set
+                        )
                     {
                         let (ty, span) = arguments.last().expect("collection value type");
                         if ty.default_depends_on_parameters() {

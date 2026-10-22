@@ -1,0 +1,3 @@
+typealias S<T> = Set<T>
+values = new Listing<S<Int>> {Set(1,2)}
+result = values[0]

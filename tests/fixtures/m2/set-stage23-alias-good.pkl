@@ -1,0 +1,2 @@
+typealias S<T> = Set<T>
+result:S<Int> = Set(1)

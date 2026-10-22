@@ -1,0 +1,1 @@
+result = Set(new Mapping {["x"]=throw("hash mapping")},throw("later element")).length

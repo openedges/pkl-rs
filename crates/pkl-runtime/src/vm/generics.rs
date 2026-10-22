@@ -124,7 +124,9 @@ impl TypeCheck {
                 Self::ParameterizedCollection { kind, arguments }
                     if !matches!(
                         kind,
-                        crate::heap::CollectionKind::List | crate::heap::CollectionKind::Map
+                        crate::heap::CollectionKind::List
+                            | crate::heap::CollectionKind::Map
+                            | crate::heap::CollectionKind::Set
                     ) =>
                 {
                     let Some((argument, _)) = arguments.last() else {
@@ -293,7 +295,10 @@ impl Vm {
                         collection_kind: kind,
                         ..Object::default()
                     };
-                    if !matches!(kind, CollectionKind::List | CollectionKind::Map) {
+                    if !matches!(
+                        kind,
+                        CollectionKind::List | CollectionKind::Map | CollectionKind::Set
+                    ) {
                         object.environment = self
                             .frames
                             .last()
@@ -303,8 +308,10 @@ impl Vm {
                         object.specialized_literal = true;
                     }
                     let id = self.heap.allocate(object);
-                    if !matches!(kind, CollectionKind::List | CollectionKind::Map)
-                        && let Some(argument) = argument
+                    if !matches!(
+                        kind,
+                        CollectionKind::List | CollectionKind::Map | CollectionKind::Set
+                    ) && let Some(argument) = argument
                         && !argument.noop()
                     {
                         run.tasks.push(DefaultTask::Collection(id));

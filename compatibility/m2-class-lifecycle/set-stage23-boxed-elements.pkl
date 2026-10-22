@@ -1,0 +1,13 @@
+class C {p=1}
+n:C?
+boxed=Set(1,1.0,0.0,-0.0,NaN,NaN)
+nulls=Set(n,null)
+intFound=boxed.contains(1)
+floatFound=boxed.contains(1.0)
+positiveFound=boxed.contains(0.0)
+negativeFound=boxed.contains(-0.0)
+nanFound=boxed.contains(NaN)
+nullFound=nulls.contains(null)
+intFloat=Set(1)==Set(1.0)
+zero=Set(0.0)==Set(-0.0)
+stable=42

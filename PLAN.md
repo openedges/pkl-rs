@@ -361,6 +361,8 @@ Stage 15의 원래 입력·URI 그대로 재비교하여 shared-slot 실패 3개
 
 [소스·gate 증거](reports/m2/source-stage22-final-evidence.tar.gz)는 소스 사본 5,557개·고유 경로 2,629개를 정확한 구현 커밋과 연결합니다. upstream 소스 사본은 0개이며 참조 pin과 oracle 출처는 별도로 확인했습니다. 요구사항 474개·부분 연결 16개와 accounting row 3,131개 중 ready 2,131개·미구현 960개·미연결 40개를 유지합니다. 엄격한 전체 gate는 기존 실패 이유 1,950개를 유지하며 이 수치를 완료율로 계산하지 않습니다. [독립 최종 감사](reports/m2/stage22-post-seal-audit.json)는 최종 archive 12개·소스·리뷰·gate·실제 포장 검사기와 역사적 증거를 확인합니다. **Stage 22의 제한된 strict-Map 개발 계약만 마감했으며 M2 전체·제품 API·성능·메모리·릴리스 플랫폼 조건은 미완료입니다.**
 
+스물세 번째 단계는 strict `Set`의 생성·중복 제거·조회·기본값·타입 검사·동등성·해시·순회와 문자열 출력을 이어서 구현합니다. 핵심 런타임은 `gpt-6-astra / xhigh`, Java 차등 검증과 독립 수명주기·플랫폼 검토는 각각 `gpt-6.1-sol / high`로 분담합니다. root는 진단·expression-string adapter 연결, 독립 소스 검토와 최종 통합 검증을 담당합니다. Java의 원소별 평가→contains→필요한 경우 put 순서와 내부 해시 구조·삽입 순서의 차이를 확인하고, 중단·재시도·GC·취소·terminal 해제를 같은 실행기에서 검증합니다. Stage 22의 2,131개 식·76개 변형 관계·129개 순차 목록·78개 플랫폼 시나리오와 기존 작은 스택 조건을 유지합니다. 기존 관찰과 별개인 새 로컬 증거를 수집하며 전체 M2·고차 Set API·성능·메모리 동등성은 이 단계의 성공만으로 완료 처리하지 않습니다. 새 선택 217개(성공 158개·예상 오류 59개), 변형 관계 6개, 순차 목록 8개를 추가해 최종 로컬 검증을 진행합니다. 일반 compound 반환의 기존 실패는 미선택 관찰로 보존하고 새 스칼라 관찰로 생성·spread 순서를 검증합니다. native 깊은 Set의 매 yield GC 시간 초과와 낮은 event cap 실패도 보존하며, 주기적 GC의 별도 조건을 기존 작은 스택 회귀와 구분합니다.
+
 다음 구현은 남은 탐색 불일치의 의존성을 기준으로 진행합니다.
 
 1. 남은 Reference metadata 작업·진단 확장을 continuation과 자원 계약으로 검증하고 Java stack-overflow 진단 및 취소 지연을 별도로 다룹니다. 전체 지연 타입 해석·alias-root 대입 identity와 wrapper 중복 제거의 실제 인자 구분을 검증합니다. 남은 nullable/default·inline Reference·local typed-property·outer 진단, generic constructor의 지연 멤버 frame 이름·builtin·generator 경계를 원래 실패 입력으로 보완합니다. 이미 검증한 공유 타입 인자의 깊은 실행·동시 해제, inline·lambda·공유 let·분기 순서·재귀 깊이별 재시도, 타입 인자 캡처·기본값·Reference 검사 순서, Host/GC/취소/terminal 동작을 회귀 기준으로 유지합니다.

@@ -1,0 +1,1 @@
+result = Set(new Dynamic{p=Set(1)}).contains(new Dynamic{p=Set(1.0)})

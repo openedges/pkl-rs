@@ -87,6 +87,7 @@ pub enum CollectionKind {
     Mapping,
     List,
     Map,
+    Set,
 }
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
@@ -171,6 +172,8 @@ pub struct Object {
     pub collection_kind: CollectionKind,
     pub collection_members: Vec<CollectionMember>,
     pub map_index: Option<Box<crate::strict_map::MapIndex>>,
+    /// Strict Set hash-table keys; element order lives in collection_members.
+    pub set_entries: Vec<Value>,
     pub declaration_index: Option<crate::economic_map::EconomicMapIndex>,
     pub declaration_hashes: Vec<i32>,
     pub length: usize,
@@ -618,6 +621,7 @@ impl Heap {
                 .chain(object.environment.outer_value.iter())
                 .chain(object.collection_default.iter().flatten())
                 .chain(object.member_values.values())
+                .chain(object.set_entries.iter())
                 .chain(object.cache_slots.iter().map(|slot| &slot.value))
                 .chain(object.cache.values().filter_map(|state| match state {
                     LazyState::Completed(value) => Some(value),

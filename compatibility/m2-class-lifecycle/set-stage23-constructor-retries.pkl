@@ -1,0 +1,5 @@
+element=new Dynamic { p=throw("set element hash") }
+bad=Set(element,throw("later element"))
+good=Set("b","a","b")
+stable=42
+query=Set(1).contains(element)

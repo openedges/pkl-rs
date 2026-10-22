@@ -1,0 +1,2 @@
+key=new Listing {local x=1+0;default=(_)->x;0}
+result = let(v=Set(key)) let(w=key.default.apply(0)) v

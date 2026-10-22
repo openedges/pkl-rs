@@ -1,0 +1,3 @@
+class C {p=1}
+n:C?
+result=Set(n,null).length

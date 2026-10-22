@@ -1,0 +1,3 @@
+class C {p=1}
+class D {p=1}
+result=Set(new C {},new D {}).length

@@ -57,9 +57,12 @@ compared without normalization. A separate outcome file records whether Java
 returned normally or caught a particular `PklException` class. This distinguishes
 a handled upstream bug report from an uncaught JVM failure without changing
 stdout or stderr. The Rust probe accepts property paths returning scalars,
-selected References and type aliases, or strict Maps. Map stringification reads
-completed values without forcing nested objects, matching its Java value
-renderer. This boundary does not prove typed API compatibility or general
+selected References and type aliases, or strict Maps and Sets. Their
+stringification reads completed values without forcing nested objects. Map uses
+the single-line layout and Set the multiline layout of the Java value renderer.
+Java may rehash nested Map keys during iteration; those rendering side effects
+are not fully reproduced by the cache-only renderer.
+This boundary does not prove typed API compatibility or general
 compound-value rendering.
 
 The default uses Java's API setting with power assertions disabled. Selected
@@ -230,8 +233,20 @@ iteration, equality, hashing, and non-forcing stringification. Raw cases separat
 insertion order from hash-trie traversal and include boxed numeric keys, duplicate
 replacement, nested Map keys, lazy failures, and full diagnostics. Native
 lifecycle checks and ordered Java sequences retain their separate contracts.
-Set, complete Map APIs, JVM identity-dependent hash order, and general compound
+Complete Map APIs, JVM identity-dependent hash order, and general compound
 rendering remain open.
+
+Stage 23 adds selected strict Set construction, duplicate elimination, contains,
+defaults, element type checks, equality, hashing, iteration, spread, and
+non-forcing multiline strings. Constructor lookup and insertion are separate
+resumable phases, including repeated zero-hash preparation. Raw cases and
+persistent sequences observe boxed numeric elements, trie boundaries, nested
+collections, failed-read retry, and cache-sensitive element order. General
+compound result controls remain unselected failures; separate scalar observations
+check Set iteration without extending the adapter to general object output.
+Higher-order Set APIs and the complete collection corpus remain open.
+Nested Map key-rehash side effects during Java value rendering also remain
+outside the selected stringification contract.
 
 A complete runtime type-resolution model, general imported types, annotation
 syntax, and full module initialization/caching remain open requirements. The

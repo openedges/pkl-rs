@@ -89,6 +89,8 @@ REQUIRED_SCENARIOS = {
     'm2-generic-constructors-closure-sequences',
     'm2-strict-map-sequences',
     'm2-strict-map-host-sequences',
+    'm2-strict-set-sequences',
+    'm2-strict-set-host-sequences',
 }
 
 

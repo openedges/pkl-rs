@@ -1,0 +1,1 @@
+result = Set(Set(new Dynamic {p=throw("hash nested set")}),throw("later element")).length

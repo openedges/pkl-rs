@@ -1,0 +1,3 @@
+typealias S<T> = Set<T>
+values = new Listing<S<Int>> {new {}}
+result = values[0].length

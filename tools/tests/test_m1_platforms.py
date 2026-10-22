@@ -85,6 +85,8 @@ class PlatformEvidenceTests(unittest.TestCase):
             'm2-generic-constructors-closure-sequences',
             'm2-strict-map-sequences',
             'm2-strict-map-host-sequences',
+            'm2-strict-set-sequences',
+            'm2-strict-set-host-sequences',
         }
         names = sorted(m1_platforms.REQUIRED_SCENARIOS)
         valid = {'nodeChecks': names, 'browserChecks': names, 'browserErrors': [],

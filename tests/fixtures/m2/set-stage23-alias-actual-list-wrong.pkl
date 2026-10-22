@@ -1,0 +1,2 @@
+typealias S<T> = Set<T>
+result:S<List<Int>> = Set(List(1,"bad"))

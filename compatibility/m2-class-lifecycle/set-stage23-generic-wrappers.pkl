@@ -1,0 +1,8 @@
+typealias S<T> = Set<T>
+empty:S<Int>
+good:S<Int> = Set(1,2)
+bad:S<Int> = Set("bad")
+nested:Set<Listing<Int>> = Set(new Listing { "bad" })
+constructor:Listing<S<String>> = new Listing { Set(1) }
+constructorValue=constructor[0]
+stable=42

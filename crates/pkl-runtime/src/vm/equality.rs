@@ -77,7 +77,7 @@ impl Vm {
         let object = self.heap.get(id)?;
         Ok(matches!(
             object.collection_kind,
-            CollectionKind::List | CollectionKind::Map
+            CollectionKind::List | CollectionKind::Map | CollectionKind::Set
         ) || matches!(object.java_hash, None | Some(Some(0))))
     }
 
@@ -160,6 +160,8 @@ enum Task {
     Compare(Value, Value, bool),
     CompareMembers(ObjectId, ObjectId),
     MapNext(ObjectId, ObjectId, usize),
+    SetNext(ObjectId, ObjectId, usize),
+    SetLookup(ObjectId, Value),
     MapLookup(ObjectId, ObjectId, CollectionMember),
     Deep(Value),
     Match(Value, Value, Vec<(Value, Value)>, usize),
@@ -593,6 +595,13 @@ impl Vm {
     fn hash_entries(&self, id: ObjectId) -> Result<Vec<(Option<Value>, Value)>, RuntimeError> {
         let object = self.heap.get(id)?;
         let typed = self.class_identity(id)?.is_some() || object.is_module;
+        if object.collection_kind == CollectionKind::Set {
+            return Ok(self
+                .set_hash_elements(id)?
+                .into_iter()
+                .map(|value| (None, value))
+                .collect());
+        }
         if object.collection_kind == CollectionKind::Map {
             return self
                 .map_hash_members(id)?
@@ -881,10 +890,17 @@ impl Vm {
                                 x.collection_kind,
                                 CollectionKind::Listing | CollectionKind::List
                             ) && x.length != y.length)
-                            || (x.collection_kind == CollectionKind::Map
-                                && x.map_index().len() != y.map_index().len())
+                            || (matches!(
+                                x.collection_kind,
+                                CollectionKind::Map | CollectionKind::Set
+                            ) && x.map_index().len() != y.map_index().len())
                         {
                             Some(false)
+                        } else if x.collection_kind == CollectionKind::Set {
+                            // AbstractUnmodSet.equals iterates the right table and
+                            // performs contains on the left table.
+                            run.tasks.push(Task::SetNext(*a, *b, 0));
+                            None
                         } else if x.collection_kind == CollectionKind::Map {
                             run.tasks.push(Task::MapNext(*a, *b, 0));
                             None
@@ -910,6 +926,27 @@ impl Vm {
                 if equal == Some(false) {
                     run.reject();
                 }
+            }
+            Task::SetNext(a, b, index) => {
+                if let Some(value) = self.set_hash_elements(b)?.get(index).cloned() {
+                    run.roots.push(value.clone());
+                    run.tasks.push(Task::SetNext(a, b, index + 1));
+                    run.tasks.push(Task::SetLookup(a, value.clone()));
+                    run.tasks.push(Task::Prepare(value));
+                }
+            }
+            Task::SetLookup(id, value) => {
+                let object = self.heap.get(id)?;
+                let candidates = object
+                    .map_index()
+                    .candidates(self.java_hash(&value)?)
+                    .into_iter()
+                    .map(|index| (object.set_entries[index].clone(), Value::Null))
+                    .collect::<Vec<_>>();
+                run.roots
+                    .extend(candidates.iter().map(|(value, _)| value.clone()));
+                run.tasks
+                    .push(Task::Match(value, Value::Null, candidates, 0));
             }
             Task::MapNext(a, b, index) => {
                 if let Some(member) = self.map_hash_members(a)?.get(index).cloned() {
@@ -1097,7 +1134,7 @@ impl Vm {
                     run.tasks.push(Task::HashMembers(id));
                     if !matches!(
                         self.heap.get(id)?.collection_kind,
-                        CollectionKind::List | CollectionKind::Map
+                        CollectionKind::List | CollectionKind::Map | CollectionKind::Set
                     ) {
                         run.tasks.push(Task::Deep(Value::Object(id)));
                     }
@@ -1235,15 +1272,22 @@ impl Vm {
                     CollectionKind::Mapping => 2,
                     CollectionKind::List => 3,
                     CollectionKind::Map => 5,
+                    CollectionKind::Set => 6,
                 };
                 let mut members = Vec::new();
-                for member in self.equality_members(id)? {
-                    let value = self.cached_equality_member(id, &member)?;
-                    members.push((
-                        member.kind == CollectionMemberKind::Property,
-                        atom(&self.heap, &member.key)?,
-                        atom(&self.heap, &value)?,
-                    ));
+                if self.heap.get(id)?.collection_kind == CollectionKind::Set {
+                    for value in self.set_hash_elements(id)? {
+                        members.push((false, Atom::Null, atom(&self.heap, &value)?));
+                    }
+                } else {
+                    for member in self.equality_members(id)? {
+                        let value = self.cached_equality_member(id, &member)?;
+                        members.push((
+                            member.kind == CollectionMemberKind::Property,
+                            atom(&self.heap, &member.key)?,
+                            atom(&self.heap, &value)?,
+                        ));
+                    }
                 }
                 members.sort();
                 let key = StructuralKey {
@@ -1274,6 +1318,11 @@ impl Vm {
                     hash = match (hash, value_hash) {
                         (Some(total), Some(value)) if sequence => {
                             Some(total.wrapping_mul(31).wrapping_add(value))
+                        }
+                        (Some(total), Some(value))
+                            if self.heap.get(id)?.collection_kind == CollectionKind::Set =>
+                        {
+                            Some(total.wrapping_add(value))
                         }
                         (Some(total), Some(value)) => {
                             key_hash.map(|key| total.wrapping_add(key ^ value))

@@ -28751,6 +28751,2625 @@
         "semantic:operators",
         "semantic:lazy-evaluation"
       ]
+    },
+    {
+      "id": "set-stage23-empty",
+      "input": "tests/fixtures/m2/set-stage23-empty.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections"
+      ],
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "set-stage23-empty",
+          "set-stage23-alias-default",
+          "set-stage23-empty-generator",
+          "set-stage23-empty-spread"
+        ],
+        "domain": "An empty Set and generic alias default have zero length, and empty Set generation/spreading produces zero elements."
+      }
+    },
+    {
+      "id": "set-stage23-empty-isempty",
+      "input": "tests/fixtures/m2/set-stage23-empty-isempty.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections"
+      ]
+    },
+    {
+      "id": "set-stage23-singleton",
+      "input": "tests/fixtures/m2/set-stage23-singleton.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections"
+      ]
+    },
+    {
+      "id": "set-stage23-duplicate",
+      "input": "tests/fixtures/m2/set-stage23-duplicate.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections"
+      ]
+    },
+    {
+      "id": "set-stage23-duplicate-length",
+      "input": "tests/fixtures/m2/set-stage23-duplicate-length.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections"
+      ]
+    },
+    {
+      "id": "set-stage23-first-throw",
+      "input": "tests/fixtures/m2/set-stage23-first-throw.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "set-stage23-hash-before-next",
+      "input": "tests/fixtures/m2/set-stage23-hash-before-next.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "set-stage23-eager-unused",
+      "input": "tests/fixtures/m2/set-stage23-eager-unused.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "set-stage23-numeric-boxed",
+      "input": "tests/fixtures/m2/set-stage23-numeric-boxed.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators"
+      ],
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "set-stage23-numeric-boxed",
+          "set-stage23-signed-zero"
+        ],
+        "domain": "Strict Set construction retains two distinct boxed Int/Float or positive/negative zero elements."
+      }
+    },
+    {
+      "id": "set-stage23-numeric-contains-int",
+      "input": "tests/fixtures/m2/set-stage23-numeric-contains-int.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators"
+      ],
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "set-stage23-numeric-contains-int",
+          "set-stage23-numeric-contains-float",
+          "set-stage23-zero-contains-positive",
+          "set-stage23-list-boxed",
+          "set-stage23-dynamic-boxed",
+          "set-stage23-nested-zero",
+          "set-stage23-set-in-list-boxed",
+          "set-stage23-set-in-map-boxed",
+          "set-stage23-set-in-dynamic-boxed"
+        ],
+        "domain": "Strict Set membership retains Java boxed numeric distinctions for direct and nested Int/Float or signed-zero elements."
+      }
+    },
+    {
+      "id": "set-stage23-numeric-contains-float",
+      "input": "tests/fixtures/m2/set-stage23-numeric-contains-float.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators"
+      ],
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "set-stage23-numeric-contains-int",
+          "set-stage23-numeric-contains-float",
+          "set-stage23-zero-contains-positive",
+          "set-stage23-list-boxed",
+          "set-stage23-dynamic-boxed",
+          "set-stage23-nested-zero",
+          "set-stage23-set-in-list-boxed",
+          "set-stage23-set-in-map-boxed",
+          "set-stage23-set-in-dynamic-boxed"
+        ],
+        "domain": "Strict Set membership retains Java boxed numeric distinctions for direct and nested Int/Float or signed-zero elements."
+      }
+    },
+    {
+      "id": "set-stage23-signed-zero",
+      "input": "tests/fixtures/m2/set-stage23-signed-zero.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators"
+      ],
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "set-stage23-numeric-boxed",
+          "set-stage23-signed-zero"
+        ],
+        "domain": "Strict Set construction retains two distinct boxed Int/Float or positive/negative zero elements."
+      }
+    },
+    {
+      "id": "set-stage23-zero-contains-positive",
+      "input": "tests/fixtures/m2/set-stage23-zero-contains-positive.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators"
+      ],
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "set-stage23-numeric-contains-int",
+          "set-stage23-numeric-contains-float",
+          "set-stage23-zero-contains-positive",
+          "set-stage23-list-boxed",
+          "set-stage23-dynamic-boxed",
+          "set-stage23-nested-zero",
+          "set-stage23-set-in-list-boxed",
+          "set-stage23-set-in-map-boxed",
+          "set-stage23-set-in-dynamic-boxed"
+        ],
+        "domain": "Strict Set membership retains Java boxed numeric distinctions for direct and nested Int/Float or signed-zero elements."
+      }
+    },
+    {
+      "id": "set-stage23-nan",
+      "input": "tests/fixtures/m2/set-stage23-nan.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators"
+      ]
+    },
+    {
+      "id": "set-stage23-nan-contains",
+      "input": "tests/fixtures/m2/set-stage23-nan-contains.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators"
+      ]
+    },
+    {
+      "id": "set-stage23-null",
+      "input": "tests/fixtures/m2/set-stage23-null.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types"
+      ]
+    },
+    {
+      "id": "set-stage23-null-contains",
+      "input": "tests/fixtures/m2/set-stage23-null-contains.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types"
+      ]
+    },
+    {
+      "id": "set-stage23-boolean",
+      "input": "tests/fixtures/m2/set-stage23-boolean.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections"
+      ]
+    },
+    {
+      "id": "set-stage23-empty-contains",
+      "input": "tests/fixtures/m2/set-stage23-empty-contains.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections"
+      ]
+    },
+    {
+      "id": "set-stage23-query-forced",
+      "input": "tests/fixtures/m2/set-stage23-query-forced.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "set-stage23-contains-missing",
+      "input": "tests/fixtures/m2/set-stage23-contains-missing.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections"
+      ]
+    },
+    {
+      "id": "set-stage23-contains-arity-zero",
+      "input": "tests/fixtures/m2/set-stage23-contains-arity-zero.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "set-stage23-contains-arity-two",
+      "input": "tests/fixtures/m2/set-stage23-contains-arity-two.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "set-stage23-structural-dynamic",
+      "input": "tests/fixtures/m2/set-stage23-structural-dynamic.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators"
+      ]
+    },
+    {
+      "id": "set-stage23-structural-list",
+      "input": "tests/fixtures/m2/set-stage23-structural-list.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators"
+      ],
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "set-stage23-structural-list",
+          "set-stage23-structural-mapping",
+          "set-stage23-structural-map",
+          "set-stage23-structural-set"
+        ],
+        "domain": "Membership with an equal supported structural List, Mapping, Map or Set element returns true."
+      }
+    },
+    {
+      "id": "set-stage23-structural-mapping",
+      "input": "tests/fixtures/m2/set-stage23-structural-mapping.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators"
+      ],
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "set-stage23-structural-list",
+          "set-stage23-structural-mapping",
+          "set-stage23-structural-map",
+          "set-stage23-structural-set"
+        ],
+        "domain": "Membership with an equal supported structural List, Mapping, Map or Set element returns true."
+      }
+    },
+    {
+      "id": "set-stage23-structural-map",
+      "input": "tests/fixtures/m2/set-stage23-structural-map.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators"
+      ],
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "set-stage23-structural-list",
+          "set-stage23-structural-mapping",
+          "set-stage23-structural-map",
+          "set-stage23-structural-set"
+        ],
+        "domain": "Membership with an equal supported structural List, Mapping, Map or Set element returns true."
+      }
+    },
+    {
+      "id": "set-stage23-structural-set",
+      "input": "tests/fixtures/m2/set-stage23-structural-set.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators"
+      ],
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "set-stage23-structural-list",
+          "set-stage23-structural-mapping",
+          "set-stage23-structural-map",
+          "set-stage23-structural-set"
+        ],
+        "domain": "Membership with an equal supported structural List, Mapping, Map or Set element returns true."
+      }
+    },
+    {
+      "id": "set-stage23-nested-set-dedupe",
+      "input": "tests/fixtures/m2/set-stage23-nested-set-dedupe.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "id": "set-stage23-list-boxed",
+      "input": "tests/fixtures/m2/set-stage23-list-boxed.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators"
+      ],
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "set-stage23-numeric-contains-int",
+          "set-stage23-numeric-contains-float",
+          "set-stage23-zero-contains-positive",
+          "set-stage23-list-boxed",
+          "set-stage23-dynamic-boxed",
+          "set-stage23-nested-zero",
+          "set-stage23-set-in-list-boxed",
+          "set-stage23-set-in-map-boxed",
+          "set-stage23-set-in-dynamic-boxed"
+        ],
+        "domain": "Strict Set membership retains Java boxed numeric distinctions for direct and nested Int/Float or signed-zero elements."
+      }
+    },
+    {
+      "id": "set-stage23-dynamic-boxed",
+      "input": "tests/fixtures/m2/set-stage23-dynamic-boxed.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators"
+      ],
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "set-stage23-numeric-contains-int",
+          "set-stage23-numeric-contains-float",
+          "set-stage23-zero-contains-positive",
+          "set-stage23-list-boxed",
+          "set-stage23-dynamic-boxed",
+          "set-stage23-nested-zero",
+          "set-stage23-set-in-list-boxed",
+          "set-stage23-set-in-map-boxed",
+          "set-stage23-set-in-dynamic-boxed"
+        ],
+        "domain": "Strict Set membership retains Java boxed numeric distinctions for direct and nested Int/Float or signed-zero elements."
+      }
+    },
+    {
+      "id": "set-stage23-set-equality",
+      "input": "tests/fixtures/m2/set-stage23-set-equality.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators"
+      ],
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "set-stage23-set-equality",
+          "set-stage23-set-nan-equality",
+          "set-stage23-set-null-equality",
+          "set-stage23-set-empty-equal",
+          "set-stage23-set-self-equal"
+        ],
+        "domain": "Strict Set equality preserves equivalent contents through ordering, boxed NaN/null identity, empty and self comparisons."
+      }
+    },
+    {
+      "id": "set-stage23-set-length-inequality",
+      "input": "tests/fixtures/m2/set-stage23-set-length-inequality.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators"
+      ]
+    },
+    {
+      "id": "set-stage23-set-boxed-equality",
+      "input": "tests/fixtures/m2/set-stage23-set-boxed-equality.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators"
+      ]
+    },
+    {
+      "id": "set-stage23-set-zero-equality",
+      "input": "tests/fixtures/m2/set-stage23-set-zero-equality.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators"
+      ]
+    },
+    {
+      "id": "set-stage23-set-nan-equality",
+      "input": "tests/fixtures/m2/set-stage23-set-nan-equality.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators"
+      ],
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "set-stage23-set-equality",
+          "set-stage23-set-nan-equality",
+          "set-stage23-set-null-equality",
+          "set-stage23-set-empty-equal",
+          "set-stage23-set-self-equal"
+        ],
+        "domain": "Strict Set equality preserves equivalent contents through ordering, boxed NaN/null identity, empty and self comparisons."
+      }
+    },
+    {
+      "id": "set-stage23-set-null-equality",
+      "input": "tests/fixtures/m2/set-stage23-set-null-equality.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:types"
+      ],
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "set-stage23-set-equality",
+          "set-stage23-set-nan-equality",
+          "set-stage23-set-null-equality",
+          "set-stage23-set-empty-equal",
+          "set-stage23-set-self-equal"
+        ],
+        "domain": "Strict Set equality preserves equivalent contents through ordering, boxed NaN/null identity, empty and self comparisons."
+      }
+    },
+    {
+      "id": "set-stage23-set-list-inequality",
+      "input": "tests/fixtures/m2/set-stage23-set-list-inequality.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators"
+      ]
+    },
+    {
+      "id": "set-stage23-set-listing-inequality",
+      "input": "tests/fixtures/m2/set-stage23-set-listing-inequality.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators"
+      ]
+    },
+    {
+      "id": "set-stage23-type-test",
+      "input": "tests/fixtures/m2/set-stage23-type-test.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types"
+      ]
+    },
+    {
+      "id": "set-stage23-type-test-wrong",
+      "input": "tests/fixtures/m2/set-stage23-type-test-wrong.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types"
+      ]
+    },
+    {
+      "id": "set-stage23-type-non-generic",
+      "input": "tests/fixtures/m2/set-stage23-type-non-generic.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics"
+      ]
+    },
+    {
+      "id": "set-stage23-default-explicit",
+      "input": "tests/fixtures/m2/set-stage23-default-explicit.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "set-stage23-default-nonempty-body",
+      "input": "tests/fixtures/m2/set-stage23-default-nonempty-body.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "set-stage23-subscript",
+      "input": "tests/fixtures/m2/set-stage23-subscript.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "set-stage23-spread-mapping",
+      "input": "tests/fixtures/m2/set-stage23-spread-mapping.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:generators",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "set-stage23-interpolation",
+      "input": "tests/fixtures/m2/set-stage23-interpolation.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections"
+      ]
+    },
+    {
+      "id": "set-stage23-string-mixed",
+      "input": "tests/fixtures/m2/set-stage23-string-mixed.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections"
+      ]
+    },
+    {
+      "id": "set-stage23-hash-map-key",
+      "input": "tests/fixtures/m2/set-stage23-hash-map-key.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:lazy-evaluation"
+      ],
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "set-stage23-hash-map-key",
+          "set-stage23-prefix-as-map-key",
+          "set-stage23-deep-16-map-key"
+        ],
+        "domain": "Equal supported shallow, cache-controlled and bounded nested Set keys retrieve the inserted Map value."
+      }
+    },
+    {
+      "id": "set-stage23-hash-list-nested",
+      "input": "tests/fixtures/m2/set-stage23-hash-list-nested.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "id": "set-stage23-nested-set-map",
+      "input": "tests/fixtures/m2/set-stage23-nested-set-map.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "id": "set-stage23-typed-good",
+      "input": "tests/fixtures/m2/set-stage23-typed-good.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types"
+      ]
+    },
+    {
+      "id": "set-stage23-typed-wrong",
+      "input": "tests/fixtures/m2/set-stage23-typed-wrong.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "set-stage23-typed-default",
+      "input": "tests/fixtures/m2/set-stage23-typed-default.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types"
+      ]
+    },
+    {
+      "id": "set-stage23-typed-nested-lazy",
+      "input": "tests/fixtures/m2/set-stage23-typed-nested-lazy.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:types",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "set-stage23-typed-nested-force",
+      "input": "tests/fixtures/m2/set-stage23-typed-nested-force.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:types",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "set-stage23-alias-default",
+      "input": "tests/fixtures/m2/set-stage23-alias-default.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:type-aliases"
+      ],
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "set-stage23-empty",
+          "set-stage23-alias-default",
+          "set-stage23-empty-generator",
+          "set-stage23-empty-spread"
+        ],
+        "domain": "An empty Set and generic alias default have zero length, and empty Set generation/spreading produces zero elements."
+      }
+    },
+    {
+      "id": "set-stage23-alias-good",
+      "input": "tests/fixtures/m2/set-stage23-alias-good.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:type-aliases"
+      ]
+    },
+    {
+      "id": "set-stage23-alias-bad",
+      "input": "tests/fixtures/m2/set-stage23-alias-bad.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:type-aliases",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "set-stage23-nullable-default",
+      "input": "tests/fixtures/m2/set-stage23-nullable-default.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types"
+      ]
+    },
+    {
+      "id": "set-stage23-class-element",
+      "input": "tests/fixtures/m2/set-stage23-class-element.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:classes"
+      ]
+    },
+    {
+      "id": "set-stage23-class-mixed",
+      "input": "tests/fixtures/m2/set-stage23-class-mixed.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:classes"
+      ]
+    },
+    {
+      "id": "set-stage23-inherited-element",
+      "input": "tests/fixtures/m2/set-stage23-inherited-element.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:amendment"
+      ]
+    },
+    {
+      "id": "set-stage23-null-default-dedupe",
+      "input": "tests/fixtures/m2/set-stage23-null-default-dedupe.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:types"
+      ]
+    },
+    {
+      "id": "set-stage23-null-default-contains",
+      "input": "tests/fixtures/m2/set-stage23-null-default-contains.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types"
+      ]
+    },
+    {
+      "id": "set-stage23-prefix-unwarmed",
+      "input": "tests/fixtures/m2/set-stage23-prefix-unwarmed.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "id": "set-stage23-prefix-warmed",
+      "input": "tests/fixtures/m2/set-stage23-prefix-warmed.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "id": "set-stage23-prefix-contains-a",
+      "input": "tests/fixtures/m2/set-stage23-prefix-contains-a.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "id": "set-stage23-prefix-contains-b",
+      "input": "tests/fixtures/m2/set-stage23-prefix-contains-b.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "id": "set-stage23-prefix-equals",
+      "input": "tests/fixtures/m2/set-stage23-prefix-equals.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "id": "set-stage23-prefix-as-map-key",
+      "input": "tests/fixtures/m2/set-stage23-prefix-as-map-key.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:lazy-evaluation"
+      ],
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "set-stage23-hash-map-key",
+          "set-stage23-prefix-as-map-key",
+          "set-stage23-deep-16-map-key"
+        ],
+        "domain": "Equal supported shallow, cache-controlled and bounded nested Set keys retrieve the inserted Map value."
+      }
+    },
+    {
+      "id": "set-stage23-prefix-format",
+      "input": "tests/fixtures/m2/set-stage23-prefix-format.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "id": "set-stage23-trie-4-contains",
+      "input": "tests/fixtures/m2/set-stage23-trie-4-contains.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections"
+      ]
+    },
+    {
+      "id": "set-stage23-trie-4-length",
+      "input": "tests/fixtures/m2/set-stage23-trie-4-length.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections"
+      ]
+    },
+    {
+      "id": "set-stage23-trie-4-equality",
+      "input": "tests/fixtures/m2/set-stage23-trie-4-equality.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators"
+      ]
+    },
+    {
+      "id": "set-stage23-trie-5-contains",
+      "input": "tests/fixtures/m2/set-stage23-trie-5-contains.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections"
+      ]
+    },
+    {
+      "id": "set-stage23-trie-5-length",
+      "input": "tests/fixtures/m2/set-stage23-trie-5-length.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections"
+      ]
+    },
+    {
+      "id": "set-stage23-trie-5-equality",
+      "input": "tests/fixtures/m2/set-stage23-trie-5-equality.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators"
+      ]
+    },
+    {
+      "id": "set-stage23-trie-16-contains",
+      "input": "tests/fixtures/m2/set-stage23-trie-16-contains.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections"
+      ]
+    },
+    {
+      "id": "set-stage23-trie-16-length",
+      "input": "tests/fixtures/m2/set-stage23-trie-16-length.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections"
+      ]
+    },
+    {
+      "id": "set-stage23-trie-16-equality",
+      "input": "tests/fixtures/m2/set-stage23-trie-16-equality.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators"
+      ]
+    },
+    {
+      "id": "set-stage23-trie-17-contains",
+      "input": "tests/fixtures/m2/set-stage23-trie-17-contains.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections"
+      ]
+    },
+    {
+      "id": "set-stage23-trie-17-length",
+      "input": "tests/fixtures/m2/set-stage23-trie-17-length.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections"
+      ]
+    },
+    {
+      "id": "set-stage23-trie-17-equality",
+      "input": "tests/fixtures/m2/set-stage23-trie-17-equality.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators"
+      ]
+    },
+    {
+      "id": "set-stage23-trie-33-contains",
+      "input": "tests/fixtures/m2/set-stage23-trie-33-contains.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections"
+      ]
+    },
+    {
+      "id": "set-stage23-trie-33-length",
+      "input": "tests/fixtures/m2/set-stage23-trie-33-length.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections"
+      ]
+    },
+    {
+      "id": "set-stage23-trie-33-equality",
+      "input": "tests/fixtures/m2/set-stage23-trie-33-equality.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators"
+      ]
+    },
+    {
+      "id": "set-stage23-string-collision",
+      "input": "tests/fixtures/m2/set-stage23-string-collision.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "id": "set-stage23-string-collision-contains",
+      "input": "tests/fixtures/m2/set-stage23-string-collision-contains.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "id": "set-stage23-deep-set",
+      "input": "tests/fixtures/m2/set-stage23-deep-set.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections"
+      ]
+    },
+    {
+      "id": "set-stage23-mapping-default",
+      "input": "tests/fixtures/m2/set-stage23-mapping-default.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types"
+      ]
+    },
+    {
+      "id": "set-stage23-listing-default",
+      "input": "tests/fixtures/m2/set-stage23-listing-default.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types"
+      ]
+    },
+    {
+      "id": "set-stage23-collision-asymmetry-length",
+      "input": "tests/fixtures/m2/set-stage23-collision-asymmetry-length.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "id": "set-stage23-collision-asymmetry-contains-a",
+      "input": "tests/fixtures/m2/set-stage23-collision-asymmetry-contains-a.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "id": "set-stage23-collision-asymmetry-contains-b",
+      "input": "tests/fixtures/m2/set-stage23-collision-asymmetry-contains-b.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "id": "set-stage23-collision-asymmetry-contains-int",
+      "input": "tests/fixtures/m2/set-stage23-collision-asymmetry-contains-int.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "id": "set-stage23-collision-asymmetry-equality",
+      "input": "tests/fixtures/m2/set-stage23-collision-asymmetry-equality.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "id": "set-stage23-collision-asymmetry-equality-reverse",
+      "input": "tests/fixtures/m2/set-stage23-collision-asymmetry-equality-reverse.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "id": "set-stage23-collision-asymmetry-format",
+      "input": "tests/fixtures/m2/set-stage23-collision-asymmetry-format.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "id": "set-stage23-collision-asymmetry-map-key",
+      "input": "tests/fixtures/m2/set-stage23-collision-asymmetry-map-key.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "id": "set-stage23-zero-hash-before",
+      "input": "tests/fixtures/m2/set-stage23-zero-hash-before.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "id": "set-stage23-zero-hash-after",
+      "input": "tests/fixtures/m2/set-stage23-zero-hash-after.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "id": "set-stage23-zero-hash-render",
+      "input": "tests/fixtures/m2/set-stage23-zero-hash-render.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "id": "set-stage23-zero-hash-equals",
+      "input": "tests/fixtures/m2/set-stage23-zero-hash-equals.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "id": "set-stage23-zero-hash-reinsert",
+      "input": "tests/fixtures/m2/set-stage23-zero-hash-reinsert.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "id": "set-stage23-zero-hash-for",
+      "input": "tests/fixtures/m2/set-stage23-zero-hash-for.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "id": "set-stage23-hash-dynamic-before-next",
+      "input": "tests/fixtures/m2/set-stage23-hash-dynamic-before-next.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "set-stage23-contains-dynamic-query",
+      "input": "tests/fixtures/m2/set-stage23-contains-dynamic-query.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "set-stage23-empty-contains-dynamic-query",
+      "input": "tests/fixtures/m2/set-stage23-empty-contains-dynamic-query.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "id": "set-stage23-hash-listing-before-next",
+      "input": "tests/fixtures/m2/set-stage23-hash-listing-before-next.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "set-stage23-contains-listing-query",
+      "input": "tests/fixtures/m2/set-stage23-contains-listing-query.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "set-stage23-empty-contains-listing-query",
+      "input": "tests/fixtures/m2/set-stage23-empty-contains-listing-query.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "id": "set-stage23-hash-mapping-before-next",
+      "input": "tests/fixtures/m2/set-stage23-hash-mapping-before-next.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "set-stage23-contains-mapping-query",
+      "input": "tests/fixtures/m2/set-stage23-contains-mapping-query.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "set-stage23-empty-contains-mapping-query",
+      "input": "tests/fixtures/m2/set-stage23-empty-contains-mapping-query.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "id": "set-stage23-hash-list-before-next",
+      "input": "tests/fixtures/m2/set-stage23-hash-list-before-next.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "set-stage23-contains-list-query",
+      "input": "tests/fixtures/m2/set-stage23-contains-list-query.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "set-stage23-empty-contains-list-query",
+      "input": "tests/fixtures/m2/set-stage23-empty-contains-list-query.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "id": "set-stage23-hash-map-before-next",
+      "input": "tests/fixtures/m2/set-stage23-hash-map-before-next.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "set-stage23-contains-map-query",
+      "input": "tests/fixtures/m2/set-stage23-contains-map-query.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "set-stage23-empty-contains-map-query",
+      "input": "tests/fixtures/m2/set-stage23-empty-contains-map-query.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "id": "set-stage23-hash-set-before-next",
+      "input": "tests/fixtures/m2/set-stage23-hash-set-before-next.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "set-stage23-contains-set-query",
+      "input": "tests/fixtures/m2/set-stage23-contains-set-query.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "set-stage23-empty-contains-set-query",
+      "input": "tests/fixtures/m2/set-stage23-empty-contains-set-query.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "set-stage23-type-null-nullable",
+      "input": "tests/fixtures/m2/set-stage23-type-null-nullable.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types"
+      ]
+    },
+    {
+      "id": "set-stage23-type-int-union",
+      "input": "tests/fixtures/m2/set-stage23-type-int-union.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types"
+      ]
+    },
+    {
+      "id": "set-stage23-type-mixed-union",
+      "input": "tests/fixtures/m2/set-stage23-type-mixed-union.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types"
+      ]
+    },
+    {
+      "id": "set-stage23-type-float-int",
+      "input": "tests/fixtures/m2/set-stage23-type-float-int.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types"
+      ]
+    },
+    {
+      "id": "set-stage23-type-nested-list-wrong",
+      "input": "tests/fixtures/m2/set-stage23-type-nested-list-wrong.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:types"
+      ]
+    },
+    {
+      "id": "set-stage23-type-nested-map-wrong",
+      "input": "tests/fixtures/m2/set-stage23-type-nested-map-wrong.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:types"
+      ]
+    },
+    {
+      "id": "set-stage23-type-nested-set-wrong",
+      "input": "tests/fixtures/m2/set-stage23-type-nested-set-wrong.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:types"
+      ]
+    },
+    {
+      "id": "set-stage23-type-outer-constraint",
+      "input": "tests/fixtures/m2/set-stage23-type-outer-constraint.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:constraints"
+      ]
+    },
+    {
+      "id": "set-stage23-type-outer-constraint-false",
+      "input": "tests/fixtures/m2/set-stage23-type-outer-constraint-false.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:constraints"
+      ]
+    },
+    {
+      "id": "set-stage23-type-wrong-type-arity",
+      "input": "tests/fixtures/m2/set-stage23-type-wrong-type-arity.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "set-stage23-type-missing-type-argument",
+      "input": "tests/fixtures/m2/set-stage23-type-missing-type-argument.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "set-stage23-typed-empty",
+      "input": "tests/fixtures/m2/set-stage23-typed-empty.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types"
+      ]
+    },
+    {
+      "id": "set-stage23-typed-null-wrong",
+      "input": "tests/fixtures/m2/set-stage23-typed-null-wrong.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "set-stage23-typed-null-good",
+      "input": "tests/fixtures/m2/set-stage23-typed-null-good.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types"
+      ]
+    },
+    {
+      "id": "set-stage23-typed-nested-map",
+      "input": "tests/fixtures/m2/set-stage23-typed-nested-map.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:types",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "set-stage23-typed-nested-set",
+      "input": "tests/fixtures/m2/set-stage23-typed-nested-set.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:types",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "set-stage23-typed-nested-list",
+      "input": "tests/fixtures/m2/set-stage23-typed-nested-list.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:types",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "set-stage23-typed-outer-constraint",
+      "input": "tests/fixtures/m2/set-stage23-typed-outer-constraint.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:constraints",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "set-stage23-alias-null-default",
+      "input": "tests/fixtures/m2/set-stage23-alias-null-default.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:type-aliases"
+      ]
+    },
+    {
+      "id": "set-stage23-alias-nested-default",
+      "input": "tests/fixtures/m2/set-stage23-alias-nested-default.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:type-aliases"
+      ]
+    },
+    {
+      "id": "set-stage23-alias-constraint",
+      "input": "tests/fixtures/m2/set-stage23-alias-constraint.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "set-stage23-inferred-new",
+      "input": "tests/fixtures/m2/set-stage23-inferred-new.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "set-stage23-default-constrained",
+      "input": "tests/fixtures/m2/set-stage23-default-constrained.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "set-stage23-set-mapping-inequality",
+      "input": "tests/fixtures/m2/set-stage23-set-mapping-inequality.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators"
+      ]
+    },
+    {
+      "id": "set-stage23-set-dynamic-inequality",
+      "input": "tests/fixtures/m2/set-stage23-set-dynamic-inequality.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators"
+      ]
+    },
+    {
+      "id": "set-stage23-set-empty-equal",
+      "input": "tests/fixtures/m2/set-stage23-set-empty-equal.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators"
+      ],
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "set-stage23-set-equality",
+          "set-stage23-set-nan-equality",
+          "set-stage23-set-null-equality",
+          "set-stage23-set-empty-equal",
+          "set-stage23-set-self-equal"
+        ],
+        "domain": "Strict Set equality preserves equivalent contents through ordering, boxed NaN/null identity, empty and self comparisons."
+      }
+    },
+    {
+      "id": "set-stage23-set-empty-nonempty",
+      "input": "tests/fixtures/m2/set-stage23-set-empty-nonempty.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections"
+      ]
+    },
+    {
+      "id": "set-stage23-set-self-equal",
+      "input": "tests/fixtures/m2/set-stage23-set-self-equal.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators"
+      ],
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "set-stage23-set-equality",
+          "set-stage23-set-nan-equality",
+          "set-stage23-set-null-equality",
+          "set-stage23-set-empty-equal",
+          "set-stage23-set-self-equal"
+        ],
+        "domain": "Strict Set equality preserves equivalent contents through ordering, boxed NaN/null identity, empty and self comparisons."
+      }
+    },
+    {
+      "id": "set-stage23-empty-generator",
+      "input": "tests/fixtures/m2/set-stage23-empty-generator.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:generators"
+      ],
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "set-stage23-empty",
+          "set-stage23-alias-default",
+          "set-stage23-empty-generator",
+          "set-stage23-empty-spread"
+        ],
+        "domain": "An empty Set and generic alias default have zero length, and empty Set generation/spreading produces zero elements."
+      }
+    },
+    {
+      "id": "set-stage23-empty-spread",
+      "input": "tests/fixtures/m2/set-stage23-empty-spread.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:generators"
+      ],
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "set-stage23-empty",
+          "set-stage23-alias-default",
+          "set-stage23-empty-generator",
+          "set-stage23-empty-spread"
+        ],
+        "domain": "An empty Set and generic alias default have zero length, and empty Set generation/spreading produces zero elements."
+      }
+    },
+    {
+      "id": "set-stage23-wrong-contains-type",
+      "input": "tests/fixtures/m2/set-stage23-wrong-contains-type.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections"
+      ]
+    },
+    {
+      "id": "set-stage23-member-length-type",
+      "input": "tests/fixtures/m2/set-stage23-member-length-type.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections"
+      ]
+    },
+    {
+      "id": "set-stage23-constraint-false-this",
+      "input": "tests/fixtures/m2/set-stage23-constraint-false-this.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:constraints"
+      ]
+    },
+    {
+      "id": "set-stage23-constraint-true-this",
+      "input": "tests/fixtures/m2/set-stage23-constraint-true-this.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:constraints"
+      ]
+    },
+    {
+      "id": "set-stage23-typed-set-method-in-constraint",
+      "input": "tests/fixtures/m2/set-stage23-typed-set-method-in-constraint.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:constraints"
+      ]
+    },
+    {
+      "id": "set-stage23-typed-set-method-false",
+      "input": "tests/fixtures/m2/set-stage23-typed-set-method-false.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types"
+      ]
+    },
+    {
+      "id": "set-stage23-default-isempty",
+      "input": "tests/fixtures/m2/set-stage23-default-isempty.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types"
+      ]
+    },
+    {
+      "id": "set-stage23-spread-typed-listing",
+      "input": "tests/fixtures/m2/set-stage23-spread-typed-listing.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generators"
+      ]
+    },
+    {
+      "id": "set-stage23-iteration-only-values",
+      "input": "tests/fixtures/m2/set-stage23-iteration-only-values.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:generators"
+      ]
+    },
+    {
+      "id": "set-stage23-iteration-only-index",
+      "input": "tests/fixtures/m2/set-stage23-iteration-only-index.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:generators"
+      ]
+    },
+    {
+      "id": "set-stage23-set-in-list-boxed",
+      "input": "tests/fixtures/m2/set-stage23-set-in-list-boxed.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators"
+      ],
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "set-stage23-numeric-contains-int",
+          "set-stage23-numeric-contains-float",
+          "set-stage23-zero-contains-positive",
+          "set-stage23-list-boxed",
+          "set-stage23-dynamic-boxed",
+          "set-stage23-nested-zero",
+          "set-stage23-set-in-list-boxed",
+          "set-stage23-set-in-map-boxed",
+          "set-stage23-set-in-dynamic-boxed"
+        ],
+        "domain": "Strict Set membership retains Java boxed numeric distinctions for direct and nested Int/Float or signed-zero elements."
+      }
+    },
+    {
+      "id": "set-stage23-set-in-map-boxed",
+      "input": "tests/fixtures/m2/set-stage23-set-in-map-boxed.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators"
+      ],
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "set-stage23-numeric-contains-int",
+          "set-stage23-numeric-contains-float",
+          "set-stage23-zero-contains-positive",
+          "set-stage23-list-boxed",
+          "set-stage23-dynamic-boxed",
+          "set-stage23-nested-zero",
+          "set-stage23-set-in-list-boxed",
+          "set-stage23-set-in-map-boxed",
+          "set-stage23-set-in-dynamic-boxed"
+        ],
+        "domain": "Strict Set membership retains Java boxed numeric distinctions for direct and nested Int/Float or signed-zero elements."
+      }
+    },
+    {
+      "id": "set-stage23-set-in-dynamic-boxed",
+      "input": "tests/fixtures/m2/set-stage23-set-in-dynamic-boxed.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators"
+      ],
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "set-stage23-numeric-contains-int",
+          "set-stage23-numeric-contains-float",
+          "set-stage23-zero-contains-positive",
+          "set-stage23-list-boxed",
+          "set-stage23-dynamic-boxed",
+          "set-stage23-nested-zero",
+          "set-stage23-set-in-list-boxed",
+          "set-stage23-set-in-map-boxed",
+          "set-stage23-set-in-dynamic-boxed"
+        ],
+        "domain": "Strict Set membership retains Java boxed numeric distinctions for direct and nested Int/Float or signed-zero elements."
+      }
+    },
+    {
+      "id": "set-stage23-nested-zero",
+      "input": "tests/fixtures/m2/set-stage23-nested-zero.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:lazy-evaluation"
+      ],
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "set-stage23-numeric-contains-int",
+          "set-stage23-numeric-contains-float",
+          "set-stage23-zero-contains-positive",
+          "set-stage23-list-boxed",
+          "set-stage23-dynamic-boxed",
+          "set-stage23-nested-zero",
+          "set-stage23-set-in-list-boxed",
+          "set-stage23-set-in-map-boxed",
+          "set-stage23-set-in-dynamic-boxed"
+        ],
+        "domain": "Strict Set membership retains Java boxed numeric distinctions for direct and nested Int/Float or signed-zero elements."
+      }
+    },
+    {
+      "id": "set-stage23-nested-nan",
+      "input": "tests/fixtures/m2/set-stage23-nested-nan.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "id": "set-stage23-nested-null",
+      "input": "tests/fixtures/m2/set-stage23-nested-null.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:types"
+      ]
+    },
+    {
+      "id": "set-stage23-typed-constraint-this",
+      "input": "tests/fixtures/m2/set-stage23-typed-constraint-this.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:constraints",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "set-stage23-typed-constraint-this-good",
+      "input": "tests/fixtures/m2/set-stage23-typed-constraint-this-good.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:constraints"
+      ]
+    },
+    {
+      "id": "set-stage23-alias-actual-list",
+      "input": "tests/fixtures/m2/set-stage23-alias-actual-list.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:type-aliases"
+      ]
+    },
+    {
+      "id": "set-stage23-alias-actual-list-wrong",
+      "input": "tests/fixtures/m2/set-stage23-alias-actual-list-wrong.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:type-aliases",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "set-stage23-constructor-listing-default",
+      "input": "tests/fixtures/m2/set-stage23-constructor-listing-default.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "set-stage23-constructor-listing-actual",
+      "input": "tests/fixtures/m2/set-stage23-constructor-listing-actual.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics"
+      ]
+    },
+    {
+      "id": "set-stage23-constructor-listing-wrong",
+      "input": "tests/fixtures/m2/set-stage23-constructor-listing-wrong.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generics",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "set-stage23-typed-null-first-error",
+      "input": "tests/fixtures/m2/set-stage23-typed-null-first-error.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:types",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "set-stage23-typed-string-first-error",
+      "input": "tests/fixtures/m2/set-stage23-typed-string-first-error.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:types",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "set-stage23-nullable-type-default",
+      "input": "tests/fixtures/m2/set-stage23-nullable-type-default.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types"
+      ]
+    },
+    {
+      "id": "set-stage23-union-default",
+      "input": "tests/fixtures/m2/set-stage23-union-default.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types"
+      ]
+    },
+    {
+      "id": "set-stage23-union-wrong",
+      "input": "tests/fixtures/m2/set-stage23-union-wrong.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "set-stage23-attached-null-element",
+      "input": "tests/fixtures/m2/set-stage23-attached-null-element.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types"
+      ]
+    },
+    {
+      "id": "set-stage23-class-type-good",
+      "input": "tests/fixtures/m2/set-stage23-class-type-good.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:classes"
+      ]
+    },
+    {
+      "id": "set-stage23-class-type-bad",
+      "input": "tests/fixtures/m2/set-stage23-class-type-bad.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:classes",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "set-stage23-deep-16-equality",
+      "input": "tests/fixtures/m2/set-stage23-deep-16-equality.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators"
+      ]
+    },
+    {
+      "id": "set-stage23-deep-16-map-key",
+      "input": "tests/fixtures/m2/set-stage23-deep-16-map-key.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections"
+      ],
+      "metamorphic_relation": {
+        "kind": "equal-stdout",
+        "case_ids": [
+          "set-stage23-hash-map-key",
+          "set-stage23-prefix-as-map-key",
+          "set-stage23-deep-16-map-key"
+        ],
+        "domain": "Equal supported shallow, cache-controlled and bounded nested Set keys retrieve the inserted Map value."
+      }
+    },
+    {
+      "id": "set-stage23-diagnostic-control-null-int",
+      "input": "tests/fixtures/m2/set-stage23-diagnostic-control-null-int.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "set-stage23-diagnostic-control-null-list",
+      "input": "tests/fixtures/m2/set-stage23-diagnostic-control-null-list.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "set-stage23-diagnostic-control-null-map",
+      "input": "tests/fixtures/m2/set-stage23-diagnostic-control-null-map.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "set-stage23-diagnostic-control-default-list",
+      "input": "tests/fixtures/m2/set-stage23-diagnostic-control-default-list.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "set-stage23-diagnostic-control-default-map",
+      "input": "tests/fixtures/m2/set-stage23-diagnostic-control-default-map.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "set-stage23-diagnostic-control-default-int",
+      "input": "tests/fixtures/m2/set-stage23-diagnostic-control-default-int.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "set-stage23-spread-listing-first",
+      "input": "tests/fixtures/m2/set-stage23-spread-listing-first.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:generators"
+      ]
+    },
+    {
+      "id": "set-stage23-spread-listing-second",
+      "input": "tests/fixtures/m2/set-stage23-spread-listing-second.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:generators"
+      ]
+    },
+    {
+      "id": "set-stage23-spread-listing-length",
+      "input": "tests/fixtures/m2/set-stage23-spread-listing-length.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:generators"
+      ]
+    },
+    {
+      "id": "set-stage23-spread-dynamic-first",
+      "input": "tests/fixtures/m2/set-stage23-spread-dynamic-first.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:generators"
+      ]
+    },
+    {
+      "id": "set-stage23-spread-dynamic-second",
+      "input": "tests/fixtures/m2/set-stage23-spread-dynamic-second.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:generators"
+      ]
+    },
+    {
+      "id": "set-stage23-generator-values-first",
+      "input": "tests/fixtures/m2/set-stage23-generator-values-first.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:generators"
+      ]
+    },
+    {
+      "id": "set-stage23-generator-values-second",
+      "input": "tests/fixtures/m2/set-stage23-generator-values-second.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:generators"
+      ]
+    },
+    {
+      "id": "set-stage23-generator-values-length",
+      "input": "tests/fixtures/m2/set-stage23-generator-values-length.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:generators"
+      ]
+    },
+    {
+      "id": "set-stage23-generator-indices-first",
+      "input": "tests/fixtures/m2/set-stage23-generator-indices-first.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:lazy-evaluation",
+        "semantic:generators"
+      ]
+    },
+    {
+      "id": "set-stage23-generator-indices-second",
+      "input": "tests/fixtures/m2/set-stage23-generator-indices-second.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:generators"
+      ]
+    },
+    {
+      "id": "set-stage23-collision-asymmetry-generator-second",
+      "input": "tests/fixtures/m2/set-stage23-collision-asymmetry-generator-second.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:generators"
+      ]
+    },
+    {
+      "id": "set-stage23-collision-asymmetry-generator-first-nested",
+      "input": "tests/fixtures/m2/set-stage23-collision-asymmetry-generator-first-nested.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:generators"
+      ]
+    },
+    {
+      "id": "set-stage23-collision-asymmetry-generator-length",
+      "input": "tests/fixtures/m2/set-stage23-collision-asymmetry-generator-length.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:lazy-evaluation",
+        "semantic:generators"
+      ]
+    },
+    {
+      "id": "set-stage23-format-nested-list",
+      "input": "tests/fixtures/m2/set-stage23-format-nested-list.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:operators",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "id": "set-stage23-format-list-dynamic",
+      "input": "tests/fixtures/m2/set-stage23-format-list-dynamic.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections"
+      ]
+    },
+    {
+      "id": "set-stage23-format-set-listing",
+      "input": "tests/fixtures/m2/set-stage23-format-set-listing.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections"
+      ]
+    },
+    {
+      "id": "set-stage23-diagnostic-control-null-listing-value",
+      "input": "tests/fixtures/m2/set-stage23-diagnostic-control-null-listing-value.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "set-stage23-spread-empty-list-mapping",
+      "input": "tests/fixtures/m2/set-stage23-spread-empty-list-mapping.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:generators",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "set-stage23-spread-list-mapping",
+      "input": "tests/fixtures/m2/set-stage23-spread-list-mapping.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:generators",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "set-stage23-spread-empty-set-mapping",
+      "input": "tests/fixtures/m2/set-stage23-spread-empty-set-mapping.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:generators",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "set-stage23-spread-empty-list-typed",
+      "input": "tests/fixtures/m2/set-stage23-spread-empty-list-typed.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generators",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "set-stage23-spread-list-typed",
+      "input": "tests/fixtures/m2/set-stage23-spread-list-typed.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generators",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "set-stage23-spread-empty-set-typed",
+      "input": "tests/fixtures/m2/set-stage23-spread-empty-set-typed.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generators",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "set-stage23-spread-set-typed",
+      "input": "tests/fixtures/m2/set-stage23-spread-set-typed.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generators",
+        "semantic:diagnostics"
+      ]
     }
   ],
   "schema_version": 1,

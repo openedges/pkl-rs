@@ -1,0 +1,1 @@
+result = Set(new Mapping { ["a"] = 1 }).contains(new Mapping { ["a"] = 1 })
