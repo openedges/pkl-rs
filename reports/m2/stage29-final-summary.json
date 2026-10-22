@@ -1,0 +1,698 @@
+{
+  "schema": 1,
+  "scope": "M2 Stage 29 lossless UTF-16 string representation; bounded local development checkpoint.",
+  "implementation_commit": "cb95430d89606d820108907b9d41b3d3f5c2ccc8",
+  "baseline_commit": "85bbb006c7da0250c98e6b2fc65a7b384f8774aa",
+  "allocation": {
+    "core": "gpt-6-astra / xhigh",
+    "oracle": "gpt-6.1-sol / high",
+    "native_platform_review": "gpt-6.1-sol / high"
+  },
+  "changes": [
+    "PklString retains UTF-16 units for unmatched surrogates and canonical UTF-8 for well-formed values.",
+    "Concatenation, interpolation, equality, Java ordering/hash, code point length, literal types/defaults and keys share the representation.",
+    "Reference metadata and collection toString preserve units; strict List rendering uses the existing bounded collection renderer.",
+    "Explicit Java UTF-8 writer conversion replaces unmatched units with ASCII question marks only at that output boundary.",
+    "Four new native lifecycle regressions and 24 Java-derived platform cases repeated twice per target."
+  ],
+  "environment": {
+    "platform": "macOS-27.0-arm64-arm-64bit-Mach-O",
+    "node": "v26.10.0",
+    "browser": "156.0.8078.4",
+    "playwright": "1.64.1"
+  },
+  "validation": {
+    "scope": "M2 Stage 29 required local checks; not full compatibility or performance evidence",
+    "checks": [
+      {
+        "command": [
+          "cargo",
+          "xtask",
+          "verify"
+        ],
+        "exit_code": 0,
+        "stdout_sha256": "900802c9cf4f23bd9dbc0e79f58d3e21493ec0c990782bc5b690a7432148e9eb",
+        "stderr_sha256": "7a52106d9f90e8992b69708ef91ecaa4f5a5c1b22c95e1ca043481ab028a3c32"
+      },
+      {
+        "command": [
+          "cargo",
+          "fmt",
+          "--all",
+          "--",
+          "--check"
+        ],
+        "exit_code": 0,
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "command": [
+          "cargo",
+          "clippy",
+          "--workspace",
+          "--all-targets",
+          "--locked",
+          "--",
+          "-D",
+          "warnings"
+        ],
+        "exit_code": 0,
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_sha256": "1f5852af1ed7025b5728e842e3c3c2f5d2f720d25557d84c38f1ffda99719c59"
+      },
+      {
+        "command": [
+          "cargo",
+          "test",
+          "--workspace",
+          "--locked"
+        ],
+        "exit_code": 0,
+        "stdout_sha256": "8aad3c28ddf2e98587b1145a8da60cfb4ac60e6ede65282cc3835bea9b2c3cef",
+        "stderr_sha256": "0a45625d5c42d5c5423db1f990bcee4e2d3efe2a06f639cf09c299e85b56644c"
+      },
+      {
+        "command": [
+          "cargo",
+          "check",
+          "-p",
+          "pkl-runtime",
+          "--target",
+          "wasm32-unknown-unknown",
+          "--locked"
+        ],
+        "exit_code": 0,
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_sha256": "c1cfa363c5434e064aabf9e77c91961299511978787595b827385c3e3a8580da"
+      },
+      {
+        "command": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "-m",
+          "unittest",
+          "discover",
+          "-s",
+          "tools/tests",
+          "-v"
+        ],
+        "exit_code": 0,
+        "stdout_sha256": "6140fab3b49477f341aaf85e3ba3eb77ea0d782b0cb05926226f5778778c5494",
+        "stderr_sha256": "02f3098edbed6c7f624d971429ec0f7e95dc8dee658ee3228e94795ec564548f"
+      },
+      {
+        "command": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "tools/m2_manifest.py",
+          "--check"
+        ],
+        "exit_code": 0,
+        "stdout_sha256": "c21f5110f8601807b80a5bc4751ec5f1f3f26f2418fd9f95d0f382704303877f",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    ],
+    "host_evidence": "target/m2/validation-stage29-final-01",
+    "source_stability": true,
+    "rust_harness_passes": 462,
+    "rust_isolated_child_duplicates": 13,
+    "rust_distinct_passes": 449,
+    "rust_ignored": 1,
+    "python_passes": 198
+  },
+  "language": {
+    "selected": 2979,
+    "status_counts": {
+      "mismatch": 1,
+      "oracle-error": 1,
+      "pass": 2977
+    },
+    "additions": 54,
+    "added_outcomes": {
+      "success": 40,
+      "failure": 14
+    },
+    "metamorphic_relations": 88,
+    "inventory": {
+      "cases": 3979,
+      "cases_by_execution": {
+        "ready": 2979,
+        "unimplemented": 960,
+        "unmapped": 40
+      },
+      "requirements": 474,
+      "requirements_by_kind": {
+        "language_parser": 137,
+        "language_token": 109,
+        "semantic-family": 30,
+        "specification": 198
+      }
+    },
+    "full_gate_failure_reasons": 1950,
+    "candidate": {
+      "build": {
+        "command": [
+          "cargo",
+          "build",
+          "-p",
+          "pkl-runtime",
+          "--example",
+          "language_probe",
+          "--locked",
+          "--release",
+          "--target-dir",
+          "/Users/cody.ij.hwang/Projects/pkl-rs/target"
+        ],
+        "exit_code": 0,
+        "stderr_sha256": "244e07fb8663167bea18aec8e14ab59116e55eb2ff9a031808146f6600ccdbde",
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "timed_out": false
+      },
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/release/examples/language_probe",
+      "sha256": "c0f0576d408a37111dcbc6860ced6206d779575bbf4c0fa4f2a54a51ad0213d9",
+      "source_binding": "recorded-build"
+    }
+  },
+  "sequences": {
+    "definitions": 151,
+    "executions": 302,
+    "matching_calls": 2622,
+    "unexecuted_groups": [
+      {
+        "group": "P09",
+        "reason": "Java-only module-cache probe stage12-java-module-identity-01 observes same URI/source identity retained, changed source at same URI ignored (marker remains1), distinct URI/evaluator identity separated. Rust multi-source module-cache parity is unimplemented; same-module identity is compared."
+      },
+      {
+        "group": "P10",
+        "reason": "Java observable sequence comparisons do not expose heap counts; Rust architectural GC coverage is separate."
+      },
+      {
+        "group": "P11",
+        "reason": "Real Java class-initialization read observed via @Deprecated { ...(read(\"life:class\")) } in stage12-java-host-path-01; Rust annotation frontend unsupported, so actual Host-in-class cross-language reentry remains unexecuted. Internal scheduler tests are separate."
+      },
+      {
+        "group": "P12",
+        "reason": "Terminal context/token/heap cleanup is covered by separate Rust lifecycle tests, not Java raw-byte equivalence."
+      },
+      {
+        "group": "P05",
+        "reason": "Indirect cyclic hierarchy property traversal new A {}.missing timed out after successful class identity calls in stage12-java-observations-03; traversal is observed oracle-timeout, not a compatibility pass."
+      }
+    ]
+  },
+  "platforms": {
+    "scenarios_per_target": 88,
+    "new_scenario_calls_per_target": 48,
+    "shared_engine_passed": 6078,
+    "oracle_passed": {
+      "rust": 6076,
+      "node": 6076,
+      "browser": 6076
+    },
+    "known_gaps": [
+      "regex-unicode-15-vs-16",
+      "regex-zero-width-supplementary"
+    ],
+    "browser_errors": []
+  },
+  "exploration": {
+    "total": 66,
+    "status_counts": {
+      "mismatch": 4,
+      "pass": 62
+    },
+    "selected_status_counts": {
+      "pass": 54
+    },
+    "exploratory_control_status_counts": {
+      "mismatch": 4,
+      "pass": 8
+    },
+    "failures": [
+      {
+        "id": "string-stage29-out-of-range",
+        "status": "mismatch"
+      },
+      {
+        "id": "string-stage29-read-uri-high",
+        "status": "mismatch"
+      },
+      {
+        "id": "string-stage29-read-uri-question",
+        "status": "mismatch"
+      },
+      {
+        "id": "string-stage29-import-uri-high",
+        "status": "mismatch"
+      }
+    ],
+    "original_stage28_control_identity": [
+      {
+        "exact_input_equal": true,
+        "input_sha256": "19e1d1a0dfdbc52ab7e05d10f0cd2357ad4955e662500e6b565beaea9de610f7",
+        "raw_java_channels_equal": {
+          "outcome": true,
+          "stderr": true,
+          "stdout": true
+        },
+        "stage28_id": "string-stage28-surrogate-high",
+        "stage28_input_uri": "file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage28-evidence-java-boundary-01/cases/string-stage28-surrogate-high/input.pkl",
+        "stage28_report_sha256": "a8f6722b57a1463bb0a92018fe6765a0a7162e22fc4e1a9ef4746d4b21499041",
+        "stage29_id": "string-stage29-high",
+        "stage29_input_uri": "file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage29-java-utf16-01/cases/string-stage29-high/input.pkl"
+      },
+      {
+        "exact_input_equal": true,
+        "input_sha256": "c920e9b920d079591fa08047a5fa8c905a3b0c2babcac0c936360749cedec821",
+        "raw_java_channels_equal": {
+          "outcome": true,
+          "stderr": true,
+          "stdout": true
+        },
+        "stage28_id": "string-stage28-surrogate-low",
+        "stage28_input_uri": "file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage28-evidence-java-boundary-01/cases/string-stage28-surrogate-low/input.pkl",
+        "stage28_report_sha256": "a8f6722b57a1463bb0a92018fe6765a0a7162e22fc4e1a9ef4746d4b21499041",
+        "stage29_id": "string-stage29-low",
+        "stage29_input_uri": "file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage29-java-utf16-01/cases/string-stage29-low/input.pkl"
+      },
+      {
+        "exact_input_equal": true,
+        "input_sha256": "4b061877d5ed9fbc29d85dc4b5125729a47a20a7b2f7930775c8f6c495f6c9d2",
+        "raw_java_channels_equal": {
+          "outcome": true,
+          "stderr": true,
+          "stdout": true
+        },
+        "stage28_id": "string-stage28-surrogate-pair",
+        "stage28_input_uri": "file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage28-evidence-java-boundary-01/cases/string-stage28-surrogate-pair/input.pkl",
+        "stage28_report_sha256": "a8f6722b57a1463bb0a92018fe6765a0a7162e22fc4e1a9ef4746d4b21499041",
+        "stage29_id": "string-stage29-pair",
+        "stage29_input_uri": "file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage29-java-utf16-01/cases/string-stage29-pair/input.pkl"
+      },
+      {
+        "exact_input_equal": true,
+        "input_sha256": "a64c3cb3d2792f1a7803f3ecbe1e48e25afbded5267fb17240776c02dbe91fa0",
+        "raw_java_channels_equal": {
+          "outcome": true,
+          "stderr": true,
+          "stdout": true
+        },
+        "stage28_id": "string-stage28-surrogate-reverse",
+        "stage28_input_uri": "file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage28-evidence-java-boundary-01/cases/string-stage28-surrogate-reverse/input.pkl",
+        "stage28_report_sha256": "a8f6722b57a1463bb0a92018fe6765a0a7162e22fc4e1a9ef4746d4b21499041",
+        "stage29_id": "string-stage29-reverse",
+        "stage29_input_uri": "file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage29-java-utf16-01/cases/string-stage29-reverse/input.pkl"
+      },
+      {
+        "exact_input_equal": true,
+        "input_sha256": "b82e65fa89672d58dbd51a83c1180f175af36bfc55d9a77fe58051fb4604c0c4",
+        "raw_java_channels_equal": {
+          "outcome": true,
+          "stderr": true,
+          "stdout": true
+        },
+        "stage28_id": "string-stage28-out-of-range",
+        "stage28_input_uri": "file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage28-evidence-java-boundary-01/cases/string-stage28-out-of-range/input.pkl",
+        "stage28_report_sha256": "a8f6722b57a1463bb0a92018fe6765a0a7162e22fc4e1a9ef4746d4b21499041",
+        "stage29_id": "string-stage29-out-of-range",
+        "stage29_input_uri": "file:///Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage29-java-utf16-01/cases/string-stage29-out-of-range/input.pkl"
+      }
+    ],
+    "candidate": {
+      "build_report": "target/m2/language-stage29-final-01/report.json",
+      "build_report_sha256": "8f94c208c342e4fac56418dbd77a8387c320598e11d190d60b2eddf29f65dab5",
+      "path": "artifacts/language_probe",
+      "sha256": "c0f0576d408a37111dcbc6860ced6206d779575bbf4c0fa4f2a54a51ad0213d9",
+      "source_binding": "recorded-build"
+    }
+  },
+  "independent_audit": {
+    "file": {
+      "path": "reports/m2/stage29-post-seal-audit.json",
+      "bytes": 6030,
+      "sha256": "f1418cd6a43391230dc9e27a09e818c50c054d9377b754f860c587e92c51543f"
+    },
+    "results": {
+      "archive": {
+        "bytes": 31614865,
+        "members": 59801,
+        "path": "reports/m2/stage29-final-evidence.tar.gz",
+        "sha256": "bce1d62f388b94c1ac2c69b4783608890cb26f637ed492cf19b0a64e5904d9e2"
+      },
+      "archived_helpers_executed": false,
+      "compatibility_complete": false,
+      "exploration": {
+        "failures": {
+          "string-stage29-import-uri-high": {
+            "java_sha256": [
+              "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "0e75a5f80652b035e65bed44ed4b3e85f89ef2d374b01cf8ae6d0b96f6d011e3"
+            ],
+            "rust_sha256": [
+              "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "c060cee4590f5349ba6ee3c7e136753bba7fb173dc21d8c1c0d76240d5586508"
+            ],
+            "status": "mismatch"
+          },
+          "string-stage29-out-of-range": {
+            "java_sha256": [
+              "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "8c522f408a5e2fa64c4816fe7b7f5f3157db9c186a5f41ea6b0d03be6c8c09ca"
+            ],
+            "rust_sha256": [
+              "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "bb33a1d85525bde17acca49cc548add0f525e3c8eb9e0f8cf9db5cefe9d8a21c"
+            ],
+            "status": "mismatch"
+          },
+          "string-stage29-read-uri-high": {
+            "java_sha256": [
+              "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "195b371367fca6754f09db45001a52589d290686205556b82e7d627aa93608c1"
+            ],
+            "rust_sha256": [
+              "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "5c60a06588c190f452e6ea2941dbc2e5c64b05947eb1541bc68724ccc4f9ea2d"
+            ],
+            "status": "mismatch"
+          },
+          "string-stage29-read-uri-question": {
+            "java_sha256": [
+              "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "2e320bf9fbcb987330713d31a835577b7368c150a280ec31df3b989b239296ba"
+            ],
+            "rust_sha256": [
+              "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "6d08cf6c8042570bcf7a0fdfaa84a90b7b3fdcbc886730da99779975b894b766"
+            ],
+            "status": "mismatch"
+          }
+        },
+        "final_language_artifact_sha256": "c0f0576d408a37111dcbc6860ced6206d779575bbf4c0fa4f2a54a51ad0213d9",
+        "original_controls": 5,
+        "raw_counts": {
+          "mismatch": 4,
+          "pass": 62
+        },
+        "selected": 54,
+        "total": 66
+      },
+      "fixtures": {
+        "added": 54,
+        "original_inputs_byte_equal": 2925,
+        "preserved": 2925,
+        "sequence_files_byte_equal": 305
+      },
+      "frontend": {
+        "raw_passed": 15
+      },
+      "gates": {
+        "class-contract": 0,
+        "class-report": 0,
+        "development": 0,
+        "full": 1,
+        "report": 0,
+        "subset": 1
+      },
+      "implementation_commit": "cb95430d89606d820108907b9d41b3d3f5c2ccc8",
+      "language": {
+        "artifact_sha256": "c0f0576d408a37111dcbc6860ced6206d779575bbf4c0fa4f2a54a51ad0213d9",
+        "failures": {
+          "error-cycle": "oracle-error",
+          "error-remainder-zero": "mismatch"
+        },
+        "metamorphic": 88,
+        "raw_counts": {
+          "mismatch": 1,
+          "oracle-error": 1,
+          "pass": 2977
+        },
+        "selected": 2979
+      },
+      "lifecycle": {
+        "diagnostic_observations": [
+          {
+            "id": "attempt-1",
+            "mode": "retry",
+            "raw_equal": false
+          },
+          {
+            "id": "attempt-2",
+            "mode": "retry",
+            "raw_equal": false
+          },
+          {
+            "id": "after-close",
+            "mode": "retry",
+            "raw_equal": false
+          },
+          {
+            "id": "after-close",
+            "mode": "reentry",
+            "raw_equal": false
+          }
+        ],
+        "negative_java_compatibility_pass": false,
+        "protocol_pairs": 2
+      },
+      "performance_targets_established": false,
+      "pinned_gitlinks": {
+        "external/pkl": "e51fb2f91774265666f94980ec630db794a4db2d",
+        "external/pkl-pantry": "904a68184e54da378b0a0e8a911a3fab3956f693"
+      },
+      "platforms": {
+        "mismatches": {
+          "browser": [
+            "regex-unicode-15-vs-16",
+            "regex-zero-width-supplementary"
+          ],
+          "node": [
+            "regex-unicode-15-vs-16",
+            "regex-zero-width-supplementary"
+          ],
+          "rust": [
+            "regex-unicode-15-vs-16",
+            "regex-zero-width-supplementary"
+          ]
+        },
+        "scenarios": 88,
+        "total": 6078
+      },
+      "raw_original_files": 59795,
+      "runtime": {
+        "cases": 9,
+        "retained_diagnostic_mismatches": [
+          "forcing-cycle"
+        ]
+      },
+      "sequences": {
+        "calls": 2622,
+        "process_pairs": 302
+      },
+      "suites": [
+        {
+          "report": "target/m2/validation-stage29-final-01/report.json",
+          "report_sha256": "65e5c1939e37728ea32fdf4631f1aaf3a93238bf3eff5be8f4971dd0591589b6",
+          "sources": 3553
+        },
+        {
+          "report": "target/m2/language-stage29-final-01/report.json",
+          "report_sha256": "8f94c208c342e4fac56418dbd77a8387c320598e11d190d60b2eddf29f65dab5",
+          "sources": 3115
+        },
+        {
+          "report": "target/m2/platforms-stage29-final-01/report.json",
+          "report_sha256": "e4796f1fc5004dd9167f8784a80f92df82d59bf42ff80e97dffe2fb5e2db1e76",
+          "sources": 75
+        },
+        {
+          "report": "target/m2/frontend-stage29-final-01/report.json",
+          "report_sha256": "3665b3c4180d78ed81e40bf1dfa28331ee1460966864def13a5e2aff26b76327",
+          "sources": 45
+        },
+        {
+          "report": "target/m2/runtime-stage29-final-01/report.json",
+          "report_sha256": "e3a24adce87d6d72dac6e248dbaef4d65a730fb75f3b7f346b384372a0c000f2",
+          "sources": 68
+        },
+        {
+          "report": "target/m2/lifecycle-stage29-final-01/report.json",
+          "report_sha256": "2d51a876005a4ba0da81d26fef2d6d52d64f885203764098d19872d790548a68",
+          "sources": 119
+        },
+        {
+          "report": "target/m2/class-lifecycle-stage29-final-01/report.json",
+          "report_sha256": "27ebbff59e8e832d9232868b8bf746e8f7bfe45a55ed7fa53203b0583d84d0aa",
+          "sources": 426
+        }
+      ],
+      "unique_git_bound_files": 3553,
+      "validation": {
+        "ignored": 1,
+        "isolated_child_passes": 13,
+        "python_tests": 198,
+        "reported_rust_passes": 462,
+        "unique_rust_passes": 449
+      }
+    }
+  },
+  "independent_reviews": [
+    {
+      "path": "target/m2/stage29-design-review-01/report.json",
+      "bytes": 5554,
+      "sha256": "2fc1abd654764b83f8323208b59f2783e4152c1eacb39a8d1a618f100aaf8fb7"
+    },
+    {
+      "path": "target/m2/stage29-native-platform-independent-semantics-review-02.json",
+      "bytes": 2286,
+      "sha256": "2f6ed8707271f818b1fdb0a4699774544bedcdafdd6308245741a4a4dbcfb45f"
+    },
+    {
+      "path": "target/m2/stage29-root-helper-independent-review-02/report.json",
+      "bytes": 6329,
+      "sha256": "bd497afbaafe41b8c0b0b5d433ada3f5ea1f5db58b7bdb0e157017ae1b40c412"
+    },
+    {
+      "path": "target/m2/stage29-config-review-final-01/report.json",
+      "bytes": 2919,
+      "sha256": "046fc84aefbd14784ad26e9d88da0797a3eec58bc6a82ff5c57d4fa173e043e7"
+    }
+  ],
+  "own_authored_evidence_review": {
+    "path": "target/m2/stage29-oracle-evidence-review-final-03/report.json",
+    "bytes": 42994,
+    "sha256": "9dad767609b6ae3a86a8530b5c6a38cbbacbf17996f2fbdc48b594421d86e8a5"
+  },
+  "fixture_preservation": {
+    "path": "target/m2/stage29-fixture-preservation-final-02/report.json",
+    "bytes": 578834,
+    "sha256": "fe3746558751ee8ab12d63c9388a0f2fa5ca4b301624d8769487becc88491e50"
+  },
+  "archive": {
+    "archive": "reports/m2/stage29-final-evidence.tar.gz",
+    "bytes": 31614865,
+    "git_bound_files": 3553,
+    "implementation_commit": "cb95430d89606d820108907b9d41b3d3f5c2ccc8",
+    "omitted_build_caches": [
+      "target/m2/stage29-focused-candidate-01/build",
+      "target/m2/lifecycle-stage29-final-01/build",
+      "target/m2/class-lifecycle-stage29-final-01/build"
+    ],
+    "original_files": 59795,
+    "roots": 105,
+    "sha256": "bce1d62f388b94c1ac2c69b4783608890cb26f637ed492cf19b0a64e5904d9e2"
+  },
+  "completion_captures": {
+    "path": "reports/m2/stage29-completion-captures.json",
+    "bytes": 87203,
+    "sha256": "646f3be1dcfdf18c9f9503b0a4388468621c5b34c171c66e0c59c56a1daaf2a8"
+  },
+  "historical_dependencies": [
+    {
+      "baseline_git_blob": "78bedffdadc93c7d5958f37a975586007d669f24",
+      "bytes": 2561780,
+      "path": "reports/m2/class-lifecycle-stage28-final-evidence.tar.gz",
+      "sha256": "6fb26edc2a6a0f49fde5c32219f373346a5e416bcbe3c6a68c204481396968e7"
+    },
+    {
+      "baseline_git_blob": "5a22549b64c1550e4a52fe88df1ca6a2f44473f6",
+      "bytes": 253402,
+      "path": "reports/m2/frontend-stage28-final-evidence.tar.gz",
+      "sha256": "e8bf94ffb62b8cf2c3014132ff1e6be2618aca69d0c874790378e9aa81c98dfc"
+    },
+    {
+      "baseline_git_blob": "39f81052bb04edf7ffa8124eb1b1ad8f1bd02d08",
+      "bytes": 6237834,
+      "path": "reports/m2/language-stage28-final-evidence.tar.gz",
+      "sha256": "adcabdf10878272fcb8c10f37dccac34ead04093b31b018e411c3114dc709218"
+    },
+    {
+      "baseline_git_blob": "7d0f11c06c24aeea8e581e8d5416522a631ece24",
+      "bytes": 1116232,
+      "path": "reports/m2/lifecycle-stage28-final-evidence.tar.gz",
+      "sha256": "a4f347c2d7433a42e72ed87f5f4b44b7daec7a9f0fa4dfce0cfca3256a07c873"
+    },
+    {
+      "baseline_git_blob": "b8c91efd45b19dea6c673cca1b2f3e554326c108",
+      "bytes": 2614336,
+      "path": "reports/m2/native-frontend-stage28-final-evidence.tar.gz",
+      "sha256": "e3a8df9e26091f5ea29f0d2e9d12720b50870ad259d33b8f9a6f08d20064bf66"
+    },
+    {
+      "baseline_git_blob": "431212a578e7e803ef16af9560be0fa3d086f3d6",
+      "bytes": 3832107,
+      "path": "reports/m2/platforms-stage28-final-evidence.tar.gz",
+      "sha256": "ea6b48721a4d03ce69baf9f397281618ab716b56bf372f4e41e651304d5e285a"
+    },
+    {
+      "baseline_git_blob": "b6e5edc67e7464800efe409697100a71bdbade71",
+      "bytes": 1925141,
+      "path": "reports/m2/runtime-stage28-final-evidence.tar.gz",
+      "sha256": "abd301363167c13ad317e2529c910d2798912f8160af7fa3ec0294615f252190"
+    },
+    {
+      "baseline_git_blob": "c9ba9d131482659fd70667094b5e208ba046369b",
+      "bytes": 4728262,
+      "path": "reports/m2/source-stage28-final-evidence.tar.gz",
+      "sha256": "7875fe18b99a1e5979b23f7f2820d2b466cd480039f593b9660c20f5a679cecb"
+    },
+    {
+      "baseline_git_blob": "668bb611cfd5b451e0fd0f4c071d0cc6e8998342",
+      "bytes": 104810,
+      "path": "reports/m2/stage28-completion-captures.json",
+      "sha256": "922e16dbda409c6ea2435272facde84c9d107bf88e3f9d2e92310d8fa9ab5a4c"
+    },
+    {
+      "baseline_git_blob": "3754675cd1d89f6fa07e719ecda1153e1e7a96a4",
+      "bytes": 41197,
+      "path": "reports/m2/stage28-final-summary.json",
+      "sha256": "3cd6188347fda4740fc881ddb45254f783796135c16461ad02b5fc927eb936c3"
+    },
+    {
+      "baseline_git_blob": "8ff54093ba74d52be05701def4519f8d550d6509",
+      "bytes": 87431,
+      "path": "reports/m2/stage28-post-seal-audit.json",
+      "sha256": "db65369290d962acdffcc76e1adaa734af0f8e13ad01b1afb673f1830b4ee9fb"
+    },
+    {
+      "baseline_git_blob": "db0b6f5d7f3f8c1843dac5806e2d9665ed9087b4",
+      "bytes": 27185754,
+      "path": "reports/m2/support-stage28-final-evidence.tar.gz",
+      "sha256": "0b89c33a25047e0f7b7409196c5fb665a86c879b7fcf1582efb910ed9e118131"
+    },
+    {
+      "baseline_git_blob": "b53822798c263fdcaec9e4b51fede066d1e32859",
+      "bytes": 3012617,
+      "path": "reports/m2/validation-stage28-final-evidence.tar.gz",
+      "sha256": "5901f404175a9c5fc727e86cac0bd74d6d5852b7374e7c4bc8b24515dd47eb96"
+    },
+    {
+      "baseline_git_blob": "4844932cd224d70f1c7c190c3c901625a6db912a",
+      "bytes": 4125,
+      "path": "reports/m2/validation-stage28-final.json",
+      "sha256": "d14b05618b1743852533035f841fb84e4dad53cc24826fcf666e7b3e63213aff"
+    }
+  ],
+  "gates": {
+    "class-contract": 0,
+    "class-report": 0,
+    "development": 0,
+    "full": 1,
+    "report": 0,
+    "subset": 1
+  },
+  "compatibility_complete": false,
+  "performance_targets_established": false,
+  "known_unverified_scope": [
+    "M2 remains in progress; full Pkl 0.32.0 language/API, release platforms, speed parity and peak-RSS parity are not established.",
+    "The selected cycle oracle error and integer remainder-by-zero mismatch remain; the strict full gate retains 1950 failure reasons and no new development exception.",
+    "Exploration retains four differences: out-of-range Unicode, two resource controls and surrogate import. The read(prop:?) control is a general unsupplied Host limitation, not surrogate identity collapse.",
+    "Unmatched-surrogate module/resource URIs are explicitly unsupported. Public JS input/JavaString transport and arbitrary surrogate-containing diagnostic member labels/frame identity remain unverified.",
+    "Platform evaluateLanguage comparisons observe the Java UTF-8 writer boundary. Four overlapping Java API probes separately retain actual UTF-16 units and are not additive coverage.",
+    "Full string builtins/regex, general compound/Listing rendering and nested Map rehash side effects remain. Strict List rendering is bounded.",
+    "Depth32/work65536 guards remain. Deep type/class/mixed-body compilation, general grammar/resource diagnostics and cancellation latency remain separate requirements.",
+    "The four new native tests are ordinary tests, not process-isolated 256 KiB small-stack tests. Existing isolated tests still run and account for 13 duplicate harness passes.",
+    "The existing two regex gaps and runtime/lifecycle diagnostic gaps remain. Linux, Windows, hosted CI and release API execution were not established.",
+    "2925 existing fixture definitions/input bytes,151 sequence definitions/305 files,87 platform scenarios and reference pins were preserved. Two old native tests needed constructor-only adaptations; their assertion semantics were preserved.",
+    "Initial failed acquisition/review/native preparations remain preserved. Direct build cache payloads were pruned before enumeration and have no size or hash claim."
+  ]
+}

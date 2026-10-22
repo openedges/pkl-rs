@@ -1,0 +1,28 @@
+{
+  "companion_sha256": "646f3be1dcfdf18c9f9503b0a4388468621c5b34c171c66e0c59c56a1daaf2a8",
+  "compatibility_complete": false,
+  "documentation_changes": [
+    "PLAN.md",
+    "reports/m2/README.md"
+  ],
+  "embedded_process_files": 12,
+  "generator_source_verified": true,
+  "local_links_verified": [
+    "reports/m2/stage29-final-summary.json",
+    "reports/m2/stage29-post-seal-audit.json",
+    "reports/m2/stage29-completion-captures.json",
+    "reports/m2/stage29-final-summary.json",
+    "reports/m2/stage29-post-seal-audit.json",
+    "reports/m2/stage29-completion-captures.json",
+    "reports/m2/validation-stage29-final.json",
+    "reports/m2/stage29-final-evidence.tar.gz",
+    "reports/m2/stage29-archive.json"
+  ],
+  "no_whole_language_api_or_performance_claim": true,
+  "performance_targets_established": false,
+  "review_passed": true,
+  "sealed_originals_unchanged": 59795,
+  "source_copies": 7401,
+  "summary_sha256": "d3932af00c0b5d8c52d35efe0ed2c6026a0110deed4781cabfcff59d47da77d3",
+  "unique_git_bound_sources": 3553
+}

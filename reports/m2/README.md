@@ -37,7 +37,85 @@ continuations for selected authored frontend paths and small-stack checks.
 Stage 26 extends those paths to bounded nested lexical strings and interpolation.
 Stage 27 aligns selected lexical string diagnostics with Java.
 Stage 28 aligns selected Unicode escape diagnostics and validation order.
+Stage 29 preserves lossless UTF-16 string values through the shared engine.
 These checkpoints do not complete the language milestone.
+
+## Stage 29 local verification checkpoint
+
+Implementation `cb95430d89606d820108907b9d41b3d3f5c2ccc8` is committed and pushed.
+The [final summary](stage29-final-summary.json), [independent audit](stage29-post-seal-audit.json),
+and [completion captures](stage29-completion-captures.json) close this bounded
+lossless UTF-16 string checkpoint. Core implementation used `gpt-6-astra / xhigh`;
+Java evidence and native/platform review each used `gpt-6.1-sol / high`.
+Verification ran locally on macOS arm64.
+
+The shared `PklString` representation retains unmatched UTF-16 surrogates while
+keeping well-formed strings in canonical UTF-8. Concatenation and interpolation
+can form surrogate pairs across fragment boundaries. Equality, Java ordering
+and hash, code point length, literal types/defaults, collection keys, `toString`,
+and Reference metadata preserve the internal units. The explicit Java UTF-8 writer
+conversion replaces unmatched units with ASCII `?` only at that output boundary.
+Strict List rendering uses the existing bounded collection renderer. Production
+evaluation has no Java fallback.
+
+The complete selected corpus has **2,979 cases: 2,977 raw matches**, the existing
+cycle oracle error, and the existing integer remainder-by-zero mismatch. All
+**54 additions (40 successes and 14 expected errors)** and all **88 metamorphic
+relations** pass. The original 2,925 fixture definitions and input bytes,
+151 persistent sequence definitions, 87 platform scenarios, and reference pins
+were preserved. Two older native tests received constructor-only adaptations;
+their assertion semantics were preserved. Persistent evaluation retains
+**2,622 matching calls** across 302 executions. The inventory has 474 requirements
+and 3,979 accounting rows (2,979 ready, 960 unimplemented, 40 unmapped); all 16
+reviewed mappings remain partial. The full gate retains **1,950 failure reasons**.
+No development exception was added.
+
+[Seven required local checks](validation-stage29-final.json) passed with
+**449 distinct Rust tests and 198 Python tests**. The Rust harness reports
+462 passes, including 13 existing isolated child repetitions, plus one
+intentionally ignored test. Four new ordinary native tests check internal units,
+Reference metadata identity, Host suspension/reentry/retry, collection on every
+instruction, captured values, shared programs, and cancel/close/timeout cleanup.
+These four tests do not establish 256 KiB process-isolated stack behavior;
+the older isolated regressions remain in the workspace suite.
+
+Node and Chromium each passed **88 development scenarios**, including 24
+Java-derived string cases repeated twice in the new scenario. All 6,078 shared
+primitive results match across targets; each target matches Java on 6,076,
+retaining the same two regex failures. Node v26.10.0, Chromium 156.0.8078.4 and
+Playwright 1.64.1 were recorded, with no browser errors. Existing M1 cycle and
+full lifecycle diagnostic differences remain. These development calls observe
+the Java UTF-8 writer boundary; public JS input/JavaString transport remains open.
+
+Fresh Java acquisitions, the focused artifact and the exact final language
+artifact compare **66 exploratory observations: 62 matches and four mismatches**.
+All 54 selected cases and eight additional List controls match. The remaining
+differences are out-of-range Unicode, two resource controls and surrogate import.
+The `read(prop:?)` control is a general unsupplied Host limitation, not surrogate
+identity collapse. The four original Stage 28 surrogate controls now match;
+the original out-of-range control still differs. Four overlapping Java API
+observations separately confirm actual UTF-16 units. Exploratory and API rows
+are not additive feature coverage.
+
+The [evidence archive](stage29-final-evidence.tar.gz) retains 59,795 original files
+under 105 explicit roots. The [archive identity](stage29-archive.json) records
+31,614,865 bytes and SHA-256
+`bce1d62f388b94c1ac2c69b4783608890cb26f637ed492cf19b0a64e5904d9e2`.
+Its checksum inventory verifies 59,801 files, including packaging metadata and
+Git provenance. The independent audit binds 7,401 final suite source copies to
+3,553 distinct files at the implementation commit and recomputes raw outcomes.
+Completed seal/audit process captures are preserved separately because they
+finish after archive creation. Three direct build caches were pruned before
+enumeration; their payload sizes and hashes are not claimed. Fourteen direct
+Stage 28 dependency identities remain references rather than recursively copied
+history. Earlier failed preparation and review attempts remain preserved.
+
+This checkpoint does not complete M2. Unmatched-surrogate module/resource URIs,
+arbitrary surrogate-containing diagnostic member labels/frame identity, full
+string builtins/regex, general compound/Listing rendering and nested Map rehash
+effects remain. The existing depth-32/work-65,536 guards and unexecuted sequence
+groups remain. Linux, Windows, hosted CI, release APIs, speed parity and peak-RSS
+parity were not established by this local checkpoint.
 
 ## Stage 28 local verification checkpoint
 

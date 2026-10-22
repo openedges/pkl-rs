@@ -1,0 +1,203 @@
+{
+  "archive": {
+    "bytes": 31614865,
+    "members": 59801,
+    "path": "reports/m2/stage29-final-evidence.tar.gz",
+    "sha256": "bce1d62f388b94c1ac2c69b4783608890cb26f637ed492cf19b0a64e5904d9e2"
+  },
+  "archived_helpers_executed": false,
+  "compatibility_complete": false,
+  "exploration": {
+    "failures": {
+      "string-stage29-import-uri-high": {
+        "java_sha256": [
+          "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "0e75a5f80652b035e65bed44ed4b3e85f89ef2d374b01cf8ae6d0b96f6d011e3"
+        ],
+        "rust_sha256": [
+          "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "c060cee4590f5349ba6ee3c7e136753bba7fb173dc21d8c1c0d76240d5586508"
+        ],
+        "status": "mismatch"
+      },
+      "string-stage29-out-of-range": {
+        "java_sha256": [
+          "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "8c522f408a5e2fa64c4816fe7b7f5f3157db9c186a5f41ea6b0d03be6c8c09ca"
+        ],
+        "rust_sha256": [
+          "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bb33a1d85525bde17acca49cc548add0f525e3c8eb9e0f8cf9db5cefe9d8a21c"
+        ],
+        "status": "mismatch"
+      },
+      "string-stage29-read-uri-high": {
+        "java_sha256": [
+          "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "195b371367fca6754f09db45001a52589d290686205556b82e7d627aa93608c1"
+        ],
+        "rust_sha256": [
+          "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "5c60a06588c190f452e6ea2941dbc2e5c64b05947eb1541bc68724ccc4f9ea2d"
+        ],
+        "status": "mismatch"
+      },
+      "string-stage29-read-uri-question": {
+        "java_sha256": [
+          "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "2e320bf9fbcb987330713d31a835577b7368c150a280ec31df3b989b239296ba"
+        ],
+        "rust_sha256": [
+          "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "6d08cf6c8042570bcf7a0fdfaa84a90b7b3fdcbc886730da99779975b894b766"
+        ],
+        "status": "mismatch"
+      }
+    },
+    "final_language_artifact_sha256": "c0f0576d408a37111dcbc6860ced6206d779575bbf4c0fa4f2a54a51ad0213d9",
+    "original_controls": 5,
+    "raw_counts": {
+      "mismatch": 4,
+      "pass": 62
+    },
+    "selected": 54,
+    "total": 66
+  },
+  "fixtures": {
+    "added": 54,
+    "original_inputs_byte_equal": 2925,
+    "preserved": 2925,
+    "sequence_files_byte_equal": 305
+  },
+  "frontend": {
+    "raw_passed": 15
+  },
+  "gates": {
+    "class-contract": 0,
+    "class-report": 0,
+    "development": 0,
+    "full": 1,
+    "report": 0,
+    "subset": 1
+  },
+  "implementation_commit": "cb95430d89606d820108907b9d41b3d3f5c2ccc8",
+  "language": {
+    "artifact_sha256": "c0f0576d408a37111dcbc6860ced6206d779575bbf4c0fa4f2a54a51ad0213d9",
+    "failures": {
+      "error-cycle": "oracle-error",
+      "error-remainder-zero": "mismatch"
+    },
+    "metamorphic": 88,
+    "raw_counts": {
+      "mismatch": 1,
+      "oracle-error": 1,
+      "pass": 2977
+    },
+    "selected": 2979
+  },
+  "lifecycle": {
+    "diagnostic_observations": [
+      {
+        "id": "attempt-1",
+        "mode": "retry",
+        "raw_equal": false
+      },
+      {
+        "id": "attempt-2",
+        "mode": "retry",
+        "raw_equal": false
+      },
+      {
+        "id": "after-close",
+        "mode": "retry",
+        "raw_equal": false
+      },
+      {
+        "id": "after-close",
+        "mode": "reentry",
+        "raw_equal": false
+      }
+    ],
+    "negative_java_compatibility_pass": false,
+    "protocol_pairs": 2
+  },
+  "performance_targets_established": false,
+  "pinned_gitlinks": {
+    "external/pkl": "e51fb2f91774265666f94980ec630db794a4db2d",
+    "external/pkl-pantry": "904a68184e54da378b0a0e8a911a3fab3956f693"
+  },
+  "platforms": {
+    "mismatches": {
+      "browser": [
+        "regex-unicode-15-vs-16",
+        "regex-zero-width-supplementary"
+      ],
+      "node": [
+        "regex-unicode-15-vs-16",
+        "regex-zero-width-supplementary"
+      ],
+      "rust": [
+        "regex-unicode-15-vs-16",
+        "regex-zero-width-supplementary"
+      ]
+    },
+    "scenarios": 88,
+    "total": 6078
+  },
+  "raw_original_files": 59795,
+  "runtime": {
+    "cases": 9,
+    "retained_diagnostic_mismatches": [
+      "forcing-cycle"
+    ]
+  },
+  "sequences": {
+    "calls": 2622,
+    "process_pairs": 302
+  },
+  "suites": [
+    {
+      "report": "target/m2/validation-stage29-final-01/report.json",
+      "report_sha256": "65e5c1939e37728ea32fdf4631f1aaf3a93238bf3eff5be8f4971dd0591589b6",
+      "sources": 3553
+    },
+    {
+      "report": "target/m2/language-stage29-final-01/report.json",
+      "report_sha256": "8f94c208c342e4fac56418dbd77a8387c320598e11d190d60b2eddf29f65dab5",
+      "sources": 3115
+    },
+    {
+      "report": "target/m2/platforms-stage29-final-01/report.json",
+      "report_sha256": "e4796f1fc5004dd9167f8784a80f92df82d59bf42ff80e97dffe2fb5e2db1e76",
+      "sources": 75
+    },
+    {
+      "report": "target/m2/frontend-stage29-final-01/report.json",
+      "report_sha256": "3665b3c4180d78ed81e40bf1dfa28331ee1460966864def13a5e2aff26b76327",
+      "sources": 45
+    },
+    {
+      "report": "target/m2/runtime-stage29-final-01/report.json",
+      "report_sha256": "e3a24adce87d6d72dac6e248dbaef4d65a730fb75f3b7f346b384372a0c000f2",
+      "sources": 68
+    },
+    {
+      "report": "target/m2/lifecycle-stage29-final-01/report.json",
+      "report_sha256": "2d51a876005a4ba0da81d26fef2d6d52d64f885203764098d19872d790548a68",
+      "sources": 119
+    },
+    {
+      "report": "target/m2/class-lifecycle-stage29-final-01/report.json",
+      "report_sha256": "27ebbff59e8e832d9232868b8bf746e8f7bfe45a55ed7fa53203b0583d84d0aa",
+      "sources": 426
+    }
+  ],
+  "unique_git_bound_files": 3553,
+  "validation": {
+    "ignored": 1,
+    "isolated_child_passes": 13,
+    "python_tests": 198,
+    "reported_rust_passes": 462,
+    "unique_rust_passes": 449
+  }
+}
