@@ -1,0 +1,89 @@
+{
+  "archiveDependencies": "Completeness is for explicitly declared preservation roots. Linked prior oracle/development/native-control dependencies outside those roots are not silently claimed embedded.",
+  "archives": [
+    {
+      "archive": "/Users/cody.ij.hwang/Projects/pkl-rs.stage39/reports/m2/stage39-final-platform-evidence.tar.gz",
+      "archiveSha256": "48be0719754fc1487693fa2fd30cef2aef0fee4b85b6240655bf05a8e16db016",
+      "cachePruningBeforeWalk": {},
+      "captureReport": "/Users/cody.ij.hwang/Projects/pkl-rs.stage39/reports/m2/stage39-final-platform-captures.json",
+      "captureReportSha256": "039807a1c279d2de1d549b1722d0c7829fe71824da0ca93a85e0e99c397f80ee",
+      "declaredRoots": [
+        "stage39-platforms-final-02",
+        "stage39-platforms-command-02",
+        "stage39-original72-platform-final-02",
+        "stage39-module-boundary-platform-final-02",
+        "stage39-portable-session-02",
+        "stage39-platform-final-audit-01",
+        "stage39-platform-final-audit-02",
+        "stage39-platform-final-audit-03",
+        "stage39-platform-final-audit-03.process.json",
+        "stage39-platform-final-audit-03.stdout.log",
+        "stage39-platform-final-audit-03.stderr.log"
+      ],
+      "independentExtractionVerified": true,
+      "inventorySha256": "78e85a6df2b047c1205a9b6513bd5a447542c46138d253f727d7c374e795ab72",
+      "kind": "platform",
+      "membersBytesModesCurrentOriginsExact": true,
+      "originalFiles": 1743,
+      "payloadBytes": 20946067,
+      "regularMembers": 1744,
+      "temporaryExtractionRemoved": true
+    },
+    {
+      "archive": "/Users/cody.ij.hwang/Projects/pkl-rs.stage39/reports/m2/stage39-final-regression-evidence.tar.gz",
+      "archiveSha256": "0d26520a5ad5b105344209328b7d888d56fc6244c1f43380966535c8ec447309",
+      "cachePruningBeforeWalk": {
+        "stage39-persistent-final-02/build": {
+          "CACHEDIR.TAG_exists": true,
+          "contentsEnumerated": false,
+          "rustc_info_exists": true
+        },
+        "stage39-trace-final-02/build": {
+          "CACHEDIR.TAG_exists": true,
+          "contentsEnumerated": false,
+          "rustc_info_exists": true
+        }
+      },
+      "captureReport": "/Users/cody.ij.hwang/Projects/pkl-rs.stage39/reports/m2/stage39-final-regression-captures.json",
+      "captureReportSha256": "73d6c5801bb5792b2c089709743f90c606c608b501d486c5aad24058ce625d20",
+      "declaredRoots": [
+        "stage39-persistent-final-02",
+        "stage39-trace-final-02",
+        "stage39-command-captures-01/persistent-final-02",
+        "stage39-command-captures-01/persistent-contract-final-02",
+        "stage39-command-captures-01/trace-final-02",
+        "stage39-command-captures-01/trace-report-final-02",
+        "stage39-command-captures-01/trace-contract-final-02"
+      ],
+      "independentExtractionVerified": true,
+      "inventorySha256": "a4ca47ef37bae01693636862b5db3fde02361fabd8c68e86f096442fa3a31213",
+      "kind": "regression",
+      "membersBytesModesCurrentOriginsExact": true,
+      "originalFiles": 30209,
+      "payloadBytes": 36968880,
+      "regularMembers": 30210,
+      "temporaryExtractionRemoved": true
+    }
+  ],
+  "cacheScope": "Only explicitly declared roots traversed; exactly two identified Cargo build trees removed before descending; generic build log directories retained. No broad target/cache traversal.",
+  "failedAudit02": {
+    "archivedWholeRoot": true,
+    "mismatches": [
+      {
+        "actualSha256": "4f04df857320515b220801c01405c7aa875d16407cea354079b3cf0ac974354c",
+        "inventoriedSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "path": "stdout.log"
+      }
+    ],
+    "scope": "Correctly preserved historical self-inventory failure, not blessed as valid closure"
+  },
+  "originalArchivesUnchanged": true,
+  "scope": "Independent bounded archive membership/full-byte/mode/current-origin audit only. No runtime/Git mutation or compatibility rerun; valid acquisition outcomes remain separately reported.",
+  "status": "pass",
+  "validAudit03": {
+    "adjacentTerminalProcessAndRawLogsPreserved": true,
+    "closureSha256": "2701b8123fae6a62d1a2ea29bc82790ddcc87c7ef4785a830db56952d48b6036",
+    "processSha256": "324d8b01c27534f10e923f85ed76581b9c9b5fb668a17383735ff5b6ac57bbcd",
+    "reportSha256": "9ecb1c3541410744caf742bb31dc29cd94d3a1eb695857273ceb7dfd91266b5c"
+  }
+}

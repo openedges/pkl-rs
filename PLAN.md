@@ -590,6 +590,14 @@ Stage 38의 문서 마감 커밋 `200b422`에서 분리한 작업 공간에서 �
 
 [구현 체크포인트](reports/m2/stage39-implementation-checkpoint.json)는 수정 후 필수 Rust 검사·manifest 검증과 native 대조군 40회(일반 오류 26회 일치·정상 출력 경로 14회 명시적 미구현)를 기록합니다. [독립 감사](reports/m2/stage39-checkpoint-audit.json)는 소스 4,121개와 고정 upstream 입력 72개를 실제 Git blob에 대조하고 여섯 archive의 payload 65,250개를 검증했습니다. 이 체크포인트는 전체 native 코퍼스와 최종 증거 마감이 남은 구현 기록이며 Stage 39 또는 M2 전체의 완료 선언이 아닙니다.
 
+수정 후 구현 `5526ec8`의 [최종 검증](reports/m2/stage39-final-summary.json)에서는 선택 3,599개 중 3,590개가 일치했고 기존 불일치 8개·순환 참조 Java 오류 1개를 유지했습니다. 원본 frontend 오류 72개는 실제 native stdout·stderr·종료 코드·생성 파일 계약이 모두 일치합니다. 실제 Node·Chromium도 원본 API 호출을 각각 144회 일치시켰으며, 내부 오류 발생 단계 차이 12개와 출력 평가 미구현 경계는 별도로 보존합니다.
+
+기존 3,527개의 정의·입력·순서·판정은 유지됐습니다. 작업 공간의 실제 URI가 달라 이전 단계와 Java 1,664개·Rust 1,665개의 원시 캡처가 다르므로, [회귀 비교](reports/m2/stage39-regression-comparison.json)에 차이를 그대로 남기고 경로 치환이나 단계 간 전체 바이트 동일 주장을 하지 않습니다. 변형 관계 88개와 순차 평가 334회에 포함된 2,782개 호출은 일치합니다. trace는 일치 54개·Java 오류 30개, 표준 플랫폼 비교는 공통 결과 6,078개·Java 일치 6,076개·기존 정규식 차이 2개를 유지합니다.
+
+[최종 소스 대응](reports/m2/stage39-source-binding.json)은 다섯 검증 묶음의 소스 사본 8,512개를 구현 커밋의 고유 파일 4,289개와 고정 upstream Git blob에 연결합니다. 수정 후 native·플랫폼·회귀 원본과 실제 gate 실패를 보존했고, 정확한 Cargo cache 경로만 열거 전에 제외했습니다. 보고서 무결성 검사는 통과하지만 개발·엄격한 선택·전체 언어 gate는 실패하며, 전체 gate의 실패 이유는 1,887개입니다. **Stage 39의 원본 frontend 오류 구현·로컬 검증은 마감하며 M2 전체는 계속 진행 중입니다.** 실제 ModuleOutput·PCF와 모듈 로딩, 나머지 언어·제품·플랫폼·성능 의무를 다음 구현으로 이어갑니다.
+
+[마지막 독립 감사](reports/m2/stage39-post-seal-audit.json)는 최종 native archive의 원본 32,724개, Git 소스 대응과 실제 gate 종료 상태를 확인했습니다. 기존 stdout은 모두 같으며, stderr 차이는 원시 바이트 그대로 보존합니다. 감사 원본·terminal 기록·게시 도구는 [완료 캡처](reports/m2/stage39-completion-captures.json)에 포함합니다.
+
 ## M3 — 표준 라이브러리와 출력
 
 - 고정된 Pkl 표준 라이브러리 소스를 활용하고 모든 external builtin과 공개 멤버를 구현합니다. 등록 목록과 공개 API 목록을 기계적으로 대조합니다.

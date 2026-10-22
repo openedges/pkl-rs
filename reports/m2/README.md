@@ -51,7 +51,7 @@ and generic method-lookup diagnostics.
 Stage 39 connects original module frontend commands and typed failure origins.
 These checkpoints do not complete the language milestone.
 
-## Stage 39 implementation and verification in progress
+## Stage 39 local verification checkpoint
 
 The [original module frontend contract](../../docs/m2-module-frontend.md)
 registers 72 unchanged upstream error cases for whole native process comparison.
@@ -80,10 +80,47 @@ The [correction archive](stage39-correction-captures.json) retains the review,
 actual Java controls, the test-authoring failure, the fix, and completed checks.
 The [independent checkpoint audit](stage39-checkpoint-audit.json) verifies all
 65,250 payload files in six archives and the source-tree bindings.
-Full native corpus verification and checkpoint closeout remain in progress.
-The earlier candidate's passing checks are historical evidence and do not stand
-in for the corrected candidate's results. Module output, loading, remaining
-language semantics and the strict M2 gate remain open.
+The [final summary](stage39-final-summary.json) records the corrected implementation
+`5526ec808b9ee9bfd743baa33bbc1a7d2364471b`: 3,590 of 3,599 selected native cases
+match, with eight existing mismatches and one cycle oracle error retained.
+All 72 original frontend commands match complete native output, exit status and
+generated-file observations. Actual Node and Chromium each match 144 original
+frontend API calls; their API result status is separate from native process exit
+and file I/O. Twelve distinct internal producer-phase differences remain visible.
+Four accepted output boundaries remain explicitly unsupported on both portable
+targets, rather than being counted as successful evaluation.
+
+The [regression comparison](stage39-regression-comparison.json) preserves the
+definitions, input bytes, order and outcomes of all 3,527 existing scalar cases.
+The new checkout has a different physical URI: 1,664 Java and 1,665 Rust captures
+differ byte-for-byte from Stage 38 and are individually retained without path
+normalization. No cross-checkout byte-identity claim is made. All 88 metamorphic
+relations and 2,782 selected calls across 334 persistent sequences match.
+Actual trace observations retain 54 matches and 30 Java oracle errors. The standard
+platform comparison retains 6,078 shared results, 6,076 Java matches per target,
+92 architecture scenarios and the two existing regex differences.
+
+The [final source binding](stage39-source-binding.json) ties 8,512 source copies
+across five corrected suites to 4,289 distinct paths in the implementation commit
+and pinned upstream Git blobs. Corrected [platform](stage39-final-platform-captures.json),
+[persistent/trace](stage39-final-regression-captures.json) and
+[native language](stage39-final-language-captures.json) archives retain full raw
+results, source snapshots, artifacts, gate failures and publication records.
+The [independent archive audit](stage39-final-archive-audit.json) verifies the
+corrected platform/regression archives, including terminal logs adjacent to their
+audit directories and the preserved earlier audit inventory failure. Only exact
+Cargo cache paths are pruned before traversal; ordinary build logs are included.
+The [final independent audit](stage39-post-seal-audit.json) also verifies the
+native archive, committed source bindings, unchanged original scalar contracts
+and exact cross-checkout differences. [Completion captures](stage39-completion-captures.json)
+retain its raw observations, terminal records and publication helpers.
+
+Report integrity passes. Development, strict selected and full language gates
+still fail, with 1,887 full-gate reasons and no new exceptions. The earlier
+candidate's passing checks remain historical evidence, not final candidate
+verification. **Stage 39's local frontend checkpoint is verified; M2 remains in
+progress.** Module output, loading, remaining language semantics, product APIs,
+release environments and execution-time/peak-RSS goals remain unfinished.
 
 ## Stage 38 local verification checkpoint
 

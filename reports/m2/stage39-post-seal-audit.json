@@ -1,0 +1,141 @@
+{
+  "checks": {
+    "allActualRequiredCheckCodesZero": true,
+    "distinctCountClaimed": false,
+    "harnessPassInvocations": 575,
+    "ignoredInvocations": 1
+  },
+  "gates": {
+    "language-development-final-02": 1,
+    "language-final-02": 0,
+    "language-full-final-02": 1,
+    "language-report-final-02": 0,
+    "language-subset-final-02": 1,
+    "persistent-contract-final-02": 0,
+    "trace-contract-final-02": 1,
+    "trace-report-final-02": 0
+  },
+  "language": {
+    "fullGateFailureReasons": 1887,
+    "metamorphicPasses": 88,
+    "originalModuleRawPasses": 72,
+    "portableMatchesEach": 144,
+    "retainedFailures": [
+      {
+        "id": "error-cycle",
+        "status": "oracle-error"
+      },
+      {
+        "id": "error-remainder-zero",
+        "status": "mismatch"
+      },
+      {
+        "id": "annotation-stage35-builtin-source-code-union-and-string",
+        "status": "mismatch"
+      },
+      {
+        "id": "trace-stage37-repeat-empty-cast-negative",
+        "status": "mismatch"
+      },
+      {
+        "id": "trace-stage37-repeat-empty-max-count",
+        "status": "mismatch"
+      },
+      {
+        "id": "read-stage38-uri-unpaired-surrogate",
+        "status": "mismatch"
+      },
+      {
+        "id": "read-stage38-edge-http-opaque",
+        "status": "mismatch"
+      },
+      {
+        "id": "read-stage38-edge-http-invalid-host",
+        "status": "mismatch"
+      },
+      {
+        "id": "read-stage38-edge-http-nonnumeric-port",
+        "status": "mismatch"
+      }
+    ],
+    "selected": 3599,
+    "statuses": {
+      "mismatch": 8,
+      "oracle-error": 1,
+      "pass": 3590
+    }
+  },
+  "languageArchive": {
+    "archive": "/Users/cody.ij.hwang/Projects/pkl-rs.stage39/reports/m2/stage39-final-language-evidence.tar.gz",
+    "archiveSha256": "239c02cad9f7f4fcfe07c05e3cd7a9235ffe445aabc787b2f44e3d59561e181d",
+    "cachePruningBeforeWalk": {},
+    "captureReport": "/Users/cody.ij.hwang/Projects/pkl-rs.stage39/reports/m2/stage39-final-language-captures.json",
+    "captureReportSha256": "566ffc8045eb91fda91bd381298dd834918761534715c4b50c1334347957c038",
+    "declaredRoots": [
+      "stage39-language-final-02",
+      "stage39-final-review-01",
+      "stage39-checkpoint-audit-01",
+      "stage39-implementation-checkpoint-01",
+      "stage39-implementation-checkpoint-02",
+      "stage39-implementation-publication-01",
+      "stage39-final-archive-audit-01",
+      "stage39-final-archive-audit-01.stdout.log",
+      "stage39-final-archive-audit-01.stderr.log",
+      "stage39-command-captures-01/language-final-02",
+      "stage39-command-captures-01/language-report-final-02",
+      "stage39-command-captures-01/language-development-final-02",
+      "stage39-command-captures-01/language-subset-final-02",
+      "stage39-command-captures-01/language-full-final-02",
+      "stage39-command-captures-01/final-review-01",
+      "stage39-command-captures-01/correction-seal-01",
+      "stage39-command-captures-01/implementation-checkpoint-01",
+      "stage39-command-captures-01/implementation-commit-01",
+      "stage39-command-captures-01/implementation-push-01",
+      "stage39-command-captures-01/implementation-remote-01",
+      "stage39-command-captures-01/final-platform-seal-01",
+      "stage39-command-captures-01/final-regression-seal-01",
+      "stage39-final-seal-01/derivation.json"
+    ],
+    "independentExtractionVerified": true,
+    "inventorySha256": "a5d71f0293c1b1fccc50329bd1467f97f2191dfdca6512a434d2cbaef827c099",
+    "kind": "language",
+    "membersBytesModesCurrentOriginsExact": true,
+    "originalFiles": 32724,
+    "payloadBytes": 69398468,
+    "regularMembers": 32725,
+    "temporaryExtractionRemoved": true
+  },
+  "noPerformanceOrM2CompletionClaim": true,
+  "noRuntimeCompatibilityExpansion": true,
+  "oldScalarRegression": {
+    "cases": 3527,
+    "definitionsInputsOrderStatusesUnchanged": true,
+    "rawChangesPreservedWithoutNormalization": true,
+    "rawDifferenceCounts": {
+      "java": 1664,
+      "rust": 1665
+    }
+  },
+  "regressionComparisonSha256": "ad1700d214250a539a59ef403f4eac80f12aeeec0a0cbab2ddb97f60d6845f80",
+  "reusedPriorArchiveAudit": {
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage39/target/m2/stage39-final-archive-audit-01/report.json",
+    "sha256": "e002926090d373a5520d1cbd7a72503fa9b85b0d2bb67a2be3a2721b9310bbc1"
+  },
+  "scope": "Independent final Stage39 language-archive/source/Git/raw regression/summary coherence audit. No runtime rerun/Git mutation; old platform/regression archive audit reused by identity.",
+  "sourceBinding": {
+    "commit": "5526ec808b9ee9bfd743baa33bbc1a7d2364471b",
+    "copies": 8512,
+    "exactCommittedGitBlobAndCopiedBytes": true,
+    "groupCounts": {
+      "stage39-checks-final-02": 4121,
+      "stage39-language-final-02": 3694,
+      "stage39-persistent-final-02": 486,
+      "stage39-platforms-final-02": 108,
+      "stage39-trace-final-02": 103
+    },
+    "uniqueFiles": 4289
+  },
+  "sourceBindingSha256": "de385bf327a47d5f6b3ba1b48a709ff6bfc23d1f029ab21c68932aeb0ce080e9",
+  "status": "pass",
+  "summarySha256": "31bf57142ff91c3a284c918f2ce2a08c6bffa8c12a39575ce1a2d974554dcd93"
+}
