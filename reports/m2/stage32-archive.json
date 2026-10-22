@@ -1,0 +1,16 @@
+{
+  "archive": "reports/m2/stage32-final-evidence.tar.gz",
+  "bytes": 73037438,
+  "git_bound_files": 3667,
+  "implementation_commit": "af1917d65a3043b9259343cb334d7c6431f8e4e6",
+  "omitted_build_caches": [
+    "target/m2/lifecycle-stage32-final-01/build",
+    "target/m2/class-lifecycle-stage32-final-01/build",
+    "target/m2/stage32-baseline-build-01/build-output",
+    "target/m2/stage32-core-build-01/build-cache",
+    "target/m2/stage32-core-build-02/build-cache"
+  ],
+  "original_files": 97159,
+  "roots": 176,
+  "sha256": "c68b9a7dfac987c8b0abbce1fe6a4d2b30785cd60308573e44a9013f5bc52a5c"
+}

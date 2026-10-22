@@ -40,7 +40,78 @@ Stage 28 aligns selected Unicode escape diagnostics and validation order.
 Stage 29 preserves lossless UTF-16 string values through the shared engine.
 Stage 30 preserves diagnostic frame identity and selected declaration ownership.
 Stage 31 aligns executable value-frame locations and constant-member source fallbacks.
+Stage 32 preserves declaration owners for rejected non-local object property annotations.
 These checkpoints do not complete the language milestone.
+
+## Stage 32 local verification checkpoint
+
+Implementation `af1917d65a3043b9259343cb334d7c6431f8e4e6` is committed and pushed. The
+[final summary](stage32-final-summary.json), [independent audit](stage32-post-seal-audit.json)
+and [completion captures](stage32-completion-captures.json) close this bounded
+frontend diagnostic checkpoint. Core work used `gpt-6-astra / xhigh`; Java
+evidence and native/platform review each used `gpt-6.1-sol / high`. Root handled
+integration, final validation, commits and sealing on local macOS arm64.
+
+Forbidden non-local object property type annotations now name their declaration
+owner. Nested properties, methods, lambdas, lets, entries and generators preserve
+the pinned Java scope names, including flattened lambda numbering, generator
+prefix revisits, quoted identifiers and UTF-16 entry keys. One resolver replay
+collects this metadata after the rejection; it adopts the owner only when every
+other diagnostic field equals the original error. Valid resolutions allocate no
+ownership stack. Annotation acceptance, earlier error ordering and numeric
+evaluation remain unchanged.
+
+All **36 additions match Java: 32 expected errors and
+4 successful values**. The complete selected corpus contains
+3,086 cases, with 3,084 raw matches and the existing cycle oracle
+error and remainder-by-zero mismatch. 88 metamorphic relations and
+2,622 sequence calls pass. The prior 3,050 selected
+definitions/input bytes and 151 sequence definitions remain
+preserved. Inventory freshness, the development contract and the strict full
+gate remain separate; the full gate retains 1,950 failure reasons.
+
+[Seven required local checks](validation-stage32-final.json) passed with
+463 distinct Rust tests and 200 Python tests. The Rust harness reports
+476 passes, including the existing 13 isolated child repetitions, with
+one ignored test. Four new ordinary native tests verify rejected owners, first
+error ordering, UTF-16 identity and accepted lazy annotation controls. They make
+no new Host/lifecycle, small-stack or memory guarantee.
+
+Node and Chromium each passed 91 development scenarios. The new
+scenario compares all 36 complete Java error/value payloads twice per
+target using fresh evaluators. Existing primitive results and the two known
+Java regex gaps remain. A fresh baseline matches 5 of the
+new selected cases; the exact final language artifact matches all 36.
+Exploration changes from 11 to 53 matches
+among 58 cases, retaining five existing inferred-new and earlier
+const-modifier diagnostics. These overlapping observations are not additive
+feature counts.
+
+Original failures remain preserved. Baseline and early native owner checks
+failed before the corrected implementation and explicit-type controls. The
+first naming helper overclassified double-negated integer/unit keys; its raw
+mismatches and successful superseded build remain separate from the final
+result. A missing browser route for the fixture module caused the first platform
+run to fail after Node passed. Its one-line correction and the resulting source
+change during the first validation run required new validation/platform output
+directories. The failed runs and superseded reviews are not counted as passes.
+
+The [sealed archive](stage32-final-evidence.tar.gz) and
+[identity record](stage32-archive.json) preserve 97,159 original files under
+176 explicit roots. The independent audit binds 7,640 final
+source copies to 3,667 implementation files and checks raw outcomes,
+failed captures, fixed-URI Java payloads and immutable origins. A completed
+origin binding connects the final focused artifact to full language evidence.
+Seal/audit captures and current closeout source snapshots are preserved after
+sealing. Explicit Cargo cache roots are omitted before enumeration; their
+contents are not counted or hashed. 7 direct historical
+dependency identities remain separate from the new evidence.
+
+M2 remains in progress. Overflow frame ownership, empty-collection unavailable
+source sections, existing frontend/runtime/lifecycle gaps, URI and public string
+transport, complete APIs and depth/work limits remain open. Local verification
+does not establish Linux, Windows, hosted CI, release platform coverage,
+execution-time parity or peak-RSS parity.
 
 ## Stage 31 local verification checkpoint
 

@@ -1,0 +1,222 @@
+{
+  "archive": {
+    "bytes": 73037438,
+    "members": 97165,
+    "path": "reports/m2/stage32-final-evidence.tar.gz",
+    "sha256": "c68b9a7dfac987c8b0abbce1fe6a4d2b30785cd60308573e44a9013f5bc52a5c"
+  },
+  "archived_helpers_executed": false,
+  "compatibility_complete": false,
+  "fixtures": {
+    "added": 36,
+    "original_inputs_byte_equal": 3050,
+    "preserved": 3050,
+    "sequence_files_byte_equal": 305
+  },
+  "focused_selection": {
+    "artifact_sha256": "df30c75d1b163db98627100ae3f18d4407f48b43efb03881d338fb38731219c1",
+    "baseline_counts": {
+      "exploration": {
+        "mismatch": 47,
+        "pass": 11
+      },
+      "selected": {
+        "mismatch": 31,
+        "pass": 5
+      }
+    },
+    "exploration": 58,
+    "exploration_counts": {
+      "mismatch": 5,
+      "pass": 53
+    },
+    "full_origin_now_complete": true,
+    "matches_final_language_artifact": true,
+    "retained_unchanged_baseline_gaps": [
+      "const-annotation",
+      "lambda",
+      "module-function",
+      "object-local-function",
+      "unused-invalid-function"
+    ],
+    "selected": 36,
+    "selected_counts": {
+      "pass": 36
+    }
+  },
+  "frontend": {
+    "raw_passed": 15
+  },
+  "gates": {
+    "class-contract": 0,
+    "class-report": 0,
+    "development": 0,
+    "full": 1,
+    "report": 0,
+    "subset": 1
+  },
+  "implementation_commit": "af1917d65a3043b9259343cb334d7c6431f8e4e6",
+  "language": {
+    "artifact_sha256": "df30c75d1b163db98627100ae3f18d4407f48b43efb03881d338fb38731219c1",
+    "failures": {
+      "error-cycle": "oracle-error",
+      "error-remainder-zero": "mismatch"
+    },
+    "metamorphic": 88,
+    "raw_counts": {
+      "mismatch": 1,
+      "oracle-error": 1,
+      "pass": 3084
+    },
+    "selected": 3086
+  },
+  "lifecycle": {
+    "diagnostic_observations": [
+      {
+        "id": "attempt-1",
+        "mode": "retry",
+        "raw_equal": false
+      },
+      {
+        "id": "attempt-2",
+        "mode": "retry",
+        "raw_equal": false
+      },
+      {
+        "id": "after-close",
+        "mode": "retry",
+        "raw_equal": false
+      },
+      {
+        "id": "after-close",
+        "mode": "reentry",
+        "raw_equal": false
+      }
+    ],
+    "negative_java_compatibility_pass": false,
+    "protocol_pairs": 2
+  },
+  "performance_targets_established": false,
+  "pinned_gitlinks": {
+    "external/pkl": "e51fb2f91774265666f94980ec630db794a4db2d",
+    "external/pkl-pantry": "904a68184e54da378b0a0e8a911a3fab3956f693"
+  },
+  "platform_oracles": {
+    "acquisition_roots": [
+      "target/m2/stage32-annotation-oracle-01",
+      "target/m2/stage32-annotation-oracle-02",
+      "target/m2/stage32-annotation-oracle-04"
+    ],
+    "cases": 36,
+    "complete_java_payloads_verified": true,
+    "errors": 32,
+    "fixed_uri": "file:///m2-platform.pkl",
+    "values": 4
+  },
+  "platforms": {
+    "mismatches": {
+      "browser": [
+        "regex-unicode-15-vs-16",
+        "regex-zero-width-supplementary"
+      ],
+      "node": [
+        "regex-unicode-15-vs-16",
+        "regex-zero-width-supplementary"
+      ],
+      "rust": [
+        "regex-unicode-15-vs-16",
+        "regex-zero-width-supplementary"
+      ]
+    },
+    "scenarios": 91,
+    "total": 6078
+  },
+  "preserved_failed_processes": [
+    {
+      "exit_code": 101,
+      "label": "Baseline native owner regressions: three tests fail; accepted control passes.",
+      "process": "target/m2/stage32-native-review-baseline-process-01/process.json",
+      "process_sha256": "f4705f06114cb5d4e3b9cac720f12299b082b02c575c570ff98d0e284a98855f"
+    },
+    {
+      "exit_code": 101,
+      "label": "Initial native candidate: inferred-parent boundary causes two failures; retained before explicit-Dynamic selected controls.",
+      "process": "target/m2/stage32-native-review-candidate-process-01/process.json",
+      "process_sha256": "43c5e291f7fe55b7133b72f85cc0b6da2695a73088602d031da1566926add4e7"
+    },
+    {
+      "exit_code": 2,
+      "label": "Initial platform run: Node scenarios passed, Chromium could not fetch the new fixture module before the route was added.",
+      "process": "target/m2/platforms-stage32-command-final-01/process.json",
+      "process_sha256": "cfd4894f2110ccebc5cd83715876595548bbd60552bd1849d16f9beefaacb5a8"
+    },
+    {
+      "exit_code": 1,
+      "label": "Initial validation: first four Cargo commands passed; source guard detected only the corrected browser route, so the full checks were rerun.",
+      "process": "target/m2/validation-stage32-command-final-01/process.json",
+      "process_sha256": "13798179ab478589a0bf184b787534c30622b37e95f9750a82cec965528938e4"
+    },
+    {
+      "exit_code": 1,
+      "label": "Initial summary helper rejected an interleaved child harness summary; complete successful test log retained and parsed with the corrected current-stage helper.",
+      "process": "target/m2/stage32-validation-summary-process-01/process.json",
+      "process_sha256": "11891fd6e39dbde67760cf7b5d0bb63cb97efd9d3d2dc3dd85bcdd0650ff30e8"
+    }
+  ],
+  "raw_original_files": 97159,
+  "runtime": {
+    "cases": 9,
+    "retained_diagnostic_mismatches": [
+      "forcing-cycle"
+    ]
+  },
+  "sequences": {
+    "calls": 2622,
+    "process_pairs": 302
+  },
+  "suites": [
+    {
+      "report": "target/m2/validation-stage32-final-02/report.json",
+      "report_sha256": "1e5304f51dcca64421b6d0a36226e6225b79d54f5f1f07b52d0c407717753913",
+      "sources": 3667
+    },
+    {
+      "report": "target/m2/language-stage32-final-01/report.json",
+      "report_sha256": "d42f80d94d5c69710131b1415c87258e9c0a056d06cf7280a53df54b78163b37",
+      "sources": 3226
+    },
+    {
+      "report": "target/m2/platforms-stage32-final-02/report.json",
+      "report_sha256": "d5fc1f164ddf74db7d840230fa803240ec0d90fdf70f4cdf0f12ae97415abd8d",
+      "sources": 79
+    },
+    {
+      "report": "target/m2/frontend-stage32-final-01/report.json",
+      "report_sha256": "30ab07f49b3a66dd6d9b0d23ea8a5535bbec7cd3c93d6e08829192320192d3cc",
+      "sources": 46
+    },
+    {
+      "report": "target/m2/runtime-stage32-final-01/report.json",
+      "report_sha256": "526b8d80232de5e341325f355b5aacda9339b07ab37abe3aaec65e465bedd611",
+      "sources": 69
+    },
+    {
+      "report": "target/m2/lifecycle-stage32-final-01/report.json",
+      "report_sha256": "2413a04600afcb40840eb75263318403d43cfba6280de395665c5759b16b3735",
+      "sources": 123
+    },
+    {
+      "report": "target/m2/class-lifecycle-stage32-final-01/report.json",
+      "report_sha256": "ef18f5bdaa52e7ea732d82430d96adfb89743ac7fb846f00ba6deb108c57b69e",
+      "sources": 430
+    }
+  ],
+  "unique_git_bound_files": 3667,
+  "validation": {
+    "ignored": 1,
+    "isolated_child_passes": 13,
+    "python_tests": 200,
+    "reported_rust_passes": 476,
+    "unique_rust_passes": 463
+  }
+}
