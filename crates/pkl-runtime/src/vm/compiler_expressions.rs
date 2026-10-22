@@ -794,6 +794,69 @@ impl Compiler<'_> {
         work: &mut Vec<Work<'a>>,
     ) -> Result<(), RuntimeError> {
         match &expression.kind {
+            ExprKind::Annotation {
+                parameters,
+                ty,
+                members,
+            } => {
+                self.initialize_type_resolution(ty, output);
+                match self.compile_type(ty) {
+                    Ok(check) => {
+                        if let TypeCheck::Class { .. } = check.unaliased() {
+                            self.class_value(&check, output, ty.span)?;
+                            output.push_at(Instruction::CheckAnnotationClass, ty.span);
+                            let generator = members.iter().any(|member| {
+                                !matches!(
+                                    member,
+                                    crate::syntax::ObjectMember::Property(_)
+                                        | crate::syntax::ObjectMember::Element { .. }
+                                        | crate::syntax::ObjectMember::Entry { .. }
+                                )
+                            });
+                            if let Some(parameter) = parameters.first().filter(|_| generator) {
+                                // GeneratorObjectLiteralNode checks the parameter descriptor
+                                // before executing its members. An untyped parameter triggers
+                                // an upstream null-location bug rather than a language error.
+                                let (kind, message, span) = match &parameter.ty {
+                                    Some(ty) => (
+                                        ErrorKind::Type,
+                                        "Expected a function that returns an object, but got an object.",
+                                        ty.span,
+                                    ),
+                                    None => (
+                                        ErrorKind::Unsupported,
+                                        "Untyped parameterized annotation generators are not implemented.",
+                                        parameter.span,
+                                    ),
+                                };
+                                output.push_at(
+                                    Instruction::Fail(RuntimeError::new(kind, message)),
+                                    span,
+                                );
+                            } else {
+                                self.instance_body(members, ty.span, output)?;
+                                if !parameters.is_empty() && !members.is_empty() {
+                                    output.push_at(Instruction::Fail(RuntimeError::new(ErrorKind::Type, "Expected a function that returns an object, but got an object.")), ty.span);
+                                }
+                            }
+                        } else {
+                            output.push_at(
+                                Instruction::Fail(RuntimeError::new(
+                                    ErrorKind::Type,
+                                    "Expected an annotation class.",
+                                )),
+                                ty.span,
+                            );
+                        }
+                    }
+                    Err(error) => {
+                        output.push_at(
+                            Instruction::Fail(error.clone()),
+                            error.span.unwrap_or(ty.span),
+                        );
+                    }
+                }
+            }
             ExprKind::New { ty, members } => {
                 let check = match self.compile_type(ty) {
                     Ok(check) => check,

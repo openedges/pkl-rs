@@ -19,7 +19,7 @@ M0의 참조 소스·Java oracle 고정, 기능·코퍼스 목록, 원시 차등
 | 초기 구성 | 구축됨 | 없음 | Git·Rust workspace·참조 submodule·개발 문서와 초기 구성 검증 |
 | M0 기준선 | 완료: 로컬 기준선·원격 CI 검증 확인 | 초기 구성 | oracle·목록·원시 비교 도구·Java 초기 측정과 전체 처리 상태 확보; 판정 보류와 미구현 범위 보존 |
 | M1 구조 검증 | 완료: 구조·Graal 조사·원격 CI 증거 확인 | M0의 oracle·실행 계약·초기 기준선 | 제한된 공통 엔진·실제 Node/브라우저·원시 비교와 비용 측정 완료. 후보 기각과 알려진 호환성·성능 실패는 후속 필수 조건으로 보존 |
-| M2 언어 런타임 | 진행 중: 메서드 반환 타입·상속 속성의 부모 추론 보완; 전체 gate 미완료 | M1의 이름 해석·값·heap·진단 설계 결정 | 객체·lazy 평가·상속·closure·타입·Reference 구현; 언어 코퍼스의 결과·오류 바이트 일치 |
+| M2 언어 런타임 | 진행 중: annotation·선언 초기화 구현과 전체 회귀 검증; 전체 gate 미완료 | M1의 이름 해석·값·heap·진단 설계 결정 | 객체·lazy 평가·상속·closure·타입·Reference 구현; 언어 코퍼스의 결과·오류 바이트 일치 |
 | M3 표준 라이브러리·출력 | 계획됨 | M2의 해당 언어 기능 | 전체 builtin·renderer·reflection·Pkl Binary 구현; 공개 멤버 누락 0, 출력·오류 일치 |
 | M4 외부 기능 | 계획됨 | M1 Host 계약과 M2·M3의 해당 기능 | module/resource Host·HTTP·프로젝트·패키지·external reader 구현; 실제 I/O·패키지 코퍼스 통과 |
 | M5 제품 API | 계획됨 | M2·M3·M4의 해당 기능 | CLI·REPL·server·Rust API·formatter·문서 생성·코드 생성·JVM adapter 구현; 기존 호출·client·수명주기 호환 |
@@ -143,7 +143,7 @@ M1의 공통 VM을 확장합니다. VM·heap·호출 의미론은 `gpt-6-astra /
 
 핵심 언어 기능을 폭넓게 구현했지만, 전체 호환성 마감에는 상당한 작업이 남아 있습니다. 아래 9개 작업 영역은 모두 일부 종료 조건이 남은 `진행 중` 상태입니다. Stage 번호는 완료한 전체 작업의 비율이 아니라 누적 구현·검증 단계를 나타냅니다. 선택 코퍼스의 높은 성공률도 M2 전체 완료율이 아닙니다.
 
-전체 목록의 요구사항 474개와 부분 mapping 16개에는 서로 겹치는 의미론·선언·후보 기록이 있습니다. 미구현 960개·미연결 40개 accounting row 역시 독립적인 기능 수나 남은 작업량을 뜻하지 않습니다. 현재 목록에는 검토된 기능별 작업량 가중치가 없으므로 신뢰할 수 있는 전체 완료 백분율은 산정하지 않습니다. 진행 보고는 구현한 범위, 실제 실행·일치 수, 미구현·미실행 범위와 엄격한 완료 gate를 함께 제시합니다.
+전체 목록의 요구사항 474개와 부분 mapping 20개에는 서로 겹치는 의미론·선언·후보 기록이 있습니다. 미구현 960개·미연결 40개 accounting row 역시 독립적인 기능 수나 남은 작업량을 뜻하지 않습니다. 현재 목록에는 검토된 기능별 작업량 가중치가 없으므로 신뢰할 수 있는 전체 완료 백분율은 산정하지 않습니다. 진행 보고는 구현한 범위, 실제 실행·일치 수, 미구현·미실행 범위와 엄격한 완료 gate를 함께 제시합니다.
 
 남은 큰 범위는 annotation·module 초기화와 상속 규칙, 지연·재귀 타입 및 제약, collection·Reference 메타데이터의 나머지 의미론, 전체 오류 메시지·논리적 스택과 원본 upstream 코퍼스 연결입니다. 원본 언어 사례가 요구하는 표준 라이브러리·출력·로딩 기능은 M3·M4와의 의존성으로 유지합니다. 이 조건을 충족하기 전에는 검증만 남은 마감 단계로 보고하지 않습니다.
 
@@ -154,7 +154,7 @@ M1의 공통 VM을 확장합니다. VM·heap·호출 의미론은 `gpt-6-astra /
 | M2-01 전체 목록과 실행 판정 | 진행 중 | `compatibility/m2-language.json`에 의미론 분류·upstream 선언·언어 snippet·rev1 후보를 보존합니다. 선언 수는 기능 커버리지가 아니며, 미연결 항목은 전체 gate 실패로 남깁니다. |
 | M2-02 lexer·표현식·문자열 | 진행 중 | 숫자·연산자 우선순위·조건식·nullable 연산·raw/multiline/interpolation과 0.32 continuation을 구현했습니다. 고정 Java의 UTF-16 식별자 표, CR/CRLF, 지연 AST 검증 순서를 연결했습니다. 전체 유효·오류 문법 코퍼스 연결이 필요합니다. |
 | M2-03 함수·closure·호출 | 진행 중 | 별도 method namespace, 재귀, lexical capture, 매개변수·반환 타입 검사, `\|>` 호출과 함수형 제약을 구현했습니다. Host 중단·재개 중 GC와 함수 타입 metadata·arity 검사를 연결했습니다. 메서드 반환 타입의 `new {}` 기본값과 상속 속성의 prototype·instance 추론을 연결하고 별칭·nullable·union·첫 오류와 수명주기를 검증했습니다. 전체 callable·amendment·오류 조건은 후속 항목입니다. |
-| M2-04 객체·클래스·상속 | 진행 중 | 클래스·prototype·상속·super 메서드·const capture·runtime identity와 타입 초기화 순서를 연결했습니다. fixed·const 선언 일치, 객체 대입·amendment 제한과 선언별 오류 순서를 구현했습니다. 선언별 singleton의 선행 게시·실패 뒤 부분 상태·GC 보존을 같은 evaluator 순차 계약에 연결했습니다. annotation·module 초기화, 전체 modifier·상속 순환 및 eager/lazy 규칙은 남아 있습니다. |
+| M2-04 객체·클래스·상속 | 진행 중 | 클래스·prototype·상속·super 메서드·const capture·runtime identity와 타입 초기화 순서를 연결했습니다. fixed·const 선언 일치, 객체 대입·amendment 제한과 선언별 오류 순서를 구현했습니다. 선언별 singleton의 선행 게시·실패 뒤 부분 상태·GC 보존을 같은 evaluator 순차 계약에 연결했습니다. annotation 구문·선언별 초기화 순서·성공한 annotation prefix 보존과 실제 Host 재진입을 추가했습니다. 전체 module 초기화·annotation reflection·modifier·상속 순환 및 eager/lazy 규칙은 남아 있습니다. |
 | M2-05 타입·제약·generic | 진행 중 | primitive·nullable·union·클래스 타입과 generic alias·기본 값을 구현했습니다. 같은 VM의 제약 continuation, custom `this`, 상속된 제약의 선언 owner, alias 실행 환경, 복구 가능한 불일치와 실행 오류 구분을 연결했습니다. generic collection의 lazy wrapper·eager key/List 검사·캐시 재사용을 연결했습니다. 별칭 선언 identity와 확장 검사를 분리하고 함수 타입 metadata를 추가했습니다. 지원하는 타입 구문의 해석 순서와 generic 매개변수 범위를 연결했습니다. 완전한 지연 타입 해석·구조 타입·recursive 타입·전체 제약 코퍼스는 남아 있습니다. |
 | M2-06 collection·generator | 진행 중 | 순서 있는 객체 본문, `Dynamic`·`Listing`·`Mapping`의 element·entry·subscript·amendment, `for`·`when`·spread와 `List` 생성 경로를 연결했습니다. 지연 멤버·반복 변수 capture·source 선행 강제 평가·상속 순서·Host 중단 중 GC를 검증합니다. generic wrapper와 일부 inferred new·클래스 기본 값을 연결했습니다. member predicate의 부모 순회·선택·amendment·지연 본문과 선언 owner 캐시를 추가했습니다. 구조 동등성과 객체 키를 확장하며 전체 해시 충돌·순환 키·typed generator·custom default 규칙은 남아 있습니다. |
 | M2-07 Reference·메타데이터 | 진행 중 | `pkl:ref` import·생성·합성 접근·정규화·렌더링·동등성과 필요한 선언·타입 정보를 연결했습니다. 상속된 hidden fixed 선언 메타데이터를 referent 본문 실행 없이 조회합니다. 전체 builtin metadata·reflection·원래 upstream suite는 남아 있습니다. |
@@ -493,6 +493,16 @@ Node·Chromium은 각각 90개 개발 시나리오를 통과했습니다. 새 �
 구현은 `gpt-6-astra / xhigh`, Java 검증과 독립 검토는 각각 `gpt-6.1-sol / high`로 진행했습니다. 필수 로컬 검사와 Rust 473개·Python 200개가 통과했습니다. 새 79개는 최종 native artifact와 실제 Node·Chromium에서 각각 77개가 Java와 일치합니다. 기존 구현에서 불일치하던 61개를 해결했으며 Dynamic `toString()` 두 원본 실패는 그대로 선택 목록에 유지합니다. 두 별도 `is Dynamic` 제어 사례가 원래 실패를 대체하지 않으며 개발 예외도 추가하지 않습니다. 기존 플랫폼 92개 시나리오와 원본 upstream `newInsideLet.pkl`의 선택 API 식 7개를 확인했습니다. 원래 snippet 출력 계약 전체의 성공으로 확대하지 않습니다.
 
 구현은 `b63163d`에 커밋·푸시했습니다. [최종 로컬 검증](reports/m2/stage34-final-summary.json)에서 전체 선택 코퍼스 3,201개 중 3,197개가 일치했고, 나머지 연산과 Dynamic `toString()` 두 사례의 불일치 3개·순환 참조 oracle 오류 1개를 유지했습니다. 변형 관계 88개와 순차 계약 2,622개 호출은 일치합니다. 전체 gate의 실패 이유는 1,952개이며 새 예외를 추가하지 않아 개발 gate도 실패합니다. 필수 로컬 검사 통과를 호환성 완료로 바꾸지 않습니다. 원래 두 Dynamic 사례는 부모 추론 수정 이후 더 뒤의 `toString` 오류에 도달하므로 수정 전후 오류 바이트 자체가 같다는 뜻은 아닙니다. 원본 입력과 양쪽 오류 기록을 모두 보존합니다. M2 전체·릴리스 플랫폼·성능 목표는 미완료입니다.
+
+### Stage 35 — annotation과 선언 초기화 (최종 검증 중)
+
+annotation 구문을 parser·resolver·공통 VM에 연결하고 모듈·클래스·별칭·속성·메서드의 초기화 순서를 구현했습니다. 클래스·별칭 singleton은 annotation 실행 전에 게시하고, 실패하면 성공한 annotation prefix와 부분 선언 상태를 보존합니다. 속성·메서드 annotation은 해당 선언의 타입·modifier 검사가 성공한 뒤 게시하며 실패한 임시 목록은 회수합니다. annotation의 일반 필드는 지연 평가하고 generator·spread와 메서드의 첫 Deprecated.message는 Java와 같은 시점에 실행합니다.
+
+구현은 `gpt-6-astra / xhigh`, Java oracle과 독립 검토는 각각 `gpt-6.1-sol / high`에 배정했습니다. 새 선택 사례 105개와 같은 evaluator의 순차 정의 9개를 추가했습니다. [구현 체크포인트](reports/m2/stage35-implementation-checkpoint.json)의 필수 로컬 검사 7개와 Python 200개가 통과했습니다. 최종 native·Node·Chromium에서 새 105개 중 각각 103개가 일치하며 플랫폼은 각 사례를 두 번씩 실행했습니다. 기존 151개와 새 9개를 합한 순차 정의 160개·호출 2,720개는 모두 일치했고 실제 소스 Host 비교 68개 호출과 프로토콜도 일치합니다. 원본 upstream annotation 17개는 현재 API 경계에서 7개가 일치하며 나머지 출력기 등의 의존성은 유지합니다. 기존 3,201개와 새 사례를 합한 3,306개의 전체 언어 수집과 최종 gate·증거 봉인은 아직 진행 중입니다. 이 체크포인트를 전체 M2 완료로 계산하지 않습니다.
+
+Annotation·Deprecated·Since·Unlisted·AlsoKnownAs·DocExample·SourceCode의 상속·필드 타입·기본값을 연결했습니다. SourceCode.language는 값을 지정하지 않으면 undefined이며 Go를 기본값으로 선택하지 않습니다. 실제 Pkl 소스의 annotation에서 resource read·Host 재진입·실패 후 재시도를 검사하고, GC·취소·timeout·close는 별도 native 검사로 추적합니다. 전체 reflection·builtin annotation metadata·ModuleInfo 버전 검사·converter·deprecation logger·module cache는 후속 범위입니다.
+
+일반 객체의 `toString()`과 `List.map`에 의존하는 원본 실패도 새 선택 목록과 플랫폼 실행에 유지합니다. SourceCode union의 직접 생성 대조군은 원래 map 사례를 대체하지 않습니다. 객체 내부를 평가하지 않는 문자열 변환 후보는 Java의 force 순서와 달라 기각했으며, 관련 실패를 개발 예외로 바꾸지 않습니다. 매개변수 annotation generator에서 관측한 Java 내부 오류는 언어 성공으로 계산하지 않습니다. M2의 9개 작업 영역과 전체 gate는 미완료 상태를 유지합니다.
 
 다음 구현은 남은 탐색 불일치의 의존성을 기준으로 진행합니다.
 

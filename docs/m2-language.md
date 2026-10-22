@@ -103,13 +103,60 @@ exploratory differences.
 The Stage 34 selection retains two failing `Dynamic.toString()` calls and adds
 separate `is Dynamic` controls. The original failures are neither replaced nor
 added to the development exceptions, so the development gate also fails until
-they are resolved. The portable comparison below executes every Stage 34 case
-twice on Node and Chromium, records complete value/error bytes, and returns
-nonzero for any mismatch. It complements the existing platform scenarios:
+they are resolved. The generic portable comparison consumes a fixture module
+exporting `cases` and `context`, validates source bytes and hashes against the
+selected files, and executes each case twice on Node and Chromium. It records
+complete value/error bytes and returns nonzero for any mismatch. Counts come
+from the supplied cases, rather than a fixed stage denominator. It complements
+the existing platform scenarios:
 
 ```sh
-node tools/platform/compare-method-parents.mjs target/m2/method-parents-platform-new target/m2/platforms-new/wasm target/m2/platforms-new/pkl_napi.node
+node tools/platform/compare-language-cases.mjs target/m2/annotations-platform-new target/m2/platforms-new/wasm target/m2/platforms-new/pkl_napi.node tools/platform/annotation-cases.mjs
+node tools/platform/compare-language-cases.mjs target/m2/method-parents-platform-new target/m2/platforms-new/wasm target/m2/platforms-new/pkl_napi.node tools/platform/method-parent-cases.mjs
 ```
+
+The historical Stage 34 wrapper remains available:
+
+```sh
+node tools/platform/compare-method-parents.mjs target/m2/method-parents-wrapper-new target/m2/platforms-new/wasm target/m2/platforms-new/pkl_napi.node
+```
+
+Each fixture supplies its source, source hash, property-path expression, and
+exactly one complete Java-derived `expectedValue` or `expectedError`. The context
+records URI, module name, power-assertion mode, and oracle acquisition identity.
+The runner preserves fixtures, runtime and artifact identities, raw payloads,
+and missing or failed executions. The fixture's Java acquisition and the portable
+execution are separate evidence; creating a fixture or documenting the command
+does not establish that a platform run passed.
+
+Stage 35 adds declaration annotations on modules, classes, aliases, properties,
+and methods. Selected comparisons distinguish bare construction, lazy fields,
+eager generators and spread, const scope, type validation, first-error order,
+and partial publication after initialization failure. After resolving its
+signature, a method reads the message of the first annotation whose class is
+exactly `Deprecated`. Unused
+class and alias declarations remain lazy, and failed ordinary member reads
+retain their retry behavior.
+
+Builtin controls cover `Annotation`, `Deprecated`, `Since`, `Unlisted`,
+`AlsoKnownAs`, `DocExample`, and `SourceCode`. Nullable string defaults and empty
+`Listing<String>` defaults are distinct from required fields. In particular,
+`SourceCode.language` has no implicit Go default: its complete union accepts
+the listed literals and other strings, but a missing value remains undefined.
+Collection element checks stay lazy and retain the standard-library declaration
+frame when forced. Untyped parameterized annotation generators remain explicitly
+unsupported: the pinned Java implementation fails internally when its diagnostic
+location is null. This is an oracle error, not a matched language error. Original
+exploratory parser failures and Java internal errors remain recorded separately
+from language-error comparisons.
+
+Full reflection and builtin annotation metadata remain open. The upstream
+`@SourceCode` metadata on `Deprecated.replaceWith` is not synthesized.
+`ModuleInfo`, converters, deprecation logging, module initialization/cache
+semantics, general object `toString`, and `List.map` remain dependencies.
+The original object-stringification and mapped-list failures retain their raw
+inputs and outcomes alongside independent controls. Authored scalar fixtures do
+not replace the original upstream annotation snippets or their renderer contract.
 
 The default uses Java's API setting with power assertions disabled. Selected
 cases can opt in with `"power_assertions": true`; the runner then passes
@@ -225,8 +272,15 @@ and diagnostic payloads. Native acquisition uses the same runtime boundary.
 Rust collects between calls while retaining the module root. Dedicated native
 tests separately verify evaluator-owned class and alias roots, disposable object
 reclamation, isolated heaps, ordinary failed-property retries, and terminal
-cleanup. Internal bytecode suspension tests establish scheduler behavior;
-they do not establish that the same suspension path is available in Pkl source.
+cleanup. Internal bytecode suspension tests retain their scheduler-only scope.
+Stage 35 also exercises actual annotation source containing `read` in eager
+construction and Deprecated message evaluation. The `annotation_host_probe`
+adapter retains the acquired module, performs nested callback evaluations, and
+compares complete ordered Java/native status, stdout, and stderr. Native tests
+separately inspect annotation roots, temporary-builder reclamation, stale
+completion rejection, evaluator isolation, nonterminal cancellation, and terminal
+release. These contracts do not establish Host I/O in `evaluateLanguage`, full
+module-cache behavior, or arbitrary retries after failed module setup.
 
 Alias sequences cover value identity, generic metadata, failed definition reuse,
 and later type uses in properties, deferred annotations, constructors, and
@@ -327,8 +381,9 @@ mixed/generator compiler paths, and recursive AST Debug/PartialEq, remain outsid
 that success claim. The historical runtime depth-768 tests construct values after
 compilation and do not replace authored-source frontend validation.
 
-A complete runtime type-resolution model, general imported types, annotation
-syntax, and full module initialization/caching remain open requirements. The
+A complete runtime type-resolution model, general imported types, complete
+annotation metadata/reflection, and full module initialization/caching remain
+open requirements. The
 persistent adapter requires an acquired module; module-entry failures do not
 establish later module retry or cache behavior.
 

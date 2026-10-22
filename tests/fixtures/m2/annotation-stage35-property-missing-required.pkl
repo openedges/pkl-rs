@@ -1,0 +1,3 @@
+class Ann extends Annotation { x: Int }
+@Ann
+result="ok"

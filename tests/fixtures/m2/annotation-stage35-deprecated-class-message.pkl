@@ -1,0 +1,3 @@
+@Deprecated { message = throw("lazy") }
+class C {}
+result=C.toString()

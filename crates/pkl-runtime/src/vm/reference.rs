@@ -121,7 +121,13 @@ pub(crate) fn type_name_value<'a>(ty: &'a TypeCheck, module: &str) -> PklString 
             }
             TypeCheck::Class { id: MODULE_ID, .. } => output.push_str(module),
             TypeCheck::Class { id: ACCESS_ID, .. } => output.push_str("pkl.ref#Access"),
-            TypeCheck::Class { name, .. } => output.push_str(&format!("{module}#{name}")),
+            TypeCheck::Class { id, name } => {
+                if super::annotations::builtin_name(*id).is_some() {
+                    output.push_str(name);
+                } else {
+                    output.push_str(&format!("{module}#{name}"));
+                }
+            }
             TypeCheck::Union { types, .. } => list(types.iter().collect(), " | "),
             TypeCheck::Nullable(inner) => {
                 sequence.push(Part::Type(inner));
@@ -747,6 +753,11 @@ impl Vm {
             return Value::Class(id);
         }
         let (id, name, abstract_) = match ty {
+            TypeCheck::Class { id, .. } if super::annotations::builtin_name(id).is_some() => (
+                id,
+                super::annotations::builtin_name(id).unwrap().to_owned(),
+                id == super::annotations::ANNOTATION_ID,
+            ),
             TypeCheck::Class { id: ACCESS_ID, .. } => (ACCESS_ID, "Access".to_owned(), false),
             TypeCheck::RefDomain => (DOMAIN_ID, "Domain".to_owned(), true),
             _ => (
@@ -782,9 +793,26 @@ impl Vm {
         let members = if id == ACCESS_ID {
             self.program.access_members.clone()
         } else {
-            Vec::new()
+            self.program
+                .annotation_members
+                .get(&id)
+                .cloned()
+                .unwrap_or_default()
+        };
+        let parent = if super::annotations::builtin_name(id).is_some()
+            && id != super::annotations::ANNOTATION_ID
+        {
+            self.builtin_class(TypeCheck::Class {
+                id: super::annotations::ANNOTATION_ID,
+                name: Arc::from("Annotation"),
+            })
+            .heap_id()
+        } else {
+            None
         };
         let object = self.heap.allocate(Object {
+            parent,
+            class_superclass_initialized: true,
             members,
             builtin_type: Some(ty),
             class_definition: Some(Class {

@@ -1059,3 +1059,6 @@ export const methodParentCases = [
     "expectedError": "\u2013\u2013 Pkl Error \u2013\u2013\nTried to read property `default` but its value is undefined.\n\n1 | p: Listing<Any> = new { new {} }\n       ^^^^^^^^^^^^\nat m2-platform#p.default (file:///m2-platform.pkl)\n\n1 | p: Listing<Any> = new { new {} }\n                            ^^^\nat m2-platform#p[#1] (file:///m2-platform.pkl)\n\n2 | result = p[0].toString()\n             ^^^^\nat m2-platform#result (file:///m2-platform.pkl)\n\n1 | result\n    ^^^^^^\nat  (repl:text)\n"
   }
 ];
+
+// Common fixture interface for the portable language comparison.
+export { methodParentCases as cases, methodParentContext as context };

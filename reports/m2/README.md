@@ -45,6 +45,23 @@ Stage 33 aligns non-local const owners and method/lambda inferred-parent boundar
 Stage 34 uses return-type defaults and inherited property contexts for inferred parents.
 These checkpoints do not complete the language milestone.
 
+## Stage 35 implementation checkpoint
+
+Declaration annotations now run through the shared parser, resolver and VM,
+including ordered initialization, retained class/alias annotation prefixes,
+member publication, seven builtin classes and source-driven Host suspension.
+The [implementation checkpoint](stage35-implementation-checkpoint.json) records
+seven passing local checks, all 2,720 persistent calls, and 68 actual-source Host
+call comparisons. The 105 new cases match Java in 103 cases on native, Node and
+Chromium; the portable targets run every case twice. General object `toString`
+and `List.map` failures remain selected, without new exceptions.
+
+The complete 3,306-case language acquisition is still running. Its final gate
+results and evidence archive will be recorded separately. This checkpoint does
+not close M2, full upstream snippet/output contracts, release platform coverage,
+or execution-time and memory targets. The completed Stage 34 acquisition below
+remains the last finalized full language report.
+
 ## Stage 34 local verification checkpoint
 
 Implementation `b63163dd1bd6376fbbe400fc38611b5495629643` is committed and pushed.

@@ -1,0 +1,4 @@
+class Ann extends Annotation
+typealias A<T> = Ann
+@A<Int>
+result="ok"

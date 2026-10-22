@@ -41864,6 +41864,1561 @@
         "semantic:lazy-evaluation",
         "semantic:diagnostics"
       ]
+    },
+    {
+      "id": "annotation-stage35-module-bare",
+      "input": "tests/fixtures/m2/annotation-stage35-module-bare.pkl",
+      "expression": "stage35Result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:annotations",
+        "semantic:objects",
+        "semantic:types",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "annotation-stage35-module-lazy-body",
+      "input": "tests/fixtures/m2/annotation-stage35-module-lazy-body.pkl",
+      "expression": "stage35Result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:annotations",
+        "semantic:objects",
+        "semantic:types",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "annotation-stage35-module-invalid",
+      "input": "tests/fixtures/m2/annotation-stage35-module-invalid.pkl",
+      "expression": "stage35Result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:annotations",
+        "semantic:objects",
+        "semantic:types",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "annotation-stage35-class-bare",
+      "input": "tests/fixtures/m2/annotation-stage35-class-bare.pkl",
+      "expression": "stage35Result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:annotations",
+        "semantic:objects",
+        "semantic:types",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "annotation-stage35-class-lazy-body",
+      "input": "tests/fixtures/m2/annotation-stage35-class-lazy-body.pkl",
+      "expression": "stage35Result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:annotations",
+        "semantic:objects",
+        "semantic:types",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "annotation-stage35-class-invalid",
+      "input": "tests/fixtures/m2/annotation-stage35-class-invalid.pkl",
+      "expression": "stage35Result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:annotations",
+        "semantic:objects",
+        "semantic:types",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "annotation-stage35-alias-bare",
+      "input": "tests/fixtures/m2/annotation-stage35-alias-bare.pkl",
+      "expression": "stage35Result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:annotations",
+        "semantic:objects",
+        "semantic:types",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "annotation-stage35-alias-lazy-body",
+      "input": "tests/fixtures/m2/annotation-stage35-alias-lazy-body.pkl",
+      "expression": "stage35Result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:annotations",
+        "semantic:objects",
+        "semantic:types",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "annotation-stage35-alias-invalid",
+      "input": "tests/fixtures/m2/annotation-stage35-alias-invalid.pkl",
+      "expression": "stage35Result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:annotations",
+        "semantic:objects",
+        "semantic:types",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "annotation-stage35-property-bare",
+      "input": "tests/fixtures/m2/annotation-stage35-property-bare.pkl",
+      "expression": "stage35Result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:annotations",
+        "semantic:objects",
+        "semantic:types",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "annotation-stage35-property-lazy-body",
+      "input": "tests/fixtures/m2/annotation-stage35-property-lazy-body.pkl",
+      "expression": "stage35Result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:annotations",
+        "semantic:objects",
+        "semantic:types",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "annotation-stage35-property-invalid",
+      "input": "tests/fixtures/m2/annotation-stage35-property-invalid.pkl",
+      "expression": "stage35Result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:annotations",
+        "semantic:objects",
+        "semantic:types",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "annotation-stage35-typed-property-bare",
+      "input": "tests/fixtures/m2/annotation-stage35-typed-property-bare.pkl",
+      "expression": "stage35Result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:annotations",
+        "semantic:objects",
+        "semantic:types",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "annotation-stage35-typed-property-lazy-body",
+      "input": "tests/fixtures/m2/annotation-stage35-typed-property-lazy-body.pkl",
+      "expression": "stage35Result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:annotations",
+        "semantic:objects",
+        "semantic:types",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "annotation-stage35-typed-property-invalid",
+      "input": "tests/fixtures/m2/annotation-stage35-typed-property-invalid.pkl",
+      "expression": "stage35Result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:annotations",
+        "semantic:objects",
+        "semantic:types",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "annotation-stage35-method-bare",
+      "input": "tests/fixtures/m2/annotation-stage35-method-bare.pkl",
+      "expression": "stage35Result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:annotations",
+        "semantic:objects",
+        "semantic:types",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "annotation-stage35-method-lazy-body",
+      "input": "tests/fixtures/m2/annotation-stage35-method-lazy-body.pkl",
+      "expression": "stage35Result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:annotations",
+        "semantic:objects",
+        "semantic:types",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "annotation-stage35-method-invalid",
+      "input": "tests/fixtures/m2/annotation-stage35-method-invalid.pkl",
+      "expression": "stage35Result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:annotations",
+        "semantic:objects",
+        "semantic:types",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "annotation-stage35-property-unknown",
+      "input": "tests/fixtures/m2/annotation-stage35-property-unknown.pkl",
+      "expression": "stage35Result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:annotations",
+        "semantic:objects",
+        "semantic:types",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "annotation-stage35-class-unused-invalid",
+      "input": "tests/fixtures/m2/annotation-stage35-class-unused-invalid.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:annotations",
+        "semantic:objects",
+        "semantic:types",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "annotation-stage35-alias-unused-invalid",
+      "input": "tests/fixtures/m2/annotation-stage35-alias-unused-invalid.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:annotations",
+        "semantic:objects",
+        "semantic:types",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "annotation-stage35-property-lazy-type",
+      "input": "tests/fixtures/m2/annotation-stage35-property-lazy-type.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:annotations",
+        "semantic:objects",
+        "semantic:types",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "annotation-stage35-property-lazy-unknown",
+      "input": "tests/fixtures/m2/annotation-stage35-property-lazy-unknown.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:annotations",
+        "semantic:objects",
+        "semantic:types",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "annotation-stage35-property-missing-required",
+      "input": "tests/fixtures/m2/annotation-stage35-property-missing-required.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:annotations",
+        "semantic:objects",
+        "semantic:types",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "annotation-stage35-annotation-base",
+      "input": "tests/fixtures/m2/annotation-stage35-annotation-base.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:annotations",
+        "semantic:objects",
+        "semantic:types",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "annotation-stage35-custom-derived",
+      "input": "tests/fixtures/m2/annotation-stage35-custom-derived.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:annotations",
+        "semantic:objects",
+        "semantic:types",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "annotation-stage35-alias-class",
+      "input": "tests/fixtures/m2/annotation-stage35-alias-class.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:annotations",
+        "semantic:objects",
+        "semantic:types",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "annotation-stage35-alias-union",
+      "input": "tests/fixtures/m2/annotation-stage35-alias-union.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:annotations",
+        "semantic:objects",
+        "semantic:types",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "annotation-stage35-type-union",
+      "input": "tests/fixtures/m2/annotation-stage35-type-union.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:annotations",
+        "semantic:objects",
+        "semantic:types",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "annotation-stage35-type-nullable",
+      "input": "tests/fixtures/m2/annotation-stage35-type-nullable.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:annotations",
+        "semantic:objects",
+        "semantic:types",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "annotation-stage35-type-parenthesized",
+      "input": "tests/fixtures/m2/annotation-stage35-type-parenthesized.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:annotations",
+        "semantic:objects",
+        "semantic:types",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "annotation-stage35-type-constrained",
+      "input": "tests/fixtures/m2/annotation-stage35-type-constrained.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:annotations",
+        "semantic:objects",
+        "semantic:types",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "annotation-stage35-type-value",
+      "input": "tests/fixtures/m2/annotation-stage35-type-value.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:annotations",
+        "semantic:objects",
+        "semantic:types",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "annotation-stage35-annotation-order",
+      "input": "tests/fixtures/m2/annotation-stage35-annotation-order.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:annotations",
+        "semantic:objects",
+        "semantic:types",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "annotation-stage35-class-super-before-annotation",
+      "input": "tests/fixtures/m2/annotation-stage35-class-super-before-annotation.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:annotations",
+        "semantic:objects",
+        "semantic:types",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "annotation-stage35-class-annotation-before-property",
+      "input": "tests/fixtures/m2/annotation-stage35-class-annotation-before-property.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:annotations",
+        "semantic:objects",
+        "semantic:types",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "annotation-stage35-alias-annotation-before-rhs",
+      "input": "tests/fixtures/m2/annotation-stage35-alias-annotation-before-rhs.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:annotations",
+        "semantic:objects",
+        "semantic:types",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "annotation-stage35-property-annotation-before-type",
+      "input": "tests/fixtures/m2/annotation-stage35-property-annotation-before-type.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:annotations",
+        "semantic:objects",
+        "semantic:types",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "annotation-stage35-method-annotation-before-parameters",
+      "input": "tests/fixtures/m2/annotation-stage35-method-annotation-before-parameters.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:annotations",
+        "semantic:objects",
+        "semantic:types",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "annotation-stage35-property-before-method",
+      "input": "tests/fixtures/m2/annotation-stage35-property-before-method.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:annotations",
+        "semantic:objects",
+        "semantic:types",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "annotation-stage35-class-local-property-unused",
+      "input": "tests/fixtures/m2/annotation-stage35-class-local-property-unused.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:annotations",
+        "semantic:objects",
+        "semantic:types",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "annotation-stage35-class-local-method-unused",
+      "input": "tests/fixtures/m2/annotation-stage35-class-local-method-unused.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:annotations",
+        "semantic:objects",
+        "semantic:types",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "annotation-stage35-module-local-property-unused",
+      "input": "tests/fixtures/m2/annotation-stage35-module-local-property-unused.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:annotations",
+        "semantic:objects",
+        "semantic:types",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "annotation-stage35-module-local-method-unused",
+      "input": "tests/fixtures/m2/annotation-stage35-module-local-method-unused.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:annotations",
+        "semantic:objects",
+        "semantic:types",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "annotation-stage35-module-local-class-unused",
+      "input": "tests/fixtures/m2/annotation-stage35-module-local-class-unused.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:annotations",
+        "semantic:objects",
+        "semantic:types",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "annotation-stage35-module-local-alias-unused",
+      "input": "tests/fixtures/m2/annotation-stage35-module-local-alias-unused.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:annotations",
+        "semantic:objects",
+        "semantic:types",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "annotation-stage35-object-property",
+      "input": "tests/fixtures/m2/annotation-stage35-object-property.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:annotations",
+        "semantic:objects",
+        "semantic:types",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "annotation-stage35-deprecated-property-message",
+      "input": "tests/fixtures/m2/annotation-stage35-deprecated-property-message.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:annotations",
+        "semantic:objects",
+        "semantic:types",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "annotation-stage35-deprecated-class-message",
+      "input": "tests/fixtures/m2/annotation-stage35-deprecated-class-message.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:annotations",
+        "semantic:objects",
+        "semantic:types",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "annotation-stage35-alias-generic",
+      "input": "tests/fixtures/m2/annotation-stage35-alias-generic.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:annotations",
+        "semantic:objects",
+        "semantic:types",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "annotation-stage35-alias-generic-missing",
+      "input": "tests/fixtures/m2/annotation-stage35-alias-generic-missing.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:annotations",
+        "semantic:objects",
+        "semantic:types",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "annotation-stage35-alias-generic-arity",
+      "input": "tests/fixtures/m2/annotation-stage35-alias-generic-arity.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:annotations",
+        "semantic:objects",
+        "semantic:types",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "annotation-stage35-alias-generic-unknown-arg",
+      "input": "tests/fixtures/m2/annotation-stage35-alias-generic-unknown-arg.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:annotations",
+        "semantic:objects",
+        "semantic:types",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "annotation-stage35-class-unexpected-type-args",
+      "input": "tests/fixtures/m2/annotation-stage35-class-unexpected-type-args.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:annotations",
+        "semantic:objects",
+        "semantic:types",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "annotation-stage35-body-generator-before-next",
+      "input": "tests/fixtures/m2/annotation-stage35-body-generator-before-next.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:annotations",
+        "semantic:objects",
+        "semantic:types",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "annotation-stage35-body-spread-before-next",
+      "input": "tests/fixtures/m2/annotation-stage35-body-spread-before-next.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:annotations",
+        "semantic:objects",
+        "semantic:types",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "annotation-stage35-body-eager-for",
+      "input": "tests/fixtures/m2/annotation-stage35-body-eager-for.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:annotations",
+        "semantic:objects",
+        "semantic:types",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "annotation-stage35-body-eager-unknown-lazy-member",
+      "input": "tests/fixtures/m2/annotation-stage35-body-eager-unknown-lazy-member.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:annotations",
+        "semantic:objects",
+        "semantic:types",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "annotation-stage35-body-missing-eager-field",
+      "input": "tests/fixtures/m2/annotation-stage35-body-missing-eager-field.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:annotations",
+        "semantic:objects",
+        "semantic:types",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "annotation-stage35-body-nonconst-eager",
+      "input": "tests/fixtures/m2/annotation-stage35-body-nonconst-eager.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:annotations",
+        "semantic:objects",
+        "semantic:types",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "annotation-stage35-body-const-eager",
+      "input": "tests/fixtures/m2/annotation-stage35-body-const-eager.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:annotations",
+        "semantic:objects",
+        "semantic:types",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "annotation-stage35-deprecated-body-nonconst",
+      "input": "tests/fixtures/m2/annotation-stage35-deprecated-body-nonconst.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:annotations",
+        "semantic:objects",
+        "semantic:types",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "annotation-stage35-deprecated-body-const",
+      "input": "tests/fixtures/m2/annotation-stage35-deprecated-body-const.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:annotations",
+        "semantic:objects",
+        "semantic:types",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "annotation-stage35-deprecated-body-localconst",
+      "input": "tests/fixtures/m2/annotation-stage35-deprecated-body-localconst.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:annotations",
+        "semantic:objects",
+        "semantic:types",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "annotation-stage35-deprecated-body-qualified-module",
+      "input": "tests/fixtures/m2/annotation-stage35-deprecated-body-qualified-module.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:annotations",
+        "semantic:objects",
+        "semantic:types",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "annotation-stage35-deprecated-body-qualified-outer",
+      "input": "tests/fixtures/m2/annotation-stage35-deprecated-body-qualified-outer.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:annotations",
+        "semantic:objects",
+        "semantic:types",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "annotation-stage35-deprecated-body-lambda",
+      "input": "tests/fixtures/m2/annotation-stage35-deprecated-body-lambda.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:annotations",
+        "semantic:objects",
+        "semantic:types",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "annotation-stage35-deprecated-body-function-const",
+      "input": "tests/fixtures/m2/annotation-stage35-deprecated-body-function-const.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:annotations",
+        "semantic:objects",
+        "semantic:types",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "annotation-stage35-deprecated-body-function-nonconst",
+      "input": "tests/fixtures/m2/annotation-stage35-deprecated-body-function-nonconst.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:annotations",
+        "semantic:objects",
+        "semantic:types",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "annotation-stage35-deprecated-body-class-member",
+      "input": "tests/fixtures/m2/annotation-stage35-deprecated-body-class-member.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:annotations",
+        "semantic:objects",
+        "semantic:types",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "annotation-stage35-deprecated-body-this",
+      "input": "tests/fixtures/m2/annotation-stage35-deprecated-body-this.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:annotations",
+        "semantic:objects",
+        "semantic:types",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "annotation-stage35-deprecated-body-local-member",
+      "input": "tests/fixtures/m2/annotation-stage35-deprecated-body-local-member.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:annotations",
+        "semantic:objects",
+        "semantic:types",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "annotation-stage35-deprecated-message-wrong-type",
+      "input": "tests/fixtures/m2/annotation-stage35-deprecated-message-wrong-type.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:annotations",
+        "semantic:objects",
+        "semantic:types",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "annotation-stage35-deprecated-method-first-message",
+      "input": "tests/fixtures/m2/annotation-stage35-deprecated-method-first-message.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:annotations",
+        "semantic:objects",
+        "semantic:types",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "annotation-stage35-deprecated-method-after-signature",
+      "input": "tests/fixtures/m2/annotation-stage35-deprecated-method-after-signature.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:annotations",
+        "semantic:objects",
+        "semantic:types",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "annotation-stage35-annotation-body-duplicate",
+      "input": "tests/fixtures/m2/annotation-stage35-annotation-body-duplicate.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:annotations",
+        "semantic:objects",
+        "semantic:types",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "annotation-stage35-annotation-body-parameter",
+      "input": "tests/fixtures/m2/annotation-stage35-annotation-body-parameter.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:annotations",
+        "semantic:objects",
+        "semantic:types",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "annotation-stage35-module-body-const",
+      "input": "tests/fixtures/m2/annotation-stage35-module-body-const.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:annotations",
+        "semantic:objects",
+        "semantic:types",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "annotation-stage35-typealias-body-order",
+      "input": "tests/fixtures/m2/annotation-stage35-typealias-body-order.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:annotations",
+        "semantic:objects",
+        "semantic:types",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "annotation-stage35-review-deprecation-sync-next-signature",
+      "input": "tests/fixtures/m2/annotation-stage35-review-deprecation-sync-next-signature.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:annotations",
+        "semantic:objects",
+        "semantic:types",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "annotation-stage35-review-deprecation-literal-next-signature-control",
+      "input": "tests/fixtures/m2/annotation-stage35-review-deprecation-literal-next-signature-control.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:annotations",
+        "semantic:objects",
+        "semantic:types",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "annotation-stage35-review-deprecated-typed-spread",
+      "input": "tests/fixtures/m2/annotation-stage35-review-deprecated-typed-spread.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:annotations",
+        "semantic:objects",
+        "semantic:types",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "annotation-stage35-review-deprecated-const-spread",
+      "input": "tests/fixtures/m2/annotation-stage35-review-deprecated-const-spread.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:annotations",
+        "semantic:objects",
+        "semantic:types",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "annotation-stage35-review-member-eager-const-when",
+      "input": "tests/fixtures/m2/annotation-stage35-review-member-eager-const-when.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:annotations",
+        "semantic:objects",
+        "semantic:types",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "annotation-stage35-review-member-lazy-const-control",
+      "input": "tests/fixtures/m2/annotation-stage35-review-member-lazy-const-control.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:annotations",
+        "semantic:objects",
+        "semantic:types",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "annotation-stage35-builtin-annotation-abstract",
+      "input": "tests/fixtures/m2/annotation-stage35-builtin-annotation-abstract.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:annotations",
+        "semantic:objects",
+        "semantic:types",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "annotation-stage35-builtin-deprecated-nullable-defaults",
+      "input": "tests/fixtures/m2/annotation-stage35-builtin-deprecated-nullable-defaults.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:annotations",
+        "semantic:objects",
+        "semantic:types",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "annotation-stage35-builtin-deprecated-since-wrong-type",
+      "input": "tests/fixtures/m2/annotation-stage35-builtin-deprecated-since-wrong-type.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:annotations",
+        "semantic:objects",
+        "semantic:types",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "annotation-stage35-builtin-deprecated-message-wrong-type",
+      "input": "tests/fixtures/m2/annotation-stage35-builtin-deprecated-message-wrong-type.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:annotations",
+        "semantic:objects",
+        "semantic:types",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "annotation-stage35-builtin-deprecated-replace-with-wrong-type",
+      "input": "tests/fixtures/m2/annotation-stage35-builtin-deprecated-replace-with-wrong-type.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:annotations",
+        "semantic:objects",
+        "semantic:types",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "annotation-stage35-builtin-since-version-undefined",
+      "input": "tests/fixtures/m2/annotation-stage35-builtin-since-version-undefined.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:annotations",
+        "semantic:objects",
+        "semantic:types",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "annotation-stage35-builtin-since-version-value",
+      "input": "tests/fixtures/m2/annotation-stage35-builtin-since-version-value.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:annotations",
+        "semantic:objects",
+        "semantic:types",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "annotation-stage35-builtin-unlisted-empty",
+      "input": "tests/fixtures/m2/annotation-stage35-builtin-unlisted-empty.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:annotations",
+        "semantic:objects",
+        "semantic:types",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "annotation-stage35-builtin-unlisted-final",
+      "input": "tests/fixtures/m2/annotation-stage35-builtin-unlisted-final.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:annotations",
+        "semantic:objects",
+        "semantic:types",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "annotation-stage35-builtin-also-known-as-default-and-lazy",
+      "input": "tests/fixtures/m2/annotation-stage35-builtin-also-known-as-default-and-lazy.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:annotations",
+        "semantic:objects",
+        "semantic:types",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "annotation-stage35-builtin-also-known-as-invalid-element",
+      "input": "tests/fixtures/m2/annotation-stage35-builtin-also-known-as-invalid-element.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:annotations",
+        "semantic:objects",
+        "semantic:types",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "annotation-stage35-builtin-doc-example-default-and-lazy",
+      "input": "tests/fixtures/m2/annotation-stage35-builtin-doc-example-default-and-lazy.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:annotations",
+        "semantic:objects",
+        "semantic:types",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "annotation-stage35-builtin-doc-example-invalid-element",
+      "input": "tests/fixtures/m2/annotation-stage35-builtin-doc-example-invalid-element.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:annotations",
+        "semantic:objects",
+        "semantic:types",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "annotation-stage35-builtin-source-code-defaults",
+      "input": "tests/fixtures/m2/annotation-stage35-builtin-source-code-defaults.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:annotations",
+        "semantic:objects",
+        "semantic:types",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "annotation-stage35-builtin-source-code-union-and-string",
+      "input": "tests/fixtures/m2/annotation-stage35-builtin-source-code-union-and-string.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:annotations",
+        "semantic:objects",
+        "semantic:types",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "annotation-stage35-builtin-source-code-language-wrong-type",
+      "input": "tests/fixtures/m2/annotation-stage35-builtin-source-code-language-wrong-type.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:annotations",
+        "semantic:objects",
+        "semantic:types",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "annotation-stage35-builtin-source-code-prefix-wrong-type",
+      "input": "tests/fixtures/m2/annotation-stage35-builtin-source-code-prefix-wrong-type.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:annotations",
+        "semantic:objects",
+        "semantic:types",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "annotation-stage35-builtin-custom-annotation-hierarchy",
+      "input": "tests/fixtures/m2/annotation-stage35-builtin-custom-annotation-hierarchy.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:annotations",
+        "semantic:objects",
+        "semantic:types",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "annotation-stage35-builtin-source-code-null-defaults",
+      "input": "tests/fixtures/m2/annotation-stage35-builtin-source-code-null-defaults.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:annotations",
+        "semantic:objects",
+        "semantic:types",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "annotation-stage35-builtin-source-code-union-direct",
+      "input": "tests/fixtures/m2/annotation-stage35-builtin-source-code-union-direct.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:annotations",
+        "semantic:objects",
+        "semantic:types",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
     }
   ],
   "schema_version": 1,

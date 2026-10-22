@@ -1,0 +1,9 @@
+class Ann extends Annotation { x: Int }
+@Ann { x=throw("lazy") }
+class C { value: Int=7; @Ann { x=throw("property-lazy") } local unused=1; @Ann { x=throw("method-lazy") } function f()=value }
+stable=23
+
+stage35Call00 = C.toString()
+stage35Call01 = new C {}.value.toString()
+stage35Call02 = new C {}.f().toString()
+stage35Call03 = stable.toString()

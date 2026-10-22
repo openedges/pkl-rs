@@ -1478,27 +1478,41 @@ impl Vm {
                         awaiting_value: false,
                     })
                 } else {
-                    let source = value.as_object().map_err(|_| {
-                        let mut error = RuntimeError::new(
-                            ErrorKind::Type,
-                            format!(
-                                "Cannot iterate over value of type `{}`.",
-                                value_type_name(&value)
-                            ),
-                        );
-                        if spread && value == Value::Null {
-                            let frame = self.frames.last().expect("active frame");
-                            error.spread_hint = self
-                                .program
-                                .metadata
-                                .get(frame.block)
-                                .and_then(|m| m.spans.get(frame.pc - 1))
-                                .copied()
-                                .flatten()
-                                .map(Box::new);
+                    let source = match value.as_object() {
+                        Ok(source) => source,
+                        Err(_) => {
+                            let mut error = RuntimeError::new(
+                                ErrorKind::Type,
+                                format!(
+                                    "Cannot iterate over value of type `{}`.",
+                                    value_type_name(&value)
+                                ),
+                            );
+                            if !(spread && value.is_null()) {
+                                error.message.push_str(&format!(
+                                    "\nValue: {}",
+                                    crate::diagnostic_values::render(
+                                        &value,
+                                        &self.heap,
+                                        &self.program.module_name,
+                                        80
+                                    )?
+                                ));
+                            }
+                            if spread && value.is_null() {
+                                let frame = self.frames.last().expect("active frame");
+                                error.spread_hint = self
+                                    .program
+                                    .metadata
+                                    .get(frame.block)
+                                    .and_then(|metadata| metadata.spans.get(frame.pc - 1))
+                                    .copied()
+                                    .flatten()
+                                    .map(Box::new);
+                            }
+                            return Err(error);
                         }
-                        error
-                    })?;
+                    };
                     if self.heap.get(source)?.reference.is_some() {
                         return Err(RuntimeError::new(
                             ErrorKind::Type,
@@ -1540,9 +1554,14 @@ impl Vm {
                         let mut error = RuntimeError::new(
                             ErrorKind::Type,
                             format!(
-                                "Cannot iterate over value of type `{}#{}`.\nValue: {}",
-                                self.program.module_name,
-                                class.name,
+                                "Cannot iterate over value of type `{}`.\nValue: {}",
+                                reference::type_name(
+                                    &TypeCheck::Class {
+                                        id: class.id,
+                                        name: class.name
+                                    },
+                                    &self.program.module_name
+                                ),
                                 crate::diagnostic_values::render(
                                     &value,
                                     &self.heap,
@@ -2314,7 +2333,7 @@ impl Compiler<'_> {
                             nullable: false,
                             spread: false,
                         },
-                        iterable.span,
+                        iterable.unparenthesized().span,
                     );
                     let start = output.len();
                     output.push_at(Instruction::IteratorNext { end: 0 }, iterable.span);
@@ -2358,7 +2377,7 @@ impl Compiler<'_> {
                             nullable: *nullable,
                             spread: true,
                         },
-                        value.span,
+                        value.unparenthesized().span,
                     );
                     let start = output.len();
                     output.push_at(Instruction::IteratorNext { end: 0 }, value.span);

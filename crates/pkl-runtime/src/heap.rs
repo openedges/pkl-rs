@@ -125,6 +125,7 @@ pub struct PredicateIterator {
 
 #[derive(Clone, Debug)]
 pub struct CollectionCast {
+    pub source: Option<Arc<crate::value::RuntimeSource>>,
     pub(crate) node: Option<TypeNodeId>,
     pub ty: crate::vm::TypeCheck,
     pub span: crate::source::Span,
@@ -150,9 +151,15 @@ pub struct Object {
     pub native_function: Option<crate::vm::reference::NativeFunction>,
     pub type_alias: Option<Arc<str>>,
     pub type_alias_initialized: bool,
+    /// Declaration-owned annotation values; fields remain ordinary lazy members.
+    pub annotations: Vec<Value>,
+    /// Published property/method annotation metadata, keyed by declaration code.
+    pub member_annotations: BTreeMap<usize, Vec<Value>>,
     pub builtin_type: Option<crate::vm::TypeCheck>,
     pub ref_module: bool,
     pub is_module: bool,
+    pub module_initializing: bool,
+    pub published_module_members: std::collections::BTreeSet<usize>,
     pub class_definition: Option<Class>,
     /// Published class whose initialization has not completed (including failure).
     /// Such classes accept new property names, but expose only published metadata.
@@ -553,6 +560,14 @@ impl Heap {
                 Entry::Object(object) => object,
             };
             pending.extend(object.parent);
+            pending.extend(object.annotations.iter().filter_map(Value::heap_id));
+            pending.extend(
+                object
+                    .member_annotations
+                    .values()
+                    .flatten()
+                    .filter_map(Value::heap_id),
+            );
             pending.extend(
                 object
                     .collection_cast
@@ -822,6 +837,7 @@ mod tests {
         );
         let wrapper = heap.allocate(Object {
             collection_cast: Some(CollectionCast {
+                source: None,
                 node: Some(node),
                 ty: crate::vm::TypeCheck::Int,
                 span: crate::source::Span::new(0, 1),

@@ -1292,6 +1292,15 @@ impl Vm {
                     collection_kind: state.kind,
                     length: object.length,
                     collection_cast: Some(crate::heap::CollectionCast {
+                        source: match run.frames.first() {
+                            // An explicit None denotes the primary module source.
+                            Some(frame) => frame.source.clone(),
+                            None => self
+                                .frames
+                                .last()
+                                .and_then(|frame| self.program.metadata.get(frame.block))
+                                .and_then(|metadata| metadata.source.clone()),
+                        },
                         node,
                         ty,
                         span,

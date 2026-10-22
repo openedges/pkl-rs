@@ -1,0 +1,2 @@
+class C { @Int local x = 1 }
+result=C.toString()

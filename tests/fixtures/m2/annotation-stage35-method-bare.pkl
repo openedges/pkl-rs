@@ -1,0 +1,5 @@
+@Ann
+function f(): Int = 1
+class Ann extends Annotation { x: String }
+
+stage35Result = f().toString()

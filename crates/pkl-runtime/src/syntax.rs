@@ -17,6 +17,7 @@ pub struct Module {
 
 #[derive(Clone, Debug, PartialEq)]
 pub struct Member {
+    pub annotations: Vec<Expr>,
     pub name: String,
     pub name_span: Span,
     pub expr: Expr,
@@ -101,6 +102,7 @@ pub struct Parameter {
 
 #[derive(Clone, Debug, PartialEq)]
 pub struct ModuleDeclaration {
+    pub annotations: Vec<Expr>,
     pub name: Option<Vec<String>>,
     pub parent: Option<ModuleParent>,
     pub modifiers: Vec<Modifier>,
@@ -321,6 +323,15 @@ impl Clone for Expr {
                             parent: parent.as_ref().map(|_| Box::new(next())),
                             members: clone_object_members(members, &mut next),
                         },
+                        E::Annotation {
+                            parameters,
+                            ty,
+                            members,
+                        } => E::Annotation {
+                            parameters: parameters.clone(),
+                            ty: ty.clone(),
+                            members: clone_object_members(members, &mut next),
+                        },
                         E::New { ty, members } => E::New {
                             ty: ty.clone(),
                             members: clone_object_members(members, &mut next),
@@ -382,7 +393,7 @@ impl Expr {
                 object_expressions(members, &mut children);
                 children
             }
-            E::New { members, .. } => {
+            E::New { members, .. } | E::Annotation { members, .. } => {
                 let mut children = Vec::new();
                 object_expressions(members, &mut children);
                 children
@@ -395,6 +406,7 @@ impl Expr {
 
 fn clone_member(member: &Member, expr: Expr) -> Member {
     Member {
+        annotations: member.annotations.clone(),
         name: member.name.clone(),
         name_span: member.name_span,
         expr,
@@ -576,7 +588,9 @@ impl Drop for Expr {
                     pending.extend(parent.map(|parent| *parent));
                     detach_members(members, pending);
                 }
-                E::New { members, .. } => detach_members(members, pending),
+                E::New { members, .. } | E::Annotation { members, .. } => {
+                    detach_members(members, pending)
+                }
                 _ => {}
             }
         }
@@ -672,6 +686,11 @@ pub enum ExprKind {
     TypeAlias {
         type_parameters: Vec<TypeParameter>,
         ty: Type,
+    },
+    Annotation {
+        parameters: Vec<Parameter>,
+        ty: Type,
+        members: Vec<ObjectMember>,
     },
     New {
         ty: Type,

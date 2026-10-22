@@ -1,0 +1,4 @@
+class Ann extends Annotation
+@Ann { ...throw("spread") }
+@Missing
+result="ok"

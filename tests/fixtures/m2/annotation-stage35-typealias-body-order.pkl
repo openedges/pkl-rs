@@ -1,0 +1,4 @@
+class Ann extends Annotation { x: Int }
+@Ann { when (throw("annotation")) {} }
+typealias A = Missing
+result=A.toString()

@@ -1,0 +1,3 @@
+empty=new AlsoKnownAs {}
+invalid=new AlsoKnownAs { names { 1 } }
+result=List(empty.names.length,invalid.names.length,(invalid is Annotation)).toString()

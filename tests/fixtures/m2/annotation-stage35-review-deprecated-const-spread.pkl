@@ -1,0 +1,6 @@
+const ann = new Deprecated { message = "ok" }
+class Child {
+ @Deprecated { ...(ann) }
+ function good() = 1
+}
+result = Child == Child

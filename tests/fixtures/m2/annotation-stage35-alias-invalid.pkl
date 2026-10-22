@@ -1,0 +1,4 @@
+@Int
+typealias A = Int
+
+stage35Result = A.toString()

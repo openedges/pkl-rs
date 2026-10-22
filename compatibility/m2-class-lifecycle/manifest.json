@@ -1063,6 +1063,69 @@
       "expressions": "string-stage26-nested-retries.expressions",
       "group": "T26",
       "note": "Bounded authored nested lexical strings, raw-hash and multiline delimiters, captured arguments, first-error ordering and repeated failed/successful evaluations; complete pinned Java captures. Native stack, GC and real Host lifecycle assertions remain separate."
+    },
+    {
+      "expressions": "annotation-stage35-class-invalid-annotation.expressions",
+      "group": "T35",
+      "id": "annotation-stage35-class-invalid-annotation",
+      "note": "Authored annotation declaration initialization, published failure state and ordered retries; scalar-property adapter preserves original expressions and repeated call order. Fresh pinned Java raw channels; reflection metadata and module initialization retry observations remain separate.",
+      "source": "annotation-stage35-class-invalid-annotation.pkl"
+    },
+    {
+      "expressions": "annotation-stage35-alias-invalid-annotation.expressions",
+      "group": "T35",
+      "id": "annotation-stage35-alias-invalid-annotation",
+      "note": "Authored annotation declaration initialization, published failure state and ordered retries; scalar-property adapter preserves original expressions and repeated call order. Fresh pinned Java raw channels; reflection metadata and module initialization retry observations remain separate.",
+      "source": "annotation-stage35-alias-invalid-annotation.pkl"
+    },
+    {
+      "expressions": "annotation-stage35-class-property-invalid-annotation.expressions",
+      "group": "T35",
+      "id": "annotation-stage35-class-property-invalid-annotation",
+      "note": "Authored annotation declaration initialization, published failure state and ordered retries; scalar-property adapter preserves original expressions and repeated call order. Fresh pinned Java raw channels; reflection metadata and module initialization retry observations remain separate.",
+      "source": "annotation-stage35-class-property-invalid-annotation.pkl"
+    },
+    {
+      "expressions": "annotation-stage35-class-method-invalid-annotation.expressions",
+      "group": "T35",
+      "id": "annotation-stage35-class-method-invalid-annotation",
+      "note": "Authored annotation declaration initialization, published failure state and ordered retries; scalar-property adapter preserves original expressions and repeated call order. Fresh pinned Java raw channels; reflection metadata and module initialization retry observations remain separate.",
+      "source": "annotation-stage35-class-method-invalid-annotation.pkl"
+    },
+    {
+      "expressions": "annotation-stage35-class-eager-annotation-failure.expressions",
+      "group": "T35",
+      "id": "annotation-stage35-class-eager-annotation-failure",
+      "note": "Authored annotation declaration initialization, published failure state and ordered retries; scalar-property adapter preserves original expressions and repeated call order. Fresh pinned Java raw channels; reflection metadata and module initialization retry observations remain separate.",
+      "source": "annotation-stage35-class-eager-annotation-failure.pkl"
+    },
+    {
+      "expressions": "annotation-stage35-alias-eager-annotation-failure.expressions",
+      "group": "T35",
+      "id": "annotation-stage35-alias-eager-annotation-failure",
+      "note": "Authored annotation declaration initialization, published failure state and ordered retries; scalar-property adapter preserves original expressions and repeated call order. Fresh pinned Java raw channels; reflection metadata and module initialization retry observations remain separate.",
+      "source": "annotation-stage35-alias-eager-annotation-failure.pkl"
+    },
+    {
+      "expressions": "annotation-stage35-method-message-failure.expressions",
+      "group": "T35",
+      "id": "annotation-stage35-method-message-failure",
+      "note": "Authored annotation declaration initialization, published failure state and ordered retries; scalar-property adapter preserves original expressions and repeated call order. Fresh pinned Java raw channels; reflection metadata and module initialization retry observations remain separate.",
+      "source": "annotation-stage35-method-message-failure.pkl"
+    },
+    {
+      "expressions": "annotation-stage35-class-lazy-success.expressions",
+      "group": "T35",
+      "id": "annotation-stage35-class-lazy-success",
+      "note": "Authored annotation declaration initialization, published failure state and ordered retries; scalar-property adapter preserves original expressions and repeated call order. Fresh pinned Java raw channels; reflection metadata and module initialization retry observations remain separate.",
+      "source": "annotation-stage35-class-lazy-success.pkl"
+    },
+    {
+      "expressions": "annotation-stage35-alias-lazy-success.expressions",
+      "group": "T35",
+      "id": "annotation-stage35-alias-lazy-success",
+      "note": "Authored annotation declaration initialization, published failure state and ordered retries; scalar-property adapter preserves original expressions and repeated call order. Fresh pinned Java raw channels; reflection metadata and module initialization retry observations remain separate.",
+      "source": "annotation-stage35-alias-lazy-success.pkl"
     }
   ],
   "unexecuted_groups": [
@@ -1076,7 +1139,7 @@
     },
     {
       "group": "P11",
-      "reason": "Real Java class-initialization read observed via @Deprecated { ...(read(\"life:class\")) } in stage12-java-host-path-01; Rust annotation frontend unsupported, so actual Host-in-class cross-language reentry remains unexecuted. Internal scheduler tests are separate."
+      "reason": "Actual annotation source now reaches Rust Host suspension, callback reentry and GC. Separate Stage 35 Java/Rust Host probes compare class, alias, property and method initialization, successful reads, eager failures and partial-state retries. This persistent scalar sequence adapter does not execute Host callbacks. Complete resource I/O failure, module-cache and product Host behavior remain unverified; native cancellation/timeout/close cleanup tests are separate from Java raw-byte equality."
     },
     {
       "group": "P12",

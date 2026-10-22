@@ -1,0 +1,3 @@
+@MissingAnn
+typealias A = MissingType
+result=A.toString()

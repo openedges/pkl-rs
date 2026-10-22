@@ -114,7 +114,14 @@ fn is_base_method(name: &str) -> bool {
 fn is_base_class(name: &str) -> bool {
     matches!(
         name,
-        "Class"
+        "Annotation"
+            | "Deprecated"
+            | "Since"
+            | "Unlisted"
+            | "AlsoKnownAs"
+            | "DocExample"
+            | "SourceCode"
+            | "Class"
             | "TypeAlias"
             | "Function"
             | "Function0"
@@ -197,6 +204,7 @@ enum Scope<'a> {
     GeneratorParameters(&'a [Parameter]),
     TypeParameters(&'a [TypeParameter]),
     CustomThis,
+    Annotation(bool),
 }
 
 #[derive(Clone, Copy, Eq, PartialEq, Ord, PartialOrd)]
@@ -246,6 +254,11 @@ struct Resolver<'a> {
 // ordered exactly as the pinned builder, including generator body-first checks.
 enum Work<'a> {
     Expression(&'a Expr, bool),
+    Annotations(&'a [Expr], bool, ConstLevel),
+    Annotation(&'a Expr, bool),
+    AnnotationBody(&'a [ObjectMember], bool),
+    EndAnnotations(ConstLevel),
+    EndAnnotationBody(ConstLevel),
     Receiver(&'a Expr),
     Type(&'a Type),
     Constraints(&'a [Expr]),
@@ -286,7 +299,7 @@ enum Work<'a> {
 
 impl<'a> Resolver<'a> {
     fn binding(&self, name: &str, method: bool) -> Binding {
-        let mut owner_depth = 0;
+        let mut owner_depth: isize = 0;
         let mut let_depth = 0;
         for scope in self.scopes.iter().rev() {
             match scope {
@@ -314,6 +327,11 @@ impl<'a> Resolver<'a> {
                     let_depth += parameters.len();
                 }
                 Scope::TypeParameters(_) | Scope::CustomThis => {}
+                Scope::Annotation(class) => {
+                    if *class {
+                        owner_depth -= 1;
+                    }
+                }
                 Scope::Object(members) => {
                     if let Some(member) = members
                         .iter()
@@ -321,12 +339,12 @@ impl<'a> Resolver<'a> {
                     {
                         return if method {
                             Binding::Method {
-                                owner_depth,
+                                owner_depth: owner_depth.max(0) as usize,
                                 local: member.local,
                             }
                         } else {
                             Binding::Property {
-                                owner_depth,
+                                owner_depth: owner_depth.max(0) as usize,
                                 local: member.local,
                             }
                         };
@@ -374,6 +392,34 @@ impl<'a> Resolver<'a> {
         let mut work = vec![initial];
         while let Some(task) = work.pop() {
             match task {
+                Work::Annotations(annotations, class, level) => {
+                    let previous = std::mem::replace(&mut self.const_level, level);
+                    work.push(Work::EndAnnotations(previous));
+                    work.extend(
+                        annotations
+                            .iter()
+                            .rev()
+                            .map(|annotation| Work::Annotation(annotation, class)),
+                    );
+                }
+                Work::Annotation(annotation, class) => {
+                    let ExprKind::Annotation { ty, members, .. } = &annotation.kind else {
+                        unreachable!("annotation syntax")
+                    };
+                    work.push(Work::AnnotationBody(members, class));
+                    work.push(Work::Type(ty));
+                }
+                Work::AnnotationBody(members, class) => {
+                    let previous = std::mem::replace(&mut self.const_level, ConstLevel::Module);
+                    self.scopes.push(Scope::Annotation(class));
+                    work.push(Work::EndAnnotationBody(previous));
+                    work.push(Work::ObjectMembers(members));
+                }
+                Work::EndAnnotations(previous) => self.const_level = previous,
+                Work::EndAnnotationBody(previous) => {
+                    self.scopes.pop();
+                    self.const_level = previous;
+                }
                 Work::EndMember(level) => {
                     self.diagnostic_owners.exit();
                     self.const_level = level;
@@ -506,6 +552,11 @@ impl<'a> Resolver<'a> {
                     if let Some(ty) = &member.ty {
                         work.push(Work::Type(ty));
                     }
+                    work.push(Work::Annotations(
+                        &member.annotations,
+                        !object && self.object_levels.len() > 1,
+                        previous,
+                    ));
                 }
                 Work::MemberBody(member, object) => {
                     if object
@@ -573,11 +624,22 @@ impl<'a> Resolver<'a> {
                         let mut seen = std::collections::BTreeSet::new();
                         for member in &names {
                             if !seen.insert((&member.name, is_method(member))) {
-                                return Err(Diagnostic::new(
+                                let mut error = Diagnostic::new(
                                     DiagnosticKind::DuplicateMember,
                                     member.name_span,
                                     format!("Duplicate definition of member `{}`.", member.name),
-                                ));
+                                );
+                                if self
+                                    .scopes
+                                    .iter()
+                                    .any(|scope| matches!(scope, Scope::Annotation(_)))
+                                {
+                                    error.member = Some(
+                                        crate::value::PklString::join(&self.diagnostic_path, ".")
+                                            .into(),
+                                    );
+                                }
+                                return Err(error);
                             }
                         }
                     }
@@ -1045,7 +1107,7 @@ impl<'a> Resolver<'a> {
                         work.push(Work::EndAlias(previous));
                         work.push(Work::Type(ty));
                     }
-                    ExprKind::New { ty, members } => {
+                    ExprKind::New { ty, members } | ExprKind::Annotation { ty, members, .. } => {
                         work.push(Work::ObjectMembers(members));
                         work.push(Work::Type(ty));
                     }
@@ -1283,7 +1345,15 @@ impl<'a> Resolver<'a> {
     fn needs_const(&self, depth: usize) -> bool {
         match self.const_level {
             ConstLevel::None => false,
-            ConstLevel::Module => depth + 1 == self.object_levels.len(),
+            ConstLevel::Module => {
+                depth + 1
+                    == self.object_levels.len()
+                        - self
+                            .scopes
+                            .iter()
+                            .filter(|scope| matches!(scope, Scope::Annotation(true)))
+                            .count()
+            }
             ConstLevel::All => {
                 let mut remaining = depth;
                 let mut levels_up = 0;
@@ -1579,6 +1649,15 @@ fn resolve_module_inner(
                     "modules"
                 },
             )?;
+        }
+        if let Some(declaration) = &module.declaration {
+            let previous = resolver.enter_object(module.members.iter().collect());
+            resolver.visit(Work::Annotations(
+                &declaration.annotations,
+                false,
+                ConstLevel::None,
+            ))?;
+            resolver.visit(Work::EndObject(previous))?;
         }
         resolver.members(&module.members, false)?;
         Ok::<(), Diagnostic>(())

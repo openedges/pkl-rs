@@ -1,0 +1,6 @@
+open class Custom extends Annotation
+class Child extends Custom
+@Child
+class C {}
+ann=new Child {}
+result=List((ann is Annotation),(ann is Custom),(ann is Child)).toString()

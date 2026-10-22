@@ -1,0 +1,4 @@
+const function message()="x"
+@Deprecated { message=message() }
+function f()=1
+result="ok"

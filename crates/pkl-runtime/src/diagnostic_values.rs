@@ -92,7 +92,11 @@ pub(crate) fn type_name(value: &Value, heap: &Heap, module: &str) -> Result<Stri
                         } else {
                             module
                         };
-                        name = format!("{defining_module}#{}", class.name);
+                        name = if crate::vm::annotations::builtin_name(class.id).is_some() {
+                            class.name.to_string()
+                        } else {
+                            format!("{defining_module}#{}", class.name)
+                        };
                         break;
                     }
                 }

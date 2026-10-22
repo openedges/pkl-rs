@@ -1,0 +1,4 @@
+function msg()="x"
+@Deprecated { message=msg() }
+function f()=1
+result="ok"

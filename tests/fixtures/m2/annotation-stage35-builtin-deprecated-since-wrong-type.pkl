@@ -1,0 +1,2 @@
+ann=new Deprecated { since=1 }
+result=ann.since.toString()

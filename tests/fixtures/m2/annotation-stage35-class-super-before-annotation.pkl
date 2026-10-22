@@ -1,0 +1,3 @@
+@MissingAnn
+class C extends MissingSuper {}
+result=C.toString()

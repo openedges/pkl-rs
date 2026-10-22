@@ -1,0 +1,3 @@
+class Ann extends Annotation
+@Ann(true)
+result="ok"

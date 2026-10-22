@@ -9,6 +9,7 @@ use crate::heap::{
 };
 use crate::source::Span;
 use crate::value::{ErrorKind, ObjectId, PklString, RuntimeError, RuntimeFrame, Value};
+pub(crate) mod annotations;
 pub mod collections;
 mod compiler_expressions;
 pub(crate) mod equality;
@@ -20,6 +21,21 @@ use typecheck::{TypeDestination, TypeRun};
 #[derive(Clone, Debug)]
 pub enum Instruction {
     LoadRefModule,
+    CheckAnnotationClass,
+    PublishModuleMember {
+        code: usize,
+    },
+    FinishModule,
+    AppendAnnotation,
+    BeginMemberAnnotations,
+    InitializeDeprecation,
+    PublishMemberAnnotations {
+        code: usize,
+    },
+    PublishAnnotatedClassMember {
+        template: usize,
+        index: usize,
+    },
     BuiltinTypeAlias(Arc<str>),
     BeginTypeAlias {
         declaration: usize,
@@ -656,6 +672,7 @@ pub struct Program {
     pub entry: usize,
     pub(crate) reference_render_block: usize,
     pub(crate) access_members: Vec<Member>,
+    pub(crate) annotation_members: BTreeMap<usize, Vec<Member>>,
     pub(crate) constraint_origins: BTreeMap<usize, (Vec<RuntimeFrame>, Vec<RuntimeFrame>)>,
 }
 
@@ -700,6 +717,7 @@ impl Program {
             ..BlockMetadata::default()
         };
         let access_members = reference::access_members(&mut blocks, &mut metadata);
+        let annotation_members = annotations::builtin_members(&mut blocks, &mut metadata);
         Self {
             module_name: Arc::from(""),
             module_template: None,
@@ -709,6 +727,7 @@ impl Program {
             entry: 0,
             reference_render_block,
             access_members,
+            annotation_members,
             constraint_origins: BTreeMap::new(),
         }
     }
@@ -1535,7 +1554,9 @@ impl Vm {
                 }
                 owner = match object.parent {
                     Some(parent) => parent,
-                    None => return Err(self.missing_member(receiver, &name, method)?),
+                    None => {
+                        return Err(self.missing_member(receiver, &name, method)?);
+                    }
                 };
             }
         };
@@ -1644,7 +1665,9 @@ impl Vm {
             }
             collection_casts.reverse();
             collection_casts.dedup_by(|later, earlier| {
-                later.span == earlier.span && later.ty.equivalent(&earlier.ty)
+                later.source == earlier.source
+                    && later.span == earlier.span
+                    && later.ty.equivalent(&earlier.ty)
             });
             if cached.is_some()
                 && !collection_casts.is_empty()
@@ -1826,6 +1849,46 @@ impl Vm {
         name: &str,
         method: bool,
     ) -> Result<RuntimeError, RuntimeError> {
+        if self.heap.get(receiver)?.is_module {
+            let kind = if method { "method" } else { "property" };
+            let mut error = RuntimeError::new(
+                ErrorKind::MissingMember,
+                format!(
+                    "Cannot find {kind} `{name}` in module `{}`.",
+                    self.program.module_name
+                ),
+            );
+            let mut names = self
+                .heap
+                .get(receiver)?
+                .members
+                .iter()
+                .filter(|member| {
+                    !member.local
+                        && member.method == method
+                        && (!self.heap.get(receiver).expect("module").module_initializing
+                            || self
+                                .heap
+                                .get(receiver)
+                                .expect("module")
+                                .published_module_members
+                                .contains(&member.code))
+                })
+                .map(|member| member.name.to_string())
+                .collect::<Vec<_>>();
+            if !method {
+                names.push("output".into());
+            }
+            names.sort_by(|a, b| a.encode_utf16().cmp(b.encode_utf16()));
+            names.dedup();
+            error.hint = Some(format!(
+                "Available {} in module `{}`:\n{}",
+                if method { "methods" } else { "properties" },
+                self.program.module_name,
+                names.join("\n")
+            ));
+            return Ok(error);
+        }
         let Some(class) = collections::typed_class(&self.heap, receiver)? else {
             return Ok(RuntimeError::new(
                 ErrorKind::MissingMember,
@@ -2135,6 +2198,23 @@ impl Vm {
             ancestor = object.parent;
         }
         if let Some(class_name) = class_name {
+            let class_label = if let Some(id) = class_parent {
+                let class = self
+                    .heap
+                    .get(id)?
+                    .class_definition
+                    .as_ref()
+                    .expect("class metadata");
+                reference::type_name(
+                    &TypeCheck::Class {
+                        id: class.id,
+                        name: class_name,
+                    },
+                    &self.program.module_name,
+                )
+            } else {
+                format!("{}#{class_name}", self.program.module_name)
+            };
             for member in members.iter().filter(|member| !member.local) {
                 if !(declared.contains(&(member.name.clone(), member.method))
                     || class_initializing && !member.method)
@@ -2142,8 +2222,8 @@ impl Vm {
                     let mut error = RuntimeError::new(
                         ErrorKind::MissingMember,
                         format!(
-                            "Cannot find property `{}` in object of type `{}#{class_name}`.",
-                            member.name, self.program.module_name
+                            "Cannot find property `{}` in object of type `{class_label}`.",
+                            member.name
                         ),
                     );
                     error.span = self
@@ -2391,6 +2471,91 @@ impl Vm {
     fn step_instruction(&mut self, instruction: Instruction) -> Result<(), RuntimeError> {
         let frame = self.frames.last_mut().expect("active frame");
         match instruction {
+            Instruction::PublishModuleMember { code } => {
+                let owner = self
+                    .stack
+                    .last()
+                    .ok_or_else(|| invalid("missing module"))?
+                    .as_object()?;
+                self.heap
+                    .get_mut(owner)?
+                    .published_module_members
+                    .insert(code);
+            }
+            Instruction::FinishModule => {
+                let owner = self
+                    .stack
+                    .last()
+                    .ok_or_else(|| invalid("missing module"))?
+                    .as_object()?;
+                self.heap.get_mut(owner)?.module_initializing = false;
+            }
+            Instruction::CheckAnnotationClass => {
+                let Some(Value::Class(id)) = self.stack.last() else {
+                    return Err(RuntimeError::new(
+                        ErrorKind::Type,
+                        "Expected an annotation class.",
+                    ));
+                };
+                let mut current = Some(*id);
+                let mut valid = false;
+                let mut visited = BTreeSet::new();
+                while let Some(id) = current {
+                    if !visited.insert(id) {
+                        break;
+                    }
+                    let object = self.heap.get(id)?;
+                    if object
+                        .class_definition
+                        .as_ref()
+                        .is_some_and(|class| class.id == annotations::ANNOTATION_ID)
+                    {
+                        valid = true;
+                        break;
+                    }
+                    current = object.parent;
+                }
+                if !valid {
+                    return Err(RuntimeError::new(
+                        ErrorKind::Type,
+                        "Expected an annotation class.",
+                    ));
+                }
+            }
+            Instruction::AppendAnnotation => self.append_annotation()?,
+            Instruction::BeginMemberAnnotations => {
+                let id = self.heap.allocate(Object::default());
+                self.stack.push(Value::Object(id));
+            }
+            Instruction::InitializeDeprecation => self.initialize_deprecation()?,
+            Instruction::PublishMemberAnnotations { code } => {
+                self.publish_member_annotations(code)?
+            }
+            Instruction::PublishAnnotatedClassMember { template, index } => {
+                let annotations = self.pop()?.as_object()?;
+                let owner = self
+                    .stack
+                    .last()
+                    .ok_or_else(|| invalid("missing annotation owner"))?
+                    .heap_id()
+                    .ok_or_else(|| invalid("annotation owner is not a declaration"))?;
+                let member = self
+                    .program
+                    .objects
+                    .get(template)
+                    .and_then(|members| members.get(index))
+                    .ok_or_else(|| invalid("missing annotated class member"))?
+                    .clone();
+                if let Some(parent) = self.heap.get(owner)?.parent {
+                    self.validate_class_override(parent, &member)?;
+                }
+                let values = self.heap.get(annotations)?.annotations.clone();
+                self.heap
+                    .get_mut(owner)?
+                    .member_annotations
+                    .insert(member.code, values);
+                self.heap.get_mut(owner)?.members.push(member);
+            }
             Instruction::BeginTypeAlias {
                 declaration,
                 name,
@@ -3041,8 +3206,14 @@ impl Vm {
                     let mut error = RuntimeError::new(
                         ErrorKind::Type,
                         format!(
-                            "Cannot extend non-open class `{}#{}`.",
-                            self.program.module_name, parent_class.name
+                            "Cannot extend non-open class `{}`.",
+                            reference::type_name(
+                                &TypeCheck::Class {
+                                    id: parent_class.id,
+                                    name: parent_class.name.clone()
+                                },
+                                &self.program.module_name
+                            )
                         ),
                     );
                     error.hint = Some("By default, classes are closed for extension.\nTo make a class extensible, add an `open` modifier: `open class MyClass { ... }`".into());
@@ -3094,6 +3265,7 @@ impl Vm {
                                 ..
                             }
                     )
+                    && !matches!(ty.resolved(), TypeCheck::Class { id, .. } if annotations::builtin_name(*id).is_some())
                 {
                     let name = reference::type_name(ty, &self.program.module_name);
                     let name = if matches!(ty.resolved(), TypeCheck::Reference { .. }) {
@@ -3120,8 +3292,12 @@ impl Vm {
                     let mut error = RuntimeError::new(
                         ErrorKind::Type,
                         format!(
-                            "Cannot instantiate abstract class `{}#{}`.",
-                            self.program.module_name, class.name
+                            "Cannot instantiate abstract class `{}`.",
+                            if annotations::builtin_name(class.id).is_some() {
+                                class.name.to_string()
+                            } else {
+                                format!("{}#{}", self.program.module_name, class.name)
+                            }
                         ),
                     );
                     error.hint = Some("Abstract classes cannot be instantiated.\nInstead, instantiate a concrete subclass.".into());
@@ -3205,12 +3381,24 @@ impl Vm {
                     .clone();
                 let object = self.heap.allocate(Object {
                     is_module: self.program.module_template == Some(template),
+                    module_initializing: self.program.module_template == Some(template),
                     parent,
                     members,
                     environment,
                     ..Object::default()
                 });
                 self.stack.push(Value::Object(object));
+                if self.program.module_template == Some(template) {
+                    self.frames
+                        .last_mut()
+                        .expect("module frame")
+                        .environment
+                        .scopes
+                        .push(Scope {
+                            receiver: object,
+                            owner: object,
+                        });
+                }
             }
             Instruction::MakeFunction {
                 block,
@@ -3544,7 +3732,7 @@ impl Vm {
                 {
                     let cast = force.collection_casts.remove(0);
                     let mut frames = vec![RuntimeFrame {
-                        source: None,
+                        source: cast.source,
                         span: cast.span,
                         member: cast.member,
                     }];
@@ -3852,7 +4040,40 @@ fn compile_module_configured(
         has_parent: false,
     });
     compiler.type_scopes.push(resolved.module.members.clone());
-    compiler.initialize_member_types(&resolved.module.members, &mut entry)?;
+    if let Some(declaration) = &resolved.module.declaration {
+        compiler.annotations(&declaration.annotations, &mut entry)?;
+    }
+    for method in [false, true] {
+        for (index, member) in resolved.module.members.iter().enumerate() {
+            let compiled = compiler.program.objects[template][index].clone();
+            if compiled.method != method {
+                continue;
+            }
+            let annotated = !member.annotations.is_empty()
+                && !matches!(
+                    member.expr.kind,
+                    crate::syntax::ExprKind::Class { .. }
+                        | crate::syntax::ExprKind::TypeAlias { .. }
+                );
+            if annotated {
+                compiler.member_annotations(member, &mut entry, false)?;
+            }
+            compiler.initialize_member_types(std::slice::from_ref(member), &mut entry)?;
+            if annotated {
+                if method {
+                    entry.push(Instruction::InitializeDeprecation);
+                    entry.push(Instruction::Pop);
+                }
+                entry.push(Instruction::PublishMemberAnnotations {
+                    code: compiled.code,
+                });
+            }
+            entry.push(Instruction::PublishModuleMember {
+                code: compiled.code,
+            });
+        }
+    }
+    entry.push(Instruction::FinishModule);
     compiler.type_scopes.pop();
     entry.push(Instruction::Return);
     compiler.program.entry = compiler.block(entry, None);
@@ -4373,6 +4594,7 @@ impl Compiler<'_> {
                 } else {
                     output.push(Instruction::SetDefaultClassParent);
                 }
+                self.declaration_annotations(expression, output)?;
                 self.type_scopes.push(members.to_vec());
                 // ClassNode initializes properties in declaration order, then methods.
                 let compiled = self.program.objects[template].clone();
@@ -4380,6 +4602,10 @@ impl Compiler<'_> {
                     for (index, (member, compiled)) in members.iter().zip(&compiled).enumerate() {
                         if compiled.method != method {
                             continue;
+                        }
+                        let annotated = !member.annotations.is_empty();
+                        if annotated {
+                            self.member_annotations(member, output, true)?;
                         }
                         if let Some(error) = self.program.metadata[compiled.code]
                             .initialization_error
@@ -4411,8 +4637,16 @@ impl Compiler<'_> {
                             continue;
                         }
                         self.initialize_member_types(std::slice::from_ref(member), output)?;
+                        if annotated && method {
+                            output.push(Instruction::InitializeDeprecation);
+                            output.push(Instruction::Pop);
+                        }
                         output.push_at(
-                            Instruction::PublishClassMember { template, index },
+                            if annotated {
+                                Instruction::PublishAnnotatedClassMember { template, index }
+                            } else {
+                                Instruction::PublishClassMember { template, index }
+                            },
                             member.name_span,
                         );
                     }
@@ -4453,6 +4687,7 @@ impl Compiler<'_> {
                     name: Arc::from(declaration_name),
                     end: 0,
                 });
+                self.declaration_annotations(expression, output)?;
                 let parameters = type_parameters
                     .iter()
                     .map(|parameter| (parameter.name.clone(), TypeCheck::Unknown))
@@ -4536,6 +4771,12 @@ impl Compiler<'_> {
                     Binding::BaseTypeAlias => output.push(Instruction::BuiltinTypeAlias(name)),
                     Binding::BaseClass => {
                         let ty = reference::base_type(&name)
+                            .or_else(|| {
+                                annotations::builtin_id(&name).map(|id| TypeCheck::Class {
+                                    id,
+                                    name: name.clone(),
+                                })
+                            })
                             .ok_or_else(|| unsupported_type("builtin class value"))?;
                         output.push(Instruction::BuiltinClass(ty));
                     }
@@ -4701,7 +4942,13 @@ fn type_name(ty: &TypeCheck, module: &str) -> String {
             TypeCheck::IntegerAlias { name, .. } => name.to_string(),
             TypeCheck::RefDomain => "pkl.ref#Domain".into(),
             TypeCheck::Reference { .. } => "pkl.ref#Reference".into(),
-            TypeCheck::Class { name, .. } => format!("{module}#{name}"),
+            TypeCheck::Class { id, name } => {
+                if annotations::builtin_name(*id).is_some() {
+                    name.to_string()
+                } else {
+                    format!("{module}#{name}")
+                }
+            }
             TypeCheck::Collection(kind) | TypeCheck::ParameterizedCollection { kind, .. } => {
                 format!("{kind:?}")
             }
@@ -5614,6 +5861,10 @@ impl Compiler<'_> {
                         return Ok(TypeCheck::ParameterizedCollection { kind, arguments });
                     }
                     match path[0].as_str() {
+                        name if annotations::builtin_id(name).is_some() => TypeCheck::Class {
+                            id: annotations::builtin_id(name).expect("annotation class"),
+                            name: Arc::from(name),
+                        },
                         "Class" | "TypeAlias" => TypeCheck::MetaClass(Arc::from(path[0].as_str())),
                         "Any" => TypeCheck::Any,
                         "NonNull" => TypeCheck::NonNull,
@@ -5689,7 +5940,7 @@ impl Compiler<'_> {
         if matches!(
             check.unaliased(),
             TypeCheck::RefDomain | TypeCheck::Reference { .. }
-        ) || matches!(check.unaliased(), TypeCheck::Class { id, .. } if *id == reference::ACCESS_ID)
+        ) || matches!(check.unaliased(), TypeCheck::Class { id, .. } if *id == reference::ACCESS_ID || annotations::builtin_name(*id).is_some())
         {
             output.push_at(Instruction::BuiltinClass(check.clone()), span);
             return Ok(());

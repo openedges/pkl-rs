@@ -1,0 +1,9 @@
+class C { x: Int=1; function before()=1; @Int function broken()=2; function after()=3 }
+stable=23
+
+stage35Call00 = C.toString()
+stage35Call01 = new C {}.x.toString()
+stage35Call02 = new C {}.before().toString()
+stage35Call03 = new C {}.broken().toString()
+stage35Call04 = new C {}.after().toString()
+stage35Call05 = stable.toString()

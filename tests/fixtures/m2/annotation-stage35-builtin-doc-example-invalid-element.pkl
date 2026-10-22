@@ -1,0 +1,2 @@
+ann=new DocExample { subjects { 1 } }
+result=ann.subjects[0].toString()

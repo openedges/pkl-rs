@@ -1,0 +1,2 @@
+ann=new Deprecated { replaceWith=1 }
+result=ann.replaceWith.toString()

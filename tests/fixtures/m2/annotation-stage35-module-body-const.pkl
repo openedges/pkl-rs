@@ -1,0 +1,4 @@
+@Deprecated { message=constValue }
+module foo
+const constValue="ok"
+result="ok"

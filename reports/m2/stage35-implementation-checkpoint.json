@@ -1,0 +1,162 @@
+{
+  "schema": 1,
+  "scope": "Stage 35 implementation checkpoint; full language acquisition and evidence closeout remain pending. M2 is incomplete.",
+  "baseline_commit": "dc5954c6f79ad9efd672ad6fa45f36c3e6f72631",
+  "allocation": {
+    "core": "gpt-6-astra / xhigh",
+    "oracle_and_independent_review": "gpt-6.1-sol / high",
+    "root": "Integration, local checks, evidence, documentation and Git mutations."
+  },
+  "changes": [
+    "Parse declaration annotations and initialize them through the shared VM with pinned ordering and const scope.",
+    "Trace retained class/alias annotation prefixes and publish member metadata only after successful initialization.",
+    "Provide seven builtin annotation classes with pinned defaults, lazy type checks and complete diagnostic source locations.",
+    "Exercise actual annotation-source Host reads, nested evaluation, GC and terminal cleanup.",
+    "Use one portable runner for all selected raw Java values and errors; preserve known failures."
+  ],
+  "validation": {
+    "required_checks_passed": true,
+    "required_checks": 7,
+    "metadata_commands": 1,
+    "source_stability": true,
+    "python_passes": 200,
+    "new_annotation_native_tests": 10,
+    "rust_harness_passes_including_child_replays": 495,
+    "rust_ignored": 1
+  },
+  "focused": {
+    "selected": 105,
+    "raw_matches": 103,
+    "baseline_raw_matches": 0,
+    "remaining": [
+      "annotation-stage35-deprecated-body-this",
+      "annotation-stage35-builtin-source-code-union-and-string"
+    ],
+    "candidate_sha256": "04780a951968c9d59e97c4815d585ba2c6a0a2c939846438315ba9e7ea812b26"
+  },
+  "portable": {
+    "status": "failed",
+    "targets": {
+      "node": {
+        "complete": true,
+        "executions": 210,
+        "passingExecutions": 206,
+        "mismatchingExecutions": 4,
+        "passingCases": 103,
+        "mismatchingCases": 2,
+        "mismatchIds": [
+          "annotation-stage35-deprecated-body-this",
+          "annotation-stage35-builtin-source-code-union-and-string"
+        ]
+      },
+      "browser": {
+        "complete": true,
+        "executions": 210,
+        "passingExecutions": 206,
+        "mismatchingExecutions": 4,
+        "passingCases": 103,
+        "mismatchingCases": 2,
+        "mismatchIds": [
+          "annotation-stage35-deprecated-body-this",
+          "annotation-stage35-builtin-source-code-union-and-string"
+        ]
+      }
+    },
+    "browser_errors": [],
+    "infrastructure_errors": [],
+    "source_or_artifact_changes": []
+  },
+  "persistent": {
+    "definitions": 160,
+    "executions": 320,
+    "raw_compared_calls": 2720,
+    "passing_calls": 2720,
+    "full_compatibility_claimed": false
+  },
+  "actual_source_host": {
+    "scenarios": 6,
+    "fresh_experiments": 12,
+    "raw_compared_calls": 68,
+    "all_protocols_and_calls_match": true,
+    "source_stability": true,
+    "scope": "Separate native development Host probe; resource I/O failure equivalence and product Host APIs remain open."
+  },
+  "standard_platforms": {
+    "total": 6078,
+    "oracle_passed": {
+      "rust": 6076,
+      "node": 6076,
+      "browser": 6076
+    },
+    "shared_engine_passed": 6078,
+    "compatibility_status": "fail",
+    "experiment_contract_status": "pass",
+    "known_gaps": [
+      "regex-unicode-15-vs-16",
+      "regex-zero-width-supplementary"
+    ]
+  },
+  "original_upstream": {
+    "inputs": 17,
+    "raw_api_matches": 7,
+    "full_snippet_contract_complete": false
+  },
+  "full_language": {
+    "selected": 3306,
+    "state": "running",
+    "path": "target/m2/language-stage35-final-01",
+    "final_gate_exits": null
+  },
+  "known_unverified_scope": [
+    "General object.toString and List.map dependencies remain selected failures.",
+    "Untyped parameterized annotation generators trigger an upstream internal error and remain unsupported.",
+    "Full reflection, builtin member annotations, ModuleInfo, converters, deprecation logging and module initialization/cache behavior.",
+    "Remaining language/type/collection/diagnostic/upstream contracts; all nine M2 workstreams remain open.",
+    "Release operating-system/platform coverage, execution time and peak-RSS parity."
+  ],
+  "evidence": [
+    {
+      "path": "target/m2/validation-stage35-final-01/report.json",
+      "sha256": "07c6c54a8b356e9963b4ce5223d4734447785511a8eb9cce326ba82e9c713247"
+    },
+    {
+      "path": "target/m2/focused-stage35-final-01/report.json",
+      "sha256": "15e3c86280951eea68e80028985e347ebc03f057890c964be32029a3469b12e8"
+    },
+    {
+      "path": "target/m2/annotations-platform-stage35-final-01/execution.json",
+      "sha256": "6be3098fffe02f0c703f0a35f0ddf934e57702749417520c9cc8b58f50b1469d"
+    },
+    {
+      "path": "target/m2/class-lifecycle-stage35-final-01/report.json",
+      "sha256": "ce64242b3080b78d8c904e1efc331b22b777b5b6ec68600cb5a3d654e5a517bf"
+    },
+    {
+      "path": "target/m2/stage35-host-comparison-05/report.json",
+      "sha256": "e1b49a160d626b86f7444675aff32639e6e9637d285b78f51fca5d9d3be48b62"
+    },
+    {
+      "path": "target/m2/platforms-stage35-final-01/report.json",
+      "sha256": "b11184337c8b6964980d0d61b001975192213110b87a2ff30efdebfe0fd208f1"
+    },
+    {
+      "path": "target/m2/upstream-stage35-final-01/report.json",
+      "sha256": "c0ae29fc4f274faa9c59cf20eeb8305bf3fb4ca6e8202f53f39b3252a9f483e7"
+    },
+    {
+      "path": "target/m2/stage35-selection-independent-audit-01/report.json",
+      "sha256": "7354b16f66a993d5ff967d95f26c563265987c931f9d73e968c6d083db32a1b7"
+    },
+    {
+      "path": "target/m2/stage35-final-independent-audit-01/report.json",
+      "sha256": "1cc5e36f380ee096fe73fa16028a26bb5be4259b62b9e330ed3f5e82a27a108b"
+    },
+    {
+      "path": "target/m2/stage35-final-independent-audit-01/platform-extension-01/report.json",
+      "sha256": "0f040cabc295005a9467096d81d7cd257ae8ce66266ff295d824bcbe53f25027"
+    }
+  ],
+  "evidence_archive": "Pending after the ongoing full acquisition and final audit; original raw captures remain in the named directories.",
+  "compatibility_complete": false,
+  "performance_targets_established": false
+}

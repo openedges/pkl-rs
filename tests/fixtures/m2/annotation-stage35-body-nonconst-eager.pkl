@@ -1,0 +1,4 @@
+class Ann extends Annotation
+flag=true
+@Ann { when (flag) {} }
+result="ok"

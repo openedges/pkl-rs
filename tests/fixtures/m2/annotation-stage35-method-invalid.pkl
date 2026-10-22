@@ -1,0 +1,4 @@
+@Int
+function f(): Int = 1
+
+stage35Result = f().toString()

@@ -204,7 +204,9 @@ fn poll(vm: &mut Vm) -> Result<Value, RuntimeError> {
     ))
 }
 
-fn runtime_error(
+/// Shared raw diagnostic formatting for source evaluation and development probes.
+/// This helper is not a complete product evaluation API.
+pub fn runtime_error(
     source: &Source,
     uri: &str,
     module: &str,

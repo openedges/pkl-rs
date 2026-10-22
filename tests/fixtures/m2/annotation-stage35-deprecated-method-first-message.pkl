@@ -1,0 +1,4 @@
+@Deprecated { message="first" }
+@Deprecated { message=throw("second") }
+function f()=1
+result="ok"

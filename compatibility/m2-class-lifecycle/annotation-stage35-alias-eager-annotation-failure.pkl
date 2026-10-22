@@ -1,0 +1,8 @@
+class Ann extends Annotation
+@Ann { ...throw("eager") }
+typealias A = Int
+stable=23
+
+stage35Call00 = A.toString()
+stage35Call01 = (1 is A).toString()
+stage35Call02 = stable.toString()

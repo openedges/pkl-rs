@@ -1,0 +1,2 @@
+class C { value="x"; @Deprecated { message=value } function f()=1 }
+result=C.toString()

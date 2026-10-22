@@ -1,0 +1,5 @@
+class Child {
+ @Deprecated { ...(new Deprecated { message = "ok" }) }
+ function good() = 1
+}
+result = Child == Child

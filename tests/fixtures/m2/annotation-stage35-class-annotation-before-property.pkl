@@ -1,0 +1,3 @@
+@MissingAnn
+class C { x: MissingType }
+result=C.toString()

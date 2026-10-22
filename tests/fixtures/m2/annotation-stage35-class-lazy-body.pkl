@@ -1,0 +1,5 @@
+@Ann { x = throw("lazy") }
+class C {}
+class Ann extends Annotation { x: String }
+
+stage35Result = C.toString()

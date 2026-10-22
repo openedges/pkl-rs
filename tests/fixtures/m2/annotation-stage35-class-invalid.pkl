@@ -1,0 +1,4 @@
+@Int
+class C {}
+
+stage35Result = C.toString()

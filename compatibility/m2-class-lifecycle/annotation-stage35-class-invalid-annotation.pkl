@@ -1,0 +1,8 @@
+@Int
+class C { x: Int=1 }
+stable=23
+
+stage35Call00 = C.toString()
+stage35Call01 = new C {}.x.toString()
+stage35Call02 = new C { x=4 }.x.toString()
+stage35Call03 = stable.toString()

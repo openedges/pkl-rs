@@ -547,8 +547,9 @@ and repeated modifier flag carries.
 
 Class declarations have an evaluator-owned singleton cache keyed by the compiled
 declaration template. `BeginClass` publishes an empty prototype before resolving
-the superclass. Successful property declarations publish in order, followed by
-methods; only `FinishClass` marks initialization complete. A failure preserves
+the superclass and evaluating declaration annotations. Successful property
+declarations publish in order, followed by methods; only `FinishClass` marks
+initialization complete. A failure preserves
 the singleton, its parent if already resolved, and the successful declaration
 prefix. Later access returns that same partial class without resuming its
 initialization. The immutable shared `Program` never owns heap handles.
@@ -583,16 +584,65 @@ URI/source identity remains a later integration requirement.
 Indirect cyclic superclass declarations can preserve class identity. Java
 property traversal of an observed cyclic hierarchy did not terminate; Rust's
 visited-set guards avoid an unbounded traversal. Those traversal results remain
-outside verified compatibility. Java can also suspend class initialization while
-evaluating an annotation containing a resource read. Annotation syntax is not yet
-supported by the Rust frontend. Internal instruction suspension tests verify VM
-reentry and cleanup separately from that unimplemented source-language path.
+outside verified compatibility. Annotation construction can suspend class
+initialization through an authored resource read. This source-language path now
+uses the shared VM continuation; the earlier tests that inject instructions
+remain separate scheduler evidence.
+
+### Declaration annotations
+
+Module, class, type-alias, property, and method declarations retain authored
+annotation expressions. Bare annotations and annotations with bodies construct
+ordinary typed objects after resolving the annotation type and checking its
+`Annotation` ancestry. Class-valued aliases can supply that type; nullable,
+constrained, and union types do not become annotation classes. The abstract
+`Annotation` base cannot be instantiated.
+
+Class initialization evaluates annotations after the superclass and before
+properties and methods. Type-alias initialization publishes its singleton before
+annotations and then resolves the definition. Both retain a successfully
+constructed annotation prefix after failure. Property and method annotations
+run before their signatures; a member's temporary annotation list is published
+only with that member. Metadata stores traced heap values, so retained
+annotations and captured environments survive collection without putting heap
+handles in a shared `Program`.
+
+Annotation fields stay lazy. Generator headers and spread sources run during
+construction, and member validation can fail before a field is read. Annotation
+scope uses the module const barrier, including eager construction expressions;
+class-member annotations use the enclosing declaration frame rather than a class
+instance. After resolving a method signature, initialization reads `message`
+from the first annotation whose class is exactly `Deprecated`. Other annotation
+fields remain deferred. This implements initialization timing, not the logger's
+complete deprecation-warning behavior.
+
+The shared builtin declarations cover `Annotation`, `Deprecated`, `Since`,
+`Unlisted`, `AlsoKnownAs`, `DocExample`, and `SourceCode`. Deprecated's nullable
+strings and SourceCode's nullable prefix/suffix default to null. The two
+`Listing<String>` fields default to empty lazy listings. `Since.version` and
+`SourceCode.language` remain undefined without assignment; the latter retains
+the complete literal/String union, with no implicit Go default. Their checks use
+the pinned `base.pkl` source for declaration frames. This does not synthesize
+all upstream builtin metadata: the `@SourceCode` annotation on
+`Deprecated.replaceWith`, full reflection, `ModuleInfo`, and converters remain
+open.
+
+Actual-source annotation Host tests retain partially initialized declarations,
+completed annotation prefixes, and pending builders across collection and nested
+contexts. They distinguish nonterminal VM cancellation from terminal Host
+cancel, close, and timeout, including stale completions and release of outstanding
+reads. The `annotation_host_probe` development adapter additionally compares
+source-driven callback reentry and ordered results with Java. These paths do not
+extend the scalar Node/Wasm adapters with Host I/O or establish complete module
+initialization, module-cache, logger, general object `toString`, or `List.map`
+compatibility.
 
 ### Type aliases and function metadata
 
 User type aliases have a separate evaluator-owned declaration cache. Initialization
-publishes the alias value before resolving its definition. A failed definition
-leaves the value available for later identity, name, class, and rendering queries;
+publishes the alias value before evaluating annotations and resolving its
+definition. A failed initialization leaves the value available for later
+identity, name, class, and rendering queries;
 using that unfinished alias as a type reports the pinned cyclic-alias diagnostic.
 Ordinary lazy wrappers still retry. Supported deferred annotations, constructors,
 and superclass expressions consult the alias cache at their authored type use.
@@ -640,9 +690,10 @@ The plan uses the existing scheduler, declaration caches, and failure unwinding;
 ordinary failed lazy members remain retryable.
 
 Check metadata uses compiled templates with runtime actual-argument substitution.
-These ordered execution plans do not establish a complete lazy runtime type-node model. General imported
-types, annotation syntax, full module initialization/caching, structural types,
-reflection, and the original upstream type/function suites remain unverified or
+These ordered execution plans do not establish a complete lazy runtime type-node
+model. General imported types, complete annotation metadata, full module
+initialization/caching, structural types, reflection, and the original upstream
+type/function suites remain unverified or
 unimplemented. Unsupported builtin generic types remain explicit gaps.
 
 ### Recursive constraint compilation

@@ -1,0 +1,7 @@
+class C { x: Int=1; @Deprecated { message=throw("message") } function f()=1 }
+stable=23
+
+stage35Call00 = C.toString()
+stage35Call01 = new C {}.x.toString()
+stage35Call02 = new C {}.f().toString()
+stage35Call03 = stable.toString()

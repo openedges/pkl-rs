@@ -1,0 +1,4 @@
+class Ann extends Annotation
+@Ann { when (throw("first")) {} }
+@Missing
+result="ok"

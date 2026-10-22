@@ -1,0 +1,10 @@
+class C { before: Int=1; @Int broken: Int=2; after: Int=3 }
+stable=23
+
+stage35Call00 = C.toString()
+stage35Call01 = new C {}.before.toString()
+stage35Call02 = new C {}.broken.toString()
+stage35Call03 = new C {}.after.toString()
+stage35Call04 = new C { before=4 }.before.toString()
+stage35Call05 = new C { after=4 }.after.toString()
+stage35Call06 = stable.toString()

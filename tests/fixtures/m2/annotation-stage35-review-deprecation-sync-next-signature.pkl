@@ -1,0 +1,6 @@
+class Child {
+ @Deprecated { ...(new Dynamic { message = "ok" }) }
+ function good() = 1
+ function bad(x: Missing) = 2
+}
+result = Child == Child

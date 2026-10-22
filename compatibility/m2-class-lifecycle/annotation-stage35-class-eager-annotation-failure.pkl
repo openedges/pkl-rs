@@ -1,0 +1,8 @@
+class Ann extends Annotation
+@Ann { when (throw("eager")) {} }
+class C { x: Int=1 }
+stable=23
+
+stage35Call00 = C.toString()
+stage35Call01 = new C {}.x.toString()
+stage35Call02 = stable.toString()

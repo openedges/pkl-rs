@@ -1,0 +1,4 @@
+value="x"
+@Deprecated { message=((x)->value).apply(1) }
+function f()=1
+result="ok"

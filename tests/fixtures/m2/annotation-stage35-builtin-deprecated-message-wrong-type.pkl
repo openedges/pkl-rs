@@ -1,0 +1,2 @@
+ann=new Deprecated { message=1 }
+result=ann.message.toString()

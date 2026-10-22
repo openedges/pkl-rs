@@ -1,0 +1,2 @@
+ann=new Since { version="0.32.0" }
+result=ann.version+"|"+(ann is Annotation).toString()

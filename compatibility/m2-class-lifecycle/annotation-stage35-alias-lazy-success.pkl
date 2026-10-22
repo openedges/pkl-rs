@@ -1,0 +1,9 @@
+class Ann extends Annotation { x: Int }
+@Ann { x=throw("lazy") }
+typealias A = Int
+stable=23
+
+stage35Call00 = A.toString()
+stage35Call01 = (1 is A).toString()
+stage35Call02 = (1 as A).toString()
+stage35Call03 = stable.toString()

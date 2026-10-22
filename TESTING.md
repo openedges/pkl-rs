@@ -368,10 +368,47 @@ parents, nullable/defaulted unions, aliases, lexical owners, lazy failures and
 complete default frames. Native tests collect between VM steps and exercise
 Host failure, retry, cancellation and terminal release. Prototype type defaults
 and instance initializers have separate expectations. The exhaustive portable
-runner `tools/platform/compare-method-parents.mjs` records each complete payload
-twice per Node/browser target and fails on any mismatch. Two original
+runner `tools/platform/compare-language-cases.mjs` records each complete payload
+twice per Node/browser target and fails on any mismatch. The historical
+`compare-method-parents.mjs` command delegates to that runner. Two original
 `Dynamic.toString()` failures remain selected alongside separate type controls;
 the development exception list is unchanged.
+
+Declaration annotation regressions compare module, class, alias, property, and
+method initialization order, lazy fields, eager generators/spread, const scope,
+type errors, and complete diagnostic frames. Persistent sequences distinguish
+published class/alias singletons and successful member prefixes after failure
+from retryable ordinary properties. Builtin cases verify nullable and empty
+listing defaults, required Since/SourceCode fields, hierarchy checks, and lazy
+element errors with pinned `base.pkl` frames. SourceCode's union has no default;
+missing `language` must not be replaced with Go.
+
+Native annotation tests use actual Pkl resource reads to exercise suspension,
+collection, nested contexts, nonterminal cancellation, stale completions,
+evaluator isolation, and terminal cleanup. Separate Java/native Host observations
+through `annotation_host_probe` compare source-driven callback reentry and full
+ordered status/stdout/stderr. Earlier injected-instruction checks remain
+architectural evidence with a separate scope. Neither contract establishes Host
+I/O through the scalar Node/Wasm language adapters or complete module setup/cache
+behavior.
+
+The generic portable runner takes a fixture module exporting `cases` and
+`context`; each case carries exact source bytes/hash, its property-path expression,
+and one complete Java-derived value or error. It validates fixture source
+identity, records artifact/runtime identities, and derives its counts from the
+selected array. Use a fresh output directory and the pinned browser tooling:
+
+```sh
+node tools/platform/compare-language-cases.mjs target/m2/annotations-platform-new target/m2/platforms-new/wasm target/m2/platforms-new/pkl_napi.node tools/platform/annotation-cases.mjs
+```
+
+An acquisition, source-hash check, or documented command is not a passing
+platform result. Full reflection and builtin metadata remain open, including the
+unsynthesized `@SourceCode` metadata on `Deprecated.replaceWith`. `ModuleInfo`,
+converters, deprecation logging, module-cache semantics, general object
+`toString`, and `List.map` retain their implementation or verification gaps.
+Preserve the original failing inputs and oracle internal errors; independent
+controls do not replace their contracts or close the full language gate.
 
 M1 experiments have narrower, explicit contracts:
 

@@ -1,0 +1,4 @@
+open class Ann extends Annotation
+class More extends Ann
+@More
+result="ok"

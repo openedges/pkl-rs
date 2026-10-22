@@ -1,0 +1,2 @@
+class C { @Int local function f()=1 }
+result=C.toString()

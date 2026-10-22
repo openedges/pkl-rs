@@ -222,7 +222,7 @@ impl Lexer<'_> {
         {
             self.cursor = start + operator.len();
             Kind::Operator(operator)
-        } else if "=(){};.,+-*/%<>!:?|[]".contains(ch) {
+        } else if "=(){};.,+-*/%<>!:?|[]@".contains(ch) {
             Kind::Symbol(ch)
         } else if !ch.is_ascii() {
             let mut diagnostic = Diagnostic::new(
@@ -560,6 +560,48 @@ impl<'a> Parser<'a> {
         Ok((name, token.span))
     }
 
+    fn annotations(&mut self) -> Result<Vec<Expr>, Diagnostic> {
+        let mut annotations = Vec::new();
+        while self.is_symbol('@') {
+            let start = self.advance()?.span.start;
+            let ty = self.type_expression()?;
+            let mut parameters = Vec::new();
+            let members = if self.is_symbol('{') {
+                let build = self.start_object(None, None, self.token.span.start, true, false)?;
+                let mut lookahead = self.clone();
+                let parsed_parameters = (|| {
+                    let mut values = vec![lookahead.parameter()?];
+                    while lookahead.is_symbol(',') {
+                        lookahead.advance()?;
+                        values.push(lookahead.parameter()?);
+                    }
+                    if !lookahead.is_operator("->") {
+                        return Err(lookahead.unexpected(Some("->")));
+                    }
+                    lookahead.advance()?;
+                    Ok::<_, Diagnostic>(values)
+                })();
+                if let Ok(values) = parsed_parameters {
+                    *self = lookahead;
+                    parameters = values;
+                }
+                let mut body = self.expression_machine(0, Some(build))?;
+                Self::take_object_members(&mut body)
+            } else {
+                Vec::new()
+            };
+            annotations.push(Expr {
+                kind: ExprKind::Annotation {
+                    parameters,
+                    ty,
+                    members,
+                },
+                span: Span::new(start, self.previous_end),
+            });
+        }
+        Ok(annotations)
+    }
+
     fn modifiers(&mut self) -> Result<Vec<Modifier>, Diagnostic> {
         let mut modifiers = Vec::new();
         loop {
@@ -589,6 +631,7 @@ impl<'a> Parser<'a> {
     fn module_declaration(
         &mut self,
         modifiers: Vec<Modifier>,
+        annotations: Vec<Expr>,
     ) -> Result<Option<ModuleDeclaration>, Diagnostic> {
         let start = modifiers
             .first()
@@ -632,6 +675,7 @@ impl<'a> Parser<'a> {
         };
         Ok(if name.is_some() || parent.is_some() {
             Some(ModuleDeclaration {
+                annotations,
                 name,
                 parent,
                 modifiers,
@@ -645,7 +689,7 @@ impl<'a> Parser<'a> {
     fn member_list(
         &mut self,
         context: MemberContext,
-        mut initial: Option<Vec<Modifier>>,
+        mut initial: Option<(Vec<Modifier>, Vec<Expr>)>,
     ) -> Result<Vec<Member>, Diagnostic> {
         let mut members = Vec::new();
         while self.token.kind != Kind::Eof
@@ -658,7 +702,9 @@ impl<'a> Parser<'a> {
                     "Keyword `import` is not allowed here.\n\nIf you must use this name as identifier, enclose it in backticks.",
                 ));
             }
-            if !matches!(self.token.kind, Kind::Name(_) | Kind::QuotedName(_)) {
+            if !self.is_symbol('@')
+                && !matches!(self.token.kind, Kind::Name(_) | Kind::QuotedName(_))
+            {
                 return Err(Diagnostic::new(
                     DiagnosticKind::Syntax,
                     self.token.span,
@@ -712,6 +758,7 @@ impl<'a> Parser<'a> {
         };
         let span = Span::new(start, self.previous_end);
         Ok(Member {
+            annotations: Vec::new(),
             name,
             name_span: span,
             expr: Expr {
@@ -739,11 +786,14 @@ impl<'a> Parser<'a> {
     fn member(
         &mut self,
         context: MemberContext,
-        initial: Option<Vec<Modifier>>,
+        initial: Option<(Vec<Modifier>, Vec<Expr>)>,
     ) -> Result<Member, Diagnostic> {
-        let modifiers = match initial {
-            Some(modifiers) => modifiers,
-            None => self.modifiers()?,
+        let (modifiers, annotations) = match initial {
+            Some(initial) => initial,
+            None => {
+                let annotations = self.annotations()?;
+                (self.modifiers()?, annotations)
+            }
         };
         let start = modifiers
             .first()
@@ -912,6 +962,7 @@ impl<'a> Parser<'a> {
         let override_fixed_span = override_modifier_span("fixed");
         let override_const_span = override_modifier_span("const");
         Ok(Member {
+            annotations,
             name,
             name_span,
             expr,
@@ -1963,6 +2014,7 @@ impl<'a> Parser<'a> {
             Some(Span::new(begin, end))
         };
         Member {
+            annotations: Vec::new(),
             name,
             name_span,
             expr,
@@ -2202,17 +2254,21 @@ fn integer(text: &str, negative: bool, span: Span) -> Result<i64, Diagnostic> {
 
 pub fn parse_module(source: &str) -> Result<Module, Diagnostic> {
     let mut parser = Parser::new(source)?;
+    let annotations = parser.annotations()?;
     let modifiers = parser.modifiers()?;
     let has_declaration =
         parser.is_name("module") || parser.is_name("extends") || parser.is_name("amends");
     let (declaration, initial) = if has_declaration {
-        (parser.module_declaration(modifiers)?, None)
+        (parser.module_declaration(modifiers, annotations)?, None)
     } else {
-        (None, Some(modifiers))
+        (None, Some((modifiers, annotations)))
     };
     let mut members = Vec::new();
     let mut initial = initial;
-    if initial.as_ref().is_none_or(Vec::is_empty) {
+    if initial
+        .as_ref()
+        .is_none_or(|(modifiers, annotations)| modifiers.is_empty() && annotations.is_empty())
+    {
         while parser.is_name("import") {
             members.push(parser.import()?);
             initial = None;

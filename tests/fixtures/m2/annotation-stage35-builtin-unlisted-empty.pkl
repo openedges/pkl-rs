@@ -1,0 +1,4 @@
+@Unlisted
+class C {}
+ann=new Unlisted {}
+result=(ann is Annotation).toString()

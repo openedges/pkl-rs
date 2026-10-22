@@ -1,0 +1,4 @@
+typealias A = Ann|Int
+class Ann extends Annotation
+@A
+result="ok"

@@ -261,7 +261,7 @@ fn expression_anchors(
                 children.extend(parent.iter().map(AsRef::as_ref));
                 member_expressions(members, &mut children);
             }
-            ExprKind::New { members, .. } => {
+            ExprKind::New { members, .. } | ExprKind::Annotation { members, .. } => {
                 member_expressions(members, &mut children);
             }
             ExprKind::Name(_)

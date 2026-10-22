@@ -1,0 +1,6 @@
+const ann = "ok"
+class Child {
+ @Deprecated { message = ann }
+ function good() = 1
+}
+result = Child == Child

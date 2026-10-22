@@ -1,0 +1,2 @@
+ann=new AlsoKnownAs { names { 1 } }
+result=ann.names[0].toString()

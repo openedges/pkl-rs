@@ -1,0 +1,3 @@
+@MissingAnn
+function f(x: MissingType): MissingResult = x
+result="ok"

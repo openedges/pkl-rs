@@ -1,0 +1,2 @@
+class Ann extends Annotation
+result=(new Dynamic { @Ann x=1 }).x.toString()
