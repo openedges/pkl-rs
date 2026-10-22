@@ -3,7 +3,7 @@
 //! Property lookup preserves both lexical owner depth and virtual receiver.
 //! An absent lexical declaration resolves to the current receiver, rather than
 //! searching enclosing objects dynamically. See Pkl 0.32 SymbolTable.resolveVariable.
-use crate::diagnostic::{Diagnostic, DiagnosticKind};
+use crate::diagnostic::{Diagnostic, DiagnosticKind, DiagnosticOrigin};
 use crate::source::Span;
 use crate::syntax::{
     Expr, ExprKind, Member, Modifier, ModifierKind, Module, ModuleParentKind, ObjectMember,
@@ -522,7 +522,8 @@ impl<'a> Resolver<'a> {
                             } else {
                                 member.name_span
                             };
-                            return Err(Diagnostic::new(
+                            return Err(Diagnostic::language(
+                                DiagnosticOrigin::Resolver,
                                 DiagnosticKind::DuplicateMember,
                                 span,
                                 format!("Duplicate definition of member `{}`.", member.name),
@@ -566,7 +567,8 @@ impl<'a> Resolver<'a> {
                         let ExprKind::Function { header_span, .. } = member.expr.kind else {
                             unreachable!()
                         };
-                        let mut error = Diagnostic::new(
+                        let mut error = Diagnostic::language(
+                            DiagnosticOrigin::Resolver,
                             DiagnosticKind::Syntax,
                             header_span,
                             "Method needs a `local` modifier because it is defined in an object, not a class.",
@@ -599,7 +601,8 @@ impl<'a> Resolver<'a> {
                     }
                     for pair in members.windows(2) {
                         if pair[0].span().end == pair[1].span().start {
-                            let mut error = Diagnostic::new(
+                            let mut error = Diagnostic::language(
+                                DiagnosticOrigin::Resolver,
                                 DiagnosticKind::Syntax,
                                 pair[1].span(),
                                 "Object members must be separated by whitespace, newline, or semicolon.\nObject entries must be separated by newline or semicolon.",
@@ -624,7 +627,8 @@ impl<'a> Resolver<'a> {
                         let mut seen = std::collections::BTreeSet::new();
                         for member in &names {
                             if !seen.insert((&member.name, is_method(member))) {
-                                let mut error = Diagnostic::new(
+                                let mut error = Diagnostic::language(
+                                    DiagnosticOrigin::Resolver,
                                     DiagnosticKind::DuplicateMember,
                                     member.name_span,
                                     format!("Duplicate definition of member `{}`.", member.name),
@@ -761,7 +765,8 @@ impl<'a> Resolver<'a> {
                     };
                     if let Some(parameter) = parameters.get(index) {
                         if parameter.name != "_" && !seen.insert(&parameter.name) {
-                            let mut error = Diagnostic::new(
+                            let mut error = Diagnostic::language(
+                                DiagnosticOrigin::Resolver,
                                 DiagnosticKind::DuplicateMember,
                                 parameter.span,
                                 format!("Duplicate definition of member `{}`.", parameter.name),
@@ -876,7 +881,8 @@ impl<'a> Resolver<'a> {
                                 _ => false,
                             });
                         if path.len() > 2 {
-                            return Err(Diagnostic::new(
+                            return Err(Diagnostic::language(
+                                DiagnosticOrigin::Resolver,
                                 DiagnosticKind::Syntax,
                                 ty.span,
                                 format!(
@@ -971,8 +977,9 @@ impl<'a> Resolver<'a> {
                             let mut binding = self.binding(name, true);
                             if binding == Binding::ImplicitMethod && self.is_custom_this_scope() {
                                 if is_base_method(name) {
-                                    return Err(Diagnostic::new(
-                                        DiagnosticKind::Unsupported,
+                                    return Err(Diagnostic::unsupported(
+                                        DiagnosticOrigin::Resolver,
+                                        "custom-this-base-method",
                                         callee.span,
                                         "Base-module method resolution is not implemented.",
                                     ));
@@ -1018,7 +1025,8 @@ impl<'a> Resolver<'a> {
                     } => {
                         self.reject_nonstdlib_type_parameters(type_parameters)?;
                         if !method && parameters.len() > 5 {
-                            return Err(Diagnostic::new(
+                            return Err(Diagnostic::language(
+                                DiagnosticOrigin::Resolver,
                                 DiagnosticKind::Syntax,
                                 expression.span,
                                 "Function literals can have at most five parameters.",
@@ -1027,7 +1035,8 @@ impl<'a> Resolver<'a> {
                         let mut seen = std::collections::BTreeSet::new();
                         for parameter in parameters {
                             if parameter.name != "_" && !seen.insert(&parameter.name) {
-                                return Err(Diagnostic::new(
+                                return Err(Diagnostic::language(
+                                    DiagnosticOrigin::Resolver,
                                     DiagnosticKind::DuplicateMember,
                                     parameter.span,
                                     format!("Duplicate parameter `{}`.", parameter.name),
@@ -1096,7 +1105,8 @@ impl<'a> Resolver<'a> {
                         let mut seen = std::collections::BTreeSet::new();
                         for parameter in type_parameters {
                             if !seen.insert(&parameter.name) {
-                                return Err(Diagnostic::new(
+                                return Err(Diagnostic::language(
+                                    DiagnosticOrigin::Resolver,
                                     DiagnosticKind::DuplicateMember,
                                     parameter.span,
                                     format!("Duplicate type parameter `{}`.", parameter.name),
@@ -1203,7 +1213,8 @@ impl<'a> Resolver<'a> {
         parameters: &[TypeParameter],
     ) -> Result<(), Diagnostic> {
         if let Some(parameter) = parameters.first() {
-            return Err(Diagnostic::new(
+            return Err(Diagnostic::language(
+                DiagnosticOrigin::Resolver,
                 DiagnosticKind::Syntax,
                 parameter.span,
                 "Only standard library members can have type parameters.",
@@ -1257,14 +1268,16 @@ impl<'a> Resolver<'a> {
         };
         if object && has(M::Const) && !has(M::Local) {
             let Some(const_modifier) = modifier(M::Const) else {
-                return Err(Diagnostic::new(
-                    DiagnosticKind::Unsupported,
+                return Err(Diagnostic::unsupported(
+                    DiagnosticOrigin::Resolver,
+                    "derived-const-diagnostic",
                     member.modifiers[0].span,
                     "Derived const modifier diagnostics are not implemented.",
                 ));
             };
             self.diagnostic_owner_requested = true;
-            let mut error = Diagnostic::new(
+            let mut error = Diagnostic::language(
+                DiagnosticOrigin::Resolver,
                 DiagnosticKind::Syntax,
                 const_modifier.span,
                 "Modifier `const` can only be applied to object members that are also `local`.",
@@ -1278,7 +1291,8 @@ impl<'a> Resolver<'a> {
             && let Some(ty) = &member.ty
         {
             self.diagnostic_owner_requested = true;
-            let mut error = Diagnostic::new(
+            let mut error = Diagnostic::language(
+                DiagnosticOrigin::Resolver,
                 DiagnosticKind::Syntax,
                 ty.span,
                 "A non-local object property cannot have a type annotation.",
@@ -1297,7 +1311,8 @@ impl<'a> Resolver<'a> {
             && !has(M::Abstract)
             && !has(M::External)
         {
-            let mut error = Diagnostic::new(
+            let mut error = Diagnostic::language(
+                DiagnosticOrigin::Resolver,
                 DiagnosticKind::Syntax,
                 *header_span,
                 format!("Method `{}` is missing a body.", member.name),
@@ -1324,7 +1339,8 @@ impl<'a> Resolver<'a> {
                             .map_or(member.name_span.end, |ty| ty.span.end),
                     ),
                 };
-                let mut error = Diagnostic::new(
+                let mut error = Diagnostic::language(
+                    DiagnosticOrigin::Resolver,
                     DiagnosticKind::Syntax,
                     header_span,
                     "Abstract members cannot have a body.",
@@ -1335,7 +1351,8 @@ impl<'a> Resolver<'a> {
             }
         }
         if has(M::Local) && matches!(member.expr.kind, ExprKind::Uninitialized) {
-            return Err(Diagnostic::new(
+            return Err(Diagnostic::language(
+                DiagnosticOrigin::Resolver,
                 DiagnosticKind::Syntax,
                 member.ty.as_ref().map_or(member.span, |ty| ty.span),
                 "Missing property value.",
@@ -1434,7 +1451,12 @@ impl<'a> Resolver<'a> {
     }
 
     fn const_error(&self, expression: &Expr, message: impl Into<String>) -> Diagnostic {
-        let mut error = Diagnostic::new(DiagnosticKind::Syntax, expression.span, message);
+        let mut error = Diagnostic::language(
+            DiagnosticOrigin::Resolver,
+            DiagnosticKind::Syntax,
+            expression.span,
+            message,
+        );
         if !self.diagnostic_path.is_empty() {
             error.member = Some(crate::value::PklString::join(&self.diagnostic_path, ".").into());
         }
@@ -1469,8 +1491,9 @@ impl<'a> Resolver<'a> {
                 // Base-module static resolution belongs to M2. Refuse the
                 // supported spelling rather than silently treating it as this.
                 if binding == Binding::ImplicitThis && is_base_property(name) {
-                    return Err(Diagnostic::new(
-                        DiagnosticKind::Unsupported,
+                    return Err(Diagnostic::unsupported(
+                        DiagnosticOrigin::Resolver,
+                        "base-name-resolution",
                         expression.span,
                         "M1 base-module name resolution is unsupported.",
                     ));
@@ -1538,7 +1561,8 @@ fn validate_modifiers(
     use ModifierKind as M;
     for modifier in modifiers {
         if !valid.contains(&modifier.kind) {
-            return Err(Diagnostic::new(
+            return Err(Diagnostic::language(
+                DiagnosticOrigin::Resolver,
                 DiagnosticKind::Syntax,
                 modifier.span,
                 format!(
@@ -1552,13 +1576,15 @@ fn validate_modifiers(
     let flags = modifier_flags(modifiers);
     if flags & M::External.flag() != 0 {
         let Some(modifier) = find(M::External) else {
-            return Err(Diagnostic::new(
-                DiagnosticKind::Unsupported,
+            return Err(Diagnostic::unsupported(
+                DiagnosticOrigin::Resolver,
+                "derived-external-modifier",
                 modifiers[0].span,
                 "Derived external modifier semantics are not implemented.",
             ));
         };
-        return Err(Diagnostic::new(
+        return Err(Diagnostic::language(
+            DiagnosticOrigin::Resolver,
             DiagnosticKind::Unsupported,
             modifier.span,
             "External members can only be defined by standard library modules.",
@@ -1583,13 +1609,15 @@ fn validate_modifiers(
     ] {
         if flags & first.flag() != 0 && flags & second.flag() != 0 {
             let Some(modifier) = find(second) else {
-                return Err(Diagnostic::new(
-                    DiagnosticKind::Unsupported,
+                return Err(Diagnostic::unsupported(
+                    DiagnosticOrigin::Resolver,
+                    "derived-modifier-diagnostic",
                     modifiers[0].span,
                     "Derived modifier diagnostics are not implemented.",
                 ));
             };
-            return Err(Diagnostic::new(
+            return Err(Diagnostic::language(
+                DiagnosticOrigin::Resolver,
                 DiagnosticKind::Syntax,
                 modifier.span,
                 message,

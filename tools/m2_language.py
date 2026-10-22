@@ -12,6 +12,8 @@ import subprocess
 import sys
 
 import m2_manifest as contract
+import m2_module_eval
+import compat
 import oracle
 
 ROOT = contract.ROOT
@@ -97,7 +99,7 @@ def capture_java(metadata, binary, identifier, source, expression, directory, po
 
 def source_paths(root=ROOT):
     paths = set(contract.INPUTS) | {'tools/m2_manifest.py', 'tools/m2_language.py',
-            'tools/m2_generate.py', 'tools/m2_identifier_tables.py', 'tools/java/M2IdentifierProbe.java',
+            'tools/m2_module_eval.py', 'tools/compat.py', 'tools/m2_generate.py', 'tools/m2_identifier_tables.py', 'tools/java/M2IdentifierProbe.java',
             'tools/m2_unicode_escape_tables.py', 'tools/java/M2UnicodeEscapeProbe.java',
             'tools/java/M2LanguageProbe.java', str(contract.MANIFEST), 'tools/oracle.py', 'oracle.lock.json',
             'Cargo.toml', 'Cargo.lock', 'rust-toolchain.toml'}
@@ -147,11 +149,30 @@ def acquire_cases(selected, output, metadata, frozen, workers=1):
     return results
 
 
-def execute(output: Path, candidate: Path | None, workers=1):
+def selected_cases(manifest, adapters=None):
+    known = ('language-api-string', m2_module_eval.ADAPTER)
+    if adapters is not None and (not adapters or len(set(adapters)) != len(adapters)
+                                 or not set(adapters) <= set(known)):
+        raise ValueError('invalid or duplicate selected adapters')
+    return [row for row in manifest['cases'] if row.get('adapter') in (adapters or known)]
+
+
+def execute(output: Path, candidate: Path | None, workers=1, *, adapters=None,
+            module_candidate=None, module_workspace=None):
     validate_workers(workers)
     manifest = contract.current_manifest()
+    selected = selected_cases(manifest, adapters)
+    if not selected:
+        raise ValueError('empty executable adapter selection')
+    scalars = [row for row in selected if row['adapter'] == 'language-api-string']
+    modules = [row for row in selected if row['adapter'] == m2_module_eval.ADAPTER]
+    if (candidate is not None and not scalars) or ((module_candidate is not None or module_workspace is not None) and not modules):
+        raise ValueError('candidate/workspace supplied for an unselected adapter')
     metadata = oracle.ensure_oracle(ROOT, fetch=False)
     output.mkdir(parents=True, exist_ok=False)
+    selection = dict(adapters=list(adapters) if adapters else ['language-api-string', m2_module_eval.ADAPTER],
+                     case_ids=[row['id'] for row in selected])
+    (output / 'selection.json').write_bytes(contract.encoded(selection))
     initial = {path: oracle.sha256(ROOT / path) for path in source_paths()}
     for path in initial:
         destination = output / 'sources' / path
@@ -161,43 +182,87 @@ def execute(output: Path, candidate: Path | None, workers=1):
     compiler = capture(['rustc', '--version', '--verbose'], output, 'rustc')
     if compiler['exit_code'] != 0:
         raise ValueError('cannot identify Rust compiler; raw evidence preserved')
-    build = None
-    if candidate is None:
-        build = capture(['cargo', 'build', '-p', 'pkl-runtime', '--example', 'language_probe',
-                         '--locked', '--release', '--target-dir', str(ROOT / 'target')],
-                        output, 'build', timeout=300)
-        if build['exit_code'] != 0:
-            raise ValueError('candidate build failed; raw build evidence preserved')
-        candidate = ROOT / 'target/release/examples/language_probe'
-    if not candidate.is_file():
-        raise ValueError('candidate artifact missing')
     artifacts = output / 'artifacts'
     artifacts.mkdir()
-    frozen = artifacts / 'language_probe'
-    frozen.write_bytes(candidate.read_bytes())
-    frozen.chmod(0o755)
-    candidate_hash = oracle.sha256(candidate)
-    classes = artifacts / 'java'
-    classes.mkdir()
-    javac = Path(metadata['java']).with_name('javac')
-    compile_row = capture([str(javac), '-encoding', 'UTF-8', '-cp', metadata['artifact'],
-                           '-d', str(classes), str(ROOT / 'tools/java/M2LanguageProbe.java')],
-                          output, 'javac', metadata['environment'])
-    if compile_row['exit_code'] != 0:
-        raise ValueError('Java oracle compile failed; raw evidence preserved')
-    selected = [row for row in manifest['cases'] if row.get('adapter') == 'language-api-string']
-    results = acquire_cases(selected, output, metadata, frozen, workers)
-    relations = check_relations(manifest, output)
-    report = dict(schema_version=2, scope=manifest['comparison_boundary'],
+    requested = [('language_probe', candidate)] if scalars else []
+    if modules:
+        requested.append(('module_eval_probe', module_candidate))
+    need_build = [name for name, supplied in requested if supplied is None]
+    build = None
+    if need_build:
+        command = ['cargo', 'build', '-p', 'pkl-runtime', '--locked', '--release']
+        for name in need_build:
+            command += ['--example', name]
+        command += ['--target-dir', str(ROOT / 'target')]
+        build = capture(command, output, 'build', timeout=300)
+        if build['exit_code'] != 0:
+            raise ValueError('candidate build failed; raw build evidence preserved')
+    bindings = {}
+    for name, supplied in requested:
+        path = supplied or ROOT / 'target/release/examples' / name
+        if not path.is_file():
+            raise ValueError('candidate artifact missing: ' + name)
+        frozen = artifacts / name
+        frozen.write_bytes(path.read_bytes())
+        frozen.chmod(0o755)
+        bindings[name] = dict(path=str(path), sha256=oracle.sha256(frozen),
+                             source_binding='unbound-caller-supplied' if supplied else 'recorded-build',
+                             build=None if supplied else build)
+    results = []
+    if scalars:
+        classes = artifacts / 'java'
+        classes.mkdir()
+        javac = Path(metadata['java']).with_name('javac')
+        compiled = capture([str(javac), '-encoding', 'UTF-8', '-cp', metadata['artifact'],
+                            '-d', str(classes), str(ROOT / 'tools/java/M2LanguageProbe.java')],
+                           output, 'javac', metadata['environment'])
+        if compiled['exit_code'] != 0:
+            raise ValueError('Java oracle compile failed; raw evidence preserved')
+        results += acquire_cases(scalars, output, metadata, artifacts / 'language_probe', workers)
+    module_context = None
+    if modules:
+        workspace = module_workspace or output.with_name(output.name + '-workspace')
+        compat.validate_paths(ROOT, workspace, output)
+        if not workspace.exists():
+            compat.prepare_workspace(ROOT, workspace)
+        else:
+            expected = dict(schema_version=1, repository=str(ROOT.resolve()), workspace=str(workspace.resolve()))
+            if not (workspace / compat.MARKER).is_file() or compat.read_json(workspace / compat.MARKER) != expected:
+                raise ValueError('module-eval workspace is not owned by this checkout')
+        corpus = contract.load(Path('compatibility/corpus.json'))
+        original_manifest = dict(sources=corpus['sources'], cases=[case['upstream_case'] for case in modules])
+        verified_inputs = compat.validate_inputs(ROOT, original_manifest, workspace)
+        (output / 'module-inputs.json').write_bytes(contract.encoded(verified_inputs))
+        baseline = compat.snapshot(workspace)
+        m2_module_eval.validate_resource_set(baseline, corpus['sources'])
+        (output / 'module-workspace.json').write_bytes(contract.encoded(baseline))
+        module_context = dict(workspace=str(workspace), workers=1, watchdog_seconds=m2_module_eval.CAPTURE_TIMEOUT_SECONDS,
+                              baseline_sha256=oracle.sha256(output / 'module-workspace.json'),
+                              input_validation_sha256=oracle.sha256(output / 'module-inputs.json'))
+        for case in modules:
+            if compat.snapshot(workspace) != baseline:
+                raise ValueError('module-eval shared workspace changed before acquisition')
+            row = m2_module_eval.acquire_case(ROOT, workspace, case, metadata, artifacts / 'module_eval_probe', output)
+            results.append(row)
+            print(f"{row['id']}: {row['status']}", flush=True)
+    by_id = {row['id']: row for row in results}
+    results = [by_id[row['id']] for row in selected]
+    relation_manifest = dict(manifest, cases=scalars)
+    relations = check_relations(relation_manifest, output)
+    report = dict(schema_version=3, scope=manifest['comparison_boundary'],
+                  module_scope=manifest.get('module_comparison_boundary'),
                   inventory_counts=manifest['counts'], selected_count=len(selected),
-                  execution=dict(workers=workers),
-                  oracle=metadata, candidate=dict(path=str(candidate), sha256=candidate_hash,
-                                 source_binding='recorded-build' if build else 'unbound-caller-supplied', build=build),
-                  javac=dict(path=str(javac), sha256=oracle.sha256(javac)),
+                  selection=selection,
+                  execution=dict(workers=workers), oracle=metadata,
+                  candidate=bindings.get('language_probe'), module_candidate=bindings.get('module_eval_probe'),
+                  module_eval=module_context,
+                  javac=dict(path=str(Path(metadata['java']).with_name('javac')),
+                             sha256=oracle.sha256(Path(metadata['java']).with_name('javac'))) if scalars else None,
                   source_sha256=initial,
                   source_stability=all((ROOT / path).is_file() and oracle.sha256(ROOT / path) == value
                                        for path, value in initial.items()),
-                  artifact_stability=candidate.is_file() and oracle.sha256(candidate) == candidate_hash,
+                  artifact_stability=all(Path(row['path']).is_file() and oracle.sha256(row['path']) == row['sha256']
+                                         for row in bindings.values()),
                   results=results, metamorphic_results=relations,
                   status_counts=dict(Counter(row['status'] for row in results)),
                   full_gate_failures=contract.full_gate_failures(manifest, results))
@@ -291,16 +356,63 @@ def check_report(directory: Path):
             raise ValueError('source snapshot changed: ' + path)
     if (directory / 'sources' / contract.MANIFEST).read_bytes() != contract.encoded(manifest):
         raise ValueError('recorded M2 manifest differs from current required contract')
-    if oracle.sha256(directory / 'artifacts/language_probe') != report['candidate']['sha256']:
-        raise ValueError('candidate artifact identity differs')
-    binding = report['candidate'].get('source_binding')
-    if binding == 'recorded-build':
-        build = json.loads((directory / 'build.process.json').read_bytes())
-        if build != report['candidate']['build'] or build['exit_code'] != 0 or build['timed_out']:
-            raise ValueError('candidate recorded build differs or failed')
-    elif binding != 'unbound-caller-supplied' or report['candidate'].get('build') is not None:
-        raise ValueError('invalid source/artifact binding claim')
-    selected = {row['id']: row for row in manifest['cases'] if row.get('adapter') == 'language-api-string'}
+    adapters = report.get('selection', {}).get('adapters', ['language-api-string'])
+    selected = {row['id']: row for row in selected_cases(manifest, adapters)}
+    if not selected:
+        raise ValueError('empty executable adapter selection')
+    has_modules = any(row['adapter'] == m2_module_eval.ADAPTER for row in selected.values())
+    if has_modules and (type(report.get('schema_version')) is not int or report['schema_version'] != 3):
+        raise ValueError('module-eval requires the current report schema')
+    if report.get('schema_version', 2) >= 3:
+        selection = report.get('selection')
+        if (not isinstance(selection, dict) or set(selection) != {'adapters', 'case_ids'}
+                or json.loads((directory / 'selection.json').read_bytes()) != selection
+                or selection['case_ids'] != list(selected)):
+            raise ValueError('captured adapter selection differs')
+    for name, key, adapter in [('language_probe', 'candidate', 'language-api-string'),
+                                ('module_eval_probe', 'module_candidate', m2_module_eval.ADAPTER)]:
+        needed = any(row['adapter'] == adapter for row in selected.values())
+        candidate = report.get(key)
+        if not needed:
+            if candidate is not None:
+                raise ValueError('unselected candidate binding')
+            continue
+        if not candidate or oracle.sha256(directory / 'artifacts' / name) != candidate['sha256']:
+            raise ValueError('candidate artifact identity differs')
+        binding = candidate.get('source_binding')
+        if binding == 'recorded-build':
+            build = json.loads((directory / 'build.process.json').read_bytes())
+            if build != candidate['build'] or build['exit_code'] != 0 or build['timed_out']:
+                raise ValueError('candidate recorded build differs or failed')
+            if report.get('schema_version', 2) >= 3:
+                built = [('language_probe', report.get('candidate')), ('module_eval_probe', report.get('module_candidate'))]
+                command = ['cargo', 'build', '-p', 'pkl-runtime', '--locked', '--release']
+                for example, claim in built:
+                    if claim is not None and claim['source_binding'] == 'recorded-build':
+                        command += ['--example', example]
+                command += ['--target-dir', str(ROOT / 'target')]
+                if build['command'] != command:
+                    raise ValueError('candidate build command differs from selected artifacts')
+        elif binding != 'unbound-caller-supplied' or candidate.get('build') is not None:
+            raise ValueError('invalid source/artifact binding claim')
+    if any(case['adapter'] == m2_module_eval.ADAPTER for case in selected.values()):
+        context = report['module_eval']
+        if (context['workers'] != 1 or type(context.get('watchdog_seconds')) is not int
+                or context['watchdog_seconds'] != m2_module_eval.CAPTURE_TIMEOUT_SECONDS
+                or oracle.sha256(directory / 'module-workspace.json') != context['baseline_sha256']
+                or oracle.sha256(directory / 'module-inputs.json') != context['input_validation_sha256']):
+            raise ValueError('module-eval staged input provenance differs')
+        corpus = json.loads((directory / 'sources/compatibility/corpus.json').read_bytes())
+        m2_module_eval.validate_resource_set(json.loads((directory / 'module-workspace.json').read_bytes()), corpus['sources'])
+        declared = {resource['path']: resource['sha256'] for source in corpus['sources'] for resource in source['resources']}
+        for case in selected.values():
+            if case['adapter'] == m2_module_eval.ADAPTER:
+                for resource in [dict(path=case['input'], sha256=case['input_sha256']), *case['upstream_case']['resources']]:
+                    if resource['path'] in declared and declared[resource['path']] != resource['sha256']:
+                        raise ValueError('module-eval resource provenance conflicts')
+                    declared[resource['path']] = resource['sha256']
+        if json.loads((directory / 'module-inputs.json').read_bytes()) != dict(files=len(declared), sha256=compat.digest(compat.encoded(declared))):
+            raise ValueError('module-eval input validation record differs')
     ids = [row['id'] for row in report['results']]
     if set(ids) != set(selected) or len(ids) != len(selected) or report['selected_count'] != len(selected):
         raise ValueError('selected execution coverage incomplete or duplicate')
@@ -308,6 +420,14 @@ def check_report(directory: Path):
         raise ValueError('selected execution order differs from manifest')
     for row in report['results']:
         case = selected[row['id']]
+        if case['adapter'] == m2_module_eval.ADAPTER:
+            context = report['module_eval']
+            if context['workers'] != 1 or oracle.sha256(directory / 'module-workspace.json') != context['baseline_sha256']:
+                raise ValueError('module-eval workspace evidence changed')
+            m2_module_eval.verify_case(ROOT, Path(context['workspace']), case, row, directory, report['oracle'],
+                                      directory / 'artifacts/module_eval_probe',
+                                      json.loads((directory / 'module-workspace.json').read_bytes()))
+            continue
         folder = directory / 'cases' / row['id']
         if oracle.sha256(folder / 'input.pkl') != case['input_sha256']:
             raise ValueError('case input differs: ' + row['id'])
@@ -346,7 +466,8 @@ def check_report(directory: Path):
                          (folder / 'java.outcome.bin').read_bytes())
         if row['status'] != outcome:
             raise ValueError('raw comparison status differs: ' + row['id'])
-    if report['metamorphic_results'] != check_relations(manifest, directory):
+    relation_manifest = dict(manifest, cases=[row for row in selected.values() if row['adapter'] == 'language-api-string'])
+    if report['metamorphic_results'] != check_relations(relation_manifest, directory):
         raise ValueError('metamorphic results differ')
     if report['status_counts'] != dict(Counter(row['status'] for row in report['results'])):
         raise ValueError('comparison counts differ')
@@ -441,14 +562,28 @@ def main():
     action.add_argument('--verify-development', type=Path, help='development-only gate allowing explicitly recorded cycle/remainder failures; does not establish compatibility')
     parser.add_argument('--record-only', action='store_true', help='with --output, acquire and validate evidence without requiring compatibility success')
     parser.add_argument('--candidate', type=Path, help='override the default recorded release build; caller-supplied artifact has no verified source binding')
+    parser.add_argument('--adapter', action='append', choices=['language-api-string', m2_module_eval.ADAPTER],
+                        help='explicit focused acquisition; omitted adapters remain required in the full gate')
+    parser.add_argument('--module-candidate', type=Path, help='override module-eval build; source binding remains unverified')
+    parser.add_argument('--module-workspace', type=Path, help='exclusive managed physical workspace shared by Java and module candidate')
     parser.add_argument('--workers', type=worker_argument, default=1,
-                        help=f'acquire up to this many cases concurrently (1-{MAX_WORKERS}, default 1); throughput only')
+                        help=f'scalar acquisition concurrency (1-{MAX_WORKERS}, default 1); module eval remains sequential; throughput only')
     args = parser.parse_args()
     if args.record_only and not args.output:
         parser.error('--record-only requires --output')
     if args.workers != 1 and not args.output:
         parser.error('--workers requires --output')
-    report = execute(args.output.resolve(), args.candidate.resolve() if args.candidate else None, args.workers) if args.output else check_report(
+    if (args.adapter or args.module_candidate or args.module_workspace) and not args.output:
+        parser.error('adapter/module acquisition settings require --output')
+    extra = {}
+    if args.adapter is not None:
+        extra['adapters'] = args.adapter
+    if args.module_candidate is not None:
+        extra['module_candidate'] = args.module_candidate.resolve()
+    if args.module_workspace is not None:
+        extra['module_workspace'] = args.module_workspace.absolute()
+    report = execute(args.output.resolve(), args.candidate.resolve() if args.candidate else None, args.workers,
+                     **extra) if args.output else check_report(
         (args.verify_report or args.verify_subset or args.verify_full or args.verify_development).resolve())
     print(json.dumps(dict(selected=report['status_counts'], full_gate_failures=len(report['full_gate_failures'])), sort_keys=True))
     if args.verify_report or args.record_only:
@@ -456,7 +591,7 @@ def main():
     if args.verify_development:
         return int(not development_passes(report, args.verify_development.resolve()))
     return int(not subset_passes(report) or bool(args.verify_full and (report['full_gate_failures']
-                     or report['candidate']['source_binding'] != 'recorded-build')))
+                     or any(row['source_binding'] != 'recorded-build' for row in [report.get('candidate'), report.get('module_candidate')] if row))))
 
 
 if __name__ == '__main__':

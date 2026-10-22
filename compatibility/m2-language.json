@@ -109010,16 +109010,20 @@
       }
     },
     {
-      "adapter": null,
+      "adapter": "language-module-eval",
       "execution": {
-        "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
-        "state": "unimplemented"
+        "reason": null,
+        "state": "ready"
       },
       "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingClassDelimiter.pkl",
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingClassDelimiter.pkl",
       "input_sha256": "e46736ba7c85c264c14632ac025a0b80d58a6729b6d21cad280646a19b384459",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "semantic:diagnostics",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/Parser.java:parseModule:08e2ccccf9a8",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/ParserImpl.java:parseModule:1faaeadbbd30"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -109105,16 +109109,20 @@
       }
     },
     {
-      "adapter": null,
+      "adapter": "language-module-eval",
       "execution": {
-        "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
-        "state": "unimplemented"
+        "reason": null,
+        "state": "ready"
       },
       "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingConstrainedTypeSeparator.pkl",
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingConstrainedTypeSeparator.pkl",
       "input_sha256": "1d1abcacc6c0d1aa6a08f0df72f17239e1745e1071fd37c438d1a50bb8bba326",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "semantic:diagnostics",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/Parser.java:parseModule:08e2ccccf9a8",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/ParserImpl.java:parseModule:1faaeadbbd30"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -109200,16 +109208,20 @@
       }
     },
     {
-      "adapter": null,
+      "adapter": "language-module-eval",
       "execution": {
-        "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
-        "state": "unimplemented"
+        "reason": null,
+        "state": "ready"
       },
       "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingContainerAmendDefDelimiter.pkl",
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingContainerAmendDefDelimiter.pkl",
       "input_sha256": "dcb19b8a7a7e868a71379f93775300d748eb5017cd7bfc395e19b0bf90215970",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "semantic:diagnostics",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/Parser.java:parseModule:08e2ccccf9a8",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/ParserImpl.java:parseModule:1faaeadbbd30"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -109295,16 +109307,20 @@
       }
     },
     {
-      "adapter": null,
+      "adapter": "language-module-eval",
       "execution": {
-        "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
-        "state": "unimplemented"
+        "reason": null,
+        "state": "ready"
       },
       "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingContainerAmendExprDelimiter.pkl",
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingContainerAmendExprDelimiter.pkl",
       "input_sha256": "55e70b4c77bfdd4d6794b6c1127edcdf2d8e306380d0c04c7b75372e8509070a",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "semantic:diagnostics",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/Parser.java:parseModule:08e2ccccf9a8",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/ParserImpl.java:parseModule:1faaeadbbd30"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -109390,16 +109406,20 @@
       }
     },
     {
-      "adapter": null,
+      "adapter": "language-module-eval",
       "execution": {
-        "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
-        "state": "unimplemented"
+        "reason": null,
+        "state": "ready"
       },
       "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingEmptyMultiLineStringDelimiter.pkl",
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingEmptyMultiLineStringDelimiter.pkl",
       "input_sha256": "a345c7257b312e69ceb0911633b1be97a6e2c6332d868914229e6cb4d067b6b6",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "semantic:diagnostics",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/Parser.java:parseModule:08e2ccccf9a8",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/ParserImpl.java:parseModule:1faaeadbbd30"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -109485,16 +109505,20 @@
       }
     },
     {
-      "adapter": null,
+      "adapter": "language-module-eval",
       "execution": {
-        "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
-        "state": "unimplemented"
+        "reason": null,
+        "state": "ready"
       },
       "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingEmptyMultiLineStringDelimiterAtEof.pkl",
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingEmptyMultiLineStringDelimiterAtEof.pkl",
       "input_sha256": "68d86a22509975ced0f54608b23636a19ecef182361c4e1c2520b6e14199a529",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "semantic:diagnostics",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/Parser.java:parseModule:08e2ccccf9a8",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/ParserImpl.java:parseModule:1faaeadbbd30"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -109580,16 +109604,20 @@
       }
     },
     {
-      "adapter": null,
+      "adapter": "language-module-eval",
       "execution": {
-        "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
-        "state": "unimplemented"
+        "reason": null,
+        "state": "ready"
       },
       "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingEmptyStringDelimiter.pkl",
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingEmptyStringDelimiter.pkl",
       "input_sha256": "7c74b8f4516d4066c55ddc61384dccda29010151490556af1bfe8f723ea98821",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "semantic:diagnostics",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/Parser.java:parseModule:08e2ccccf9a8",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/ParserImpl.java:parseModule:1faaeadbbd30"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -109675,16 +109703,20 @@
       }
     },
     {
-      "adapter": null,
+      "adapter": "language-module-eval",
       "execution": {
-        "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
-        "state": "unimplemented"
+        "reason": null,
+        "state": "ready"
       },
       "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingEmptyStringDelimiterAtEof.pkl",
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingEmptyStringDelimiterAtEof.pkl",
       "input_sha256": "9c74473ca861870ebabf8e0b51037c1e68a82bfcb66be3e0934df701cdba12dc",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "semantic:diagnostics",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/Parser.java:parseModule:08e2ccccf9a8",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/ParserImpl.java:parseModule:1faaeadbbd30"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -109770,16 +109802,20 @@
       }
     },
     {
-      "adapter": null,
+      "adapter": "language-module-eval",
       "execution": {
-        "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
-        "state": "unimplemented"
+        "reason": null,
+        "state": "ready"
       },
       "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingFunction0ParameterListDelimiter.pkl",
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingFunction0ParameterListDelimiter.pkl",
       "input_sha256": "193efb3110f1f9baedfa68f745e52bceb166bbcc7cf68bbd99aaec41046460fe",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "semantic:diagnostics",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/Parser.java:parseModule:08e2ccccf9a8",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/ParserImpl.java:parseModule:1faaeadbbd30"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -109865,16 +109901,20 @@
       }
     },
     {
-      "adapter": null,
+      "adapter": "language-module-eval",
       "execution": {
-        "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
-        "state": "unimplemented"
+        "reason": null,
+        "state": "ready"
       },
       "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingFunction1ParameterListDelimiter.pkl",
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingFunction1ParameterListDelimiter.pkl",
       "input_sha256": "676cd1bdc1d09cc05b37e6b508a23b8c5dc368cb6c495fbfb44a276805944a79",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "semantic:diagnostics",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/Parser.java:parseModule:08e2ccccf9a8",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/ParserImpl.java:parseModule:1faaeadbbd30"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -109960,16 +110000,20 @@
       }
     },
     {
-      "adapter": null,
+      "adapter": "language-module-eval",
       "execution": {
-        "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
-        "state": "unimplemented"
+        "reason": null,
+        "state": "ready"
       },
       "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingFunctionAmendParameterListSeparator.pkl",
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingFunctionAmendParameterListSeparator.pkl",
       "input_sha256": "978777815a3950288cf39fea36342ccf39eba869185486778153bf3d055c5512",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "semantic:diagnostics",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/Parser.java:parseModule:08e2ccccf9a8",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/ParserImpl.java:parseModule:1faaeadbbd30"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -110055,16 +110099,20 @@
       }
     },
     {
-      "adapter": null,
+      "adapter": "language-module-eval",
       "execution": {
-        "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
-        "state": "unimplemented"
+        "reason": null,
+        "state": "ready"
       },
       "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingFunctionNParameterListDelimiter.pkl",
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingFunctionNParameterListDelimiter.pkl",
       "input_sha256": "b6697008654380546e9f4ed22368f0f277e4659f444af6ae26ed8e7d06431554",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "semantic:diagnostics",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/Parser.java:parseModule:08e2ccccf9a8",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/ParserImpl.java:parseModule:1faaeadbbd30"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -110150,16 +110198,20 @@
       }
     },
     {
-      "adapter": null,
+      "adapter": "language-module-eval",
       "execution": {
-        "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
-        "state": "unimplemented"
+        "reason": null,
+        "state": "ready"
       },
       "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingFunctionParameterListSeparator.pkl",
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingFunctionParameterListSeparator.pkl",
       "input_sha256": "34749dcbbf991437945725a13926d79ad7eb67faab84d64d4ed3ca017907eece",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "semantic:diagnostics",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/Parser.java:parseModule:08e2ccccf9a8",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/ParserImpl.java:parseModule:1faaeadbbd30"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -110245,16 +110297,20 @@
       }
     },
     {
-      "adapter": null,
+      "adapter": "language-module-eval",
       "execution": {
-        "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
-        "state": "unimplemented"
+        "reason": null,
+        "state": "ready"
       },
       "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingFunctionType0ParameterListDelimiter.pkl",
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingFunctionType0ParameterListDelimiter.pkl",
       "input_sha256": "e67f27b50bf204a5274b8053443649998b6f09c3c6a280a8b272fd066452a84f",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "semantic:diagnostics",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/Parser.java:parseModule:08e2ccccf9a8",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/ParserImpl.java:parseModule:1faaeadbbd30"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -110340,16 +110396,20 @@
       }
     },
     {
-      "adapter": null,
+      "adapter": "language-module-eval",
       "execution": {
-        "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
-        "state": "unimplemented"
+        "reason": null,
+        "state": "ready"
       },
       "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingFunctionType1ParameterListDelimiter.pkl",
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingFunctionType1ParameterListDelimiter.pkl",
       "input_sha256": "50e894969c75a5383662d4dea73e82d7a21887cd392470d010b50f2eb703df59",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "semantic:diagnostics",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/Parser.java:parseModule:08e2ccccf9a8",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/ParserImpl.java:parseModule:1faaeadbbd30"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -110435,16 +110495,20 @@
       }
     },
     {
-      "adapter": null,
+      "adapter": "language-module-eval",
       "execution": {
-        "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
-        "state": "unimplemented"
+        "reason": null,
+        "state": "ready"
       },
       "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingFunctionTypeNParameterListDelimiter.pkl",
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingFunctionTypeNParameterListDelimiter.pkl",
       "input_sha256": "a4d462b2fe7d0856cd793fef40c5e12fe3d4ec5c4269876b2f66ccdab375cd79",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "semantic:diagnostics",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/Parser.java:parseModule:08e2ccccf9a8",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/ParserImpl.java:parseModule:1faaeadbbd30"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -110530,16 +110594,20 @@
       }
     },
     {
-      "adapter": null,
+      "adapter": "language-module-eval",
       "execution": {
-        "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
-        "state": "unimplemented"
+        "reason": null,
+        "state": "ready"
       },
       "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingFunctionTypeParameterListSeparator.pkl",
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingFunctionTypeParameterListSeparator.pkl",
       "input_sha256": "ebb8c81ae998ea8edc962c6611b7ea73bf051b2bcf768c808902363a0df26b64",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "semantic:diagnostics",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/Parser.java:parseModule:08e2ccccf9a8",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/ParserImpl.java:parseModule:1faaeadbbd30"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -110625,16 +110693,20 @@
       }
     },
     {
-      "adapter": null,
+      "adapter": "language-module-eval",
       "execution": {
-        "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
-        "state": "unimplemented"
+        "reason": null,
+        "state": "ready"
       },
       "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingIfExprDelimiter.pkl",
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingIfExprDelimiter.pkl",
       "input_sha256": "ea6f0f6f54eb286a7ef13c15fa6ae6b5449bf3bf95a615cf2a12842a2d3985f4",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "semantic:diagnostics",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/Parser.java:parseModule:08e2ccccf9a8",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/ParserImpl.java:parseModule:1faaeadbbd30"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -110720,16 +110792,20 @@
       }
     },
     {
-      "adapter": null,
+      "adapter": "language-module-eval",
       "execution": {
-        "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
-        "state": "unimplemented"
+        "reason": null,
+        "state": "ready"
       },
       "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingListDelimiter.pkl",
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingListDelimiter.pkl",
       "input_sha256": "33ae882474d0c66aacedb5b9e77727586454a87adf6ef8ad5e66580ac7d7d4bf",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "semantic:diagnostics",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/Parser.java:parseModule:08e2ccccf9a8",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/ParserImpl.java:parseModule:1faaeadbbd30"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -110815,16 +110891,20 @@
       }
     },
     {
-      "adapter": null,
+      "adapter": "language-module-eval",
       "execution": {
-        "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
-        "state": "unimplemented"
+        "reason": null,
+        "state": "ready"
       },
       "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingListSeparator.pkl",
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingListSeparator.pkl",
       "input_sha256": "b68535a7d23ec9c79e50612d18b238533a339d9943e5201976bb2e2868c6202b",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "semantic:diagnostics",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/Parser.java:parseModule:08e2ccccf9a8",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/ParserImpl.java:parseModule:1faaeadbbd30"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -110910,16 +110990,20 @@
       }
     },
     {
-      "adapter": null,
+      "adapter": "language-module-eval",
       "execution": {
-        "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
-        "state": "unimplemented"
+        "reason": null,
+        "state": "ready"
       },
       "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingMapDelimiter.pkl",
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingMapDelimiter.pkl",
       "input_sha256": "36259416b3dd6a2fa0de8355a930ca60bbc382c3f162f928e9dec138221f0c9e",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "semantic:diagnostics",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/Parser.java:parseModule:08e2ccccf9a8",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/ParserImpl.java:parseModule:1faaeadbbd30"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -111005,16 +111089,20 @@
       }
     },
     {
-      "adapter": null,
+      "adapter": "language-module-eval",
       "execution": {
-        "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
-        "state": "unimplemented"
+        "reason": null,
+        "state": "ready"
       },
       "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingMapSeparator.pkl",
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingMapSeparator.pkl",
       "input_sha256": "17a15facd60875e1879f9fe69a85bdeca1dbbe53e85c9f66adda2dbc54d5a637",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "semantic:diagnostics",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/Parser.java:parseModule:08e2ccccf9a8",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/ParserImpl.java:parseModule:1faaeadbbd30"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -111100,16 +111188,20 @@
       }
     },
     {
-      "adapter": null,
+      "adapter": "language-module-eval",
       "execution": {
-        "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
-        "state": "unimplemented"
+        "reason": null,
+        "state": "ready"
       },
       "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingMethodArgumentListDelimiter.pkl",
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingMethodArgumentListDelimiter.pkl",
       "input_sha256": "b99d380fc3d828ffe960f72f7b921fb3c80307ffb7888fb4fcce0f181ce35fb3",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "semantic:diagnostics",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/Parser.java:parseModule:08e2ccccf9a8",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/ParserImpl.java:parseModule:1faaeadbbd30"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -111195,16 +111287,20 @@
       }
     },
     {
-      "adapter": null,
+      "adapter": "language-module-eval",
       "execution": {
-        "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
-        "state": "unimplemented"
+        "reason": null,
+        "state": "ready"
       },
       "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingMethodArgumentListSeparator.pkl",
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingMethodArgumentListSeparator.pkl",
       "input_sha256": "8344c94149dec2b2f649491d6240bad9795c0c0e9b48f418a8e1152fcd70170a",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "semantic:diagnostics",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/Parser.java:parseModule:08e2ccccf9a8",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/ParserImpl.java:parseModule:1faaeadbbd30"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -111290,16 +111386,20 @@
       }
     },
     {
-      "adapter": null,
+      "adapter": "language-module-eval",
       "execution": {
-        "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
-        "state": "unimplemented"
+        "reason": null,
+        "state": "ready"
       },
       "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingMethodParameterListDelimiter.pkl",
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingMethodParameterListDelimiter.pkl",
       "input_sha256": "828a56cda37ec261b61591f1756d4a543b90be34b2226a3b7a7331c5b28ce476",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "semantic:diagnostics",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/Parser.java:parseModule:08e2ccccf9a8",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/ParserImpl.java:parseModule:1faaeadbbd30"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -111385,16 +111485,20 @@
       }
     },
     {
-      "adapter": null,
+      "adapter": "language-module-eval",
       "execution": {
-        "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
-        "state": "unimplemented"
+        "reason": null,
+        "state": "ready"
       },
       "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingMethodParameterListSeparator.pkl",
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingMethodParameterListSeparator.pkl",
       "input_sha256": "ff97238751e248b4a059ce83963665333020ddff3471ba149ea00675d4d4c1ce",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "semantic:diagnostics",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/Parser.java:parseModule:08e2ccccf9a8",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/ParserImpl.java:parseModule:1faaeadbbd30"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -111480,16 +111584,20 @@
       }
     },
     {
-      "adapter": null,
+      "adapter": "language-module-eval",
       "execution": {
-        "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
-        "state": "unimplemented"
+        "reason": null,
+        "state": "ready"
       },
       "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingMultiLineStringDelimiter.pkl",
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingMultiLineStringDelimiter.pkl",
       "input_sha256": "dc2360f2b3e90decc538b3603943050b281d82cbf0ebb8b0ec9fe2e1f3fdc9eb",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "semantic:diagnostics",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/Parser.java:parseModule:08e2ccccf9a8",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/ParserImpl.java:parseModule:1faaeadbbd30"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -111575,16 +111683,20 @@
       }
     },
     {
-      "adapter": null,
+      "adapter": "language-module-eval",
       "execution": {
-        "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
-        "state": "unimplemented"
+        "reason": null,
+        "state": "ready"
       },
       "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingObjectAmendDefDelimiter.pkl",
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingObjectAmendDefDelimiter.pkl",
       "input_sha256": "dcb19b8a7a7e868a71379f93775300d748eb5017cd7bfc395e19b0bf90215970",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "semantic:diagnostics",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/Parser.java:parseModule:08e2ccccf9a8",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/ParserImpl.java:parseModule:1faaeadbbd30"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -111670,16 +111782,20 @@
       }
     },
     {
-      "adapter": null,
+      "adapter": "language-module-eval",
       "execution": {
-        "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
-        "state": "unimplemented"
+        "reason": null,
+        "state": "ready"
       },
       "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingObjectAmendDefDelimiter2.pkl",
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingObjectAmendDefDelimiter2.pkl",
       "input_sha256": "fc4d34f9f3cff11ca50ee3da8bebe100e8f663d9b9dd38c2f6db05cb27adc13c",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "semantic:diagnostics",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/Parser.java:parseModule:08e2ccccf9a8",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/ParserImpl.java:parseModule:1faaeadbbd30"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -111765,16 +111881,20 @@
       }
     },
     {
-      "adapter": null,
+      "adapter": "language-module-eval",
       "execution": {
-        "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
-        "state": "unimplemented"
+        "reason": null,
+        "state": "ready"
       },
       "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingObjectAmendDefDelimiter3.pkl",
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingObjectAmendDefDelimiter3.pkl",
       "input_sha256": "dc41623c31084df96460b75bdb0568d82ca3af057bf72a8be0c8a3109beae203",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "semantic:diagnostics",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/Parser.java:parseModule:08e2ccccf9a8",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/ParserImpl.java:parseModule:1faaeadbbd30"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -111860,16 +111980,20 @@
       }
     },
     {
-      "adapter": null,
+      "adapter": "language-module-eval",
       "execution": {
-        "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
-        "state": "unimplemented"
+        "reason": null,
+        "state": "ready"
       },
       "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingObjectAmendExprDelimiter.pkl",
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingObjectAmendExprDelimiter.pkl",
       "input_sha256": "a258b5fab28f208f6b69a415881e1cc03e65f814ec2ac5b9d8610e93602f20c6",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "semantic:diagnostics",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/Parser.java:parseModule:08e2ccccf9a8",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/ParserImpl.java:parseModule:1faaeadbbd30"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -111955,16 +112079,20 @@
       }
     },
     {
-      "adapter": null,
+      "adapter": "language-module-eval",
       "execution": {
-        "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
-        "state": "unimplemented"
+        "reason": null,
+        "state": "ready"
       },
       "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingObjectDelimiter.pkl",
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingObjectDelimiter.pkl",
       "input_sha256": "a94f683317f1258094cbab410c7a0c387e2164768b4ca90743b2c2bcaf8eb2a4",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "semantic:diagnostics",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/Parser.java:parseModule:08e2ccccf9a8",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/ParserImpl.java:parseModule:1faaeadbbd30"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -112050,16 +112178,20 @@
       }
     },
     {
-      "adapter": null,
+      "adapter": "language-module-eval",
       "execution": {
-        "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
-        "state": "unimplemented"
+        "reason": null,
+        "state": "ready"
       },
       "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingParenthesizedExprDelimiter.pkl",
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingParenthesizedExprDelimiter.pkl",
       "input_sha256": "a71ca9e9ba7d25e236a625325e6f2dfa6c613b81c9aeb8d470710d33450267ee",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "semantic:diagnostics",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/Parser.java:parseModule:08e2ccccf9a8",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/ParserImpl.java:parseModule:1faaeadbbd30"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -112145,16 +112277,20 @@
       }
     },
     {
-      "adapter": null,
+      "adapter": "language-module-eval",
       "execution": {
-        "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
-        "state": "unimplemented"
+        "reason": null,
+        "state": "ready"
       },
       "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingParenthesizedTypeDelimiter.pkl",
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingParenthesizedTypeDelimiter.pkl",
       "input_sha256": "1a7d8d63393d5733056d9bdd98e1e05d1012ea5cbe0c7b28773870cc441d760b",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "semantic:diagnostics",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/Parser.java:parseModule:08e2ccccf9a8",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/ParserImpl.java:parseModule:1faaeadbbd30"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -112240,16 +112376,20 @@
       }
     },
     {
-      "adapter": null,
+      "adapter": "language-module-eval",
       "execution": {
-        "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
-        "state": "unimplemented"
+        "reason": null,
+        "state": "ready"
       },
       "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingRawMultiLineStringDelimiter.pkl",
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingRawMultiLineStringDelimiter.pkl",
       "input_sha256": "69de37bf00b1e5efb7eb907e6f1942aa0a1a15f520008474e7d07640c34c1981",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "semantic:diagnostics",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/Parser.java:parseModule:08e2ccccf9a8",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/ParserImpl.java:parseModule:1faaeadbbd30"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -112335,16 +112475,20 @@
       }
     },
     {
-      "adapter": null,
+      "adapter": "language-module-eval",
       "execution": {
-        "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
-        "state": "unimplemented"
+        "reason": null,
+        "state": "ready"
       },
       "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingRawStringDelimiter.pkl",
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingRawStringDelimiter.pkl",
       "input_sha256": "70726db3a5fc7671c09df7d3eef2df1c9070ed462d6cef34920ff7e549d8576d",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "semantic:diagnostics",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/Parser.java:parseModule:08e2ccccf9a8",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/ParserImpl.java:parseModule:1faaeadbbd30"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -112430,16 +112574,20 @@
       }
     },
     {
-      "adapter": null,
+      "adapter": "language-module-eval",
       "execution": {
-        "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
-        "state": "unimplemented"
+        "reason": null,
+        "state": "ready"
       },
       "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingSetSeparator.pkl",
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingSetSeparator.pkl",
       "input_sha256": "c145fbb70212507661b331c14835a84aa44632638936ec6aec39765a5648574c",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "semantic:diagnostics",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/Parser.java:parseModule:08e2ccccf9a8",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/ParserImpl.java:parseModule:1faaeadbbd30"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -112525,16 +112673,20 @@
       }
     },
     {
-      "adapter": null,
+      "adapter": "language-module-eval",
       "execution": {
-        "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
-        "state": "unimplemented"
+        "reason": null,
+        "state": "ready"
       },
       "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingStringDelimiter.pkl",
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingStringDelimiter.pkl",
       "input_sha256": "1017e4890629dda680ff6d0456c38d5bc935aa585685e3c401bf5c52c5e73992",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "semantic:diagnostics",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/Parser.java:parseModule:08e2ccccf9a8",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/ParserImpl.java:parseModule:1faaeadbbd30"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -112620,16 +112772,20 @@
       }
     },
     {
-      "adapter": null,
+      "adapter": "language-module-eval",
       "execution": {
-        "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
-        "state": "unimplemented"
+        "reason": null,
+        "state": "ready"
       },
       "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingSubscriptDelimiter.pkl",
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingSubscriptDelimiter.pkl",
       "input_sha256": "6df311ecbc3148656c196f7678453cc9533f53aed2af7a053322004b99297a51",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "semantic:diagnostics",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/Parser.java:parseModule:08e2ccccf9a8",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/ParserImpl.java:parseModule:1faaeadbbd30"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -112715,16 +112871,20 @@
       }
     },
     {
-      "adapter": null,
+      "adapter": "language-module-eval",
       "execution": {
-        "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
-        "state": "unimplemented"
+        "reason": null,
+        "state": "ready"
       },
       "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingTypeConstraintListDelimiter.pkl",
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingTypeConstraintListDelimiter.pkl",
       "input_sha256": "2034f072bcffcee8492d8d7cd0454ebab904013f5251165d1e04c241f498c709",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "semantic:diagnostics",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/Parser.java:parseModule:08e2ccccf9a8",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/ParserImpl.java:parseModule:1faaeadbbd30"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -112810,16 +112970,20 @@
       }
     },
     {
-      "adapter": null,
+      "adapter": "language-module-eval",
       "execution": {
-        "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
-        "state": "unimplemented"
+        "reason": null,
+        "state": "ready"
       },
       "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingTypedMethodParameterListDelimiter.pkl",
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingTypedMethodParameterListDelimiter.pkl",
       "input_sha256": "278722a298c27eff411c4ea97ed8903e794cdf756d5b7d87f168db10e23e8633",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "semantic:diagnostics",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/Parser.java:parseModule:08e2ccccf9a8",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/ParserImpl.java:parseModule:1faaeadbbd30"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -112905,16 +113069,20 @@
       }
     },
     {
-      "adapter": null,
+      "adapter": "language-module-eval",
       "execution": {
-        "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
-        "state": "unimplemented"
+        "reason": null,
+        "state": "ready"
       },
       "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingTypedMethodParameterListSeparator.pkl",
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingTypedMethodParameterListSeparator.pkl",
       "input_sha256": "1077d4378b9657530345095d4770397bad7dda0c88baa5f054c50c314ac78c12",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "semantic:diagnostics",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/Parser.java:parseModule:08e2ccccf9a8",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/ParserImpl.java:parseModule:1faaeadbbd30"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -113000,16 +113168,20 @@
       }
     },
     {
-      "adapter": null,
+      "adapter": "language-module-eval",
       "execution": {
-        "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
-        "state": "unimplemented"
+        "reason": null,
+        "state": "ready"
       },
       "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/unbalancedEntryBrackets1.pkl",
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/unbalancedEntryBrackets1.pkl",
       "input_sha256": "9e1ab5c8d68a8634f35bde3e31f4b33815b2a95e204cedc552867a8dea31cefe",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "semantic:diagnostics",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/Parser.java:parseModule:08e2ccccf9a8",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/ParserImpl.java:parseModule:1faaeadbbd30"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -113095,16 +113267,20 @@
       }
     },
     {
-      "adapter": null,
+      "adapter": "language-module-eval",
       "execution": {
-        "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
-        "state": "unimplemented"
+        "reason": null,
+        "state": "ready"
       },
       "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/unbalancedEntryBrackets2.pkl",
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/unbalancedEntryBrackets2.pkl",
       "input_sha256": "cb79378d66bc026cb34a6fcd9856c005c287a59a74bc5362719ee42ba5a6d402",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "semantic:diagnostics",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/Parser.java:parseModule:08e2ccccf9a8",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/ParserImpl.java:parseModule:1faaeadbbd30"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -113190,16 +113366,20 @@
       }
     },
     {
-      "adapter": null,
+      "adapter": "language-module-eval",
       "execution": {
-        "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
-        "state": "unimplemented"
+        "reason": null,
+        "state": "ready"
       },
       "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/unbalancedEntryBrackets3.pkl",
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/unbalancedEntryBrackets3.pkl",
       "input_sha256": "dbb9a4065f329a3d928d3f2fe939553e405dceafc0768091903d8f9030493c60",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "semantic:diagnostics",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/Parser.java:parseModule:08e2ccccf9a8",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/ParserImpl.java:parseModule:1faaeadbbd30"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -113285,16 +113465,20 @@
       }
     },
     {
-      "adapter": null,
+      "adapter": "language-module-eval",
       "execution": {
-        "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
-        "state": "unimplemented"
+        "reason": null,
+        "state": "ready"
       },
       "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/unbalancedEntryBrackets4.pkl",
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/unbalancedEntryBrackets4.pkl",
       "input_sha256": "ec8e5dc38b67fc6f3647d115b4339865d6352dabee9d6422cb178985796d0bba",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "semantic:diagnostics",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/Parser.java:parseModule:08e2ccccf9a8",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/ParserImpl.java:parseModule:1faaeadbbd30"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -124495,16 +124679,20 @@
       }
     },
     {
-      "adapter": null,
+      "adapter": "language-module-eval",
       "execution": {
-        "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
-        "state": "unimplemented"
+        "reason": null,
+        "state": "ready"
       },
       "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/parser1.pkl",
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/parser1.pkl",
       "input_sha256": "fbcfe686ce4dbcb3e6d3cbbdc41ba1fe8c5639843a3b92fcaafebe9b30f7bd74",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "semantic:diagnostics",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/Parser.java:parseModule:08e2ccccf9a8",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/ParserImpl.java:parseModule:1faaeadbbd30"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -124590,16 +124778,20 @@
       }
     },
     {
-      "adapter": null,
+      "adapter": "language-module-eval",
       "execution": {
-        "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
-        "state": "unimplemented"
+        "reason": null,
+        "state": "ready"
       },
       "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/parser10.pkl",
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/parser10.pkl",
       "input_sha256": "d9c7c0290fd835e99cf35aeec801f79cf34e3eb3723635a81bc0d3e4fce9944f",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "semantic:diagnostics",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/Parser.java:parseModule:08e2ccccf9a8",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/ParserImpl.java:parseModule:1faaeadbbd30"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -124685,16 +124877,20 @@
       }
     },
     {
-      "adapter": null,
+      "adapter": "language-module-eval",
       "execution": {
-        "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
-        "state": "unimplemented"
+        "reason": null,
+        "state": "ready"
       },
       "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/parser11.pkl",
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/parser11.pkl",
       "input_sha256": "432612397e81c6a00b03050bb5fdd997c5805ab81ebcb39946e07d7e21015f46",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "semantic:diagnostics",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/Parser.java:parseModule:08e2ccccf9a8",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/ParserImpl.java:parseModule:1faaeadbbd30"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -124780,16 +124976,20 @@
       }
     },
     {
-      "adapter": null,
+      "adapter": "language-module-eval",
       "execution": {
-        "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
-        "state": "unimplemented"
+        "reason": null,
+        "state": "ready"
       },
       "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/parser12.pkl",
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/parser12.pkl",
       "input_sha256": "1d280e9af7e51ee3d6c10069fc0edbded47b9f52b9794b9657a993d5d1595e2e",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "semantic:diagnostics",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/Parser.java:parseModule:08e2ccccf9a8",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/ParserImpl.java:parseModule:1faaeadbbd30"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -124875,16 +125075,20 @@
       }
     },
     {
-      "adapter": null,
+      "adapter": "language-module-eval",
       "execution": {
-        "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
-        "state": "unimplemented"
+        "reason": null,
+        "state": "ready"
       },
       "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/parser14.pkl",
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/parser14.pkl",
       "input_sha256": "0e1a2a5f52634211dcf61b92e457c98e40b8c2d3d098316d121f3c57fa085313",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "semantic:diagnostics",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/Parser.java:parseModule:08e2ccccf9a8",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/ParserImpl.java:parseModule:1faaeadbbd30"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -124970,16 +125174,20 @@
       }
     },
     {
-      "adapter": null,
+      "adapter": "language-module-eval",
       "execution": {
-        "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
-        "state": "unimplemented"
+        "reason": null,
+        "state": "ready"
       },
       "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/parser15.pkl",
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/parser15.pkl",
       "input_sha256": "1f3255ae06a3e7fabd2036d481956be940e579147dd483783dba275d8dc6c4b1",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "semantic:diagnostics",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/Parser.java:parseModule:08e2ccccf9a8",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/ParserImpl.java:parseModule:1faaeadbbd30"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -125065,16 +125273,20 @@
       }
     },
     {
-      "adapter": null,
+      "adapter": "language-module-eval",
       "execution": {
-        "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
-        "state": "unimplemented"
+        "reason": null,
+        "state": "ready"
       },
       "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/parser16.pkl",
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/parser16.pkl",
       "input_sha256": "b25a942193a04be17c5a5f869bb6aa1c6106a2e171b979e17a98b47d591b2d41",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "semantic:diagnostics",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/Parser.java:parseModule:08e2ccccf9a8",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/ParserImpl.java:parseModule:1faaeadbbd30"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -125160,16 +125372,20 @@
       }
     },
     {
-      "adapter": null,
+      "adapter": "language-module-eval",
       "execution": {
-        "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
-        "state": "unimplemented"
+        "reason": null,
+        "state": "ready"
       },
       "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/parser17.pkl",
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/parser17.pkl",
       "input_sha256": "099480a7eff83973581e4a98c4e0f98397d57a7d71ec3d4d4d44863839369200",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "semantic:diagnostics",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/Parser.java:parseModule:08e2ccccf9a8",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/ParserImpl.java:parseModule:1faaeadbbd30"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -125255,16 +125471,20 @@
       }
     },
     {
-      "adapter": null,
+      "adapter": "language-module-eval",
       "execution": {
-        "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
-        "state": "unimplemented"
+        "reason": null,
+        "state": "ready"
       },
       "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/parser18.pkl",
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/parser18.pkl",
       "input_sha256": "b10c4b4cdba539bef4f299aea068e0a035758094767f5ddbbb26a2cd16456134",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "semantic:diagnostics",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/Parser.java:parseModule:08e2ccccf9a8",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/ParserImpl.java:parseModule:1faaeadbbd30"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -125350,16 +125570,20 @@
       }
     },
     {
-      "adapter": null,
+      "adapter": "language-module-eval",
       "execution": {
-        "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
-        "state": "unimplemented"
+        "reason": null,
+        "state": "ready"
       },
       "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/parser19.pkl",
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/parser19.pkl",
       "input_sha256": "029cefc1b8957e75d9ec925188a868f1d3cab583fd326de98cd7532367146ff2",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "semantic:diagnostics",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/Parser.java:parseModule:08e2ccccf9a8",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/ParserImpl.java:parseModule:1faaeadbbd30"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -125445,16 +125669,20 @@
       }
     },
     {
-      "adapter": null,
+      "adapter": "language-module-eval",
       "execution": {
-        "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
-        "state": "unimplemented"
+        "reason": null,
+        "state": "ready"
       },
       "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/parser2.pkl",
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/parser2.pkl",
       "input_sha256": "4bbcc70cca77c193a9c88fbf9502c313ad05114c32f2679c8f9c4d90417c3044",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "semantic:diagnostics",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/Parser.java:parseModule:08e2ccccf9a8",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/ParserImpl.java:parseModule:1faaeadbbd30"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -125540,16 +125768,20 @@
       }
     },
     {
-      "adapter": null,
+      "adapter": "language-module-eval",
       "execution": {
-        "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
-        "state": "unimplemented"
+        "reason": null,
+        "state": "ready"
       },
       "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/parser20.pkl",
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/parser20.pkl",
       "input_sha256": "1e48a8ee3d5f86adac80b23d26fbee3f1556d1658ee3e8e1fd5cf5a40d3faca2",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "semantic:diagnostics",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/Parser.java:parseModule:08e2ccccf9a8",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/ParserImpl.java:parseModule:1faaeadbbd30"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -125635,16 +125867,20 @@
       }
     },
     {
-      "adapter": null,
+      "adapter": "language-module-eval",
       "execution": {
-        "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
-        "state": "unimplemented"
+        "reason": null,
+        "state": "ready"
       },
       "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/parser21.pkl",
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/parser21.pkl",
       "input_sha256": "c7eab9cff6c3d5b4316053605da708045a6009f158279309cfa4a5340abac228",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "semantic:diagnostics",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/Parser.java:parseModule:08e2ccccf9a8",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/ParserImpl.java:parseModule:1faaeadbbd30"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -125730,16 +125966,20 @@
       }
     },
     {
-      "adapter": null,
+      "adapter": "language-module-eval",
       "execution": {
-        "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
-        "state": "unimplemented"
+        "reason": null,
+        "state": "ready"
       },
       "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/parser3.pkl",
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/parser3.pkl",
       "input_sha256": "264ec25d620871eb3027304775a7a328dca98efd3e8d04e4a978f349ce461d86",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "semantic:diagnostics",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/Parser.java:parseModule:08e2ccccf9a8",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/ParserImpl.java:parseModule:1faaeadbbd30"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -125825,16 +126065,20 @@
       }
     },
     {
-      "adapter": null,
+      "adapter": "language-module-eval",
       "execution": {
-        "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
-        "state": "unimplemented"
+        "reason": null,
+        "state": "ready"
       },
       "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/parser4.pkl",
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/parser4.pkl",
       "input_sha256": "df373fef1ada6616ba0b7ef39636e99ff8dce60a7c207686450f92136b27c01d",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "semantic:diagnostics",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/Parser.java:parseModule:08e2ccccf9a8",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/ParserImpl.java:parseModule:1faaeadbbd30"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -125920,16 +126164,20 @@
       }
     },
     {
-      "adapter": null,
+      "adapter": "language-module-eval",
       "execution": {
-        "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
-        "state": "unimplemented"
+        "reason": null,
+        "state": "ready"
       },
       "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/parser5.pkl",
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/parser5.pkl",
       "input_sha256": "fd7fac75263bc24cc829a4d8963f4384925f74a33d0b13a8a04d5285a9aa674d",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "semantic:diagnostics",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/Parser.java:parseModule:08e2ccccf9a8",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/ParserImpl.java:parseModule:1faaeadbbd30"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -126015,16 +126263,20 @@
       }
     },
     {
-      "adapter": null,
+      "adapter": "language-module-eval",
       "execution": {
-        "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
-        "state": "unimplemented"
+        "reason": null,
+        "state": "ready"
       },
       "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/parser6.pkl",
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/parser6.pkl",
       "input_sha256": "0d763b252798af2617ebfdcdd461e08996c033b9e150bad113c1096e44c75db5",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "semantic:diagnostics",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/Parser.java:parseModule:08e2ccccf9a8",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/ParserImpl.java:parseModule:1faaeadbbd30"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -126110,16 +126362,20 @@
       }
     },
     {
-      "adapter": null,
+      "adapter": "language-module-eval",
       "execution": {
-        "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
-        "state": "unimplemented"
+        "reason": null,
+        "state": "ready"
       },
       "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/parser7.pkl",
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/parser7.pkl",
       "input_sha256": "2652b68f2b4e99961de752d98cd7f8fcea1794e7ee55339bfb25a5863546ab94",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "semantic:diagnostics",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/Parser.java:parseModule:08e2ccccf9a8",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/ParserImpl.java:parseModule:1faaeadbbd30"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -126205,16 +126461,20 @@
       }
     },
     {
-      "adapter": null,
+      "adapter": "language-module-eval",
       "execution": {
-        "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
-        "state": "unimplemented"
+        "reason": null,
+        "state": "ready"
       },
       "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/parser8.pkl",
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/parser8.pkl",
       "input_sha256": "2363e00fa8dbb05a789d894e1dbf2bce41a61b9efca85c5278194461dbcb3a9f",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "semantic:diagnostics",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/Parser.java:parseModule:08e2ccccf9a8",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/ParserImpl.java:parseModule:1faaeadbbd30"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -126300,16 +126560,20 @@
       }
     },
     {
-      "adapter": null,
+      "adapter": "language-module-eval",
       "execution": {
-        "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
-        "state": "unimplemented"
+        "reason": null,
+        "state": "ready"
       },
       "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/parser9.pkl",
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/errors/parser9.pkl",
       "input_sha256": "a5a8e68e273f879ab003ff15edf07e6453c1f877ec2be5048cd5a2546943d695",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "semantic:diagnostics",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/Parser.java:parseModule:08e2ccccf9a8",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/ParserImpl.java:parseModule:1faaeadbbd30"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -152837,16 +153101,20 @@
       }
     },
     {
-      "adapter": null,
+      "adapter": "language-module-eval",
       "execution": {
-        "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
-        "state": "unimplemented"
+        "reason": null,
+        "state": "ready"
       },
       "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/amendsRequiresParens.pkl",
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/parser/amendsRequiresParens.pkl",
       "input_sha256": "31d229206e009070ded303c33d800bbc51123a3aaafe41c1a23ed93344190cd1",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "semantic:diagnostics",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/Parser.java:parseModule:08e2ccccf9a8",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/ParserImpl.java:parseModule:1faaeadbbd30"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -152932,16 +153200,20 @@
       }
     },
     {
-      "adapter": null,
+      "adapter": "language-module-eval",
       "execution": {
-        "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
-        "state": "unimplemented"
+        "reason": null,
+        "state": "ready"
       },
       "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/constantStringInterpolation.pkl",
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/parser/constantStringInterpolation.pkl",
       "input_sha256": "45aaffc48c4ee589f80cefba1c74da3472f9928c2ed57ca106c2cb58a079048f",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "semantic:diagnostics",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/Parser.java:parseModule:08e2ccccf9a8",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/ParserImpl.java:parseModule:1faaeadbbd30"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -153121,16 +153393,20 @@
       }
     },
     {
-      "adapter": null,
+      "adapter": "language-module-eval",
       "execution": {
-        "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
-        "state": "unimplemented"
+        "reason": null,
+        "state": "ready"
       },
       "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/invalidCharacter.pkl",
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/parser/invalidCharacter.pkl",
       "input_sha256": "0541d40d462db88d25ebcf7ae9c21fd605aec9d82f7a68a9d783a60105b7d95e",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "semantic:diagnostics",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/Parser.java:parseModule:08e2ccccf9a8",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/ParserImpl.java:parseModule:1faaeadbbd30"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -153581,16 +153857,20 @@
       }
     },
     {
-      "adapter": null,
+      "adapter": "language-module-eval",
       "execution": {
-        "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
-        "state": "unimplemented"
+        "reason": null,
+        "state": "ready"
       },
       "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/spacesBetweenDocComments.pkl",
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/parser/spacesBetweenDocComments.pkl",
       "input_sha256": "8b289d806cec2c5bbddc2f9dc9203cbb9b30d1a553624885482f07c22225675a",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "semantic:diagnostics",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/Parser.java:parseModule:08e2ccccf9a8",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/ParserImpl.java:parseModule:1faaeadbbd30"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -153864,16 +154144,20 @@
       }
     },
     {
-      "adapter": null,
+      "adapter": "language-module-eval",
       "execution": {
-        "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
-        "state": "unimplemented"
+        "reason": null,
+        "state": "ready"
       },
       "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/typeAnnotationInAmends.pkl",
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/parser/typeAnnotationInAmends.pkl",
       "input_sha256": "b3ec294ef1a2e9ce6f3484f92d44978667580346ae9dc232969509611f1fdae0",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "semantic:diagnostics",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/Parser.java:parseModule:08e2ccccf9a8",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/ParserImpl.java:parseModule:1faaeadbbd30"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -153959,16 +154243,20 @@
       }
     },
     {
-      "adapter": null,
+      "adapter": "language-module-eval",
       "execution": {
-        "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
-        "state": "unimplemented"
+        "reason": null,
+        "state": "ready"
       },
       "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/wrongDocComment.pkl",
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/parser/wrongDocComment.pkl",
       "input_sha256": "0ba502295863f0c51d115d93ce2ae76702fd9b6f6c64d60b9d03b5063a8b9bc3",
       "required": true,
-      "requirements": [],
+      "requirements": [
+        "semantic:diagnostics",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/Parser.java:parseModule:08e2ccccf9a8",
+        "language_parser:pkl-parser/src/main/java/org/pkl/parser/ParserImpl.java:parseModule:1faaeadbbd30"
+      ],
       "upstream_case": {
         "assertion_count": null,
         "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
@@ -163086,8 +163374,8 @@
   "counts": {
     "cases": 4527,
     "cases_by_execution": {
-      "ready": 3527,
-      "unimplemented": 960,
+      "ready": 3599,
+      "unimplemented": 888,
       "unmapped": 40
     },
     "requirements": 475,
@@ -163098,6 +163386,7 @@
       "specification": 198
     }
   },
+  "module_comparison_boundary": "Original module eval argv/cwd/env/resources in one physical staged workspace; complete stdout/stderr/exit/files and unexpected workspace writes. Parser success is unsupported ModuleOutput evaluation, never eval success. No golden replay or diagnostic normalization.",
   "requirements": [
     {
       "description": "All tokens, whitespace, nested comments, quoted and blank identifiers, Unicode and source positions",
@@ -168639,22 +168928,22 @@
           },
           {
             "path": "crates/pkl-runtime/src/resolver.rs",
-            "sha256": "08462255198ada43fcc2e7b90253abed2533de5f10b6d62785aedbf09de418af",
+            "sha256": "7e44c1f799c1fc9441ae22a48994591f38508325b44c5c8e740989e431365727",
             "symbol": "validate_modifiers"
           },
           {
             "path": "crates/pkl-runtime/src/resolver.rs",
-            "sha256": "08462255198ada43fcc2e7b90253abed2533de5f10b6d62785aedbf09de418af",
+            "sha256": "7e44c1f799c1fc9441ae22a48994591f38508325b44c5c8e740989e431365727",
             "symbol": "ConstLevel"
           },
           {
             "path": "crates/pkl-runtime/src/resolver.rs",
-            "sha256": "08462255198ada43fcc2e7b90253abed2533de5f10b6d62785aedbf09de418af",
+            "sha256": "7e44c1f799c1fc9441ae22a48994591f38508325b44c5c8e740989e431365727",
             "symbol": "ConstScope"
           },
           {
             "path": "crates/pkl-runtime/src/parser.rs",
-            "sha256": "db7a66d35f549b8d2104ef332fda8adc610c82b0eda52590551e9dec28f2cfc2",
+            "sha256": "78c4c68031b0e71fab9fa2c3a1ce1c931de7953f72e8bbb7578a949c1a55da5d",
             "symbol": "arguments"
           },
           {
@@ -168990,12 +169279,12 @@
           },
           {
             "path": "crates/pkl-runtime/src/resolver.rs",
-            "sha256": "08462255198ada43fcc2e7b90253abed2533de5f10b6d62785aedbf09de418af",
+            "sha256": "7e44c1f799c1fc9441ae22a48994591f38508325b44c5c8e740989e431365727",
             "symbol": "ConstScope"
           },
           {
             "path": "crates/pkl-runtime/src/parser.rs",
-            "sha256": "db7a66d35f549b8d2104ef332fda8adc610c82b0eda52590551e9dec28f2cfc2",
+            "sha256": "78c4c68031b0e71fab9fa2c3a1ce1c931de7953f72e8bbb7578a949c1a55da5d",
             "symbol": "arguments"
           },
           {
@@ -176080,12 +176369,12 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/parser.rs",
-            "sha256": "db7a66d35f549b8d2104ef332fda8adc610c82b0eda52590551e9dec28f2cfc2",
+            "sha256": "78c4c68031b0e71fab9fa2c3a1ce1c931de7953f72e8bbb7578a949c1a55da5d",
             "symbol": "annotations"
           },
           {
             "path": "crates/pkl-runtime/src/resolver.rs",
-            "sha256": "08462255198ada43fcc2e7b90253abed2533de5f10b6d62785aedbf09de418af",
+            "sha256": "7e44c1f799c1fc9441ae22a48994591f38508325b44c5c8e740989e431365727",
             "symbol": "Annotations"
           },
           {
@@ -176440,12 +176729,12 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/parser.rs",
-            "sha256": "db7a66d35f549b8d2104ef332fda8adc610c82b0eda52590551e9dec28f2cfc2",
+            "sha256": "78c4c68031b0e71fab9fa2c3a1ce1c931de7953f72e8bbb7578a949c1a55da5d",
             "symbol": "import"
           },
           {
             "path": "crates/pkl-runtime/src/resolver.rs",
-            "sha256": "08462255198ada43fcc2e7b90253abed2533de5f10b6d62785aedbf09de418af",
+            "sha256": "7e44c1f799c1fc9441ae22a48994591f38508325b44c5c8e740989e431365727",
             "symbol": "visit"
           },
           {
@@ -176495,7 +176784,7 @@
           },
           {
             "path": "crates/pkl-runtime/src/evaluation.rs",
-            "sha256": "e27bf6018944b04154becc615db679e55e0c05d3bb81cfd5a1d656d7ad3f6938",
+            "sha256": "216999115e70f812e5a93ea18173eb35f98c1eedfffa57edfee91b9f57a4593b",
             "symbol": "runtime_error"
           },
           {
@@ -176515,12 +176804,12 @@
           },
           {
             "path": "crates/pkl-runtime/src/resolver.rs",
-            "sha256": "08462255198ada43fcc2e7b90253abed2533de5f10b6d62785aedbf09de418af",
+            "sha256": "7e44c1f799c1fc9441ae22a48994591f38508325b44c5c8e740989e431365727",
             "symbol": "ConstScope"
           },
           {
             "path": "crates/pkl-runtime/src/parser.rs",
-            "sha256": "db7a66d35f549b8d2104ef332fda8adc610c82b0eda52590551e9dec28f2cfc2",
+            "sha256": "78c4c68031b0e71fab9fa2c3a1ce1c931de7953f72e8bbb7578a949c1a55da5d",
             "symbol": "arguments"
           },
           {
@@ -176557,6 +176846,11 @@
             "path": "crates/pkl-runtime/src/diagnostic_values.rs",
             "sha256": "390943c09715e6ff48aa416ad44653558afa26e610a9be6518e07fccbbbc12e5",
             "symbol": "RenderRun"
+          },
+          {
+            "path": "crates/pkl-runtime/src/evaluation/frontend.rs",
+            "sha256": "22890894d5c93a12bf4649a08ec1d41101b329f8c778086e48decdddadc290e7",
+            "symbol": "evaluate_module_frontend"
           }
         ],
         "state": "partial"
@@ -176573,7 +176867,7 @@
           "Cyclic rendering oracle failures, identity-dependent keys, complete diagnostic-time forcing/Host suspension and finite truncation side effects remain unresolved or unverified.",
           "The new persistent originals use trace; complete trace logging and its original sequence contract remain required."
         ],
-        "scope": "Reference constructor, access, constraint and rendering errors retain complete message, authored frame, foreign standard-library source and URI bytes in selected comparisons. Stage11 adds selected fixed declaration, inherited metadata and complete raw diagnostics through the shared VM. Stage 13 adds selected alias/function metadata, exported-type equality and complete raw diagnostic comparisons; original suite execution and remaining scope stay open. Stage 14 adds selected authored type-resolution order, generic parameter scope and nested substitution, class/alias arity ordering, and owner signature diagnostics; persistent failed-declaration state has a separate sequence contract. Stage 15 adds selected non-generic recursive constraint block graphs and declaration type scope, plus builtin Class argument erasure and arity ordering. At Stage 15 recursive generic constraints remained open; Stage 16 adds bounded shared receiver-slot support. Stage 16: Selected recursive frame compression, count-one loops, complete call spans and hint placement match Java uncolored diagnostics. Stage 17: Selected const-method barriers, lambda lookup depth, immediate outer lexical scope, and grouped-callee parser diagnostics follow the pinned Java behavior. Stage 18 adds selected let-body and for-generator lexical const-depth boundaries while retaining enclosing const levels, plus their complete raw diagnostics and lambda controls. Selected finite recursive generic and instantiated type-variable failures compare complete Java bytes with power assertions enabled and disabled. Stage 19 adds bounded shared-metadata regressions for finite deep and branching actual arguments, observable class-argument swaps, inline/lambda/shared-let recursion, recursive Reference validation, and distinct wrapper actuals. Original Java stack errors, historical native abort evidence, full language semantics and performance remain separately accounted. Stage20 adds bounded nullable defaults, inferred collection amendments, null identity and repeated default failures; complete nullable and collection semantics remain unverified. Stage21 adds bounded direct symbolic constructors, actual-argument diagnostics, lazy class defaults, collection body controls and persistent retries; complete constructors, lexical roots and builtin coverage remain unverified. Stage22 adds bounded strict Map construction, boxed/hash-prefix key semantics, lazy nested generic values, insertion-order iteration and HAMT-ordered equality/hash forcing; complete Map APIs and language coverage remain unverified. Stage23 adds bounded strict Set construction, immediate element hashing and deduplication, boxed/cache-sensitive membership, Set defaults and generic aliases, eager nested element checks, structural equality/hash, insertion-order generation/spreading and raw null/default diagnostic controls; complete Set APIs and language coverage remain unverified. Stage 24 additionally covers bounded Collection List/Set classification, eager versus lazy nested validation, aliases/defaults, nullable constructor timing, selected metadata and complete diagnostics. Stage 30 preserves UTF-16 diagnostic member paths through parser/resolver/compiler counters, block metadata, runtime frames and recursive compression. Selected sibling entry/function numbering and detached lifecycle names distinguish unmatched surrogates from literal question marks before Java UTF-8 output. Typed-property diagnostic controls distinguish inline checks for object-local declarations from module/class-local separate call frames; alias use does not change the declaration category. Stage 31 distinguishes folded numeric-token value frames for local properties from authored body sections retained by selected public class constant properties. Selected complete diagnostics cover signed integer/float literals, whitespace/comments/multiline syntax, radix and minimum-integer literals, grouping, direct constraints and aliases; operand, argument/return, cast, overflow-literal and first-error controls retain their separate source ownership. Success controls preserve minimum integers and negative-zero arithmetic. These selected observations do not establish the complete numeric or diagnostic surface. Additional scalar-constant controls distinguish grouping removal in computed local bodies from source reconstruction for selected non-local property, overridden property, Mapping entry and Listing element value frames. Grouped string, Boolean and null constants preserve the same wrapper distinction. Original failed baseline and first-candidate grouped Listing observations remain preserved alongside the selected reconstruction regression; later observations do not relabel those historical failures. Stage 32 adds bounded forbidden non-local object property type-annotation diagnostic ownership, nested declaration paths, earlier-error controls and valid module/class/object-local annotations; complete frontend diagnostics remain separately unverified. Stage 33 adds bounded const-modifier ownership before property-scope entry, method inferred-new versus lambda first-error selection, explicit-parent and earlier-error controls, and successful Dynamic/untyped method and unused-body controls. Non-Dynamic typed method return inference remains outside this repair. Stage 36 adds resumable object deep forcing and object.toString rendering with persistent force marks, owner-specific hidden declarations, inherited member order, undefined-member handling, and renderer key hashing/equality. Selected scalar comparisons and separate stateful/Host observations retain their own raw contracts. Additional source-derived controls cover user-defined toString interpolation, hidden builtin defaults and inherited equal/colliding object keys. Modifier-addition controls distinguish Java IMPORT, CLASS and TYPE_ALIAS bits when filtering rendered declarations. Stage38 adds original generic implicit/explicit missing-method, suggestions, call-span and argument-order controls; failures remain visible until differential verification. Stage38 additionally checks lexical candidate ordering across property/method and scope boundaries, stable similarity/arity ranking, and explicit-receiver contrast against nine fresh Java observations.",
+        "scope": "Reference constructor, access, constraint and rendering errors retain complete message, authored frame, foreign standard-library source and URI bytes in selected comparisons. Stage11 adds selected fixed declaration, inherited metadata and complete raw diagnostics through the shared VM. Stage 13 adds selected alias/function metadata, exported-type equality and complete raw diagnostic comparisons; original suite execution and remaining scope stay open. Stage 14 adds selected authored type-resolution order, generic parameter scope and nested substitution, class/alias arity ordering, and owner signature diagnostics; persistent failed-declaration state has a separate sequence contract. Stage 15 adds selected non-generic recursive constraint block graphs and declaration type scope, plus builtin Class argument erasure and arity ordering. At Stage 15 recursive generic constraints remained open; Stage 16 adds bounded shared receiver-slot support. Stage 16: Selected recursive frame compression, count-one loops, complete call spans and hint placement match Java uncolored diagnostics. Stage 17: Selected const-method barriers, lambda lookup depth, immediate outer lexical scope, and grouped-callee parser diagnostics follow the pinned Java behavior. Stage 18 adds selected let-body and for-generator lexical const-depth boundaries while retaining enclosing const levels, plus their complete raw diagnostics and lambda controls. Selected finite recursive generic and instantiated type-variable failures compare complete Java bytes with power assertions enabled and disabled. Stage 19 adds bounded shared-metadata regressions for finite deep and branching actual arguments, observable class-argument swaps, inline/lambda/shared-let recursion, recursive Reference validation, and distinct wrapper actuals. Original Java stack errors, historical native abort evidence, full language semantics and performance remain separately accounted. Stage20 adds bounded nullable defaults, inferred collection amendments, null identity and repeated default failures; complete nullable and collection semantics remain unverified. Stage21 adds bounded direct symbolic constructors, actual-argument diagnostics, lazy class defaults, collection body controls and persistent retries; complete constructors, lexical roots and builtin coverage remain unverified. Stage22 adds bounded strict Map construction, boxed/hash-prefix key semantics, lazy nested generic values, insertion-order iteration and HAMT-ordered equality/hash forcing; complete Map APIs and language coverage remain unverified. Stage23 adds bounded strict Set construction, immediate element hashing and deduplication, boxed/cache-sensitive membership, Set defaults and generic aliases, eager nested element checks, structural equality/hash, insertion-order generation/spreading and raw null/default diagnostic controls; complete Set APIs and language coverage remain unverified. Stage 24 additionally covers bounded Collection List/Set classification, eager versus lazy nested validation, aliases/defaults, nullable constructor timing, selected metadata and complete diagnostics. Stage 30 preserves UTF-16 diagnostic member paths through parser/resolver/compiler counters, block metadata, runtime frames and recursive compression. Selected sibling entry/function numbering and detached lifecycle names distinguish unmatched surrogates from literal question marks before Java UTF-8 output. Typed-property diagnostic controls distinguish inline checks for object-local declarations from module/class-local separate call frames; alias use does not change the declaration category. Stage 31 distinguishes folded numeric-token value frames for local properties from authored body sections retained by selected public class constant properties. Selected complete diagnostics cover signed integer/float literals, whitespace/comments/multiline syntax, radix and minimum-integer literals, grouping, direct constraints and aliases; operand, argument/return, cast, overflow-literal and first-error controls retain their separate source ownership. Success controls preserve minimum integers and negative-zero arithmetic. These selected observations do not establish the complete numeric or diagnostic surface. Additional scalar-constant controls distinguish grouping removal in computed local bodies from source reconstruction for selected non-local property, overridden property, Mapping entry and Listing element value frames. Grouped string, Boolean and null constants preserve the same wrapper distinction. Original failed baseline and first-candidate grouped Listing observations remain preserved alongside the selected reconstruction regression; later observations do not relabel those historical failures. Stage 32 adds bounded forbidden non-local object property type-annotation diagnostic ownership, nested declaration paths, earlier-error controls and valid module/class/object-local annotations; complete frontend diagnostics remain separately unverified. Stage 33 adds bounded const-modifier ownership before property-scope entry, method inferred-new versus lambda first-error selection, explicit-parent and earlier-error controls, and successful Dynamic/untyped method and unused-body controls. Non-Dynamic typed method return inference remains outside this repair. Stage 36 adds resumable object deep forcing and object.toString rendering with persistent force marks, owner-specific hidden declarations, inherited member order, undefined-member handling, and renderer key hashing/equality. Selected scalar comparisons and separate stateful/Host observations retain their own raw contracts. Additional source-derived controls cover user-defined toString interpolation, hidden builtin defaults and inherited equal/colliding object keys. Modifier-addition controls distinguish Java IMPORT, CLASS and TYPE_ALIAS bits when filtering rendered declarations. Stage38 adds original generic implicit/explicit missing-method, suggestions, call-span and argument-order controls; failures remain visible until differential verification. Stage38 additionally checks lexical candidate ordering across property/method and scope boundaries, stable similarity/arity ranking, and explicit-receiver contrast against nine fresh Java observations. Original module eval frontend failures are exercised through their unchanged argv/cwd/env/resource contracts with the bundled CLI frame profile; complete output evaluation remains unsupported.",
         "source": "compatibility/m2-mappings.json"
       },
       "tests": {
@@ -178608,7 +178902,79 @@
           "method-stage38-order-equal-rank-declaration-order",
           "method-stage38-order-explicit-module-excludes-base-properties",
           "method-stage38-order-same-scope-property-before-method",
-          "method-stage38-order-nested-method-before-outer-property"
+          "method-stage38-order-nested-method-before-outer-property",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingClassDelimiter.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingConstrainedTypeSeparator.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingContainerAmendDefDelimiter.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingContainerAmendExprDelimiter.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingEmptyMultiLineStringDelimiter.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingEmptyMultiLineStringDelimiterAtEof.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingEmptyStringDelimiter.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingEmptyStringDelimiterAtEof.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingFunction0ParameterListDelimiter.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingFunction1ParameterListDelimiter.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingFunctionAmendParameterListSeparator.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingFunctionNParameterListDelimiter.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingFunctionParameterListSeparator.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingFunctionType0ParameterListDelimiter.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingFunctionType1ParameterListDelimiter.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingFunctionTypeNParameterListDelimiter.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingFunctionTypeParameterListSeparator.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingIfExprDelimiter.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingListDelimiter.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingListSeparator.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingMapDelimiter.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingMapSeparator.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingMethodArgumentListDelimiter.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingMethodArgumentListSeparator.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingMethodParameterListDelimiter.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingMethodParameterListSeparator.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingMultiLineStringDelimiter.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingObjectAmendDefDelimiter.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingObjectAmendDefDelimiter2.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingObjectAmendDefDelimiter3.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingObjectAmendExprDelimiter.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingObjectDelimiter.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingParenthesizedExprDelimiter.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingParenthesizedTypeDelimiter.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingRawMultiLineStringDelimiter.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingRawStringDelimiter.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingSetSeparator.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingStringDelimiter.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingSubscriptDelimiter.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingTypeConstraintListDelimiter.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingTypedMethodParameterListDelimiter.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingTypedMethodParameterListSeparator.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/unbalancedEntryBrackets1.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/unbalancedEntryBrackets2.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/unbalancedEntryBrackets3.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/unbalancedEntryBrackets4.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/parser1.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/parser10.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/parser11.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/parser12.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/parser14.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/parser15.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/parser16.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/parser17.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/parser18.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/parser19.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/parser2.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/parser20.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/parser21.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/parser3.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/parser4.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/parser5.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/parser6.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/parser7.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/parser8.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/parser9.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/amendsRequiresParens.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/constantStringInterpolation.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/invalidCharacter.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/spacesBetweenDocComments.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/typeAnnotationInAmends.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/wrongDocComment.pkl"
         ],
         "state": "partial"
       }
@@ -179755,12 +180121,12 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/parser.rs",
-            "sha256": "db7a66d35f549b8d2104ef332fda8adc610c82b0eda52590551e9dec28f2cfc2",
+            "sha256": "78c4c68031b0e71fab9fa2c3a1ce1c931de7953f72e8bbb7578a949c1a55da5d",
             "symbol": "annotations"
           },
           {
             "path": "crates/pkl-runtime/src/resolver.rs",
-            "sha256": "08462255198ada43fcc2e7b90253abed2533de5f10b6d62785aedbf09de418af",
+            "sha256": "7e44c1f799c1fc9441ae22a48994591f38508325b44c5c8e740989e431365727",
             "symbol": "Annotations"
           },
           {
@@ -181337,19 +181703,111 @@
       "description": "parseModule",
       "id": "language_parser:pkl-parser/src/main/java/org/pkl/parser/Parser.java:parseModule:08e2ccccf9a8",
       "implementation": {
-        "links": [],
-        "state": "unimplemented"
+        "links": [
+          {
+            "path": "crates/pkl-runtime/src/parser.rs",
+            "sha256": "78c4c68031b0e71fab9fa2c3a1ce1c931de7953f72e8bbb7578a949c1a55da5d",
+            "symbol": "parse_module"
+          },
+          {
+            "path": "crates/pkl-runtime/src/evaluation/frontend.rs",
+            "sha256": "22890894d5c93a12bf4649a08ec1d41101b329f8c778086e48decdddadc290e7",
+            "symbol": "evaluate_module_frontend"
+          }
+        ],
+        "state": "partial"
       },
       "kind": "language_parser",
-      "reason": "Source-derived declaration/heading retained conservatively; semantic mapping requires review.",
+      "reason": "Reviewed source/test links; completion still requires the full recorded scope and executions.",
       "required": true,
+      "reviewed_mapping": {
+        "remaining": [
+          "Complete original valid and invalid grammar corpus, AST validation and error ordering.",
+          "Actual ModuleOutput.bytes and renderer success, imported modules and settings/project variants."
+        ],
+        "scope": "Original delimiter and parser error module eval contracts execute the shared frontend with exact CLI diagnostic bytes. Ready describes executable original contracts, not passing results or complete module/output evaluation.",
+        "source": "compatibility/m2-mappings.json"
+      },
       "source": {
         "line": 25,
         "path": "pkl-parser/src/main/java/org/pkl/parser/Parser.java"
       },
       "tests": {
-        "case_ids": [],
-        "state": "unmapped"
+        "case_ids": [
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingClassDelimiter.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingConstrainedTypeSeparator.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingContainerAmendDefDelimiter.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingContainerAmendExprDelimiter.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingEmptyMultiLineStringDelimiter.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingEmptyMultiLineStringDelimiterAtEof.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingEmptyStringDelimiter.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingEmptyStringDelimiterAtEof.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingFunction0ParameterListDelimiter.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingFunction1ParameterListDelimiter.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingFunctionAmendParameterListSeparator.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingFunctionNParameterListDelimiter.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingFunctionParameterListSeparator.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingFunctionType0ParameterListDelimiter.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingFunctionType1ParameterListDelimiter.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingFunctionTypeNParameterListDelimiter.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingFunctionTypeParameterListSeparator.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingIfExprDelimiter.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingListDelimiter.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingListSeparator.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingMapDelimiter.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingMapSeparator.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingMethodArgumentListDelimiter.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingMethodArgumentListSeparator.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingMethodParameterListDelimiter.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingMethodParameterListSeparator.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingMultiLineStringDelimiter.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingObjectAmendDefDelimiter.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingObjectAmendDefDelimiter2.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingObjectAmendDefDelimiter3.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingObjectAmendExprDelimiter.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingObjectDelimiter.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingParenthesizedExprDelimiter.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingParenthesizedTypeDelimiter.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingRawMultiLineStringDelimiter.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingRawStringDelimiter.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingSetSeparator.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingStringDelimiter.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingSubscriptDelimiter.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingTypeConstraintListDelimiter.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingTypedMethodParameterListDelimiter.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingTypedMethodParameterListSeparator.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/unbalancedEntryBrackets1.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/unbalancedEntryBrackets2.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/unbalancedEntryBrackets3.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/unbalancedEntryBrackets4.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/parser1.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/parser10.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/parser11.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/parser12.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/parser14.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/parser15.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/parser16.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/parser17.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/parser18.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/parser19.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/parser2.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/parser20.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/parser21.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/parser3.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/parser4.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/parser5.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/parser6.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/parser7.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/parser8.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/parser9.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/amendsRequiresParens.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/constantStringInterpolation.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/invalidCharacter.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/spacesBetweenDocComments.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/typeAnnotationInAmends.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/wrongDocComment.pkl"
+        ],
+        "state": "partial"
       }
     },
     {
@@ -181416,12 +181874,12 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/parser.rs",
-            "sha256": "db7a66d35f549b8d2104ef332fda8adc610c82b0eda52590551e9dec28f2cfc2",
+            "sha256": "78c4c68031b0e71fab9fa2c3a1ce1c931de7953f72e8bbb7578a949c1a55da5d",
             "symbol": "annotations"
           },
           {
             "path": "crates/pkl-runtime/src/resolver.rs",
-            "sha256": "08462255198ada43fcc2e7b90253abed2533de5f10b6d62785aedbf09de418af",
+            "sha256": "7e44c1f799c1fc9441ae22a48994591f38508325b44c5c8e740989e431365727",
             "symbol": "Annotations"
           },
           {
@@ -182048,19 +182506,111 @@
       "description": "parseModule",
       "id": "language_parser:pkl-parser/src/main/java/org/pkl/parser/ParserImpl.java:parseModule:1faaeadbbd30",
       "implementation": {
-        "links": [],
-        "state": "unimplemented"
+        "links": [
+          {
+            "path": "crates/pkl-runtime/src/parser.rs",
+            "sha256": "78c4c68031b0e71fab9fa2c3a1ce1c931de7953f72e8bbb7578a949c1a55da5d",
+            "symbol": "parse_module"
+          },
+          {
+            "path": "crates/pkl-runtime/src/evaluation/frontend.rs",
+            "sha256": "22890894d5c93a12bf4649a08ec1d41101b329f8c778086e48decdddadc290e7",
+            "symbol": "evaluate_module_frontend"
+          }
+        ],
+        "state": "partial"
       },
       "kind": "language_parser",
-      "reason": "Source-derived declaration/heading retained conservatively; semantic mapping requires review.",
+      "reason": "Reviewed source/test links; completion still requires the full recorded scope and executions.",
       "required": true,
+      "reviewed_mapping": {
+        "remaining": [
+          "Complete original valid and invalid grammar corpus, AST validation and error ordering.",
+          "Actual ModuleOutput.bytes and renderer success, imported modules and settings/project variants."
+        ],
+        "scope": "Original delimiter and parser error module eval contracts execute the shared frontend with exact CLI diagnostic bytes. Ready describes executable original contracts, not passing results or complete module/output evaluation.",
+        "source": "compatibility/m2-mappings.json"
+      },
       "source": {
         "line": 108,
         "path": "pkl-parser/src/main/java/org/pkl/parser/ParserImpl.java"
       },
       "tests": {
-        "case_ids": [],
-        "state": "unmapped"
+        "case_ids": [
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingClassDelimiter.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingConstrainedTypeSeparator.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingContainerAmendDefDelimiter.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingContainerAmendExprDelimiter.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingEmptyMultiLineStringDelimiter.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingEmptyMultiLineStringDelimiterAtEof.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingEmptyStringDelimiter.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingEmptyStringDelimiterAtEof.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingFunction0ParameterListDelimiter.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingFunction1ParameterListDelimiter.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingFunctionAmendParameterListSeparator.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingFunctionNParameterListDelimiter.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingFunctionParameterListSeparator.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingFunctionType0ParameterListDelimiter.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingFunctionType1ParameterListDelimiter.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingFunctionTypeNParameterListDelimiter.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingFunctionTypeParameterListSeparator.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingIfExprDelimiter.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingListDelimiter.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingListSeparator.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingMapDelimiter.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingMapSeparator.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingMethodArgumentListDelimiter.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingMethodArgumentListSeparator.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingMethodParameterListDelimiter.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingMethodParameterListSeparator.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingMultiLineStringDelimiter.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingObjectAmendDefDelimiter.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingObjectAmendDefDelimiter2.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingObjectAmendDefDelimiter3.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingObjectAmendExprDelimiter.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingObjectDelimiter.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingParenthesizedExprDelimiter.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingParenthesizedTypeDelimiter.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingRawMultiLineStringDelimiter.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingRawStringDelimiter.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingSetSeparator.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingStringDelimiter.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingSubscriptDelimiter.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingTypeConstraintListDelimiter.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingTypedMethodParameterListDelimiter.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingTypedMethodParameterListSeparator.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/unbalancedEntryBrackets1.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/unbalancedEntryBrackets2.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/unbalancedEntryBrackets3.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/unbalancedEntryBrackets4.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/parser1.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/parser10.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/parser11.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/parser12.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/parser14.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/parser15.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/parser16.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/parser17.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/parser18.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/parser19.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/parser2.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/parser20.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/parser21.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/parser3.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/parser4.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/parser5.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/parser6.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/parser7.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/parser8.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/parser9.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/amendsRequiresParens.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/constantStringInterpolation.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/invalidCharacter.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/spacesBetweenDocComments.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/typeAnnotationInAmends.pkl",
+          "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/wrongDocComment.pkl"
+        ],
+        "state": "partial"
       }
     },
     {
@@ -184027,7 +184577,7 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/parser.rs",
-            "sha256": "db7a66d35f549b8d2104ef332fda8adc610c82b0eda52590551e9dec28f2cfc2",
+            "sha256": "78c4c68031b0e71fab9fa2c3a1ce1c931de7953f72e8bbb7578a949c1a55da5d",
             "symbol": "ReadResource"
           },
           {
@@ -184150,7 +184700,7 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/parser.rs",
-            "sha256": "db7a66d35f549b8d2104ef332fda8adc610c82b0eda52590551e9dec28f2cfc2",
+            "sha256": "78c4c68031b0e71fab9fa2c3a1ce1c931de7953f72e8bbb7578a949c1a55da5d",
             "symbol": "ReadResource"
           },
           {
@@ -185248,12 +185798,12 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/parser.rs",
-            "sha256": "db7a66d35f549b8d2104ef332fda8adc610c82b0eda52590551e9dec28f2cfc2",
+            "sha256": "78c4c68031b0e71fab9fa2c3a1ce1c931de7953f72e8bbb7578a949c1a55da5d",
             "symbol": "annotations"
           },
           {
             "path": "crates/pkl-runtime/src/resolver.rs",
-            "sha256": "08462255198ada43fcc2e7b90253abed2533de5f10b6d62785aedbf09de418af",
+            "sha256": "7e44c1f799c1fc9441ae22a48994591f38508325b44c5c8e740989e431365727",
             "symbol": "Annotations"
           },
           {
@@ -186592,12 +187142,12 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/parser.rs",
-            "sha256": "db7a66d35f549b8d2104ef332fda8adc610c82b0eda52590551e9dec28f2cfc2",
+            "sha256": "78c4c68031b0e71fab9fa2c3a1ce1c931de7953f72e8bbb7578a949c1a55da5d",
             "symbol": "import"
           },
           {
             "path": "crates/pkl-runtime/src/resolver.rs",
-            "sha256": "08462255198ada43fcc2e7b90253abed2533de5f10b6d62785aedbf09de418af",
+            "sha256": "7e44c1f799c1fc9441ae22a48994591f38508325b44c5c8e740989e431365727",
             "symbol": "visit"
           },
           {
@@ -187553,7 +188103,7 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/parser.rs",
-            "sha256": "db7a66d35f549b8d2104ef332fda8adc610c82b0eda52590551e9dec28f2cfc2",
+            "sha256": "78c4c68031b0e71fab9fa2c3a1ce1c931de7953f72e8bbb7578a949c1a55da5d",
             "symbol": "ReadResource"
           },
           {
@@ -189109,7 +189659,8 @@
   "sources": {
     "compatibility/corpus.json": "0e95da22f965dede398f1a1f136703ba913d588aa51c1fb871cd97a11c84a0dd",
     "compatibility/inventory.json": "a9b21752adad9a269a54854c0dd298256757be88ad95c1388e30d7c78e407070",
-    "compatibility/m2-mappings.json": "82022a3459e7676bdb2c0889352727698dc19210f9c57307e92f61eeed9d9ed2",
+    "compatibility/m2-mappings.json": "2f85e256d7e986a731cf1ef7b795d3d77bcaf585c6ac339cc7128c982208646f",
+    "compatibility/m2-module-eval.json": "fc14b82e9f783a30fab735cf04379adde5883dc09df0cb0afa005268363626e0",
     "compatibility/regressions.json": "09c064f65730d30f72bf87a45c88d47ecc0844e57966a999dc8e759f083af3da",
     "compatibility/rev1-inventory.json": "6061f202ba3f04565efed3617ac69d3c2fadc54eec1f562b67a4758b3d0a8ab5",
     "references.lock": "278f48fd7697459281aa78a706c9ca57222f36a8c0785d838a6449fbaf26d30b",

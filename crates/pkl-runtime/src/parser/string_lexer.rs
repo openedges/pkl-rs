@@ -4,7 +4,10 @@ use crate::value::PklString;
 use std::collections::BTreeMap;
 use std::sync::Arc;
 
-use super::{Diagnostic, DiagnosticKind, Kind, Lexer, Parser, Span, StringPart, unicode_escape};
+use super::{
+    Diagnostic, DiagnosticKind, DiagnosticOrigin, Kind, Lexer, Parser, Span, StringPart,
+    unicode_escape,
+};
 
 // EOF validation parses an interpolation to preserve its first syntax error.
 // Replaying already failed child strings prevents that validation from entering
@@ -54,17 +57,36 @@ enum StringFlow {
 
 impl Lexer<'_> {
     pub(super) fn string(&mut self, start: usize, first: char) -> Result<Kind, Diagnostic> {
+        self.string_in_context(start, first, false)
+    }
+
+    pub(super) fn string_in_context(
+        &mut self,
+        start: usize,
+        first: char,
+        constant: bool,
+    ) -> Result<Kind, Diagnostic> {
         let mut frames = vec![self.start_string(start, first)?];
         loop {
             let frame = frames.last_mut().expect("active string scan");
-            let result = match self.string_step(frame) {
+            let step = self.string_step(frame);
+            if constant && let Some(interpolation) = &frame.interpolation {
+                return Err(Diagnostic::language(
+                    DiagnosticOrigin::Parser,
+                    DiagnosticKind::Syntax,
+                    Span::new(interpolation.start, self.cursor),
+                    "String constant cannot have interpolated values.",
+                ));
+            }
+            let result = match step {
                 Ok(StringFlow::Continue) => continue,
                 Ok(StringFlow::Start(start, first)) => {
                     if frames.len() >= 32 {
                         // Resource guards must not be swallowed by the lexical
                         // recovery used to defer ordinary expression errors.
-                        return Err(Diagnostic::new(
-                            DiagnosticKind::Unsupported,
+                        return Err(Diagnostic::limit(
+                            DiagnosticOrigin::Lexer,
+                            "interpolation-depth-32",
                             Span::new(start, self.cursor),
                             "String interpolation nesting limit exceeded.",
                         ));
@@ -104,7 +126,8 @@ impl Lexer<'_> {
                             Ok(())
                         });
                     let mut error = result.err().unwrap_or_else(|| {
-                        let mut error = Diagnostic::new(
+                        let mut error = Diagnostic::language(
+                            DiagnosticOrigin::Lexer,
                             DiagnosticKind::Syntax,
                             Span::new(range.end, range.end),
                             "Unexpected token `EOF`. Expected `)`.",
@@ -190,8 +213,17 @@ impl Lexer<'_> {
                 hashes += 1;
                 self.advance();
             }
+            if self.peek().is_none() {
+                return Err(Diagnostic::language(
+                    DiagnosticOrigin::Lexer,
+                    DiagnosticKind::Syntax,
+                    Span::new(self.cursor.saturating_sub(1), self.cursor),
+                    "Unexpected end of file.",
+                ));
+            }
             if self.advance() != Some('"') {
-                return Err(Diagnostic::new(
+                return Err(Diagnostic::language(
+                    DiagnosticOrigin::Lexer,
                     DiagnosticKind::Syntax,
                     Span::new(start, self.cursor),
                     "Expected string after `#`.",
@@ -265,7 +297,8 @@ impl Lexer<'_> {
         let position = self.cursor;
         let Some(ch) = self.advance() else {
             self.validate_pending_unicode(frame)?;
-            return Err(Diagnostic::new(
+            return Err(Diagnostic::language(
+                DiagnosticOrigin::Lexer,
                 DiagnosticKind::Syntax,
                 Span::new(self.cursor, self.cursor),
                 format!("Missing `{}` delimiter.", frame.delimiter),
@@ -273,7 +306,8 @@ impl Lexer<'_> {
         };
         if ch == '\n' || ch == '\r' {
             if !frame.multiline {
-                return Err(Diagnostic::new(
+                return Err(Diagnostic::language(
+                    DiagnosticOrigin::Lexer,
                     DiagnosticKind::Syntax,
                     Span::new(position, self.cursor),
                     format!("Missing `{}` delimiter.", frame.delimiter),
@@ -294,7 +328,8 @@ impl Lexer<'_> {
             self.cursor += frame.escape.len();
             let escaped_start = self.cursor;
             let escaped = self.advance().ok_or_else(|| {
-                Diagnostic::new(
+                Diagnostic::language(
+                    DiagnosticOrigin::Lexer,
                     DiagnosticKind::Syntax,
                     Span::new(self.cursor, self.cursor),
                     "Unexpected end of file.",
@@ -325,7 +360,8 @@ impl Lexer<'_> {
                         self.advance();
                     }
                     if self.peek() != Some('}') {
-                        return Err(Diagnostic::new(
+                        return Err(Diagnostic::language(
+                            DiagnosticOrigin::Lexer,
                             DiagnosticKind::Syntax,
                             Span::new(position, self.cursor),
                             format!(
@@ -357,7 +393,8 @@ impl Lexer<'_> {
                         self.advance();
                     }
                     if !frame.multiline {
-                        let mut error = Diagnostic::new(
+                        let mut error = Diagnostic::language(
+                            DiagnosticOrigin::Lexer,
                             DiagnosticKind::Syntax,
                             Span::new(position, self.cursor),
                             "Invalid line continuation escape sequence.\n\nLine continuations are only allowed in multi-line strings.",
@@ -379,7 +416,8 @@ impl Lexer<'_> {
                             self.advance();
                         }
                         if self.advance().is_some_and(|ch| matches!(ch, '\n' | '\r')) {
-                            let mut error = Diagnostic::new(
+                            let mut error = Diagnostic::language(
+                                DiagnosticOrigin::Lexer,
                                 DiagnosticKind::Syntax,
                                 Span::new(escaped_start - 1, self.cursor),
                                 "Invalid line continuation escape sequence.\n\nWhitespace between the continuation escape and following newline is not allowed.",
@@ -394,9 +432,9 @@ impl Lexer<'_> {
                             return Err(error);
                         }
                     }
-                    return Err(Diagnostic::new(
-                        DiagnosticKind::Syntax,
-                        // Java uses the last hash rather than the backslash
+                    return Err(Diagnostic::language(
+                        DiagnosticOrigin::Lexer,
+                        DiagnosticKind::Syntax, // Java uses the last hash rather than the backslash
                         // when an active raw-string escape is invalid.
                         Span::new(escaped_start - 1, end),
                         format!(
@@ -426,12 +464,13 @@ impl Lexer<'_> {
         Ok(())
     }
 
-    fn unexpected_unicode_character(&self, got: &str, expected: &str) -> Diagnostic {
+    pub(super) fn unexpected_unicode_character(&self, got: &str, expected: &str) -> Diagnostic {
         let span = self.peek().map_or_else(
             || Span::new(self.cursor - 1, self.cursor - 1),
             |character| Span::new(self.cursor, self.cursor + character.len_utf8()),
         );
-        let mut error = Diagnostic::new(
+        let mut error = Diagnostic::language(
+            DiagnosticOrigin::Lexer,
             DiagnosticKind::Syntax,
             span,
             format!("Unexpected character `{got}`. Did you mean `{expected}`?"),
@@ -450,10 +489,10 @@ impl Lexer<'_> {
         loop {
             let token = self.next_token(true).map_err(|error| {
                 match &self.source[error.span.start..error.span.end] {
-                    "&" if error.kind == DiagnosticKind::Unsupported => {
+                    "&" if error.provenance.origin == DiagnosticOrigin::Lexer => {
                         self.unexpected_unicode_character("&", "&&")
                     }
-                    "~" if error.kind == DiagnosticKind::Unsupported => {
+                    "~" if error.provenance.origin == DiagnosticOrigin::Lexer => {
                         self.unexpected_unicode_character("~", "~/")
                     }
                     _ => error,
@@ -476,7 +515,8 @@ impl Lexer<'_> {
                     self.advance();
                 }
                 if self.peek().is_none() {
-                    return Err(Diagnostic::new(
+                    return Err(Diagnostic::language(
+                        DiagnosticOrigin::Lexer,
                         DiagnosticKind::Syntax,
                         Span::new(token.span.start, self.cursor),
                         "Unexpected end of file.",
@@ -581,7 +621,8 @@ fn multiline_parts(
         parts.first().map(|part| &part.part),
         Some(StringPart::Newline)
     ) {
-        return Err(Diagnostic::new(
+        return Err(Diagnostic::language(
+            DiagnosticOrigin::Lexer,
             DiagnosticKind::Syntax,
             parts.first().map_or(span, |part| part.span),
             "The content of a multi-line string must begin on a new line.",
@@ -604,7 +645,8 @@ fn multiline_parts(
             indent
         }
         _ => {
-            return Err(Diagnostic::new(
+            return Err(Diagnostic::language(
+                DiagnosticOrigin::Lexer,
                 DiagnosticKind::Syntax,
                 span,
                 "The closing delimiter of a multi-line string must begin on a new line.",
@@ -626,7 +668,8 @@ fn multiline_parts(
                             .bytes()
                             .take_while(|ch| matches!(ch, b' ' | b'\t'))
                             .count();
-                        return Err(Diagnostic::new(
+                        return Err(Diagnostic::language(
+                            DiagnosticOrigin::Lexer,
                             DiagnosticKind::Syntax,
                             Span::new(part.span.start + leading, part.span.end),
                             "Line must match or exceed indentation of the String's last line.",
@@ -639,7 +682,8 @@ fn multiline_parts(
             StringPart::Newline | StringPart::Continuation => line_start = true,
             StringPart::Escape(_) | StringPart::Unicode => {
                 if line_start && !indent.is_empty() {
-                    return Err(Diagnostic::new(
+                    return Err(Diagnostic::language(
+                        DiagnosticOrigin::Lexer,
                         DiagnosticKind::Syntax,
                         part.span,
                         "Line must match or exceed indentation of the String's last line.",
@@ -680,7 +724,8 @@ fn decode_unicode(source: &str, span: Span) -> Result<PklString, Diagnostic> {
     });
     let Some(point) = point else {
         let prefix = &text[..brace];
-        return Err(Diagnostic::new(
+        return Err(Diagnostic::language(
+            DiagnosticOrigin::Lexer,
             DiagnosticKind::Syntax,
             span,
             format!(
@@ -694,8 +739,9 @@ fn decode_unicode(source: &str, span: Span) -> Result<PklString, Diagnostic> {
     let Some(character) = char::from_u32(point as u32) else {
         // Java has a distinct internal error for larger code points. Preserve
         // that incompatibility rather than synthesizing JVM stack traces.
-        return Err(Diagnostic::new(
-            DiagnosticKind::Unsupported,
+        return Err(Diagnostic::unsupported(
+            DiagnosticOrigin::Lexer,
+            "unicode-out-of-range",
             span,
             "Unicode escape is outside the supported scalar range.",
         ));

@@ -1,0 +1,93 @@
+{
+  "archives": {
+    "development": {
+      "bytes": 7064703,
+      "extracted_members_verified": true,
+      "inventory_sha256": "30cb0686421c75fb6394a91548b65f5da1fb144c64d254c0b5ec464bd6c9ff38",
+      "original_bytes": 54216342,
+      "original_files": 1943,
+      "originals_stable": true,
+      "path": "reports/m2/stage39-development-evidence.tar.gz",
+      "roots": [
+        "stage39-adapter-checks-01",
+        "stage39-adapter-final-checks-01",
+        "stage39-adapter-tests-01",
+        "stage39-adapter-tests-02",
+        "stage39-adapter-tests-03",
+        "stage39-adapter-tests-04",
+        "stage39-adapter-tests-05",
+        "stage39-adapter-tests-06",
+        "stage39-adapter-tests-07",
+        "stage39-manifest-refresh-01",
+        "stage39-module-baseline-build-01",
+        "stage39-module-baseline-comparison-01",
+        "stage39-core-validation-01",
+        "stage39-core-validation-02",
+        "stage39-core-validation-03",
+        "stage39-core-original72-baseline-01",
+        "stage39-core-original72-02",
+        "stage39-root-contract-review-01",
+        "stage39-next-scope-design-01",
+        "stage39-frontend-boundary-oracle-01",
+        "stage39-doc-semicolon-oracle-01"
+      ],
+      "sha256": "517ca98ab14919eec3b001a4844c97b390bd69852c894f5b4b4af9d6018c726d"
+    },
+    "platform": {
+      "bytes": 4604812,
+      "extracted_members_verified": true,
+      "inventory_sha256": "902718699c45d1e3ce3c6ff34955dfc66e26dacc348b41613fae32b9fa49742e",
+      "original_bytes": 21398151,
+      "original_files": 1771,
+      "originals_stable": true,
+      "path": "reports/m2/stage39-platform-evidence.tar.gz",
+      "roots": [
+        "stage39-module-boundary-platform-final-01",
+        "stage39-module-boundary-platform-tool-01",
+        "stage39-module-platform-driver-review-01",
+        "stage39-module-platform-driver-review-02",
+        "stage39-original72-platform-final-01",
+        "stage39-platform-build-session-01",
+        "stage39-platform-final-audit-01",
+        "stage39-platform-preparation-01",
+        "stage39-platforms-final-01",
+        "stage39-portable-session-01"
+      ],
+      "sha256": "611be07684965cbc3c65260ca20b58a13d96efc67d03342f154856b5d3d27324"
+    },
+    "regression": {
+      "bytes": 7865711,
+      "extracted_members_verified": true,
+      "inventory_sha256": "1400a86d653d7248b6054f2966b613a9c012a9da99e1dd8cf3eba538d6009969",
+      "original_bytes": 67327614,
+      "original_files": 34353,
+      "originals_stable": true,
+      "path": "reports/m2/stage39-regression-evidence.tar.gz",
+      "roots": [
+        "stage39-check-runner-01",
+        "stage39-checks-final-01",
+        "stage39-persistent-final-01",
+        "stage39-trace-final-01",
+        "stage39-regression-review-01",
+        "stage39-command-captures-01/persistent-final-01",
+        "stage39-command-captures-01/persistent-contract-final-01",
+        "stage39-command-captures-01/trace-final-01",
+        "stage39-command-captures-01/trace-report-final-01",
+        "stage39-command-captures-01/trace-contract-final-01"
+      ],
+      "sha256": "8be1faa8329362eb141d56d2d0cc032a6ba83dc1751a5d74bdcf9792f24394b7"
+    }
+  },
+  "excluded_cargo_contents_enumerated": false,
+  "excluded_cargo_paths": [
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage39/target/m2/stage39-persistent-final-01/build",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage39/target/m2/stage39-trace-final-01/build"
+  ],
+  "existing_oracle_archive": {
+    "path": "reports/m2/stage39-oracle-evidence.tar.gz",
+    "sha256": "d7d6c728e9bc05653af457d2fdf3d7b5d223015a3b472ffbb84058e521ba0035"
+  },
+  "helper_sha256": "a0e321ae02486364a61892b81a7ec99fe8aca1c9220c77d7e617e708c2237266",
+  "schema": 1,
+  "scope": "Closed Stage39 checkpoint development, platform and regression evidence. Pending native language acquisitions are not included or claimed complete."
+}

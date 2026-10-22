@@ -1,5 +1,5 @@
 //! Shared incremental parser, following the pinned Pkl 0.32 grammar.
-use crate::diagnostic::{Diagnostic, DiagnosticKind};
+use crate::diagnostic::{Diagnostic, DiagnosticKind, DiagnosticOrigin};
 use crate::source::Span;
 use crate::syntax::{
     BinaryOp, Expr, ExprKind, Member, Modifier, ModifierKind, Module, ModuleDeclaration,
@@ -108,6 +108,9 @@ enum Kind {
     Operator(&'static str),
     String(crate::value::PklString),
     StringTemplate(Vec<StringPart>),
+    DocComment,
+    LineComment,
+    BlockComment,
     StringStart(char),
     Symbol(char),
     Eof,
@@ -143,6 +146,14 @@ impl Lexer<'_> {
     }
 
     fn next_token(&mut self, string_start_only: bool) -> Result<Token, Diagnostic> {
+        self.next_with_comments(string_start_only, false)
+    }
+
+    fn next_with_comments(
+        &mut self,
+        string_start_only: bool,
+        comments: bool,
+    ) -> Result<Token, Diagnostic> {
         loop {
             while self
                 .peek()
@@ -151,21 +162,41 @@ impl Lexer<'_> {
                 self.advance();
             }
             if self.source[self.cursor..].starts_with("//") {
+                let start = self.cursor;
+                let doc = self.source[start..].starts_with("///");
                 while self.peek().is_some_and(|ch| ch != '\n' && ch != '\r') {
                     self.advance();
                 }
+                if doc || comments {
+                    return Ok(Token {
+                        kind: if doc {
+                            Kind::DocComment
+                        } else {
+                            Kind::LineComment
+                        },
+                        span: Span::new(start, self.cursor),
+                    });
+                }
             } else if self.source[self.cursor..].starts_with("/*") {
+                let start = self.cursor;
                 self.cursor += 2;
                 let end = self.source[self.cursor..].find("*/");
                 self.cursor = end.map_or(self.source.len(), |end| self.cursor + end + 2);
                 // The pinned lexer reports EOF even when a block comment's
                 // closing delimiter is the final source token.
                 if self.cursor == self.source.len() {
-                    return Err(Diagnostic::new(
+                    return Err(Diagnostic::language(
+                        DiagnosticOrigin::Lexer,
                         DiagnosticKind::Syntax,
                         Span::new(self.cursor, self.cursor),
                         "Unexpected end of file.",
                     ));
+                }
+                if comments {
+                    return Ok(Token {
+                        kind: Kind::BlockComment,
+                        span: Span::new(start, self.cursor),
+                    });
                 }
             } else {
                 break;
@@ -188,7 +219,8 @@ impl Lexer<'_> {
             }
             let end = self.cursor;
             if self.advance() != Some('`') {
-                return Err(Diagnostic::new(
+                return Err(Diagnostic::language(
+                    DiagnosticOrigin::Lexer,
                     DiagnosticKind::Syntax,
                     Span::new(start, self.cursor),
                     "Missing backtick delimiter.",
@@ -231,7 +263,8 @@ impl Lexer<'_> {
         } else if "=(){};.,+-*/%<>!:?|[]@".contains(ch) {
             Kind::Symbol(ch)
         } else if !ch.is_ascii() {
-            let mut diagnostic = Diagnostic::new(
+            let mut diagnostic = Diagnostic::language(
+                DiagnosticOrigin::Lexer,
                 DiagnosticKind::Syntax,
                 Span::new(start, self.cursor),
                 format!(
@@ -246,16 +279,32 @@ impl Lexer<'_> {
             diagnostic.highlight_length_utf16 = Some(1);
             return Err(diagnostic);
         } else {
-            return Err(Diagnostic::new(
-                DiagnosticKind::Unsupported,
+            if ch == '&' || ch == '~' {
+                return Err(self.unexpected_unicode_character(
+                    &ch.to_string(),
+                    if ch == '&' { "&&" } else { "~/" },
+                ));
+            }
+            return Err(Diagnostic::language(
+                DiagnosticOrigin::Lexer,
+                DiagnosticKind::Syntax,
                 Span::new(start, self.cursor),
-                format!("M1 token `{ch}` is unsupported."),
+                format!("Invalid identifier `{ch}`."),
             ));
         };
         Ok(Token {
             kind,
             span: Span::new(start, self.cursor),
         })
+    }
+
+    fn numeric_separator(&self, offset: usize) -> Diagnostic {
+        Diagnostic::language(
+            DiagnosticOrigin::Lexer,
+            DiagnosticKind::Syntax,
+            Span::new(offset, offset + 1),
+            "Unexpected separator character.\n\nThe separator character (`_`) cannot follow `0x`, `0b`, `.`, `e`, or 'E' in a number literal.",
+        )
     }
 
     fn number(&mut self, start: usize, first: char) -> Result<Kind, Diagnostic> {
@@ -268,8 +317,12 @@ impl Lexer<'_> {
             };
             if let Some(radix) = radix {
                 self.advance();
+                if self.peek() == Some('_') {
+                    return Err(self.numeric_separator(self.cursor));
+                }
                 if !self.peek().is_some_and(|ch| ch.is_digit(radix)) {
-                    return Err(Diagnostic::new(
+                    return Err(Diagnostic::language(
+                        DiagnosticOrigin::Lexer,
                         DiagnosticKind::Syntax,
                         Span::new(start, self.cursor),
                         "Expected digits after numeric base prefix.",
@@ -294,11 +347,7 @@ impl Lexer<'_> {
         if !float && self.peek() == Some('.') {
             let next = self.source[self.cursor + 1..].chars().next();
             if next == Some('_') {
-                return Err(Diagnostic::new(
-                    DiagnosticKind::Syntax,
-                    Span::new(start, self.cursor + 2),
-                    "Invalid numeric separator position.",
-                ));
+                return Err(self.numeric_separator(self.cursor + 1));
             }
             if next.is_some_and(|ch| ch.is_ascii_digit()) {
                 float = true;
@@ -317,8 +366,12 @@ impl Lexer<'_> {
             if matches!(self.peek(), Some('+' | '-')) {
                 self.advance();
             }
+            if self.peek() == Some('_') {
+                return Err(self.numeric_separator(self.cursor));
+            }
             if !self.peek().is_some_and(|ch| ch.is_ascii_digit()) {
-                return Err(Diagnostic::new(
+                return Err(Diagnostic::language(
+                    DiagnosticOrigin::Lexer,
                     DiagnosticKind::Syntax,
                     Span::new(start, self.cursor),
                     "Expected exponent digits.",
@@ -359,6 +412,7 @@ enum MemberContext {
 
 struct ObjectBuild {
     start: usize,
+    parameters: Vec<Parameter>,
     parent: Option<Expr>,
     ty: Option<Type>,
     members: Vec<ObjectMember>,
@@ -515,6 +569,24 @@ impl<'a> Parser<'a> {
         matches!(&self.token.kind, Kind::Name(name) if name == expected)
     }
 
+    fn diagnostic_token_span(&self) -> Span {
+        if matches!(self.token.kind, Kind::String(_) | Kind::StringTemplate(_)) {
+            let text = &self.lexer.source[self.token.span.start..self.token.span.end];
+            let hashes = text.bytes().take_while(|&b| b == b'#').count();
+            let quotes = if text[hashes..].starts_with("\"\"\"") {
+                3
+            } else {
+                1
+            };
+            Span::new(
+                self.token.span.start,
+                self.token.span.start + hashes + quotes,
+            )
+        } else {
+            self.token.span
+        }
+    }
+
     fn unexpected(&self, expected: Option<&str>) -> Diagnostic {
         let eof = self.token.kind == Kind::Eof;
         let token = if eof {
@@ -531,7 +603,8 @@ impl<'a> Parser<'a> {
             || (expected.is_some()
                 && self.lexer.source[self.previous_end..self.token.span.start]
                     .contains(['\n', '\r']));
-        let mut diagnostic = Diagnostic::new(
+        let mut diagnostic = Diagnostic::language(
+            DiagnosticOrigin::Parser,
             DiagnosticKind::Syntax,
             if synthetic {
                 Span::new(self.previous_end, self.previous_end)
@@ -559,21 +632,117 @@ impl<'a> Parser<'a> {
         };
         if matches!(self.token.kind, Kind::Name(_)) && (is_keyword(name) || name == "_") {
             if name == "read?" {
-                return Err(Diagnostic::new(
+                return Err(Diagnostic::language(
+                    DiagnosticOrigin::Parser,
                     DiagnosticKind::Syntax,
                     self.token.span,
                     "Keyword `read_question` is not allowed here.\n\nIf you must use this name as identifier, enclose it in backticks.",
                 ));
             }
-            return Err(Diagnostic::new(
-                DiagnosticKind::Unsupported,
+            return Err(Diagnostic::language(
+                DiagnosticOrigin::Parser,
+                DiagnosticKind::Syntax,
                 self.token.span,
-                "M1 keyword cannot be used as an identifier.",
+                format!(
+                    "Keyword `{name}` is not allowed here.\n\nIf you must use this name as identifier, enclose it in backticks."
+                ),
             ));
         }
         let name = name.clone();
         let token = self.advance()?;
         Ok((name, token.span))
+    }
+
+    fn doc_comment(&mut self) -> Result<bool, Diagnostic> {
+        if self.token.kind != Kind::DocComment {
+            return Ok(false);
+        }
+        let mut newlines = self.advance_comment()?;
+        while matches!(
+            self.token.kind,
+            Kind::DocComment | Kind::LineComment | Kind::BlockComment
+        ) {
+            if newlines > 1 {
+                if self.token.kind != Kind::DocComment {
+                    self.advance_comment()?;
+                }
+                break;
+            }
+            newlines = self.advance_comment()?;
+        }
+        while matches!(self.token.kind, Kind::LineComment | Kind::BlockComment) {
+            self.advance_comment()?;
+        }
+        Ok(true)
+    }
+
+    fn advance_comment(&mut self) -> Result<usize, Diagnostic> {
+        self.previous_end = self.token.span.end;
+        let mut gap_start = self.previous_end;
+        loop {
+            self.token = self.lexer.next_with_comments(false, true)?;
+            if !self.is_symbol(';') {
+                break;
+            }
+            // Pinned forceNextComment ignores semicolons and reports only the
+            // final lexer's inter-token newlines, unlike normal forceNext.
+            gap_start = self.token.span.end;
+        }
+        let gap = &self.lexer.source[gap_start..self.token.span.start];
+        Ok(gap
+            .bytes()
+            .enumerate()
+            .filter(|(i, b)| {
+                *b == b'\n' || *b == b'\r' && gap.as_bytes().get(i + 1) != Some(&b'\n')
+            })
+            .count())
+    }
+
+    fn dangling_doc_comment(&self) -> Diagnostic {
+        Diagnostic::language(
+            DiagnosticOrigin::Parser,
+            DiagnosticKind::Syntax,
+            self.token.span,
+            "Dangling documentation comment.\n\nDocumentation comments must be attached to modules, classes, typealiases, methods, or properties.",
+        )
+    }
+
+    fn advance_constant(&mut self) -> Result<Token, Diagnostic> {
+        let previous = self.token.clone();
+        self.previous_end = previous.span.end;
+        let mut token = self.lexer.next_token(true)?;
+        if let Kind::StringStart(first) = token.kind {
+            token.kind = self
+                .lexer
+                .string_in_context(token.span.start, first, true)?;
+            token.span.end = self.lexer.cursor;
+        }
+        self.token = token;
+        Ok(previous)
+    }
+
+    fn string_constant(&mut self) -> Result<(PklString, Span), Diagnostic> {
+        match self.token.kind.clone() {
+            Kind::String(text) => Ok((text, self.advance()?.span)),
+            Kind::StringTemplate(parts) => {
+                let span = parts
+                    .iter()
+                    .find_map(|part| match part {
+                        StringPart::Expression(_, span) => Some(*span),
+                        _ => None,
+                    })
+                    .unwrap_or(self.token.span);
+                let prefix = &self.lexer.source[span.start..span.end];
+                let width = 2 + prefix.bytes().skip(1).take_while(|&b| b == b'#').count();
+                Err(Diagnostic::language(
+                    DiagnosticOrigin::Parser,
+                    DiagnosticKind::Syntax,
+                    Span::new(span.start, span.start + width),
+                    "String constant cannot have interpolated values.",
+                ))
+            }
+            _ => Err(self.unexpected(Some("\""))),
+        }
     }
 
     fn annotations(&mut self) -> Result<Vec<Expr>, Diagnostic> {
@@ -583,24 +752,9 @@ impl<'a> Parser<'a> {
             let ty = self.type_expression()?;
             let mut parameters = Vec::new();
             let members = if self.is_symbol('{') {
-                let build = self.start_object(None, None, self.token.span.start, true, false)?;
-                let mut lookahead = self.clone();
-                let parsed_parameters = (|| {
-                    let mut values = vec![lookahead.parameter()?];
-                    while lookahead.is_symbol(',') {
-                        lookahead.advance()?;
-                        values.push(lookahead.parameter()?);
-                    }
-                    if !lookahead.is_operator("->") {
-                        return Err(lookahead.unexpected(Some("->")));
-                    }
-                    lookahead.advance()?;
-                    Ok::<_, Diagnostic>(values)
-                })();
-                if let Ok(values) = parsed_parameters {
-                    *self = lookahead;
-                    parameters = values;
-                }
+                let mut build =
+                    self.start_object(None, None, self.token.span.start, true, false)?;
+                parameters = std::mem::take(&mut build.parameters);
                 let mut body = self.expression_machine(0, Some(build))?;
                 Self::take_object_members(&mut body)
             } else {
@@ -669,14 +823,13 @@ impl<'a> Parser<'a> {
             } else {
                 ModuleParentKind::Amends
             };
-            let begin = self.advance()?.span.start;
-            let Kind::String(uri) = self.token.kind.clone() else {
-                return Err(self.unexpected(Some("string constant")));
-            };
-            let end = self.advance()?.span.end;
+            let begin = self.advance_constant()?.span.start;
+            let (uri, uri_span) = self.string_constant()?;
+            let end = uri_span.end;
             let Some(uri) = uri.as_str() else {
-                return Err(Diagnostic::new(
-                    DiagnosticKind::Unsupported,
+                return Err(Diagnostic::unsupported(
+                    DiagnosticOrigin::Parser,
+                    "module-uri-utf16",
                     Span::new(begin, end),
                     "Module URIs containing unmatched UTF-16 surrogates are not implemented.",
                 ));
@@ -705,25 +858,30 @@ impl<'a> Parser<'a> {
     fn member_list(
         &mut self,
         context: MemberContext,
-        mut initial: Option<(Vec<Modifier>, Vec<Expr>)>,
+        mut initial: Option<(Vec<Modifier>, Vec<Expr>, bool)>,
     ) -> Result<Vec<Member>, Diagnostic> {
         let mut members = Vec::new();
         while self.token.kind != Kind::Eof
             && !(context != MemberContext::Module && self.is_symbol('}'))
         {
             if context == MemberContext::Module && self.is_name("import") {
-                return Err(Diagnostic::new(
+                return Err(Diagnostic::language(
+                    DiagnosticOrigin::Parser,
                     DiagnosticKind::Syntax,
                     self.token.span,
                     "Keyword `import` is not allowed here.\n\nIf you must use this name as identifier, enclose it in backticks.",
                 ));
             }
             if !self.is_symbol('@')
-                && !matches!(self.token.kind, Kind::Name(_) | Kind::QuotedName(_))
+                && !matches!(
+                    self.token.kind,
+                    Kind::Name(_) | Kind::QuotedName(_) | Kind::DocComment
+                )
             {
-                return Err(Diagnostic::new(
+                return Err(Diagnostic::language(
+                    DiagnosticOrigin::Parser,
                     DiagnosticKind::Syntax,
-                    self.token.span,
+                    self.diagnostic_token_span(),
                     "Invalid token at position. Expected a class, typealias, method, or property.",
                 ));
             }
@@ -736,21 +894,20 @@ impl<'a> Parser<'a> {
     }
 
     fn import(&mut self) -> Result<Member, Diagnostic> {
-        let start = self.advance()?.span.start;
+        let start = self.advance_constant()?.span.start;
         if self.is_symbol('*') {
-            return Err(Diagnostic::new(
-                DiagnosticKind::Unsupported,
+            return Err(Diagnostic::unsupported(
+                DiagnosticOrigin::Parser,
+                "glob-module-import",
                 Span::new(start, self.token.span.end),
                 "Glob module imports are not implemented.",
             ));
         }
-        let Kind::String(uri) = self.token.kind.clone() else {
-            return Err(self.unexpected(Some("string constant")));
-        };
-        let uri_span = self.advance()?.span;
+        let (uri, uri_span) = self.string_constant()?;
         let Some(uri) = uri.as_str() else {
-            return Err(Diagnostic::new(
-                DiagnosticKind::Unsupported,
+            return Err(Diagnostic::unsupported(
+                DiagnosticOrigin::Parser,
+                "module-uri-utf16",
                 uri_span,
                 "Module URIs containing unmatched UTF-16 surrogates are not implemented.",
             ));
@@ -802,15 +959,27 @@ impl<'a> Parser<'a> {
     fn member(
         &mut self,
         context: MemberContext,
-        initial: Option<(Vec<Modifier>, Vec<Expr>)>,
+        initial: Option<(Vec<Modifier>, Vec<Expr>, bool)>,
     ) -> Result<Member, Diagnostic> {
-        let (modifiers, annotations) = match initial {
+        let (modifiers, annotations, _documented) = match initial {
             Some(initial) => initial,
             None => {
+                let documented = self.doc_comment()?;
                 let annotations = self.annotations()?;
-                (self.modifiers()?, annotations)
+                (self.modifiers()?, annotations, documented)
             }
         };
+        if self.token.kind == Kind::DocComment {
+            return Err(self.dangling_doc_comment());
+        }
+        if self.token.kind == Kind::Eof {
+            return Err(Diagnostic::language(
+                DiagnosticOrigin::Parser,
+                DiagnosticKind::Syntax,
+                self.token.span,
+                "Unexpected end of file.",
+            ));
+        }
         let start = modifiers
             .first()
             .map_or(self.token.span.start, |modifier| modifier.span.start);
@@ -926,7 +1095,14 @@ impl<'a> Parser<'a> {
             let expr = if self.is_symbol('=') {
                 self.advance()?;
                 self.expression_expected(0, (context == MemberContext::Object).then_some('}'))?
-            } else if self.is_symbol('{') && ty.is_none() {
+            } else if self.is_symbol('{') && ty.is_some() {
+                return Err(Diagnostic::language(
+                    DiagnosticOrigin::Parser,
+                    DiagnosticKind::Syntax,
+                    self.token.span,
+                    "Properties with type annotations cannot have object bodies.\n\nTo define both a type annotation and an object body, try using assignment instead.\nFor example: `obj: Bird = new { ... }`.",
+                ));
+            } else if self.is_symbol('{') {
                 let parent = Expr {
                     kind: ExprKind::Member(
                         Box::new(Expr {
@@ -1050,8 +1226,9 @@ impl<'a> Parser<'a> {
         // ordinary Pratt expression machine below stores its continuations on
         // the heap; one shared work budget bounds both wide and deep inputs.
         if self.depth >= 32 {
-            return Err(Diagnostic::new(
-                DiagnosticKind::Unsupported,
+            return Err(Diagnostic::limit(
+                DiagnosticOrigin::Parser,
+                "expression-scope-depth-32",
                 self.token.span,
                 "Expression scope nesting limit exceeded.",
             ));
@@ -1064,8 +1241,9 @@ impl<'a> Parser<'a> {
 
     fn enter_expression_scope(&mut self) -> Result<(), Diagnostic> {
         if self.depth >= 32 {
-            return Err(Diagnostic::new(
-                DiagnosticKind::Unsupported,
+            return Err(Diagnostic::limit(
+                DiagnosticOrigin::Parser,
+                "expression-scope-depth-32",
                 self.token.span,
                 "Expression scope nesting limit exceeded.",
             ));
@@ -1077,8 +1255,9 @@ impl<'a> Parser<'a> {
     fn expression_step(&mut self) -> Result<(), Diagnostic> {
         self.expressions += 1;
         if self.expressions > 65_536 {
-            return Err(Diagnostic::new(
-                DiagnosticKind::Unsupported,
+            return Err(Diagnostic::limit(
+                DiagnosticOrigin::Parser,
+                "expression-work-65536",
                 self.token.span,
                 "Expression work limit exceeded.",
             ));
@@ -1110,6 +1289,14 @@ impl<'a> Parser<'a> {
                     return Err(error);
                 }
                 let end = self.expect('}')?.span.end;
+                if !build.parameters.is_empty() {
+                    self.pending.push(Diagnostic::unsupported(
+                        DiagnosticOrigin::DeferredAstValidation,
+                        "parameterized-object-body",
+                        Span::new(build.start, end),
+                        "Parameterized object body evaluation is not implemented.",
+                    ));
+                }
                 self.depth -= 1;
                 machine.current = Some(Expr {
                     kind: if let Some(ty) = build.ty.take() {
@@ -1152,6 +1339,16 @@ impl<'a> Parser<'a> {
                 }
             } else {
                 let start = self.token.span.start;
+                if self.is_name("class") || self.is_name("typealias") {
+                    let mut error = Diagnostic::language(
+                        DiagnosticOrigin::Parser,
+                        DiagnosticKind::Syntax,
+                        Span::new(self.previous_end, self.previous_end),
+                        "Missing `}` delimiter.",
+                    );
+                    error.highlight_length_utf16 = Some(1);
+                    return Err(error);
+                }
                 if self.is_name("unknown") || self.is_name("nothing") {
                     return Err(self.unexpected(Some("}")));
                 }
@@ -1258,7 +1455,23 @@ impl<'a> Parser<'a> {
             let span = self.token.span;
             if self.is_symbol('(') {
                 let mut candidate = self.clone();
+                let mut head = self.clone();
+                head.advance()?;
+                let mut committed = head.is_name("_") || head.is_symbol(')');
+                if (matches!(&head.token.kind, Kind::Name(name) if !is_keyword(name))
+                    || matches!(head.token.kind, Kind::QuotedName(_)))
+                    && !head.is_name("_")
+                {
+                    head.advance()?;
+                    committed = head.is_symbol(',') || head.is_symbol(':');
+                }
                 let parameters = candidate.parameters();
+                if committed && let Err(error) = &parameters {
+                    return Err(error.clone());
+                }
+                if committed && parameters.is_ok() && !candidate.is_operator("->") {
+                    return Err(candidate.unexpected(Some("->")));
+                }
                 if let Ok(parameters) = parameters
                     && candidate.is_operator("->")
                 {
@@ -1289,7 +1502,7 @@ impl<'a> Parser<'a> {
                 let ty = if self.is_symbol('{') {
                     None
                 } else {
-                    Some(self.type_expression()?)
+                    Some(self.type_expression_expected(Some("{"))?)
                 };
                 let missing_delimiter = ty.is_none();
                 machine.object_build =
@@ -1481,11 +1694,18 @@ impl<'a> Parser<'a> {
             }
             if self.is_symbol('{') {
                 // Pkl requires an explicitly parenthesized amendment parent.
-                if !self.lexer.source[left.span.start..left.span.end].starts_with('(') {
-                    return Err(Diagnostic::new(
-                        DiagnosticKind::Unsupported,
+                if !matches!(
+                    left.kind,
+                    ExprKind::Parenthesized(_) | ExprKind::New { .. } | ExprKind::Object { .. }
+                ) {
+                    let parent = &self.lexer.source[left.span.start..left.span.end];
+                    return Err(Diagnostic::language(
+                        DiagnosticOrigin::Parser,
+                        DiagnosticKind::Syntax,
                         self.token.span,
-                        "M1 amendment parent must be parenthesized.",
+                        format!(
+                            "Unexpected token: `{{`.\n\nIf you meant to write an amends expression, wrap the parent in parentheses. Try: `({parent}) {{ ... }}`"
+                        ),
                     ));
                 }
                 let start = left.span.start;
@@ -1764,7 +1984,8 @@ impl<'a> Parser<'a> {
                         return Err(error);
                     }
                     if self.token.span.start != close.span.end {
-                        return Err(Diagnostic::new(
+                        return Err(Diagnostic::language(
+                            DiagnosticOrigin::Parser,
                             DiagnosticKind::Syntax,
                             close.span,
                             format!(
@@ -1787,6 +2008,9 @@ impl<'a> Parser<'a> {
                         ),
                     ));
                 } else {
+                    if !self.is_symbol('{') {
+                        return Err(self.unexpected(Some("{` or `=")));
+                    }
                     let parent = Expr {
                         kind: ExprKind::EntryParent,
                         span: Span::new(start, self.previous_end),
@@ -1923,14 +2147,48 @@ impl<'a> Parser<'a> {
     ) -> Result<Box<ObjectBuild>, Diagnostic> {
         self.enter_expression_scope()?;
         self.expect('{')?;
+        let parameters = self.object_parameters()?;
         Ok(Box::new(ObjectBuild {
             start,
+            parameters,
             parent,
             ty,
             members: Vec::new(),
             missing_delimiter,
             postfix,
         }))
+    }
+
+    fn object_parameters(&mut self) -> Result<Vec<Parameter>, Diagnostic> {
+        let underscore = self.is_name("_");
+        if !underscore
+            && !match &self.token.kind {
+                Kind::QuotedName(_) => true,
+                Kind::Name(name) => !is_keyword(name),
+                _ => false,
+            }
+        {
+            return Ok(Vec::new());
+        }
+        let mut candidate = self.clone();
+        let first = candidate.parameter()?;
+        if !underscore && !candidate.is_symbol(',') && !candidate.is_operator("->") {
+            return Ok(Vec::new());
+        }
+        let mut parameters = vec![first];
+        while candidate.is_symbol(',') {
+            candidate.advance()?;
+            if candidate.is_operator("->") {
+                break;
+            }
+            parameters.push(candidate.parameter()?);
+        }
+        if !candidate.is_operator("->") {
+            return Err(candidate.unexpected(Some(",` or `->")));
+        }
+        candidate.advance()?;
+        *self = candidate;
+        Ok(parameters)
     }
 
     fn take_object_members(expression: &mut Expr) -> Vec<ObjectMember> {
@@ -2104,8 +2362,14 @@ impl<'a> Parser<'a> {
                 break;
             }
             self.advance()?;
+            if self.is_symbol(')') {
+                break;
+            }
         }
-        self.expect(')')?;
+        if !self.is_symbol(')') {
+            return Err(self.unexpected(Some(",` or `)")));
+        }
+        self.advance()?;
         Ok(parameters)
     }
 
@@ -2135,8 +2399,15 @@ impl<'a> Parser<'a> {
     }
 
     fn type_expression(&mut self) -> Result<Type, Diagnostic> {
+        self.type_expression_expected(None)
+    }
+
+    fn type_expression_expected(
+        &mut self,
+        expected: Option<&'static str>,
+    ) -> Result<Type, Diagnostic> {
         let depth = self.depth;
-        let result = self.type_inner();
+        let result = self.type_inner(expected);
         self.depth = depth;
         result
     }
@@ -2246,21 +2517,21 @@ impl<'a> Parser<'a> {
             }
             Kind::Name(name) => {
                 if is_keyword(&name) || name == "_" {
-                    return Err(Diagnostic::new(
-                        DiagnosticKind::Unsupported,
-                        span,
-                        format!("M1 expression `{name}` is unsupported."),
-                    ));
+                    if name == "import" {
+                        return Err(Diagnostic::unsupported(
+                            DiagnosticOrigin::Parser,
+                            "import-expression",
+                            span,
+                            "Import expressions are not implemented.",
+                        ));
+                    }
+                    return Err(self.unexpected(self.expectation.as_deref()));
                 }
                 self.advance()?;
                 ExprKind::Name(name)
             }
             Kind::Symbol('[') => {
-                return Err(Diagnostic::new(
-                    DiagnosticKind::Unsupported,
-                    span,
-                    "M1 token `[` is unsupported.",
-                ));
+                return Err(self.unexpected(self.expectation.as_deref()));
             }
             Kind::Eof => return Err(self.unexpected(None)),
             _ => {
@@ -2288,7 +2559,8 @@ fn integer(text: &str, negative: bool, span: Span) -> Result<i64, Diagnostic> {
         .ok()
         .and_then(|value| i64::try_from(if negative { -value } else { value }).ok());
     value.ok_or_else(|| {
-        Diagnostic::new(
+        Diagnostic::language(
+            DiagnosticOrigin::DeferredAstValidation,
             DiagnosticKind::IntegerRange,
             span,
             format!("Int literal `{literal}` is too large."),
@@ -2298,6 +2570,7 @@ fn integer(text: &str, negative: bool, span: Span) -> Result<i64, Diagnostic> {
 
 pub fn parse_module(source: &str) -> Result<Module, Diagnostic> {
     let mut parser = Parser::new(source)?;
+    let documented = parser.doc_comment()?;
     let annotations = parser.annotations()?;
     let modifiers = parser.modifiers()?;
     let has_declaration =
@@ -2305,14 +2578,32 @@ pub fn parse_module(source: &str) -> Result<Module, Diagnostic> {
     let (declaration, initial) = if has_declaration {
         (parser.module_declaration(modifiers, annotations)?, None)
     } else {
-        (None, Some((modifiers, annotations)))
+        (None, Some((modifiers, annotations, documented)))
     };
     let mut members = Vec::new();
     let mut initial = initial;
-    if initial
+    let has_header = initial
         .as_ref()
-        .is_none_or(|(modifiers, annotations)| modifiers.is_empty() && annotations.is_empty())
-    {
+        .is_some_and(|(modifiers, annotations, documented)| {
+            *documented || !modifiers.is_empty() || !annotations.is_empty()
+        });
+    if has_header && parser.is_name("import") {
+        return Err(Diagnostic::language(
+            DiagnosticOrigin::Parser,
+            DiagnosticKind::Syntax,
+            parser.token.span,
+            "Imports cannot have doc comments, annotations or modifiers.",
+        ));
+    }
+    if has_header && parser.token.kind == Kind::Eof {
+        return Err(Diagnostic::language(
+            DiagnosticOrigin::Parser,
+            DiagnosticKind::Syntax,
+            parser.token.span,
+            "Unexpected end of file.",
+        ));
+    }
+    if !has_header {
         while parser.is_name("import") {
             members.push(parser.import()?);
             initial = None;

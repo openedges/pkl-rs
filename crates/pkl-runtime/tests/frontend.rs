@@ -37,7 +37,7 @@ fn bounded_parser_preserves_precedence_and_rejects_trailing_input() {
     assert!(parse_expression("9223372036854775808").is_err());
     assert_eq!(
         parse_expression("[1]").unwrap_err().kind,
-        DiagnosticKind::Unsupported
+        DiagnosticKind::Syntax
     );
 }
 

@@ -14,6 +14,36 @@ pub enum DiagnosticKind {
     IntegerRange,
 }
 
+/// The frontend component that produced a diagnostic, independent of its topic.
+#[derive(Clone, Copy, Debug, Eq, PartialEq)]
+pub enum DiagnosticOrigin {
+    Lexer,
+    Parser,
+    DeferredAstValidation,
+    Resolver,
+    Unclassified,
+}
+
+/// A failure's meaning, independent of its rendered bytes and compatibility.
+#[derive(Clone, Copy, Debug, Eq, PartialEq)]
+pub enum FailureDisposition {
+    LanguageError,
+    Unsupported,
+    LimitExceeded,
+    InternalFailure,
+}
+
+impl FailureDisposition {
+    pub fn as_str(self) -> &'static str {
+        match self {
+            Self::LanguageError => "language-error",
+            Self::Unsupported => "unsupported",
+            Self::LimitExceeded => "limit-exceeded",
+            Self::InternalFailure => "internal-failure",
+        }
+    }
+}
+
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub struct LogicalFrame {
     pub source: SourceId,
@@ -149,9 +179,18 @@ impl TypeDiagnostic {
     }
 }
 
+/// Cold-path failure metadata, boxed so parser continuation results stay small.
+#[derive(Clone, Debug, Eq, PartialEq)]
+pub struct DiagnosticProvenance {
+    pub origin: DiagnosticOrigin,
+    pub disposition: FailureDisposition,
+    pub reason: Option<&'static str>,
+}
+
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub struct Diagnostic {
     pub kind: DiagnosticKind,
+    pub provenance: Box<DiagnosticProvenance>,
     pub span: Span,
     pub message: String,
     /// Synthetic JVM underline width (not a source byte length), e.g. at EOF.
@@ -175,6 +214,11 @@ impl Diagnostic {
     pub fn new(kind: DiagnosticKind, span: Span, message: impl Into<String>) -> Self {
         Self {
             kind,
+            provenance: Box::new(DiagnosticProvenance {
+                origin: DiagnosticOrigin::Unclassified,
+                disposition: FailureDisposition::InternalFailure,
+                reason: Some("unclassified-legacy-diagnostic"),
+            }),
             span,
             message: message.into(),
             highlight_length_utf16: None,
@@ -183,6 +227,43 @@ impl Diagnostic {
             frames: Box::default(),
             details: None,
         }
+    }
+
+    pub fn language(
+        origin: DiagnosticOrigin,
+        kind: DiagnosticKind,
+        span: Span,
+        message: impl Into<String>,
+    ) -> Self {
+        let mut diagnostic = Self::new(kind, span, message);
+        diagnostic.provenance.origin = origin;
+        diagnostic.provenance.disposition = FailureDisposition::LanguageError;
+        diagnostic.provenance.reason = None;
+        diagnostic
+    }
+
+    pub fn unsupported(
+        origin: DiagnosticOrigin,
+        capability: &'static str,
+        span: Span,
+        message: impl Into<String>,
+    ) -> Self {
+        let mut diagnostic = Self::new(DiagnosticKind::Unsupported, span, message);
+        diagnostic.provenance.origin = origin;
+        diagnostic.provenance.disposition = FailureDisposition::Unsupported;
+        diagnostic.provenance.reason = Some(capability);
+        diagnostic
+    }
+
+    pub fn limit(
+        origin: DiagnosticOrigin,
+        resource: &'static str,
+        span: Span,
+        message: impl Into<String>,
+    ) -> Self {
+        let mut diagnostic = Self::unsupported(origin, resource, span, message);
+        diagnostic.provenance.disposition = FailureDisposition::LimitExceeded;
+        diagnostic
     }
 
     pub fn with_hint(mut self, hint: impl Into<String>) -> Self {

@@ -1,5 +1,6 @@
 //! Experimental expression-string boundary shared by development adapters.
 //! This does not implement the full evaluator API or general REPL/module loading.
+pub mod frontend;
 pub mod session;
 use crate::diagnostic::{RenderFrame, render_error};
 use crate::source::{Source, SourceMap, Span};

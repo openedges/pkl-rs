@@ -48,7 +48,42 @@ object forcing and string conversion. Stage 37 adds trace/logger events and keep
 initialization and first-path evaluation within one admitted Host context.
 Stage 38 adds resource-read syntax, the shared scalar default policy,
 and generic method-lookup diagnostics.
+Stage 39 connects original module frontend commands and typed failure origins.
 These checkpoints do not complete the language milestone.
+
+## Stage 39 implementation and verification in progress
+
+The [original module frontend contract](../../docs/m2-module-frontend.md)
+registers 72 unchanged upstream error cases for whole native process comparison.
+The default language runner now also selects those commands. Inventory status is
+3,599 executable rows, 888 unimplemented rows and 40 unmapped rows; executable
+status remains separate from a passing observation and feature coverage.
+
+[Original Java observations](stage39-oracle-captures.json) retain two CLI runs
+per case, separate parser phase observations and input bindings to pinned Git
+blobs. [Development, platform and regression captures](stage39-checkpoint-captures.json)
+preserve the first implementation, including initial failures and successful
+bounded checks. An independent review subsequently reproduced a keyword-headed
+group/lambda commitment regression. The [interrupted captures](stage39-interrupted-captures.json)
+retain both intentionally stopped native acquisitions, including incomplete
+process captures. They are not complete suites.
+
+The parser correction preserves ordinary keyword grouping and real identifier,
+quoted identifier, underscore and empty-parameter lambda commitment. Corrected
+native controls include 26 complete error matches and 14 explicit unsupported
+output results. The [implementation checkpoint](stage39-implementation-checkpoint.json)
+and its [source binding](stage39-implementation-source-binding.json) connect
+completed local Rust checks to 4,121 exact source paths, including 72 pinned
+submodule inputs. Rust logs contain 575 passing harness invocations and one
+ignored invocation; child reruns are included, so this is not a distinct test count.
+The [correction archive](stage39-correction-captures.json) retains the review,
+actual Java controls, the test-authoring failure, the fix, and completed checks.
+The [independent checkpoint audit](stage39-checkpoint-audit.json) verifies all
+65,250 payload files in six archives and the source-tree bindings.
+Full native corpus verification and checkpoint closeout remain in progress.
+The earlier candidate's passing checks are historical evidence and do not stand
+in for the corrected candidate's results. Module output, loading, remaining
+language semantics and the strict M2 gate remain open.
 
 ## Stage 38 local verification checkpoint
 

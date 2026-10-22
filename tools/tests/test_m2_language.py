@@ -62,6 +62,19 @@ class ManifestTests(unittest.TestCase):
                 m2_manifest.validate_manifest(broken)
 
 
+class AdapterSelectionTests(unittest.TestCase):
+    def test_module_selection_is_explicit_and_omitted_scalar_obligations_stay_in_full_gate(self):
+        cases = [dict(id='scalar', adapter='language-api-string', required=True, requirements=['feature'], execution=dict(state='ready')),
+                 dict(id='original', adapter='language-module-eval', required=True, requirements=['feature'], execution=dict(state='ready'))]
+        manifest = dict(requirements=[], cases=cases)
+        self.assertEqual(m2_language.selected_cases(manifest), cases)
+        self.assertEqual(m2_language.selected_cases(manifest, ['language-module-eval']), cases[1:])
+        self.assertIn('required case incomplete: scalar', m2_manifest.full_gate_failures(manifest, [dict(id='original', status='pass')]))
+        for setting in [[], ['unknown'], ['language-module-eval', 'language-module-eval']]:
+            with self.assertRaises(ValueError): m2_language.selected_cases(manifest, setting)
+
+
+
 class DevelopmentGateTests(unittest.TestCase):
     def setUp(self):
         temporary = tempfile.TemporaryDirectory()

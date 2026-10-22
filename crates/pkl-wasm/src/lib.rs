@@ -58,6 +58,51 @@ pub fn evaluate_language(
     )
     .map_err(error)
 }
+/// Portable frontend bytes; no native process exit or generated-files execution.
+#[wasm_bindgen(js_name = evaluateModuleFrontend)]
+pub fn evaluate_module_frontend(
+    source: JsString,
+    uri: JsString,
+    module_name: JsString,
+    arguments: js_sys::Array,
+) -> Result<js_sys::Object, JsValue> {
+    use pkl_runtime::evaluation::frontend::{ModuleSourceInput, arguments::parse_module_eval_args};
+    let arguments = arguments
+        .iter()
+        .map(|value| string(&JsString::from(value)))
+        .collect::<Result<Vec<_>, _>>()?;
+    let invocation = parse_module_eval_args(&arguments).map_err(error)?;
+    let source = string(&source)?;
+    let uri = string(&uri)?;
+    let module_name = string(&module_name)?;
+    let result = pkl_runtime::evaluation::frontend::evaluate_module_frontend(
+        ModuleSourceInput {
+            text: &source,
+            uri: &uri,
+            inferred_name: &module_name,
+        },
+        &invocation.options,
+    );
+    let outcome = js_sys::Object::new();
+    for (name, value) in [
+        ("phase", JsValue::from_str(result.phase.as_str())),
+        (
+            "disposition",
+            JsValue::from_str(result.disposition.as_str()),
+        ),
+        (
+            "reason",
+            result.reason.map_or(JsValue::NULL, JsValue::from_str),
+        ),
+        ("stdout", Uint8Array::from(result.stdout.as_slice()).into()),
+        ("stderr", Uint8Array::from(result.stderr.as_slice()).into()),
+        ("exitCode", JsValue::from(result.exit_code)),
+    ] {
+        js_sys::Reflect::set(&outcome, &JsValue::from_str(name), &value)?;
+    }
+    Ok(outcome)
+}
+
 /// Development-only ordered calls on one evaluator, retaining failures as data.
 #[wasm_bindgen(js_name = evaluateLanguageSequence)]
 pub fn evaluate_language_sequence(

@@ -1,0 +1,131 @@
+{
+  "archived_original_files": 65250,
+  "archives": [
+    {
+      "all_payloads_and_current_origins_match": true,
+      "bytes": 1580722,
+      "cache_exclusions_pruned_before_traversal": [],
+      "exact_membership": true,
+      "inventory_sha256": "cd8ba72ebac3dc81b1590a0520cd978add140037413b848a967328884093044b",
+      "label": "oracle",
+      "original_files": 1285,
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage39/reports/m2/stage39-oracle-evidence.tar.gz",
+      "payload_bytes": 14284850,
+      "sha256": "d7d6c728e9bc05653af457d2fdf3d7b5d223015a3b472ffbb84058e521ba0035"
+    },
+    {
+      "all_payloads_and_current_origins_match": true,
+      "bytes": 7064703,
+      "cache_exclusions_pruned_before_traversal": [],
+      "exact_membership": true,
+      "inventory_sha256": "30cb0686421c75fb6394a91548b65f5da1fb144c64d254c0b5ec464bd6c9ff38",
+      "label": "development",
+      "original_files": 1943,
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage39/reports/m2/stage39-development-evidence.tar.gz",
+      "payload_bytes": 54216342,
+      "sha256": "517ca98ab14919eec3b001a4844c97b390bd69852c894f5b4b4af9d6018c726d"
+    },
+    {
+      "all_payloads_and_current_origins_match": true,
+      "bytes": 4604812,
+      "cache_exclusions_pruned_before_traversal": [],
+      "exact_membership": true,
+      "inventory_sha256": "902718699c45d1e3ce3c6ff34955dfc66e26dacc348b41613fae32b9fa49742e",
+      "label": "platform",
+      "original_files": 1771,
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage39/reports/m2/stage39-platform-evidence.tar.gz",
+      "payload_bytes": 21398151,
+      "sha256": "611be07684965cbc3c65260ca20b58a13d96efc67d03342f154856b5d3d27324"
+    },
+    {
+      "all_payloads_and_current_origins_match": true,
+      "bytes": 7865711,
+      "cache_exclusions_pruned_before_traversal": [
+        "stage39-persistent-final-01/build",
+        "stage39-trace-final-01/build"
+      ],
+      "exact_membership": true,
+      "inventory_sha256": "1400a86d653d7248b6054f2966b613a9c012a9da99e1dd8cf3eba538d6009969",
+      "label": "regression",
+      "original_files": 34353,
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage39/reports/m2/stage39-regression-evidence.tar.gz",
+      "payload_bytes": 67327614,
+      "sha256": "8be1faa8329362eb141d56d2d0cc032a6ba83dc1751a5d74bdcf9792f24394b7"
+    },
+    {
+      "all_payloads_and_current_origins_match": true,
+      "bytes": 8468442,
+      "cache_exclusions_pruned_before_traversal": [],
+      "exact_membership": true,
+      "inventory_sha256": "aa4ee09986361afac187543bc70832638cdd150b6c1f30b840a8c075110c6054",
+      "label": "interrupted",
+      "original_files": 20691,
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage39/reports/m2/stage39-interrupted-evidence.tar.gz",
+      "payload_bytes": 65256353,
+      "sha256": "687ec9d4de18e78b43b6ce061d108099ce3058b0b6eec523bdc2d8f730a01b3f"
+    },
+    {
+      "all_payloads_and_current_origins_match": true,
+      "bytes": 6279597,
+      "cache_exclusions_pruned_before_traversal": [],
+      "exact_membership": true,
+      "inventory_sha256": "81ed87787e8a3bbdf401520d0641823b0dae50c0dfda7d366cb0015e3441aefa",
+      "label": "correction",
+      "original_files": 5207,
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage39/reports/m2/stage39-correction-evidence.tar.gz",
+      "payload_bytes": 54608970,
+      "sha256": "429724e8327424c67ce36f61b300acc7e7467f29f36971ea7a458497493a1bad"
+    }
+  ],
+  "bound_sources": 4121,
+  "cache_policy": "Only positive closed origin lists walked; actual persistent/trace build caches pruned top-down before traversal. Git read-only cat-file/ls-tree.",
+  "captured_final_checks_source_map_exact": true,
+  "clarification": "Initial pending-standard wording corrected by parent additive status update; prior summary preserved. Initial audit inspection expected common inventory format; format assumptions failed before corrected independent verifier, retained in audit notes.",
+  "corrected_standard_completed_reference_verified": true,
+  "distinct_test_count_claimed": false,
+  "findings": [],
+  "full_native_pending_preserved": true,
+  "git_mutations": 0,
+  "initial_clippy_failure_preserved": true,
+  "inventory_counts": {
+    "cases": 4527,
+    "cases_by_execution": {
+      "ready": 3599,
+      "unimplemented": 888,
+      "unmapped": 40
+    },
+    "requirements": 475,
+    "requirements_by_kind": {
+      "language_parser": 137,
+      "language_token": 109,
+      "semantic-family": 31,
+      "specification": 198
+    }
+  },
+  "production_changes": 0,
+  "required_checks_passed": true,
+  "retained_baseline_statuses": {
+    "candidate-non-language-exit2": 3,
+    "mismatch": 27,
+    "pass": 42
+  },
+  "retained_interrupted_completed_pairs": 25,
+  "retained_interrupted_not_started": 46,
+  "runtime_reruns": 0,
+  "rust_harness_pass_invocations": 575,
+  "rust_ignored_invocations": 1,
+  "scope": "Independent implementation-checkpoint source-tree and six closed archive audit. Full corrected3599 acquisition/gates remain pending; no Stage39/M2 compatibility or performance completion claim.",
+  "source_binding": {
+    "bytes": 1023673,
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage39/reports/m2/stage39-implementation-source-binding.json",
+    "sha256": "d2ebcd7616a450d1a271e9c4e92cac764b5491f404f95d58e878174cdd37c84c"
+  },
+  "source_tree": "34adeb8b2928afbbce68f3335a304d8dbaa5c1ee",
+  "status": "pass",
+  "submodule_inputs_bound": 72,
+  "summary": {
+    "bytes": 3935,
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage39/reports/m2/stage39-implementation-checkpoint.json",
+    "sha256": "38373cb04e4ebee872aab6b3efe790ad75fdc730f2374728d5f57ece1ba5a0bb"
+  }
+}

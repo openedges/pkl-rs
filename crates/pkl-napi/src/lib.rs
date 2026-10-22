@@ -62,6 +62,48 @@ pub fn evaluate_language(
     )
     .map_err(error)
 }
+/// Portable frontend bytes; this does not execute a native process or render output.
+#[napi(object)]
+pub struct ModuleFrontendOutcome {
+    pub phase: String,
+    pub disposition: String,
+    pub reason: Option<String>,
+    pub stdout: Uint8Array,
+    pub stderr: Uint8Array,
+    pub exit_code: i32,
+}
+
+#[napi]
+pub fn evaluate_module_frontend(
+    source: Utf16String,
+    uri: Utf16String,
+    module_name: Utf16String,
+    arguments: Vec<Utf16String>,
+) -> Result<ModuleFrontendOutcome> {
+    use pkl_runtime::evaluation::frontend::{ModuleSourceInput, arguments::parse_module_eval_args};
+    let arguments = arguments.iter().map(string).collect::<Result<Vec<_>>>()?;
+    let invocation = parse_module_eval_args(&arguments).map_err(error)?;
+    let source = string(&source)?;
+    let uri = string(&uri)?;
+    let module_name = string(&module_name)?;
+    let result = pkl_runtime::evaluation::frontend::evaluate_module_frontend(
+        ModuleSourceInput {
+            text: &source,
+            uri: &uri,
+            inferred_name: &module_name,
+        },
+        &invocation.options,
+    );
+    Ok(ModuleFrontendOutcome {
+        phase: result.phase.as_str().to_owned(),
+        disposition: result.disposition.as_str().to_owned(),
+        reason: result.reason.map(str::to_owned),
+        stdout: Uint8Array::new(result.stdout),
+        stderr: Uint8Array::new(result.stderr),
+        exit_code: result.exit_code,
+    })
+}
+
 /// Development-only ordered calls on one evaluator, retaining failures as data.
 #[napi]
 pub fn evaluate_language_sequence(

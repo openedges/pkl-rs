@@ -1,0 +1,14 @@
+{
+  "archive": "/Users/cody.ij.hwang/Projects/pkl-rs.stage39/reports/m2/stage39-correction-evidence.tar.gz",
+  "archive_bytes": 6279597,
+  "archive_sha256": "429724e8327424c67ce36f61b300acc7e7467f29f36971ea7a458497493a1bad",
+  "extracted_members_verified": true,
+  "helper_sha256": "9416339238cb1a327aec39bbdc17d493edcfae9a791cb8416c9b36452c372c12",
+  "inventory_sha256": "81ed87787e8a3bbdf401520d0641823b0dae50c0dfda7d366cb0015e3441aefa",
+  "original_bytes": 54608970,
+  "original_files": 5207,
+  "originals_stable": true,
+  "plan_sha256": "d52eed60047fcc478e87d783712ad8b6f4cb1aef8687679d7266bfb1d39cf8ae",
+  "schema": 1,
+  "scope": "Confirmed parser regression, original Java controls, narrow correction, corrected native comparisons and completed local checks. Stage40 material is read-only design. Full corrected native corpus and portable acquisitions remain separate pending work."
+}

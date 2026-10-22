@@ -1,5 +1,5 @@
 //! Explicit continuations for type syntax, including union and arrow binding.
-use super::{Diagnostic, DiagnosticKind, Kind, Parser, Span, Type, TypeKind};
+use super::{Diagnostic, DiagnosticOrigin, Kind, Parser, Span, Type, TypeKind};
 
 struct Parsed {
     ty: Type,
@@ -12,6 +12,7 @@ struct Union {
     types: Vec<Type>,
     height: usize,
     default: Option<usize>,
+    expectation: Option<&'static str>,
 }
 
 struct Named {
@@ -23,15 +24,16 @@ struct Named {
 }
 
 struct Parameters {
+    expectation: Option<&'static str>,
     start: usize,
     parameters: Vec<Type>,
     height: usize,
 }
 
 enum Work {
-    Type,
+    Type(Option<&'static str>),
     Leave,
-    Atom,
+    Atom(Option<&'static str>),
     Union(Union),
     Named(Named),
     Parameters(Parameters, bool),
@@ -45,9 +47,12 @@ struct Constraint {
 }
 
 impl Parser<'_> {
-    pub(super) fn type_inner(&mut self) -> Result<Type, Diagnostic> {
+    pub(super) fn type_inner(
+        &mut self,
+        expectation: Option<&'static str>,
+    ) -> Result<Type, Diagnostic> {
         let base_depth = self.depth;
-        let mut work = vec![Work::Type];
+        let mut work = vec![Work::Type(expectation)];
         let mut values = Vec::new();
         while let Some(task) = work.pop() {
             // The step's larger match frame is gone before constraints enter
@@ -81,8 +86,9 @@ impl Parser<'_> {
     }
 
     fn type_limit(&self) -> Diagnostic {
-        Diagnostic::new(
-            DiagnosticKind::Unsupported,
+        Diagnostic::limit(
+            DiagnosticOrigin::Parser,
+            "type-nesting",
             self.token.span,
             "Type nesting limit exceeded.",
         )
@@ -96,7 +102,7 @@ impl Parser<'_> {
         base_depth: usize,
     ) -> Result<Option<Constraint>, Diagnostic> {
         match task {
-            Work::Type => {
+            Work::Type(expectation) => {
                 if self.depth >= 32 {
                     return Err(self.type_limit());
                 }
@@ -114,8 +120,9 @@ impl Parser<'_> {
                     types: Vec::new(),
                     height: 0,
                     default,
+                    expectation,
                 }));
-                work.push(Work::Atom);
+                work.push(Work::Atom(expectation));
             }
             Work::Leave => self.depth -= 1,
             Work::Union(mut union) => {
@@ -131,8 +138,9 @@ impl Parser<'_> {
                         union.default = Some(union.types.len());
                         self.advance()?;
                     }
+                    let expectation = union.expectation;
                     work.push(Work::Union(union));
-                    work.push(Work::Atom);
+                    work.push(Work::Atom(expectation));
                 } else if union.types.len() == 1 {
                     if union.default.is_some() {
                         return Err(self.unexpected(Some("|")));
@@ -158,7 +166,7 @@ impl Parser<'_> {
                     });
                 }
             }
-            Work::Atom => {
+            Work::Atom(expectation) => {
                 let start = self.token.span.start;
                 work.push(Work::Suffix(start));
                 let kind = match self.token.kind.clone() {
@@ -195,7 +203,7 @@ impl Parser<'_> {
                                 return Err(error);
                             }
                             work.push(Work::Named(named));
-                            work.push(Work::Type);
+                            work.push(Work::Type(None));
                             return Ok(None);
                         }
                         TypeKind::Named {
@@ -213,6 +221,7 @@ impl Parser<'_> {
                         let empty = self.is_symbol(')');
                         work.push(Work::Parameters(
                             Parameters {
+                                expectation,
                                 start,
                                 parameters: Vec::new(),
                                 height: 0,
@@ -220,11 +229,21 @@ impl Parser<'_> {
                             !empty,
                         ));
                         if !empty {
-                            work.push(Work::Type);
+                            work.push(Work::Type(Some(")")));
                         }
                         return Ok(None);
                     }
-                    _ => return Err(self.unexpected(Some("type"))),
+                    _ => {
+                        let token = &self.lexer.source[self.token.span.start..self.token.span.end];
+                        let suffix = expectation
+                            .map_or_else(|| ".".into(), |expected| format!(" or `{expected}`."));
+                        return Err(Diagnostic::language(
+                            DiagnosticOrigin::Parser,
+                            super::DiagnosticKind::Syntax,
+                            self.token.span,
+                            format!("Unexpected token `{token}`. Expected a type{suffix}"),
+                        ));
+                    }
                 };
                 values.push(Parsed {
                     ty: Type {
@@ -243,7 +262,7 @@ impl Parser<'_> {
                     self.advance()?;
                     if !self.is_symbol('>') {
                         work.push(Work::Named(named));
-                        work.push(Work::Type);
+                        work.push(Work::Type(None));
                         return Ok(None);
                     }
                 }
@@ -272,16 +291,20 @@ impl Parser<'_> {
                         self.advance()?;
                         if !self.is_symbol(')') {
                             work.push(Work::Parameters(parameters, true));
-                            work.push(Work::Type);
+                            work.push(Work::Type(Some(")")));
                             return Ok(None);
                         }
                     }
                 }
-                self.expect(')')?;
+                if !self.is_symbol(')') {
+                    return Err(self.unexpected(Some(",` or `)")));
+                }
+                self.advance()?;
                 if self.is_operator("->") {
                     self.advance()?;
+                    let expectation = parameters.expectation;
                     work.push(Work::Return(parameters));
-                    work.push(Work::Type);
+                    work.push(Work::Type(expectation));
                 } else {
                     if parameters.parameters.len() != 1 {
                         return Err(self.unexpected(Some("->")));

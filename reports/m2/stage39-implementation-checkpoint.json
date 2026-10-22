@@ -1,0 +1,94 @@
+{
+  "archives": [
+    {
+      "bytes": 1947,
+      "path": "reports/m2/stage39-oracle-captures.json",
+      "sha256": "cc63cf2e36841e3d9b2056c442cac92140afbca00dc2e22fbf0c9a42c273bc40"
+    },
+    {
+      "bytes": 3877,
+      "path": "reports/m2/stage39-checkpoint-captures.json",
+      "sha256": "2d92a4de2b76db651c331a727832506085b663c76803898752bba7be64234f20"
+    },
+    {
+      "bytes": 885,
+      "path": "reports/m2/stage39-interrupted-captures.json",
+      "sha256": "803407809bf62f65b65040918cd2bd57bcd98ef7447bd7b733f133b1c69eb8f3"
+    },
+    {
+      "bytes": 891,
+      "path": "reports/m2/stage39-correction-captures.json",
+      "sha256": "25a49584ac1436e79f846f9903e1ae7fcbb925da8f009e69978e99a793d17dab"
+    }
+  ],
+  "base_commit": "200b42200f05b46378eb630be94ecc576e6c6bc6",
+  "check_source_stability": true,
+  "checks": {
+    "bytes": 556767,
+    "path": "target/m2/stage39-checks-final-02/report.json",
+    "sha256": "b2bfa8b45965185e83bc939b447f572e077379cca521a6cec532486717acd92a"
+  },
+  "compatibility_complete": false,
+  "completed_corrected_standard_platform_acquisition": {
+    "path": "target/m2/stage39-platforms-final-02/report.json",
+    "scope": "Completed acquisition; final checkpoint evidence review remains separate.",
+    "sha256": "18d484da97d75e594b012832d35878e161fec368e6af836eef5989cdbf5ef2d6"
+  },
+  "corrected_manifest_and_focused_tool_checks": {
+    "bytes": 2945,
+    "path": "target/m2/stage39-adapter-final-checks-02/report.json",
+    "sha256": "1362ac9b37f234392bc88d10913868c82f5236467c395936fd0610f28f0f6f47"
+  },
+  "corrected_native_controls": {
+    "bytes": 44512,
+    "path": "target/m2/stage39-lambda-corrected-native-01/report.json",
+    "sha256": "d09e1390ffe7eadabf09ec020a777916eb9318a8864ce9a1d70998b495002098"
+  },
+  "helper_sha256": "60d35bcd2dd9032223dd452cf0fddc9837f87eb79969fbc1e3854e43385dcb07",
+  "inventory_counts": {
+    "cases": 4527,
+    "cases_by_execution": {
+      "ready": 3599,
+      "unimplemented": 888,
+      "unmapped": 40
+    },
+    "requirements": 475,
+    "requirements_by_kind": {
+      "language_parser": 137,
+      "language_token": 109,
+      "semantic-family": 31,
+      "specification": 198
+    }
+  },
+  "original_control_scope": "20 sources, two native repetitions each against two closed Java observations. Accepted output evaluation stays Unsupported; inspect the raw control report for dispositions.",
+  "pending": [
+    "Full corrected 3599-case native acquisition and all gates",
+    "Completion and final verification of corrected persistent/trace evidence",
+    "Final review and publication of actual corrected standard, original72 and boundary Node/Chromium evidence",
+    "Final source/byte evidence review and milestone checkpoint closeout"
+  ],
+  "performance_target_claimed": false,
+  "prior_unchanged_tooling_checks": {
+    "bytes": 557750,
+    "path": "target/m2/stage39-checks-final-01/report.json",
+    "sha256": "b30e85178f752bbd4267d538e8682a1233472a7a3b9a809d459ccb9d9fcd8962"
+  },
+  "required_rust_checks_passed": true,
+  "rust_count_is_distinct_test_count": false,
+  "rust_harness_pass_invocations": 575,
+  "rust_ignored_invocations": 1,
+  "schema": 1,
+  "scope": "Stage39 implementation checkpoint after correcting independently reproduced lambda-keyword regression. The complete corrected native corpus and final evidence review remain unfinished; Stage39 and M2 are not closed.",
+  "source_binding": {
+    "bytes": 1023673,
+    "path": "reports/m2/stage39-implementation-source-binding.json",
+    "sha256": "d2ebcd7616a450d1a271e9c4e92cac764b5491f404f95d58e878174cdd37c84c"
+  },
+  "source_tree": "34adeb8b2928afbbce68f3335a304d8dbaa5c1ee",
+  "status_update": {
+    "epoch": 1792706600.3112261,
+    "helper_sha256": "2dc9bc2138a83365dbc6aa988ed6cb6c653cecafa9848493f01ab2e030ef831f",
+    "prior_summary_sha256": "426f2c716193ca31d16eff81740a5934a9eec0c8838a325e937fecb6236eeafa",
+    "source_binding_unchanged": true
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "archive": "reports/m2/stage39-oracle-evidence.tar.gz",
+  "archive_bytes": 1580722,
+  "archive_members": 1286,
+  "archive_sha256": "d7d6c728e9bc05653af457d2fdf3d7b5d223015a3b472ffbb84058e521ba0035",
+  "candidate_executions": 0,
+  "compatibility_complete": false,
+  "every_payload_byte_verified": true,
+  "exact_membership_verified": true,
+  "input_source_binding": {
+    "cases": 72,
+    "parent_commit": "200b42200f05b46378eb630be94ecc576e6c6bc6",
+    "path": "stage39-oracle-seal-01/input-source-binding.json",
+    "sha256": "3b42ae34be5a4bf5f0b6b8a24629af8c3c08b24e9d8467151e3499c759ddfd78",
+    "submodule_revision": "e51fb2f91774265666f94980ec630db794a4db2d"
+  },
+  "inventory_sha256": "cd8ba72ebac3dc81b1590a0520cd978add140037413b848a967328884093044b",
+  "java_cli_cases": 72,
+  "java_cli_processes": 144,
+  "no_exclusions": true,
+  "original_files": 1285,
+  "original_stability_verified": true,
+  "parser_phase_cases": 72,
+  "roots": [
+    {
+      "archive_prefix": "stage39-original72-java-01",
+      "files": 819,
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage39/target/m2/stage39-original72-java-01"
+    },
+    {
+      "archive_prefix": "stage39-original72-phase-01",
+      "files": 446,
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage39/target/m2/stage39-original72-phase-01"
+    },
+    {
+      "archive_prefix": "stage39-original72-java-audit-01",
+      "files": 4,
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage39/target/m2/stage39-original72-java-audit-01"
+    },
+    {
+      "archive_prefix": "stage38-frontend-phase-preflight-01",
+      "files": 12,
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage38/target/m2/stage38-frontend-phase-preflight-01"
+    }
+  ],
+  "schema": 1,
+  "scope": "Closed Stage39 original Java CLI and parser phase evidence, prior frontend phase audit, and independent pinned-input Git binding. Not a Rust compatibility result.",
+  "uncompressed_bytes": 14770363
+}

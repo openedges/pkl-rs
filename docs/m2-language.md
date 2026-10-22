@@ -15,6 +15,12 @@ source URIs, and the distinction between Java byte captures and lossless
 portable string comparisons. Permitted I/O readers and complete URI semantics
 remain open.
 
+The [original module frontend contract](m2-module-frontend.md) connects unchanged
+upstream module commands to a shared parser/resolver diagnostic path. Its native
+process comparisons retain the original arguments, resources, and physical
+source path. Successful frontend preparation remains explicit unsupported module
+output evaluation; portable byte-vector results have a separate boundary.
+
 `compatibility/m2-language.json` keeps semantic families, pinned source
 declarations, upstream language snippets, selected historical regressions, and
 unmapped historical candidates visible. Declaration and heading counts are
@@ -56,19 +62,24 @@ python3 tools/m2_language.py --verify-subset target/m2/language-new
 python3 tools/m2_language.py --verify-full target/m2/language-new
 ```
 
-Use a fresh output directory. The runner records a release build of
-`language_probe`, freezes its executable, compiles the Java probe against the
-pinned oracle, and retains source snapshots and raw process captures.
-`--candidate` is an explicit artifact override whose source binding is unverified.
+Use a fresh output directory. By default, the runner acquires both expression
+comparisons and registered original module commands. It records a release build
+of `language_probe` and `module_eval_probe`, freezes their executables, compiles
+the expression Java probe against the pinned oracle, and retains source snapshots
+and raw process captures. `--adapter language-api-string` and
+`--adapter language-module-eval` select a focused acquisition; omitted required
+cases remain incomplete in the full gate. `--candidate` and `--module-candidate`
+are explicit artifact overrides whose source bindings are unverified.
 
-Acquisition defaults to one worker. `--workers 4` runs up to four cases concurrently;
-the accepted range is 1–32. Every case retains fresh Java and Rust processes,
+Expression acquisition defaults to one worker. `--workers 4` runs up to four
+expression cases concurrently; the accepted range is 1–32. Original module
+commands run sequentially in their shared physical workspace. Every case retains fresh Java and Rust processes,
 separate raw captures and the pinned environment. Results remain in manifest
 order, including failures and the independent remainder-error repeat. The report
 records the worker count. This option measures acquisition throughput; evaluator
 performance and memory comparisons require the separate benchmark contract.
 
-The Java boundary is `evaluateExpressionString` with a file module and an
+The expression adapter's Java boundary is `evaluateExpressionString` with a file module and an
 expression. Both processes receive the same absolute source path. Successful
 UTF-8 stdout, full uncolored `PklException.getMessage()` stderr, and exit codes are
 compared without normalization. A separate outcome file records whether Java

@@ -25,6 +25,10 @@ records the accepted local verification scope, known failures, and unexecuted
 environments.
 The [M2 verification contract](docs/m2-language.md)
 keeps the complete language inventory separate from selected executable probes.
+The [original module frontend adapter](docs/m2-module-frontend.md) also compares
+registered upstream commands with their original inputs, arguments, resources,
+and complete process output. Successful frontend preparation currently stops at
+explicitly unsupported module-output evaluation.
 Complete modifier and type semantics, remaining collection and Reference rules,
 module loading, reflection metadata, and the remaining language corpus are
 required before M2 can close.

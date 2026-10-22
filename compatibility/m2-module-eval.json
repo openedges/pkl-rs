@@ -1,0 +1,368 @@
+{
+  "adapter": "language-module-eval",
+  "baseline": "0.32.0",
+  "cases": [
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingClassDelimiter.pkl",
+      "input_sha256": "e46736ba7c85c264c14632ac025a0b80d58a6729b6d21cad280646a19b384459",
+      "upstream_case_sha256": "8fb98b96abedcb753127090c515f15216e29057998ad4c0c0866a357e26bf49c"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingConstrainedTypeSeparator.pkl",
+      "input_sha256": "1d1abcacc6c0d1aa6a08f0df72f17239e1745e1071fd37c438d1a50bb8bba326",
+      "upstream_case_sha256": "046a02d466a0dac3c7e93df897758d5c57cdc6e09da5d4bf7b20a04d57c78e46"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingContainerAmendDefDelimiter.pkl",
+      "input_sha256": "dcb19b8a7a7e868a71379f93775300d748eb5017cd7bfc395e19b0bf90215970",
+      "upstream_case_sha256": "8da49e90d5d94d3432b8b7c55368068b68ae628c5a5d74ac24d63b32ce1c553e"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingContainerAmendExprDelimiter.pkl",
+      "input_sha256": "55e70b4c77bfdd4d6794b6c1127edcdf2d8e306380d0c04c7b75372e8509070a",
+      "upstream_case_sha256": "e70d20e39258736e9cb4a705c5340f3a1219609836762ac693c06348ae7af049"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingEmptyMultiLineStringDelimiter.pkl",
+      "input_sha256": "a345c7257b312e69ceb0911633b1be97a6e2c6332d868914229e6cb4d067b6b6",
+      "upstream_case_sha256": "872846dc6cb435d9f8a9405b5ffeeeeaaf2b05394dac54a3a4ba90c5028f11a9"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingEmptyMultiLineStringDelimiterAtEof.pkl",
+      "input_sha256": "68d86a22509975ced0f54608b23636a19ecef182361c4e1c2520b6e14199a529",
+      "upstream_case_sha256": "33c2b1ca4ee64444bd6f454ff29ab548ce01b0a9db0cc4eecb0288dd32f52531"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingEmptyStringDelimiter.pkl",
+      "input_sha256": "7c74b8f4516d4066c55ddc61384dccda29010151490556af1bfe8f723ea98821",
+      "upstream_case_sha256": "72403e2503f74ca7ab13f411eaf4b89b48dff2455869703fa156d003aca619d7"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingEmptyStringDelimiterAtEof.pkl",
+      "input_sha256": "9c74473ca861870ebabf8e0b51037c1e68a82bfcb66be3e0934df701cdba12dc",
+      "upstream_case_sha256": "de9c09f70c31793b8fbee8ab61412409dcf8352c526fdde06359f3d6e440c1c0"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingFunction0ParameterListDelimiter.pkl",
+      "input_sha256": "193efb3110f1f9baedfa68f745e52bceb166bbcc7cf68bbd99aaec41046460fe",
+      "upstream_case_sha256": "a84edb990d62e0a6c04eca18ed3f6190351bb49c3d7005c0b8e220d1e1f12631"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingFunction1ParameterListDelimiter.pkl",
+      "input_sha256": "676cd1bdc1d09cc05b37e6b508a23b8c5dc368cb6c495fbfb44a276805944a79",
+      "upstream_case_sha256": "ae65d3933000a7446f620b7c6cfe310d9aa8e682db64adddba58a0235953ee3e"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingFunctionAmendParameterListSeparator.pkl",
+      "input_sha256": "978777815a3950288cf39fea36342ccf39eba869185486778153bf3d055c5512",
+      "upstream_case_sha256": "08c479fa1274dc16983486027ba9f37ef34739d010d99316f1a9f64d71971d60"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingFunctionNParameterListDelimiter.pkl",
+      "input_sha256": "b6697008654380546e9f4ed22368f0f277e4659f444af6ae26ed8e7d06431554",
+      "upstream_case_sha256": "329bb6b83309a902168a3d0e56a8bb3355f2c4aefc0756473140226af4e80884"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingFunctionParameterListSeparator.pkl",
+      "input_sha256": "34749dcbbf991437945725a13926d79ad7eb67faab84d64d4ed3ca017907eece",
+      "upstream_case_sha256": "b2d41cd68ae945dcf6bf27bf7aa0eb25c8475da5317c46b1a35783f1fc31240b"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingFunctionType0ParameterListDelimiter.pkl",
+      "input_sha256": "e67f27b50bf204a5274b8053443649998b6f09c3c6a280a8b272fd066452a84f",
+      "upstream_case_sha256": "615db0ec337f676d4e7dabec5bf208ce1d9fea98d108140e37ac0fbc04a85ffe"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingFunctionType1ParameterListDelimiter.pkl",
+      "input_sha256": "50e894969c75a5383662d4dea73e82d7a21887cd392470d010b50f2eb703df59",
+      "upstream_case_sha256": "9dc36335b236a85439e12b1b6d7d59a3aba1f3688f7ba201b33a0159f84e9c99"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingFunctionTypeNParameterListDelimiter.pkl",
+      "input_sha256": "a4d462b2fe7d0856cd793fef40c5e12fe3d4ec5c4269876b2f66ccdab375cd79",
+      "upstream_case_sha256": "10cb7786c3d11ad9a1771ad54f8258454369f4b383ad6c939cb7408e66c91ba7"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingFunctionTypeParameterListSeparator.pkl",
+      "input_sha256": "ebb8c81ae998ea8edc962c6611b7ea73bf051b2bcf768c808902363a0df26b64",
+      "upstream_case_sha256": "84df663cab4a2c0e71b5c373ec573baac6c1f7236f2b6e14ed744b9666cd52d8"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingIfExprDelimiter.pkl",
+      "input_sha256": "ea6f0f6f54eb286a7ef13c15fa6ae6b5449bf3bf95a615cf2a12842a2d3985f4",
+      "upstream_case_sha256": "de365dd1a7448ae8cc058708dda95e21a91c8240098703612a2319190f6d825e"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingListDelimiter.pkl",
+      "input_sha256": "33ae882474d0c66aacedb5b9e77727586454a87adf6ef8ad5e66580ac7d7d4bf",
+      "upstream_case_sha256": "7a7208984ea00ff13aa8c0482ef918c4a9be1d2c6b57be4c6d8025e3796a7778"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingListSeparator.pkl",
+      "input_sha256": "b68535a7d23ec9c79e50612d18b238533a339d9943e5201976bb2e2868c6202b",
+      "upstream_case_sha256": "5eb13c2f36eeb4f1ebc75027d816d3e8e405fae881b90cec8f13b8874699f298"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingMapDelimiter.pkl",
+      "input_sha256": "36259416b3dd6a2fa0de8355a930ca60bbc382c3f162f928e9dec138221f0c9e",
+      "upstream_case_sha256": "707110fe799cea826ea1d8937f3f5ac70c8d6a976b7d361e927a6ef92428354d"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingMapSeparator.pkl",
+      "input_sha256": "17a15facd60875e1879f9fe69a85bdeca1dbbe53e85c9f66adda2dbc54d5a637",
+      "upstream_case_sha256": "deaf2dd5fc90110f3a65dc7eb2d20a3770ea6bb65e031f09045c56d1ff4001cb"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingMethodArgumentListDelimiter.pkl",
+      "input_sha256": "b99d380fc3d828ffe960f72f7b921fb3c80307ffb7888fb4fcce0f181ce35fb3",
+      "upstream_case_sha256": "595859ec9209e5a3d5b3347bcaab2c3e4783951298a67dbf0503d1f095711683"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingMethodArgumentListSeparator.pkl",
+      "input_sha256": "8344c94149dec2b2f649491d6240bad9795c0c0e9b48f418a8e1152fcd70170a",
+      "upstream_case_sha256": "6a62b3717225482d51da96da71bb81c9d2b51886aeb483e766a2ec767d74535d"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingMethodParameterListDelimiter.pkl",
+      "input_sha256": "828a56cda37ec261b61591f1756d4a543b90be34b2226a3b7a7331c5b28ce476",
+      "upstream_case_sha256": "12eb77e5fb50a920d642d17e65a2e48276e1a3eeb0ed451f94996d793808ba71"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingMethodParameterListSeparator.pkl",
+      "input_sha256": "ff97238751e248b4a059ce83963665333020ddff3471ba149ea00675d4d4c1ce",
+      "upstream_case_sha256": "8151841e10699db383f6f12336625768ebaa53bb57f98ba936e8bef3bb31beae"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingMultiLineStringDelimiter.pkl",
+      "input_sha256": "dc2360f2b3e90decc538b3603943050b281d82cbf0ebb8b0ec9fe2e1f3fdc9eb",
+      "upstream_case_sha256": "8851eb2d259382202073e0fe557b68aab16a5ac77b4eb25b2e50279fc3c91b4b"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingObjectAmendDefDelimiter.pkl",
+      "input_sha256": "dcb19b8a7a7e868a71379f93775300d748eb5017cd7bfc395e19b0bf90215970",
+      "upstream_case_sha256": "94fb6f393066beea96596424e0fbf50da9c74f30a0b7576224981af57b763df0"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingObjectAmendDefDelimiter2.pkl",
+      "input_sha256": "fc4d34f9f3cff11ca50ee3da8bebe100e8f663d9b9dd38c2f6db05cb27adc13c",
+      "upstream_case_sha256": "35a2009806cf653d5dc009658d6c18b2122319e4ede18b3e1a0432b22479f9cf"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingObjectAmendDefDelimiter3.pkl",
+      "input_sha256": "dc41623c31084df96460b75bdb0568d82ca3af057bf72a8be0c8a3109beae203",
+      "upstream_case_sha256": "cb10dbe2232eab3e5d2ff1ed9931f94ac78db6db02051f0881944820c44c9b80"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingObjectAmendExprDelimiter.pkl",
+      "input_sha256": "a258b5fab28f208f6b69a415881e1cc03e65f814ec2ac5b9d8610e93602f20c6",
+      "upstream_case_sha256": "7cde5b63f18ae9189812ff6db723113c5bfa9639340ca7cd59ca2a05489a2ac0"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingObjectDelimiter.pkl",
+      "input_sha256": "a94f683317f1258094cbab410c7a0c387e2164768b4ca90743b2c2bcaf8eb2a4",
+      "upstream_case_sha256": "8603dac60b42ae1d1502487f301bcb90e7aa422c3f912ed0cd67a360b83b361f"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingParenthesizedExprDelimiter.pkl",
+      "input_sha256": "a71ca9e9ba7d25e236a625325e6f2dfa6c613b81c9aeb8d470710d33450267ee",
+      "upstream_case_sha256": "18a7b26edb4b971af3f2066b93b53da4667b515fa566ff0b9fda85005461f89c"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingParenthesizedTypeDelimiter.pkl",
+      "input_sha256": "1a7d8d63393d5733056d9bdd98e1e05d1012ea5cbe0c7b28773870cc441d760b",
+      "upstream_case_sha256": "10d456a8b7a3239303fe0709f7d32f65231aed93584ac8702e009bd1b2bf2de3"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingRawMultiLineStringDelimiter.pkl",
+      "input_sha256": "69de37bf00b1e5efb7eb907e6f1942aa0a1a15f520008474e7d07640c34c1981",
+      "upstream_case_sha256": "135ea2e0a857b7270d7a0befe33042bf3d3bc05f224caec7d8d38dd07b504eda"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingRawStringDelimiter.pkl",
+      "input_sha256": "70726db3a5fc7671c09df7d3eef2df1c9070ed462d6cef34920ff7e549d8576d",
+      "upstream_case_sha256": "3e6d27cc628c65230303b1d4c14169b13cd56ecffe70046cad3cd79c313ff5a5"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingSetSeparator.pkl",
+      "input_sha256": "c145fbb70212507661b331c14835a84aa44632638936ec6aec39765a5648574c",
+      "upstream_case_sha256": "cc666a30e0630c3afacec4623605e06d1771462a2a4bee3accba015a3916bbad"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingStringDelimiter.pkl",
+      "input_sha256": "1017e4890629dda680ff6d0456c38d5bc935aa585685e3c401bf5c52c5e73992",
+      "upstream_case_sha256": "202343dca6e7202ad1b15a996983446d266c3d4a289a6e9e8c85532c5808772f"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingSubscriptDelimiter.pkl",
+      "input_sha256": "6df311ecbc3148656c196f7678453cc9533f53aed2af7a053322004b99297a51",
+      "upstream_case_sha256": "0b435f45b6875c5558ee588a552a763e4a97602b04381129d30baca87d4c71eb"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingTypeConstraintListDelimiter.pkl",
+      "input_sha256": "2034f072bcffcee8492d8d7cd0454ebab904013f5251165d1e04c241f498c709",
+      "upstream_case_sha256": "bcfc7d8a9ea0e010521556b32182a507189922aa821b04554f45ba8c105f9660"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingTypedMethodParameterListDelimiter.pkl",
+      "input_sha256": "278722a298c27eff411c4ea97ed8903e794cdf756d5b7d87f168db10e23e8633",
+      "upstream_case_sha256": "e6a7697f35b8759cfa73341a22b3a561671b53c73a962b262e4be7d5612e9761"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/missingTypedMethodParameterListSeparator.pkl",
+      "input_sha256": "1077d4378b9657530345095d4770397bad7dda0c88baa5f054c50c314ac78c12",
+      "upstream_case_sha256": "049c9e908a45576ac9afa2aa6be712ab845d5b42c2bb8488383b0524584d3700"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/unbalancedEntryBrackets1.pkl",
+      "input_sha256": "9e1ab5c8d68a8634f35bde3e31f4b33815b2a95e204cedc552867a8dea31cefe",
+      "upstream_case_sha256": "d4edcd9473474ce681c5cadd50d927c1f019508722914a622eeaa73f9a8bf88e"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/unbalancedEntryBrackets2.pkl",
+      "input_sha256": "cb79378d66bc026cb34a6fcd9856c005c287a59a74bc5362719ee42ba5a6d402",
+      "upstream_case_sha256": "c8663ca0011e58251c2da5fa954866ec0022b9aada7e35ab5d964be8233ec71e"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/unbalancedEntryBrackets3.pkl",
+      "input_sha256": "dbb9a4065f329a3d928d3f2fe939553e405dceafc0768091903d8f9030493c60",
+      "upstream_case_sha256": "94fb722ead4b09936de2a9e14d33c22b05281c8c92ee530cf1a9362acc5a1eb2"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/delimiters/unbalancedEntryBrackets4.pkl",
+      "input_sha256": "ec8e5dc38b67fc6f3647d115b4339865d6352dabee9d6422cb178985796d0bba",
+      "upstream_case_sha256": "8c3aa036f723ed1b4b4c3a22dfc7482599a68b5327ed65d08550a01d921d35f7"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/parser1.pkl",
+      "input_sha256": "fbcfe686ce4dbcb3e6d3cbbdc41ba1fe8c5639843a3b92fcaafebe9b30f7bd74",
+      "upstream_case_sha256": "e3b44dd2e973cd61d4c41f19cbcf907e93397ec53a7316950e78b7cd65de5dac"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/parser10.pkl",
+      "input_sha256": "d9c7c0290fd835e99cf35aeec801f79cf34e3eb3723635a81bc0d3e4fce9944f",
+      "upstream_case_sha256": "29341e75869b68c9098d2e2474791db19191de8bfcb3ab2151287437397214d5"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/parser11.pkl",
+      "input_sha256": "432612397e81c6a00b03050bb5fdd997c5805ab81ebcb39946e07d7e21015f46",
+      "upstream_case_sha256": "64a9668eff71cc49fbfd699aa4500352f03ab986e58fbd0a464903af92da5b40"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/parser12.pkl",
+      "input_sha256": "1d280e9af7e51ee3d6c10069fc0edbded47b9f52b9794b9657a993d5d1595e2e",
+      "upstream_case_sha256": "85e34ef93946ad3ae338a8f87a9ac82650cd7c028fd851f3a54567dd26822317"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/parser14.pkl",
+      "input_sha256": "0e1a2a5f52634211dcf61b92e457c98e40b8c2d3d098316d121f3c57fa085313",
+      "upstream_case_sha256": "412f711a12ce2697fd2dfec490bb50527b16ed8ed7829f41b78d84fc861d9893"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/parser15.pkl",
+      "input_sha256": "1f3255ae06a3e7fabd2036d481956be940e579147dd483783dba275d8dc6c4b1",
+      "upstream_case_sha256": "162ba42cfebc878aae51b08ec5e08b959bb0729d30422e3982d3cb1658aeb19a"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/parser16.pkl",
+      "input_sha256": "b25a942193a04be17c5a5f869bb6aa1c6106a2e171b979e17a98b47d591b2d41",
+      "upstream_case_sha256": "d66c0b5dc801d0be79de19cd1a635d23fe55cc1908f3b93655f14599ee3b679d"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/parser17.pkl",
+      "input_sha256": "099480a7eff83973581e4a98c4e0f98397d57a7d71ec3d4d4d44863839369200",
+      "upstream_case_sha256": "7d4bd6e8e8c75556d84d6d3404bf0c23e778de3e107ccf9a8a1e04ce3e5c83d9"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/parser18.pkl",
+      "input_sha256": "b10c4b4cdba539bef4f299aea068e0a035758094767f5ddbbb26a2cd16456134",
+      "upstream_case_sha256": "1aa3040e018ff62fea68d3611acca835b6b6271656336c52327e3bbde8110141"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/parser19.pkl",
+      "input_sha256": "029cefc1b8957e75d9ec925188a868f1d3cab583fd326de98cd7532367146ff2",
+      "upstream_case_sha256": "7f8355bacf7aaee3dcda2f02fe3329157058e784d53b8121f37c524e32002fea"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/parser2.pkl",
+      "input_sha256": "4bbcc70cca77c193a9c88fbf9502c313ad05114c32f2679c8f9c4d90417c3044",
+      "upstream_case_sha256": "6d0e00497fa4dd201d670056e949d7fcd68830f733f752a6058304ed9aaa6f53"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/parser20.pkl",
+      "input_sha256": "1e48a8ee3d5f86adac80b23d26fbee3f1556d1658ee3e8e1fd5cf5a40d3faca2",
+      "upstream_case_sha256": "164fc623c1e4d82e455e43dd6c9b0e84198a6bc3730e23f0f533d00a86a1c4ef"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/parser21.pkl",
+      "input_sha256": "c7eab9cff6c3d5b4316053605da708045a6009f158279309cfa4a5340abac228",
+      "upstream_case_sha256": "eae5279203113a2629873b50ca46115f409ce51a1df15ded90784c4d65b6444d"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/parser3.pkl",
+      "input_sha256": "264ec25d620871eb3027304775a7a328dca98efd3e8d04e4a978f349ce461d86",
+      "upstream_case_sha256": "28d36f881cd3ea5af562d1d32cfe49161181f0e50765113c95bd581c8c910767"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/parser4.pkl",
+      "input_sha256": "df373fef1ada6616ba0b7ef39636e99ff8dce60a7c207686450f92136b27c01d",
+      "upstream_case_sha256": "bca67dbb4ef225aba7e9f7007630afcd19ee4999c8ae1dd248514166c6e00e5b"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/parser5.pkl",
+      "input_sha256": "fd7fac75263bc24cc829a4d8963f4384925f74a33d0b13a8a04d5285a9aa674d",
+      "upstream_case_sha256": "b5e70c1e2a69c781c3c4673e8b534ba4bb27ab612050768ff74d7954325680a9"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/parser6.pkl",
+      "input_sha256": "0d763b252798af2617ebfdcdd461e08996c033b9e150bad113c1096e44c75db5",
+      "upstream_case_sha256": "d182959c81a02a56f748a09f5616076482340ef6cc3d9b701d9cbbf12c63cb2c"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/parser7.pkl",
+      "input_sha256": "2652b68f2b4e99961de752d98cd7f8fcea1794e7ee55339bfb25a5863546ab94",
+      "upstream_case_sha256": "f0f940b1f6ac436d21d54c4595b465c2baae438b70165df65659d82f1b56c2ee"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/parser8.pkl",
+      "input_sha256": "2363e00fa8dbb05a789d894e1dbf2bce41a61b9efca85c5278194461dbcb3a9f",
+      "upstream_case_sha256": "54ca2afa4e56551e7864bc680ab38b4e0d66f97aace7a73424c489176f9e42d0"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/errors/parser9.pkl",
+      "input_sha256": "a5a8e68e273f879ab003ff15edf07e6453c1f877ec2be5048cd5a2546943d695",
+      "upstream_case_sha256": "890ed38429b2824916132a3146312784902a56a4569f08667370e7b0fe131d36"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/amendsRequiresParens.pkl",
+      "input_sha256": "31d229206e009070ded303c33d800bbc51123a3aaafe41c1a23ed93344190cd1",
+      "upstream_case_sha256": "ae24da4c63ec463e864338e53c0fb519ea54939543f14a418ac13e4abdb66b05"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/constantStringInterpolation.pkl",
+      "input_sha256": "45aaffc48c4ee589f80cefba1c74da3472f9928c2ed57ca106c2cb58a079048f",
+      "upstream_case_sha256": "73f7d7dfb116f52afaacd569fcc33e6bd8db802ac7755d87b458fc7093f594b9"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/invalidCharacter.pkl",
+      "input_sha256": "0541d40d462db88d25ebcf7ae9c21fd605aec9d82f7a68a9d783a60105b7d95e",
+      "upstream_case_sha256": "1578a8260df5eca74f5d0c52ee9a13817fab781c5d6c1c7821de7142c7bab6d6"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/spacesBetweenDocComments.pkl",
+      "input_sha256": "8b289d806cec2c5bbddc2f9dc9203cbb9b30d1a553624885482f07c22225675a",
+      "upstream_case_sha256": "3a4f6a04adb41b15762a122a4cf5a8c1a355158b57d5a08e096d29b8251b8b9e"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/typeAnnotationInAmends.pkl",
+      "input_sha256": "b3ec294ef1a2e9ce6f3484f92d44978667580346ae9dc232969509611f1fdae0",
+      "upstream_case_sha256": "7929a249486604bb2bbcd58ab6b55eb20bc833ac442dd0eac63cb9c80551e4f6"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/wrongDocComment.pkl",
+      "input_sha256": "0ba502295863f0c51d115d93ce2ae76702fd9b6f6c64d60b9d03b5063a8b9bc3",
+      "upstream_case_sha256": "e9b747612495b04e13b130e0aa55895ab4c256357329f1c10a4e5e7bd28f8be0"
+    }
+  ],
+  "schema_version": 1,
+  "scope": "Original module eval CLI contracts with a shared frontend rejection boundary. General ModuleOutput/renderer success remains unsupported and cannot pass by parsing alone."
+}
