@@ -91,6 +91,8 @@ REQUIRED_SCENARIOS = {
     'm2-strict-map-host-sequences',
     'm2-strict-set-sequences',
     'm2-strict-set-host-sequences',
+    'm2-collection-type-sequences',
+    'm2-collection-type-host-sequences',
 }
 
 

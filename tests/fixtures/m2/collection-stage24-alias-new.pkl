@@ -1,0 +1,2 @@
+typealias C<T> =Collection<T>
+result=(new C<Int> {}).length

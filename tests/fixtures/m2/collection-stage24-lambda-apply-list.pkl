@@ -1,0 +1,2 @@
+f=(x:Collection<Int>)->x.length
+result=f.apply(List(1,2))

@@ -1,0 +1,2 @@
+x:Mapping<String,Collection<Int>> =new Mapping {["a"]=Set(2)}
+result=x["a"].length

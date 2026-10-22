@@ -1,0 +1,12 @@
+typealias C<T> = Collection<T>
+ints:C<Int> = List(1,2)
+strings:C<String> = Set("a","b")
+badInts:C<Int> = Set("bad")
+badStrings:C<String> = List(1)
+empty:C<nothing>
+stable=42
+observation0=ints.length
+observation1=strings.length
+observation2=badInts.length
+observation3=badStrings.length
+observation4=empty.length

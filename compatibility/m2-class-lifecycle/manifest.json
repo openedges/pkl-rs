@@ -965,6 +965,76 @@
       "expressions": "set-stage23-iteration-scalars.expressions",
       "group": "T23",
       "note": "Complete raw pinned Java strict Set construction, immediate contains/hash/deduplication, boxed elements, structural nested keys, eager generic element checks, insertion-order iteration and cache-sensitive membership/equality. Ordered retries and successful reads share one evaluator. Native Host/GC lifecycle evidence remains separate."
+    },
+    {
+      "id": "collection-stage24-classification-retries",
+      "source": "collection-stage24-classification-retries.pkl",
+      "expressions": "collection-stage24-classification-retries.expressions",
+      "group": "T24",
+      "note": "Raw pinned Java Collection type classification, nested lazy List versus eager Set checks, aliases, defaults and constructors, constraints, casts/unions, metadata and ordered successful/failed retries. Scalar source observations preserve the bounded property-path transport; native Host/GC lifecycle checks are separate."
+    },
+    {
+      "id": "collection-stage24-nested-lazy-retries",
+      "source": "collection-stage24-nested-lazy-retries.pkl",
+      "expressions": "collection-stage24-nested-lazy-retries.expressions",
+      "group": "T24",
+      "note": "Raw pinned Java Collection type classification, nested lazy List versus eager Set checks, aliases, defaults and constructors, constraints, casts/unions, metadata and ordered successful/failed retries. Scalar source observations preserve the bounded property-path transport; native Host/GC lifecycle checks are separate."
+    },
+    {
+      "id": "collection-stage24-alias-actual-retries",
+      "source": "collection-stage24-alias-actual-retries.pkl",
+      "expressions": "collection-stage24-alias-actual-retries.expressions",
+      "group": "T24",
+      "note": "Raw pinned Java Collection type classification, nested lazy List versus eager Set checks, aliases, defaults and constructors, constraints, casts/unions, metadata and ordered successful/failed retries. Scalar source observations preserve the bounded property-path transport; native Host/GC lifecycle checks are separate."
+    },
+    {
+      "id": "collection-stage24-constructor-default-retries",
+      "source": "collection-stage24-constructor-default-retries.pkl",
+      "expressions": "collection-stage24-constructor-default-retries.expressions",
+      "group": "T24",
+      "note": "Raw pinned Java Collection type classification, nested lazy List versus eager Set checks, aliases, defaults and constructors, constraints, casts/unions, metadata and ordered successful/failed retries. Scalar source observations preserve the bounded property-path transport; native Host/GC lifecycle checks are separate."
+    },
+    {
+      "id": "collection-stage24-constraints-retries",
+      "source": "collection-stage24-constraints-retries.pkl",
+      "expressions": "collection-stage24-constraints-retries.expressions",
+      "group": "T24",
+      "note": "Raw pinned Java Collection type classification, nested lazy List versus eager Set checks, aliases, defaults and constructors, constraints, casts/unions, metadata and ordered successful/failed retries. Scalar source observations preserve the bounded property-path transport; native Host/GC lifecycle checks are separate."
+    },
+    {
+      "id": "collection-stage24-wrapper-retries",
+      "source": "collection-stage24-wrapper-retries.pkl",
+      "expressions": "collection-stage24-wrapper-retries.expressions",
+      "group": "T24",
+      "note": "Raw pinned Java Collection type classification, nested lazy List versus eager Set checks, aliases, defaults and constructors, constraints, casts/unions, metadata and ordered successful/failed retries. Scalar source observations preserve the bounded property-path transport; native Host/GC lifecycle checks are separate."
+    },
+    {
+      "id": "collection-stage24-union-cast-retries",
+      "source": "collection-stage24-union-cast-retries.pkl",
+      "expressions": "collection-stage24-union-cast-retries.expressions",
+      "group": "T24",
+      "note": "Raw pinned Java Collection type classification, nested lazy List versus eager Set checks, aliases, defaults and constructors, constraints, casts/unions, metadata and ordered successful/failed retries. Scalar source observations preserve the bounded property-path transport; native Host/GC lifecycle checks are separate."
+    },
+    {
+      "id": "collection-stage24-metadata-retries",
+      "source": "collection-stage24-metadata-retries.pkl",
+      "expressions": "collection-stage24-metadata-retries.expressions",
+      "group": "T24",
+      "note": "Raw pinned Java Collection type classification, nested lazy List versus eager Set checks, aliases, defaults and constructors, constraints, casts/unions, metadata and ordered successful/failed retries. Scalar source observations preserve the bounded property-path transport; native Host/GC lifecycle checks are separate."
+    },
+    {
+      "id": "collection-stage24-nested-collection-retries",
+      "source": "collection-stage24-nested-collection-retries.pkl",
+      "expressions": "collection-stage24-nested-collection-retries.expressions",
+      "group": "T24",
+      "note": "Raw pinned Java Collection type classification, nested lazy List versus eager Set checks, aliases, defaults and constructors, constraints, casts/unions, metadata and ordered successful/failed retries. Scalar source observations preserve the bounded property-path transport; native Host/GC lifecycle checks are separate."
+    },
+    {
+      "id": "collection-stage24-function-retries",
+      "source": "collection-stage24-function-retries.pkl",
+      "expressions": "collection-stage24-function-retries.expressions",
+      "group": "T24",
+      "note": "Raw pinned Java Collection type classification, nested lazy List versus eager Set checks, aliases, defaults and constructors, constraints, casts/unions, metadata and ordered successful/failed retries. Scalar source observations preserve the bounded property-path transport; native Host/GC lifecycle checks are separate."
     }
   ],
   "unexecuted_groups": [

@@ -58,6 +58,12 @@ impl TypeCheck {
                     .map(|(ty, span)| Ok((sub(ty)?, *span)))
                     .collect::<Result<_, RuntimeError>>()?,
             },
+            CollectionBase { arguments } => CollectionBase {
+                arguments: arguments
+                    .iter()
+                    .map(|(ty, span)| Ok((sub(ty)?, *span)))
+                    .collect::<Result<_, RuntimeError>>()?,
+            },
             Nullable(inner) => Nullable(Box::new(sub(inner)?)),
             Alias(inner) => Alias(Box::new(sub(inner)?)),
             GenericAlias(inner) => GenericAlias(Box::new(sub(inner)?)),
@@ -282,6 +288,12 @@ impl Vm {
                         run.value = Some(Value::Object(object));
                     }
                 }
+                TypeCheck::CollectionBase { .. } => {
+                    run.value = Some(Value::Object(self.heap.allocate(Object {
+                        collection_kind: CollectionKind::List,
+                        ..Object::default()
+                    })));
+                }
                 ty @ (TypeCheck::Collection(_) | TypeCheck::ParameterizedCollection { .. }) => {
                     let (kind, argument) = match ty {
                         TypeCheck::Collection(kind) => (kind, None),
@@ -374,9 +386,8 @@ impl TypeCheck {
             | Self::Alias(inner)
             | Self::GenericAlias(inner)
             | Self::Constrained { base: inner, .. } => Box::new(std::iter::once(inner.as_ref())),
-            Self::ParameterizedCollection { arguments, .. } => {
-                Box::new(arguments.iter().map(|(ty, _)| ty))
-            }
+            Self::ParameterizedCollection { arguments, .. }
+            | Self::CollectionBase { arguments } => Box::new(arguments.iter().map(|(ty, _)| ty)),
             Self::Union { types, .. } => Box::new(types.iter()),
             _ => Box::new(std::iter::empty()),
         }
@@ -513,7 +524,8 @@ impl Drop for SharedTypeCheck {
                 TypeCheck::Nullable(inner)
                 | TypeCheck::Alias(inner)
                 | TypeCheck::GenericAlias(inner) => pending.push(*inner),
-                TypeCheck::ParameterizedCollection { arguments, .. } => {
+                TypeCheck::ParameterizedCollection { arguments, .. }
+                | TypeCheck::CollectionBase { arguments } => {
                     pending.extend(arguments.into_iter().map(|(ty, _)| ty));
                 }
                 TypeCheck::Union { types, .. } => pending.extend(types),

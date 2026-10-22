@@ -1,0 +1,4 @@
+function f(x:Listing<Collection<Listing<Int>>>)=x
+function g(x:Listing<Collection<Listing<Int>>>)=x
+x=new Listing {List(new Listing {"bad"})}
+result=g(f(x))[0][0][0]

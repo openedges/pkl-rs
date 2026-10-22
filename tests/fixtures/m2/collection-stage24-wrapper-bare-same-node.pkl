@@ -1,0 +1,3 @@
+function f(x:Listing<Collection>)=x
+x=new Listing {List(new Listing {"bad"})}
+result=f(f(x))[0][0][0]

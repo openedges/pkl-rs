@@ -1,0 +1,2 @@
+x:Collection<Collection<Int>?> =List(null,List(1))
+result=x.length

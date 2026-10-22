@@ -1,0 +1,2 @@
+typealias N = Collection<Int>?(throw("constraint"))
+result=(new N {}).length

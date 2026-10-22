@@ -262,7 +262,8 @@ pub(super) fn needs_custom_this(ty: &TypeCheck) -> bool {
         | TypeCheck::Alias(expanded)
         | TypeCheck::GenericAlias(expanded) => needs_custom_this(expanded),
         TypeCheck::Reference { domain, .. } => needs_custom_this(domain),
-        TypeCheck::ParameterizedCollection { arguments, .. } => {
+        TypeCheck::ParameterizedCollection { arguments, .. }
+        | TypeCheck::CollectionBase { arguments } => {
             arguments.iter().any(|(ty, _)| needs_custom_this(ty))
         }
         TypeCheck::Union { types, .. } => types.iter().any(needs_custom_this),
@@ -699,6 +700,24 @@ impl Vm {
                     }));
                     self.push_type_child(&mut run, types[0].clone(), spans[0], 0)?;
                 }
+                TypeCheck::CollectionBase { arguments }
+                    if !arguments.is_empty()
+                        && (TypeCheck::CollectionBase {
+                            arguments: Vec::new(),
+                        })
+                        .accepts(&run.value, &self.heap) =>
+                {
+                    let Value::Object(id) = run.value else {
+                        unreachable!()
+                    };
+                    let kind = self.heap.get(id)?.collection_kind;
+                    // Keep the abstract type's executable node: its element is
+                    // child zero regardless of the concrete value's kind.
+                    run.tasks.push(Task::Check {
+                        ty: TypeCheck::ParameterizedCollection { kind, arguments },
+                        span,
+                    });
+                }
                 TypeCheck::ParameterizedCollection { kind, arguments }
                     if TypeCheck::Collection(kind).accepts(&run.value, &self.heap) =>
                 {
@@ -1105,17 +1124,30 @@ fn union_eager(types: &[TypeCheck]) -> bool {
     while let Some(ty) = pending.pop() {
         match ty.resolved() {
             TypeCheck::ParameterizedCollection { kind, .. } => {
-                if kinds.contains(kind) {
+                if kinds.contains(&Some(*kind)) {
                     return true;
                 }
-                kinds.push(*kind);
+                kinds.push(Some(*kind));
+            }
+            TypeCheck::CollectionBase { arguments } if !arguments.is_empty() => {
+                if kinds.contains(&None) {
+                    return true;
+                }
+                kinds.push(None);
             }
             TypeCheck::GenericAlias(inner) => {
-                if let TypeCheck::ParameterizedCollection { kind, .. } = inner.unaliased() {
-                    if kinds.contains(kind) {
+                if matches!(inner.unaliased(), TypeCheck::CollectionBase { arguments } if !arguments.is_empty())
+                {
+                    if kinds.contains(&None) {
                         return true;
                     }
-                    kinds.push(*kind);
+                    kinds.push(None);
+                }
+                if let TypeCheck::ParameterizedCollection { kind, .. } = inner.unaliased() {
+                    if kinds.contains(&Some(*kind)) {
+                        return true;
+                    }
+                    kinds.push(Some(*kind));
                 }
                 pending.push(inner);
             }

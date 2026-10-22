@@ -1,0 +1,7 @@
+a:Listing<Collection<Int>> = new Listing {List(1);Set("bad")}
+b:Mapping<String,Collection<Int>> = new Mapping {["ok"]=Set(2);["bad"]=List("bad")}
+goodA=a[0].length
+badA=a[1].length
+goodB=b["ok"].length
+badB=b["bad"].length
+stable=42

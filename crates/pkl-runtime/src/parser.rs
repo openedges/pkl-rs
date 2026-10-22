@@ -1544,6 +1544,11 @@ impl<'a> Parser<'a> {
                 let mut arguments = Vec::new();
                 if self.is_symbol('<') {
                     self.advance()?;
+                    if self.is_symbol('>') {
+                        let mut error = self.unexpected(None);
+                        error.message.push_str(" Expected a type.");
+                        return Err(error);
+                    }
                     while !self.is_symbol('>') {
                         arguments.push(self.type_expression()?);
                         if !self.is_symbol(',') {

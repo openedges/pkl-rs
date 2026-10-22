@@ -1,0 +1,3 @@
+function f(x:Listing<Collection<Listing<Int>>>):Listing<Collection<Listing<Int>>> =x
+x=new Listing {List(new Listing {7})}
+result=f(f(x))[0][0][0]

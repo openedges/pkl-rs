@@ -1,0 +1,9 @@
+list:Collection<Int> = List(1,2)
+set:Collection<Int> = Set(2,1)
+bad:Collection<Int> = Map(1,2)
+wrong:Collection<Int> = List("bad")
+stable=42
+observation0=list.length
+observation1=set.length
+observation2=bad.length
+observation3=wrong.length

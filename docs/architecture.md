@@ -282,6 +282,15 @@ JVM identity-dependent ordering remain separate work. Nested Map iteration can
 rehash keys while Java renders a value; the cache-only snapshot renderer does
 not yet reproduce every such side effect.
 
+`Collection<T>` has a distinct abstract type node and no corresponding heap
+collection kind. It accepts concrete List and Set values. Parameterized checks
+reuse the common continuation: List elements can acquire nested lazy wrappers,
+while Set elements are checked eagerly without replacing hash keys. Bare
+`Collection` checks only the concrete class. Defaults are empty Lists; element
+defaults are not constructed. Type names and normalized Reference metadata retain
+the abstract `Collection` identity, including its covariant element type.
+Executable checker equivalence remains separate from exported structural metadata.
+
 ### Member predicates
 
 Member predicates traverse the parent's declarations child first, suppressing

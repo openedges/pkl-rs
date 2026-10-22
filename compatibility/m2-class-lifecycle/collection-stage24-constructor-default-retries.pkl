@@ -1,0 +1,13 @@
+typealias C<T> = Collection<T>
+empty:C<Int>
+explicit=new C<Int> {}
+inferred:C<Int> = new {}
+nullable:C<Int>?
+amended=(nullable){}
+badAmended=(nullable){1}
+stable=42
+observation0=empty.length
+observation1=explicit.length
+observation2=inferred.length
+observation3=amended.length
+observation4=badAmended.length

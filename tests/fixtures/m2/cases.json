@@ -31370,6 +31370,3524 @@
         "semantic:generators",
         "semantic:diagnostics"
       ]
+    },
+    {
+      "id": "collection-stage24-is-list",
+      "input": "tests/fixtures/m2/collection-stage24-is-list.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-tests-casts"
+      ]
+    },
+    {
+      "id": "collection-stage24-typed-list",
+      "input": "tests/fixtures/m2/collection-stage24-typed-list.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types"
+      ]
+    },
+    {
+      "id": "collection-stage24-is-set",
+      "input": "tests/fixtures/m2/collection-stage24-is-set.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-tests-casts"
+      ]
+    },
+    {
+      "id": "collection-stage24-typed-set",
+      "input": "tests/fixtures/m2/collection-stage24-typed-set.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types"
+      ]
+    },
+    {
+      "id": "collection-stage24-is-empty-list",
+      "input": "tests/fixtures/m2/collection-stage24-is-empty-list.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-tests-casts"
+      ]
+    },
+    {
+      "id": "collection-stage24-typed-empty-list",
+      "input": "tests/fixtures/m2/collection-stage24-typed-empty-list.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types"
+      ]
+    },
+    {
+      "id": "collection-stage24-is-empty-set",
+      "input": "tests/fixtures/m2/collection-stage24-is-empty-set.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-tests-casts"
+      ]
+    },
+    {
+      "id": "collection-stage24-typed-empty-set",
+      "input": "tests/fixtures/m2/collection-stage24-typed-empty-set.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types"
+      ]
+    },
+    {
+      "id": "collection-stage24-is-listing",
+      "input": "tests/fixtures/m2/collection-stage24-is-listing.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-tests-casts"
+      ]
+    },
+    {
+      "id": "collection-stage24-typed-listing",
+      "input": "tests/fixtures/m2/collection-stage24-typed-listing.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "collection-stage24-is-mapping",
+      "input": "tests/fixtures/m2/collection-stage24-is-mapping.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-tests-casts"
+      ]
+    },
+    {
+      "id": "collection-stage24-typed-mapping",
+      "input": "tests/fixtures/m2/collection-stage24-typed-mapping.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "collection-stage24-is-map",
+      "input": "tests/fixtures/m2/collection-stage24-is-map.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-tests-casts"
+      ]
+    },
+    {
+      "id": "collection-stage24-typed-map",
+      "input": "tests/fixtures/m2/collection-stage24-typed-map.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "collection-stage24-is-dynamic",
+      "input": "tests/fixtures/m2/collection-stage24-is-dynamic.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-tests-casts"
+      ]
+    },
+    {
+      "id": "collection-stage24-typed-dynamic",
+      "input": "tests/fixtures/m2/collection-stage24-typed-dynamic.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "collection-stage24-is-int",
+      "input": "tests/fixtures/m2/collection-stage24-is-int.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-tests-casts"
+      ]
+    },
+    {
+      "id": "collection-stage24-typed-int",
+      "input": "tests/fixtures/m2/collection-stage24-typed-int.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "collection-stage24-is-float",
+      "input": "tests/fixtures/m2/collection-stage24-is-float.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-tests-casts"
+      ]
+    },
+    {
+      "id": "collection-stage24-typed-float",
+      "input": "tests/fixtures/m2/collection-stage24-typed-float.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "collection-stage24-is-string",
+      "input": "tests/fixtures/m2/collection-stage24-is-string.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-tests-casts"
+      ]
+    },
+    {
+      "id": "collection-stage24-typed-string",
+      "input": "tests/fixtures/m2/collection-stage24-typed-string.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "collection-stage24-is-boolean",
+      "input": "tests/fixtures/m2/collection-stage24-is-boolean.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-tests-casts"
+      ]
+    },
+    {
+      "id": "collection-stage24-typed-boolean",
+      "input": "tests/fixtures/m2/collection-stage24-typed-boolean.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "collection-stage24-is-null",
+      "input": "tests/fixtures/m2/collection-stage24-is-null.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-tests-casts"
+      ]
+    },
+    {
+      "id": "collection-stage24-typed-null",
+      "input": "tests/fixtures/m2/collection-stage24-typed-null.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "collection-stage24-list-any-empty",
+      "input": "tests/fixtures/m2/collection-stage24-list-any-empty.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-tests-casts"
+      ]
+    },
+    {
+      "id": "collection-stage24-list-any-int",
+      "input": "tests/fixtures/m2/collection-stage24-list-any-int.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-tests-casts"
+      ]
+    },
+    {
+      "id": "collection-stage24-list-any-string",
+      "input": "tests/fixtures/m2/collection-stage24-list-any-string.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-tests-casts"
+      ]
+    },
+    {
+      "id": "collection-stage24-list-any-null",
+      "input": "tests/fixtures/m2/collection-stage24-list-any-null.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-tests-casts"
+      ]
+    },
+    {
+      "id": "collection-stage24-list-unknown-empty",
+      "input": "tests/fixtures/m2/collection-stage24-list-unknown-empty.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-tests-casts"
+      ]
+    },
+    {
+      "id": "collection-stage24-list-unknown-int",
+      "input": "tests/fixtures/m2/collection-stage24-list-unknown-int.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-tests-casts"
+      ]
+    },
+    {
+      "id": "collection-stage24-list-unknown-string",
+      "input": "tests/fixtures/m2/collection-stage24-list-unknown-string.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-tests-casts"
+      ]
+    },
+    {
+      "id": "collection-stage24-list-unknown-null",
+      "input": "tests/fixtures/m2/collection-stage24-list-unknown-null.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-tests-casts"
+      ]
+    },
+    {
+      "id": "collection-stage24-list-nullable-empty",
+      "input": "tests/fixtures/m2/collection-stage24-list-nullable-empty.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-tests-casts"
+      ]
+    },
+    {
+      "id": "collection-stage24-list-nullable-int",
+      "input": "tests/fixtures/m2/collection-stage24-list-nullable-int.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-tests-casts"
+      ]
+    },
+    {
+      "id": "collection-stage24-list-nullable-string",
+      "input": "tests/fixtures/m2/collection-stage24-list-nullable-string.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-tests-casts"
+      ]
+    },
+    {
+      "id": "collection-stage24-list-nullable-null",
+      "input": "tests/fixtures/m2/collection-stage24-list-nullable-null.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-tests-casts"
+      ]
+    },
+    {
+      "id": "collection-stage24-list-union-empty",
+      "input": "tests/fixtures/m2/collection-stage24-list-union-empty.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-tests-casts"
+      ]
+    },
+    {
+      "id": "collection-stage24-list-union-int",
+      "input": "tests/fixtures/m2/collection-stage24-list-union-int.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-tests-casts"
+      ]
+    },
+    {
+      "id": "collection-stage24-list-union-string",
+      "input": "tests/fixtures/m2/collection-stage24-list-union-string.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-tests-casts"
+      ]
+    },
+    {
+      "id": "collection-stage24-list-union-null",
+      "input": "tests/fixtures/m2/collection-stage24-list-union-null.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-tests-casts"
+      ]
+    },
+    {
+      "id": "collection-stage24-list-list-int-empty",
+      "input": "tests/fixtures/m2/collection-stage24-list-list-int-empty.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-tests-casts"
+      ]
+    },
+    {
+      "id": "collection-stage24-list-list-int-int",
+      "input": "tests/fixtures/m2/collection-stage24-list-list-int-int.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-tests-casts"
+      ]
+    },
+    {
+      "id": "collection-stage24-list-list-int-string",
+      "input": "tests/fixtures/m2/collection-stage24-list-list-int-string.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-tests-casts"
+      ]
+    },
+    {
+      "id": "collection-stage24-list-list-int-null",
+      "input": "tests/fixtures/m2/collection-stage24-list-list-int-null.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-tests-casts"
+      ]
+    },
+    {
+      "id": "collection-stage24-list-nested-empty",
+      "input": "tests/fixtures/m2/collection-stage24-list-nested-empty.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-tests-casts"
+      ]
+    },
+    {
+      "id": "collection-stage24-list-nested-int",
+      "input": "tests/fixtures/m2/collection-stage24-list-nested-int.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-tests-casts"
+      ]
+    },
+    {
+      "id": "collection-stage24-list-nested-string",
+      "input": "tests/fixtures/m2/collection-stage24-list-nested-string.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-tests-casts"
+      ]
+    },
+    {
+      "id": "collection-stage24-list-nested-null",
+      "input": "tests/fixtures/m2/collection-stage24-list-nested-null.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-tests-casts"
+      ]
+    },
+    {
+      "id": "collection-stage24-list-typed-wrong",
+      "input": "tests/fixtures/m2/collection-stage24-list-typed-wrong.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "collection-stage24-list-typed-null",
+      "input": "tests/fixtures/m2/collection-stage24-list-typed-null.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "collection-stage24-list-lazy-listing",
+      "input": "tests/fixtures/m2/collection-stage24-list-lazy-listing.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types"
+      ]
+    },
+    {
+      "id": "collection-stage24-list-is-listing",
+      "input": "tests/fixtures/m2/collection-stage24-list-is-listing.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-tests-casts"
+      ]
+    },
+    {
+      "id": "collection-stage24-list-lazy-mapping",
+      "input": "tests/fixtures/m2/collection-stage24-list-lazy-mapping.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types"
+      ]
+    },
+    {
+      "id": "collection-stage24-list-is-mapping",
+      "input": "tests/fixtures/m2/collection-stage24-list-is-mapping.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-tests-casts"
+      ]
+    },
+    {
+      "id": "collection-stage24-list-lazy-class",
+      "input": "tests/fixtures/m2/collection-stage24-list-lazy-class.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types"
+      ]
+    },
+    {
+      "id": "collection-stage24-list-is-class",
+      "input": "tests/fixtures/m2/collection-stage24-list-is-class.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-tests-casts"
+      ]
+    },
+    {
+      "id": "collection-stage24-list-lazy-nested-list",
+      "input": "tests/fixtures/m2/collection-stage24-list-lazy-nested-list.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types"
+      ]
+    },
+    {
+      "id": "collection-stage24-list-is-nested-list",
+      "input": "tests/fixtures/m2/collection-stage24-list-is-nested-list.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-tests-casts"
+      ]
+    },
+    {
+      "id": "collection-stage24-list-lazy-nested-collection",
+      "input": "tests/fixtures/m2/collection-stage24-list-lazy-nested-collection.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types"
+      ]
+    },
+    {
+      "id": "collection-stage24-list-is-nested-collection",
+      "input": "tests/fixtures/m2/collection-stage24-list-is-nested-collection.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-tests-casts"
+      ]
+    },
+    {
+      "id": "collection-stage24-set-any-empty",
+      "input": "tests/fixtures/m2/collection-stage24-set-any-empty.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-tests-casts"
+      ]
+    },
+    {
+      "id": "collection-stage24-set-any-int",
+      "input": "tests/fixtures/m2/collection-stage24-set-any-int.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-tests-casts"
+      ]
+    },
+    {
+      "id": "collection-stage24-set-any-string",
+      "input": "tests/fixtures/m2/collection-stage24-set-any-string.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-tests-casts"
+      ]
+    },
+    {
+      "id": "collection-stage24-set-any-null",
+      "input": "tests/fixtures/m2/collection-stage24-set-any-null.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-tests-casts"
+      ]
+    },
+    {
+      "id": "collection-stage24-set-unknown-empty",
+      "input": "tests/fixtures/m2/collection-stage24-set-unknown-empty.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-tests-casts"
+      ]
+    },
+    {
+      "id": "collection-stage24-set-unknown-int",
+      "input": "tests/fixtures/m2/collection-stage24-set-unknown-int.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-tests-casts"
+      ]
+    },
+    {
+      "id": "collection-stage24-set-unknown-string",
+      "input": "tests/fixtures/m2/collection-stage24-set-unknown-string.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-tests-casts"
+      ]
+    },
+    {
+      "id": "collection-stage24-set-unknown-null",
+      "input": "tests/fixtures/m2/collection-stage24-set-unknown-null.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-tests-casts"
+      ]
+    },
+    {
+      "id": "collection-stage24-set-nullable-empty",
+      "input": "tests/fixtures/m2/collection-stage24-set-nullable-empty.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-tests-casts"
+      ]
+    },
+    {
+      "id": "collection-stage24-set-nullable-int",
+      "input": "tests/fixtures/m2/collection-stage24-set-nullable-int.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-tests-casts"
+      ]
+    },
+    {
+      "id": "collection-stage24-set-nullable-string",
+      "input": "tests/fixtures/m2/collection-stage24-set-nullable-string.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-tests-casts"
+      ]
+    },
+    {
+      "id": "collection-stage24-set-nullable-null",
+      "input": "tests/fixtures/m2/collection-stage24-set-nullable-null.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-tests-casts"
+      ]
+    },
+    {
+      "id": "collection-stage24-set-union-empty",
+      "input": "tests/fixtures/m2/collection-stage24-set-union-empty.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-tests-casts"
+      ]
+    },
+    {
+      "id": "collection-stage24-set-union-int",
+      "input": "tests/fixtures/m2/collection-stage24-set-union-int.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-tests-casts"
+      ]
+    },
+    {
+      "id": "collection-stage24-set-union-string",
+      "input": "tests/fixtures/m2/collection-stage24-set-union-string.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-tests-casts"
+      ]
+    },
+    {
+      "id": "collection-stage24-set-union-null",
+      "input": "tests/fixtures/m2/collection-stage24-set-union-null.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-tests-casts"
+      ]
+    },
+    {
+      "id": "collection-stage24-set-list-int-empty",
+      "input": "tests/fixtures/m2/collection-stage24-set-list-int-empty.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-tests-casts"
+      ]
+    },
+    {
+      "id": "collection-stage24-set-list-int-int",
+      "input": "tests/fixtures/m2/collection-stage24-set-list-int-int.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-tests-casts"
+      ]
+    },
+    {
+      "id": "collection-stage24-set-list-int-string",
+      "input": "tests/fixtures/m2/collection-stage24-set-list-int-string.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-tests-casts"
+      ]
+    },
+    {
+      "id": "collection-stage24-set-list-int-null",
+      "input": "tests/fixtures/m2/collection-stage24-set-list-int-null.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-tests-casts"
+      ]
+    },
+    {
+      "id": "collection-stage24-set-nested-empty",
+      "input": "tests/fixtures/m2/collection-stage24-set-nested-empty.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-tests-casts"
+      ]
+    },
+    {
+      "id": "collection-stage24-set-nested-int",
+      "input": "tests/fixtures/m2/collection-stage24-set-nested-int.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-tests-casts"
+      ]
+    },
+    {
+      "id": "collection-stage24-set-nested-string",
+      "input": "tests/fixtures/m2/collection-stage24-set-nested-string.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-tests-casts"
+      ]
+    },
+    {
+      "id": "collection-stage24-set-nested-null",
+      "input": "tests/fixtures/m2/collection-stage24-set-nested-null.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-tests-casts"
+      ]
+    },
+    {
+      "id": "collection-stage24-set-typed-wrong",
+      "input": "tests/fixtures/m2/collection-stage24-set-typed-wrong.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "collection-stage24-set-typed-null",
+      "input": "tests/fixtures/m2/collection-stage24-set-typed-null.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "collection-stage24-set-lazy-listing",
+      "input": "tests/fixtures/m2/collection-stage24-set-lazy-listing.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "collection-stage24-set-is-listing",
+      "input": "tests/fixtures/m2/collection-stage24-set-is-listing.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-tests-casts"
+      ]
+    },
+    {
+      "id": "collection-stage24-set-lazy-mapping",
+      "input": "tests/fixtures/m2/collection-stage24-set-lazy-mapping.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "collection-stage24-set-is-mapping",
+      "input": "tests/fixtures/m2/collection-stage24-set-is-mapping.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-tests-casts"
+      ]
+    },
+    {
+      "id": "collection-stage24-set-lazy-class",
+      "input": "tests/fixtures/m2/collection-stage24-set-lazy-class.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "collection-stage24-set-is-class",
+      "input": "tests/fixtures/m2/collection-stage24-set-is-class.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "collection-stage24-set-lazy-nested-list",
+      "input": "tests/fixtures/m2/collection-stage24-set-lazy-nested-list.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "collection-stage24-set-is-nested-list",
+      "input": "tests/fixtures/m2/collection-stage24-set-is-nested-list.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-tests-casts"
+      ]
+    },
+    {
+      "id": "collection-stage24-set-lazy-nested-collection",
+      "input": "tests/fixtures/m2/collection-stage24-set-lazy-nested-collection.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "collection-stage24-set-is-nested-collection",
+      "input": "tests/fixtures/m2/collection-stage24-set-is-nested-collection.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-tests-casts"
+      ]
+    },
+    {
+      "id": "collection-stage24-arity-bare",
+      "input": "tests/fixtures/m2/collection-stage24-arity-bare.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types"
+      ]
+    },
+    {
+      "id": "collection-stage24-arity-empty-args",
+      "input": "tests/fixtures/m2/collection-stage24-arity-empty-args.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "collection-stage24-arity-two-args",
+      "input": "tests/fixtures/m2/collection-stage24-arity-two-args.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "collection-stage24-arity-missing-arg",
+      "input": "tests/fixtures/m2/collection-stage24-arity-missing-arg.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "collection-stage24-default-bare",
+      "input": "tests/fixtures/m2/collection-stage24-default-bare.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types"
+      ]
+    },
+    {
+      "id": "collection-stage24-new-bare",
+      "input": "tests/fixtures/m2/collection-stage24-new-bare.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "collection-stage24-new-body-bare",
+      "input": "tests/fixtures/m2/collection-stage24-new-body-bare.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "collection-stage24-nullable-default-bare",
+      "input": "tests/fixtures/m2/collection-stage24-nullable-default-bare.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types"
+      ]
+    },
+    {
+      "id": "collection-stage24-default-int",
+      "input": "tests/fixtures/m2/collection-stage24-default-int.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types"
+      ]
+    },
+    {
+      "id": "collection-stage24-new-int",
+      "input": "tests/fixtures/m2/collection-stage24-new-int.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "collection-stage24-new-body-int",
+      "input": "tests/fixtures/m2/collection-stage24-new-body-int.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "collection-stage24-nullable-default-int",
+      "input": "tests/fixtures/m2/collection-stage24-nullable-default-int.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types"
+      ]
+    },
+    {
+      "id": "collection-stage24-default-nested",
+      "input": "tests/fixtures/m2/collection-stage24-default-nested.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types"
+      ]
+    },
+    {
+      "id": "collection-stage24-new-nested",
+      "input": "tests/fixtures/m2/collection-stage24-new-nested.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "collection-stage24-new-body-nested",
+      "input": "tests/fixtures/m2/collection-stage24-new-body-nested.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "collection-stage24-nullable-default-nested",
+      "input": "tests/fixtures/m2/collection-stage24-nullable-default-nested.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types"
+      ]
+    },
+    {
+      "id": "collection-stage24-alias-default",
+      "input": "tests/fixtures/m2/collection-stage24-alias-default.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-aliases"
+      ]
+    },
+    {
+      "id": "collection-stage24-alias-new",
+      "input": "tests/fixtures/m2/collection-stage24-alias-new.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "collection-stage24-alias-wrong",
+      "input": "tests/fixtures/m2/collection-stage24-alias-wrong.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "collection-stage24-union-left",
+      "input": "tests/fixtures/m2/collection-stage24-union-left.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "collection-stage24-union-right",
+      "input": "tests/fixtures/m2/collection-stage24-union-right.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "collection-stage24-union-default",
+      "input": "tests/fixtures/m2/collection-stage24-union-default.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types"
+      ]
+    },
+    {
+      "id": "collection-stage24-cast-good",
+      "input": "tests/fixtures/m2/collection-stage24-cast-good.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-tests-casts"
+      ]
+    },
+    {
+      "id": "collection-stage24-cast-wrong",
+      "input": "tests/fixtures/m2/collection-stage24-cast-wrong.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "collection-stage24-cast-wrong-kind",
+      "input": "tests/fixtures/m2/collection-stage24-cast-wrong-kind.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "collection-stage24-constraint-good",
+      "input": "tests/fixtures/m2/collection-stage24-constraint-good.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types"
+      ]
+    },
+    {
+      "id": "collection-stage24-constraint-bad",
+      "input": "tests/fixtures/m2/collection-stage24-constraint-bad.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "collection-stage24-constraint-element-first",
+      "input": "tests/fixtures/m2/collection-stage24-constraint-element-first.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "collection-stage24-constraint-outer",
+      "input": "tests/fixtures/m2/collection-stage24-constraint-outer.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "collection-stage24-argument-before-value",
+      "input": "tests/fixtures/m2/collection-stage24-argument-before-value.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "collection-stage24-arity-before-value",
+      "input": "tests/fixtures/m2/collection-stage24-arity-before-value.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "collection-stage24-list-first-error",
+      "input": "tests/fixtures/m2/collection-stage24-list-first-error.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "collection-stage24-set-first-error",
+      "input": "tests/fixtures/m2/collection-stage24-set-first-error.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "collection-stage24-metadata-list",
+      "input": "tests/fixtures/m2/collection-stage24-metadata-list.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types"
+      ]
+    },
+    {
+      "id": "collection-stage24-metadata-set",
+      "input": "tests/fixtures/m2/collection-stage24-metadata-set.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types"
+      ]
+    },
+    {
+      "id": "collection-stage24-metadata-default",
+      "input": "tests/fixtures/m2/collection-stage24-metadata-default.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types"
+      ]
+    },
+    {
+      "id": "collection-stage24-collection-class",
+      "input": "tests/fixtures/m2/collection-stage24-collection-class.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types"
+      ]
+    },
+    {
+      "id": "collection-stage24-set-stage23-type-any",
+      "input": "tests/fixtures/m2/collection-stage24-set-stage23-type-any.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-tests-casts"
+      ]
+    },
+    {
+      "id": "collection-stage24-alias-actual-missing",
+      "input": "tests/fixtures/m2/collection-stage24-alias-actual-missing.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "collection-stage24-list-is-nested-lazy",
+      "input": "tests/fixtures/m2/collection-stage24-list-is-nested-lazy.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-tests-casts"
+      ]
+    },
+    {
+      "id": "collection-stage24-set-is-nested-lazy",
+      "input": "tests/fixtures/m2/collection-stage24-set-is-nested-lazy.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-tests-casts"
+      ]
+    },
+    {
+      "id": "collection-stage24-set-as-nested-lazy",
+      "input": "tests/fixtures/m2/collection-stage24-set-as-nested-lazy.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "collection-stage24-compound-set",
+      "input": "tests/fixtures/m2/collection-stage24-compound-set.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-tests-casts"
+      ]
+    },
+    {
+      "id": "collection-stage24-inferred-empty",
+      "input": "tests/fixtures/m2/collection-stage24-inferred-empty.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "collection-stage24-inferred-body",
+      "input": "tests/fixtures/m2/collection-stage24-inferred-body.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "collection-stage24-inferred-nullable-empty",
+      "input": "tests/fixtures/m2/collection-stage24-inferred-nullable-empty.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types"
+      ]
+    },
+    {
+      "id": "collection-stage24-inferred-nullable-body",
+      "input": "tests/fixtures/m2/collection-stage24-inferred-nullable-body.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "collection-stage24-explicit-alias-body",
+      "input": "tests/fixtures/m2/collection-stage24-explicit-alias-body.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "collection-stage24-class-value",
+      "input": "tests/fixtures/m2/collection-stage24-class-value.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types"
+      ]
+    },
+    {
+      "id": "collection-stage24-bare-is-listing",
+      "input": "tests/fixtures/m2/collection-stage24-bare-is-listing.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-tests-casts"
+      ]
+    },
+    {
+      "id": "collection-stage24-bare-is-list",
+      "input": "tests/fixtures/m2/collection-stage24-bare-is-list.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-tests-casts"
+      ]
+    },
+    {
+      "id": "collection-stage24-bare-is-set",
+      "input": "tests/fixtures/m2/collection-stage24-bare-is-set.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-tests-casts"
+      ]
+    },
+    {
+      "id": "collection-stage24-bare-typed-list",
+      "input": "tests/fixtures/m2/collection-stage24-bare-typed-list.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types"
+      ]
+    },
+    {
+      "id": "collection-stage24-bare-typed-set",
+      "input": "tests/fixtures/m2/collection-stage24-bare-typed-set.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types"
+      ]
+    },
+    {
+      "id": "collection-stage24-bare-cast-map",
+      "input": "tests/fixtures/m2/collection-stage24-bare-cast-map.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "collection-stage24-bare-default-class",
+      "input": "tests/fixtures/m2/collection-stage24-bare-default-class.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types"
+      ]
+    },
+    {
+      "id": "collection-stage24-unknown-argument-before-value",
+      "input": "tests/fixtures/m2/collection-stage24-unknown-argument-before-value.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "collection-stage24-missing-lazy-declaration",
+      "input": "tests/fixtures/m2/collection-stage24-missing-lazy-declaration.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "collection-stage24-missing-is-empty",
+      "input": "tests/fixtures/m2/collection-stage24-missing-is-empty.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "collection-stage24-new-missing-before-body",
+      "input": "tests/fixtures/m2/collection-stage24-new-missing-before-body.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "collection-stage24-nullable-nested-null",
+      "input": "tests/fixtures/m2/collection-stage24-nullable-nested-null.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types"
+      ]
+    },
+    {
+      "id": "collection-stage24-nullable-list-attached",
+      "input": "tests/fixtures/m2/collection-stage24-nullable-list-attached.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types"
+      ]
+    },
+    {
+      "id": "collection-stage24-nullable-set-element",
+      "input": "tests/fixtures/m2/collection-stage24-nullable-set-element.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types"
+      ]
+    },
+    {
+      "id": "collection-stage24-collection-function-return",
+      "input": "tests/fixtures/m2/collection-stage24-collection-function-return.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:functions"
+      ]
+    },
+    {
+      "id": "collection-stage24-collection-function-wrong",
+      "input": "tests/fixtures/m2/collection-stage24-collection-function-wrong.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:functions",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "collection-stage24-collection-alias-union",
+      "input": "tests/fixtures/m2/collection-stage24-collection-alias-union.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-aliases"
+      ]
+    },
+    {
+      "id": "collection-stage24-collection-union-overlap-list",
+      "input": "tests/fixtures/m2/collection-stage24-collection-union-overlap-list.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types"
+      ]
+    },
+    {
+      "id": "collection-stage24-collection-union-overlap-set",
+      "input": "tests/fixtures/m2/collection-stage24-collection-union-overlap-set.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types"
+      ]
+    },
+    {
+      "id": "collection-stage24-collection-union-overlap-failure",
+      "input": "tests/fixtures/m2/collection-stage24-collection-union-overlap-failure.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "collection-stage24-collection-default-union-set",
+      "input": "tests/fixtures/m2/collection-stage24-collection-default-union-set.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types"
+      ]
+    },
+    {
+      "id": "collection-stage24-collection-constraint-length-set",
+      "input": "tests/fixtures/m2/collection-stage24-collection-constraint-length-set.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "collection-stage24-reference-collection-int-as-collection-int",
+      "input": "tests/fixtures/m2/collection-stage24-reference-collection-int-as-collection-int.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:reflection-metadata",
+        "semantic:functions"
+      ]
+    },
+    {
+      "id": "collection-stage24-reference-collection-int-as-collection-any",
+      "input": "tests/fixtures/m2/collection-stage24-reference-collection-int-as-collection-any.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:reflection-metadata",
+        "semantic:functions"
+      ]
+    },
+    {
+      "id": "collection-stage24-reference-collection-int-as-list-int",
+      "input": "tests/fixtures/m2/collection-stage24-reference-collection-int-as-list-int.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:reflection-metadata",
+        "semantic:functions"
+      ]
+    },
+    {
+      "id": "collection-stage24-reference-collection-int-as-set-int",
+      "input": "tests/fixtures/m2/collection-stage24-reference-collection-int-as-set-int.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:reflection-metadata",
+        "semantic:functions"
+      ]
+    },
+    {
+      "id": "collection-stage24-reference-list-int-as-collection-int",
+      "input": "tests/fixtures/m2/collection-stage24-reference-list-int-as-collection-int.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:reflection-metadata",
+        "semantic:functions"
+      ]
+    },
+    {
+      "id": "collection-stage24-reference-list-int-as-collection-any",
+      "input": "tests/fixtures/m2/collection-stage24-reference-list-int-as-collection-any.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:reflection-metadata",
+        "semantic:functions"
+      ]
+    },
+    {
+      "id": "collection-stage24-reference-list-int-as-list-int",
+      "input": "tests/fixtures/m2/collection-stage24-reference-list-int-as-list-int.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:reflection-metadata",
+        "semantic:functions"
+      ]
+    },
+    {
+      "id": "collection-stage24-reference-list-int-as-set-int",
+      "input": "tests/fixtures/m2/collection-stage24-reference-list-int-as-set-int.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:reflection-metadata",
+        "semantic:functions"
+      ]
+    },
+    {
+      "id": "collection-stage24-reference-set-int-as-collection-int",
+      "input": "tests/fixtures/m2/collection-stage24-reference-set-int-as-collection-int.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:reflection-metadata",
+        "semantic:functions"
+      ]
+    },
+    {
+      "id": "collection-stage24-reference-set-int-as-collection-any",
+      "input": "tests/fixtures/m2/collection-stage24-reference-set-int-as-collection-any.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:reflection-metadata",
+        "semantic:functions"
+      ]
+    },
+    {
+      "id": "collection-stage24-reference-set-int-as-list-int",
+      "input": "tests/fixtures/m2/collection-stage24-reference-set-int-as-list-int.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:reflection-metadata",
+        "semantic:functions"
+      ]
+    },
+    {
+      "id": "collection-stage24-reference-set-int-as-set-int",
+      "input": "tests/fixtures/m2/collection-stage24-reference-set-int-as-set-int.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:reflection-metadata",
+        "semantic:functions"
+      ]
+    },
+    {
+      "id": "collection-stage24-reference-collection-unknown-as-collection-int",
+      "input": "tests/fixtures/m2/collection-stage24-reference-collection-unknown-as-collection-int.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:reflection-metadata",
+        "semantic:functions"
+      ]
+    },
+    {
+      "id": "collection-stage24-reference-collection-unknown-as-collection-any",
+      "input": "tests/fixtures/m2/collection-stage24-reference-collection-unknown-as-collection-any.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:reflection-metadata",
+        "semantic:functions"
+      ]
+    },
+    {
+      "id": "collection-stage24-reference-collection-unknown-as-list-int",
+      "input": "tests/fixtures/m2/collection-stage24-reference-collection-unknown-as-list-int.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:reflection-metadata",
+        "semantic:functions"
+      ]
+    },
+    {
+      "id": "collection-stage24-reference-collection-unknown-as-set-int",
+      "input": "tests/fixtures/m2/collection-stage24-reference-collection-unknown-as-set-int.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:reflection-metadata",
+        "semantic:functions"
+      ]
+    },
+    {
+      "id": "collection-stage24-reference-collection-any-as-collection-int",
+      "input": "tests/fixtures/m2/collection-stage24-reference-collection-any-as-collection-int.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:reflection-metadata",
+        "semantic:functions"
+      ]
+    },
+    {
+      "id": "collection-stage24-reference-collection-any-as-collection-any",
+      "input": "tests/fixtures/m2/collection-stage24-reference-collection-any-as-collection-any.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:reflection-metadata",
+        "semantic:functions"
+      ]
+    },
+    {
+      "id": "collection-stage24-reference-collection-any-as-list-int",
+      "input": "tests/fixtures/m2/collection-stage24-reference-collection-any-as-list-int.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:reflection-metadata",
+        "semantic:functions"
+      ]
+    },
+    {
+      "id": "collection-stage24-reference-collection-any-as-set-int",
+      "input": "tests/fixtures/m2/collection-stage24-reference-collection-any-as-set-int.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:reflection-metadata",
+        "semantic:functions"
+      ]
+    },
+    {
+      "id": "collection-stage24-reference-collection-int-ispositive-as-collection-int",
+      "input": "tests/fixtures/m2/collection-stage24-reference-collection-int-ispositive-as-collection-int.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:reflection-metadata",
+        "semantic:functions"
+      ]
+    },
+    {
+      "id": "collection-stage24-reference-collection-int-ispositive-as-collection-any",
+      "input": "tests/fixtures/m2/collection-stage24-reference-collection-int-ispositive-as-collection-any.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:reflection-metadata",
+        "semantic:functions"
+      ]
+    },
+    {
+      "id": "collection-stage24-reference-collection-int-ispositive-as-list-int",
+      "input": "tests/fixtures/m2/collection-stage24-reference-collection-int-ispositive-as-list-int.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:reflection-metadata",
+        "semantic:functions"
+      ]
+    },
+    {
+      "id": "collection-stage24-reference-collection-int-ispositive-as-set-int",
+      "input": "tests/fixtures/m2/collection-stage24-reference-collection-int-ispositive-as-set-int.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:reflection-metadata",
+        "semantic:functions"
+      ]
+    },
+    {
+      "id": "collection-stage24-wrapper-listing",
+      "input": "tests/fixtures/m2/collection-stage24-wrapper-listing.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types"
+      ]
+    },
+    {
+      "id": "collection-stage24-wrapper-listing-bad",
+      "input": "tests/fixtures/m2/collection-stage24-wrapper-listing-bad.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "collection-stage24-wrapper-mapping",
+      "input": "tests/fixtures/m2/collection-stage24-wrapper-mapping.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types"
+      ]
+    },
+    {
+      "id": "collection-stage24-wrapper-mapping-bad",
+      "input": "tests/fixtures/m2/collection-stage24-wrapper-mapping-bad.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "collection-stage24-cast-wrapper-reuse",
+      "input": "tests/fixtures/m2/collection-stage24-cast-wrapper-reuse.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-tests-casts"
+      ]
+    },
+    {
+      "id": "collection-stage24-cast-wrapper-retry",
+      "input": "tests/fixtures/m2/collection-stage24-cast-wrapper-retry.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "collection-stage24-direct-alias-int-empty",
+      "input": "tests/fixtures/m2/collection-stage24-direct-alias-int-empty.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "collection-stage24-direct-alias-int-body",
+      "input": "tests/fixtures/m2/collection-stage24-direct-alias-int-body.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "collection-stage24-direct-alias-bare-empty",
+      "input": "tests/fixtures/m2/collection-stage24-direct-alias-bare-empty.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "collection-stage24-direct-alias-bare-body",
+      "input": "tests/fixtures/m2/collection-stage24-direct-alias-bare-body.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "collection-stage24-direct-alias-nullable-empty",
+      "input": "tests/fixtures/m2/collection-stage24-direct-alias-nullable-empty.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-aliases"
+      ]
+    },
+    {
+      "id": "collection-stage24-direct-alias-nullable-body",
+      "input": "tests/fixtures/m2/collection-stage24-direct-alias-nullable-body.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "collection-stage24-direct-alias-identity-empty",
+      "input": "tests/fixtures/m2/collection-stage24-direct-alias-identity-empty.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "collection-stage24-direct-alias-identity-body",
+      "input": "tests/fixtures/m2/collection-stage24-direct-alias-identity-body.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "collection-stage24-direct-alias-nested-empty",
+      "input": "tests/fixtures/m2/collection-stage24-direct-alias-nested-empty.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "collection-stage24-direct-alias-nested-body",
+      "input": "tests/fixtures/m2/collection-stage24-direct-alias-nested-body.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "collection-stage24-lambda-apply-wrong",
+      "input": "tests/fixtures/m2/collection-stage24-lambda-apply-wrong.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "collection-stage24-lambda-apply-list",
+      "input": "tests/fixtures/m2/collection-stage24-lambda-apply-list.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types"
+      ]
+    },
+    {
+      "id": "collection-stage24-lambda-apply-set",
+      "input": "tests/fixtures/m2/collection-stage24-lambda-apply-set.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types"
+      ]
+    },
+    {
+      "id": "collection-stage24-wrapper-same-node",
+      "input": "tests/fixtures/m2/collection-stage24-wrapper-same-node.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:functions"
+      ]
+    },
+    {
+      "id": "collection-stage24-wrapper-different-node",
+      "input": "tests/fixtures/m2/collection-stage24-wrapper-different-node.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:functions"
+      ]
+    },
+    {
+      "id": "collection-stage24-wrapper-same-node-bad",
+      "input": "tests/fixtures/m2/collection-stage24-wrapper-same-node-bad.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:functions",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "collection-stage24-wrapper-different-node-bad",
+      "input": "tests/fixtures/m2/collection-stage24-wrapper-different-node-bad.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:functions",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "collection-stage24-wrapper-bare-same-node",
+      "input": "tests/fixtures/m2/collection-stage24-wrapper-bare-same-node.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:functions"
+      ]
+    },
+    {
+      "id": "collection-stage24-subtype-class-test",
+      "input": "tests/fixtures/m2/collection-stage24-subtype-class-test.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-tests-casts"
+      ]
+    },
+    {
+      "id": "collection-stage24-subtype-list-class-test",
+      "input": "tests/fixtures/m2/collection-stage24-subtype-list-class-test.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-tests-casts"
+      ]
+    },
+    {
+      "id": "collection-stage24-subtype-set-class-test",
+      "input": "tests/fixtures/m2/collection-stage24-subtype-set-class-test.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-tests-casts"
+      ]
+    },
+    {
+      "id": "collection-stage24-nullable-new-alias",
+      "input": "tests/fixtures/m2/collection-stage24-nullable-new-alias.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-aliases"
+      ]
+    },
+    {
+      "id": "collection-stage24-nullable-empty-alias",
+      "input": "tests/fixtures/m2/collection-stage24-nullable-empty-alias.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-aliases"
+      ]
+    },
+    {
+      "id": "collection-stage24-nullable-nonempty-alias",
+      "input": "tests/fixtures/m2/collection-stage24-nullable-nonempty-alias.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "collection-stage24-relation-kind-check-left",
+      "input": "tests/fixtures/m2/collection-stage24-relation-kind-check-left.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:generated-verification"
+      ],
+      "metamorphic_relation": {
+        "case_ids": [
+          "collection-stage24-relation-kind-check-left",
+          "collection-stage24-relation-kind-check-right"
+        ],
+        "kind": "equal-stdout",
+        "domain": "bounded Collection type preservation: kind-check"
+      }
+    },
+    {
+      "id": "collection-stage24-relation-kind-check-right",
+      "input": "tests/fixtures/m2/collection-stage24-relation-kind-check-right.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:generated-verification"
+      ],
+      "metamorphic_relation": {
+        "case_ids": [
+          "collection-stage24-relation-kind-check-left",
+          "collection-stage24-relation-kind-check-right"
+        ],
+        "kind": "equal-stdout",
+        "domain": "bounded Collection type preservation: kind-check"
+      }
+    },
+    {
+      "id": "collection-stage24-relation-rejected-elements-left",
+      "input": "tests/fixtures/m2/collection-stage24-relation-rejected-elements-left.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:generated-verification"
+      ],
+      "metamorphic_relation": {
+        "case_ids": [
+          "collection-stage24-relation-rejected-elements-left",
+          "collection-stage24-relation-rejected-elements-right"
+        ],
+        "kind": "equal-stdout",
+        "domain": "bounded Collection type preservation: rejected-elements"
+      }
+    },
+    {
+      "id": "collection-stage24-relation-rejected-elements-right",
+      "input": "tests/fixtures/m2/collection-stage24-relation-rejected-elements-right.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:generated-verification"
+      ],
+      "metamorphic_relation": {
+        "case_ids": [
+          "collection-stage24-relation-rejected-elements-left",
+          "collection-stage24-relation-rejected-elements-right"
+        ],
+        "kind": "equal-stdout",
+        "domain": "bounded Collection type preservation: rejected-elements"
+      }
+    },
+    {
+      "id": "collection-stage24-relation-nullable-elements-left",
+      "input": "tests/fixtures/m2/collection-stage24-relation-nullable-elements-left.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:generated-verification"
+      ],
+      "metamorphic_relation": {
+        "case_ids": [
+          "collection-stage24-relation-nullable-elements-left",
+          "collection-stage24-relation-nullable-elements-right"
+        ],
+        "kind": "equal-stdout",
+        "domain": "bounded Collection type preservation: nullable-elements"
+      }
+    },
+    {
+      "id": "collection-stage24-relation-nullable-elements-right",
+      "input": "tests/fixtures/m2/collection-stage24-relation-nullable-elements-right.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:generated-verification"
+      ],
+      "metamorphic_relation": {
+        "case_ids": [
+          "collection-stage24-relation-nullable-elements-left",
+          "collection-stage24-relation-nullable-elements-right"
+        ],
+        "kind": "equal-stdout",
+        "domain": "bounded Collection type preservation: nullable-elements"
+      }
+    },
+    {
+      "id": "collection-stage24-relation-nested-kinds-left",
+      "input": "tests/fixtures/m2/collection-stage24-relation-nested-kinds-left.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:generated-verification"
+      ],
+      "metamorphic_relation": {
+        "case_ids": [
+          "collection-stage24-relation-nested-kinds-left",
+          "collection-stage24-relation-nested-kinds-right"
+        ],
+        "kind": "equal-stdout",
+        "domain": "bounded Collection type preservation: nested-kinds"
+      }
+    },
+    {
+      "id": "collection-stage24-relation-nested-kinds-right",
+      "input": "tests/fixtures/m2/collection-stage24-relation-nested-kinds-right.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:generated-verification"
+      ],
+      "metamorphic_relation": {
+        "case_ids": [
+          "collection-stage24-relation-nested-kinds-left",
+          "collection-stage24-relation-nested-kinds-right"
+        ],
+        "kind": "equal-stdout",
+        "domain": "bounded Collection type preservation: nested-kinds"
+      }
+    },
+    {
+      "id": "collection-stage24-list-force-listing-subscript",
+      "input": "tests/fixtures/m2/collection-stage24-list-force-listing-subscript.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "collection-stage24-list-force-mapping-subscript",
+      "input": "tests/fixtures/m2/collection-stage24-list-force-mapping-subscript.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "collection-stage24-list-force-class-subscript",
+      "input": "tests/fixtures/m2/collection-stage24-list-force-class-subscript.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "collection-stage24-list-force-nested-list-subscript",
+      "input": "tests/fixtures/m2/collection-stage24-list-force-nested-list-subscript.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "collection-stage24-list-force-nested-collection-subscript",
+      "input": "tests/fixtures/m2/collection-stage24-list-force-nested-collection-subscript.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "collection-stage24-list-positive-empty-predicate",
+      "input": "tests/fixtures/m2/collection-stage24-list-positive-empty-predicate.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:constraints",
+        "semantic:type-tests-casts"
+      ]
+    },
+    {
+      "id": "collection-stage24-list-positive-int-predicate",
+      "input": "tests/fixtures/m2/collection-stage24-list-positive-int-predicate.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:constraints",
+        "semantic:type-tests-casts"
+      ]
+    },
+    {
+      "id": "collection-stage24-list-positive-string-predicate",
+      "input": "tests/fixtures/m2/collection-stage24-list-positive-string-predicate.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:constraints",
+        "semantic:type-tests-casts"
+      ]
+    },
+    {
+      "id": "collection-stage24-list-positive-null-predicate",
+      "input": "tests/fixtures/m2/collection-stage24-list-positive-null-predicate.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:constraints",
+        "semantic:type-tests-casts"
+      ]
+    },
+    {
+      "id": "collection-stage24-list-typed-negative-predicate",
+      "input": "tests/fixtures/m2/collection-stage24-list-typed-negative-predicate.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:constraints",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "collection-stage24-set-positive-empty-predicate",
+      "input": "tests/fixtures/m2/collection-stage24-set-positive-empty-predicate.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:constraints",
+        "semantic:type-tests-casts"
+      ]
+    },
+    {
+      "id": "collection-stage24-set-positive-int-predicate",
+      "input": "tests/fixtures/m2/collection-stage24-set-positive-int-predicate.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:constraints",
+        "semantic:type-tests-casts"
+      ]
+    },
+    {
+      "id": "collection-stage24-set-positive-string-predicate",
+      "input": "tests/fixtures/m2/collection-stage24-set-positive-string-predicate.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:constraints",
+        "semantic:type-tests-casts"
+      ]
+    },
+    {
+      "id": "collection-stage24-set-positive-null-predicate",
+      "input": "tests/fixtures/m2/collection-stage24-set-positive-null-predicate.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:constraints",
+        "semantic:type-tests-casts"
+      ]
+    },
+    {
+      "id": "collection-stage24-set-typed-negative-predicate",
+      "input": "tests/fixtures/m2/collection-stage24-set-typed-negative-predicate.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:constraints",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "collection-stage24-alias-constrained-predicate",
+      "input": "tests/fixtures/m2/collection-stage24-alias-constrained-predicate.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "collection-stage24-wrapper-constrained-same-predicate",
+      "input": "tests/fixtures/m2/collection-stage24-wrapper-constrained-same-predicate.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:constraints",
+        "semantic:functions",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "collection-stage24-wrapper-constrained-different-predicate",
+      "input": "tests/fixtures/m2/collection-stage24-wrapper-constrained-different-predicate.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:constraints",
+        "semantic:functions",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "collection-stage24-cast-list-scalar",
+      "input": "tests/fixtures/m2/collection-stage24-cast-list-scalar.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-tests-casts"
+      ]
+    },
+    {
+      "id": "collection-stage24-cast-list-force-scalar",
+      "input": "tests/fixtures/m2/collection-stage24-cast-list-force-scalar.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "collection-stage24-cast-set-scalar",
+      "input": "tests/fixtures/m2/collection-stage24-cast-set-scalar.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "collection-stage24-alias-nested-scalar",
+      "input": "tests/fixtures/m2/collection-stage24-alias-nested-scalar.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-aliases"
+      ]
+    },
+    {
+      "id": "collection-stage24-list-nothing-empty-bottom",
+      "input": "tests/fixtures/m2/collection-stage24-list-nothing-empty-bottom.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-tests-casts"
+      ]
+    },
+    {
+      "id": "collection-stage24-list-nothing-int-bottom",
+      "input": "tests/fixtures/m2/collection-stage24-list-nothing-int-bottom.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-tests-casts"
+      ]
+    },
+    {
+      "id": "collection-stage24-list-nothing-string-bottom",
+      "input": "tests/fixtures/m2/collection-stage24-list-nothing-string-bottom.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-tests-casts"
+      ]
+    },
+    {
+      "id": "collection-stage24-list-nothing-null-bottom",
+      "input": "tests/fixtures/m2/collection-stage24-list-nothing-null-bottom.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-tests-casts"
+      ]
+    },
+    {
+      "id": "collection-stage24-set-nothing-empty-bottom",
+      "input": "tests/fixtures/m2/collection-stage24-set-nothing-empty-bottom.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-tests-casts"
+      ]
+    },
+    {
+      "id": "collection-stage24-set-nothing-int-bottom",
+      "input": "tests/fixtures/m2/collection-stage24-set-nothing-int-bottom.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-tests-casts"
+      ]
+    },
+    {
+      "id": "collection-stage24-set-nothing-string-bottom",
+      "input": "tests/fixtures/m2/collection-stage24-set-nothing-string-bottom.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-tests-casts"
+      ]
+    },
+    {
+      "id": "collection-stage24-set-nothing-null-bottom",
+      "input": "tests/fixtures/m2/collection-stage24-set-nothing-null-bottom.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-tests-casts"
+      ]
+    },
+    {
+      "id": "collection-stage24-default-nothing-bottom",
+      "input": "tests/fixtures/m2/collection-stage24-default-nothing-bottom.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types"
+      ]
+    },
+    {
+      "id": "collection-stage24-new-nothing-bottom",
+      "input": "tests/fixtures/m2/collection-stage24-new-nothing-bottom.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "collection-stage24-new-body-nothing-bottom",
+      "input": "tests/fixtures/m2/collection-stage24-new-body-nothing-bottom.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "collection-stage24-nullable-default-nothing-bottom",
+      "input": "tests/fixtures/m2/collection-stage24-nullable-default-nothing-bottom.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types"
+      ]
+    },
+    {
+      "id": "collection-stage24-nullable-outer-false-empty",
+      "input": "tests/fixtures/m2/collection-stage24-nullable-outer-false-empty.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints"
+      ]
+    },
+    {
+      "id": "collection-stage24-nullable-outer-false-body",
+      "input": "tests/fixtures/m2/collection-stage24-nullable-outer-false-body.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "collection-stage24-nullable-outer-throw-empty",
+      "input": "tests/fixtures/m2/collection-stage24-nullable-outer-throw-empty.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints"
+      ]
+    },
+    {
+      "id": "collection-stage24-nullable-outer-throw-body",
+      "input": "tests/fixtures/m2/collection-stage24-nullable-outer-throw-body.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "collection-stage24-nullable-inner-false-empty",
+      "input": "tests/fixtures/m2/collection-stage24-nullable-inner-false-empty.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints"
+      ]
+    },
+    {
+      "id": "collection-stage24-nullable-inner-false-body",
+      "input": "tests/fixtures/m2/collection-stage24-nullable-inner-false-body.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "collection-stage24-nullable-inner-throw-empty",
+      "input": "tests/fixtures/m2/collection-stage24-nullable-inner-throw-empty.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints"
+      ]
+    },
+    {
+      "id": "collection-stage24-nullable-inner-throw-body",
+      "input": "tests/fixtures/m2/collection-stage24-nullable-inner-throw-body.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:constraints",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "collection-stage24-nullable-union-nullable-default-empty",
+      "input": "tests/fixtures/m2/collection-stage24-nullable-union-nullable-default-empty.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-aliases"
+      ]
+    },
+    {
+      "id": "collection-stage24-nullable-union-nullable-default-body",
+      "input": "tests/fixtures/m2/collection-stage24-nullable-union-nullable-default-body.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "collection-stage24-nullable-nullable-bottom-empty",
+      "input": "tests/fixtures/m2/collection-stage24-nullable-nullable-bottom-empty.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-aliases"
+      ]
+    },
+    {
+      "id": "collection-stage24-nullable-nullable-bottom-body",
+      "input": "tests/fixtures/m2/collection-stage24-nullable-nullable-bottom-body.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "collection-stage24-relation-empty-nothing-left-bottom",
+      "input": "tests/fixtures/m2/collection-stage24-relation-empty-nothing-left-bottom.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:generated-verification"
+      ],
+      "metamorphic_relation": {
+        "case_ids": [
+          "collection-stage24-relation-empty-nothing-left-bottom",
+          "collection-stage24-relation-empty-nothing-right-bottom"
+        ],
+        "kind": "equal-stdout",
+        "domain": "bounded Collection type preservation: empty-nothing"
+      }
+    },
+    {
+      "id": "collection-stage24-relation-empty-nothing-right-bottom",
+      "input": "tests/fixtures/m2/collection-stage24-relation-empty-nothing-right-bottom.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-tests-casts",
+        "semantic:generated-verification"
+      ],
+      "metamorphic_relation": {
+        "case_ids": [
+          "collection-stage24-relation-empty-nothing-left-bottom",
+          "collection-stage24-relation-empty-nothing-right-bottom"
+        ],
+        "kind": "equal-stdout",
+        "domain": "bounded Collection type preservation: empty-nothing"
+      }
+    },
+    {
+      "id": "collection-stage24-nullable-inferred-empty",
+      "input": "tests/fixtures/m2/collection-stage24-nullable-inferred-empty.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types"
+      ]
+    },
+    {
+      "id": "collection-stage24-nullable-inferred-body",
+      "input": "tests/fixtures/m2/collection-stage24-nullable-inferred-body.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "collection-stage24-nullable-inferred-outer-false-empty",
+      "input": "tests/fixtures/m2/collection-stage24-nullable-inferred-outer-false-empty.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:constraints",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "collection-stage24-nullable-inferred-outer-false-body",
+      "input": "tests/fixtures/m2/collection-stage24-nullable-inferred-outer-false-body.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:constraints",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "collection-stage24-nullable-inferred-inner-false-empty",
+      "input": "tests/fixtures/m2/collection-stage24-nullable-inferred-inner-false-empty.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:constraints",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "collection-stage24-nullable-inferred-inner-false-body",
+      "input": "tests/fixtures/m2/collection-stage24-nullable-inferred-inner-false-body.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:constraints",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "collection-stage24-nullable-inferred-outer-throw-empty",
+      "input": "tests/fixtures/m2/collection-stage24-nullable-inferred-outer-throw-empty.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:constraints",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "collection-stage24-nullable-inferred-outer-throw-body",
+      "input": "tests/fixtures/m2/collection-stage24-nullable-inferred-outer-throw-body.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:constraints",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "collection-stage24-parser-collection-empty-scalar",
+      "input": "tests/fixtures/m2/collection-stage24-parser-collection-empty-scalar.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "collection-stage24-parser-list-empty-scalar",
+      "input": "tests/fixtures/m2/collection-stage24-parser-list-empty-scalar.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "collection-stage24-parser-set-empty-scalar",
+      "input": "tests/fixtures/m2/collection-stage24-parser-set-empty-scalar.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "collection-stage24-parser-map-empty-scalar",
+      "input": "tests/fixtures/m2/collection-stage24-parser-map-empty-scalar.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "collection-stage24-parser-alias-empty-scalar",
+      "input": "tests/fixtures/m2/collection-stage24-parser-alias-empty-scalar.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "collection-stage24-parser-collection-trailing-scalar",
+      "input": "tests/fixtures/m2/collection-stage24-parser-collection-trailing-scalar.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types"
+      ]
+    },
+    {
+      "id": "collection-stage24-parser-list-trailing-scalar",
+      "input": "tests/fixtures/m2/collection-stage24-parser-list-trailing-scalar.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types"
+      ]
+    },
+    {
+      "id": "collection-stage24-parser-set-trailing-scalar",
+      "input": "tests/fixtures/m2/collection-stage24-parser-set-trailing-scalar.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types"
+      ]
+    },
+    {
+      "id": "collection-stage24-parser-map-trailing-scalar",
+      "input": "tests/fixtures/m2/collection-stage24-parser-map-trailing-scalar.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types"
+      ]
+    },
+    {
+      "id": "collection-stage24-parser-alias-trailing-scalar",
+      "input": "tests/fixtures/m2/collection-stage24-parser-alias-trailing-scalar.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-aliases"
+      ]
+    },
+    {
+      "id": "collection-stage24-relation-default-kind-left-property",
+      "input": "tests/fixtures/m2/collection-stage24-relation-default-kind-left-property.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generated-verification"
+      ],
+      "metamorphic_relation": {
+        "case_ids": [
+          "collection-stage24-relation-default-kind-left-property",
+          "collection-stage24-relation-default-kind-right-property"
+        ],
+        "kind": "equal-stdout",
+        "domain": "bounded Collection and concrete List default runtime class"
+      }
+    },
+    {
+      "id": "collection-stage24-relation-default-kind-right-property",
+      "input": "tests/fixtures/m2/collection-stage24-relation-default-kind-right-property.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:generated-verification"
+      ],
+      "metamorphic_relation": {
+        "case_ids": [
+          "collection-stage24-relation-default-kind-left-property",
+          "collection-stage24-relation-default-kind-right-property"
+        ],
+        "kind": "equal-stdout",
+        "domain": "bounded Collection and concrete List default runtime class"
+      }
+    },
+    {
+      "id": "collection-stage24-parser-multiline-list-spaced",
+      "input": "tests/fixtures/m2/collection-stage24-parser-multiline-list-spaced.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "collection-stage24-parser-multiline-collection-spaced",
+      "input": "tests/fixtures/m2/collection-stage24-parser-multiline-collection-spaced.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "collection-stage24-parser-multiline-map-spaced",
+      "input": "tests/fixtures/m2/collection-stage24-parser-multiline-map-spaced.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "collection-stage24-parser-multiline-set-spaced",
+      "input": "tests/fixtures/m2/collection-stage24-parser-multiline-set-spaced.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "collection-stage24-parser-multiline-alias-spaced",
+      "input": "tests/fixtures/m2/collection-stage24-parser-multiline-alias-spaced.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:collections",
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:diagnostics"
+      ]
     }
   ],
   "schema_version": 1,

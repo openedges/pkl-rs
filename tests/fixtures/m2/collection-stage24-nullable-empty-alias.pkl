@@ -1,0 +1,3 @@
+typealias N=Collection<Int>?
+x:N
+result=(x){}.length

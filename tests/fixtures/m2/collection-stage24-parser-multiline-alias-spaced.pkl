@@ -1,0 +1,4 @@
+typealias A<T> = Collection<T>
+x:A<
+> =List()
+result=x

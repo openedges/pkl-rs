@@ -47,6 +47,9 @@ pub(crate) fn base_type(name: &str) -> Option<TypeCheck> {
         "List" => TypeCheck::Collection(CollectionKind::List),
         "Map" => TypeCheck::Collection(CollectionKind::Map),
         "Set" => TypeCheck::Collection(CollectionKind::Set),
+        "Collection" => TypeCheck::CollectionBase {
+            arguments: Vec::new(),
+        },
         _ => return None,
     })
 }
@@ -129,6 +132,14 @@ pub(crate) fn type_name<'a>(ty: &'a TypeCheck, module: &str) -> String {
                 sequence.push(Part::Text(">".into()));
             }
             TypeCheck::Collection(kind) => output.push_str(&format!("{kind:?}")),
+            TypeCheck::CollectionBase { arguments } => {
+                output.push_str("Collection");
+                if !arguments.is_empty() {
+                    output.push('<');
+                    list(arguments.iter().map(|(ty, _)| ty).collect(), ", ");
+                    sequence.push(Part::Text(">".into()));
+                }
+            }
             TypeCheck::StringLiteral(value) => output.push_str(&format!("\"{value}\"")),
             _ => output.push_str(&super::type_name(ty, module)),
         }
@@ -182,7 +193,8 @@ pub(crate) fn normalize(ty: &TypeCheck, module: &str) -> TypeCheck {
             | TypeCheck::Constrained { base: inner, .. }
             | TypeCheck::Nullable(inner) => vec![inner],
             TypeCheck::Union { types, .. } => types.iter().collect(),
-            TypeCheck::ParameterizedCollection { arguments, .. } => {
+            TypeCheck::ParameterizedCollection { arguments, .. }
+            | TypeCheck::CollectionBase { arguments } => {
                 arguments.iter().map(|(ty, _)| ty).collect()
             }
             TypeCheck::Function {
@@ -225,6 +237,13 @@ pub(crate) fn normalize(ty: &TypeCheck, module: &str) -> TypeCheck {
                             1
                         }
                     ],
+                },
+                TypeCheck::CollectionBase { .. } => TypeCheck::CollectionBase {
+                    arguments: if args.is_empty() {
+                        vec![(TypeCheck::Unknown, Span::new(0, 0))]
+                    } else {
+                        args.into_iter().map(|ty| (ty, Span::new(0, 0))).collect()
+                    },
                 },
                 TypeCheck::ParameterizedCollection { kind, .. } => {
                     TypeCheck::ParameterizedCollection {
@@ -317,7 +336,8 @@ pub(crate) fn metadata_key(ty: &TypeCheck) -> String {
                 .chain(std::iter::once(result.as_ref()))
                 .collect(),
             TypeCheck::Union { types, .. } => types.iter().collect(),
-            TypeCheck::ParameterizedCollection { arguments, .. } => {
+            TypeCheck::ParameterizedCollection { arguments, .. }
+            | TypeCheck::CollectionBase { arguments } => {
                 arguments.iter().map(|(ty, _)| ty).collect()
             }
             TypeCheck::Reference { domain, referent } => vec![domain, referent],
@@ -345,6 +365,7 @@ pub(crate) fn metadata_key(ty: &TypeCheck) -> String {
                 TypeCheck::ParameterizedCollection { kind, .. } => {
                     format!("collection:{kind:?}:{args:?}")
                 }
+                TypeCheck::CollectionBase { .. } => format!("collection:Collection:{args:?}"),
                 TypeCheck::Reference { .. } => format!("reference:{args:?}"),
                 other => format!("leaf:{other:?}"),
             };
@@ -385,7 +406,8 @@ fn function_syntax_flags(root: &TypeCheck) -> BTreeMap<usize, bool> {
                 .flatten()
                 .chain(std::iter::once(result.as_ref()))
                 .collect(),
-            TypeCheck::ParameterizedCollection { arguments, .. } => {
+            TypeCheck::ParameterizedCollection { arguments, .. }
+            | TypeCheck::CollectionBase { arguments } => {
                 arguments.iter().map(|(ty, _)| ty).collect()
             }
             TypeCheck::Reference { domain, referent } => vec![domain, referent],
@@ -530,6 +552,14 @@ fn subtype(a: &TypeCheck, b: &TypeCheck, heap: &Heap) -> bool {
                             TypeCheck::ParameterizedCollection { .. },
                             TypeCheck::ParameterizedCollection { .. }
                         )
+                        | (
+                            TypeCheck::CollectionBase { .. },
+                            TypeCheck::CollectionBase { .. }
+                        )
+                        | (
+                            TypeCheck::ParameterizedCollection { .. },
+                            TypeCheck::CollectionBase { .. }
+                        )
                         | (TypeCheck::Union { .. }, TypeCheck::Union { .. })
                 );
                 if !structural
@@ -570,6 +600,7 @@ fn subtype(a: &TypeCheck, b: &TypeCheck, heap: &Heap) -> bool {
                         | TypeCheck::RefDomain
                         | TypeCheck::Collection(_)
                         | TypeCheck::ParameterizedCollection { .. }
+                        | TypeCheck::CollectionBase { .. }
                         | TypeCheck::Reference { .. },
                         TypeCheck::Any,
                     ) => true,
@@ -651,6 +682,27 @@ fn subtype(a: &TypeCheck, b: &TypeCheck, heap: &Heap) -> bool {
                         false
                     }
                     (
+                        TypeCheck::CollectionBase { arguments: aa },
+                        TypeCheck::CollectionBase { arguments: ba },
+                    )
+                    | (
+                        TypeCheck::ParameterizedCollection {
+                            kind: CollectionKind::List | CollectionKind::Set,
+                            arguments: aa,
+                        },
+                        TypeCheck::CollectionBase { arguments: ba },
+                    ) => {
+                        if aa.len() == ba.len() {
+                            tasks.push(Task::Group {
+                                pairs: aa.iter().zip(ba).map(|((a, _), (b, _))| (a, b)).collect(),
+                                next: 0,
+                                all: true,
+                            });
+                            continue;
+                        }
+                        false
+                    }
+                    (
                         TypeCheck::Union { types: left, .. },
                         TypeCheck::Union { types: right, .. },
                     ) => {
@@ -709,10 +761,11 @@ impl Vm {
                         TypeCheck::Collection(CollectionKind::List) => 22,
                         TypeCheck::Collection(CollectionKind::Map) => 25,
                         TypeCheck::Collection(CollectionKind::Set) => 26,
+                        TypeCheck::CollectionBase { .. } => 27,
                         _ => 2,
                     },
                 super::type_name(&ty, &self.program.module_name),
-                false,
+                matches!(ty, TypeCheck::CollectionBase { .. }),
             ),
         };
         let members = if id == ACCESS_ID {

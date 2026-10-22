@@ -2,6 +2,69 @@
 use super::*;
 
 #[test]
+fn shared_abstract_collection_metadata_traversals_and_release_are_stack_safe() {
+    std::thread::Builder::new()
+        .stack_size(256 * 1024)
+        .spawn(|| {
+            let mut left = TypeCheck::Int.shared();
+            let TypeCheck::Shared(node) = &left else {
+                unreachable!()
+            };
+            let released = Arc::downgrade(node.0.as_ref().unwrap());
+            let mut right = TypeCheck::Int.shared();
+            let span = Span::new(0, 0);
+            for _ in 0..20_000 {
+                left = TypeCheck::CollectionBase {
+                    arguments: vec![(left, span)],
+                }
+                .shared();
+                right = TypeCheck::CollectionBase {
+                    arguments: vec![(right, span)],
+                }
+                .shared();
+            }
+            // Abstract Collection type-node identity is deliberately distinct
+            // from exported structural metadata equality.
+            assert!(!left.equivalent(&right));
+            assert!(!left.noop());
+            assert!(!left.contains_parameter());
+            assert!(!left.has_deferred_reference_validation());
+            assert!(!typecheck::needs_custom_this(&left));
+            left.validate_reference_arguments(span, &[], &BTreeMap::new())
+                .unwrap();
+            let left_metadata = reference::normalize(&left, "m2-collection");
+            let right_metadata = reference::normalize(&right, "m2-collection");
+            assert_eq!(
+                reference::metadata_key(&left_metadata),
+                reference::metadata_key(&right_metadata)
+            );
+            assert!(reference::is_subtype(
+                &left_metadata,
+                &right_metadata,
+                &Heap::new()
+            ));
+            assert!(reference::is_subtype(
+                &right_metadata,
+                &left_metadata,
+                &Heap::new()
+            ));
+            assert_eq!(
+                reference::type_name(&left_metadata, ""),
+                format!("{}Int{}", "Collection<".repeat(20_000), ">".repeat(20_000))
+            );
+            assert_eq!(type_name(&left, ""), "Collection");
+            drop(left);
+            drop(right);
+            assert!(released.upgrade().is_none());
+            drop(left_metadata);
+            drop(right_metadata);
+        })
+        .unwrap()
+        .join()
+        .unwrap();
+}
+
+#[test]
 fn shared_argument_dags_clone_compare_substitute_and_release_on_small_stack() {
     std::thread::Builder::new()
         .stack_size(256 * 1024)

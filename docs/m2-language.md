@@ -248,6 +248,17 @@ Higher-order Set APIs and the complete collection corpus remain open.
 Nested Map key-rehash side effects during Java value rendering also remain
 outside the selected stringification contract.
 
+Stage 24 adds selected `Collection<T>` type semantics. It distinguishes List and
+Set values from other collections, preserves nested lazy List checks and eager
+Set checks, and covers bare types, aliases, defaults, nullable attached defaults,
+casts, union checking and normalized Reference metadata. Explicit empty generic
+argument lists now produce the pinned parser diagnostic, including List, Set,
+Map and alias controls. Original parser depth and node limits remain unchanged.
+Persistent sequences and native Host/GC checks retain independent contracts.
+Unselected controls preserve String-selected alias-union constructor diagnostic
+differences, unsupported member APIs and general compound outputs. These are
+remaining gaps, not additional development exceptions.
+
 A complete runtime type-resolution model, general imported types, annotation
 syntax, and full module initialization/caching remain open requirements. The
 persistent adapter requires an acquired module; module-entry failures do not

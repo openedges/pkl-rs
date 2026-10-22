@@ -133,6 +133,7 @@ fn is_base_class(name: &str) -> bool {
             | "Dynamic"
             | "Listing"
             | "Mapping"
+            | "Collection"
             | "List"
             | "Set"
             | "Map"

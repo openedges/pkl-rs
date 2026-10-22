@@ -1,0 +1,2 @@
+x:Listing<Collection<Int>> =new Listing {List(1);Set(2)}
+result=x[1].length

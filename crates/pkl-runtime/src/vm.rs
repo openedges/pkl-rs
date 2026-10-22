@@ -254,6 +254,11 @@ pub enum TypeCheck {
     String,
     Bytes,
     Collection(crate::heap::CollectionKind),
+    /// Abstract `Collection` type, distinct from every concrete heap kind.
+    /// An empty argument list is the bare class; a parameterized use has one.
+    CollectionBase {
+        arguments: Vec<(TypeCheck, Span)>,
+    },
     ParameterizedCollection {
         kind: crate::heap::CollectionKind,
         arguments: Vec<(TypeCheck, Span)>,
@@ -310,6 +315,23 @@ impl TypeCheck {
                 } => current = inner,
                 ty => return ty,
             }
+        }
+    }
+    /// Whether this type's selected default ultimately comes from Collection.
+    /// Nullable defaults retain the empty List for empty amendments.
+    fn collection_base_default(&self) -> bool {
+        let mut ty = self;
+        loop {
+            ty = match ty.unaliased() {
+                Self::CollectionBase { .. } => return true,
+                Self::Nullable(inner) | Self::Constrained { base: inner, .. } => inner,
+                Self::Union {
+                    types,
+                    default: Some(index),
+                    ..
+                } => &types[*index],
+                _ => return false,
+            };
         }
     }
     pub(crate) fn equivalent(&self, other: &Self) -> bool {
@@ -370,6 +392,10 @@ impl TypeCheck {
                 (Self::StringLiteral(a), Self::StringLiteral(b)) => a == b,
                 (Self::Class { id: a, .. }, Self::Class { id: b, .. }) => a == b,
                 (Self::Collection(a), Self::Collection(b)) => a == b,
+                (Self::CollectionBase { arguments: a }, Self::CollectionBase { arguments: b }) => {
+                    // CollectionTypeNode is equivalent only to the same node.
+                    a.is_empty() && b.is_empty()
+                }
                 (
                     Self::ParameterizedCollection {
                         kind: a,
@@ -538,6 +564,10 @@ impl TypeCheck {
             }
             Self::ParameterizedCollection { kind, .. } => {
                 Self::Collection(*kind).accepts(value, heap)
+            }
+            Self::CollectionBase { .. } => {
+                Self::Collection(crate::heap::CollectionKind::List).accepts(value, heap)
+                    || Self::Collection(crate::heap::CollectionKind::Set).accepts(value, heap)
             }
             Self::Class { id, .. } => {
                 let &Value::Object(mut object) = value else {
@@ -3769,7 +3799,8 @@ fn reference_constrained_type(check: &TypeCheck) -> Option<&TypeCheck> {
             | TypeCheck::NamedAlias {
                 expanded: inner, ..
             } => pending.push(inner),
-            TypeCheck::ParameterizedCollection { arguments, .. } => {
+            TypeCheck::ParameterizedCollection { arguments, .. }
+            | TypeCheck::CollectionBase { arguments } => {
                 pending.extend(arguments.iter().rev().map(|(ty, _)| ty))
             }
             TypeCheck::Union { types, .. } => pending.extend(types.iter().rev()),
@@ -3909,6 +3940,33 @@ impl Compiler<'_> {
                 &mut BTreeSet::new(),
             )?;
             self.instance_body(members, ty.span, &mut instructions)?;
+        } else if let crate::syntax::ExprKind::Object {
+            parent: None,
+            members,
+        } = &member.expr.kind
+            && let Some(ty) = &member.ty
+            && self.compile_type(ty)?.collection_base_default()
+        {
+            let check = self.compile_type(ty)?;
+            self.default_type(&check, &mut instructions, ty.span)?;
+            let start = instructions.len();
+            self.collection_body(
+                members,
+                crate::heap::CollectionKind::Dynamic,
+                true,
+                &mut instructions,
+            )?;
+            let span = member.expr.span;
+            let span = if self.resolved.module.source[span.start..].starts_with("new") {
+                Span::new(span.start, span.start + 3)
+            } else {
+                span
+            };
+            for location in &mut instructions.spans[start..] {
+                if location.is_none() {
+                    *location = Some(span);
+                }
+            }
         } else if let crate::syntax::ExprKind::Object {
             parent: None,
             members,
@@ -4264,6 +4322,16 @@ impl Compiler<'_> {
                     }
                 };
                 self.initialize_type_resolution(ty, output);
+                if check.collection_base_default() {
+                    self.default_type(&check, output, ty.span)?;
+                    self.collection_body(
+                        members,
+                        crate::heap::CollectionKind::Dynamic,
+                        true,
+                        output,
+                    )?;
+                    return Ok(());
+                }
                 if let TypeCheck::Collection(kind)
                 | TypeCheck::ParameterizedCollection { kind, .. } = check.unaliased()
                 {
@@ -4973,6 +5041,7 @@ fn type_name(ty: &TypeCheck, module: &str) -> String {
             TypeCheck::Collection(kind) | TypeCheck::ParameterizedCollection { kind, .. } => {
                 format!("{kind:?}")
             }
+            TypeCheck::CollectionBase { .. } => "Collection".into(),
             TypeCheck::StringLiteral(value) => format!("{value:?}"),
             TypeCheck::Nullable(inner) => {
                 pending.push(Part::Text("?".into()));
@@ -5810,6 +5879,24 @@ impl Compiler<'_> {
                             syntax: false,
                         });
                     }
+                    if path[0] == "Collection" {
+                        if arguments.len() > 1 {
+                            return Err(RuntimeError::new(
+                                ErrorKind::Type,
+                                format!("Expected 1 type argument(s) but got {}.", arguments.len()),
+                            ));
+                        }
+                        let arguments = arguments
+                            .iter()
+                            .map(|argument| {
+                                Ok((
+                                    self.compile_type_at(argument, limit, aliases, parameters)?,
+                                    self.type_source_span(argument),
+                                ))
+                            })
+                            .collect::<Result<_, RuntimeError>>()?;
+                        return Ok(TypeCheck::CollectionBase { arguments });
+                    }
                     if !arguments.is_empty() {
                         let kind = match path[0].as_str() {
                             "Listing" => crate::heap::CollectionKind::Listing,
@@ -6023,6 +6110,9 @@ impl Compiler<'_> {
                 expanded: inner, ..
             } => {
                 return self.default_type(inner, output, span);
+            }
+            TypeCheck::CollectionBase { .. } => {
+                output.push_at(Instruction::MakeList { length: 0 }, span);
             }
             TypeCheck::Collection(kind) | TypeCheck::ParameterizedCollection { kind, .. } => {
                 if *kind == crate::heap::CollectionKind::List {

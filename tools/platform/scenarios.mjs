@@ -11,6 +11,7 @@ import { genericDefaultsGroups, genericDefaultsContext } from './generic-default
 import { genericConstructorsGroups, genericConstructorsContext } from './generic-constructors-cases.mjs';
 import { strictMapGroups, strictMapContext } from './strict-map-cases.mjs';
 import { strictSetGroups, strictSetContext } from './strict-set-cases.mjs';
+import { collectionTypeGroups, collectionTypeContext } from './collection-type-cases.mjs';
 
 // Identical assertions execute inside Node and an actual Chromium page.
 export async function scenarios(api) {
@@ -220,6 +221,21 @@ export async function scenarios(api) {
           const actual = api.evaluateLanguageSequence(fixture.source,
             strictSetContext.uri, strictSetContext.moduleName,
             fixture.expressions, strictSetContext.powerAssertions);
+          eq(actual.length, fixture.expected.length);
+          for (let index = 0; index < actual.length; index++) {
+            eq(actual[index], fixture.expected[index]);
+          }
+        }
+      }
+    });
+  }
+  for (const group of collectionTypeGroups) {
+    await check(group.scenario, () => {
+      for (const fixture of group.fixtures) {
+        for (let repetition = 0; repetition < 2; repetition++) {
+          const actual = api.evaluateLanguageSequence(fixture.source,
+            collectionTypeContext.uri, collectionTypeContext.moduleName,
+            fixture.expressions, collectionTypeContext.powerAssertions);
           eq(actual.length, fixture.expected.length);
           for (let index = 0; index < actual.length; index++) {
             eq(actual[index], fixture.expected[index]);

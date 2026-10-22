@@ -1,0 +1,4 @@
+function f(x:Listing<Collection<Int(this > 0)>>)=x
+function g(x:Listing<Collection<Int(this > 0)>>)=x
+x=new Listing {List(-1)}
+result=g(f(x))[0][0]

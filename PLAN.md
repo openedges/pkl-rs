@@ -373,6 +373,8 @@ Stage 15의 원래 입력·URI 그대로 재비교하여 shared-slot 실패 3개
 
 [소스·gate 증거](reports/m2/source-stage23-final-evidence.tar.gz)는 소스 사본 6,053개·고유 경로 2,873개를 정확한 구현 커밋에 연결합니다. 요구사항 474개·부분 연결 16개, accounting row 3,348개 중 ready 2,348개·미구현 960개·미연결 40개를 유지하며 완료율로 계산하지 않습니다. strict subset/full gate는 실패하고 전체 gate의 실패 이유 1,950개를 유지합니다. [독립 최종 감사](reports/m2/stage23-post-seal-audit.json)는 archive 12개·총 108,225,352 bytes와 소스·Git·리뷰·gate·실제 포장 helper를 확인했습니다. **Stage 23의 제한된 strict-Set 개발 계약만 마감했으며 M2 전체·제품 API·성능·메모리·릴리스 플랫폼 조건은 미완료입니다.**
 
+스물네 번째 단계는 `Collection<T>`의 제한된 타입 의미론을 진행합니다. 핵심 런타임은 `gpt-6-astra / xhigh`, Java 차등 코퍼스와 독립 수명주기·플랫폼 검증은 각각 `gpt-6.1-sol / high`에 배정합니다. 고정 Java의 List·Set 분류, List 원소의 지연 검사와 Set 원소의 즉시 검사, 기본값·별칭·metadata를 기준으로 구현합니다. 이전 2,348개 선택 입력·82개 변형 관계·137개 순차 목록과 원래 작은 스택 검사의 조건을 보존합니다. 새 Java 원시 비교, 필수 로컬 검사, 실제 Node·Chromium 실행과 독립 소스·증거 검토를 마친 뒤 구현 및 검증 기록을 단계별로 커밋·푸시합니다. 현재 이 단계의 최종 검증은 완료되지 않았습니다. 프런트엔드의 깊은 구문 처리와 전체 collection API·compound 출력은 별도 후속 작업으로 유지합니다.
+
 다음 구현은 남은 탐색 불일치의 의존성을 기준으로 진행합니다.
 
 1. 남은 Reference metadata 작업·진단 확장을 continuation과 자원 계약으로 검증하고 Java stack-overflow 진단 및 취소 지연을 별도로 다룹니다. 전체 지연 타입 해석·alias-root 대입 identity와 wrapper 중복 제거의 실제 인자 구분을 검증합니다. 남은 nullable/default·inline Reference·local typed-property·outer 진단, generic constructor의 지연 멤버 frame 이름·builtin·generator 경계를 원래 실패 입력으로 보완합니다. 이미 검증한 공유 타입 인자의 깊은 실행·동시 해제, inline·lambda·공유 let·분기 순서·재귀 깊이별 재시도, 타입 인자 캡처·기본값·Reference 검사 순서, Host/GC/취소/terminal 동작을 회귀 기준으로 유지합니다.

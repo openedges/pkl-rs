@@ -1,0 +1,2 @@
+x:Collection<Listing<Int>> = List(new Listing {"bad"})
+result=x.length

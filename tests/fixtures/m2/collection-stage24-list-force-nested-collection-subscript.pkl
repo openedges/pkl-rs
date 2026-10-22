@@ -1,0 +1,2 @@
+x:Collection<Collection<Listing<Int>>> = List(List(new Listing {"bad"}))
+result=x[0][0][0]

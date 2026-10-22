@@ -1,0 +1,5 @@
+import "pkl:ref"
+class D extends ref.Domain {function renderReference(r):String="ok"}
+local d=new D {}
+class C {p:Collection<Any> =throw("unforced")}
+result=ref.Reference(d,C,null).p is ref.Reference<D,Collection<Any>>

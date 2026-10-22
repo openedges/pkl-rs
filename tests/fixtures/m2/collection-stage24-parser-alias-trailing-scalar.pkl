@@ -1,0 +1,3 @@
+typealias A<T> = Collection<T>
+x:A<Int,>
+result=x.length

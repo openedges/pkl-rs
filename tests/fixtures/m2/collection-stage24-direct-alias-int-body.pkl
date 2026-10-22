@@ -1,0 +1,3 @@
+typealias Identity<T> = T
+typealias A<T> = Int((new T {1}).length == this)
+result:A<Collection<Int>> = 0

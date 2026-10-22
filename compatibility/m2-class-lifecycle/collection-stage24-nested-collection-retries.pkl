@@ -1,0 +1,8 @@
+x:Collection<Collection<Int>> = List(Set(1),List(2))
+y:Collection<Collection<Int>> = Set(List("bad"))
+first=x[0].length
+nullable:Collection<Int>?
+ordinaryNull=nullable==null
+stable=42
+observation0=x.length
+observation1=y.length

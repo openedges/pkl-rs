@@ -1,0 +1,3 @@
+typealias C<T> =Collection<T>
+x:C<Int> =Set("bad")
+result=x.length

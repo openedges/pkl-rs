@@ -1,0 +1,2 @@
+class C {p:Int}
+result = Set(new C {p="bad"}) is Collection<C>

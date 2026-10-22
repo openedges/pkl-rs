@@ -1,0 +1,2 @@
+typealias N = Collection<nothing>?
+result=(new N {1}).length

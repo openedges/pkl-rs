@@ -1,0 +1,7 @@
+function f(x:Collection<Int>):Int=x.length
+list=f(List(1,2))
+set=f(Set(2,1))
+badList=f(List("bad"))
+badSet=f(Set("bad"))
+badKind=f(new Listing {1})
+stable=42

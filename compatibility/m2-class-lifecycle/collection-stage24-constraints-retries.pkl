@@ -1,0 +1,10 @@
+typealias Positive=Int(this > 0)
+good:Collection<Positive> = List(1,2)
+bad:Collection<Positive> = List(1,-1)
+outerCheck:Collection<Int>(length==2) = Set(1)
+throwing:Collection<Int>(throw("collection constraint")) = List(1)
+stable=42
+observation0=good.length
+observation1=bad.length
+observation2=outerCheck.length
+observation3=throwing.length

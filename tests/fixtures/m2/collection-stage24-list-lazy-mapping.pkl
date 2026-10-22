@@ -1,0 +1,2 @@
+x:Collection<Mapping<String,Int>> = List(new Mapping {["a"]="bad"})
+result=x.length

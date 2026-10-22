@@ -293,6 +293,19 @@ retained ordinary values from executable metadata, verify repeated-call plateaus
 require zero terminal heap entries. Existing small-stack Map and generic tests keep
 their conditions.
 
+Abstract `Collection<T>` comparisons distinguish List and Set from Listing,
+Mapping, Map and scalar values. They cover bare and parameterized types, nested
+lazy List wrappers versus eager Set checks, aliases, defaults, nullable attached
+defaults, casts, union checking and Reference metadata. Empty explicit type
+argument lists are compared at their original source locations, with other
+collection and alias syntax as controls. Native checks collect at every yield
+and pending read, use one instruction per poll with at most 200,000 polls per
+event, and exercise retained receivers, Host reentry, failed-read retry, 24
+nonterminal cancellations, evaluator isolation and terminal cleanup. Separate
+deep metadata checks run on a 256 KiB stack; they do not exercise deeply authored
+parser input or establish Java speed or peak-RSS parity. Historical small-stack
+tests retain their original sources and execution conditions.
+
 M1 experiments have narrower, explicit contracts:
 
 ```sh

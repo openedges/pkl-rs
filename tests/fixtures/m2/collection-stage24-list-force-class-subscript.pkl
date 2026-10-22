@@ -1,0 +1,3 @@
+class C {p:Int}
+x:Collection<C> = List(new C {p="bad"})
+result=x[0].p

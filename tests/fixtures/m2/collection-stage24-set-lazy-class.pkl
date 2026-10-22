@@ -1,0 +1,3 @@
+class C {p:Int}
+x:Collection<C> = Set(new C {p="bad"})
+result=x.length

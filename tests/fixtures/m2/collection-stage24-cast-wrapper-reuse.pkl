@@ -1,0 +1,3 @@
+x:Listing<Collection<Int>> =new Listing {List(1)}
+y=x as Listing<Collection<Int>>
+result=y[0].length

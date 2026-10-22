@@ -1,0 +1,7 @@
+left:Collection<Int>|String = List("bad")
+right:String|Collection<Int> = Set("bad")
+good=(Set(1) as Collection<Int>).length
+bad=(List("bad") as Collection<Int>).length
+listTest=List("bad") is Collection<Int>
+setTest=Set(1) is Collection<Int>
+stable=42

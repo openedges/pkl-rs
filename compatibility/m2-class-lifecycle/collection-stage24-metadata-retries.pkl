@@ -1,0 +1,10 @@
+typealias C<T> = Collection<T>
+x:C<Int> = List(1)
+y:C<Int> = Set(1)
+z:C<Int>
+listClass=x.getClass()==List
+setClass=y.getClass()==Set
+defaultClass=z.getClass()==List
+bad:C<Int> = List("bad")
+stable=42
+observation0=bad.length

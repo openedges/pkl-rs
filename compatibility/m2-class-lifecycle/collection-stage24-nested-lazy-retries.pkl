@@ -1,0 +1,7 @@
+list:Collection<Listing<Int>> = List(new Listing {"bad"})
+set:Collection<Listing<Int>> = Set(new Listing {"bad"})
+listValue=list[0]
+forceList=list[0][0]
+stable=42
+observation0=list.length
+observation1=set.length
