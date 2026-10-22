@@ -1,0 +1,185 @@
+{
+  "archive": {
+    "bytes": 33201555,
+    "members": 59782,
+    "path": "reports/m2/stage31-final-evidence.tar.gz",
+    "sha256": "6d0d96a862389b4e53f2e09a18b09c70de130ec79fdbf082732aaee9d28f77be"
+  },
+  "archived_helpers_executed": false,
+  "compatibility_complete": false,
+  "fixtures": {
+    "added": 48,
+    "original_inputs_byte_equal": 3002,
+    "preserved": 3002,
+    "sequence_files_byte_equal": 305
+  },
+  "focused_selection": {
+    "all_final_candidate_cases_pass": true,
+    "baseline_git_bound_sources": 115,
+    "cases": 48,
+    "exploration": {
+      "cases": 124,
+      "raw_equal_counts": {
+        "baseline": 78,
+        "candidate": 119
+      },
+      "retained_mismatches": [
+        "module-alias-double-minint",
+        "object-public-negative-int",
+        "object-public-negative-float",
+        "object-public-grouped-negative",
+        "object-public-negative-grouped"
+      ]
+    },
+    "focused_source_digests_bound_to_final_suite_snapshots": 42,
+    "matches_final_language_artifact": true,
+    "raw_equal_counts": {
+      "baseline": 28,
+      "candidate": 48
+    }
+  },
+  "frontend": {
+    "raw_passed": 15
+  },
+  "gates": {
+    "class-contract": 0,
+    "class-report": 0,
+    "development": 0,
+    "full": 1,
+    "report": 0,
+    "subset": 1
+  },
+  "implementation_commit": "92b87ccbd999b4d1648b15b43e853643fdb62f94",
+  "language": {
+    "artifact_sha256": "dd7caa28616e4f1ea86f32b0d45beec8f641f108f28e57bf9332f016e419bc37",
+    "failures": {
+      "error-cycle": "oracle-error",
+      "error-remainder-zero": "mismatch"
+    },
+    "metamorphic": 88,
+    "raw_counts": {
+      "mismatch": 1,
+      "oracle-error": 1,
+      "pass": 3048
+    },
+    "selected": 3050
+  },
+  "lifecycle": {
+    "diagnostic_observations": [
+      {
+        "id": "attempt-1",
+        "mode": "retry",
+        "raw_equal": false
+      },
+      {
+        "id": "attempt-2",
+        "mode": "retry",
+        "raw_equal": false
+      },
+      {
+        "id": "after-close",
+        "mode": "retry",
+        "raw_equal": false
+      },
+      {
+        "id": "after-close",
+        "mode": "reentry",
+        "raw_equal": false
+      }
+    ],
+    "negative_java_compatibility_pass": false,
+    "protocol_pairs": 2
+  },
+  "performance_targets_established": false,
+  "pinned_gitlinks": {
+    "external/pkl": "e51fb2f91774265666f94980ec630db794a4db2d",
+    "external/pkl-pantry": "904a68184e54da378b0a0e8a911a3fab3956f693"
+  },
+  "platform_oracles": {
+    "acquisitions": [
+      "target/m2/stage31-platform-oracle-01",
+      "target/m2/stage31-platform-oracle-extra-01",
+      "target/m2/stage31-platform-oracle-extra-02"
+    ],
+    "cases": 48,
+    "complete_payloads_match_java": true,
+    "outcomes": {
+      "error": 43,
+      "success": 5
+    }
+  },
+  "platforms": {
+    "mismatches": {
+      "browser": [
+        "regex-unicode-15-vs-16",
+        "regex-zero-width-supplementary"
+      ],
+      "node": [
+        "regex-unicode-15-vs-16",
+        "regex-zero-width-supplementary"
+      ],
+      "rust": [
+        "regex-unicode-15-vs-16",
+        "regex-zero-width-supplementary"
+      ]
+    },
+    "scenarios": 90,
+    "total": 6078
+  },
+  "raw_original_files": 59776,
+  "runtime": {
+    "cases": 9,
+    "retained_diagnostic_mismatches": [
+      "forcing-cycle"
+    ]
+  },
+  "sequences": {
+    "calls": 2622,
+    "process_pairs": 302
+  },
+  "suites": [
+    {
+      "report": "target/m2/validation-stage31-final-01/report.json",
+      "report_sha256": "ebc97a542bb83a106747284c4950df03446060e6a654dc4deb9d51fada90f7ba",
+      "sources": 3628
+    },
+    {
+      "report": "target/m2/language-stage31-final-01/report.json",
+      "report_sha256": "6f610f6ebdf2132597659a1a1631f167c3fc8737d9eacd7e0c8370718983cf8c",
+      "sources": 3188
+    },
+    {
+      "report": "target/m2/platforms-stage31-final-01/report.json",
+      "report_sha256": "ba90cdef9804bb9fbc6039af46030924db7667bc4b9d9cc863e208cb7961fd66",
+      "sources": 77
+    },
+    {
+      "report": "target/m2/frontend-stage31-final-01/report.json",
+      "report_sha256": "0ff433452799d10afc7498bfcc066d111b2c32d31666d52a354047f371a63350",
+      "sources": 45
+    },
+    {
+      "report": "target/m2/runtime-stage31-final-01/report.json",
+      "report_sha256": "ccd821cead1a2b84689fab129994f4dd8eb0e7c25091fca3a76aca671b7e4e0d",
+      "sources": 68
+    },
+    {
+      "report": "target/m2/lifecycle-stage31-final-01/report.json",
+      "report_sha256": "a759ef59454b9abeb4888aa5c62f34441964405857dcfbb600b96d4150af6a81",
+      "sources": 121
+    },
+    {
+      "report": "target/m2/class-lifecycle-stage31-final-01/report.json",
+      "report_sha256": "f47353521775c1ab6c31dc3dc17f5ff77350e59f3fcfa030f1f9fe52a7a67e19",
+      "sources": 428
+    }
+  ],
+  "unique_git_bound_files": 3628,
+  "validation": {
+    "ignored": 1,
+    "isolated_child_passes": 13,
+    "python_tests": 200,
+    "reported_rust_passes": 472,
+    "unique_rust_passes": 459
+  }
+}

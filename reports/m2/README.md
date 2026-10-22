@@ -39,7 +39,98 @@ Stage 27 aligns selected lexical string diagnostics with Java.
 Stage 28 aligns selected Unicode escape diagnostics and validation order.
 Stage 29 preserves lossless UTF-16 string values through the shared engine.
 Stage 30 preserves diagnostic frame identity and selected declaration ownership.
+Stage 31 aligns executable value-frame locations and constant-member source fallbacks.
 These checkpoints do not complete the language milestone.
+
+## Stage 31 local verification checkpoint
+
+Implementation `92b87ccbd999b4d1648b15b43e853643fdb62f94` is committed and pushed. The
+[final summary](stage31-final-summary.json), [independent audit](stage31-post-seal-audit.json)
+and [completion captures](stage31-completion-captures.json) close this bounded
+value-frame source-ownership checkpoint. Core work used `gpt-6-astra / xhigh`;
+Java evidence and native/platform review each used `gpt-6.1-sol / high`. Root
+handled integration, final validation, commits and sealing. Verification ran
+locally on macOS arm64.
+
+Value-call frames now distinguish authored syntax from the executable expression.
+Direct numeric negation retains the unsigned numeric token's location; grouping
+around the complete expression is removed, while a unary operator on a grouped
+operand keeps its expression span. Typed locals and function bodies use these
+executable locations. Constant members follow Java's separate source fallback
+after their declaration header, preserving authored signs, groups and comments
+in public properties, class defaults, overrides and entries. Constant element
+headers can leave a closing-parenthesis suffix, matching the pinned Listing
+diagnostic. Authored AST, resolution and assertion-observation identities remain
+unchanged, as do arithmetic, evaluation order and declaration-origin checks.
+
+The first candidate applied executable locations too broadly to public
+constants. Fresh class/module/override/collection controls and a native test
+exposed that regression. The first focused comparison, supplemental mismatches,
+native failure and superseded review remain preserved. An initial baseline build
+also failed because the extracted workspace omitted `xtask`; its corrected build
+used a fresh directory. Final results use the corrected source and exact final
+language artifact. The initial baseline build and native control exited 101;
+the first fixture-generation command exited 1. These three process failures are
+retained explicitly. The initial static auditor review also required stronger
+focused-source and exploratory-origin checks; its findings and the corrected
+review remain preserved. Production evaluation has no Java fallback.
+
+The selected corpus has **3,050 cases: 3,048 raw matches**, the existing cycle
+oracle error and integer remainder-by-zero mismatch. All **48 additions match:
+43 expected errors and five successful values**. All **88 metamorphic relations**
+pass. The prior 3,002 definitions and input bytes, 151 sequence definitions and
+89 platform scenarios remain preserved. Persistent evaluation retains **2,622
+matching calls** across 302 executions. The inventory has 474 requirements and
+4,050 accounting rows (3,050 ready, 960 unimplemented, 40 unmapped). The 16
+reviewed mappings remain partial, and the full gate retains 1,950 failure reasons.
+No development compatibility exception was added.
+
+[Seven required local checks](validation-stage31-final.json) passed with
+**459 distinct Rust tests and 200 Python tests**. The raw Rust harness
+reports 472 passes, including 13 existing isolated child repetitions, and
+one intentionally ignored test. Three new ordinary native tests check value-frame
+ownership, signed values, per-instruction GC, suspended constraints, reentry,
+retry, shared programs and detached errors after close. Two compiler units retain
+authored observation spans and check scalar/collection/comment/Unicode source
+suffixes. These checks establish no new small-stack or memory-parity guarantee.
+Archive verification now indexes previously validated members; duplicate-name,
+inventory, length and digest checks remain intact.
+
+Node and Chromium each passed **90 development scenarios**. The new scenario
+compares 48 complete Java-derived error/value payloads twice per target (96 calls),
+using fresh evaluators. Native Host tests separately cover recovery within a
+session. All 6,078 shared primitive results match across targets; each target
+matches Java on 6,076, retaining the two known regex gaps. Existing runtime cycle
+and full lifecycle diagnostic differences remain.
+
+A fresh baseline build matches **28 of 48 new selected cases**; the exact final
+language artifact matches **48 of 48**. Broader exploration matches **119 of 124**,
+compared with **78 of 124** for the baseline. Four invalid public-object annotation
+frame differences and one nested-minimum-negation overflow frame difference remain.
+Selected, platform and exploratory observations overlap and are not additive
+feature counts. Java's unavailable source sections for empty collection calls
+remain a separate diagnostic gap.
+
+The [sealed archive](stage31-final-evidence.tar.gz) and its
+[identity record](stage31-archive.json) preserve 59776 original files under
+89 explicit roots. The independent audit checks inventory and original
+bytes, Git provenance, raw outcomes and the final focused artifact. It binds
+7555 final suite source copies to 3628 distinct
+implementation files. A completed-origin binding separately connects the focused
+results to the finished full-language report, source snapshots, artifact and raw
+captures. Completed seal/audit captures and current closeout source snapshots
+are preserved separately after sealing. Only explicitly listed Cargo build caches
+are excluded before enumeration; their payload sizes and hashes are not claimed.
+The initial baseline checkout and fresh baseline source snapshots are retained;
+the absent initial build-output directory is recorded separately.
+7 historical dependency
+identities are retained without recursively packaging prior evidence.
+
+M2 remains in progress. Complete numeric/constant-source diagnostics, imported
+and surrogate URI handling, out-of-range Unicode internal errors, public JS string
+transport, colored/stack-overflow output, full string APIs and existing depth/work
+limits remain open. Local macOS verification does not establish Linux, Windows,
+hosted CI, release APIs, execution-time parity or peak-RSS parity.
 
 ## Stage 30 local verification checkpoint
 

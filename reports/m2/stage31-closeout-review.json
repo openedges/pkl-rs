@@ -1,0 +1,168 @@
+{
+  "schema": 1,
+  "status": "pass",
+  "scope": "Independent final public closeout review of bounded M2 Stage31; archive checked only by exact byte identity, without archive enumeration or evaluator/helper replay.",
+  "implementation_commit": "92b87ccbd999b4d1648b15b43e853643fdb62f94",
+  "implementation_checkpoint_complete": true,
+  "m2_complete": false,
+  "compatibility_complete": false,
+  "performance_targets_established": false,
+  "findings": [],
+  "public_inputs": [
+    {
+      "path": "reports/m2/stage31-archive.json",
+      "bytes": 544,
+      "sha256": "ad9e7ba1b0f6ebaef69940ea1bcf0cf5b3eee51d77175bd8b8c247f19c2c1c5b"
+    },
+    {
+      "path": "reports/m2/stage31-post-seal-audit.json",
+      "bytes": 4918,
+      "sha256": "d9ba41e2729e910bcaf76990a7ec38b2f3154dd8f0bb859e04e2ae67aa42d85d"
+    },
+    {
+      "path": "reports/m2/stage31-completion-captures.json",
+      "bytes": 168450,
+      "sha256": "e42742ee1385bce65e7312eb5104aa3379bd5195ddfb0a364d593ceefe7ab3cc"
+    },
+    {
+      "path": "reports/m2/stage31-final-summary.json",
+      "bytes": 57908,
+      "sha256": "d6df31bfc87cd8fd216867483519938fdef4a1c38fccdb13eb49eaed100748e9"
+    },
+    {
+      "path": "reports/m2/validation-stage31-final.json",
+      "bytes": 2826,
+      "sha256": "7f13939d45634bbcc94a5efe9e24308a270339a954bfeab215bef59aff3b1be1"
+    },
+    {
+      "path": "PLAN.md",
+      "bytes": 159734,
+      "sha256": "642b45712b7b6eeec839a280793c4e3bdf90d51a9da0ce7f795d1d2a682bdf29"
+    },
+    {
+      "path": "reports/m2/README.md",
+      "bytes": 186262,
+      "sha256": "d06efff066d24425ffca8d79ff1eb0645dd2735b74a49ad406e2e61340f15312"
+    }
+  ],
+  "implementation_source_frozen": true,
+  "tracked_changes_after_implementation": [
+    "PLAN.md",
+    "reports/m2/README.md"
+  ],
+  "counts": {
+    "selected": 3050,
+    "raw_matches": 3048,
+    "additions": 48,
+    "rust_distinct": 459,
+    "rust_harness": 472,
+    "isolated_child_duplicates": 13,
+    "ignored": 1,
+    "python": 200,
+    "scenarios_per_target": 90,
+    "matching_sequence_calls": 2622,
+    "originals": 59776,
+    "audited_inventory_payload_files": 59782,
+    "archive_bytes": 33201555,
+    "source_copies": 7555,
+    "unique_git_bound_sources": 3628,
+    "roots": 89
+  },
+  "archive": {
+    "path": "reports/m2/stage31-final-evidence.tar.gz",
+    "bytes": 33201555,
+    "sha256": "6d0d96a862389b4e53f2e09a18b09c70de130ec79fdbf082732aaee9d28f77be",
+    "identity_matches_public_records": true,
+    "reenumerated": false
+  },
+  "completion_captures": {
+    "embedded_records": 19,
+    "unique_paths": 18,
+    "decoded_bytes_hashes_and_originals_equal": true
+  },
+  "completed_wrappers": [
+    {
+      "kind": "pack",
+      "process": {
+        "path": "target/m2/stage31-pack-command-final-01/process.json",
+        "bytes": 820,
+        "sha256": "22bba1564508a7228d4a90bf2a6b31c10e48ec2f7f620316484f18bad539d764"
+      },
+      "exit_code": 0,
+      "entrypoints_stable": true,
+      "capture_errors": []
+    },
+    {
+      "kind": "audit",
+      "process": {
+        "path": "target/m2/stage31-postseal-audit-command-final-01/process.json",
+        "bytes": 915,
+        "sha256": "626e99d0d24f0a8948a51a8298b151f6a6ab12533923d21c9a02d73297329402"
+      },
+      "exit_code": 0,
+      "entrypoints_stable": true,
+      "capture_errors": []
+    },
+    {
+      "kind": "closeout",
+      "process": {
+        "path": "target/m2/stage31-closeout-command-final-01/process.json",
+        "bytes": 831,
+        "sha256": "158fb28b97192ebde3f8c22dc05edb1298a1b13679bf07f98d1bec4ba65a96e1"
+      },
+      "exit_code": 0,
+      "entrypoints_stable": true,
+      "capture_errors": []
+    },
+    {
+      "kind": "docs",
+      "process": {
+        "path": "target/m2/stage31-docs-command-final-01/process.json",
+        "bytes": 795,
+        "sha256": "f9fedbca8653055519f86cfa2f91f73c5021ff48d5f26c08dcc985aeadcf7e30"
+      },
+      "exit_code": 0,
+      "entrypoints_stable": true,
+      "capture_errors": []
+    }
+  ],
+  "docs": {
+    "report_language": "English",
+    "planning_language": "Korean",
+    "placeholders_remaining": false,
+    "bounded_checkpoint_and_whole_milestone_status_distinguished": true
+  },
+  "preserved_failures": {
+    "selected": {
+      "error-cycle": "oracle-error",
+      "error-remainder-zero": "mismatch"
+    },
+    "exploratory": [
+      "module-alias-double-minint",
+      "object-public-grouped-negative",
+      "object-public-negative-float",
+      "object-public-negative-grouped",
+      "object-public-negative-int"
+    ],
+    "regex": [
+      "regex-unicode-15-vs-16",
+      "regex-zero-width-supplementary"
+    ],
+    "runtime": [
+      "forcing-cycle"
+    ],
+    "lifecycle_differences": 4,
+    "initial_process_exit_codes": [
+      101,
+      101,
+      1
+    ],
+    "strict_subset_exit": 1,
+    "strict_full_exit": 1
+  },
+  "limitations": [
+    "Known compatibility failures and unexecuted sequence/platform/API scope remain.",
+    "No complete language/API, performance or release-platform claim.",
+    "Archive payload inventory count is taken from the completed independent postseal audit; this review did not enumerate the archive again."
+  ]
+}

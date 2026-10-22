@@ -1,0 +1,1332 @@
+{
+  "schema": 1,
+  "scope": "M2 Stage31 numeric/grouped value-frame source ownership; bounded local checkpoint.",
+  "implementation_commit": "92b87ccbd999b4d1648b15b43e853643fdb62f94",
+  "baseline_commit": "ffdfc0ed0e93264acbe510f055d47a55cbce9f3e",
+  "allocation": "Core semantics: gpt-6-astra/xhigh; Java evidence and fixtures: gpt-6.1-sol/high; native/platform coverage and independent production review: gpt-6.1-sol/high; root: integration, local verification and Git closeout.",
+  "changes": [
+    "Executable value-frame spans strip grouping and retain the numeric token for immediate signed numeric literals, while runtime unary operations keep their expression span.",
+    "Typed locals and function bodies retain node-owned spans; constant members reconstruct the authored suffix after the header across module/class defaults, overrides, entries and elements.",
+    "The exact constant-member suffix rule preserves comments and grouping, including the observed closing-parenthesis frame for grouped Listing constants.",
+    "Authored AST/resolution/Observe identities, arithmetic, evaluation order and declaration-origin type-check ownership remain unchanged; production evaluation has no Java fallback.",
+    "Evidence verification indexes already-validated archive members without weakening duplicate rejection, exact inventory membership, byte lengths or SHA256 checks."
+  ],
+  "environment": {
+    "platform": "macOS-27.0-arm64-arm-64bit-Mach-O",
+    "node": "v26.10.0",
+    "browser": "156.0.8078.4",
+    "playwright": "1.64.1"
+  },
+  "validation": {
+    "scope": "M2 Stage 31 required local checks; not full compatibility or performance evidence",
+    "checks": [
+      {
+        "command": [
+          "cargo",
+          "xtask",
+          "verify"
+        ],
+        "exit_code": 0,
+        "stdout_sha256": "900802c9cf4f23bd9dbc0e79f58d3e21493ec0c990782bc5b690a7432148e9eb",
+        "stderr_sha256": "bc6672ad25e8e968f3b45ae3e5f405670f383ed0969e40136e0c1423980ba44c"
+      },
+      {
+        "command": [
+          "cargo",
+          "fmt",
+          "--all",
+          "--",
+          "--check"
+        ],
+        "exit_code": 0,
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "command": [
+          "cargo",
+          "clippy",
+          "--workspace",
+          "--all-targets",
+          "--locked",
+          "--",
+          "-D",
+          "warnings"
+        ],
+        "exit_code": 0,
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_sha256": "5a2bd059146150a0811d58bf25477d5f363a27df2e318c5e4b44c1472981b4bf"
+      },
+      {
+        "command": [
+          "cargo",
+          "test",
+          "--workspace",
+          "--locked"
+        ],
+        "exit_code": 0,
+        "stdout_sha256": "2780abf3e4bb4e4968b15ee8ba89467a218fd3375f766393d50235650420f33f",
+        "stderr_sha256": "eecfc06e253c9e965eda4ed2739dbbc106d7a9b7adcfdc76951f5d4dfd195898"
+      },
+      {
+        "command": [
+          "cargo",
+          "check",
+          "-p",
+          "pkl-runtime",
+          "--target",
+          "wasm32-unknown-unknown",
+          "--locked"
+        ],
+        "exit_code": 0,
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_sha256": "800ea888f37b7083e1133d2d9a3b18dd19e7887fb907a3e14d147298e1ab1a45"
+      },
+      {
+        "command": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "-m",
+          "unittest",
+          "discover",
+          "-s",
+          "tools/tests",
+          "-v"
+        ],
+        "exit_code": 0,
+        "stdout_sha256": "827f0e65fe628d9c83c79dfb8096d04340f58ee4b62a3201fd49d514135bda8e",
+        "stderr_sha256": "2566f07d5ba80c1cf00006c3b4efccca9a98d53455eb4594e79d9c46643d1cff"
+      },
+      {
+        "command": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "tools/m2_manifest.py",
+          "--check"
+        ],
+        "exit_code": 0,
+        "stdout_sha256": "509077423bfa70a816adbe2c2266bfe0a19ae68ee920349756aa949057821b93",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    ],
+    "host_evidence": "target/m2/validation-stage31-final-01",
+    "source_stability": true,
+    "rust_harness_passes": 472,
+    "rust_isolated_child_duplicates": 13,
+    "rust_distinct_passes": 459,
+    "rust_ignored": 1,
+    "python_passes": 200
+  },
+  "validation_report": {
+    "path": "reports/m2/validation-stage31-final.json",
+    "bytes": 2826,
+    "sha256": "7f13939d45634bbcc94a5efe9e24308a270339a954bfeab215bef59aff3b1be1"
+  },
+  "language": {
+    "selected": 3050,
+    "status_counts": {
+      "mismatch": 1,
+      "oracle-error": 1,
+      "pass": 3048
+    },
+    "additions": 48,
+    "added_expected_outcomes": {
+      "failure": 43,
+      "success": 5
+    },
+    "metamorphic_relations": 88,
+    "inventory": {
+      "cases": 4050,
+      "cases_by_execution": {
+        "ready": 3050,
+        "unimplemented": 960,
+        "unmapped": 40
+      },
+      "requirements": 474,
+      "requirements_by_kind": {
+        "language_parser": 137,
+        "language_token": 109,
+        "semantic-family": 30,
+        "specification": 198
+      }
+    },
+    "full_gate_failure_reasons": 1950,
+    "candidate": {
+      "build": {
+        "command": [
+          "cargo",
+          "build",
+          "-p",
+          "pkl-runtime",
+          "--example",
+          "language_probe",
+          "--locked",
+          "--release",
+          "--target-dir",
+          "/Users/cody.ij.hwang/Projects/pkl-rs/target"
+        ],
+        "exit_code": 0,
+        "stderr_sha256": "4f4750b4ebacb694b78c7c2eee286fd581bddecd244ecfaa5b9fb663153be7b4",
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "timed_out": false
+      },
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/release/examples/language_probe",
+      "sha256": "dd7caa28616e4f1ea86f32b0d45beec8f641f108f28e57bf9332f016e419bc37",
+      "source_binding": "recorded-build"
+    }
+  },
+  "sequences": {
+    "definitions": 151,
+    "executions": 302,
+    "matching_calls": 2622,
+    "unexecuted_groups": [
+      {
+        "group": "P09",
+        "reason": "Java-only module-cache probe stage12-java-module-identity-01 observes same URI/source identity retained, changed source at same URI ignored (marker remains1), distinct URI/evaluator identity separated. Rust multi-source module-cache parity is unimplemented; same-module identity is compared."
+      },
+      {
+        "group": "P10",
+        "reason": "Java observable sequence comparisons do not expose heap counts; Rust architectural GC coverage is separate."
+      },
+      {
+        "group": "P11",
+        "reason": "Real Java class-initialization read observed via @Deprecated { ...(read(\"life:class\")) } in stage12-java-host-path-01; Rust annotation frontend unsupported, so actual Host-in-class cross-language reentry remains unexecuted. Internal scheduler tests are separate."
+      },
+      {
+        "group": "P12",
+        "reason": "Terminal context/token/heap cleanup is covered by separate Rust lifecycle tests, not Java raw-byte equivalence."
+      },
+      {
+        "group": "P05",
+        "reason": "Indirect cyclic hierarchy property traversal new A {}.missing timed out after successful class identity calls in stage12-java-observations-03; traversal is observed oracle-timeout, not a compatibility pass."
+      }
+    ]
+  },
+  "platforms": {
+    "scenarios_per_target": 90,
+    "new_cases": 48,
+    "new_case_outcomes": {
+      "error": 43,
+      "success": 5
+    },
+    "repetitions": 2,
+    "new_calls_per_target": 96,
+    "evaluator_scope": "Each portable evaluateLanguage call uses a fresh evaluator; same-session recovery is covered by the native Host test.",
+    "shared_engine_passed": 6078,
+    "oracle_passed": {
+      "rust": 6076,
+      "node": 6076,
+      "browser": 6076
+    },
+    "known_gaps": [
+      "regex-unicode-15-vs-16",
+      "regex-zero-width-supplementary"
+    ],
+    "browser_errors": []
+  },
+  "focused_selection": {
+    "report": {
+      "path": "target/m2/stage31-focused-comparison-final-01/report.json",
+      "bytes": 539746,
+      "sha256": "546619fbe116ea4a187e1d587afcb2f52c6c32ed07c31163a491a3e1cc5d7e35"
+    },
+    "cases": 48,
+    "raw_equal_counts": {
+      "baseline": 28,
+      "candidate": 48
+    },
+    "final_language_artifact_sha256": "dd7caa28616e4f1ea86f32b0d45beec8f641f108f28e57bf9332f016e419bc37",
+    "same_artifact_asserted_by_independent_audit": true,
+    "exploration": {
+      "cases": 124,
+      "raw_equal_counts": {
+        "baseline": 78,
+        "candidate": 119
+      },
+      "retained_mismatches": [
+        "module-alias-double-minint",
+        "object-public-grouped-negative",
+        "object-public-negative-float",
+        "object-public-negative-grouped",
+        "object-public-negative-int"
+      ]
+    }
+  },
+  "completed_full_origin_binding": {
+    "file": {
+      "path": "target/m2/stage31-full-origin-binding-final-01/report.json",
+      "bytes": 30533,
+      "sha256": "0b726f8a7bed1ab99aae29e3a46ab9c538c00d3004738264e91e5c102f8d65cd"
+    },
+    "results": {
+      "schema": 1,
+      "scope": "Read-only completed full-language/focused origin binding; no new Java/Rust execution, compatibility expansion, or performance claim",
+      "language_report": {
+        "path": "target/m2/language-stage31-final-01/report.json",
+        "bytes": 10619757,
+        "sha256": "6f610f6ebdf2132597659a1a1631f167c3fc8737d9eacd7e0c8370718983cf8c"
+      },
+      "focused_report": {
+        "path": "target/m2/stage31-focused-comparison-final-01/report.json",
+        "bytes": 539746,
+        "sha256": "546619fbe116ea4a187e1d587afcb2f52c6c32ed07c31163a491a3e1cc5d7e35"
+      },
+      "language_outer_process": {
+        "path": "target/m2/language-stage31-command-final-01/process.json",
+        "bytes": 852,
+        "sha256": "f8929c56770b4de7fd987c2cbd9b561735add9185628cba7215364e7341cc2bc"
+      },
+      "focused_outer_process": {
+        "path": "target/m2/stage31-focused-final-process-01/process.json",
+        "bytes": 863,
+        "sha256": "d6fea8be284c7b59ed2b8ce8cc23a0efceb6784bb1ee3fc2890c6798fe39ee2c"
+      },
+      "language_outer_exit_code": 0,
+      "focused_outer_exit_code": 0,
+      "candidate_artifact_sha256": "dd7caa28616e4f1ea86f32b0d45beec8f641f108f28e57bf9332f016e419bc37",
+      "candidate_source_binding": "completed-recorded-build-and-identical-artifact-bytes",
+      "baseline_commit": "ffdfc0ed0e93264acbe510f055d47a55cbce9f3e",
+      "baseline_artifact_sha256": "abcdd947ec4b07dd2d96767f6f5cce994d62de19f6c92c7cf26652328ae0affb",
+      "source_digests_bound_to_full_snapshots": 42,
+      "language_evidence_inventory_verified": true,
+      "language_selected_count": 3050,
+      "language_status_counts": {
+        "mismatch": 1,
+        "oracle-error": 1,
+        "pass": 3048
+      },
+      "selected_count": 48,
+      "selected_raw_equal_counts": {
+        "baseline": 28,
+        "candidate": 48
+      },
+      "cases": [
+        {
+          "id": "diagnostic-stage31-module-alias-negative-int",
+          "source": "tests/fixtures/m2/diagnostic-stage31-module-alias-negative-int.pkl",
+          "expression": "result",
+          "input_sha256": "29a7f6c49fe752d7dea9a06e4fa9ead4ed56a14a0c29b632215723d752702930",
+          "expected_outcome": "failure",
+          "source_uri_and_expression_identical": true,
+          "original_java_bytes_and_exit_identical": true,
+          "full_java_bytes_and_exit_identical": true,
+          "full_candidate_bytes_and_exit_identical": true,
+          "baseline_raw_equal": false,
+          "candidate_raw_equal": true
+        },
+        {
+          "id": "diagnostic-stage31-module-alias-negative-space",
+          "source": "tests/fixtures/m2/diagnostic-stage31-module-alias-negative-space.pkl",
+          "expression": "result",
+          "input_sha256": "68384ac048c0e01234ea76d44e9c4f3c4a33c2cd43142468fc44ad12149da89b",
+          "expected_outcome": "failure",
+          "source_uri_and_expression_identical": true,
+          "original_java_bytes_and_exit_identical": true,
+          "full_java_bytes_and_exit_identical": true,
+          "full_candidate_bytes_and_exit_identical": true,
+          "baseline_raw_equal": false,
+          "candidate_raw_equal": true
+        },
+        {
+          "id": "diagnostic-stage31-module-alias-negative-comment",
+          "source": "tests/fixtures/m2/diagnostic-stage31-module-alias-negative-comment.pkl",
+          "expression": "result",
+          "input_sha256": "ab24112cd1a67e41273497792bdd79dac524f4889ceada01326722a959f5fd13",
+          "expected_outcome": "failure",
+          "source_uri_and_expression_identical": true,
+          "original_java_bytes_and_exit_identical": true,
+          "full_java_bytes_and_exit_identical": true,
+          "full_candidate_bytes_and_exit_identical": true,
+          "baseline_raw_equal": false,
+          "candidate_raw_equal": true
+        },
+        {
+          "id": "diagnostic-stage31-module-alias-negative-multiline",
+          "source": "tests/fixtures/m2/diagnostic-stage31-module-alias-negative-multiline.pkl",
+          "expression": "result",
+          "input_sha256": "789cf136bf53a4ab9859c5ff4d59cb23dd7673af65c9c1376b98c724311cc3a9",
+          "expected_outcome": "failure",
+          "source_uri_and_expression_identical": true,
+          "original_java_bytes_and_exit_identical": true,
+          "full_java_bytes_and_exit_identical": true,
+          "full_candidate_bytes_and_exit_identical": true,
+          "baseline_raw_equal": false,
+          "candidate_raw_equal": true
+        },
+        {
+          "id": "diagnostic-stage31-module-alias-negative-hex",
+          "source": "tests/fixtures/m2/diagnostic-stage31-module-alias-negative-hex.pkl",
+          "expression": "result",
+          "input_sha256": "6ac4c7dab8872e75316fadc03609ca0a865b52ccdc79da91c1c7ad7289f248d4",
+          "expected_outcome": "failure",
+          "source_uri_and_expression_identical": true,
+          "original_java_bytes_and_exit_identical": true,
+          "full_java_bytes_and_exit_identical": true,
+          "full_candidate_bytes_and_exit_identical": true,
+          "baseline_raw_equal": false,
+          "candidate_raw_equal": true
+        },
+        {
+          "id": "diagnostic-stage31-module-alias-negative-binary",
+          "source": "tests/fixtures/m2/diagnostic-stage31-module-alias-negative-binary.pkl",
+          "expression": "result",
+          "input_sha256": "ebc07abd18e9ae2f2b5781b258b9c62349594ab1831e71ef1b5a2365f8f3b5b1",
+          "expected_outcome": "failure",
+          "source_uri_and_expression_identical": true,
+          "original_java_bytes_and_exit_identical": true,
+          "full_java_bytes_and_exit_identical": true,
+          "full_candidate_bytes_and_exit_identical": true,
+          "baseline_raw_equal": false,
+          "candidate_raw_equal": true
+        },
+        {
+          "id": "diagnostic-stage31-module-alias-negative-octal",
+          "source": "tests/fixtures/m2/diagnostic-stage31-module-alias-negative-octal.pkl",
+          "expression": "result",
+          "input_sha256": "37a449fc4dbc63e65be5a7e545588c9e2177843b7328bd1492cda59f78493623",
+          "expected_outcome": "failure",
+          "source_uri_and_expression_identical": true,
+          "original_java_bytes_and_exit_identical": true,
+          "full_java_bytes_and_exit_identical": true,
+          "full_candidate_bytes_and_exit_identical": true,
+          "baseline_raw_equal": false,
+          "candidate_raw_equal": true
+        },
+        {
+          "id": "diagnostic-stage31-module-alias-negative-float",
+          "source": "tests/fixtures/m2/diagnostic-stage31-module-alias-negative-float.pkl",
+          "expression": "result",
+          "input_sha256": "897552865213a99fa9dd18f9014e093e3bd44cd72d6f049aa1efa1a2fd122e1b",
+          "expected_outcome": "failure",
+          "source_uri_and_expression_identical": true,
+          "original_java_bytes_and_exit_identical": true,
+          "full_java_bytes_and_exit_identical": true,
+          "full_candidate_bytes_and_exit_identical": true,
+          "baseline_raw_equal": false,
+          "candidate_raw_equal": true
+        },
+        {
+          "id": "diagnostic-stage31-module-alias-negative-float-zero",
+          "source": "tests/fixtures/m2/diagnostic-stage31-module-alias-negative-float-zero.pkl",
+          "expression": "result",
+          "input_sha256": "b3176c60728a32fa7e465f669cea27d16577eb61b8fd7d6fd018632bde538a6c",
+          "expected_outcome": "failure",
+          "source_uri_and_expression_identical": true,
+          "original_java_bytes_and_exit_identical": true,
+          "full_java_bytes_and_exit_identical": true,
+          "full_candidate_bytes_and_exit_identical": true,
+          "baseline_raw_equal": false,
+          "candidate_raw_equal": true
+        },
+        {
+          "id": "diagnostic-stage31-module-alias-grouped-negative",
+          "source": "tests/fixtures/m2/diagnostic-stage31-module-alias-grouped-negative.pkl",
+          "expression": "result",
+          "input_sha256": "24f7e9f8895fd70e1a67de46d44d56c7fc0c5992184bfef73c6b895bfda1c16f",
+          "expected_outcome": "failure",
+          "source_uri_and_expression_identical": true,
+          "original_java_bytes_and_exit_identical": true,
+          "full_java_bytes_and_exit_identical": true,
+          "full_candidate_bytes_and_exit_identical": true,
+          "baseline_raw_equal": false,
+          "candidate_raw_equal": true
+        },
+        {
+          "id": "diagnostic-stage31-module-alias-nested-grouped-negative",
+          "source": "tests/fixtures/m2/diagnostic-stage31-module-alias-nested-grouped-negative.pkl",
+          "expression": "result",
+          "input_sha256": "1dd6eec0ba82e93fd2c6707652efdf2e978bfb086f07581bda0f36722fcf192d",
+          "expected_outcome": "failure",
+          "source_uri_and_expression_identical": true,
+          "original_java_bytes_and_exit_identical": true,
+          "full_java_bytes_and_exit_identical": true,
+          "full_candidate_bytes_and_exit_identical": true,
+          "baseline_raw_equal": false,
+          "candidate_raw_equal": true
+        },
+        {
+          "id": "diagnostic-stage31-module-alias-negative-grouped",
+          "source": "tests/fixtures/m2/diagnostic-stage31-module-alias-negative-grouped.pkl",
+          "expression": "result",
+          "input_sha256": "c576948c7464dddea02147ff7415014324e1fd393dc2416330c6ac9db86ff0dc",
+          "expected_outcome": "failure",
+          "source_uri_and_expression_identical": true,
+          "original_java_bytes_and_exit_identical": true,
+          "full_java_bytes_and_exit_identical": true,
+          "full_candidate_bytes_and_exit_identical": true,
+          "baseline_raw_equal": true,
+          "candidate_raw_equal": true
+        },
+        {
+          "id": "diagnostic-stage31-module-alias-negative-grouped-float",
+          "source": "tests/fixtures/m2/diagnostic-stage31-module-alias-negative-grouped-float.pkl",
+          "expression": "result",
+          "input_sha256": "4f8e44133248cf3ba290beeab176ca5403edd12392ba80dcb2940df03a3f7239",
+          "expected_outcome": "failure",
+          "source_uri_and_expression_identical": true,
+          "original_java_bytes_and_exit_identical": true,
+          "full_java_bytes_and_exit_identical": true,
+          "full_candidate_bytes_and_exit_identical": true,
+          "baseline_raw_equal": true,
+          "candidate_raw_equal": true
+        },
+        {
+          "id": "diagnostic-stage31-module-alias-double-negative",
+          "source": "tests/fixtures/m2/diagnostic-stage31-module-alias-double-negative.pkl",
+          "expression": "result",
+          "input_sha256": "3cdb643a67083d85b3258bce903bbade1bed0ea4145d3c9e766deb54c1ddd8fe",
+          "expected_outcome": "failure",
+          "source_uri_and_expression_identical": true,
+          "original_java_bytes_and_exit_identical": true,
+          "full_java_bytes_and_exit_identical": true,
+          "full_candidate_bytes_and_exit_identical": true,
+          "baseline_raw_equal": true,
+          "candidate_raw_equal": true
+        },
+        {
+          "id": "diagnostic-stage31-module-alias-negative-minint",
+          "source": "tests/fixtures/m2/diagnostic-stage31-module-alias-negative-minint.pkl",
+          "expression": "result",
+          "input_sha256": "17b80e792642769197cbaa43eb5d5a4ea2d2e7d2d581194310052733115a6da0",
+          "expected_outcome": "failure",
+          "source_uri_and_expression_identical": true,
+          "original_java_bytes_and_exit_identical": true,
+          "full_java_bytes_and_exit_identical": true,
+          "full_candidate_bytes_and_exit_identical": true,
+          "baseline_raw_equal": false,
+          "candidate_raw_equal": true
+        },
+        {
+          "id": "diagnostic-stage31-module-alias-grouped-overflow",
+          "source": "tests/fixtures/m2/diagnostic-stage31-module-alias-grouped-overflow.pkl",
+          "expression": "result",
+          "input_sha256": "6d8446626bf6364ba8ef781939b298cca895786eeb83f16a42bbe00c14ae4e34",
+          "expected_outcome": "failure",
+          "source_uri_and_expression_identical": true,
+          "original_java_bytes_and_exit_identical": true,
+          "full_java_bytes_and_exit_identical": true,
+          "full_candidate_bytes_and_exit_identical": true,
+          "baseline_raw_equal": true,
+          "candidate_raw_equal": true
+        },
+        {
+          "id": "diagnostic-stage31-module-alias-negative-overflow",
+          "source": "tests/fixtures/m2/diagnostic-stage31-module-alias-negative-overflow.pkl",
+          "expression": "result",
+          "input_sha256": "2191f0572439967986fe171e4c3a64b4c0c37412cc507ca68c2dd96637de9102",
+          "expected_outcome": "failure",
+          "source_uri_and_expression_identical": true,
+          "original_java_bytes_and_exit_identical": true,
+          "full_java_bytes_and_exit_identical": true,
+          "full_candidate_bytes_and_exit_identical": true,
+          "baseline_raw_equal": true,
+          "candidate_raw_equal": true
+        },
+        {
+          "id": "diagnostic-stage31-class-local-negative-int",
+          "source": "tests/fixtures/m2/diagnostic-stage31-class-local-negative-int.pkl",
+          "expression": "result",
+          "input_sha256": "2ff018671a9a8e94d5f389ad0c9cea5eef9ab72cda5a529afb2e3afae8905943",
+          "expected_outcome": "failure",
+          "source_uri_and_expression_identical": true,
+          "original_java_bytes_and_exit_identical": true,
+          "full_java_bytes_and_exit_identical": true,
+          "full_candidate_bytes_and_exit_identical": true,
+          "baseline_raw_equal": false,
+          "candidate_raw_equal": true
+        },
+        {
+          "id": "diagnostic-stage31-class-public-grouped-negative",
+          "source": "tests/fixtures/m2/diagnostic-stage31-class-public-grouped-negative.pkl",
+          "expression": "result",
+          "input_sha256": "eaf086b471ad5317574c247e309dfc8570002fe5f5a343162f0445df973696cd",
+          "expected_outcome": "failure",
+          "source_uri_and_expression_identical": true,
+          "original_java_bytes_and_exit_identical": true,
+          "full_java_bytes_and_exit_identical": true,
+          "full_candidate_bytes_and_exit_identical": true,
+          "baseline_raw_equal": true,
+          "candidate_raw_equal": true
+        },
+        {
+          "id": "diagnostic-stage31-object-local-negative-int",
+          "source": "tests/fixtures/m2/diagnostic-stage31-object-local-negative-int.pkl",
+          "expression": "result",
+          "input_sha256": "463f0609b97b13607da536056afb3f7c95021e5cf0add3925226c70b252db29e",
+          "expected_outcome": "failure",
+          "source_uri_and_expression_identical": true,
+          "original_java_bytes_and_exit_identical": true,
+          "full_java_bytes_and_exit_identical": true,
+          "full_candidate_bytes_and_exit_identical": true,
+          "baseline_raw_equal": true,
+          "candidate_raw_equal": true
+        },
+        {
+          "id": "diagnostic-stage31-module-direct-negative-int",
+          "source": "tests/fixtures/m2/diagnostic-stage31-module-direct-negative-int.pkl",
+          "expression": "result",
+          "input_sha256": "2cdc7ad002f63effc926432eb423a3cd09eb51f1b162d6acd41ed3320872521f",
+          "expected_outcome": "failure",
+          "source_uri_and_expression_identical": true,
+          "original_java_bytes_and_exit_identical": true,
+          "full_java_bytes_and_exit_identical": true,
+          "full_candidate_bytes_and_exit_identical": true,
+          "baseline_raw_equal": false,
+          "candidate_raw_equal": true
+        },
+        {
+          "id": "diagnostic-stage31-module-mismatch-negative-int",
+          "source": "tests/fixtures/m2/diagnostic-stage31-module-mismatch-negative-int.pkl",
+          "expression": "result",
+          "input_sha256": "9d97eaa2f744139831d323bfe033050e2f424ee26dc5ac031246dede0530ed49",
+          "expected_outcome": "failure",
+          "source_uri_and_expression_identical": true,
+          "original_java_bytes_and_exit_identical": true,
+          "full_java_bytes_and_exit_identical": true,
+          "full_candidate_bytes_and_exit_identical": true,
+          "baseline_raw_equal": false,
+          "candidate_raw_equal": true
+        },
+        {
+          "id": "diagnostic-stage31-argument-alias-grouped-negative",
+          "source": "tests/fixtures/m2/diagnostic-stage31-argument-alias-grouped-negative.pkl",
+          "expression": "result",
+          "input_sha256": "e681cd3c8ea816af159ff746c84d4cb3c578d1aeb88d20717d97e528fa56140e",
+          "expected_outcome": "failure",
+          "source_uri_and_expression_identical": true,
+          "original_java_bytes_and_exit_identical": true,
+          "full_java_bytes_and_exit_identical": true,
+          "full_candidate_bytes_and_exit_identical": true,
+          "baseline_raw_equal": true,
+          "candidate_raw_equal": true
+        },
+        {
+          "id": "diagnostic-stage31-argument-direct-negative-float",
+          "source": "tests/fixtures/m2/diagnostic-stage31-argument-direct-negative-float.pkl",
+          "expression": "result",
+          "input_sha256": "c4b59e51be1d799faf84fff936938695b57dc1290a5955091a0088af7154c35b",
+          "expected_outcome": "failure",
+          "source_uri_and_expression_identical": true,
+          "original_java_bytes_and_exit_identical": true,
+          "full_java_bytes_and_exit_identical": true,
+          "full_candidate_bytes_and_exit_identical": true,
+          "baseline_raw_equal": true,
+          "candidate_raw_equal": true
+        },
+        {
+          "id": "diagnostic-stage31-return-alias-grouped-negative",
+          "source": "tests/fixtures/m2/diagnostic-stage31-return-alias-grouped-negative.pkl",
+          "expression": "result",
+          "input_sha256": "295b006cbfc71dc1ca9dda4089dff5079f3f1be2ed52838a592ed46e15f8f99b",
+          "expected_outcome": "failure",
+          "source_uri_and_expression_identical": true,
+          "original_java_bytes_and_exit_identical": true,
+          "full_java_bytes_and_exit_identical": true,
+          "full_candidate_bytes_and_exit_identical": true,
+          "baseline_raw_equal": true,
+          "candidate_raw_equal": true
+        },
+        {
+          "id": "diagnostic-stage31-return-direct-negative-int",
+          "source": "tests/fixtures/m2/diagnostic-stage31-return-direct-negative-int.pkl",
+          "expression": "result",
+          "input_sha256": "b9e046ac4f83c46306f4e1e82a778c5299029a0b244f544c4aa005f518abb0b9",
+          "expected_outcome": "failure",
+          "source_uri_and_expression_identical": true,
+          "original_java_bytes_and_exit_identical": true,
+          "full_java_bytes_and_exit_identical": true,
+          "full_candidate_bytes_and_exit_identical": true,
+          "baseline_raw_equal": true,
+          "candidate_raw_equal": true
+        },
+        {
+          "id": "diagnostic-stage31-cast-grouped-negative",
+          "source": "tests/fixtures/m2/diagnostic-stage31-cast-grouped-negative.pkl",
+          "expression": "result",
+          "input_sha256": "f4dfebb8e02805b43fefd7309b23c95ba29508d44905884e62423fa2abe25d39",
+          "expected_outcome": "failure",
+          "source_uri_and_expression_identical": true,
+          "original_java_bytes_and_exit_identical": true,
+          "full_java_bytes_and_exit_identical": true,
+          "full_candidate_bytes_and_exit_identical": true,
+          "baseline_raw_equal": true,
+          "candidate_raw_equal": true
+        },
+        {
+          "id": "diagnostic-stage31-first-error-negative-int",
+          "source": "tests/fixtures/m2/diagnostic-stage31-first-error-negative-int.pkl",
+          "expression": "result",
+          "input_sha256": "e188aa78f285fb6ed6f9520edfba9dd3ea0342f873667f7e36571bd95d3a6054",
+          "expected_outcome": "failure",
+          "source_uri_and_expression_identical": true,
+          "original_java_bytes_and_exit_identical": true,
+          "full_java_bytes_and_exit_identical": true,
+          "full_candidate_bytes_and_exit_identical": true,
+          "baseline_raw_equal": false,
+          "candidate_raw_equal": true
+        },
+        {
+          "id": "diagnostic-stage31-success-minint",
+          "source": "tests/fixtures/m2/diagnostic-stage31-success-minint.pkl",
+          "expression": "result",
+          "input_sha256": "517f765ce9c8daec2df3bea0b9bc32245b424f827650bf1c031788b5c4ee3f4e",
+          "expected_outcome": "success",
+          "source_uri_and_expression_identical": true,
+          "original_java_bytes_and_exit_identical": true,
+          "full_java_bytes_and_exit_identical": true,
+          "full_candidate_bytes_and_exit_identical": true,
+          "baseline_raw_equal": true,
+          "candidate_raw_equal": true
+        },
+        {
+          "id": "diagnostic-stage31-success-negative-zero",
+          "source": "tests/fixtures/m2/diagnostic-stage31-success-negative-zero.pkl",
+          "expression": "result",
+          "input_sha256": "94fe05ce8061cb0a1d1efeae8b82dffa636847b58bd1685b9118abdb9e9419aa",
+          "expected_outcome": "success",
+          "source_uri_and_expression_identical": true,
+          "original_java_bytes_and_exit_identical": true,
+          "full_java_bytes_and_exit_identical": true,
+          "full_candidate_bytes_and_exit_identical": true,
+          "baseline_raw_equal": true,
+          "candidate_raw_equal": true
+        },
+        {
+          "id": "diagnostic-stage31-success-negative-grouped",
+          "source": "tests/fixtures/m2/diagnostic-stage31-success-negative-grouped.pkl",
+          "expression": "result",
+          "input_sha256": "33ba7785e08a1a49a824ff7620e617f7a5b9e223fecee478dd31df5f97fe85fb",
+          "expected_outcome": "success",
+          "source_uri_and_expression_identical": true,
+          "original_java_bytes_and_exit_identical": true,
+          "full_java_bytes_and_exit_identical": true,
+          "full_candidate_bytes_and_exit_identical": true,
+          "baseline_raw_equal": true,
+          "candidate_raw_equal": true
+        },
+        {
+          "id": "diagnostic-stage31-success-grouped-negative",
+          "source": "tests/fixtures/m2/diagnostic-stage31-success-grouped-negative.pkl",
+          "expression": "result",
+          "input_sha256": "a443a9f13e480d2e940638eef6b82aaefe9edaa004623e56519e31e5a5cb4458",
+          "expected_outcome": "success",
+          "source_uri_and_expression_identical": true,
+          "original_java_bytes_and_exit_identical": true,
+          "full_java_bytes_and_exit_identical": true,
+          "full_candidate_bytes_and_exit_identical": true,
+          "baseline_raw_equal": true,
+          "candidate_raw_equal": true
+        },
+        {
+          "id": "diagnostic-stage31-success-double-negative",
+          "source": "tests/fixtures/m2/diagnostic-stage31-success-double-negative.pkl",
+          "expression": "result",
+          "input_sha256": "988e293d84247088875c34fe5250b20a9e8b308d4f12c95ded3250f65058a826",
+          "expected_outcome": "success",
+          "source_uri_and_expression_identical": true,
+          "original_java_bytes_and_exit_identical": true,
+          "full_java_bytes_and_exit_identical": true,
+          "full_candidate_bytes_and_exit_identical": true,
+          "baseline_raw_equal": true,
+          "candidate_raw_equal": true
+        },
+        {
+          "id": "diagnostic-stage31-class-public-negative-int",
+          "source": "tests/fixtures/m2/diagnostic-stage31-class-public-negative-int.pkl",
+          "expression": "result",
+          "input_sha256": "763f090583918677bac3893d54f30efbfdb57708f3cc0fb2eac8e387394c66f3",
+          "expected_outcome": "failure",
+          "source_uri_and_expression_identical": true,
+          "original_java_bytes_and_exit_identical": true,
+          "full_java_bytes_and_exit_identical": true,
+          "full_candidate_bytes_and_exit_identical": true,
+          "baseline_raw_equal": true,
+          "candidate_raw_equal": true
+        },
+        {
+          "id": "diagnostic-stage31-class-public-negative-float",
+          "source": "tests/fixtures/m2/diagnostic-stage31-class-public-negative-float.pkl",
+          "expression": "result",
+          "input_sha256": "1d5c3aee9854129e34d385bf03e89e96dfbe40d524807c0e3805fc01088ee34d",
+          "expected_outcome": "failure",
+          "source_uri_and_expression_identical": true,
+          "original_java_bytes_and_exit_identical": true,
+          "full_java_bytes_and_exit_identical": true,
+          "full_candidate_bytes_and_exit_identical": true,
+          "baseline_raw_equal": true,
+          "candidate_raw_equal": true
+        },
+        {
+          "id": "diagnostic-stage31-module-public-alias-negative",
+          "source": "tests/fixtures/m2/diagnostic-stage31-module-public-alias-negative.pkl",
+          "expression": "result",
+          "input_sha256": "25240485629f8ef27de1570e560f0814eff0cefd9b3250a3e6f26f8282d06676",
+          "expected_outcome": "failure",
+          "source_uri_and_expression_identical": true,
+          "original_java_bytes_and_exit_identical": true,
+          "full_java_bytes_and_exit_identical": true,
+          "full_candidate_bytes_and_exit_identical": true,
+          "baseline_raw_equal": true,
+          "candidate_raw_equal": true
+        },
+        {
+          "id": "diagnostic-stage31-module-public-alias-grouped",
+          "source": "tests/fixtures/m2/diagnostic-stage31-module-public-alias-grouped.pkl",
+          "expression": "result",
+          "input_sha256": "441872079d2f7298dbc9a40d24880a2070476bed86c0eedd3a22130738d8aa09",
+          "expected_outcome": "failure",
+          "source_uri_and_expression_identical": true,
+          "original_java_bytes_and_exit_identical": true,
+          "full_java_bytes_and_exit_identical": true,
+          "full_candidate_bytes_and_exit_identical": true,
+          "baseline_raw_equal": true,
+          "candidate_raw_equal": true
+        },
+        {
+          "id": "diagnostic-stage31-class-amendment-grouped",
+          "source": "tests/fixtures/m2/diagnostic-stage31-class-amendment-grouped.pkl",
+          "expression": "result",
+          "input_sha256": "41703d61cac36933871cc5dd5461c665b26a4caaef2218d4a3390256db17fbe6",
+          "expected_outcome": "failure",
+          "source_uri_and_expression_identical": true,
+          "original_java_bytes_and_exit_identical": true,
+          "full_java_bytes_and_exit_identical": true,
+          "full_candidate_bytes_and_exit_identical": true,
+          "baseline_raw_equal": true,
+          "candidate_raw_equal": true
+        },
+        {
+          "id": "diagnostic-stage31-mapping-direct-negative",
+          "source": "tests/fixtures/m2/diagnostic-stage31-mapping-direct-negative.pkl",
+          "expression": "result",
+          "input_sha256": "afb2bc5c6bd2adb4b18426b594e4f4a550abff5e3a1dbc8c43029ff563183e59",
+          "expected_outcome": "failure",
+          "source_uri_and_expression_identical": true,
+          "original_java_bytes_and_exit_identical": true,
+          "full_java_bytes_and_exit_identical": true,
+          "full_candidate_bytes_and_exit_identical": true,
+          "baseline_raw_equal": true,
+          "candidate_raw_equal": true
+        },
+        {
+          "id": "diagnostic-stage31-mapping-direct-grouped",
+          "source": "tests/fixtures/m2/diagnostic-stage31-mapping-direct-grouped.pkl",
+          "expression": "result",
+          "input_sha256": "6ca51102e0c7822e854c1c240c09af51e7650b148625a99591c78534f5a9736d",
+          "expected_outcome": "failure",
+          "source_uri_and_expression_identical": true,
+          "original_java_bytes_and_exit_identical": true,
+          "full_java_bytes_and_exit_identical": true,
+          "full_candidate_bytes_and_exit_identical": true,
+          "baseline_raw_equal": true,
+          "candidate_raw_equal": true
+        },
+        {
+          "id": "diagnostic-stage31-listing-direct-negative",
+          "source": "tests/fixtures/m2/diagnostic-stage31-listing-direct-negative.pkl",
+          "expression": "result",
+          "input_sha256": "5b4e031bbdd1c1086e132f33290d8872e776f2515158c95e0ba073fda5e4b084",
+          "expected_outcome": "failure",
+          "source_uri_and_expression_identical": true,
+          "original_java_bytes_and_exit_identical": true,
+          "full_java_bytes_and_exit_identical": true,
+          "full_candidate_bytes_and_exit_identical": true,
+          "baseline_raw_equal": true,
+          "candidate_raw_equal": true
+        },
+        {
+          "id": "diagnostic-stage31-listing-direct-grouped",
+          "source": "tests/fixtures/m2/diagnostic-stage31-listing-direct-grouped.pkl",
+          "expression": "result",
+          "input_sha256": "6e05baabf15c3f0213f9d956ec4f3584ac379d988774fac60d2f88f9542b2a14",
+          "expected_outcome": "failure",
+          "source_uri_and_expression_identical": true,
+          "original_java_bytes_and_exit_identical": true,
+          "full_java_bytes_and_exit_identical": true,
+          "full_candidate_bytes_and_exit_identical": true,
+          "baseline_raw_equal": false,
+          "candidate_raw_equal": true
+        },
+        {
+          "id": "diagnostic-stage31-local-string",
+          "source": "tests/fixtures/m2/diagnostic-stage31-local-string.pkl",
+          "expression": "result",
+          "input_sha256": "e0faf6b529d20aefec6356de3e15a6365bdb8d9ea447801ba1c5f75f8501cfa7",
+          "expected_outcome": "failure",
+          "source_uri_and_expression_identical": true,
+          "original_java_bytes_and_exit_identical": true,
+          "full_java_bytes_and_exit_identical": true,
+          "full_candidate_bytes_and_exit_identical": true,
+          "baseline_raw_equal": false,
+          "candidate_raw_equal": true
+        },
+        {
+          "id": "diagnostic-stage31-local-bool",
+          "source": "tests/fixtures/m2/diagnostic-stage31-local-bool.pkl",
+          "expression": "result",
+          "input_sha256": "fcbdb0e1b935db23cfcf73a9c915f62b088f46079083fac10bff1600eb97f20a",
+          "expected_outcome": "failure",
+          "source_uri_and_expression_identical": true,
+          "original_java_bytes_and_exit_identical": true,
+          "full_java_bytes_and_exit_identical": true,
+          "full_candidate_bytes_and_exit_identical": true,
+          "baseline_raw_equal": false,
+          "candidate_raw_equal": true
+        },
+        {
+          "id": "diagnostic-stage31-local-null",
+          "source": "tests/fixtures/m2/diagnostic-stage31-local-null.pkl",
+          "expression": "result",
+          "input_sha256": "c7d8bac40e814b80a91284003f754104db2f423964352a6a46b63d01b8089baa",
+          "expected_outcome": "failure",
+          "source_uri_and_expression_identical": true,
+          "original_java_bytes_and_exit_identical": true,
+          "full_java_bytes_and_exit_identical": true,
+          "full_candidate_bytes_and_exit_identical": true,
+          "baseline_raw_equal": false,
+          "candidate_raw_equal": true
+        },
+        {
+          "id": "diagnostic-stage31-class-public-string",
+          "source": "tests/fixtures/m2/diagnostic-stage31-class-public-string.pkl",
+          "expression": "result",
+          "input_sha256": "7d146cf0ac77bdd21b93d6ea12aa3e8d7d0050b1f9932689a4bbc001c3d8cb05",
+          "expected_outcome": "failure",
+          "source_uri_and_expression_identical": true,
+          "original_java_bytes_and_exit_identical": true,
+          "full_java_bytes_and_exit_identical": true,
+          "full_candidate_bytes_and_exit_identical": true,
+          "baseline_raw_equal": true,
+          "candidate_raw_equal": true
+        },
+        {
+          "id": "diagnostic-stage31-class-public-bool",
+          "source": "tests/fixtures/m2/diagnostic-stage31-class-public-bool.pkl",
+          "expression": "result",
+          "input_sha256": "a45c85c855346c41b967cbefacea2ee4f6ec922deac1e4dac4a803400245effb",
+          "expected_outcome": "failure",
+          "source_uri_and_expression_identical": true,
+          "original_java_bytes_and_exit_identical": true,
+          "full_java_bytes_and_exit_identical": true,
+          "full_candidate_bytes_and_exit_identical": true,
+          "baseline_raw_equal": true,
+          "candidate_raw_equal": true
+        },
+        {
+          "id": "diagnostic-stage31-class-public-null",
+          "source": "tests/fixtures/m2/diagnostic-stage31-class-public-null.pkl",
+          "expression": "result",
+          "input_sha256": "0bbda97d35be5b58f25a81111030ad24f7212e33a789392602d636ea3d32bdc8",
+          "expected_outcome": "failure",
+          "source_uri_and_expression_identical": true,
+          "original_java_bytes_and_exit_identical": true,
+          "full_java_bytes_and_exit_identical": true,
+          "full_candidate_bytes_and_exit_identical": true,
+          "baseline_raw_equal": true,
+          "candidate_raw_equal": true
+        }
+      ],
+      "focus_original_pending_flag_preserved": true,
+      "full_origin_now_complete": true,
+      "helper": {
+        "path": "target/m2/stage31-full-origin-binding-final-01/run.py",
+        "bytes": 11371,
+        "sha256": "485debae7833478ebd5c3b04369b02c364465d50400a28dc2f5c4cc24e5418ef"
+      }
+    }
+  },
+  "independent_audit": {
+    "file": {
+      "path": "reports/m2/stage31-post-seal-audit.json",
+      "bytes": 4918,
+      "sha256": "d9ba41e2729e910bcaf76990a7ec38b2f3154dd8f0bb859e04e2ae67aa42d85d"
+    },
+    "results": {
+      "archive": {
+        "bytes": 33201555,
+        "members": 59782,
+        "path": "reports/m2/stage31-final-evidence.tar.gz",
+        "sha256": "6d0d96a862389b4e53f2e09a18b09c70de130ec79fdbf082732aaee9d28f77be"
+      },
+      "archived_helpers_executed": false,
+      "compatibility_complete": false,
+      "fixtures": {
+        "added": 48,
+        "original_inputs_byte_equal": 3002,
+        "preserved": 3002,
+        "sequence_files_byte_equal": 305
+      },
+      "focused_selection": {
+        "all_final_candidate_cases_pass": true,
+        "baseline_git_bound_sources": 115,
+        "cases": 48,
+        "exploration": {
+          "cases": 124,
+          "raw_equal_counts": {
+            "baseline": 78,
+            "candidate": 119
+          },
+          "retained_mismatches": [
+            "module-alias-double-minint",
+            "object-public-negative-int",
+            "object-public-negative-float",
+            "object-public-grouped-negative",
+            "object-public-negative-grouped"
+          ]
+        },
+        "focused_source_digests_bound_to_final_suite_snapshots": 42,
+        "matches_final_language_artifact": true,
+        "raw_equal_counts": {
+          "baseline": 28,
+          "candidate": 48
+        }
+      },
+      "frontend": {
+        "raw_passed": 15
+      },
+      "gates": {
+        "class-contract": 0,
+        "class-report": 0,
+        "development": 0,
+        "full": 1,
+        "report": 0,
+        "subset": 1
+      },
+      "implementation_commit": "92b87ccbd999b4d1648b15b43e853643fdb62f94",
+      "language": {
+        "artifact_sha256": "dd7caa28616e4f1ea86f32b0d45beec8f641f108f28e57bf9332f016e419bc37",
+        "failures": {
+          "error-cycle": "oracle-error",
+          "error-remainder-zero": "mismatch"
+        },
+        "metamorphic": 88,
+        "raw_counts": {
+          "mismatch": 1,
+          "oracle-error": 1,
+          "pass": 3048
+        },
+        "selected": 3050
+      },
+      "lifecycle": {
+        "diagnostic_observations": [
+          {
+            "id": "attempt-1",
+            "mode": "retry",
+            "raw_equal": false
+          },
+          {
+            "id": "attempt-2",
+            "mode": "retry",
+            "raw_equal": false
+          },
+          {
+            "id": "after-close",
+            "mode": "retry",
+            "raw_equal": false
+          },
+          {
+            "id": "after-close",
+            "mode": "reentry",
+            "raw_equal": false
+          }
+        ],
+        "negative_java_compatibility_pass": false,
+        "protocol_pairs": 2
+      },
+      "performance_targets_established": false,
+      "pinned_gitlinks": {
+        "external/pkl": "e51fb2f91774265666f94980ec630db794a4db2d",
+        "external/pkl-pantry": "904a68184e54da378b0a0e8a911a3fab3956f693"
+      },
+      "platform_oracles": {
+        "acquisitions": [
+          "target/m2/stage31-platform-oracle-01",
+          "target/m2/stage31-platform-oracle-extra-01",
+          "target/m2/stage31-platform-oracle-extra-02"
+        ],
+        "cases": 48,
+        "complete_payloads_match_java": true,
+        "outcomes": {
+          "error": 43,
+          "success": 5
+        }
+      },
+      "platforms": {
+        "mismatches": {
+          "browser": [
+            "regex-unicode-15-vs-16",
+            "regex-zero-width-supplementary"
+          ],
+          "node": [
+            "regex-unicode-15-vs-16",
+            "regex-zero-width-supplementary"
+          ],
+          "rust": [
+            "regex-unicode-15-vs-16",
+            "regex-zero-width-supplementary"
+          ]
+        },
+        "scenarios": 90,
+        "total": 6078
+      },
+      "raw_original_files": 59776,
+      "runtime": {
+        "cases": 9,
+        "retained_diagnostic_mismatches": [
+          "forcing-cycle"
+        ]
+      },
+      "sequences": {
+        "calls": 2622,
+        "process_pairs": 302
+      },
+      "suites": [
+        {
+          "report": "target/m2/validation-stage31-final-01/report.json",
+          "report_sha256": "ebc97a542bb83a106747284c4950df03446060e6a654dc4deb9d51fada90f7ba",
+          "sources": 3628
+        },
+        {
+          "report": "target/m2/language-stage31-final-01/report.json",
+          "report_sha256": "6f610f6ebdf2132597659a1a1631f167c3fc8737d9eacd7e0c8370718983cf8c",
+          "sources": 3188
+        },
+        {
+          "report": "target/m2/platforms-stage31-final-01/report.json",
+          "report_sha256": "ba90cdef9804bb9fbc6039af46030924db7667bc4b9d9cc863e208cb7961fd66",
+          "sources": 77
+        },
+        {
+          "report": "target/m2/frontend-stage31-final-01/report.json",
+          "report_sha256": "0ff433452799d10afc7498bfcc066d111b2c32d31666d52a354047f371a63350",
+          "sources": 45
+        },
+        {
+          "report": "target/m2/runtime-stage31-final-01/report.json",
+          "report_sha256": "ccd821cead1a2b84689fab129994f4dd8eb0e7c25091fca3a76aca671b7e4e0d",
+          "sources": 68
+        },
+        {
+          "report": "target/m2/lifecycle-stage31-final-01/report.json",
+          "report_sha256": "a759ef59454b9abeb4888aa5c62f34441964405857dcfbb600b96d4150af6a81",
+          "sources": 121
+        },
+        {
+          "report": "target/m2/class-lifecycle-stage31-final-01/report.json",
+          "report_sha256": "f47353521775c1ab6c31dc3dc17f5ff77350e59f3fcfa030f1f9fe52a7a67e19",
+          "sources": 428
+        }
+      ],
+      "unique_git_bound_files": 3628,
+      "validation": {
+        "ignored": 1,
+        "isolated_child_passes": 13,
+        "python_tests": 200,
+        "reported_rust_passes": 472,
+        "unique_rust_passes": 459
+      }
+    }
+  },
+  "archive": {
+    "archive": "reports/m2/stage31-final-evidence.tar.gz",
+    "bytes": 33201555,
+    "git_bound_files": 3628,
+    "implementation_commit": "92b87ccbd999b4d1648b15b43e853643fdb62f94",
+    "omitted_build_caches": [
+      "target/m2/lifecycle-stage31-final-01/build",
+      "target/m2/class-lifecycle-stage31-final-01/build",
+      "target/m2/stage31-baseline-evidence-02/build",
+      "target/m2/stage31-focused-comparison-01/build"
+    ],
+    "original_files": 59776,
+    "roots": 89,
+    "sha256": "6d0d96a862389b4e53f2e09a18b09c70de130ec79fdbf082732aaee9d28f77be"
+  },
+  "gates": {
+    "class-contract": 0,
+    "class-report": 0,
+    "development": 0,
+    "full": 1,
+    "report": 0,
+    "subset": 1
+  },
+  "historical_dependencies": [
+    {
+      "baseline_git_blob": "f43b7733c2ef1aa57a38d65940ed426f43bb3b0f",
+      "bytes": 546,
+      "path": "reports/m2/stage30-archive.json",
+      "sha256": "2df1114535e671a07e1103944fc7dd1d932f48fd58ab15c68dd0e2c4e20a39fe"
+    },
+    {
+      "baseline_git_blob": "746d4bb32df061db49e5a0e5886561738d519244",
+      "bytes": 2175,
+      "path": "reports/m2/stage30-closeout-review.json",
+      "sha256": "80bb588c8a6d721584dfd9ea2a05f3c66644ffbb1cf584931d084e0866c1bc84"
+    },
+    {
+      "baseline_git_blob": "a0f086e26e91f4fb79eb86261f565266349e6d9b",
+      "bytes": 95727,
+      "path": "reports/m2/stage30-completion-captures.json",
+      "sha256": "dab41676484d0ecddcab89a094b5acd98525817cdce88ebcf38962d8d28b9501"
+    },
+    {
+      "baseline_git_blob": "e0475cc43bbe2d3a6a8093236e4ad07ec373a809",
+      "bytes": 63151108,
+      "path": "reports/m2/stage30-final-evidence.tar.gz",
+      "sha256": "3d9c2047e9d77d3747def54b4bca4cf8e53d660c8181d7077e471171598ccf5d"
+    },
+    {
+      "baseline_git_blob": "168d7f8cd0585a721227a00f84ec949544273959",
+      "bytes": 19096,
+      "path": "reports/m2/stage30-final-summary.json",
+      "sha256": "5215a9c4687866c6661519256465c0bd0d08c6d86a0e201126917d00977d0ab4"
+    },
+    {
+      "baseline_git_blob": "4051f2225b1237d05f432dad1ef4149c6ff3f9ba",
+      "bytes": 5046,
+      "path": "reports/m2/stage30-post-seal-audit.json",
+      "sha256": "ca0a7a96f3a7c215a31b8d1fab37ce7a271758366bbece23c7af51b7e62c9864"
+    },
+    {
+      "baseline_git_blob": "9e209d40b56cefcf173acf8d0a6b96f0046d0a6e",
+      "bytes": 2826,
+      "path": "reports/m2/validation-stage30-final.json",
+      "sha256": "00fa623c9b9f5bf5bd34f229be5a699549f146bf6c95641127c3dd3d8d2ae53a"
+    }
+  ],
+  "final_suite_reports": [
+    {
+      "path": "target/m2/validation-stage31-final-01/report.json",
+      "bytes": 972609,
+      "sha256": "ebc97a542bb83a106747284c4950df03446060e6a654dc4deb9d51fada90f7ba"
+    },
+    {
+      "path": "target/m2/language-stage31-final-01/report.json",
+      "bytes": 10619757,
+      "sha256": "6f610f6ebdf2132597659a1a1631f167c3fc8737d9eacd7e0c8370718983cf8c"
+    },
+    {
+      "path": "target/m2/platforms-stage31-final-01/report.json",
+      "bytes": 3369496,
+      "sha256": "ba90cdef9804bb9fbc6039af46030924db7667bc4b9d9cc863e208cb7961fd66"
+    },
+    {
+      "path": "target/m2/frontend-stage31-final-01/report.json",
+      "bytes": 53981,
+      "sha256": "0ff433452799d10afc7498bfcc066d111b2c32d31666d52a354047f371a63350"
+    },
+    {
+      "path": "target/m2/runtime-stage31-final-01/report.json",
+      "bytes": 63592,
+      "sha256": "ccd821cead1a2b84689fab129994f4dd8eb0e7c25091fca3a76aca671b7e4e0d"
+    },
+    {
+      "path": "target/m2/lifecycle-stage31-final-01/report.json",
+      "bytes": 72086,
+      "sha256": "a759ef59454b9abeb4888aa5c62f34441964405857dcfbb600b96d4150af6a81"
+    },
+    {
+      "path": "target/m2/class-lifecycle-stage31-final-01/report.json",
+      "bytes": 9806374,
+      "sha256": "f47353521775c1ab6c31dc3dc17f5ff77350e59f3fcfa030f1f9fe52a7a67e19"
+    }
+  ],
+  "compatibility_complete": false,
+  "performance_targets_established": false,
+  "preserved_initial_observations": [
+    "The first fresh baseline build failed because its extracted workspace omitted xtask; the failed acquisition remains preserved and the corrected baseline was built in a new directory.",
+    "The first portable fixture-generation command failed and is preserved separately from the successful later generations.",
+    "The first candidate lowered constant public-member spans too broadly. Its selected comparison, broader public/scalar/collection follow-ups and failing native class-public control remain preserved; they are not final passes.",
+    "The first production review missed the constant-member source fallback. The superseding source review and fresh exact-final-artifact comparison establish the corrected bounded result.",
+    "The initial static auditor review requested changes to focused-source binding and exploratory-origin coverage. That review remains preserved; the revised auditor binds final-suite snapshots and independently checks all exploratory captures and immutable origins."
+  ],
+  "preserved_failed_processes": [
+    {
+      "process": {
+        "path": "target/m2/stage31-numeric-span-oracle-01/baseline-build.process.json",
+        "bytes": 620,
+        "sha256": "bf2da5310e3462f8094462b60ac9f587a88308b6d8eba6e87d9bc37b19d68583"
+      },
+      "exit_code": 101,
+      "streams": {
+        "stdout": {
+          "path": "target/m2/stage31-numeric-span-oracle-01/baseline-build.stdout.bin",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stderr": {
+          "path": "target/m2/stage31-numeric-span-oracle-01/baseline-build.stderr.bin",
+          "bytes": 483,
+          "sha256": "b51464d9fdd9cb8deb0e6656abb9638a44f335100e51f659cfe62d8d2815407f"
+        }
+      }
+    },
+    {
+      "process": {
+        "path": "target/m2/stage31-review-native-tests-02/process.json",
+        "bytes": 710,
+        "sha256": "d43ba4d370d2e4b54b8becb7f6ed34ff54b1fe2ab38197db6a190f69bcbb395e"
+      },
+      "exit_code": 101,
+      "streams": {
+        "stdout": {
+          "path": "target/m2/stage31-review-native-tests-02/stdout.bin",
+          "bytes": 470,
+          "sha256": "f29832f9cfa0a06ea576d160ccc159fe38373a221dab1f111b9aef8c4f538387"
+        },
+        "stderr": {
+          "path": "target/m2/stage31-review-native-tests-02/stderr.bin",
+          "bytes": 1346,
+          "sha256": "b8befe843a3259461e8827e2acc41323cd4c8a02a84520467b665deadce80433"
+        }
+      }
+    },
+    {
+      "process": {
+        "path": "target/m2/stage31-platform-fixture-generation-01/process.json",
+        "bytes": 820,
+        "sha256": "aa384f10ae4fbcec56383dbbc8484e2563d78eb2104ffcf313630ba55d808b19"
+      },
+      "exit_code": 1,
+      "streams": {
+        "stdout": {
+          "path": "target/m2/stage31-platform-fixture-generation-01/stdout.bin",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stderr": {
+          "path": "target/m2/stage31-platform-fixture-generation-01/stderr.bin",
+          "bytes": 319,
+          "sha256": "158b105996b465297654958e8b113206bb07d013e55e56686f9186e770944bbb"
+        }
+      }
+    }
+  ],
+  "initial_focused_selection": {
+    "report": {
+      "path": "target/m2/stage31-focused-comparison-01/report.json",
+      "bytes": 164213,
+      "sha256": "7f70ae50ea8d3196cb81ded4cab62ce47ac614e69483001b825d3e0fb25e9edc"
+    },
+    "cases": 33,
+    "raw_equal_counts": {
+      "baseline": 17,
+      "candidate": 32
+    }
+  },
+  "known_unverified_scope": [
+    "M2 remains in progress. Full language/API compatibility, release platform coverage, execution-time parity and peak-RSS parity are not established.",
+    "The selected cycle oracle error and remainder-by-zero mismatch remain; no development compatibility exception was added.",
+    "Four invalid public-object annotation frame differences and one nested-minimum-negation overflow frame difference remain in the broad exploration.",
+    "Java unavailable source sections for empty constant collection calls remain a separate diagnostic gap; general numeric/constant-source diagnostics are not complete.",
+    "The two Java regex differences, existing runtime cycle diagnostic and four full lifecycle diagnostic differences remain.",
+    "General imported/surrogate URI, Java out-of-range Unicode internal-error, public JS string transport, colored/stack-overflow diagnostic and complete string API requirements remain open.",
+    "Native lifetime/value-frame tests are ordinary tests. Existing isolated regressions remain separate; no new small-stack or memory-parity guarantee is claimed.",
+    "Portable case repetitions are fresh evaluations and do not establish same-evaluator recovery. Platform, selected and exploratory cases overlap and are not additive feature counts.",
+    "Only explicitly configured Cargo build-cache directories are omitted before traversal; no payload sizes or hashes are claimed for them. Initial baseline checkout and fresh baseline source snapshots are retained; the absent initial baseline-build directory is recorded separately.",
+    "Local macOS verification does not establish Linux, Windows, hosted CI or release API execution. Existing depth/work limits and unexecuted sequence groups remain."
+  ],
+  "completion_captures": {
+    "path": "reports/m2/stage31-completion-captures.json",
+    "bytes": 168450,
+    "sha256": "e42742ee1385bce65e7312eb5104aa3379bd5195ddfb0a364d593ceefe7ab3cc"
+  }
+}
