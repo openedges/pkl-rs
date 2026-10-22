@@ -1,0 +1,2 @@
+x = new { local unused: Int = throw("unused"); value = 2 }
+result = x.value

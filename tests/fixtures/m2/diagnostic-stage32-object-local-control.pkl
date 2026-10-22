@@ -1,0 +1,2 @@
+x = new { local good: Int = 1; value = good }
+result = x.value

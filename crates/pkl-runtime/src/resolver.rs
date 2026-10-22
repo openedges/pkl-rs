@@ -11,6 +11,7 @@ use crate::syntax::{
 };
 use std::collections::BTreeMap;
 mod constant_keys;
+mod diagnostic_owner;
 
 // Nonlocal properties/classes/type aliases in the pinned stdlib/base.pkl,
 // following BaseModuleMembersGenerator. Base semantics are outside this prototype.
@@ -236,6 +237,8 @@ struct Resolver<'a> {
     entry_counts: BTreeMap<crate::value::PklString, usize>,
     member_path: Vec<String>,
     diagnostic_path: Vec<crate::value::PklString>,
+    annotation_owners: diagnostic_owner::OwnerScopes,
+    annotation_owner_requested: bool,
 }
 
 // Resolver continuations own temporary scope state, never authored AST nodes.
@@ -273,10 +276,12 @@ enum Work<'a> {
     ClassMembers(&'a [Member]),
     EndClass(ConstLevel),
     EndAlias(ConstLevel),
-    EndFunction(bool),
+    EndFunction(bool, bool),
     EndMember(ConstLevel),
     EndObject(bool),
     PopScope,
+    EndAnnotationOwner,
+    AnnotationOwnerPrefix(&'a [ObjectMember]),
 }
 
 impl<'a> Resolver<'a> {
@@ -350,6 +355,7 @@ impl<'a> Resolver<'a> {
     }
 
     fn enter_object(&mut self, names: Vec<&'a Member>) -> bool {
+        self.annotation_owners.enter_inherited();
         self.scopes.push(Scope::Object(names));
         self.object_levels.push(self.const_level);
         self.const_scopes.push(ConstScope {
@@ -369,18 +375,23 @@ impl<'a> Resolver<'a> {
         while let Some(task) = work.pop() {
             match task {
                 Work::EndMember(level) => {
+                    self.annotation_owners.exit();
                     self.const_level = level;
                     self.member_path.pop();
                     self.diagnostic_path.pop();
                 }
                 Work::EndObject(lambda) => {
+                    self.annotation_owners.exit();
                     self.receiver_is_lambda = lambda;
                     self.object_receiver_lambdas.pop();
                     self.object_levels.pop();
                     self.const_scopes.pop();
                     self.scopes.pop();
                 }
-                Work::EndFunction(lambda) => {
+                Work::EndFunction(lambda, owner_is_lambda) => {
+                    if owner_is_lambda {
+                        self.annotation_owners.exit();
+                    }
                     self.receiver_is_lambda = lambda;
                     self.const_scopes.pop();
                     self.scopes.pop();
@@ -391,9 +402,11 @@ impl<'a> Resolver<'a> {
                     self.scopes.pop();
                 }
                 Work::PopScope => {
+                    self.annotation_owners.exit();
                     self.scopes.pop();
                 }
                 Work::EndLet(nested) => {
+                    self.annotation_owners.exit();
                     self.const_scopes.pop();
                     self.scopes.pop();
                     if !nested {
@@ -401,6 +414,7 @@ impl<'a> Resolver<'a> {
                     }
                 }
                 Work::EndFor => {
+                    self.annotation_owners.exit();
                     self.const_scopes.pop();
                     self.scopes.pop();
                 }
@@ -418,13 +432,30 @@ impl<'a> Resolver<'a> {
                     const_index,
                     custom,
                 } => {
+                    self.annotation_owners.exit();
                     if custom {
+                        self.annotation_owners.exit();
                         self.scopes.pop();
                     }
                     self.const_scopes[const_index].lookup = true;
                     self.receiver_is_lambda = lambda;
                     self.object_levels.push(level);
                     self.scopes.insert(index, scope);
+                }
+                Work::EndAnnotationOwner => self.annotation_owners.exit(),
+                Work::AnnotationOwnerPrefix(members) => {
+                    // AstBuilder's specialized object pass visits the prefix,
+                    // then its generator fallback revisits it in the same scope.
+                    // Only that scope's entry ordinals survive the first pass.
+                    for member in members {
+                        let key = match member {
+                            ObjectMember::Element { .. } => None,
+                            ObjectMember::Entry { key, .. } => Some(key),
+                            _ => continue,
+                        };
+                        self.annotation_owners.enter_entry(key);
+                        self.annotation_owners.exit();
+                    }
                 }
                 Work::ConstantEntries(members) => self.constant_entries(members)?,
                 Work::Members(members, object) => {
@@ -462,6 +493,7 @@ impl<'a> Resolver<'a> {
                     );
                 }
                 Work::Member(member, object) => {
+                    self.annotation_owners.enter_member(&member.name);
                     self.member_path.push(member.name.clone());
                     self.diagnostic_path.push(member.name.clone().into());
                     let previous = self.const_level;
@@ -552,7 +584,25 @@ impl<'a> Resolver<'a> {
                     let previous = self.enter_object(names);
                     work.push(Work::EndObject(previous));
                     work.push(Work::ConstantEntries(members));
-                    work.push(Work::ObjectBody(members, None));
+                    if self.annotation_owners.is_enabled()
+                        && let Some(generator) = members.iter().position(|member| {
+                            !matches!(
+                                member,
+                                ObjectMember::Property(_)
+                                    | ObjectMember::Element { .. }
+                                    | ObjectMember::Entry { .. }
+                            )
+                        })
+                    {
+                        for (index, member) in members.iter().enumerate().rev() {
+                            work.push(Work::ObjectMember(member, None));
+                            if index == generator {
+                                work.push(Work::AnnotationOwnerPrefix(&members[..generator]));
+                            }
+                        }
+                    } else {
+                        work.push(Work::ObjectBody(members, None));
+                    }
                 }
                 Work::ObjectBody(members, for_span) => work.extend(
                     members
@@ -580,6 +630,10 @@ impl<'a> Resolver<'a> {
                     }
                     ObjectMember::Element { value, .. } => {
                         self.entry_label(None);
+                        if self.annotation_owners.is_enabled() {
+                            self.annotation_owners.enter_entry(None);
+                            work.push(Work::EndAnnotationOwner);
+                        }
                         work.push(Work::Expression(value, true));
                     }
                     ObjectMember::Entry { key, value, .. } => {
@@ -611,9 +665,17 @@ impl<'a> Resolver<'a> {
                 },
                 Work::EntryValue(key, value) => {
                     self.entry_label(Some(key));
+                    if self.annotation_owners.is_enabled() {
+                        self.annotation_owners.enter_entry(Some(key));
+                        work.push(Work::EndAnnotationOwner);
+                    }
                     work.push(Work::Expression(value, true));
                 }
                 Work::PredicateValue(condition, value) => {
+                    if self.annotation_owners.is_enabled() {
+                        self.annotation_owners.enter_entry(Some(condition));
+                        work.push(Work::EndAnnotationOwner);
+                    }
                     let label = self.entry_label(Some(condition));
                     let previous = self.diagnostic_path.pop().unwrap_or_default();
                     self.diagnostic_path.push(
@@ -660,6 +722,7 @@ impl<'a> Resolver<'a> {
                     }
                 }
                 Work::ForBody(parameters, members, span) => {
+                    self.annotation_owners.enter_for();
                     self.scopes.push(Scope::GeneratorParameters(parameters));
                     self.const_scopes.push(ConstScope {
                         level: self.const_level,
@@ -670,6 +733,10 @@ impl<'a> Resolver<'a> {
                     work.push(Work::ObjectBody(members, Some(span)));
                 }
                 Work::Eager(expression, custom) => {
+                    self.annotation_owners.enter_inherited();
+                    if custom {
+                        self.annotation_owners.enter_inherited();
+                    }
                     let index = self
                         .scopes
                         .iter()
@@ -704,6 +771,7 @@ impl<'a> Resolver<'a> {
                     work.push(Work::Expression(expression, false));
                 }
                 Work::LetBody(name, body, contextual_new) => {
+                    self.annotation_owners.enter_let();
                     let nested = matches!(self.scopes.last(), Some(Scope::Let(_)));
                     if !nested {
                         self.diagnostic_path.push("<let expr>".into());
@@ -724,6 +792,7 @@ impl<'a> Resolver<'a> {
                     work.push(Work::Members(members, false));
                 }
                 Work::Constraints(constraints) => {
+                    self.annotation_owners.enter_inherited();
                     self.scopes.push(Scope::CustomThis);
                     work.push(Work::PopScope);
                     work.extend(
@@ -915,7 +984,10 @@ impl<'a> Resolver<'a> {
                             lookup: true,
                         });
                         let previous = std::mem::replace(&mut self.receiver_is_lambda, !method);
-                        work.push(Work::EndFunction(previous));
+                        if !method {
+                            self.annotation_owners.enter_lambda();
+                        }
+                        work.push(Work::EndFunction(previous, !method));
                         work.push(Work::Expression(body, false));
                         if let Some(ty) = return_type {
                             work.push(Work::Type(ty));
@@ -1070,7 +1142,7 @@ impl<'a> Resolver<'a> {
         Ok(())
     }
 
-    fn validate_member(&self, member: &Member, object: bool) -> Result<(), Diagnostic> {
+    fn validate_member(&mut self, member: &Member, object: bool) -> Result<(), Diagnostic> {
         use ModifierKind as M;
         let (valid, target): (&[ModifierKind], &str) = if object {
             (&[M::Local, M::Const], "object members")
@@ -1131,11 +1203,15 @@ impl<'a> Resolver<'a> {
             && !has(M::Local)
             && let Some(ty) = &member.ty
         {
-            return Err(Diagnostic::new(
+            self.annotation_owner_requested = true;
+            let mut error = Diagnostic::new(
                 DiagnosticKind::Syntax,
                 ty.span,
                 "A non-local object property cannot have a type annotation.",
-            ));
+            );
+            // AstBuilder enters this property scope before rejecting its type.
+            error.member = self.annotation_owners.name().map(Into::into);
+            return Err(error);
         }
         if let ExprKind::Function {
             method: true,
@@ -1430,6 +1506,29 @@ fn validate_modifiers(
 }
 
 pub fn resolve_module(module: &Module) -> Result<ResolvedModule, Diagnostic> {
+    let (result, annotation_owner_requested) = resolve_module_inner(module, false);
+    if !annotation_owner_requested {
+        return result;
+    }
+    let Err(mut error) = result else {
+        unreachable!("annotation ownership is requested only on rejection");
+    };
+    // Valid modules never allocate this naming stack. Replay the same worklist
+    // once for the rejected declaration, so sibling ordinals retain visit order.
+    // Adopt only ownership, and only if every other diagnostic field is equal.
+    if let (Err(mut replay), _) = resolve_module_inner(module, true) {
+        let owner = replay.member.take();
+        if replay == error {
+            error.member = owner;
+        }
+    }
+    Err(error)
+}
+
+fn resolve_module_inner(
+    module: &Module,
+    capture_annotation_owner: bool,
+) -> (Result<ResolvedModule, Diagnostic>, bool) {
     let mut resolver = Resolver {
         scopes: Vec::new(),
         folded_integer_spans: &module.folded_integer_spans,
@@ -1445,6 +1544,8 @@ pub fn resolve_module(module: &Module) -> Result<ResolvedModule, Diagnostic> {
         entry_counts: BTreeMap::new(),
         member_path: Vec::new(),
         diagnostic_path: Vec::new(),
+        annotation_owners: diagnostic_owner::OwnerScopes::new(capture_annotation_owner),
+        annotation_owner_requested: false,
     };
     let validation = (|| {
         if let Some(declaration) = &module.declaration {
@@ -1469,19 +1570,22 @@ pub fn resolve_module(module: &Module) -> Result<ResolvedModule, Diagnostic> {
         resolver.members(&module.members, false)?;
         Ok::<(), Diagnostic>(())
     })();
-    validation.map_err(|mut error| {
-        error.module_name = module
-            .declaration
-            .as_ref()
-            .and_then(|declaration| declaration.name.as_ref())
-            .map(|name| name.join(".").into_boxed_str());
-        error
-    })?;
-    Ok(ResolvedModule {
-        module: module.clone(),
-        names: resolver.names,
-        const_names: resolver.const_names,
-        custom_this: resolver.custom_this,
-        custom_functions: resolver.custom_functions,
-    })
+    let annotation_owner_requested = resolver.annotation_owner_requested;
+    let result = validation
+        .map_err(|mut error| {
+            error.module_name = module
+                .declaration
+                .as_ref()
+                .and_then(|declaration| declaration.name.as_ref())
+                .map(|name| name.join(".").into_boxed_str());
+            error
+        })
+        .map(|()| ResolvedModule {
+            module: module.clone(),
+            names: resolver.names,
+            const_names: resolver.const_names,
+            custom_this: resolver.custom_this,
+            custom_functions: resolver.custom_functions,
+        });
+    (result, annotation_owner_requested)
 }

@@ -1,0 +1,2 @@
+x = new { ["\u{D800}"] = new { bad: Int = 1 } }
+result = 1

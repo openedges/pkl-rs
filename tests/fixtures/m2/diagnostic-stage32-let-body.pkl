@@ -1,0 +1,2 @@
+x = let (v = 1) new { bad: Int = v }
+result = 1

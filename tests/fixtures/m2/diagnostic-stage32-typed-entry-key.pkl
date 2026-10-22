@@ -1,0 +1,2 @@
+x = new { [new Dynamic { bad: Int = 1 }] = 2 }
+result = 1

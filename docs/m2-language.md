@@ -83,8 +83,15 @@ properties, method returns and collection members. Typed locals and function
 bodies use the executable expression's source span; other constant members retain
 Java's source suffix after their header. Authored syntax and assertion observations
 remain separate. Minimum integers, radix literals, signed zero, scalar constants
-and nonliteral unary operations provide value and diagnostic controls. Invalid public object
-annotations and nested-negation overflow frames retain separate known gaps.
+and nonliteral unary operations provide value and diagnostic controls.
+
+Rejected non-local object property type annotations retain their authored member
+paths, including nested objects, functions, let scopes, entries and generators.
+The selected cases compare the complete rejection bytes and accepted module,
+class and object-local controls. Diagnostic naming preserves UTF-16 identity,
+literal entry labels and scope-local ordinals. Earlier const-modifier and
+inferred-parent errors remain separate exploratory differences, alongside
+nested-negation overflow frames and unavailable source sections.
 
 The default uses Java's API setting with power assertions disabled. Selected
 cases can opt in with `"power_assertions": true`; the runner then passes

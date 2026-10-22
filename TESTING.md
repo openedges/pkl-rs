@@ -349,8 +349,18 @@ Native checks retain authored observation spans while inspecting executable
 value spans, declaration ownership, suspended constraints, reentry, retry,
 per-instruction collection and detached errors after close. Node and Chromium
 run the same fresh Java-derived cases, including successful value controls.
-Exploratory invalid-annotation and nested-negation overflow differences remain
-recorded separately; these checks do not complete numeric diagnostics.
+Exploratory nested-negation overflow differences remain recorded separately;
+these checks do not complete numeric diagnostics.
+
+Forbidden object property annotation regressions compare full Java diagnostics
+at the actual fixture URI, with accepted module, class and local declarations as
+controls. Native checks cover authored owners, first-error order, literal and
+computed entry labels, generator prefix revisits, supplementary positions and
+unmatched-surrogate string keys. Node and Chromium compare the complete
+Java-derived payloads through fresh evaluators. These frontend checks establish
+neither Host lifecycle behavior nor a new small-stack or performance result.
+Earlier const-modifier ownership and inferred-parent rejection differences
+remain recorded exploratory failures.
 
 M1 experiments have narrower, explicit contracts:
 

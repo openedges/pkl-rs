@@ -39742,6 +39742,469 @@
         "semantic:scalar-literals",
         "semantic:classes"
       ]
+    },
+    {
+      "id": "diagnostic-stage32-object-public-negative-int",
+      "input": "tests/fixtures/m2/diagnostic-stage32-object-public-negative-int.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:objects",
+        "semantic:types",
+        "semantic:numeric-literals"
+      ]
+    },
+    {
+      "id": "diagnostic-stage32-object-public-negative-float",
+      "input": "tests/fixtures/m2/diagnostic-stage32-object-public-negative-float.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:objects",
+        "semantic:types",
+        "semantic:numeric-literals"
+      ]
+    },
+    {
+      "id": "diagnostic-stage32-object-public-grouped-negative",
+      "input": "tests/fixtures/m2/diagnostic-stage32-object-public-grouped-negative.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:objects",
+        "semantic:types",
+        "semantic:numeric-literals"
+      ]
+    },
+    {
+      "id": "diagnostic-stage32-object-public-negative-grouped",
+      "input": "tests/fixtures/m2/diagnostic-stage32-object-public-negative-grouped.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:objects",
+        "semantic:types",
+        "semantic:numeric-literals"
+      ]
+    },
+    {
+      "id": "diagnostic-stage32-nested-property",
+      "input": "tests/fixtures/m2/diagnostic-stage32-nested-property.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:objects",
+        "semantic:types"
+      ]
+    },
+    {
+      "id": "diagnostic-stage32-module-function",
+      "input": "tests/fixtures/m2/diagnostic-stage32-module-function.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:objects",
+        "semantic:types",
+        "semantic:functions"
+      ]
+    },
+    {
+      "id": "diagnostic-stage32-entry-body",
+      "input": "tests/fixtures/m2/diagnostic-stage32-entry-body.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:objects",
+        "semantic:types",
+        "semantic:collections"
+      ]
+    },
+    {
+      "id": "diagnostic-stage32-entry-astral",
+      "input": "tests/fixtures/m2/diagnostic-stage32-entry-astral.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:objects",
+        "semantic:types",
+        "semantic:strings"
+      ]
+    },
+    {
+      "id": "diagnostic-stage32-element-body",
+      "input": "tests/fixtures/m2/diagnostic-stage32-element-body.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:objects",
+        "semantic:types",
+        "semantic:collections"
+      ]
+    },
+    {
+      "id": "diagnostic-stage32-element-second",
+      "input": "tests/fixtures/m2/diagnostic-stage32-element-second.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:objects",
+        "semantic:types",
+        "semantic:collections"
+      ]
+    },
+    {
+      "id": "diagnostic-stage32-when-body",
+      "input": "tests/fixtures/m2/diagnostic-stage32-when-body.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:objects",
+        "semantic:types",
+        "semantic:generators"
+      ]
+    },
+    {
+      "id": "diagnostic-stage32-when-false-body",
+      "input": "tests/fixtures/m2/diagnostic-stage32-when-false-body.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:objects",
+        "semantic:types",
+        "semantic:generators"
+      ]
+    },
+    {
+      "id": "diagnostic-stage32-amendment",
+      "input": "tests/fixtures/m2/diagnostic-stage32-amendment.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:objects",
+        "semantic:types",
+        "semantic:amendment"
+      ]
+    },
+    {
+      "id": "diagnostic-stage32-nested-amendment",
+      "input": "tests/fixtures/m2/diagnostic-stage32-nested-amendment.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:objects",
+        "semantic:types",
+        "semantic:amendment"
+      ]
+    },
+    {
+      "id": "diagnostic-stage32-let-body",
+      "input": "tests/fixtures/m2/diagnostic-stage32-let-body.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:objects",
+        "semantic:types",
+        "semantic:name-resolution"
+      ]
+    },
+    {
+      "id": "diagnostic-stage32-quoted-name",
+      "input": "tests/fixtures/m2/diagnostic-stage32-quoted-name.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:objects",
+        "semantic:types",
+        "semantic:strings"
+      ]
+    },
+    {
+      "id": "diagnostic-stage32-astral-name",
+      "input": "tests/fixtures/m2/diagnostic-stage32-astral-name.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:objects",
+        "semantic:types",
+        "semantic:strings"
+      ]
+    },
+    {
+      "id": "diagnostic-stage32-surrogate-name",
+      "input": "tests/fixtures/m2/diagnostic-stage32-surrogate-name.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:objects",
+        "semantic:types",
+        "semantic:strings"
+      ]
+    },
+    {
+      "id": "diagnostic-stage32-first-annotation",
+      "input": "tests/fixtures/m2/diagnostic-stage32-first-annotation.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:objects",
+        "semantic:types"
+      ]
+    },
+    {
+      "id": "diagnostic-stage32-annotation-before-type",
+      "input": "tests/fixtures/m2/diagnostic-stage32-annotation-before-type.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:objects",
+        "semantic:types"
+      ]
+    },
+    {
+      "id": "diagnostic-stage32-unused-invalid-body",
+      "input": "tests/fixtures/m2/diagnostic-stage32-unused-invalid-body.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:objects",
+        "semantic:types"
+      ]
+    },
+    {
+      "id": "diagnostic-stage32-unused-invalid-function",
+      "input": "tests/fixtures/m2/diagnostic-stage32-unused-invalid-function.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:objects",
+        "semantic:types",
+        "semantic:functions"
+      ]
+    },
+    {
+      "id": "diagnostic-stage32-module-control",
+      "input": "tests/fixtures/m2/diagnostic-stage32-module-control.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:objects",
+        "semantic:types"
+      ]
+    },
+    {
+      "id": "diagnostic-stage32-class-control",
+      "input": "tests/fixtures/m2/diagnostic-stage32-class-control.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:objects",
+        "semantic:types",
+        "semantic:classes"
+      ]
+    },
+    {
+      "id": "diagnostic-stage32-object-local-control",
+      "input": "tests/fixtures/m2/diagnostic-stage32-object-local-control.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:objects",
+        "semantic:types",
+        "semantic:modifiers"
+      ]
+    },
+    {
+      "id": "diagnostic-stage32-local-lazy-control",
+      "input": "tests/fixtures/m2/diagnostic-stage32-local-lazy-control.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:objects",
+        "semantic:types",
+        "semantic:modifiers",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "id": "diagnostic-stage32-hidden-annotation",
+      "input": "tests/fixtures/m2/diagnostic-stage32-hidden-annotation.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:objects",
+        "semantic:types",
+        "semantic:modifiers"
+      ]
+    },
+    {
+      "id": "diagnostic-stage32-nested-three",
+      "input": "tests/fixtures/m2/diagnostic-stage32-nested-three.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:objects",
+        "semantic:types"
+      ]
+    },
+    {
+      "id": "diagnostic-stage32-object-local-function",
+      "input": "tests/fixtures/m2/diagnostic-stage32-object-local-function.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:objects",
+        "semantic:types",
+        "semantic:functions"
+      ]
+    },
+    {
+      "id": "diagnostic-stage32-typed-lambda",
+      "input": "tests/fixtures/m2/diagnostic-stage32-typed-lambda.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:objects",
+        "semantic:types",
+        "semantic:closures"
+      ]
+    },
+    {
+      "id": "diagnostic-stage32-typed-nested-lambda",
+      "input": "tests/fixtures/m2/diagnostic-stage32-typed-nested-lambda.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:objects",
+        "semantic:types",
+        "semantic:closures"
+      ]
+    },
+    {
+      "id": "diagnostic-stage32-typed-entry-key",
+      "input": "tests/fixtures/m2/diagnostic-stage32-typed-entry-key.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:objects",
+        "semantic:types",
+        "semantic:collections"
+      ]
+    },
+    {
+      "id": "diagnostic-stage32-for-entry-body",
+      "input": "tests/fixtures/m2/diagnostic-stage32-for-entry-body.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:objects",
+        "semantic:types",
+        "semantic:generators"
+      ]
+    },
+    {
+      "id": "diagnostic-stage32-typed-let-initializer",
+      "input": "tests/fixtures/m2/diagnostic-stage32-typed-let-initializer.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:objects",
+        "semantic:types",
+        "semantic:name-resolution"
+      ]
+    },
+    {
+      "id": "diagnostic-stage32-typed-type-predicate",
+      "input": "tests/fixtures/m2/diagnostic-stage32-typed-type-predicate.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:objects",
+        "semantic:types",
+        "semantic:constraints"
+      ]
+    },
+    {
+      "id": "diagnostic-stage32-entry-surrogate",
+      "input": "tests/fixtures/m2/diagnostic-stage32-entry-surrogate.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:objects",
+        "semantic:types",
+        "semantic:strings"
+      ]
     }
   ],
   "schema_version": 1,

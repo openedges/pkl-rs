@@ -456,6 +456,8 @@ Node·Chromium은 각각 90개 개발 시나리오를 통과했습니다. 새 �
 
 [최종 요약](reports/m2/stage31-final-summary.json)·[독립 감사](reports/m2/stage31-post-seal-audit.json)·[완료 캡처](reports/m2/stage31-completion-captures.json)로 이 단계를 마감했습니다. 명시 경로 89개에서 원본 59776개를 봉인하고, 최종 소스 사본 7555개를 구현 커밋의 서로 다른 파일 3628개에 연결했습니다. 완료된 full-origin binding은 focused 결과를 전체 language report·source snapshot·artifact·원시 캡처에 연결합니다. 봉인·감사 완료 캡처와 현재 closeout source snapshot은 봉인 뒤 별도로 보존합니다. 명시한 Cargo build cache만 열거 전에 제외하며 첫 baseline checkout과 새 baseline source snapshot은 보존합니다. 존재하지 않는 첫 build-output 경로는 별도로 기록하고, 과거 자료 7개는 identity로 참조합니다. 전체 gate 실패 이유 1,950개·부분 mapping 16개와 기존 runtime·lifecycle·미실행 범위를 보존합니다. M2 전체·제품 API·릴리스 플랫폼·속도·peak RSS 목표는 여전히 미완료입니다.
 
+서른두 번째 단계는 금지된 비-local 객체 프로퍼티 타입 표기의 frontend 오류 소유 경로를 보완합니다. 핵심 의미론은 `gpt-6-astra / xhigh`, 새 Java 증거와 native·플랫폼·독립 검토는 각각 `gpt-6.1-sol / high`에 배정했습니다. Stage 31의 기존 네 실패에서 시작해 중첩 객체·함수·entry·generator·Unicode 이름과 유효한 선언을 대조합니다. 금지된 구문의 거부, 오류 시점·첫 오류·밑줄을 유지하며, 숫자 overflow와 빈 상수의 unavailable source section은 별도 작업으로 남깁니다. 수정 범위와 완료 여부는 새 Java 원시 캡처 및 최종 로컬 검증으로 확정합니다.
+
 다음 구현은 남은 탐색 불일치의 의존성을 기준으로 진행합니다.
 
 가장 가까운 제한된 작업은 금지된 비-local 객체 프로퍼티 타입 표기를 거부할 때의 frontend 소유 경로입니다. Stage 31의 기존 실패 네 개를 기준으로 Java의 오류 시점·밑줄·멤버 경로를 새 원본 캡처로 검증하고, 중첩 객체·함수와 유효한 module/class/object-local 타입 표기를 대조합니다. 중첩 최소 정수 부호 반전 overflow의 프레임과 empty collection의 unavailable source section은 각각 별도 관측으로 규칙을 확정합니다.
