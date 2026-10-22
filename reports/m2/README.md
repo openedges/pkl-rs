@@ -42,7 +42,67 @@ Stage 30 preserves diagnostic frame identity and selected declaration ownership.
 Stage 31 aligns executable value-frame locations and constant-member source fallbacks.
 Stage 32 preserves declaration owners for rejected non-local object property annotations.
 Stage 33 aligns non-local const owners and method/lambda inferred-parent boundaries.
+Stage 34 uses return-type defaults and inherited property contexts for inferred parents.
 These checkpoints do not complete the language milestone.
+
+## Stage 34 local verification checkpoint
+
+Implementation `b63163dd1bd6376fbbe400fc38611b5495629643` is committed and pushed.
+The [final summary](stage34-final-summary.json) and
+[raw evidence archive](stage34-final-evidence.tar.gz) record this bounded checkpoint.
+Core implementation used `gpt-6-astra / xhigh`; Java comparison and independent
+review each used `gpt-6.1-sol / high`. Verification ran locally on macOS arm64.
+
+Contextual `new {}` now uses declared method return-type defaults, including
+class, Listing, Mapping, alias, nullable and default-union cases. Literal
+`unknown` remains distinct from `Any` and aliases to unknown. Inherited class
+prototypes use declared type defaults, while instance amendments read prototype
+initializers. Generated default source locations, first-error selection and VM
+cleanup preserve the checked Java behavior.
+
+The complete selected corpus has **3,197 raw matches out of 3,201 cases**:
+three mismatches and one cycle oracle error remain. All 88 metamorphic relations
+and 2,622 persistent class/alias calls pass. The 79 additions contain 46 Java
+successes and 33 expected errors. They improve from 16 to 77 raw matches,
+repairing 61 cases with no baseline-pass regressions. The same final native
+artifact also matches seven selected API expressions against the original
+upstream `newInsideLet.pkl`; this does not complete its original snippet renderer
+contract.
+
+Node and Chromium each execute all 79 additions twice: 77 matching cases and
+two mismatching cases per target. The two original `Dynamic.toString()` cases
+remain selected and failed; separate type controls do not replace them. After
+parent inference is fixed, their first error advances from a Listing/Dynamic
+type mismatch to missing `toString`. Both old and new raw errors are preserved.
+The portable comparison exits 1. No new development exception was added, so the
+language development, strict subset and full completion gates fail. The full
+gate reports 1,952 failure reasons. The inventory retains 474 requirements,
+16 partial mappings and 4,201 overlapping accounting rows: 3,201 ready,
+960 unimplemented and 40 unmapped. These counts are not completion percentages.
+
+Seven required local checks pass with **473 distinct Rust tests and 200 Python
+tests**. The Rust log has 486 passes including 13 isolated child repetitions,
+plus one ignored test. Six new native tests cover parent inference, boundaries,
+first errors, prototype/instance behavior, default origins and Host/GC/retry/
+cancel/close behavior. Existing Node/browser development checks pass 92 scenarios
+per target; the two existing Java regex differences remain failed compatibility
+comparisons. M1 frontend comparisons pass 15/15; runtime comparisons match 8/9,
+and lifecycle protocol success retains its full diagnostic differences.
+
+The [independent audit](stage34-independent-audit.json) binds recorded sources
+and artifacts to the implementation and checks raw outcomes. The archive includes
+final suites, Java origins, intermediate failures and the first incomplete
+validation/language runs, which were interrupted to correct diagnostic differences.
+Initial audit assertion assumptions are retained alongside their corrected
+results. The Cargo build cache is excluded before traversal, as recorded in the
+[archive identity](stage34-archive.json). Java-only prototype trace sequences are
+observations, not evidence of Rust trace equivalence.
+
+**M2 remains in progress.** All nine workstreams retain completion conditions,
+including annotation/module initialization, remaining type/collection/Reference
+semantics, complete diagnostics and original upstream execution. Local checks do
+not establish release-platform coverage, public API completeness, execution-time
+parity or peak-RSS parity.
 
 ## Stage 33 local verification checkpoint
 

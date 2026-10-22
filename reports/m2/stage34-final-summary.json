@@ -1,0 +1,344 @@
+{
+  "schema": 1,
+  "scope": "Stage 34 bounded method and property parent inference; M2 remains in progress.",
+  "implementation_commit": "b63163dd1bd6376fbbe400fc38611b5495629643",
+  "baseline_commit": "ba9f451003d3e463e0de82138b5efb8e17aabc24",
+  "allocation": {
+    "core": "gpt-6-astra / xhigh",
+    "java_oracle": "gpt-6.1-sol / high",
+    "independent_review": "gpt-6.1-sol / high",
+    "root": "Integration, final local checks, reports, commits and push."
+  },
+  "changes": [
+    "Use method return type defaults for contextual new expressions, preserving Java expression boundaries.",
+    "Distinguish literal unknown from Any and aliases to unknown.",
+    "Use declared type defaults in inherited prototypes and prototype initializers in instance amendments.",
+    "Preserve generated default source locations, first errors, VM cleanup and diagnostic frame boundaries.",
+    "Retain both failing Dynamic.toString inputs and execute all 79 cases twice on each portable target."
+  ],
+  "environment": {
+    "platform": "macOS-27.0-arm64-arm-64bit-Mach-O",
+    "verification": "Local macOS only; no hosted CI or release-platform claim."
+  },
+  "validation": {
+    "required_checks_passed": true,
+    "required_checks": 7,
+    "toolchain_metadata_commands": 1,
+    "rust_distinct_passes": 473,
+    "rust_harness_passes_including_child_replays": 486,
+    "rust_child_replays": 13,
+    "rust_ignored": 1,
+    "python_passes": 200
+  },
+  "language": {
+    "selected": 3201,
+    "status_counts": {
+      "mismatch": 3,
+      "oracle-error": 1,
+      "pass": 3197
+    },
+    "failures": [
+      {
+        "id": "error-cycle",
+        "status": "oracle-error"
+      },
+      {
+        "id": "error-remainder-zero",
+        "status": "mismatch"
+      },
+      {
+        "id": "method-parent-stage34-generic-unknown-alias-element",
+        "status": "mismatch"
+      },
+      {
+        "id": "method-parent-stage34-listing-unknown-element",
+        "status": "mismatch"
+      }
+    ],
+    "metamorphic_relations": 88,
+    "metamorphic_passes": 88,
+    "inventory": {
+      "cases": 4201,
+      "cases_by_execution": {
+        "ready": 3201,
+        "unimplemented": 960,
+        "unmapped": 40
+      },
+      "requirements": 474,
+      "requirements_by_kind": {
+        "language_parser": 137,
+        "language_token": 109,
+        "semantic-family": 30,
+        "specification": 198
+      }
+    },
+    "inventory_is_completion_percentage": false,
+    "full_gate_failure_reasons": 1952,
+    "source_stability": true,
+    "artifact_stability": true,
+    "candidate": {
+      "build": {
+        "command": [
+          "cargo",
+          "build",
+          "-p",
+          "pkl-runtime",
+          "--example",
+          "language_probe",
+          "--locked",
+          "--release",
+          "--target-dir",
+          "/Users/cody.ij.hwang/Projects/pkl-rs/target"
+        ],
+        "exit_code": 0,
+        "stderr_sha256": "47c2374f1eac70083fb78fec982ac6781112b4dd51953a3fc398a0fd0f7ba633",
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "timed_out": false
+      },
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/release/examples/language_probe",
+      "sha256": "216a74e1344c3341cc017a0a567da15da3e9483e20b0fa19dfa392ed4ecf53a8",
+      "source_binding": "recorded-build"
+    }
+  },
+  "focused_selection": {
+    "cases": 79,
+    "java_expected_successes": 46,
+    "java_expected_errors": 33,
+    "baseline_matches": 16,
+    "final_matches": 77,
+    "new_matches": 61,
+    "baseline_pass_regressions": 0,
+    "failure_evolution": [
+      {
+        "id": "method-parent-stage34-generic-unknown-alias-element",
+        "baseline_raw_unchanged": false,
+        "baseline_stderr_sha256": "41c1347b8e5aa2ba1d5bc050d4add48ad99ed4f682a8174e34fb28e820cf5e47",
+        "final_stderr_sha256": "5eae5a6504405ef9041856ca178f7221b0a8b8acd79a42371f67c1cf41149d34",
+        "observation": "Parent inference now reaches missing member toString; original earlier Listing/Dynamic type error remains preserved in baseline captures."
+      },
+      {
+        "id": "method-parent-stage34-listing-unknown-element",
+        "baseline_raw_unchanged": false,
+        "baseline_stderr_sha256": "f267714969ab0fea5c61a797b247bfb5b87e0cb75171c5c74f10bcf7e6b77c17",
+        "final_stderr_sha256": "70887433b0eb30fadc3d90f84099cde7ae750b873dd56098ce276c748211d376",
+        "observation": "Parent inference now reaches missing member toString; original earlier Listing/Dynamic type error remains preserved in baseline captures."
+      }
+    ]
+  },
+  "portable": {
+    "status": "failed",
+    "targets": {
+      "node": {
+        "complete": true,
+        "executions": 158,
+        "passingExecutions": 154,
+        "mismatchingExecutions": 4,
+        "passingCases": 77,
+        "mismatchingCases": 2,
+        "mismatchIds": [
+          "method-parent-stage34-generic-unknown-alias-element",
+          "method-parent-stage34-listing-unknown-element"
+        ]
+      },
+      "browser": {
+        "complete": true,
+        "executions": 158,
+        "passingExecutions": 154,
+        "mismatchingExecutions": 4,
+        "passingCases": 77,
+        "mismatchingCases": 2,
+        "mismatchIds": [
+          "method-parent-stage34-generic-unknown-alias-element",
+          "method-parent-stage34-listing-unknown-element"
+        ]
+      }
+    },
+    "execution_exit_code": 1,
+    "new_development_exceptions": 0,
+    "browser_errors": [],
+    "infrastructure_errors": []
+  },
+  "standard_platforms": {
+    "total": 6078,
+    "oracle_passed": {
+      "rust": 6076,
+      "node": 6076,
+      "browser": 6076
+    },
+    "shared_engine_passed": 6078,
+    "compatibility_status": "fail",
+    "experiment_contract_status": "pass",
+    "known_gaps": [
+      "regex-unicode-15-vs-16",
+      "regex-zero-width-supplementary"
+    ]
+  },
+  "class_lifecycle": {
+    "sequences_with_repetition": 302,
+    "raw_compared_calls": 2622,
+    "mismatching_calls": 0,
+    "full_compatibility_claimed": false
+  },
+  "upstream": {
+    "api_expressions": 7,
+    "raw_matches": 7,
+    "original_snippet_renderer_contract_complete": false
+  },
+  "regressions": {
+    "frontend_matches": 15,
+    "frontend_cases": 15,
+    "runtime_matches": 8,
+    "runtime_cases": 9,
+    "runtime_remaining": "forcing-cycle diagnostic mismatch",
+    "lifecycle": "Retry/reentry protocol matches; full diagnostic payload differences remain.",
+    "java_only_trace_observations": "Prototype-default trace/retry captures do not establish Rust trace equivalence."
+  },
+  "gates": {
+    "report": 0,
+    "development": 1,
+    "subset": 1,
+    "full": 1
+  },
+  "gate_interpretation": "Integrity passes; development, strict subset and full compatibility gates fail. No new exceptions.",
+  "evidence": {
+    "language": {
+      "path": "target/m2/language-stage34-final-02/report.json",
+      "sha256": "6da32eab8ce6d487114bd02019005e713a889208f90f125c84fdc70cefdfbf02"
+    },
+    "validation": {
+      "path": "target/m2/validation-stage34-final-02/report.json",
+      "sha256": "e5f4fb39e6a88c3213197bb4f00cefa9ab852eeaafdb9dd884ed25b641c474d0"
+    },
+    "class_lifecycle": {
+      "path": "target/m2/class-lifecycle-stage34-final-01/report.json",
+      "sha256": "099e91aff78a59cddace42a59f8a63f1c04b1419368d1313dc6c7f4323742e70"
+    },
+    "platforms": {
+      "path": "target/m2/platforms-stage34-final-01/report.json",
+      "sha256": "73cd4277776436fbd4dfa5352434429cac6b9b330740d7036604143dcb50fba1"
+    },
+    "method_platforms": {
+      "path": "target/m2/method-parents-platform-stage34-final-01/execution.json",
+      "sha256": "f12fdb0e7d775152ae405db3d3a1f650566e8f8e1cc6736ba1eb9472d00c9fb6"
+    },
+    "focused": {
+      "path": "target/m2/focused-stage34-final-01/report.json",
+      "sha256": "67110bd12c00a750990db1b8cfd49c26d53cef03c285b3799c90407681107abd"
+    },
+    "upstream": {
+      "path": "target/m2/upstream-stage34-final-01/report.json",
+      "sha256": "ba1ee65d6d2f11e4cf2d6da6959908a27cbb0e428a7a40391cca0bab56732d28"
+    },
+    "frontend": {
+      "path": "target/m2/frontend-stage34-final-01/report.json",
+      "sha256": "3974cbbbe11b3c7b12cae3983ae4522db1c55de2ac8652867087dd56c0a34aca"
+    },
+    "runtime": {
+      "path": "target/m2/runtime-stage34-final-01/report.json",
+      "sha256": "34df97cd7822a0da41fd21832383358b9996e417d08eb1f8bb5785cff25038be"
+    },
+    "lifecycle": {
+      "path": "target/m2/lifecycle-stage34-final-01/report.json",
+      "sha256": "1f5a708bdb7b6d02f3ec13a53d59568847a4815a62cbad64b7f3b4efbf554fd8"
+    },
+    "gates": {
+      "path": "target/m2/gates-stage34-final-01/report.json",
+      "sha256": "6b1ff9da8f0ab1fabaddb09778524e734045f572e318fd43c52b2b5c92c53bfe"
+    },
+    "audit": {
+      "path": "target/m2/stage34-independent-audit-01/report-verified-current.json",
+      "sha256": "f5cc0bbd622ef37e696410732d67693913f4ef5759a7c49f37b71ab0fa197c3d"
+    },
+    "full_language_audit": {
+      "path": "target/m2/stage34-independent-audit-01/full-language-audit.json",
+      "sha256": "696228789a2aefb513ad97b504e6e90292ac3afeaa45276c656e8f9e6966029a"
+    }
+  },
+  "archive": {
+    "schema": 1,
+    "scope": "Original current-stage files, including failed and incomplete observations.",
+    "implementation_commit": "b63163dd1bd6376fbbe400fc38611b5495629643",
+    "roots": [
+      "target/m2/class-lifecycle-stage34-final-01",
+      "target/m2/class-lifecycle-stage34-final-01.log",
+      "target/m2/focused-stage34-final-01",
+      "target/m2/frontend-stage34-final-01",
+      "target/m2/frontend-stage34-final-01.log",
+      "target/m2/gates-stage34-final-01",
+      "target/m2/language-stage34-final-01",
+      "target/m2/language-stage34-final-01.log",
+      "target/m2/language-stage34-final-02",
+      "target/m2/language-stage34-final-02.log",
+      "target/m2/lifecycle-stage34-final-01",
+      "target/m2/lifecycle-stage34-final-01.log",
+      "target/m2/method-parents-platform-stage34-final-01",
+      "target/m2/method-parents-platform-stage34-final-01.log",
+      "target/m2/platforms-stage34-final-01",
+      "target/m2/platforms-stage34-final-01.log",
+      "target/m2/runtime-stage34-final-01",
+      "target/m2/runtime-stage34-final-01.log",
+      "target/m2/stage34-core-intermediate-outcomes.json",
+      "target/m2/stage34-core-native-tests-02",
+      "target/m2/stage34-core-origins-01",
+      "target/m2/stage34-core-runtime-tests-01",
+      "target/m2/stage34-core-selected-01",
+      "target/m2/stage34-core-selected-02",
+      "target/m2/stage34-core-selected-03",
+      "target/m2/stage34-core-selected-04",
+      "target/m2/stage34-dynamic-tostring-oracle-01",
+      "target/m2/stage34-independent-audit-01",
+      "target/m2/stage34-oracle-capture-audit-01",
+      "target/m2/stage34-oracle-matrix-01",
+      "target/m2/stage34-oracle-matrix-02",
+      "target/m2/stage34-oracle-matrix-03",
+      "target/m2/stage34-oracle-matrix-04",
+      "target/m2/stage34-property-default-sequence-oracle-01",
+      "target/m2/stage34-property-default-sequence-oracle-02",
+      "target/m2/stage34-property-default-sequence-oracle-03",
+      "target/m2/stage34-property-guards-capture-audit-01",
+      "target/m2/stage34-property-guards-oracle-01",
+      "target/m2/stage34-property-origin-oracle-01",
+      "target/m2/stage34-property-selected-oracle-01",
+      "target/m2/stage34-property-selected-rows.json",
+      "target/m2/stage34-property-selection-capture-audit-01",
+      "target/m2/stage34-selected-oracle-01",
+      "target/m2/stage34-selected-rows-final.json",
+      "target/m2/stage34-selected-rows.json",
+      "target/m2/stage34-supplemental-capture-audit-01",
+      "target/m2/stage34-supplemental-oracle-01",
+      "target/m2/stage34-supplemental-rows.json",
+      "target/m2/stage34-tools",
+      "target/m2/stage34-upstream-new-inside-let-01",
+      "target/m2/upstream-stage34-final-01",
+      "target/m2/validation-stage34-final-01",
+      "target/m2/validation-stage34-final-02"
+    ],
+    "exclusions": [
+      {
+        "path": "target/m2/stage34-core-cargo",
+        "reason": "Cargo build cache; excluded before traversal."
+      }
+    ],
+    "original_files": 69262,
+    "original_bytes": 273555179,
+    "archive": "reports/m2/stage34-final-evidence.tar.gz",
+    "archive_bytes": 61159368,
+    "archive_sha256": "abaf6ba62eab9b56f7a492b4e5a7b5075b0716842a4cf6fd0b99fe910763a5c7",
+    "inventory_files": 69263
+  },
+  "preserved_failures": [
+    "Initial validation and language acquisitions deliberately interrupted (exit 143) for diagnostic corrections; incomplete, not passes.",
+    "Intermediate core test failures and initial selection outcome-label correction retained.",
+    "Initial independent audit assumptions about child-test counts and unchanged baseline failure bytes corrected; original reports retained.",
+    "The same two selected Dynamic.toString cases remain mismatches; their first error changes from Listing/Dynamic typing to missing toString after parent inference is fixed."
+  ],
+  "known_unverified_scope": [
+    "Whole language corpus and all 9 M2 workstreams remain incomplete; 16 reviewed mappings remain partial.",
+    "Complete annotation/module initialization, modifiers, recursive types, constraints, collection and Reference metadata.",
+    "Complete diagnostic/error-order/stack behavior, overflow frames, unavailable source sections and original upstream snippets.",
+    "M3 builtins/renderers and M4 module/resource loading dependencies, public APIs and full platform coverage.",
+    "Execution-time and peak-RSS parity; no new performance measurement was made."
+  ],
+  "compatibility_complete": false,
+  "performance_targets_established": false
+}
