@@ -1,0 +1,191 @@
+{
+  "scope": "Closed Stage37 publication and independent archive/Git-source audit records.",
+  "implementation_commit": "646cf78a9b3775bf25e63e09146856c34225665e",
+  "compatibility_complete": false,
+  "source_binding_passed": true,
+  "distinct_committed_paths": 4113,
+  "original_files": 42,
+  "archive_files": 44,
+  "processes": {
+    "git-add": {
+      "command": [
+        "git",
+        "add",
+        "--",
+        "PLAN.md",
+        "compatibility",
+        "crates",
+        "docs/m2-language.md",
+        "docs/m2-tracing.md",
+        "reports/m2/README.md",
+        "tests/fixtures/m2",
+        "tests/fixtures/m2-trace",
+        "tools",
+        "reports/m2/stage37-final-evidence.tar.gz",
+        "reports/m2/stage37-final-summary.json",
+        "reports/m2/stage37-origins-evidence.tar.gz",
+        "reports/m2/stage37-origins-summary.json"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs",
+      "started_epoch": 1792698392.231549,
+      "elapsed_seconds": 2.3587281703948975,
+      "exit_code": 0,
+      "stdout.bin": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0
+      },
+      "stderr.bin": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0
+      }
+    },
+    "implementation-commit": {
+      "command": [
+        "git",
+        "commit",
+        "-m",
+        "feat(runtime): add trace logging and admitted source-session initialization"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs",
+      "started_epoch": 1792698408.6913018,
+      "elapsed_seconds": 0.20626115798950195,
+      "exit_code": 0,
+      "stdout.bin": {
+        "sha256": "6d6c88f8719e8a1b6f9e6ed1d74f6dff9c12591958afbc31dade168ff0885020",
+        "bytes": 7318
+      },
+      "stderr.bin": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0
+      }
+    },
+    "implementation-push": {
+      "command": [
+        "git",
+        "push",
+        "origin",
+        "main"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs",
+      "started_epoch": 1792698412.614657,
+      "elapsed_seconds": 23.695441007614136,
+      "exit_code": 0,
+      "stdout.bin": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0
+      },
+      "stderr.bin": {
+        "sha256": "09cd3361d3cb2513adbfae8170c6a0ab95c4688ddc076c709d987558059e9e4a",
+        "bytes": 426
+      }
+    },
+    "implementation-remote": {
+      "command": [
+        "git",
+        "ls-remote",
+        "origin",
+        "refs/heads/main"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs",
+      "started_epoch": 1792698457.097483,
+      "elapsed_seconds": 2.2005720138549805,
+      "exit_code": 0,
+      "stdout.bin": {
+        "sha256": "bf0d1dec9e1cc65e729ff58e633aac50f0885b5b54aba1b59d7b1f068b62d238",
+        "bytes": 57
+      },
+      "stderr.bin": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0
+      }
+    },
+    "source-binding": {
+      "command": [
+        "python3",
+        "target/m2/closeout-stage37-01/bind_sources.py",
+        "--commit",
+        "HEAD",
+        "--output",
+        "target/m2/closeout-stage37-01/committed"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs",
+      "started_epoch": 1792698422.7649019,
+      "elapsed_seconds": 3.802593946456909,
+      "exit_code": 0,
+      "stdout.bin": {
+        "sha256": "3eefe52aac1c1f1026af34d7c8ac2ad89b1ee5744141e44cc235179a888e8662",
+        "bytes": 677
+      },
+      "stderr.bin": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0
+      }
+    },
+    "staged-whitespace": {
+      "command": [
+        "git",
+        "diff",
+        "--cached",
+        "--check",
+        "--",
+        ".",
+        ":!tests/fixtures/m2",
+        ":!tests/fixtures/m2-trace"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs",
+      "started_epoch": 1792698402.525554,
+      "elapsed_seconds": 0.09767508506774902,
+      "exit_code": 0,
+      "stdout.bin": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0
+      },
+      "stderr.bin": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0
+      }
+    }
+  },
+  "direct_dependencies": [
+    {
+      "path": "reports/m2/stage37-final-evidence.tar.gz",
+      "sha256": "224fca08f6fca7e6edb4b3c7a14712c2612e6726a16e23c556abdbbefb841ae5",
+      "bytes": 26860767
+    },
+    {
+      "path": "reports/m2/stage37-final-summary.json",
+      "sha256": "6bb9343f146706d0fd101d0b5e613be1e3791e65adfd80ed13da5c6cf6de7a71",
+      "bytes": 124885
+    },
+    {
+      "path": "reports/m2/stage37-origins-evidence.tar.gz",
+      "sha256": "74f113cec433fa02aeef62a0b8abe90ca6db869974b8a27499313362190b4c2f",
+      "bytes": 54123496
+    },
+    {
+      "path": "reports/m2/stage37-origins-summary.json",
+      "sha256": "9200127aa61fb0851e3b4311d3fc2778768bc83b959ba0982ec3a07d8ce27689",
+      "bytes": 832
+    },
+    {
+      "path": "reports/m2/stage37-source-binding.json",
+      "sha256": "e095b6ec3d7444c579b97327f0d0f58b65223e09a6f1f5b4e27b872b112be90c",
+      "bytes": 1178397
+    }
+  ],
+  "independent_audit": {
+    "path": "target/m2/closeout-stage37-independent-audit-01/report.json",
+    "sha256": "c6d81c12559f9ff25789be684e8e2a6c8bb073ae92a179a9d5b139c1a50bf1c8",
+    "bytes": 1282
+  },
+  "independent_audit_closure": {
+    "path": "target/m2/closeout-stage37-independent-audit-01/closure.json",
+    "sha256": "9637af3c6093c3c675e333b0ea7af1dec43d3d01135cdf2d18bc9fb5c095b71e",
+    "bytes": 2003
+  },
+  "archive": {
+    "path": "reports/m2/stage37-completion-evidence.tar.gz",
+    "sha256": "a2fc8b361d8e6220f1d7519e4984317edf518368b6e0cd44d34a7270ec7000ca",
+    "bytes": 2601469
+  }
+}

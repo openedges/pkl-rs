@@ -522,6 +522,8 @@ Annotation·Deprecated·Since·Unlisted·AlsoKnownAs·DocExample·SourceCode의 
 
 ### Stage 37 — trace·logger와 초기화 수명주기
 
+구현과 최종 검증 자료는 `646cf78a9b3775bf25e63e09146856c34225665e`에 커밋·푸시했습니다. [소스 연결 검증](reports/m2/stage37-source-binding.json)은 최종 검사·native·Node·Chromium 취득의 서로 다른 소스 경로 4,113개를 이 커밋의 정확한 Git blob과 대조합니다. 별도 검사 실행 helper는 원본 증거로 보존하며 Git 소스 개수에 넣지 않습니다. [완료 기록](reports/m2/stage37-completion-captures.json)에 증거 보관·독립 감사·커밋·푸시·원격 확인을 연결했습니다.
+
 [공통 trace 경로](docs/m2-tracing.md)를 구현하고 메인 작업 트리에 통합했습니다. operand를 한 번 평가한 뒤 공통 force·renderer를 실행하고 원래 값을 반환하며, COMPACT/PRETTY 메시지·operand 위치·UTF-16 원문을 보존합니다. 기본 noop logger도 force와 frame 구성을 생략하지 않고, Host frame transformer가 있으면 이벤트를 전달합니다. read/log 요청과 완료 토큰을 구분하고 콜백 재진입·캐시·GC·취소를 같은 VM에서 처리합니다. 긴 원본 로그 입력을 실행하기 위해 `String.repeat`와 UInt 오류 순서도 연결했습니다.
 
 독립 Java 관측에서 초기화 중 logger가 evaluator를 닫아도 이미 시작한 첫 표현식은 완료됨을 확인했습니다. 초기화와 첫 path를 별도 요청으로 처리하던 구현을 수정하여 하나의 Host context·deadline으로 이어갑니다. 이후 새 호출과 재진입은 종료 상태를 그대로 검사합니다. 성공한 module receiver는 GC root로 유지하고, 초기화 오류와 일반 속성 오류를 구분합니다. Host 전체의 timeout·cancel은 캐시된 초기화 언어 오류로 바꾸지 않습니다. native·Wasm·N-API는 같은 source session과 UTF-16 이벤트 transport를 사용합니다.

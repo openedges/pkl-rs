@@ -50,6 +50,15 @@ These checkpoints do not complete the language milestone.
 
 ## Stage 37 local verification checkpoint
 
+Implementation and final acquisitions are committed and pushed as
+`646cf78a9b3775bf25e63e09146856c34225665e`. The
+[source binding](stage37-source-binding.json) verifies 4,113 distinct source paths
+from final checks and native/Node/Chromium acquisitions against exact Git blobs.
+The captured check helper is retained separately rather than counted as a
+committed production source. [Completion captures](stage37-completion-captures.json)
+retain independent archive/source audits and the implementation commit, push and
+remote verification records.
+
 The shared runtime now connects trace evaluation, source-frame construction,
 UTF-16 logger transport, and callback completion. Fresh source-path evaluation
 keeps module initialization and the first path within one admitted Host context
