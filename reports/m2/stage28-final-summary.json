@@ -1,0 +1,855 @@
+{
+  "schema": 1,
+  "status": "ready",
+  "utc": "2026-10-22T08:05:11.900475+00:00",
+  "implementation_commit": "370a668a8534ae42f4fc2a24ae62977df08779c2",
+  "completed_suites": {
+    "language": {
+      "selected_count": 2925,
+      "status_counts": {
+        "mismatch": 1,
+        "oracle-error": 1,
+        "pass": 2923
+      },
+      "inventory_counts": {
+        "cases": 3925,
+        "cases_by_execution": {
+          "ready": 2925,
+          "unimplemented": 960,
+          "unmapped": 40
+        },
+        "requirements": 474,
+        "requirements_by_kind": {
+          "language_parser": 137,
+          "language_token": 109,
+          "semantic-family": 30,
+          "specification": 198
+        }
+      },
+      "metamorphic_relations": 88,
+      "metamorphic_passed": 88,
+      "full_gate_failure_count": 1950,
+      "candidate": {
+        "build": {
+          "command": [
+            "cargo",
+            "build",
+            "-p",
+            "pkl-runtime",
+            "--example",
+            "language_probe",
+            "--locked",
+            "--release",
+            "--target-dir",
+            "/Users/cody.ij.hwang/Projects/pkl-rs/target"
+          ],
+          "exit_code": 0,
+          "stderr_sha256": "f8fe1e29ef4f994a1725ea7303e135b336c2e17c0af5e066489481f1a2358bf3",
+          "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "timed_out": false
+        },
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/release/examples/language_probe",
+        "sha256": "e7e17f1ee00c9238bcceb54744d42c6142f47889bad9b90d77384dada0f013ee",
+        "source_binding": "recorded-build"
+      }
+    },
+    "validation": {
+      "rust_passed": 445,
+      "rust_harness_passed": 458,
+      "rust_isolated_child_duplicate_passed": 13,
+      "rust_isolated_child_tests": [
+        "authored_chains_parse_clone_resolve_compile_and_drop_on_small_stack",
+        "authored_power_assertion_compiler_and_cleanup_use_small_stack",
+        "authored_partial_parse_resolve_and_compile_errors_release_on_small_stack",
+        "authored_scope_type_and_shared_work_guards_release_on_small_stack",
+        "authored_frontend_program_survives_host_reentry_retry_cancel_and_terminal_release",
+        "nested_lexical_accepted_near_guard_traverses_frontend_on_small_stack",
+        "original_nested_lexical_64_rejects_without_aborting_small_stack",
+        "nested_lexical_partial_errors_and_shared_work_guard_release_small_stack",
+        "nested_lexical_host_reentry_read_failure_retry_cancel_and_terminal_cleanup",
+        "nested_lexical_error_priority_spans_and_eof_cleanup_on_small_stack",
+        "malformed_multiline_diagnostic_spans_and_guard_cleanup_on_small_stack",
+        "unicode_semantic_priority_and_nested_cleanup_on_small_stack",
+        "unicode_lexical_boundaries_byte_spans_and_guard_cleanup_on_small_stack"
+      ],
+      "rust_intentionally_ignored": 1,
+      "python_passed": 198,
+      "required_commands": 7
+    },
+    "platforms": {
+      "total": 6078,
+      "shared_engine_passed": 6078,
+      "oracle_passed": {
+        "rust": 6076,
+        "node": 6076,
+        "browser": 6076
+      },
+      "node_scenarios": 87,
+      "browser_scenarios": 87,
+      "known_gaps": [
+        "regex-unicode-15-vs-16",
+        "regex-zero-width-supplementary"
+      ]
+    },
+    "frontend": {
+      "cases": 15,
+      "passed": 15
+    },
+    "runtime": {
+      "status_counts": {
+        "bounded-value-bytes-match": 6,
+        "diagnostic-bytes-match": 2,
+        "diagnostic-byte-mismatch": 1
+      },
+      "compatibility_complete": false
+    },
+    "lifecycle": {
+      "cases": 2,
+      "compatibility_complete": false,
+      "limitations": [
+        "protocol bytes are not full Java diagnostics or public API compatibility",
+        "Java parses the Pkl fixtures; Rust uses explicit bytecode translations checked against exact fixture bytes, not frontend read(...) lowering",
+        "reentry uses a prewarmed resource: a new nested Java resource read inside an outer read can raise ConcurrentModificationException; that unsupported upstream edge is outside this successful protocol",
+        "native bounded VM/Host only; not browser/Node lifecycle parity",
+        "no performance or long-session memory claim"
+      ]
+    },
+    "class-lifecycle": {
+      "unique_sequences": 151,
+      "executions": 302,
+      "comparisons": 2622,
+      "unexecuted_groups": [
+        {
+          "group": "P09",
+          "reason": "Java-only module-cache probe stage12-java-module-identity-01 observes same URI/source identity retained, changed source at same URI ignored (marker remains1), distinct URI/evaluator identity separated. Rust multi-source module-cache parity is unimplemented; same-module identity is compared."
+        },
+        {
+          "group": "P10",
+          "reason": "Java observable sequence comparisons do not expose heap counts; Rust architectural GC coverage is separate."
+        },
+        {
+          "group": "P11",
+          "reason": "Real Java class-initialization read observed via @Deprecated { ...(read(\"life:class\")) } in stage12-java-host-path-01; Rust annotation frontend unsupported, so actual Host-in-class cross-language reentry remains unexecuted. Internal scheduler tests are separate."
+        },
+        {
+          "group": "P12",
+          "reason": "Terminal context/token/heap cleanup is covered by separate Rust lifecycle tests, not Java raw-byte equivalence."
+        },
+        {
+          "group": "P05",
+          "reason": "Indirect cyclic hierarchy property traversal new A {}.missing timed out after successful class identity calls in stage12-java-observations-03; traversal is observed oracle-timeout, not a compatibility pass."
+        }
+      ]
+    },
+    "native-frontend": {
+      "passed": 2,
+      "source_stability": true,
+      "conditions": {
+        "expected_top_level_tests": 2,
+        "expected_child_completion_markers": 2,
+        "expected_harness_passes_including_child_repeats": 4,
+        "thread_stack_bytes": 262144,
+        "parent_deadline_seconds_per_test": 60,
+        "diagnostic_lexical_depths": [
+          24,
+          31
+        ],
+        "diagnostic_delimiters": [
+          "ordinary",
+          "hash",
+          "multiline"
+        ],
+        "guarded_lexical_depth": 64,
+        "guarded_delimiters": [
+          "ordinary",
+          "hash",
+          "multiline"
+        ],
+        "malformed_multiline_shapes": [
+          "missing-opening-newline",
+          "missing-closing-newline",
+          "incorrect-indentation"
+        ],
+        "entrypoints": [
+          "parse_expression",
+          "parse_module with completed deep sibling and Unicode prefix"
+        ],
+        "error_checks": "exact kind, complete message and byte spans; Unicode token semantic/lexical phases and multiline order; newline and zero-width true EOF distinguished",
+        "cleanup": "partial parse failure drops completed siblings and lexical frames on the same stack; errors are dropped before fresh successful depth31 parse/resolve/compile/eval/release",
+        "success_after_errors": "fresh evaluator for each recovery call; no retained-evaluator claim across setup errors",
+        "host_lifecycle": "existing Stage26/27 Host suspension/reentry/retry/GC/terminal tests remain separate and unchanged",
+        "known_limits": [
+          "Java accepts guarded depth64 inputs; retained bounded rejection remains a compatibility mismatch",
+          "No new Host lifecycle test or persistent sequence is claimed",
+          "Deep type/class/mixed-body compilation and arbitrary nesting remain separate requirements"
+        ]
+      }
+    }
+  },
+  "preservation": {
+    "baseline": "2822ecaae5316f7a49e8f81aa19a9db7879d61cb",
+    "original_selected": 2831,
+    "current_selected": 2925,
+    "added_ids": [
+      "string-stage28-ordinary-empty",
+      "string-stage28-ordinary-nonhex",
+      "string-stage28-ordinary-missing-brace",
+      "string-stage28-raw-one-empty",
+      "string-stage28-raw-two-nonhex",
+      "string-stage28-raw-two-missing-brace",
+      "string-stage28-raw-inactive",
+      "string-stage28-multiline-empty",
+      "string-stage28-hash-multiline-nonhex",
+      "string-stage28-multiline-missing-brace",
+      "string-stage28-numeric-zero",
+      "string-stage28-numeric-upper",
+      "string-stage28-numeric-leading-zero",
+      "string-stage28-numeric-seven-digit",
+      "string-stage28-numeric-overflow",
+      "string-stage28-bmp-letter",
+      "string-stage28-bmp-arabic-digit",
+      "string-stage28-bmp-fullwidth-hex",
+      "string-stage28-supplementary-letter",
+      "string-stage28-combining-mark",
+      "string-stage28-punctuation",
+      "string-stage28-space",
+      "string-stage28-quote",
+      "string-stage28-right-paren",
+      "string-stage28-emoji-span",
+      "string-stage28-cjk-span",
+      "string-stage28-tab-span",
+      "string-stage28-combining-span",
+      "string-stage28-nested-emoji-span",
+      "string-stage28-closed-before-text-later-escape",
+      "string-stage28-missing-brace-supplementary",
+      "string-stage28-closed-before-later-escape",
+      "string-stage28-closed-before-later-interpolation",
+      "string-stage28-syntax-before-closed",
+      "string-stage28-inner-closed-before-later-syntax",
+      "string-stage28-outer-syntax-before-closed",
+      "string-stage28-missing-brace-before-later-escape",
+      "string-stage28-unclosed-before-later-escape",
+      "string-stage28-multiline-opening-before-closed",
+      "string-stage28-multiline-closing-before-closed",
+      "string-stage28-multiline-indent-before-closed",
+      "string-stage28-multiline-closed-before-later-escape",
+      "string-stage28-multiline-closed-before-later-syntax",
+      "string-stage28-multiline-syntax-before-closed",
+      "string-stage28-multiline-opening-before-unclosed",
+      "string-stage28-multiline-indent-before-unclosed",
+      "string-stage28-raw-missing-brace-punctuation",
+      "string-stage28-scalar-supplementary",
+      "string-stage28-eof-u",
+      "string-stage28-eof-open",
+      "string-stage28-eof-digits",
+      "string-stage28-eof-closed",
+      "string-stage28-lf-open",
+      "string-stage28-crlf-open",
+      "string-stage28-missing-brace-lf",
+      "string-stage28-missing-brace-crlf",
+      "string-stage28-missing-brace-quote",
+      "string-stage28-closed-before-comment-eof",
+      "string-stage28-multiline-closed-before-eof",
+      "string-stage28-multiline-closed-before-comment-eof",
+      "string-stage28-second-line-span",
+      "string-stage28-closed-then-lf",
+      "string-stage28-closed-text-then-lf",
+      "string-stage28-closed-then-crlf",
+      "string-stage28-closed-text-then-crlf",
+      "string-stage28-multiline-then-comment-eof",
+      "string-stage28-multiline-then-comment-closed",
+      "string-stage28-multiline-then-ampersand",
+      "string-stage28-multiline-unicode-before-later-indent",
+      "string-stage28-multiline-early-indent-before-unicode",
+      "string-stage28-ordinary-then-comment-eof",
+      "string-stage28-ordinary-then-ampersand",
+      "string-stage28-multiline-lookahead-hash-bang",
+      "string-stage28-multiline-lookahead-hash-eof",
+      "string-stage28-multiline-lookahead-ordinary-bad-escape",
+      "string-stage28-multiline-lookahead-raw-bad-escape",
+      "string-stage28-multiline-lookahead-ordinary-unclosed",
+      "string-stage28-multiline-lookahead-raw-unclosed",
+      "string-stage28-multiline-lookahead-two-hash-eof",
+      "string-stage28-multiline-lookahead-two-hash-bang",
+      "string-stage28-multiline-lookahead-inactive-raw",
+      "string-stage28-ordinary-lookahead-hash-bang",
+      "string-stage28-platform-deep-ordinary-31",
+      "string-stage28-platform-deep-raw-31",
+      "string-stage28-platform-deep-multiline-24",
+      "string-stage28-recovery-ordinary",
+      "string-stage28-recovery-raw",
+      "string-stage28-recovery-multiline",
+      "string-stage28-deep-multiline-leaf-ordinary-24",
+      "string-stage28-deep-multiline-leaf-ordinary-31",
+      "string-stage28-deep-multiline-leaf-raw-24",
+      "string-stage28-deep-multiline-leaf-raw-31",
+      "string-stage28-deep-multiline-leaf-multiline-24",
+      "string-stage28-deep-multiline-leaf-multiline-31"
+    ],
+    "added_expected_outcomes": {
+      "failure": 83,
+      "success": 11
+    },
+    "original_sequences": 151,
+    "current_sequences": 151,
+    "original_platform_scenarios": 86,
+    "current_platform_scenarios": 87,
+    "original_fixture_and_native_test_bytes_unchanged": true,
+    "fixture_changes": [
+      "A\tcrates/pkl-runtime/tests/m2_unicode_diagnostic_lifecycle.rs",
+      "M\ttests/fixtures/m2/cases.json",
+      "A\ttests/fixtures/m2/string-stage28-bmp-arabic-digit.pkl",
+      "A\ttests/fixtures/m2/string-stage28-bmp-fullwidth-hex.pkl",
+      "A\ttests/fixtures/m2/string-stage28-bmp-letter.pkl",
+      "A\ttests/fixtures/m2/string-stage28-cjk-span.pkl",
+      "A\ttests/fixtures/m2/string-stage28-closed-before-comment-eof.pkl",
+      "A\ttests/fixtures/m2/string-stage28-closed-before-later-escape.pkl",
+      "A\ttests/fixtures/m2/string-stage28-closed-before-later-interpolation.pkl",
+      "A\ttests/fixtures/m2/string-stage28-closed-before-text-later-escape.pkl",
+      "A\ttests/fixtures/m2/string-stage28-closed-text-then-crlf.pkl",
+      "A\ttests/fixtures/m2/string-stage28-closed-text-then-lf.pkl",
+      "A\ttests/fixtures/m2/string-stage28-closed-then-crlf.pkl",
+      "A\ttests/fixtures/m2/string-stage28-closed-then-lf.pkl",
+      "A\ttests/fixtures/m2/string-stage28-combining-mark.pkl",
+      "A\ttests/fixtures/m2/string-stage28-combining-span.pkl",
+      "A\ttests/fixtures/m2/string-stage28-crlf-open.pkl",
+      "A\ttests/fixtures/m2/string-stage28-deep-multiline-leaf-multiline-24.pkl",
+      "A\ttests/fixtures/m2/string-stage28-deep-multiline-leaf-multiline-31.pkl",
+      "A\ttests/fixtures/m2/string-stage28-deep-multiline-leaf-ordinary-24.pkl",
+      "A\ttests/fixtures/m2/string-stage28-deep-multiline-leaf-ordinary-31.pkl",
+      "A\ttests/fixtures/m2/string-stage28-deep-multiline-leaf-raw-24.pkl",
+      "A\ttests/fixtures/m2/string-stage28-deep-multiline-leaf-raw-31.pkl",
+      "A\ttests/fixtures/m2/string-stage28-emoji-span.pkl",
+      "A\ttests/fixtures/m2/string-stage28-eof-closed.pkl",
+      "A\ttests/fixtures/m2/string-stage28-eof-digits.pkl",
+      "A\ttests/fixtures/m2/string-stage28-eof-open.pkl",
+      "A\ttests/fixtures/m2/string-stage28-eof-u.pkl",
+      "A\ttests/fixtures/m2/string-stage28-hash-multiline-nonhex.pkl",
+      "A\ttests/fixtures/m2/string-stage28-inner-closed-before-later-syntax.pkl",
+      "A\ttests/fixtures/m2/string-stage28-lf-open.pkl",
+      "A\ttests/fixtures/m2/string-stage28-missing-brace-before-later-escape.pkl",
+      "A\ttests/fixtures/m2/string-stage28-missing-brace-crlf.pkl",
+      "A\ttests/fixtures/m2/string-stage28-missing-brace-lf.pkl",
+      "A\ttests/fixtures/m2/string-stage28-missing-brace-quote.pkl",
+      "A\ttests/fixtures/m2/string-stage28-missing-brace-supplementary.pkl",
+      "A\ttests/fixtures/m2/string-stage28-multiline-closed-before-comment-eof.pkl",
+      "A\ttests/fixtures/m2/string-stage28-multiline-closed-before-eof.pkl",
+      "A\ttests/fixtures/m2/string-stage28-multiline-closed-before-later-escape.pkl",
+      "A\ttests/fixtures/m2/string-stage28-multiline-closed-before-later-syntax.pkl",
+      "A\ttests/fixtures/m2/string-stage28-multiline-closing-before-closed.pkl",
+      "A\ttests/fixtures/m2/string-stage28-multiline-early-indent-before-unicode.pkl",
+      "A\ttests/fixtures/m2/string-stage28-multiline-empty.pkl",
+      "A\ttests/fixtures/m2/string-stage28-multiline-indent-before-closed.pkl",
+      "A\ttests/fixtures/m2/string-stage28-multiline-indent-before-unclosed.pkl",
+      "A\ttests/fixtures/m2/string-stage28-multiline-lookahead-hash-bang.pkl",
+      "A\ttests/fixtures/m2/string-stage28-multiline-lookahead-hash-eof.pkl",
+      "A\ttests/fixtures/m2/string-stage28-multiline-lookahead-inactive-raw.pkl",
+      "A\ttests/fixtures/m2/string-stage28-multiline-lookahead-ordinary-bad-escape.pkl",
+      "A\ttests/fixtures/m2/string-stage28-multiline-lookahead-ordinary-unclosed.pkl",
+      "A\ttests/fixtures/m2/string-stage28-multiline-lookahead-raw-bad-escape.pkl",
+      "A\ttests/fixtures/m2/string-stage28-multiline-lookahead-raw-unclosed.pkl",
+      "A\ttests/fixtures/m2/string-stage28-multiline-lookahead-two-hash-bang.pkl",
+      "A\ttests/fixtures/m2/string-stage28-multiline-lookahead-two-hash-eof.pkl",
+      "A\ttests/fixtures/m2/string-stage28-multiline-missing-brace.pkl",
+      "A\ttests/fixtures/m2/string-stage28-multiline-opening-before-closed.pkl",
+      "A\ttests/fixtures/m2/string-stage28-multiline-opening-before-unclosed.pkl",
+      "A\ttests/fixtures/m2/string-stage28-multiline-syntax-before-closed.pkl",
+      "A\ttests/fixtures/m2/string-stage28-multiline-then-ampersand.pkl",
+      "A\ttests/fixtures/m2/string-stage28-multiline-then-comment-closed.pkl",
+      "A\ttests/fixtures/m2/string-stage28-multiline-then-comment-eof.pkl",
+      "A\ttests/fixtures/m2/string-stage28-multiline-unicode-before-later-indent.pkl",
+      "A\ttests/fixtures/m2/string-stage28-nested-emoji-span.pkl",
+      "A\ttests/fixtures/m2/string-stage28-numeric-leading-zero.pkl",
+      "A\ttests/fixtures/m2/string-stage28-numeric-overflow.pkl",
+      "A\ttests/fixtures/m2/string-stage28-numeric-seven-digit.pkl",
+      "A\ttests/fixtures/m2/string-stage28-numeric-upper.pkl",
+      "A\ttests/fixtures/m2/string-stage28-numeric-zero.pkl",
+      "A\ttests/fixtures/m2/string-stage28-ordinary-empty.pkl",
+      "A\ttests/fixtures/m2/string-stage28-ordinary-lookahead-hash-bang.pkl",
+      "A\ttests/fixtures/m2/string-stage28-ordinary-missing-brace.pkl",
+      "A\ttests/fixtures/m2/string-stage28-ordinary-nonhex.pkl",
+      "A\ttests/fixtures/m2/string-stage28-ordinary-then-ampersand.pkl",
+      "A\ttests/fixtures/m2/string-stage28-ordinary-then-comment-eof.pkl",
+      "A\ttests/fixtures/m2/string-stage28-outer-syntax-before-closed.pkl",
+      "A\ttests/fixtures/m2/string-stage28-platform-deep-multiline-24.pkl",
+      "A\ttests/fixtures/m2/string-stage28-platform-deep-ordinary-31.pkl",
+      "A\ttests/fixtures/m2/string-stage28-platform-deep-raw-31.pkl",
+      "A\ttests/fixtures/m2/string-stage28-punctuation.pkl",
+      "A\ttests/fixtures/m2/string-stage28-quote.pkl",
+      "A\ttests/fixtures/m2/string-stage28-raw-inactive.pkl",
+      "A\ttests/fixtures/m2/string-stage28-raw-missing-brace-punctuation.pkl",
+      "A\ttests/fixtures/m2/string-stage28-raw-one-empty.pkl",
+      "A\ttests/fixtures/m2/string-stage28-raw-two-missing-brace.pkl",
+      "A\ttests/fixtures/m2/string-stage28-raw-two-nonhex.pkl",
+      "A\ttests/fixtures/m2/string-stage28-recovery-multiline.pkl",
+      "A\ttests/fixtures/m2/string-stage28-recovery-ordinary.pkl",
+      "A\ttests/fixtures/m2/string-stage28-recovery-raw.pkl",
+      "A\ttests/fixtures/m2/string-stage28-right-paren.pkl",
+      "A\ttests/fixtures/m2/string-stage28-scalar-supplementary.pkl",
+      "A\ttests/fixtures/m2/string-stage28-second-line-span.pkl",
+      "A\ttests/fixtures/m2/string-stage28-space.pkl",
+      "A\ttests/fixtures/m2/string-stage28-supplementary-letter.pkl",
+      "A\ttests/fixtures/m2/string-stage28-syntax-before-closed.pkl",
+      "A\ttests/fixtures/m2/string-stage28-tab-span.pkl",
+      "A\ttests/fixtures/m2/string-stage28-unclosed-before-later-escape.pkl"
+    ]
+  },
+  "source_binding": {
+    "implementation_commit": "370a668a8534ae42f4fc2a24ae62977df08779c2",
+    "source_snapshot_copies": 7338,
+    "unique_source_files": 3496,
+    "upstream_source_snapshot_copies": 0,
+    "upstream_blob_proof_claimed": false,
+    "git_request_sha256": "a349d442ef783dc037d9c340e74e9645daa306bfe83c4e678aa9665535992660",
+    "git_response_sha256": "d45609963e9df4305df073b37b08d939b53d0752c22dd3cd909118aeb70db694",
+    "scope": "Only final project source copies enumerated here equal exact implementation Git bytes. Historical focused/exploratory sources retain separate provenance."
+  },
+  "archives": {
+    "language": {
+      "path": "reports/m2/language-stage28-final-evidence.tar.gz",
+      "bytes": 6237834,
+      "sha256": "adcabdf10878272fcb8c10f37dccac34ead04093b31b018e411c3114dc709218"
+    },
+    "validation": {
+      "path": "reports/m2/validation-stage28-final-evidence.tar.gz",
+      "bytes": 3012617,
+      "sha256": "5901f404175a9c5fc727e86cac0bd74d6d5852b7374e7c4bc8b24515dd47eb96"
+    },
+    "platforms": {
+      "path": "reports/m2/platforms-stage28-final-evidence.tar.gz",
+      "bytes": 3832107,
+      "sha256": "ea6b48721a4d03ce69baf9f397281618ab716b56bf372f4e41e651304d5e285a"
+    },
+    "frontend": {
+      "path": "reports/m2/frontend-stage28-final-evidence.tar.gz",
+      "bytes": 253402,
+      "sha256": "e8bf94ffb62b8cf2c3014132ff1e6be2618aca69d0c874790378e9aa81c98dfc"
+    },
+    "runtime": {
+      "path": "reports/m2/runtime-stage28-final-evidence.tar.gz",
+      "bytes": 1925141,
+      "sha256": "abd301363167c13ad317e2529c910d2798912f8160af7fa3ec0294615f252190"
+    },
+    "lifecycle": {
+      "path": "reports/m2/lifecycle-stage28-final-evidence.tar.gz",
+      "bytes": 1116232,
+      "sha256": "a4f347c2d7433a42e72ed87f5f4b44b7daec7a9f0fa4dfce0cfca3256a07c873"
+    },
+    "class-lifecycle": {
+      "path": "reports/m2/class-lifecycle-stage28-final-evidence.tar.gz",
+      "bytes": 2561780,
+      "sha256": "6fb26edc2a6a0f49fde5c32219f373346a5e416bcbe3c6a68c204481396968e7"
+    },
+    "native-frontend": {
+      "path": "reports/m2/native-frontend-stage28-final-evidence.tar.gz",
+      "bytes": 2614336,
+      "sha256": "e3a8df9e26091f5ea29f0d2e9d12720b50870ad259d33b8f9a6f08d20064bf66"
+    },
+    "support": {
+      "path": "reports/m2/support-stage28-final-evidence.tar.gz",
+      "bytes": 27185754,
+      "sha256": "0b89c33a25047e0f7b7409196c5fb665a86c879b7fcf1582efb910ed9e118131"
+    },
+    "source": {
+      "path": "reports/m2/source-stage28-final-evidence.tar.gz",
+      "bytes": 4728262,
+      "sha256": "7875fe18b99a1e5979b23f7f2820d2b466cd480039f593b9660c20f5a679cecb"
+    }
+  },
+  "historical_dependencies": {
+    "summary": {
+      "path": "reports/m2/stage27-final-summary.json",
+      "bytes": 40323,
+      "sha256": "aef0f8bda475962b9696aecadb0a6da0e1c499cb2c3dd671f5ceb2e2ec799ca2"
+    },
+    "archives": {
+      "language": {
+        "path": "reports/m2/language-stage27-final-evidence.tar.gz",
+        "bytes": 6108241,
+        "sha256": "c9bcb01a90925856de48b1849fefdc03fa1b9efeef2fda5ac81e0adf69a7b468"
+      },
+      "validation": {
+        "path": "reports/m2/validation-stage27-final-evidence.tar.gz",
+        "bytes": 2971960,
+        "sha256": "f943ff0f229352b24511635ebc0643f2206e334692dbba34045ba58841a1ff5f"
+      },
+      "platforms": {
+        "path": "reports/m2/platforms-stage27-final-evidence.tar.gz",
+        "bytes": 3814934,
+        "sha256": "665029e38e6c77e129d34d9dc1ac9cf9ed0561d0ed7cfad56ce8318bf26288c6"
+      },
+      "frontend": {
+        "path": "reports/m2/frontend-stage27-final-evidence.tar.gz",
+        "bytes": 250057,
+        "sha256": "f7059c9fc6668829d1a8762fafab8bd6056877ba359000626d6a1a6d45cc3b0d"
+      },
+      "runtime": {
+        "path": "reports/m2/runtime-stage27-final-evidence.tar.gz",
+        "bytes": 1915849,
+        "sha256": "26e7d85bbc514284c4b5117c30aaabeddad27f8f038bc7f538d744ff1e6de9b4"
+      },
+      "lifecycle": {
+        "path": "reports/m2/lifecycle-stage27-final-evidence.tar.gz",
+        "bytes": 1110434,
+        "sha256": "95049bf7e69dec5f19ec200023451ce177e74bbcae9cb0c2d1b0bb722a16c990"
+      },
+      "class-lifecycle": {
+        "path": "reports/m2/class-lifecycle-stage27-final-evidence.tar.gz",
+        "bytes": 2551258,
+        "sha256": "3903ddc6cee91a09d5cc8b4c64efbeeeb5d7f8f0ecbfba0b11ee9c39103ca648"
+      },
+      "native-frontend": {
+        "path": "reports/m2/native-frontend-stage27-final-evidence.tar.gz",
+        "bytes": 2599126,
+        "sha256": "3dc48ac7f5139cb1c8a9eef223b0fd5e2bc0e02c10f39342f818f127b72d79d1"
+      },
+      "support": {
+        "path": "reports/m2/support-stage27-final-evidence.tar.gz",
+        "bytes": 12679092,
+        "sha256": "e2f796bdc13877d5bb3f2037f6d2e04c22d4f45689fef69aab17cc9f584f4958"
+      },
+      "source": {
+        "path": "reports/m2/source-stage27-final-evidence.tar.gz",
+        "bytes": 4212096,
+        "sha256": "f260613352ae35c2559e3a521345846865d339c46c4860f449196c7f324d17ee"
+      }
+    },
+    "audit": {
+      "path": "reports/m2/stage27-post-seal-audit.json",
+      "bytes": 89965,
+      "sha256": "6d7739095290bac93de91854591acaf36fbc1644d6d57996046add485ffab1b8"
+    },
+    "completion": {
+      "path": "reports/m2/stage27-completion-captures.json",
+      "bytes": 104566,
+      "sha256": "a303bddc3ea75f47f15b85ebaa36194f25e54bbe77a7465388ccf323451148fc"
+    },
+    "scope": "Direct Stage27 archive identities verified; inherited evidence remains referenced through its immutable summary, not recursively rerun or re-audited."
+  },
+  "reviews": [
+    {
+      "path": "target/m2/stage28-evidence-commit-review-final-01.json",
+      "bytes": 411254,
+      "sha256": "b5e54e01727d342a5617c629cd9047d55e9a2f632adcc598cc8ab4b0b87f2ee0"
+    },
+    {
+      "path": "target/m2/stage28-native-platform-review-final-01.json",
+      "bytes": 11022,
+      "sha256": "b6fabc3e0f4082c9d6b28c49f987135312f0876608e458b582ad9b7c7f16edb2"
+    },
+    {
+      "path": "target/m2/stage28-preparation-review-final-02.json",
+      "bytes": 9380,
+      "sha256": "6768bb8bc8d733327c5def6a7e22a77072c042b920f1ed256a6289efb36804e2"
+    },
+    {
+      "path": "target/m2/stage28-root-review-final-01.json",
+      "bytes": 18007,
+      "sha256": "1656fd50ab1bb3d4bb8854fbb874746cfad5b521da7cd0d184d8948c780ac71a"
+    },
+    {
+      "path": "target/m2/stage28-exploration-core-independent-review-final-01.json",
+      "bytes": 103173,
+      "sha256": "65d1227653200c198d3b2f2bf783b412bfaacbdf039f8aff4ca1deb23ee7e5c7"
+    },
+    {
+      "path": "target/m2/stage28-config-independent-review-final-01/review.json",
+      "bytes": 420306,
+      "sha256": "cc1dbd560062b1b9ff74237faefc498aa2fde549c00d8942df043f5c558a30cd"
+    }
+  ],
+  "gates": [
+    {
+      "name": "report",
+      "expected_exit": 0,
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/m2_language.py",
+        "--verify-report",
+        "target/m2/language-stage28-final-01"
+      ],
+      "exit_code": 0,
+      "timed_out": false,
+      "stdout_sha256": "4451db12f1151c7aa61531135d0db2890d13c14875395f37ff387153ec081f94",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "development",
+      "expected_exit": 0,
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/m2_language.py",
+        "--verify-development",
+        "target/m2/language-stage28-final-01"
+      ],
+      "exit_code": 0,
+      "timed_out": false,
+      "stdout_sha256": "4451db12f1151c7aa61531135d0db2890d13c14875395f37ff387153ec081f94",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "subset",
+      "expected_exit": 1,
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/m2_language.py",
+        "--verify-subset",
+        "target/m2/language-stage28-final-01"
+      ],
+      "exit_code": 1,
+      "timed_out": false,
+      "stdout_sha256": "4451db12f1151c7aa61531135d0db2890d13c14875395f37ff387153ec081f94",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "full",
+      "expected_exit": 1,
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/m2_language.py",
+        "--verify-full",
+        "target/m2/language-stage28-final-01"
+      ],
+      "exit_code": 1,
+      "timed_out": false,
+      "stdout_sha256": "4451db12f1151c7aa61531135d0db2890d13c14875395f37ff387153ec081f94",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "class-report",
+      "expected_exit": 0,
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/m2_class_lifecycle.py",
+        "--verify-report",
+        "target/m2/class-lifecycle-stage28-final-01"
+      ],
+      "exit_code": 0,
+      "timed_out": false,
+      "stdout_sha256": "72d5e6dc6030bfe305585af5573c0784a65e700c1314b4760230d842ea8ebef5",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "class-contract",
+      "expected_exit": 0,
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/m2_class_lifecycle.py",
+        "--verify-contract",
+        "target/m2/class-lifecycle-stage28-final-01"
+      ],
+      "exit_code": 0,
+      "timed_out": false,
+      "stdout_sha256": "72d5e6dc6030bfe305585af5573c0784a65e700c1314b4760230d842ea8ebef5",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "helper_provenance": [
+    {
+      "path": "target/m2/stage28_seal.py",
+      "bytes": 13716,
+      "sha256": "ad810140e1d055a6727306d3336e64d2b2d30a1cdbb40794159da9b7e55960a2"
+    },
+    {
+      "path": "target/m2/stage28_suite_checks.py",
+      "bytes": 23509,
+      "sha256": "e9efc95c33046017ae70dff43a668370f6041874b986a2d1d4de9d18de747e8b"
+    },
+    {
+      "path": "target/m2/stage28-suite-checks-preparation.json",
+      "bytes": 277,
+      "sha256": "033a0238acd7c831882d940141bbf265947cb347d0e71c9881a08441f3effaa9"
+    }
+  ],
+  "configuration": {
+    "path": "target/m2/stage28-final-config.json",
+    "bytes": 11070,
+    "sha256": "5704ec2949c9db96fa102411fb44ce69c2a46cd18a7b0dcc0f4144b00d347ed7"
+  },
+  "support": {
+    "original_files": 10529,
+    "explicit_roots": [
+      "target/m2/class-lifecycle-stage28-command-final-01",
+      "target/m2/frontend-stage28-command-final-01",
+      "target/m2/language-stage28-command-final-01",
+      "target/m2/lifecycle-stage28-command-final-01",
+      "target/m2/native-frontend-stage28-command-final-01",
+      "target/m2/native-unicode-stage28-preliminary-01",
+      "target/m2/native-unicode-stage28-preliminary-02",
+      "target/m2/native-unicode-stage28-preliminary-03",
+      "target/m2/platforms-stage28-command-final-01",
+      "target/m2/release-probe-build-stage28-command-final-01",
+      "target/m2/release-probe-build-stage28-final-01",
+      "target/m2/run_stage28_validation.py",
+      "target/m2/runtime-stage28-command-final-01",
+      "target/m2/stage28-audit-preparation",
+      "target/m2/stage28-auditor-preparation-command-01",
+      "target/m2/stage28-config-independent-review-final-01",
+      "target/m2/stage28-config-review-command-final-01",
+      "target/m2/stage28-config-review-preparation-01",
+      "target/m2/stage28-evidence-commit-review-01",
+      "target/m2/stage28-evidence-commit-review-final-01.json",
+      "target/m2/stage28-evidence-java-boundary-01",
+      "target/m2/stage28-evidence-java-deep-multiline-leaf-01",
+      "target/m2/stage28-evidence-java-lookahead-01",
+      "target/m2/stage28-evidence-java-lookahead-extra-01",
+      "target/m2/stage28-evidence-java-lookahead-extra-02",
+      "target/m2/stage28-evidence-java-originals-01",
+      "target/m2/stage28-evidence-java-supplement-01",
+      "target/m2/stage28-evidence-rust-deep-multiline-leaf-focused-01",
+      "target/m2/stage28-evidence-rust-focused-01",
+      "target/m2/stage28-exploration-core-command-final-01",
+      "target/m2/stage28-exploration-core-final-01",
+      "target/m2/stage28-exploration-core-independent-review-command-final-01",
+      "target/m2/stage28-exploration-core-independent-review-final-01.json",
+      "target/m2/stage28-exploration-focused-command-final-01",
+      "target/m2/stage28-exploration-focused-final-01",
+      "target/m2/stage28-final-evidence-review-01",
+      "target/m2/stage28-final-independent-review-01",
+      "target/m2/stage28-final-independent-review-02",
+      "target/m2/stage28-final-independent-review-command-01",
+      "target/m2/stage28-final-independent-review-command-02",
+      "target/m2/stage28-fixture-selection-01",
+      "target/m2/stage28-fixture-selection-02",
+      "target/m2/stage28-focused-candidate-01",
+      "target/m2/stage28-formal-review-copies.json",
+      "target/m2/stage28-gates-command-final-01",
+      "target/m2/stage28-gates-final-01",
+      "target/m2/stage28-java-acquisition-review-01",
+      "target/m2/stage28-java-acquisition-review-02",
+      "target/m2/stage28-java-acquisition-review-03",
+      "target/m2/stage28-manifest-process-01",
+      "target/m2/stage28-native-platform-review-final-01.json",
+      "target/m2/stage28-platform-definitions.json",
+      "target/m2/stage28-platform-independent-review-01.json",
+      "target/m2/stage28-platform-module-preparation-process-01",
+      "target/m2/stage28-platform-payload-final-01",
+      "target/m2/stage28-platform-payload-focused-01",
+      "target/m2/stage28-platform-unicode-java-01",
+      "target/m2/stage28-post-seal-audit-preparation-01",
+      "target/m2/stage28-post-seal-audit-preparation-01.json",
+      "target/m2/stage28-preparation-independent-review-01",
+      "target/m2/stage28-preparation-independent-review-02",
+      "target/m2/stage28-preparation-review-final-01.json",
+      "target/m2/stage28-preparation-review-final-02.json",
+      "target/m2/stage28-process-evidence-commit-review-01",
+      "target/m2/stage28-process-final-evidence-review-01",
+      "target/m2/stage28-process-fixture-selection-01",
+      "target/m2/stage28-process-fixture-selection-02",
+      "target/m2/stage28-process-focused-build-01",
+      "target/m2/stage28-process-java-acquisition-review-01",
+      "target/m2/stage28-process-java-acquisition-review-02",
+      "target/m2/stage28-process-java-acquisition-review-03",
+      "target/m2/stage28-process-java-boundary-01",
+      "target/m2/stage28-process-java-deep-multiline-leaf-01",
+      "target/m2/stage28-process-java-lookahead-01",
+      "target/m2/stage28-process-java-lookahead-extra-01",
+      "target/m2/stage28-process-java-lookahead-extra-02",
+      "target/m2/stage28-process-java-originals-01",
+      "target/m2/stage28-process-java-supplement-01",
+      "target/m2/stage28-process-native-preliminary-01",
+      "target/m2/stage28-process-native-preliminary-02",
+      "target/m2/stage28-process-native-preliminary-03",
+      "target/m2/stage28-process-platform-independent-review-01",
+      "target/m2/stage28-process-platform-independent-review-02",
+      "target/m2/stage28-process-platform-java-01",
+      "target/m2/stage28-process-platform-payload-final-01",
+      "target/m2/stage28-process-platform-payload-focused-01",
+      "target/m2/stage28-process-production-independent-review-01",
+      "target/m2/stage28-process-raw-deep-multiline-leaf-focused-01",
+      "target/m2/stage28-process-raw-focused-01",
+      "target/m2/stage28-process-root-helper-independent-review-01",
+      "target/m2/stage28-process-root-helper-independent-review-02",
+      "target/m2/stage28-process-table-unit-01",
+      "target/m2/stage28-process-unicode-tables-independent-check-01",
+      "target/m2/stage28-process-unicode-tables-independent-review-01",
+      "target/m2/stage28-process-unicode-tables-write-01",
+      "target/m2/stage28-production-independent-review-01",
+      "target/m2/stage28-root-helper-independent-review-01",
+      "target/m2/stage28-root-helper-independent-review-02",
+      "target/m2/stage28-root-native-auditor-preliminary-review-01.json",
+      "target/m2/stage28-root-review-final-01.json",
+      "target/m2/stage28-root-review-preparation-02",
+      "target/m2/stage28-root-review-preparation-03",
+      "target/m2/stage28-root-review-preparation.json",
+      "target/m2/stage28-root-review-process-final-01",
+      "target/m2/stage28-root-review-process-final-02",
+      "target/m2/stage28-root-tool-preparation.json",
+      "target/m2/stage28-suite-checks-preparation.json",
+      "target/m2/stage28-unicode-planning-note.md",
+      "target/m2/stage28-unicode-production-preliminary-review.json",
+      "target/m2/stage28-unicode-tables-independent-check-01",
+      "target/m2/stage28-unicode-tables-independent-review-01",
+      "target/m2/stage28-unicode-tables-write-01",
+      "target/m2/stage28-validation-summary-process-01",
+      "target/m2/stage28_acquire_java.py",
+      "target/m2/stage28_acquire_platform_java.py",
+      "target/m2/stage28_build_focused.py",
+      "target/m2/stage28_capture_process.py",
+      "target/m2/stage28_closeout_docs.py",
+      "target/m2/stage28_compare_java.py",
+      "target/m2/stage28_compare_platform_java.py",
+      "target/m2/stage28_complete_captures.py",
+      "target/m2/stage28_evidence_commit_review.py",
+      "target/m2/stage28_gates.py",
+      "target/m2/stage28_native_capture.py",
+      "target/m2/stage28_post_seal_audit.py",
+      "target/m2/stage28_prepare_platform_module.py",
+      "target/m2/stage28_prepare_validation_summary.py",
+      "target/m2/stage28_review_config.py",
+      "target/m2/stage28_review_exploration_core.py",
+      "target/m2/stage28_review_final_evidence.py",
+      "target/m2/stage28_review_final_owned_scope.py",
+      "target/m2/stage28_review_java_acquisition.py",
+      "target/m2/stage28_review_platform.py",
+      "target/m2/stage28_review_preparation_unicode.py",
+      "target/m2/stage28_review_preparation_unicode_02.py",
+      "target/m2/stage28_review_production.py",
+      "target/m2/stage28_review_root_helpers.py",
+      "target/m2/stage28_review_unicode_tables.py",
+      "target/m2/stage28_root_review.py",
+      "target/m2/stage28_seal.py",
+      "target/m2/stage28_select_deep_fixtures.py",
+      "target/m2/stage28_select_fixtures.py",
+      "target/m2/stage28_suite_checks.py",
+      "target/m2/validation-stage28-command-final-01"
+    ]
+  },
+  "omitted_build_caches": [
+    {
+      "path": "target/m2/lifecycle-stage28-final-01/build",
+      "payload_enumerated": false,
+      "reason": "Direct suite Cargo build cache; captured artifact, build output and source snapshots are retained."
+    },
+    {
+      "path": "target/m2/class-lifecycle-stage28-final-01/build",
+      "payload_enumerated": false,
+      "reason": "Direct suite Cargo build cache; captured artifact, build output and source snapshots are retained."
+    },
+    {
+      "path": "target/m2/stage28-focused-candidate-01/build",
+      "payload_enumerated": false,
+      "reason": "Exploratory Cargo build cache; complete captured source/artifact/process records retained."
+    },
+    {
+      "path": "target/m2/release-probe-build-stage28-final-01/build",
+      "payload_enumerated": false,
+      "reason": "Exploratory Cargo build cache; complete captured source/artifact/process records retained."
+    }
+  ],
+  "omitted_cache_payload_sizes_and_hashes_claimed": false,
+  "captured_evaluators_executed": false,
+  "compatibility_complete": false,
+  "performance_targets_established": false,
+  "known_unverified_scope": [
+    "This bounded Stage28 Unicode diagnostic checkpoint does not complete M2, full Pkl 0.32.0 language/API compatibility, release platform coverage, speed parity or peak-RSS parity.",
+    "The selected cycle oracle error and integer remainder-by-zero diagnostic mismatch remain. The strict full gate still has1950 failure reasons; no development compatibility exception was added.",
+    "Exploratory96 observations retain91 raw matches and5 mismatches: four surrogate representation cases and one out-of-range Java internal error. No replacement-character approximation hides these differences. Exploratory rows overlap selected cases and are not additive coverage.",
+    "The lexical depth32 guard and65536 work budget remain. Arbitrary syntax depth, deep type/class/mixed-body compilation, Java resource-error diagnostics and synchronous lexical reparse latency remain separate requirements.",
+    "Native256KiB/60s tests and Node/Chromium87 development scenarios establish only bounded behavior. The new platform scenario performs72 calls with fresh evaluators after parser setup errors; no retained-evaluator or Host lifecycle claim is added.",
+    "Persistent151 sequences and2622 compared calls remain unchanged regressions; module-cache, annotation/Host-in-class and other recorded unexecuted groups remain.",
+    "Two known regex primitive failures and M1 cycle/full lifecycle diagnostic differences remain. Local macOS execution does not establish hosted CI, Linux or Windows execution.",
+    "The inventory has474 requirements,3925 accounting rows (2925 ready,960 unimplemented,40 unmapped), and16 partial mappings; these are not feature completion percentages.",
+    "Initial native assertion, platform route audit, acquisition source drift, helper review drift and root whitespace-assumption failures remain in support evidence. The Java-derived platform module retains its generator-produced final blank line; the precise cosmetic finding is reviewed without changing source or comparison bytes."
+  ]
+}

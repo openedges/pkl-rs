@@ -1,0 +1,117 @@
+{
+  "implementation_commit": "370a668a8534ae42f4fc2a24ae62977df08779c2",
+  "scope": "M2 Stage28 required local development checks; full compatibility and performance remain separate.",
+  "source_stability": true,
+  "source_snapshot_count": 3496,
+  "source_manifest_report_sha256": "304c5fe964ee52b6058dc69943f441da6eede3937b9a0c8d7f904f1c1301d6a5",
+  "raw_report": "validation-stage28-final-evidence.tar.gz:report.json",
+  "rust_passed": 445,
+  "rust_harness_passed": 458,
+  "rust_isolated_child_duplicate_passed": 13,
+  "rust_isolated_child_tests": [
+    "authored_chains_parse_clone_resolve_compile_and_drop_on_small_stack",
+    "authored_power_assertion_compiler_and_cleanup_use_small_stack",
+    "authored_partial_parse_resolve_and_compile_errors_release_on_small_stack",
+    "authored_scope_type_and_shared_work_guards_release_on_small_stack",
+    "authored_frontend_program_survives_host_reentry_retry_cancel_and_terminal_release",
+    "nested_lexical_accepted_near_guard_traverses_frontend_on_small_stack",
+    "original_nested_lexical_64_rejects_without_aborting_small_stack",
+    "nested_lexical_partial_errors_and_shared_work_guard_release_small_stack",
+    "nested_lexical_host_reentry_read_failure_retry_cancel_and_terminal_cleanup",
+    "nested_lexical_error_priority_spans_and_eof_cleanup_on_small_stack",
+    "malformed_multiline_diagnostic_spans_and_guard_cleanup_on_small_stack",
+    "unicode_semantic_priority_and_nested_cleanup_on_small_stack",
+    "unicode_lexical_boundaries_byte_spans_and_guard_cleanup_on_small_stack"
+  ],
+  "rust_intentionally_ignored": 1,
+  "python_passed": 198,
+  "required_commands": 7,
+  "checks": [
+    {
+      "command": [
+        "cargo",
+        "xtask",
+        "verify"
+      ],
+      "exit_code": 0,
+      "stdout_sha256": "900802c9cf4f23bd9dbc0e79f58d3e21493ec0c990782bc5b690a7432148e9eb",
+      "stderr_sha256": "f4b8a117389ad0c5b41fd17312b54082dcc7f5b63c304b32df000da0f8be1876"
+    },
+    {
+      "command": [
+        "cargo",
+        "fmt",
+        "--all",
+        "--",
+        "--check"
+      ],
+      "exit_code": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "cargo",
+        "clippy",
+        "--workspace",
+        "--all-targets",
+        "--locked",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "exit_code": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "294c4bb48b60c1fea72c5a6fb131347defd3240c1b66029a973cc5ddb32d5602"
+    },
+    {
+      "command": [
+        "cargo",
+        "test",
+        "--workspace",
+        "--locked"
+      ],
+      "exit_code": 0,
+      "stdout_sha256": "18d4bc3a892890535a1ed00425c3df421efee6c5067c06274af74e58a8f839c9",
+      "stderr_sha256": "425790879a05ff31c90088b8f0ea125b120737e25d513b38d59173b065cf3297"
+    },
+    {
+      "command": [
+        "cargo",
+        "check",
+        "-p",
+        "pkl-runtime",
+        "--target",
+        "wasm32-unknown-unknown",
+        "--locked"
+      ],
+      "exit_code": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "1f04270778ae04180b4beb0f0aaaf22489614a7c644a8792662bb1d2dd5e5ff9"
+    },
+    {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools/tests",
+        "-v"
+      ],
+      "exit_code": 0,
+      "stdout_sha256": "8a02170b198e681778a8a2ce7f51b87d011e655faf43f6a08e893ce67db2fddc",
+      "stderr_sha256": "752cbd86e69dd83705d51f6b4fb6106dc99827afde8e7912a5b9ec0b5cc70914"
+    },
+    {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/m2_manifest.py",
+        "--check"
+      ],
+      "exit_code": 0,
+      "stdout_sha256": "5822889749515cf6db6e394a95d48029729abe8632350b103eb200c81b62018b",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ]
+}

@@ -36,7 +36,72 @@ bounded abstract Collection type checks, defaults and metadata. Stage 25 adds
 continuations for selected authored frontend paths and small-stack checks.
 Stage 26 extends those paths to bounded nested lexical strings and interpolation.
 Stage 27 aligns selected lexical string diagnostics with Java.
+Stage 28 aligns selected Unicode escape diagnostics and validation order.
 These checkpoints do not complete the language milestone.
+
+## Stage 28 local verification checkpoint
+
+Implementation `370a668a8534ae42f4fc2a24ae62977df08779c2` is committed and pushed. The [final summary](stage28-final-summary.json),
+[independent audit](stage28-post-seal-audit.json), and [completion captures](stage28-completion-captures.json)
+close this bounded Unicode escape diagnostic checkpoint. Core parser work used
+`gpt-6-astra / xhigh`; Java evidence and native/platform review each used
+`gpt-6.1-sol / high`. Verification ran locally on macOS arm64.
+
+Unicode escape scanning now preserves Java's token spans and validation phases.
+Ordinary strings defer conversion until the following text token; multiline
+strings validate interpolation syntax and delimiter structure before converting
+escapes in indentation order. Following-token lookahead preserves source-end and
+consumed-range cache visibility. Pinned Java tables contain 401 letter-or-digit
+ranges and 41 hexadecimal digit mappings, including non-ASCII decimal digits
+and fullwidth hexadecimal letters. Numeric conversion retains signed-32-bit
+overflow behavior and arbitrary leading zeros. Production evaluation has no
+Java fallback.
+
+The complete selected corpus has **2,925 cases: 2,923 raw matches**,
+the existing cycle oracle error, and the existing integer remainder-by-zero
+mismatch. All **94 additions (11 successes and 83 expected errors)** and all
+88 metamorphic relations pass. The original 2,831 definitions and input bytes,
+151 persistent sequence definitions, 86 platform scenarios, native test files,
+and reference pins remain unchanged. Persistent evaluation retains
+2,622 matching calls. The inventory has 474 requirements and 3,925 accounting
+rows (2,925 ready, 960 unimplemented, 40 unmapped); all 16 reviewed mappings remain
+partial. The full gate retains 1,950 failure reasons. No development exception was added.
+
+[Seven required local checks](validation-stage28-final.json) passed with
+**445 distinct Rust tests and 198 Python tests**. The raw Rust harness reports
+458 passes, including 13 isolated child repetitions, plus one intentionally ignored test.
+Two new native tests run on 256 KiB stacks with a 60-second parent deadline per
+test. They cover failure cleanup, original byte spans, UTF-16 highlights, and
+actual malformed multiline leaves nested at depths 24 and 31. Successful work
+after parser errors creates fresh evaluators; this does not establish retained
+evaluator or Host lifecycle behavior.
+
+Node and Chromium each passed **87 development scenarios**, including 72 calls in
+the new scenario. All 6,078 shared primitive results match across targets; each
+target matches Java on 6,076, retaining the same two regex failures. Existing
+M1 cycle and lifecycle diagnostic gaps remain. Linux, Windows, hosted CI, and
+release API behavior were not established by this local checkpoint.
+
+Fresh Java acquisitions and both the focused release artifact and the exact full
+language artifact compare **96 exploratory observations: 91 matches and five
+mismatches**. The remaining controls are four surrogate representations and one
+out-of-range Java internal error. They are retained outside the selected additions;
+no replacement-character approximation or exception hides them. The original
+three Unicode diagnostic differences now match at their original source URIs.
+These exploratory observations overlap selected cases and are not additive coverage.
+The depth-32 guard and 65,536-work budget remain, as do arbitrary-depth, synchronous
+lexical reparse latency, resource-error, and complete Unicode representation gaps.
+
+The independent audit verified **10 new archives / 53,467,465 bytes**, 7,338 final
+source copies representing 3,496 project files against the exact implementation
+commit, and 64,377 original acquisition files. The 4 explicitly named direct
+Cargo build caches were omitted without enumerating payloads. Stage 27 archives,
+summary, audit, and completion records remain immutable direct dependencies.
+The completion companion preserves 12 original sealing/audit process files.
+Initial native assertion and platform-route failures, rejected acquisition source
+drift, intermediate comparisons, and intentional fixture whitespace remain in
+the evidence. **M2, full product compatibility, release platform coverage, speed
+parity, and peak-RSS parity remain incomplete.**
 
 ## Stage 27 local verification checkpoint
 
