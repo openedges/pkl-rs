@@ -508,6 +508,8 @@ Annotation·Deprecated·Since·Unlisted·AlsoKnownAs·DocExample·SourceCode의 
 
 ### Stage 36 — 객체 강제 평가와 문자열 변환
 
+구현은 `462ae5d333da629cd871eb48a55be58d6cc0a5ff`에 커밋·푸시했습니다. [소스 연결 검증](reports/m2/stage36-source-binding.json)은 최종 검사·취득에서 기록한 서로 다른 소스 경로 4,016개를 이 커밋의 정확한 Git blob과 대조합니다. [완료 기록](reports/m2/stage36-completion-captures.json)은 최종 증거 봉인·구현 커밋·푸시·원격 확인·소스 연결 process의 종료 결과를 보존합니다.
+
 일반 객체의 `toString()`을 Java의 강제 평가·상속 순서·undefined 처리·캐시와 연결했습니다. 별도 작업 공간에서 객체 키의 해시·동등성 비교, 사용자 메서드 호출과 Host 중단·재진입·GC·취소를 검증했습니다. `trace`를 사용하는 원본 순차 사례와 오류 표시 중 Host 읽기 의존성은 별도 실패로 보존하며 전체 renderer 호환성으로 확대하지 않습니다.
 
 객체의 강제 평가를 공통 VM continuation으로 연결하고 완료한 자식의 캐시·force 상태를 실패한 부모와 구분했습니다. hidden 선언은 각 owner를 기준으로 검사하고, 강제 평가의 자식 우선 순서와 출력의 부모 우선 순서를 보존합니다. typed interpolation은 사용자 `toString`을 가상 호출합니다. Host 재진입 오류에는 중단된 바깥 호출의 실제 소스 프레임을 추가하고, Dynamic 멤버 진단은 공통 이름 추천 경로를 사용합니다. 구현은 `gpt-6-astra / xhigh`, Java 증거와 독립 검토는 각각 `gpt-6.1-sol / high`에 배정했습니다.
@@ -516,7 +518,7 @@ Annotation·Deprecated·Since·Unlisted·AlsoKnownAs·DocExample·SourceCode의 
 
 [최종 검증](reports/m2/stage36-final-summary.json)에서 전체 선택 3,389개 중 3,386개와 변형 관계 88개가 일치했습니다. 나머지 연산·SourceCode의 mapped-list 불일치 2개와 순환 참조 oracle 오류 1개를 유지합니다. 기존 일치 사례의 회귀 없이 객체 문자열 변환에 막혀 있던 불일치 3개를 해결했습니다. 같은 최종 native 후보의 새 83개는 모두 일치하고, 고정 Stage35 후보는 5개가 일치합니다. 순차 정의 167개를 두 번 실행해 2,728개 호출이 일치했으나 `trace` 의존성 때문에 요청된 54개 native 호출은 미실행입니다. 필수 로컬 검사 7개와 Python 208개가 통과했고 Rust 로그의 성공 506회는 자식 재실행을 포함한 harness 집계입니다. 개발·엄격한 선택·전체 언어·순차 호환성 gate는 실패하며, 전체 언어 gate의 실패 이유 1,951개를 유지합니다. **이 체크포인트는 M2 전체 완료가 아닙니다.**
 
-먼저 전체 코퍼스 취득 도구에 선택적 `--workers` 병렬 실행을 추가했습니다. 기본값은 1이며 각 사례의 독립 Java/Rust process·원시 바이트·manifest 순서·나머지 오류의 독립 재실행을 유지합니다. [도구 검증](reports/m2/stage36-tooling-checkpoint.json)에서 Python 208개와 현재 manifest 검사가 통과했고, 새로 실행한 직렬·병렬 6개 사례의 모든 원시 채널이 같았습니다. 이 결과는 검증 취득 처리량에 관한 것이며 evaluator 성능 목표 달성으로 계산하지 않습니다. 런타임 구현과 최종 전체 회귀 검사는 계속 진행 중입니다.
+먼저 전체 코퍼스 취득 도구에 선택적 `--workers` 병렬 실행을 추가했습니다. 기본값은 1이며 각 사례의 독립 Java/Rust process·원시 바이트·manifest 순서·나머지 오류의 독립 재실행을 유지합니다. [도구 검증](reports/m2/stage36-tooling-checkpoint.json)에서 Python 208개와 현재 manifest 검사가 통과했고, 새로 실행한 직렬·병렬 6개 사례의 모든 원시 채널이 같았습니다. 이 결과는 검증 취득 처리량에 관한 것이며 evaluator 성능 목표 달성으로 계산하지 않습니다. 도구 체크포인트 당시 진행 중이던 Stage 36 런타임 구현과 최종 전체 회귀 검사는 위의 최종 검증으로 마감했습니다.
 
 다음 구현은 남은 탐색 불일치의 의존성을 기준으로 진행합니다.
 

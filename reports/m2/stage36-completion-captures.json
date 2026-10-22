@@ -1,0 +1,86 @@
+{
+  "scope": "Closed Stage36 source implementation, archive and binding process records. No new runtime acquisition.",
+  "implementation_commit": "462ae5d333da629cd871eb48a55be58d6cc0a5ff",
+  "compatibility_complete": false,
+  "source_binding_passed": true,
+  "distinct_committed_paths": 4016,
+  "original_files": 22,
+  "processes": [
+    {
+      "name": "seal-final",
+      "command": [
+        "python3",
+        "target/m2/stage36-tools/seal-final.py"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs",
+      "started_at": 1792692556.2414699,
+      "exit_code": 0,
+      "finished_at": 1792692791.931621,
+      "stdout_sha256": "3496faac3e5edd3ae2b30542472772218fed81349ecf9fa1d6fb3f7519106bf0",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "commit-source",
+      "command": [
+        "git",
+        "commit",
+        "-m",
+        "feat(runtime): preserve object forcing and string conversion semantics"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs",
+      "started_at": 1792692849.060132,
+      "exit_code": 0,
+      "finished_at": 1792692849.290122,
+      "stdout_sha256": "38a6b28a33da2013e6366d9718719a8390b1d2d007721f846550ce75889b8655",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "push-source",
+      "command": [
+        "git",
+        "push",
+        "origin",
+        "main"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs",
+      "started_at": 1792692854.681387,
+      "exit_code": 0,
+      "finished_at": 1792692878.524676,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "38dafed08accacd32e8a5cfd3d6d51df20ef8858a9de2da6a4c8b76c075755d5"
+    },
+    {
+      "name": "remote-source",
+      "command": [
+        "git",
+        "ls-remote",
+        "origin",
+        "refs/heads/main"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs",
+      "started_at": 1792692942.5084748,
+      "exit_code": 0,
+      "finished_at": 1792692944.8193338,
+      "stdout_sha256": "759d615d56249dc7c0ba095485c128dc337020844165c8879b6cc0cf6db21c40",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "bind-sources",
+      "command": [
+        "python3",
+        "target/m2/stage36-tools/bind-sources.py"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs",
+      "started_at": 1792692855.859936,
+      "exit_code": 0,
+      "finished_at": 1792692864.997442,
+      "stdout_sha256": "8d9c2426d98341c3457678a449ae5a5f0e71d29d0dcf0fd9f357e0da55fab679",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "archive": {
+    "path": "reports/m2/stage36-completion-evidence.tar.gz",
+    "sha256": "3e0e30dd9e0d39c779f9f7ce341361aa6e3eda3df95bb6b93abe854c0c40679f",
+    "bytes": 298167
+  }
+}

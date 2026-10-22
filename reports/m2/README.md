@@ -47,6 +47,12 @@ These checkpoints do not complete the language milestone.
 
 ## Stage 36 local verification checkpoint
 
+Implementation `462ae5d333da629cd871eb48a55be58d6cc0a5ff` is committed and pushed.
+The [source binding](stage36-source-binding.json) connects 4,016 distinct source
+paths from the completed checks and acquisitions to their exact Git blobs.
+The [completion captures](stage36-completion-captures.json) preserve the final
+archive, commit, push, remote verification and source-binding process records.
+
 Object string conversion now uses resumable deep forcing, persistent completed
 force markers, scoped undefined handling and inherited render order. Object-key
 hashing/equality runs through the shared VM during runtime formatting. Typed
