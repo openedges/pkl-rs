@@ -343,6 +343,15 @@ local declarations and aliases that retain their separate call frames. Surrogate
 URI handling, the complete diagnostic corpus and full string builtins remain
 separate requirements.
 
+Numeric value-frame regressions compare complete Java diagnostics and successful
+values for direct negation, parentheses, radix/minimum integers and signed zero.
+Native checks retain authored observation spans while inspecting executable
+value spans, declaration ownership, suspended constraints, reentry, retry,
+per-instruction collection and detached errors after close. Node and Chromium
+run the same fresh Java-derived cases, including successful value controls.
+Exploratory invalid-annotation and nested-negation overflow differences remain
+recorded separately; these checks do not complete numeric diagnostics.
+
 M1 experiments have narrower, explicit contracts:
 
 ```sh

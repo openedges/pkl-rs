@@ -51,13 +51,16 @@ def verify(path: Path):
             raise ValueError("Missing inventory or duplicate archive members")
         if any(not member.isfile() or Path(member.name).is_absolute() or ".." in Path(member.name).parts for member in members):
             raise ValueError("Unsafe archive member")
-        inventory = json.load(archive.extractfile("EVIDENCE.json"))
+        # TarFile's string lookup scans member names. Keep the checked members
+        # indexed so large evidence inventories do not repeat that scan per file.
+        indexed = {member.name: member for member in members}
+        inventory = json.load(archive.extractfile(indexed["EVIDENCE.json"]))
         rows = inventory["files"]
         expected = {row["path"] for row in rows}
         if not rows or len(expected) != len(rows) or expected != set(names) - {"EVIDENCE.json"}:
             raise ValueError("Incomplete or empty evidence inventory")
         for row in rows:
-            data = archive.extractfile(row["path"]).read()
+            data = archive.extractfile(indexed[row["path"]]).read()
             if len(data) != row["bytes"] or hashlib.sha256(data).hexdigest() != row["sha256"]:
                 raise ValueError(f"Evidence bytes do not match inventory: {row['path']}")
     print(f"Verified {len(rows)} evidence files: {path}")

@@ -60633,6 +60633,998 @@
       ]
     },
     {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "diagnostic-stage31-module-alias-negative-int",
+      "input": "tests/fixtures/m2/diagnostic-stage31-module-alias-negative-int.pkl",
+      "input_sha256": "29a7f6c49fe752d7dea9a06e4fa9ead4ed56a14a0c29b632215723d752702930",
+      "required": true,
+      "requirements": [
+        "semantic:numeric-literals",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:types",
+        "semantic:type-aliases"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "diagnostic-stage31-module-alias-negative-space",
+      "input": "tests/fixtures/m2/diagnostic-stage31-module-alias-negative-space.pkl",
+      "input_sha256": "68384ac048c0e01234ea76d44e9c4f3c4a33c2cd43142468fc44ad12149da89b",
+      "required": true,
+      "requirements": [
+        "semantic:numeric-literals",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:types",
+        "semantic:type-aliases"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "diagnostic-stage31-module-alias-negative-comment",
+      "input": "tests/fixtures/m2/diagnostic-stage31-module-alias-negative-comment.pkl",
+      "input_sha256": "ab24112cd1a67e41273497792bdd79dac524f4889ceada01326722a959f5fd13",
+      "required": true,
+      "requirements": [
+        "semantic:numeric-literals",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:types",
+        "semantic:type-aliases"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "diagnostic-stage31-module-alias-negative-multiline",
+      "input": "tests/fixtures/m2/diagnostic-stage31-module-alias-negative-multiline.pkl",
+      "input_sha256": "789cf136bf53a4ab9859c5ff4d59cb23dd7673af65c9c1376b98c724311cc3a9",
+      "required": true,
+      "requirements": [
+        "semantic:numeric-literals",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:types",
+        "semantic:type-aliases"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "diagnostic-stage31-module-alias-negative-hex",
+      "input": "tests/fixtures/m2/diagnostic-stage31-module-alias-negative-hex.pkl",
+      "input_sha256": "6ac4c7dab8872e75316fadc03609ca0a865b52ccdc79da91c1c7ad7289f248d4",
+      "required": true,
+      "requirements": [
+        "semantic:numeric-literals",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:types",
+        "semantic:type-aliases"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "diagnostic-stage31-module-alias-negative-binary",
+      "input": "tests/fixtures/m2/diagnostic-stage31-module-alias-negative-binary.pkl",
+      "input_sha256": "ebc07abd18e9ae2f2b5781b258b9c62349594ab1831e71ef1b5a2365f8f3b5b1",
+      "required": true,
+      "requirements": [
+        "semantic:numeric-literals",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:types",
+        "semantic:type-aliases"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "diagnostic-stage31-module-alias-negative-octal",
+      "input": "tests/fixtures/m2/diagnostic-stage31-module-alias-negative-octal.pkl",
+      "input_sha256": "37a449fc4dbc63e65be5a7e545588c9e2177843b7328bd1492cda59f78493623",
+      "required": true,
+      "requirements": [
+        "semantic:numeric-literals",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:types",
+        "semantic:type-aliases"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "diagnostic-stage31-module-alias-negative-float",
+      "input": "tests/fixtures/m2/diagnostic-stage31-module-alias-negative-float.pkl",
+      "input_sha256": "897552865213a99fa9dd18f9014e093e3bd44cd72d6f049aa1efa1a2fd122e1b",
+      "required": true,
+      "requirements": [
+        "semantic:numeric-literals",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:types",
+        "semantic:type-aliases"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "diagnostic-stage31-module-alias-negative-float-zero",
+      "input": "tests/fixtures/m2/diagnostic-stage31-module-alias-negative-float-zero.pkl",
+      "input_sha256": "b3176c60728a32fa7e465f669cea27d16577eb61b8fd7d6fd018632bde538a6c",
+      "required": true,
+      "requirements": [
+        "semantic:numeric-literals",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:types",
+        "semantic:type-aliases"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "diagnostic-stage31-module-alias-grouped-negative",
+      "input": "tests/fixtures/m2/diagnostic-stage31-module-alias-grouped-negative.pkl",
+      "input_sha256": "24f7e9f8895fd70e1a67de46d44d56c7fc0c5992184bfef73c6b895bfda1c16f",
+      "required": true,
+      "requirements": [
+        "semantic:numeric-literals",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:types",
+        "semantic:type-aliases"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "diagnostic-stage31-module-alias-nested-grouped-negative",
+      "input": "tests/fixtures/m2/diagnostic-stage31-module-alias-nested-grouped-negative.pkl",
+      "input_sha256": "1dd6eec0ba82e93fd2c6707652efdf2e978bfb086f07581bda0f36722fcf192d",
+      "required": true,
+      "requirements": [
+        "semantic:numeric-literals",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:types",
+        "semantic:type-aliases"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "diagnostic-stage31-module-alias-negative-grouped",
+      "input": "tests/fixtures/m2/diagnostic-stage31-module-alias-negative-grouped.pkl",
+      "input_sha256": "c576948c7464dddea02147ff7415014324e1fd393dc2416330c6ac9db86ff0dc",
+      "required": true,
+      "requirements": [
+        "semantic:numeric-literals",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:types",
+        "semantic:type-aliases"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "diagnostic-stage31-module-alias-negative-grouped-float",
+      "input": "tests/fixtures/m2/diagnostic-stage31-module-alias-negative-grouped-float.pkl",
+      "input_sha256": "4f8e44133248cf3ba290beeab176ca5403edd12392ba80dcb2940df03a3f7239",
+      "required": true,
+      "requirements": [
+        "semantic:numeric-literals",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:types",
+        "semantic:type-aliases"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "diagnostic-stage31-module-alias-double-negative",
+      "input": "tests/fixtures/m2/diagnostic-stage31-module-alias-double-negative.pkl",
+      "input_sha256": "3cdb643a67083d85b3258bce903bbade1bed0ea4145d3c9e766deb54c1ddd8fe",
+      "required": true,
+      "requirements": [
+        "semantic:numeric-literals",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:types",
+        "semantic:type-aliases"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "diagnostic-stage31-module-alias-negative-minint",
+      "input": "tests/fixtures/m2/diagnostic-stage31-module-alias-negative-minint.pkl",
+      "input_sha256": "17b80e792642769197cbaa43eb5d5a4ea2d2e7d2d581194310052733115a6da0",
+      "required": true,
+      "requirements": [
+        "semantic:numeric-literals",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:types",
+        "semantic:type-aliases"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "diagnostic-stage31-module-alias-grouped-overflow",
+      "input": "tests/fixtures/m2/diagnostic-stage31-module-alias-grouped-overflow.pkl",
+      "input_sha256": "6d8446626bf6364ba8ef781939b298cca895786eeb83f16a42bbe00c14ae4e34",
+      "required": true,
+      "requirements": [
+        "semantic:numeric-literals",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:types",
+        "semantic:type-aliases"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "diagnostic-stage31-module-alias-negative-overflow",
+      "input": "tests/fixtures/m2/diagnostic-stage31-module-alias-negative-overflow.pkl",
+      "input_sha256": "2191f0572439967986fe171e4c3a64b4c0c37412cc507ca68c2dd96637de9102",
+      "required": true,
+      "requirements": [
+        "semantic:numeric-literals",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:types",
+        "semantic:type-aliases"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "diagnostic-stage31-class-local-negative-int",
+      "input": "tests/fixtures/m2/diagnostic-stage31-class-local-negative-int.pkl",
+      "input_sha256": "2ff018671a9a8e94d5f389ad0c9cea5eef9ab72cda5a529afb2e3afae8905943",
+      "required": true,
+      "requirements": [
+        "semantic:numeric-literals",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:classes"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "diagnostic-stage31-class-public-grouped-negative",
+      "input": "tests/fixtures/m2/diagnostic-stage31-class-public-grouped-negative.pkl",
+      "input_sha256": "eaf086b471ad5317574c247e309dfc8570002fe5f5a343162f0445df973696cd",
+      "required": true,
+      "requirements": [
+        "semantic:numeric-literals",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:classes"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "diagnostic-stage31-object-local-negative-int",
+      "input": "tests/fixtures/m2/diagnostic-stage31-object-local-negative-int.pkl",
+      "input_sha256": "463f0609b97b13607da536056afb3f7c95021e5cf0add3925226c70b252db29e",
+      "required": true,
+      "requirements": [
+        "semantic:numeric-literals",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:types",
+        "semantic:type-aliases"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "diagnostic-stage31-module-direct-negative-int",
+      "input": "tests/fixtures/m2/diagnostic-stage31-module-direct-negative-int.pkl",
+      "input_sha256": "2cdc7ad002f63effc926432eb423a3cd09eb51f1b162d6acd41ed3320872521f",
+      "required": true,
+      "requirements": [
+        "semantic:numeric-literals",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:types"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "diagnostic-stage31-module-mismatch-negative-int",
+      "input": "tests/fixtures/m2/diagnostic-stage31-module-mismatch-negative-int.pkl",
+      "input_sha256": "9d97eaa2f744139831d323bfe033050e2f424ee26dc5ac031246dede0530ed49",
+      "required": true,
+      "requirements": [
+        "semantic:numeric-literals",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:types"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "diagnostic-stage31-argument-alias-grouped-negative",
+      "input": "tests/fixtures/m2/diagnostic-stage31-argument-alias-grouped-negative.pkl",
+      "input_sha256": "e681cd3c8ea816af159ff746c84d4cb3c578d1aeb88d20717d97e528fa56140e",
+      "required": true,
+      "requirements": [
+        "semantic:numeric-literals",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:functions"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "diagnostic-stage31-argument-direct-negative-float",
+      "input": "tests/fixtures/m2/diagnostic-stage31-argument-direct-negative-float.pkl",
+      "input_sha256": "c4b59e51be1d799faf84fff936938695b57dc1290a5955091a0088af7154c35b",
+      "required": true,
+      "requirements": [
+        "semantic:numeric-literals",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:types",
+        "semantic:functions"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "diagnostic-stage31-return-alias-grouped-negative",
+      "input": "tests/fixtures/m2/diagnostic-stage31-return-alias-grouped-negative.pkl",
+      "input_sha256": "295b006cbfc71dc1ca9dda4089dff5079f3f1be2ed52838a592ed46e15f8f99b",
+      "required": true,
+      "requirements": [
+        "semantic:numeric-literals",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:functions"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "diagnostic-stage31-return-direct-negative-int",
+      "input": "tests/fixtures/m2/diagnostic-stage31-return-direct-negative-int.pkl",
+      "input_sha256": "b9e046ac4f83c46306f4e1e82a778c5299029a0b244f544c4aa005f518abb0b9",
+      "required": true,
+      "requirements": [
+        "semantic:numeric-literals",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:types",
+        "semantic:functions"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "diagnostic-stage31-cast-grouped-negative",
+      "input": "tests/fixtures/m2/diagnostic-stage31-cast-grouped-negative.pkl",
+      "input_sha256": "f4dfebb8e02805b43fefd7309b23c95ba29508d44905884e62423fa2abe25d39",
+      "required": true,
+      "requirements": [
+        "semantic:numeric-literals",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:types",
+        "semantic:type-tests-casts"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "diagnostic-stage31-first-error-negative-int",
+      "input": "tests/fixtures/m2/diagnostic-stage31-first-error-negative-int.pkl",
+      "input_sha256": "e188aa78f285fb6ed6f9520edfba9dd3ea0342f873667f7e36571bd95d3a6054",
+      "required": true,
+      "requirements": [
+        "semantic:numeric-literals",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:types"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "diagnostic-stage31-success-minint",
+      "input": "tests/fixtures/m2/diagnostic-stage31-success-minint.pkl",
+      "input_sha256": "517f765ce9c8daec2df3bea0b9bc32245b424f827650bf1c031788b5c4ee3f4e",
+      "required": true,
+      "requirements": [
+        "semantic:numeric-literals",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "diagnostic-stage31-success-negative-zero",
+      "input": "tests/fixtures/m2/diagnostic-stage31-success-negative-zero.pkl",
+      "input_sha256": "94fe05ce8061cb0a1d1efeae8b82dffa636847b58bd1685b9118abdb9e9419aa",
+      "required": true,
+      "requirements": [
+        "semantic:numeric-literals",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "diagnostic-stage31-success-negative-grouped",
+      "input": "tests/fixtures/m2/diagnostic-stage31-success-negative-grouped.pkl",
+      "input_sha256": "33ba7785e08a1a49a824ff7620e617f7a5b9e223fecee478dd31df5f97fe85fb",
+      "required": true,
+      "requirements": [
+        "semantic:numeric-literals",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "diagnostic-stage31-success-grouped-negative",
+      "input": "tests/fixtures/m2/diagnostic-stage31-success-grouped-negative.pkl",
+      "input_sha256": "a443a9f13e480d2e940638eef6b82aaefe9edaa004623e56519e31e5a5cb4458",
+      "required": true,
+      "requirements": [
+        "semantic:numeric-literals",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "diagnostic-stage31-success-double-negative",
+      "input": "tests/fixtures/m2/diagnostic-stage31-success-double-negative.pkl",
+      "input_sha256": "988e293d84247088875c34fe5250b20a9e8b308d4f12c95ded3250f65058a826",
+      "required": true,
+      "requirements": [
+        "semantic:numeric-literals",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "diagnostic-stage31-class-public-negative-int",
+      "input": "tests/fixtures/m2/diagnostic-stage31-class-public-negative-int.pkl",
+      "input_sha256": "763f090583918677bac3893d54f30efbfdb57708f3cc0fb2eac8e387394c66f3",
+      "required": true,
+      "requirements": [
+        "semantic:numeric-literals",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:classes"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "diagnostic-stage31-class-public-negative-float",
+      "input": "tests/fixtures/m2/diagnostic-stage31-class-public-negative-float.pkl",
+      "input_sha256": "1d5c3aee9854129e34d385bf03e89e96dfbe40d524807c0e3805fc01088ee34d",
+      "required": true,
+      "requirements": [
+        "semantic:numeric-literals",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:classes"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "diagnostic-stage31-module-public-alias-negative",
+      "input": "tests/fixtures/m2/diagnostic-stage31-module-public-alias-negative.pkl",
+      "input_sha256": "25240485629f8ef27de1570e560f0814eff0cefd9b3250a3e6f26f8282d06676",
+      "required": true,
+      "requirements": [
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:types",
+        "semantic:numeric-literals",
+        "semantic:operators",
+        "semantic:type-aliases"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "diagnostic-stage31-module-public-alias-grouped",
+      "input": "tests/fixtures/m2/diagnostic-stage31-module-public-alias-grouped.pkl",
+      "input_sha256": "441872079d2f7298dbc9a40d24880a2070476bed86c0eedd3a22130738d8aa09",
+      "required": true,
+      "requirements": [
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:types",
+        "semantic:numeric-literals",
+        "semantic:operators",
+        "semantic:type-aliases"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "diagnostic-stage31-class-amendment-grouped",
+      "input": "tests/fixtures/m2/diagnostic-stage31-class-amendment-grouped.pkl",
+      "input_sha256": "41703d61cac36933871cc5dd5461c665b26a4caaef2218d4a3390256db17fbe6",
+      "required": true,
+      "requirements": [
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:types",
+        "semantic:numeric-literals",
+        "semantic:operators",
+        "semantic:classes"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "diagnostic-stage31-mapping-direct-negative",
+      "input": "tests/fixtures/m2/diagnostic-stage31-mapping-direct-negative.pkl",
+      "input_sha256": "afb2bc5c6bd2adb4b18426b594e4f4a550abff5e3a1dbc8c43029ff563183e59",
+      "required": true,
+      "requirements": [
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:types",
+        "semantic:numeric-literals",
+        "semantic:operators",
+        "semantic:collections"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "diagnostic-stage31-mapping-direct-grouped",
+      "input": "tests/fixtures/m2/diagnostic-stage31-mapping-direct-grouped.pkl",
+      "input_sha256": "6ca51102e0c7822e854c1c240c09af51e7650b148625a99591c78534f5a9736d",
+      "required": true,
+      "requirements": [
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:types",
+        "semantic:numeric-literals",
+        "semantic:operators",
+        "semantic:collections"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "diagnostic-stage31-listing-direct-negative",
+      "input": "tests/fixtures/m2/diagnostic-stage31-listing-direct-negative.pkl",
+      "input_sha256": "5b4e031bbdd1c1086e132f33290d8872e776f2515158c95e0ba073fda5e4b084",
+      "required": true,
+      "requirements": [
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:types",
+        "semantic:numeric-literals",
+        "semantic:operators",
+        "semantic:collections"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "diagnostic-stage31-listing-direct-grouped",
+      "input": "tests/fixtures/m2/diagnostic-stage31-listing-direct-grouped.pkl",
+      "input_sha256": "6e05baabf15c3f0213f9d956ec4f3584ac379d988774fac60d2f88f9542b2a14",
+      "required": true,
+      "requirements": [
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:types",
+        "semantic:numeric-literals",
+        "semantic:operators",
+        "semantic:collections"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "diagnostic-stage31-local-string",
+      "input": "tests/fixtures/m2/diagnostic-stage31-local-string.pkl",
+      "input_sha256": "e0faf6b529d20aefec6356de3e15a6365bdb8d9ea447801ba1c5f75f8501cfa7",
+      "required": true,
+      "requirements": [
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:types",
+        "semantic:strings"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "diagnostic-stage31-local-bool",
+      "input": "tests/fixtures/m2/diagnostic-stage31-local-bool.pkl",
+      "input_sha256": "fcbdb0e1b935db23cfcf73a9c915f62b088f46079083fac10bff1600eb97f20a",
+      "required": true,
+      "requirements": [
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:types",
+        "semantic:scalar-literals"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "diagnostic-stage31-local-null",
+      "input": "tests/fixtures/m2/diagnostic-stage31-local-null.pkl",
+      "input_sha256": "c7d8bac40e814b80a91284003f754104db2f423964352a6a46b63d01b8089baa",
+      "required": true,
+      "requirements": [
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:types",
+        "semantic:scalar-literals"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "diagnostic-stage31-class-public-string",
+      "input": "tests/fixtures/m2/diagnostic-stage31-class-public-string.pkl",
+      "input_sha256": "7d146cf0ac77bdd21b93d6ea12aa3e8d7d0050b1f9932689a4bbc001c3d8cb05",
+      "required": true,
+      "requirements": [
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:types",
+        "semantic:strings",
+        "semantic:classes"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "diagnostic-stage31-class-public-bool",
+      "input": "tests/fixtures/m2/diagnostic-stage31-class-public-bool.pkl",
+      "input_sha256": "a45c85c855346c41b967cbefacea2ee4f6ec922deac1e4dac4a803400245effb",
+      "required": true,
+      "requirements": [
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:types",
+        "semantic:scalar-literals",
+        "semantic:classes"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "diagnostic-stage31-class-public-null",
+      "input": "tests/fixtures/m2/diagnostic-stage31-class-public-null.pkl",
+      "input_sha256": "0bbda97d35be5b58f25a81111030ad24f7212e33a789392602d636ea3d32bdc8",
+      "required": true,
+      "requirements": [
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:types",
+        "semantic:scalar-literals",
+        "semantic:classes"
+      ]
+    },
+    {
       "adapter": null,
       "execution": {
         "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
@@ -152045,9 +153037,9 @@
   "comparison_boundary": "evaluateExpressionString(ModuleSource.path(same absolute URI), expression) UTF-8 stdout; whole PklException.getMessage() UTF-8 stderr and exit 1; no trimming. Power assertions default to disabled; an explicit per-case power_assertions boolean enables the same option in both probes. Stringification alone is not typed value/API compatibility.",
   "completion": "Every required semantic/source requirement needs implementation/test mappings and complete passing execution. Pending/unmapped/unimplemented/mismatch remains a full-gate failure.",
   "counts": {
-    "cases": 4002,
+    "cases": 4050,
     "cases_by_execution": {
-      "ready": 3002,
+      "ready": 3050,
       "unimplemented": 960,
       "unmapped": 40
     },
@@ -152402,7 +153394,49 @@
           "equality-semantic-number-signed-zero",
           "diagnostic-stage30-overflow-dynamic-body",
           "diagnostic-stage30-overflow-element-body",
-          "diagnostic-stage30-overflow-key-expression"
+          "diagnostic-stage30-overflow-key-expression",
+          "diagnostic-stage31-module-alias-negative-int",
+          "diagnostic-stage31-module-alias-negative-space",
+          "diagnostic-stage31-module-alias-negative-comment",
+          "diagnostic-stage31-module-alias-negative-multiline",
+          "diagnostic-stage31-module-alias-negative-hex",
+          "diagnostic-stage31-module-alias-negative-binary",
+          "diagnostic-stage31-module-alias-negative-octal",
+          "diagnostic-stage31-module-alias-negative-float",
+          "diagnostic-stage31-module-alias-negative-float-zero",
+          "diagnostic-stage31-module-alias-grouped-negative",
+          "diagnostic-stage31-module-alias-nested-grouped-negative",
+          "diagnostic-stage31-module-alias-negative-grouped",
+          "diagnostic-stage31-module-alias-negative-grouped-float",
+          "diagnostic-stage31-module-alias-double-negative",
+          "diagnostic-stage31-module-alias-negative-minint",
+          "diagnostic-stage31-module-alias-grouped-overflow",
+          "diagnostic-stage31-module-alias-negative-overflow",
+          "diagnostic-stage31-class-local-negative-int",
+          "diagnostic-stage31-class-public-grouped-negative",
+          "diagnostic-stage31-object-local-negative-int",
+          "diagnostic-stage31-module-direct-negative-int",
+          "diagnostic-stage31-module-mismatch-negative-int",
+          "diagnostic-stage31-argument-alias-grouped-negative",
+          "diagnostic-stage31-argument-direct-negative-float",
+          "diagnostic-stage31-return-alias-grouped-negative",
+          "diagnostic-stage31-return-direct-negative-int",
+          "diagnostic-stage31-cast-grouped-negative",
+          "diagnostic-stage31-first-error-negative-int",
+          "diagnostic-stage31-success-minint",
+          "diagnostic-stage31-success-negative-zero",
+          "diagnostic-stage31-success-negative-grouped",
+          "diagnostic-stage31-success-grouped-negative",
+          "diagnostic-stage31-success-double-negative",
+          "diagnostic-stage31-class-public-negative-int",
+          "diagnostic-stage31-class-public-negative-float",
+          "diagnostic-stage31-module-public-alias-negative",
+          "diagnostic-stage31-module-public-alias-grouped",
+          "diagnostic-stage31-class-amendment-grouped",
+          "diagnostic-stage31-mapping-direct-negative",
+          "diagnostic-stage31-mapping-direct-grouped",
+          "diagnostic-stage31-listing-direct-negative",
+          "diagnostic-stage31-listing-direct-grouped"
         ],
         "state": "partial"
       }
@@ -152421,7 +153455,11 @@
         "case_ids": [
           "literal-true",
           "literal-false",
-          "literal-null"
+          "literal-null",
+          "diagnostic-stage31-local-bool",
+          "diagnostic-stage31-local-null",
+          "diagnostic-stage31-class-public-bool",
+          "diagnostic-stage31-class-public-null"
         ],
         "state": "partial"
       }
@@ -152525,7 +153563,9 @@
           "diagnostic-stage30-overflow-key-expression",
           "diagnostic-stage30-module-local-typed-ascii",
           "diagnostic-stage30-class-local-typed-ascii",
-          "diagnostic-stage30-object-local-typed-alias-function"
+          "diagnostic-stage30-object-local-typed-alias-function",
+          "diagnostic-stage31-local-string",
+          "diagnostic-stage31-class-public-string"
         ],
         "state": "partial"
       }
@@ -153549,7 +154589,49 @@
           "string-stage29-order-raw-high-invalid-escape",
           "string-stage29-order-multiline-high-indent",
           "string-stage29-order-multiline-high-empty-later-escape",
-          "string-stage29-order-split-pair-later-syntax"
+          "string-stage29-order-split-pair-later-syntax",
+          "diagnostic-stage31-module-alias-negative-int",
+          "diagnostic-stage31-module-alias-negative-space",
+          "diagnostic-stage31-module-alias-negative-comment",
+          "diagnostic-stage31-module-alias-negative-multiline",
+          "diagnostic-stage31-module-alias-negative-hex",
+          "diagnostic-stage31-module-alias-negative-binary",
+          "diagnostic-stage31-module-alias-negative-octal",
+          "diagnostic-stage31-module-alias-negative-float",
+          "diagnostic-stage31-module-alias-negative-float-zero",
+          "diagnostic-stage31-module-alias-grouped-negative",
+          "diagnostic-stage31-module-alias-nested-grouped-negative",
+          "diagnostic-stage31-module-alias-negative-grouped",
+          "diagnostic-stage31-module-alias-negative-grouped-float",
+          "diagnostic-stage31-module-alias-double-negative",
+          "diagnostic-stage31-module-alias-negative-minint",
+          "diagnostic-stage31-module-alias-grouped-overflow",
+          "diagnostic-stage31-module-alias-negative-overflow",
+          "diagnostic-stage31-class-local-negative-int",
+          "diagnostic-stage31-class-public-grouped-negative",
+          "diagnostic-stage31-object-local-negative-int",
+          "diagnostic-stage31-module-direct-negative-int",
+          "diagnostic-stage31-module-mismatch-negative-int",
+          "diagnostic-stage31-argument-alias-grouped-negative",
+          "diagnostic-stage31-argument-direct-negative-float",
+          "diagnostic-stage31-return-alias-grouped-negative",
+          "diagnostic-stage31-return-direct-negative-int",
+          "diagnostic-stage31-cast-grouped-negative",
+          "diagnostic-stage31-first-error-negative-int",
+          "diagnostic-stage31-success-minint",
+          "diagnostic-stage31-success-negative-zero",
+          "diagnostic-stage31-success-negative-grouped",
+          "diagnostic-stage31-success-grouped-negative",
+          "diagnostic-stage31-success-double-negative",
+          "diagnostic-stage31-class-public-negative-int",
+          "diagnostic-stage31-class-public-negative-float",
+          "diagnostic-stage31-module-public-alias-negative",
+          "diagnostic-stage31-module-public-alias-grouped",
+          "diagnostic-stage31-class-amendment-grouped",
+          "diagnostic-stage31-mapping-direct-negative",
+          "diagnostic-stage31-mapping-direct-grouped",
+          "diagnostic-stage31-listing-direct-negative",
+          "diagnostic-stage31-listing-direct-grouped"
         ],
         "state": "partial"
       }
@@ -153994,12 +155076,12 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "18a4be0943749c78b23d8882cdad4fe6775848f1d51660b69b8fa3d374fed9c1",
+            "sha256": "f8b4a26b6d3639c596e69b3928ba3dbd4c7a7e22436da746b68e6ab53d9f227f",
             "symbol": "initialize_member_types"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "18a4be0943749c78b23d8882cdad4fe6775848f1d51660b69b8fa3d374fed9c1",
+            "sha256": "f8b4a26b6d3639c596e69b3928ba3dbd4c7a7e22436da746b68e6ab53d9f227f",
             "symbol": "validate_class_override"
           },
           {
@@ -154009,7 +155091,7 @@
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "18a4be0943749c78b23d8882cdad4fe6775848f1d51660b69b8fa3d374fed9c1",
+            "sha256": "f8b4a26b6d3639c596e69b3928ba3dbd4c7a7e22436da746b68e6ab53d9f227f",
             "symbol": "force_key"
           },
           {
@@ -155906,12 +156988,12 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "18a4be0943749c78b23d8882cdad4fe6775848f1d51660b69b8fa3d374fed9c1",
+            "sha256": "f8b4a26b6d3639c596e69b3928ba3dbd4c7a7e22436da746b68e6ab53d9f227f",
             "symbol": "validate_object_override"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "18a4be0943749c78b23d8882cdad4fe6775848f1d51660b69b8fa3d374fed9c1",
+            "sha256": "f8b4a26b6d3639c596e69b3928ba3dbd4c7a7e22436da746b68e6ab53d9f227f",
             "symbol": "inherited_member"
           }
         ],
@@ -156117,17 +157199,17 @@
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "18a4be0943749c78b23d8882cdad4fe6775848f1d51660b69b8fa3d374fed9c1",
+            "sha256": "f8b4a26b6d3639c596e69b3928ba3dbd4c7a7e22436da746b68e6ab53d9f227f",
             "symbol": "validate_class_override"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "18a4be0943749c78b23d8882cdad4fe6775848f1d51660b69b8fa3d374fed9c1",
+            "sha256": "f8b4a26b6d3639c596e69b3928ba3dbd4c7a7e22436da746b68e6ab53d9f227f",
             "symbol": "validate_object_override"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "18a4be0943749c78b23d8882cdad4fe6775848f1d51660b69b8fa3d374fed9c1",
+            "sha256": "f8b4a26b6d3639c596e69b3928ba3dbd4c7a7e22436da746b68e6ab53d9f227f",
             "symbol": "initialize_member_types"
           }
         ],
@@ -156494,7 +157576,15 @@
           "set-stage23-class-type-good",
           "set-stage23-class-type-bad",
           "diagnostic-stage30-class-typed-ascii",
-          "diagnostic-stage30-class-local-typed-ascii"
+          "diagnostic-stage30-class-local-typed-ascii",
+          "diagnostic-stage31-class-local-negative-int",
+          "diagnostic-stage31-class-public-grouped-negative",
+          "diagnostic-stage31-class-public-negative-int",
+          "diagnostic-stage31-class-public-negative-float",
+          "diagnostic-stage31-class-amendment-grouped",
+          "diagnostic-stage31-class-public-string",
+          "diagnostic-stage31-class-public-bool",
+          "diagnostic-stage31-class-public-null"
         ],
         "state": "partial"
       }
@@ -156511,17 +157601,17 @@
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "18a4be0943749c78b23d8882cdad4fe6775848f1d51660b69b8fa3d374fed9c1",
+            "sha256": "f8b4a26b6d3639c596e69b3928ba3dbd4c7a7e22436da746b68e6ab53d9f227f",
             "symbol": "validate_class_override"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "18a4be0943749c78b23d8882cdad4fe6775848f1d51660b69b8fa3d374fed9c1",
+            "sha256": "f8b4a26b6d3639c596e69b3928ba3dbd4c7a7e22436da746b68e6ab53d9f227f",
             "symbol": "validate_object_override"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "18a4be0943749c78b23d8882cdad4fe6775848f1d51660b69b8fa3d374fed9c1",
+            "sha256": "f8b4a26b6d3639c596e69b3928ba3dbd4c7a7e22436da746b68e6ab53d9f227f",
             "symbol": "initialize_member_types"
           },
           {
@@ -156829,12 +157919,12 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "18a4be0943749c78b23d8882cdad4fe6775848f1d51660b69b8fa3d374fed9c1",
+            "sha256": "f8b4a26b6d3639c596e69b3928ba3dbd4c7a7e22436da746b68e6ab53d9f227f",
             "symbol": "TypeCheck"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "18a4be0943749c78b23d8882cdad4fe6775848f1d51660b69b8fa3d374fed9c1",
+            "sha256": "f8b4a26b6d3639c596e69b3928ba3dbd4c7a7e22436da746b68e6ab53d9f227f",
             "symbol": "compile_type_at"
           },
           {
@@ -156844,7 +157934,7 @@
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "18a4be0943749c78b23d8882cdad4fe6775848f1d51660b69b8fa3d374fed9c1",
+            "sha256": "f8b4a26b6d3639c596e69b3928ba3dbd4c7a7e22436da746b68e6ab53d9f227f",
             "symbol": "invoke_function"
           },
           {
@@ -157170,6 +158260,10 @@
           "collection-stage24-wrapper-constrained-different-predicate",
           "diagnostic-stage30-local-method-high",
           "diagnostic-stage30-object-local-typed-alias-function",
+          "diagnostic-stage31-argument-alias-grouped-negative",
+          "diagnostic-stage31-argument-direct-negative-float",
+          "diagnostic-stage31-return-alias-grouped-negative",
+          "diagnostic-stage31-return-direct-negative-int",
           "types-stage18-default-style-lambda"
         ],
         "state": "partial"
@@ -159137,7 +160231,11 @@
           "diagnostic-stage30-listing-high-control",
           "diagnostic-stage30-overflow-dynamic-body",
           "diagnostic-stage30-overflow-element-body",
-          "diagnostic-stage30-overflow-key-expression"
+          "diagnostic-stage30-overflow-key-expression",
+          "diagnostic-stage31-mapping-direct-negative",
+          "diagnostic-stage31-mapping-direct-grouped",
+          "diagnostic-stage31-listing-direct-negative",
+          "diagnostic-stage31-listing-direct-grouped"
         ],
         "state": "partial"
       }
@@ -159149,12 +160247,12 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "18a4be0943749c78b23d8882cdad4fe6775848f1d51660b69b8fa3d374fed9c1",
+            "sha256": "f8b4a26b6d3639c596e69b3928ba3dbd4c7a7e22436da746b68e6ab53d9f227f",
             "symbol": "TypeCheck"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "18a4be0943749c78b23d8882cdad4fe6775848f1d51660b69b8fa3d374fed9c1",
+            "sha256": "f8b4a26b6d3639c596e69b3928ba3dbd4c7a7e22436da746b68e6ab53d9f227f",
             "symbol": "initialize_type_resolution"
           },
           {
@@ -159164,12 +160262,12 @@
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "18a4be0943749c78b23d8882cdad4fe6775848f1d51660b69b8fa3d374fed9c1",
+            "sha256": "f8b4a26b6d3639c596e69b3928ba3dbd4c7a7e22436da746b68e6ab53d9f227f",
             "symbol": "type_resolution_plan"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "18a4be0943749c78b23d8882cdad4fe6775848f1d51660b69b8fa3d374fed9c1",
+            "sha256": "f8b4a26b6d3639c596e69b3928ba3dbd4c7a7e22436da746b68e6ab53d9f227f",
             "symbol": "active_constraints"
           },
           {
@@ -160474,6 +161572,49 @@
           "diagnostic-stage30-module-local-typed-ascii",
           "diagnostic-stage30-class-local-typed-ascii",
           "diagnostic-stage30-object-local-typed-alias-function",
+          "diagnostic-stage31-module-alias-negative-int",
+          "diagnostic-stage31-module-alias-negative-space",
+          "diagnostic-stage31-module-alias-negative-comment",
+          "diagnostic-stage31-module-alias-negative-multiline",
+          "diagnostic-stage31-module-alias-negative-hex",
+          "diagnostic-stage31-module-alias-negative-binary",
+          "diagnostic-stage31-module-alias-negative-octal",
+          "diagnostic-stage31-module-alias-negative-float",
+          "diagnostic-stage31-module-alias-negative-float-zero",
+          "diagnostic-stage31-module-alias-grouped-negative",
+          "diagnostic-stage31-module-alias-nested-grouped-negative",
+          "diagnostic-stage31-module-alias-negative-grouped",
+          "diagnostic-stage31-module-alias-negative-grouped-float",
+          "diagnostic-stage31-module-alias-double-negative",
+          "diagnostic-stage31-module-alias-negative-minint",
+          "diagnostic-stage31-module-alias-grouped-overflow",
+          "diagnostic-stage31-module-alias-negative-overflow",
+          "diagnostic-stage31-class-local-negative-int",
+          "diagnostic-stage31-class-public-grouped-negative",
+          "diagnostic-stage31-object-local-negative-int",
+          "diagnostic-stage31-module-direct-negative-int",
+          "diagnostic-stage31-module-mismatch-negative-int",
+          "diagnostic-stage31-argument-alias-grouped-negative",
+          "diagnostic-stage31-argument-direct-negative-float",
+          "diagnostic-stage31-return-alias-grouped-negative",
+          "diagnostic-stage31-return-direct-negative-int",
+          "diagnostic-stage31-cast-grouped-negative",
+          "diagnostic-stage31-first-error-negative-int",
+          "diagnostic-stage31-class-public-negative-int",
+          "diagnostic-stage31-class-public-negative-float",
+          "diagnostic-stage31-module-public-alias-negative",
+          "diagnostic-stage31-module-public-alias-grouped",
+          "diagnostic-stage31-class-amendment-grouped",
+          "diagnostic-stage31-mapping-direct-negative",
+          "diagnostic-stage31-mapping-direct-grouped",
+          "diagnostic-stage31-listing-direct-negative",
+          "diagnostic-stage31-listing-direct-grouped",
+          "diagnostic-stage31-local-string",
+          "diagnostic-stage31-local-bool",
+          "diagnostic-stage31-local-null",
+          "diagnostic-stage31-class-public-string",
+          "diagnostic-stage31-class-public-bool",
+          "diagnostic-stage31-class-public-null",
           "types-stage13-alias-value",
           "types-stage13-alias-self-equal",
           "types-stage13-alias-distinct-equal",
@@ -160613,32 +161754,32 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "18a4be0943749c78b23d8882cdad4fe6775848f1d51660b69b8fa3d374fed9c1",
+            "sha256": "f8b4a26b6d3639c596e69b3928ba3dbd4c7a7e22436da746b68e6ab53d9f227f",
             "symbol": "BeginTypeAlias"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "18a4be0943749c78b23d8882cdad4fe6775848f1d51660b69b8fa3d374fed9c1",
+            "sha256": "f8b4a26b6d3639c596e69b3928ba3dbd4c7a7e22436da746b68e6ab53d9f227f",
             "symbol": "NamedAlias"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "18a4be0943749c78b23d8882cdad4fe6775848f1d51660b69b8fa3d374fed9c1",
+            "sha256": "f8b4a26b6d3639c596e69b3928ba3dbd4c7a7e22436da746b68e6ab53d9f227f",
             "symbol": "compile_type_at"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "18a4be0943749c78b23d8882cdad4fe6775848f1d51660b69b8fa3d374fed9c1",
+            "sha256": "f8b4a26b6d3639c596e69b3928ba3dbd4c7a7e22436da746b68e6ab53d9f227f",
             "symbol": "type_resolution_plan"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "18a4be0943749c78b23d8882cdad4fe6775848f1d51660b69b8fa3d374fed9c1",
+            "sha256": "f8b4a26b6d3639c596e69b3928ba3dbd4c7a7e22436da746b68e6ab53d9f227f",
             "symbol": "initialize_type_resolution"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "18a4be0943749c78b23d8882cdad4fe6775848f1d51660b69b8fa3d374fed9c1",
+            "sha256": "f8b4a26b6d3639c596e69b3928ba3dbd4c7a7e22436da746b68e6ab53d9f227f",
             "symbol": "active_constraints"
           },
           {
@@ -161308,6 +162449,32 @@
           "collection-stage24-parser-alias-trailing-scalar",
           "collection-stage24-parser-multiline-alias-spaced",
           "diagnostic-stage30-object-local-typed-alias-function",
+          "diagnostic-stage31-module-alias-negative-int",
+          "diagnostic-stage31-module-alias-negative-space",
+          "diagnostic-stage31-module-alias-negative-comment",
+          "diagnostic-stage31-module-alias-negative-multiline",
+          "diagnostic-stage31-module-alias-negative-hex",
+          "diagnostic-stage31-module-alias-negative-binary",
+          "diagnostic-stage31-module-alias-negative-octal",
+          "diagnostic-stage31-module-alias-negative-float",
+          "diagnostic-stage31-module-alias-negative-float-zero",
+          "diagnostic-stage31-module-alias-grouped-negative",
+          "diagnostic-stage31-module-alias-nested-grouped-negative",
+          "diagnostic-stage31-module-alias-negative-grouped",
+          "diagnostic-stage31-module-alias-negative-grouped-float",
+          "diagnostic-stage31-module-alias-double-negative",
+          "diagnostic-stage31-module-alias-negative-minint",
+          "diagnostic-stage31-module-alias-grouped-overflow",
+          "diagnostic-stage31-module-alias-negative-overflow",
+          "diagnostic-stage31-class-local-negative-int",
+          "diagnostic-stage31-class-public-grouped-negative",
+          "diagnostic-stage31-object-local-negative-int",
+          "diagnostic-stage31-argument-alias-grouped-negative",
+          "diagnostic-stage31-return-alias-grouped-negative",
+          "diagnostic-stage31-class-public-negative-int",
+          "diagnostic-stage31-class-public-negative-float",
+          "diagnostic-stage31-module-public-alias-negative",
+          "diagnostic-stage31-module-public-alias-grouped",
           "types-stage17-const-method-local",
           "types-stage17-const-method-ordinary",
           "types-stage17-const-method-this",
@@ -161380,7 +162547,7 @@
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "18a4be0943749c78b23d8882cdad4fe6775848f1d51660b69b8fa3d374fed9c1",
+            "sha256": "f8b4a26b6d3639c596e69b3928ba3dbd4c7a7e22436da746b68e6ab53d9f227f",
             "symbol": "invoke_function"
           },
           {
@@ -162099,12 +163266,12 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "18a4be0943749c78b23d8882cdad4fe6775848f1d51660b69b8fa3d374fed9c1",
+            "sha256": "f8b4a26b6d3639c596e69b3928ba3dbd4c7a7e22436da746b68e6ab53d9f227f",
             "symbol": "NamedAlias"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "18a4be0943749c78b23d8882cdad4fe6775848f1d51660b69b8fa3d374fed9c1",
+            "sha256": "f8b4a26b6d3639c596e69b3928ba3dbd4c7a7e22436da746b68e6ab53d9f227f",
             "symbol": "compile_type_at"
           },
           {
@@ -162114,12 +163281,12 @@
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "18a4be0943749c78b23d8882cdad4fe6775848f1d51660b69b8fa3d374fed9c1",
+            "sha256": "f8b4a26b6d3639c596e69b3928ba3dbd4c7a7e22436da746b68e6ab53d9f227f",
             "symbol": "type_resolution_plan"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "18a4be0943749c78b23d8882cdad4fe6775848f1d51660b69b8fa3d374fed9c1",
+            "sha256": "f8b4a26b6d3639c596e69b3928ba3dbd4c7a7e22436da746b68e6ab53d9f227f",
             "symbol": "initialize_type_resolution"
           },
           {
@@ -163200,7 +164367,8 @@
           "collection-stage24-set-nothing-string-bottom",
           "collection-stage24-set-nothing-null-bottom",
           "collection-stage24-relation-empty-nothing-left-bottom",
-          "collection-stage24-relation-empty-nothing-right-bottom"
+          "collection-stage24-relation-empty-nothing-right-bottom",
+          "diagnostic-stage31-cast-grouped-negative"
         ],
         "state": "partial"
       }
@@ -163497,7 +164665,7 @@
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "18a4be0943749c78b23d8882cdad4fe6775848f1d51660b69b8fa3d374fed9c1",
+            "sha256": "f8b4a26b6d3639c596e69b3928ba3dbd4c7a7e22436da746b68e6ab53d9f227f",
             "symbol": "initialize_member_types"
           },
           {
@@ -163701,7 +164869,7 @@
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "18a4be0943749c78b23d8882cdad4fe6775848f1d51660b69b8fa3d374fed9c1",
+            "sha256": "f8b4a26b6d3639c596e69b3928ba3dbd4c7a7e22436da746b68e6ab53d9f227f",
             "symbol": "compile_type_at"
           }
         ],
@@ -163783,6 +164951,11 @@
             "path": "crates/pkl-runtime/src/value.rs",
             "sha256": "1989d618346dc3c3de36bd95490740efc379cd8cf51dd19c9e1e7eb159f06511",
             "symbol": "RuntimeFrame"
+          },
+          {
+            "path": "crates/pkl-runtime/src/vm.rs",
+            "sha256": "f8b4a26b6d3639c596e69b3928ba3dbd4c7a7e22436da746b68e6ab53d9f227f",
+            "symbol": "executable_value_span"
           }
         ],
         "state": "partial"
@@ -163793,9 +164966,10 @@
       "reviewed_mapping": {
         "remaining": [
           "Colored output, general imported source stacks, first-error combinations and the complete parser/resolver/runtime diagnostic corpus remain open; selected uncolored recursive compression is covered.",
-          "Original selected cycle and remainder-zero failures remain failed."
+          "Original selected cycle and remainder-zero failures remain failed.",
+          "Exploratory double-negated minimum-integer overflow frames and invalid non-local object annotation frame names remain known differences outside the Stage 31 selected additions."
         ],
-        "scope": "Reference constructor, access, constraint and rendering errors retain complete message, authored frame, foreign standard-library source and URI bytes in selected comparisons. Stage11 adds selected fixed declaration, inherited metadata and complete raw diagnostics through the shared VM. Stage 13 adds selected alias/function metadata, exported-type equality and complete raw diagnostic comparisons; original suite execution and remaining scope stay open. Stage 14 adds selected authored type-resolution order, generic parameter scope and nested substitution, class/alias arity ordering, and owner signature diagnostics; persistent failed-declaration state has a separate sequence contract. Stage 15 adds selected non-generic recursive constraint block graphs and declaration type scope, plus builtin Class argument erasure and arity ordering. At Stage 15 recursive generic constraints remained open; Stage 16 adds bounded shared receiver-slot support. Stage 16: Selected recursive frame compression, count-one loops, complete call spans and hint placement match Java uncolored diagnostics. Stage 17: Selected const-method barriers, lambda lookup depth, immediate outer lexical scope, and grouped-callee parser diagnostics follow the pinned Java behavior. Stage 18 adds selected let-body and for-generator lexical const-depth boundaries while retaining enclosing const levels, plus their complete raw diagnostics and lambda controls. Selected finite recursive generic and instantiated type-variable failures compare complete Java bytes with power assertions enabled and disabled. Stage 19 adds bounded shared-metadata regressions for finite deep and branching actual arguments, observable class-argument swaps, inline/lambda/shared-let recursion, recursive Reference validation, and distinct wrapper actuals. Original Java stack errors, historical native abort evidence, full language semantics and performance remain separately accounted. Stage20 adds bounded nullable defaults, inferred collection amendments, null identity and repeated default failures; complete nullable and collection semantics remain unverified. Stage21 adds bounded direct symbolic constructors, actual-argument diagnostics, lazy class defaults, collection body controls and persistent retries; complete constructors, lexical roots and builtin coverage remain unverified. Stage22 adds bounded strict Map construction, boxed/hash-prefix key semantics, lazy nested generic values, insertion-order iteration and HAMT-ordered equality/hash forcing; complete Map APIs and language coverage remain unverified. Stage23 adds bounded strict Set construction, immediate element hashing and deduplication, boxed/cache-sensitive membership, Set defaults and generic aliases, eager nested element checks, structural equality/hash, insertion-order generation/spreading and raw null/default diagnostic controls; complete Set APIs and language coverage remain unverified. Stage 24 additionally covers bounded Collection List/Set classification, eager versus lazy nested validation, aliases/defaults, nullable constructor timing, selected metadata and complete diagnostics. Stage 30 preserves UTF-16 diagnostic member paths through parser/resolver/compiler counters, block metadata, runtime frames and recursive compression. Selected sibling entry/function numbering and detached lifecycle names distinguish unmatched surrogates from literal question marks before Java UTF-8 output. Typed-property diagnostic controls distinguish inline checks for object-local declarations from module/class-local separate call frames; alias use does not change the declaration category.",
+        "scope": "Reference constructor, access, constraint and rendering errors retain complete message, authored frame, foreign standard-library source and URI bytes in selected comparisons. Stage11 adds selected fixed declaration, inherited metadata and complete raw diagnostics through the shared VM. Stage 13 adds selected alias/function metadata, exported-type equality and complete raw diagnostic comparisons; original suite execution and remaining scope stay open. Stage 14 adds selected authored type-resolution order, generic parameter scope and nested substitution, class/alias arity ordering, and owner signature diagnostics; persistent failed-declaration state has a separate sequence contract. Stage 15 adds selected non-generic recursive constraint block graphs and declaration type scope, plus builtin Class argument erasure and arity ordering. At Stage 15 recursive generic constraints remained open; Stage 16 adds bounded shared receiver-slot support. Stage 16: Selected recursive frame compression, count-one loops, complete call spans and hint placement match Java uncolored diagnostics. Stage 17: Selected const-method barriers, lambda lookup depth, immediate outer lexical scope, and grouped-callee parser diagnostics follow the pinned Java behavior. Stage 18 adds selected let-body and for-generator lexical const-depth boundaries while retaining enclosing const levels, plus their complete raw diagnostics and lambda controls. Selected finite recursive generic and instantiated type-variable failures compare complete Java bytes with power assertions enabled and disabled. Stage 19 adds bounded shared-metadata regressions for finite deep and branching actual arguments, observable class-argument swaps, inline/lambda/shared-let recursion, recursive Reference validation, and distinct wrapper actuals. Original Java stack errors, historical native abort evidence, full language semantics and performance remain separately accounted. Stage20 adds bounded nullable defaults, inferred collection amendments, null identity and repeated default failures; complete nullable and collection semantics remain unverified. Stage21 adds bounded direct symbolic constructors, actual-argument diagnostics, lazy class defaults, collection body controls and persistent retries; complete constructors, lexical roots and builtin coverage remain unverified. Stage22 adds bounded strict Map construction, boxed/hash-prefix key semantics, lazy nested generic values, insertion-order iteration and HAMT-ordered equality/hash forcing; complete Map APIs and language coverage remain unverified. Stage23 adds bounded strict Set construction, immediate element hashing and deduplication, boxed/cache-sensitive membership, Set defaults and generic aliases, eager nested element checks, structural equality/hash, insertion-order generation/spreading and raw null/default diagnostic controls; complete Set APIs and language coverage remain unverified. Stage 24 additionally covers bounded Collection List/Set classification, eager versus lazy nested validation, aliases/defaults, nullable constructor timing, selected metadata and complete diagnostics. Stage 30 preserves UTF-16 diagnostic member paths through parser/resolver/compiler counters, block metadata, runtime frames and recursive compression. Selected sibling entry/function numbering and detached lifecycle names distinguish unmatched surrogates from literal question marks before Java UTF-8 output. Typed-property diagnostic controls distinguish inline checks for object-local declarations from module/class-local separate call frames; alias use does not change the declaration category. Stage 31 distinguishes folded numeric-token value frames for local properties from authored body sections retained by selected public class constant properties. Selected complete diagnostics cover signed integer/float literals, whitespace/comments/multiline syntax, radix and minimum-integer literals, grouping, direct constraints and aliases; operand, argument/return, cast, overflow-literal and first-error controls retain their separate source ownership. Success controls preserve minimum integers and negative-zero arithmetic. These selected observations do not establish the complete numeric or diagnostic surface. Additional scalar-constant controls distinguish grouping removal in computed local bodies from source reconstruction for selected non-local property, overridden property, Mapping entry and Listing element value frames. Grouped string, Boolean and null constants preserve the same wrapper distinction. Original failed baseline and first-candidate grouped Listing observations remain preserved alongside the selected reconstruction regression; later observations do not relabel those historical failures.",
         "source": "compatibility/m2-mappings.json"
       },
       "tests": {
@@ -165305,7 +166479,55 @@
           "diagnostic-stage30-overflow-key-expression",
           "diagnostic-stage30-module-local-typed-ascii",
           "diagnostic-stage30-class-local-typed-ascii",
-          "diagnostic-stage30-object-local-typed-alias-function"
+          "diagnostic-stage30-object-local-typed-alias-function",
+          "diagnostic-stage31-module-alias-negative-int",
+          "diagnostic-stage31-module-alias-negative-space",
+          "diagnostic-stage31-module-alias-negative-comment",
+          "diagnostic-stage31-module-alias-negative-multiline",
+          "diagnostic-stage31-module-alias-negative-hex",
+          "diagnostic-stage31-module-alias-negative-binary",
+          "diagnostic-stage31-module-alias-negative-octal",
+          "diagnostic-stage31-module-alias-negative-float",
+          "diagnostic-stage31-module-alias-negative-float-zero",
+          "diagnostic-stage31-module-alias-grouped-negative",
+          "diagnostic-stage31-module-alias-nested-grouped-negative",
+          "diagnostic-stage31-module-alias-negative-grouped",
+          "diagnostic-stage31-module-alias-negative-grouped-float",
+          "diagnostic-stage31-module-alias-double-negative",
+          "diagnostic-stage31-module-alias-negative-minint",
+          "diagnostic-stage31-module-alias-grouped-overflow",
+          "diagnostic-stage31-module-alias-negative-overflow",
+          "diagnostic-stage31-class-local-negative-int",
+          "diagnostic-stage31-class-public-grouped-negative",
+          "diagnostic-stage31-object-local-negative-int",
+          "diagnostic-stage31-module-direct-negative-int",
+          "diagnostic-stage31-module-mismatch-negative-int",
+          "diagnostic-stage31-argument-alias-grouped-negative",
+          "diagnostic-stage31-argument-direct-negative-float",
+          "diagnostic-stage31-return-alias-grouped-negative",
+          "diagnostic-stage31-return-direct-negative-int",
+          "diagnostic-stage31-cast-grouped-negative",
+          "diagnostic-stage31-first-error-negative-int",
+          "diagnostic-stage31-success-minint",
+          "diagnostic-stage31-success-negative-zero",
+          "diagnostic-stage31-success-negative-grouped",
+          "diagnostic-stage31-success-grouped-negative",
+          "diagnostic-stage31-success-double-negative",
+          "diagnostic-stage31-class-public-negative-int",
+          "diagnostic-stage31-class-public-negative-float",
+          "diagnostic-stage31-module-public-alias-negative",
+          "diagnostic-stage31-module-public-alias-grouped",
+          "diagnostic-stage31-class-amendment-grouped",
+          "diagnostic-stage31-mapping-direct-negative",
+          "diagnostic-stage31-mapping-direct-grouped",
+          "diagnostic-stage31-listing-direct-negative",
+          "diagnostic-stage31-listing-direct-grouped",
+          "diagnostic-stage31-local-string",
+          "diagnostic-stage31-local-bool",
+          "diagnostic-stage31-local-null",
+          "diagnostic-stage31-class-public-string",
+          "diagnostic-stage31-class-public-bool",
+          "diagnostic-stage31-class-public-null"
         ],
         "state": "partial"
       }
@@ -165671,7 +166893,55 @@
           "diagnostic-stage30-overflow-key-expression",
           "diagnostic-stage30-module-local-typed-ascii",
           "diagnostic-stage30-class-local-typed-ascii",
-          "diagnostic-stage30-object-local-typed-alias-function"
+          "diagnostic-stage30-object-local-typed-alias-function",
+          "diagnostic-stage31-module-alias-negative-int",
+          "diagnostic-stage31-module-alias-negative-space",
+          "diagnostic-stage31-module-alias-negative-comment",
+          "diagnostic-stage31-module-alias-negative-multiline",
+          "diagnostic-stage31-module-alias-negative-hex",
+          "diagnostic-stage31-module-alias-negative-binary",
+          "diagnostic-stage31-module-alias-negative-octal",
+          "diagnostic-stage31-module-alias-negative-float",
+          "diagnostic-stage31-module-alias-negative-float-zero",
+          "diagnostic-stage31-module-alias-grouped-negative",
+          "diagnostic-stage31-module-alias-nested-grouped-negative",
+          "diagnostic-stage31-module-alias-negative-grouped",
+          "diagnostic-stage31-module-alias-negative-grouped-float",
+          "diagnostic-stage31-module-alias-double-negative",
+          "diagnostic-stage31-module-alias-negative-minint",
+          "diagnostic-stage31-module-alias-grouped-overflow",
+          "diagnostic-stage31-module-alias-negative-overflow",
+          "diagnostic-stage31-class-local-negative-int",
+          "diagnostic-stage31-class-public-grouped-negative",
+          "diagnostic-stage31-object-local-negative-int",
+          "diagnostic-stage31-module-direct-negative-int",
+          "diagnostic-stage31-module-mismatch-negative-int",
+          "diagnostic-stage31-argument-alias-grouped-negative",
+          "diagnostic-stage31-argument-direct-negative-float",
+          "diagnostic-stage31-return-alias-grouped-negative",
+          "diagnostic-stage31-return-direct-negative-int",
+          "diagnostic-stage31-cast-grouped-negative",
+          "diagnostic-stage31-first-error-negative-int",
+          "diagnostic-stage31-success-minint",
+          "diagnostic-stage31-success-negative-zero",
+          "diagnostic-stage31-success-negative-grouped",
+          "diagnostic-stage31-success-grouped-negative",
+          "diagnostic-stage31-success-double-negative",
+          "diagnostic-stage31-class-public-negative-int",
+          "diagnostic-stage31-class-public-negative-float",
+          "diagnostic-stage31-module-public-alias-negative",
+          "diagnostic-stage31-module-public-alias-grouped",
+          "diagnostic-stage31-class-amendment-grouped",
+          "diagnostic-stage31-mapping-direct-negative",
+          "diagnostic-stage31-mapping-direct-grouped",
+          "diagnostic-stage31-listing-direct-negative",
+          "diagnostic-stage31-listing-direct-grouped",
+          "diagnostic-stage31-local-string",
+          "diagnostic-stage31-local-bool",
+          "diagnostic-stage31-local-null",
+          "diagnostic-stage31-class-public-string",
+          "diagnostic-stage31-class-public-bool",
+          "diagnostic-stage31-class-public-null"
         ],
         "state": "partial"
       }
@@ -171664,17 +172934,17 @@
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "18a4be0943749c78b23d8882cdad4fe6775848f1d51660b69b8fa3d374fed9c1",
+            "sha256": "f8b4a26b6d3639c596e69b3928ba3dbd4c7a7e22436da746b68e6ab53d9f227f",
             "symbol": "validate_class_override"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "18a4be0943749c78b23d8882cdad4fe6775848f1d51660b69b8fa3d374fed9c1",
+            "sha256": "f8b4a26b6d3639c596e69b3928ba3dbd4c7a7e22436da746b68e6ab53d9f227f",
             "symbol": "validate_object_override"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "18a4be0943749c78b23d8882cdad4fe6775848f1d51660b69b8fa3d374fed9c1",
+            "sha256": "f8b4a26b6d3639c596e69b3928ba3dbd4c7a7e22436da746b68e6ab53d9f227f",
             "symbol": "initialize_member_types"
           }
         ],
@@ -172112,7 +173382,7 @@
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "18a4be0943749c78b23d8882cdad4fe6775848f1d51660b69b8fa3d374fed9c1",
+            "sha256": "f8b4a26b6d3639c596e69b3928ba3dbd4c7a7e22436da746b68e6ab53d9f227f",
             "symbol": "compile_type_at"
           }
         ],
@@ -174566,10 +175836,10 @@
   "sources": {
     "compatibility/corpus.json": "0e95da22f965dede398f1a1f136703ba913d588aa51c1fb871cd97a11c84a0dd",
     "compatibility/inventory.json": "a9b21752adad9a269a54854c0dd298256757be88ad95c1388e30d7c78e407070",
-    "compatibility/m2-mappings.json": "44208eea4d072509eedaeef4306006e45baf26af1b955eecdf6e20a4c558c071",
+    "compatibility/m2-mappings.json": "6f3f24a96c6fbc8879e68094e6bf7e5e6cc21133cdfdfb80f4474e9eccca3df4",
     "compatibility/regressions.json": "09c064f65730d30f72bf87a45c88d47ecc0844e57966a999dc8e759f083af3da",
     "compatibility/rev1-inventory.json": "6061f202ba3f04565efed3617ac69d3c2fadc54eec1f562b67a4758b3d0a8ab5",
     "references.lock": "278f48fd7697459281aa78a706c9ca57222f36a8c0785d838a6449fbaf26d30b",
-    "tests/fixtures/m2/cases.json": "986a755379b9fbafed491959cce5758bac2097e353d903cab3f971179c79e03d"
+    "tests/fixtures/m2/cases.json": "44c04239b829f2fd217178421ed68a6b1ad171202ea4ab5eca3941a86fad112c"
   }
 }

@@ -1,4 +1,5 @@
 import gzip
+import hashlib
 import io
 import json
 from pathlib import Path
@@ -46,6 +47,36 @@ class EvidenceTests(unittest.TestCase):
             empty.mkdir()
             with self.assertRaisesRegex(ValueError, "Empty"):
                 evidence.create(empty, root / "archive.tar.gz", [])
+
+    def test_inventory_order_does_not_change_member_identity(self):
+        with tempfile.TemporaryDirectory() as temp:
+            path = Path(temp) / "reordered.tar.gz"
+            files = [("first.bin", b"\xff\r\n\x00"), ("second.bin", b"other")]
+            inventory = {"files": [
+                {"path": name, "bytes": len(data), "sha256": hashlib.sha256(data).hexdigest()}
+                for name, data in reversed(files)
+            ]}
+            with tarfile.open(path, "w:gz") as archive:
+                for name, data in files + [("EVIDENCE.json", json.dumps(inventory).encode())]:
+                    info = tarfile.TarInfo(name)
+                    info.size = len(data)
+                    archive.addfile(info, io.BytesIO(data))
+            evidence.verify(path)
+
+    def test_duplicate_members_cannot_be_hidden_by_indexing(self):
+        with tempfile.TemporaryDirectory() as temp:
+            path = Path(temp) / "duplicate.tar.gz"
+            data = b"expected"
+            inventory = {"files": [{"path": "output.bin", "bytes": len(data),
+                                    "sha256": hashlib.sha256(data).hexdigest()}]}
+            with tarfile.open(path, "w:gz") as archive:
+                for name, payload in [("output.bin", b"wrong"), ("output.bin", data),
+                                      ("EVIDENCE.json", json.dumps(inventory).encode())]:
+                    info = tarfile.TarInfo(name)
+                    info.size = len(payload)
+                    archive.addfile(info, io.BytesIO(payload))
+            with self.assertRaisesRegex(ValueError, "duplicate"):
+                evidence.verify(path)
 
 
 if __name__ == "__main__":

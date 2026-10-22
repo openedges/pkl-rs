@@ -1,0 +1,3 @@
+typealias I = Int(this > 0)
+bad: I = (-1)
+result = bad

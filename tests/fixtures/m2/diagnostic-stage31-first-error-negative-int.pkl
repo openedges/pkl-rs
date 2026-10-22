@@ -1,0 +1,3 @@
+local bad: Int(this > 0) = -1
+local other = missing
+result = bad + other

@@ -446,6 +446,8 @@ Node·Chromium은 각각 89개 개발 시나리오를 통과했고, 새 시나�
 
 [최종 요약](reports/m2/stage30-final-summary.json)·[독립 감사](reports/m2/stage30-post-seal-audit.json)·[완료 캡처](reports/m2/stage30-completion-captures.json)로 이 단계를 마감했습니다. 명시 경로 116개에서 원본 83,858개를 봉인하고 최종 소스 사본 7,453개를 구현 커밋의 서로 다른 파일 3,578개에 연결했습니다. 직접 build cache와 사용하지 않는 baseline checkout은 열거 전에 제외하고 이전 단계 자료 7개는 identity로 참조합니다. 전체 gate 실패 이유 1,950개·부분 mapping 16개와 기존 runtime·lifecycle·미실행 범위를 보존합니다. M2 전체·제품 API·릴리스 플랫폼·속도·peak RSS 목표는 여전히 미완료입니다.
 
+서른한 번째 단계는 음수 숫자 리터럴과 괄호의 실행 위치를 Java의 source section 규칙에 맞춥니다. 핵심 의미론은 `gpt-6-astra / xhigh`, 새 Java 비교와 독립 native·플랫폼 검토는 각각 `gpt-6.1-sol / high`에 배정했습니다. 작성된 구문 범위와 실행 값의 진단 범위를 구분하고, 모듈·클래스·객체 property와 함수·entry 경로, 최소 정수·음수 0·중첩 부호·Host 중단/재시도에서 오류 순서와 값이 유지되는지 확인합니다. 기존 음수 리터럴 밑줄 차이를 출발점으로 하며, 수정 범위와 완료 여부는 새 Java 원시 결과 및 최종 검증으로 확정합니다.
+
 다음 구현은 남은 탐색 불일치의 의존성을 기준으로 진행합니다.
 
 1. 남은 Reference metadata 작업·진단 확장을 continuation과 자원 계약으로 검증하고 Java stack-overflow 진단 및 취소 지연을 별도로 다룹니다. 전체 지연 타입 해석·alias-root 대입 identity와 wrapper 중복 제거의 실제 인자 구분을 검증합니다. 남은 nullable/default·inline Reference·local typed-property·outer 진단, generic constructor의 지연 멤버 frame 이름·builtin·generator 경계를 원래 실패 입력으로 보완합니다. Stage 24에서 보존한 String 선택 별칭 union 생성자의 `Cannot instantiate type` 진단·지연 시점·오류 우선순위도 여기에 포함합니다. wrapper identity를 바꾸기 전에는 Java에서 관찰 가능한 캐시·성공 predicate 호출 횟수 근거를 먼저 확보합니다. 이미 검증한 공유 타입 인자의 깊은 실행·동시 해제, inline·lambda·공유 let·분기 순서·재귀 깊이별 재시도, 타입 인자 캡처·기본값·Reference 검사 순서, Host/GC/취소/terminal 동작을 회귀 기준으로 유지합니다.

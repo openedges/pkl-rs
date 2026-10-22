@@ -3835,6 +3835,103 @@ fn reference_constrained_type(check: &TypeCheck) -> Option<&TypeCheck> {
 }
 
 impl Compiler<'_> {
+    /// Source owned by the executable value after Java's grouping removal and
+    /// direct numeric negation folding. Authored spans remain the identity for
+    /// resolution and assertion observations; only value-call frames use this.
+    fn executable_value_span(&self, expression: &crate::syntax::Expr) -> Span {
+        use crate::syntax::{ExprKind, UnaryOp};
+
+        let expression = expression.unparenthesized();
+        if let Some(span) = self
+            .resolved
+            .module
+            .folded_integer_spans
+            .get(&expression.span)
+        {
+            return *span;
+        }
+        if let ExprKind::Unary {
+            op: UnaryOp::Negate,
+            operand,
+        } = &expression.kind
+            && matches!(operand.kind, ExprKind::Float(_))
+        {
+            return operand.span;
+        }
+        expression.span
+    }
+
+    /// Constant members have no Java MemberNode. Their inserted value frame
+    /// comes from ObjectMember.getBodySection's authored header suffix instead.
+    fn constant_member_body(&self, expression: &crate::syntax::Expr) -> bool {
+        use crate::resolver::Binding;
+        use crate::syntax::{ExprKind, UnaryOp};
+
+        let mut pending = vec![expression];
+        while let Some(expression) = pending.pop() {
+            match &expression.unparenthesized().kind {
+                ExprKind::Null
+                | ExprKind::Bool(_)
+                | ExprKind::Int(_)
+                | ExprKind::Float(_)
+                | ExprKind::String(_) => {}
+                ExprKind::Unary {
+                    op: UnaryOp::Negate,
+                    operand,
+                } if matches!(operand.kind, ExprKind::Float(_)) => {}
+                ExprKind::Call { callee, arguments }
+                    if matches!(
+                        &callee.kind,
+                        ExprKind::Name(name) if matches!(name.as_str(), "List" | "Set" | "Map")
+                    ) && self.resolved.names.get(&callee.span)
+                        == Some(&Binding::ImplicitMethod) =>
+                {
+                    pending.extend(arguments);
+                }
+                _ => return false,
+            }
+        }
+        true
+    }
+
+    fn constant_member_value_span(
+        &self,
+        expression: &crate::syntax::Expr,
+        header_end: usize,
+        entry: bool,
+    ) -> Span {
+        let suffix = &self.resolved.module.source[header_end..expression.span.end];
+        if suffix.is_empty() {
+            return expression.span;
+        }
+        let skip = suffix
+            .chars()
+            .take_while(|&ch| {
+                (entry && ch == ']') || ch == '=' || crate::diagnostic::java_whitespace(ch)
+            })
+            .map(char::len_utf8)
+            .sum::<usize>();
+        Span::new(header_end + skip, expression.span.end)
+    }
+
+    fn property_value_span(&self, member: &crate::syntax::Member) -> Span {
+        if matches!(member.expr.kind, crate::syntax::ExprKind::Uninitialized) {
+            return member.name_span;
+        }
+        // VmUtils.createObjectProperty retains a member node for local typed
+        // properties even when the body is constant, so their lowered body owns
+        // the frame. This distinction applies to module, class and object scopes.
+        if !(member.local && member.ty.is_some()) && self.constant_member_body(&member.expr) {
+            let header_end = member
+                .ty
+                .as_ref()
+                .map_or(member.name_span.end, |ty| ty.span.end);
+            self.constant_member_value_span(&member.expr, header_end, false)
+        } else {
+            self.executable_value_span(&member.expr)
+        }
+    }
+
     fn object(&mut self, members: &[crate::syntax::Member]) -> Result<usize, RuntimeError> {
         self.object_template(members, false, true)
     }
@@ -4048,13 +4145,7 @@ impl Compiler<'_> {
             .modifiers
             .iter()
             .any(|m| m.kind == crate::syntax::ModifierKind::Hidden);
-        self.program.metadata[code].value_span = Some(
-            if matches!(member.expr.kind, crate::syntax::ExprKind::Uninitialized) {
-                member.name_span
-            } else {
-                member.expr.span
-            },
-        );
+        self.program.metadata[code].value_span = Some(self.property_value_span(member));
         self.program.metadata[code].initialization_error = initialization_error;
         self.program.metadata[code].property_typecheck = property_typecheck;
         self.program.metadata[code].amendment = member.is_amendment();

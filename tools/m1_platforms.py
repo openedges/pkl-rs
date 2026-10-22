@@ -100,6 +100,7 @@ REQUIRED_SCENARIOS = {
     'm2-unicode-diagnostic-recovery',
     'm2-lossless-string-representation',
     'm2-lossless-diagnostic-frame-identity',
+    'm2-numeric-value-frame-spans',
 }
 
 

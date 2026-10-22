@@ -2180,7 +2180,15 @@ impl Compiler<'_> {
         }
         code.push(Instruction::Return);
         let block = self.block(code, Some(span));
-        self.program.metadata[block].value_span = Some(value.span);
+        self.program.metadata[block].value_span = Some(if self.constant_member_body(value) {
+            self.constant_member_value_span(
+                value,
+                self.executable_value_span(key.unwrap_or(value)).end,
+                key.is_some(),
+            )
+        } else {
+            self.executable_value_span(value)
+        });
         self.member = previous;
         Ok(Member {
             entry: true,

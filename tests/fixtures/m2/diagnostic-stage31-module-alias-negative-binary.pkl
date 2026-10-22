@@ -1,0 +1,3 @@
+typealias I = Int(this > 2000)
+local bad: I = -0b101010
+result = bad

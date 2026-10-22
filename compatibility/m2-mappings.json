@@ -511,6 +511,10 @@
           {
             "path": "crates/pkl-runtime/src/value.rs",
             "symbol": "RuntimeFrame"
+          },
+          {
+            "path": "crates/pkl-runtime/src/vm.rs",
+            "symbol": "executable_value_span"
           }
         ]
       },
@@ -1188,13 +1192,62 @@
           "diagnostic-stage30-overflow-key-expression",
           "diagnostic-stage30-module-local-typed-ascii",
           "diagnostic-stage30-class-local-typed-ascii",
-          "diagnostic-stage30-object-local-typed-alias-function"
+          "diagnostic-stage30-object-local-typed-alias-function",
+          "diagnostic-stage31-module-alias-negative-int",
+          "diagnostic-stage31-module-alias-negative-space",
+          "diagnostic-stage31-module-alias-negative-comment",
+          "diagnostic-stage31-module-alias-negative-multiline",
+          "diagnostic-stage31-module-alias-negative-hex",
+          "diagnostic-stage31-module-alias-negative-binary",
+          "diagnostic-stage31-module-alias-negative-octal",
+          "diagnostic-stage31-module-alias-negative-float",
+          "diagnostic-stage31-module-alias-negative-float-zero",
+          "diagnostic-stage31-module-alias-grouped-negative",
+          "diagnostic-stage31-module-alias-nested-grouped-negative",
+          "diagnostic-stage31-module-alias-negative-grouped",
+          "diagnostic-stage31-module-alias-negative-grouped-float",
+          "diagnostic-stage31-module-alias-double-negative",
+          "diagnostic-stage31-module-alias-negative-minint",
+          "diagnostic-stage31-module-alias-grouped-overflow",
+          "diagnostic-stage31-module-alias-negative-overflow",
+          "diagnostic-stage31-class-local-negative-int",
+          "diagnostic-stage31-class-public-grouped-negative",
+          "diagnostic-stage31-object-local-negative-int",
+          "diagnostic-stage31-module-direct-negative-int",
+          "diagnostic-stage31-module-mismatch-negative-int",
+          "diagnostic-stage31-argument-alias-grouped-negative",
+          "diagnostic-stage31-argument-direct-negative-float",
+          "diagnostic-stage31-return-alias-grouped-negative",
+          "diagnostic-stage31-return-direct-negative-int",
+          "diagnostic-stage31-cast-grouped-negative",
+          "diagnostic-stage31-first-error-negative-int",
+          "diagnostic-stage31-success-minint",
+          "diagnostic-stage31-success-negative-zero",
+          "diagnostic-stage31-success-negative-grouped",
+          "diagnostic-stage31-success-grouped-negative",
+          "diagnostic-stage31-success-double-negative",
+          "diagnostic-stage31-class-public-negative-int",
+          "diagnostic-stage31-class-public-negative-float",
+          "diagnostic-stage31-module-public-alias-negative",
+          "diagnostic-stage31-module-public-alias-grouped",
+          "diagnostic-stage31-class-amendment-grouped",
+          "diagnostic-stage31-mapping-direct-negative",
+          "diagnostic-stage31-mapping-direct-grouped",
+          "diagnostic-stage31-listing-direct-negative",
+          "diagnostic-stage31-listing-direct-grouped",
+          "diagnostic-stage31-local-string",
+          "diagnostic-stage31-local-bool",
+          "diagnostic-stage31-local-null",
+          "diagnostic-stage31-class-public-string",
+          "diagnostic-stage31-class-public-bool",
+          "diagnostic-stage31-class-public-null"
         ]
       },
-      "scope": "Reference constructor, access, constraint and rendering errors retain complete message, authored frame, foreign standard-library source and URI bytes in selected comparisons. Stage11 adds selected fixed declaration, inherited metadata and complete raw diagnostics through the shared VM. Stage 13 adds selected alias/function metadata, exported-type equality and complete raw diagnostic comparisons; original suite execution and remaining scope stay open. Stage 14 adds selected authored type-resolution order, generic parameter scope and nested substitution, class/alias arity ordering, and owner signature diagnostics; persistent failed-declaration state has a separate sequence contract. Stage 15 adds selected non-generic recursive constraint block graphs and declaration type scope, plus builtin Class argument erasure and arity ordering. At Stage 15 recursive generic constraints remained open; Stage 16 adds bounded shared receiver-slot support. Stage 16: Selected recursive frame compression, count-one loops, complete call spans and hint placement match Java uncolored diagnostics. Stage 17: Selected const-method barriers, lambda lookup depth, immediate outer lexical scope, and grouped-callee parser diagnostics follow the pinned Java behavior. Stage 18 adds selected let-body and for-generator lexical const-depth boundaries while retaining enclosing const levels, plus their complete raw diagnostics and lambda controls. Selected finite recursive generic and instantiated type-variable failures compare complete Java bytes with power assertions enabled and disabled. Stage 19 adds bounded shared-metadata regressions for finite deep and branching actual arguments, observable class-argument swaps, inline/lambda/shared-let recursion, recursive Reference validation, and distinct wrapper actuals. Original Java stack errors, historical native abort evidence, full language semantics and performance remain separately accounted. Stage20 adds bounded nullable defaults, inferred collection amendments, null identity and repeated default failures; complete nullable and collection semantics remain unverified. Stage21 adds bounded direct symbolic constructors, actual-argument diagnostics, lazy class defaults, collection body controls and persistent retries; complete constructors, lexical roots and builtin coverage remain unverified. Stage22 adds bounded strict Map construction, boxed/hash-prefix key semantics, lazy nested generic values, insertion-order iteration and HAMT-ordered equality/hash forcing; complete Map APIs and language coverage remain unverified. Stage23 adds bounded strict Set construction, immediate element hashing and deduplication, boxed/cache-sensitive membership, Set defaults and generic aliases, eager nested element checks, structural equality/hash, insertion-order generation/spreading and raw null/default diagnostic controls; complete Set APIs and language coverage remain unverified. Stage 24 additionally covers bounded Collection List/Set classification, eager versus lazy nested validation, aliases/defaults, nullable constructor timing, selected metadata and complete diagnostics. Stage 30 preserves UTF-16 diagnostic member paths through parser/resolver/compiler counters, block metadata, runtime frames and recursive compression. Selected sibling entry/function numbering and detached lifecycle names distinguish unmatched surrogates from literal question marks before Java UTF-8 output. Typed-property diagnostic controls distinguish inline checks for object-local declarations from module/class-local separate call frames; alias use does not change the declaration category.",
+      "scope": "Reference constructor, access, constraint and rendering errors retain complete message, authored frame, foreign standard-library source and URI bytes in selected comparisons. Stage11 adds selected fixed declaration, inherited metadata and complete raw diagnostics through the shared VM. Stage 13 adds selected alias/function metadata, exported-type equality and complete raw diagnostic comparisons; original suite execution and remaining scope stay open. Stage 14 adds selected authored type-resolution order, generic parameter scope and nested substitution, class/alias arity ordering, and owner signature diagnostics; persistent failed-declaration state has a separate sequence contract. Stage 15 adds selected non-generic recursive constraint block graphs and declaration type scope, plus builtin Class argument erasure and arity ordering. At Stage 15 recursive generic constraints remained open; Stage 16 adds bounded shared receiver-slot support. Stage 16: Selected recursive frame compression, count-one loops, complete call spans and hint placement match Java uncolored diagnostics. Stage 17: Selected const-method barriers, lambda lookup depth, immediate outer lexical scope, and grouped-callee parser diagnostics follow the pinned Java behavior. Stage 18 adds selected let-body and for-generator lexical const-depth boundaries while retaining enclosing const levels, plus their complete raw diagnostics and lambda controls. Selected finite recursive generic and instantiated type-variable failures compare complete Java bytes with power assertions enabled and disabled. Stage 19 adds bounded shared-metadata regressions for finite deep and branching actual arguments, observable class-argument swaps, inline/lambda/shared-let recursion, recursive Reference validation, and distinct wrapper actuals. Original Java stack errors, historical native abort evidence, full language semantics and performance remain separately accounted. Stage20 adds bounded nullable defaults, inferred collection amendments, null identity and repeated default failures; complete nullable and collection semantics remain unverified. Stage21 adds bounded direct symbolic constructors, actual-argument diagnostics, lazy class defaults, collection body controls and persistent retries; complete constructors, lexical roots and builtin coverage remain unverified. Stage22 adds bounded strict Map construction, boxed/hash-prefix key semantics, lazy nested generic values, insertion-order iteration and HAMT-ordered equality/hash forcing; complete Map APIs and language coverage remain unverified. Stage23 adds bounded strict Set construction, immediate element hashing and deduplication, boxed/cache-sensitive membership, Set defaults and generic aliases, eager nested element checks, structural equality/hash, insertion-order generation/spreading and raw null/default diagnostic controls; complete Set APIs and language coverage remain unverified. Stage 24 additionally covers bounded Collection List/Set classification, eager versus lazy nested validation, aliases/defaults, nullable constructor timing, selected metadata and complete diagnostics. Stage 30 preserves UTF-16 diagnostic member paths through parser/resolver/compiler counters, block metadata, runtime frames and recursive compression. Selected sibling entry/function numbering and detached lifecycle names distinguish unmatched surrogates from literal question marks before Java UTF-8 output. Typed-property diagnostic controls distinguish inline checks for object-local declarations from module/class-local separate call frames; alias use does not change the declaration category. Stage 31 distinguishes folded numeric-token value frames for local properties from authored body sections retained by selected public class constant properties. Selected complete diagnostics cover signed integer/float literals, whitespace/comments/multiline syntax, radix and minimum-integer literals, grouping, direct constraints and aliases; operand, argument/return, cast, overflow-literal and first-error controls retain their separate source ownership. Success controls preserve minimum integers and negative-zero arithmetic. These selected observations do not establish the complete numeric or diagnostic surface. Additional scalar-constant controls distinguish grouping removal in computed local bodies from source reconstruction for selected non-local property, overridden property, Mapping entry and Listing element value frames. Grouped string, Boolean and null constants preserve the same wrapper distinction. Original failed baseline and first-candidate grouped Listing observations remain preserved alongside the selected reconstruction regression; later observations do not relabel those historical failures.",
       "remaining": [
         "Colored output, general imported source stacks, first-error combinations and the complete parser/resolver/runtime diagnostic corpus remain open; selected uncolored recursive compression is covered.",
-        "Original selected cycle and remainder-zero failures remain failed."
+        "Original selected cycle and remainder-zero failures remain failed.",
+        "Exploratory double-negated minimum-integer overflow frames and invalid non-local object annotation frame names remain known differences outside the Stage 31 selected additions."
       ]
     },
     {

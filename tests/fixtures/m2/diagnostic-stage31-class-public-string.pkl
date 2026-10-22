@@ -1,0 +1,2 @@
+class C { bad: Int = ("wrong") }
+result = new C {}.bad

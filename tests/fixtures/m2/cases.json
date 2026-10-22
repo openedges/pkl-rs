@@ -39086,6 +39086,662 @@
         "semantic:type-aliases",
         "semantic:functions"
       ]
+    },
+    {
+      "id": "diagnostic-stage31-module-alias-negative-int",
+      "input": "tests/fixtures/m2/diagnostic-stage31-module-alias-negative-int.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:numeric-literals",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:types",
+        "semantic:type-aliases"
+      ]
+    },
+    {
+      "id": "diagnostic-stage31-module-alias-negative-space",
+      "input": "tests/fixtures/m2/diagnostic-stage31-module-alias-negative-space.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:numeric-literals",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:types",
+        "semantic:type-aliases"
+      ]
+    },
+    {
+      "id": "diagnostic-stage31-module-alias-negative-comment",
+      "input": "tests/fixtures/m2/diagnostic-stage31-module-alias-negative-comment.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:numeric-literals",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:types",
+        "semantic:type-aliases"
+      ]
+    },
+    {
+      "id": "diagnostic-stage31-module-alias-negative-multiline",
+      "input": "tests/fixtures/m2/diagnostic-stage31-module-alias-negative-multiline.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:numeric-literals",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:types",
+        "semantic:type-aliases"
+      ]
+    },
+    {
+      "id": "diagnostic-stage31-module-alias-negative-hex",
+      "input": "tests/fixtures/m2/diagnostic-stage31-module-alias-negative-hex.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:numeric-literals",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:types",
+        "semantic:type-aliases"
+      ]
+    },
+    {
+      "id": "diagnostic-stage31-module-alias-negative-binary",
+      "input": "tests/fixtures/m2/diagnostic-stage31-module-alias-negative-binary.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:numeric-literals",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:types",
+        "semantic:type-aliases"
+      ]
+    },
+    {
+      "id": "diagnostic-stage31-module-alias-negative-octal",
+      "input": "tests/fixtures/m2/diagnostic-stage31-module-alias-negative-octal.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:numeric-literals",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:types",
+        "semantic:type-aliases"
+      ]
+    },
+    {
+      "id": "diagnostic-stage31-module-alias-negative-float",
+      "input": "tests/fixtures/m2/diagnostic-stage31-module-alias-negative-float.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:numeric-literals",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:types",
+        "semantic:type-aliases"
+      ]
+    },
+    {
+      "id": "diagnostic-stage31-module-alias-negative-float-zero",
+      "input": "tests/fixtures/m2/diagnostic-stage31-module-alias-negative-float-zero.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:numeric-literals",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:types",
+        "semantic:type-aliases"
+      ]
+    },
+    {
+      "id": "diagnostic-stage31-module-alias-grouped-negative",
+      "input": "tests/fixtures/m2/diagnostic-stage31-module-alias-grouped-negative.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:numeric-literals",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:types",
+        "semantic:type-aliases"
+      ]
+    },
+    {
+      "id": "diagnostic-stage31-module-alias-nested-grouped-negative",
+      "input": "tests/fixtures/m2/diagnostic-stage31-module-alias-nested-grouped-negative.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:numeric-literals",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:types",
+        "semantic:type-aliases"
+      ]
+    },
+    {
+      "id": "diagnostic-stage31-module-alias-negative-grouped",
+      "input": "tests/fixtures/m2/diagnostic-stage31-module-alias-negative-grouped.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:numeric-literals",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:types",
+        "semantic:type-aliases"
+      ]
+    },
+    {
+      "id": "diagnostic-stage31-module-alias-negative-grouped-float",
+      "input": "tests/fixtures/m2/diagnostic-stage31-module-alias-negative-grouped-float.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:numeric-literals",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:types",
+        "semantic:type-aliases"
+      ]
+    },
+    {
+      "id": "diagnostic-stage31-module-alias-double-negative",
+      "input": "tests/fixtures/m2/diagnostic-stage31-module-alias-double-negative.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:numeric-literals",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:types",
+        "semantic:type-aliases"
+      ]
+    },
+    {
+      "id": "diagnostic-stage31-module-alias-negative-minint",
+      "input": "tests/fixtures/m2/diagnostic-stage31-module-alias-negative-minint.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:numeric-literals",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:types",
+        "semantic:type-aliases"
+      ]
+    },
+    {
+      "id": "diagnostic-stage31-module-alias-grouped-overflow",
+      "input": "tests/fixtures/m2/diagnostic-stage31-module-alias-grouped-overflow.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:numeric-literals",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:types",
+        "semantic:type-aliases"
+      ]
+    },
+    {
+      "id": "diagnostic-stage31-module-alias-negative-overflow",
+      "input": "tests/fixtures/m2/diagnostic-stage31-module-alias-negative-overflow.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:numeric-literals",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:types",
+        "semantic:type-aliases"
+      ]
+    },
+    {
+      "id": "diagnostic-stage31-class-local-negative-int",
+      "input": "tests/fixtures/m2/diagnostic-stage31-class-local-negative-int.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:numeric-literals",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:classes"
+      ]
+    },
+    {
+      "id": "diagnostic-stage31-class-public-grouped-negative",
+      "input": "tests/fixtures/m2/diagnostic-stage31-class-public-grouped-negative.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:numeric-literals",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:classes"
+      ]
+    },
+    {
+      "id": "diagnostic-stage31-object-local-negative-int",
+      "input": "tests/fixtures/m2/diagnostic-stage31-object-local-negative-int.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:numeric-literals",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:types",
+        "semantic:type-aliases"
+      ]
+    },
+    {
+      "id": "diagnostic-stage31-module-direct-negative-int",
+      "input": "tests/fixtures/m2/diagnostic-stage31-module-direct-negative-int.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:numeric-literals",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:types"
+      ]
+    },
+    {
+      "id": "diagnostic-stage31-module-mismatch-negative-int",
+      "input": "tests/fixtures/m2/diagnostic-stage31-module-mismatch-negative-int.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:numeric-literals",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:types"
+      ]
+    },
+    {
+      "id": "diagnostic-stage31-argument-alias-grouped-negative",
+      "input": "tests/fixtures/m2/diagnostic-stage31-argument-alias-grouped-negative.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:numeric-literals",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:functions"
+      ]
+    },
+    {
+      "id": "diagnostic-stage31-argument-direct-negative-float",
+      "input": "tests/fixtures/m2/diagnostic-stage31-argument-direct-negative-float.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:numeric-literals",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:types",
+        "semantic:functions"
+      ]
+    },
+    {
+      "id": "diagnostic-stage31-return-alias-grouped-negative",
+      "input": "tests/fixtures/m2/diagnostic-stage31-return-alias-grouped-negative.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:numeric-literals",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:functions"
+      ]
+    },
+    {
+      "id": "diagnostic-stage31-return-direct-negative-int",
+      "input": "tests/fixtures/m2/diagnostic-stage31-return-direct-negative-int.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:numeric-literals",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:types",
+        "semantic:functions"
+      ]
+    },
+    {
+      "id": "diagnostic-stage31-cast-grouped-negative",
+      "input": "tests/fixtures/m2/diagnostic-stage31-cast-grouped-negative.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:numeric-literals",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:types",
+        "semantic:type-tests-casts"
+      ]
+    },
+    {
+      "id": "diagnostic-stage31-first-error-negative-int",
+      "input": "tests/fixtures/m2/diagnostic-stage31-first-error-negative-int.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:numeric-literals",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:types"
+      ]
+    },
+    {
+      "id": "diagnostic-stage31-success-minint",
+      "input": "tests/fixtures/m2/diagnostic-stage31-success-minint.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:numeric-literals",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "diagnostic-stage31-success-negative-zero",
+      "input": "tests/fixtures/m2/diagnostic-stage31-success-negative-zero.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:numeric-literals",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "diagnostic-stage31-success-negative-grouped",
+      "input": "tests/fixtures/m2/diagnostic-stage31-success-negative-grouped.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:numeric-literals",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "diagnostic-stage31-success-grouped-negative",
+      "input": "tests/fixtures/m2/diagnostic-stage31-success-grouped-negative.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:numeric-literals",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "diagnostic-stage31-success-double-negative",
+      "input": "tests/fixtures/m2/diagnostic-stage31-success-double-negative.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:numeric-literals",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "diagnostic-stage31-class-public-negative-int",
+      "input": "tests/fixtures/m2/diagnostic-stage31-class-public-negative-int.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:numeric-literals",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:classes"
+      ]
+    },
+    {
+      "id": "diagnostic-stage31-class-public-negative-float",
+      "input": "tests/fixtures/m2/diagnostic-stage31-class-public-negative-float.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:numeric-literals",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:types",
+        "semantic:type-aliases",
+        "semantic:classes"
+      ]
+    },
+    {
+      "id": "diagnostic-stage31-module-public-alias-negative",
+      "input": "tests/fixtures/m2/diagnostic-stage31-module-public-alias-negative.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:types",
+        "semantic:numeric-literals",
+        "semantic:operators",
+        "semantic:type-aliases"
+      ]
+    },
+    {
+      "id": "diagnostic-stage31-module-public-alias-grouped",
+      "input": "tests/fixtures/m2/diagnostic-stage31-module-public-alias-grouped.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:types",
+        "semantic:numeric-literals",
+        "semantic:operators",
+        "semantic:type-aliases"
+      ]
+    },
+    {
+      "id": "diagnostic-stage31-class-amendment-grouped",
+      "input": "tests/fixtures/m2/diagnostic-stage31-class-amendment-grouped.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:types",
+        "semantic:numeric-literals",
+        "semantic:operators",
+        "semantic:classes"
+      ]
+    },
+    {
+      "id": "diagnostic-stage31-mapping-direct-negative",
+      "input": "tests/fixtures/m2/diagnostic-stage31-mapping-direct-negative.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:types",
+        "semantic:numeric-literals",
+        "semantic:operators",
+        "semantic:collections"
+      ]
+    },
+    {
+      "id": "diagnostic-stage31-mapping-direct-grouped",
+      "input": "tests/fixtures/m2/diagnostic-stage31-mapping-direct-grouped.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:types",
+        "semantic:numeric-literals",
+        "semantic:operators",
+        "semantic:collections"
+      ]
+    },
+    {
+      "id": "diagnostic-stage31-listing-direct-negative",
+      "input": "tests/fixtures/m2/diagnostic-stage31-listing-direct-negative.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:types",
+        "semantic:numeric-literals",
+        "semantic:operators",
+        "semantic:collections"
+      ]
+    },
+    {
+      "id": "diagnostic-stage31-listing-direct-grouped",
+      "input": "tests/fixtures/m2/diagnostic-stage31-listing-direct-grouped.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:types",
+        "semantic:numeric-literals",
+        "semantic:operators",
+        "semantic:collections"
+      ]
+    },
+    {
+      "id": "diagnostic-stage31-local-string",
+      "input": "tests/fixtures/m2/diagnostic-stage31-local-string.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:types",
+        "semantic:strings"
+      ]
+    },
+    {
+      "id": "diagnostic-stage31-local-bool",
+      "input": "tests/fixtures/m2/diagnostic-stage31-local-bool.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:types",
+        "semantic:scalar-literals"
+      ]
+    },
+    {
+      "id": "diagnostic-stage31-local-null",
+      "input": "tests/fixtures/m2/diagnostic-stage31-local-null.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:types",
+        "semantic:scalar-literals"
+      ]
+    },
+    {
+      "id": "diagnostic-stage31-class-public-string",
+      "input": "tests/fixtures/m2/diagnostic-stage31-class-public-string.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:types",
+        "semantic:strings",
+        "semantic:classes"
+      ]
+    },
+    {
+      "id": "diagnostic-stage31-class-public-bool",
+      "input": "tests/fixtures/m2/diagnostic-stage31-class-public-bool.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:types",
+        "semantic:scalar-literals",
+        "semantic:classes"
+      ]
+    },
+    {
+      "id": "diagnostic-stage31-class-public-null",
+      "input": "tests/fixtures/m2/diagnostic-stage31-class-public-null.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:types",
+        "semantic:scalar-literals",
+        "semantic:classes"
+      ]
     }
   ],
   "schema_version": 1,

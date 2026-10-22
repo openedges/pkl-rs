@@ -93,6 +93,7 @@ class PlatformEvidenceTests(unittest.TestCase):
             'm2-frontend-depth-host-sequences',
             'm2-lossless-string-representation',
             'm2-lossless-diagnostic-frame-identity',
+            'm2-numeric-value-frame-spans',
         }
         names = sorted(m1_platforms.REQUIRED_SCENARIOS)
         valid = {'nodeChecks': names, 'browserChecks': names, 'browserErrors': [],

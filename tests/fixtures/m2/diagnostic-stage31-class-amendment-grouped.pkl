@@ -1,0 +1,4 @@
+typealias I = Int(this > 0)
+class C { bad: I = 1 }
+x = new C { bad = (-1) }
+result = x.bad

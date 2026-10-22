@@ -373,7 +373,8 @@ impl Compiler<'_> {
                                 expression.span
                             }),
                         );
-                        self.program.metadata[block].value_span = Some(body.span);
+                        self.program.metadata[block].value_span =
+                            Some(self.executable_value_span(body));
                         self.member = previous;
                         pending_spans = pending;
                         emitted_start = output.len();
@@ -622,13 +623,8 @@ impl Compiler<'_> {
                             .modifiers
                             .iter()
                             .any(|m| m.kind == crate::syntax::ModifierKind::Hidden);
-                        self.program.metadata[code].value_span = Some(
-                            if matches!(member.expr.kind, crate::syntax::ExprKind::Uninitialized) {
-                                member.name_span
-                            } else {
-                                member.expr.span
-                            },
-                        );
+                        self.program.metadata[code].value_span =
+                            Some(self.property_value_span(member));
                         self.program.metadata[code].initialization_error = initialization_error;
                         self.program.metadata[code].property_typecheck = property_typecheck;
                         self.program.metadata[code].inline_property_typecheck = member.local;
@@ -1055,5 +1051,92 @@ impl Compiler<'_> {
             _ => self.inner_expression(expression, output)?,
         }
         Ok(())
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::parser::parse_module;
+    use crate::resolver::resolve_module;
+
+    #[test]
+    fn constant_member_frames_retain_authored_header_suffixes() {
+        for (source, expected) in [
+            ("value: String = (-1)", "(-1)"),
+            ("value: Int = (\"λ\")", "(\"λ\")"),
+            ("value: Int = (false)", "(false)"),
+            ("value: Int = (null)", "(null)"),
+            ("value: Int = /* 한😀 */ (\"λ\")", "/* 한😀 */ (\"λ\")"),
+            ("value: String = (-(1))", "-(1)"),
+            ("value: String = (--1)", "--1"),
+            ("value: Int = (List(-1, (\"λ\")))", "(List(-1, (\"λ\")))"),
+            ("value: Int = (Set(-1))", "(Set(-1))"),
+            ("value: Int = (Map(\"λ\", -1))", "(Map(\"λ\", -1))"),
+            (
+                "local value: Int = (List(-1, (\"λ\")))",
+                "List(-1, (\"λ\"))",
+            ),
+        ] {
+            let module = parse_module(source).unwrap();
+            let resolved = resolve_module(&module).unwrap();
+            let program = compile_module(&resolved).unwrap();
+            let metadata = program
+                .metadata
+                .iter()
+                .find(|metadata| metadata.member == PklString::from("#value"))
+                .unwrap();
+            let span = metadata.value_span.unwrap();
+            assert_eq!(&source[span.start..span.end], expected, "{source}");
+        }
+    }
+
+    #[test]
+    fn executable_value_frames_keep_authored_assertion_observations() {
+        for (authored, value, observations) in [
+            ("-1", "1", vec!["-1"]),
+            ("(-  /* gap */ 1)", "1", vec!["-  /* gap */ 1"]),
+            (
+                "((-0x8000000000000000))",
+                "0x8000000000000000",
+                vec!["-0x8000000000000000"],
+            ),
+            ("(-0.0)", "0.0", vec!["0.0", "-0.0"]),
+            ("- 1.25", "1.25", vec!["1.25", "- 1.25"]),
+            ("(-(1))", "-(1)", vec!["1", "-(1)"]),
+            ("--1", "--1", vec!["-1", "--1"]),
+            ("--1.25", "--1.25", vec!["1.25", "-1.25", "--1.25"]),
+        ] {
+            let source = format!("local value: Any = {authored}");
+            let module = parse_module(&source).unwrap();
+            let resolved = resolve_module(&module).unwrap();
+            let authored_span = module.members[0].expr.span;
+            assert_eq!(&source[authored_span.start..authored_span.end], authored);
+
+            for instrument in [false, true] {
+                let program =
+                    compile_module_configured(&resolved, CompileOptions::default(), instrument)
+                        .unwrap();
+                let block = program
+                    .metadata
+                    .iter()
+                    .position(|metadata| metadata.member == PklString::from("#value"))
+                    .unwrap();
+                let span = program.metadata[block].value_span.unwrap();
+                assert_eq!(&source[span.start..span.end], value, "{authored}");
+                let actual_observations: Vec<_> = program.blocks[block]
+                    .iter()
+                    .filter_map(|instruction| match instruction {
+                        Instruction::Observe(span) => Some(&source[span.start..span.end]),
+                        _ => None,
+                    })
+                    .collect();
+                if instrument {
+                    assert_eq!(actual_observations, observations, "{authored}");
+                } else {
+                    assert!(actual_observations.is_empty());
+                }
+            }
+        }
     }
 }

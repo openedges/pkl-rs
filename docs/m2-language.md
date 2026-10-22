@@ -78,6 +78,14 @@ writer conversion. Selected nested entry/function numbering and compression
 controls verify this identity separately from displayed bytes. The complete
 string API and diagnostic corpus still require further verification.
 
+Numeric value-frame cases compare direct negation and grouping across typed
+properties, method returns and collection members. Typed locals and function
+bodies use the executable expression's source span; other constant members retain
+Java's source suffix after their header. Authored syntax and assertion observations
+remain separate. Minimum integers, radix literals, signed zero, scalar constants
+and nonliteral unary operations provide value and diagnostic controls. Invalid public object
+annotations and nested-negation overflow frames retain separate known gaps.
+
 The default uses Java's API setting with power assertions disabled. Selected
 cases can opt in with `"power_assertions": true`; the runner then passes
 `--power-assertions` to both probes and verifies that option in the recorded

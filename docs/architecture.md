@@ -864,3 +864,20 @@ anonymous object bodies run inline in the property frame. Module and class
 declarations retain the separate value-call frame, including local declarations.
 Compiler metadata records this declaration origin; the local lookup flag alone
 does not determine diagnostic call structure.
+
+Value-call frames use the executable expression's source span separately from
+its authored syntax. Removing outer parentheses and folding a directly negated
+numeric literal follow the pinned Java AST builder: the folded value retains
+the unsigned numeric token's span. A unary operation on a parenthesized operand
+keeps the unary expression's span. Typed local properties and function bodies use
+this executable span. Other constant members follow Java's optimization that
+stores a value without a member node: their diagnostic span is reconstructed from
+the source suffix after the header. This preserves authored grouping, signs and
+comments in public properties, overrides and entries. Element headers use the
+lowered expression, so a grouped constant can leave only closing parentheses in
+that suffix. Scalar constants and the implemented constant List/Set/Map
+constructors share this metadata policy. Authored AST spans, resolution keys,
+instruction locations and power-assertion observations retain their original
+identities. This metadata rule does not change arithmetic, evaluation order or
+declaration ownership. Java's unavailable source sections for empty collection
+calls remain a separate diagnostic gap.
