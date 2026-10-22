@@ -208,7 +208,7 @@ fn raw_and_multiline_strings_decode_before_evaluation() {
     ] {
         assert_eq!(
             parse_expression(source).unwrap().kind,
-            ExprKind::String(expected.to_owned()),
+            ExprKind::String(expected.into()),
             "{source}"
         );
     }

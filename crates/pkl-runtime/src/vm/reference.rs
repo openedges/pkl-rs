@@ -54,12 +54,16 @@ pub(crate) fn base_type(name: &str) -> Option<TypeCheck> {
     })
 }
 
-pub(crate) fn type_name<'a>(ty: &'a TypeCheck, module: &str) -> String {
+pub(crate) fn type_name(ty: &TypeCheck, module: &str) -> String {
+    type_name_value(ty, module).to_java_utf8()
+}
+
+pub(crate) fn type_name_value<'a>(ty: &'a TypeCheck, module: &str) -> PklString {
     enum Part<'a> {
         Type(&'a TypeCheck),
         Text(String),
     }
-    let mut output = String::new();
+    let mut output = crate::pkl_string::PklStringBuilder::default();
     let mut pending = vec![Part::Type(ty)];
     while let Some(part) = pending.pop() {
         let ty = match part {
@@ -140,12 +144,16 @@ pub(crate) fn type_name<'a>(ty: &'a TypeCheck, module: &str) -> String {
                     sequence.push(Part::Text(">".into()));
                 }
             }
-            TypeCheck::StringLiteral(value) => output.push_str(&format!("\"{value}\"")),
+            TypeCheck::StringLiteral(value) => {
+                output.push('"');
+                output.push_value(value);
+                output.push('"');
+            }
             _ => output.push_str(&super::type_name(ty, module)),
         }
         pending.extend(sequence.into_iter().rev());
     }
-    output
+    output.finish()
 }
 
 /// Fold an immutable metadata DAG in postorder without using the native stack.
@@ -296,9 +304,9 @@ fn union(types: Vec<TypeCheck>, module: &str) -> TypeCheck {
         return TypeCheck::Any;
     }
     result.sort_by(|a, b| {
-        type_name(a, module)
+        type_name_value(a, module)
             .encode_utf16()
-            .cmp(type_name(b, module).encode_utf16())
+            .cmp(type_name_value(b, module).encode_utf16())
     });
     result.dedup_by(|a, b| metadata_key(a) == metadata_key(b));
     if result.len() == 1 {
@@ -367,6 +375,9 @@ pub(crate) fn metadata_key(ty: &TypeCheck) -> String {
                 }
                 TypeCheck::CollectionBase { .. } => format!("collection:Collection:{args:?}"),
                 TypeCheck::Reference { .. } => format!("reference:{args:?}"),
+                TypeCheck::StringLiteral(value) => {
+                    format!("string:{:?}", value.encode_utf16().collect::<Vec<_>>())
+                }
                 other => format!("leaf:{other:?}"),
             };
             if let Some(index) = interned.get(&record) {
@@ -873,7 +884,7 @@ impl Vm {
             return Ok(());
         }
         if native.name.as_ref() == "scalarToString" {
-            let text = if self.is_set(&native.receiver) {
+            let text = if self.is_set(&native.receiver) || self.is_list(&native.receiver) {
                 crate::diagnostic_values::render_multiline(
                     &native.receiver,
                     &self.heap,
@@ -884,7 +895,7 @@ impl Vm {
                     Value::TypeAlias(_)
                     | Value::Class(_)
                     | Value::Function(_)
-                    | Value::Object(_) => crate::diagnostic_values::render(
+                    | Value::Object(_) => crate::diagnostic_values::render_string(
                         &native.receiver,
                         &self.heap,
                         &self.program.module_name,

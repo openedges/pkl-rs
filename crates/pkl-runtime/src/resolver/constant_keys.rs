@@ -2,6 +2,7 @@
 use super::Binding;
 use crate::source::Span;
 use crate::syntax::{Expr, ExprKind, UnaryOp};
+use crate::value::PklString;
 use std::collections::BTreeMap;
 
 // A prefix token stream keeps construction, equality, rendering and destruction
@@ -15,7 +16,7 @@ enum ConstantToken {
     Bool(bool),
     Int(i64),
     Float(u64),
-    String(String),
+    String(PklString),
     List(usize),
 }
 
@@ -63,8 +64,8 @@ impl ConstantKey {
             .collect()
     }
 
-    fn text(&self) -> String {
-        let mut text = String::new();
+    fn text(&self) -> PklString {
+        let mut text = crate::pkl_string::PklStringBuilder::default();
         let mut remaining = Vec::new();
         for token in &self.0 {
             if let Some(count) = remaining.last_mut() {
@@ -78,18 +79,7 @@ impl ConstantKey {
                     text.push_str(&crate::numeric::double_to_string(f64::from_bits(*value)))
                 }
                 ConstantToken::String(value) => {
-                    text.push('"');
-                    for ch in value.chars() {
-                        match ch {
-                            '\n' => text.push_str("\\n"),
-                            '\r' => text.push_str("\\r"),
-                            '\t' => text.push_str("\\t"),
-                            '\\' => text.push_str("\\\\"),
-                            '"' => text.push_str("\\\""),
-                            ch => text.push(ch),
-                        }
-                    }
-                    text.push('"');
+                    text.push_value(&value.quoted());
                 }
                 ConstantToken::List(count) => {
                     text.push_str("List(");
@@ -107,6 +97,6 @@ impl ConstantKey {
                 text.push_str(", ");
             }
         }
-        text
+        text.finish()
     }
 }

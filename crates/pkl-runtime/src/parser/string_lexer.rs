@@ -1,4 +1,6 @@
 //! Eager string tokens with heap-backed nested string/interpolation scanning.
+use crate::pkl_string::PklStringBuilder;
+use crate::value::PklString;
 use std::collections::BTreeMap;
 use std::sync::Arc;
 
@@ -404,7 +406,7 @@ impl Lexer<'_> {
                 }
             };
             frame.parts.push(SpannedStringPart {
-                part: StringPart::Escape(decoded),
+                part: StringPart::Escape(decoded.into()),
                 span: Span::new(position, self.cursor),
             });
         } else {
@@ -532,26 +534,28 @@ impl Lexer<'_> {
             })?;
         }
         let mut rendered = Vec::new();
-        let mut text = String::new();
+        let mut text = PklStringBuilder::default();
         for part in parts {
             match part.part {
-                StringPart::Text(value) | StringPart::Escape(value) => text.push_str(&value),
+                StringPart::Text(value) => text.push_str(&value),
+                StringPart::Escape(value) => text.push_value(&value),
+                StringPart::Value(_) => unreachable!("string parts have not been rendered"),
                 StringPart::Unicode => unreachable!("Unicode tokens have been decoded"),
                 StringPart::Newline => text.push('\n'),
                 StringPart::Continuation => {}
                 StringPart::Expression(span, interpolation) => {
                     if !text.is_empty() {
-                        rendered.push(StringPart::Text(std::mem::take(&mut text)));
+                        rendered.push(StringPart::Value(std::mem::take(&mut text).finish()));
                     }
                     rendered.push(StringPart::Expression(span, interpolation));
                 }
             }
         }
         if rendered.is_empty() {
-            Ok(Kind::String(text))
+            Ok(Kind::String(text.finish()))
         } else {
             if !text.is_empty() {
-                rendered.push(StringPart::Text(text));
+                rendered.push(StringPart::Value(text.finish()));
             }
             Ok(Kind::StringTemplate(rendered))
         }
@@ -647,12 +651,13 @@ fn multiline_parts(
                 line_start = false;
             }
             StringPart::Expression(_, _) => {}
+            StringPart::Value(_) => unreachable!("string parts have not been rendered"),
         }
     }
     Ok(parts)
 }
 
-fn decode_unicode(source: &str, span: Span) -> Result<String, Diagnostic> {
+fn decode_unicode(source: &str, span: Span) -> Result<PklString, Diagnostic> {
     let text = &source[span.start..span.end];
     let brace = text.find('{').expect("lexed Unicode opening brace");
     let digits = &text[brace + 1..text.len() - 1];
@@ -683,14 +688,17 @@ fn decode_unicode(source: &str, span: Span) -> Result<String, Diagnostic> {
             ),
         ));
     };
+    if (0xd800..=0xdfff).contains(&point) {
+        return Ok(PklString::from_utf16(vec![point as u16]));
+    }
     let Some(character) = char::from_u32(point as u32) else {
-        // Java represents lone surrogates and has a distinct internal error for
-        // larger code points. Preserve both as explicit unsupported gaps.
+        // Java has a distinct internal error for larger code points. Preserve
+        // that incompatibility rather than synthesizing JVM stack traces.
         return Err(Diagnostic::new(
             DiagnosticKind::Unsupported,
             span,
             "Unicode escape is outside the supported scalar range.",
         ));
     };
-    Ok(character.to_string())
+    Ok(character.to_string().into())
 }

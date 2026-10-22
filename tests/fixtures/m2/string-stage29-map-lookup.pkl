@@ -1,0 +1,1 @@
+result = List(Map("\u{D800}",1).getOrNull("\u{DFFF}"),Map("\u{D800}",1).getOrNull("?"),Map("\u{D83D}\u{DE00}",1).getOrNull("\u{1F600}"))

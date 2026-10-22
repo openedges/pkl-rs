@@ -16,6 +16,7 @@ import { frontendDepthGroups, frontendDepthContext } from './frontend-depth-case
 import { stringFrontendGroups, stringFrontendContext } from './string-frontend-cases.mjs';
 import { lexicalDiagnosticCases, lexicalDiagnosticRecoveries, lexicalDiagnosticContext } from './lexical-diagnostic-cases.mjs';
 import { unicodeDiagnosticCases, unicodeDiagnosticRecoveries, unicodeDiagnosticContext } from './unicode-diagnostic-cases.mjs';
+import { stringRepresentationCases, stringRepresentationContext } from './string-representation-cases.mjs';
 
 // Identical assertions execute inside Node and an actual Chromium page.
 export async function scenarios(api) {
@@ -299,6 +300,20 @@ export async function scenarios(api) {
         const recovery = unicodeDiagnosticRecoveries[index % unicodeDiagnosticRecoveries.length];
         eq(api.evaluateLanguage(recovery.source, unicodeDiagnosticContext.uri,
           unicodeDiagnosticContext.moduleName, recovery.expression), recovery.expectedValue);
+      }
+    }
+  });
+  await check('m2-lossless-string-representation', () => {
+    for (let repetition = 0; repetition < 2; repetition++) {
+      for (const fixture of stringRepresentationCases) {
+        const evaluate = () => api.evaluateLanguage(fixture.source,
+          stringRepresentationContext.uri, stringRepresentationContext.moduleName,
+          fixture.expression);
+        if (Object.hasOwn(fixture, 'expectedError')) {
+          throws(evaluate, fixture.expectedError);
+        } else {
+          eq(evaluate(), fixture.expectedValue);
+        }
       }
     }
   });

@@ -98,6 +98,7 @@ REQUIRED_SCENARIOS = {
     'm2-string-frontend-sequences',
     'm2-lexical-diagnostic-recovery',
     'm2-unicode-diagnostic-recovery',
+    'm2-lossless-string-representation',
 }
 
 

@@ -93,7 +93,7 @@ pub fn evaluate_language_sequence(
 #[wasm_bindgen(js_name = roundtripString)]
 pub fn roundtrip_string(input: JsString) -> Result<String, JsValue> {
     match probe::identity(Value::string(string(&input)?)).map_err(error)? {
-        Value::String(value) => Ok(value.to_string()),
+        Value::String(value) => Ok(value.to_java_utf8()),
         _ => Err(error("invalid engine result")),
     }
 }

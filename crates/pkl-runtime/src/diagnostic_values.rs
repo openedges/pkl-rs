@@ -110,6 +110,15 @@ pub(crate) fn render(
     module: &str,
     limit: usize,
 ) -> Result<String, RuntimeError> {
+    Ok(render_string(value, heap, module, limit)?.to_java_utf8())
+}
+
+pub(crate) fn render_string(
+    value: &Value,
+    heap: &Heap,
+    module: &str,
+    limit: usize,
+) -> Result<crate::value::PklString, RuntimeError> {
     render_with_layout(value, heap, module, limit, false)
 }
 
@@ -119,7 +128,7 @@ pub(crate) fn render_multiline(
     value: &Value,
     heap: &Heap,
     module: &str,
-) -> Result<String, RuntimeError> {
+) -> Result<crate::value::PklString, RuntimeError> {
     render_with_layout(value, heap, module, i32::MAX as usize, true)
 }
 
@@ -129,7 +138,7 @@ fn render_with_layout(
     module: &str,
     limit: usize,
     multiline: bool,
-) -> Result<String, RuntimeError> {
+) -> Result<crate::value::PklString, RuntimeError> {
     let mut renderer = Renderer {
         heap,
         module,
@@ -140,11 +149,9 @@ fn render_with_layout(
         depth: 0,
     };
     renderer.value(value, false)?;
-    // Java's UTF-8 writer replaces an unmatched surrogate with '?'. The
-    // upstream UTF-16 length limit can split a supplementary character.
-    Ok(char::decode_utf16(renderer.units)
-        .map(|unit| unit.unwrap_or('?'))
-        .collect())
+    // Runtime toString retains units even when a UTF-16 limit splits a pair.
+    // Only the diagnostic/output boundary applies Java UTF-8 replacement.
+    Ok(crate::value::PklString::from_utf16(renderer.units))
 }
 
 struct Renderer<'a> {
@@ -159,10 +166,14 @@ struct Renderer<'a> {
 
 impl Renderer<'_> {
     fn append(&mut self, text: &str) {
+        self.append_units(text.encode_utf16());
+    }
+
+    fn append_units(&mut self, units: impl IntoIterator<Item = u16>) {
         if self.stopped {
             return;
         }
-        self.units.extend(text.encode_utf16());
+        self.units.extend(units);
         if self.units.len() >= self.limit {
             self.units.truncate(self.limit - 3);
             self.units.extend("...".encode_utf16());
@@ -190,19 +201,7 @@ impl Renderer<'_> {
             Value::Int(value) => self.append(&value.to_string()),
             Value::Float(value) => self.append(&crate::numeric::double_to_string(*value)),
             Value::String(value) => {
-                let mut text = String::from("\"");
-                for ch in value.chars() {
-                    match ch {
-                        '\n' => text.push_str("\\n"),
-                        '\r' => text.push_str("\\r"),
-                        '\t' => text.push_str("\\t"),
-                        '\\' => text.push_str("\\\\"),
-                        '"' => text.push_str("\\\""),
-                        ch => text.push(ch),
-                    }
-                }
-                text.push('"');
-                self.append(&text);
+                self.append_units(value.quoted().encode_utf16());
             }
             Value::Bytes(bytes) => {
                 self.append("Bytes(");
@@ -254,13 +253,17 @@ impl Renderer<'_> {
             }
             Value::Class(id) => {
                 if let Some(ty) = &self.heap.get(*id)?.builtin_type {
-                    self.append(&match ty {
+                    let text = match ty {
                         crate::vm::TypeCheck::Reference { .. } => "pkl.ref#Reference".into(),
-                        crate::vm::TypeCheck::Function { parameters, .. } => parameters
-                            .as_ref()
-                            .map_or_else(|| "Function".into(), |p| format!("Function{}", p.len())),
-                        _ => crate::vm::reference::type_name(ty, self.module),
-                    });
+                        crate::vm::TypeCheck::Function { parameters, .. } => {
+                            parameters.as_ref().map_or_else(
+                                || "Function".into(),
+                                |p| format!("Function{}", p.len()).into(),
+                            )
+                        }
+                        _ => crate::vm::reference::type_name_value(ty, self.module),
+                    };
+                    self.append_units(text.encode_utf16());
                     return Ok(());
                 }
                 let name = class_name(*id, self.heap)?.ok_or_else(|| {
@@ -278,10 +281,10 @@ impl Renderer<'_> {
             self.append("Reference(");
             self.value(&reference.domain, false)?;
             self.append(", ");
-            self.append(&crate::vm::reference::type_name(
-                &reference.referent,
-                self.module,
-            ));
+            self.append_units(
+                crate::vm::reference::type_name_value(&reference.referent, self.module)
+                    .encode_utf16(),
+            );
             self.append(", ");
             self.value(&reference.data, false)?;
             self.append(")");
@@ -312,7 +315,13 @@ impl Renderer<'_> {
                 };
                 if let Value::String(property) = component("property")? {
                     self.append(".");
-                    self.identifier(property);
+                    if let Some(property) = property.as_str() {
+                        self.identifier(property);
+                    } else {
+                        self.append("`");
+                        self.append_units(property.encode_utf16());
+                        self.append("`");
+                    }
                 } else {
                     let key = component("key")?;
                     self.append("[");

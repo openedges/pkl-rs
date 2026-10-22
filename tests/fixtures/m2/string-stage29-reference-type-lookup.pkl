@@ -1,0 +1,14 @@
+import "pkl:ref"
+class D extends ref.Domain {}
+d = new D {}
+class A { p: ("\u{D800}") -> Int }
+class B { p: ("\u{DFFF}") -> Int }
+class C { p: ("?") -> Int }
+class P { p: ("\u{D83D}\u{DE00}") -> Int }
+class Q { p: ("\u{1F600}") -> Int }
+a = ref.Reference(d,A,null).p
+b = ref.Reference(d,B,null).p
+c = ref.Reference(d,C,null).p
+p = ref.Reference(d,P,null).p
+q = ref.Reference(d,Q,null).p
+result = Map(p,7).getOrNull(q)

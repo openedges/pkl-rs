@@ -153,6 +153,7 @@ pub fn scalar_expressions_with_options(
                 if vm.is_reference(&value)
                     || vm.is_map(&value)
                     || vm.is_set(&value)
+                    || vm.is_list(&value)
                     || matches!(value, Value::TypeAlias(_))
                 {
                     value = vm
@@ -167,7 +168,7 @@ pub fn scalar_expressions_with_options(
                     Value::Bool(value) => Ok(value.to_string()),
                     Value::Int(value) => Ok(value.to_string()),
                     Value::Float(value) => Ok(crate::numeric::double_to_string(value)),
-                    Value::String(value) => Ok(value.to_string()),
+                    Value::String(value) => Ok(value.to_java_utf8()),
                     _ => Err(render_error(
                         "the M2 probe does not yet stringify compound values",
                         &[],

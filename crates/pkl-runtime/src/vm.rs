@@ -8,7 +8,7 @@ use crate::heap::{
     LazyState, Member, Object, Scope, TypeNodeId,
 };
 use crate::source::Span;
-use crate::value::{ErrorKind, ObjectId, RuntimeError, RuntimeFrame, Value};
+use crate::value::{ErrorKind, ObjectId, PklString, RuntimeError, RuntimeFrame, Value};
 pub mod collections;
 mod compiler_expressions;
 pub(crate) mod equality;
@@ -264,7 +264,7 @@ pub enum TypeCheck {
         kind: crate::heap::CollectionKind,
         arguments: Vec<(TypeCheck, Span)>,
     },
-    StringLiteral(Arc<str>),
+    StringLiteral(PklString),
     Class {
         id: usize,
         name: Arc<str>,
@@ -1045,6 +1045,10 @@ impl Vm {
     }
     pub(crate) fn is_set(&self, value: &Value) -> bool {
         matches!(value, Value::Object(id) if self.heap.get(*id).is_ok_and(|object| object.collection_kind == crate::heap::CollectionKind::Set))
+    }
+
+    pub(crate) fn is_list(&self, value: &Value) -> bool {
+        matches!(value, Value::Object(id) if self.heap.get(*id).is_ok_and(|object| object.collection_kind == crate::heap::CollectionKind::List))
     }
 
     pub(crate) fn is_map(&self, value: &Value) -> bool {
@@ -2584,7 +2588,7 @@ impl Vm {
                         &self.heap,
                     )?);
                 };
-                return Err(RuntimeError::new(ErrorKind::Type, message.as_ref()));
+                return Err(RuntimeError::new(ErrorKind::Type, message.to_java_utf8()));
             }
             Instruction::ToString => {
                 let value = self.pop()?;
@@ -2592,7 +2596,7 @@ impl Vm {
                     && self.heap.get(id)?.reference.is_some()
                 {
                     self.render_reference(id)?;
-                } else if self.is_set(&value) {
+                } else if self.is_set(&value) || self.is_list(&value) {
                     let text = crate::diagnostic_values::render_multiline(
                         &value,
                         &self.heap,
@@ -2604,7 +2608,7 @@ impl Vm {
                     Value::TypeAlias(_) | Value::Class(_) | Value::Function(_)
                 ) || self.is_map(&value)
                 {
-                    let text = crate::diagnostic_values::render(
+                    let text = crate::diagnostic_values::render_string(
                         &value,
                         &self.heap,
                         &self.program.module_name,
@@ -2682,7 +2686,7 @@ impl Vm {
                     && matches!(name.as_ref(), "length" | "isEmpty")
                 {
                     self.stack.push(if name.as_ref() == "length" {
-                        Value::Int(text.chars().count() as i64)
+                        Value::Int(text.code_point_len() as i64)
                     } else {
                         Value::Bool(text.is_empty())
                     });
@@ -2698,7 +2702,8 @@ impl Vm {
                     && name.as_ref() == "toString"
                     && (receiver.as_object().is_err()
                         || self.is_map(&receiver)
-                        || self.is_set(&receiver))
+                        || self.is_set(&receiver)
+                        || self.is_list(&receiver))
                 {
                     let function = self.native_reference_method(receiver, "scalarToString");
                     self.stack.push(function);
@@ -3299,6 +3304,13 @@ impl Vm {
                         "resource URI must be a String",
                     ));
                 };
+                let Some(uri) = uri.as_str() else {
+                    return Err(RuntimeError::new(
+                        ErrorKind::Unsupported,
+                        "Resource URIs containing unmatched UTF-16 surrogates are not implemented.",
+                    ));
+                };
+                let uri = Arc::from(uri);
                 let id = self.next_request;
                 self.next_request = id
                     .checked_add(1)
@@ -3527,7 +3539,7 @@ fn binary(instruction: &Instruction, left: Value, right: Value) -> Result<Value,
             _ => return Err(invalid("invalid binary instruction")),
         }),
         (Value::String(left), Value::String(right)) if matches!(instruction, Instruction::Add) => {
-            Ok(Value::string(format!("{left}{right}")))
+            Ok(Value::string(left.concat(&right)))
         }
         (Value::String(left), Value::String(right)) => {
             let order = left.encode_utf16().cmp(right.encode_utf16());
@@ -4300,7 +4312,7 @@ impl Compiler<'_> {
             ExprKind::Float(value) => output.push(Instruction::Constant(Value::Float(*value))),
             ExprKind::Null => output.push(Instruction::Constant(Value::Null)),
             ExprKind::String(value) => {
-                output.push(Instruction::Constant(Value::string(value.as_str())))
+                output.push(Instruction::Constant(Value::string(value.clone())))
             }
             ExprKind::Bool(value) => output.push(Instruction::Constant(Value::Bool(*value))),
             ExprKind::This => {
@@ -4410,13 +4422,13 @@ impl Compiler<'_> {
     }
 }
 
-fn scalar_string(value: &Value) -> Result<String, RuntimeError> {
+fn scalar_string(value: &Value) -> Result<PklString, RuntimeError> {
     Ok(match value {
-        Value::Null | Value::NullWithDefault(_) => "null".to_owned(),
-        Value::Bool(value) => value.to_string(),
-        Value::Int(value) => value.to_string(),
-        Value::Float(value) => crate::numeric::double_to_string(*value),
-        Value::String(value) => value.to_string(),
+        Value::Null | Value::NullWithDefault(_) => "null".into(),
+        Value::Bool(value) => value.to_string().into(),
+        Value::Int(value) => value.to_string().into(),
+        Value::Float(value) => crate::numeric::double_to_string(*value).into(),
+        Value::String(value) => value.clone(),
         _ => {
             return Err(RuntimeError::new(
                 ErrorKind::Unsupported,
@@ -4519,7 +4531,7 @@ fn type_name(ty: &TypeCheck, module: &str) -> String {
                 format!("{kind:?}")
             }
             TypeCheck::CollectionBase { .. } => "Collection".into(),
-            TypeCheck::StringLiteral(value) => format!("{value:?}"),
+            TypeCheck::StringLiteral(value) => format!("{:?}", value.to_java_utf8()),
             TypeCheck::Nullable(inner) => {
                 pending.push(Part::Text("?".into()));
                 pending.push(Part::Type(inner));
@@ -4558,8 +4570,10 @@ fn value_type_name(value: &Value) -> &'static str {
 
 fn display_value(value: &Value) -> String {
     match value {
-        Value::String(value) => format!("{value:?}"),
-        _ => scalar_string(value).unwrap_or_else(|_| value_type_name(value).to_owned()),
+        Value::String(value) => format!("{:?}", value.to_java_utf8()),
+        _ => scalar_string(value)
+            .map(|value| value.to_java_utf8())
+            .unwrap_or_else(|_| value_type_name(value).to_owned()),
     }
 }
 
@@ -4941,7 +4955,7 @@ impl Compiler<'_> {
                 result: Box::new(self.compile_type_at(return_type, limit, aliases, parameters)?),
                 syntax: true,
             },
-            TypeKind::String(value) => TypeCheck::StringLiteral(Arc::from(value.as_str())),
+            TypeKind::String(value) => TypeCheck::StringLiteral(value.clone()),
             TypeKind::Nullable(inner) => TypeCheck::Nullable(Box::new(
                 self.compile_type_at(inner, limit, aliases, parameters)?,
             )),

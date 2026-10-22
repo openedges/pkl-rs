@@ -38164,6 +38164,650 @@
         "semantic:diagnostics",
         "semantic:shared-engine"
       ]
+    },
+    {
+      "id": "string-stage29-high",
+      "input": "tests/fixtures/m2/string-stage29-high.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:strings",
+        "semantic:operators",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "string-stage29-low",
+      "input": "tests/fixtures/m2/string-stage29-low.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:strings",
+        "semantic:operators",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "string-stage29-pair",
+      "input": "tests/fixtures/m2/string-stage29-pair.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:strings",
+        "semantic:operators",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "string-stage29-reverse",
+      "input": "tests/fixtures/m2/string-stage29-reverse.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:strings",
+        "semantic:operators",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "string-stage29-lengths",
+      "input": "tests/fixtures/m2/string-stage29-lengths.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:strings",
+        "semantic:operators",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "string-stage29-equality-controls",
+      "input": "tests/fixtures/m2/string-stage29-equality-controls.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:strings",
+        "semantic:operators",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "string-stage29-pair-scalar-equality",
+      "input": "tests/fixtures/m2/string-stage29-pair-scalar-equality.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:strings",
+        "semantic:operators",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "string-stage29-concat-pair",
+      "input": "tests/fixtures/m2/string-stage29-concat-pair.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:strings",
+        "semantic:operators",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "string-stage29-concat-pair-length",
+      "input": "tests/fixtures/m2/string-stage29-concat-pair-length.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:strings",
+        "semantic:operators",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "string-stage29-concat-pair-equality",
+      "input": "tests/fixtures/m2/string-stage29-concat-pair-equality.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:strings",
+        "semantic:operators",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "string-stage29-concat-reverse",
+      "input": "tests/fixtures/m2/string-stage29-concat-reverse.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:strings",
+        "semantic:operators",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "string-stage29-concat-spaced",
+      "input": "tests/fixtures/m2/string-stage29-concat-spaced.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:strings",
+        "semantic:operators",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "string-stage29-interpolation-pair",
+      "input": "tests/fixtures/m2/string-stage29-interpolation-pair.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:strings",
+        "semantic:operators",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "string-stage29-interpolation-mixed",
+      "input": "tests/fixtures/m2/string-stage29-interpolation-mixed.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:strings",
+        "semantic:operators",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "string-stage29-ordering",
+      "input": "tests/fixtures/m2/string-stage29-ordering.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:strings",
+        "semantic:operators",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "string-stage29-list-render",
+      "input": "tests/fixtures/m2/string-stage29-list-render.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:strings",
+        "semantic:operators",
+        "semantic:shared-engine",
+        "semantic:collections"
+      ]
+    },
+    {
+      "id": "string-stage29-set-identity",
+      "input": "tests/fixtures/m2/string-stage29-set-identity.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:strings",
+        "semantic:operators",
+        "semantic:shared-engine",
+        "semantic:collections"
+      ]
+    },
+    {
+      "id": "string-stage29-set-pair-coalescing",
+      "input": "tests/fixtures/m2/string-stage29-set-pair-coalescing.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:strings",
+        "semantic:operators",
+        "semantic:shared-engine",
+        "semantic:collections"
+      ]
+    },
+    {
+      "id": "string-stage29-map-identity",
+      "input": "tests/fixtures/m2/string-stage29-map-identity.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:strings",
+        "semantic:operators",
+        "semantic:shared-engine",
+        "semantic:collections"
+      ]
+    },
+    {
+      "id": "string-stage29-map-lookup",
+      "input": "tests/fixtures/m2/string-stage29-map-lookup.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:strings",
+        "semantic:operators",
+        "semantic:shared-engine",
+        "semantic:collections"
+      ]
+    },
+    {
+      "id": "string-stage29-structural-key",
+      "input": "tests/fixtures/m2/string-stage29-structural-key.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:strings",
+        "semantic:operators",
+        "semantic:shared-engine",
+        "semantic:collections"
+      ]
+    },
+    {
+      "id": "string-stage29-literal-type-pair",
+      "input": "tests/fixtures/m2/string-stage29-literal-type-pair.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:strings",
+        "semantic:operators",
+        "semantic:shared-engine",
+        "semantic:types"
+      ]
+    },
+    {
+      "id": "string-stage29-literal-type-unpaired",
+      "input": "tests/fixtures/m2/string-stage29-literal-type-unpaired.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:strings",
+        "semantic:operators",
+        "semantic:shared-engine",
+        "semantic:types"
+      ]
+    },
+    {
+      "id": "string-stage29-throw",
+      "input": "tests/fixtures/m2/string-stage29-throw.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:strings",
+        "semantic:operators",
+        "semantic:shared-engine",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "string-stage29-raw-high",
+      "input": "tests/fixtures/m2/string-stage29-raw-high.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:strings",
+        "semantic:operators",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "string-stage29-multiline-high",
+      "input": "tests/fixtures/m2/string-stage29-multiline-high.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:strings",
+        "semantic:operators",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "string-stage29-literal-type-error",
+      "input": "tests/fixtures/m2/string-stage29-literal-type-error.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:strings",
+        "semantic:operators",
+        "semantic:shared-engine",
+        "semantic:types",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "string-stage29-literal-default-high",
+      "input": "tests/fixtures/m2/string-stage29-literal-default-high.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:strings",
+        "semantic:operators",
+        "semantic:shared-engine",
+        "semantic:types"
+      ]
+    },
+    {
+      "id": "string-stage29-alias-default-high",
+      "input": "tests/fixtures/m2/string-stage29-alias-default-high.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:strings",
+        "semantic:operators",
+        "semantic:shared-engine",
+        "semantic:types"
+      ]
+    },
+    {
+      "id": "string-stage29-union-default-pair",
+      "input": "tests/fixtures/m2/string-stage29-union-default-pair.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:strings",
+        "semantic:operators",
+        "semantic:shared-engine",
+        "semantic:types"
+      ]
+    },
+    {
+      "id": "string-stage29-literal-as-high",
+      "input": "tests/fixtures/m2/string-stage29-literal-as-high.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:strings",
+        "semantic:operators",
+        "semantic:shared-engine",
+        "semantic:types"
+      ]
+    },
+    {
+      "id": "string-stage29-literal-as-error",
+      "input": "tests/fixtures/m2/string-stage29-literal-as-error.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:strings",
+        "semantic:operators",
+        "semantic:shared-engine",
+        "semantic:types",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "string-stage29-list-tostring-identity",
+      "input": "tests/fixtures/m2/string-stage29-list-tostring-identity.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:strings",
+        "semantic:operators",
+        "semantic:shared-engine",
+        "semantic:collections"
+      ]
+    },
+    {
+      "id": "string-stage29-map-tostring-identity",
+      "input": "tests/fixtures/m2/string-stage29-map-tostring-identity.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:strings",
+        "semantic:operators",
+        "semantic:shared-engine",
+        "semantic:collections"
+      ]
+    },
+    {
+      "id": "string-stage29-set-tostring-identity",
+      "input": "tests/fixtures/m2/string-stage29-set-tostring-identity.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:strings",
+        "semantic:operators",
+        "semantic:shared-engine",
+        "semantic:collections"
+      ]
+    },
+    {
+      "id": "string-stage29-list-tostring-length",
+      "input": "tests/fixtures/m2/string-stage29-list-tostring-length.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:strings",
+        "semantic:operators",
+        "semantic:shared-engine",
+        "semantic:collections"
+      ]
+    },
+    {
+      "id": "string-stage29-list-tostring-concat",
+      "input": "tests/fixtures/m2/string-stage29-list-tostring-concat.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:strings",
+        "semantic:operators",
+        "semantic:shared-engine",
+        "semantic:collections"
+      ]
+    },
+    {
+      "id": "string-stage29-hash-collision-map",
+      "input": "tests/fixtures/m2/string-stage29-hash-collision-map.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:strings",
+        "semantic:operators",
+        "semantic:shared-engine",
+        "semantic:collections"
+      ]
+    },
+    {
+      "id": "string-stage29-hash-collision-set",
+      "input": "tests/fixtures/m2/string-stage29-hash-collision-set.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:strings",
+        "semantic:operators",
+        "semantic:shared-engine",
+        "semantic:collections"
+      ]
+    },
+    {
+      "id": "string-stage29-type-value-high-error",
+      "input": "tests/fixtures/m2/string-stage29-type-value-high-error.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:strings",
+        "semantic:operators",
+        "semantic:shared-engine",
+        "semantic:types",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "string-stage29-reference-type-identity",
+      "input": "tests/fixtures/m2/string-stage29-reference-type-identity.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:strings",
+        "semantic:operators",
+        "semantic:shared-engine",
+        "semantic:types",
+        "semantic:reference",
+        "semantic:reflection-metadata"
+      ]
+    },
+    {
+      "id": "string-stage29-reference-type-map",
+      "input": "tests/fixtures/m2/string-stage29-reference-type-map.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:strings",
+        "semantic:operators",
+        "semantic:shared-engine",
+        "semantic:collections",
+        "semantic:types",
+        "semantic:reference",
+        "semantic:reflection-metadata"
+      ]
+    },
+    {
+      "id": "string-stage29-reference-type-set",
+      "input": "tests/fixtures/m2/string-stage29-reference-type-set.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:strings",
+        "semantic:operators",
+        "semantic:shared-engine",
+        "semantic:collections",
+        "semantic:types",
+        "semantic:reference",
+        "semantic:reflection-metadata"
+      ]
+    },
+    {
+      "id": "string-stage29-reference-type-lookup",
+      "input": "tests/fixtures/m2/string-stage29-reference-type-lookup.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:strings",
+        "semantic:operators",
+        "semantic:shared-engine",
+        "semantic:types",
+        "semantic:reference",
+        "semantic:reflection-metadata"
+      ]
+    },
+    {
+      "id": "string-stage29-order-high-empty-unicode",
+      "input": "tests/fixtures/m2/string-stage29-order-high-empty-unicode.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:strings",
+        "semantic:operators",
+        "semantic:shared-engine",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "string-stage29-order-high-nonhex-unicode",
+      "input": "tests/fixtures/m2/string-stage29-order-high-nonhex-unicode.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:strings",
+        "semantic:operators",
+        "semantic:shared-engine",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "string-stage29-order-high-missing-brace",
+      "input": "tests/fixtures/m2/string-stage29-order-high-missing-brace.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:strings",
+        "semantic:operators",
+        "semantic:shared-engine",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "string-stage29-order-high-invalid-escape",
+      "input": "tests/fixtures/m2/string-stage29-order-high-invalid-escape.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:strings",
+        "semantic:operators",
+        "semantic:shared-engine",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "string-stage29-order-high-interpolation-syntax",
+      "input": "tests/fixtures/m2/string-stage29-order-high-interpolation-syntax.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:strings",
+        "semantic:operators",
+        "semantic:shared-engine",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "string-stage29-order-high-unclosed",
+      "input": "tests/fixtures/m2/string-stage29-order-high-unclosed.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:strings",
+        "semantic:operators",
+        "semantic:shared-engine",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "string-stage29-order-raw-high-invalid-escape",
+      "input": "tests/fixtures/m2/string-stage29-order-raw-high-invalid-escape.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:strings",
+        "semantic:operators",
+        "semantic:shared-engine",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "string-stage29-order-multiline-high-indent",
+      "input": "tests/fixtures/m2/string-stage29-order-multiline-high-indent.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:strings",
+        "semantic:operators",
+        "semantic:shared-engine",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "string-stage29-order-multiline-high-empty-later-escape",
+      "input": "tests/fixtures/m2/string-stage29-order-multiline-high-empty-later-escape.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:strings",
+        "semantic:operators",
+        "semantic:shared-engine",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "string-stage29-order-split-pair-later-syntax",
+      "input": "tests/fixtures/m2/string-stage29-order-split-pair-later-syntax.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:strings",
+        "semantic:operators",
+        "semantic:shared-engine",
+        "semantic:diagnostics"
+      ]
     }
   ],
   "schema_version": 1,

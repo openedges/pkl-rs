@@ -19,7 +19,7 @@ pub(crate) enum Atom {
     Bool(bool),
     Int(i64),
     Float(u64),
-    String(Arc<str>),
+    String(PklString),
     Bytes(Arc<[u8]>),
     Structural(u64),
     Function(ObjectId),
@@ -94,7 +94,9 @@ impl Vm {
                 };
                 Some((bits ^ (bits >> 32)) as i32)
             }
-            Value::String(value) => Some(string_hash(value)),
+            Value::String(value) => Some(value.encode_utf16().fold(0i32, |hash, unit| {
+                hash.wrapping_mul(31).wrapping_add(i32::from(unit))
+            })),
             Value::Bytes(value) => Some(value.iter().fold(1i32, |hash, byte| {
                 hash.wrapping_mul(31).wrapping_add(i32::from(*byte as i8))
             })),

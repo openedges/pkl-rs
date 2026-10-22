@@ -1,0 +1,1 @@
+result = List("\u{D800}","\u{D83D}\u{DE00}").toString().length

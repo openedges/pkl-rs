@@ -1,5 +1,6 @@
 //! Shared source syntax. Unsupported runtime features remain explicit errors.
 use crate::source::Span;
+use crate::value::PklString;
 
 #[derive(Clone, Debug, PartialEq)]
 pub struct Module {
@@ -209,7 +210,7 @@ pub enum TypeKind {
         parameters: Vec<Type>,
         return_type: Box<Type>,
     },
-    String(String),
+    String(PklString),
     Constrained {
         base: Box<Type>,
         constraints: Vec<Expr>,
@@ -603,7 +604,7 @@ pub enum ExprKind {
     Int(i64),
     Float(f64),
     Null,
-    String(String),
+    String(PklString),
     InterpolatedString(Vec<Expr>),
     Bool(bool),
     Name(String),

@@ -102,7 +102,7 @@ bytecode. VM errors retain these logical frames before unwinding. A shared
 scalar evaluation boundary combines them with source URIs and module names
 and renders complete uncolored diagnostics. Native `language_probe`, Node
 `evaluateLanguage`, and Wasm `evaluateLanguage` use this boundary. These are
-development adapters with scalar and selected Reference/type-alias/strict Map/Set
+development adapters with scalar and selected Reference/type-alias/strict List/Map/Set
 property-path results; full expression APIs, general compound rendering, and
 external module loading remain separate requirements.
 
@@ -144,8 +144,31 @@ continuation and multiline diagnostics with Pkl 0.32.0, preserving interpolation
 error order and explicit UTF-16 underline widths. Cached lexical failures retain
 their original consumed end and source-end provenance. Parse-time recovery tests
 use fresh evaluators because a failed module setup cannot produce a retained one.
-Malformed Unicode diagnostics and Java's out-of-range scalar bug remain separate
-compatibility gaps.
+Selected malformed Unicode diagnostics preserve Java's conversion timing and
+UTF-16 token widths. Java's out-of-range scalar bug remains a separate
+compatibility gap.
+
+### Language string values
+
+`PklString` preserves UTF-16 code units, including unmatched surrogates. A
+well-formed value uses UTF-8 storage; a value with unmatched units uses UTF-16
+storage. Construction and concatenation canonicalize well-formed pairs, so
+escaped pairs and literal supplementary characters have the same value.
+Source text, identifiers and source positions retain their separate UTF-8 types.
+
+String literals, interpolation, literal types and defaults, collection keys,
+comparison, Java string hashing, and the implemented `toString` paths retain
+the lossless value. Code point length counts an unmatched surrogate as one
+point. Reference type names and metadata keys also preserve literal units.
+Host suspension and evaluator caches carry the same value representation.
+
+`to_java_utf8` is an explicit output operation: it maps unmatched units to `?`
+as Java's UTF-8 writer does. Development language adapters observe that writer
+boundary. This does not establish lossless public JavaScript string transport
+or the complete embedding API. Module and resource URIs containing unmatched
+units remain explicitly unsupported rather than being converted to a different
+URI. Full string builtins, general Java regular expressions, and performance
+and memory parity remain separate requirements.
 
 ### Constraint continuations
 

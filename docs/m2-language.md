@@ -58,13 +58,22 @@ compared without normalization. A separate outcome file records whether Java
 returned normally or caught a particular `PklException` class. This distinguishes
 a handled upstream bug report from an uncaught JVM failure without changing
 stdout or stderr. The Rust probe accepts property paths returning scalars,
-selected References and type aliases, or strict Maps and Sets. Their
+selected References and type aliases, or strict Lists, Maps and Sets. Their
 stringification reads completed values without forcing nested objects. Map uses
-the single-line layout and Set the multiline layout of the Java value renderer.
+the single-line layout and List/Set the multiline layout of the Java value renderer.
 Java may rehash nested Map keys during iteration; those rendering side effects
 are not fully reproduced by the cache-only renderer.
 This boundary does not prove typed API compatibility or general
 compound-value rendering.
+
+Language strings retain UTF-16 code units internally, including unmatched
+surrogates. Literal types, keys, concatenation, interpolation and the implemented
+collection `toString` paths preserve those units. The development probes apply
+Java's UTF-8 writer replacement only when producing their output. Matching that
+byte boundary does not establish lossless public JavaScript string transport.
+Unmatched-surrogate module/resource URIs and Java's out-of-range escape internal
+error remain separate gaps. The complete string API and arbitrary surrogate
+diagnostic-frame identity also require further verification.
 
 The default uses Java's API setting with power assertions disabled. Selected
 cases can opt in with `"power_assertions": true`; the runner then passes

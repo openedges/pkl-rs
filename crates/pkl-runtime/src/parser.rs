@@ -104,7 +104,7 @@ enum Kind {
     Float(String),
     QuotedName(String),
     Operator(&'static str),
-    String(String),
+    String(crate::value::PklString),
     StringTemplate(Vec<StringPart>),
     StringStart(char),
     Symbol(char),
@@ -114,7 +114,8 @@ enum Kind {
 #[derive(Clone, Debug, PartialEq)]
 enum StringPart {
     Text(String),
-    Escape(String),
+    Escape(crate::value::PklString),
+    Value(crate::value::PklString),
     Unicode,
     Newline,
     Continuation,
@@ -610,9 +611,16 @@ impl<'a> Parser<'a> {
                 return Err(self.unexpected(Some("string constant")));
             };
             let end = self.advance()?.span.end;
+            let Some(uri) = uri.as_str() else {
+                return Err(Diagnostic::new(
+                    DiagnosticKind::Unsupported,
+                    Span::new(begin, end),
+                    "Module URIs containing unmatched UTF-16 surrogates are not implemented.",
+                ));
+            };
             Some(ModuleParent {
                 kind,
-                uri,
+                uri: uri.to_owned(),
                 span: Span::new(begin, end),
             })
         } else {
@@ -674,6 +682,14 @@ impl<'a> Parser<'a> {
             return Err(self.unexpected(Some("string constant")));
         };
         let uri_span = self.advance()?.span;
+        let Some(uri) = uri.as_str() else {
+            return Err(Diagnostic::new(
+                DiagnosticKind::Unsupported,
+                uri_span,
+                "Module URIs containing unmatched UTF-16 surrogates are not implemented.",
+            ));
+        };
+        let uri = uri.to_owned();
         let (name, _) = if self.is_name("as") {
             self.advance()?;
             self.identifier()?

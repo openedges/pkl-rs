@@ -64,7 +64,7 @@ pub fn ordered_members(
                 .iter()
                 .filter(|m| !m.local && !m.method && !m.entry)
                 .map(|m| CollectionMember {
-                    key: Value::String(m.name.clone()),
+                    key: Value::string(m.name.clone()),
                     name: m.name.clone(),
                     kind: CollectionMemberKind::Property,
                 })
@@ -1145,7 +1145,7 @@ impl Vm {
 
             Instruction::EndCollection => self.end_collection()?,
             Instruction::AddCollectionProperty(member) => {
-                let key = Value::String(member.name.clone());
+                let key = Value::string(member.name.clone());
                 if self.prepare_insertion(&key, CollectionMemberKind::Property)? {
                     return Ok(());
                 }
@@ -1741,7 +1741,7 @@ impl Vm {
                         "entry key"
                     };
                     let key = if source_member.kind == CollectionMemberKind::Property {
-                        scalar_string(&key)?
+                        scalar_string(&key)?.to_java_utf8()
                     } else {
                         display_value(&key)
                     };

@@ -160,7 +160,7 @@ fn shared_nullable_traversals_and_concurrent_last_release_are_stack_safe() {
 fn default_descent_and_unwind_yield_trace_unpublished_objects_and_cancel() {
     const DEPTH: usize = 512;
     for stop in [1, DEPTH / 2, DEPTH + 1, DEPTH + DEPTH / 2] {
-        let mut ty = TypeCheck::StringLiteral(Arc::from("leaf")).shared();
+        let mut ty = TypeCheck::StringLiteral("leaf".into()).shared();
         for _ in 0..DEPTH {
             ty = TypeCheck::ParameterizedCollection {
                 kind: crate::heap::CollectionKind::Listing,

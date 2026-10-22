@@ -1,0 +1,3 @@
+typealias Choice = "\u{D800}"
+x: Choice
+result = List(x=="\u{D800}",x=="?",x.length)

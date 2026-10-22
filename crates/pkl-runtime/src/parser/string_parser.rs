@@ -44,7 +44,7 @@ impl<'a> Parser<'a> {
                 if let Some(mut build) = string.take() {
                     for part in build.parts.by_ref() {
                         match part {
-                            StringPart::Text(value) => build.expressions.push(Expr {
+                            StringPart::Value(value) => build.expressions.push(Expr {
                                 kind: ExprKind::String(value),
                                 span: build.span,
                             }),

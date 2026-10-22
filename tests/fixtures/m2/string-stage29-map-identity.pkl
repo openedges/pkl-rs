@@ -1,0 +1,1 @@
+result = Map("\u{D800}",1,"\u{DFFF}",2,"?",3,"\u{FFFD}",4).length

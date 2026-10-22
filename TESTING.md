@@ -323,6 +323,18 @@ removing it from a passing checkpoint never turns it into a successful guard tes
 These tests do not establish arbitrary syntax depth, Java stack-overflow diagnostics, uniform
 cancellation latency or workload-level speed and memory parity.
 
+Lossless string regressions distinguish UTF-16 value identity from UTF-8 output.
+The pinned Java API probe records code units, code points, hash codes and output
+bytes for lone, paired and reversed surrogates. Differential cases cover
+concatenation, interpolation, literal types/defaults, Map/Set keys, strict
+collection stringification, Reference metadata and malformed-escape error order.
+Native checks inspect actual units through Host suspension, reentry, failed-read
+retry, collection, cancellation and terminal release. The Node and Chromium
+scenarios compare complete Java-derived output payloads. These output adapters
+observe Java's UTF-8 writer; they do not establish lossless public JavaScript
+string transport. Surrogate URI handling, arbitrary diagnostic-frame identity,
+and full string builtins remain separate requirements.
+
 M1 experiments have narrower, explicit contracts:
 
 ```sh

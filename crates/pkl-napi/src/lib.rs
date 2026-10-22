@@ -92,7 +92,7 @@ pub fn evaluate_language_sequence(
 #[napi]
 pub fn roundtrip_string(input: Utf16String) -> Result<String> {
     match probe::identity(Value::string(string(&input)?)).map_err(error)? {
-        Value::String(value) => Ok(value.to_string()),
+        Value::String(value) => Ok(value.to_java_utf8()),
         _ => Err(error("invalid engine result")),
     }
 }

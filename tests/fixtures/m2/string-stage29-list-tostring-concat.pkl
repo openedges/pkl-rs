@@ -1,0 +1,1 @@
+result = List("\u{D800}").toString()+"\u{DE00}"

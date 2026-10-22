@@ -3,6 +3,7 @@
 use std::fmt;
 use std::sync::Arc;
 
+pub use crate::pkl_string::PklString;
 use crate::source::Span;
 
 /// A generation prevents a reclaimed slot from aliasing its next occupant.
@@ -21,7 +22,7 @@ pub enum Value {
     Bool(bool),
     Int(i64),
     Float(f64),
-    String(Arc<str>),
+    String(PklString),
     Bytes(Arc<[u8]>),
     Object(ObjectId),
     Function(ObjectId),
@@ -52,7 +53,7 @@ impl Value {
         matches!(self, Self::Null | Self::NullWithDefault(_))
     }
 
-    pub fn string(value: impl Into<Arc<str>>) -> Self {
+    pub fn string(value: impl Into<PklString>) -> Self {
         Self::String(value.into())
     }
 
