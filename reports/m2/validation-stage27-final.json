@@ -1,0 +1,115 @@
+{
+  "implementation_commit": "5383d84c894bc19c90c5b5a3cf9bf54aeb3381d0",
+  "scope": "M2 Stage27 required local development checks; full compatibility and performance remain separate.",
+  "source_stability": true,
+  "source_snapshot_count": 3396,
+  "source_manifest_report_sha256": "4bdea8440feee1d001b7b1017b1848656639149a095e8d432d617885a5476477",
+  "raw_report": "validation-stage27-final-evidence.tar.gz:report.json",
+  "rust_passed": 443,
+  "rust_harness_passed": 454,
+  "rust_isolated_child_duplicate_passed": 11,
+  "rust_isolated_child_tests": [
+    "authored_chains_parse_clone_resolve_compile_and_drop_on_small_stack",
+    "authored_power_assertion_compiler_and_cleanup_use_small_stack",
+    "authored_partial_parse_resolve_and_compile_errors_release_on_small_stack",
+    "authored_scope_type_and_shared_work_guards_release_on_small_stack",
+    "authored_frontend_program_survives_host_reentry_retry_cancel_and_terminal_release",
+    "nested_lexical_accepted_near_guard_traverses_frontend_on_small_stack",
+    "original_nested_lexical_64_rejects_without_aborting_small_stack",
+    "nested_lexical_partial_errors_and_shared_work_guard_release_small_stack",
+    "nested_lexical_host_reentry_read_failure_retry_cancel_and_terminal_cleanup",
+    "nested_lexical_error_priority_spans_and_eof_cleanup_on_small_stack",
+    "malformed_multiline_diagnostic_spans_and_guard_cleanup_on_small_stack"
+  ],
+  "rust_intentionally_ignored": 1,
+  "python_passed": 194,
+  "required_commands": 7,
+  "checks": [
+    {
+      "command": [
+        "cargo",
+        "xtask",
+        "verify"
+      ],
+      "exit_code": 0,
+      "stdout_sha256": "900802c9cf4f23bd9dbc0e79f58d3e21493ec0c990782bc5b690a7432148e9eb",
+      "stderr_sha256": "8de24a775d3c860ae8fa8a9901f957656c9f63ca9aecadc4296c141b7560b706"
+    },
+    {
+      "command": [
+        "cargo",
+        "fmt",
+        "--all",
+        "--",
+        "--check"
+      ],
+      "exit_code": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "cargo",
+        "clippy",
+        "--workspace",
+        "--all-targets",
+        "--locked",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "exit_code": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "9abe15196a33669405546621a8cbd303c41678a7ecfd3a036a631e58d0b26f79"
+    },
+    {
+      "command": [
+        "cargo",
+        "test",
+        "--workspace",
+        "--locked"
+      ],
+      "exit_code": 0,
+      "stdout_sha256": "10435a5a76659433d30313655c2bfa0582b1524f101f1d873e1036a3660a06aa",
+      "stderr_sha256": "c0887e7f1cc35f067d647b2ff87e5dba30f87626037fc6e47a8baaaeb4b6af9f"
+    },
+    {
+      "command": [
+        "cargo",
+        "check",
+        "-p",
+        "pkl-runtime",
+        "--target",
+        "wasm32-unknown-unknown",
+        "--locked"
+      ],
+      "exit_code": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "efaadec5018223ba91b1d746ee501b38baf9dc837bde6bc3698677183b63353a"
+    },
+    {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools/tests",
+        "-v"
+      ],
+      "exit_code": 0,
+      "stdout_sha256": "f22ad49162eb6638b5cb804194efcd6bffb5f7c12aae8bd2c40879ce011d1df7",
+      "stderr_sha256": "db5eebe33dbb19af289b190abf6c47f5a52f57a25220127fb8fda1e81490e952"
+    },
+    {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/m2_manifest.py",
+        "--check"
+      ],
+      "exit_code": 0,
+      "stdout_sha256": "4a7c33033e929d180c714c1c1ace1b6147849b32d954b82876c60d8fe4e0f019",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ]
+}

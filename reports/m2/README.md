@@ -35,7 +35,93 @@ selected strict Set semantics, multiline strings and lifecycle checks. Stage 24 
 bounded abstract Collection type checks, defaults and metadata. Stage 25 adds
 continuations for selected authored frontend paths and small-stack checks.
 Stage 26 extends those paths to bounded nested lexical strings and interpolation.
+Stage 27 aligns selected lexical string diagnostics with Java.
 These checkpoints do not complete the language milestone.
+
+## Stage 27 local verification checkpoint
+
+Implementation `5383d84c894bc19c90c5b5a3cf9bf54aeb3381d0` is committed and pushed.
+The [final summary](stage27-final-summary.json), [independent audit](stage27-post-seal-audit.json)
+and [completion captures](stage27-completion-captures.json) close this bounded
+lexical diagnostic checkpoint. M2 remains in progress.
+
+String parts now retain exact byte spans, including empty tokens used by Java's
+multiline validation. Selected invalid escapes, missing delimiters, block-comment
+EOF, interpolation EOF, line continuations and multiline indentation errors match
+Pkl 0.32.0 messages and locations. Raw-string escapes follow Java's required hash
+prefix and final-hash underline. Explicit UTF-16 widths preserve whitespace and
+newline underlines. Earlier interpolation errors retain priority; cached failures
+still require the original consumed end and source-end provenance.
+
+Core implementation used `gpt-6-astra / xhigh`. Separate `gpt-6.1-sol / high`
+agents handled Java evidence, native/platform tests and independent reviews.
+Review scopes exclude each author's own semantic changes. The original 2,724
+selected definitions and input bytes, 151 persistent sequences, 85 platform
+scenarios, reference pins and existing native test files remain preserved.
+
+The full selected comparison records **2,831 expressions: 2,829 raw matches,
+the original cycle oracle error and integer `% 0` diagnostic mismatch**.
+All **107 additions** match: five successful inputs and 102 expected errors.
+All **88 metamorphic relations** pass. The strict full gate retains **1,950
+failure reasons**; no development exception was added. Inventory accounting keeps
+474 requirements and 3,831 case rows: 2,831 ready, 960 unimplemented and 40 unmapped.
+The 16 reviewed requirement mappings remain partial. These overlapping inventories
+do not measure feature completion.
+
+All seven [required local checks](validation-stage27-final.json) pass: **443 distinct
+Rust tests and 194 Python tests**, with one existing ignored probe. Raw Rust output
+contains 454 harness passes; 11 isolated child reports also appear in their parent
+counts. Exact markers, invocation names and numeric summaries identify those
+duplicates without rewriting interleaved output. Two new isolated native tests
+retain **256 KiB stacks and 60-second deadlines**, checking exact spans, error
+order, partial frontend cleanup and fresh successful work after rejection.
+
+The complete persistent suite retains **2,622 matching calls across 151 sequences
+run twice**. Actual Node and Chromium each pass **86 development scenarios**.
+The new scenario makes 60 calls per target, alternating the 15 historical setup
+errors with successful inputs. Failed parsing cannot create a retained evaluator;
+these are fresh-evaluator recovery checks on the same binding API. Existing
+same-evaluator Host, GC, reentry, retry, cancellation and terminal tests remain
+separate. Shared primitive results agree in all 6,078 cases; each target matches
+Java in 6,076 and preserves the two known regex failures. M1 frontend, runtime and
+lifecycle results retain their previous successes and diagnostic gaps.
+
+Fresh Java replay at the original URIs reproduces all 15 historical diagnostic
+failures byte for byte. Focused and final language artifacts each replay **158
+exploratory observations: 144 matches, 12 mismatches and two Java process errors**.
+The original 15 diagnostic differences now match. Remaining observations include
+seven Java-valid deep strings rejected by Rust's guard, the historical Unicode
+internal-error case, four new Unicode controls, and two Java failures on deep unary
+inputs. The selection overlaps this exploration; counts must not be added as
+distinct coverage. The other 47 historical Java observations use retained captures,
+not a fresh Java run.
+
+Three new Unicode controls expose ordinary diagnostics for empty, nonhexadecimal
+and missing-brace escapes. The fourth retains Java's out-of-range scalar internal
+error versus Rust's unsupported-range diagnostic. Surrogate behavior remains
+unverified. The lexical nesting limit remains 32, and scope and type depth guards are
+unchanged. The expression work budget remains 65,536. Auxiliary lexical validation can synchronously reparse
+ranges. Arbitrary nesting, deep type/class/mixed-body compilation, uniform latency,
+complete diagnostics, product APIs, release platforms and speed/peak-RSS parity
+remain open.
+
+The ten new archives total **38,213,047 bytes**. All **7,131 final source
+copies from 3,396 unique project files** match the implementation commit.
+The audit verifies **60,233 original acquisition files**, source/Git proof,
+raw new and known-failure language controls, platform primitive results, reviews
+and six distinct gates. 3 direct Cargo build caches are omitted without
+enumerating their payloads; no payload size or hash is claimed. Stage 26 archives,
+summary, audit and completion companion remain direct immutable dependencies;
+inherited evidence is not recursively rerun or audited. The completion companion
+preserves 12 original sealing/audit process files after archive creation.
+
+Preliminary builds and failed development comparisons retain their own provenance.
+An early formatting failure has conversation output only; filesystem bytes were
+not reconstructed. Intentional spaces, tabs, CRLF and missing terminators in
+malformed fixtures preserve Java input bytes. These are local macOS captures;
+no hosted CI, Linux or Windows run is claimed. As before, the recorded full-Chrome
+identity does not directly establish the launched binary; headless-shell selection
+is inferred from pinned Playwright code.
 
 ## Stage 26 local verification checkpoint
 
