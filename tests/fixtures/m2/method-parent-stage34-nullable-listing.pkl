@@ -1,0 +1,2 @@
+function build(): Listing<Int>? = new { 3 }
+result = build()!![0].toString()

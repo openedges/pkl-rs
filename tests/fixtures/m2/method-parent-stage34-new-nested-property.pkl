@@ -1,0 +1,4 @@
+class Person { age: Int = 7 }
+class Envelope { child: Person }
+function build(): Envelope = new { child = new { age = 9 } }
+result = build().child.age.toString()

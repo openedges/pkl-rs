@@ -187,6 +187,8 @@ pub struct Object {
     /// Inherited default value for inferred element/entry objects. `Some(None)`
     /// means the annotated value type has no default; `None` uses Dynamic's default.
     pub collection_default: Option<Option<Value>>,
+    /// Authored declaration of a synthesized undefined collection default.
+    pub collection_default_origin: Option<crate::value::RuntimeFrame>,
 }
 
 impl Object {

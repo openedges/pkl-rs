@@ -1,0 +1,2 @@
+function build(): Listing<Int> = new { 1; 2 }
+result = build()[0].toString() + ":" + build()[1].toString()

@@ -1110,12 +1110,13 @@ impl Vm {
                     .builders
                     .push(id);
             }
-            Instruction::SetCollectionDefault { defined } => {
+            Instruction::SetCollectionDefault { defined, origin } => {
                 let value = if defined { Some(self.pop()?) } else { None };
                 let target = self.builder()?;
                 self.heap.get_mut(target)?.collection_default = Some(value);
+                self.heap.get_mut(target)?.collection_default_origin = origin;
             }
-            Instruction::SetCollectionTypeDefault(ty) => {
+            Instruction::SetCollectionTypeDefault { ty, origin } => {
                 let environment = self
                     .frames
                     .last()
@@ -1124,13 +1125,15 @@ impl Vm {
                     .clone();
                 let ty = ty.substituted(&environment)?;
                 let target = self.builder()?;
-                if ty.noop() {
+                self.heap.get_mut(target)?.collection_default_origin = origin.clone();
+                if matches!(ty.resolved(), TypeCheck::Unknown) {
                     self.heap.get_mut(target)?.collection_default = None;
                 } else {
                     self.frames
                         .last_mut()
                         .expect("active frame")
-                        .generic_default = Some(generics::GenericDefaultRun::new(target, ty));
+                        .generic_default =
+                        Some(generics::GenericDefaultRun::new(target, ty, origin));
                 }
             }
             Instruction::GenericConstructorParent { ty, source } => {
@@ -1442,10 +1445,14 @@ impl Vm {
                                 self.stack.push(value.clone());
                                 return Ok(());
                             }
-                            return Err(RuntimeError::new(
+                            let mut error = RuntimeError::new(
                                 ErrorKind::MissingMember,
                                 "Tried to read property `default` but its value is undefined.",
-                            ));
+                            );
+                            error
+                                .frames
+                                .extend(object.collection_default_origin.clone());
+                            return Err(error);
                         }
                         if object.members.iter().any(|m| {
                             !m.entry && !m.method && !m.local && m.name.as_ref() == "default"
@@ -2173,7 +2180,10 @@ impl Compiler<'_> {
             members,
         } = &value.unparenthesized().kind
         {
-            code.push(Instruction::EntryParent);
+            code.push_at(
+                Instruction::EntryParent,
+                Span::new(value.span.start, value.span.start + 3),
+            );
             self.collection_body(members, CollectionKind::Dynamic, true, &mut code)?;
         } else {
             self.expression(value, &mut code)?;

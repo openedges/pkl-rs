@@ -1,0 +1,3 @@
+typealias Values<T> = Mapping<String, T>
+function build(): Values<Int> = new { ["x"] = 4 }
+result = build()["x"].toString()

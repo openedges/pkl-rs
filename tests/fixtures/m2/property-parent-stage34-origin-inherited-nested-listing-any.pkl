@@ -1,0 +1,3 @@
+open class A { items: Listing<Listing<Any>> }
+class B extends A { items = new { new { new {} } } }
+result = (new B {}).items[0][0].toString()

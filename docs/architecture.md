@@ -170,6 +170,28 @@ units remain explicitly unsupported rather than being converted to a different
 URI. Full string builtins, general Java regular expressions, and performance
 and memory parity remain separate requirements.
 
+### Inferred object parents
+
+Methods construct the parent of contextual `new {}` from their declared return
+type. Inference follows `if` expressions and let bodies; parentheses, lambdas,
+and let initializers keep their own boundaries. Type defaults are created only
+when execution reaches `new`, before amendment members run. Literal `unknown`
+retains the Dynamic default; `Any` and aliases of `unknown` do not acquire it.
+
+Typed properties use the same default construction. An inherited class
+prototype uses the declared property type's default, while an instance amendment
+reads the class prototype's initializer without applying its constraint before
+the amendment. These reads use ordinary resumable VM frames and existing traced
+default continuations. Undefined prototype defaults become an inference error
+at `new`; other failures retain the prototype error and omit the inference read
+frame. Cache cleanup still visits every active frame.
+
+Generated collection default errors retain the method header or property type
+span, as appropriate. Their metadata contains source information, not heap
+handles. Selected Java comparisons and native Host/GC tests cover these paths;
+general module inference, complete diagnostics and object stringification remain
+separate requirements.
+
 ### Constraint continuations
 
 Constraint checks use a continuation in the checking VM frame. Primitive

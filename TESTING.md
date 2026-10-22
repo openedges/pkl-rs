@@ -362,8 +362,16 @@ neither Host lifecycle behavior nor a new small-stack or performance result.
 Const-modifier and inferred-parent regressions additionally compare enclosing
 versus expression owners and method-versus-lambda error ordering. Successful
 untyped and explicit Dynamic method calls, unused lazy methods and earlier
-lexical errors are controls. Class and collection return-type inference remains
-an exploratory failure outside the selected development contract.
+lexical errors are controls. Typed method return defaults and inherited property
+inference now have selected Java comparisons, including class and collection
+parents, nullable/defaulted unions, aliases, lexical owners, lazy failures and
+complete default frames. Native tests collect between VM steps and exercise
+Host failure, retry, cancellation and terminal release. Prototype type defaults
+and instance initializers have separate expectations. The exhaustive portable
+runner `tools/platform/compare-method-parents.mjs` records each complete payload
+twice per Node/browser target and fails on any mismatch. Two original
+`Dynamic.toString()` failures remain selected alongside separate type controls;
+the development exception list is unchanged.
 
 M1 experiments have narrower, explicit contracts:
 

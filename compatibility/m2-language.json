@@ -63066,6 +63066,1744 @@
       ]
     },
     {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "method-parent-stage34-abstract-class",
+      "input": "tests/fixtures/m2/method-parent-stage34-abstract-class.pkl",
+      "input_sha256": "78df80320989b6cf7bd62369aa3f8ab671df6671fea1eb7171bd48a8bd27d04c",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "method-parent-stage34-alias",
+      "input": "tests/fixtures/m2/method-parent-stage34-alias.pkl",
+      "input_sha256": "7a0001d7cb2b0584058c30d1bf9a25ccfb9c7d53c1b478542211f1dfb3b61b8b",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "method-parent-stage34-any",
+      "input": "tests/fixtures/m2/method-parent-stage34-any.pkl",
+      "input_sha256": "098506716a9f1ee8cd9708058eae777cc08f4935a23efe5aeb6fd26ef435968a",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "method-parent-stage34-class-default",
+      "input": "tests/fixtures/m2/method-parent-stage34-class-default.pkl",
+      "input_sha256": "480a1f60de7e6a6023afa75e50c79f2a22f2ad5bcc38d5d20bf05fbabd18d99a",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "method-parent-stage34-class-inherited",
+      "input": "tests/fixtures/m2/method-parent-stage34-class-inherited.pkl",
+      "input_sha256": "2fecbfe576fe5e1d5811f68affbd51d45e6ca7e6b3285fb3962fad15bd5ebfaa",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "method-parent-stage34-class-method",
+      "input": "tests/fixtures/m2/method-parent-stage34-class-method.pkl",
+      "input_sha256": "0c2dcb20f77cb50c6f86ec759776a7003472038ab698477582148ee6446f2b72",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "method-parent-stage34-dynamic",
+      "input": "tests/fixtures/m2/method-parent-stage34-dynamic.pkl",
+      "input_sha256": "464ff275b71d0b94c3f7228507a2c43e4cbb77f2894af0e3cb4a1711c3c68b32",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "method-parent-stage34-first-argument-before-default",
+      "input": "tests/fixtures/m2/method-parent-stage34-first-argument-before-default.pkl",
+      "input_sha256": "769c6a8ef2c0e0170f70f5d2955ff592a266027b938d006c9df74c37ade5ede9",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "method-parent-stage34-first-condition-before-default",
+      "input": "tests/fixtures/m2/method-parent-stage34-first-condition-before-default.pkl",
+      "input_sha256": "e6ab9f0828458fbb54f86a040dc45a99e595435e426961eddd32ecae75e3f527",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "method-parent-stage34-first-default-before-body",
+      "input": "tests/fixtures/m2/method-parent-stage34-first-default-before-body.pkl",
+      "input_sha256": "e0ffb79c574070131142f382b91828eeee928e7506711f62d491ed23aa3bece2",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "method-parent-stage34-first-let-before-default",
+      "input": "tests/fixtures/m2/method-parent-stage34-first-let-before-default.pkl",
+      "input_sha256": "0bec8c4784e5ebe167acb52c89cc63d65f9c5199a10b2e5dbf9686ab12834eee",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "method-parent-stage34-first-type-before-new",
+      "input": "tests/fixtures/m2/method-parent-stage34-first-type-before-new.pkl",
+      "input_sha256": "6c1b9c96ec89851d5e0cf95c096577490e6d40c7ccd7ec5402f44e9366167a5a",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "method-parent-stage34-generic-alias",
+      "input": "tests/fixtures/m2/method-parent-stage34-generic-alias.pkl",
+      "input_sha256": "da5fc93c24b04ab3fff5a2e415dfe2b5cb578ec086e0cf46ce2e8b04f329e877",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "method-parent-stage34-generic-alias-mapping",
+      "input": "tests/fixtures/m2/method-parent-stage34-generic-alias-mapping.pkl",
+      "input_sha256": "9c4af83a81e039ea39250f2679908f26d72b27f7dc57e16975a4dd4fe8f97052",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "method-parent-stage34-if-let",
+      "input": "tests/fixtures/m2/method-parent-stage34-if-let.pkl",
+      "input_sha256": "131f698ec82bbbd8002d821dd0707a3027ae8c0b7120d41f0e731cf7e937c89d",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "method-parent-stage34-inherited-method",
+      "input": "tests/fixtures/m2/method-parent-stage34-inherited-method.pkl",
+      "input_sha256": "36e7e972015678fc3c4d6a52031453f12e11c9e53db10e896c272a3954b26488",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "method-parent-stage34-int-no-default",
+      "input": "tests/fixtures/m2/method-parent-stage34-int-no-default.pkl",
+      "input_sha256": "32625d652f15595db09fb3c7c916c99cf93a6ff833ccc9ff5af30d7dcfab6e7c",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "method-parent-stage34-lambda-rejected",
+      "input": "tests/fixtures/m2/method-parent-stage34-lambda-rejected.pkl",
+      "input_sha256": "70804f8ebedba5e39dea0088ff45c14c6f42a04269b0f4182a7bc70beb2c9088",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "method-parent-stage34-lazy-return-validation",
+      "input": "tests/fixtures/m2/method-parent-stage34-lazy-return-validation.pkl",
+      "input_sha256": "ba914dad7be7b591e6ba31b41bfcc2d6785b7f7ef8ef98a82380f13374d04060",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "method-parent-stage34-lazy-skipped-new",
+      "input": "tests/fixtures/m2/method-parent-stage34-lazy-skipped-new.pkl",
+      "input_sha256": "a4358a8f45ce2d23f6ffca815c7d856df41d62ba81acce58423e80b599314c89",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "method-parent-stage34-lazy-unused-signature",
+      "input": "tests/fixtures/m2/method-parent-stage34-lazy-unused-signature.pkl",
+      "input_sha256": "7990da6a8e0793e7e6fa701cf2e2eda74b69ea21c546797d9a488f6658ac2f51",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "method-parent-stage34-let-initializer-rejected",
+      "input": "tests/fixtures/m2/method-parent-stage34-let-initializer-rejected.pkl",
+      "input_sha256": "776df4e451cab2239f81e507c0ab5c9a7928122f580041c736e57fbf1dbda66f",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "method-parent-stage34-lexical-capture",
+      "input": "tests/fixtures/m2/method-parent-stage34-lexical-capture.pkl",
+      "input_sha256": "47f9565d2a0ddc3f9cc5f4032ab954d9e00b6579b7ac516c3998c39b3ea24053",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "method-parent-stage34-list-no-default",
+      "input": "tests/fixtures/m2/method-parent-stage34-list-no-default.pkl",
+      "input_sha256": "a62d76f563b7b2ef908a6ea8165bfe3cc1039e1ed9163f62dbda0dbaea056dcf",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "method-parent-stage34-listing",
+      "input": "tests/fixtures/m2/method-parent-stage34-listing.pkl",
+      "input_sha256": "84827df86be78ed211387c5104a9f486f0c49f0b42a189d826be0d7f8d7e24b5",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "method-parent-stage34-listing-value-type",
+      "input": "tests/fixtures/m2/method-parent-stage34-listing-value-type.pkl",
+      "input_sha256": "72c967836656cdc9ef53de65538bc60bbbd69e1c0cad502cac62b8fe82f4c579",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "method-parent-stage34-local-object",
+      "input": "tests/fixtures/m2/method-parent-stage34-local-object.pkl",
+      "input_sha256": "9c7331dcde7d25babb9f05cca84d71314b7bceeed471b3d4337f3fd3be790539",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "method-parent-stage34-mapping",
+      "input": "tests/fixtures/m2/method-parent-stage34-mapping.pkl",
+      "input_sha256": "506393c91025f12d8d20ff58e49efabc4e256aa9c1ec38feb20c55cfc123cd0a",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "method-parent-stage34-mapping-key-type",
+      "input": "tests/fixtures/m2/method-parent-stage34-mapping-key-type.pkl",
+      "input_sha256": "16c90ea88fcc0e6913a6cc9c8389bfb147d4199d44b1296c6b350c450ee90d0b",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "method-parent-stage34-new-explicit-control",
+      "input": "tests/fixtures/m2/method-parent-stage34-new-explicit-control.pkl",
+      "input_sha256": "818abfe1c930833cdc13a7ab2d709bfb1e61090a45cde4e2db86bec8143aca5b",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "method-parent-stage34-new-nested-property",
+      "input": "tests/fixtures/m2/method-parent-stage34-new-nested-property.pkl",
+      "input_sha256": "72b6f0ab511cf4213f7e7d0e30220f32f7002987d5c85ef9648f6e97dd3b274c",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "method-parent-stage34-no-annotation",
+      "input": "tests/fixtures/m2/method-parent-stage34-no-annotation.pkl",
+      "input_sha256": "aa3b7a1a978950a2b442cb8bf2b9c4aee10e9c6712af7e99529830ac2d6e62cf",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "method-parent-stage34-nullable-class",
+      "input": "tests/fixtures/m2/method-parent-stage34-nullable-class.pkl",
+      "input_sha256": "5e49b6e3245705b908eecd0bc139db4ed0a95b5c3a81c757f57d442d4387e679",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "method-parent-stage34-nullable-empty",
+      "input": "tests/fixtures/m2/method-parent-stage34-nullable-empty.pkl",
+      "input_sha256": "32e14c0380d644bbf13f6f20f7c585ebd3a77c7ccac58e42047c3fa795e61216",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "method-parent-stage34-nullable-int",
+      "input": "tests/fixtures/m2/method-parent-stage34-nullable-int.pkl",
+      "input_sha256": "3784f1d3dcd5d67bcfc75cf212f34c59a8bf515da6ae2246e41d60584a5da5ed",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "method-parent-stage34-override-method",
+      "input": "tests/fixtures/m2/method-parent-stage34-override-method.pkl",
+      "input_sha256": "4b7c9cb5cd0ca549986dca966c1ca33994dabffd942a3e7959ee431679e7549b",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "method-parent-stage34-paren-rejected",
+      "input": "tests/fixtures/m2/method-parent-stage34-paren-rejected.pkl",
+      "input_sha256": "718053079ca0394e6fffd55ce61bbd43ccb02d0857f87ed015bce18cf4ab7a3c",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "method-parent-stage34-receiver-capture",
+      "input": "tests/fixtures/m2/method-parent-stage34-receiver-capture.pkl",
+      "input_sha256": "8878d2742fa3a73a3703189248c37aaeba2f0cd95be731ecdc6a86d22444e0df",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "method-parent-stage34-string-default",
+      "input": "tests/fixtures/m2/method-parent-stage34-string-default.pkl",
+      "input_sha256": "62065e58d97081efa8eae6bb80112f7a5469acc4dbaeaa3570c14ee313d5b673",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "method-parent-stage34-union-default",
+      "input": "tests/fixtures/m2/method-parent-stage34-union-default.pkl",
+      "input_sha256": "ffa7c0bb64378aa3c94e297f2d62b5a0a75b6e2fc46c28546530e9e1d345a144",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "method-parent-stage34-union-no-default",
+      "input": "tests/fixtures/m2/method-parent-stage34-union-no-default.pkl",
+      "input_sha256": "9b6dd48e7e8f8e1fbffca4cae5f94a89e7ea55b07d022e665214283e81d7c2b9",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "method-parent-stage34-unknown",
+      "input": "tests/fixtures/m2/method-parent-stage34-unknown.pkl",
+      "input_sha256": "567381b3e7736f3e44e3a6ee2adf23715a3b1aea6a6eba7bb38317e889d0192f",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "method-parent-stage34-local-object-listing",
+      "input": "tests/fixtures/m2/method-parent-stage34-local-object-listing.pkl",
+      "input_sha256": "1416596dcf53606f6ceaaf4358881e41831474354a3000ce596a3a65450cfe97",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "method-parent-stage34-local-object-mapping",
+      "input": "tests/fixtures/m2/method-parent-stage34-local-object-mapping.pkl",
+      "input_sha256": "6c131f1ff76f7a9471cd4f05e00de0e1e43c0450df0226d6a0a3757cf7a25ee1",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "method-parent-stage34-local-return-constraint",
+      "input": "tests/fixtures/m2/method-parent-stage34-local-return-constraint.pkl",
+      "input_sha256": "1f4c00a0662c3a457bd64e278ab3945add17fb2d7e4f8a9c065d57d780b97aae",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "method-parent-stage34-nested-defaults",
+      "input": "tests/fixtures/m2/method-parent-stage34-nested-defaults.pkl",
+      "input_sha256": "7ff3d380aca4ecc784bb3ed2d0944eb3053069f0069f6b40aac79ab7940722c1",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "method-parent-stage34-nested-generic-alias",
+      "input": "tests/fixtures/m2/method-parent-stage34-nested-generic-alias.pkl",
+      "input_sha256": "78cfc3658fed2b2f030b495b8ae0ffc153e9e56885a21b73a5dc6c2bed86edf8",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "method-parent-stage34-nullable-listing",
+      "input": "tests/fixtures/m2/method-parent-stage34-nullable-listing.pkl",
+      "input_sha256": "6dad6b6410e08f6a2fd4e5b2fe281e61ee88a93b4c7ceb851afc1d4cb2d93c50",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "method-parent-stage34-nullable-mapping",
+      "input": "tests/fixtures/m2/method-parent-stage34-nullable-mapping.pkl",
+      "input_sha256": "c745ac3b0dcbe052f625e8287afec3aa4e722840416ccb39a2512301532a6e47",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "method-parent-stage34-repeated-arguments",
+      "input": "tests/fixtures/m2/method-parent-stage34-repeated-arguments.pkl",
+      "input_sha256": "241ce17d000e6b496899888b8fa4f2858d9744cc8b0278b7a00f0f9c3dfabce2",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "method-parent-stage34-type-before-argument",
+      "input": "tests/fixtures/m2/method-parent-stage34-type-before-argument.pkl",
+      "input_sha256": "dc413cf32b13f1314081982c3591ae25bc056509e5b558845d060e9e25267050",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "method-parent-stage34-generic-unknown-alias-element",
+      "input": "tests/fixtures/m2/method-parent-stage34-generic-unknown-alias-element.pkl",
+      "input_sha256": "1cfea212e1d4d86b9947eb5bb9f18d25dffd7a5e4197c0a43fe901c6edb5b422",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "method-parent-stage34-if-condition",
+      "input": "tests/fixtures/m2/method-parent-stage34-if-condition.pkl",
+      "input_sha256": "f167d84cacedf0a898a5d51a774ad05ec2d83a38164ba1c10b46b9f15bc0e0c2",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "method-parent-stage34-if-condition-unused",
+      "input": "tests/fixtures/m2/method-parent-stage34-if-condition-unused.pkl",
+      "input_sha256": "753a0a78c0e5e39f6a6b4df21a07b857a2c31dbfb8c1aea6ab6197f8b6a501ed",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "method-parent-stage34-listing-any-element",
+      "input": "tests/fixtures/m2/method-parent-stage34-listing-any-element.pkl",
+      "input_sha256": "5b55a5b0cb9869b9b86e8acd6778af57d314c59553cdd86a7956300afeac438d",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "method-parent-stage34-listing-unknown-alias-element",
+      "input": "tests/fixtures/m2/method-parent-stage34-listing-unknown-alias-element.pkl",
+      "input_sha256": "9d505b053bed77523c6d3c18b6981360c4281770f7a0719d9438e1812a539ea7",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "method-parent-stage34-listing-unknown-element",
+      "input": "tests/fixtures/m2/method-parent-stage34-listing-unknown-element.pkl",
+      "input_sha256": "f7a217d533fb8df8b5dc41e26c93f05e87e6c5e9e004dc265552686d09cc46fb",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "method-parent-stage34-mapping-any-element",
+      "input": "tests/fixtures/m2/method-parent-stage34-mapping-any-element.pkl",
+      "input_sha256": "7000afd4bf679597a7b851107e6b3cf8d29d7f748034c66ec32ae4b1d67c9f8e",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "method-parent-stage34-unknown-alias",
+      "input": "tests/fixtures/m2/method-parent-stage34-unknown-alias.pkl",
+      "input_sha256": "f5d5779e008f863e02f5110ff053f896ad04458cf139d0fb6f14bd0a3a52886e",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "method-parent-stage34-listing-unknown-element-type-control",
+      "input": "tests/fixtures/m2/method-parent-stage34-listing-unknown-element-type-control.pkl",
+      "input_sha256": "f26a790d3cc0ef0217e6ae946aeb851a3d9f4f3dda64f48f7cc39822b74685fd",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "method-parent-stage34-generic-unknown-alias-element-type-control",
+      "input": "tests/fixtures/m2/method-parent-stage34-generic-unknown-alias-element-type-control.pkl",
+      "input_sha256": "02744a6160420f14a0a9aff579d2ac2476d16618d6e7b261113f19eacb6a1863",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "property-parent-stage34-explicit-super-missing-amended",
+      "input": "tests/fixtures/m2/property-parent-stage34-explicit-super-missing-amended.pkl",
+      "input_sha256": "64595e5a7900868a11d82fb183b712b025bbf1e07d5f823b0597af6001f3fefe",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "property-parent-stage34-explicit-super-missing-new",
+      "input": "tests/fixtures/m2/property-parent-stage34-explicit-super-missing-new.pkl",
+      "input_sha256": "fb3c9ce569de0eeeab106c62e79b7280a72b398ad1fb0738dd88e319a6f23897",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "property-parent-stage34-explicit-super-missing-present-parent",
+      "input": "tests/fixtures/m2/property-parent-stage34-explicit-super-missing-present-parent.pkl",
+      "input_sha256": "5f99901642c679faba6224abd344549fb25d186cfc50aa703324200ed3552fd3",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "property-parent-stage34-instance-inherited-initializer",
+      "input": "tests/fixtures/m2/property-parent-stage34-instance-inherited-initializer.pkl",
+      "input_sha256": "b88d874a70dc981c13b66fc8d2c55fd10ce704f22b2917f5aaf8668389ec71fc",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "property-parent-stage34-instance-prototype-initializer",
+      "input": "tests/fixtures/m2/property-parent-stage34-instance-prototype-initializer.pkl",
+      "input_sha256": "8a6dd99234e150e463a9f6d45160a0db859ce1cf36a0d4dc63df3c7178405aa4",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "property-parent-stage34-nested-abstract-default",
+      "input": "tests/fixtures/m2/property-parent-stage34-nested-abstract-default.pkl",
+      "input_sha256": "9698e766896981ca9d51bb67d43576f366a151e8b58edaa97ee38b48f75420bd",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "property-parent-stage34-nested-constraints-skipped",
+      "input": "tests/fixtures/m2/property-parent-stage34-nested-constraints-skipped.pkl",
+      "input_sha256": "b1f2f7e986e9a56b219b7fbe2def0fc9deb92e7658c3a065483b8bf27337a3b6",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "property-parent-stage34-nested-default-field-undefined",
+      "input": "tests/fixtures/m2/property-parent-stage34-nested-default-field-undefined.pkl",
+      "input_sha256": "f104952db8cfd56ccbb5c7c042df5ff48318cdc1489de142444fd5eed1f6e348",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "property-parent-stage34-nested-default-throw-before-body",
+      "input": "tests/fixtures/m2/property-parent-stage34-nested-default-throw-before-body.pkl",
+      "input_sha256": "b4cf6f0a7ffbc7896e4f77d0ff4539b450a52fd576c78898630cd247cbec2ccb",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "property-parent-stage34-nested-if-let-super",
+      "input": "tests/fixtures/m2/property-parent-stage34-nested-if-let-super.pkl",
+      "input_sha256": "43709a87dd509b367c6f72ae66a5ba1a3dbb53621d947d68b3a886428ba66b38",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "property-parent-stage34-nested-no-default",
+      "input": "tests/fixtures/m2/property-parent-stage34-nested-no-default.pkl",
+      "input_sha256": "826d464aae3553440b56deb46dac84287e37ff7e0bdaad234d75a4a5c4f6b074",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "property-parent-stage34-nested-union-no-default",
+      "input": "tests/fixtures/m2/property-parent-stage34-nested-union-no-default.pkl",
+      "input_sha256": "4e7605e23ff9a0a7328c250b6b1fe71f0ae75e6c39efd398eb1330e1750feba5",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "property-parent-stage34-prototype-inherited-default",
+      "input": "tests/fixtures/m2/property-parent-stage34-prototype-inherited-default.pkl",
+      "input_sha256": "eb94040a9eea34373968843c6071bea9198234f73ca24dfa4c9f23af352843cf",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "property-parent-stage34-prototype-inherited-initializer",
+      "input": "tests/fixtures/m2/property-parent-stage34-prototype-inherited-initializer.pkl",
+      "input_sha256": "f8fe10aa4a630f8e4f8edf4ddd8846351b03149ae95c806b4cfed53212c6e4db",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "property-parent-stage34-shorthand-local-method",
+      "input": "tests/fixtures/m2/property-parent-stage34-shorthand-local-method.pkl",
+      "input_sha256": "cee24c9674dcab069bfe18a8bc127abf38f43370059e6679aa83b087c5a2c096",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "property-parent-stage34-shorthand-nested",
+      "input": "tests/fixtures/m2/property-parent-stage34-shorthand-nested.pkl",
+      "input_sha256": "18a64451f48638934fcf3221a893497822c8c37d9abc5649bbd4518d21e08837",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "property-parent-stage34-origin-inherited-nested-listing-any",
+      "input": "tests/fixtures/m2/property-parent-stage34-origin-inherited-nested-listing-any.pkl",
+      "input_sha256": "ebef5bebef161c0473b35b54773792a4d274d52d1b6928082002ca8c90576ad0",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "property-parent-stage34-origin-listing-any",
+      "input": "tests/fixtures/m2/property-parent-stage34-origin-listing-any.pkl",
+      "input_sha256": "9ab991f99f89b3c33530ae7d7c5727de6c14c6f3b2679f3b1f905977bfd8e9e2",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
       "adapter": null,
       "execution": {
         "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
@@ -154478,9 +156216,9 @@
   "comparison_boundary": "evaluateExpressionString(ModuleSource.path(same absolute URI), expression) UTF-8 stdout; whole PklException.getMessage() UTF-8 stderr and exit 1; no trimming. Power assertions default to disabled; an explicit per-case power_assertions boolean enables the same option in both probes. Stringification alone is not typed value/API compatibility.",
   "completion": "Every required semantic/source requirement needs implementation/test mappings and complete passing execution. Pending/unmapped/unimplemented/mismatch remains a full-gate failure.",
   "counts": {
-    "cases": 4122,
+    "cases": 4201,
     "cases_by_execution": {
-      "ready": 3122,
+      "ready": 3201,
       "unimplemented": 960,
       "unmapped": 40
     },
@@ -156522,7 +158260,86 @@
           "diagnostic-stage33-const-let",
           "diagnostic-stage33-function-let-inferred",
           "diagnostic-stage33-let-valid-inferred",
-          "diagnostic-stage33-function-if-let-paren-valid"
+          "diagnostic-stage33-function-if-let-paren-valid",
+          "method-parent-stage34-abstract-class",
+          "method-parent-stage34-alias",
+          "method-parent-stage34-any",
+          "method-parent-stage34-class-default",
+          "method-parent-stage34-class-inherited",
+          "method-parent-stage34-class-method",
+          "method-parent-stage34-dynamic",
+          "method-parent-stage34-first-argument-before-default",
+          "method-parent-stage34-first-condition-before-default",
+          "method-parent-stage34-first-default-before-body",
+          "method-parent-stage34-first-let-before-default",
+          "method-parent-stage34-first-type-before-new",
+          "method-parent-stage34-generic-alias",
+          "method-parent-stage34-generic-alias-mapping",
+          "method-parent-stage34-if-let",
+          "method-parent-stage34-inherited-method",
+          "method-parent-stage34-int-no-default",
+          "method-parent-stage34-lambda-rejected",
+          "method-parent-stage34-lazy-return-validation",
+          "method-parent-stage34-lazy-skipped-new",
+          "method-parent-stage34-lazy-unused-signature",
+          "method-parent-stage34-let-initializer-rejected",
+          "method-parent-stage34-lexical-capture",
+          "method-parent-stage34-list-no-default",
+          "method-parent-stage34-listing",
+          "method-parent-stage34-listing-value-type",
+          "method-parent-stage34-local-object",
+          "method-parent-stage34-mapping",
+          "method-parent-stage34-mapping-key-type",
+          "method-parent-stage34-new-explicit-control",
+          "method-parent-stage34-new-nested-property",
+          "method-parent-stage34-no-annotation",
+          "method-parent-stage34-nullable-class",
+          "method-parent-stage34-nullable-empty",
+          "method-parent-stage34-nullable-int",
+          "method-parent-stage34-override-method",
+          "method-parent-stage34-paren-rejected",
+          "method-parent-stage34-receiver-capture",
+          "method-parent-stage34-string-default",
+          "method-parent-stage34-union-default",
+          "method-parent-stage34-union-no-default",
+          "method-parent-stage34-unknown",
+          "method-parent-stage34-local-object-listing",
+          "method-parent-stage34-local-object-mapping",
+          "method-parent-stage34-local-return-constraint",
+          "method-parent-stage34-nested-defaults",
+          "method-parent-stage34-nested-generic-alias",
+          "method-parent-stage34-nullable-listing",
+          "method-parent-stage34-nullable-mapping",
+          "method-parent-stage34-repeated-arguments",
+          "method-parent-stage34-type-before-argument",
+          "method-parent-stage34-generic-unknown-alias-element",
+          "method-parent-stage34-if-condition",
+          "method-parent-stage34-if-condition-unused",
+          "method-parent-stage34-listing-any-element",
+          "method-parent-stage34-listing-unknown-alias-element",
+          "method-parent-stage34-listing-unknown-element",
+          "method-parent-stage34-mapping-any-element",
+          "method-parent-stage34-unknown-alias",
+          "method-parent-stage34-listing-unknown-element-type-control",
+          "method-parent-stage34-generic-unknown-alias-element-type-control",
+          "property-parent-stage34-explicit-super-missing-amended",
+          "property-parent-stage34-explicit-super-missing-new",
+          "property-parent-stage34-explicit-super-missing-present-parent",
+          "property-parent-stage34-instance-inherited-initializer",
+          "property-parent-stage34-instance-prototype-initializer",
+          "property-parent-stage34-nested-abstract-default",
+          "property-parent-stage34-nested-constraints-skipped",
+          "property-parent-stage34-nested-default-field-undefined",
+          "property-parent-stage34-nested-default-throw-before-body",
+          "property-parent-stage34-nested-if-let-super",
+          "property-parent-stage34-nested-no-default",
+          "property-parent-stage34-nested-union-no-default",
+          "property-parent-stage34-prototype-inherited-default",
+          "property-parent-stage34-prototype-inherited-initializer",
+          "property-parent-stage34-shorthand-local-method",
+          "property-parent-stage34-shorthand-nested",
+          "property-parent-stage34-origin-inherited-nested-listing-any",
+          "property-parent-stage34-origin-listing-any"
         ],
         "state": "partial"
       }
@@ -156534,12 +158351,12 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "f8b4a26b6d3639c596e69b3928ba3dbd4c7a7e22436da746b68e6ab53d9f227f",
+            "sha256": "e7029873fe78bbf29e640ec84930b87f556118c3720f42295ef656947740b5c8",
             "symbol": "initialize_member_types"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "f8b4a26b6d3639c596e69b3928ba3dbd4c7a7e22436da746b68e6ab53d9f227f",
+            "sha256": "e7029873fe78bbf29e640ec84930b87f556118c3720f42295ef656947740b5c8",
             "symbol": "validate_class_override"
           },
           {
@@ -156549,12 +158366,12 @@
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "f8b4a26b6d3639c596e69b3928ba3dbd4c7a7e22436da746b68e6ab53d9f227f",
+            "sha256": "e7029873fe78bbf29e640ec84930b87f556118c3720f42295ef656947740b5c8",
             "symbol": "force_key"
           },
           {
             "path": "crates/pkl-runtime/src/heap.rs",
-            "sha256": "69f91e6a252edc3f721863d84862d1d070f38ebe3fb3072cfbc0f468ade4d530",
+            "sha256": "b81417a06fe7bdc6a01fb2b520a3f757631c377239fab207e58de86e7dae9c47",
             "symbol": "ExecutableState"
           },
           {
@@ -156564,22 +158381,22 @@
           },
           {
             "path": "crates/pkl-runtime/src/vm/generics.rs",
-            "sha256": "a2b885a418e4f63480c157895e5db08ac46782c6511d2089e26478136e08d911",
+            "sha256": "5449406e74efb5c11325c2e7a2bc1b9c64ae9fc9c1ef87fa9c9e76e660b67647",
             "symbol": "substituted"
           },
           {
             "path": "crates/pkl-runtime/src/vm/generics.rs",
-            "sha256": "a2b885a418e4f63480c157895e5db08ac46782c6511d2089e26478136e08d911",
+            "sha256": "5449406e74efb5c11325c2e7a2bc1b9c64ae9fc9c1ef87fa9c9e76e660b67647",
             "symbol": "default_depends_on_parameters"
           },
           {
             "path": "crates/pkl-runtime/src/vm/generics.rs",
-            "sha256": "a2b885a418e4f63480c157895e5db08ac46782c6511d2089e26478136e08d911",
+            "sha256": "5449406e74efb5c11325c2e7a2bc1b9c64ae9fc9c1ef87fa9c9e76e660b67647",
             "symbol": "step_generic_default"
           },
           {
             "path": "crates/pkl-runtime/src/vm/generics.rs",
-            "sha256": "a2b885a418e4f63480c157895e5db08ac46782c6511d2089e26478136e08d911",
+            "sha256": "5449406e74efb5c11325c2e7a2bc1b9c64ae9fc9c1ef87fa9c9e76e660b67647",
             "symbol": "validate_reference_arguments"
           }
         ],
@@ -157761,6 +159578,85 @@
           "diagnostic-stage32-local-lazy-control",
           "diagnostic-stage33-function-unused-lazy-control",
           "diagnostic-stage33-local-const-unused-control",
+          "method-parent-stage34-abstract-class",
+          "method-parent-stage34-alias",
+          "method-parent-stage34-any",
+          "method-parent-stage34-class-default",
+          "method-parent-stage34-class-inherited",
+          "method-parent-stage34-class-method",
+          "method-parent-stage34-dynamic",
+          "method-parent-stage34-first-argument-before-default",
+          "method-parent-stage34-first-condition-before-default",
+          "method-parent-stage34-first-default-before-body",
+          "method-parent-stage34-first-let-before-default",
+          "method-parent-stage34-first-type-before-new",
+          "method-parent-stage34-generic-alias",
+          "method-parent-stage34-generic-alias-mapping",
+          "method-parent-stage34-if-let",
+          "method-parent-stage34-inherited-method",
+          "method-parent-stage34-int-no-default",
+          "method-parent-stage34-lambda-rejected",
+          "method-parent-stage34-lazy-return-validation",
+          "method-parent-stage34-lazy-skipped-new",
+          "method-parent-stage34-lazy-unused-signature",
+          "method-parent-stage34-let-initializer-rejected",
+          "method-parent-stage34-lexical-capture",
+          "method-parent-stage34-list-no-default",
+          "method-parent-stage34-listing",
+          "method-parent-stage34-listing-value-type",
+          "method-parent-stage34-local-object",
+          "method-parent-stage34-mapping",
+          "method-parent-stage34-mapping-key-type",
+          "method-parent-stage34-new-explicit-control",
+          "method-parent-stage34-new-nested-property",
+          "method-parent-stage34-no-annotation",
+          "method-parent-stage34-nullable-class",
+          "method-parent-stage34-nullable-empty",
+          "method-parent-stage34-nullable-int",
+          "method-parent-stage34-override-method",
+          "method-parent-stage34-paren-rejected",
+          "method-parent-stage34-receiver-capture",
+          "method-parent-stage34-string-default",
+          "method-parent-stage34-union-default",
+          "method-parent-stage34-union-no-default",
+          "method-parent-stage34-unknown",
+          "method-parent-stage34-local-object-listing",
+          "method-parent-stage34-local-object-mapping",
+          "method-parent-stage34-local-return-constraint",
+          "method-parent-stage34-nested-defaults",
+          "method-parent-stage34-nested-generic-alias",
+          "method-parent-stage34-nullable-listing",
+          "method-parent-stage34-nullable-mapping",
+          "method-parent-stage34-repeated-arguments",
+          "method-parent-stage34-type-before-argument",
+          "method-parent-stage34-generic-unknown-alias-element",
+          "method-parent-stage34-if-condition",
+          "method-parent-stage34-if-condition-unused",
+          "method-parent-stage34-listing-any-element",
+          "method-parent-stage34-listing-unknown-alias-element",
+          "method-parent-stage34-listing-unknown-element",
+          "method-parent-stage34-mapping-any-element",
+          "method-parent-stage34-unknown-alias",
+          "method-parent-stage34-listing-unknown-element-type-control",
+          "method-parent-stage34-generic-unknown-alias-element-type-control",
+          "property-parent-stage34-explicit-super-missing-amended",
+          "property-parent-stage34-explicit-super-missing-new",
+          "property-parent-stage34-explicit-super-missing-present-parent",
+          "property-parent-stage34-instance-inherited-initializer",
+          "property-parent-stage34-instance-prototype-initializer",
+          "property-parent-stage34-nested-abstract-default",
+          "property-parent-stage34-nested-constraints-skipped",
+          "property-parent-stage34-nested-default-field-undefined",
+          "property-parent-stage34-nested-default-throw-before-body",
+          "property-parent-stage34-nested-if-let-super",
+          "property-parent-stage34-nested-no-default",
+          "property-parent-stage34-nested-union-no-default",
+          "property-parent-stage34-prototype-inherited-default",
+          "property-parent-stage34-prototype-inherited-initializer",
+          "property-parent-stage34-shorthand-local-method",
+          "property-parent-stage34-shorthand-nested",
+          "property-parent-stage34-origin-inherited-nested-listing-any",
+          "property-parent-stage34-origin-listing-any",
           "types-stage17-inline-is-local",
           "types-stage17-inline-is-const",
           "types-stage17-inline-as-local",
@@ -158509,7 +160405,86 @@
           "diagnostic-stage33-function-if-let-paren-valid",
           "diagnostic-stage33-function-unused-lazy-control",
           "diagnostic-stage33-local-const-unused-control",
-          "diagnostic-stage33-function-typed-valid"
+          "diagnostic-stage33-function-typed-valid",
+          "method-parent-stage34-abstract-class",
+          "method-parent-stage34-alias",
+          "method-parent-stage34-any",
+          "method-parent-stage34-class-default",
+          "method-parent-stage34-class-inherited",
+          "method-parent-stage34-class-method",
+          "method-parent-stage34-dynamic",
+          "method-parent-stage34-first-argument-before-default",
+          "method-parent-stage34-first-condition-before-default",
+          "method-parent-stage34-first-default-before-body",
+          "method-parent-stage34-first-let-before-default",
+          "method-parent-stage34-first-type-before-new",
+          "method-parent-stage34-generic-alias",
+          "method-parent-stage34-generic-alias-mapping",
+          "method-parent-stage34-if-let",
+          "method-parent-stage34-inherited-method",
+          "method-parent-stage34-int-no-default",
+          "method-parent-stage34-lambda-rejected",
+          "method-parent-stage34-lazy-return-validation",
+          "method-parent-stage34-lazy-skipped-new",
+          "method-parent-stage34-lazy-unused-signature",
+          "method-parent-stage34-let-initializer-rejected",
+          "method-parent-stage34-lexical-capture",
+          "method-parent-stage34-list-no-default",
+          "method-parent-stage34-listing",
+          "method-parent-stage34-listing-value-type",
+          "method-parent-stage34-local-object",
+          "method-parent-stage34-mapping",
+          "method-parent-stage34-mapping-key-type",
+          "method-parent-stage34-new-explicit-control",
+          "method-parent-stage34-new-nested-property",
+          "method-parent-stage34-no-annotation",
+          "method-parent-stage34-nullable-class",
+          "method-parent-stage34-nullable-empty",
+          "method-parent-stage34-nullable-int",
+          "method-parent-stage34-override-method",
+          "method-parent-stage34-paren-rejected",
+          "method-parent-stage34-receiver-capture",
+          "method-parent-stage34-string-default",
+          "method-parent-stage34-union-default",
+          "method-parent-stage34-union-no-default",
+          "method-parent-stage34-unknown",
+          "method-parent-stage34-local-object-listing",
+          "method-parent-stage34-local-object-mapping",
+          "method-parent-stage34-local-return-constraint",
+          "method-parent-stage34-nested-defaults",
+          "method-parent-stage34-nested-generic-alias",
+          "method-parent-stage34-nullable-listing",
+          "method-parent-stage34-nullable-mapping",
+          "method-parent-stage34-repeated-arguments",
+          "method-parent-stage34-type-before-argument",
+          "method-parent-stage34-generic-unknown-alias-element",
+          "method-parent-stage34-if-condition",
+          "method-parent-stage34-if-condition-unused",
+          "method-parent-stage34-listing-any-element",
+          "method-parent-stage34-listing-unknown-alias-element",
+          "method-parent-stage34-listing-unknown-element",
+          "method-parent-stage34-mapping-any-element",
+          "method-parent-stage34-unknown-alias",
+          "method-parent-stage34-listing-unknown-element-type-control",
+          "method-parent-stage34-generic-unknown-alias-element-type-control",
+          "property-parent-stage34-explicit-super-missing-amended",
+          "property-parent-stage34-explicit-super-missing-new",
+          "property-parent-stage34-explicit-super-missing-present-parent",
+          "property-parent-stage34-instance-inherited-initializer",
+          "property-parent-stage34-instance-prototype-initializer",
+          "property-parent-stage34-nested-abstract-default",
+          "property-parent-stage34-nested-constraints-skipped",
+          "property-parent-stage34-nested-default-field-undefined",
+          "property-parent-stage34-nested-default-throw-before-body",
+          "property-parent-stage34-nested-if-let-super",
+          "property-parent-stage34-nested-no-default",
+          "property-parent-stage34-nested-union-no-default",
+          "property-parent-stage34-prototype-inherited-default",
+          "property-parent-stage34-prototype-inherited-initializer",
+          "property-parent-stage34-shorthand-local-method",
+          "property-parent-stage34-shorthand-nested",
+          "property-parent-stage34-origin-inherited-nested-listing-any",
+          "property-parent-stage34-origin-listing-any"
         ],
         "state": "partial"
       }
@@ -158521,12 +160496,12 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "f8b4a26b6d3639c596e69b3928ba3dbd4c7a7e22436da746b68e6ab53d9f227f",
+            "sha256": "e7029873fe78bbf29e640ec84930b87f556118c3720f42295ef656947740b5c8",
             "symbol": "validate_object_override"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "f8b4a26b6d3639c596e69b3928ba3dbd4c7a7e22436da746b68e6ab53d9f227f",
+            "sha256": "e7029873fe78bbf29e640ec84930b87f556118c3720f42295ef656947740b5c8",
             "symbol": "inherited_member"
           }
         ],
@@ -158729,22 +160704,22 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/heap.rs",
-            "sha256": "69f91e6a252edc3f721863d84862d1d070f38ebe3fb3072cfbc0f468ade4d530",
+            "sha256": "b81417a06fe7bdc6a01fb2b520a3f757631c377239fab207e58de86e7dae9c47",
             "symbol": "Member"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "f8b4a26b6d3639c596e69b3928ba3dbd4c7a7e22436da746b68e6ab53d9f227f",
+            "sha256": "e7029873fe78bbf29e640ec84930b87f556118c3720f42295ef656947740b5c8",
             "symbol": "validate_class_override"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "f8b4a26b6d3639c596e69b3928ba3dbd4c7a7e22436da746b68e6ab53d9f227f",
+            "sha256": "e7029873fe78bbf29e640ec84930b87f556118c3720f42295ef656947740b5c8",
             "symbol": "validate_object_override"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "f8b4a26b6d3639c596e69b3928ba3dbd4c7a7e22436da746b68e6ab53d9f227f",
+            "sha256": "e7029873fe78bbf29e640ec84930b87f556118c3720f42295ef656947740b5c8",
             "symbol": "initialize_member_types"
           }
         ],
@@ -159133,37 +161108,37 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/heap.rs",
-            "sha256": "69f91e6a252edc3f721863d84862d1d070f38ebe3fb3072cfbc0f468ade4d530",
+            "sha256": "b81417a06fe7bdc6a01fb2b520a3f757631c377239fab207e58de86e7dae9c47",
             "symbol": "Member"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "f8b4a26b6d3639c596e69b3928ba3dbd4c7a7e22436da746b68e6ab53d9f227f",
+            "sha256": "e7029873fe78bbf29e640ec84930b87f556118c3720f42295ef656947740b5c8",
             "symbol": "validate_class_override"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "f8b4a26b6d3639c596e69b3928ba3dbd4c7a7e22436da746b68e6ab53d9f227f",
+            "sha256": "e7029873fe78bbf29e640ec84930b87f556118c3720f42295ef656947740b5c8",
             "symbol": "validate_object_override"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "f8b4a26b6d3639c596e69b3928ba3dbd4c7a7e22436da746b68e6ab53d9f227f",
+            "sha256": "e7029873fe78bbf29e640ec84930b87f556118c3720f42295ef656947740b5c8",
             "symbol": "initialize_member_types"
           },
           {
             "path": "crates/pkl-runtime/src/resolver.rs",
-            "sha256": "9fe8d161e65f0e994a058bc4ef699ff1f7962af91c4ae99cba64ee8cf16e9b20",
+            "sha256": "bb9f1bcf9122aa8824730f3670717f09a35fa0988d7bfaec1652e36b01cd2e24",
             "symbol": "validate_modifiers"
           },
           {
             "path": "crates/pkl-runtime/src/resolver.rs",
-            "sha256": "9fe8d161e65f0e994a058bc4ef699ff1f7962af91c4ae99cba64ee8cf16e9b20",
+            "sha256": "bb9f1bcf9122aa8824730f3670717f09a35fa0988d7bfaec1652e36b01cd2e24",
             "symbol": "ConstLevel"
           },
           {
             "path": "crates/pkl-runtime/src/resolver.rs",
-            "sha256": "9fe8d161e65f0e994a058bc4ef699ff1f7962af91c4ae99cba64ee8cf16e9b20",
+            "sha256": "bb9f1bcf9122aa8824730f3670717f09a35fa0988d7bfaec1652e36b01cd2e24",
             "symbol": "ConstScope"
           },
           {
@@ -159479,12 +161454,12 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "f8b4a26b6d3639c596e69b3928ba3dbd4c7a7e22436da746b68e6ab53d9f227f",
+            "sha256": "e7029873fe78bbf29e640ec84930b87f556118c3720f42295ef656947740b5c8",
             "symbol": "TypeCheck"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "f8b4a26b6d3639c596e69b3928ba3dbd4c7a7e22436da746b68e6ab53d9f227f",
+            "sha256": "e7029873fe78bbf29e640ec84930b87f556118c3720f42295ef656947740b5c8",
             "symbol": "compile_type_at"
           },
           {
@@ -159494,17 +161469,17 @@
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "f8b4a26b6d3639c596e69b3928ba3dbd4c7a7e22436da746b68e6ab53d9f227f",
+            "sha256": "e7029873fe78bbf29e640ec84930b87f556118c3720f42295ef656947740b5c8",
             "symbol": "invoke_function"
           },
           {
             "path": "crates/pkl-runtime/src/heap.rs",
-            "sha256": "69f91e6a252edc3f721863d84862d1d070f38ebe3fb3072cfbc0f468ade4d530",
+            "sha256": "b81417a06fe7bdc6a01fb2b520a3f757631c377239fab207e58de86e7dae9c47",
             "symbol": "Function"
           },
           {
             "path": "crates/pkl-runtime/src/resolver.rs",
-            "sha256": "9fe8d161e65f0e994a058bc4ef699ff1f7962af91c4ae99cba64ee8cf16e9b20",
+            "sha256": "bb9f1bcf9122aa8824730f3670717f09a35fa0988d7bfaec1652e36b01cd2e24",
             "symbol": "ConstScope"
           },
           {
@@ -159848,6 +161823,85 @@
           "diagnostic-stage33-function-if-let-paren-valid",
           "diagnostic-stage33-function-unused-lazy-control",
           "diagnostic-stage33-function-typed-valid",
+          "method-parent-stage34-abstract-class",
+          "method-parent-stage34-alias",
+          "method-parent-stage34-any",
+          "method-parent-stage34-class-default",
+          "method-parent-stage34-class-inherited",
+          "method-parent-stage34-class-method",
+          "method-parent-stage34-dynamic",
+          "method-parent-stage34-first-argument-before-default",
+          "method-parent-stage34-first-condition-before-default",
+          "method-parent-stage34-first-default-before-body",
+          "method-parent-stage34-first-let-before-default",
+          "method-parent-stage34-first-type-before-new",
+          "method-parent-stage34-generic-alias",
+          "method-parent-stage34-generic-alias-mapping",
+          "method-parent-stage34-if-let",
+          "method-parent-stage34-inherited-method",
+          "method-parent-stage34-int-no-default",
+          "method-parent-stage34-lambda-rejected",
+          "method-parent-stage34-lazy-return-validation",
+          "method-parent-stage34-lazy-skipped-new",
+          "method-parent-stage34-lazy-unused-signature",
+          "method-parent-stage34-let-initializer-rejected",
+          "method-parent-stage34-lexical-capture",
+          "method-parent-stage34-list-no-default",
+          "method-parent-stage34-listing",
+          "method-parent-stage34-listing-value-type",
+          "method-parent-stage34-local-object",
+          "method-parent-stage34-mapping",
+          "method-parent-stage34-mapping-key-type",
+          "method-parent-stage34-new-explicit-control",
+          "method-parent-stage34-new-nested-property",
+          "method-parent-stage34-no-annotation",
+          "method-parent-stage34-nullable-class",
+          "method-parent-stage34-nullable-empty",
+          "method-parent-stage34-nullable-int",
+          "method-parent-stage34-override-method",
+          "method-parent-stage34-paren-rejected",
+          "method-parent-stage34-receiver-capture",
+          "method-parent-stage34-string-default",
+          "method-parent-stage34-union-default",
+          "method-parent-stage34-union-no-default",
+          "method-parent-stage34-unknown",
+          "method-parent-stage34-local-object-listing",
+          "method-parent-stage34-local-object-mapping",
+          "method-parent-stage34-local-return-constraint",
+          "method-parent-stage34-nested-defaults",
+          "method-parent-stage34-nested-generic-alias",
+          "method-parent-stage34-nullable-listing",
+          "method-parent-stage34-nullable-mapping",
+          "method-parent-stage34-repeated-arguments",
+          "method-parent-stage34-type-before-argument",
+          "method-parent-stage34-generic-unknown-alias-element",
+          "method-parent-stage34-if-condition",
+          "method-parent-stage34-if-condition-unused",
+          "method-parent-stage34-listing-any-element",
+          "method-parent-stage34-listing-unknown-alias-element",
+          "method-parent-stage34-listing-unknown-element",
+          "method-parent-stage34-mapping-any-element",
+          "method-parent-stage34-unknown-alias",
+          "method-parent-stage34-listing-unknown-element-type-control",
+          "method-parent-stage34-generic-unknown-alias-element-type-control",
+          "property-parent-stage34-explicit-super-missing-amended",
+          "property-parent-stage34-explicit-super-missing-new",
+          "property-parent-stage34-explicit-super-missing-present-parent",
+          "property-parent-stage34-instance-inherited-initializer",
+          "property-parent-stage34-instance-prototype-initializer",
+          "property-parent-stage34-nested-abstract-default",
+          "property-parent-stage34-nested-constraints-skipped",
+          "property-parent-stage34-nested-default-field-undefined",
+          "property-parent-stage34-nested-default-throw-before-body",
+          "property-parent-stage34-nested-if-let-super",
+          "property-parent-stage34-nested-no-default",
+          "property-parent-stage34-nested-union-no-default",
+          "property-parent-stage34-prototype-inherited-default",
+          "property-parent-stage34-prototype-inherited-initializer",
+          "property-parent-stage34-shorthand-local-method",
+          "property-parent-stage34-shorthand-nested",
+          "property-parent-stage34-origin-inherited-nested-listing-any",
+          "property-parent-stage34-origin-listing-any",
           "types-stage18-default-style-lambda"
         ],
         "state": "partial"
@@ -161849,12 +163903,12 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "f8b4a26b6d3639c596e69b3928ba3dbd4c7a7e22436da746b68e6ab53d9f227f",
+            "sha256": "e7029873fe78bbf29e640ec84930b87f556118c3720f42295ef656947740b5c8",
             "symbol": "TypeCheck"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "f8b4a26b6d3639c596e69b3928ba3dbd4c7a7e22436da746b68e6ab53d9f227f",
+            "sha256": "e7029873fe78bbf29e640ec84930b87f556118c3720f42295ef656947740b5c8",
             "symbol": "initialize_type_resolution"
           },
           {
@@ -161864,22 +163918,22 @@
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "f8b4a26b6d3639c596e69b3928ba3dbd4c7a7e22436da746b68e6ab53d9f227f",
+            "sha256": "e7029873fe78bbf29e640ec84930b87f556118c3720f42295ef656947740b5c8",
             "symbol": "type_resolution_plan"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "f8b4a26b6d3639c596e69b3928ba3dbd4c7a7e22436da746b68e6ab53d9f227f",
+            "sha256": "e7029873fe78bbf29e640ec84930b87f556118c3720f42295ef656947740b5c8",
             "symbol": "active_constraints"
           },
           {
             "path": "crates/pkl-runtime/src/heap.rs",
-            "sha256": "69f91e6a252edc3f721863d84862d1d070f38ebe3fb3072cfbc0f468ade4d530",
+            "sha256": "b81417a06fe7bdc6a01fb2b520a3f757631c377239fab207e58de86e7dae9c47",
             "symbol": "CustomThisSlot"
           },
           {
             "path": "crates/pkl-runtime/src/heap.rs",
-            "sha256": "69f91e6a252edc3f721863d84862d1d070f38ebe3fb3072cfbc0f468ade4d530",
+            "sha256": "b81417a06fe7bdc6a01fb2b520a3f757631c377239fab207e58de86e7dae9c47",
             "symbol": "ExecutableState"
           },
           {
@@ -161889,22 +163943,22 @@
           },
           {
             "path": "crates/pkl-runtime/src/vm/generics.rs",
-            "sha256": "a2b885a418e4f63480c157895e5db08ac46782c6511d2089e26478136e08d911",
+            "sha256": "5449406e74efb5c11325c2e7a2bc1b9c64ae9fc9c1ef87fa9c9e76e660b67647",
             "symbol": "substituted"
           },
           {
             "path": "crates/pkl-runtime/src/vm/generics.rs",
-            "sha256": "a2b885a418e4f63480c157895e5db08ac46782c6511d2089e26478136e08d911",
+            "sha256": "5449406e74efb5c11325c2e7a2bc1b9c64ae9fc9c1ef87fa9c9e76e660b67647",
             "symbol": "default_depends_on_parameters"
           },
           {
             "path": "crates/pkl-runtime/src/vm/generics.rs",
-            "sha256": "a2b885a418e4f63480c157895e5db08ac46782c6511d2089e26478136e08d911",
+            "sha256": "5449406e74efb5c11325c2e7a2bc1b9c64ae9fc9c1ef87fa9c9e76e660b67647",
             "symbol": "step_generic_default"
           },
           {
             "path": "crates/pkl-runtime/src/vm/generics.rs",
-            "sha256": "a2b885a418e4f63480c157895e5db08ac46782c6511d2089e26478136e08d911",
+            "sha256": "5449406e74efb5c11325c2e7a2bc1b9c64ae9fc9c1ef87fa9c9e76e660b67647",
             "symbol": "validate_reference_arguments"
           }
         ],
@@ -163282,6 +165336,85 @@
           "diagnostic-stage33-object-local-typed-valid",
           "diagnostic-stage33-function-if-let-paren-valid",
           "diagnostic-stage33-function-typed-valid",
+          "method-parent-stage34-abstract-class",
+          "method-parent-stage34-alias",
+          "method-parent-stage34-any",
+          "method-parent-stage34-class-default",
+          "method-parent-stage34-class-inherited",
+          "method-parent-stage34-class-method",
+          "method-parent-stage34-dynamic",
+          "method-parent-stage34-first-argument-before-default",
+          "method-parent-stage34-first-condition-before-default",
+          "method-parent-stage34-first-default-before-body",
+          "method-parent-stage34-first-let-before-default",
+          "method-parent-stage34-first-type-before-new",
+          "method-parent-stage34-generic-alias",
+          "method-parent-stage34-generic-alias-mapping",
+          "method-parent-stage34-if-let",
+          "method-parent-stage34-inherited-method",
+          "method-parent-stage34-int-no-default",
+          "method-parent-stage34-lambda-rejected",
+          "method-parent-stage34-lazy-return-validation",
+          "method-parent-stage34-lazy-skipped-new",
+          "method-parent-stage34-lazy-unused-signature",
+          "method-parent-stage34-let-initializer-rejected",
+          "method-parent-stage34-lexical-capture",
+          "method-parent-stage34-list-no-default",
+          "method-parent-stage34-listing",
+          "method-parent-stage34-listing-value-type",
+          "method-parent-stage34-local-object",
+          "method-parent-stage34-mapping",
+          "method-parent-stage34-mapping-key-type",
+          "method-parent-stage34-new-explicit-control",
+          "method-parent-stage34-new-nested-property",
+          "method-parent-stage34-no-annotation",
+          "method-parent-stage34-nullable-class",
+          "method-parent-stage34-nullable-empty",
+          "method-parent-stage34-nullable-int",
+          "method-parent-stage34-override-method",
+          "method-parent-stage34-paren-rejected",
+          "method-parent-stage34-receiver-capture",
+          "method-parent-stage34-string-default",
+          "method-parent-stage34-union-default",
+          "method-parent-stage34-union-no-default",
+          "method-parent-stage34-unknown",
+          "method-parent-stage34-local-object-listing",
+          "method-parent-stage34-local-object-mapping",
+          "method-parent-stage34-local-return-constraint",
+          "method-parent-stage34-nested-defaults",
+          "method-parent-stage34-nested-generic-alias",
+          "method-parent-stage34-nullable-listing",
+          "method-parent-stage34-nullable-mapping",
+          "method-parent-stage34-repeated-arguments",
+          "method-parent-stage34-type-before-argument",
+          "method-parent-stage34-generic-unknown-alias-element",
+          "method-parent-stage34-if-condition",
+          "method-parent-stage34-if-condition-unused",
+          "method-parent-stage34-listing-any-element",
+          "method-parent-stage34-listing-unknown-alias-element",
+          "method-parent-stage34-listing-unknown-element",
+          "method-parent-stage34-mapping-any-element",
+          "method-parent-stage34-unknown-alias",
+          "method-parent-stage34-listing-unknown-element-type-control",
+          "method-parent-stage34-generic-unknown-alias-element-type-control",
+          "property-parent-stage34-explicit-super-missing-amended",
+          "property-parent-stage34-explicit-super-missing-new",
+          "property-parent-stage34-explicit-super-missing-present-parent",
+          "property-parent-stage34-instance-inherited-initializer",
+          "property-parent-stage34-instance-prototype-initializer",
+          "property-parent-stage34-nested-abstract-default",
+          "property-parent-stage34-nested-constraints-skipped",
+          "property-parent-stage34-nested-default-field-undefined",
+          "property-parent-stage34-nested-default-throw-before-body",
+          "property-parent-stage34-nested-if-let-super",
+          "property-parent-stage34-nested-no-default",
+          "property-parent-stage34-nested-union-no-default",
+          "property-parent-stage34-prototype-inherited-default",
+          "property-parent-stage34-prototype-inherited-initializer",
+          "property-parent-stage34-shorthand-local-method",
+          "property-parent-stage34-shorthand-nested",
+          "property-parent-stage34-origin-inherited-nested-listing-any",
+          "property-parent-stage34-origin-listing-any",
           "types-stage13-alias-value",
           "types-stage13-alias-self-equal",
           "types-stage13-alias-distinct-equal",
@@ -163421,32 +165554,32 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "f8b4a26b6d3639c596e69b3928ba3dbd4c7a7e22436da746b68e6ab53d9f227f",
+            "sha256": "e7029873fe78bbf29e640ec84930b87f556118c3720f42295ef656947740b5c8",
             "symbol": "BeginTypeAlias"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "f8b4a26b6d3639c596e69b3928ba3dbd4c7a7e22436da746b68e6ab53d9f227f",
+            "sha256": "e7029873fe78bbf29e640ec84930b87f556118c3720f42295ef656947740b5c8",
             "symbol": "NamedAlias"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "f8b4a26b6d3639c596e69b3928ba3dbd4c7a7e22436da746b68e6ab53d9f227f",
+            "sha256": "e7029873fe78bbf29e640ec84930b87f556118c3720f42295ef656947740b5c8",
             "symbol": "compile_type_at"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "f8b4a26b6d3639c596e69b3928ba3dbd4c7a7e22436da746b68e6ab53d9f227f",
+            "sha256": "e7029873fe78bbf29e640ec84930b87f556118c3720f42295ef656947740b5c8",
             "symbol": "type_resolution_plan"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "f8b4a26b6d3639c596e69b3928ba3dbd4c7a7e22436da746b68e6ab53d9f227f",
+            "sha256": "e7029873fe78bbf29e640ec84930b87f556118c3720f42295ef656947740b5c8",
             "symbol": "initialize_type_resolution"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "f8b4a26b6d3639c596e69b3928ba3dbd4c7a7e22436da746b68e6ab53d9f227f",
+            "sha256": "e7029873fe78bbf29e640ec84930b87f556118c3720f42295ef656947740b5c8",
             "symbol": "active_constraints"
           },
           {
@@ -163456,12 +165589,12 @@
           },
           {
             "path": "crates/pkl-runtime/src/heap.rs",
-            "sha256": "69f91e6a252edc3f721863d84862d1d070f38ebe3fb3072cfbc0f468ade4d530",
+            "sha256": "b81417a06fe7bdc6a01fb2b520a3f757631c377239fab207e58de86e7dae9c47",
             "symbol": "CustomThisSlot"
           },
           {
             "path": "crates/pkl-runtime/src/heap.rs",
-            "sha256": "69f91e6a252edc3f721863d84862d1d070f38ebe3fb3072cfbc0f468ade4d530",
+            "sha256": "b81417a06fe7bdc6a01fb2b520a3f757631c377239fab207e58de86e7dae9c47",
             "symbol": "ExecutableState"
           },
           {
@@ -163471,22 +165604,22 @@
           },
           {
             "path": "crates/pkl-runtime/src/vm/generics.rs",
-            "sha256": "a2b885a418e4f63480c157895e5db08ac46782c6511d2089e26478136e08d911",
+            "sha256": "5449406e74efb5c11325c2e7a2bc1b9c64ae9fc9c1ef87fa9c9e76e660b67647",
             "symbol": "substituted"
           },
           {
             "path": "crates/pkl-runtime/src/vm/generics.rs",
-            "sha256": "a2b885a418e4f63480c157895e5db08ac46782c6511d2089e26478136e08d911",
+            "sha256": "5449406e74efb5c11325c2e7a2bc1b9c64ae9fc9c1ef87fa9c9e76e660b67647",
             "symbol": "default_depends_on_parameters"
           },
           {
             "path": "crates/pkl-runtime/src/vm/generics.rs",
-            "sha256": "a2b885a418e4f63480c157895e5db08ac46782c6511d2089e26478136e08d911",
+            "sha256": "5449406e74efb5c11325c2e7a2bc1b9c64ae9fc9c1ef87fa9c9e76e660b67647",
             "symbol": "step_generic_default"
           },
           {
             "path": "crates/pkl-runtime/src/vm/generics.rs",
-            "sha256": "a2b885a418e4f63480c157895e5db08ac46782c6511d2089e26478136e08d911",
+            "sha256": "5449406e74efb5c11325c2e7a2bc1b9c64ae9fc9c1ef87fa9c9e76e660b67647",
             "symbol": "validate_reference_arguments"
           }
         ],
@@ -164199,7 +166332,7 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/heap.rs",
-            "sha256": "69f91e6a252edc3f721863d84862d1d070f38ebe3fb3072cfbc0f468ade4d530",
+            "sha256": "b81417a06fe7bdc6a01fb2b520a3f757631c377239fab207e58de86e7dae9c47",
             "symbol": "CustomThisSlot"
           },
           {
@@ -164214,12 +166347,12 @@
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "f8b4a26b6d3639c596e69b3928ba3dbd4c7a7e22436da746b68e6ab53d9f227f",
+            "sha256": "e7029873fe78bbf29e640ec84930b87f556118c3720f42295ef656947740b5c8",
             "symbol": "invoke_function"
           },
           {
             "path": "crates/pkl-runtime/src/heap.rs",
-            "sha256": "69f91e6a252edc3f721863d84862d1d070f38ebe3fb3072cfbc0f468ade4d530",
+            "sha256": "b81417a06fe7bdc6a01fb2b520a3f757631c377239fab207e58de86e7dae9c47",
             "symbol": "ExecutableState"
           },
           {
@@ -164229,22 +166362,22 @@
           },
           {
             "path": "crates/pkl-runtime/src/vm/generics.rs",
-            "sha256": "a2b885a418e4f63480c157895e5db08ac46782c6511d2089e26478136e08d911",
+            "sha256": "5449406e74efb5c11325c2e7a2bc1b9c64ae9fc9c1ef87fa9c9e76e660b67647",
             "symbol": "substituted"
           },
           {
             "path": "crates/pkl-runtime/src/vm/generics.rs",
-            "sha256": "a2b885a418e4f63480c157895e5db08ac46782c6511d2089e26478136e08d911",
+            "sha256": "5449406e74efb5c11325c2e7a2bc1b9c64ae9fc9c1ef87fa9c9e76e660b67647",
             "symbol": "default_depends_on_parameters"
           },
           {
             "path": "crates/pkl-runtime/src/vm/generics.rs",
-            "sha256": "a2b885a418e4f63480c157895e5db08ac46782c6511d2089e26478136e08d911",
+            "sha256": "5449406e74efb5c11325c2e7a2bc1b9c64ae9fc9c1ef87fa9c9e76e660b67647",
             "symbol": "step_generic_default"
           },
           {
             "path": "crates/pkl-runtime/src/vm/generics.rs",
-            "sha256": "a2b885a418e4f63480c157895e5db08ac46782c6511d2089e26478136e08d911",
+            "sha256": "5449406e74efb5c11325c2e7a2bc1b9c64ae9fc9c1ef87fa9c9e76e660b67647",
             "symbol": "validate_reference_arguments"
           }
         ],
@@ -164934,12 +167067,12 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "f8b4a26b6d3639c596e69b3928ba3dbd4c7a7e22436da746b68e6ab53d9f227f",
+            "sha256": "e7029873fe78bbf29e640ec84930b87f556118c3720f42295ef656947740b5c8",
             "symbol": "NamedAlias"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "f8b4a26b6d3639c596e69b3928ba3dbd4c7a7e22436da746b68e6ab53d9f227f",
+            "sha256": "e7029873fe78bbf29e640ec84930b87f556118c3720f42295ef656947740b5c8",
             "symbol": "compile_type_at"
           },
           {
@@ -164949,32 +167082,32 @@
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "f8b4a26b6d3639c596e69b3928ba3dbd4c7a7e22436da746b68e6ab53d9f227f",
+            "sha256": "e7029873fe78bbf29e640ec84930b87f556118c3720f42295ef656947740b5c8",
             "symbol": "type_resolution_plan"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "f8b4a26b6d3639c596e69b3928ba3dbd4c7a7e22436da746b68e6ab53d9f227f",
+            "sha256": "e7029873fe78bbf29e640ec84930b87f556118c3720f42295ef656947740b5c8",
             "symbol": "initialize_type_resolution"
           },
           {
             "path": "crates/pkl-runtime/src/vm/generics.rs",
-            "sha256": "a2b885a418e4f63480c157895e5db08ac46782c6511d2089e26478136e08d911",
+            "sha256": "5449406e74efb5c11325c2e7a2bc1b9c64ae9fc9c1ef87fa9c9e76e660b67647",
             "symbol": "substituted"
           },
           {
             "path": "crates/pkl-runtime/src/vm/generics.rs",
-            "sha256": "a2b885a418e4f63480c157895e5db08ac46782c6511d2089e26478136e08d911",
+            "sha256": "5449406e74efb5c11325c2e7a2bc1b9c64ae9fc9c1ef87fa9c9e76e660b67647",
             "symbol": "default_depends_on_parameters"
           },
           {
             "path": "crates/pkl-runtime/src/vm/generics.rs",
-            "sha256": "a2b885a418e4f63480c157895e5db08ac46782c6511d2089e26478136e08d911",
+            "sha256": "5449406e74efb5c11325c2e7a2bc1b9c64ae9fc9c1ef87fa9c9e76e660b67647",
             "symbol": "step_generic_default"
           },
           {
             "path": "crates/pkl-runtime/src/vm/generics.rs",
-            "sha256": "a2b885a418e4f63480c157895e5db08ac46782c6511d2089e26478136e08d911",
+            "sha256": "5449406e74efb5c11325c2e7a2bc1b9c64ae9fc9c1ef87fa9c9e76e660b67647",
             "symbol": "validate_reference_arguments"
           }
         ],
@@ -166068,7 +168201,7 @@
           },
           {
             "path": "crates/pkl-runtime/src/vm/generics.rs",
-            "sha256": "a2b885a418e4f63480c157895e5db08ac46782c6511d2089e26478136e08d911",
+            "sha256": "5449406e74efb5c11325c2e7a2bc1b9c64ae9fc9c1ef87fa9c9e76e660b67647",
             "symbol": "validate_reference_arguments"
           }
         ],
@@ -166323,17 +168456,17 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/heap.rs",
-            "sha256": "69f91e6a252edc3f721863d84862d1d070f38ebe3fb3072cfbc0f468ade4d530",
+            "sha256": "b81417a06fe7bdc6a01fb2b520a3f757631c377239fab207e58de86e7dae9c47",
             "symbol": "Member"
           },
           {
             "path": "crates/pkl-runtime/src/heap.rs",
-            "sha256": "69f91e6a252edc3f721863d84862d1d070f38ebe3fb3072cfbc0f468ade4d530",
+            "sha256": "b81417a06fe7bdc6a01fb2b520a3f757631c377239fab207e58de86e7dae9c47",
             "symbol": "Object"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "f8b4a26b6d3639c596e69b3928ba3dbd4c7a7e22436da746b68e6ab53d9f227f",
+            "sha256": "e7029873fe78bbf29e640ec84930b87f556118c3720f42295ef656947740b5c8",
             "symbol": "initialize_member_types"
           },
           {
@@ -166348,7 +168481,7 @@
           },
           {
             "path": "crates/pkl-runtime/src/vm/generics.rs",
-            "sha256": "a2b885a418e4f63480c157895e5db08ac46782c6511d2089e26478136e08d911",
+            "sha256": "5449406e74efb5c11325c2e7a2bc1b9c64ae9fc9c1ef87fa9c9e76e660b67647",
             "symbol": "step_generic_default"
           }
         ],
@@ -166532,12 +168665,12 @@
           },
           {
             "path": "crates/pkl-runtime/src/resolver.rs",
-            "sha256": "9fe8d161e65f0e994a058bc4ef699ff1f7962af91c4ae99cba64ee8cf16e9b20",
+            "sha256": "bb9f1bcf9122aa8824730f3670717f09a35fa0988d7bfaec1652e36b01cd2e24",
             "symbol": "visit"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "f8b4a26b6d3639c596e69b3928ba3dbd4c7a7e22436da746b68e6ab53d9f227f",
+            "sha256": "e7029873fe78bbf29e640ec84930b87f556118c3720f42295ef656947740b5c8",
             "symbol": "compile_type_at"
           }
         ],
@@ -166602,7 +168735,7 @@
           },
           {
             "path": "crates/pkl-runtime/src/resolver.rs",
-            "sha256": "9fe8d161e65f0e994a058bc4ef699ff1f7962af91c4ae99cba64ee8cf16e9b20",
+            "sha256": "bb9f1bcf9122aa8824730f3670717f09a35fa0988d7bfaec1652e36b01cd2e24",
             "symbol": "ConstScope"
           },
           {
@@ -166622,7 +168755,7 @@
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "f8b4a26b6d3639c596e69b3928ba3dbd4c7a7e22436da746b68e6ab53d9f227f",
+            "sha256": "e7029873fe78bbf29e640ec84930b87f556118c3720f42295ef656947740b5c8",
             "symbol": "executable_value_span"
           },
           {
@@ -168272,7 +170405,86 @@
           "diagnostic-stage33-function-if-let-paren-valid",
           "diagnostic-stage33-function-unused-lazy-control",
           "diagnostic-stage33-local-const-unused-control",
-          "diagnostic-stage33-function-typed-valid"
+          "diagnostic-stage33-function-typed-valid",
+          "method-parent-stage34-abstract-class",
+          "method-parent-stage34-alias",
+          "method-parent-stage34-any",
+          "method-parent-stage34-class-default",
+          "method-parent-stage34-class-inherited",
+          "method-parent-stage34-class-method",
+          "method-parent-stage34-dynamic",
+          "method-parent-stage34-first-argument-before-default",
+          "method-parent-stage34-first-condition-before-default",
+          "method-parent-stage34-first-default-before-body",
+          "method-parent-stage34-first-let-before-default",
+          "method-parent-stage34-first-type-before-new",
+          "method-parent-stage34-generic-alias",
+          "method-parent-stage34-generic-alias-mapping",
+          "method-parent-stage34-if-let",
+          "method-parent-stage34-inherited-method",
+          "method-parent-stage34-int-no-default",
+          "method-parent-stage34-lambda-rejected",
+          "method-parent-stage34-lazy-return-validation",
+          "method-parent-stage34-lazy-skipped-new",
+          "method-parent-stage34-lazy-unused-signature",
+          "method-parent-stage34-let-initializer-rejected",
+          "method-parent-stage34-lexical-capture",
+          "method-parent-stage34-list-no-default",
+          "method-parent-stage34-listing",
+          "method-parent-stage34-listing-value-type",
+          "method-parent-stage34-local-object",
+          "method-parent-stage34-mapping",
+          "method-parent-stage34-mapping-key-type",
+          "method-parent-stage34-new-explicit-control",
+          "method-parent-stage34-new-nested-property",
+          "method-parent-stage34-no-annotation",
+          "method-parent-stage34-nullable-class",
+          "method-parent-stage34-nullable-empty",
+          "method-parent-stage34-nullable-int",
+          "method-parent-stage34-override-method",
+          "method-parent-stage34-paren-rejected",
+          "method-parent-stage34-receiver-capture",
+          "method-parent-stage34-string-default",
+          "method-parent-stage34-union-default",
+          "method-parent-stage34-union-no-default",
+          "method-parent-stage34-unknown",
+          "method-parent-stage34-local-object-listing",
+          "method-parent-stage34-local-object-mapping",
+          "method-parent-stage34-local-return-constraint",
+          "method-parent-stage34-nested-defaults",
+          "method-parent-stage34-nested-generic-alias",
+          "method-parent-stage34-nullable-listing",
+          "method-parent-stage34-nullable-mapping",
+          "method-parent-stage34-repeated-arguments",
+          "method-parent-stage34-type-before-argument",
+          "method-parent-stage34-generic-unknown-alias-element",
+          "method-parent-stage34-if-condition",
+          "method-parent-stage34-if-condition-unused",
+          "method-parent-stage34-listing-any-element",
+          "method-parent-stage34-listing-unknown-alias-element",
+          "method-parent-stage34-listing-unknown-element",
+          "method-parent-stage34-mapping-any-element",
+          "method-parent-stage34-unknown-alias",
+          "method-parent-stage34-listing-unknown-element-type-control",
+          "method-parent-stage34-generic-unknown-alias-element-type-control",
+          "property-parent-stage34-explicit-super-missing-amended",
+          "property-parent-stage34-explicit-super-missing-new",
+          "property-parent-stage34-explicit-super-missing-present-parent",
+          "property-parent-stage34-instance-inherited-initializer",
+          "property-parent-stage34-instance-prototype-initializer",
+          "property-parent-stage34-nested-abstract-default",
+          "property-parent-stage34-nested-constraints-skipped",
+          "property-parent-stage34-nested-default-field-undefined",
+          "property-parent-stage34-nested-default-throw-before-body",
+          "property-parent-stage34-nested-if-let-super",
+          "property-parent-stage34-nested-no-default",
+          "property-parent-stage34-nested-union-no-default",
+          "property-parent-stage34-prototype-inherited-default",
+          "property-parent-stage34-prototype-inherited-initializer",
+          "property-parent-stage34-shorthand-local-method",
+          "property-parent-stage34-shorthand-nested",
+          "property-parent-stage34-origin-inherited-nested-listing-any",
+          "property-parent-stage34-origin-listing-any"
         ],
         "state": "partial"
       }
@@ -168758,7 +170970,86 @@
           "diagnostic-stage33-function-if-let-paren-valid",
           "diagnostic-stage33-function-unused-lazy-control",
           "diagnostic-stage33-local-const-unused-control",
-          "diagnostic-stage33-function-typed-valid"
+          "diagnostic-stage33-function-typed-valid",
+          "method-parent-stage34-abstract-class",
+          "method-parent-stage34-alias",
+          "method-parent-stage34-any",
+          "method-parent-stage34-class-default",
+          "method-parent-stage34-class-inherited",
+          "method-parent-stage34-class-method",
+          "method-parent-stage34-dynamic",
+          "method-parent-stage34-first-argument-before-default",
+          "method-parent-stage34-first-condition-before-default",
+          "method-parent-stage34-first-default-before-body",
+          "method-parent-stage34-first-let-before-default",
+          "method-parent-stage34-first-type-before-new",
+          "method-parent-stage34-generic-alias",
+          "method-parent-stage34-generic-alias-mapping",
+          "method-parent-stage34-if-let",
+          "method-parent-stage34-inherited-method",
+          "method-parent-stage34-int-no-default",
+          "method-parent-stage34-lambda-rejected",
+          "method-parent-stage34-lazy-return-validation",
+          "method-parent-stage34-lazy-skipped-new",
+          "method-parent-stage34-lazy-unused-signature",
+          "method-parent-stage34-let-initializer-rejected",
+          "method-parent-stage34-lexical-capture",
+          "method-parent-stage34-list-no-default",
+          "method-parent-stage34-listing",
+          "method-parent-stage34-listing-value-type",
+          "method-parent-stage34-local-object",
+          "method-parent-stage34-mapping",
+          "method-parent-stage34-mapping-key-type",
+          "method-parent-stage34-new-explicit-control",
+          "method-parent-stage34-new-nested-property",
+          "method-parent-stage34-no-annotation",
+          "method-parent-stage34-nullable-class",
+          "method-parent-stage34-nullable-empty",
+          "method-parent-stage34-nullable-int",
+          "method-parent-stage34-override-method",
+          "method-parent-stage34-paren-rejected",
+          "method-parent-stage34-receiver-capture",
+          "method-parent-stage34-string-default",
+          "method-parent-stage34-union-default",
+          "method-parent-stage34-union-no-default",
+          "method-parent-stage34-unknown",
+          "method-parent-stage34-local-object-listing",
+          "method-parent-stage34-local-object-mapping",
+          "method-parent-stage34-local-return-constraint",
+          "method-parent-stage34-nested-defaults",
+          "method-parent-stage34-nested-generic-alias",
+          "method-parent-stage34-nullable-listing",
+          "method-parent-stage34-nullable-mapping",
+          "method-parent-stage34-repeated-arguments",
+          "method-parent-stage34-type-before-argument",
+          "method-parent-stage34-generic-unknown-alias-element",
+          "method-parent-stage34-if-condition",
+          "method-parent-stage34-if-condition-unused",
+          "method-parent-stage34-listing-any-element",
+          "method-parent-stage34-listing-unknown-alias-element",
+          "method-parent-stage34-listing-unknown-element",
+          "method-parent-stage34-mapping-any-element",
+          "method-parent-stage34-unknown-alias",
+          "method-parent-stage34-listing-unknown-element-type-control",
+          "method-parent-stage34-generic-unknown-alias-element-type-control",
+          "property-parent-stage34-explicit-super-missing-amended",
+          "property-parent-stage34-explicit-super-missing-new",
+          "property-parent-stage34-explicit-super-missing-present-parent",
+          "property-parent-stage34-instance-inherited-initializer",
+          "property-parent-stage34-instance-prototype-initializer",
+          "property-parent-stage34-nested-abstract-default",
+          "property-parent-stage34-nested-constraints-skipped",
+          "property-parent-stage34-nested-default-field-undefined",
+          "property-parent-stage34-nested-default-throw-before-body",
+          "property-parent-stage34-nested-if-let-super",
+          "property-parent-stage34-nested-no-default",
+          "property-parent-stage34-nested-union-no-default",
+          "property-parent-stage34-prototype-inherited-default",
+          "property-parent-stage34-prototype-inherited-initializer",
+          "property-parent-stage34-shorthand-local-method",
+          "property-parent-stage34-shorthand-nested",
+          "property-parent-stage34-origin-inherited-nested-listing-any",
+          "property-parent-stage34-origin-listing-any"
         ],
         "state": "partial"
       }
@@ -174746,22 +177037,22 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/heap.rs",
-            "sha256": "69f91e6a252edc3f721863d84862d1d070f38ebe3fb3072cfbc0f468ade4d530",
+            "sha256": "b81417a06fe7bdc6a01fb2b520a3f757631c377239fab207e58de86e7dae9c47",
             "symbol": "Member"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "f8b4a26b6d3639c596e69b3928ba3dbd4c7a7e22436da746b68e6ab53d9f227f",
+            "sha256": "e7029873fe78bbf29e640ec84930b87f556118c3720f42295ef656947740b5c8",
             "symbol": "validate_class_override"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "f8b4a26b6d3639c596e69b3928ba3dbd4c7a7e22436da746b68e6ab53d9f227f",
+            "sha256": "e7029873fe78bbf29e640ec84930b87f556118c3720f42295ef656947740b5c8",
             "symbol": "validate_object_override"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "f8b4a26b6d3639c596e69b3928ba3dbd4c7a7e22436da746b68e6ab53d9f227f",
+            "sha256": "e7029873fe78bbf29e640ec84930b87f556118c3720f42295ef656947740b5c8",
             "symbol": "initialize_member_types"
           }
         ],
@@ -175194,12 +177485,12 @@
           },
           {
             "path": "crates/pkl-runtime/src/resolver.rs",
-            "sha256": "9fe8d161e65f0e994a058bc4ef699ff1f7962af91c4ae99cba64ee8cf16e9b20",
+            "sha256": "bb9f1bcf9122aa8824730f3670717f09a35fa0988d7bfaec1652e36b01cd2e24",
             "symbol": "visit"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "f8b4a26b6d3639c596e69b3928ba3dbd4c7a7e22436da746b68e6ab53d9f227f",
+            "sha256": "e7029873fe78bbf29e640ec84930b87f556118c3720f42295ef656947740b5c8",
             "symbol": "compile_type_at"
           }
         ],
@@ -177657,6 +179948,6 @@
     "compatibility/regressions.json": "09c064f65730d30f72bf87a45c88d47ecc0844e57966a999dc8e759f083af3da",
     "compatibility/rev1-inventory.json": "6061f202ba3f04565efed3617ac69d3c2fadc54eec1f562b67a4758b3d0a8ab5",
     "references.lock": "278f48fd7697459281aa78a706c9ca57222f36a8c0785d838a6449fbaf26d30b",
-    "tests/fixtures/m2/cases.json": "4bdb801f62406e65d60e3265c6defee1877b1727a26a66e9f207e2571e080494"
+    "tests/fixtures/m2/cases.json": "9c7983c2c6fe3ee6fb27c956ffcf44fe9619d77bc9c2855bd4cf5a50b018a46e"
   }
 }

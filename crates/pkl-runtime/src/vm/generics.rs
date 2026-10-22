@@ -152,12 +152,21 @@ enum DefaultTask {
     Collection(ObjectId),
     Publish(ObjectId),
     Constructor(TypeCheck, TypeArgumentSource),
+    InferredParent,
 }
 pub(super) struct GenericDefaultRun {
     tasks: Vec<DefaultTask>,
     value: Option<Value>,
+    origin: Option<RuntimeFrame>,
 }
 impl GenericDefaultRun {
+    pub(super) fn inferred_parent(ty: TypeCheck, origin: Option<RuntimeFrame>) -> Self {
+        Self {
+            tasks: vec![DefaultTask::InferredParent, DefaultTask::Visit(ty)],
+            value: None,
+            origin,
+        }
+    }
     pub(super) fn constructor(ty: TypeCheck, source: TypeArgumentSource) -> Self {
         Self {
             tasks: vec![
@@ -165,19 +174,24 @@ impl GenericDefaultRun {
                 DefaultTask::Visit(ty),
             ],
             value: None,
+            origin: None,
         }
     }
-    pub(super) fn new(target: ObjectId, ty: TypeCheck) -> Self {
+    pub(super) fn new(target: ObjectId, ty: TypeCheck, origin: Option<RuntimeFrame>) -> Self {
         Self {
             tasks: vec![DefaultTask::Publish(target), DefaultTask::Visit(ty)],
             value: None,
+            origin,
         }
     }
     pub(super) fn roots(&self, roots: &mut Vec<Value>) {
         roots.extend(self.value.iter().cloned());
         roots.extend(self.tasks.iter().filter_map(|task| match task {
             DefaultTask::Collection(id) | DefaultTask::Publish(id) => Some(Value::Object(*id)),
-            DefaultTask::Visit(_) | DefaultTask::Nullable | DefaultTask::Constructor(_, _) => None,
+            DefaultTask::Visit(_)
+            | DefaultTask::Nullable
+            | DefaultTask::Constructor(_, _)
+            | DefaultTask::InferredParent => None,
         }));
     }
 }
@@ -198,6 +212,10 @@ impl Vm {
             .pop()
             .ok_or_else(|| invalid("empty default run"))?
         {
+            DefaultTask::InferredParent => {
+                self.stack.push(run.value.ok_or_else(cannot_infer_parent)?);
+                return Ok(());
+            }
             DefaultTask::Constructor(ty, source) => {
                 if let Some(value) = run.value {
                     self.stack.push(value);
@@ -305,6 +323,7 @@ impl Vm {
                     };
                     let mut object = Object {
                         collection_kind: kind,
+                        collection_default_origin: run.origin.clone(),
                         ..Object::default()
                     };
                     if !matches!(
@@ -324,7 +343,7 @@ impl Vm {
                         kind,
                         CollectionKind::List | CollectionKind::Map | CollectionKind::Set
                     ) && let Some(argument) = argument
-                        && !argument.noop()
+                        && !matches!(argument.resolved(), TypeCheck::Unknown)
                     {
                         run.tasks.push(DefaultTask::Collection(id));
                         run.tasks.push(DefaultTask::Visit(argument));

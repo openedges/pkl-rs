@@ -1,0 +1,2 @@
+function build(): Int = new { value = throw("body") }
+result = build().toString()

@@ -1,0 +1,2 @@
+function build(n: Int): Int = new {}
+result = build(throw("argument")).toString()

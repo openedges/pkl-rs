@@ -1,0 +1,3 @@
+class Person { age: Int = 7 }
+class Factory { function build(): Person = new { age = 9 } }
+result = (new Factory {}).build().age.toString()

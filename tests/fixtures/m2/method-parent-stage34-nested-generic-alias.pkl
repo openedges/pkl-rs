@@ -1,0 +1,3 @@
+typealias Rows<T> = Listing<Listing<T>>
+function build(): Rows<Int> = new { new { 3 } }
+result = build()[0][0].toString()

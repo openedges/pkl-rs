@@ -1,0 +1,3 @@
+typealias U = unknown
+function build(): U = new {}
+result = build().toString()

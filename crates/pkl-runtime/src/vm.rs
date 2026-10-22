@@ -54,9 +54,13 @@ pub enum Instruction {
     EndCollection,
     SetCollectionDefault {
         defined: bool,
+        origin: Option<RuntimeFrame>,
     },
     /// Instantiate a collection element default after lexical type substitution.
-    SetCollectionTypeDefault(TypeCheck),
+    SetCollectionTypeDefault {
+        ty: TypeCheck,
+        origin: Option<RuntimeFrame>,
+    },
     /// Resolve a generic constructor's parent using this invocation's actual type.
     GenericConstructorParent {
         ty: TypeCheck,
@@ -86,6 +90,7 @@ pub enum Instruction {
     Subscript,
     SuperSubscript,
     EntryParent,
+    InferPropertyParent,
     MakeList {
         length: usize,
     },
@@ -1166,13 +1171,45 @@ impl Vm {
     }
 
     fn fail(&mut self, mut error: RuntimeError) {
+        // Inferred properties read their class prototype without type checks.
+        // An undefined prototype value is caught by the inference node, whose
+        // authored new expression becomes the error origin. Keep all frames for
+        // pending-cache cleanup even though the caught read is not diagnostic.
+        let instruction = |frame: &Frame| {
+            self.program
+                .blocks
+                .get(frame.block)
+                .and_then(|code| code.get(frame.pc.saturating_sub(1)))
+        };
+        let caught_undefined = error.kind == ErrorKind::MissingMember
+            && self.frames.last().is_some_and(|frame| {
+                matches!(
+                    instruction(frame),
+                    Some(Instruction::Undefined(_) | Instruction::EntryParent)
+                )
+            });
+        let diagnostic_count = if caught_undefined {
+            self.frames
+                .iter()
+                .rposition(|frame| {
+                    matches!(instruction(frame), Some(Instruction::InferPropertyParent))
+                })
+                .map(|index| {
+                    error = cannot_infer_parent();
+                    index + 1
+                })
+                .unwrap_or(self.frames.len())
+        } else {
+            self.frames.len()
+        };
+        let diagnostic_frames = &self.frames[..diagnostic_count];
         // LetExprNode inserts one frame per call target when a body throws.
         // Unwinding replaces inner scopes with the outermost active scope,
         // including across recursive calls. Initializers and type checks are
         // outside the body range and therefore do not insert a frame.
         let mut let_frames = BTreeMap::new();
         let mut logical_targets = Vec::with_capacity(self.frames.len());
-        for frame in &self.frames {
+        for frame in diagnostic_frames {
             let target = if frame.return_to_type
                 && self
                     .program
@@ -1186,7 +1223,7 @@ impl Vm {
             };
             logical_targets.push(target);
         }
-        for (index, frame) in self.frames.iter().rev().enumerate() {
+        for (index, frame) in diagnostic_frames.iter().rev().enumerate() {
             // A recoverable mismatch becomes VmException only at PklRootNode.
             // Let bodies within that root do not catch the original mismatch.
             if index == 0
@@ -1215,7 +1252,7 @@ impl Vm {
                 })
             {
                 let_frames.insert(
-                    logical_targets[self.frames.len() - 1 - index],
+                    logical_targets[diagnostic_frames.len() - 1 - index],
                     scope.frame.clone(),
                 );
             }
@@ -1263,11 +1300,13 @@ impl Vm {
             error.message = format!("Cannot find property `{name}`.");
             error.hint = crate::diagnostic::property_suggestions(name, names, true);
         }
-        for (frame_index, frame) in self.frames.iter().enumerate().rev() {
+        for (frame_index, frame) in diagnostic_frames.iter().enumerate().rev() {
             if let Some(metadata) = self.program.metadata.get(frame.block)
                 && let Some(Some(span)) = metadata.spans.get(frame.pc.saturating_sub(1))
             {
-                if !frame.callsite_hidden {
+                let reading_inferred_parent = frame_index + 1 < diagnostic_frames.len()
+                    && matches!(instruction(frame), Some(Instruction::InferPropertyParent));
+                if !frame.callsite_hidden && !reading_inferred_parent {
                     error.frames.push(RuntimeFrame {
                         source: metadata.source.clone(),
                         span: if error.frames.is_empty() {
@@ -2310,7 +2349,7 @@ impl Vm {
                 | Instruction::BeginCollection { .. }
                 | Instruction::EndCollection
                 | Instruction::SetCollectionDefault { .. }
-                | Instruction::SetCollectionTypeDefault(_)
+                | Instruction::SetCollectionTypeDefault { .. }
                 | Instruction::GenericConstructorParent { .. }
                 | Instruction::AmendEmpty
                 | Instruction::AddCollectionProperty(_)
@@ -2452,7 +2491,7 @@ impl Vm {
             | Instruction::BeginCollection { .. }
             | Instruction::EndCollection
             | Instruction::SetCollectionDefault { .. }
-            | Instruction::SetCollectionTypeDefault(_)
+            | Instruction::SetCollectionTypeDefault { .. }
             | Instruction::GenericConstructorParent { .. }
             | Instruction::AmendEmpty
             | Instruction::AddCollectionProperty(_)
@@ -2800,6 +2839,81 @@ impl Vm {
                     self.force(receiver, receiver, name.clone(), false, true, method)?;
                 }
             }
+            Instruction::InferPropertyParent => {
+                let scope = self.scope(0)?;
+                let name = self
+                    .frames
+                    .last()
+                    .and_then(|frame| frame.force.as_ref())
+                    .ok_or_else(|| invalid("property parent outside member"))?
+                    .name
+                    .clone();
+                let mut prototype = Some(scope.owner);
+                while let Some(owner) = prototype {
+                    let object = self.heap.get(owner)?;
+                    if object.class_definition.is_some() {
+                        break;
+                    }
+                    prototype = object.parent;
+                }
+                if let Some(prototype) = prototype
+                    && prototype != scope.owner
+                {
+                    let depth = self.frames.len();
+                    self.force(prototype, prototype, name, false, true, false)?;
+                    if self.frames.len() > depth {
+                        self.frames
+                            .last_mut()
+                            .expect("prototype read")
+                            .force
+                            .as_mut()
+                            .expect("property force")
+                            .skip_typecheck = true;
+                    }
+                } else if prototype.is_some() {
+                    // A prototype uses the aggregated declaration type, not a
+                    // superclass initializer. Ordinary instances above read
+                    // their prototype's value instead.
+                    let mut owner = prototype;
+                    let mut annotation = None;
+                    while let Some(id) = owner {
+                        let object = self.heap.get(id)?;
+                        if let Some(member) = object.members.iter().find(|member| {
+                            !member.entry
+                                && !member.local
+                                && !member.method
+                                && member.name == name
+                                && member.ty.is_some()
+                        }) {
+                            let origin =
+                                self.program.metadata.get(member.code).and_then(|metadata| {
+                                    member.type_span.map(|span| RuntimeFrame {
+                                        source: metadata.source.clone(),
+                                        span,
+                                        member: metadata.member.concat(&".default".into()),
+                                    })
+                                });
+                            annotation = Some((member.ty.clone().expect("property type"), origin));
+                            break;
+                        }
+                        owner = object.parent;
+                    }
+                    if let Some((ty, origin)) = annotation
+                        && !matches!(ty.resolved(), TypeCheck::Unknown)
+                    {
+                        let frame = self.frames.last_mut().expect("property default frame");
+                        let ty = ty.substituted(&frame.environment)?;
+                        frame.generic_default =
+                            Some(generics::GenericDefaultRun::inferred_parent(ty, origin));
+                    } else {
+                        self.stack
+                            .push(Value::Object(self.heap.allocate(Object::default())));
+                    }
+                } else {
+                    self.stack
+                        .push(Value::Object(self.heap.allocate(Object::default())));
+                }
+            }
             Instruction::GetSuperMember(ref name)
             | Instruction::GetSuperMethod(ref name)
             | Instruction::GetConstSuperMember(ref name)
@@ -2809,7 +2923,27 @@ impl Vm {
                     Instruction::GetSuperMethod(_) | Instruction::GetConstSuperMethod(_)
                 );
                 let scope = self.scope(0)?;
-                let parent = self.heap.get(scope.owner)?.parent.ok_or_else(|| {
+                let parent = self.heap.get(scope.owner)?.parent;
+                if !method {
+                    let mut owner = parent;
+                    let mut found = false;
+                    while let Some(id) = owner {
+                        let object = self.heap.get(id)?;
+                        if object.members.iter().any(|member| {
+                            !member.entry && !member.local && !member.method && member.name == *name
+                        }) {
+                            found = true;
+                            break;
+                        }
+                        owner = object.parent;
+                    }
+                    if !found {
+                        self.stack
+                            .push(Value::Object(self.heap.allocate(Object::default())));
+                        return Ok(());
+                    }
+                }
+                let parent = parent.ok_or_else(|| {
                     RuntimeError::new(ErrorKind::MissingMember, "super has no parent")
                 })?;
                 if matches!(
@@ -4048,81 +4182,8 @@ impl Compiler<'_> {
             );
         } else if matches!(member.expr.kind, crate::syntax::ExprKind::Uninitialized) {
             self.default_property(member, &mut instructions)?;
-        } else if let crate::syntax::ExprKind::Object {
-            parent: None,
-            members,
-        } = &member.expr.kind
-            && let Some(ty) = &member.ty
-            && matches!(self.compile_type(ty)?.unaliased(), TypeCheck::Class { .. })
-        {
-            self.class_expression(
-                ty,
-                &mut instructions,
-                self.type_scopes.len(),
-                &mut BTreeSet::new(),
-            )?;
-            self.instance_body(members, ty.span, &mut instructions)?;
-        } else if let crate::syntax::ExprKind::Object {
-            parent: None,
-            members,
-        } = &member.expr.kind
-            && let Some(ty) = &member.ty
-            && self.compile_type(ty)?.collection_base_default()
-        {
-            let check = self.compile_type(ty)?;
-            self.default_type(&check, &mut instructions, ty.span)?;
-            let start = instructions.len();
-            self.collection_body(
-                members,
-                crate::heap::CollectionKind::Dynamic,
-                true,
-                &mut instructions,
-            )?;
-            let span = member.expr.span;
-            let span = if self.resolved.module.source[span.start..].starts_with("new") {
-                Span::new(span.start, span.start + 3)
-            } else {
-                span
-            };
-            for location in &mut instructions.spans[start..] {
-                if location.is_none() {
-                    *location = Some(span);
-                }
-            }
-        } else if let crate::syntax::ExprKind::Object {
-            parent: None,
-            members,
-        } = &member.expr.kind
-            && let Some(ty) = &member.ty
-            && let TypeCheck::Collection(kind) | TypeCheck::ParameterizedCollection { kind, .. } =
-                self.compile_type(ty)?.unaliased()
-        {
-            let kind = *kind;
-            if matches!(
-                kind,
-                crate::heap::CollectionKind::Map | crate::heap::CollectionKind::Set
-            ) {
-                let span = member.expr.span;
-                let span = if self.resolved.module.source[span.start..].starts_with("new") {
-                    Span::new(span.start, span.start + 3)
-                } else {
-                    span
-                };
-                instructions.push_at(
-                    Instruction::Fail(collections::external_amendment_error(&format!("{kind:?}"))),
-                    span,
-                );
-            } else {
-                let check = self.compile_type(ty)?;
-                let has_default =
-                    matches!(check.unaliased(), TypeCheck::ParameterizedCollection { .. });
-                if has_default {
-                    self.default_type(&check, &mut instructions, ty.span)?;
-                }
-                self.collection_body(members, kind, has_default, &mut instructions)?;
-            }
         } else {
-            self.expression(&member.expr, &mut instructions)?;
+            self.expression_with_property_parent(&member.expr, &mut instructions, Some(member))?;
         }
         let property_typecheck = member.ty.as_ref().map(|_| instructions.len());
         if let Some(ty) = &member.ty {
@@ -5679,7 +5740,12 @@ impl Compiler<'_> {
         }
         if let Some(ty) = &member.ty {
             let check = self.compile_type(ty)?;
-            if self.default_type(&check, output, ty.span)? {
+            let origin = RuntimeFrame {
+                source: None,
+                span: self.type_source_span(ty),
+                member: self.member.concat(&".default".into()),
+            };
+            if self.default_type_with_origin(&check, output, ty.span, Some(&origin))? {
                 return Ok(());
             }
         }
@@ -5696,10 +5762,20 @@ impl Compiler<'_> {
         output: &mut Code,
         span: Span,
     ) -> Result<bool, RuntimeError> {
+        self.default_type_with_origin(check, output, span, None)
+    }
+
+    fn default_type_with_origin(
+        &mut self,
+        check: &TypeCheck,
+        output: &mut Code,
+        span: Span,
+        origin: Option<&RuntimeFrame>,
+    ) -> Result<bool, RuntimeError> {
         match check {
             TypeCheck::Null => output.push_at(Instruction::Constant(Value::Null), span),
             TypeCheck::Nullable(inner) => {
-                let defined = self.default_type(inner, output, span)?;
+                let defined = self.default_type_with_origin(inner, output, span, origin)?;
                 output.push_at(Instruction::WrapNullableDefault { defined }, span);
             }
             TypeCheck::StringLiteral(value) => {
@@ -5709,14 +5785,16 @@ impl Compiler<'_> {
                 types,
                 default: Some(index),
                 ..
-            } => return self.default_type(&types[*index], output, span),
-            TypeCheck::Constrained { base, .. } => return self.default_type(base, output, span),
+            } => return self.default_type_with_origin(&types[*index], output, span, origin),
+            TypeCheck::Constrained { base, .. } => {
+                return self.default_type_with_origin(base, output, span, origin);
+            }
             TypeCheck::Alias(inner)
             | TypeCheck::GenericAlias(inner)
             | TypeCheck::NamedAlias {
                 expanded: inner, ..
             } => {
-                return self.default_type(inner, output, span);
+                return self.default_type_with_origin(inner, output, span, origin);
             }
             TypeCheck::CollectionBase { .. } => {
                 output.push_at(Instruction::MakeList { length: 0 }, span);
@@ -5738,11 +5816,20 @@ impl Compiler<'_> {
                     {
                         let (ty, span) = arguments.last().expect("collection value type");
                         if ty.default_depends_on_parameters() {
-                            output
-                                .push_at(Instruction::SetCollectionTypeDefault(ty.clone()), *span);
-                        } else if !ty.noop() {
-                            let defined = self.default_type(ty, output, *span)?;
-                            output.push(Instruction::SetCollectionDefault { defined });
+                            output.push_at(
+                                Instruction::SetCollectionTypeDefault {
+                                    ty: ty.clone(),
+                                    origin: origin.cloned(),
+                                },
+                                *span,
+                            );
+                        } else if !matches!(ty.resolved(), TypeCheck::Unknown) {
+                            let defined =
+                                self.default_type_with_origin(ty, output, *span, origin)?;
+                            output.push(Instruction::SetCollectionDefault {
+                                defined,
+                                origin: origin.cloned(),
+                            });
                         }
                     }
                     output.push(Instruction::EndCollection);
@@ -5797,4 +5884,10 @@ fn float_power(base: f64, exponent: f64) -> f64 {
     } else {
         libm::pow(base, exponent)
     }
+}
+
+fn cannot_infer_parent() -> RuntimeError {
+    let mut error = RuntimeError::new(ErrorKind::Type, "Cannot tell which parent to amend.");
+    error.hint = Some("Please specify a parent explicitly, for example `new Person { ... }` instead of `new { ... }`.".into());
+    error
 }

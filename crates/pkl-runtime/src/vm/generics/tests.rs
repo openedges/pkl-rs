@@ -175,7 +175,8 @@ fn default_descent_and_unwind_yield_trace_unpublished_objects_and_cancel() {
         let mut vm = Vm::new(program);
         vm.start(0, vec![]).unwrap();
         let target = vm.heap.allocate(Object::default());
-        vm.frames.last_mut().unwrap().generic_default = Some(GenericDefaultRun::new(target, ty));
+        vm.frames.last_mut().unwrap().generic_default =
+            Some(GenericDefaultRun::new(target, ty, None));
         for index in 0..stop {
             assert!(matches!(vm.poll(1), VmPoll::Yielded));
             // Descent allocates exactly one object per step; unwind publishes

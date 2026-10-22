@@ -1,0 +1,2 @@
+one { two { value = 3 } }
+result = (one.two is Dynamic).toString() + ":" + one.two.value.toString()

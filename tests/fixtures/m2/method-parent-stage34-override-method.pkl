@@ -1,0 +1,5 @@
+open class Person { age: Int = 7 }
+class Child extends Person { age = 8 }
+open class Factory { function build(): Person = new { age = 9 } }
+class ChildFactory extends Factory { function build(): Child = new {} }
+result = (new ChildFactory {}).build().age.toString()

@@ -1,0 +1,5 @@
+class Child { x: Int = 7 }
+class C { child: Child = throw("default first") }
+function make(): C = new { child = new { x = throw("body second") } }
+result = make().child.x.toString()
+stable = 23

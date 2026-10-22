@@ -1,0 +1,3 @@
+typealias V<T> = Listing<T>
+function build(): V<unknown> = new { new {} }
+result = build()[0].toString()

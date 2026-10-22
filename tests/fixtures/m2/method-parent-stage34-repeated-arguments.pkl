@@ -1,0 +1,3 @@
+class Person { age: Int = 7 }
+function build(n: Int): Person = new { age = n }
+result = build(1).age.toString() + ":" + build(2).age.toString()

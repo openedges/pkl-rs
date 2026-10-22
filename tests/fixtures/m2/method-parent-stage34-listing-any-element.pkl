@@ -1,0 +1,2 @@
+function build(): Listing<Any> = new { new {} }
+result = build()[0].toString()

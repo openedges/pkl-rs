@@ -942,7 +942,7 @@ impl<'a> Resolver<'a> {
                     } => {
                         work.push(Work::Expression(else_branch, contextual_new));
                         work.push(Work::Expression(then_branch, contextual_new));
-                        work.push(Work::Expression(condition, false));
+                        work.push(Work::Expression(condition, contextual_new));
                     }
                     ExprKind::Function {
                         type_parameters,

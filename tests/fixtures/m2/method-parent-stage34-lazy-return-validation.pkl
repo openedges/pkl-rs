@@ -1,0 +1,3 @@
+typealias Bad = Listing<Missing>
+function build(): Bad = if (true) throw("body") else new {}
+result = build().toString()

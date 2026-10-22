@@ -91,11 +91,25 @@ The selected cases compare the complete rejection bytes and accepted module,
 class and object-local controls. Diagnostic naming preserves UTF-16 identity,
 literal entry labels and scope-local ordinals. Const-modifier errors retain their
 enclosing owner, while inferred-parent errors retain the expression owner.
-Method bodies accept contextual `new {}`; lambda and parenthesized contexts
-retain their rejection. Successful untyped and explicit Dynamic method calls,
-lazy unused methods and earlier lexical errors provide controls. Class and
-collection return-type inference, nested-negation overflow frames and unavailable
-source sections remain exploratory differences.
+Method bodies infer contextual `new {}` from return-type defaults, including
+classes, collections, aliases, nullable types and defaulted unions. Lambda and
+parenthesized contexts retain their rejection. Inherited property prototypes
+use declared type defaults; instance amendments read prototype initializers.
+Literal `unknown`, aliases of `unknown`, and `Any` keep distinct default rules.
+Selected cases cover lazy unused methods, first errors, and generated default
+frames. Nested-negation overflow frames and unavailable source sections remain
+exploratory differences.
+
+The Stage 34 selection retains two failing `Dynamic.toString()` calls and adds
+separate `is Dynamic` controls. The original failures are neither replaced nor
+added to the development exceptions, so the development gate also fails until
+they are resolved. The portable comparison below executes every Stage 34 case
+twice on Node and Chromium, records complete value/error bytes, and returns
+nonzero for any mismatch. It complements the existing platform scenarios:
+
+```sh
+node tools/platform/compare-method-parents.mjs target/m2/method-parents-platform-new target/m2/platforms-new/wasm target/m2/platforms-new/pkl_napi.node
+```
 
 The default uses Java's API setting with power assertions disabled. Selected
 cases can opt in with `"power_assertions": true`; the runner then passes

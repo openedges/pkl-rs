@@ -1,0 +1,4 @@
+class Person { age: Int = 7 }
+seed = 11
+function build(seed: Int): Person = new { age = seed }
+result = build(9).age.toString() + ":" + seed.toString()

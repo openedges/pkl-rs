@@ -1,0 +1,4 @@
+open class Base { a: Int = 3; b: Int = 4 }
+class Child extends Base { a = 5 }
+function build(): Child = new { b = 9 }
+result = build().a.toString() + ":" + build().b.toString()

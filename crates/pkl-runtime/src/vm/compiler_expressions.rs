@@ -3,6 +3,38 @@ use super::*;
 use crate::resolver::Binding;
 use crate::syntax::{BinaryOp, Expr, ExprKind, UnaryOp};
 
+#[derive(Clone)]
+enum InferredParent {
+    DeclaredType(TypeCheck, RuntimeFrame),
+    Property,
+}
+
+fn register_inferred_parents(
+    body: &Expr,
+    parent: InferredParent,
+    parents: &mut BTreeMap<Span, InferredParent>,
+) {
+    let mut bodies = vec![body];
+    while let Some(body) = bodies.pop() {
+        match &body.kind {
+            ExprKind::Object { parent: None, .. } => {
+                parents.insert(body.span, parent.clone());
+            }
+            ExprKind::If {
+                condition,
+                then_branch,
+                else_branch,
+            } => {
+                bodies.push(else_branch);
+                bodies.push(then_branch);
+                bodies.push(condition);
+            }
+            ExprKind::Let { body, .. } => bodies.push(body),
+            _ => {}
+        }
+    }
+}
+
 enum Work<'a> {
     Visit(&'a Expr),
     Finish(&'a Expr, usize),
@@ -44,16 +76,59 @@ struct PropertyCompilation<'a> {
 }
 
 impl Compiler<'_> {
+    fn register_property_parents(
+        &mut self,
+        member: &crate::syntax::Member,
+        parents: &mut BTreeMap<Span, InferredParent>,
+    ) -> Result<(), RuntimeError> {
+        let parent = if let Some(ty) = &member.ty {
+            let check = self.compile_type(ty)?;
+            if matches!(check, TypeCheck::Unknown) {
+                return Ok(());
+            }
+            InferredParent::DeclaredType(
+                check,
+                RuntimeFrame {
+                    source: None,
+                    span: self.type_source_span(ty),
+                    member: self.member.concat(&".default".into()),
+                },
+            )
+        } else if !member.local {
+            InferredParent::Property
+        } else {
+            return Ok(());
+        };
+        register_inferred_parents(&member.expr, parent, parents);
+        Ok(())
+    }
+
     pub(super) fn expression(
         &mut self,
         expression: &Expr,
         output: &mut Code,
+    ) -> Result<(), RuntimeError> {
+        self.expression_with_property_parent(expression, output, None)
+    }
+
+    pub(super) fn expression_with_property_parent(
+        &mut self,
+        expression: &Expr,
+        output: &mut Code,
+        property_parent: Option<&crate::syntax::Member>,
     ) -> Result<(), RuntimeError> {
         let mut work = vec![Work::Visit(expression)];
         // Children own their emitted source spans. Only outstanding instructions
         // need their parent's span; never rescan an already completed subtree.
         let mut pending_spans = Vec::new();
         let mut active_spans = Vec::new();
+        // Only the new expressions connected directly to a method body through
+        // if/let nodes inherit its return type. Nested properties and lambdas
+        // establish their own inference contexts.
+        let mut inferred_parents = BTreeMap::new();
+        if let Some(member) = property_parent {
+            self.register_property_parents(member, &mut inferred_parents)?;
+        }
         let result = (|| {
             while let Some(task) = work.pop() {
                 let mut emitted_start = output.len();
@@ -283,6 +358,7 @@ impl Compiler<'_> {
                             return_type,
                             body,
                             method,
+                            header_span,
                             ..
                         } = &expression.kind
                         else {
@@ -321,6 +397,23 @@ impl Compiler<'_> {
                             self.member = previous;
                         } else {
                             let mut instructions = Code::default();
+                            if *method && let Some(ty) = return_type {
+                                let check = self.compile_type(ty)?;
+                                if !matches!(check, TypeCheck::Unknown) {
+                                    register_inferred_parents(
+                                        body,
+                                        InferredParent::DeclaredType(
+                                            check,
+                                            RuntimeFrame {
+                                                source: None,
+                                                span: *header_span,
+                                                member: self.member.concat(&".default".into()),
+                                            },
+                                        ),
+                                        &mut inferred_parents,
+                                    );
+                                }
+                            }
                             for (index, parameter) in parameters.iter().enumerate() {
                                 if let Some(ty) = &parameter.ty {
                                     instructions
@@ -479,92 +572,6 @@ impl Compiler<'_> {
                         } else if matches!(member.expr.kind, crate::syntax::ExprKind::Uninitialized)
                         {
                             self.default_property(member, &mut instructions)?;
-                        } else if let crate::syntax::ExprKind::Object {
-                            parent: None,
-                            members,
-                        } = &member.expr.kind
-                            && let Some(ty) = &member.ty
-                            && matches!(self.compile_type(ty)?.unaliased(), TypeCheck::Class { .. })
-                        {
-                            self.class_expression(
-                                ty,
-                                &mut instructions,
-                                self.type_scopes.len(),
-                                &mut BTreeSet::new(),
-                            )?;
-                            self.instance_body(members, ty.span, &mut instructions)?;
-                        } else if let crate::syntax::ExprKind::Object {
-                            parent: None,
-                            members,
-                        } = &member.expr.kind
-                            && let Some(ty) = &member.ty
-                            && self.compile_type(ty)?.collection_base_default()
-                        {
-                            let check = self.compile_type(ty)?;
-                            self.default_type(&check, &mut instructions, ty.span)?;
-                            let start = instructions.len();
-                            self.collection_body(
-                                members,
-                                crate::heap::CollectionKind::Dynamic,
-                                true,
-                                &mut instructions,
-                            )?;
-                            let span = member.expr.span;
-                            let span =
-                                if self.resolved.module.source[span.start..].starts_with("new") {
-                                    Span::new(span.start, span.start + 3)
-                                } else {
-                                    span
-                                };
-                            for location in &mut instructions.spans[start..] {
-                                if location.is_none() {
-                                    *location = Some(span);
-                                }
-                            }
-                        } else if let crate::syntax::ExprKind::Object {
-                            parent: None,
-                            members,
-                        } = &member.expr.kind
-                            && let Some(ty) = &member.ty
-                            && let TypeCheck::Collection(kind)
-                            | TypeCheck::ParameterizedCollection { kind, .. } =
-                                self.compile_type(ty)?.unaliased()
-                        {
-                            let kind = *kind;
-                            if matches!(
-                                kind,
-                                crate::heap::CollectionKind::Map | crate::heap::CollectionKind::Set
-                            ) {
-                                let span = member.expr.span;
-                                let span = if self.resolved.module.source[span.start..]
-                                    .starts_with("new")
-                                {
-                                    Span::new(span.start, span.start + 3)
-                                } else {
-                                    span
-                                };
-                                instructions.push_at(
-                                    Instruction::Fail(collections::external_amendment_error(
-                                        &format!("{kind:?}"),
-                                    )),
-                                    span,
-                                );
-                            } else {
-                                let check = self.compile_type(ty)?;
-                                let has_default = matches!(
-                                    check.unaliased(),
-                                    TypeCheck::ParameterizedCollection { .. }
-                                );
-                                if has_default {
-                                    self.default_type(&check, &mut instructions, ty.span)?;
-                                }
-                                self.collection_body(
-                                    members,
-                                    kind,
-                                    has_default,
-                                    &mut instructions,
-                                )?;
-                            }
                         } else {
                             visit = true;
                         }
@@ -583,6 +590,7 @@ impl Compiler<'_> {
                             pending,
                         })));
                         if visit {
+                            self.register_property_parents(member, &mut inferred_parents)?;
                             work.push(Work::Visit(&member.expr));
                         }
                         continue;
@@ -698,8 +706,55 @@ impl Compiler<'_> {
                     Work::Visit(expression) => {
                         active_spans.push(expression.span);
                         work.push(Work::Finish(expression, pending_spans.len()));
-                        self.schedule_expression(expression, output, &mut work)
-                            .map_err(|error| error.at(expression.span))?;
+                        if let Some(parent) = inferred_parents.remove(&expression.span) {
+                            let ExprKind::Object { members, .. } = &expression.kind else {
+                                unreachable!()
+                            };
+                            let span = Span::new(expression.span.start, expression.span.start + 3);
+                            let defined = match parent {
+                                InferredParent::DeclaredType(check, origin) => self
+                                    .default_type_with_origin(
+                                        &check,
+                                        output,
+                                        span,
+                                        Some(&origin),
+                                    )?,
+                                InferredParent::Property => {
+                                    output.push_at(Instruction::InferPropertyParent, span);
+                                    true
+                                }
+                            };
+                            if defined {
+                                if members.iter().all(|member| {
+                                    matches!(member, crate::syntax::ObjectMember::Property(_))
+                                }) {
+                                    work.push(Work::ObjectBody(
+                                        members,
+                                        crate::heap::CollectionKind::Dynamic,
+                                        true,
+                                        Some(span),
+                                    ));
+                                } else {
+                                    let start = output.len();
+                                    self.collection_body(
+                                        members,
+                                        crate::heap::CollectionKind::Dynamic,
+                                        true,
+                                        output,
+                                    )?;
+                                    for location in &mut output.spans[start..] {
+                                        if location.is_none() {
+                                            *location = Some(span);
+                                        }
+                                    }
+                                }
+                            } else {
+                                output.push_at(Instruction::Fail(cannot_infer_parent()), span);
+                            }
+                        } else {
+                            self.schedule_expression(expression, output, &mut work)
+                                .map_err(|error| error.at(expression.span))?;
+                        }
                     }
                 }
                 pending_spans.extend(

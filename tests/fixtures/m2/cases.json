@@ -40679,6 +40679,1191 @@
         "semantic:functions",
         "semantic:types"
       ]
+    },
+    {
+      "id": "method-parent-stage34-abstract-class",
+      "input": "tests/fixtures/m2/method-parent-stage34-abstract-class.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "method-parent-stage34-alias",
+      "input": "tests/fixtures/m2/method-parent-stage34-alias.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "method-parent-stage34-any",
+      "input": "tests/fixtures/m2/method-parent-stage34-any.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "method-parent-stage34-class-default",
+      "input": "tests/fixtures/m2/method-parent-stage34-class-default.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "method-parent-stage34-class-inherited",
+      "input": "tests/fixtures/m2/method-parent-stage34-class-inherited.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "method-parent-stage34-class-method",
+      "input": "tests/fixtures/m2/method-parent-stage34-class-method.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "method-parent-stage34-dynamic",
+      "input": "tests/fixtures/m2/method-parent-stage34-dynamic.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "method-parent-stage34-first-argument-before-default",
+      "input": "tests/fixtures/m2/method-parent-stage34-first-argument-before-default.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "method-parent-stage34-first-condition-before-default",
+      "input": "tests/fixtures/m2/method-parent-stage34-first-condition-before-default.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "method-parent-stage34-first-default-before-body",
+      "input": "tests/fixtures/m2/method-parent-stage34-first-default-before-body.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "method-parent-stage34-first-let-before-default",
+      "input": "tests/fixtures/m2/method-parent-stage34-first-let-before-default.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "method-parent-stage34-first-type-before-new",
+      "input": "tests/fixtures/m2/method-parent-stage34-first-type-before-new.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "method-parent-stage34-generic-alias",
+      "input": "tests/fixtures/m2/method-parent-stage34-generic-alias.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "method-parent-stage34-generic-alias-mapping",
+      "input": "tests/fixtures/m2/method-parent-stage34-generic-alias-mapping.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "method-parent-stage34-if-let",
+      "input": "tests/fixtures/m2/method-parent-stage34-if-let.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "method-parent-stage34-inherited-method",
+      "input": "tests/fixtures/m2/method-parent-stage34-inherited-method.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "method-parent-stage34-int-no-default",
+      "input": "tests/fixtures/m2/method-parent-stage34-int-no-default.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "method-parent-stage34-lambda-rejected",
+      "input": "tests/fixtures/m2/method-parent-stage34-lambda-rejected.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "method-parent-stage34-lazy-return-validation",
+      "input": "tests/fixtures/m2/method-parent-stage34-lazy-return-validation.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "method-parent-stage34-lazy-skipped-new",
+      "input": "tests/fixtures/m2/method-parent-stage34-lazy-skipped-new.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "method-parent-stage34-lazy-unused-signature",
+      "input": "tests/fixtures/m2/method-parent-stage34-lazy-unused-signature.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "method-parent-stage34-let-initializer-rejected",
+      "input": "tests/fixtures/m2/method-parent-stage34-let-initializer-rejected.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "method-parent-stage34-lexical-capture",
+      "input": "tests/fixtures/m2/method-parent-stage34-lexical-capture.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "method-parent-stage34-list-no-default",
+      "input": "tests/fixtures/m2/method-parent-stage34-list-no-default.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "method-parent-stage34-listing",
+      "input": "tests/fixtures/m2/method-parent-stage34-listing.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "method-parent-stage34-listing-value-type",
+      "input": "tests/fixtures/m2/method-parent-stage34-listing-value-type.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "method-parent-stage34-local-object",
+      "input": "tests/fixtures/m2/method-parent-stage34-local-object.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "method-parent-stage34-mapping",
+      "input": "tests/fixtures/m2/method-parent-stage34-mapping.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "method-parent-stage34-mapping-key-type",
+      "input": "tests/fixtures/m2/method-parent-stage34-mapping-key-type.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "method-parent-stage34-new-explicit-control",
+      "input": "tests/fixtures/m2/method-parent-stage34-new-explicit-control.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "method-parent-stage34-new-nested-property",
+      "input": "tests/fixtures/m2/method-parent-stage34-new-nested-property.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "method-parent-stage34-no-annotation",
+      "input": "tests/fixtures/m2/method-parent-stage34-no-annotation.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "method-parent-stage34-nullable-class",
+      "input": "tests/fixtures/m2/method-parent-stage34-nullable-class.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "method-parent-stage34-nullable-empty",
+      "input": "tests/fixtures/m2/method-parent-stage34-nullable-empty.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "method-parent-stage34-nullable-int",
+      "input": "tests/fixtures/m2/method-parent-stage34-nullable-int.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "method-parent-stage34-override-method",
+      "input": "tests/fixtures/m2/method-parent-stage34-override-method.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "method-parent-stage34-paren-rejected",
+      "input": "tests/fixtures/m2/method-parent-stage34-paren-rejected.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "method-parent-stage34-receiver-capture",
+      "input": "tests/fixtures/m2/method-parent-stage34-receiver-capture.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "method-parent-stage34-string-default",
+      "input": "tests/fixtures/m2/method-parent-stage34-string-default.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "method-parent-stage34-union-default",
+      "input": "tests/fixtures/m2/method-parent-stage34-union-default.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "method-parent-stage34-union-no-default",
+      "input": "tests/fixtures/m2/method-parent-stage34-union-no-default.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "method-parent-stage34-unknown",
+      "input": "tests/fixtures/m2/method-parent-stage34-unknown.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "method-parent-stage34-local-object-listing",
+      "input": "tests/fixtures/m2/method-parent-stage34-local-object-listing.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "method-parent-stage34-local-object-mapping",
+      "input": "tests/fixtures/m2/method-parent-stage34-local-object-mapping.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "method-parent-stage34-local-return-constraint",
+      "input": "tests/fixtures/m2/method-parent-stage34-local-return-constraint.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "method-parent-stage34-nested-defaults",
+      "input": "tests/fixtures/m2/method-parent-stage34-nested-defaults.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "method-parent-stage34-nested-generic-alias",
+      "input": "tests/fixtures/m2/method-parent-stage34-nested-generic-alias.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "method-parent-stage34-nullable-listing",
+      "input": "tests/fixtures/m2/method-parent-stage34-nullable-listing.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "method-parent-stage34-nullable-mapping",
+      "input": "tests/fixtures/m2/method-parent-stage34-nullable-mapping.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "method-parent-stage34-repeated-arguments",
+      "input": "tests/fixtures/m2/method-parent-stage34-repeated-arguments.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "method-parent-stage34-type-before-argument",
+      "input": "tests/fixtures/m2/method-parent-stage34-type-before-argument.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "method-parent-stage34-generic-unknown-alias-element",
+      "input": "tests/fixtures/m2/method-parent-stage34-generic-unknown-alias-element.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "method-parent-stage34-if-condition",
+      "input": "tests/fixtures/m2/method-parent-stage34-if-condition.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "method-parent-stage34-if-condition-unused",
+      "input": "tests/fixtures/m2/method-parent-stage34-if-condition-unused.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "method-parent-stage34-listing-any-element",
+      "input": "tests/fixtures/m2/method-parent-stage34-listing-any-element.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "method-parent-stage34-listing-unknown-alias-element",
+      "input": "tests/fixtures/m2/method-parent-stage34-listing-unknown-alias-element.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "method-parent-stage34-listing-unknown-element",
+      "input": "tests/fixtures/m2/method-parent-stage34-listing-unknown-element.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "method-parent-stage34-mapping-any-element",
+      "input": "tests/fixtures/m2/method-parent-stage34-mapping-any-element.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "method-parent-stage34-unknown-alias",
+      "input": "tests/fixtures/m2/method-parent-stage34-unknown-alias.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "method-parent-stage34-listing-unknown-element-type-control",
+      "input": "tests/fixtures/m2/method-parent-stage34-listing-unknown-element-type-control.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "method-parent-stage34-generic-unknown-alias-element-type-control",
+      "input": "tests/fixtures/m2/method-parent-stage34-generic-unknown-alias-element-type-control.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "property-parent-stage34-explicit-super-missing-amended",
+      "input": "tests/fixtures/m2/property-parent-stage34-explicit-super-missing-amended.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "property-parent-stage34-explicit-super-missing-new",
+      "input": "tests/fixtures/m2/property-parent-stage34-explicit-super-missing-new.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "property-parent-stage34-explicit-super-missing-present-parent",
+      "input": "tests/fixtures/m2/property-parent-stage34-explicit-super-missing-present-parent.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "property-parent-stage34-instance-inherited-initializer",
+      "input": "tests/fixtures/m2/property-parent-stage34-instance-inherited-initializer.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "property-parent-stage34-instance-prototype-initializer",
+      "input": "tests/fixtures/m2/property-parent-stage34-instance-prototype-initializer.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "property-parent-stage34-nested-abstract-default",
+      "input": "tests/fixtures/m2/property-parent-stage34-nested-abstract-default.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "property-parent-stage34-nested-constraints-skipped",
+      "input": "tests/fixtures/m2/property-parent-stage34-nested-constraints-skipped.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "property-parent-stage34-nested-default-field-undefined",
+      "input": "tests/fixtures/m2/property-parent-stage34-nested-default-field-undefined.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "property-parent-stage34-nested-default-throw-before-body",
+      "input": "tests/fixtures/m2/property-parent-stage34-nested-default-throw-before-body.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "property-parent-stage34-nested-if-let-super",
+      "input": "tests/fixtures/m2/property-parent-stage34-nested-if-let-super.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "property-parent-stage34-nested-no-default",
+      "input": "tests/fixtures/m2/property-parent-stage34-nested-no-default.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "property-parent-stage34-nested-union-no-default",
+      "input": "tests/fixtures/m2/property-parent-stage34-nested-union-no-default.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "property-parent-stage34-prototype-inherited-default",
+      "input": "tests/fixtures/m2/property-parent-stage34-prototype-inherited-default.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "property-parent-stage34-prototype-inherited-initializer",
+      "input": "tests/fixtures/m2/property-parent-stage34-prototype-inherited-initializer.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "property-parent-stage34-shorthand-local-method",
+      "input": "tests/fixtures/m2/property-parent-stage34-shorthand-local-method.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "property-parent-stage34-shorthand-nested",
+      "input": "tests/fixtures/m2/property-parent-stage34-shorthand-nested.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "property-parent-stage34-origin-inherited-nested-listing-any",
+      "input": "tests/fixtures/m2/property-parent-stage34-origin-inherited-nested-listing-any.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
+    },
+    {
+      "id": "property-parent-stage34-origin-listing-any",
+      "input": "tests/fixtures/m2/property-parent-stage34-origin-listing-any.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:shared-engine",
+        "semantic:name-resolution",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics"
+      ]
     }
   ],
   "schema_version": 1,

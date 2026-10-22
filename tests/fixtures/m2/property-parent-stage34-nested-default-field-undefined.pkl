@@ -1,0 +1,4 @@
+class Child { x: Int }
+class C { child: Child = new {} }
+function make(): C = new { child = new {} }
+result = make().child.x.toString()

@@ -1,0 +1,2 @@
+function build(n): Missing = new {}
+result = build(throw("argument")).toString()

@@ -1,0 +1,2 @@
+x = new Dynamic { value = super.missing }
+result = (x.value is Dynamic).toString()

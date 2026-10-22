@@ -1,0 +1,3 @@
+typealias Positive = Int(this > 0)
+x = new { local function build(): Positive = new {}; value = build() }
+result = x.value.toString()

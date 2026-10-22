@@ -1,0 +1,2 @@
+p: Listing<Any> = new { new {} }
+result = p[0].toString()

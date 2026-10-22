@@ -1,0 +1,2 @@
+x = new { local function build(): Listing<Int> = new { 6 }; value = build()[0] }
+result = x.value.toString()

@@ -1,0 +1,4 @@
+class C { x: Int = 7 }
+open class A { p: C = new { x = 9 } }
+class B extends A {}
+result = (new B { p = new {} }).p.x.toString()

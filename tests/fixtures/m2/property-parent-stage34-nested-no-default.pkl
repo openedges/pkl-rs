@@ -1,0 +1,3 @@
+class C { child: Int }
+function make(): C = new { child = new {} }
+result = make().child.toString()

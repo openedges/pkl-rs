@@ -1,0 +1,3 @@
+class Person { name: String = "default"; age: Int = 7 }
+function build(): Person = new { name = "new" }
+result = build().name + ":" + build().age.toString()

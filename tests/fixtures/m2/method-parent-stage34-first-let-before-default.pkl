@@ -1,0 +1,2 @@
+function build(): Int = let (n = throw("binding")) new {}
+result = build().toString()

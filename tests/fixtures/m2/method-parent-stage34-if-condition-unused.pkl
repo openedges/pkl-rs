@@ -1,0 +1,3 @@
+class C {}
+function f(): C = if (new {}) new {} else new {}
+result = "ok"

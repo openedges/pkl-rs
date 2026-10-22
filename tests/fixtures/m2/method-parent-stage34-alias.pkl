@@ -1,0 +1,4 @@
+class Person { age: Int = 7 }
+typealias Alias = Person
+function build(): Alias = new { age = 9 }
+result = build().age.toString()

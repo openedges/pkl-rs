@@ -1,0 +1,4 @@
+class C { x: Int = 7 }
+class D { child: C = new { x = 12 } }
+function make(): D = new { child = if (true) let (v = 3) new { x = super.x + v } else new {} }
+result = make().child.x.toString()
