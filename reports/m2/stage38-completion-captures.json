@@ -1,0 +1,153 @@
+{
+  "schema": 1,
+  "scope": "Closed Stage 38 implementation publication and Git source identity.",
+  "implementation_commit": "5515462f773c676f4c9652e86ac0c6439f385127",
+  "remote_main_verified": "5515462f773c676f4c9652e86ac0c6439f385127",
+  "compatibility_complete": false,
+  "source_binding_passed": true,
+  "distinct_committed_paths": 4219,
+  "source_binding_sha256": "fefa3ca20f5e16473c7dcd4dda574ca176e129b7a135c71c025c5a2ccb66034e",
+  "processes": {
+    "git-add": {
+      "command": [
+        "git",
+        "add",
+        "--",
+        "PLAN.md",
+        "TESTING.md",
+        "compatibility",
+        "crates",
+        "docs",
+        "reports/m2",
+        "tests/fixtures/m2",
+        "tools/platform"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs",
+      "started_epoch": 1792702730.187867,
+      "elapsed_seconds": 3.878798007965088,
+      "exit_code": 0,
+      "stdout.bin": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0
+      },
+      "stderr.bin": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0
+      }
+    },
+    "staged-whitespace": {
+      "command": [
+        "git",
+        "diff",
+        "--cached",
+        "--check",
+        "--",
+        ".",
+        ":!tests/fixtures/m2"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs",
+      "started_epoch": 1792702736.4475598,
+      "elapsed_seconds": 0.07599616050720215,
+      "exit_code": 0,
+      "stdout.bin": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0
+      },
+      "stderr.bin": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0
+      }
+    },
+    "implementation-commit": {
+      "command": [
+        "git",
+        "commit",
+        "-m",
+        "feat(runtime): implement resource reads and ordered method diagnostics"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs",
+      "started_epoch": 1792702740.531828,
+      "elapsed_seconds": 0.19968199729919434,
+      "exit_code": 0,
+      "stdout.bin": {
+        "sha256": "8dfe976cfb1d1e7bfd343c10a89fc03c171b69185e0cdbc0677c80cd1e70a931",
+        "bytes": 9189
+      },
+      "stderr.bin": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0
+      }
+    },
+    "source-binding": {
+      "command": [
+        "python3",
+        "target/m2/closeout-stage38-01/bind_sources.py",
+        "--commit",
+        "HEAD",
+        "--output",
+        "target/m2/closeout-stage38-01/committed"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs",
+      "started_epoch": 1792702749.624901,
+      "elapsed_seconds": 34.149953842163086,
+      "exit_code": 0,
+      "stdout.bin": {
+        "sha256": "cd118a0ae14c614c67167b0a782cc116adf10e827d40adbdaacd6787682cac5e",
+        "bytes": 574
+      },
+      "stderr.bin": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0
+      }
+    },
+    "implementation-push": {
+      "command": [
+        "git",
+        "push",
+        "origin",
+        "main"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs",
+      "started_epoch": 1792702761.278974,
+      "elapsed_seconds": 38.99529194831848,
+      "exit_code": 0,
+      "stdout.bin": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0
+      },
+      "stderr.bin": {
+        "sha256": "f1a25f0fb87740eac8aeead1ad2a7f469b3f598ae476a5e91dc87b24b4948455",
+        "bytes": 430
+      }
+    },
+    "implementation-remote": {
+      "command": [
+        "git",
+        "ls-remote",
+        "origin",
+        "refs/heads/main"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs",
+      "started_epoch": 1792702850.707458,
+      "elapsed_seconds": 2.183363199234009,
+      "exit_code": 0,
+      "stdout.bin": {
+        "sha256": "25a1d51f6c844fa93a1ed691930eaceead2dffb065c5c19559e8b6fac2c4fe14",
+        "bytes": 57
+      },
+      "stderr.bin": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0
+      }
+    }
+  },
+  "original_files": 49,
+  "extracted_files_verified": 50,
+  "archive": {
+    "path": "reports/m2/stage38-completion-evidence.tar.gz",
+    "bytes": 526860,
+    "sha256": "7028fd7445425ba7344b8f55a687a67a7d76e2950a4aa2bd284ad4fdcb445578",
+    "inventory_sha256": "7084888eeda5c31477b4ea924aa5ebcb19eb3b98d9269e272ba14790869a5319"
+  },
+  "final_summary_sha256": "06c944f2a2e1fdb793c2505c922fa0ceb727f913034d1cae8c4577f02b1c419f"
+}

@@ -52,6 +52,13 @@ These checkpoints do not complete the language milestone.
 
 ## Stage 38 local verification checkpoint
 
+Implementation and final acquisitions are committed and pushed as
+`5515462f773c676f4c9652e86ac0c6439f385127`. The
+[source binding](stage38-source-binding.json) verifies 4,219 distinct source paths
+against exact Git blobs. [Publication receipts](stage38-completion-captures.json)
+and their [archive](stage38-completion-evidence.tar.gz) retain the implementation
+commit, push and remote-head verification.
+
 The [resource-read contract](../../docs/m2-resource-reads.md) describes dedicated
 `read`/`read?` expressions, nullable absence, declaration-source URI handling and
 the current empty environment/property profile. Permitted I/O readers and

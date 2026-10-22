@@ -556,6 +556,8 @@ Stage 34에서 class·Listing 반환 타입과 상속 속성의 선택된 inferr
 
 ### Stage 38 — 자원 읽기 구문과 기본 정책
 
+구현과 최종 검증 자료는 `5515462`에 커밋·푸시했습니다. [소스 대응 검증](reports/m2/stage38-source-binding.json)은 최종 native·Node·Chromium 실행과 로컬 검사의 소스 4,219개를 해당 커밋의 Git 파일에 연결하며, [완료 기록](reports/m2/stage38-completion-captures.json)은 구현 푸시와 원격 커밋 확인을 보존합니다.
+
 `read`·`read?`를 독립적인 언어 구문으로 처리하고, quoted method 이름과 분리했습니다. nullable 읽기의 부재 처리, 피연산자의 비강제 표시, 선언 module URI와 기본 scalar 정책을 공통 VM 재개 경로에 연결했습니다. 허용된 파일·네트워크·패키지 I/O, 완전한 URI 구문과 단독 UTF-16 surrogate URI는 미완료입니다. 구체적인 지원 범위와 비교 경계는 [자원 읽기 계약](docs/m2-resource-reads.md)에 기록합니다.
 
 독립 검토에서 두 가지 추가 문제를 확인했습니다. portable 검사 도구는 Java와 Node의 서로 다른 surrogate UTF-8 인코딩을 동일한 경계로 비교하고 있었고, 공통 method 진단은 같은 점수의 후보를 표시할 때 선언 범위를 넘는 속성·메서드 순서를 잃었습니다. 원래 실패를 보존하고, 정확한 UTF-16 문자열 비교와 원본 Java UTF-8 기록을 분리했으며 후보 수집·안정 정렬 순서를 수정했습니다. 새 순서 대조군 9개를 포함한 고정 URI 비교 45개가 일치했습니다. Stage 38 최종 후보는 기존 3,427개를 보존하며 Java에서 관찰한 100개 사례를 추가합니다.
