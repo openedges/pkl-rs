@@ -1,0 +1,75 @@
+{
+  "status": "pass",
+  "utc": "2026-10-22T02:14:10.851378+00:00",
+  "scope": "Independent read-only original/copy/archive byte comparison for the completed exploration sealing outer capture. This verifies preservation without re-executing the sealer or any retained helper/evaluator.",
+  "implementation_commit": "84d7044e7b9b83350b895a3b91a92663aedb73df",
+  "summary": {
+    "path": "reports/m2/stage23-final-summary.json",
+    "sha256": "ffb3e40f3b28dec562e0d20f89216d53df08cd6c6b5f195f81817cad42a43b06"
+  },
+  "source_archive": {
+    "bytes": 5660384,
+    "files_including_inventory": 2926,
+    "inventory_verified": true,
+    "path": "reports/m2/source-stage23-final-evidence.tar.gz",
+    "sha256": "3fafdc032d966bba023cd58d6ab7f98ab145116f139fcb2229206347a9e75a0a"
+  },
+  "copy_manifest": {
+    "path": "target/m2/stage23-readiness-captured-exploration-seal-01/COPY_ORIGIN.json",
+    "sha256": "6312268055b73df57825454869d8b38d5bd5efe762d2226740e6a2e6f67a2a5a"
+  },
+  "preserved_files": [
+    {
+      "original_path": "target/m2/stage23-seal-command-01/process.json",
+      "copied_path": "target/m2/stage23-readiness-captured-exploration-seal-01/process.json",
+      "archive_member": "helper-history/stage23-readiness-captured-exploration-seal-01/process.json",
+      "sha256": "3cedecfc08e2e76d5a51f16938ede635bbdf933b6fa769ee9fbf1b3ad49af7f3",
+      "bytes": 581,
+      "all_three_payloads_identical": true
+    },
+    {
+      "original_path": "target/m2/stage23-seal-command-01/runner.py",
+      "copied_path": "target/m2/stage23-readiness-captured-exploration-seal-01/runner.py",
+      "archive_member": "helper-history/stage23-readiness-captured-exploration-seal-01/runner.py",
+      "sha256": "b77f29ae6fcecc21da7575ebeb327e26fd803a683e73cda0964b5668e7ec2d33",
+      "bytes": 1935,
+      "all_three_payloads_identical": true
+    },
+    {
+      "original_path": "target/m2/stage23-seal-command-01/stderr.bin",
+      "copied_path": "target/m2/stage23-readiness-captured-exploration-seal-01/stderr.bin",
+      "archive_member": "helper-history/stage23-readiness-captured-exploration-seal-01/stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "all_three_payloads_identical": true
+    },
+    {
+      "original_path": "target/m2/stage23-seal-command-01/stdout.bin",
+      "copied_path": "target/m2/stage23-readiness-captured-exploration-seal-01/stdout.bin",
+      "archive_member": "helper-history/stage23-readiness-captured-exploration-seal-01/stdout.bin",
+      "sha256": "1297781c20044130ed62a694b76053cb5fb7b7dd114ec5bcbafcb4fa3a8cd6f7",
+      "bytes": 6646,
+      "all_three_payloads_identical": true
+    }
+  ],
+  "original_process": {
+    "path": "target/m2/stage23-seal-command-01/process.json",
+    "sha256": "3cedecfc08e2e76d5a51f16938ede635bbdf933b6fa769ee9fbf1b3ad49af7f3",
+    "command": [
+      "python3",
+      "target/m2/stage23_seal_exploration.py",
+      "target/m2/stage23-exploration-configuration.json",
+      "target/m2/stage23-exploration-seal-01"
+    ],
+    "exit_code": 0,
+    "raw_channels_verified": true
+  },
+  "original_paths_and_commands_unchanged": true,
+  "preservation_is_a_second_execution": false,
+  "captured_artifacts_executed": false,
+  "reviewer": {
+    "path": "target/m2/stage23_check_sealing_capture.py",
+    "sha256": "61e9e62c9d4ba4c422c29952b8cc304854e98443672d73e78e891ac2ae18ffa7",
+    "source_utf8": "\"\"\"Read-only comparison of preserved sealing capture, original files and source archive.\"\"\"\nfrom pathlib import Path\nimport datetime,hashlib,json,tarfile\nroot=Path.cwd();sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()\nread=lambda p:json.loads(p.read_bytes())\ndef need(condition,message):\n    if not condition:raise AssertionError(message)\nsummary_path=root/'reports/m2/stage23-final-summary.json';summary=read(summary_path)\nneed(summary['implementation_commit']=='84d7044e7b9b83350b895a3b91a92663aedb73df','unexpected implementation')\narchive_row=summary['archives']['source'];archive=root/archive_row['path']\nneed(sha(archive)==archive_row['sha256'] and archive.stat().st_size==archive_row['bytes'],'source archive identity')\norigin_path=root/'target/m2/stage23-readiness-captured-exploration-seal-01/COPY_ORIGIN.json';origin=read(origin_path)\nneed(len(origin['files'])==4,'sealing capture closure changed')\nprefix='helper-history/stage23-readiness-captured-exploration-seal-01/'\nrows=[]\nwith tarfile.open(archive) as stream:\n    members=stream.getmembers();lookup={member.name:member for member in members}\n    need(len(lookup)==len(members),'duplicate archive member')\n    inventory=json.load(stream.extractfile(lookup['EVIDENCE.json']));inventory_rows={row['path']:row for row in inventory['files']}\n    need(stream.extractfile(lookup[prefix+'COPY_ORIGIN.json']).read()==origin_path.read_bytes(),'archived preservation manifest changed')\n    expected_members={prefix+'COPY_ORIGIN.json'}\n    for row in origin['files']:\n        original=root/row['original_path'];copied=root/row['copied_path'];data=original.read_bytes()\n        need(copied.read_bytes()==data,'original/copied raw bytes differ')\n        need(len(data)==row['bytes'] and hashlib.sha256(data).hexdigest()==row['sha256'],'raw preservation identity differs')\n        member=prefix+copied.name;expected_members.add(member)\n        need(stream.extractfile(lookup[member]).read()==data,'archived sealing capture differs from original')\n        need(inventory_rows[member]['sha256']==row['sha256'] and inventory_rows[member]['bytes']==row['bytes'],'archived inventory identity differs')\n        rows.append(dict(original_path=row['original_path'],copied_path=row['copied_path'],archive_member=member,sha256=row['sha256'],bytes=row['bytes'],all_three_payloads_identical=True))\n    need({name for name in lookup if name.startswith(prefix)}==expected_members,'extra or missing preserved capture files')\noriginal_process=root/'target/m2/stage23-seal-command-01/process.json';process=read(original_process)\nneed(process['exit_code']==0 and not process['timed_out'],'original sealing process failed')\nfor channel in ['stdout','stderr']:\n    path=original_process.parent/(channel+'.bin');need(sha(path)==process[channel+'_sha256'] and path.stat().st_size==process[channel+'_bytes'],'original sealing process raw channel differs')\nreport=dict(status='pass',utc=datetime.datetime.now(datetime.timezone.utc).isoformat(),scope='Independent read-only original/copy/archive byte comparison for the completed exploration sealing outer capture. This verifies preservation without re-executing the sealer or any retained helper/evaluator.',\n    implementation_commit=summary['implementation_commit'],summary=dict(path=str(summary_path.relative_to(root)),sha256=sha(summary_path)),source_archive=archive_row,\n    copy_manifest=dict(path=str(origin_path.relative_to(root)),sha256=sha(origin_path)),preserved_files=rows,original_process=dict(path=str(original_process.relative_to(root)),sha256=sha(original_process),command=process['command'],exit_code=0,raw_channels_verified=True),\n    original_paths_and_commands_unchanged=True,preservation_is_a_second_execution=False,captured_artifacts_executed=False,\n    reviewer=dict(path=str(Path(__file__).relative_to(root)),sha256=sha(Path(__file__)),source_utf8=Path(__file__).read_text()))\nout=root/'reports/m2/stage23-sealing-capture-audit.json'\nwith out.open('x') as stream:json.dump(report,stream,indent=2);stream.write('\\n')\nprint(json.dumps(dict(status='pass',files=4,path=str(out.relative_to(root)),sha256=sha(out)),indent=2))\n"
+  }
+}

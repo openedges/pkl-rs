@@ -30,8 +30,110 @@ defaults, and makes deep Reference metadata traversal stack safe. Stage 20
 preserves nullable defaults through amendments and evaluator lifecycles. Stage 21
 adds selected direct generic constructors, argument-source diagnostics, and their
 shared-engine lifecycle checks. Stage 22 adds selected strict Map construction,
-lookup, typing, equality, hashing, iteration and stringification.
+lookup, typing, equality, hashing, iteration and stringification. Stage 23 adds
+selected strict Set semantics, multiline strings and lifecycle checks.
 These checkpoints do not complete the language milestone.
+
+## Stage 23 local verification checkpoint
+
+Implementation `84d7044e7b9b83350b895a3b91a92663aedb73df` is committed and pushed.
+Runtime implementation used `gpt-6-astra / xhigh`; Java comparisons and independent
+lifecycle/platform review used `gpt-6.1-sol / high`. Root added the shared Set
+stringification boundary, reviewed the runtime and native tests, and coordinated local
+macOS verification. Self-review, independent source review, raw comparison, and
+packaging audits retain their separate scopes.
+
+Strict Set construction now evaluates each element, checks membership, and hashes new
+elements during insertion. Empty membership skips hashing; a nonempty lookup and
+insertion prepare their hashes separately. Duplicate elements preserve the first
+insertion position. The shared VM supports selected `contains`, `length`, `isEmpty`,
+defaults, eager element type checks, equality, hashing, iteration, spread, and multiline
+strings. Internal table keys and insertion-order elements have separate representations
+and GC roots. Strings read completed member caches; direct Map strings and diagnostic
+snapshots retain their single-line layout. Nested Map key-rehash side effects during
+Java rendering remain a known boundary.
+
+The [final summary](stage23-final-summary.json) records **2,348 independent expressions:
+2,346 raw matches, the original cycle oracle error, and the original integer `% 0`
+diagnostic mismatch**. All 217 additions match: 158 successes and 59 expected errors.
+All 82 metamorphic relations pass.
+
+The [persistent suite](class-lifecycle-stage23-final-evidence.tar.gz) runs 137 sequences
+twice, with **2,326 matching calls**. The previous 2,131 independent inputs, 76
+relations, 129 sequences, 20 lifecycle test files and 78 platform scenarios remain
+unchanged. No development exception was added.
+
+All seven [required local checks](validation-stage23-final.json) pass: **424 Rust tests
+and 194 Python tests**, with the original ignored Rust probe excluded. Eight [native
+lifecycle tests](native-set-stage23-final-evidence.tar.gz) cover pending builders,
+membership queries and comparison operands, nested Host failure and retry, 24
+cancellations, independent evaluators, stale handles, retained declaration and cache
+plateaus, and terminal release. Seven cases collect at every cooperative yield, with one
+instruction per poll and at most 200,000 polls per event. The separate deep test uses
+depth 768, a 256 KiB evaluator stack, a 60-second parent deadline, one instruction per
+poll, GC every 128 polls, and a limit of 4,000,000 polls per event. It records 901,299
+polls and 7,042 periodic/pending collections plus one final rooted collection.
+Compilation uses an ordinary stack.
+
+The original deep every-yield experiment timed out, and a later periodic-GC run hit its
+lower limit of 200,000 polls per event. Both remain failed evidence. The passing test
+has explicitly different conditions; it does not establish the earlier resource contract
+or Java performance parity. Initial alias assertions also failed: one source had a parse
+error, another reproduced Java's alias receiver scope, and zero-live assertions
+overlooked intentionally retained declaration/module caches. The revised test separates
+ordinary and executable entries, verifies repeated-call plateaus, and requires zero
+entries after terminal cleanup. The first preliminary acquisition also had source drift;
+its before/after sources are preserved, but it has no single exact source/binary
+binding. Historical Map and generic small-stack tests remain byte-identical and pass
+unchanged.
+
+[Actual Node and Chromium](platforms-stage23-final-evidence.tar.gz) each pass all 80
+development scenarios. The two new Set groups compare 160 ordered calls per target
+against complete Java payloads. All 6,078 shared primitive results agree across engines;
+each target matches Java in 6,076 cases and retains the same two regex failures. The
+architecture contract passes while strict primitive compatibility fails. M1 frontend,
+runtime and lifecycle comparisons retain their prior successes and known
+cycle/complete-diagnostic differences. No new hosted CI, Linux or Windows execution is
+claimed. The logged browser executable path identifies full Chrome; selection of
+headless-shell is inferred from pinned Playwright launch code, so that path hash is not
+proof of the launched browser binary. Browser version and scenario outcomes were
+observed during actual execution.
+
+The [exploration archive](exploration-stage23-evidence.tar.gz), [interim
+comparisons](exploration-stage23-superseded-evidence.tar.gz), and [native
+preparations](exploration-stage23-native-preliminary-evidence.tar.gz) retain original
+inputs, failed hypotheses, original conditions, helpers, and final recorded-artifact
+replays. The final artifacts match all 217 selected original exploratory URIs and 80
+focused persistent calls. Broader exploration retains 224 matches and **22 mismatches
+among 246 inputs**, overlapping the 217 selected cases; three additional alias/Host
+observations retain one match and two mismatches. Six original compound-return proposals
+and the original iteration sequence remain unselected observations. Fresh sources return
+scalar observations of indexed members and lengths to preserve order, deduplication and
+forced-member checks without claiming general compound output support. No selected
+baseline failure or temporary exception was removed.
+
+The [source and gate evidence](source-stage23-final-evidence.tar.gz) binds 6,053
+captured project-source copies across 2,873 unique paths to the exact implementation
+commit. Reference pins and the oracle retain separate provenance; no upstream
+source-copy binding is claimed. The selected development gate passes; strict selected
+and full gates fail as expected, retaining 1,950 full-gate failure reasons. Twelve final
+archives total 108,225,352 bytes. The exploration audit checks 56,234 original paths and
+56,246 inventory entries without cache exclusions.
+
+The [independent postseal audit](stage23-post-seal-audit.json) verifies all twelve
+archive inventories, exact source/Git objects, reviews, gates, approved packaging helper
+and execution provenance. A [capture preservation
+check](stage23-sealing-capture-audit.json) verifies the original, copied and archived
+sealing-process bytes. Historical artifacts retain their original identities; no
+captured evaluator binary is executed during these audits.
+
+The inventory retains 474 requirements, 16 partial mappings, and 3,348 accounting rows:
+2,348 ready, 960 unimplemented and 40 unmapped. These overlapping rows are not a
+completion percentage. Full Set/Map APIs, including higher-order operations, JVM
+identity hash ordering, general compound output, remaining type/Reference/module rules,
+original upstream suites, product APIs, release platforms and workload-level
+speed/peak-RSS requirements remain open. **Only the bounded Stage 23 development
+contract is closed; M2 as a whole remains in progress.**
 
 ## Stage 22 local verification checkpoint
 
