@@ -39,9 +39,10 @@ These checkpoints do not complete the language milestone.
 
 ## Stage 26 local verification checkpoint
 
-Implementation, required local checks and focused verification are complete.
-Full selected acquisition and final evidence sealing are in progress; this
-checkpoint is not yet closed.
+Implementation `51b132bba82587e3cb013c46f5c452c22fa01ccf` is committed and pushed.
+The [final summary](stage26-final-summary.json) and
+[independent audit](stage26-post-seal-audit.json) close this bounded checkpoint.
+M2 remains in progress.
 
 String scanning uses explicit string/interpolation frames. Interpolation parsing
 suspends and restores parser and expression-machine state on the heap, preserving
@@ -58,12 +59,20 @@ the production parser, tests, Java platform payloads and browser module route.
 The original 2,688 selected definitions, 150 sequences, 84 platform scenarios and
 existing native test files remain unchanged; new cases are appended.
 
-All seven required local checks pass with stable source identities: **441 distinct
+All seven [required local checks](validation-stage26-final.json) pass with stable source identities: **441 distinct
 Rust tests and 194 Python tests**, plus the original ignored probe. The Rust output
 contains 450 harness passes, including nine isolated child reports duplicated by
 their parents. Exact completion markers and test names distinguish those reports;
 one child summary contains an interleaved phase line on the shared output stream.
 The original raw output remains unchanged.
+
+The full language comparison records **2,724 independent expressions: 2,722 raw
+matches, the original cycle oracle error and the original integer `% 0`
+diagnostic mismatch**. All 36 additions and all **88 metamorphic relations** pass.
+The strict full gate retains 1,950 failure reasons. Requirement accounting keeps
+474 requirements and 3,724 case rows: 2,724 ready, 960 unimplemented and 40 unmapped.
+The 16 reviewed requirement mappings remain partial. These inventories overlap
+and do not measure feature completion; no development exception was added.
 
 Four isolated native tests pass with unchanged **256 KiB stacks and 60-second
 parent deadlines**. Ordinary, raw-hash and multiline strings at depths 24/31 pass
@@ -80,8 +89,8 @@ multiline inputs at depths 24/31 originally exposed a second failure in cache re
 across shorter interpolation ranges. Their original failed captures are retained;
 the corrected implementation returns Syntax for the unchanged inputs through both
 expression and module entry points. Eight original malformed expression inputs
-also have a separate successful small-stack replay. Their diagnostic bytes are
-verified separately from native safety.
+also have a separate successful small-stack replay. Separate Java comparisons
+retain diagnostic byte mismatches; native replay establishes safe rejection only.
 
 Focused frozen artifacts match **36 new selected cases: 23 successes and 13
 expected errors**, plus **30 persistent calls**. Broader exploration retains
@@ -92,6 +101,8 @@ and two Java process failures on deep unary inputs. Six multiline Java inputs
 explicitly wrap the preserved expression bytes in a module; this changes their
 source offsets and is not an expression-API byte comparison.
 
+The complete persistent suite matches **2,622 calls across 151 sequences run
+twice**, retaining the previous 150 definitions and their execution conditions.
 Actual Node and Chromium each pass **85 development scenarios**, including the new
 15-call sequence twice per target. The browser runner now serves its new imported
 fixture module. All 6,078 primitive results agree across the shared engines; each
@@ -99,14 +110,44 @@ target matches Java in 6,076 cases and retains the same two regex failures. The
 first browser acquisition failed because that module route was missing; its raw
 failure remains separate from the successful rerun. M1 frontend, runtime and
 lifecycle captures retain their previous successes and diagnostic differences.
+These are local macOS captures; no new hosted CI, Linux or Windows execution is
+claimed. Browser execution does not directly prove that the recorded full-Chrome
+executable was launched; headless-shell selection is inferred from pinned
+Playwright code, as in the preceding checkpoint.
 
 Failed native drafts, a helper compile failure, an invalid acquisition command and
 a source-drift build remain recorded. No failed or incomplete capture counts as a
-pass. Normal interpolation parsing shares its work allowance; auxiliary lexical
+pass. The first sealing attempt rejected unchanged historical archives because
+the helper compared identity fields with full metadata rows. That failed process
+and its exact helper snapshot are retained; the corrected identity comparison has
+an independent review. Normal interpolation parsing shares its work allowance;
+auxiliary lexical
 error validation can reparse ranges and does not establish a uniform work or
 latency bound. Arbitrary nesting, full type/class/mixed-body compilation, complete
 Java diagnostics, product APIs, release platforms and speed/peak-RSS parity remain
 outside this checkpoint.
+
+The [sealed summary](stage26-final-summary.json) records **10 new archives totaling
+58,909,100 bytes**, covering eight final suites, support captures and source proof.
+All **6,911 final source copies from 3,287 unique project files** match the exact
+implementation commit. Support evidence retains 15,423 original files. Five
+explicit direct Cargo build caches are omitted without enumerating their payloads;
+no payload count, size or hash is claimed. The 15 Stage 25 archives remain direct
+size/hash dependencies; inherited evidence is not recursively rerun or re-audited.
+Earliest exploratory Java runners lack saved outer Python stdout captures; their
+inner raw process files and source/runtime identities remain retained.
+
+The independent audit verifies **67,236 original acquisition files**, all final
+source snapshots, review/helper identities, six gate results, public test counts,
+the 36 new and two known-failure raw language controls, and all platform primitive
+comparisons. Its first attempt incorrectly expected complete parent test lines in
+serial native output; a reviewed supplementary auditor checks each original
+parent/child block without changing or normalizing the bytes. The original auditor,
+failed process and all ten sealed archives remain unchanged. The
+[completion companion](stage26-completion-captures.json) preserves 26 original
+process and supplementary files, including the failed first audit, successful
+corrected audit, exact helper sources, preparation diff and independent reviews.
+No retained evaluator or historical helper was executed by the audit.
 
 ## Stage 25 local verification checkpoint
 

@@ -1,0 +1,113 @@
+{
+  "implementation_commit": "51b132bba82587e3cb013c46f5c452c22fa01ccf",
+  "scope": "M2 Stage26 required local development checks; full compatibility and performance remain separate.",
+  "source_stability": true,
+  "source_snapshot_count": 3287,
+  "source_manifest_report_sha256": "f6c93871ca5bfee85a762b11641adca28810edfcfd321d1a504084a24f1aae56",
+  "raw_report": "validation-stage26-final-evidence.tar.gz:report.json",
+  "rust_passed": 441,
+  "rust_harness_passed": 450,
+  "rust_isolated_child_duplicate_passed": 9,
+  "rust_isolated_child_tests": [
+    "authored_chains_parse_clone_resolve_compile_and_drop_on_small_stack",
+    "authored_power_assertion_compiler_and_cleanup_use_small_stack",
+    "authored_partial_parse_resolve_and_compile_errors_release_on_small_stack",
+    "authored_scope_type_and_shared_work_guards_release_on_small_stack",
+    "authored_frontend_program_survives_host_reentry_retry_cancel_and_terminal_release",
+    "nested_lexical_accepted_near_guard_traverses_frontend_on_small_stack",
+    "original_nested_lexical_64_rejects_without_aborting_small_stack",
+    "nested_lexical_partial_errors_and_shared_work_guard_release_small_stack",
+    "nested_lexical_host_reentry_read_failure_retry_cancel_and_terminal_cleanup"
+  ],
+  "rust_intentionally_ignored": 1,
+  "python_passed": 194,
+  "required_commands": 7,
+  "checks": [
+    {
+      "command": [
+        "cargo",
+        "xtask",
+        "verify"
+      ],
+      "exit_code": 0,
+      "stdout_sha256": "900802c9cf4f23bd9dbc0e79f58d3e21493ec0c990782bc5b690a7432148e9eb",
+      "stderr_sha256": "be365833dc48c1d83b7f08a7b4270a9a1146a24b888ec42219e94c1ca2485792"
+    },
+    {
+      "command": [
+        "cargo",
+        "fmt",
+        "--all",
+        "--",
+        "--check"
+      ],
+      "exit_code": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "cargo",
+        "clippy",
+        "--workspace",
+        "--all-targets",
+        "--locked",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "exit_code": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "dd621e9ff7c9eac161c730aa8a79332dd68698435a7a84d044d9ad39dfa1f5d2"
+    },
+    {
+      "command": [
+        "cargo",
+        "test",
+        "--workspace",
+        "--locked"
+      ],
+      "exit_code": 0,
+      "stdout_sha256": "8d63d6c9212ee953396f6b66f16d718e58fc337ebc68186287475c8f3db3edc6",
+      "stderr_sha256": "fe30a339317ec163b151be1e35edad06a9ef4ef39a2ae5d4b701a98e0669aeb5"
+    },
+    {
+      "command": [
+        "cargo",
+        "check",
+        "-p",
+        "pkl-runtime",
+        "--target",
+        "wasm32-unknown-unknown",
+        "--locked"
+      ],
+      "exit_code": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "c92508a29848820f033cd2ea015c85dde0953c88b07cc967ce34b7c08f610549"
+    },
+    {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools/tests",
+        "-v"
+      ],
+      "exit_code": 0,
+      "stdout_sha256": "7ae40ebce22a6d66b46c60a190073cad40ea9f3c89a62f9742c838e96c657f0a",
+      "stderr_sha256": "c04758eeb90ff7a71fe61cf7ec799e1c85538eea54f10ff3aa8cce009dbfa9ad"
+    },
+    {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/m2_manifest.py",
+        "--check"
+      ],
+      "exit_code": 0,
+      "stdout_sha256": "4eaf1f826a0cdac8c23be74da6f69df8deffbcc95f21326ce3b960a36c6233ad",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ]
+}

@@ -1,0 +1,764 @@
+{
+  "schema": 1,
+  "status": "ready",
+  "utc": "2026-10-22T05:50:46.887218+00:00",
+  "implementation_commit": "51b132bba82587e3cb013c46f5c452c22fa01ccf",
+  "completed_suites": {
+    "language": {
+      "selected_count": 2724,
+      "status_counts": {
+        "mismatch": 1,
+        "oracle-error": 1,
+        "pass": 2722
+      },
+      "inventory_counts": {
+        "cases": 3724,
+        "cases_by_execution": {
+          "ready": 2724,
+          "unimplemented": 960,
+          "unmapped": 40
+        },
+        "requirements": 474,
+        "requirements_by_kind": {
+          "language_parser": 137,
+          "language_token": 109,
+          "semantic-family": 30,
+          "specification": 198
+        }
+      },
+      "metamorphic_relations": 88,
+      "metamorphic_passed": 88,
+      "full_gate_failure_count": 1950,
+      "candidate": {
+        "build": {
+          "command": [
+            "cargo",
+            "build",
+            "-p",
+            "pkl-runtime",
+            "--example",
+            "language_probe",
+            "--locked",
+            "--release",
+            "--target-dir",
+            "/Users/cody.ij.hwang/Projects/pkl-rs/target"
+          ],
+          "exit_code": 0,
+          "stderr_sha256": "a960d5b21fbac9dd2d88577803b49e7519253bc3443a8084bf4afcf43f710078",
+          "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "timed_out": false
+        },
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/release/examples/language_probe",
+        "sha256": "49b7025c1f4d73f664f17aaa6d0006b17cadf6499c2d9db69e05e2418dcc9a0f",
+        "source_binding": "recorded-build"
+      }
+    },
+    "validation": {
+      "rust_passed": 441,
+      "rust_harness_passed": 450,
+      "rust_isolated_child_duplicate_passed": 9,
+      "rust_isolated_child_tests": [
+        "authored_chains_parse_clone_resolve_compile_and_drop_on_small_stack",
+        "authored_power_assertion_compiler_and_cleanup_use_small_stack",
+        "authored_partial_parse_resolve_and_compile_errors_release_on_small_stack",
+        "authored_scope_type_and_shared_work_guards_release_on_small_stack",
+        "authored_frontend_program_survives_host_reentry_retry_cancel_and_terminal_release",
+        "nested_lexical_accepted_near_guard_traverses_frontend_on_small_stack",
+        "original_nested_lexical_64_rejects_without_aborting_small_stack",
+        "nested_lexical_partial_errors_and_shared_work_guard_release_small_stack",
+        "nested_lexical_host_reentry_read_failure_retry_cancel_and_terminal_cleanup"
+      ],
+      "rust_intentionally_ignored": 1,
+      "python_passed": 194,
+      "required_commands": 7
+    },
+    "platforms": {
+      "total": 6078,
+      "shared_engine_passed": 6078,
+      "oracle_passed": {
+        "rust": 6076,
+        "node": 6076,
+        "browser": 6076
+      },
+      "node_scenarios": 85,
+      "browser_scenarios": 85,
+      "known_gaps": [
+        "regex-unicode-15-vs-16",
+        "regex-zero-width-supplementary"
+      ]
+    },
+    "frontend": {
+      "cases": 15,
+      "passed": 15
+    },
+    "runtime": {
+      "status_counts": {
+        "bounded-value-bytes-match": 6,
+        "diagnostic-bytes-match": 2,
+        "diagnostic-byte-mismatch": 1
+      },
+      "compatibility_complete": false
+    },
+    "lifecycle": {
+      "cases": 2,
+      "compatibility_complete": false,
+      "limitations": [
+        "protocol bytes are not full Java diagnostics or public API compatibility",
+        "Java parses the Pkl fixtures; Rust uses explicit bytecode translations checked against exact fixture bytes, not frontend read(...) lowering",
+        "reentry uses a prewarmed resource: a new nested Java resource read inside an outer read can raise ConcurrentModificationException; that unsupported upstream edge is outside this successful protocol",
+        "native bounded VM/Host only; not browser/Node lifecycle parity",
+        "no performance or long-session memory claim"
+      ]
+    },
+    "class-lifecycle": {
+      "unique_sequences": 151,
+      "executions": 302,
+      "comparisons": 2622,
+      "unexecuted_groups": [
+        {
+          "group": "P09",
+          "reason": "Java-only module-cache probe stage12-java-module-identity-01 observes same URI/source identity retained, changed source at same URI ignored (marker remains1), distinct URI/evaluator identity separated. Rust multi-source module-cache parity is unimplemented; same-module identity is compared."
+        },
+        {
+          "group": "P10",
+          "reason": "Java observable sequence comparisons do not expose heap counts; Rust architectural GC coverage is separate."
+        },
+        {
+          "group": "P11",
+          "reason": "Real Java class-initialization read observed via @Deprecated { ...(read(\"life:class\")) } in stage12-java-host-path-01; Rust annotation frontend unsupported, so actual Host-in-class cross-language reentry remains unexecuted. Internal scheduler tests are separate."
+        },
+        {
+          "group": "P12",
+          "reason": "Terminal context/token/heap cleanup is covered by separate Rust lifecycle tests, not Java raw-byte equivalence."
+        },
+        {
+          "group": "P05",
+          "reason": "Indirect cyclic hierarchy property traversal new A {}.missing timed out after successful class identity calls in stage12-java-observations-03; traversal is observed oracle-timeout, not a compatibility pass."
+        }
+      ]
+    },
+    "native-frontend": {
+      "passed": 4,
+      "source_stability": true,
+      "conditions": {
+        "expected_top_level_tests": 4,
+        "thread_stack_bytes": 262144,
+        "parent_deadline_seconds_per_test": 60,
+        "accepted_lexical_depths": [
+          24,
+          31
+        ],
+        "accepted_delimiters": [
+          "ordinary",
+          "hash",
+          "multiline"
+        ],
+        "authored_near_boundary_module_width": 64,
+        "original_guarded_lexical_depth": 64,
+        "mixed_guarded_lexical_depth": 64,
+        "malformed_near_boundary_lexical_depth": 31,
+        "malformed_multiline_depths": [
+          24,
+          31
+        ],
+        "malformed_multiline_shapes": [
+          "missing-opening-newline",
+          "missing-closing-newline",
+          "incorrect-indentation"
+        ],
+        "malformed_multiline_entrypoints": [
+          "parse_expression-original-input",
+          "parse_module-wrapper"
+        ],
+        "shared_interpolation_budget_unary_depth_per_argument": 20000,
+        "host_poll_budget": 1,
+        "gc_cadence": "every yielded Host poll and every pending read",
+        "max_polls_per_host_event": 200000,
+        "frontend_lifecycle": "parse, Module clone/drop, resolve, ResolvedModule clone/drop, compile, Program drop all on same stack",
+        "host_lifecycle": "authored nested lexical31: actual read, failed child retry, successful String result, separate pending child cancellation with parent, both tokens rejected after terminal cleanup",
+        "known_limits": [
+          "Lexical nesting64 may reject at retained bounded guard; safety does not establish Java resource-error compatibility",
+          "Deep type and class/mixed-body compilation remain separate requirements"
+        ]
+      }
+    }
+  },
+  "preservation": {
+    "baseline": "282934b41f9b897815150f91b8ee139dd5a78f76",
+    "original_selected": 2688,
+    "current_selected": 2724,
+    "added_ids": [
+      "string-stage26-nested-1",
+      "string-stage26-nested-24",
+      "string-stage26-nested-31",
+      "string-stage26-raw-hash-24",
+      "string-stage26-raw-two-hashes-24",
+      "string-stage26-multiline-24",
+      "string-stage26-mixed-delimiters",
+      "string-stage26-empty-inner-string",
+      "string-stage26-escaped-inner-delimiters",
+      "string-stage26-raw-literal-interpolation",
+      "string-stage26-block-comment-delimiters",
+      "string-stage26-line-comment-delimiters",
+      "string-stage26-quoted-identifier",
+      "string-stage26-parentheses-256",
+      "string-stage26-multiple-interpolations",
+      "string-stage26-lexical-capture",
+      "string-stage26-lazy-branch",
+      "string-stage26-first-runtime-error",
+      "string-stage26-inner-missing-name",
+      "string-stage26-utf16-runtime-span",
+      "string-stage26-inner-missing-operand",
+      "string-stage26-inner-extra-close",
+      "string-stage26-first-syntax-error",
+      "string-stage26-raw-wrong-hash-literal",
+      "string-stage26-multiline-indent",
+      "string-stage26-multiline-continuation",
+      "string-stage26-unicode-valid-escapes",
+      "string-stage26-raw-shorter-close",
+      "string-stage26-syntax-before-later-escape",
+      "string-stage26-syntax-before-later-eof",
+      "string-stage26-syntax-before-later-comment",
+      "string-stage26-raw-syntax-before-later-escape",
+      "string-stage26-multiline-syntax-before-later-escape",
+      "string-stage26-outer-syntax-before-inner-escape",
+      "string-stage26-unicode-before-syntax-error",
+      "string-stage26-boundary-syntax-before-later-escape"
+    ],
+    "added_expected_outcomes": {
+      "success": 23,
+      "failure": 13
+    },
+    "original_sequences": 150,
+    "current_sequences": 151,
+    "original_platform_scenarios": 84,
+    "current_platform_scenarios": 85,
+    "original_fixture_and_native_test_bytes_unchanged": true,
+    "fixture_changes": [
+      "M\tcompatibility/m2-class-lifecycle/manifest.json",
+      "A\tcompatibility/m2-class-lifecycle/string-stage26-nested-retries.expressions",
+      "A\tcompatibility/m2-class-lifecycle/string-stage26-nested-retries.pkl",
+      "A\tcrates/pkl-runtime/tests/m2_string_frontend_lifecycle.rs",
+      "M\ttests/fixtures/m2/cases.json",
+      "A\ttests/fixtures/m2/string-stage26-block-comment-delimiters.pkl",
+      "A\ttests/fixtures/m2/string-stage26-boundary-syntax-before-later-escape.pkl",
+      "A\ttests/fixtures/m2/string-stage26-empty-inner-string.pkl",
+      "A\ttests/fixtures/m2/string-stage26-escaped-inner-delimiters.pkl",
+      "A\ttests/fixtures/m2/string-stage26-first-runtime-error.pkl",
+      "A\ttests/fixtures/m2/string-stage26-first-syntax-error.pkl",
+      "A\ttests/fixtures/m2/string-stage26-inner-extra-close.pkl",
+      "A\ttests/fixtures/m2/string-stage26-inner-missing-name.pkl",
+      "A\ttests/fixtures/m2/string-stage26-inner-missing-operand.pkl",
+      "A\ttests/fixtures/m2/string-stage26-lazy-branch.pkl",
+      "A\ttests/fixtures/m2/string-stage26-lexical-capture.pkl",
+      "A\ttests/fixtures/m2/string-stage26-line-comment-delimiters.pkl",
+      "A\ttests/fixtures/m2/string-stage26-mixed-delimiters.pkl",
+      "A\ttests/fixtures/m2/string-stage26-multiline-24.pkl",
+      "A\ttests/fixtures/m2/string-stage26-multiline-continuation.pkl",
+      "A\ttests/fixtures/m2/string-stage26-multiline-indent.pkl",
+      "A\ttests/fixtures/m2/string-stage26-multiline-syntax-before-later-escape.pkl",
+      "A\ttests/fixtures/m2/string-stage26-multiple-interpolations.pkl",
+      "A\ttests/fixtures/m2/string-stage26-nested-1.pkl",
+      "A\ttests/fixtures/m2/string-stage26-nested-24.pkl",
+      "A\ttests/fixtures/m2/string-stage26-nested-31.pkl",
+      "A\ttests/fixtures/m2/string-stage26-outer-syntax-before-inner-escape.pkl",
+      "A\ttests/fixtures/m2/string-stage26-parentheses-256.pkl",
+      "A\ttests/fixtures/m2/string-stage26-quoted-identifier.pkl",
+      "A\ttests/fixtures/m2/string-stage26-raw-hash-24.pkl",
+      "A\ttests/fixtures/m2/string-stage26-raw-literal-interpolation.pkl",
+      "A\ttests/fixtures/m2/string-stage26-raw-shorter-close.pkl",
+      "A\ttests/fixtures/m2/string-stage26-raw-syntax-before-later-escape.pkl",
+      "A\ttests/fixtures/m2/string-stage26-raw-two-hashes-24.pkl",
+      "A\ttests/fixtures/m2/string-stage26-raw-wrong-hash-literal.pkl",
+      "A\ttests/fixtures/m2/string-stage26-syntax-before-later-comment.pkl",
+      "A\ttests/fixtures/m2/string-stage26-syntax-before-later-eof.pkl",
+      "A\ttests/fixtures/m2/string-stage26-syntax-before-later-escape.pkl",
+      "A\ttests/fixtures/m2/string-stage26-unicode-before-syntax-error.pkl",
+      "A\ttests/fixtures/m2/string-stage26-unicode-valid-escapes.pkl",
+      "A\ttests/fixtures/m2/string-stage26-utf16-runtime-span.pkl"
+    ]
+  },
+  "source_binding": {
+    "implementation_commit": "51b132bba82587e3cb013c46f5c452c22fa01ccf",
+    "source_snapshot_copies": 6911,
+    "unique_source_files": 3287,
+    "upstream_source_snapshot_copies": 0,
+    "upstream_blob_proof_claimed": false,
+    "git_request_sha256": "a6f1faade8e8a391f6f6a9846fcf621a61833ef9be403631e47b3bb39f01c6f7",
+    "git_response_sha256": "0cbe91564ec2d43f3a6914393824882cc5edc0a54bfbe5da338b3ab569d90bb0",
+    "scope": "Only final project source copies enumerated here equal exact implementation Git bytes. Historical focused/exploratory sources retain separate provenance."
+  },
+  "archives": {
+    "language": {
+      "path": "reports/m2/language-stage26-final-evidence.tar.gz",
+      "bytes": 5971130,
+      "sha256": "c4b5a5e054db1c89e8d987a9becdb31b87b1b82e070f2b4c4d7dcc12883fc2d8"
+    },
+    "validation": {
+      "path": "reports/m2/validation-stage26-final-evidence.tar.gz",
+      "bytes": 2934049,
+      "sha256": "10d5265cc713e70236ceb3084a1f94d907c4fbd11c36dc6ec5fb71ff84892b16"
+    },
+    "platforms": {
+      "path": "reports/m2/platforms-stage26-final-evidence.tar.gz",
+      "bytes": 3808490,
+      "sha256": "8beded3f6a67b9dd996bbf9ed0a5ce39846dc7d1fb465d5348b19207f253e5c4"
+    },
+    "frontend": {
+      "path": "reports/m2/frontend-stage26-final-evidence.tar.gz",
+      "bytes": 249057,
+      "sha256": "fbbf956fe1180ed4a011d84b1ba0f00e7175cbced8e7956105ca975e07601f33"
+    },
+    "runtime": {
+      "path": "reports/m2/runtime-stage26-final-evidence.tar.gz",
+      "bytes": 1913870,
+      "sha256": "f90ac5ea2763365fbc3780c54e4fcea2163dca008e249ac63b80e5d268c26bb1"
+    },
+    "lifecycle": {
+      "path": "reports/m2/lifecycle-stage26-final-evidence.tar.gz",
+      "bytes": 1107152,
+      "sha256": "512972362c7200689370c78d40cccf074dfeaa22b4f9ddd69aa42c33c2bfbc48"
+    },
+    "class-lifecycle": {
+      "path": "reports/m2/class-lifecycle-stage26-final-evidence.tar.gz",
+      "bytes": 2546966,
+      "sha256": "dd84392b8366b6bbf85bf1a917772e97ca99873a5d460b0647041ea1ff6e4a4a"
+    },
+    "native-frontend": {
+      "path": "reports/m2/native-frontend-stage26-final-evidence.tar.gz",
+      "bytes": 2777507,
+      "sha256": "c632e47a3d92ba0fdf234cce8fcd698efacbf7e3e4ca39c624b68666d7323880"
+    },
+    "support": {
+      "path": "reports/m2/support-stage26-final-evidence.tar.gz",
+      "bytes": 33047621,
+      "sha256": "7ff4f45d14fc3b204f523ca41ba75bea5a8ba4a461a776016bbef8aba0db89bb"
+    },
+    "source": {
+      "path": "reports/m2/source-stage26-final-evidence.tar.gz",
+      "bytes": 4553258,
+      "sha256": "9b674b2b25570791909fc1c10adb654537985f5f3c73603d2ce41aff4fad73b4"
+    }
+  },
+  "historical_dependencies": {
+    "summary": {
+      "path": "reports/m2/stage25-final-summary.json",
+      "bytes": 88297,
+      "sha256": "4c32b3627d6391dfe879d55643191179d364bad0f3030ed8ae956f62f3ed3dcb"
+    },
+    "archives": {
+      "class-lifecycle": {
+        "bytes": 2284198,
+        "files_including_inventory": 22966,
+        "inventory_verified": true,
+        "path": "reports/m2/class-lifecycle-stage25-final-evidence.tar.gz",
+        "sha256": "0261ee5bb4832bb8b30374eaec19840c59e389af3e53c044c07ae47f3af80c9c"
+      },
+      "exploration": {
+        "bytes": 6167195,
+        "excluded_cache_files": 0,
+        "inventory_verified": true,
+        "original_files": 21763,
+        "path": "reports/m2/exploration-stage25-evidence.tar.gz",
+        "scope": "Disjoint original Stage25 exploratory, failed and superseded bytes; exact source/runtime/artifact provenance and all raw observations retained.",
+        "sha256": "8b240db91dbbdf308ea6a1ebfcfbf1afb44c53781d5c7115d5a9f97cdeb5cf57"
+      },
+      "exploration-support-1": {
+        "bytes": 10641057,
+        "excluded_cache_files": 0,
+        "inventory_verified": true,
+        "original_files": 1238,
+        "path": "reports/m2/exploration-stage25-part02-evidence.tar.gz",
+        "scope": "Disjoint original Stage25 exploratory, failed and superseded bytes; exact source/runtime/artifact provenance and all raw observations retained.",
+        "sha256": "c74749dbb4f32d2cb00f330a41a732ac6b87e379a6f520c9c7abf8738ac71f04"
+      },
+      "exploration-support-2": {
+        "bytes": 10636854,
+        "excluded_cache_files": 0,
+        "inventory_verified": true,
+        "original_files": 3452,
+        "path": "reports/m2/exploration-stage25-part03-evidence.tar.gz",
+        "scope": "Disjoint original Stage25 exploratory, failed and superseded bytes; exact source/runtime/artifact provenance and all raw observations retained.",
+        "sha256": "de4b9550d4fce6ffd1132aadb2b6a2e1eb2eb90c00c974a3344553a22fa98687"
+      },
+      "exploration-support-3": {
+        "bytes": 8416630,
+        "excluded_cache_files": 0,
+        "inventory_verified": true,
+        "original_files": 165,
+        "path": "reports/m2/exploration-stage25-part04-evidence.tar.gz",
+        "scope": "Disjoint original Stage25 exploratory, failed and superseded bytes; exact source/runtime/artifact provenance and all raw observations retained.",
+        "sha256": "828e1f5c4420a2990a10f3c142813505fce065e5b5092a62ca92839fc9909e46"
+      },
+      "exploration-support-4": {
+        "bytes": 10326761,
+        "excluded_cache_files": 0,
+        "inventory_verified": true,
+        "original_files": 2698,
+        "path": "reports/m2/exploration-stage25-part05-evidence.tar.gz",
+        "scope": "Disjoint original Stage25 exploratory, failed and superseded bytes; exact source/runtime/artifact provenance and all raw observations retained.",
+        "sha256": "1666767d7470ed9d0b1783d48abf986e6345f74e3db89fc9f9b77122d6d23f55"
+      },
+      "exploration-support-5": {
+        "bytes": 1782514,
+        "excluded_cache_files": 0,
+        "inventory_verified": true,
+        "original_files": 2973,
+        "path": "reports/m2/exploration-stage25-part06-evidence.tar.gz",
+        "scope": "Disjoint original Stage25 exploratory, failed and superseded bytes; exact source/runtime/artifact provenance and all raw observations retained.",
+        "sha256": "486f36ce280288f56193e25b570ca703bf2d84757ac63fe4aba949af44eee51a"
+      },
+      "frontend": {
+        "bytes": 241060,
+        "files_including_inventory": 137,
+        "inventory_verified": true,
+        "path": "reports/m2/frontend-stage25-final-evidence.tar.gz",
+        "sha256": "5d99f46ca17c89c5d9f060987341dbaa0073082be49a6adc54eb81144a433512"
+      },
+      "language": {
+        "bytes": 5145762,
+        "files_including_inventory": 24336,
+        "inventory_verified": true,
+        "path": "reports/m2/language-stage25-final-evidence.tar.gz",
+        "sha256": "17e65e685cc13b1b40d78907fa29f5ba85e5f3cc5d7318e1d2ea8736f24137ca"
+      },
+      "lifecycle": {
+        "bytes": 1088390,
+        "files_including_inventory": 165,
+        "inventory_verified": true,
+        "path": "reports/m2/lifecycle-stage25-final-evidence.tar.gz",
+        "sha256": "814bb83f8709ea4f3cb7aa6a054c1c2b7fd1d5a89ce827abb9845b8ca4693e34"
+      },
+      "native-frontend": {
+        "bytes": 2744291,
+        "files_including_inventory": 56,
+        "inventory_verified": true,
+        "path": "reports/m2/native-frontend-stage25-final-evidence.tar.gz",
+        "sha256": "d65b9c54dde07e21a7be052dad97b6abd42217b7d5569a708bd6fede1226c3b9"
+      },
+      "platforms": {
+        "bytes": 3779401,
+        "files_including_inventory": 120,
+        "inventory_verified": true,
+        "path": "reports/m2/platforms-stage25-final-evidence.tar.gz",
+        "sha256": "8699a43215d4294d6b3716fe812349c8c192de9be4be85de9e04000f0a8a200a"
+      },
+      "runtime": {
+        "bytes": 1890474,
+        "files_including_inventory": 133,
+        "inventory_verified": true,
+        "path": "reports/m2/runtime-stage25-final-evidence.tar.gz",
+        "sha256": "974edc260f991e84bcb910c2097baf1bef7d4e684032a573706f0debdc6db749"
+      },
+      "source": {
+        "bytes": 5970573,
+        "files_including_inventory": 3283,
+        "inventory_verified": true,
+        "path": "reports/m2/source-stage25-final-evidence.tar.gz",
+        "sha256": "05608f60d3942f7090f583b717147d4369dc503725bd77496f01533bdd2dbdbf"
+      },
+      "validation": {
+        "bytes": 2734205,
+        "files_including_inventory": 3270,
+        "inventory_verified": true,
+        "path": "reports/m2/validation-stage25-final-evidence.tar.gz",
+        "sha256": "c67d7160815cc499403edd26eeb3c94bd0ad1d858094d7fd80d62cc7f57333d7"
+      }
+    },
+    "scope": "Direct Stage25 archive identities verified; inherited evidence remains referenced through its immutable summary, not recursively rerun or re-audited."
+  },
+  "reviews": [
+    {
+      "path": "target/m2/stage26-frontend-review-final-01.json",
+      "bytes": 9307,
+      "sha256": "5933551ab7ab016fbd0bf26608446f6ec302ded5c1e09d939b6238af8b31c057"
+    },
+    {
+      "path": "target/m2/stage26-lifecycle-review-final-02.json",
+      "bytes": 10881,
+      "sha256": "ef346459a224f9fa52e12add0cd2844fd75a241b205fa06607fb17fad58239c2"
+    },
+    {
+      "path": "target/m2/stage26-root-review-final-01.json",
+      "bytes": 4148,
+      "sha256": "56b5a7c0d19a33da1803036c729412afba1c1b5de8db2ffeffc8eea636ecde6d"
+    },
+    {
+      "path": "target/m2/stage26-evidence-review-final-01.json",
+      "bytes": 13642,
+      "sha256": "414d52b7a676da9c97727018305d0fb6a5a63d261061cc435016d2f13fe61067"
+    },
+    {
+      "path": "target/m2/stage26-packager-review-final-02.json",
+      "bytes": 10688,
+      "sha256": "de7170c7330612a0e2c58374e9a81a16de6efafdfee72135298967f723d63f76"
+    },
+    {
+      "path": "target/m2/stage26-evidence-core-review-final-01.json",
+      "bytes": 3604,
+      "sha256": "3ff65c5dd0e593081e2865d25d33e42895bad2fdfd3c17ca02918dbdb78db441"
+    },
+    {
+      "path": "target/m2/stage26-packager-config-review-final-02.json",
+      "bytes": 5878,
+      "sha256": "39b6485e0044a7258760f573b14b7506b55b59c99a70723c33379ef6d2038bb9"
+    },
+    {
+      "path": "target/m2/stage26-completion-helper-review-final-04.json",
+      "bytes": 5705,
+      "sha256": "c32d67a4f853204ee23d34f4bdcc9571df57c826fc46d12172d40b5a0ea31b6b"
+    }
+  ],
+  "gates": [
+    {
+      "name": "report",
+      "expected_exit": 0,
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/m2_language.py",
+        "--verify-report",
+        "target/m2/language-stage26-final-01"
+      ],
+      "exit_code": 0,
+      "timed_out": false,
+      "stdout_sha256": "275a191cb3f8de527e26216722146fee2313a5810bbdcaaf8e6e5c24f4df9e5f",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "development",
+      "expected_exit": 0,
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/m2_language.py",
+        "--verify-development",
+        "target/m2/language-stage26-final-01"
+      ],
+      "exit_code": 0,
+      "timed_out": false,
+      "stdout_sha256": "275a191cb3f8de527e26216722146fee2313a5810bbdcaaf8e6e5c24f4df9e5f",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "subset",
+      "expected_exit": 1,
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/m2_language.py",
+        "--verify-subset",
+        "target/m2/language-stage26-final-01"
+      ],
+      "exit_code": 1,
+      "timed_out": false,
+      "stdout_sha256": "275a191cb3f8de527e26216722146fee2313a5810bbdcaaf8e6e5c24f4df9e5f",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "full",
+      "expected_exit": 1,
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/m2_language.py",
+        "--verify-full",
+        "target/m2/language-stage26-final-01"
+      ],
+      "exit_code": 1,
+      "timed_out": false,
+      "stdout_sha256": "275a191cb3f8de527e26216722146fee2313a5810bbdcaaf8e6e5c24f4df9e5f",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "class-report",
+      "expected_exit": 0,
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/m2_class_lifecycle.py",
+        "--verify-report",
+        "target/m2/class-lifecycle-stage26-final-01"
+      ],
+      "exit_code": 0,
+      "timed_out": false,
+      "stdout_sha256": "72d5e6dc6030bfe305585af5573c0784a65e700c1314b4760230d842ea8ebef5",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "class-contract",
+      "expected_exit": 0,
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/m2_class_lifecycle.py",
+        "--verify-contract",
+        "target/m2/class-lifecycle-stage26-final-01"
+      ],
+      "exit_code": 0,
+      "timed_out": false,
+      "stdout_sha256": "72d5e6dc6030bfe305585af5573c0784a65e700c1314b4760230d842ea8ebef5",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "helper_provenance": [
+    {
+      "path": "target/m2/stage26_seal.py",
+      "bytes": 13205,
+      "sha256": "e5abda761a0e937f37406e5768d855955cfb972615067159716179dc4ad79554"
+    },
+    {
+      "path": "target/m2/stage26_suite_checks.py",
+      "bytes": 22789,
+      "sha256": "dadefcacd4e5e1802e9d59858d1a05bbaaa71ce0baee701cdd3b2162ac7fdde2"
+    },
+    {
+      "path": "target/m2/stage26-suite-checks-preparation.json",
+      "bytes": 640,
+      "sha256": "56d2c04bc36354911e54cc4242417dab21c457315aa0fb635ed069f83585b868"
+    }
+  ],
+  "configuration": {
+    "path": "target/m2/stage26-final-config-02.json",
+    "bytes": 8323,
+    "sha256": "803b535782de3321a5c38461dd5b4c45e020a579c20e2985367528aa3d575d22"
+  },
+  "support": {
+    "original_files": 15423,
+    "explicit_roots": [
+      "target/m2/class-lifecycle-stage26-command-final-01",
+      "target/m2/frontend-stage26-command-final-01",
+      "target/m2/language-stage26-command-final-01",
+      "target/m2/lifecycle-stage26-command-final-01",
+      "target/m2/platforms-stage26-command-final-01",
+      "target/m2/platforms-stage26-command-final-02",
+      "target/m2/platforms-stage26-command-final-03",
+      "target/m2/platforms-stage26-final-01",
+      "target/m2/run_stage26_validation.py",
+      "target/m2/runtime-stage26-command-final-01",
+      "target/m2/stage26-completion-helper-review-final-01.json",
+      "target/m2/stage26-completion-helper-review-final-02.json",
+      "target/m2/stage26-completion-helper-review-final-03.json",
+      "target/m2/stage26-completion-helper-review-final-04.json",
+      "target/m2/stage26-development-attempts.json",
+      "target/m2/stage26-evidence-core-review-final-01.json",
+      "target/m2/stage26-evidence-java-01",
+      "target/m2/stage26-evidence-java-02",
+      "target/m2/stage26-evidence-java-03",
+      "target/m2/stage26-evidence-java-04",
+      "target/m2/stage26-evidence-java-command-04",
+      "target/m2/stage26-evidence-review-command-final-01",
+      "target/m2/stage26-evidence-review-final-01.json",
+      "target/m2/stage26-evidence-review-support-final-01",
+      "target/m2/stage26-evidence-rust-baseline-01",
+      "target/m2/stage26-evidence-rust-core-final-01",
+      "target/m2/stage26-evidence-rust-core-final-command-01",
+      "target/m2/stage26-evidence-rust-final-01",
+      "target/m2/stage26-evidence-rust-final-command-01",
+      "target/m2/stage26-evidence-rust-prelim-01",
+      "target/m2/stage26-evidence-rust-prelim-command-01",
+      "target/m2/stage26-final-config.json",
+      "target/m2/stage26-frontend-adversarial-01",
+      "target/m2/stage26-frontend-adversarial-02",
+      "target/m2/stage26-frontend-adversarial-finish-02",
+      "target/m2/stage26-frontend-adversarial-finish-03",
+      "target/m2/stage26-frontend-browser-route-review-01.json",
+      "target/m2/stage26-frontend-dev-01",
+      "target/m2/stage26-frontend-review-final-01.json",
+      "target/m2/stage26-gates-command-final-01",
+      "target/m2/stage26-gates-final-01",
+      "target/m2/stage26-lifecycle-adversarial-01",
+      "target/m2/stage26-lifecycle-adversarial-02",
+      "target/m2/stage26-lifecycle-platform-generation-01",
+      "target/m2/stage26-lifecycle-preliminary-01",
+      "target/m2/stage26-lifecycle-review-final-01.json",
+      "target/m2/stage26-lifecycle-review-final-02.json",
+      "target/m2/stage26-native-frontend-preliminary-01",
+      "target/m2/stage26-native-frontend-preliminary-02-capture",
+      "target/m2/stage26-packager-config-review-final-01.json",
+      "target/m2/stage26-packager-config-review-final-02.json",
+      "target/m2/stage26-packager-review-final-01.json",
+      "target/m2/stage26-packager-review-final-02.json",
+      "target/m2/stage26-parser-finish-capture-03.py",
+      "target/m2/stage26-parser-finish-capture.py",
+      "target/m2/stage26-parser-native-review-check.json",
+      "target/m2/stage26-parser-test-review-check.json",
+      "target/m2/stage26-post-seal-audit-preparation-01",
+      "target/m2/stage26-post-seal-audit-preparation-01.json",
+      "target/m2/stage26-release-probe-build-command-final-01",
+      "target/m2/stage26-release-probe-build-command-final-02",
+      "target/m2/stage26-release-probe-build-command-prelim-01",
+      "target/m2/stage26-release-probe-build-final-01",
+      "target/m2/stage26-release-probe-build-final-02",
+      "target/m2/stage26-release-probe-build-prelim-01",
+      "target/m2/stage26-root-review-final-01.json",
+      "target/m2/stage26-seal-command-final-01",
+      "target/m2/stage26-selection-01",
+      "target/m2/stage26-selection-command-01",
+      "target/m2/stage26-sequence-rust-core-final-01",
+      "target/m2/stage26-sequence-rust-core-final-command-01",
+      "target/m2/stage26-sequence-rust-final-01",
+      "target/m2/stage26-sequence-rust-final-command-01",
+      "target/m2/stage26-sequences-java-01",
+      "target/m2/stage26-suite-checks-preparation.json",
+      "target/m2/stage26-validation-accounting-review-01.json",
+      "target/m2/stage26_acquire_java.py",
+      "target/m2/stage26_acquire_sequence_java.py",
+      "target/m2/stage26_build_focused.py",
+      "target/m2/stage26_capture_process.py",
+      "target/m2/stage26_complete_captures.py",
+      "target/m2/stage26_finalize_evidence_review.py",
+      "target/m2/stage26_gates.py",
+      "target/m2/stage26_native_capture.py",
+      "target/m2/stage26_post_seal_audit.py",
+      "target/m2/stage26_replay_exploration.py",
+      "target/m2/stage26_replay_sequence.py",
+      "target/m2/stage26_seal.py",
+      "target/m2/stage26_select_fixtures.py",
+      "target/m2/stage26_suite_checks.py",
+      "target/m2/validation-stage26-command-final-01",
+      "target/m2/validation-stage26-command-final-02",
+      "target/m2/validation-stage26-final-01"
+    ]
+  },
+  "omitted_build_caches": [
+    {
+      "path": "target/m2/lifecycle-stage26-final-01/build",
+      "payload_enumerated": false,
+      "reason": "Direct suite Cargo build cache; captured artifact, build output and source snapshots are retained."
+    },
+    {
+      "path": "target/m2/class-lifecycle-stage26-final-01/build",
+      "payload_enumerated": false,
+      "reason": "Direct suite Cargo build cache; captured artifact, build output and source snapshots are retained."
+    },
+    {
+      "path": "target/m2/stage26-release-probe-build-final-02/build",
+      "payload_enumerated": false,
+      "reason": "Exploratory Cargo build cache; complete captured source/artifact/process records retained."
+    },
+    {
+      "path": "target/m2/stage26-release-probe-build-final-01/build",
+      "payload_enumerated": false,
+      "reason": "Exploratory Cargo build cache; complete captured source/artifact/process records retained."
+    },
+    {
+      "path": "target/m2/stage26-release-probe-build-prelim-01/build",
+      "payload_enumerated": false,
+      "reason": "Exploratory Cargo build cache; complete captured source/artifact/process records retained."
+    }
+  ],
+  "omitted_cache_payload_sizes_and_hashes_claimed": false,
+  "captured_evaluators_executed": false,
+  "compatibility_complete": false,
+  "performance_targets_established": false,
+  "known_unverified_scope": [
+    "This bounded Stage26 checkpoint does not complete M2, full Pkl 0.32.0 language/API compatibility, release platforms, speed parity or peak-RSS parity.",
+    "The original cycle oracle error and integer remainder-by-zero diagnostic mismatch remain selected failures; 1950 strict full-gate failure reasons remain open.",
+    "Lexical and expression-scope limits remain 32. Java-valid deep lexical strings, including the original depth-64 input, safely reach a Rust guard and remain compatibility mismatches.",
+    "Full type/class/mixed-body compilation, arbitrary syntax depth and Java resource-error diagnostics remain unverified.",
+    "Auxiliary lexical error validation may synchronously reparse ranges; normal interpolation work-budget sharing does not establish a uniform work or latency bound.",
+    "Exploration retains 23 raw diagnostic/guard mismatches and two Java oracle errors among 62 observations. These overlap selected cases and do not create development exceptions.",
+    "Six malformed multiline Java inputs explicitly wrap preserved expression bytes in a module; source offsets differ from expression-API invocations.",
+    "The earliest Java exploratory runners retain inner raw processes and helper/source identities but have no saved outer Python stdout capture; no outer bytes are reconstructed.",
+    "Node and Chromium development scenarios are bounded; two known regex primitive mismatches, M1 cycle and complete lifecycle-diagnostic differences remain.",
+    "Observed Chromium execution does not directly prove that the recorded full-Chrome executable, rather than the headless-shell selection inferred from pinned Playwright code, was launched.",
+    "Historical Stage25 archives remain direct exact-hash dependencies; inherited payloads are not recursively re-audited or rerun.",
+    "Explicit direct Cargo build caches are omitted without payload enumeration; their payload count, size and hash are not claimed.",
+    "Failed and source-unstable development captures remain separate support evidence and are not counted as passing final suites."
+  ]
+}

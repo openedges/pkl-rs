@@ -1,0 +1,770 @@
+{
+  "schema": 1,
+  "status": "pass",
+  "utc": "2026-10-22T05:59:12.354360+00:00",
+  "implementation_commit": "51b132bba82587e3cb013c46f5c452c22fa01ccf",
+  "scope": "Independent read-only Stage26 archive/source/Git/raw-outcome audit. Reviewer authored no reviewed production, test, platform, sealer or suite-checker source. No retained helper or evaluator is executed.",
+  "host": "macOS-27.0-arm64-arm-64bit-Mach-O",
+  "summary": {
+    "path": "reports/m2/stage26-final-summary.json",
+    "sha256": "43abc20a4baaa150e01f84fa3b86867c5f5fd00d91dbadf4e258a7af8c62acbc",
+    "bytes": 34555
+  },
+  "archives": [
+    {
+      "name": "language",
+      "path": "reports/m2/language-stage26-final-evidence.tar.gz",
+      "bytes": 5971130,
+      "sha256": "c4b5a5e054db1c89e8d987a9becdb31b87b1b82e070f2b4c4d7dcc12883fc2d8",
+      "inventory_files": 24663
+    },
+    {
+      "name": "validation",
+      "path": "reports/m2/validation-stage26-final-evidence.tar.gz",
+      "bytes": 2934049,
+      "sha256": "10d5265cc713e70236ceb3084a1f94d907c4fbd11c36dc6ec5fb71ff84892b16",
+      "inventory_files": 3312
+    },
+    {
+      "name": "platforms",
+      "path": "reports/m2/platforms-stage26-final-evidence.tar.gz",
+      "bytes": 3808490,
+      "sha256": "8beded3f6a67b9dd996bbf9ed0a5ce39846dc7d1fb465d5348b19207f253e5c4",
+      "inventory_files": 123
+    },
+    {
+      "name": "frontend",
+      "path": "reports/m2/frontend-stage26-final-evidence.tar.gz",
+      "bytes": 249057,
+      "sha256": "fbbf956fe1180ed4a011d84b1ba0f00e7175cbced8e7956105ca975e07601f33",
+      "inventory_files": 139
+    },
+    {
+      "name": "runtime",
+      "path": "reports/m2/runtime-stage26-final-evidence.tar.gz",
+      "bytes": 1913870,
+      "sha256": "f90ac5ea2763365fbc3780c54e4fcea2163dca008e249ac63b80e5d268c26bb1",
+      "inventory_files": 135
+    },
+    {
+      "name": "lifecycle",
+      "path": "reports/m2/lifecycle-stage26-final-evidence.tar.gz",
+      "bytes": 1107152,
+      "sha256": "512972362c7200689370c78d40cccf074dfeaa22b4f9ddd69aa42c33c2bfbc48",
+      "inventory_files": 168
+    },
+    {
+      "name": "class-lifecycle",
+      "path": "reports/m2/class-lifecycle-stage26-final-evidence.tar.gz",
+      "bytes": 2546966,
+      "sha256": "dd84392b8366b6bbf85bf1a917772e97ca99873a5d460b0647041ea1ff6e4a4a",
+      "inventory_files": 23223
+    },
+    {
+      "name": "native-frontend",
+      "path": "reports/m2/native-frontend-stage26-final-evidence.tar.gz",
+      "bytes": 2777507,
+      "sha256": "c632e47a3d92ba0fdf234cce8fcd698efacbf7e3e4ca39c624b68666d7323880",
+      "inventory_files": 58
+    },
+    {
+      "name": "support",
+      "path": "reports/m2/support-stage26-final-evidence.tar.gz",
+      "bytes": 33047621,
+      "sha256": "7ff4f45d14fc3b204f523ca41ba75bea5a8ba4a461a776016bbef8aba0db89bb",
+      "inventory_files": 15424
+    },
+    {
+      "name": "source",
+      "path": "reports/m2/source-stage26-final-evidence.tar.gz",
+      "bytes": 4553258,
+      "sha256": "9b674b2b25570791909fc1c10adb654537985f5f3c73603d2ce41aff4fad73b4",
+      "inventory_files": 19
+    }
+  ],
+  "new_archive_count": 10,
+  "original_acquisition_files": 67236,
+  "original_archive_payload_identity_verified": true,
+  "source_binding": {
+    "source_snapshot_copies": 6911,
+    "unique_source_files": 3287,
+    "all_final_archived_source_snapshots_verified": true,
+    "retained_git_proof_matches_live_exact_commit": true,
+    "upstream_source_snapshot_copies": 0
+  },
+  "selected_contract": {
+    "original_cases": 2688,
+    "current_cases": 2724,
+    "added_cases": 36,
+    "added_expected_outcomes": {
+      "success": 23,
+      "failure": 13
+    },
+    "unchanged_original_input_files": 2988,
+    "known_failures": {
+      "error-cycle": "oracle-error",
+      "error-remainder-zero": "mismatch"
+    },
+    "raw_new_and_known_controls": [
+      {
+        "id": "error-cycle",
+        "status": "oracle-error",
+        "expected_outcome": "failure",
+        "input_sha256": "4224d1d5e1abe9d89c353862ed612923e79ec9f0929013bf964026449e8095ba"
+      },
+      {
+        "id": "error-remainder-zero",
+        "status": "mismatch",
+        "expected_outcome": "failure",
+        "input_sha256": "d7f2c40bdc290143438f2ee579c2b2d03b96b52265934c39b517c909fd3a3112"
+      },
+      {
+        "id": "string-stage26-nested-1",
+        "status": "pass",
+        "expected_outcome": "success",
+        "input_sha256": "89399ba9dcb8db76e94659ecfddb214b30ba96f87017bc3e077c1f4b0ff69bdd"
+      },
+      {
+        "id": "string-stage26-nested-24",
+        "status": "pass",
+        "expected_outcome": "success",
+        "input_sha256": "73c85afb0acd690c1642e2def007fc2f9c9becb3b3d8d59bd24b3013295251d7"
+      },
+      {
+        "id": "string-stage26-nested-31",
+        "status": "pass",
+        "expected_outcome": "success",
+        "input_sha256": "4b5cc14292b7f388369f211be981e6e9211012627182ba09144749cb3d31c432"
+      },
+      {
+        "id": "string-stage26-raw-hash-24",
+        "status": "pass",
+        "expected_outcome": "success",
+        "input_sha256": "d2de4268f44bf5c384c0693268384729bd3a0cf55f00f949ef0765c5509fe227"
+      },
+      {
+        "id": "string-stage26-raw-two-hashes-24",
+        "status": "pass",
+        "expected_outcome": "success",
+        "input_sha256": "b24096d8e333ca4032d93d29e0f85746413b9bc5d0962c8865008a33957db7c3"
+      },
+      {
+        "id": "string-stage26-multiline-24",
+        "status": "pass",
+        "expected_outcome": "success",
+        "input_sha256": "a0983e946c352e2f15bc5fba4577be03a30971015a8048b0ff67e9c1920b51f3"
+      },
+      {
+        "id": "string-stage26-mixed-delimiters",
+        "status": "pass",
+        "expected_outcome": "success",
+        "input_sha256": "048814fdf2947d3628ef0a2298021639c4cdb870047c6fd3f8f37d5894842418"
+      },
+      {
+        "id": "string-stage26-empty-inner-string",
+        "status": "pass",
+        "expected_outcome": "success",
+        "input_sha256": "900478d6336c1b3b5fb2c8798c0b329c60b6012d60fc1e68e5ee9785d1370bdd"
+      },
+      {
+        "id": "string-stage26-escaped-inner-delimiters",
+        "status": "pass",
+        "expected_outcome": "success",
+        "input_sha256": "ba6f210ed847946e5c6de4ffa8a932b00e7513d0278aa9cd46a124ba685ceab9"
+      },
+      {
+        "id": "string-stage26-raw-literal-interpolation",
+        "status": "pass",
+        "expected_outcome": "success",
+        "input_sha256": "d04e58876bc2184ef066fcd9373763331e2d9be130f0e0fce4b52fb6d2c22254"
+      },
+      {
+        "id": "string-stage26-block-comment-delimiters",
+        "status": "pass",
+        "expected_outcome": "success",
+        "input_sha256": "79cbddcabf355ec79e0d99fcfd346bf4abd24a7e25273c0a211d63c584d89dd9"
+      },
+      {
+        "id": "string-stage26-line-comment-delimiters",
+        "status": "pass",
+        "expected_outcome": "success",
+        "input_sha256": "f7276f0834816ad6423d08234ca41524fe8c72a0c409c44b638319b248eeafe8"
+      },
+      {
+        "id": "string-stage26-quoted-identifier",
+        "status": "pass",
+        "expected_outcome": "success",
+        "input_sha256": "58da56687632f0237a901c5d18ce83fa485a57caf932092ab200b0ab13ab7520"
+      },
+      {
+        "id": "string-stage26-parentheses-256",
+        "status": "pass",
+        "expected_outcome": "success",
+        "input_sha256": "bed588c495e9e84e2064df69b8521e4f6cc4a430135910a659d70172de93ec88"
+      },
+      {
+        "id": "string-stage26-multiple-interpolations",
+        "status": "pass",
+        "expected_outcome": "success",
+        "input_sha256": "2851b6c6373f1b59b5a5e980fe9645766860f2cad8b662243d105b8dbd0ecf58"
+      },
+      {
+        "id": "string-stage26-lexical-capture",
+        "status": "pass",
+        "expected_outcome": "success",
+        "input_sha256": "543eaeb2bb3cebe20aabcaec4307b7a0325c78c1fb4f119251a2e6a15e83cdea"
+      },
+      {
+        "id": "string-stage26-lazy-branch",
+        "status": "pass",
+        "expected_outcome": "success",
+        "input_sha256": "f445b68db8ea13bd0d24344326460b99092f2bdfd8c1d35a87988cedc7a4eab7"
+      },
+      {
+        "id": "string-stage26-first-runtime-error",
+        "status": "pass",
+        "expected_outcome": "failure",
+        "input_sha256": "03e92b8223d6c77bff840d2d23ae45545456c5ed442301f747fe6930d1096c95"
+      },
+      {
+        "id": "string-stage26-inner-missing-name",
+        "status": "pass",
+        "expected_outcome": "failure",
+        "input_sha256": "a12cbc995771118eda7df929bda99050b3f643d7bcd139eb0c2628ea215dd5d7"
+      },
+      {
+        "id": "string-stage26-utf16-runtime-span",
+        "status": "pass",
+        "expected_outcome": "failure",
+        "input_sha256": "d4981e61a43b7081c89b24b4b4122842e97df634d1afbb7e0af3eb4495ce0d7e"
+      },
+      {
+        "id": "string-stage26-inner-missing-operand",
+        "status": "pass",
+        "expected_outcome": "failure",
+        "input_sha256": "23abaed8112c81a559735d9f7a7bf75c82b3063898ee428f3f916e0dc237ed92"
+      },
+      {
+        "id": "string-stage26-inner-extra-close",
+        "status": "pass",
+        "expected_outcome": "success",
+        "input_sha256": "716467ecb2956949eb2b390684fae3a6a3bf17505f342603602747ea9f2c7455"
+      },
+      {
+        "id": "string-stage26-first-syntax-error",
+        "status": "pass",
+        "expected_outcome": "failure",
+        "input_sha256": "dfc1cb0a368132ec618ea245049793f9059394022c9dce86bc980dc0d1dcff55"
+      },
+      {
+        "id": "string-stage26-raw-wrong-hash-literal",
+        "status": "pass",
+        "expected_outcome": "success",
+        "input_sha256": "0c1153b2837cf3cba5347e4840626fbe13c14f1e889f03b033f108c7c657f838"
+      },
+      {
+        "id": "string-stage26-multiline-indent",
+        "status": "pass",
+        "expected_outcome": "success",
+        "input_sha256": "d65e19939779a89bd39b774cbe5cbceccb5577a55b15e8eeaedac0c506a8fd15"
+      },
+      {
+        "id": "string-stage26-multiline-continuation",
+        "status": "pass",
+        "expected_outcome": "success",
+        "input_sha256": "3aa7904466929152ed80781c76c5fd67fc089a329c41a80afa2560b0469ed688"
+      },
+      {
+        "id": "string-stage26-unicode-valid-escapes",
+        "status": "pass",
+        "expected_outcome": "success",
+        "input_sha256": "a6ddf9cee1085993962a55810690fbee6481c47c0994c7a4276e3e9b7fbd5514"
+      },
+      {
+        "id": "string-stage26-raw-shorter-close",
+        "status": "pass",
+        "expected_outcome": "success",
+        "input_sha256": "e290f8391a6358600743792068ea1e1def632b0e5f02732ca9154d1a0dc6de62"
+      },
+      {
+        "id": "string-stage26-syntax-before-later-escape",
+        "status": "pass",
+        "expected_outcome": "failure",
+        "input_sha256": "aa9a00caa254d7edbdf4beda32bd851c38faa3ed37f42bfcd301b11eca205b33"
+      },
+      {
+        "id": "string-stage26-syntax-before-later-eof",
+        "status": "pass",
+        "expected_outcome": "failure",
+        "input_sha256": "576eabcb72e7c482115a134ef946a679158c977393ef7126c4bc80d3f9f4fbb7"
+      },
+      {
+        "id": "string-stage26-syntax-before-later-comment",
+        "status": "pass",
+        "expected_outcome": "failure",
+        "input_sha256": "3e5ce8aa9f3a2284d3ddab6ed9ac80a99c87c2bbcb54f6c319fb2cb35f605c46"
+      },
+      {
+        "id": "string-stage26-raw-syntax-before-later-escape",
+        "status": "pass",
+        "expected_outcome": "failure",
+        "input_sha256": "7d1a550949a64caa76416ef98f36550decd1e1daa2c771bf8562b30c05f34d39"
+      },
+      {
+        "id": "string-stage26-multiline-syntax-before-later-escape",
+        "status": "pass",
+        "expected_outcome": "failure",
+        "input_sha256": "1c6955f2e3d7b0bb741b975794d7ddae21137848cc72cfe523252635a44ce832"
+      },
+      {
+        "id": "string-stage26-outer-syntax-before-inner-escape",
+        "status": "pass",
+        "expected_outcome": "failure",
+        "input_sha256": "c98779e549e7d931a046d0a4e918693f40d52c6d4243e3d40285734a4960d521"
+      },
+      {
+        "id": "string-stage26-unicode-before-syntax-error",
+        "status": "pass",
+        "expected_outcome": "failure",
+        "input_sha256": "1131f7a1ad70cb0015df075c67dc24046f20b9e9ac4581fea3a8d5a929490728"
+      },
+      {
+        "id": "string-stage26-boundary-syntax-before-later-escape",
+        "status": "pass",
+        "expected_outcome": "failure",
+        "input_sha256": "ab4d883471ca58b3613460554574696c56c4cc2cdc265fc3ff35060bff55b325"
+      }
+    ]
+  },
+  "validation_accounting": {
+    "rust_passed": 441,
+    "rust_harness_passed": 450,
+    "rust_isolated_child_duplicate_passed": 9,
+    "rust_isolated_child_tests": [
+      "authored_chains_parse_clone_resolve_compile_and_drop_on_small_stack",
+      "authored_power_assertion_compiler_and_cleanup_use_small_stack",
+      "authored_partial_parse_resolve_and_compile_errors_release_on_small_stack",
+      "authored_scope_type_and_shared_work_guards_release_on_small_stack",
+      "authored_frontend_program_survives_host_reentry_retry_cancel_and_terminal_release",
+      "nested_lexical_accepted_near_guard_traverses_frontend_on_small_stack",
+      "original_nested_lexical_64_rejects_without_aborting_small_stack",
+      "nested_lexical_partial_errors_and_shared_work_guard_release_small_stack",
+      "nested_lexical_host_reentry_read_failure_retry_cancel_and_terminal_cleanup"
+    ],
+    "rust_intentionally_ignored": 1,
+    "python_passed": 194,
+    "required_commands": 7
+  },
+  "validation_stdout_interleaving": {
+    "review_path": "target/m2/stage26-validation-accounting-review-01.json",
+    "literal": "3 filtered outnested lexical phase=resolve\n; finished in 0.01s",
+    "count": 1,
+    "raw_bytes_normalized": false
+  },
+  "persistent_accounting": {
+    "unique_sequences": 151,
+    "executions": 302,
+    "comparisons": 2622,
+    "unexecuted_groups": [
+      {
+        "group": "P09",
+        "reason": "Java-only module-cache probe stage12-java-module-identity-01 observes same URI/source identity retained, changed source at same URI ignored (marker remains1), distinct URI/evaluator identity separated. Rust multi-source module-cache parity is unimplemented; same-module identity is compared."
+      },
+      {
+        "group": "P10",
+        "reason": "Java observable sequence comparisons do not expose heap counts; Rust architectural GC coverage is separate."
+      },
+      {
+        "group": "P11",
+        "reason": "Real Java class-initialization read observed via @Deprecated { ...(read(\"life:class\")) } in stage12-java-host-path-01; Rust annotation frontend unsupported, so actual Host-in-class cross-language reentry remains unexecuted. Internal scheduler tests are separate."
+      },
+      {
+        "group": "P12",
+        "reason": "Terminal context/token/heap cleanup is covered by separate Rust lifecycle tests, not Java raw-byte equivalence."
+      },
+      {
+        "group": "P05",
+        "reason": "Indirect cyclic hierarchy property traversal new A {}.missing timed out after successful class identity calls in stage12-java-observations-03; traversal is observed oracle-timeout, not a compatibility pass."
+      }
+    ]
+  },
+  "platform_accounting": {
+    "total": 6078,
+    "shared_engine_passed": 6078,
+    "oracle_passed": {
+      "rust": 6076,
+      "node": 6076,
+      "browser": 6076
+    },
+    "node_scenarios": 85,
+    "browser_scenarios": 85,
+    "known_gaps": [
+      "regex-unicode-15-vs-16",
+      "regex-zero-width-supplementary"
+    ]
+  },
+  "historical_dependencies": {
+    "summary": {
+      "path": "reports/m2/stage25-final-summary.json",
+      "bytes": 88297,
+      "sha256": "4c32b3627d6391dfe879d55643191179d364bad0f3030ed8ae956f62f3ed3dcb"
+    },
+    "archives": [
+      {
+        "path": "reports/m2/class-lifecycle-stage25-final-evidence.tar.gz",
+        "bytes": 2284198,
+        "sha256": "0261ee5bb4832bb8b30374eaec19840c59e389af3e53c044c07ae47f3af80c9c"
+      },
+      {
+        "path": "reports/m2/exploration-stage25-evidence.tar.gz",
+        "bytes": 6167195,
+        "sha256": "8b240db91dbbdf308ea6a1ebfcfbf1afb44c53781d5c7115d5a9f97cdeb5cf57"
+      },
+      {
+        "path": "reports/m2/exploration-stage25-part02-evidence.tar.gz",
+        "bytes": 10641057,
+        "sha256": "c74749dbb4f32d2cb00f330a41a732ac6b87e379a6f520c9c7abf8738ac71f04"
+      },
+      {
+        "path": "reports/m2/exploration-stage25-part03-evidence.tar.gz",
+        "bytes": 10636854,
+        "sha256": "de4b9550d4fce6ffd1132aadb2b6a2e1eb2eb90c00c974a3344553a22fa98687"
+      },
+      {
+        "path": "reports/m2/exploration-stage25-part04-evidence.tar.gz",
+        "bytes": 8416630,
+        "sha256": "828e1f5c4420a2990a10f3c142813505fce065e5b5092a62ca92839fc9909e46"
+      },
+      {
+        "path": "reports/m2/exploration-stage25-part05-evidence.tar.gz",
+        "bytes": 10326761,
+        "sha256": "1666767d7470ed9d0b1783d48abf986e6345f74e3db89fc9f9b77122d6d23f55"
+      },
+      {
+        "path": "reports/m2/exploration-stage25-part06-evidence.tar.gz",
+        "bytes": 1782514,
+        "sha256": "486f36ce280288f56193e25b570ca703bf2d84757ac63fe4aba949af44eee51a"
+      },
+      {
+        "path": "reports/m2/frontend-stage25-final-evidence.tar.gz",
+        "bytes": 241060,
+        "sha256": "5d99f46ca17c89c5d9f060987341dbaa0073082be49a6adc54eb81144a433512"
+      },
+      {
+        "path": "reports/m2/language-stage25-final-evidence.tar.gz",
+        "bytes": 5145762,
+        "sha256": "17e65e685cc13b1b40d78907fa29f5ba85e5f3cc5d7318e1d2ea8736f24137ca"
+      },
+      {
+        "path": "reports/m2/lifecycle-stage25-final-evidence.tar.gz",
+        "bytes": 1088390,
+        "sha256": "814bb83f8709ea4f3cb7aa6a054c1c2b7fd1d5a89ce827abb9845b8ca4693e34"
+      },
+      {
+        "path": "reports/m2/native-frontend-stage25-final-evidence.tar.gz",
+        "bytes": 2744291,
+        "sha256": "d65b9c54dde07e21a7be052dad97b6abd42217b7d5569a708bd6fede1226c3b9"
+      },
+      {
+        "path": "reports/m2/platforms-stage25-final-evidence.tar.gz",
+        "bytes": 3779401,
+        "sha256": "8699a43215d4294d6b3716fe812349c8c192de9be4be85de9e04000f0a8a200a"
+      },
+      {
+        "path": "reports/m2/runtime-stage25-final-evidence.tar.gz",
+        "bytes": 1890474,
+        "sha256": "974edc260f991e84bcb910c2097baf1bef7d4e684032a573706f0debdc6db749"
+      },
+      {
+        "path": "reports/m2/source-stage25-final-evidence.tar.gz",
+        "bytes": 5970573,
+        "sha256": "05608f60d3942f7090f583b717147d4369dc503725bd77496f01533bdd2dbdbf"
+      },
+      {
+        "path": "reports/m2/validation-stage25-final-evidence.tar.gz",
+        "bytes": 2734205,
+        "sha256": "c67d7160815cc499403edd26eeb3c94bd0ad1d858094d7fd80d62cc7f57333d7"
+      }
+    ],
+    "recursive_historical_audit_performed": false
+  },
+  "gates": [
+    {
+      "name": "report",
+      "expected_exit": 0,
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/m2_language.py",
+        "--verify-report",
+        "target/m2/language-stage26-final-01"
+      ],
+      "exit_code": 0,
+      "timed_out": false,
+      "stdout_sha256": "275a191cb3f8de527e26216722146fee2313a5810bbdcaaf8e6e5c24f4df9e5f",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "development",
+      "expected_exit": 0,
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/m2_language.py",
+        "--verify-development",
+        "target/m2/language-stage26-final-01"
+      ],
+      "exit_code": 0,
+      "timed_out": false,
+      "stdout_sha256": "275a191cb3f8de527e26216722146fee2313a5810bbdcaaf8e6e5c24f4df9e5f",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "subset",
+      "expected_exit": 1,
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/m2_language.py",
+        "--verify-subset",
+        "target/m2/language-stage26-final-01"
+      ],
+      "exit_code": 1,
+      "timed_out": false,
+      "stdout_sha256": "275a191cb3f8de527e26216722146fee2313a5810bbdcaaf8e6e5c24f4df9e5f",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "full",
+      "expected_exit": 1,
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/m2_language.py",
+        "--verify-full",
+        "target/m2/language-stage26-final-01"
+      ],
+      "exit_code": 1,
+      "timed_out": false,
+      "stdout_sha256": "275a191cb3f8de527e26216722146fee2313a5810bbdcaaf8e6e5c24f4df9e5f",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "class-report",
+      "expected_exit": 0,
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/m2_class_lifecycle.py",
+        "--verify-report",
+        "target/m2/class-lifecycle-stage26-final-01"
+      ],
+      "exit_code": 0,
+      "timed_out": false,
+      "stdout_sha256": "72d5e6dc6030bfe305585af5573c0784a65e700c1314b4760230d842ea8ebef5",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "class-contract",
+      "expected_exit": 0,
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/m2_class_lifecycle.py",
+        "--verify-contract",
+        "target/m2/class-lifecycle-stage26-final-01"
+      ],
+      "exit_code": 0,
+      "timed_out": false,
+      "stdout_sha256": "72d5e6dc6030bfe305585af5573c0784a65e700c1314b4760230d842ea8ebef5",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "reviews": [
+    {
+      "path": "target/m2/stage26-frontend-review-final-01.json",
+      "bytes": 9307,
+      "sha256": "5933551ab7ab016fbd0bf26608446f6ec302ded5c1e09d939b6238af8b31c057"
+    },
+    {
+      "path": "target/m2/stage26-lifecycle-review-final-02.json",
+      "bytes": 10881,
+      "sha256": "ef346459a224f9fa52e12add0cd2844fd75a241b205fa06607fb17fad58239c2"
+    },
+    {
+      "path": "target/m2/stage26-root-review-final-01.json",
+      "bytes": 4148,
+      "sha256": "56b5a7c0d19a33da1803036c729412afba1c1b5de8db2ffeffc8eea636ecde6d"
+    },
+    {
+      "path": "target/m2/stage26-evidence-review-final-01.json",
+      "bytes": 13642,
+      "sha256": "414d52b7a676da9c97727018305d0fb6a5a63d261061cc435016d2f13fe61067"
+    },
+    {
+      "path": "target/m2/stage26-packager-review-final-02.json",
+      "bytes": 10688,
+      "sha256": "de7170c7330612a0e2c58374e9a81a16de6efafdfee72135298967f723d63f76"
+    },
+    {
+      "path": "target/m2/stage26-evidence-core-review-final-01.json",
+      "bytes": 3604,
+      "sha256": "3ff65c5dd0e593081e2865d25d33e42895bad2fdfd3c17ca02918dbdb78db441"
+    },
+    {
+      "path": "target/m2/stage26-packager-config-review-final-02.json",
+      "bytes": 5878,
+      "sha256": "39b6485e0044a7258760f573b14b7506b55b59c99a70723c33379ef6d2038bb9"
+    },
+    {
+      "path": "target/m2/stage26-completion-helper-review-final-04.json",
+      "bytes": 5705,
+      "sha256": "c32d67a4f853204ee23d34f4bdcc9571df57c826fc46d12172d40b5a0ea31b6b"
+    }
+  ],
+  "helper_provenance": [
+    {
+      "path": "target/m2/stage26_seal.py",
+      "bytes": 13205,
+      "sha256": "e5abda761a0e937f37406e5768d855955cfb972615067159716179dc4ad79554"
+    },
+    {
+      "path": "target/m2/stage26_suite_checks.py",
+      "bytes": 22789,
+      "sha256": "dadefcacd4e5e1802e9d59858d1a05bbaaa71ce0baee701cdd3b2162ac7fdde2"
+    },
+    {
+      "path": "target/m2/stage26-suite-checks-preparation.json",
+      "bytes": 640,
+      "sha256": "56d2c04bc36354911e54cc4242417dab21c457315aa0fb635ed069f83585b868"
+    }
+  ],
+  "omitted_build_caches": [
+    {
+      "path": "target/m2/lifecycle-stage26-final-01/build",
+      "payload_enumerated": false,
+      "reason": "Direct suite Cargo build cache; captured artifact, build output and source snapshots are retained."
+    },
+    {
+      "path": "target/m2/class-lifecycle-stage26-final-01/build",
+      "payload_enumerated": false,
+      "reason": "Direct suite Cargo build cache; captured artifact, build output and source snapshots are retained."
+    },
+    {
+      "path": "target/m2/stage26-release-probe-build-final-02/build",
+      "payload_enumerated": false,
+      "reason": "Exploratory Cargo build cache; complete captured source/artifact/process records retained."
+    },
+    {
+      "path": "target/m2/stage26-release-probe-build-final-01/build",
+      "payload_enumerated": false,
+      "reason": "Exploratory Cargo build cache; complete captured source/artifact/process records retained."
+    },
+    {
+      "path": "target/m2/stage26-release-probe-build-prelim-01/build",
+      "payload_enumerated": false,
+      "reason": "Exploratory Cargo build cache; complete captured source/artifact/process records retained."
+    }
+  ],
+  "omitted_cache_payload_sizes_and_hashes_claimed": false,
+  "audit_preparation": {
+    "path": "target/m2/stage26-post-seal-audit-preparation-01.json",
+    "sha256": "a1a79e1eacfacf3d5fd0e71fe883e5e07540f10a0f11e860ee2fb1da38175e5b"
+  },
+  "audit_correction": {
+    "path": "target/m2/stage26-post-seal-audit-preparation-02.json",
+    "sha256": "0151ee7f0f795ae037f9487330afe92d5a58c978a5901890032b9affa78e5575",
+    "original_auditor_preserved": true,
+    "original_audit_failure_preserved": true,
+    "new_helper_is_post_seal_supplement": true,
+    "original_ten_archives_resealed": false
+  },
+  "read_only_git_commands": [
+    {
+      "command": [
+        "git",
+        "cat-file",
+        "--batch"
+      ],
+      "exit_code": 0,
+      "request_sha256": "a6f1faade8e8a391f6f6a9846fcf621a61833ef9be403631e47b3bb39f01c6f7",
+      "stdout_sha256": "0cbe91564ec2d43f3a6914393824882cc5edc0a54bfbe5da338b3ab569d90bb0",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "git",
+        "merge-base",
+        "--is-ancestor",
+        "282934b41f9b897815150f91b8ee139dd5a78f76",
+        "51b132bba82587e3cb013c46f5c452c22fa01ccf"
+      ],
+      "exit_code": 0,
+      "request_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "git",
+        "cat-file",
+        "--batch"
+      ],
+      "exit_code": 0,
+      "request_sha256": "4396caeb57f7ed6889a3ea646024c38f6ec1869ba4c4717caf8b8e30f4890639",
+      "stdout_sha256": "70b24fc79658f885e033b426be6661aeb7453185d10a77d83efdd9d2b5046155",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "git",
+        "cat-file",
+        "--batch"
+      ],
+      "exit_code": 0,
+      "request_sha256": "78e329128ac45f0b386058e9c728bcc82b0442cc83d414af6ace23f5ef1a7d6d",
+      "stdout_sha256": "3da610fd2f2ca124cd340f02fa637b59aeac5ca081caf58c4ebf1b5091fa021f",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--name-status",
+        "--no-renames",
+        "282934b41f9b897815150f91b8ee139dd5a78f76",
+        "51b132bba82587e3cb013c46f5c452c22fa01ccf",
+        "--",
+        "tests/fixtures/m2",
+        "compatibility/m2-class-lifecycle",
+        "crates/pkl-runtime/tests"
+      ],
+      "exit_code": 0,
+      "request_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "3e3133fbc635c72e3535fa61ea1d4113569f6f0cb11b073bb8ad4c91d9f1a5e9",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "git",
+        "cat-file",
+        "--batch"
+      ],
+      "exit_code": 0,
+      "request_sha256": "cdc810268f0ca01a8efb3726f2e42717966c2f5dbe9a4713c265abb389c928c1",
+      "stdout_sha256": "021e0bdeeee84cc6ea5625e4d29bb2faa40acb2746c81aa7d60c9c995f642cd1",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "retained_helpers_executed": false,
+  "retained_evaluators_executed": false,
+  "compatibility_complete": false,
+  "performance_targets_established": false,
+  "limitations": [
+    "Only final suite source snapshots are bound to the implementation commit; exploratory and failed support captures retain original identities and provenance.",
+    "Historical Stage25 archive files are checked by direct size/hash identities without recursively inspecting inherited inventories.",
+    "The 36 added and two known-failure language verdicts and all platform primitive bytes are recomputed; other semantic outcomes are not rerun.",
+    "Omitted Cargo build cache payloads are deliberately unenumerated; no payload size or hash is claimed.",
+    "This audit does not establish whole-language compatibility, release platform coverage, arbitrary syntax depth, or performance targets."
+  ],
+  "audit_helper": {
+    "path": "target/m2/stage26_post_seal_audit_02.py",
+    "sha256": "820de5bcd490c088877bb0d57a325225f1276c793abb9b5a849bd4c5f6934e4c",
+    "bytes": 44679,
+    "source_utf8": "\"\"\"Independent read-only Stage26 seal audit. Never execute retained helpers or evaluators.\"\"\"\nfrom pathlib import Path\nfrom collections import Counter\nimport ast\nimport datetime\nimport hashlib\nimport json\nimport platform\nimport re\nimport subprocess\nimport sys\nimport tarfile\n\nsys.dont_write_bytecode = True\nROOT = Path.cwd()\nBASELINE = '282934b41f9b897815150f91b8ee139dd5a78f76'\nSUITES = ['language', 'validation', 'platforms', 'frontend', 'runtime', 'lifecycle', 'class-lifecycle', 'native-frontend']\nsys.path.insert(0, str(ROOT / 'tools'))\nimport evidence\n\n\ndef need(condition, message):\n    if not condition:\n        raise AssertionError(message)\n\n\ndef digest(raw):\n    return hashlib.sha256(raw).hexdigest()\n\n\ndef sha(path):\n    value = hashlib.sha256()\n    with Path(path).open('rb') as stream:\n        for block in iter(lambda: stream.read(1024 * 1024), b''):\n            value.update(block)\n    return value.hexdigest()\n\n\ndef read(path):\n    return json.loads(Path(path).read_bytes())\n\n\ndef identity(row):\n    path = ROOT / row['path']\n    need(path.is_file() and not path.is_symlink(), 'missing/linked file: ' + row['path'])\n    need(sha(path) == row['sha256'], 'file hash: ' + row['path'])\n    if 'bytes' in row:\n        need(path.stat().st_size == row['bytes'], 'file size: ' + row['path'])\n    return dict(path=row['path'], bytes=path.stat().st_size, sha256=row['sha256'])\n\n\nGIT_COMMANDS = []\n\n\ndef git(arguments, raw=None):\n    # The only child processes used by this auditor are read-only Git queries.\n    need(arguments[0] in ['cat-file', 'diff', 'merge-base'], 'non-read-only Git request')\n    result = subprocess.run(['git', *arguments], cwd=ROOT, input=raw, capture_output=True)\n    need(result.returncode == 0, 'Git query failed: ' + repr(arguments))\n    GIT_COMMANDS.append(dict(command=['git', *arguments], exit_code=result.returncode,\n                             request_sha256=digest(raw or b''), stdout_sha256=digest(result.stdout),\n                             stderr_sha256=digest(result.stderr)))\n    return result\n\n\ndef parse_batch(request, response, commit):\n    requested = request.decode().splitlines()\n    need(request.endswith(b'\\n') and all(name.startswith(commit + ':') for name in requested), 'Git request framing')\n    names = [name[len(commit) + 1:] for name in requested]\n    need(names == sorted(set(names)), 'Git request source order/duplicates')\n    offset = 0\n    payloads = {}\n    ids = {}\n    for name in names:\n        end = response.index(b'\\n', offset)\n        fields = response[offset:end].split()\n        need(len(fields) == 3 and fields[1] == b'blob', 'Git blob header: ' + name)\n        size = int(fields[2])\n        raw = response[end + 1:end + 1 + size]\n        offset = end + size + 2\n        need(len(raw) == size and response[offset - 1:offset] == b'\\n', 'Git blob framing: ' + name)\n        oid = hashlib.sha1(b'blob ' + str(size).encode() + b'\\0' + raw).hexdigest()\n        need(oid == fields[0].decode(), 'Git object hash: ' + name)\n        payloads[name], ids[name] = raw, oid\n    need(offset == len(response), 'extra Git batch bytes')\n    return payloads, ids\n\n\ndef committed_many(commit, names):\n    request = ('\\n'.join(commit + ':' + name for name in sorted(set(names))) + '\\n').encode()\n    return parse_batch(request, git(['cat-file', '--batch'], request).stdout, commit)[0]\n\n\ndef scenario_set(raw):\n    values = [ast.literal_eval(node.value) for node in ast.parse(raw).body\n              if isinstance(node, ast.Assign) and any(isinstance(t, ast.Name) and t.id == 'REQUIRED_SCENARIOS' for t in node.targets)]\n    need(len(values) == 1, 'platform scenario definition coverage')\n    return values[0]\n\n\ndef main():\n    need(len(sys.argv) == 2 and re.fullmatch('[0-9a-f]{40}', sys.argv[1]), 'full implementation commit required')\n    commit = sys.argv[1]\n    summary_path = ROOT / 'reports/m2/stage26-final-summary.json'\n    summary = read(summary_path)\n    need(summary['implementation_commit'] == commit and summary['status'] == 'ready', 'incomplete/wrong seal')\n    need(not summary['compatibility_complete'] and not summary['performance_targets_established']\n         and not summary['captured_evaluators_executed'], 'invalid scope claims')\n    need(set(summary['completed_suites']) == set(SUITES), 'suite summary coverage')\n    preparation_path = ROOT / 'target/m2/stage26-post-seal-audit-preparation-01.json'\n    preparation = read(preparation_path)\n    identity(preparation['auditor'])\n    identity(preparation['prepared_source_copy'])\n    original_auditor = (ROOT / preparation['auditor']['path']).read_bytes()\n    need((ROOT / preparation['prepared_source_copy']['path']).read_bytes() == original_auditor, 'original auditor preparation copy differs')\n    correction_path = ROOT / 'target/m2/stage26-post-seal-audit-preparation-02.json'\n    correction = read(correction_path)\n    need(correction['original_auditor'] == preparation['auditor'], 'correction donor differs from sealed auditor')\n    for row in [correction['original_preparation'], correction['auditor'], correction['prepared_source_copy'], correction['preparation_helper'], correction['diff'], *correction['failed_audit_capture']]:\n        identity(row)\n    need(correction['original_preparation']['path'] == str(preparation_path.relative_to(ROOT)), 'correction original preparation path differs')\n    need(correction['auditor']['path'] == str(Path(__file__).resolve().relative_to(ROOT)), 'executed correction path differs')\n    reconstructed = original_auditor.decode()\n    for substitution in correction['ordered_substitutions']:\n        need(reconstructed.count(substitution['old']) == substitution['count'], 'correction substitution occurrence count differs')\n        reconstructed = reconstructed.replace(substitution['old'], substitution['new'])\n    need(reconstructed.encode() == Path(__file__).read_bytes() == (ROOT / correction['prepared_source_copy']['path']).read_bytes(), 'executed correction differs from prepared exact substitutions')\n    failed_process = read(ROOT / 'target/m2/stage26-post-seal-audit-command-final-01/process.json')\n    need(failed_process['exit_code'] == 1 and failed_process['entrypoints_stable'] and not failed_process['capture_errors'], 'original audit failure capture differs')\n\n    records = summary['archives']\n    need(set(records) == set(SUITES) | {'source', 'support'} and len(records) == 10, 'new archive coverage')\n    need(len({row['path'] for row in records.values()}) == 10, 'duplicate archive path')\n    archives, inventories, handles = [], {}, {}\n    try:\n        for name, row in records.items():\n            identity(row)\n            evidence.verify(ROOT / row['path'])\n            archive = handles[name] = tarfile.open(ROOT / row['path'], 'r:gz')\n            inventory = json.load(archive.extractfile('EVIDENCE.json'))\n            need(inventory['excluded_patterns'] == [], 'hidden archive exclusions: ' + name)\n            inventories[name] = {entry['path']: entry for entry in inventory['files']}\n            archives.append(dict(name=name, **identity(row), inventory_files=len(inventory['files'])))\n\n        def raw(suite, name):\n            need(name in inventories[suite], 'missing archived payload: ' + suite + ':' + name)\n            return handles[suite].extractfile(name).read()\n\n        def document(suite, name):\n            return json.loads(raw(suite, name))\n\n        config = document('source', 'config.json')\n        need(config['implementation_commit'] == commit and set(config['suites']) == set(SUITES), 'configuration suite/commit mismatch')\n        identity(summary['configuration'])\n        need(raw('source', 'config.json') == (ROOT / summary['configuration']['path']).read_bytes(), 'configuration bytes differ')\n        directories = config['suites']\n        need(len(set(directories.values())) == len(SUITES), 'duplicate suite acquisition root')\n        roots = [*directories.values(), *config['support_roots']]\n        need(len(roots) == len(set(roots)), 'duplicate acquisition roots')\n        need(all(not Path(a).is_relative_to(Path(b)) for a in roots for b in roots if a != b), 'nested acquisition roots')\n        need(all(not Path(p).is_absolute() and '..' not in Path(p).parts for p in roots), 'unsafe acquisition root')\n\n        # Every copied acquisition byte must be in both the original-path table and archive inventory.\n        original_rows = {}\n        declared_omissions = []\n        for suite in [*SUITES, 'support']:\n            original = document(suite, 'STAGE26-ORIGINALS.json')\n            archive_members = set()\n            for row in original['files']:\n                need(row['archive_path'].startswith(suite + '/'), 'original archive prefix')\n                member = row['archive_path'][len(suite) + 1:]\n                need(member not in archive_members, 'duplicate original archive member')\n                archive_members.add(member)\n                expected = inventories[suite][member]\n                need(all(row[key] == expected[key] for key in ['bytes', 'sha256']), 'original/archive identity: ' + row['path'])\n                need(row['path'] not in original_rows, 'duplicate original acquisition path')\n                original_rows[row['path']] = {key: row[key] for key in ['path', 'bytes', 'sha256']}\n                identity(original_rows[row['path']])\n                if suite != 'support':\n                    need(row['path'] == directories[suite] + '/' + member, 'suite original path differs')\n                else:\n                    need(member == row['path'] and any(Path(row['path']).is_relative_to(Path(root)) for root in config['support_roots']), 'support original path outside explicit roots')\n            need(archive_members == set(inventories[suite]) - {'STAGE26-ORIGINALS.json'}, 'unlisted original payload: ' + suite)\n            declared_omissions.extend(original['omitted_build_caches'])\n            if suite == 'support':\n                need(original['explicit_roots'] == config['support_roots'], 'support root list differs')\n                need(original['omitted_build_caches'] == config['support_omitted_build_caches'], 'support omission list differs')\n                need(summary['support']['original_files'] == len(original['files']) and summary['support']['explicit_roots'] == config['support_roots'], 'support summary counts differ')\n        preflight = document('source', 'acquisition-preflight.json')\n        preflight_rows = {row['path']: row for row in preflight['files']}\n        need(len(preflight_rows) == len(preflight['files']) and preflight_rows == original_rows, 'preflight/original acquisition closure differs')\n        omissions = summary['omitted_build_caches']\n        need(len({row['path'] for row in omissions}) == len(omissions), 'duplicate cache omission')\n        need(set(declared_omissions) == set(preflight['omitted_roots']) == {row['path'] for row in omissions}, 'cache omission accounting differs')\n        need(not summary['omitted_cache_payload_sizes_and_hashes_claimed'], 'unobserved cache payload claim')\n        for row in omissions:\n            path = Path(row['path'])\n            need(path.name == 'build' and str(path.parent) in roots and not path.is_absolute() and '..' not in path.parts, 'cache omission outside direct explicit root')\n            need(row['payload_enumerated'] is False and row['reason'] and 'bytes' not in row and 'sha256' not in row, 'unjustified cache omission')\n            need(not any(Path(name).is_relative_to(path) for name in original_rows), 'omitted cache has counted payload')\n        omitted_paths = {ROOT / row['path'] for row in omissions}\n        current_paths = set()\n\n        def enumerate_original(path):\n            need(path.exists() and not path.is_symlink(), 'missing/linked original acquisition path: ' + str(path))\n            if path in omitted_paths:\n                need(path.is_dir(), 'omitted build cache is not a directory')\n            elif path.is_file():\n                current_paths.add(path.relative_to(ROOT).as_posix())\n            else:\n                for child in path.iterdir():\n                    enumerate_original(child)\n\n        for path in roots:\n            enumerate_original(ROOT / path)\n        need(current_paths == set(original_rows), 'explicit original root closure differs from archive inventory')\n\n        # Proof covers every source snapshot in final suites. Exploratory support snapshots retain their historical provenance.\n        binding = document('source', 'source-binding.json')\n        need(binding['implementation_commit'] == commit and not binding['untracked_helpers_with_separate_hashes'], 'source binding commit/helper closure')\n        need(binding['upstream_source_snapshot_copies'] == 0 and not binding['upstream_blob_proof_claimed'], 'unproven upstream source claim')\n        request, response, stderr = [raw('source', 'git-' + name + '.bin') for name in ['request', 'stdout', 'stderr']]\n        process = document('source', 'git-process.json')\n        need(process['command'] == ['git', 'cat-file', '--batch'] and process['exit_code'] == 0, 'retained Git proof process')\n        need(digest(request) == binding['git_request_sha256'] and digest(response) == binding['git_response_sha256'], 'retained Git proof hash')\n        current = git(['cat-file', '--batch'], request)\n        need(current.stdout == response and current.stderr == stderr, 'retained proof differs from exact live Git objects')\n        payloads, blob_ids = parse_batch(request, response, commit)\n        git(['merge-base', '--is-ancestor', BASELINE, commit])\n        enumerated = {(suite, name) for suite in SUITES for name in inventories[suite]\n                      if name.startswith('sources/') or name.startswith('oracle-native/sources/')}\n        bound = set()\n        for row in binding['copies']:\n            suite, name = row['suite'], row['path']\n            need(suite in SUITES and row['snapshot'].startswith(directories[suite] + '/'), 'snapshot suite path')\n            member = row['snapshot'][len(directories[suite]) + 1:]\n            need((suite, member) not in bound, 'duplicate bound snapshot')\n            bound.add((suite, member))\n            data = payloads[name]\n            need(row['git_blob'] == blob_ids[name] and row['sha256'] == digest(data) and row['bytes'] == len(data), 'snapshot Git identity: ' + name)\n            need(raw(suite, member) == data == (ROOT / name).read_bytes(), 'source snapshot/live project differs from exact commit: ' + name)\n        need(bound == enumerated, 'archived final source snapshot closure differs from Git binding')\n        need({row['path'] for row in binding['copies']} == set(payloads), 'Git request/source copy closure differs')\n        need(binding['source_snapshot_copies'] == len(bound) and binding['unique_source_files'] == len(payloads), 'source binding counts differ')\n        need(summary['source_binding'] == {key: value for key, value in binding.items() if key not in ['copies', 'untracked_helpers_with_separate_hashes']}, 'public source binding summary differs')\n\n        # Final helpers and reviews are read as bytes; none are imported or executed.\n        for row in summary['helper_provenance']:\n            identity(row)\n            need(raw('source', Path(row['path']).name) == (ROOT / row['path']).read_bytes(), 'helper source archive identity')\n        need({Path(row['path']).name for row in summary['helper_provenance']} == {'stage26_seal.py', 'stage26_suite_checks.py', 'stage26-suite-checks-preparation.json'}, 'helper provenance closure')\n        need([row['path'] for row in summary['reviews']] == config['reviews'], 'review inventory differs')\n        for row in summary['reviews']:\n            identity(row)\n            data = raw('source', Path(row['path']).name)\n            need(data == (ROOT / row['path']).read_bytes(), 'archived review identity')\n            review = json.loads(data)\n            need(review['status'] == 'pass' and review['implementation_commit'] == commit, 'unbound/failed review')\n            for name, value in review.get('source_sha256', {}).items():\n                expected = payloads.get(name)\n                if expected is None:\n                    expected = committed_many(commit, [name])[name]\n                need(digest(expected) == value, 'reviewed source differs from commit: ' + name)\n        for path in [preparation['auditor']['path'], str(preparation_path.relative_to(ROOT)), preparation['prepared_source_copy']['path']]:\n            need(path in original_rows and raw('support', path) == (ROOT / path).read_bytes(), 'auditor preparation absent from sealed support')\n        need(digest(payloads['tools/evidence.py']) == sha(ROOT / 'tools/evidence.py'), 'inventory verifier differs from commit')\n\n        reports = {suite: document(suite, 'report.json') for suite in SUITES}\n        selected_path = 'tests/fixtures/m2/cases.json'\n        sequence_path = 'compatibility/m2-class-lifecycle/manifest.json'\n        old = committed_many(BASELINE, [selected_path, sequence_path, 'tools/m1_platforms.py', 'references.lock'])\n        old_cases, cases = json.loads(old[selected_path])['cases'], json.loads(payloads[selected_path])['cases']\n        added = cases[len(old_cases):]\n        need(cases[:len(old_cases)] == old_cases and len({row['id'] for row in cases}) == len(cases), 'baseline selected cases/order changed')\n        need((len(old_cases), len(cases), len(added)) == (2688, 2724, 36), 'Stage26 selected counts differ')\n        need(Counter(row['expected_outcome'] for row in added) == {'success': 23, 'failure': 13}, 'new selected outcome counts differ')\n        old_sequences, sequences = json.loads(old[sequence_path]), json.loads(payloads[sequence_path])\n        need(sequences['sequences'][:len(old_sequences['sequences'])] == old_sequences['sequences'], 'baseline sequences/order changed')\n        need((len(old_sequences['sequences']), len(sequences['sequences'])) == (150, 151), 'sequence counts differ')\n        for name in ['schema', 'uri', 'module_name', 'power_assertions']:\n            need(sequences[name] == old_sequences[name], 'persistent context changed: ' + name)\n        need(all(row in sequences['unexecuted_groups'] for row in old_sequences['unexecuted_groups']), 'persistent unexecuted scope removed')\n        original_inputs = {row['input'] for row in old_cases}\n        for row in old_sequences['sequences']:\n            original_inputs.update('compatibility/m2-class-lifecycle/' + row[key] for key in ['source', 'expressions'])\n        for name, data in committed_many(BASELINE, original_inputs).items():\n            need(payloads[name] == data, 'baseline input bytes changed: ' + name)\n        changes = git(['diff', '--name-status', '--no-renames', BASELINE, commit, '--', 'tests/fixtures/m2', 'compatibility/m2-class-lifecycle', 'crates/pkl-runtime/tests']).stdout.decode().splitlines()\n        for change in changes:\n            status, name = change.split('\\t')\n            need(status == 'A' or (status == 'M' and name in [selected_path, sequence_path]), 'original fixture/native test changed: ' + change)\n        need(payloads['references.lock'] == old['references.lock'], 'reference pins changed')\n        old_scenarios, scenarios = scenario_set(old['tools/m1_platforms.py']), scenario_set(payloads['tools/m1_platforms.py'])\n        need(old_scenarios <= scenarios and (len(old_scenarios), len(scenarios)) == (84, 85), 'platform baseline scenario coverage changed')\n        preservation = document('source', 'preservation.json')\n        need(preservation == summary['preservation'], 'public preservation record differs')\n        expected_preservation = dict(baseline=BASELINE, original_selected=2688, current_selected=2724,\n                                     added_ids=[row['id'] for row in added], added_expected_outcomes={'success': 23, 'failure': 13},\n                                     original_sequences=150, current_sequences=151, original_platform_scenarios=84, current_platform_scenarios=85,\n                                     original_fixture_and_native_test_bytes_unchanged=True, fixture_changes=changes)\n        need(preservation == expected_preservation, 'preservation summary differs from independent Git checks')\n\n        language = reports['language']\n        need([row['id'] for row in language['results']] == [row['id'] for row in cases], 'language coverage/order differs')\n        status_counts = dict(Counter(row['status'] for row in language['results']))\n        need(language['selected_count'] == len(cases) and language['status_counts'] == status_counts, 'language accounting differs')\n        failures = {row['id']: row['status'] for row in language['results'] if row['status'] != 'pass'}\n        need(set(failures) == {'error-cycle', 'error-remainder-zero'} and failures['error-remainder-zero'] == 'mismatch'\n             and failures['error-cycle'] in ['oracle-error', 'mismatch'], 'known language failures changed/hidden')\n        result_by_id = {row['id']: row for row in language['results']}\n        selected_controls = {row['id'] for row in added} | set(failures)\n        raw_controls = []\n        for case in cases:\n            if case['id'] not in selected_controls:\n                continue\n            row = result_by_id[case['id']]\n            prefix = 'cases/' + case['id'] + '/'\n            need(raw('language', prefix + 'input.pkl') == payloads[case['input']], 'raw selected input changed')\n            channels = {}\n            for engine in ['java', 'rust']:\n                need(document('language', prefix + engine + '.process.json') == row[engine], 'raw selected process metadata differs')\n                for channel in ['stdout', 'stderr']:\n                    data = raw('language', prefix + engine + '.' + channel + '.bin')\n                    need(digest(data) == row[engine][channel + '_sha256'], 'selected raw channel hash')\n                    channels[engine, channel] = data\n            outcome = raw('language', prefix + 'java.outcome.bin')\n            need(digest(outcome) == row['java']['outcome_sha256'], 'selected oracle outcome hash')\n            java, rust = row['java'], row['rust']\n            expected = 0 if case['expected_outcome'] == 'success' else 1\n            valid_exception = re.fullmatch(rb'pkl-exception\\torg\\.pkl\\.core\\.[A-Za-z0-9_$]+\\n', outcome) is not None\n            if java['timed_out'] or java['exit_code'] != expected:\n                status = 'oracle-error'\n            elif expected == 0 and (channels['java', 'stderr'] or outcome != b'success\\n'):\n                status = 'oracle-error'\n            elif expected == 1 and (channels['java', 'stdout'] or not channels['java', 'stderr'] or not valid_exception):\n                status = 'oracle-error'\n            elif rust['timed_out']:\n                status = 'candidate-timeout'\n            elif (java['exit_code'], channels['java', 'stdout'], channels['java', 'stderr']) == (rust['exit_code'], channels['rust', 'stdout'], channels['rust', 'stderr']):\n                status = 'pass'\n            else:\n                status = 'mismatch'\n            need(status == row['status'] and (case['id'] in failures or status == 'pass'), 'selected raw verdict differs: ' + case['id'])\n            raw_controls.append(dict(id=case['id'], status=status, expected_outcome=case['expected_outcome'], input_sha256=digest(payloads[case['input']])))\n        language_counts = dict(selected_count=len(cases), status_counts=status_counts, inventory_counts=language['inventory_counts'],\n                               metamorphic_relations=len(language['metamorphic_results']), metamorphic_passed=sum(row['status'] == 'pass' for row in language['metamorphic_results']),\n                               full_gate_failure_count=len(language['full_gate_failures']), candidate=language['candidate'])\n        need(language_counts == summary['completed_suites']['language'], 'public language counts differ')\n\n        persistent = reports['class-lifecycle']\n        need(persistent['repetitions'] == 2, 'persistent repetition count differs')\n        need([(row['id'], row['repetition']) for row in persistent['cases']] == [(row['id'], repetition) for row in sequences['sequences'] for repetition in range(2)], 'persistent execution coverage/order differs')\n        calls = {row['id']: len(payloads['compatibility/m2-class-lifecycle/' + row['expressions']].decode().splitlines()) for row in sequences['sequences']}\n        for row in persistent['cases']:\n            comparisons = row['observations']['comparisons']\n            need(len(comparisons) == calls[row['id']], 'persistent call coverage differs')\n            need(all(item['status'] == 'pass' and item['raw_equal'] for item in comparisons), 'persistent comparison failed')\n        persistent_counts = dict(unique_sequences=151, executions=302, comparisons=sum(calls.values()) * 2, unexecuted_groups=persistent['unexecuted_groups'])\n        need(persistent_counts['comparisons'] == 2622 and persistent_counts == summary['completed_suites']['class-lifecycle'], 'public persistent counts differ')\n\n        validation = reports['validation']\n        need(validation['source_stability'] and validation['source_sha256_before'] == validation['source_sha256_after'], 'validation source drift')\n        required = [['cargo', 'xtask', 'verify'], ['cargo', 'fmt', '--all', '--', '--check'],\n                    ['cargo', 'clippy', '--workspace', '--all-targets', '--locked', '--', '-D', 'warnings'],\n                    ['cargo', 'test', '--workspace', '--locked'], ['cargo', 'check', '-p', 'pkl-runtime', '--target', 'wasm32-unknown-unknown', '--locked']]\n        need(len(validation['checks']) == 7 and [row['command'] for row in validation['checks'][:5]] == required, 'required check inventory differs')\n        need(validation['checks'][5]['command'][1:] == ['-m', 'unittest', 'discover', '-s', 'tools/tests', '-v']\n             and validation['checks'][6]['command'][1:] == ['tools/m2_manifest.py', '--check'], 'Python/inventory check inventory differs')\n        outputs = []\n        for index, row in enumerate(validation['checks']):\n            need(row['exit_code'] == 0 and not row.get('timed_out', False), 'required command failed')\n            parts = []\n            for channel in ['stdout', 'stderr']:\n                data = raw('validation', str(index) + '.' + channel + '.bin')\n                need(digest(data) == row[channel + '_sha256'], 'required raw channel hash')\n                parts.append(data.decode())\n            outputs.append(''.join(parts))\n        rust_text = outputs[3]\n        accounting_review_path = 'target/m2/stage26-validation-accounting-review-01.json'\n        need(accounting_review_path in original_rows, 'validation interleaving review absent from sealed support')\n        accounting_review = document('support', accounting_review_path)\n        need(accounting_review['raw_stdout_sha256'] == digest(raw('validation', '3.stdout.bin')), 'validation interleaving review binds different raw output')\n        interleaving = '3 filtered outnested lexical phase=resolve\\n; finished in 0.01s'\n        need(accounting_review['literal_interleaving'] == interleaving and rust_text.count(interleaving) == 1, 'unexpected validation stdout interleaving')\n        test_summaries = re.findall(r'test result: ok\\. (\\d+) passed; (\\d+) failed; (\\d+) ignored;', rust_text)\n        need(test_summaries and all(int(row[1]) == 0 for row in test_summaries), 'Rust harness failed/missing')\n        child_names = []\n        for filename, marker, expected in [('m2_frontend_lifecycle.rs', r'^authored frontend completed: (\\w+); stack=262144; depth=768$', 5),\n                                           ('m2_string_frontend_lifecycle.rs', r'^authored string frontend completed: (\\w+); stack=262144$', 4)]:\n            names = re.findall(r'#\\[test\\]\\s*fn\\s+(\\w+)\\s*\\(', payloads['crates/pkl-runtime/tests/' + filename].decode())\n            need(len(names) == len(set(names)) == expected and Counter(re.findall(marker, rust_text, re.M)) == Counter(names), 'isolated completion coverage: ' + filename)\n            prefix = 'test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; ' + str(expected - 1) + ' filtered out'\n            ordinary = rust_text.count(prefix + ';')\n            inserted = rust_text.count(prefix + 'nested lexical phase=resolve\\n; finished in 0.01s') if expected == 4 else 0\n            need(ordinary + inserted == expected and inserted == (1 if expected == 4 else 0), 'isolated harness coverage')\n            child_names.extend(names)\n        need(len(child_names) == len(set(child_names)) == 9, 'isolated duplicate inventory differs')\n        for name in child_names:\n            need(len(re.findall(r'^test ' + re.escape(name) + r' \\.\\.\\. ok$', rust_text, re.M)) == 2, 'isolated child/parent success coverage')\n        python = re.findall(r'Ran (\\d+) tests? in ', outputs[5])\n        need(len(python) == 1 and re.search(r'\\nOK\\s*$', outputs[5]), 'Python success summary missing')\n        harness = sum(int(row[0]) for row in test_summaries)\n        validation_counts = dict(rust_passed=harness - 9, rust_harness_passed=harness, rust_isolated_child_duplicate_passed=9,\n                                 rust_isolated_child_tests=child_names, rust_intentionally_ignored=sum(int(row[2]) for row in test_summaries),\n                                 python_passed=int(python[0]), required_commands=7)\n        need(validation_counts == summary['completed_suites']['validation'], 'public validation accounting differs')\n\n        platforms = reports['platforms']\n        execution = document('platforms', 'execution/execution.json')\n        need(platforms['execution'] == execution and platforms['source_stability'], 'platform execution/source metadata differs')\n        for target in ['node', 'browser']:\n            checks = execution[target + 'Checks']\n            need(len(checks) == len(set(checks)) == 85 and set(checks) == scenarios, 'platform scenario coverage differs')\n            need(document('platforms', 'execution/' + target + '-checks.json') == checks, 'platform scenario capture differs')\n        need(execution['browserErrors'] == [], 'recorded browser errors')\n        pin = json.loads(payloads['tools/platform/package.json'])['devDependencies']['playwright']\n        need(all(execution[key] == pin for key in ['playwright', 'playwrightCore', 'playwrightPin']), 'browser tool pin differs')\n        capture_paths = {'java': 'oracle-native/java.stdout.bin', 'rust': 'oracle-native/rust.stdout.bin', 'node': 'execution/node.stdout.bin', 'browser': 'execution/browser.stdout.bin'}\n        values = {}\n        for target, name in capture_paths.items():\n            capture = raw('platforms', name)\n            need(capture.endswith(b'\\n'), 'platform capture missing terminal newline')\n            lines = capture[:-1].split(b'\\n')\n            need(len(lines) == 6078 and all(re.fullmatch(rb'(?:[0-9a-f]{2})*', line) for line in lines), 'platform hex capture framing')\n            values[target] = [bytes.fromhex(line.decode()) for line in lines]\n        comparisons = []\n        primitive_cases = json.loads(payloads['tests/fixtures/m1/semantics/cases.json'])['cases']\n        need([row['id'] for row in platforms['comparisons']] == [row['id'] for row in primitive_cases], 'platform primitive coverage/order differs')\n        for index, recorded in enumerate(platforms['comparisons']):\n            row_values = {target: data[index] for target, data in values.items()}\n            matches = {target: row_values[target] == row_values['java'] for target in ['rust', 'node', 'browser']}\n            comparison = dict(id=recorded['id'], oracle_matches=matches, shared_engine_match=row_values['rust'] == row_values['node'] == row_values['browser'],\n                              sha256={target: digest(value) for target, value in row_values.items()})\n            if not all(matches.values()):\n                comparison['mismatched_bytes_hex'] = {target: value.hex() for target, value in row_values.items()}\n            need(comparison == recorded, 'platform raw comparison differs')\n            comparisons.append(comparison)\n        platform_counts = dict(total=len(comparisons), shared_engine_passed=sum(row['shared_engine_match'] for row in comparisons),\n                               oracle_passed={target: sum(row['oracle_matches'][target] for row in comparisons) for target in ['rust', 'node', 'browser']},\n                               node_scenarios=85, browser_scenarios=85, known_gaps=platforms['known_gaps'])\n        need(platform_counts == summary['completed_suites']['platforms'], 'public platform counts differ')\n        need(platform_counts['total'] == platform_counts['shared_engine_passed'] == 6078\n             and all(value == 6076 for value in platform_counts['oracle_passed'].values()), 'platform expected raw count differs')\n        need(set(platforms['known_gaps']) == {'regex-unicode-15-vs-16', 'regex-zero-width-supplementary'}, 'known regex gap identities changed')\n        for target in ['rust', 'node', 'browser']:\n            need({row['id'] for row in comparisons if not row['oracle_matches'][target]} == set(platforms['known_gaps']), 'platform known failures changed/hidden')\n\n        frontend = reports['frontend']\n        need(dict(cases=len(frontend['results']), passed=sum(row['passed'] for row in frontend['results'])) == summary['completed_suites']['frontend'], 'public frontend counts differ')\n        lifecycle = reports['lifecycle']\n        need(dict(cases=len(lifecycle['cases']), compatibility_complete=lifecycle['compatibility_complete'], limitations=lifecycle['limitations']) == summary['completed_suites']['lifecycle'], 'public lifecycle counts/scope differ')\n        runtime = reports['runtime']\n        runtime_counts = Counter()\n        for row in runtime['cases']:\n            observations = []\n            for target in ['java', 'rust']:\n                process = row[target]\n                need(process['status'] == 'executed', 'runtime process did not execute')\n                channels = []\n                for channel in ['stdout', 'stderr']:\n                    record = process[channel]\n                    path = Path(record['path'])\n                    relative = path.relative_to(ROOT / directories['runtime']).as_posix()\n                    data = raw('runtime', relative)\n                    need(digest(data) == record['sha256'] and len(data) == record['bytes'], 'runtime raw channel hash/size')\n                    channels.append(data)\n                observations.append((process['exit_code'], *channels))\n            equal = observations[0] == observations[1]\n            need(equal == row['raw_equal'], 'runtime raw equality differs')\n            if observations[0][0] == 0:\n                need(equal, 'runtime success bytes differ')\n                status = 'bounded-value-bytes-match'\n            else:\n                need(observations[0][0] == observations[1][0] == 1, 'runtime error exit differs')\n                status = 'diagnostic-bytes-match' if equal else 'diagnostic-byte-mismatch'\n                need(equal or row['id'] == 'forcing-cycle', 'new runtime diagnostic mismatch')\n            need(status == row['status'], 'runtime status differs from raw bytes')\n            runtime_counts[status] += 1\n        need(dict(status_counts=dict(runtime_counts), compatibility_complete=False) == summary['completed_suites']['runtime'], 'public runtime accounting differs')\n        native = reports['native-frontend']\n        need(native['source_stability'] and native['source_sha256_before'] == native['source_sha256_after'], 'native source drift')\n        native_text = raw('native-frontend', 'native-lifecycle.stdout.bin').decode()\n        native_names = re.findall(r'#\\[test\\]\\s*fn\\s+(\\w+)\\s*\\(', payloads['crates/pkl-runtime/tests/m2_string_frontend_lifecycle.rs'].decode())\n        need(len(native_names) == 4 and Counter(re.findall(r'^authored string frontend completed: (\\w+); stack=262144$', native_text, re.M)) == Counter(native_names), 'native isolated completion coverage differs')\n        # --test-threads=1 prints each parent prefix before the inherited child\n        # output and its standalone \"ok\" afterward. Require every complete block\n        # with the same child name, numeric summary, completion marker and parent\n        # success; preserve the captured bytes without joining or normalizing them.\n        names_pattern = '|'.join(re.escape(name) for name in sorted(native_names))\n        block_pattern = (r'^test (?P<name>' + names_pattern + r') \\.\\.\\. \\nrunning 1 test\\n'\n                         r'.*?^authored string frontend completed: (?P=name); stack=262144\\n'\n                         r'test (?P=name) \\.\\.\\. ok\\n\\n'\n                         r'test result: ok\\. 1 passed; 0 failed; 0 ignored; 0 measured; 3 filtered out; finished in [0-9]+\\.[0-9]+s\\n\\nok\\n')\n        blocks = list(re.finditer(block_pattern, native_text, re.M | re.S))\n        need([match.group('name') for match in blocks] == sorted(native_names), 'native serial child/parent block coverage')\n        need(native_text[:blocks[0].start()] == '\\nrunning 4 tests\\n', 'native parent harness preamble differs')\n        need(all(left.end() == right.start() for left, right in zip(blocks, blocks[1:])), 'unexpected bytes between native parent/child blocks')\n        need(re.fullmatch(r'\\ntest result: ok\\. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in [0-9]+\\.[0-9]+s\\n\\n', native_text[blocks[-1].end():]) is not None, 'native parent complete numeric summary differs')\n        for row in native['commands']:\n            need(row['exit_code'] == 0 and not row['timed_out'], 'native capture command failed')\n            for channel in ['stdout', 'stderr']:\n                need(digest(raw('native-frontend', row['name'] + '.' + channel + '.bin')) == row[channel + '_sha256'], 'native raw command hash')\n        need(dict(passed=4, source_stability=True, conditions=native['conditions']) == summary['completed_suites']['native-frontend'], 'public native counts/conditions differ')\n\n        gate_root = config['gates']\n        need(gate_root in config['support_roots'], 'gates not in explicit support roots')\n        gates = document('support', gate_root + '/report.json')['gates']\n        need(gates == summary['gates'], 'public gate records differ')\n        specs = [('report', 'tools/m2_language.py', '--verify-report', 'language', 0), ('development', 'tools/m2_language.py', '--verify-development', 'language', 0),\n                 ('subset', 'tools/m2_language.py', '--verify-subset', 'language', 1), ('full', 'tools/m2_language.py', '--verify-full', 'language', 1),\n                 ('class-report', 'tools/m2_class_lifecycle.py', '--verify-report', 'class-lifecycle', 0), ('class-contract', 'tools/m2_class_lifecycle.py', '--verify-contract', 'class-lifecycle', 0)]\n        need(len(gates) == len(specs), 'six gate inventory differs')\n        for row, (name, tool, flag, suite, expected) in zip(gates, specs):\n            need(row['name'] == name and row['expected_exit'] == row['exit_code'] == expected and not row['timed_out'], 'gate outcome differs')\n            need(row['command'][1:] == [tool, flag, directories[suite]], 'gate command differs')\n            for channel in ['stdout', 'stderr']:\n                need(digest(raw('support', gate_root + '/' + name + '.' + channel + '.bin')) == row[channel + '_sha256'], 'gate raw channel differs')\n            if suite == 'language':\n                accounting = document('support', gate_root + '/' + name + '.stdout.bin')\n                need(accounting == dict(selected=status_counts, full_gate_failures=len(language['full_gate_failures'])), 'raw gate language accounting differs')\n\n        historical = summary['historical_dependencies']\n        identity(historical['summary'])\n        old_summary_raw = committed_many(BASELINE, ['reports/m2/stage25-final-summary.json'])['reports/m2/stage25-final-summary.json']\n        need((ROOT / historical['summary']['path']).read_bytes() == old_summary_raw, 'Stage25 summary differs from baseline commit')\n        old_summary = json.loads(old_summary_raw)\n        need(historical['archives'] == old_summary['archives'], 'Stage25 direct archive dependency inventory differs')\n        historical_identities = [identity(row) for row in historical['archives'].values()]\n        need(summary['known_unverified_scope'] == config['known_unverified_scope'] and bool(summary['known_unverified_scope']), 'unverified scope missing/changed')\n        code = Path(__file__).read_bytes()\n        result = dict(schema=1, status='pass', utc=datetime.datetime.now(datetime.timezone.utc).isoformat(), implementation_commit=commit,\n                      scope='Independent read-only Stage26 archive/source/Git/raw-outcome audit. Reviewer authored no reviewed production, test, platform, sealer or suite-checker source. No retained helper or evaluator is executed.',\n                      host=platform.platform(), summary=dict(path=str(summary_path.relative_to(ROOT)), sha256=sha(summary_path), bytes=summary_path.stat().st_size),\n                      archives=archives, new_archive_count=10, original_acquisition_files=len(original_rows), original_archive_payload_identity_verified=True,\n                      source_binding=dict(source_snapshot_copies=len(bound), unique_source_files=len(payloads), all_final_archived_source_snapshots_verified=True,\n                                          retained_git_proof_matches_live_exact_commit=True, upstream_source_snapshot_copies=0),\n                      selected_contract=dict(original_cases=2688, current_cases=2724, added_cases=36, added_expected_outcomes={'success': 23, 'failure': 13},\n                                             unchanged_original_input_files=len(original_inputs), known_failures=failures, raw_new_and_known_controls=raw_controls),\n                      validation_accounting=validation_counts, validation_stdout_interleaving=dict(review_path=accounting_review_path, literal=interleaving, count=1, raw_bytes_normalized=False),\n                      persistent_accounting=persistent_counts, platform_accounting=platform_counts,\n                      historical_dependencies=dict(summary=historical['summary'], archives=historical_identities, recursive_historical_audit_performed=False),\n                      gates=gates, reviews=summary['reviews'], helper_provenance=summary['helper_provenance'], omitted_build_caches=omissions,\n                      omitted_cache_payload_sizes_and_hashes_claimed=False, audit_preparation=dict(path=str(preparation_path.relative_to(ROOT)), sha256=sha(preparation_path)),\n                      audit_correction=dict(path=str(correction_path.relative_to(ROOT)), sha256=sha(correction_path), original_auditor_preserved=True, original_audit_failure_preserved=True, new_helper_is_post_seal_supplement=True, original_ten_archives_resealed=False),\n                      read_only_git_commands=GIT_COMMANDS, retained_helpers_executed=False, retained_evaluators_executed=False,\n                      compatibility_complete=False, performance_targets_established=False,\n                      limitations=['Only final suite source snapshots are bound to the implementation commit; exploratory and failed support captures retain original identities and provenance.',\n                                   'Historical Stage25 archive files are checked by direct size/hash identities without recursively inspecting inherited inventories.',\n                                   'The 36 added and two known-failure language verdicts and all platform primitive bytes are recomputed; other semantic outcomes are not rerun.',\n                                   'Omitted Cargo build cache payloads are deliberately unenumerated; no payload size or hash is claimed.',\n                                   'This audit does not establish whole-language compatibility, release platform coverage, arbitrary syntax depth, or performance targets.'],\n                      audit_helper=dict(path=str(Path(__file__).resolve().relative_to(ROOT)), sha256=digest(code), bytes=len(code), source_utf8=code.decode()))\n        output = ROOT / 'reports/m2/stage26-post-seal-audit.json'\n        with output.open('x') as stream:\n            json.dump(result, stream, indent=2)\n            stream.write('\\n')\n        print(json.dumps(dict(status='pass', output=str(output.relative_to(ROOT)), sha256=sha(output), new_archives=10,\n                              source_snapshot_copies=len(bound), unique_source_files=len(payloads), original_acquisition_files=len(original_rows))))\n    finally:\n        for archive in handles.values():\n            archive.close()\n\n\nif __name__ == '__main__':\n    main()\n"
+  }
+}
