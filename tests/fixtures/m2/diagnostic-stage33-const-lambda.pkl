@@ -1,0 +1,2 @@
+f = () -> new Dynamic { const bad: Int = 1 }
+result = 1

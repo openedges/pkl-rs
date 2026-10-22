@@ -1,0 +1,2 @@
+function build(): Dynamic = new { good = 1 }
+result = build().good

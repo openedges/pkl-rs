@@ -95,6 +95,7 @@ class PlatformEvidenceTests(unittest.TestCase):
             'm2-lossless-diagnostic-frame-identity',
             'm2-numeric-value-frame-spans',
             'm2-frontend-annotation-owners',
+            'm2-frontend-const-owner-and-parent-order',
         }
         names = sorted(m1_platforms.REQUIRED_SCENARIOS)
         valid = {'nodeChecks': names, 'browserChecks': names, 'browserErrors': [],

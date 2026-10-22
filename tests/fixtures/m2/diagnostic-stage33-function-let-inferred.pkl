@@ -1,0 +1,2 @@
+function build() = let (a = 1) new { bad: Int = a }
+result = 1

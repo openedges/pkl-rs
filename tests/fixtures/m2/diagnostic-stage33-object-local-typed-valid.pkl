@@ -1,0 +1,2 @@
+x = new { local function build(): Dynamic = new { good = 1 }; value = build().good }
+result = x.value

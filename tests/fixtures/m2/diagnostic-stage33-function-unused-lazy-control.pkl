@@ -1,0 +1,2 @@
+function unused() = new { good = throw("unused") }
+result = 2

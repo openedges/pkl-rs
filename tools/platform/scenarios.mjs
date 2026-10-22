@@ -20,6 +20,7 @@ import { stringRepresentationCases, stringRepresentationContext } from './string
 import { diagnosticFrameIdentityCases, diagnosticFrameIdentityContext } from './diagnostic-frame-identity-cases.mjs';
 import { numericValueFrameCases, numericValueFrameContext } from './numeric-value-frame-cases.mjs';
 import { frontendOwnerCases, frontendOwnerContext } from './frontend-owner-cases.mjs';
+import { frontendParentCases, frontendParentContext } from './frontend-parent-cases.mjs';
 
 // Identical assertions execute inside Node and an actual Chromium page.
 export async function scenarios(api) {
@@ -356,6 +357,22 @@ export async function scenarios(api) {
         const evaluate = () => api.evaluateLanguage(fixture.source,
           frontendOwnerContext.uri, frontendOwnerContext.moduleName,
           fixture.expression, frontendOwnerContext.powerAssertions);
+        if (Object.hasOwn(fixture, 'expectedError')) {
+          throws(evaluate, fixture.expectedError);
+        } else {
+          eq(evaluate(), fixture.expectedValue);
+        }
+      }
+    }
+  });
+  await check('m2-frontend-const-owner-and-parent-order', () => {
+    // The complete Java payload is compared at the same fixed URI. Each call
+    // starts a fresh evaluator, including unused-body and accepted controls.
+    for (let repetition = 0; repetition < 2; repetition++) {
+      for (const fixture of frontendParentCases) {
+        const evaluate = () => api.evaluateLanguage(fixture.source,
+          frontendParentContext.uri, frontendParentContext.moduleName,
+          fixture.expression, frontendParentContext.powerAssertions);
         if (Object.hasOwn(fixture, 'expectedError')) {
           throws(evaluate, fixture.expectedError);
         } else {

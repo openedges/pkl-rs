@@ -1,6 +1,7 @@
-//! Scope names for the rejected non-local object property type annotation.
+//! Scope names for selected resolver diagnostics.
 //!
-//! Captured only on a resolver replay after that rejection. The pinned
+//! Captured only on a replay after a non-local object property type annotation,
+//! non-local const modifier, or inferred-parent rejection. The pinned
 //! SymbolTable assigns child ordinals to scopes, not to rendered path strings.
 use crate::syntax::{Expr, ExprKind, UnaryOp};
 use crate::value::PklString;
@@ -42,6 +43,12 @@ impl OwnerScopes {
         self.0
             .as_ref()
             .map(|scopes| scopes.last().unwrap().name.clone())
+    }
+
+    pub(super) fn enclosing_name(&self) -> Option<PklString> {
+        self.0
+            .as_ref()
+            .map(|scopes| scopes[scopes.len() - 2].name.clone())
     }
 
     pub(super) fn is_enabled(&self) -> bool {

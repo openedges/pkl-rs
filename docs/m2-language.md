@@ -89,9 +89,13 @@ Rejected non-local object property type annotations retain their authored member
 paths, including nested objects, functions, let scopes, entries and generators.
 The selected cases compare the complete rejection bytes and accepted module,
 class and object-local controls. Diagnostic naming preserves UTF-16 identity,
-literal entry labels and scope-local ordinals. Earlier const-modifier and
-inferred-parent errors remain separate exploratory differences, alongside
-nested-negation overflow frames and unavailable source sections.
+literal entry labels and scope-local ordinals. Const-modifier errors retain their
+enclosing owner, while inferred-parent errors retain the expression owner.
+Method bodies accept contextual `new {}`; lambda and parenthesized contexts
+retain their rejection. Successful untyped and explicit Dynamic method calls,
+lazy unused methods and earlier lexical errors provide controls. Class and
+collection return-type inference, nested-negation overflow frames and unavailable
+source sections remain exploratory differences.
 
 The default uses Java's API setting with power assertions disabled. Selected
 cases can opt in with `"power_assertions": true`; the runner then passes

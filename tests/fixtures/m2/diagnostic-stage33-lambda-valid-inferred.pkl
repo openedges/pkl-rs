@@ -1,0 +1,2 @@
+f = () -> new { good = 1 }
+result = f().good

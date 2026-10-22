@@ -1,0 +1,2 @@
+function build(): Dynamic = if (true) (let (a = 1) (new { good = a })) else (new { good = 2 })
+result = build().good

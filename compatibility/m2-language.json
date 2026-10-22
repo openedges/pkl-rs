@@ -62340,6 +62340,732 @@
       ]
     },
     {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "diagnostic-stage33-module-function",
+      "input": "tests/fixtures/m2/diagnostic-stage33-module-function.pkl",
+      "input_sha256": "2db0c8191468ce9b491750039a6b0cb73c932002f13cd374b7d54da14499ec43",
+      "required": true,
+      "requirements": [
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "diagnostic-stage33-lambda",
+      "input": "tests/fixtures/m2/diagnostic-stage33-lambda.pkl",
+      "input_sha256": "7a24a6f3a4a2cbea0a9ee3bdd8abdbc58f480bae48741866557ce3b11ca1919d",
+      "required": true,
+      "requirements": [
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:objects",
+        "semantic:closures",
+        "semantic:types"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "diagnostic-stage33-unused-invalid-function",
+      "input": "tests/fixtures/m2/diagnostic-stage33-unused-invalid-function.pkl",
+      "input_sha256": "66c8986a31bfebbf0cec9922f8063be1f16803b7ce9352373b2bd294491ee7f8",
+      "required": true,
+      "requirements": [
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "diagnostic-stage33-const-annotation",
+      "input": "tests/fixtures/m2/diagnostic-stage33-const-annotation.pkl",
+      "input_sha256": "d2d048e5eb9e0a7c9f354b0061215e8fa81a8ff2064403b3b9c19cf6d09edaa3",
+      "required": true,
+      "requirements": [
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:objects",
+        "semantic:modifiers",
+        "semantic:types"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "diagnostic-stage33-object-local-function",
+      "input": "tests/fixtures/m2/diagnostic-stage33-object-local-function.pkl",
+      "input_sha256": "820b1c16b78fd9dd1e3d15e526beba86bf9767d8d2aef64804642498b7a7b491",
+      "required": true,
+      "requirements": [
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "diagnostic-stage33-const-negative",
+      "input": "tests/fixtures/m2/diagnostic-stage33-const-negative.pkl",
+      "input_sha256": "0742fdaa8273ee0f7e9c2aaf5480dbeffcaf5284d6b79316b8c14c7bd5bb5675",
+      "required": true,
+      "requirements": [
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:objects",
+        "semantic:modifiers",
+        "semantic:types"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "diagnostic-stage33-const-nested",
+      "input": "tests/fixtures/m2/diagnostic-stage33-const-nested.pkl",
+      "input_sha256": "e13e6ca5f9997df7fcd9fc846c7a0433c0d5ede1b645fb37080d1b795aafccfd",
+      "required": true,
+      "requirements": [
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:objects",
+        "semantic:modifiers",
+        "semantic:types"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "diagnostic-stage33-const-quoted",
+      "input": "tests/fixtures/m2/diagnostic-stage33-const-quoted.pkl",
+      "input_sha256": "d2ab8e2a579f42f0bee9b7f5beab43c0baeb4c501ca2b63c7adf382629383749",
+      "required": true,
+      "requirements": [
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:objects",
+        "semantic:modifiers",
+        "semantic:types",
+        "semantic:strings"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "diagnostic-stage33-const-function",
+      "input": "tests/fixtures/m2/diagnostic-stage33-const-function.pkl",
+      "input_sha256": "282c289900406ad1091d88cc330dd375af3f75d096ebfa8f3953d040386da39a",
+      "required": true,
+      "requirements": [
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:objects",
+        "semantic:modifiers",
+        "semantic:functions",
+        "semantic:types"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "diagnostic-stage33-const-lambda",
+      "input": "tests/fixtures/m2/diagnostic-stage33-const-lambda.pkl",
+      "input_sha256": "afe14251c3d712f6f9da724c5e631220e25a74bd60e787ab5b06e6b24c955424",
+      "required": true,
+      "requirements": [
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:objects",
+        "semantic:modifiers",
+        "semantic:closures",
+        "semantic:types"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "diagnostic-stage33-const-let",
+      "input": "tests/fixtures/m2/diagnostic-stage33-const-let.pkl",
+      "input_sha256": "f2192d16325a177c9ad2dd6af1536ef844e817e8f668835a830b844ec07f2452",
+      "required": true,
+      "requirements": [
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:objects",
+        "semantic:modifiers",
+        "semantic:types",
+        "semantic:name-resolution"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "diagnostic-stage33-const-entry",
+      "input": "tests/fixtures/m2/diagnostic-stage33-const-entry.pkl",
+      "input_sha256": "a7902cd7f600098d9e0b534e87a8bec5007d4463b8a4a53d84cae39145a3d823",
+      "required": true,
+      "requirements": [
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:objects",
+        "semantic:modifiers",
+        "semantic:types",
+        "semantic:collections"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "diagnostic-stage33-const-earlier-error",
+      "input": "tests/fixtures/m2/diagnostic-stage33-const-earlier-error.pkl",
+      "input_sha256": "de935ce973c3ecdf2f87b5cae3a1a9b5940b17e8a0b72a2470a553161372c15d",
+      "required": true,
+      "requirements": [
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:objects",
+        "semantic:modifiers",
+        "semantic:types"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "diagnostic-stage33-const-untyped",
+      "input": "tests/fixtures/m2/diagnostic-stage33-const-untyped.pkl",
+      "input_sha256": "23c8589384b48b1a984aa5226742556aaedac015806aa0c59ab0b7c00548a945",
+      "required": true,
+      "requirements": [
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:objects",
+        "semantic:modifiers",
+        "semantic:types"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "diagnostic-stage33-local-const-control",
+      "input": "tests/fixtures/m2/diagnostic-stage33-local-const-control.pkl",
+      "input_sha256": "3f56d70f2e461f2c7dd5dc1206721d2a55692b86a60b0e9dcec1c32cba43b4ec",
+      "required": true,
+      "requirements": [
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:objects",
+        "semantic:modifiers"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "diagnostic-stage33-class-const-control",
+      "input": "tests/fixtures/m2/diagnostic-stage33-class-const-control.pkl",
+      "input_sha256": "f673a3598776f2db46cbb29921d74c70672481ea2d8e45b950802ffb2bf3632a",
+      "required": true,
+      "requirements": [
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:objects",
+        "semantic:modifiers",
+        "semantic:classes"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "diagnostic-stage33-module-const-control",
+      "input": "tests/fixtures/m2/diagnostic-stage33-module-const-control.pkl",
+      "input_sha256": "53faa747c1e7745b791139c77376bf33615493e43e4caee0a95551711e0b13ca",
+      "required": true,
+      "requirements": [
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:objects",
+        "semantic:modifiers"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "diagnostic-stage33-lambda-dynamic",
+      "input": "tests/fixtures/m2/diagnostic-stage33-lambda-dynamic.pkl",
+      "input_sha256": "d06e8e897b1673ef34244e63a8b28239ea9f243db6de8cf1b8f9d61a861018d8",
+      "required": true,
+      "requirements": [
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:objects",
+        "semantic:closures",
+        "semantic:types"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "diagnostic-stage33-object-local-function-dynamic",
+      "input": "tests/fixtures/m2/diagnostic-stage33-object-local-function-dynamic.pkl",
+      "input_sha256": "a07805c69cd055c3fd81407f96cedddddc7f69b0ce7ef28d064eb338b4165dc0",
+      "required": true,
+      "requirements": [
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "diagnostic-stage33-function-return-type",
+      "input": "tests/fixtures/m2/diagnostic-stage33-function-return-type.pkl",
+      "input_sha256": "313bc14c27b54ad7e68fd4e5ac06019e7f5988489df2e0b727e63256c1ae5961",
+      "required": true,
+      "requirements": [
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "diagnostic-stage33-function-valid-inferred",
+      "input": "tests/fixtures/m2/diagnostic-stage33-function-valid-inferred.pkl",
+      "input_sha256": "29ee5f486552b93c437229382db6fbe2bbe7a319a9cb7bedff1d058a0d0793df",
+      "required": true,
+      "requirements": [
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:objects",
+        "semantic:functions"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "diagnostic-stage33-lambda-valid-inferred",
+      "input": "tests/fixtures/m2/diagnostic-stage33-lambda-valid-inferred.pkl",
+      "input_sha256": "8fb38dd26de90c745c75decce414b765dc5c6f7d57a6df7fa5e5b0d77cec4dc3",
+      "required": true,
+      "requirements": [
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:objects",
+        "semantic:closures",
+        "semantic:types"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "diagnostic-stage33-function-nested-inferred",
+      "input": "tests/fixtures/m2/diagnostic-stage33-function-nested-inferred.pkl",
+      "input_sha256": "fd5c575d8d8770a782590da194b4565e5e833be1f8f6123e8833c752b61ed84c",
+      "required": true,
+      "requirements": [
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "diagnostic-stage33-lambda-quoted-inferred",
+      "input": "tests/fixtures/m2/diagnostic-stage33-lambda-quoted-inferred.pkl",
+      "input_sha256": "58d1217c0dfb46d0a70047369c7b6a42825f68ac8ecb333b1adfc93a9d953af7",
+      "required": true,
+      "requirements": [
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:objects",
+        "semantic:closures",
+        "semantic:types",
+        "semantic:strings"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "diagnostic-stage33-function-let-inferred",
+      "input": "tests/fixtures/m2/diagnostic-stage33-function-let-inferred.pkl",
+      "input_sha256": "e54a7372ac572890eb48295249146d273382056e24f9a9306bee324a2c9dbd87",
+      "required": true,
+      "requirements": [
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:name-resolution"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "diagnostic-stage33-function-entry-inferred",
+      "input": "tests/fixtures/m2/diagnostic-stage33-function-entry-inferred.pkl",
+      "input_sha256": "8dfa338d20cc5069aa6760cb5e952be54654ed66cdeb3499f52eba1fe16f5c76",
+      "required": true,
+      "requirements": [
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:collections"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "diagnostic-stage33-function-body-earlier-error",
+      "input": "tests/fixtures/m2/diagnostic-stage33-function-body-earlier-error.pkl",
+      "input_sha256": "900e268c14ef8d7ce0533356b201b818b3f3f84c811b45aa80d118b1fefa4160",
+      "required": true,
+      "requirements": [
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "diagnostic-stage33-lambda-body-earlier-error",
+      "input": "tests/fixtures/m2/diagnostic-stage33-lambda-body-earlier-error.pkl",
+      "input_sha256": "b586099cf8146de4ff3f0aa9372b41884afd0213f7b02b4cd2d8c25639376ba8",
+      "required": true,
+      "requirements": [
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:objects",
+        "semantic:closures",
+        "semantic:types"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "diagnostic-stage33-function-const-before-parent",
+      "input": "tests/fixtures/m2/diagnostic-stage33-function-const-before-parent.pkl",
+      "input_sha256": "1459d98db811d6ac4807683fabf0a9586c517c29be3383ab0e7bfc1345a3b3ae",
+      "required": true,
+      "requirements": [
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:objects",
+        "semantic:modifiers",
+        "semantic:functions",
+        "semantic:types"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "diagnostic-stage33-let-valid-inferred",
+      "input": "tests/fixtures/m2/diagnostic-stage33-let-valid-inferred.pkl",
+      "input_sha256": "018426b2710f28b2b4ec81d725f2a1b250ae93015da96e00117092b28b544021",
+      "required": true,
+      "requirements": [
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:objects",
+        "semantic:name-resolution"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "diagnostic-stage33-lambda-argument-new",
+      "input": "tests/fixtures/m2/diagnostic-stage33-lambda-argument-new.pkl",
+      "input_sha256": "1270ba0c1f67469bfa76790623f07972f468b8fb7bf0a7f4629cabc2e6a1c647",
+      "required": true,
+      "requirements": [
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:objects",
+        "semantic:closures",
+        "semantic:types"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "diagnostic-stage33-object-local-typed-valid",
+      "input": "tests/fixtures/m2/diagnostic-stage33-object-local-typed-valid.pkl",
+      "input_sha256": "7301df4c09ccfbb17d4b9e84cab018e4a6445f4656f05470ed54eec6b72ca1a1",
+      "required": true,
+      "requirements": [
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "diagnostic-stage33-function-if-let-paren-valid",
+      "input": "tests/fixtures/m2/diagnostic-stage33-function-if-let-paren-valid.pkl",
+      "input_sha256": "61c0f9bed486fb33b9366d49b795ded9ee1e0f48cb0c25687d957e099e615980",
+      "required": true,
+      "requirements": [
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types",
+        "semantic:name-resolution"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "diagnostic-stage33-function-unused-lazy-control",
+      "input": "tests/fixtures/m2/diagnostic-stage33-function-unused-lazy-control.pkl",
+      "input_sha256": "1f03b7713603cf05e20212cee9a58c54b7e5b53985a061b32488e9acc23c219f",
+      "required": true,
+      "requirements": [
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "diagnostic-stage33-local-const-unused-control",
+      "input": "tests/fixtures/m2/diagnostic-stage33-local-const-unused-control.pkl",
+      "input_sha256": "8cd2cfb7652be42b9f330fe99661641b9f4f984ae0f436ce34fc2bce9b2c7ee7",
+      "required": true,
+      "requirements": [
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:objects",
+        "semantic:modifiers",
+        "semantic:lazy-evaluation"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "diagnostic-stage33-function-typed-valid",
+      "input": "tests/fixtures/m2/diagnostic-stage33-function-typed-valid.pkl",
+      "input_sha256": "9b080c2067e3835c59087f2abf7fa58d0862c0d813c5f38df6e125d41f0cc1cc",
+      "required": true,
+      "requirements": [
+        "semantic:diagnostics",
+        "semantic:shared-engine",
+        "semantic:objects",
+        "semantic:functions",
+        "semantic:types"
+      ]
+    },
+    {
       "adapter": null,
       "execution": {
         "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
@@ -153752,9 +154478,9 @@
   "comparison_boundary": "evaluateExpressionString(ModuleSource.path(same absolute URI), expression) UTF-8 stdout; whole PklException.getMessage() UTF-8 stderr and exit 1; no trimming. Power assertions default to disabled; an explicit per-case power_assertions boolean enables the same option in both probes. Stringification alone is not typed value/API compatibility.",
   "completion": "Every required semantic/source requirement needs implementation/test mappings and complete passing execution. Pending/unmapped/unimplemented/mismatch remains a full-gate failure.",
   "counts": {
-    "cases": 4086,
+    "cases": 4122,
     "cases_by_execution": {
-      "ready": 3086,
+      "ready": 3122,
       "unimplemented": 960,
       "unmapped": 40
     },
@@ -154289,7 +155015,9 @@
           "diagnostic-stage32-quoted-name",
           "diagnostic-stage32-astral-name",
           "diagnostic-stage32-surrogate-name",
-          "diagnostic-stage32-entry-surrogate"
+          "diagnostic-stage32-entry-surrogate",
+          "diagnostic-stage33-const-quoted",
+          "diagnostic-stage33-lambda-quoted-inferred"
         ],
         "state": "partial"
       }
@@ -155790,7 +156518,11 @@
           "types-stage18-class-for-module",
           "types-stage18-following-const",
           "diagnostic-stage32-let-body",
-          "diagnostic-stage32-typed-let-initializer"
+          "diagnostic-stage32-typed-let-initializer",
+          "diagnostic-stage33-const-let",
+          "diagnostic-stage33-function-let-inferred",
+          "diagnostic-stage33-let-valid-inferred",
+          "diagnostic-stage33-function-if-let-paren-valid"
         ],
         "state": "partial"
       }
@@ -155862,7 +156594,7 @@
           "Selected non-generic and finite generic const-read retries, shared generic let roots and let/for lexical barriers are covered; complete lexical-scope, general lazy generic resolution and runtime type-node identity still retain gaps.",
           "Nullable collection defaults, some missing/literal/default-root diagnostics, general inferred generic new construction and complete Reference argument diagnostic frames retain exploratory gaps; these are not counted as passing selected cases."
         ],
-        "scope": "Selected probes preserve unforced fixed initializers, class type-before-modifier errors, fixed override checks before body forcing, and fixed Reference metadata without evaluating referent bodies. Stage 16: Selected lazy member calls isolate receiver slots and alias const checks remain deferred until a lexical read executes. Stage 17: Evaluator-owned executable and type-use nodes preserve selected non-generic local const-property resolution across retries, distinct inline/lambda uses, shared let roots, recursive depth, inherited annotations, and lazy collection members; per-call receiver slots remain separate. Stage 18 adds finite recursive generic checks with lexical constraint-template substitutions, including changing actual arguments, parameter shadowing, root-parameter alias chains and inline/lambda argument captures. Generic local-writing let constraints retain their declaration call target and its unbound parameter interpretation; selected retry sharing is recorded separately from complete type-node identity. Stage 18 adds selected let-body and for-generator lexical const-depth boundaries while retaining enclosing const levels, plus their complete raw diagnostics and lambda controls. Selected generic collection-element amendments derive defaults after actual type substitution, retaining existing class objects, lazy bodies, nested collection shapes and first failure/retry behavior. Deferred Reference referent validation runs at the reached authored resolution site before the checked value; original diagnostic gaps remain separately recorded. Stage 19 adds bounded shared-metadata regressions for finite deep and branching actual arguments, observable class-argument swaps, inline/lambda/shared-let recursion, recursive Reference validation, and distinct wrapper actuals. Original Java stack errors, historical native abort evidence, full language semantics and performance remain separately accounted. Stage20 adds bounded nullable defaults, inferred collection amendments, null identity and repeated default failures; complete nullable and collection semantics remain unverified. Stage21 adds bounded direct symbolic constructors, actual-argument diagnostics, lazy class defaults, collection body controls and persistent retries; complete constructors, lexical roots and builtin coverage remain unverified. Stage22 adds bounded strict Map construction, boxed/hash-prefix key semantics, lazy nested generic values, insertion-order iteration and HAMT-ordered equality/hash forcing; complete Map APIs and language coverage remain unverified. Five late Stage22 scalar witnesses retain the observed Paguro HashCollisionNode find/assoc asymmetry after Listing cache warm-up, including distinct table entries and insertion-order length. Stage23 adds bounded strict Set construction, immediate element hashing and deduplication, boxed/cache-sensitive membership, Set defaults and generic aliases, eager nested element checks, structural equality/hash, insertion-order generation/spreading and raw null/default diagnostic controls; complete Set APIs and language coverage remain unverified. Stage 32 adds bounded forbidden non-local object property type-annotation diagnostic ownership, nested declaration paths, earlier-error controls and valid module/class/object-local annotations; complete frontend diagnostics remain separately unverified.",
+        "scope": "Selected probes preserve unforced fixed initializers, class type-before-modifier errors, fixed override checks before body forcing, and fixed Reference metadata without evaluating referent bodies. Stage 16: Selected lazy member calls isolate receiver slots and alias const checks remain deferred until a lexical read executes. Stage 17: Evaluator-owned executable and type-use nodes preserve selected non-generic local const-property resolution across retries, distinct inline/lambda uses, shared let roots, recursive depth, inherited annotations, and lazy collection members; per-call receiver slots remain separate. Stage 18 adds finite recursive generic checks with lexical constraint-template substitutions, including changing actual arguments, parameter shadowing, root-parameter alias chains and inline/lambda argument captures. Generic local-writing let constraints retain their declaration call target and its unbound parameter interpretation; selected retry sharing is recorded separately from complete type-node identity. Stage 18 adds selected let-body and for-generator lexical const-depth boundaries while retaining enclosing const levels, plus their complete raw diagnostics and lambda controls. Selected generic collection-element amendments derive defaults after actual type substitution, retaining existing class objects, lazy bodies, nested collection shapes and first failure/retry behavior. Deferred Reference referent validation runs at the reached authored resolution site before the checked value; original diagnostic gaps remain separately recorded. Stage 19 adds bounded shared-metadata regressions for finite deep and branching actual arguments, observable class-argument swaps, inline/lambda/shared-let recursion, recursive Reference validation, and distinct wrapper actuals. Original Java stack errors, historical native abort evidence, full language semantics and performance remain separately accounted. Stage20 adds bounded nullable defaults, inferred collection amendments, null identity and repeated default failures; complete nullable and collection semantics remain unverified. Stage21 adds bounded direct symbolic constructors, actual-argument diagnostics, lazy class defaults, collection body controls and persistent retries; complete constructors, lexical roots and builtin coverage remain unverified. Stage22 adds bounded strict Map construction, boxed/hash-prefix key semantics, lazy nested generic values, insertion-order iteration and HAMT-ordered equality/hash forcing; complete Map APIs and language coverage remain unverified. Five late Stage22 scalar witnesses retain the observed Paguro HashCollisionNode find/assoc asymmetry after Listing cache warm-up, including distinct table entries and insertion-order length. Stage23 adds bounded strict Set construction, immediate element hashing and deduplication, boxed/cache-sensitive membership, Set defaults and generic aliases, eager nested element checks, structural equality/hash, insertion-order generation/spreading and raw null/default diagnostic controls; complete Set APIs and language coverage remain unverified. Stage 32 adds bounded forbidden non-local object property type-annotation diagnostic ownership, nested declaration paths, earlier-error controls and valid module/class/object-local annotations; complete frontend diagnostics remain separately unverified. Stage 33 adds bounded const-modifier ownership before property-scope entry, method inferred-new versus lambda first-error selection, explicit-parent and earlier-error controls, and successful Dynamic/untyped method and unused-body controls. Non-Dynamic typed method return inference remains outside this repair.",
         "source": "compatibility/m2-mappings.json"
       },
       "tests": {
@@ -157027,6 +157759,8 @@
           "set-stage23-collision-asymmetry-generator-length",
           "set-stage23-format-nested-list",
           "diagnostic-stage32-local-lazy-control",
+          "diagnostic-stage33-function-unused-lazy-control",
+          "diagnostic-stage33-local-const-unused-control",
           "types-stage17-inline-is-local",
           "types-stage17-inline-is-const",
           "types-stage17-inline-as-local",
@@ -157739,7 +158473,43 @@
           "diagnostic-stage32-for-entry-body",
           "diagnostic-stage32-typed-let-initializer",
           "diagnostic-stage32-typed-type-predicate",
-          "diagnostic-stage32-entry-surrogate"
+          "diagnostic-stage32-entry-surrogate",
+          "diagnostic-stage33-module-function",
+          "diagnostic-stage33-lambda",
+          "diagnostic-stage33-unused-invalid-function",
+          "diagnostic-stage33-const-annotation",
+          "diagnostic-stage33-object-local-function",
+          "diagnostic-stage33-const-negative",
+          "diagnostic-stage33-const-nested",
+          "diagnostic-stage33-const-quoted",
+          "diagnostic-stage33-const-function",
+          "diagnostic-stage33-const-lambda",
+          "diagnostic-stage33-const-let",
+          "diagnostic-stage33-const-entry",
+          "diagnostic-stage33-const-earlier-error",
+          "diagnostic-stage33-const-untyped",
+          "diagnostic-stage33-local-const-control",
+          "diagnostic-stage33-class-const-control",
+          "diagnostic-stage33-module-const-control",
+          "diagnostic-stage33-lambda-dynamic",
+          "diagnostic-stage33-object-local-function-dynamic",
+          "diagnostic-stage33-function-return-type",
+          "diagnostic-stage33-function-valid-inferred",
+          "diagnostic-stage33-lambda-valid-inferred",
+          "diagnostic-stage33-function-nested-inferred",
+          "diagnostic-stage33-lambda-quoted-inferred",
+          "diagnostic-stage33-function-let-inferred",
+          "diagnostic-stage33-function-entry-inferred",
+          "diagnostic-stage33-function-body-earlier-error",
+          "diagnostic-stage33-lambda-body-earlier-error",
+          "diagnostic-stage33-function-const-before-parent",
+          "diagnostic-stage33-let-valid-inferred",
+          "diagnostic-stage33-lambda-argument-new",
+          "diagnostic-stage33-object-local-typed-valid",
+          "diagnostic-stage33-function-if-let-paren-valid",
+          "diagnostic-stage33-function-unused-lazy-control",
+          "diagnostic-stage33-local-const-unused-control",
+          "diagnostic-stage33-function-typed-valid"
         ],
         "state": "partial"
       }
@@ -157989,7 +158759,7 @@
           "Full modifier combinations, annotation metadata, generic class inheritance and the complete class/member error corpus remain outside this bounded selection.",
           "Caught upstream PklBugException duplicate hidden/local outputs and any recorded exploratory mismatches remain separate failures, without development exceptions."
         ],
-        "scope": "Selected class fixed properties preserve declaration fixedness through inheritance, reject instance assignment and amendment before forcing bodies, and retain member/type initialization error order. Raw comparisons cover only the linked fixtures at their actual URIs. Stage 14 adds selected authored type-resolution order, generic parameter scope and nested substitution, class/alias arity ordering, and owner signature diagnostics; persistent failed-declaration state has a separate sequence contract. Stage 15 adds selected non-generic recursive constraint block graphs and declaration type scope, plus builtin Class argument erasure and arity ordering. At Stage 15 recursive generic constraints remained open; Stage 16 adds bounded shared receiver-slot support. Stage 19 adds bounded shared-metadata regressions for finite deep and branching actual arguments, observable class-argument swaps, inline/lambda/shared-let recursion, recursive Reference validation, and distinct wrapper actuals. Original Java stack errors, historical native abort evidence, full language semantics and performance remain separately accounted. Stage20 adds bounded nullable defaults, inferred collection amendments, null identity and repeated default failures; complete nullable and collection semantics remain unverified. Stage21 adds bounded direct symbolic constructors, actual-argument diagnostics, lazy class defaults, collection body controls and persistent retries; complete constructors, lexical roots and builtin coverage remain unverified. Stage22 adds bounded strict Map construction, boxed/hash-prefix key semantics, lazy nested generic values, insertion-order iteration and HAMT-ordered equality/hash forcing; complete Map APIs and language coverage remain unverified. Stage23 adds bounded strict Set construction, immediate element hashing and deduplication, boxed/cache-sensitive membership, Set defaults and generic aliases, eager nested element checks, structural equality/hash, insertion-order generation/spreading and raw null/default diagnostic controls; complete Set APIs and language coverage remain unverified. Stage 32 adds bounded forbidden non-local object property type-annotation diagnostic ownership, nested declaration paths, earlier-error controls and valid module/class/object-local annotations; complete frontend diagnostics remain separately unverified.",
+        "scope": "Selected class fixed properties preserve declaration fixedness through inheritance, reject instance assignment and amendment before forcing bodies, and retain member/type initialization error order. Raw comparisons cover only the linked fixtures at their actual URIs. Stage 14 adds selected authored type-resolution order, generic parameter scope and nested substitution, class/alias arity ordering, and owner signature diagnostics; persistent failed-declaration state has a separate sequence contract. Stage 15 adds selected non-generic recursive constraint block graphs and declaration type scope, plus builtin Class argument erasure and arity ordering. At Stage 15 recursive generic constraints remained open; Stage 16 adds bounded shared receiver-slot support. Stage 19 adds bounded shared-metadata regressions for finite deep and branching actual arguments, observable class-argument swaps, inline/lambda/shared-let recursion, recursive Reference validation, and distinct wrapper actuals. Original Java stack errors, historical native abort evidence, full language semantics and performance remain separately accounted. Stage20 adds bounded nullable defaults, inferred collection amendments, null identity and repeated default failures; complete nullable and collection semantics remain unverified. Stage21 adds bounded direct symbolic constructors, actual-argument diagnostics, lazy class defaults, collection body controls and persistent retries; complete constructors, lexical roots and builtin coverage remain unverified. Stage22 adds bounded strict Map construction, boxed/hash-prefix key semantics, lazy nested generic values, insertion-order iteration and HAMT-ordered equality/hash forcing; complete Map APIs and language coverage remain unverified. Stage23 adds bounded strict Set construction, immediate element hashing and deduplication, boxed/cache-sensitive membership, Set defaults and generic aliases, eager nested element checks, structural equality/hash, insertion-order generation/spreading and raw null/default diagnostic controls; complete Set APIs and language coverage remain unverified. Stage 32 adds bounded forbidden non-local object property type-annotation diagnostic ownership, nested declaration paths, earlier-error controls and valid module/class/object-local annotations; complete frontend diagnostics remain separately unverified. Stage 33 adds bounded const-modifier ownership before property-scope entry, method inferred-new versus lambda first-error selection, explicit-parent and earlier-error controls, and successful Dynamic/untyped method and unused-body controls. Non-Dynamic typed method return inference remains outside this repair.",
         "source": "compatibility/m2-mappings.json"
       },
       "tests": {
@@ -158350,7 +159120,8 @@
           "diagnostic-stage31-class-public-string",
           "diagnostic-stage31-class-public-bool",
           "diagnostic-stage31-class-public-null",
-          "diagnostic-stage32-class-control"
+          "diagnostic-stage32-class-control",
+          "diagnostic-stage33-class-const-control"
         ],
         "state": "partial"
       }
@@ -158382,23 +159153,28 @@
           },
           {
             "path": "crates/pkl-runtime/src/resolver.rs",
-            "sha256": "cc09e1b99c7b3b807a5238358446aea9852185284399ad8f8c0ee5dc0b3539b9",
+            "sha256": "9fe8d161e65f0e994a058bc4ef699ff1f7962af91c4ae99cba64ee8cf16e9b20",
             "symbol": "validate_modifiers"
           },
           {
             "path": "crates/pkl-runtime/src/resolver.rs",
-            "sha256": "cc09e1b99c7b3b807a5238358446aea9852185284399ad8f8c0ee5dc0b3539b9",
+            "sha256": "9fe8d161e65f0e994a058bc4ef699ff1f7962af91c4ae99cba64ee8cf16e9b20",
             "symbol": "ConstLevel"
           },
           {
             "path": "crates/pkl-runtime/src/resolver.rs",
-            "sha256": "cc09e1b99c7b3b807a5238358446aea9852185284399ad8f8c0ee5dc0b3539b9",
+            "sha256": "9fe8d161e65f0e994a058bc4ef699ff1f7962af91c4ae99cba64ee8cf16e9b20",
             "symbol": "ConstScope"
           },
           {
             "path": "crates/pkl-runtime/src/parser.rs",
             "sha256": "10b15011286730b8a1e870a5b5eb9f9d428b1ccac953dc79a6b43e3891017e53",
             "symbol": "arguments"
+          },
+          {
+            "path": "crates/pkl-runtime/src/resolver/diagnostic_owner.rs",
+            "sha256": "ba660e1df479e041d5b9f543577c7e91cac3f1eec38dc534a49758d037abb03d",
+            "symbol": "OwnerScopes"
           }
         ],
         "state": "partial"
@@ -158413,7 +159189,7 @@
           "Caught upstream PklBugException duplicate hidden/local outputs and any recorded exploratory mismatches remain separate failures, without development exceptions.",
           "Selected non-generic and finite generic const-read retries, shared generic let roots and let/for lexical barriers are covered; complete lexical-scope, general lazy generic resolution and runtime type-node identity still retain gaps."
         ],
-        "scope": "Selected class fixed properties preserve declaration fixedness through inheritance, reject instance assignment and amendment before forcing bodies, and retain member/type initialization error order. Raw comparisons cover only the linked fixtures at their actual URIs. Stage 16: Selected alias lexical property/method reads apply a deferred module const barrier, including unused and short-circuited reads. Stage 17: Selected const-method barriers, lambda lookup depth, immediate outer lexical scope, and grouped-callee parser diagnostics follow the pinned Java behavior. Stage 18 adds selected let-body and for-generator lexical const-depth boundaries while retaining enclosing const levels, plus their complete raw diagnostics and lambda controls. Stage 32 adds bounded forbidden non-local object property type-annotation diagnostic ownership, nested declaration paths, earlier-error controls and valid module/class/object-local annotations; complete frontend diagnostics remain separately unverified.",
+        "scope": "Selected class fixed properties preserve declaration fixedness through inheritance, reject instance assignment and amendment before forcing bodies, and retain member/type initialization error order. Raw comparisons cover only the linked fixtures at their actual URIs. Stage 16: Selected alias lexical property/method reads apply a deferred module const barrier, including unused and short-circuited reads. Stage 17: Selected const-method barriers, lambda lookup depth, immediate outer lexical scope, and grouped-callee parser diagnostics follow the pinned Java behavior. Stage 18 adds selected let-body and for-generator lexical const-depth boundaries while retaining enclosing const levels, plus their complete raw diagnostics and lambda controls. Stage 32 adds bounded forbidden non-local object property type-annotation diagnostic ownership, nested declaration paths, earlier-error controls and valid module/class/object-local annotations; complete frontend diagnostics remain separately unverified. Stage 33 adds bounded const-modifier ownership before property-scope entry, method inferred-new versus lambda first-error selection, explicit-parent and earlier-error controls, and successful Dynamic/untyped method and unused-body controls. Non-Dynamic typed method return inference remains outside this repair.",
         "source": "compatibility/m2-mappings.json"
       },
       "tests": {
@@ -158670,6 +159446,21 @@
           "diagnostic-stage32-object-local-control",
           "diagnostic-stage32-local-lazy-control",
           "diagnostic-stage32-hidden-annotation",
+          "diagnostic-stage33-const-annotation",
+          "diagnostic-stage33-const-negative",
+          "diagnostic-stage33-const-nested",
+          "diagnostic-stage33-const-quoted",
+          "diagnostic-stage33-const-function",
+          "diagnostic-stage33-const-lambda",
+          "diagnostic-stage33-const-let",
+          "diagnostic-stage33-const-entry",
+          "diagnostic-stage33-const-earlier-error",
+          "diagnostic-stage33-const-untyped",
+          "diagnostic-stage33-local-const-control",
+          "diagnostic-stage33-class-const-control",
+          "diagnostic-stage33-module-const-control",
+          "diagnostic-stage33-function-const-before-parent",
+          "diagnostic-stage33-local-const-unused-control",
           "types-stage17-grouped-call-top",
           "types-stage17-grouped-call-argument",
           "types-stage17-grouped-call-constraint",
@@ -158713,13 +159504,18 @@
           },
           {
             "path": "crates/pkl-runtime/src/resolver.rs",
-            "sha256": "cc09e1b99c7b3b807a5238358446aea9852185284399ad8f8c0ee5dc0b3539b9",
+            "sha256": "9fe8d161e65f0e994a058bc4ef699ff1f7962af91c4ae99cba64ee8cf16e9b20",
             "symbol": "ConstScope"
           },
           {
             "path": "crates/pkl-runtime/src/parser.rs",
             "sha256": "10b15011286730b8a1e870a5b5eb9f9d428b1ccac953dc79a6b43e3891017e53",
             "symbol": "arguments"
+          },
+          {
+            "path": "crates/pkl-runtime/src/resolver/diagnostic_owner.rs",
+            "sha256": "ba660e1df479e041d5b9f543577c7e91cac3f1eec38dc534a49758d037abb03d",
+            "symbol": "OwnerScopes"
           }
         ],
         "state": "partial"
@@ -158732,7 +159528,7 @@
           "Function amendments, full callable/builtin behavior, imports and the original function suite contracts remain outside this bounded selection.",
           "The broader function, closure, diagnostic and reflection inventories are not completed by metadata comparisons."
         ],
-        "scope": "Function and Function0..5 class types and arrow annotations retain parameter/result metadata while selected runtime value checks use arity. Comparisons distinguish annotation checks from a lambda declaration's own argument checks and distinguish Reference type tests from exported-type equality. Stage 14 adds selected authored type-resolution order, generic parameter scope and nested substitution, class/alias arity ordering, and owner signature diagnostics; persistent failed-declaration state has a separate sequence contract. Stage 15 adds selected non-generic recursive constraint block graphs and declaration type scope, plus builtin Class argument erasure and arity ordering. At Stage 15 recursive generic constraints remained open; Stage 16 adds bounded shared receiver-slot support. Stage 16: Selected lambdas snapshot the custom receiver at creation; function and local-writing let roots isolate subsequent receiver mutations. Stage 17: Selected const-method barriers, lambda lookup depth, immediate outer lexical scope, and grouped-callee parser diagnostics follow the pinned Java behavior. Stage 18 adds selected let-body and for-generator lexical const-depth boundaries while retaining enclosing const levels, plus their complete raw diagnostics and lambda controls. Selected generic constraint lambdas retain invocation-specific type argument captures. Stage 19 adds bounded shared-metadata regressions for finite deep and branching actual arguments, observable class-argument swaps, inline/lambda/shared-let recursion, recursive Reference validation, and distinct wrapper actuals. Original Java stack errors, historical native abort evidence, full language semantics and performance remain separately accounted. Stage21 adds bounded direct symbolic constructors, actual-argument diagnostics, lazy class defaults, collection body controls and persistent retries; complete constructors, lexical roots and builtin coverage remain unverified. Stage22 adds bounded strict Map construction, boxed/hash-prefix key semantics, lazy nested generic values, insertion-order iteration and HAMT-ordered equality/hash forcing; complete Map APIs and language coverage remain unverified. Stage 24 additionally covers bounded Collection List/Set classification, eager versus lazy nested validation, aliases/defaults, nullable constructor timing, selected metadata and complete diagnostics. Stage 32 adds bounded forbidden non-local object property type-annotation diagnostic ownership, nested declaration paths, earlier-error controls and valid module/class/object-local annotations; complete frontend diagnostics remain separately unverified.",
+        "scope": "Function and Function0..5 class types and arrow annotations retain parameter/result metadata while selected runtime value checks use arity. Comparisons distinguish annotation checks from a lambda declaration's own argument checks and distinguish Reference type tests from exported-type equality. Stage 14 adds selected authored type-resolution order, generic parameter scope and nested substitution, class/alias arity ordering, and owner signature diagnostics; persistent failed-declaration state has a separate sequence contract. Stage 15 adds selected non-generic recursive constraint block graphs and declaration type scope, plus builtin Class argument erasure and arity ordering. At Stage 15 recursive generic constraints remained open; Stage 16 adds bounded shared receiver-slot support. Stage 16: Selected lambdas snapshot the custom receiver at creation; function and local-writing let roots isolate subsequent receiver mutations. Stage 17: Selected const-method barriers, lambda lookup depth, immediate outer lexical scope, and grouped-callee parser diagnostics follow the pinned Java behavior. Stage 18 adds selected let-body and for-generator lexical const-depth boundaries while retaining enclosing const levels, plus their complete raw diagnostics and lambda controls. Selected generic constraint lambdas retain invocation-specific type argument captures. Stage 19 adds bounded shared-metadata regressions for finite deep and branching actual arguments, observable class-argument swaps, inline/lambda/shared-let recursion, recursive Reference validation, and distinct wrapper actuals. Original Java stack errors, historical native abort evidence, full language semantics and performance remain separately accounted. Stage21 adds bounded direct symbolic constructors, actual-argument diagnostics, lazy class defaults, collection body controls and persistent retries; complete constructors, lexical roots and builtin coverage remain unverified. Stage22 adds bounded strict Map construction, boxed/hash-prefix key semantics, lazy nested generic values, insertion-order iteration and HAMT-ordered equality/hash forcing; complete Map APIs and language coverage remain unverified. Stage 24 additionally covers bounded Collection List/Set classification, eager versus lazy nested validation, aliases/defaults, nullable constructor timing, selected metadata and complete diagnostics. Stage 32 adds bounded forbidden non-local object property type-annotation diagnostic ownership, nested declaration paths, earlier-error controls and valid module/class/object-local annotations; complete frontend diagnostics remain separately unverified. Stage 33 adds bounded const-modifier ownership before property-scope entry, method inferred-new versus lambda first-error selection, explicit-parent and earlier-error controls, and successful Dynamic/untyped method and unused-body controls. Non-Dynamic typed method return inference remains outside this repair.",
         "source": "compatibility/m2-mappings.json"
       },
       "tests": {
@@ -159036,6 +159832,22 @@
           "diagnostic-stage32-module-function",
           "diagnostic-stage32-unused-invalid-function",
           "diagnostic-stage32-object-local-function",
+          "diagnostic-stage33-module-function",
+          "diagnostic-stage33-unused-invalid-function",
+          "diagnostic-stage33-object-local-function",
+          "diagnostic-stage33-const-function",
+          "diagnostic-stage33-object-local-function-dynamic",
+          "diagnostic-stage33-function-return-type",
+          "diagnostic-stage33-function-valid-inferred",
+          "diagnostic-stage33-function-nested-inferred",
+          "diagnostic-stage33-function-let-inferred",
+          "diagnostic-stage33-function-entry-inferred",
+          "diagnostic-stage33-function-body-earlier-error",
+          "diagnostic-stage33-function-const-before-parent",
+          "diagnostic-stage33-object-local-typed-valid",
+          "diagnostic-stage33-function-if-let-paren-valid",
+          "diagnostic-stage33-function-unused-lazy-control",
+          "diagnostic-stage33-function-typed-valid",
           "types-stage18-default-style-lambda"
         ],
         "state": "partial"
@@ -159136,7 +159948,14 @@
           "diagnostic-stage30-lambda-question",
           "diagnostic-stage30-lambda-low",
           "diagnostic-stage32-typed-lambda",
-          "diagnostic-stage32-typed-nested-lambda"
+          "diagnostic-stage32-typed-nested-lambda",
+          "diagnostic-stage33-lambda",
+          "diagnostic-stage33-const-lambda",
+          "diagnostic-stage33-lambda-dynamic",
+          "diagnostic-stage33-lambda-valid-inferred",
+          "diagnostic-stage33-lambda-quoted-inferred",
+          "diagnostic-stage33-lambda-body-earlier-error",
+          "diagnostic-stage33-lambda-argument-new"
         ],
         "state": "partial"
       }
@@ -161016,7 +161835,9 @@
           "diagnostic-stage32-entry-body",
           "diagnostic-stage32-element-body",
           "diagnostic-stage32-element-second",
-          "diagnostic-stage32-typed-entry-key"
+          "diagnostic-stage32-typed-entry-key",
+          "diagnostic-stage33-const-entry",
+          "diagnostic-stage33-function-entry-inferred"
         ],
         "state": "partial"
       }
@@ -161098,7 +161919,7 @@
           "General lazy generic declaration resolution, full alias-root substitution identity, imported generic declarations and original suite adapters remain open. The Stage 18 changing-argument native-stack abort remains preserved as historical failure evidence. Shared metadata now has bounded extended execution and cleanup checks; exact Java stack diagnostics, wall-time bounds, and metadata/output resource bounds remain unverified.",
           "Nullable collection defaults, some missing/literal/default-root diagnostics, general inferred generic new construction and complete Reference argument diagnostic frames retain exploratory gaps; these are not counted as passing selected cases."
         ],
-        "scope": "The Stage 13 selection links named alias expansion, meta-class checks, function arity and exported type metadata to the shared VM. Existing upstream case definitions, adapters and execution states remain unchanged. Stage 14 adds selected authored type-resolution order, generic parameter scope and nested substitution, class/alias arity ordering, and owner signature diagnostics; persistent failed-declaration state has a separate sequence contract. Stage 15 adds selected non-generic recursive constraint block graphs and declaration type scope, plus builtin Class argument erasure and arity ordering. At Stage 15 recursive generic constraints remained open; Stage 16 adds bounded shared receiver-slot support. Stage 16: Selected nested is/as and recursive constraints retain receiver mutations, original successful values, predicate arguments and complete failure bytes. Stage 17: Evaluator-owned executable and type-use nodes preserve selected non-generic local const-property resolution across retries, distinct inline/lambda uses, shared let roots, recursive depth, inherited annotations, and lazy collection members; per-call receiver slots remain separate. Stage 18 adds finite recursive generic checks with lexical constraint-template substitutions, including changing actual arguments, parameter shadowing, root-parameter alias chains and inline/lambda argument captures. Generic local-writing let constraints retain their declaration call target and its unbound parameter interpretation; selected retry sharing is recorded separately from complete type-node identity. Selected generic collection-element amendments derive defaults after actual type substitution, retaining existing class objects, lazy bodies, nested collection shapes and first failure/retry behavior. Deferred Reference referent validation runs at the reached authored resolution site before the checked value; original diagnostic gaps remain separately recorded. Stage 19 adds bounded shared-metadata regressions for finite deep and branching actual arguments, observable class-argument swaps, inline/lambda/shared-let recursion, recursive Reference validation, and distinct wrapper actuals. Original Java stack errors, historical native abort evidence, full language semantics and performance remain separately accounted. Stage20 adds bounded nullable defaults, inferred collection amendments, null identity and repeated default failures; complete nullable and collection semantics remain unverified. Stage21 adds bounded direct symbolic constructors, actual-argument diagnostics, lazy class defaults, collection body controls and persistent retries; complete constructors, lexical roots and builtin coverage remain unverified. Stage22 adds bounded strict Map construction, boxed/hash-prefix key semantics, lazy nested generic values, insertion-order iteration and HAMT-ordered equality/hash forcing; complete Map APIs and language coverage remain unverified. Stage23 adds bounded strict Set construction, immediate element hashing and deduplication, boxed/cache-sensitive membership, Set defaults and generic aliases, eager nested element checks, structural equality/hash, insertion-order generation/spreading and raw null/default diagnostic controls; complete Set APIs and language coverage remain unverified. Stage 24 additionally covers bounded Collection List/Set classification, eager versus lazy nested validation, aliases/defaults, nullable constructor timing, selected metadata and complete diagnostics. Stage 32 adds bounded forbidden non-local object property type-annotation diagnostic ownership, nested declaration paths, earlier-error controls and valid module/class/object-local annotations; complete frontend diagnostics remain separately unverified.",
+        "scope": "The Stage 13 selection links named alias expansion, meta-class checks, function arity and exported type metadata to the shared VM. Existing upstream case definitions, adapters and execution states remain unchanged. Stage 14 adds selected authored type-resolution order, generic parameter scope and nested substitution, class/alias arity ordering, and owner signature diagnostics; persistent failed-declaration state has a separate sequence contract. Stage 15 adds selected non-generic recursive constraint block graphs and declaration type scope, plus builtin Class argument erasure and arity ordering. At Stage 15 recursive generic constraints remained open; Stage 16 adds bounded shared receiver-slot support. Stage 16: Selected nested is/as and recursive constraints retain receiver mutations, original successful values, predicate arguments and complete failure bytes. Stage 17: Evaluator-owned executable and type-use nodes preserve selected non-generic local const-property resolution across retries, distinct inline/lambda uses, shared let roots, recursive depth, inherited annotations, and lazy collection members; per-call receiver slots remain separate. Stage 18 adds finite recursive generic checks with lexical constraint-template substitutions, including changing actual arguments, parameter shadowing, root-parameter alias chains and inline/lambda argument captures. Generic local-writing let constraints retain their declaration call target and its unbound parameter interpretation; selected retry sharing is recorded separately from complete type-node identity. Selected generic collection-element amendments derive defaults after actual type substitution, retaining existing class objects, lazy bodies, nested collection shapes and first failure/retry behavior. Deferred Reference referent validation runs at the reached authored resolution site before the checked value; original diagnostic gaps remain separately recorded. Stage 19 adds bounded shared-metadata regressions for finite deep and branching actual arguments, observable class-argument swaps, inline/lambda/shared-let recursion, recursive Reference validation, and distinct wrapper actuals. Original Java stack errors, historical native abort evidence, full language semantics and performance remain separately accounted. Stage20 adds bounded nullable defaults, inferred collection amendments, null identity and repeated default failures; complete nullable and collection semantics remain unverified. Stage21 adds bounded direct symbolic constructors, actual-argument diagnostics, lazy class defaults, collection body controls and persistent retries; complete constructors, lexical roots and builtin coverage remain unverified. Stage22 adds bounded strict Map construction, boxed/hash-prefix key semantics, lazy nested generic values, insertion-order iteration and HAMT-ordered equality/hash forcing; complete Map APIs and language coverage remain unverified. Stage23 adds bounded strict Set construction, immediate element hashing and deduplication, boxed/cache-sensitive membership, Set defaults and generic aliases, eager nested element checks, structural equality/hash, insertion-order generation/spreading and raw null/default diagnostic controls; complete Set APIs and language coverage remain unverified. Stage 24 additionally covers bounded Collection List/Set classification, eager versus lazy nested validation, aliases/defaults, nullable constructor timing, selected metadata and complete diagnostics. Stage 32 adds bounded forbidden non-local object property type-annotation diagnostic ownership, nested declaration paths, earlier-error controls and valid module/class/object-local annotations; complete frontend diagnostics remain separately unverified. Stage 33 adds bounded const-modifier ownership before property-scope entry, method inferred-new versus lambda first-error selection, explicit-parent and earlier-error controls, and successful Dynamic/untyped method and unused-body controls. Non-Dynamic typed method return inference remains outside this repair.",
         "source": "compatibility/m2-mappings.json"
       },
       "tests": {
@@ -162432,6 +163253,35 @@
           "diagnostic-stage32-typed-let-initializer",
           "diagnostic-stage32-typed-type-predicate",
           "diagnostic-stage32-entry-surrogate",
+          "diagnostic-stage33-module-function",
+          "diagnostic-stage33-lambda",
+          "diagnostic-stage33-unused-invalid-function",
+          "diagnostic-stage33-const-annotation",
+          "diagnostic-stage33-object-local-function",
+          "diagnostic-stage33-const-negative",
+          "diagnostic-stage33-const-nested",
+          "diagnostic-stage33-const-quoted",
+          "diagnostic-stage33-const-function",
+          "diagnostic-stage33-const-lambda",
+          "diagnostic-stage33-const-let",
+          "diagnostic-stage33-const-entry",
+          "diagnostic-stage33-const-earlier-error",
+          "diagnostic-stage33-const-untyped",
+          "diagnostic-stage33-lambda-dynamic",
+          "diagnostic-stage33-object-local-function-dynamic",
+          "diagnostic-stage33-function-return-type",
+          "diagnostic-stage33-lambda-valid-inferred",
+          "diagnostic-stage33-function-nested-inferred",
+          "diagnostic-stage33-lambda-quoted-inferred",
+          "diagnostic-stage33-function-let-inferred",
+          "diagnostic-stage33-function-entry-inferred",
+          "diagnostic-stage33-function-body-earlier-error",
+          "diagnostic-stage33-lambda-body-earlier-error",
+          "diagnostic-stage33-function-const-before-parent",
+          "diagnostic-stage33-lambda-argument-new",
+          "diagnostic-stage33-object-local-typed-valid",
+          "diagnostic-stage33-function-if-let-paren-valid",
+          "diagnostic-stage33-function-typed-valid",
           "types-stage13-alias-value",
           "types-stage13-alias-self-equal",
           "types-stage13-alias-distinct-equal",
@@ -165682,7 +166532,7 @@
           },
           {
             "path": "crates/pkl-runtime/src/resolver.rs",
-            "sha256": "cc09e1b99c7b3b807a5238358446aea9852185284399ad8f8c0ee5dc0b3539b9",
+            "sha256": "9fe8d161e65f0e994a058bc4ef699ff1f7962af91c4ae99cba64ee8cf16e9b20",
             "symbol": "visit"
           },
           {
@@ -165752,7 +166602,7 @@
           },
           {
             "path": "crates/pkl-runtime/src/resolver.rs",
-            "sha256": "cc09e1b99c7b3b807a5238358446aea9852185284399ad8f8c0ee5dc0b3539b9",
+            "sha256": "9fe8d161e65f0e994a058bc4ef699ff1f7962af91c4ae99cba64ee8cf16e9b20",
             "symbol": "ConstScope"
           },
           {
@@ -165777,7 +166627,7 @@
           },
           {
             "path": "crates/pkl-runtime/src/resolver/diagnostic_owner.rs",
-            "sha256": "4ce70ad34656f07e533d4ccbf0e263d5fba349fefc9241af3c3b416dd233e55d",
+            "sha256": "ba660e1df479e041d5b9f543577c7e91cac3f1eec38dc534a49758d037abb03d",
             "symbol": "OwnerScopes"
           }
         ],
@@ -165792,7 +166642,7 @@
           "Original selected cycle and remainder-zero failures remain failed.",
           "Exploratory double-negated minimum-integer overflow frames and invalid non-local object annotation frame names remain known differences outside the Stage 31 selected additions."
         ],
-        "scope": "Reference constructor, access, constraint and rendering errors retain complete message, authored frame, foreign standard-library source and URI bytes in selected comparisons. Stage11 adds selected fixed declaration, inherited metadata and complete raw diagnostics through the shared VM. Stage 13 adds selected alias/function metadata, exported-type equality and complete raw diagnostic comparisons; original suite execution and remaining scope stay open. Stage 14 adds selected authored type-resolution order, generic parameter scope and nested substitution, class/alias arity ordering, and owner signature diagnostics; persistent failed-declaration state has a separate sequence contract. Stage 15 adds selected non-generic recursive constraint block graphs and declaration type scope, plus builtin Class argument erasure and arity ordering. At Stage 15 recursive generic constraints remained open; Stage 16 adds bounded shared receiver-slot support. Stage 16: Selected recursive frame compression, count-one loops, complete call spans and hint placement match Java uncolored diagnostics. Stage 17: Selected const-method barriers, lambda lookup depth, immediate outer lexical scope, and grouped-callee parser diagnostics follow the pinned Java behavior. Stage 18 adds selected let-body and for-generator lexical const-depth boundaries while retaining enclosing const levels, plus their complete raw diagnostics and lambda controls. Selected finite recursive generic and instantiated type-variable failures compare complete Java bytes with power assertions enabled and disabled. Stage 19 adds bounded shared-metadata regressions for finite deep and branching actual arguments, observable class-argument swaps, inline/lambda/shared-let recursion, recursive Reference validation, and distinct wrapper actuals. Original Java stack errors, historical native abort evidence, full language semantics and performance remain separately accounted. Stage20 adds bounded nullable defaults, inferred collection amendments, null identity and repeated default failures; complete nullable and collection semantics remain unverified. Stage21 adds bounded direct symbolic constructors, actual-argument diagnostics, lazy class defaults, collection body controls and persistent retries; complete constructors, lexical roots and builtin coverage remain unverified. Stage22 adds bounded strict Map construction, boxed/hash-prefix key semantics, lazy nested generic values, insertion-order iteration and HAMT-ordered equality/hash forcing; complete Map APIs and language coverage remain unverified. Stage23 adds bounded strict Set construction, immediate element hashing and deduplication, boxed/cache-sensitive membership, Set defaults and generic aliases, eager nested element checks, structural equality/hash, insertion-order generation/spreading and raw null/default diagnostic controls; complete Set APIs and language coverage remain unverified. Stage 24 additionally covers bounded Collection List/Set classification, eager versus lazy nested validation, aliases/defaults, nullable constructor timing, selected metadata and complete diagnostics. Stage 30 preserves UTF-16 diagnostic member paths through parser/resolver/compiler counters, block metadata, runtime frames and recursive compression. Selected sibling entry/function numbering and detached lifecycle names distinguish unmatched surrogates from literal question marks before Java UTF-8 output. Typed-property diagnostic controls distinguish inline checks for object-local declarations from module/class-local separate call frames; alias use does not change the declaration category. Stage 31 distinguishes folded numeric-token value frames for local properties from authored body sections retained by selected public class constant properties. Selected complete diagnostics cover signed integer/float literals, whitespace/comments/multiline syntax, radix and minimum-integer literals, grouping, direct constraints and aliases; operand, argument/return, cast, overflow-literal and first-error controls retain their separate source ownership. Success controls preserve minimum integers and negative-zero arithmetic. These selected observations do not establish the complete numeric or diagnostic surface. Additional scalar-constant controls distinguish grouping removal in computed local bodies from source reconstruction for selected non-local property, overridden property, Mapping entry and Listing element value frames. Grouped string, Boolean and null constants preserve the same wrapper distinction. Original failed baseline and first-candidate grouped Listing observations remain preserved alongside the selected reconstruction regression; later observations do not relabel those historical failures. Stage 32 adds bounded forbidden non-local object property type-annotation diagnostic ownership, nested declaration paths, earlier-error controls and valid module/class/object-local annotations; complete frontend diagnostics remain separately unverified.",
+        "scope": "Reference constructor, access, constraint and rendering errors retain complete message, authored frame, foreign standard-library source and URI bytes in selected comparisons. Stage11 adds selected fixed declaration, inherited metadata and complete raw diagnostics through the shared VM. Stage 13 adds selected alias/function metadata, exported-type equality and complete raw diagnostic comparisons; original suite execution and remaining scope stay open. Stage 14 adds selected authored type-resolution order, generic parameter scope and nested substitution, class/alias arity ordering, and owner signature diagnostics; persistent failed-declaration state has a separate sequence contract. Stage 15 adds selected non-generic recursive constraint block graphs and declaration type scope, plus builtin Class argument erasure and arity ordering. At Stage 15 recursive generic constraints remained open; Stage 16 adds bounded shared receiver-slot support. Stage 16: Selected recursive frame compression, count-one loops, complete call spans and hint placement match Java uncolored diagnostics. Stage 17: Selected const-method barriers, lambda lookup depth, immediate outer lexical scope, and grouped-callee parser diagnostics follow the pinned Java behavior. Stage 18 adds selected let-body and for-generator lexical const-depth boundaries while retaining enclosing const levels, plus their complete raw diagnostics and lambda controls. Selected finite recursive generic and instantiated type-variable failures compare complete Java bytes with power assertions enabled and disabled. Stage 19 adds bounded shared-metadata regressions for finite deep and branching actual arguments, observable class-argument swaps, inline/lambda/shared-let recursion, recursive Reference validation, and distinct wrapper actuals. Original Java stack errors, historical native abort evidence, full language semantics and performance remain separately accounted. Stage20 adds bounded nullable defaults, inferred collection amendments, null identity and repeated default failures; complete nullable and collection semantics remain unverified. Stage21 adds bounded direct symbolic constructors, actual-argument diagnostics, lazy class defaults, collection body controls and persistent retries; complete constructors, lexical roots and builtin coverage remain unverified. Stage22 adds bounded strict Map construction, boxed/hash-prefix key semantics, lazy nested generic values, insertion-order iteration and HAMT-ordered equality/hash forcing; complete Map APIs and language coverage remain unverified. Stage23 adds bounded strict Set construction, immediate element hashing and deduplication, boxed/cache-sensitive membership, Set defaults and generic aliases, eager nested element checks, structural equality/hash, insertion-order generation/spreading and raw null/default diagnostic controls; complete Set APIs and language coverage remain unverified. Stage 24 additionally covers bounded Collection List/Set classification, eager versus lazy nested validation, aliases/defaults, nullable constructor timing, selected metadata and complete diagnostics. Stage 30 preserves UTF-16 diagnostic member paths through parser/resolver/compiler counters, block metadata, runtime frames and recursive compression. Selected sibling entry/function numbering and detached lifecycle names distinguish unmatched surrogates from literal question marks before Java UTF-8 output. Typed-property diagnostic controls distinguish inline checks for object-local declarations from module/class-local separate call frames; alias use does not change the declaration category. Stage 31 distinguishes folded numeric-token value frames for local properties from authored body sections retained by selected public class constant properties. Selected complete diagnostics cover signed integer/float literals, whitespace/comments/multiline syntax, radix and minimum-integer literals, grouping, direct constraints and aliases; operand, argument/return, cast, overflow-literal and first-error controls retain their separate source ownership. Success controls preserve minimum integers and negative-zero arithmetic. These selected observations do not establish the complete numeric or diagnostic surface. Additional scalar-constant controls distinguish grouping removal in computed local bodies from source reconstruction for selected non-local property, overridden property, Mapping entry and Listing element value frames. Grouped string, Boolean and null constants preserve the same wrapper distinction. Original failed baseline and first-candidate grouped Listing observations remain preserved alongside the selected reconstruction regression; later observations do not relabel those historical failures. Stage 32 adds bounded forbidden non-local object property type-annotation diagnostic ownership, nested declaration paths, earlier-error controls and valid module/class/object-local annotations; complete frontend diagnostics remain separately unverified. Stage 33 adds bounded const-modifier ownership before property-scope entry, method inferred-new versus lambda first-error selection, explicit-parent and earlier-error controls, and successful Dynamic/untyped method and unused-body controls. Non-Dynamic typed method return inference remains outside this repair.",
         "source": "compatibility/m2-mappings.json"
       },
       "tests": {
@@ -167386,7 +168236,43 @@
           "diagnostic-stage32-for-entry-body",
           "diagnostic-stage32-typed-let-initializer",
           "diagnostic-stage32-typed-type-predicate",
-          "diagnostic-stage32-entry-surrogate"
+          "diagnostic-stage32-entry-surrogate",
+          "diagnostic-stage33-module-function",
+          "diagnostic-stage33-lambda",
+          "diagnostic-stage33-unused-invalid-function",
+          "diagnostic-stage33-const-annotation",
+          "diagnostic-stage33-object-local-function",
+          "diagnostic-stage33-const-negative",
+          "diagnostic-stage33-const-nested",
+          "diagnostic-stage33-const-quoted",
+          "diagnostic-stage33-const-function",
+          "diagnostic-stage33-const-lambda",
+          "diagnostic-stage33-const-let",
+          "diagnostic-stage33-const-entry",
+          "diagnostic-stage33-const-earlier-error",
+          "diagnostic-stage33-const-untyped",
+          "diagnostic-stage33-local-const-control",
+          "diagnostic-stage33-class-const-control",
+          "diagnostic-stage33-module-const-control",
+          "diagnostic-stage33-lambda-dynamic",
+          "diagnostic-stage33-object-local-function-dynamic",
+          "diagnostic-stage33-function-return-type",
+          "diagnostic-stage33-function-valid-inferred",
+          "diagnostic-stage33-lambda-valid-inferred",
+          "diagnostic-stage33-function-nested-inferred",
+          "diagnostic-stage33-lambda-quoted-inferred",
+          "diagnostic-stage33-function-let-inferred",
+          "diagnostic-stage33-function-entry-inferred",
+          "diagnostic-stage33-function-body-earlier-error",
+          "diagnostic-stage33-lambda-body-earlier-error",
+          "diagnostic-stage33-function-const-before-parent",
+          "diagnostic-stage33-let-valid-inferred",
+          "diagnostic-stage33-lambda-argument-new",
+          "diagnostic-stage33-object-local-typed-valid",
+          "diagnostic-stage33-function-if-let-paren-valid",
+          "diagnostic-stage33-function-unused-lazy-control",
+          "diagnostic-stage33-local-const-unused-control",
+          "diagnostic-stage33-function-typed-valid"
         ],
         "state": "partial"
       }
@@ -167836,7 +168722,43 @@
           "diagnostic-stage32-for-entry-body",
           "diagnostic-stage32-typed-let-initializer",
           "diagnostic-stage32-typed-type-predicate",
-          "diagnostic-stage32-entry-surrogate"
+          "diagnostic-stage32-entry-surrogate",
+          "diagnostic-stage33-module-function",
+          "diagnostic-stage33-lambda",
+          "diagnostic-stage33-unused-invalid-function",
+          "diagnostic-stage33-const-annotation",
+          "diagnostic-stage33-object-local-function",
+          "diagnostic-stage33-const-negative",
+          "diagnostic-stage33-const-nested",
+          "diagnostic-stage33-const-quoted",
+          "diagnostic-stage33-const-function",
+          "diagnostic-stage33-const-lambda",
+          "diagnostic-stage33-const-let",
+          "diagnostic-stage33-const-entry",
+          "diagnostic-stage33-const-earlier-error",
+          "diagnostic-stage33-const-untyped",
+          "diagnostic-stage33-local-const-control",
+          "diagnostic-stage33-class-const-control",
+          "diagnostic-stage33-module-const-control",
+          "diagnostic-stage33-lambda-dynamic",
+          "diagnostic-stage33-object-local-function-dynamic",
+          "diagnostic-stage33-function-return-type",
+          "diagnostic-stage33-function-valid-inferred",
+          "diagnostic-stage33-lambda-valid-inferred",
+          "diagnostic-stage33-function-nested-inferred",
+          "diagnostic-stage33-lambda-quoted-inferred",
+          "diagnostic-stage33-function-let-inferred",
+          "diagnostic-stage33-function-entry-inferred",
+          "diagnostic-stage33-function-body-earlier-error",
+          "diagnostic-stage33-lambda-body-earlier-error",
+          "diagnostic-stage33-function-const-before-parent",
+          "diagnostic-stage33-let-valid-inferred",
+          "diagnostic-stage33-lambda-argument-new",
+          "diagnostic-stage33-object-local-typed-valid",
+          "diagnostic-stage33-function-if-let-paren-valid",
+          "diagnostic-stage33-function-unused-lazy-control",
+          "diagnostic-stage33-local-const-unused-control",
+          "diagnostic-stage33-function-typed-valid"
         ],
         "state": "partial"
       }
@@ -174272,7 +175194,7 @@
           },
           {
             "path": "crates/pkl-runtime/src/resolver.rs",
-            "sha256": "cc09e1b99c7b3b807a5238358446aea9852185284399ad8f8c0ee5dc0b3539b9",
+            "sha256": "9fe8d161e65f0e994a058bc4ef699ff1f7962af91c4ae99cba64ee8cf16e9b20",
             "symbol": "visit"
           },
           {
@@ -176731,10 +177653,10 @@
   "sources": {
     "compatibility/corpus.json": "0e95da22f965dede398f1a1f136703ba913d588aa51c1fb871cd97a11c84a0dd",
     "compatibility/inventory.json": "a9b21752adad9a269a54854c0dd298256757be88ad95c1388e30d7c78e407070",
-    "compatibility/m2-mappings.json": "2dbdc085765081d90e66cddfe0ef617f26c7ee6953d8ec4bf01d67b0eb54681e",
+    "compatibility/m2-mappings.json": "e3a3a4aaa620d7ca0b93744524f93402825eb771f9f93f299305fba2f1f8d5a2",
     "compatibility/regressions.json": "09c064f65730d30f72bf87a45c88d47ecc0844e57966a999dc8e759f083af3da",
     "compatibility/rev1-inventory.json": "6061f202ba3f04565efed3617ac69d3c2fadc54eec1f562b67a4758b3d0a8ab5",
     "references.lock": "278f48fd7697459281aa78a706c9ca57222f36a8c0785d838a6449fbaf26d30b",
-    "tests/fixtures/m2/cases.json": "96ce1140c906d3b8bb4244b6cfe8d370189af9c2386ceb3ffe7919695b609287"
+    "tests/fixtures/m2/cases.json": "4bdb801f62406e65d60e3265c6defee1877b1727a26a66e9f207e2571e080494"
   }
 }

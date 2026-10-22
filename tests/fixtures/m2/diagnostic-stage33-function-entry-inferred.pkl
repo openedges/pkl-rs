@@ -1,0 +1,2 @@
+function build() = new { ["bad"] = new { bad: Int = 1 } }
+result = 1

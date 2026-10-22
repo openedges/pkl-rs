@@ -359,8 +359,11 @@ computed entry labels, generator prefix revisits, supplementary positions and
 unmatched-surrogate string keys. Node and Chromium compare the complete
 Java-derived payloads through fresh evaluators. These frontend checks establish
 neither Host lifecycle behavior nor a new small-stack or performance result.
-Earlier const-modifier ownership and inferred-parent rejection differences
-remain recorded exploratory failures.
+Const-modifier and inferred-parent regressions additionally compare enclosing
+versus expression owners and method-versus-lambda error ordering. Successful
+untyped and explicit Dynamic method calls, unused lazy methods and earlier
+lexical errors are controls. Class and collection return-type inference remains
+an exploratory failure outside the selected development contract.
 
 M1 experiments have narrower, explicit contracts:
 

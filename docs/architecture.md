@@ -745,15 +745,20 @@ they share bytecode: wrapper elision requires the same type-node identity.
 Semantic type equivalence remains sufficient for types without executable
 constraints.
 
-For a rejected non-local object property type annotation, the resolver obtains
+For rejected non-local object annotations, const modifiers and inferred parents, the resolver obtains
 the diagnostic owner through a single replay of its iterative worklist. Ordinary
-resolution allocates no annotation-owner stack. The replay preserves the
+resolution allocates no diagnostic-owner stack. The replay preserves the
 original error unless every diagnostic field except the captured member is
 identical. Its private naming scopes retain UTF-16 paths, quoted identifiers,
 literal entry labels, lambda and entry ordinals, and Java's generator-prefix
 revisit behavior. This is diagnostic metadata; it does not evaluate rejected
 types or values, change numeric operations, or replace existing runtime owners.
-Earlier modifier and inferred-parent rejections retain their separate behavior.
+Const-modifier rejection uses the enclosing owner, before entering the property
+scope. Inferred-parent rejection retains the current expression owner. Method
+bodies permit contextual `new {}`, while lambda bodies and parenthesized object
+expressions retain their rejection. Untyped and explicit `Dynamic` method returns
+use the existing Dynamic default; class and collection return-type inference
+remains incomplete.
 
 A local const-boundary read publishes the actual resolved `Member` definition
 before checking its const modifier, matching

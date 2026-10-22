@@ -155,13 +155,16 @@ fn predicate_values_do_not_infer_a_parent_from_the_matched_entry() {
 #[test]
 fn dynamic_predicate_body_diagnostics_keep_authored_entry_numbering() {
     let source = "result = (source) { 1; [key] = 2; [[this == 1]] = new {} }";
+    // The pinned builder visits the element and dynamic entry before falling
+    // back to the generator body, then revisits them before the predicate.
+    // Those visits consume four ordinals; fresh Java 0.32.0 reports entry #5.
     let error = resolve_module(&parse_module(source).unwrap()).unwrap_err();
     assert_eq!(
         error
             .member
             .as_deref()
             .and_then(pkl_runtime::value::PklString::as_str),
-        Some("result[#3]")
+        Some("result[#5]")
     );
 }
 

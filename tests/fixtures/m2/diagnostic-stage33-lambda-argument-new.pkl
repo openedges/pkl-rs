@@ -1,0 +1,2 @@
+f = (a) -> a
+result = f(new { bad: Int = 1 })

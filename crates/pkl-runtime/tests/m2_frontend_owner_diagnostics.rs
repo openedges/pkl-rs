@@ -178,20 +178,14 @@ fn annotation_rejection_precedes_type_and_value_evaluation() {
         let error = rejection(source);
         assert_eq!(error.message, message);
         assert_eq!(&source[error.span.start..error.span.end], fragment);
-        // The earlier const-modifier owner's existing mismatch remains a
-        // separate raw Java observation; this annotation change preserves it.
-        if fragment != "const" {
-            assert!(
-                error
-                    .member
-                    .as_ref()
-                    .unwrap()
-                    .encode_utf16()
-                    .eq("x".encode_utf16())
-            );
-        } else {
-            assert!(error.member.is_none());
-        }
+        assert!(
+            error
+                .member
+                .as_ref()
+                .unwrap()
+                .encode_utf16()
+                .eq("x".encode_utf16())
+        );
     }
 }
 

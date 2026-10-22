@@ -1,0 +1,2 @@
+f = () -> new { before = "\q"; bad: Int = 1 }
+result = 1
