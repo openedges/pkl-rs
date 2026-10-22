@@ -1,0 +1,1305 @@
+{
+  "archives": {
+    "class-lifecycle": {
+      "bytes": 2204355,
+      "files_including_inventory": 22441,
+      "inventory_verified": true,
+      "path": "reports/m2/class-lifecycle-stage24-final-evidence.tar.gz",
+      "sha256": "9c48d14a9f4d1418432aa583a516b1eba5ab823d8bf7fb9b308f7526f71f5b77"
+    },
+    "exploration": {
+      "bytes": 9110782,
+      "excluded_cache_files": 0,
+      "inventory_verified": true,
+      "original_files": 3058,
+      "path": "reports/m2/exploration-stage24-evidence.tar.gz",
+      "scope": "Disjoint complete Stage24 original exploratory bytes, retained failed/superseded attempts, exact authored inputs, helpers and provenance; final recorded-artifact original-URI replays are distinguished from earlier source-unbound development builds.",
+      "sha256": "ff0d6d0b35c17e5da0b4c1496012d96144b7822757d9019de2e7e1a56d25c9cd"
+    },
+    "exploration-support-1": {
+      "bytes": 9588773,
+      "excluded_cache_files": 0,
+      "inventory_verified": true,
+      "original_files": 1630,
+      "path": "reports/m2/exploration-stage24-part02-evidence.tar.gz",
+      "scope": "Disjoint complete Stage24 original exploratory bytes, retained failed/superseded attempts, exact authored inputs, helpers and provenance; final recorded-artifact original-URI replays are distinguished from earlier source-unbound development builds.",
+      "sha256": "b41e4b125f8f019ff09495beef4dbacea20388da11edc7e01691e17298d14e4a"
+    },
+    "exploration-support-2": {
+      "bytes": 9848463,
+      "excluded_cache_files": 0,
+      "inventory_verified": true,
+      "original_files": 4962,
+      "path": "reports/m2/exploration-stage24-part03-evidence.tar.gz",
+      "scope": "Disjoint complete Stage24 original exploratory bytes, retained failed/superseded attempts, exact authored inputs, helpers and provenance; final recorded-artifact original-URI replays are distinguished from earlier source-unbound development builds.",
+      "sha256": "fef7c70ec13b2f6b6782aaadf91ed156fd46259c7fe8c432078c100afbfcc27e"
+    },
+    "exploration-support-3": {
+      "bytes": 9442813,
+      "excluded_cache_files": 0,
+      "inventory_verified": true,
+      "original_files": 647,
+      "path": "reports/m2/exploration-stage24-part04-evidence.tar.gz",
+      "scope": "Disjoint complete Stage24 original exploratory bytes, retained failed/superseded attempts, exact authored inputs, helpers and provenance; final recorded-artifact original-URI replays are distinguished from earlier source-unbound development builds.",
+      "sha256": "bccf3e3209b06af98b297d97db668fefdc1b189212402d372909cd2ce99b3efd"
+    },
+    "exploration-support-4": {
+      "bytes": 9842423,
+      "excluded_cache_files": 0,
+      "inventory_verified": true,
+      "original_files": 422,
+      "path": "reports/m2/exploration-stage24-part05-evidence.tar.gz",
+      "scope": "Disjoint complete Stage24 original exploratory bytes, retained failed/superseded attempts, exact authored inputs, helpers and provenance; final recorded-artifact original-URI replays are distinguished from earlier source-unbound development builds.",
+      "sha256": "e41985337ad7a07ad85f19fa4cc2be1ad22297a50a3dbe15a0651b440facf8c4"
+    },
+    "exploration-support-5": {
+      "bytes": 9554714,
+      "excluded_cache_files": 0,
+      "inventory_verified": true,
+      "original_files": 7116,
+      "path": "reports/m2/exploration-stage24-part06-evidence.tar.gz",
+      "scope": "Disjoint complete Stage24 original exploratory bytes, retained failed/superseded attempts, exact authored inputs, helpers and provenance; final recorded-artifact original-URI replays are distinguished from earlier source-unbound development builds.",
+      "sha256": "f9b473bbfc4f50badfb838c93faeacab608b2774fe5205cd75e6df3be7e533ac"
+    },
+    "exploration-support-6": {
+      "bytes": 4835663,
+      "excluded_cache_files": 0,
+      "inventory_verified": true,
+      "original_files": 2094,
+      "path": "reports/m2/exploration-stage24-part07-evidence.tar.gz",
+      "scope": "Disjoint complete Stage24 original exploratory bytes, retained failed/superseded attempts, exact authored inputs, helpers and provenance; final recorded-artifact original-URI replays are distinguished from earlier source-unbound development builds.",
+      "sha256": "7cfddfa20dcfed6ecf058ab48d8ad04c6632d3e8516e5cd51557213e68f50177"
+    },
+    "frontend": {
+      "bytes": 229066,
+      "files_including_inventory": 135,
+      "inventory_verified": true,
+      "path": "reports/m2/frontend-stage24-final-evidence.tar.gz",
+      "sha256": "9bbdc0e1ca71924fb0821968144d614592537a7fd485a9706a6e2cd3f1a7e273"
+    },
+    "language": {
+      "bytes": 5044785,
+      "files_including_inventory": 24009,
+      "inventory_verified": true,
+      "path": "reports/m2/language-stage24-final-evidence.tar.gz",
+      "sha256": "aa8b2ad0d2e2e82670952be82078801b78b4922cd835acb200e9d9fd0996fd8d"
+    },
+    "lifecycle": {
+      "bytes": 1071760,
+      "files_including_inventory": 162,
+      "inventory_verified": true,
+      "path": "reports/m2/lifecycle-stage24-final-evidence.tar.gz",
+      "sha256": "2a8657cccde029303e41084b19ef50e9b85f124e6bec7fd6ed4c224d034ddb9a"
+    },
+    "native-collection-type": {
+      "bytes": 2569843,
+      "files_including_inventory": 54,
+      "inventory_verified": true,
+      "path": "reports/m2/native-collection-type-stage24-final-evidence.tar.gz",
+      "sha256": "9cb0639acc452820b5d43fcdd63caeb9b11ba86f1cb9e094e077855bb88180df"
+    },
+    "platforms": {
+      "bytes": 3706264,
+      "files_including_inventory": 117,
+      "inventory_verified": true,
+      "path": "reports/m2/platforms-stage24-final-evidence.tar.gz",
+      "sha256": "c8df40855b8a6c7cb2375568d508d9be78f18f66425d4f7aa7748d64b1215656"
+    },
+    "runtime": {
+      "bytes": 1839009,
+      "files_including_inventory": 131,
+      "inventory_verified": true,
+      "path": "reports/m2/runtime-stage24-final-evidence.tar.gz",
+      "sha256": "f11fcfd46b36b8c2f2a38e7de2679dd0e8e9ce654e06a552a25c0eaae3a8c090"
+    },
+    "source": {
+      "bytes": 5930641,
+      "files_including_inventory": 3261,
+      "inventory_verified": true,
+      "path": "reports/m2/source-stage24-final-evidence.tar.gz",
+      "sha256": "4898f0d6bf1fb066d93fa4eb377443fd8b89e6fe97c23529f24828971a7d12f9"
+    },
+    "validation": {
+      "bytes": 2694760,
+      "files_including_inventory": 3224,
+      "inventory_verified": true,
+      "path": "reports/m2/validation-stage24-final-evidence.tar.gz",
+      "sha256": "f8a156408f1d5157d3219bf800a2fcf9487113d613013d1506e3889b85de3643"
+    }
+  },
+  "captured_binaries_executed_by_packaging": false,
+  "compatibility_complete": false,
+  "completed_suites": {
+    "class-lifecycle": {
+      "comparisons": 2532,
+      "executions": 294,
+      "unexecuted_groups": [
+        {
+          "group": "P09",
+          "reason": "Java-only module-cache probe stage12-java-module-identity-01 observes same URI/source identity retained, changed source at same URI ignored (marker remains1), distinct URI/evaluator identity separated. Rust multi-source module-cache parity is unimplemented; same-module identity is compared."
+        },
+        {
+          "group": "P10",
+          "reason": "Java observable sequence comparisons do not expose heap counts; Rust architectural GC coverage is separate."
+        },
+        {
+          "group": "P11",
+          "reason": "Real Java class-initialization read observed via @Deprecated { ...(read(\"life:class\")) } in stage12-java-host-path-01; Rust annotation frontend unsupported, so actual Host-in-class cross-language reentry remains unexecuted. Internal scheduler tests are separate."
+        },
+        {
+          "group": "P12",
+          "reason": "Terminal context/token/heap cleanup is covered by separate Rust lifecycle tests, not Java raw-byte equivalence."
+        },
+        {
+          "group": "P05",
+          "reason": "Indirect cyclic hierarchy property traversal new A {}.missing timed out after successful class identity calls in stage12-java-observations-03; traversal is observed oracle-timeout, not a compatibility pass."
+        }
+      ],
+      "unique_sequences": 147
+    },
+    "frontend": {
+      "cases": 15,
+      "passed": 15
+    },
+    "language": {
+      "candidate": {
+        "build": {
+          "command": [
+            "cargo",
+            "build",
+            "-p",
+            "pkl-runtime",
+            "--example",
+            "language_probe",
+            "--locked",
+            "--release",
+            "--target-dir",
+            "/Users/cody.ij.hwang/Projects/pkl-rs/target"
+          ],
+          "exit_code": 0,
+          "stderr_sha256": "a72a0e3b8bf021e1708dc9f877c68b53e4e6e736a6852a75ae7d658e9be46d76",
+          "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "timed_out": false
+        },
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/release/examples/language_probe",
+        "sha256": "90857761cfccbfa4a8c61c0edb3c6a167062bcec7fbf233d7caadf234d9d98ba",
+        "source_binding": "recorded-build"
+      },
+      "full_gate_failure_count": 1950,
+      "inventory_counts": {
+        "cases": 3652,
+        "cases_by_execution": {
+          "ready": 2652,
+          "unimplemented": 960,
+          "unmapped": 40
+        },
+        "requirements": 474,
+        "requirements_by_kind": {
+          "language_parser": 137,
+          "language_token": 109,
+          "semantic-family": 30,
+          "specification": 198
+        }
+      },
+      "metamorphic_passed": 88,
+      "metamorphic_relations": 88,
+      "selected_count": 2652,
+      "status_counts": {
+        "mismatch": 1,
+        "oracle-error": 1,
+        "pass": 2650
+      }
+    },
+    "lifecycle": {
+      "cases": 2,
+      "compatibility_complete": false,
+      "limitations": [
+        "protocol bytes are not full Java diagnostics or public API compatibility",
+        "Java parses the Pkl fixtures; Rust uses explicit bytecode translations checked against exact fixture bytes, not frontend read(...) lowering",
+        "reentry uses a prewarmed resource: a new nested Java resource read inside an outer read can raise ConcurrentModificationException; that unsupported upstream edge is outside this successful protocol",
+        "native bounded VM/Host only; not browser/Node lifecycle parity",
+        "no performance or long-session memory claim"
+      ]
+    },
+    "native-collection-type": {
+      "conditions": {
+        "expected_top_level_tests": 7,
+        "gc_cadence": "every yielded VM/Host poll and every pending read",
+        "host_poll_budget": 1,
+        "max_polls_per_event": 200000,
+        "nonterminal_cancel_repetitions": 24,
+        "terminal_actions": [
+          "cancel",
+          "close",
+          "timeout"
+        ],
+        "thread_stack": "ordinary integration test stack; separate 20,000-level Collection metadata check uses 256 KiB thread in workspace validation",
+        "vm_poll_budget": 1
+      },
+      "passed": 7,
+      "source_stability": true
+    },
+    "platforms": {
+      "browser_scenarios": 82,
+      "known_gaps": [
+        "regex-unicode-15-vs-16",
+        "regex-zero-width-supplementary"
+      ],
+      "node_scenarios": 82,
+      "oracle_passed": {
+        "browser": 6076,
+        "node": 6076,
+        "rust": 6076
+      },
+      "shared_engine_passed": 6078,
+      "total": 6078
+    },
+    "runtime": {
+      "compatibility_complete": false,
+      "status_counts": {
+        "bounded-value-bytes-match": 6,
+        "diagnostic-byte-mismatch": 1,
+        "diagnostic-bytes-match": 2
+      }
+    },
+    "validation": {
+      "python_passed": 194,
+      "required_commands": 7,
+      "rust_intentionally_ignored": 1,
+      "rust_passed": 432
+    }
+  },
+  "evidence_review": {
+    "binding_scope": "Focused raw-comparison review and final artifact/source identities; not an independent production source review.",
+    "path": "target/m2/stage24-evidence-review-final-01.json",
+    "scope": "304 selected Collection source programs replayed at their original exploratory Java URIs plus 10 persistent sequences / 103 ordered calls against root recorded final artifacts. Root full language evidence separately covers 2652 selected fixture URIs and 88 relations. Broad 363 observations overlap the 304 selected programs and retain 59 controls; counts are not summed as additional compatibility passes.",
+    "sha256": "ac78a6b02b90751ca3de5819d6838a950b08286520b4fddc1302568cc6f9a4a9"
+  },
+  "exploration": {
+    "additional_archives": [
+      {
+        "bytes": 9588773,
+        "excluded_cache_files": 0,
+        "inventory_verified": true,
+        "original_files": 1630,
+        "path": "reports/m2/exploration-stage24-part02-evidence.tar.gz",
+        "scope": "Disjoint complete Stage24 original exploratory bytes, retained failed/superseded attempts, exact authored inputs, helpers and provenance; final recorded-artifact original-URI replays are distinguished from earlier source-unbound development builds.",
+        "sha256": "b41e4b125f8f019ff09495beef4dbacea20388da11edc7e01691e17298d14e4a"
+      },
+      {
+        "bytes": 9848463,
+        "excluded_cache_files": 0,
+        "inventory_verified": true,
+        "original_files": 4962,
+        "path": "reports/m2/exploration-stage24-part03-evidence.tar.gz",
+        "scope": "Disjoint complete Stage24 original exploratory bytes, retained failed/superseded attempts, exact authored inputs, helpers and provenance; final recorded-artifact original-URI replays are distinguished from earlier source-unbound development builds.",
+        "sha256": "fef7c70ec13b2f6b6782aaadf91ed156fd46259c7fe8c432078c100afbfcc27e"
+      },
+      {
+        "bytes": 9442813,
+        "excluded_cache_files": 0,
+        "inventory_verified": true,
+        "original_files": 647,
+        "path": "reports/m2/exploration-stage24-part04-evidence.tar.gz",
+        "scope": "Disjoint complete Stage24 original exploratory bytes, retained failed/superseded attempts, exact authored inputs, helpers and provenance; final recorded-artifact original-URI replays are distinguished from earlier source-unbound development builds.",
+        "sha256": "bccf3e3209b06af98b297d97db668fefdc1b189212402d372909cd2ce99b3efd"
+      },
+      {
+        "bytes": 9842423,
+        "excluded_cache_files": 0,
+        "inventory_verified": true,
+        "original_files": 422,
+        "path": "reports/m2/exploration-stage24-part05-evidence.tar.gz",
+        "scope": "Disjoint complete Stage24 original exploratory bytes, retained failed/superseded attempts, exact authored inputs, helpers and provenance; final recorded-artifact original-URI replays are distinguished from earlier source-unbound development builds.",
+        "sha256": "e41985337ad7a07ad85f19fa4cc2be1ad22297a50a3dbe15a0651b440facf8c4"
+      },
+      {
+        "bytes": 9554714,
+        "excluded_cache_files": 0,
+        "inventory_verified": true,
+        "original_files": 7116,
+        "path": "reports/m2/exploration-stage24-part06-evidence.tar.gz",
+        "scope": "Disjoint complete Stage24 original exploratory bytes, retained failed/superseded attempts, exact authored inputs, helpers and provenance; final recorded-artifact original-URI replays are distinguished from earlier source-unbound development builds.",
+        "sha256": "f9b473bbfc4f50badfb838c93faeacab608b2774fe5205cd75e6df3be7e533ac"
+      },
+      {
+        "bytes": 4835663,
+        "excluded_cache_files": 0,
+        "inventory_verified": true,
+        "original_files": 2094,
+        "path": "reports/m2/exploration-stage24-part07-evidence.tar.gz",
+        "scope": "Disjoint complete Stage24 original exploratory bytes, retained failed/superseded attempts, exact authored inputs, helpers and provenance; final recorded-artifact original-URI replays are distinguished from earlier source-unbound development builds.",
+        "sha256": "7cfddfa20dcfed6ecf058ab48d8ad04c6632d3e8516e5cd51557213e68f50177"
+      }
+    ],
+    "all_original_paths_sizes_and_hashes_verified": true,
+    "captured_artifacts_executed": false,
+    "counts": {
+      "added_cases": 304,
+      "broad_exploration_cases": 363,
+      "broad_selected_overlap": 304,
+      "broad_status_counts": {
+        "mismatch": 26,
+        "pass": 337
+      },
+      "broad_unselected_controls": 59,
+      "current_cases": 2652,
+      "current_persistent_calls": 2532,
+      "current_platform_scenarios": 82,
+      "current_relations": 88,
+      "current_sequences": 147,
+      "focused_original_uri_cases": 304,
+      "focused_persistent_calls": 103,
+      "focused_persistent_sequences": 10,
+      "native_preliminary_acquisitions": 3,
+      "new_expected_failure": 108,
+      "new_expected_success": 196,
+      "original_cases": 2348,
+      "original_persistent_calls": 2326,
+      "original_platform_scenarios": 80,
+      "original_relations": 82,
+      "original_sequences": 137
+    },
+    "history_dependencies": [
+      {
+        "bytes": 2120193,
+        "path": "reports/m2/class-lifecycle-stage23-final-evidence.tar.gz",
+        "sha256": "08c60df471b93015360cd7e708d121fade68cc930e6cdb35baba31dd61964b18"
+      },
+      {
+        "bytes": 40557082,
+        "path": "reports/m2/exploration-stage23-evidence.tar.gz",
+        "sha256": "b38c86629dd2ecbfdbb0abf6b1bc61cf7eb535b8c3ad50c2047ccb136fdc0c05"
+      },
+      {
+        "bytes": 15462171,
+        "path": "reports/m2/exploration-stage23-native-preliminary-evidence.tar.gz",
+        "sha256": "c25c189eeefa24a8a13646c799a0e6d625c78a9e2af5aba28c11715690db19eb"
+      },
+      {
+        "bytes": 27632479,
+        "path": "reports/m2/exploration-stage23-superseded-evidence.tar.gz",
+        "sha256": "b443d937d5f75b1c7ad1d8be7736b1c02251358efb746b934cdfc8124ffcabec"
+      },
+      {
+        "bytes": 227766,
+        "path": "reports/m2/frontend-stage23-final-evidence.tar.gz",
+        "sha256": "2b96b48523dcad124f239a5cc248b86aa68137743fd0d0bd89f4804e0c895aea"
+      },
+      {
+        "bytes": 4768228,
+        "path": "reports/m2/language-stage23-final-evidence.tar.gz",
+        "sha256": "b9a45c71e654446f070c5e3ab4496f0561496b1f21bb3f8a3684e908d0df3854"
+      },
+      {
+        "bytes": 1066786,
+        "path": "reports/m2/lifecycle-stage23-final-evidence.tar.gz",
+        "sha256": "3d3e508b6224c0004fa8a0bd2f33fd54569b4befdbc0816b18e184de3db1231f"
+      },
+      {
+        "bytes": 2601909,
+        "path": "reports/m2/native-set-stage23-final-evidence.tar.gz",
+        "sha256": "856f0e9ae6aa120e6628848656a4ea2664a2a1e571b6173ce4b80aff4cf74e3a"
+      },
+      {
+        "bytes": 3696368,
+        "path": "reports/m2/platforms-stage23-final-evidence.tar.gz",
+        "sha256": "13974097fef188d7542253b93c84b4c594bba3ac6fea8004bcce8f6cd8bb7025"
+      },
+      {
+        "bytes": 1833767,
+        "path": "reports/m2/runtime-stage23-final-evidence.tar.gz",
+        "sha256": "2e27fc3178c435ad3cceafd4b3eb9c1c401001fedba5f09b6e17dbf0054b5ef7"
+      },
+      {
+        "bytes": 5660384,
+        "path": "reports/m2/source-stage23-final-evidence.tar.gz",
+        "sha256": "3fafdc032d966bba023cd58d6ab7f98ab145116f139fcb2229206347a9e75a0a"
+      },
+      {
+        "bytes": 2598219,
+        "path": "reports/m2/validation-stage23-final-evidence.tar.gz",
+        "sha256": "c521783e975e9817763478d063da8c9689c51023017672c676c69cd73d287d7d"
+      },
+      {
+        "bytes": 56312,
+        "path": "reports/m2/stage23-final-summary.json",
+        "sha256": "ffb3e40f3b28dec562e0d20f89216d53df08cd6c6b5f195f81817cad42a43b06"
+      }
+    ],
+    "index_path": "target/m2/stage24-exploration-index.json",
+    "index_sha256": "0a2d11a63e90165a98fe7fbaad16f16e685bf02d2e5b4f31cc646667cb244134",
+    "limitations": [
+      "Initial exploratory debug builds retain exact artifacts, helpers, matrices, raw outcomes and oracle identities, but lack exact recorded build/project source closures. Their source bytes are not inferred from run order, timestamps or the checkout. The exploration provenance ledger states the per-acquisition limits. The later runtime-build-01 has its own retained source scope; focused final artifacts here match independent complete root recorded builds.",
+      "The 363 broad observations overlap all 304 selected programs and retain 59 unselected controls. Invalid custom generic declarations, capitalized Nothing, unsupported first/isPositive/Class APIs, function call syntax, general compound List output, malformed typed let and >= token diagnostics remain complete retained observations; independent scalar, explicit-predicate, lowercase nothing and correctly spaced parser sources have their own Java-derived outcomes.",
+      "Two union alias constructors select String rather than Collection. Their Java Cannot instantiate type N versus Rust Expected a class type diagnostic mismatches remain unselected, with no exception or source substitution. Collection-selected nullable defaults and separate inferred annotation timing are selected.",
+      "Same-function and distinct-function Listing/Collection wrapper chains compare observable values and complete failures; they do not establish wrapper identity, complete same-node cache reuse or the number of successful predicate invocations.",
+      "Property-path transport observations use scalar properties authored in the source. Original unsupported direct List.length transport and earlier sequence proposals remain preserved; no adapter normalization or general compound output was introduced.",
+      "Native preliminary receiver/alias assertions and metadata compilation failures remain retained separately from stable final lifecycle evidence. These early captures lack a complete project/build closure. Actual Host retention/GC and real Node/Chromium scenarios have separate root acquisitions.",
+      "The original cycle oracle error and integer % 0 diagnostic mismatch remain in the unchanged selected development contract. Full language/product APIs, release platforms and performance/memory parity remain incomplete.",
+      "Every file under the configured original exploration roots, including cache paths, is enumerated without exclusions. Partitions are file-disjoint and bounded to 48MB raw input before metadata; each produced gzip archive must be below 80MB. Captured artifacts are never executed while sealing.",
+      "The configuration, index, active configuration/sealing/audit command outputs and later package/postseal outputs are generated metadata or independent root source/helper-history artifacts. They cannot recursively be payloads of the archives they create. Completed earlier readiness, origin and helper captures are retained here.",
+      "Tar headers use deterministic 0644 modes; ORIGINAL_PATHS records exact original paths, sizes and hashes and does not claim preservation of original executable modes."
+    ],
+    "main": {
+      "bytes": 9110782,
+      "excluded_cache_files": 0,
+      "inventory_verified": true,
+      "original_files": 3058,
+      "path": "reports/m2/exploration-stage24-evidence.tar.gz",
+      "scope": "Disjoint complete Stage24 original exploratory bytes, retained failed/superseded attempts, exact authored inputs, helpers and provenance; final recorded-artifact original-URI replays are distinguished from earlier source-unbound development builds.",
+      "sha256": "ff0d6d0b35c17e5da0b4c1496012d96144b7822757d9019de2e7e1a56d25c9cd"
+    },
+    "scope": "Bounded Collection type Java/candidate exploration, all original failed and superseded attempts and sources, supported scalar revisions, exact source/artifact provenance and limits, final recorded-artifact original-URI replays, persistent sequences, native preparations and independent platform/browser evidence. Root full language/persistent/platform/native/validation suites and final source/audit artifacts are packaged separately."
+  },
+  "exploration_independent_audit": {
+    "excluded_cache_files": 0,
+    "inventory_files": 19957,
+    "original_paths": 19929,
+    "path": "target/m2/stage24-exploration-independent-audit.json",
+    "scope": "Root independent read-only audit of sealed Stage24 exploration archives, full evidence/original inventories, explicit cache exclusions, helper/config provenance and historical dependency identities. Root authored documentation and final verification orchestration, but did not author the Collection production implementation, exploration sealer, native tests, platform scenarios or selected Java captures.",
+    "sha256": "fc9ca7d53387a2f8e20ea36dcd1e15ab5ed0142421218971012743539b8af121"
+  },
+  "gates": [
+    {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/m2_language.py",
+        "--verify-report",
+        "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/language-stage24-final-01"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "gate": "report",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "544c478dd0682cf362addc8435ee319a68b747d747aff831959bc0608f845d83"
+    },
+    {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/m2_language.py",
+        "--verify-development",
+        "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/language-stage24-final-01"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "gate": "development",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "544c478dd0682cf362addc8435ee319a68b747d747aff831959bc0608f845d83"
+    },
+    {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/m2_language.py",
+        "--verify-subset",
+        "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/language-stage24-final-01"
+      ],
+      "exit_code": 1,
+      "expected_exit_code": 1,
+      "gate": "subset",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "544c478dd0682cf362addc8435ee319a68b747d747aff831959bc0608f845d83"
+    },
+    {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/m2_language.py",
+        "--verify-full",
+        "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/language-stage24-final-01"
+      ],
+      "exit_code": 1,
+      "expected_exit_code": 1,
+      "gate": "full",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "544c478dd0682cf362addc8435ee319a68b747d747aff831959bc0608f845d83"
+    },
+    {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/m2_class_lifecycle.py",
+        "--verify-report",
+        "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/class-lifecycle-stage24-final-01"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "gate": "class-report",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "63192cd1ad7f6745224099cbe742d1aaa9b92fbb3878b0aeb8a37c4881dc4c97"
+    },
+    {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/m2_class_lifecycle.py",
+        "--verify-contract",
+        "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/class-lifecycle-stage24-final-01"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "gate": "class-contract",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "63192cd1ad7f6745224099cbe742d1aaa9b92fbb3878b0aeb8a37c4881dc4c97"
+    }
+  ],
+  "historical_dependencies": {
+    "archives": {
+      "class-lifecycle": {
+        "bytes": 2120193,
+        "files_including_inventory": 20652,
+        "inventory_verified": true,
+        "path": "reports/m2/class-lifecycle-stage23-final-evidence.tar.gz",
+        "sha256": "08c60df471b93015360cd7e708d121fade68cc930e6cdb35baba31dd61964b18"
+      },
+      "exploration": {
+        "bytes": 40557082,
+        "excluded_cache_files": 0,
+        "inventory_verified": true,
+        "original_files": 12556,
+        "path": "reports/m2/exploration-stage23-evidence.tar.gz",
+        "scope": "Original Java/candidate acquisition captures, exact source/proposal fixtures and helpers, final recorded-artifact original-URI replays, selected scope revision and input preservation proof. Baseline debug candidates remain explicitly unbound; captured artifacts are not executed during sealing.",
+        "sha256": "b38c86629dd2ecbfdbb0abf6b1bc61cf7eb535b8c3ad50c2047ccb136fdc0c05"
+      },
+      "exploration-support-1": {
+        "bytes": 27632479,
+        "excluded_cache_files": 0,
+        "inventory_verified": true,
+        "original_files": 43354,
+        "path": "reports/m2/exploration-stage23-superseded-evidence.tar.gz",
+        "scope": "Complete interim frozen candidate raw replays including the original 2,131 cases and unchanged two nonpasses, earlier Set output/diagnostic failures and corrected selected/persistent proposals. These are historical intermediate observations, not final source-bound evidence.",
+        "sha256": "b443d937d5f75b1c7ad1d8be7736b1c02251358efb746b934cdfc8124ffcabec"
+      },
+      "exploration-support-2": {
+        "bytes": 15462171,
+        "excluded_cache_files": 0,
+        "inventory_verified": true,
+        "original_files": 324,
+        "path": "reports/m2/exploration-stage23-native-preliminary-evidence.tar.gz",
+        "scope": "Six complete native preliminary/debug acquisition roots, source snapshots, raw compile/test captures, unchanged failure conditions, later distinct repaired exploratory conditions and exact capture helpers/notes. Final passing native tests are acquired separately.",
+        "sha256": "c25c189eeefa24a8a13646c799a0e6d625c78a9e2af5aba28c11715690db19eb"
+      },
+      "frontend": {
+        "bytes": 227766,
+        "files_including_inventory": 135,
+        "inventory_verified": true,
+        "path": "reports/m2/frontend-stage23-final-evidence.tar.gz",
+        "sha256": "2b96b48523dcad124f239a5cc248b86aa68137743fd0d0bd89f4804e0c895aea"
+      },
+      "language": {
+        "bytes": 4768228,
+        "files_including_inventory": 21272,
+        "inventory_verified": true,
+        "path": "reports/m2/language-stage23-final-evidence.tar.gz",
+        "sha256": "b9a45c71e654446f070c5e3ab4496f0561496b1f21bb3f8a3684e908d0df3854"
+      },
+      "lifecycle": {
+        "bytes": 1066786,
+        "files_including_inventory": 161,
+        "inventory_verified": true,
+        "path": "reports/m2/lifecycle-stage23-final-evidence.tar.gz",
+        "sha256": "3d3e508b6224c0004fa8a0bd2f33fd54569b4befdbc0816b18e184de3db1231f"
+      },
+      "native-set": {
+        "bytes": 2601909,
+        "files_including_inventory": 54,
+        "inventory_verified": true,
+        "path": "reports/m2/native-set-stage23-final-evidence.tar.gz",
+        "sha256": "856f0e9ae6aa120e6628848656a4ea2664a2a1e571b6173ce4b80aff4cf74e3a"
+      },
+      "platforms": {
+        "bytes": 3696368,
+        "files_including_inventory": 116,
+        "inventory_verified": true,
+        "path": "reports/m2/platforms-stage23-final-evidence.tar.gz",
+        "sha256": "13974097fef188d7542253b93c84b4c594bba3ac6fea8004bcce8f6cd8bb7025"
+      },
+      "runtime": {
+        "bytes": 1833767,
+        "files_including_inventory": 131,
+        "inventory_verified": true,
+        "path": "reports/m2/runtime-stage23-final-evidence.tar.gz",
+        "sha256": "2e27fc3178c435ad3cceafd4b3eb9c1c401001fedba5f09b6e17dbf0054b5ef7"
+      },
+      "source": {
+        "bytes": 5660384,
+        "files_including_inventory": 2926,
+        "inventory_verified": true,
+        "path": "reports/m2/source-stage23-final-evidence.tar.gz",
+        "sha256": "3fafdc032d966bba023cd58d6ab7f98ab145116f139fcb2229206347a9e75a0a"
+      },
+      "validation": {
+        "bytes": 2598219,
+        "files_including_inventory": 2898,
+        "inventory_verified": true,
+        "path": "reports/m2/validation-stage23-final-evidence.tar.gz",
+        "sha256": "c521783e975e9817763478d063da8c9689c51023017672c676c69cd73d287d7d"
+      }
+    },
+    "inherited_dependencies": {
+      "archives": {
+        "class-lifecycle": {
+          "bytes": 1995418,
+          "files_including_inventory": 19256,
+          "inventory_verified": true,
+          "path": "reports/m2/class-lifecycle-stage22-final-evidence.tar.gz",
+          "sha256": "151ce45936f5d69b15805fd8d9ceb6ae0c4053da0dac3a2a4db0693398503e96"
+        },
+        "exploration": {
+          "bytes": 38713060,
+          "excluded_cache_files": 0,
+          "inventory_verified": true,
+          "original_files": 7366,
+          "path": "reports/m2/exploration-stage22-evidence.tar.gz",
+          "scope": "Original strict Map scalar/persistent Java and Rust raw captures, failed/superseded observations, source programs, pinned dependency source evidence, final artifact replay, original contract preservation and exact helper provenance. No captured artifact executes during sealing.",
+          "sha256": "f150ea2abd416b8256ceb00b47a7bd22f5e12bb0fca13e07778c19915cf189dc"
+        },
+        "exploration-support-1": {
+          "bytes": 38499578,
+          "excluded_cache_files": 0,
+          "inventory_verified": true,
+          "original_files": 11493,
+          "path": "reports/m2/exploration-stage22-superseded-evidence.tar.gz",
+          "scope": "Complete interim candidate replays against immutable Java observations, including original mismatches before runtime fixes. Retained artifacts are not executed while sealing.",
+          "sha256": "ce21b1ebce213b35a9524c42f91896e07d8a96a8c5e183b69e787a0023986ee8"
+        },
+        "exploration-support-2": {
+          "bytes": 43595972,
+          "excluded_cache_files": 0,
+          "inventory_verified": true,
+          "original_files": 20578,
+          "path": "reports/m2/exploration-stage22-superseded-final01-evidence.tar.gz",
+          "scope": "Aborted and failed root final01 acquisitions, successful but superseded focused replays/reviews, exact helper snapshots and stop metadata. Missing outer process records remain missing with explicit ledger limitations; no passing final closeout claim is made.",
+          "sha256": "454e795f3ec5019c105cb701e46bce93cae25351b142d1a2d78abeef4efab178"
+        },
+        "frontend": {
+          "bytes": 201017,
+          "files_including_inventory": 134,
+          "inventory_verified": true,
+          "path": "reports/m2/frontend-stage22-final-evidence.tar.gz",
+          "sha256": "4516a61c4239b00bfe1bef7b8e484de621041790a409e09c4d84748ee918f844"
+        },
+        "language": {
+          "bytes": 4499419,
+          "files_including_inventory": 19311,
+          "inventory_verified": true,
+          "path": "reports/m2/language-stage22-final-evidence.tar.gz",
+          "sha256": "c281b23e880f7ba309640aee49698114e51d02adffeb5ea81d4bd6f0001ced41"
+        },
+        "lifecycle": {
+          "bytes": 1005226,
+          "files_including_inventory": 159,
+          "inventory_verified": true,
+          "path": "reports/m2/lifecycle-stage22-final-evidence.tar.gz",
+          "sha256": "dcb74892813034412bb29e82a8aeabe1ba317a1fcd207a86d6a3b5ab9cf56d42"
+        },
+        "native-map": {
+          "bytes": 2513651,
+          "files_including_inventory": 53,
+          "inventory_verified": true,
+          "path": "reports/m2/native-map-stage22-final-evidence.tar.gz",
+          "sha256": "58a883297c284bb1c6cf1c5381e408e31c5f8fb3f4c37c2ca1374d22153b9ff8"
+        },
+        "platforms": {
+          "bytes": 3595974,
+          "files_including_inventory": 114,
+          "inventory_verified": true,
+          "path": "reports/m2/platforms-stage22-final-evidence.tar.gz",
+          "sha256": "44fce5bb1fa13c6ea9b04eed8af89772b37373b112e3a6476527340412975fe8"
+        },
+        "runtime": {
+          "bytes": 1742081,
+          "files_including_inventory": 130,
+          "inventory_verified": true,
+          "path": "reports/m2/runtime-stage22-final-evidence.tar.gz",
+          "sha256": "b10bb929369dec50ac357e7e5686a030cffc193ccae1a822f92827e01db369a5"
+        },
+        "source": {
+          "bytes": 5426817,
+          "files_including_inventory": 2680,
+          "inventory_verified": true,
+          "path": "reports/m2/source-stage22-final-evidence.tar.gz",
+          "sha256": "7ea3e6ce3940ec449e74c8c15e3c0170a38f7b441c2db961b576addafd3bb5a0"
+        },
+        "validation": {
+          "bytes": 2495625,
+          "files_including_inventory": 2654,
+          "inventory_verified": true,
+          "path": "reports/m2/validation-stage22-final-evidence.tar.gz",
+          "sha256": "7cb170dc6a5550f2a0e4723c6a3ce5dfef25670fc1d34e9be78c1dd0d589398d"
+        }
+      },
+      "inherited_dependencies": {
+        "archives": {
+          "class-lifecycle": {
+            "bytes": 1909283,
+            "files_including_inventory": 18036,
+            "inventory_verified": true,
+            "path": "reports/m2/class-lifecycle-stage21-final-evidence.tar.gz",
+            "sha256": "3533ae15b05b89cceb772060d25140c9aaf45b637d1c0601c062b1d6df9dd2d3"
+          },
+          "exploration": {
+            "bytes": 42338168,
+            "excluded_cache_files": 0,
+            "inventory_verified": true,
+            "original_files": 5806,
+            "path": "reports/m2/exploration-stage21-evidence.tar.gz",
+            "scope": "Original direct-new scalar and persistent Java/Rust captures, complete failed/superseded observations, authored fixtures, source-origin controls, original-path replay, final frozen artifacts, unchanged contract proof, exact helper provenance and inconclusive native preparation. No captured artifact is executed by sealing.",
+            "sha256": "fd54513b04ace99de74202dca5168a0dbec398c0e3860f9104837be125e03939"
+          },
+          "frontend": {
+            "bytes": 195823,
+            "files_including_inventory": 133,
+            "inventory_verified": true,
+            "path": "reports/m2/frontend-stage21-final-evidence.tar.gz",
+            "sha256": "d4b7fa2dc1eec98b9a6056889ba85fa37453b69c3720459f761e72fbb458f389"
+          },
+          "language": {
+            "bytes": 4272822,
+            "files_including_inventory": 17590,
+            "inventory_verified": true,
+            "path": "reports/m2/language-stage21-final-evidence.tar.gz",
+            "sha256": "b88120cf2f98b706590666287b80370e81b9d08171c46a8c353402e437ea23e1"
+          },
+          "lifecycle": {
+            "bytes": 969687,
+            "files_including_inventory": 157,
+            "inventory_verified": true,
+            "path": "reports/m2/lifecycle-stage21-final-evidence.tar.gz",
+            "sha256": "d19a032e262295e89970796a101f4a58e71c3ca30dceb55a56d7026a16d2a1ed"
+          },
+          "native-constructors": {
+            "bytes": 2421453,
+            "files_including_inventory": 52,
+            "inventory_verified": true,
+            "path": "reports/m2/native-constructors-stage21-final-evidence.tar.gz",
+            "sha256": "081596745cd7e824190ef869af86be962c558c4fa54e47d42c7b0784b25d5442"
+          },
+          "platforms": {
+            "bytes": 3541118,
+            "files_including_inventory": 112,
+            "inventory_verified": true,
+            "path": "reports/m2/platforms-stage21-final-evidence.tar.gz",
+            "sha256": "6d60bfac560c6439dd80bce1514116f8a54e67166c0cac265a2f1caff71a9efe"
+          },
+          "runtime": {
+            "bytes": 1682432,
+            "files_including_inventory": 129,
+            "inventory_verified": true,
+            "path": "reports/m2/runtime-stage21-final-evidence.tar.gz",
+            "sha256": "55c3ee3271a9bda568284b49f6c4108a4dbc4b754ca966f981855290e405e770"
+          },
+          "source": {
+            "bytes": 5226479,
+            "files_including_inventory": 2465,
+            "inventory_verified": true,
+            "path": "reports/m2/source-stage21-final-evidence.tar.gz",
+            "sha256": "f12f2645774c18a067f022b36389d5d2ed13fdb8fb8e0600e15709c982b7a2f2"
+          },
+          "validation": {
+            "bytes": 2423723,
+            "files_including_inventory": 2446,
+            "inventory_verified": true,
+            "path": "reports/m2/validation-stage21-final-evidence.tar.gz",
+            "sha256": "e974e234891e1bd7dc7e3d396ae3ff4e68bbd31f336e7d209555a4bd67b605c2"
+          }
+        },
+        "inherited_dependencies": {
+          "archives": {
+            "class-lifecycle": {
+              "bytes": 1856440,
+              "files_including_inventory": 17259,
+              "inventory_verified": true,
+              "path": "reports/m2/class-lifecycle-stage20-final-evidence.tar.gz",
+              "sha256": "97fdfbb8a1d104b9379a29999b16f14573a2511da3788b0fba56258e2d35d95a"
+            },
+            "exploration": {
+              "bytes": 31739779,
+              "excluded_cache_files": 0,
+              "inventory_verified": true,
+              "original_files": 3666,
+              "path": "reports/m2/exploration-stage20-evidence.tar.gz",
+              "scope": "Original nullable-default exploration, complete raw scalar/persistent Java captures, original URI replays, helper provenance, preserved selected inputs, preparation limitations and final corrected artifact replays.",
+              "sha256": "1b50d34afc2a1e4fcd78c5110d2d75f0506de4117eec9a079bcd31b5bc661be3"
+            },
+            "exploration-support-1": {
+              "bytes": 15640533,
+              "excluded_cache_files": 178,
+              "inventory_verified": true,
+              "original_files": 13078,
+              "path": "reports/m2/exploration-stage20-superseded-evidence.tar.gz",
+              "scope": "Superseded Stage20 final-01 acquisition and review, original unchanged Stage19 stack regression failure, nonrecursive dispatcher correction controls; complete raw captures, executable artifacts and source snapshots retained, disposable Cargo build caches excluded.",
+              "sha256": "554cd772ca835e4e2c01d6c3de5f2115137c6a202ac30fcf71f4f001c935b18e"
+            },
+            "frontend": {
+              "bytes": 194013,
+              "files_including_inventory": 133,
+              "inventory_verified": true,
+              "path": "reports/m2/frontend-stage20-final-evidence.tar.gz",
+              "sha256": "f913d311d3fffcbf160973100288c7d168db1bf1f5cb8539087f8b229c37a4ad"
+            },
+            "language": {
+              "bytes": 4168452,
+              "files_including_inventory": 16869,
+              "inventory_verified": true,
+              "path": "reports/m2/language-stage20-final-evidence.tar.gz",
+              "sha256": "1638a56a67a4fb1ebadeb0abaacf6d0e49537b50720c4d2969889e46ff694cf8"
+            },
+            "lifecycle": {
+              "bytes": 954224,
+              "files_including_inventory": 156,
+              "inventory_verified": true,
+              "path": "reports/m2/lifecycle-stage20-final-evidence.tar.gz",
+              "sha256": "a64f3adb801b5a475ffd6b2582f4d87011b9aa80e79dcd34abdf63a6722df173"
+            },
+            "native-defaults": {
+              "bytes": 2348247,
+              "files_including_inventory": 52,
+              "inventory_verified": true,
+              "path": "reports/m2/native-defaults-stage20-final-evidence.tar.gz",
+              "sha256": "0cc9705780529c94e59c3fda9784cf100f13249628fc1c4a3eac6ee632a86e12"
+            },
+            "platforms": {
+              "bytes": 3505628,
+              "files_including_inventory": 111,
+              "inventory_verified": true,
+              "path": "reports/m2/platforms-stage20-final-evidence.tar.gz",
+              "sha256": "6850492399889be64afe85b5abc4fd098c15e85e6845d82f6d4d47b6399463e3"
+            },
+            "runtime": {
+              "bytes": 1647848,
+              "files_including_inventory": 129,
+              "inventory_verified": true,
+              "path": "reports/m2/runtime-stage20-final-evidence.tar.gz",
+              "sha256": "e041ba7d098e05a55ebce66079efaff397b174c527a4fb5256d829949eb9a539"
+            },
+            "source": {
+              "bytes": 5137505,
+              "files_including_inventory": 2377,
+              "inventory_verified": true,
+              "path": "reports/m2/source-stage20-final-evidence.tar.gz",
+              "sha256": "6bbf63cfd882075bce1335f5c41a0689f58d5ecbf6276d93c4cede68edaacad3"
+            },
+            "validation": {
+              "bytes": 2387186,
+              "files_including_inventory": 2356,
+              "inventory_verified": true,
+              "path": "reports/m2/validation-stage20-final-evidence.tar.gz",
+              "sha256": "eb3ad807c6b82eb912343faeff50876bcd0d129ff88c6cfbc6f4bd4fbf595b5c"
+            }
+          },
+          "inherited_dependencies": {
+            "archives": {
+              "class-lifecycle": {
+                "bytes": 1826768,
+                "files_including_inventory": 16688,
+                "inventory_verified": true,
+                "path": "reports/m2/class-lifecycle-stage19-final-evidence.tar.gz",
+                "sha256": "59c2307e382115467653f93c724bae058a453a0ef257a52b3021c5d9be0f2217"
+              },
+              "exploration": {
+                "bytes": 448580,
+                "inventory_verified": true,
+                "path": "reports/m2/exploration-stage19-evidence.tar.gz",
+                "sha256": "5aea00bbddf3d5a18a3b610de7fe447d34c36d7963525cfa1e70006fa650ec77"
+              },
+              "exploration-history-1": {
+                "blob_count": 5906,
+                "bytes": 7431252,
+                "inventory_verified": true,
+                "path": "reports/m2/exploration-stage19-support-01-evidence.tar.gz",
+                "sha256": "c27e29bc0a8092bf9803a868b9b2e2e1da6782fdf1722648512c927b41bad9c8",
+                "uncompressed_unique_bytes": 27190958
+              },
+              "frontend": {
+                "bytes": 192767,
+                "files_including_inventory": 133,
+                "inventory_verified": true,
+                "path": "reports/m2/frontend-stage19-final-evidence.tar.gz",
+                "sha256": "b233f996c77b0afade6fd2042fd172b8a5ac642d1622daaad87e930e2aba7267"
+              },
+              "language": {
+                "bytes": 4125872,
+                "files_including_inventory": 16517,
+                "inventory_verified": true,
+                "path": "reports/m2/language-stage19-final-evidence.tar.gz",
+                "sha256": "2c2e3b2d082ab21414bf08f1eb36230dd4142fcc2a8ee8d465b8747f45fa7ab9"
+              },
+              "lifecycle": {
+                "bytes": 951385,
+                "files_including_inventory": 155,
+                "inventory_verified": true,
+                "path": "reports/m2/lifecycle-stage19-final-evidence.tar.gz",
+                "sha256": "469c0d707e8a0964831c696d4015c5171323b35342e5748a7e78b3c24837cd1d"
+              },
+              "native-generics": {
+                "bytes": 2422874,
+                "files_including_inventory": 75,
+                "inventory_verified": true,
+                "path": "reports/m2/native-generics-stage19-final-evidence.tar.gz",
+                "sha256": "e317d548e64e4535dacc5c88cf1d6d7aa37b9ebf89d8cd53ed455e9196a2e1f3"
+              },
+              "platforms": {
+                "bytes": 3497456,
+                "files_including_inventory": 110,
+                "inventory_verified": true,
+                "path": "reports/m2/platforms-stage19-final-evidence.tar.gz",
+                "sha256": "255797a2361f1292758cdbb78c8bdf8c20c89704858dbcabba49d93143b1bfc5"
+              },
+              "prior-selection": {
+                "bytes": 2004187,
+                "files_including_inventory": 7291,
+                "inventory_verified": true,
+                "path": "reports/m2/prior-selection-stage19-final-evidence.tar.gz",
+                "sha256": "c3b6c9f7efbb8f9d60d0aa3477727eaec6b0895a356b523d502eab398007351b"
+              },
+              "release-build": {
+                "bytes": 1959564,
+                "files_including_inventory": 113,
+                "inventory_verified": true,
+                "path": "reports/m2/release-build-stage19-final-evidence.tar.gz",
+                "sha256": "6d24016af93366319fb5242f8c9f80a57da6332198274a427bbae423b1f10dc0"
+              },
+              "runtime": {
+                "bytes": 1646051,
+                "files_including_inventory": 129,
+                "inventory_verified": true,
+                "path": "reports/m2/runtime-stage19-final-evidence.tar.gz",
+                "sha256": "f94ee9c288fbd5157c16c0d987f85763d02b788dfabe350b161613279a3a79ce"
+              },
+              "source": {
+                "bytes": 5034776,
+                "files_including_inventory": 2336,
+                "inventory_verified": true,
+                "path": "reports/m2/source-stage19-final-evidence.tar.gz",
+                "sha256": "512117386589bee1b68ed1355dc8d0525775abae6324cceab54dd1e69b10da61"
+              },
+              "validation": {
+                "bytes": 2369149,
+                "files_including_inventory": 2309,
+                "inventory_verified": true,
+                "path": "reports/m2/validation-stage19-final-evidence.tar.gz",
+                "sha256": "eb7395ff6e4e2b4dbacaab6329fa7d4257f7bca33bb2b1322b62c8c6f4615dca"
+              }
+            },
+            "inherited_dependencies": {
+              "archives": {
+                "class-lifecycle": {
+                  "bytes": 1752505,
+                  "files_including_inventory": 15884,
+                  "inventory_verified": true,
+                  "path": "reports/m2/class-lifecycle-stage18-final-evidence.tar.gz",
+                  "sha256": "50c67d1a47083956d08d5c5444ebdf54bcf5e6b4ac0be010641f2ea7efdeb6de"
+                },
+                "exploration": {
+                  "bytes": 1814949,
+                  "inventory_verified": true,
+                  "path": "reports/m2/exploration-stage18-evidence.tar.gz",
+                  "sha256": "9e226b18304278a74db30bbb0462a87054121ae93cfc224fbfc90fc7385cff5c"
+                },
+                "exploration-history-1": {
+                  "blob_count": 4069,
+                  "bytes": 46292188,
+                  "inventory_verified": true,
+                  "path": "reports/m2/exploration-stage18-support-01-evidence.tar.gz",
+                  "sha256": "c85deece0cc11e9b2d85fa9fe911e581d73990623b7b12985fac363d64101780",
+                  "uncompressed_unique_bytes": 198468748
+                },
+                "exploration-history-2": {
+                  "blob_count": 5238,
+                  "bytes": 45885557,
+                  "inventory_verified": true,
+                  "path": "reports/m2/exploration-stage18-support-02-evidence.tar.gz",
+                  "sha256": "9a3f4eed701edc76430de2e779738e3c3dada3aa85e3d3af81cb68dafcad6f17",
+                  "uncompressed_unique_bytes": 188205680
+                },
+                "exploration-history-3": {
+                  "blob_count": 1364,
+                  "bytes": 21104951,
+                  "inventory_verified": true,
+                  "path": "reports/m2/exploration-stage18-support-03-evidence.tar.gz",
+                  "sha256": "b20759c38d2f6e92c9ef213b02fb11ec64e1982c3247cacd8f6251552b834253",
+                  "uncompressed_unique_bytes": 89030696
+                },
+                "frontend": {
+                  "bytes": 185701,
+                  "files_including_inventory": 132,
+                  "inventory_verified": true,
+                  "path": "reports/m2/frontend-stage18-final-evidence.tar.gz",
+                  "sha256": "cb4fd2efe0baebf59bd04bdadcf129665f91cc3cf1b98c1f750c1c954ec414a1"
+                },
+                "language": {
+                  "bytes": 4056803,
+                  "files_including_inventory": 16308,
+                  "inventory_verified": true,
+                  "path": "reports/m2/language-stage18-final-evidence.tar.gz",
+                  "sha256": "841bde3b331b3782c9e8daa721396663cc09411b35b60ca2647b1bf6209eb54c"
+                },
+                "lifecycle": {
+                  "bytes": 904626,
+                  "files_including_inventory": 153,
+                  "inventory_verified": true,
+                  "path": "reports/m2/lifecycle-stage18-final-evidence.tar.gz",
+                  "sha256": "2822ab537ed13bd8a7336c2be84a48ca579159bdc7c3a609b1073c3acefe5df5"
+                },
+                "native-generics": {
+                  "bytes": 2316514,
+                  "files_including_inventory": 92,
+                  "inventory_verified": true,
+                  "path": "reports/m2/native-generics-stage18-final-evidence.tar.gz",
+                  "sha256": "13f3a3c497a4c626435e15218e1a7017be1fe141da469ae27c5490b3d6e9bc65"
+                },
+                "platforms": {
+                  "bytes": 3425421,
+                  "files_including_inventory": 108,
+                  "inventory_verified": true,
+                  "path": "reports/m2/platforms-stage18-final-evidence.tar.gz",
+                  "sha256": "129649a7dff6a54ca417ddccba0e4290779c621193e75649be2a879797446adc"
+                },
+                "prior-selection": {
+                  "bytes": 1893909,
+                  "files_including_inventory": 6733,
+                  "inventory_verified": true,
+                  "path": "reports/m2/prior-selection-stage18-final-evidence.tar.gz",
+                  "sha256": "d2c7cf51991bad4154bbe12e864b561f07a9caa5251b25387ad07865e0416332"
+                },
+                "release-build": {
+                  "bytes": 1878992,
+                  "files_including_inventory": 111,
+                  "inventory_verified": true,
+                  "path": "reports/m2/release-build-stage18-final-evidence.tar.gz",
+                  "sha256": "0231e85476567f430a7a27abab614f456360d19b7b9f536eb27851443af00298"
+                },
+                "runtime": {
+                  "bytes": 1568345,
+                  "files_including_inventory": 128,
+                  "inventory_verified": true,
+                  "path": "reports/m2/runtime-stage18-final-evidence.tar.gz",
+                  "sha256": "f9a402ed01e6d42f6809933bff22a44c1aeb318065dc82892603edf086a769e6"
+                },
+                "source": {
+                  "bytes": 5495125,
+                  "files_including_inventory": 2311,
+                  "inventory_verified": true,
+                  "path": "reports/m2/source-stage18-final-evidence.tar.gz",
+                  "sha256": "f1b9400694d2d583eed1f413321b6f3223c7535d7b313f55aa503b01a407141c"
+                },
+                "validation": {
+                  "bytes": 2344824,
+                  "files_including_inventory": 2269,
+                  "inventory_verified": true,
+                  "path": "reports/m2/validation-stage18-final-evidence.tar.gz",
+                  "sha256": "72b4913fb9bfa6b537e060e8f544b75fbaf8ef302d46cad6c307616653a701c5"
+                }
+              },
+              "inherited_dependencies": {
+                "archives": {
+                  "class-lifecycle": {
+                    "bytes": 1471054,
+                    "files_including_inventory": 9466,
+                    "inventory_verified": true,
+                    "path": "reports/m2/class-lifecycle-stage17-final-evidence.tar.gz",
+                    "sha256": "afe409da39467d8e7209d225a04a6c5dbf47c0f8fd560a15bddf67f48de52a22"
+                  },
+                  "exploration": {
+                    "bytes": 40915589,
+                    "path": "reports/m2/exploration-stage17-evidence.tar.gz",
+                    "sha256": "0bac7fcf0f4860d7463913671e35270e08355888c31d0df15979fae8a8defdd9"
+                  },
+                  "exploration-history-1": {
+                    "bytes": 38356107,
+                    "files_count": 22942,
+                    "inventory_verified": true,
+                    "partition_key": "reports/m2/exploration-stage17-history-01-evidence.tar.gz",
+                    "path": "reports/m2/exploration-stage17-history-01-evidence.tar.gz",
+                    "scope": "Complete superseded and exploratory supporting histories; paths and raw identities are conserved by the partition index.",
+                    "sha256": "792963ccfdb64df3d7683340a91f53f6333144ca4e3d160bf1fed3f17f915113",
+                    "uncompressed_payload_bytes": 172985250
+                  },
+                  "exploration-history-2": {
+                    "bytes": 38961690,
+                    "files_count": 22408,
+                    "inventory_verified": true,
+                    "partition_key": "reports/m2/exploration-stage17-history-02-evidence.tar.gz",
+                    "path": "reports/m2/exploration-stage17-history-02-evidence.tar.gz",
+                    "scope": "Complete superseded and exploratory supporting histories; paths and raw identities are conserved by the partition index.",
+                    "sha256": "6915d3724c2a96ab272039c3b334eec4f872d647ae3c7206e436f4a3b1fa9285",
+                    "uncompressed_payload_bytes": 171245491
+                  },
+                  "exploration-history-3": {
+                    "bytes": 32294731,
+                    "files_count": 164,
+                    "inventory_verified": true,
+                    "partition_key": "reports/m2/exploration-stage17-history-03-evidence.tar.gz",
+                    "path": "reports/m2/exploration-stage17-history-03-evidence.tar.gz",
+                    "scope": "Complete superseded and exploratory supporting histories; paths and raw identities are conserved by the partition index.",
+                    "sha256": "e42ec9e4655531eb82207a66c5ae728ab99dc934e04ad6156ca9bdf542811229",
+                    "uncompressed_payload_bytes": 136711625
+                  },
+                  "exploration-history-4": {
+                    "bytes": 35794996,
+                    "files_count": 3517,
+                    "inventory_verified": true,
+                    "partition_key": "reports/m2/exploration-stage17-history-04-evidence.tar.gz",
+                    "path": "reports/m2/exploration-stage17-history-04-evidence.tar.gz",
+                    "scope": "Complete superseded and exploratory supporting histories; paths and raw identities are conserved by the partition index.",
+                    "sha256": "5e6a4ea6172ff5ba1a68660b2a82ddd25f0b03c1d72bd399e50c553767edb7dd",
+                    "uncompressed_payload_bytes": 151211498
+                  },
+                  "gates": {
+                    "bytes": 938,
+                    "files_including_inventory": 10,
+                    "inventory_verified": true,
+                    "path": "reports/m2/gates-stage17-final-evidence.tar.gz",
+                    "sha256": "f4307bf3ec4ae777ae4c935774a5c07f6b6c1e3ff2eab4a10cf547f9d469c6a4"
+                  },
+                  "language": {
+                    "bytes": 3883852,
+                    "files_including_inventory": 15053,
+                    "inventory_verified": true,
+                    "path": "reports/m2/language-stage17-final-evidence.tar.gz",
+                    "sha256": "0b9f25ccec620ff0bc1cb216e053aabc863858265c0229d01b8012f41a6a05b6"
+                  },
+                  "platforms": {
+                    "bytes": 3367449,
+                    "files_including_inventory": 106,
+                    "inventory_verified": true,
+                    "path": "reports/m2/platforms-stage17-final-evidence.tar.gz",
+                    "sha256": "6ead24db1a84e03970d7c5fe47b5664c8ae4fd1b949f4484bedc036014710f10"
+                  },
+                  "regressions": {
+                    "bytes": 21456570,
+                    "files_including_inventory": 8679,
+                    "inventory_verified": true,
+                    "path": "reports/m2/regressions-stage17-final-evidence.tar.gz",
+                    "sha256": "f0709e8fd8d44d2b73903e238c0f0c665c62fc84b62fc4ada348b578caf75e22"
+                  },
+                  "source": {
+                    "bytes": 4103478,
+                    "files_including_inventory": 2019,
+                    "inventory_verified": true,
+                    "path": "reports/m2/source-stage17-final-evidence.tar.gz",
+                    "sha256": "a012d2be480a070f5c67c4743702fe4529c8f7cf9617e2e2fff00cc8a115fc4d"
+                  },
+                  "validation": {
+                    "bytes": 16967,
+                    "files_including_inventory": 16,
+                    "inventory_verified": true,
+                    "path": "reports/m2/validation-stage17-final-evidence.tar.gz",
+                    "sha256": "92069c17bc7451a4e092808b7f557b4ba5e0ae50078e85e6b4cc63e1b8c14a62"
+                  }
+                },
+                "scope": "Immutable Stage17 archives remain external dependencies; no historical payload is rewritten or duplicated.",
+                "summary_path": "reports/m2/stage17-final-summary.json",
+                "summary_sha256": "387089a325531d3c63b34405d883861ead0cdeb3ace6b186dc8a0c3a13083c22"
+              },
+              "scope": "Immutable Stage18 archives and their recorded dependency chain remain external dependencies; no historical payload is rewritten or duplicated.",
+              "summary_path": "reports/m2/stage18-final-summary.json",
+              "summary_sha256": "e480344e27cb62c48497846ca72541c23b4630ce39f8203da95099bc3de94405"
+            },
+            "scope": "Immutable Stage19 archives and their recorded dependency chain remain external dependencies; no historical payload is rewritten or duplicated.",
+            "summary_path": "reports/m2/stage19-final-summary.json",
+            "summary_sha256": "2714acf295b74dd5a69dd750f91d8b48f53d26a0926798762177a727dee60e66"
+          },
+          "scope": "Immutable Stage20 archives and their recorded dependency chain remain external dependencies; no historical payload is rewritten or duplicated.",
+          "summary_path": "reports/m2/stage20-final-summary.json",
+          "summary_sha256": "e68afa30ba397c211a78ac1ef4aaabe955b2ad8875e926f40977c871fcc7865c"
+        },
+        "scope": "Immutable Stage21 archives and their recorded dependency chain remain external dependencies; no historical payload is rewritten or duplicated.",
+        "summary_path": "reports/m2/stage21-final-summary.json",
+        "summary_sha256": "821100192c6cfc6ed83869582f2af49bebdd88567d6cb492fd5448522719acea"
+      },
+      "scope": "Immutable Stage22 archives and their recorded dependency chain remain external dependencies; no historical payload is rewritten or duplicated.",
+      "summary_path": "reports/m2/stage22-final-summary.json",
+      "summary_sha256": "750aea177a6364373b67aa280c959a14d45ea4fe8d9b135ac9cc592ab5ad5a75"
+    },
+    "scope": "Immutable Stage23 archives and their recorded dependency chain remain external dependencies; no historical payload is rewritten or duplicated.",
+    "summary_path": "reports/m2/stage23-final-summary.json",
+    "summary_sha256": "ffb3e40f3b28dec562e0d20f89216d53df08cd6c6b5f195f81817cad42a43b06"
+  },
+  "implementation_commit": "123f41660286787bc46418d6a81d984f48ba22ef",
+  "known_unverified_scope": [
+    "Collection<T> coverage is limited to selected List/Set classification, eager/lazy element checks, defaults, aliases and metadata observations. Full collection APIs, general compound output, authored frontend nesting, JVM identity-dependent hashes, generic gaps outside selected cases, Java stack diagnostics and arbitrary resource growth remain unverified.",
+    "Whole-language, complete API, Linux/Windows release execution and every-workload performance/memory gates remain open."
+  ],
+  "missing_or_running_suites": [],
+  "packaging_helper": {
+    "executed_path": "target/m2/stage24-package-captured-final-01/helper/package_stage24_final.py",
+    "invocation": [
+      "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage24-package-captured-final-01/helper/package_stage24_final.py",
+      "--commit",
+      "123f41660286787bc46418d6a81d984f48ba22ef"
+    ],
+    "sha256": "70031692ce1cf29592642a574684a4eb3b4c908dfd75f4f94a80e07f74c541b3"
+  },
+  "packaging_review": {
+    "helper_sha256": "70031692ce1cf29592642a574684a4eb3b4c908dfd75f4f94a80e07f74c541b3",
+    "path": "target/m2/stage24-packager-review-final-01.json",
+    "scope": "Independent review of the root-authored Stage24 final packager and immutable-copy runner. Read-only integrity and preservation checks are separate from production semantics, final suite acquisition, sealing and postseal audit.",
+    "sha256": "84d23bdea265ae91bab5bb19880cc71535e046e59b5841c90a2327c019943f45"
+  },
+  "performance_targets_established": false,
+  "preservation": {
+    "added_selected": 304,
+    "added_selected_outcomes": {
+      "failure": 108,
+      "success": 196
+    },
+    "commit": "6d3f1a1340faa967f116ec553490a87cf6c48235",
+    "current_platform_scenarios": 82,
+    "current_selected": 2652,
+    "current_sequences": 147,
+    "historical_lifecycle_files_unchanged": 21,
+    "inventories": {
+      "compatibility/m2-language.json": {
+        "current_requirements": 474,
+        "original_ids_states_definitions_and_links_preserved": true,
+        "original_requirements": 474
+      },
+      "compatibility/m2-mappings.json": {
+        "current_requirements": 16,
+        "original_ids_states_definitions_and_links_preserved": true,
+        "original_requirements": 16
+      }
+    },
+    "original_platform_scenarios": 80,
+    "original_selected": 2348,
+    "original_sequences": 137,
+    "reviewed_implementation_link_updates": [],
+    "reviewed_remaining_updates": []
+  },
+  "reviews": {
+    "stage24-lifecycle-review-final-01.json": {
+      "implementation_commit": "123f41660286787bc46418d6a81d984f48ba22ef",
+      "path": "target/m2/stage24-lifecycle-review-final-01.json",
+      "scope": "Independent review of runtime-authored abstract Collection implementation and root consumer integration, with explicit disclosure that reviewer authored the native lifecycle/deep metadata tests and platform wiring. This source review is separate from Java raw differential evidence and final archive audit.",
+      "sha256": "2640f1c75da2ac73ca874208cf4e9a1360db7f95475d8988fed5597897dd4ae7",
+      "source_count": 13
+    },
+    "stage24-root-review-final-01.json": {
+      "implementation_commit": "123f41660286787bc46418d6a81d984f48ba22ef",
+      "path": "target/m2/stage24-root-review-final-01.json",
+      "scope": "Root independent source review of Collection<T> runtime, empty explicit generic-argument parsing, native lifecycle assertions and actual-target wiring. Root authored documentation and final verification orchestration but no production implementation, test cases, platform payload or exploration captures.",
+      "sha256": "6e7da76189b03ace5b4ae6ead41a9867c34ed891915a7c8adf57363d1bdb7355",
+      "source_count": 13
+    },
+    "stage24-runtime-review-final-01.json": {
+      "implementation_commit": "123f41660286787bc46418d6a81d984f48ba22ef",
+      "path": "target/m2/stage24-runtime-review-final-01.json",
+      "scope": "Implementation self-review of the frozen bounded M2 Stage24 Collection<T> production changes; not independent review, full compatibility, product API completion, or performance validation.",
+      "sha256": "1d09fbb77ce1ca996a4d386c9f405e9b791de301f409bf7c18e76cccca7b3acb",
+      "source_count": 6
+    }
+  },
+  "schema": 1,
+  "source_binding": {
+    "git_request_sha256": "f63ce1a5f7ee8038a22ea9be37e3d8f47744afe64f2e866cea14f43cc582ed95",
+    "git_response_sha256": "69c64f9814b8e080c16a96cb7e9adef0064dd486379d19c506d514c7d6a40538",
+    "helper_snapshot_copies": 0,
+    "implementation_commit": "123f41660286787bc46418d6a81d984f48ba22ef",
+    "scope": "Only final project source copies enumerated here equal exact implementation Git bytes. Historical focused/exploratory sources retain separate provenance.",
+    "source_snapshot_copies": 6707,
+    "unique_source_files": 3199,
+    "upstream_blob_proof_claimed": false,
+    "upstream_source_snapshot_copies": 0
+  },
+  "status": "ready",
+  "utc": "2026-10-22T03:09:07.876896+00:00"
+}

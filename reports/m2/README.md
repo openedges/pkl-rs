@@ -31,8 +31,96 @@ preserves nullable defaults through amendments and evaluator lifecycles. Stage 2
 adds selected direct generic constructors, argument-source diagnostics, and their
 shared-engine lifecycle checks. Stage 22 adds selected strict Map construction,
 lookup, typing, equality, hashing, iteration and stringification. Stage 23 adds
-selected strict Set semantics, multiline strings and lifecycle checks.
+selected strict Set semantics, multiline strings and lifecycle checks. Stage 24 adds
+bounded abstract Collection type checks, defaults and metadata.
 These checkpoints do not complete the language milestone.
+
+## Stage 24 local verification checkpoint
+
+Implementation `123f41660286787bc46418d6a81d984f48ba22ef` is committed and pushed.
+Runtime implementation used `gpt-6-astra / xhigh`; Java comparisons and independent
+lifecycle/platform review used `gpt-6.1-sol / high`. Root reviewed the implementation
+and tests and coordinated local macOS verification. Runtime self-review, independent
+source review, raw comparisons and archive audits have separate scopes.
+
+`Collection<T>` is an abstract type accepting List and Set values. List elements can
+receive nested lazy wrappers; Set elements remain eagerly checked without replacing
+their keys. Bare types, aliases, empty List defaults, nullable attached defaults,
+Collection-selected union defaults, casts, constraints and Reference metadata have
+selected Java comparisons. Empty explicit generic argument lists now report the pinned
+parser error, with List, Set, Map and alias controls. Existing parser depth and node
+limits are unchanged.
+
+The [final summary](stage24-final-summary.json) records **2,652 independent expressions:
+2,650 raw matches, the original cycle oracle error, and the original integer `% 0`
+diagnostic mismatch**.
+All 304 additions match: 196 successes and 108 expected errors. All **88 metamorphic
+relations** pass. The [persistent suite](class-lifecycle-stage24-final-evidence.tar.gz)
+executes **147 sequences twice, with 2,532 matching calls**. The previous 2,348
+independent inputs, 82 relations, 137 sequences, 21 lifecycle test files and 80 platform
+scenarios are preserved. Root also verified
+all 51 previous native test files and the existing internal metadata test bodies are
+byte-identical. No development exception was added.
+
+All seven [required local checks](validation-stage24-final.json) pass: **432 Rust tests
+and 194 Python tests**, with the original ignored Rust probe reported separately.
+Seven [native Collection lifecycle tests](native-collection-type-stage24-final-evidence.tar.gz)
+cover lazy/eager timing, suspended constraint context, retained temporary receivers,
+Host reentry and failed-read retry, 24 nonterminal cancellations, evaluator isolation,
+stale handles and terminal cleanup.
+They use one instruction per poll, GC at every yield and pending read, and at most
+200,000 polls per event. A separate 20,000-level metadata test exercises traversal,
+normalization, subtype checks, exported names and release on a 256 KiB stack. It does
+not exercise deeply authored syntax or establish Java speed or peak-RSS parity.
+Historical Map, Set and generic small-stack conditions remain unchanged.
+
+[Actual Node and Chromium](platforms-stage24-final-evidence.tar.gz) each pass
+**82 development scenarios**. The two new groups compare 206 ordered calls per target
+against complete Java payloads. All 6,078 shared primitive results agree across engines;
+each target matches Java in 6,076 cases and
+retains the same two regex failures. The architecture contract passes while strict
+primitive compatibility fails. M1 frontend, runtime and lifecycle comparisons retain
+their earlier successes and known cycle/complete-diagnostic differences. No hosted CI,
+Linux or Windows execution is claimed. The logged full-Chrome path is distinct from
+the headless-shell selection inferred from pinned Playwright code; its hash does not
+prove which browser executable was launched. Browser version and scenario outcomes
+were observed during actual execution.
+
+Focused final artifacts match all 304 selected programs at their original exploratory
+Java URIs and all 103 new persistent calls. Broader exploration retains **337 matches
+and 26 mismatches among 363 observations**, overlapping all 304 selected programs and
+including 59 unselected controls. Original unsupported API/compound-output inputs,
+invalid syntax and declarations, failed hypotheses and corrected-source observations
+retain their own bytes. Two String-selected alias-union constructors still differ in
+their complete diagnostics. Same/different-function wrapper chains establish selected
+values and errors, not wrapper identity or successful predicate execution counts.
+
+Early exploratory builds retain their artifact, input and outcome identities but lack
+complete recorded build/project-source closure. No source identity is inferred from
+timestamps or the later checkout. The final recorded builds and original-URI replays
+have separate exact source binding. Preliminary receiver/alias assertions and metadata
+test compilation failures remain preserved; the passing final captures do not replace
+them.
+
+The final evidence consists of 16 archives totaling 87,514,114 bytes. The
+[source and gate archive](source-stage24-final-evidence.tar.gz) binds 6,707 source
+snapshot copies across 3,199 unique project paths to the exact implementation commit.
+The seven exploration partitions preserve 19,929 original paths without exclusions;
+their inventories contain 19,957 entries including per-partition metadata. The
+[independent postseal audit](stage24-post-seal-audit.json) verifies archive inventories,
+Git source binding, reviews, the actual packaging helper and process, recorded gates,
+and historical artifact identities. It passes without executing retained evaluators.
+The [completion capture companion](stage24-completion-captures.json) preserves exact
+runner, invocation, process, output and helper bytes from the completed packaging and
+audit processes. These later records are separate from the sixteen sealed archives.
+
+The inventory retains 474 requirements, 16 partial mappings and 3,652 accounting rows:
+2,652 ready, 960 unimplemented and 40 unmapped. These overlapping rows are not a
+completion percentage. The strict full gate retains 1,950 failure reasons. Authored
+frontend stack safety, remaining alias-constructor diagnostics and type/Reference/module
+rules, full collection APIs, compound rendering, original upstream suites, product APIs,
+release platforms and workload-level speed/peak-RSS requirements remain open.
+**The bounded Stage 24 Collection contract is closed. M2 as a whole remains in progress.**
 
 ## Stage 23 local verification checkpoint
 

@@ -1,0 +1,100 @@
+{
+  "implementation_commit": "123f41660286787bc46418d6a81d984f48ba22ef",
+  "scope": "Required local development checks for M2 Stage24. Full language, API, release-platform and performance gates remain separate.",
+  "source_stability": true,
+  "source_snapshot_count": 3199,
+  "source_manifest_report_sha256": "bbd4f52ff9d393dac3c3eb132f82535e3b9033ba43b9604428737c0ba857acf9",
+  "raw_report": "validation-stage24-final-evidence.tar.gz:report.json",
+  "rust_passed": 432,
+  "rust_failed": 0,
+  "rust_ignored": 1,
+  "python_passed": 194,
+  "checks": [
+    {
+      "command": [
+        "cargo",
+        "xtask",
+        "verify"
+      ],
+      "exit_code": 0,
+      "stdout_sha256": "900802c9cf4f23bd9dbc0e79f58d3e21493ec0c990782bc5b690a7432148e9eb",
+      "stderr_sha256": "fd273ae560aa8961b11ae8c95903cfed0ca2a724fec3bf37d264e738bae63ea1"
+    },
+    {
+      "command": [
+        "cargo",
+        "fmt",
+        "--all",
+        "--",
+        "--check"
+      ],
+      "exit_code": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "cargo",
+        "clippy",
+        "--workspace",
+        "--all-targets",
+        "--locked",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "exit_code": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "9aad50bab514a1d63c4732d216a4aac0e118c246ec2776ed778f4c4b65fbb6d4"
+    },
+    {
+      "command": [
+        "cargo",
+        "test",
+        "--workspace",
+        "--locked"
+      ],
+      "exit_code": 0,
+      "stdout_sha256": "4cf90d87e812fe065b3c630c5aac0d76fab8f99d4759735fb1150ebfb7a1343c",
+      "stderr_sha256": "a45f0fa602679e46687f25f59c0f84bd171dfdfd4bb2275b54cf5b090b3de861"
+    },
+    {
+      "command": [
+        "cargo",
+        "check",
+        "-p",
+        "pkl-runtime",
+        "--target",
+        "wasm32-unknown-unknown",
+        "--locked"
+      ],
+      "exit_code": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "eb9856c2ac79422dbdf5aad9b6afbe8734ff2cedfd03e73d16f4ae91fe43bf4f"
+    },
+    {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools/tests",
+        "-v"
+      ],
+      "exit_code": 0,
+      "stdout_sha256": "5bf3cf2dd5d1e4737f353e988911f56c0600d17731a22227887028bf0fa0a78b",
+      "stderr_sha256": "597068063547239a4fc4f2666f93546c665a340678f04987fc5df46951a08b5c"
+    },
+    {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/m2_manifest.py",
+        "--check"
+      ],
+      "exit_code": 0,
+      "stdout_sha256": "335afcbf787bcccae1652ba3cb965d1b64c9d25bd49c4d33c458ec99cff36476",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ]
+}
