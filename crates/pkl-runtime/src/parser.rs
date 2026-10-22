@@ -7,6 +7,8 @@ use crate::syntax::{
     UnaryOp, Variance, modifier_flags,
 };
 
+mod string_lexer;
+mod string_parser;
 mod type_parser;
 mod unicode_identifier;
 
@@ -103,6 +105,7 @@ enum Kind {
     Operator(&'static str),
     String(String),
     StringTemplate(Vec<StringPart>),
+    StringStart(char),
     Symbol(char),
     Eof,
 }
@@ -126,11 +129,15 @@ struct Token {
 struct Lexer<'a> {
     source: &'a str,
     cursor: usize,
-    string_depth: usize,
+    string_errors: string_lexer::StringErrors,
 }
 
 impl Lexer<'_> {
     fn next(&mut self) -> Result<Token, Diagnostic> {
+        self.next_token(false)
+    }
+
+    fn next_token(&mut self, string_start_only: bool) -> Result<Token, Diagnostic> {
         loop {
             while self
                 .peek()
@@ -191,7 +198,15 @@ impl Lexer<'_> {
         {
             self.number(start, ch)?
         } else if ch == '"' || ch == '#' {
-            self.string(start, ch)?
+            if let Some((end, error)) = self.cached_string_error(start) {
+                self.cursor = end;
+                return Err(error);
+            }
+            if string_start_only {
+                Kind::StringStart(ch)
+            } else {
+                self.string(start, ch)?
+            }
         } else if let Some(operator) = [
             "...?", "...", "[[", "**", "~/", "==", "!=", "<=", ">=", "&&", "||", "??", "->", "!!",
             "?.", "|>",
@@ -229,216 +244,6 @@ impl Lexer<'_> {
             kind,
             span: Span::new(start, self.cursor),
         })
-    }
-
-    fn string(&mut self, start: usize, first: char) -> Result<Kind, Diagnostic> {
-        if self.string_depth >= 32 {
-            return Err(Diagnostic::new(
-                DiagnosticKind::Unsupported,
-                Span::new(start, self.cursor),
-                "String interpolation nesting limit exceeded.",
-            ));
-        }
-        self.string_depth += 1;
-        let mut hashes = usize::from(first == '#');
-        if first == '#' {
-            while self.peek() == Some('#') {
-                hashes += 1;
-                self.advance();
-            }
-            if self.advance() != Some('"') {
-                return Err(Diagnostic::new(
-                    DiagnosticKind::Syntax,
-                    Span::new(start, self.cursor),
-                    "Expected string after `#`.",
-                ));
-            }
-        }
-        let multiline = self.source[self.cursor..].starts_with("\"\"");
-        if multiline {
-            self.cursor += 2;
-        }
-        let delimiter = format!(
-            "{}{}",
-            if multiline { "\"\"\"" } else { "\"" },
-            "#".repeat(hashes)
-        );
-        let escape = format!("\\{}", "#".repeat(hashes));
-        let mut parts = Vec::new();
-        let mut text = String::new();
-        loop {
-            if self.source[self.cursor..].starts_with(&delimiter) {
-                self.cursor += delimiter.len();
-                if !text.is_empty() {
-                    parts.push(StringPart::Text(std::mem::take(&mut text)));
-                }
-                break;
-            }
-            let position = self.cursor;
-            let Some(ch) = self.advance() else {
-                return Err(Diagnostic::new(
-                    DiagnosticKind::Syntax,
-                    Span::new(start, self.cursor),
-                    format!("Missing `{delimiter}` delimiter."),
-                ));
-            };
-            if ch == '\n' || ch == '\r' {
-                if !multiline {
-                    return Err(Diagnostic::new(
-                        DiagnosticKind::Syntax,
-                        Span::new(position, self.cursor),
-                        "String content must remain on one line.",
-                    ));
-                }
-                if ch == '\r' && self.peek() == Some('\n') {
-                    self.advance();
-                }
-                if !text.is_empty() {
-                    parts.push(StringPart::Text(std::mem::take(&mut text)));
-                }
-                parts.push(StringPart::Newline);
-            } else if ch == '\\'
-                && self.source[position..].starts_with(&escape)
-                && self.source[position + 1..]
-                    .chars()
-                    .take_while(|ch| *ch == '#')
-                    .count()
-                    == hashes
-            {
-                self.cursor = position + escape.len();
-                if !text.is_empty() {
-                    parts.push(StringPart::Text(std::mem::take(&mut text)));
-                }
-                let escaped = self.advance().ok_or_else(|| {
-                    Diagnostic::new(
-                        DiagnosticKind::Syntax,
-                        Span::new(position, self.cursor),
-                        "Missing string escape character.",
-                    )
-                })?;
-                let decoded = match escaped {
-                    'n' => "\n".to_owned(),
-                    'r' => "\r".to_owned(),
-                    't' => "\t".to_owned(),
-                    '"' => "\"".to_owned(),
-                    '\\' => "\\".to_owned(),
-                    'u' => {
-                        if self.advance() != Some('{') {
-                            return Err(Diagnostic::new(
-                                DiagnosticKind::Syntax,
-                                Span::new(position, self.cursor),
-                                "Expected `{` in Unicode escape.",
-                            ));
-                        }
-                        let begin = self.cursor;
-                        while self.peek().is_some_and(|ch| ch.is_ascii_hexdigit()) {
-                            self.advance();
-                        }
-                        let end = self.cursor;
-                        if self.advance() != Some('}') {
-                            return Err(Diagnostic::new(
-                                DiagnosticKind::Syntax,
-                                Span::new(position, self.cursor),
-                                "Invalid Unicode escape.",
-                            ));
-                        }
-                        let point = u32::from_str_radix(&self.source[begin..end], 16).ok();
-                        let Some(character) = point.and_then(char::from_u32) else {
-                            return Err(Diagnostic::new(
-                                DiagnosticKind::Unsupported,
-                                Span::new(position, self.cursor),
-                                "Unicode escape is outside the supported scalar range.",
-                            ));
-                        };
-                        character.to_string()
-                    }
-                    '(' => {
-                        let begin = self.cursor;
-                        let mut nesting = 1;
-                        loop {
-                            // Scan delimiters without letting a later lexical failure
-                            // supersede an earlier expression syntax error. Parsing
-                            // the captured range below reports failures in order.
-                            let token = match self.next() {
-                                Ok(token) => token,
-                                Err(_) => continue,
-                            };
-                            match token.kind {
-                                Kind::Symbol('(') => nesting += 1,
-                                Kind::Symbol(')') => {
-                                    nesting -= 1;
-                                    if nesting == 0 {
-                                        parts.push(StringPart::Expression(
-                                            Span::new(begin, token.span.start),
-                                            Span::new(position, token.span.end),
-                                        ));
-                                        break;
-                                    }
-                                }
-                                Kind::Eof => {
-                                    let mut parser = Parser::interpolation(
-                                        self.source,
-                                        Span::new(begin, self.cursor),
-                                    )?;
-                                    parser.expression_expected(0, Some(')'))?;
-                                    return Err(Diagnostic::new(
-                                        DiagnosticKind::Syntax,
-                                        Span::new(begin, self.cursor),
-                                        "Missing `)` delimiter in interpolation.",
-                                    ));
-                                }
-                                _ => {}
-                            }
-                        }
-                        continue;
-                    }
-                    '\n' | '\r' if multiline => {
-                        if escaped == '\r' && self.peek() == Some('\n') {
-                            self.advance();
-                        }
-                        parts.push(StringPart::Continuation);
-                        continue;
-                    }
-                    _ => {
-                        return Err(Diagnostic::new(
-                            DiagnosticKind::Syntax,
-                            Span::new(position, self.cursor),
-                            "Invalid string escape.",
-                        ));
-                    }
-                };
-                parts.push(StringPart::Escape(decoded));
-            } else {
-                text.push(ch);
-            }
-        }
-        if multiline {
-            parts = multiline_parts(parts, Span::new(start, self.cursor))?;
-        }
-        let mut rendered = Vec::new();
-        let mut text = String::new();
-        for part in parts {
-            match part {
-                StringPart::Text(value) | StringPart::Escape(value) => text.push_str(&value),
-                StringPart::Newline => text.push('\n'),
-                StringPart::Continuation => {}
-                StringPart::Expression(span, interpolation) => {
-                    if !text.is_empty() {
-                        rendered.push(StringPart::Text(std::mem::take(&mut text)));
-                    }
-                    rendered.push(StringPart::Expression(span, interpolation));
-                }
-            }
-        }
-        self.string_depth -= 1;
-        if rendered.is_empty() {
-            Ok(Kind::String(text))
-        } else {
-            if !text.is_empty() {
-                rendered.push(StringPart::Text(text));
-            }
-            Ok(Kind::StringTemplate(rendered))
-        }
     }
 
     fn number(&mut self, start: usize, first: char) -> Result<Kind, Diagnostic> {
@@ -628,7 +433,7 @@ impl<'a> Parser<'a> {
         let mut lexer = Lexer {
             source,
             cursor: 0,
-            string_depth: 0,
+            string_errors: Default::default(),
         };
         let token = lexer.next()?;
         Ok(Self {
@@ -645,11 +450,15 @@ impl<'a> Parser<'a> {
         })
     }
 
-    fn interpolation(source: &'a str, span: Span) -> Result<Self, Diagnostic> {
+    fn interpolation_with_errors(
+        source: &'a str,
+        span: Span,
+        string_errors: string_lexer::StringErrors,
+    ) -> Result<Self, Diagnostic> {
         let mut lexer = Lexer {
             source: &source[..(span.end + 1).min(source.len())],
             cursor: span.start,
-            string_depth: 0,
+            string_errors,
         };
         let token = lexer.next()?;
         Ok(Self {
@@ -1195,21 +1004,7 @@ impl<'a> Parser<'a> {
         minimum_precedence: u8,
         initial_object: Option<Box<ObjectBuild>>,
     ) -> Result<Expr, Diagnostic> {
-        let mut machine = ExpressionMachine {
-            frames: Vec::new(),
-            minimum: minimum_precedence,
-            current: None,
-            object_root: initial_object.is_some(),
-            finish_expression: false,
-            object_build: initial_object,
-        };
-        loop {
-            match self.expression_machine_step(&mut machine)? {
-                ExpressionFlow::Continue => {}
-                ExpressionFlow::Primary => machine.current = Some(self.primary()?),
-                ExpressionFlow::Done(expression) => return Ok(expression),
-            }
-        }
+        self.interpolated_expression_machine(minimum_precedence, initial_object)
     }
 
     fn expression_machine_step(
@@ -2249,37 +2044,6 @@ impl<'a> Parser<'a> {
             Kind::String(text) => {
                 self.advance()?;
                 ExprKind::String(text)
-            }
-            Kind::StringTemplate(parts) => {
-                let mut expressions = Vec::new();
-                for part in parts {
-                    match part {
-                        StringPart::Text(value) => expressions.push(Expr {
-                            kind: ExprKind::String(value),
-                            span,
-                        }),
-                        StringPart::Expression(range, interpolation) => {
-                            let mut parser = Self::interpolation(self.lexer.source, range)?;
-                            parser.depth = self.depth;
-                            parser.expressions = self.expressions;
-                            parser.member_path.clone_from(&self.member_path);
-                            let expression = parser.expression_expected(0, Some(')'))?;
-                            parser.expect(')')?;
-                            self.expressions = parser.expressions;
-                            self.pending.append(&mut parser.pending);
-                            self.folded_integer_spans
-                                .append(&mut parser.folded_integer_spans);
-                            self.interpolation_spans
-                                .append(&mut parser.interpolation_spans);
-                            self.interpolation_spans
-                                .insert(expression.span, interpolation);
-                            expressions.push(expression);
-                        }
-                        _ => unreachable!("string lexer returns rendered parts"),
-                    }
-                }
-                self.advance()?;
-                ExprKind::InterpolatedString(expressions)
             }
             Kind::Name(name) if name == "true" || name == "false" => {
                 self.advance()?;

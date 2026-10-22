@@ -35320,6 +35320,438 @@
         "semantic:diagnostics",
         "semantic:shared-engine"
       ]
+    },
+    {
+      "id": "string-stage26-nested-1",
+      "input": "tests/fixtures/m2/string-stage26-nested-1.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "string-stage26-nested-24",
+      "input": "tests/fixtures/m2/string-stage26-nested-24.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "string-stage26-nested-31",
+      "input": "tests/fixtures/m2/string-stage26-nested-31.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "string-stage26-raw-hash-24",
+      "input": "tests/fixtures/m2/string-stage26-raw-hash-24.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "string-stage26-raw-two-hashes-24",
+      "input": "tests/fixtures/m2/string-stage26-raw-two-hashes-24.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "string-stage26-multiline-24",
+      "input": "tests/fixtures/m2/string-stage26-multiline-24.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "string-stage26-mixed-delimiters",
+      "input": "tests/fixtures/m2/string-stage26-mixed-delimiters.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "string-stage26-empty-inner-string",
+      "input": "tests/fixtures/m2/string-stage26-empty-inner-string.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "string-stage26-escaped-inner-delimiters",
+      "input": "tests/fixtures/m2/string-stage26-escaped-inner-delimiters.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "string-stage26-raw-literal-interpolation",
+      "input": "tests/fixtures/m2/string-stage26-raw-literal-interpolation.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "string-stage26-block-comment-delimiters",
+      "input": "tests/fixtures/m2/string-stage26-block-comment-delimiters.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "string-stage26-line-comment-delimiters",
+      "input": "tests/fixtures/m2/string-stage26-line-comment-delimiters.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "string-stage26-quoted-identifier",
+      "input": "tests/fixtures/m2/string-stage26-quoted-identifier.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "string-stage26-parentheses-256",
+      "input": "tests/fixtures/m2/string-stage26-parentheses-256.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "string-stage26-multiple-interpolations",
+      "input": "tests/fixtures/m2/string-stage26-multiple-interpolations.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "string-stage26-lexical-capture",
+      "input": "tests/fixtures/m2/string-stage26-lexical-capture.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "string-stage26-lazy-branch",
+      "input": "tests/fixtures/m2/string-stage26-lazy-branch.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "string-stage26-first-runtime-error",
+      "input": "tests/fixtures/m2/string-stage26-first-runtime-error.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "string-stage26-inner-missing-name",
+      "input": "tests/fixtures/m2/string-stage26-inner-missing-name.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "string-stage26-utf16-runtime-span",
+      "input": "tests/fixtures/m2/string-stage26-utf16-runtime-span.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "string-stage26-inner-missing-operand",
+      "input": "tests/fixtures/m2/string-stage26-inner-missing-operand.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "string-stage26-inner-extra-close",
+      "input": "tests/fixtures/m2/string-stage26-inner-extra-close.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "string-stage26-first-syntax-error",
+      "input": "tests/fixtures/m2/string-stage26-first-syntax-error.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "string-stage26-raw-wrong-hash-literal",
+      "input": "tests/fixtures/m2/string-stage26-raw-wrong-hash-literal.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "string-stage26-multiline-indent",
+      "input": "tests/fixtures/m2/string-stage26-multiline-indent.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "string-stage26-multiline-continuation",
+      "input": "tests/fixtures/m2/string-stage26-multiline-continuation.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "string-stage26-unicode-valid-escapes",
+      "input": "tests/fixtures/m2/string-stage26-unicode-valid-escapes.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "string-stage26-raw-shorter-close",
+      "input": "tests/fixtures/m2/string-stage26-raw-shorter-close.pkl",
+      "expression": "result",
+      "expected_outcome": "success",
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "string-stage26-syntax-before-later-escape",
+      "input": "tests/fixtures/m2/string-stage26-syntax-before-later-escape.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "string-stage26-syntax-before-later-eof",
+      "input": "tests/fixtures/m2/string-stage26-syntax-before-later-eof.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "string-stage26-syntax-before-later-comment",
+      "input": "tests/fixtures/m2/string-stage26-syntax-before-later-comment.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "string-stage26-raw-syntax-before-later-escape",
+      "input": "tests/fixtures/m2/string-stage26-raw-syntax-before-later-escape.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "string-stage26-multiline-syntax-before-later-escape",
+      "input": "tests/fixtures/m2/string-stage26-multiline-syntax-before-later-escape.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "string-stage26-outer-syntax-before-inner-escape",
+      "input": "tests/fixtures/m2/string-stage26-outer-syntax-before-inner-escape.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "string-stage26-unicode-before-syntax-error",
+      "input": "tests/fixtures/m2/string-stage26-unicode-before-syntax-error.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "id": "string-stage26-boundary-syntax-before-later-escape",
+      "input": "tests/fixtures/m2/string-stage26-boundary-syntax-before-later-escape.pkl",
+      "expression": "result",
+      "expected_outcome": "failure",
+      "requirements": [
+        "semantic:lexing",
+        "semantic:operators",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
     }
   ],
   "schema_version": 1,

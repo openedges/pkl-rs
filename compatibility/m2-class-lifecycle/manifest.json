@@ -1056,6 +1056,13 @@
       "expressions": "frontend-stage25-shape-boundaries.expressions",
       "group": "T25",
       "note": "Bounded authored ordinary-expression depth and width, AST shape, guarded scope boundaries and ordered first-error retries; complete pinned Java captures. Native stack, GC and real Host lifecycle assertions remain separate."
+    },
+    {
+      "id": "string-stage26-nested-retries",
+      "source": "string-stage26-nested-retries.pkl",
+      "expressions": "string-stage26-nested-retries.expressions",
+      "group": "T26",
+      "note": "Bounded authored nested lexical strings, raw-hash and multiline delimiters, captured arguments, first-error ordering and repeated failed/successful evaluations; complete pinned Java captures. Native stack, GC and real Host lifecycle assertions remain separate."
     }
   ],
   "unexecuted_groups": [

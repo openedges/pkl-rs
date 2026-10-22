@@ -34,7 +34,79 @@ lookup, typing, equality, hashing, iteration and stringification. Stage 23 adds
 selected strict Set semantics, multiline strings and lifecycle checks. Stage 24 adds
 bounded abstract Collection type checks, defaults and metadata. Stage 25 adds
 continuations for selected authored frontend paths and small-stack checks.
+Stage 26 extends those paths to bounded nested lexical strings and interpolation.
 These checkpoints do not complete the language milestone.
+
+## Stage 26 local verification checkpoint
+
+Implementation, required local checks and focused verification are complete.
+Full selected acquisition and final evidence sealing are in progress; this
+checkpoint is not yet closed.
+
+String scanning uses explicit string/interpolation frames. Interpolation parsing
+suspends and restores parser and expression-machine state on the heap, preserving
+source spans, deferred integer diagnostics and the shared expression-work budget.
+Failed nested string tokens retain their consumed range and original source end.
+They can be replayed within a shorter visible prefix when all diagnostic locations
+remain visible; truncated-EOF failures are not reused for longer inputs. Earlier
+interpolation syntax errors now precede later escape, comment, EOF or multiline
+validation errors on the compared paths.
+
+Core implementation used `gpt-6-astra / xhigh`; Java evidence and native/lifecycle
+work used separate `gpt-6.1-sol / high` agents. Independent finishing reviews covered
+the production parser, tests, Java platform payloads and browser module route.
+The original 2,688 selected definitions, 150 sequences, 84 platform scenarios and
+existing native test files remain unchanged; new cases are appended.
+
+All seven required local checks pass with stable source identities: **441 distinct
+Rust tests and 194 Python tests**, plus the original ignored probe. The Rust output
+contains 450 harness passes, including nine isolated child reports duplicated by
+their parents. Exact completion markers and test names distinguish those reports;
+one child summary contains an interleaved phase line on the shared output stream.
+The original raw output remains unchanged.
+
+Four isolated native tests pass with unchanged **256 KiB stacks and 60-second
+parent deadlines**. Ordinary, raw-hash and multiline strings at depths 24/31 pass
+parse, Module clone/drop, resolution, ResolvedModule clone/drop and compilation.
+Partial failures release their trees; wide strings and the shared 65,536-step
+expression budget have separate checks. A nested authored string also exercises
+real Host suspension, reentry, failed-read retry, cancellation and terminal cleanup
+with one instruction per poll and GC at every yield and pending read.
+
+The original depth-64 input now returns the existing nesting-limit diagnostic
+without a native abort on that stack. **Java accepts this input, so the Rust guard
+remains a compatibility mismatch.** The nesting limit remains 32. Six malformed
+multiline inputs at depths 24/31 originally exposed a second failure in cache reuse
+across shorter interpolation ranges. Their original failed captures are retained;
+the corrected implementation returns Syntax for the unchanged inputs through both
+expression and module entry points. Eight original malformed expression inputs
+also have a separate successful small-stack replay. Their diagnostic bytes are
+verified separately from native safety.
+
+Focused frozen artifacts match **36 new selected cases: 23 successes and 13
+expected errors**, plus **30 persistent calls**. Broader exploration retains
+**37 raw matches, 23 mismatches and two oracle errors among 62 observations**,
+overlapping the selection. These include valid deep strings rejected by the Rust
+guard, remaining invalid-escape/unclosed/multiline diagnostics, a Java Unicode bug
+and two Java process failures on deep unary inputs. Six multiline Java inputs
+explicitly wrap the preserved expression bytes in a module; this changes their
+source offsets and is not an expression-API byte comparison.
+
+Actual Node and Chromium each pass **85 development scenarios**, including the new
+15-call sequence twice per target. The browser runner now serves its new imported
+fixture module. All 6,078 primitive results agree across the shared engines; each
+target matches Java in 6,076 cases and retains the same two regex failures. The
+first browser acquisition failed because that module route was missing; its raw
+failure remains separate from the successful rerun. M1 frontend, runtime and
+lifecycle captures retain their previous successes and diagnostic differences.
+
+Failed native drafts, a helper compile failure, an invalid acquisition command and
+a source-drift build remain recorded. No failed or incomplete capture counts as a
+pass. Normal interpolation parsing shares its work allowance; auxiliary lexical
+error validation can reparse ranges and does not establish a uniform work or
+latency bound. Arbitrary nesting, full type/class/mixed-body compilation, complete
+Java diagnostics, product APIs, release platforms and speed/peak-RSS parity remain
+outside this checkpoint.
 
 ## Stage 25 local verification checkpoint
 

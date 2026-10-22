@@ -95,6 +95,7 @@ REQUIRED_SCENARIOS = {
     'm2-collection-type-host-sequences',
     'm2-frontend-depth-sequences',
     'm2-frontend-depth-host-sequences',
+    'm2-string-frontend-sequences',
 }
 
 
