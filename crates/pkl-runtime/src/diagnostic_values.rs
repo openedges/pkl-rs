@@ -143,31 +143,196 @@ fn render_with_layout(
     limit: usize,
     multiline: bool,
 ) -> Result<crate::value::PklString, RuntimeError> {
-    let mut renderer = Renderer {
-        heap,
-        module,
-        units: Vec::new(),
-        limit: limit.max(3),
-        stopped: false,
-        multiline,
-        depth: 0,
-    };
-    renderer.value(value, false)?;
-    // Runtime toString retains units even when a UTF-16 limit splits a pair.
-    // Only the diagnostic/output boundary applies Java UTF-8 replacement.
-    Ok(crate::value::PklString::from_utf16(renderer.units))
+    let mut run = RenderRun::new(value.clone(), limit, multiline);
+    while !run.step(heap, module)? {}
+    Ok(run.finish())
 }
 
-struct Renderer<'a> {
-    heap: &'a Heap,
-    module: &'a str,
+enum RenderTask {
+    Value(Value, bool, usize),
+    Text(crate::value::PklString),
+    Identifier(crate::value::PklString),
+    Members {
+        id: ObjectId,
+        members: Vec<crate::vm::collections::RenderMember>,
+        index: usize,
+        depth: usize,
+        strict: bool,
+        hash_ready: bool,
+        seen: Vec<(bool, Value, Option<i32>)>,
+        emitted: usize,
+        key_hash: Option<Option<i32>>,
+        compare_index: usize,
+        duplicate: bool,
+    },
+    Exit(ObjectId),
+}
+/// Shared iterative value formatting. VM callers service key hash/equality
+/// requests; synchronous diagnostic snapshots currently cannot suspend for them.
+pub(crate) struct RenderRun {
+    tasks: Vec<RenderTask>,
     units: Vec<u16>,
     limit: usize,
     stopped: bool,
     multiline: bool,
-    depth: usize,
+    active: BTreeSet<ObjectId>,
 }
-
+impl RenderRun {
+    pub(crate) fn new(value: Value, limit: usize, multiline: bool) -> Self {
+        Self {
+            tasks: vec![RenderTask::Value(value, false, 0)],
+            units: Vec::new(),
+            limit: limit.max(3),
+            stopped: false,
+            multiline,
+            active: BTreeSet::new(),
+        }
+    }
+    pub(crate) fn finish(self) -> crate::value::PklString {
+        crate::value::PklString::from_utf16(self.units)
+    }
+    pub(crate) fn roots(&self, roots: &mut Vec<Value>) {
+        for task in &self.tasks {
+            match task {
+                RenderTask::Value(value, ..) => roots.push(value.clone()),
+                RenderTask::Members { id, members, .. } => {
+                    roots.push(Value::Object(*id));
+                    roots.extend(members.iter().map(|member| member.descriptor.key.clone()));
+                }
+                RenderTask::Exit(id) => roots.push(Value::Object(*id)),
+                _ => {}
+            }
+        }
+    }
+    /// Runtime rendering services Java HashSet key hashing at this exact visit.
+    /// Read-only diagnostic snapshots leave this request to the caller.
+    pub(crate) fn take_key_to_prepare(&mut self) -> Option<Value> {
+        if self.stopped {
+            return None;
+        }
+        if let Some(RenderTask::Members {
+            members,
+            index,
+            strict: false,
+            hash_ready,
+            ..
+        }) = self.tasks.last_mut()
+            && !*hash_ready
+            && let Some(member) = members.get(*index)
+        {
+            *hash_ready = true;
+            return Some(member.descriptor.key.clone());
+        }
+        None
+    }
+    pub(crate) fn record_key_hash(&mut self, hash: Option<i32>) {
+        if let Some(RenderTask::Members { key_hash, .. }) = self.tasks.last_mut() {
+            *key_hash = Some(hash);
+        }
+    }
+    pub(crate) fn take_key_comparison(&mut self, heap: &Heap) -> Option<(Value, Value)> {
+        let Some(RenderTask::Members {
+            members,
+            index,
+            strict: false,
+            key_hash: Some(hash),
+            compare_index,
+            duplicate,
+            seen,
+            ..
+        }) = self.tasks.last_mut()
+        else {
+            return None;
+        };
+        if *duplicate {
+            return None;
+        }
+        let member = &members.get(*index)?.descriptor;
+        let entry = member.kind != CollectionMemberKind::Property;
+        while let Some((old_entry, old_key, old_hash)) = seen.get(*compare_index) {
+            *compare_index += 1;
+            if *old_entry != entry {
+                continue;
+            }
+            if crate::vm::equality::same_key(heap, &member.key, old_key) {
+                *duplicate = true;
+                return None;
+            }
+            // Some upstream key hashes contain JVM identity components. An
+            // unknown numeric hash cannot rule out a collision; equality still
+            // decides membership after both keys have completed hash forcing.
+            if hash.is_none() || old_hash.is_none() || hash == old_hash {
+                return Some((member.key.clone(), old_key.clone()));
+            }
+        }
+        None
+    }
+    pub(crate) fn record_key_comparison(&mut self, equal: bool) {
+        if equal && let Some(RenderTask::Members { duplicate, .. }) = self.tasks.last_mut() {
+            *duplicate = true;
+        }
+    }
+    pub(crate) fn step(&mut self, heap: &Heap, module: &str) -> Result<bool, RuntimeError> {
+        if self.stopped {
+            return Ok(true);
+        }
+        let Some(task) = self.tasks.pop() else {
+            return Ok(true);
+        };
+        let mut renderer = Renderer {
+            heap,
+            module,
+            state: self,
+        };
+        match task {
+            RenderTask::Value(value, implicit, depth) => renderer.value(&value, implicit, depth)?,
+            RenderTask::Text(text) => renderer.append_units(text.encode_utf16()),
+            RenderTask::Identifier(text) => {
+                if let Some(text) = text.as_str() {
+                    renderer.identifier(text);
+                } else {
+                    renderer.append("`");
+                    renderer.append_units(text.encode_utf16());
+                    renderer.append("`");
+                }
+            }
+            RenderTask::Members {
+                id,
+                members,
+                index,
+                depth,
+                strict,
+                seen,
+                emitted,
+                key_hash,
+                duplicate,
+                ..
+            } => renderer.member(
+                id, members, index, depth, strict, seen, emitted, key_hash, duplicate,
+            )?,
+            RenderTask::Exit(id) => {
+                renderer.active.remove(&id);
+            }
+        }
+        Ok(renderer.stopped || renderer.tasks.is_empty())
+    }
+}
+struct Renderer<'a> {
+    heap: &'a Heap,
+    module: &'a str,
+    state: &'a mut RenderRun,
+}
+impl std::ops::Deref for Renderer<'_> {
+    type Target = RenderRun;
+    fn deref(&self) -> &Self::Target {
+        self.state
+    }
+}
+impl std::ops::DerefMut for Renderer<'_> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        self.state
+    }
+}
 impl Renderer<'_> {
     fn append(&mut self, text: &str) {
         self.append_units(text.encode_utf16());
@@ -179,7 +344,8 @@ impl Renderer<'_> {
         }
         self.units.extend(units);
         if self.units.len() >= self.limit {
-            self.units.truncate(self.limit - 3);
+            let end = self.limit - 3;
+            self.units.truncate(end);
             self.units.extend("...".encode_utf16());
             self.stopped = true;
         }
@@ -195,7 +361,7 @@ impl Renderer<'_> {
         }
     }
 
-    fn value(&mut self, value: &Value, implicit: bool) -> Result<(), RuntimeError> {
+    fn value(&mut self, value: &Value, implicit: bool, depth: usize) -> Result<(), RuntimeError> {
         if self.stopped {
             return Ok(());
         }
@@ -275,34 +441,44 @@ impl Renderer<'_> {
                 })?;
                 self.append(&format!("{}#{name}", self.module));
             }
-            Value::Object(id) => self.object(*id, implicit)?,
+            Value::Object(id) => self.object(*id, implicit, depth)?,
         }
         Ok(())
     }
 
-    fn object(&mut self, id: ObjectId, implicit: bool) -> Result<(), RuntimeError> {
+    fn schedule(&mut self, tasks: impl IntoIterator<Item = RenderTask>) {
+        let tasks: Vec<_> = tasks.into_iter().collect();
+        self.tasks.extend(tasks.into_iter().rev());
+    }
+    fn object(&mut self, id: ObjectId, implicit: bool, depth: usize) -> Result<(), RuntimeError> {
+        if self.limit >= i32::MAX as usize && !self.active.insert(id) {
+            return Err(RuntimeError::new(
+                ErrorKind::Cycle,
+                "cyclic value rendering",
+            ));
+        }
+        self.tasks.push(RenderTask::Exit(id));
         if let Some(reference) = &self.heap.get(id)?.reference {
-            self.append("Reference(");
-            self.value(&reference.domain, false)?;
-            self.append(", ");
-            self.append_units(
-                crate::vm::reference::type_name_value(&reference.referent, self.module)
-                    .encode_utf16(),
-            );
-            self.append(", ");
-            self.value(&reference.data, false)?;
-            self.append(")");
+            let mut tasks = vec![
+                RenderTask::Text("Reference(".into()),
+                RenderTask::Value(reference.domain.clone(), false, depth),
+                RenderTask::Text(", ".into()),
+                RenderTask::Text(crate::vm::reference::type_name_value(
+                    &reference.referent,
+                    self.module,
+                )),
+                RenderTask::Text(", ".into()),
+                RenderTask::Value(reference.data.clone(), false, depth),
+                RenderTask::Text(")".into()),
+            ];
             for access in &reference.path {
-                if self.stopped {
-                    break;
-                }
                 let Value::Object(access) = access else {
                     return Err(RuntimeError::new(
                         ErrorKind::InvalidBytecode,
                         "Reference path contains a non-object access",
                     ));
                 };
-                let component = |name: &str| -> Result<&Value, RuntimeError> {
+                let component = |name: &str| -> Result<Value, RuntimeError> {
                     let key = CacheKey {
                         entry: false,
                         owner: None,
@@ -310,7 +486,7 @@ impl Renderer<'_> {
                         method: false,
                     };
                     match self.heap.get(*access)?.cache.get(&key) {
-                        Some(LazyState::Completed(value)) => Ok(value),
+                        Some(LazyState::Completed(value)) => Ok(value.clone()),
                         _ => Err(RuntimeError::new(
                             ErrorKind::InvalidBytecode,
                             "Reference path component is not cached",
@@ -318,127 +494,172 @@ impl Renderer<'_> {
                     }
                 };
                 if let Value::String(property) = component("property")? {
-                    self.append(".");
-                    if let Some(property) = property.as_str() {
-                        self.identifier(property);
-                    } else {
-                        self.append("`");
-                        self.append_units(property.encode_utf16());
-                        self.append("`");
-                    }
+                    tasks.push(RenderTask::Text(".".into()));
+                    tasks.push(RenderTask::Identifier(property));
                 } else {
-                    let key = component("key")?;
-                    self.append("[");
-                    self.value(key, false)?;
-                    self.append("]");
+                    tasks.push(RenderTask::Text("[".into()));
+                    tasks.push(RenderTask::Value(component("key")?, false, depth));
+                    tasks.push(RenderTask::Text("]".into()));
                 }
             }
+            self.schedule(tasks);
             return Ok(());
         }
         let kind = self.heap.get(id)?.collection_kind;
-        if matches!(
+        let strict = matches!(
             kind,
             CollectionKind::List | CollectionKind::Map | CollectionKind::Set
-        ) {
+        );
+        let members = if strict {
             self.append(match kind {
                 CollectionKind::Map => "Map(",
                 CollectionKind::Set => "Set(",
                 _ => "List(",
             });
-            for (index, member) in crate::vm::collections::ordered_members(self.heap, id)?
+            crate::vm::collections::ordered_members(self.heap, id)?
                 .into_iter()
-                .enumerate()
-            {
-                if self.stopped {
-                    return Ok(());
-                }
-                if index > 0 {
-                    self.append(", ");
-                }
-                if kind == CollectionKind::Map {
-                    self.value(&member.key, false)?;
-                    self.append(", ");
-                }
-                let key = CacheKey {
-                    entry: true,
-                    owner: None,
-                    name: member.name,
-                    method: false,
-                };
-                match self.heap.get(id)?.cache.get(&key) {
-                    Some(LazyState::Completed(value)) => self.value(value, false)?,
-                    _ => self.append("?"),
-                }
+                .map(|descriptor| crate::vm::collections::RenderMember {
+                    descriptor,
+                    skip: false,
+                })
+                .collect()
+        } else {
+            if !implicit {
+                self.append("new ");
+                self.append(&object_name(id, self.heap)?);
+                self.append(" ");
             }
-            self.append(")");
+            self.append("{");
+            crate::vm::collections::render_members(self.heap, id)?
+        };
+        self.tasks.push(RenderTask::Members {
+            id,
+            members,
+            index: 0,
+            depth,
+            strict,
+            hash_ready: false,
+            seen: Vec::new(),
+            emitted: 0,
+            key_hash: None,
+            compare_index: 0,
+            duplicate: false,
+        });
+        Ok(())
+    }
+    #[allow(clippy::too_many_arguments)]
+    fn member(
+        &mut self,
+        id: ObjectId,
+        members: Vec<crate::vm::collections::RenderMember>,
+        index: usize,
+        depth: usize,
+        strict: bool,
+        mut seen: Vec<(bool, Value, Option<i32>)>,
+        emitted: usize,
+        key_hash: Option<Option<i32>>,
+        duplicate: bool,
+    ) -> Result<(), RuntimeError> {
+        let Some(render_member) = members.get(index).cloned() else {
+            if strict {
+                self.append(")");
+            } else {
+                if emitted > 0 {
+                    if self.multiline {
+                        self.append("\n");
+                        self.append(&"  ".repeat(depth));
+                    } else {
+                        self.append(" ");
+                    }
+                }
+                self.append("}");
+            }
+            return Ok(());
+        };
+        let member = render_member.descriptor;
+        let entry = member.kind != CollectionMemberKind::Property;
+        let already_seen = !strict
+            && if key_hash.is_some() {
+                duplicate
+            } else {
+                seen.iter().any(|(old_entry, key, _)| {
+                    *old_entry == entry
+                        && crate::vm::equality::same_key(self.heap, key, &member.key)
+                })
+            };
+        if !strict && !already_seen {
+            seen.push((entry, member.key.clone(), key_hash.flatten()));
+        }
+        let skip = already_seen || render_member.skip;
+        self.tasks.push(RenderTask::Members {
+            id,
+            members,
+            index: index + 1,
+            depth,
+            strict,
+            hash_ready: false,
+            seen,
+            emitted: emitted + usize::from(!skip),
+            key_hash: None,
+            compare_index: 0,
+            duplicate: false,
+        });
+        if skip {
             return Ok(());
         }
-        if !implicit {
-            self.append("new ");
-            self.append(&object_name(id, self.heap)?);
-            self.append(" ");
-        }
-        self.append("{");
-        self.depth += 1;
-        let mut any = false;
-        for member in crate::vm::collections::ordered_members(self.heap, id)? {
-            if self.stopped {
-                return Ok(());
+        let value = crate::vm::collections::cached_render_value(self.heap, id, &member)?;
+        let mut tasks = Vec::new();
+        if strict {
+            if emitted > 0 {
+                self.append(", ");
             }
-            if !any {
-                self.append(if self.multiline { "\n" } else { " " });
-                any = true;
+            if self.heap.get(id)?.collection_kind == CollectionKind::Map {
+                tasks.push(RenderTask::Value(member.key, false, depth));
+                tasks.push(RenderTask::Text(", ".into()));
             }
+        } else {
             if self.multiline {
-                self.append(&"  ".repeat(self.depth));
+                self.append("\n");
+                self.append(&"  ".repeat(depth + 1));
+            } else {
+                self.append(if emitted == 0 { " " } else { "; " });
             }
-            let key = CacheKey {
-                entry: member.kind != CollectionMemberKind::Property,
-                owner: None,
-                name: member.name.clone(),
-                method: false,
-            };
-            let value = match self.heap.get(id)?.cache.get(&key) {
-                Some(LazyState::Completed(value)) => Some(value),
-                _ => None,
-            };
             match member.kind {
-                CollectionMemberKind::Property => self.identifier(&member.name),
+                CollectionMemberKind::Property => {
+                    tasks.push(RenderTask::Identifier(member.name.clone().into()))
+                }
                 CollectionMemberKind::Entry => {
-                    self.append("[");
-                    self.value(&member.key, false)?;
-                    self.append("]");
+                    tasks.push(RenderTask::Text("[".into()));
+                    tasks.push(RenderTask::Value(member.key, false, depth + 1));
+                    tasks.push(RenderTask::Text("]".into()));
                 }
                 CollectionMemberKind::Element => {}
             }
             if member.kind != CollectionMemberKind::Element {
-                let object_like = match value {
-                    Some(Value::Object(value)) => {
+                let object_like = match &value {
+                    Some(Value::Object(id)) => {
                         !matches!(
-                            self.heap.get(*value)?.collection_kind,
+                            self.heap.get(*id)?.collection_kind,
                             CollectionKind::List | CollectionKind::Map | CollectionKind::Set
-                        ) && self.heap.get(*value)?.reference.is_none()
+                        ) && self.heap.get(*id)?.reference.is_none()
                     }
                     Some(Value::Function(_)) => true,
                     _ => false,
                 };
-                self.append(if object_like { " " } else { " = " });
+                tasks.push(RenderTask::Text(
+                    if object_like { " " } else { " = " }.into(),
+                ));
             }
-            match value {
-                Some(value) => self.value(value, member.kind != CollectionMemberKind::Element)?,
-                None => self.append("?"),
-            }
-            self.append(if self.multiline { "\n" } else { "; " });
         }
-        self.depth -= 1;
-        if any && !self.stopped && !self.multiline {
-            self.units.truncate(self.units.len() - 2);
-            self.append(" ");
-        }
-        if any && self.multiline {
-            self.append(&"  ".repeat(self.depth));
-        }
-        self.append("}");
+        tasks.push(match value {
+            Some(value) => RenderTask::Value(
+                value,
+                !strict && member.kind != CollectionMemberKind::Element,
+                if strict { depth } else { depth + 1 },
+            ),
+            None => RenderTask::Text("?".into()),
+        });
+        self.schedule(tasks);
         Ok(())
     }
 }
@@ -477,6 +698,7 @@ mod tests {
 
     fn member(name: &str, local: bool) -> Member {
         Member {
+            flags: 0,
             entry: false,
             name: name.into(),
             code: usize::MAX, // Rendering must not execute any code.

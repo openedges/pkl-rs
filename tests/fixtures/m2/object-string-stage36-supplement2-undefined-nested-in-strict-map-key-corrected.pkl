@@ -1,0 +1,3 @@
+class C { missing: Int }
+obj=new Dynamic { map=Map(new C {},1) }
+result=obj.toString()

@@ -1,0 +1,2 @@
+obj = new Dynamic { x=missing; y=2 }
+result=obj.toString()

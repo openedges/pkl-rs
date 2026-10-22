@@ -135,7 +135,7 @@ fn eof_underlines_have_a_virtual_utf16_width_not_an_invalid_byte_span() {
 
 #[test]
 fn unsupported_base_properties_and_iterative_ordinary_nesting_are_explicit() {
-    for name in ["Regex", "VarArgs", "Int8"] {
+    for name in ["Regex", "VarArgs"] {
         let module = parse_module(&format!("result = {name}")).unwrap();
         assert_eq!(
             resolve_module(&module).unwrap_err().kind,

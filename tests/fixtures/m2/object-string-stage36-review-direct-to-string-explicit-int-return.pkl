@@ -1,0 +1,2 @@
+class C { function toString(): Int=1 }
+result=new C {}.toString()

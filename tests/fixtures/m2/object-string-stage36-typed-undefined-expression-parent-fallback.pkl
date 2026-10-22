@@ -1,0 +1,4 @@
+class Required { missing: Int }
+open class B { x: Int=5 }
+class C extends B { x=(new Required {}).missing }
+result=new C {}.toString()

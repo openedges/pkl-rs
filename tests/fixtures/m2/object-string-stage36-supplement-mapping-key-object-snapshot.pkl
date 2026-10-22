@@ -1,0 +1,2 @@
+obj=new Mapping { [new Dynamic { x=throw("key") }]=1 }
+result=obj.toString()

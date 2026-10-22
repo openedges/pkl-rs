@@ -1,0 +1,3 @@
+child=new Dynamic { value=1 }
+obj=new Dynamic { first=child; second=child }
+result=obj.toString()

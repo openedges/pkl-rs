@@ -661,6 +661,7 @@ impl Compiler<'_> {
                         self.member = previous_member;
                         self.modifiers = previous_modifiers;
                         let compiled = Member {
+                            flags: Member::declaration_flags(member),
                             entry: false,
                             name: Arc::from(member.name.as_str()),
                             code,

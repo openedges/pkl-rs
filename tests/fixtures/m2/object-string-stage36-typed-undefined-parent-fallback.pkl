@@ -1,0 +1,3 @@
+open class B { x: Int=5 }
+class C extends B { x: Int }
+result=new C {}.toString()

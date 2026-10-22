@@ -1,0 +1,5 @@
+child=new Dynamic { x=trace(1) }
+obj=new Dynamic { first=child; second=child }
+first=obj.toString()
+second=obj.toString()
+stable="ok"

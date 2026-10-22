@@ -1,0 +1,2 @@
+obj = new Dynamic { x=Map(new Dynamic { value=throw("nested key") },1) }
+result=obj.toString()

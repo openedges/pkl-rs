@@ -1,0 +1,2 @@
+class C { bad=throw("unforced"); function toString(): String="custom" }
+result=new C {}.toString()

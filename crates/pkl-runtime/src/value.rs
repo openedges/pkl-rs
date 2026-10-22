@@ -117,6 +117,8 @@ pub struct RuntimeFrame {
 /// Rendering belongs to the evaluation boundary, which owns the source and URI.
 #[derive(Clone, Debug, PartialEq, Eq)]
 pub struct RuntimeError {
+    /// Internal exception provenance; unknown-member failures are never undefined.
+    pub(crate) undefined_value: bool,
     pub kind: ErrorKind,
     pub message: String,
     pub span: Option<Span>,
@@ -129,6 +131,7 @@ pub struct RuntimeError {
 impl RuntimeError {
     pub fn new(kind: ErrorKind, message: impl Into<String>) -> Self {
         Self {
+            undefined_value: false,
             kind,
             message: message.into(),
             span: None,
@@ -137,6 +140,11 @@ impl RuntimeError {
             spread_hint: None,
             type_diagnostic: None,
         }
+    }
+
+    pub(crate) fn undefined(mut self) -> Self {
+        self.undefined_value = true;
+        self
     }
 
     pub fn at(mut self, span: Span) -> Self {

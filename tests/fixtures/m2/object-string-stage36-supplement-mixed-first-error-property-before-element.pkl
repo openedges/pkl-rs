@@ -1,0 +1,2 @@
+obj=new Dynamic { throw("element"); prop=throw("prop") }
+result=obj.toString()

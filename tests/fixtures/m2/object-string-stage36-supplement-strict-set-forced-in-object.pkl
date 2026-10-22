@@ -1,0 +1,2 @@
+obj=new Dynamic { set=Set(new Dynamic { x=throw("set nested") }) }
+result=obj.toString()

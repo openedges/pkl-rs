@@ -34,6 +34,8 @@ pub struct Environment {
 
 #[derive(Clone, Debug)]
 pub struct Member {
+    /// Authored modifier arithmetic and the pinned internal declaration bits.
+    pub flags: u32,
     pub entry: bool,
     pub name: Arc<str>,
     pub code: usize,
@@ -44,6 +46,31 @@ pub struct Member {
     pub constant: bool,
     /// A class property may be overridden only by another fixed declaration.
     pub fixed: bool,
+}
+
+impl Member {
+    const CLASS: u32 = 0x100;
+    const TYPE_ALIAS: u32 = 0x200;
+    pub(crate) fn declaration_flags(member: &crate::syntax::Member) -> u32 {
+        crate::syntax::modifier_flags(&member.modifiers)
+            | match member.expr.kind {
+                crate::syntax::ExprKind::Class { .. } => Self::CLASS,
+                crate::syntax::ExprKind::TypeAlias { .. } => Self::TYPE_ALIAS,
+                _ => 0,
+            }
+    }
+    pub(crate) fn hidden(&self) -> bool {
+        self.flags & crate::syntax::ModifierKind::Hidden.flag() != 0
+    }
+    pub(crate) fn external(&self) -> bool {
+        self.flags & crate::syntax::ModifierKind::External.flag() != 0
+    }
+    pub(crate) fn abstract_member(&self) -> bool {
+        self.flags & crate::syntax::ModifierKind::Abstract.flag() != 0
+    }
+    pub(crate) fn definition(&self) -> bool {
+        self.flags & (Self::CLASS | Self::TYPE_ALIAS) != 0
+    }
 }
 
 #[derive(Clone, Debug, PartialEq)]
@@ -141,6 +168,8 @@ pub struct CacheSlot {
 
 #[derive(Clone, Debug, Default)]
 pub struct Object {
+    /// Recursive force publishes this mark before traversing children.
+    pub forced: bool,
     /// Evaluator-owned canonical identity, populated only after key hashing succeeds.
     pub structural_key: Option<u64>,
     /// Numeric Java hash, independent of canonical equality identity.
@@ -325,7 +354,8 @@ impl Heap {
         }
     }
 
-    pub fn allocate(&mut self, object: Object) -> ObjectId {
+    pub fn allocate(&mut self, mut object: Object) -> ObjectId {
+        object.forced = false;
         self.allocate_entry(Entry::Object(Box::new(object)))
     }
 

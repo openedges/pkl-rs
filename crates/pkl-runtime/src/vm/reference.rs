@@ -911,6 +911,9 @@ impl Vm {
             self.stack.push(value);
             return Ok(());
         }
+        if native.name.as_ref() == "objectToString" {
+            return self.begin_object_string(native.receiver.clone());
+        }
         if native.name.as_ref() == "scalarToString" {
             let text = if self.is_set(&native.receiver) || self.is_list(&native.receiver) {
                 crate::diagnostic_values::render_multiline(
@@ -1116,6 +1119,7 @@ impl Vm {
         for (index, value) in values.into_iter().enumerate() {
             let name: Arc<str> = Arc::from(format!("\0{index}"));
             object.members.push(Member {
+                flags: 0,
                 entry: true,
                 name: name.clone(),
                 code: usize::MAX,
@@ -1163,6 +1167,7 @@ impl Vm {
         ] {
             let name: Arc<str> = Arc::from(name);
             object.members.push(Member {
+                flags: 0,
                 entry: false,
                 name: name.clone(),
                 code: usize::MAX,
@@ -1549,6 +1554,7 @@ pub(super) fn access_members(
         });
         blocks.push(code);
         members.push(Member {
+            flags: 0,
             entry: false,
             name: Arc::from(name),
             code: index,

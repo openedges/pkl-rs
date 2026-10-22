@@ -1,0 +1,2 @@
+obj = new Listing { new Dynamic { x=1 }; new Listing { 2 }; new Mapping { ["a"]=3 } }
+result=obj.toString()

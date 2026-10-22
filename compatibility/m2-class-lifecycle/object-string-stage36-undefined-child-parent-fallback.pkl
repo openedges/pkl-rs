@@ -1,0 +1,8 @@
+class Required { missing: Int }
+open class B { x: Int=trace(5) }
+class C extends B { x=if(trace(1)==1) (new Required {}).missing else 0 }
+obj=new C {}
+first=obj.toString()
+childRead=obj.x.toString()
+second=obj.toString()
+stable="ok"

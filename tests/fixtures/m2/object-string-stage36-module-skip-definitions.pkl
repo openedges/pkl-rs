@@ -1,0 +1,7 @@
+class C {}
+typealias A=Int
+x=1
+function f()=throw("method")
+local private=throw("local")
+hidden secret=throw("hidden")
+hidden result=module.toString()

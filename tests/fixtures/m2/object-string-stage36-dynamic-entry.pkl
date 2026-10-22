@@ -1,0 +1,2 @@
+obj = new Dynamic { ["one"]=1; [2]=new Dynamic { value=7 } }
+result=obj.toString()

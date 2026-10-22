@@ -1,0 +1,5 @@
+x=module.toString()
+bad=if(trace(1)==1) throw("failure") else 0
+hidden first=x
+hidden second=module.toString()
+hidden stable="ok"

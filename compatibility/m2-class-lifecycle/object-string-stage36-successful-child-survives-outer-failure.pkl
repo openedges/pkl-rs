@@ -1,0 +1,7 @@
+class Required { missing: Int }
+child=new Dynamic { x=if(trace(1)==1) (new Required {}).missing else 0 }
+obj=new Dynamic { first=child; bad=throw("failure") }
+first=obj.toString()
+second=child.toString()
+third=obj.toString()
+stable="ok"

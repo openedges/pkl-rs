@@ -1,0 +1,4 @@
+class Required { missing: Int }
+parent=new Dynamic { x=5 }
+obj=(parent) { x=(new Required {}).missing }
+result=obj.toString()

@@ -1,0 +1,3 @@
+open class B { inherited=throw("parent") }
+class C extends B { child=throw("child") }
+result=new C {}.toString()

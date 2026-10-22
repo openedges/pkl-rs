@@ -19,7 +19,7 @@ M0의 참조 소스·Java oracle 고정, 기능·코퍼스 목록, 원시 차등
 | 초기 구성 | 구축됨 | 없음 | Git·Rust workspace·참조 submodule·개발 문서와 초기 구성 검증 |
 | M0 기준선 | 완료: 로컬 기준선·원격 CI 검증 확인 | 초기 구성 | oracle·목록·원시 비교 도구·Java 초기 측정과 전체 처리 상태 확보; 판정 보류와 미구현 범위 보존 |
 | M1 구조 검증 | 완료: 구조·Graal 조사·원격 CI 증거 확인 | M0의 oracle·실행 계약·초기 기준선 | 제한된 공통 엔진·실제 Node/브라우저·원시 비교와 비용 측정 완료. 후보 기각과 알려진 호환성·성능 실패는 후속 필수 조건으로 보존 |
-| M2 언어 런타임 | 진행 중: annotation·선언 초기화 구현과 전체 회귀 검증; 전체 gate 미완료 | M1의 이름 해석·값·heap·진단 설계 결정 | 객체·lazy 평가·상속·closure·타입·Reference 구현; 언어 코퍼스의 결과·오류 바이트 일치 |
+| M2 언어 런타임 | 진행 중: 객체 강제 평가·문자열 변환과 Host 오류 프레임 보완; 전체 gate 미완료 | M1의 이름 해석·값·heap·진단 설계 결정 | 객체·lazy 평가·상속·closure·타입·Reference 구현; 언어 코퍼스의 결과·오류 바이트 일치 |
 | M3 표준 라이브러리·출력 | 계획됨 | M2의 해당 언어 기능 | 전체 builtin·renderer·reflection·Pkl Binary 구현; 공개 멤버 누락 0, 출력·오류 일치 |
 | M4 외부 기능 | 계획됨 | M1 Host 계약과 M2·M3의 해당 기능 | module/resource Host·HTTP·프로젝트·패키지·external reader 구현; 실제 I/O·패키지 코퍼스 통과 |
 | M5 제품 API | 계획됨 | M2·M3·M4의 해당 기능 | CLI·REPL·server·Rust API·formatter·문서 생성·코드 생성·JVM adapter 구현; 기존 호출·client·수명주기 호환 |
@@ -143,7 +143,7 @@ M1의 공통 VM을 확장합니다. VM·heap·호출 의미론은 `gpt-6-astra /
 
 핵심 언어 기능을 폭넓게 구현했지만, 전체 호환성 마감에는 상당한 작업이 남아 있습니다. 아래 9개 작업 영역은 모두 일부 종료 조건이 남은 `진행 중` 상태입니다. Stage 번호는 완료한 전체 작업의 비율이 아니라 누적 구현·검증 단계를 나타냅니다. 선택 코퍼스의 높은 성공률도 M2 전체 완료율이 아닙니다.
 
-전체 목록의 요구사항 474개와 부분 mapping 20개에는 서로 겹치는 의미론·선언·후보 기록이 있습니다. 미구현 960개·미연결 40개 accounting row 역시 독립적인 기능 수나 남은 작업량을 뜻하지 않습니다. 현재 목록에는 검토된 기능별 작업량 가중치가 없으므로 신뢰할 수 있는 전체 완료 백분율은 산정하지 않습니다. 진행 보고는 구현한 범위, 실제 실행·일치 수, 미구현·미실행 범위와 엄격한 완료 gate를 함께 제시합니다.
+전체 목록의 요구사항 474개와 부분 mapping 21개에는 서로 겹치는 의미론·선언·후보 기록이 있습니다. 미구현 960개·미연결 40개 accounting row 역시 독립적인 기능 수나 남은 작업량을 뜻하지 않습니다. 현재 목록에는 검토된 기능별 작업량 가중치가 없으므로 신뢰할 수 있는 전체 완료 백분율은 산정하지 않습니다. 진행 보고는 구현한 범위, 실제 실행·일치 수, 미구현·미실행 범위와 엄격한 완료 gate를 함께 제시합니다.
 
 남은 큰 범위는 annotation·module 초기화와 상속 규칙, 지연·재귀 타입 및 제약, collection·Reference 메타데이터의 나머지 의미론, 전체 오류 메시지·논리적 스택과 원본 upstream 코퍼스 연결입니다. 원본 언어 사례가 요구하는 표준 라이브러리·출력·로딩 기능은 M3·M4와의 의존성으로 유지합니다. 이 조건을 충족하기 전에는 검증만 남은 마감 단계로 보고하지 않습니다.
 
@@ -506,22 +506,30 @@ Annotation·Deprecated·Since·Unlisted·AlsoKnownAs·DocExample·SourceCode의 
 
 일반 객체의 `toString()`과 `List.map`에 의존하는 원본 실패도 새 선택 목록과 플랫폼 실행에 유지합니다. SourceCode union의 직접 생성 대조군은 원래 map 사례를 대체하지 않습니다. 객체 내부를 평가하지 않는 문자열 변환 후보는 Java의 force 순서와 달라 기각했으며, 관련 실패를 개발 예외로 바꾸지 않습니다. 매개변수 annotation generator에서 관측한 Java 내부 오류는 언어 성공으로 계산하지 않습니다. M2의 9개 작업 영역과 전체 gate는 미완료 상태를 유지합니다.
 
-### Stage 36 — 객체 강제 평가와 문자열 변환 (진행 중)
+### Stage 36 — 객체 강제 평가와 문자열 변환
 
-일반 객체의 `toString()`을 Java의 강제 평가·상속 순서·undefined 처리·캐시와 연결하고 있습니다. 별도 작업 공간에서 객체 키의 해시·동등성 비교, 사용자 메서드 호출과 Host 중단·재진입·GC·취소를 검증합니다. `trace`를 사용하는 원본 순차 사례와 오류 표시 중 Host 읽기 의존성은 별도 실패로 보존하며 전체 renderer 호환성으로 확대하지 않습니다.
+일반 객체의 `toString()`을 Java의 강제 평가·상속 순서·undefined 처리·캐시와 연결했습니다. 별도 작업 공간에서 객체 키의 해시·동등성 비교, 사용자 메서드 호출과 Host 중단·재진입·GC·취소를 검증했습니다. `trace`를 사용하는 원본 순차 사례와 오류 표시 중 Host 읽기 의존성은 별도 실패로 보존하며 전체 renderer 호환성으로 확대하지 않습니다.
+
+객체의 강제 평가를 공통 VM continuation으로 연결하고 완료한 자식의 캐시·force 상태를 실패한 부모와 구분했습니다. hidden 선언은 각 owner를 기준으로 검사하고, 강제 평가의 자식 우선 순서와 출력의 부모 우선 순서를 보존합니다. typed interpolation은 사용자 `toString`을 가상 호출합니다. Host 재진입 오류에는 중단된 바깥 호출의 실제 소스 프레임을 추가하고, Dynamic 멤버 진단은 공통 이름 추천 경로를 사용합니다. 구현은 `gpt-6-astra / xhigh`, Java 증거와 독립 검토는 각각 `gpt-6.1-sol / high`에 배정했습니다.
+
+확정한 후보의 새 언어 사례 83개가 Java 원시 바이트·상태와 일치하고, 실제 Node·Chromium도 각각 83개를 두 번씩 실행해 일치했습니다. 일반 Host 실험 7개를 두 번 실행한 14개는 전체 프로토콜과 72개 호출이 일치합니다. 별도 진단 실험의 Host 읽기 차이, 메서드 재호출 시 resource cache 부재로 발생하는 추가 callback, 중첩 Java reader의 ConcurrentModificationException은 성공으로 계산하지 않습니다. 원래 순차 사례 7개 중 6개의 `trace` 의존성도 유지합니다.
+
+[최종 검증](reports/m2/stage36-final-summary.json)에서 전체 선택 3,389개 중 3,386개와 변형 관계 88개가 일치했습니다. 나머지 연산·SourceCode의 mapped-list 불일치 2개와 순환 참조 oracle 오류 1개를 유지합니다. 기존 일치 사례의 회귀 없이 객체 문자열 변환에 막혀 있던 불일치 3개를 해결했습니다. 같은 최종 native 후보의 새 83개는 모두 일치하고, 고정 Stage35 후보는 5개가 일치합니다. 순차 정의 167개를 두 번 실행해 2,728개 호출이 일치했으나 `trace` 의존성 때문에 요청된 54개 native 호출은 미실행입니다. 필수 로컬 검사 7개와 Python 208개가 통과했고 Rust 로그의 성공 506회는 자식 재실행을 포함한 harness 집계입니다. 개발·엄격한 선택·전체 언어·순차 호환성 gate는 실패하며, 전체 언어 gate의 실패 이유 1,951개를 유지합니다. **이 체크포인트는 M2 전체 완료가 아닙니다.**
 
 먼저 전체 코퍼스 취득 도구에 선택적 `--workers` 병렬 실행을 추가했습니다. 기본값은 1이며 각 사례의 독립 Java/Rust process·원시 바이트·manifest 순서·나머지 오류의 독립 재실행을 유지합니다. [도구 검증](reports/m2/stage36-tooling-checkpoint.json)에서 Python 208개와 현재 manifest 검사가 통과했고, 새로 실행한 직렬·병렬 6개 사례의 모든 원시 채널이 같았습니다. 이 결과는 검증 취득 처리량에 관한 것이며 evaluator 성능 목표 달성으로 계산하지 않습니다. 런타임 구현과 최종 전체 회귀 검사는 계속 진행 중입니다.
 
 다음 구현은 남은 탐색 불일치의 의존성을 기준으로 진행합니다.
 
-Stage 34에서 class·Listing 반환 타입과 상속 속성의 선택된 inferred parent 차이를 해결했습니다. 전체 module·Mixin·trace 문맥과 원래 upstream snippet 실행은 후속 의무로 유지합니다. 새 선택 목록의 Dynamic `toString()` 두 실패는 M3의 일반 객체 문자열 변환 의존성과 함께 추적하며 개발 예외나 성공으로 바꾸지 않습니다. 중첩 최소 정수 부호 반전 overflow 프레임과 empty collection의 unavailable source section은 각각 별도 관측으로 규칙을 확정합니다.
+우선 Stage 37에서는 `trace` 표현식을 실제 logger 전달까지 연결합니다. operand를 한 번 평가한 뒤 공통 force·renderer를 실행하고 원래 값을 반환하며, COMPACT/PRETTY 메시지·operand 위치·UTF-16 원문을 보존합니다. 기본 noop logger도 force와 frame 변환을 생략하지 않습니다. 같은 pending 속성·상위 속성에 대한 콜백 재진입, 성공한 내부 캐시 보존, read/log 토큰 구분·GC·취소, callback close 뒤 이미 시작한 상위 요청의 완료를 실제 Java 관찰에 맞춥니다. native·Wasm·N-API는 공통 source session과 로그 transport를 사용하고 원래 여섯 `trace` 순차 입력을 그대로 재검증합니다. 이 설계는 구현 완료 기록이 아니며 일반 resource cache·전체 REPL·deprecation warning·module loader 의무를 대체하지 않습니다.
+
+Stage 34에서 class·Listing 반환 타입과 상속 속성의 선택된 inferred parent 차이를 해결했고, 그 뒤 남은 Dynamic `toString()` 두 실패는 Stage 36에서 해결했습니다. 전체 module·Mixin·trace 문맥과 원래 upstream snippet 실행은 후속 의무로 유지합니다. SourceCode의 원래 `List.map` 입력은 여전히 실패하며 표준 라이브러리 의존성을 추적합니다. 중첩 최소 정수 부호 반전 overflow 프레임과 empty collection의 unavailable source section은 각각 별도 관측으로 규칙을 확정합니다.
 
 1. 남은 Reference metadata 작업·진단 확장을 continuation과 자원 계약으로 검증하고 Java stack-overflow 진단 및 취소 지연을 별도로 다룹니다. 전체 지연 타입 해석·alias-root 대입 identity와 wrapper 중복 제거의 실제 인자 구분을 검증합니다. 남은 nullable/default·inline Reference·local typed-property·outer 진단, generic constructor의 지연 멤버 frame 이름·builtin·generator 경계를 원래 실패 입력으로 보완합니다. Stage 24에서 보존한 String 선택 별칭 union 생성자의 `Cannot instantiate type` 진단·지연 시점·오류 우선순위도 여기에 포함합니다. wrapper identity를 바꾸기 전에는 Java에서 관찰 가능한 캐시·성공 predicate 호출 횟수 근거를 먼저 확보합니다. 이미 검증한 공유 타입 인자의 깊은 실행·동시 해제, inline·lambda·공유 let·분기 순서·재귀 깊이별 재시도, 타입 인자 캡처·기본값·Reference 검사 순서, Host/GC/취소/terminal 동작을 회귀 기준으로 유지합니다.
 2. Stage 22·23에서 추가한 strict `Map`·`Set`의 생성·조회·기본값·타입 검사·동등성·해시·순회 회귀와 공통 VM·GC·Host 수명주기를 유지합니다. Stage 24의 `Collection<T>` 분류·eager/lazy 원소 검사·기본값·별칭·metadata와 `set-stage23-type-any`의 해결을 회귀 기준에 추가했습니다. 전체 collection API 완료로 확대하지 않습니다. Stage 25에서 `set-stage23-deep-64-equality`·`set-stage23-deep-64-map-key`의 작성된 구문 경로를 개선했고, 기존 768단계 runtime 검사와 별도로 authored source를 검증합니다. Stage 26은 중첩 lexical string의 원래 작은 스택 오류를 제한된 범위에서 개선했습니다. Stage 27은 비교한 문자열 진단 15개를 해결했습니다. Stage 28은 Unicode escape 진단 3종·비ASCII 숫자·지연 검사 순서를 보완했습니다. Stage 29는 surrogate 표현 4개를 해결하고 공통 문자열의 내부 UTF-16 값을 보존합니다. Stage 30은 선택한 진단 이름·자식 번호·재귀 frame identity와 선언 출처의 타입 검사 프레임을 보완했습니다. 다음 문자열·진단 작업은 Java 범위 초과 내부 오류, surrogate URI·공개 JS 문자열 전달, 중첩 최소 정수 부호 반전 overflow·전체 module/Mixin/trace의 inferred parent 문맥·empty collection의 unavailable source section과 남은 문자열 builtin·문법·resource guard 차이를 별도로 다룹니다. 후속 프런트엔드 작업은 남은 깊이 한도와 Unicode 진단 차이, 깊은 타입·클래스·혼합 body 컴파일과 Java 자원 오류의 진단입니다. JVM identity hash, 변경된 zero-hash 키의 순회와 중첩 Map 렌더링 중 재해시 효과도 남겨 둡니다. `Map.keys`·`entries`, Set·List/Listing의 고차 함수·변환·`map`·`join`, Pair·Duration/DataSize와 일반 compound 출력은 M3 의존성으로 추적합니다.
 3. annotation과 남은 클래스 초기화·modifier·재귀 타입·reflection 규칙을 확장합니다. 실제 source의 초기화 중 Host 중단·재진입, 미게시 local 선언의 Java 내부 오류와 순환 계층의 비종료 관찰은 원래 실패·미실행 상태를 보존하며 별도로 검증합니다.
 4. 모듈 클래스 상속·선언 출처·ModuleOutput override를 M2 의미론에 연결하고 실제 모듈 로딩·URI/source cache identity·Host는 M4 경로와 통합합니다. primitive missing-method 진단도 실제 멤버 목록을 사용하도록 보완합니다.
 
-다음 기능도 한 evaluator의 상태·오류 순서·GC root·Host 재진입·terminal 해제를 함께 검증해야 합니다. 현재 선택된 3,306개 독립 식과 88개 변형 관계, 별도 클래스·별칭 순차 계약 2,720개 호출을 회귀 기준으로 유지하고 Java 원시 결과를 Rust 출력으로 대체하지 않습니다. 순차 계약의 성공은 전체 클래스·module API나 M2 완료, 메모리 목표 달성을 뜻하지 않습니다.
+다음 기능도 한 evaluator의 상태·오류 순서·GC root·Host 재진입·terminal 해제를 함께 검증해야 합니다. 현재 선택된 3,389개 독립 식과 88개 변형 관계, 별도 클래스·별칭 순차 계약의 일치한 2,728개 호출과 미실행 54개를 회귀 기준으로 유지하고 Java 원시 결과를 Rust 출력으로 대체하지 않습니다. 순차 계약의 일부 성공은 전체 클래스·module API나 M2 완료, 메모리 목표 달성을 뜻하지 않습니다.
 
 [원본 API 사례](external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/api/reference.pkl)는 `fixed` 이후에도 Map·`map`/`join`·`pkl:math`·renderer converter를 요구하며, [원본 basic 사례](external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/basic/reference.pkl)는 module amendment·`pkl:test`·PCF 출력에 의존합니다. 이 M3·M4 연결을 별도 작업으로 추적하며 원래 snippet/API 실행 조건을 유지합니다. Stage 13의 Reference 탐색 재비교에서는 이전 불일치 4개가 해결되어 191개 중 173개 일치·18개 불일치가 남았습니다. 남은 불일치를 삭제하거나 개발 예외로 바꾸지 않고 단계별로 재검증합니다. 이는 Stage 12에서 수정한 순차 클래스 진단 불일치 22개와 별도 집계입니다.
 

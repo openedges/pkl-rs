@@ -45,6 +45,54 @@ Stage 33 aligns non-local const owners and method/lambda inferred-parent boundar
 Stage 34 uses return-type defaults and inherited property contexts for inferred parents.
 These checkpoints do not complete the language milestone.
 
+## Stage 36 local verification checkpoint
+
+Object string conversion now uses resumable deep forcing, persistent completed
+force markers, scoped undefined handling and inherited render order. Object-key
+hashing/equality runs through the shared VM during runtime formatting. Typed
+interpolation dispatches authored `toString` overrides. Host callback errors retain
+suspended caller source frames, and Dynamic missing-member errors use the shared
+name-suggestion path.
+
+The [final summary](stage36-final-summary.json) records **3,386 raw matches out of
+3,389 selected cases** and all 88 metamorphic relations. The existing remainder
+mismatch, cycle oracle error and SourceCode mapped-list mismatch remain failures.
+Three earlier object-string-dependent mismatches are repaired; none of the old
+passing cases regressed. All 83 new cases match native Java comparisons, compared
+with five matches for the frozen Stage35 baseline. Node and Chromium each match
+all 83 cases in two fresh executions per case.
+
+The persistent suite retains 167 definitions and 334 executions. All 2,728 paired
+calls match; 54 requested native calls are unexecuted because six original new
+definitions require unsupported `trace`. Their inputs and setup errors remain
+selected. Integrity gates pass, while development, strict selected, full language
+and persistent compatibility gates fail. The full language gate has 1,951 failure
+reasons. Its 474 requirements, 21 partial mappings and 4,389 overlapping accounting
+rows (3,389 ready, 960 unimplemented, 40 unmapped) are not completion percentages.
+
+All seven required local checks and 208 Python tests pass. Rust logs contain 506
+passing harness invocations, including child repeats, and one ignored test; this
+is not a distinct-test count. Standard Node/browser checks retain 92 scenarios
+per target, 6,078 shared primitive matches and 6,076 Java matches per target, with
+the two known regex differences. M1 frontend comparisons match 15/15, runtime
+comparisons 8/9, and lifecycle protocols match while four complete diagnostics
+remain different. No new evaluator performance or peak-RSS result is claimed.
+
+Ordinary actual-source Host experiments match 14/14 repetitions and all 72 calls.
+Separate diagnostic-key experiments retain two mismatches and two truncation
+control passes. All eight nested-read experiments remain Java oracle errors,
+although 16 complete inner language-error payloads match. Additional callback
+controls match all 270 expected raw channels for 90 calls, but a resource-cache
+gap produces eight extra native callbacks; that suite fails its whole protocol.
+
+The [original observations](stage36-origins-evidence.tar.gz) preserve intermediate
+failures, Java bugs, source snapshots and independent reviews. The
+[final evidence](stage36-final-evidence.tar.gz) preserves completed main checks,
+full raw acquisitions, baseline replays and gate exits. Cargo build caches are
+excluded before archive traversal. **M2 remains in progress**: trace, diagnostic
+Host rendering, resource caching and all remaining language/upstream obligations
+stay open, alongside product API, release-platform and performance requirements.
+
 ## Stage 36 acquisition tooling checkpoint
 
 The language runner accepts an optional `--workers` count while retaining fresh
@@ -54,8 +102,8 @@ records 208 passing Python tests, current manifest validation, and six fresh
 serial/parallel cases with identical raw channels, including the existing
 remainder mismatch. The [raw archive](stage36-tooling-evidence.tar.gz) preserves
 the initial driver failure, worktree freshness failures and final main checks.
-This improves acquisition throughput; Stage 36 runtime work remains in progress
-and no evaluator speed or memory result is claimed.
+This improves acquisition throughput. At that tooling checkpoint, Stage 36 runtime
+work was still in progress; no evaluator speed or memory result was claimed.
 
 ## Stage 35 local verification checkpoint
 

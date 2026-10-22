@@ -165,6 +165,27 @@ The original object-stringification and mapped-list failures retain their raw
 inputs and outcomes alongside independent controls. Authored scalar fixtures do
 not replace the original upstream annotation snippets or their renderer contract.
 
+Stage 36 adds object force/string comparisons for `Dynamic`, `Listing`, `Mapping`,
+typed objects and modules. Cases cover child-first forcing, inherited render order,
+undefined members, hidden declaration owners, strict collections nested inside
+objects, virtual `toString` dispatch, equal entry keys and guaranteed String-key hash
+collisions. Portable cases preserve fresh Java results for native, Node and browser
+comparison, including full errors. The older property-key case named as a collision
+is an unequal-key control: its Identifier hashes do not prove a numeric collision.
+
+Seven additional persistent definitions retain their original inputs. Six require
+`trace`, which remains unsupported; failed setup is recorded rather than replaced
+with trace-free input. The trace-free module-self sequence tests cached string
+results in one evaluator. Actual-source Host comparisons separately cover ordinary
+forcing, callback errors and nested callbacks. Matching expected error payloads
+does not override extra callback/protocol differences or Java internal errors.
+Diagnostic formatting that needs Host reads during key hashing remains a failed
+comparison. These obligations stay outside claims about the passing scalar cases.
+
+```sh
+node tools/platform/compare-language-cases.mjs target/m2/object-string-platform-new target/m2/platforms-new/wasm target/m2/platforms-new/pkl_napi.node tools/platform/object-string-cases.mjs
+```
+
 The default uses Java's API setting with power assertions disabled. Selected
 cases can opt in with `"power_assertions": true`; the runner then passes
 `--power-assertions` to both probes and verifies that option in the recorded

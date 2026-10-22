@@ -1,0 +1,2 @@
+obj = new Dynamic { x=List(new Dynamic { value=throw("nested list") }) }
+result=obj.toString()

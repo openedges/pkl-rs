@@ -1126,6 +1126,55 @@
       "id": "annotation-stage35-alias-lazy-success",
       "note": "Authored annotation declaration initialization, published failure state and ordered retries; scalar-property adapter preserves original expressions and repeated call order. Fresh pinned Java raw channels; reflection metadata and module initialization retry observations remain separate.",
       "source": "annotation-stage35-alias-lazy-success.pkl"
+    },
+    {
+      "expressions": "object-string-stage36-undefined-force-mark-success.expressions",
+      "group": "T36",
+      "id": "object-string-stage36-undefined-force-mark-success",
+      "note": "Undefined member permits a completed force mark; repeated object strings do not retry its initializer. Exact source and property-call order from pinned Java acquisition stage36-persistent-oracle-01; repeated fresh evaluator raw channels and separate trace observations are retained. Trace logging is not part of this scalar adapter comparison.",
+      "source": "object-string-stage36-undefined-force-mark-success.pkl"
+    },
+    {
+      "expressions": "object-string-stage36-throw-force-mark-retry.expressions",
+      "group": "T36",
+      "id": "object-string-stage36-throw-force-mark-retry",
+      "note": "Ordinary member failure resets the object force mark and retries on later independent calls. Exact source and property-call order from pinned Java acquisition stage36-persistent-oracle-01; repeated fresh evaluator raw channels and separate trace observations are retained. Trace logging is not part of this scalar adapter comparison.",
+      "source": "object-string-stage36-throw-force-mark-retry.pkl"
+    },
+    {
+      "expressions": "object-string-stage36-shared-child-force-once.expressions",
+      "group": "T36",
+      "id": "object-string-stage36-shared-child-force-once",
+      "note": "Shared nested child is deeply forced once and reused across ordered member visits and calls. Exact source and property-call order from pinned Java acquisition stage36-persistent-oracle-01; repeated fresh evaluator raw channels and separate trace observations are retained. Trace logging is not part of this scalar adapter comparison.",
+      "source": "object-string-stage36-shared-child-force-once.pkl"
+    },
+    {
+      "expressions": "object-string-stage36-undefined-child-parent-fallback.expressions",
+      "group": "T36",
+      "id": "object-string-stage36-undefined-child-parent-fallback",
+      "note": "Child undefined is followed by parent declaration evaluation and receiver-cache fallback. Exact source and property-call order from pinned Java acquisition stage36-persistent-oracle-01; repeated fresh evaluator raw channels and separate trace observations are retained. Trace logging is not part of this scalar adapter comparison.",
+      "source": "object-string-stage36-undefined-child-parent-fallback.pkl"
+    },
+    {
+      "expressions": "object-string-stage36-module-self-success.expressions",
+      "group": "T36",
+      "id": "object-string-stage36-module-self-success",
+      "note": "Module self-stringification preserves its in-progress undefined member snapshot and cached nested string. Exact source and property-call order from pinned Java acquisition stage36-persistent-oracle-01; repeated fresh evaluator raw channels and separate trace observations are retained. Trace logging is not part of this scalar adapter comparison.",
+      "source": "object-string-stage36-module-self-success.pkl"
+    },
+    {
+      "expressions": "object-string-stage36-module-inner-cache-before-failure.expressions",
+      "group": "T36",
+      "id": "object-string-stage36-module-inner-cache-before-failure",
+      "note": "Inner module string success remains cached after an outer force fails; later calls retain that partial state. Exact source and property-call order from pinned Java acquisition stage36-persistent-oracle-01; repeated fresh evaluator raw channels and separate trace observations are retained. Trace logging is not part of this scalar adapter comparison.",
+      "source": "object-string-stage36-module-inner-cache-before-failure.pkl"
+    },
+    {
+      "expressions": "object-string-stage36-successful-child-survives-outer-failure.expressions",
+      "group": "T36",
+      "id": "object-string-stage36-successful-child-survives-outer-failure",
+      "note": "A completed nested child force mark survives a later outer member failure and retry. Exact source and property-call order from pinned Java acquisition stage36-persistent-oracle-01; repeated fresh evaluator raw channels and separate trace observations are retained. Trace logging is not part of this scalar adapter comparison.",
+      "source": "object-string-stage36-successful-child-survives-outer-failure.pkl"
     }
   ],
   "unexecuted_groups": [

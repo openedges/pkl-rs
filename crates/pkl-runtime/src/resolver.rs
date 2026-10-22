@@ -1449,7 +1449,19 @@ impl<'a> Resolver<'a> {
                 if binding == Binding::ImplicitThis && is_base_class(name) {
                     binding = Binding::BaseClass;
                 }
-                if binding == Binding::ImplicitThis && name == "NonNull" {
+                if binding == Binding::ImplicitThis
+                    && matches!(
+                        name.as_str(),
+                        "NonNull"
+                            | "Int8"
+                            | "Int16"
+                            | "Int32"
+                            | "UInt8"
+                            | "UInt16"
+                            | "UInt32"
+                            | "UInt"
+                    )
+                {
                     binding = Binding::BaseTypeAlias;
                 }
                 // Base-module static resolution belongs to M2. Refuse the

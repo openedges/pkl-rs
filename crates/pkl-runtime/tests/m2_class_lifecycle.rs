@@ -60,6 +60,7 @@ fn partial_singleton_survives_failure_scalar_gc_and_wrapper_retry() {
         .push(vec![I::Constant(Value::Int(7)), I::Return]);
     let empty_template = program.objects.len();
     program.objects.push(vec![Member {
+        flags: 0,
         entry: false,
         name: "early".into(),
         code: scalar,

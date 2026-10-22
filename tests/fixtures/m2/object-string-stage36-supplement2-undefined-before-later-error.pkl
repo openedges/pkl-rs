@@ -1,0 +1,3 @@
+class C { missing: Int }
+obj=new Dynamic { x=(new C {}).missing; y=throw("after undefined") }
+result=obj.toString()

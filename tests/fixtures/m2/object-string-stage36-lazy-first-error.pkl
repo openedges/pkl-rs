@@ -1,0 +1,2 @@
+obj = new Dynamic { a=throw("first"); b=throw("second") }
+result=obj.toString()

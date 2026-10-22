@@ -1,0 +1,3 @@
+class C { x: Int=1; y: String; z: Int=3 }
+obj=new C {}
+result=obj.toString()

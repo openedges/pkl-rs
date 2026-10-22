@@ -1,0 +1,2 @@
+obj = new Dynamic { x=new Dynamic { value=throw("nested") }; y=throw("later") }
+result=obj.toString()

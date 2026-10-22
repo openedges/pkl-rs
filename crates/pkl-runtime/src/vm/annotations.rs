@@ -163,6 +163,7 @@ pub(super) fn builtin_members(
             });
             blocks.push(instructions);
             members.push(Member {
+                flags: 0,
                 entry: false,
                 name: Arc::from(property),
                 code,

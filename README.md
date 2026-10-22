@@ -16,7 +16,8 @@ parameter scopes, selected recursive constraints and erased `Class<T>` arguments
 shared constraint receiver slots and creation-time lambda captures,
 finite recursive generics with shared captured type arguments, nullable defaults,
 selected direct generic constructors and their diagnostic origins, declaration
-annotations and ordered initialization, strict Map
+annotations and ordered initialization, resumable object forcing and string conversion,
+Host callback diagnostic frames, strict Map
 and Set construction, lookup, typing and structural comparison, persistent type-use
 resolution, let/for const scopes, and structured source diagnostics with recursive frame compression with optional power assertions
 and standard-library frames. The [latest checkpoint](reports/m2/README.md)

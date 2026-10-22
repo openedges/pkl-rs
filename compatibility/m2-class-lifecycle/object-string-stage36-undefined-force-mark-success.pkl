@@ -1,0 +1,5 @@
+class C { missing: Int }
+obj=new Dynamic { x=if(trace(1)==1) (new C {}).missing else 0 }
+first=obj.toString()
+second=obj.toString()
+stable="ok"

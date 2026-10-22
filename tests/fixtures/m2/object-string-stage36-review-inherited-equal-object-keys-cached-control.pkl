@@ -1,0 +1,5 @@
+k1=new Dynamic { x=1 }
+k2=new Dynamic { x=1 }
+base=new Mapping { [k1]="base" }
+obj=(base) { [k2]="child" }
+result=let (ignore=obj[k1]) obj.toString()

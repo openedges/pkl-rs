@@ -1,0 +1,3 @@
+class C { missing: Int }
+obj=new Dynamic { list=List(new C {}) }
+result=obj.toString()

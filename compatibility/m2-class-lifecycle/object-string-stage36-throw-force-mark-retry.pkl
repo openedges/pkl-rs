@@ -1,0 +1,4 @@
+obj=new Dynamic { x=if(trace(1)==1) throw("failure") else 0 }
+first=obj.toString()
+second=obj.toString()
+stable="ok"

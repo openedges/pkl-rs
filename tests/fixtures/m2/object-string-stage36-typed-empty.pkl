@@ -1,0 +1,3 @@
+class C {}
+obj=new C {}
+result=obj.toString()

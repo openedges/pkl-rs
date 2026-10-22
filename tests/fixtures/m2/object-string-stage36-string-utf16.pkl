@@ -1,0 +1,2 @@
+obj = new Dynamic { a="\u{d800}"; b="?"; c="😀"; d="\u{d83d}\u{de00}" }
+result=obj.toString()

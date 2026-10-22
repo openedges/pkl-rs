@@ -1,0 +1,3 @@
+class C { missing: Int }
+obj=new Mapping { ["a"]=(new C {}).missing; ["b"]=2 }
+result=obj.toString()

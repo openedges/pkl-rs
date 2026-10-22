@@ -90,6 +90,68 @@ pub fn ordered_members(
     Ok(result)
 }
 
+/// Recover an entry's authored key from the internal cache name.
+pub(crate) fn cache_entry_key(
+    heap: &Heap,
+    receiver: ObjectId,
+    key: &CacheKey,
+) -> Result<Option<Value>, RuntimeError> {
+    if !key.entry || key.owner.is_some() {
+        return Ok(None);
+    }
+    let mut owner = Some(receiver);
+    let mut seen = BTreeSet::new();
+    while let Some(id) = owner {
+        if !seen.insert(id) {
+            return Err(RuntimeError::new(ErrorKind::Cycle, "cyclic parent chain"));
+        }
+        let object = heap.get(id)?;
+        if let Some(member) = object
+            .collection_members
+            .iter()
+            .find(|member| member.name == key.name && member.kind != CollectionMemberKind::Property)
+        {
+            return Ok(Some(member.key.clone()));
+        }
+        owner = object.parent;
+    }
+    Err(invalid("missing cache entry key"))
+}
+
+/// Snapshot an already cached receiver value. Runtime rendering prepares key
+/// equality before this lookup; this helper itself never evaluates a member.
+pub(crate) fn cached_render_value(
+    heap: &Heap,
+    receiver: ObjectId,
+    member: &CollectionMember,
+) -> Result<Option<Value>, RuntimeError> {
+    let entry = member.kind != CollectionMemberKind::Property;
+    let object = heap.get(receiver)?;
+    if entry {
+        for slot in &object.cache_slots {
+            if slot.key.entry
+                && slot.key.owner.is_none()
+                && !slot.key.method
+                && let Some(key) = cache_entry_key(heap, receiver, &slot.key)?
+                && same_key(heap, &member.key, &key)
+            {
+                return Ok(Some(slot.value.clone()));
+            }
+        }
+    }
+    Ok(
+        match object.cache.get(&CacheKey {
+            entry,
+            owner: None,
+            name: member.name.clone(),
+            method: false,
+        }) {
+            Some(LazyState::Completed(value)) => Some(value.clone()),
+            _ => None,
+        },
+    )
+}
+
 pub(super) fn forcing_members(
     heap: &Heap,
     receiver: ObjectId,
@@ -118,6 +180,96 @@ pub(super) fn forcing_members(
             }
         }
         next = object.parent;
+    }
+    Ok(result)
+}
+
+/// Class-hidden names stay hidden even when an override lacks the modifier.
+pub(crate) fn hidden_property(
+    heap: &Heap,
+    receiver: ObjectId,
+    name: &str,
+    entry: bool,
+) -> Result<bool, RuntimeError> {
+    if entry {
+        return Ok(false);
+    }
+    // Dynamic, Listing and Mapping inherit the hidden standard-library default.
+    if name == "default" && typed_class(heap, receiver)?.is_none() && !heap.get(receiver)?.is_module
+    {
+        return Ok(true);
+    }
+    let mut owner = Some(receiver);
+    let mut seen = BTreeSet::new();
+    while let Some(id) = owner {
+        if !seen.insert(id) {
+            return Err(RuntimeError::new(ErrorKind::Cycle, "cyclic parent chain"));
+        }
+        let object = heap.get(id)?;
+        if object.members.iter().any(|member| {
+            !member.entry && !member.local && member.name.as_ref() == name && member.hidden()
+        }) {
+            return Ok(true);
+        }
+        owner = object.parent;
+    }
+    Ok(false)
+}
+
+#[derive(Clone)]
+pub(crate) struct RenderMember {
+    pub descriptor: CollectionMember,
+    pub skip: bool,
+}
+
+/// VmObject.iterateMembers visits every nonlocal declaration parent first.
+/// Deduplication happens later, after the renderer hashes each visited key.
+pub(crate) fn render_members(
+    heap: &Heap,
+    receiver: ObjectId,
+) -> Result<Vec<RenderMember>, RuntimeError> {
+    let mut chain = Vec::new();
+    let mut owner = Some(receiver);
+    let mut seen = BTreeSet::new();
+    while let Some(id) = owner {
+        if !seen.insert(id) {
+            return Err(RuntimeError::new(ErrorKind::Cycle, "cyclic parent chain"));
+        }
+        chain.push(id);
+        owner = heap.get(id)?.parent;
+    }
+    let typed = typed_class(heap, receiver)?.is_some() || heap.get(receiver)?.is_module;
+    let mut result = Vec::new();
+    for id in chain.into_iter().rev() {
+        let object = heap.get(id)?;
+        for member in &object.members {
+            if member.local || member.method {
+                continue;
+            }
+            let descriptor = if member.entry {
+                let Some(descriptor) = object
+                    .collection_members
+                    .iter()
+                    .find(|descriptor| descriptor.name == member.name)
+                else {
+                    continue;
+                };
+                descriptor.clone()
+            } else {
+                CollectionMember {
+                    key: Value::string(member.name.clone()),
+                    name: member.name.clone(),
+                    kind: CollectionMemberKind::Property,
+                }
+            };
+            result.push(RenderMember {
+                descriptor,
+                skip: member.hidden()
+                    || member.external()
+                    || member.definition()
+                    || (!typed && !member.entry && member.name.as_ref() == "default"),
+            });
+        }
     }
     Ok(result)
 }
@@ -307,6 +459,7 @@ impl Vm {
         }
         self.add_collection_member(
             Member {
+                flags: 0,
                 entry: true,
                 name: Arc::from(""),
                 code: usize::MAX,
@@ -422,6 +575,7 @@ impl Vm {
                 kind: CollectionMemberKind::Entry,
             });
             object.members.push(Member {
+                flags: 0,
                 name: name.clone(),
                 code: usize::MAX,
                 local: false,
@@ -1448,7 +1602,8 @@ impl Vm {
                             let mut error = RuntimeError::new(
                                 ErrorKind::MissingMember,
                                 "Tried to read property `default` but its value is undefined.",
-                            );
+                            )
+                            .undefined();
                             error
                                 .frames
                                 .extend(object.collection_default_origin.clone());
@@ -1985,6 +2140,7 @@ impl Vm {
                     .push(id);
                 for value in values {
                     let member = Member {
+                        flags: 0,
                         entry: true,
                         name: Arc::from(""),
                         code: usize::MAX,
@@ -2220,6 +2376,7 @@ impl Compiler<'_> {
         });
         self.member = previous;
         Ok(Member {
+            flags: 0,
             entry: true,
             name: Arc::from(""),
             code: block,

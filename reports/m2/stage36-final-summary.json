@@ -1,0 +1,460 @@
+{
+  "schema": 1,
+  "scope": "Stage36 shared object forcing/string conversion and callback diagnostic frames, with complete selected acquisition. M2 remains in progress; strict language and persistent compatibility gates fail.",
+  "compatibility_complete": false,
+  "performance_target_claimed": false,
+  "base_commit": "e71dd0bad2a0d92a28bbce0d700b44437e9eae09",
+  "validation": {
+    "checks": [
+      {
+        "name": "rust-version",
+        "command": [
+          "rustc",
+          "-Vv"
+        ],
+        "exit_code": 0,
+        "elapsed_seconds": 0.06719779968261719,
+        "stdout_sha256": "e2211d4c0760a2a3b03eab88e42f8848952b7aa2ed649277a8fdbf3ce1838fd4",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "name": "references",
+        "command": [
+          "cargo",
+          "xtask",
+          "verify"
+        ],
+        "exit_code": 0,
+        "elapsed_seconds": 6.6703879833221436,
+        "stdout_sha256": "900802c9cf4f23bd9dbc0e79f58d3e21493ec0c990782bc5b690a7432148e9eb",
+        "stderr_sha256": "436214aaf692cbe6baa5de9743f4856aa81d501fee6b322affbe3ccea26f7ce7"
+      },
+      {
+        "name": "format",
+        "command": [
+          "cargo",
+          "fmt",
+          "--all",
+          "--",
+          "--check"
+        ],
+        "exit_code": 0,
+        "elapsed_seconds": 0.6230430603027344,
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "name": "clippy",
+        "command": [
+          "cargo",
+          "clippy",
+          "--workspace",
+          "--all-targets",
+          "--locked",
+          "--",
+          "-D",
+          "warnings"
+        ],
+        "exit_code": 0,
+        "elapsed_seconds": 22.695218801498413,
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_sha256": "9b40439711a82323c55fd00f6d96303281a2465dad070f96728fbdefc1f226c9"
+      },
+      {
+        "name": "rust-tests",
+        "command": [
+          "cargo",
+          "test",
+          "--workspace",
+          "--locked"
+        ],
+        "exit_code": 0,
+        "elapsed_seconds": 266.8330891132355,
+        "stdout_sha256": "26ba9797efe37d265362ed06475119351404c44cd4cfb341acddc5824f746cfc",
+        "stderr_sha256": "4d2e6698762419248fbd6f3b7dfc862fdfc052565fe7ebf02ff9b97df2470905"
+      },
+      {
+        "name": "wasm-check",
+        "command": [
+          "cargo",
+          "check",
+          "-p",
+          "pkl-runtime",
+          "--target",
+          "wasm32-unknown-unknown",
+          "--locked"
+        ],
+        "exit_code": 0,
+        "elapsed_seconds": 5.297107934951782,
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_sha256": "00010ef9b676b44154a3f477f97f361df5ad6c2bfca7fc63913b0006762477e7"
+      },
+      {
+        "name": "python-tests",
+        "command": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "-m",
+          "unittest",
+          "discover",
+          "-s",
+          "tools/tests",
+          "-v"
+        ],
+        "exit_code": 0,
+        "elapsed_seconds": 714.8284139633179,
+        "stdout_sha256": "687ac5b155107dc98dee57c877da85395921d5b9bde10426b0c0a5771e5904f1",
+        "stderr_sha256": "d93992e8505fcc2247634eba2e33905ebb8ebf30379ecb7b8208d22054d63c59"
+      },
+      {
+        "name": "manifest",
+        "command": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "tools/m2_manifest.py",
+          "--check"
+        ],
+        "exit_code": 0,
+        "elapsed_seconds": 2.076272964477539,
+        "stdout_sha256": "c6db063c8ab4807c6c17adb70c6692acd95b13312c0a510e7d367b553d0552b0",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    ],
+    "source_stability": true,
+    "source_files": 4017,
+    "python_tests": 208,
+    "rust_harness_pass_invocations": 506,
+    "rust_ignored_invocations": 1,
+    "rust_count_is_distinct_test_count": false
+  },
+  "native_new_cases": {
+    "selected": 83,
+    "raw_matches": 83,
+    "scope": "Corrected core pre-freeze raw comparison; full platform/compatibility evidence separately acquired by root.",
+    "artifact_sha256": "d5bc31bff2ec7067971f808d47c18955b789dae1d13f9df2c695c1b48859ad78",
+    "report_sha256": "b4ecfd097fdcd9ad2a85d74dd03f05ceb1845da500c31330b43179f27d1718a0"
+  },
+  "full_language": {
+    "selected": 3389,
+    "status_counts": {
+      "mismatch": 2,
+      "oracle-error": 1,
+      "pass": 3386
+    },
+    "failures": [
+      {
+        "id": "error-cycle",
+        "status": "oracle-error"
+      },
+      {
+        "id": "error-remainder-zero",
+        "status": "mismatch"
+      },
+      {
+        "id": "annotation-stage35-builtin-source-code-union-and-string",
+        "status": "mismatch"
+      }
+    ],
+    "metamorphic_relations": 88,
+    "metamorphic_passes": 88,
+    "full_gate_failure_reasons": 1951,
+    "source_stability": true,
+    "artifact_stability": true,
+    "candidate": {
+      "build": {
+        "command": [
+          "cargo",
+          "build",
+          "-p",
+          "pkl-runtime",
+          "--example",
+          "language_probe",
+          "--locked",
+          "--release",
+          "--target-dir",
+          "/Users/cody.ij.hwang/Projects/pkl-rs/target"
+        ],
+        "exit_code": 0,
+        "stderr_sha256": "add9c5423d8d997ececfded061e4117140ef4016459daf56f630c498d4a364a4",
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "timed_out": false
+      },
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/release/examples/language_probe",
+      "sha256": "6b02be1df4f1590636223d414c277e05bed058bef6469088a856447d173d5c23",
+      "source_binding": "recorded-build"
+    },
+    "report_sha256": "f5d41f178aff55dd1ed2b488d5577f0199b6ee613ad53d4db38bf9564f6969cd"
+  },
+  "focused": {
+    "scope": "Focused view of the same full final acquisition, with fresh Stage35 baseline replays. This is not an independent second candidate acquisition.",
+    "selected": 83,
+    "raw_matches": 83,
+    "baseline_raw_matches": 5,
+    "candidate_sha256": "6b02be1df4f1590636223d414c277e05bed058bef6469088a856447d173d5c23",
+    "baseline_sha256": "04780a951968c9d59e97c4815d585ba2c6a0a2c939846438315ba9e7ea812b26",
+    "source_stability": true,
+    "artifact_stability": true
+  },
+  "gates": {
+    "report": 0,
+    "development": 1,
+    "subset": 1,
+    "full": 1,
+    "persistent-report": 0,
+    "persistent-contract": 1
+  },
+  "gate_interpretation": "Report integrity, strict selected compatibility and full milestone completion are different gates. Nonzero exits and unexecuted calls are not passes.",
+  "prior_java_replay": {
+    "selected": 3306,
+    "status_counts": {
+      "pass": 3303,
+      "oracle-error": 1,
+      "mismatch": 2
+    },
+    "baseline_pass_regressions": [],
+    "candidate_sha256": "6b02be1df4f1590636223d414c277e05bed058bef6469088a856447d173d5c23",
+    "baseline_report_sha256": "e34778f123492b1f0987a1076ad6628941abf49c8a6bf20506981a2a33d45c08",
+    "source_stability": true,
+    "artifact_stability": true
+  },
+  "replay_interpretation": "Fresh native runs compared with the unchanged Stage35 Java bytes and actual source paths. Not a new Java acquisition.",
+  "prior_mismatch_repairs": [
+    "method-parent-stage34-generic-unknown-alias-element",
+    "method-parent-stage34-listing-unknown-element",
+    "annotation-stage35-deprecated-body-this"
+  ],
+  "portable": {
+    "selected": 83,
+    "status": "passed",
+    "targets": {
+      "node": {
+        "complete": true,
+        "executions": 166,
+        "passingExecutions": 166,
+        "mismatchingExecutions": 0,
+        "passingCases": 83,
+        "mismatchingCases": 0,
+        "mismatchIds": []
+      },
+      "browser": {
+        "complete": true,
+        "executions": 166,
+        "passingExecutions": 166,
+        "mismatchingExecutions": 0,
+        "passingCases": 83,
+        "mismatchingCases": 0,
+        "mismatchIds": []
+      }
+    }
+  },
+  "persistent": {
+    "definitions": 167,
+    "executions": 334,
+    "call_status_counts": {
+      "pass": 2728,
+      "unexecuted": 54
+    },
+    "native_setup_states": {
+      "executed": 322,
+      "acquisition-failed": 12
+    },
+    "compatibility_complete": false,
+    "source_stability": true
+  },
+  "standard_platforms": {
+    "total": 6078,
+    "oracle_passed": {
+      "rust": 6076,
+      "node": 6076,
+      "browser": 6076
+    },
+    "shared_engine_passed": 6078,
+    "known_gaps": [
+      "regex-unicode-15-vs-16",
+      "regex-zero-width-supplementary"
+    ],
+    "experiment_contract_status": "pass",
+    "compatibility_status": "fail",
+    "source_stability": true
+  },
+  "actual_source_host": {
+    "suites": [
+      {
+        "mode": "object-string",
+        "experiments": 14,
+        "status_counts": {
+          "pass": 14
+        },
+        "expected_java_calls": 72,
+        "paired_calls": 72,
+        "terminal_heap_zero_count": 14,
+        "passed": true,
+        "artifact_sha256": "0892bf97bd57687597696842e1da11ee3e06f95bec18f6d8d7bc07d36b348e78",
+        "report_sha256": "e6bfa47a5fd1c4b5d2386e8db9fc05f3331a58ae4d947bcf3648023e63190d3e"
+      },
+      {
+        "mode": "diagnostic",
+        "experiments": 4,
+        "status_counts": {
+          "mismatch": 2,
+          "pass": 2
+        },
+        "expected_java_calls": 10,
+        "paired_calls": 8,
+        "terminal_heap_zero_count": 4,
+        "passed": false,
+        "artifact_sha256": "db198323106b98abe459c174f50b21d7c611959268476ee884fbfbf22fe622fd",
+        "report_sha256": "09d2d64f0ad0f8c5d131727792c3d689bc4209211176c4c732f25a5616748bcc"
+      },
+      {
+        "mode": "nested",
+        "experiments": 8,
+        "status_counts": {
+          "oracle-error": 8
+        },
+        "expected_java_calls": 88,
+        "paired_calls": 70,
+        "terminal_heap_zero_count": 8,
+        "passed": false,
+        "artifact_sha256": "c04b5fce36e144f3ff9a830ccbf5f1066029850ee116cffd0d4b281711912ed2",
+        "report_sha256": "61a538f6b0cfc690ded02eb9bf82fbcac68e4a44be132f00cd2a16f9da21198d"
+      }
+    ],
+    "nested_inner_ordinary_error_payloads": 16,
+    "nested_scope": "Sixteen entire ordinary inner callback error status/stdout/stderr payloads match; all eight whole nested experiments remain oracle-error due Java ResourceManager ConcurrentModificationException and differing outer results/protocol.",
+    "additional_callback_controls": {
+      "cases": 5,
+      "expected_calls": 90,
+      "all_expected_raw_channels_equal": true,
+      "whole_protocol_passed": false,
+      "exact_call_coverage": false,
+      "scope": "Independent five-case actual-source Host callback comparison to unchanged acquired Java bytes. Error class files retained, not cross-language compared. Architecture observations separate. Sixth arbitrary-expression Java case remains unsupported by native property-path adapter.",
+      "report_sha256": "d4e97d05d18512727901c314148d33355e45f7daf0421c268075113dd36852ba"
+    }
+  },
+  "frontend": {
+    "total": 15,
+    "passed": 15
+  },
+  "runtime": {
+    "total": 9,
+    "raw_matches": 8
+  },
+  "lifecycle": {
+    "protocols": [
+      {
+        "id": "retry",
+        "protocol_raw_equal": true,
+        "diagnostics": [
+          {
+            "id": "attempt-1",
+            "raw_equal": false,
+            "status": "full-diagnostic-byte-mismatch"
+          },
+          {
+            "id": "attempt-2",
+            "raw_equal": false,
+            "status": "full-diagnostic-byte-mismatch"
+          },
+          {
+            "id": "after-close",
+            "raw_equal": false,
+            "status": "full-diagnostic-byte-mismatch"
+          }
+        ]
+      },
+      {
+        "id": "reentry",
+        "protocol_raw_equal": true,
+        "diagnostics": [
+          {
+            "id": "after-close",
+            "raw_equal": false,
+            "status": "full-diagnostic-byte-mismatch"
+          }
+        ]
+      }
+    ],
+    "compatibility_complete": false
+  },
+  "archive": {
+    "path": "reports/m2/stage36-final-evidence.tar.gz",
+    "sha256": "615e9e5b680b9533683ce32a4528203d00d32912815df34d8c9bd651b2ecaab5",
+    "bytes": 28696508,
+    "original_files": 71811,
+    "inventory_files": 71813,
+    "source_stability": true,
+    "excluded_before_traversal": [
+      "target/m2/class-lifecycle-stage36-final-01/build",
+      "target/m2/lifecycle-stage36-final-01/build"
+    ]
+  },
+  "origins_archive": {
+    "scope": "Original Stage36 Java observations, intermediate failures, frozen worktree checks and audits. Main final acquisitions are separate.",
+    "archive": "reports/m2/stage36-origins-evidence.tar.gz",
+    "sha256": "65dfe032e1a4fde7497d4134ed38ac6b3489a7b7b9ccbf57c17cbe504e08c72b",
+    "bytes": 48875041,
+    "original_files": 11055,
+    "inventory_files": 11058,
+    "source_stability": true,
+    "worktree_inventory_sha256": "d705193fdea73e68164d1d3c2c3163d03031b86086beccff5987cc454fda56ae",
+    "worktree_originals": 9980,
+    "excluded_before_traversal": [
+      {
+        "path": "stage36-core-cargo",
+        "reason": "Entire Cargo target cache. Core supplied final frozen artifacts separately."
+      },
+      {
+        "path": "stage36-host-comparison-01/build",
+        "reason": "CARGO_TARGET_DIR=OUT/build in stage36-host-compare.py."
+      },
+      {
+        "path": "stage36-host-comparison-02/build",
+        "reason": "CARGO_TARGET_DIR=OUT/build in stage36-host-compare.py."
+      },
+      {
+        "path": "stage36-diagnostic-host-comparison-01/build",
+        "reason": "CARGO_TARGET_DIR=OUT/build in shared comparison helper."
+      },
+      {
+        "path": "stage36-diagnostic-host-comparison-02/build",
+        "reason": "CARGO_TARGET_DIR=OUT/build in shared comparison helper."
+      },
+      {
+        "path": "stage36-nested-host-comparison-01/build",
+        "reason": "CARGO_TARGET_DIR=OUT/build in shared comparison helper."
+      },
+      {
+        "path": "stage36-origins-inventory-01",
+        "reason": "This actively written inventory root; outside the original-origin aggregate."
+      }
+    ],
+    "tooling_duplication": "Concurrent acquisition/tool freeze/validation original roots are included unchanged, even when the earlier main tooling checkpoint archive contains their duplicate evidence. No deduplication.",
+    "stage37_excluded": true,
+    "compatibility_complete": false
+  },
+  "independent_audits": [
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage36/target/m2/stage36-review-final-audit-01/report.json",
+      "sha256": "b1ddb2be8e8ad93ed23eb0f6c56ea678d9fd5d9ba6f87ca266af56530c802006"
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage36/target/m2/stage36-main-integration-audit-01/report.json",
+      "sha256": "d6b33ce9ed2afd814b492226dd564952193df1ea09bcff981b2bd3b658d5d3cf"
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage36-platform-review-audit-01/report.json",
+      "sha256": "93613848bec1549533cc824cbad0c0588ff33bfe010161354a710b674d2ff4f4"
+    },
+    {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage36-final-review-audit-01/report.json",
+      "sha256": "2eeaa7ca624ad822af556fa1160e0736e82fe34e74d50a39526b5c01830ee2aa"
+    }
+  ],
+  "remaining": [
+    "Six original persistent trace sources fail native setup; 54 requested calls remain unexecuted.",
+    "Synchronous diagnostic object-key hashing cannot suspend for Host reads.",
+    "Resource cache differences produce extra native callbacks in one method experiment.",
+    "Nested Java ResourceManager reads retain full-experiment internal errors.",
+    "Complete language inventory, upstream adapters, diagnostics and resource limits remain open.",
+    "Product API, release-platform, execution-time and peak-RSS goals remain open."
+  ]
+}

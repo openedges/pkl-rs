@@ -153,6 +153,7 @@ fn resource_program() -> Arc<Program> {
         ],
     ]);
     program.objects.push(vec![Member {
+        flags: 0,
         entry: false,
         name: Arc::from("answer"),
         code: 1,
@@ -274,6 +275,7 @@ fn malformed_bytecode_is_an_error_and_cannot_leak_a_running_thunk() {
         ],
     ]);
     program.objects.push(vec![Member {
+        flags: 0,
         entry: false,
         name: Arc::from("bad"),
         code: 1,
@@ -330,6 +332,7 @@ fn super_reads_preserve_receiver_but_do_not_memoize_parent_body() {
         ],
     ]);
     program.objects.push(vec![Member {
+        flags: 0,
         entry: false,
         name: Arc::from("answer"),
         code: 1,
@@ -341,6 +344,7 @@ fn super_reads_preserve_receiver_but_do_not_memoize_parent_body() {
         fixed: false,
     }]);
     program.objects.push(vec![Member {
+        flags: 0,
         entry: false,
         name: Arc::from("result"),
         code: 2,
@@ -451,6 +455,7 @@ fn transient_failures_retry_in_order_while_successful_dependencies_stay_cached()
     program.objects.push(
         [("first", 1), ("second", 2), ("result", 3)]
             .map(|(name, code)| Member {
+                flags: 0,
                 entry: false,
                 name: Arc::from(name),
                 code,

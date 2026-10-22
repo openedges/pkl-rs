@@ -1,0 +1,2 @@
+obj=new Dynamic { minimum=-9223372036854775808; zero=-0.0; infinity=1.0/0.0; nan=0.0/0.0 }
+result=obj.toString()

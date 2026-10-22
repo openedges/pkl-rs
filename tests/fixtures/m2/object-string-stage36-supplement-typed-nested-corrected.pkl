@@ -1,0 +1,4 @@
+class C { x: Int=1 }
+class D { child: C=new C {}; other: Listing<Int> = new { 2 } }
+obj=new D {}
+result=obj.toString()

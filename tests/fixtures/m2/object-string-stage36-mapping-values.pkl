@@ -1,0 +1,2 @@
+obj = new Mapping { ["a"]=1; [2]="two" }
+result=obj.toString()

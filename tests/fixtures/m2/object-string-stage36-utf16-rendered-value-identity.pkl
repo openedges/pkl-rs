@@ -1,0 +1,4 @@
+obj=new Dynamic { x="\u{d800}" }
+expected="new Dynamic { x = \"\u{d800}\" }"
+replacement="new Dynamic { x = \"?\" }"
+result=List((obj.toString()==expected),(obj.toString()==replacement)).toString()

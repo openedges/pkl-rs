@@ -227,6 +227,7 @@ fn shared_session() -> (HostSession, Value) {
     ]);
     program.objects.push(vec![
         Member {
+            flags: 0,
             entry: false,
             name: Arc::from("outer"),
             code: 3,
@@ -238,6 +239,7 @@ fn shared_session() -> (HostSession, Value) {
             fixed: false,
         },
         Member {
+            flags: 0,
             entry: false,
             name: Arc::from("shared"),
             code: 4,

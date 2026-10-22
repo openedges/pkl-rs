@@ -125,7 +125,7 @@ pub(super) fn identical_key(heap: &Heap, left: &Value, right: &Value) -> bool {
     }
 }
 
-pub(super) fn same_key(heap: &Heap, left: &Value, right: &Value) -> bool {
+pub(crate) fn same_key(heap: &Heap, left: &Value, right: &Value) -> bool {
     if let (Value::Object(a), Value::Object(b)) = (left, right) {
         if a == b {
             return true;
@@ -153,6 +153,8 @@ enum Task {
         Vec<(Value, Option<i32>)>,
         Value,
     ),
+    ForceCached(ObjectId, ObjectId, Member, Option<Vec<usize>>, usize),
+    ForceCachedMatch(Value, Value, Value),
     PublishCache(ObjectId, CacheKey, Value),
     AppendCache(ObjectId, CacheKey, Value),
     CacheRebuild(ObjectId, usize),
@@ -166,12 +168,12 @@ enum Task {
     SetLookup(ObjectId, Value),
     MapLookup(ObjectId, ObjectId, CollectionMember),
     Deep(Value),
+    DiscardForcedValue,
     Match(Value, Value, Vec<(Value, Value)>, usize),
     Matched(Value, Value, Value, Value),
     Prepare(Value),
     HashMembers(ObjectId),
     Build(ObjectId),
-    Force(ObjectId, CollectionMember, bool),
     Resolve(
         ObjectId,
         CollectionMember,
@@ -259,20 +261,7 @@ impl Vm {
         receiver: ObjectId,
         key: &CacheKey,
     ) -> Result<Option<Value>, RuntimeError> {
-        if !key.entry || key.owner.is_some() {
-            return Ok(None);
-        }
-        let mut owner = Some(receiver);
-        while let Some(id) = owner {
-            let object = self.heap.get(id)?;
-            if let Some(member) = object.collection_members.iter().find(|member| {
-                member.name == key.name && member.kind != CollectionMemberKind::Property
-            }) {
-                return Ok(Some(member.key.clone()));
-            }
-            owner = object.parent;
-        }
-        Err(invalid("missing cache entry key"))
+        collections::cache_entry_key(&self.heap, receiver, key)
     }
 
     fn cache_key_hash(&self, receiver: ObjectId, key: &CacheKey) -> Result<i32, RuntimeError> {
@@ -354,6 +343,52 @@ impl Vm {
             return Ok(true);
         }
         Ok(false)
+    }
+
+    /// VmObject.force queries the receiver cache before reading the current
+    /// owner's declaration. Small EconomicMaps compare keys without hashing.
+    pub(super) fn force_declaration_member(
+        &mut self,
+        receiver: ObjectId,
+        owner: ObjectId,
+        member: Member,
+    ) -> Result<(), RuntimeError> {
+        if !member.entry || self.heap.get(receiver)?.cache_slots.is_empty() {
+            return self.force_key(
+                receiver,
+                owner,
+                member.name,
+                false,
+                true,
+                false,
+                member.entry,
+            );
+        }
+        let key = CacheKey {
+            entry: true,
+            owner: None,
+            method: false,
+            name: member.name.clone(),
+        };
+        let query = self
+            .cache_value_key(receiver, &key)?
+            .ok_or_else(|| invalid("force entry key"))?;
+        let mut tasks = vec![Task::ForceCached(receiver, owner, member, None, 0)];
+        if self.heap.get(receiver)?.cache_index.has_hash() {
+            tasks.push(Task::Prepare(query.clone()));
+        }
+        self.schedule_tasks(
+            tasks,
+            vec![Value::Object(receiver), Value::Object(owner), query],
+        );
+        self.frames
+            .last_mut()
+            .expect("force frame")
+            .equality_run
+            .as_mut()
+            .expect("cache lookup")
+            .hide_callsite = false;
+        Ok(())
     }
 
     pub(super) fn count_mapping_keys(&mut self, id: ObjectId, keys: Vec<Value>) {
@@ -451,6 +486,17 @@ impl Vm {
             }
         }
         Ok(false)
+    }
+    /// VmObject.iterateMemberValues hashes each visited key before rendering it.
+    pub(super) fn prepare_render_key(&mut self, key: Value) {
+        self.schedule_tasks(vec![Task::Prepare(key.clone())], vec![key]);
+        self.frames
+            .last_mut()
+            .expect("render frame")
+            .equality_run
+            .as_mut()
+            .expect("key preparation")
+            .hide_callsite = false;
     }
     pub(super) fn prepare_keys(&mut self, keys: Vec<Value>) -> Result<bool, RuntimeError> {
         // One bytecode instruction can prepare a probe and then a larger set
@@ -758,6 +804,82 @@ impl Vm {
                 return self.force_key_mode_prepared(
                     receiver, owner, name, local, memoize, method, entry, predicate, true, None,
                 );
+            }
+            Task::ForceCached(receiver, owner, member, candidates, index) => {
+                let key = CacheKey {
+                    entry: true,
+                    owner: None,
+                    method: false,
+                    name: member.name.clone(),
+                };
+                let query = self
+                    .cache_value_key(receiver, &key)?
+                    .ok_or_else(|| invalid("force entry key"))?;
+                let candidates = match candidates {
+                    Some(candidates) => candidates,
+                    None => {
+                        let object = self.heap.get(receiver)?;
+                        if object.cache_index.has_hash() {
+                            object
+                                .cache_index
+                                .candidates(Some(self.cache_key_hash(receiver, &key)?))
+                        } else {
+                            (0..object.cache_slots.len()).collect()
+                        }
+                    }
+                };
+                if let Some(slot) = candidates
+                    .get(index)
+                    .and_then(|index| self.heap.get(receiver).ok()?.cache_slots.get(*index))
+                    .cloned()
+                {
+                    let retry =
+                        Task::ForceCached(receiver, owner, member, Some(candidates), index + 1);
+                    if slot.key.owner.is_some() || !slot.key.entry || slot.key.method {
+                        run.tasks.push(retry);
+                    } else {
+                        let stored = self
+                            .cache_value_key(receiver, &slot.key)?
+                            .ok_or_else(|| invalid("cached entry key"))?;
+                        if same_key(&self.heap, &query, &stored) {
+                            self.stack.push(slot.value);
+                        } else {
+                            let depth = run.tasks.len();
+                            run.on_false.push((depth, retry));
+                            run.roots
+                                .extend([query.clone(), stored.clone(), slot.value.clone()]);
+                            run.tasks.push(Task::ForceCachedMatch(
+                                query.clone(),
+                                stored.clone(),
+                                slot.value,
+                            ));
+                            run.tasks.push(Task::Compare(query, stored, false));
+                        }
+                    }
+                } else {
+                    self.frames[frame_index].equality_run = Some(run);
+                    return self.force_key_mode_prepared(
+                        receiver,
+                        owner,
+                        member.name.clone(),
+                        false,
+                        true,
+                        false,
+                        true,
+                        false,
+                        true,
+                        Some(member),
+                    );
+                }
+            }
+            Task::ForceCachedMatch(query, stored, value) => {
+                run.on_false
+                    .pop()
+                    .ok_or_else(|| invalid("missing force cache branch"))?;
+                if let (Value::Object(query), Value::Object(stored)) = (query, stored) {
+                    self.heap.key_equalities.insert((query, stored));
+                }
+                self.stack.push(value);
             }
             Task::PublishCache(id, key, value) => {
                 // Bootstrap strict collections can carry completed scalar slots
@@ -1103,27 +1225,15 @@ impl Vm {
                 if let Value::Object(id) = value
                     && run.forced.insert(id)
                 {
-                    if let Some(reference) = self.heap.get_mut(id)?.reference.as_mut() {
-                        if !reference.forced {
-                            reference.forced = true;
-                            run.tasks
-                                .extend(reference.path.iter().rev().cloned().map(Task::Deep));
-                            run.tasks.push(Task::Deep(reference.data.clone()));
-                            run.tasks.push(Task::Deep(reference.domain.clone()));
-                        }
-                    } else if self.heap.get(id)?.collection_kind == CollectionKind::Map {
-                        for member in self.map_hash_members(id)?.into_iter().rev() {
-                            let value = self.cached_equality_member(id, &member)?;
-                            run.roots.extend([member.key.clone(), value.clone()]);
-                            run.tasks.push(Task::Deep(value));
-                            run.tasks.push(Task::Deep(member.key));
-                        }
-                    } else {
-                        for member in self.equality_members(id)?.into_iter().rev() {
-                            run.tasks.push(Task::Force(id, member, false));
-                        }
-                    }
+                    run.tasks.push(Task::DiscardForcedValue);
+                    self.frames[frame_index].callsite_hidden = run.hide_callsite;
+                    self.frames[frame_index].equality_run = Some(run);
+                    self.force_value_frame(Value::Object(id))?;
+                    return Ok(());
                 }
+            }
+            Task::DiscardForcedValue => {
+                self.pop()?;
             }
             Task::Prepare(value) => {
                 if let Value::Object(id) = value
@@ -1162,11 +1272,6 @@ impl Vm {
                         run.tasks.push(Task::Prepare(key));
                     }
                 }
-            }
-            Task::Force(id, member, prepare) => {
-                let candidates = collections::forcing_members(&self.heap, id)?;
-                run.tasks
-                    .push(Task::Resolve(id, member, candidates, 0, Some(prepare)));
             }
             Task::Resolve(id, member, candidates, index, prepare) => {
                 if member.kind == CollectionMemberKind::Property {

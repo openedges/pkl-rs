@@ -1,0 +1,2 @@
+obj = new Dynamic { x=1; y="two"; z=true; n=null }
+result=obj.toString()

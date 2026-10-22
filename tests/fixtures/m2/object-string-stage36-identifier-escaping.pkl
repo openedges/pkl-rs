@@ -1,0 +1,2 @@
+obj = new Dynamic { `class`=1; `has space`=2; `two-words`=3; café=4 }
+result=obj.toString()

@@ -1,0 +1,2 @@
+obj=new Mapping { default=throw("hidden"); ["x"]=1 }
+result=obj.toString()

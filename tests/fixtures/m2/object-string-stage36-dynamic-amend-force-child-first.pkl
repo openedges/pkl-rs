@@ -1,0 +1,2 @@
+obj = (new Dynamic { a=throw("parent") }) { b=throw("child") }
+result=obj.toString()

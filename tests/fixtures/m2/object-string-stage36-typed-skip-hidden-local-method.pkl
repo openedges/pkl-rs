@@ -1,0 +1,3 @@
+class C { x=1; hidden secret=throw("hidden"); local private=throw("local"); function f()=throw("method") }
+obj=new C {}
+result=obj.toString()

@@ -1,0 +1,2 @@
+obj=new Dynamic { x=1; local private=throw("local"); local function f()=throw("method") }
+result=obj.toString()

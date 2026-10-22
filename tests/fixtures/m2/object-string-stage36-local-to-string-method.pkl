@@ -1,0 +1,2 @@
+obj=new Dynamic { local function toString()="local"; bad=throw("forced") }
+result=obj.toString()

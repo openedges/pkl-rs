@@ -1,0 +1,2 @@
+obj = new Dynamic { text="quote\" slash\\ tab\t line\n return\r null\u{0}" }
+result=obj.toString()

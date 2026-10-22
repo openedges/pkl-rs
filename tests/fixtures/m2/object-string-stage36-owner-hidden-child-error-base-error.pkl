@@ -1,0 +1,3 @@
+open class B { x=throw("base") }
+class C extends B { hidden x=throw("child") }
+result=new C {}.toString()

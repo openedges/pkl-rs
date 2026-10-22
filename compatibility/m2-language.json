@@ -67409,6 +67409,1583 @@
       ]
     },
     {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "object-string-stage36-dynamic-amend-force-child-first",
+      "input": "tests/fixtures/m2/object-string-stage36-dynamic-amend-force-child-first.pkl",
+      "input_sha256": "19286abb787bfc9f9809f562dcb694859bdbb1572e416144a229ba347bf85be1",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "object-string-stage36-dynamic-amend-render-order",
+      "input": "tests/fixtures/m2/object-string-stage36-dynamic-amend-render-order.pkl",
+      "input_sha256": "d9d9b44bcb01b3349310f5e82804d049fd9feee4b7076f21f1ea10c8153c11c0",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "object-string-stage36-dynamic-elements",
+      "input": "tests/fixtures/m2/object-string-stage36-dynamic-elements.pkl",
+      "input_sha256": "9ead63ccfbabbe2b441c43c7377e11d426064a92b1cad9d95d380fa9fd0cca35",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "object-string-stage36-dynamic-empty",
+      "input": "tests/fixtures/m2/object-string-stage36-dynamic-empty.pkl",
+      "input_sha256": "6d298cbb893a4612b5930d7d2cdeda4146a17ef3889fcd30bc70eff555242849",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "object-string-stage36-dynamic-entry",
+      "input": "tests/fixtures/m2/object-string-stage36-dynamic-entry.pkl",
+      "input_sha256": "93dc2dfc912142c35e4046e51a8a92c9576af51d6057daeb685a386c52808cbb",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "object-string-stage36-dynamic-mixed-order",
+      "input": "tests/fixtures/m2/object-string-stage36-dynamic-mixed-order.pkl",
+      "input_sha256": "5b938c0a4a6fb6dbd8d9e3d96306d306d369f2dc96cb20e09b31c77312ec284f",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "object-string-stage36-dynamic-nested-property",
+      "input": "tests/fixtures/m2/object-string-stage36-dynamic-nested-property.pkl",
+      "input_sha256": "42623ea893d7521017cf938160522b3d1914aa3c2427fdb7005dfbfa1b080289",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "object-string-stage36-dynamic-scalars",
+      "input": "tests/fixtures/m2/object-string-stage36-dynamic-scalars.pkl",
+      "input_sha256": "0b88ac07fe8aab2eb6ed803ba3e33f9e6ef9d497686bca5f73266357374ee438",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "object-string-stage36-entry-key-object-nonforcing",
+      "input": "tests/fixtures/m2/object-string-stage36-entry-key-object-nonforcing.pkl",
+      "input_sha256": "c1de34fa551d4bd78bb6e4f79ad28f71f5e1d2dffc410380229b92840f2438fd",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "object-string-stage36-function-and-class-values",
+      "input": "tests/fixtures/m2/object-string-stage36-function-and-class-values.pkl",
+      "input_sha256": "e1cf426ee7d6980adcafaf719f7b724032d4c93ca21d3019cf472dd479f29fb2",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "object-string-stage36-identifier-escaping",
+      "input": "tests/fixtures/m2/object-string-stage36-identifier-escaping.pkl",
+      "input_sha256": "57b0165232611670f2de940330bf34fd425875083ce76ddd939dd7d4be8696c1",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "object-string-stage36-inherited-force-child-first",
+      "input": "tests/fixtures/m2/object-string-stage36-inherited-force-child-first.pkl",
+      "input_sha256": "82e45f2fa00a4b9cefd27ce7e2719d441a8558658866e3d6bf443518e273e373",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "object-string-stage36-inherited-hidden-override",
+      "input": "tests/fixtures/m2/object-string-stage36-inherited-hidden-override.pkl",
+      "input_sha256": "3288880592c96dd33f639c9f7193316240ac18e5bc1590d5449cb3a3f359b94a",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "object-string-stage36-inherited-override-no-parent-force",
+      "input": "tests/fixtures/m2/object-string-stage36-inherited-override-no-parent-force.pkl",
+      "input_sha256": "f35d9bac4464e36438771705588e3ad139eebcdfef21205a62f0cebd81f257fd",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "object-string-stage36-inherited-render-order",
+      "input": "tests/fixtures/m2/object-string-stage36-inherited-render-order.pkl",
+      "input_sha256": "f609ad8067f44e8c7f039f1c844e94a667c3ca00ccdbe1bf9db17ed84ae32180",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "object-string-stage36-lazy-first-error",
+      "input": "tests/fixtures/m2/object-string-stage36-lazy-first-error.pkl",
+      "input_sha256": "2be6f6f0a5c14fb8512e217215f3ad3341965dd22754fea7221e83e2c63d4285",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "object-string-stage36-listing-empty",
+      "input": "tests/fixtures/m2/object-string-stage36-listing-empty.pkl",
+      "input_sha256": "067b27c3e1e99416fa6126d14b05a44fec3949120c59c2638c8164858c151bdd",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "object-string-stage36-listing-nested",
+      "input": "tests/fixtures/m2/object-string-stage36-listing-nested.pkl",
+      "input_sha256": "70c904b64a5d40280c897a2deea3d04cc45d1ca24ed63b745200028b10ec0dbf",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "object-string-stage36-listing-values",
+      "input": "tests/fixtures/m2/object-string-stage36-listing-values.pkl",
+      "input_sha256": "8421d0f27024a2993254e0343bd025e24a76787b67916ac212c43d38b289e44d",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "object-string-stage36-mapping-empty",
+      "input": "tests/fixtures/m2/object-string-stage36-mapping-empty.pkl",
+      "input_sha256": "639f0042d467e787da6164e1aab167d71ed0334e87d7272b7f5d57318a067775",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "object-string-stage36-mapping-nested",
+      "input": "tests/fixtures/m2/object-string-stage36-mapping-nested.pkl",
+      "input_sha256": "92efe1bcfc6404a6916d717c72bb49eea4a0c553280b2b24a440e0df0c772de1",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "object-string-stage36-mapping-values",
+      "input": "tests/fixtures/m2/object-string-stage36-mapping-values.pkl",
+      "input_sha256": "e753489582717478fc360897f1c86c5153da7e824473aedb061ffa210ed3ca69",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "object-string-stage36-module-empty",
+      "input": "tests/fixtures/m2/object-string-stage36-module-empty.pkl",
+      "input_sha256": "8c6d3cfb244ef7ef01a0b0ca58c614e3d9219440a42b3123d77e8d1a1d860c7c",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "object-string-stage36-module-force-class-error",
+      "input": "tests/fixtures/m2/object-string-stage36-module-force-class-error.pkl",
+      "input_sha256": "bf773a0e917c12fe67ed5f4973541c2dc0ab04806b391024539240ebe631ba63",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "object-string-stage36-module-self-result",
+      "input": "tests/fixtures/m2/object-string-stage36-module-self-result.pkl",
+      "input_sha256": "7ac382401caa114a4bc21480ce989e6075381ad6d6929de9ba9c99e8b3099fbb",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "object-string-stage36-module-skip-definitions",
+      "input": "tests/fixtures/m2/object-string-stage36-module-skip-definitions.pkl",
+      "input_sha256": "be1e9c5fc7293185294e8c36c1c27d82310856a0c8a4b61f0a54051f0159589d",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "object-string-stage36-module-values",
+      "input": "tests/fixtures/m2/object-string-stage36-module-values.pkl",
+      "input_sha256": "ab5c4438f4ca5ae9dbad0e737b0bb0c14dfdcb3e55f471f19898697751f62e6e",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "object-string-stage36-nested-error-before-next",
+      "input": "tests/fixtures/m2/object-string-stage36-nested-error-before-next.pkl",
+      "input_sha256": "1fdbb9e9e6440d816ee599acd4b8ba8f2024a00d1be2473dbf6ec075c2c9f55b",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "object-string-stage36-nested-strict-list-forced",
+      "input": "tests/fixtures/m2/object-string-stage36-nested-strict-list-forced.pkl",
+      "input_sha256": "5f61d8d14f9ab593c1dbe8637c0c95d8f065de7478fc1b1390700d09199d7419",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "object-string-stage36-nested-strict-map-keys-forced",
+      "input": "tests/fixtures/m2/object-string-stage36-nested-strict-map-keys-forced.pkl",
+      "input_sha256": "4fc0b7a79dd7ff5b96b82bf0a598bc836e3c890f795ec3627ce77d2527158db7",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "object-string-stage36-nested-strict-map-values-forced",
+      "input": "tests/fixtures/m2/object-string-stage36-nested-strict-map-values-forced.pkl",
+      "input_sha256": "73e2cbfd318525510fdfbf09c9176e42c2845566155b7223836fe2d3b71c08f0",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "object-string-stage36-strict-list-control-unforced",
+      "input": "tests/fixtures/m2/object-string-stage36-strict-list-control-unforced.pkl",
+      "input_sha256": "ae2d20ee6ae00851d669d3d345809f8030119b96c24c7c906e840a7c63ddac68",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "object-string-stage36-strict-map-control-unforced",
+      "input": "tests/fixtures/m2/object-string-stage36-strict-map-control-unforced.pkl",
+      "input_sha256": "10bea4716d76640bc09f43fc39ddffa97e911b3478825ca2339a3be25e83f993",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "object-string-stage36-string-escaping",
+      "input": "tests/fixtures/m2/object-string-stage36-string-escaping.pkl",
+      "input_sha256": "e46066bfe27aeb1c9e094c6c3e9973a999e7e68dadafcb4a48fb5ea0dfaf9898",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "object-string-stage36-string-utf16",
+      "input": "tests/fixtures/m2/object-string-stage36-string-utf16.pkl",
+      "input_sha256": "53af31c28aa61afd3ce4f5573551f2fbdd29bef9b8f15243f60fc49745eb89df",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "object-string-stage36-supplement-dynamic-local-method-corrected",
+      "input": "tests/fixtures/m2/object-string-stage36-supplement-dynamic-local-method-corrected.pkl",
+      "input_sha256": "ba506cd2018556ff48bb5544600f32e6cea9cf22cb5ad0543ee3a1b0f7f3b58c",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "object-string-stage36-supplement-mapping-key-object-snapshot",
+      "input": "tests/fixtures/m2/object-string-stage36-supplement-mapping-key-object-snapshot.pkl",
+      "input_sha256": "2c11fa7e1928617a39fd70c2efe7994db2e9b6a999b93217bb246211acabf699",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "object-string-stage36-supplement-mixed-first-error-property-before-element",
+      "input": "tests/fixtures/m2/object-string-stage36-supplement-mixed-first-error-property-before-element.pkl",
+      "input_sha256": "a983f4f240ddf7eb291ddf32b63f1ea25082775ee728a8b5e3d1019ba3dc0f39",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "object-string-stage36-supplement-mixed-first-error-property-before-entry",
+      "input": "tests/fixtures/m2/object-string-stage36-supplement-mixed-first-error-property-before-entry.pkl",
+      "input_sha256": "2d6853c639379791399d7df21bdbc2c7e9b70f9a04814a6ccaeab1bebfc8fa91",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "object-string-stage36-supplement-nested-render-context-mixed",
+      "input": "tests/fixtures/m2/object-string-stage36-supplement-nested-render-context-mixed.pkl",
+      "input_sha256": "2bc6de4d31d90d0e4c4d06aaf71bca11a64b2565ddff0ebff3bff9b82ac7ae20",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "object-string-stage36-supplement-shared-child-finite",
+      "input": "tests/fixtures/m2/object-string-stage36-supplement-shared-child-finite.pkl",
+      "input_sha256": "21e9fd24e9cfc0449f6b1b7b4ce97d443e43668eba93dbd001e7ad168f2de515",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "object-string-stage36-supplement-strict-set-forced-in-object",
+      "input": "tests/fixtures/m2/object-string-stage36-supplement-strict-set-forced-in-object.pkl",
+      "input_sha256": "c036b64c3cddd4ee8c96ac600b0204507206492e62a8f67cd1f64175a0733280",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "object-string-stage36-supplement-typed-nested-corrected",
+      "input": "tests/fixtures/m2/object-string-stage36-supplement-typed-nested-corrected.pkl",
+      "input_sha256": "e7f5d619b1ebc1ab5e8655a9446f6a83c6ac2fb8baca30a30cb341e88de4210e",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "object-string-stage36-supplement-unlimited-single-line",
+      "input": "tests/fixtures/m2/object-string-stage36-supplement-unlimited-single-line.pkl",
+      "input_sha256": "23a6e4d554dc704e2025d9a0595afccca48f7be66441b0477082ba341bf0858a",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "object-string-stage36-supplement2-dynamic-undefined-required-property",
+      "input": "tests/fixtures/m2/object-string-stage36-supplement2-dynamic-undefined-required-property.pkl",
+      "input_sha256": "452fe0df48da5b250f2bf6cf9a31c366ecd677cbd35490b63a904223057ad629",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "object-string-stage36-supplement2-listing-undefined-required-property",
+      "input": "tests/fixtures/m2/object-string-stage36-supplement2-listing-undefined-required-property.pkl",
+      "input_sha256": "f0c609ba0d17206afe456cfa8894a076c346b4a08d96b9f6367cd22034d6a258",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "object-string-stage36-supplement2-mapping-undefined-required-property",
+      "input": "tests/fixtures/m2/object-string-stage36-supplement2-mapping-undefined-required-property.pkl",
+      "input_sha256": "bb9fc97d8be0f7a942ce9e7912215d7abcca8490685237a328f7fcd1e14ae30e",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "object-string-stage36-supplement2-nested-undefined-required-property",
+      "input": "tests/fixtures/m2/object-string-stage36-supplement2-nested-undefined-required-property.pkl",
+      "input_sha256": "295c0a1ae9d13d025e7ac3233271cc9f7d18316fd5ef82f61fdae764f0978378",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "object-string-stage36-supplement2-typed-undefined-expression",
+      "input": "tests/fixtures/m2/object-string-stage36-supplement2-typed-undefined-expression.pkl",
+      "input_sha256": "d2abd7686259981647a39c5084cc232060a891398851d8354fcc043f6a8ea476",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "object-string-stage36-supplement2-undefined-before-later-error",
+      "input": "tests/fixtures/m2/object-string-stage36-supplement2-undefined-before-later-error.pkl",
+      "input_sha256": "fe38f0a49249d80e25b370fa56e9b3419209f8d1d99f84aa201ddcbf33e551a5",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "object-string-stage36-supplement2-undefined-nested-in-strict-list-corrected",
+      "input": "tests/fixtures/m2/object-string-stage36-supplement2-undefined-nested-in-strict-list-corrected.pkl",
+      "input_sha256": "019514dffa71e3a527eda35c44771facacc08c38d0850c28505435cff2872491",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "object-string-stage36-supplement2-undefined-nested-in-strict-map-key-corrected",
+      "input": "tests/fixtures/m2/object-string-stage36-supplement2-undefined-nested-in-strict-map-key-corrected.pkl",
+      "input_sha256": "0baafe1966b243862eef78932d9275417f59a2344a16c5697d4f0767097f6b75",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "object-string-stage36-typed-empty",
+      "input": "tests/fixtures/m2/object-string-stage36-typed-empty.pkl",
+      "input_sha256": "e227135714bddb26c05e4228f938c66a4bc1be4cb72a4d4180b2529675712e72",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "object-string-stage36-typed-skip-hidden-local-method",
+      "input": "tests/fixtures/m2/object-string-stage36-typed-skip-hidden-local-method.pkl",
+      "input_sha256": "1dd9322ed2bf1a4baa2bfc88be8b1a7b1073aa5c3abf0800f6e3c87a7fd8b72a",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "object-string-stage36-typed-undefined",
+      "input": "tests/fixtures/m2/object-string-stage36-typed-undefined.pkl",
+      "input_sha256": "a488a28fe0574641cf2de03fe0a4d9500fbe536561a7ab0c4c72306d604835ae",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "object-string-stage36-typed-undefined-middle",
+      "input": "tests/fixtures/m2/object-string-stage36-typed-undefined-middle.pkl",
+      "input_sha256": "8a42550ab24f73b87a1611d81fcb1be39ecec9fdb75556f6c957ae72fe2e2955",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "object-string-stage36-typed-values",
+      "input": "tests/fixtures/m2/object-string-stage36-typed-values.pkl",
+      "input_sha256": "ba0a5dde60650a0a27f7bb63baf506e96d6b2376ec99557ac96227d25e00f91b",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "object-string-stage36-unknown-name-not-undefined",
+      "input": "tests/fixtures/m2/object-string-stage36-unknown-name-not-undefined.pkl",
+      "input_sha256": "ac56a23d036391280a8ba9d81abfc37aa687f8d68e42df2a49b4ced94f0820f3",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "object-string-stage36-typed-undefined-parent-fallback",
+      "input": "tests/fixtures/m2/object-string-stage36-typed-undefined-parent-fallback.pkl",
+      "input_sha256": "42a8463bf2a1d486f6bbe4232c8e997069748a4a0fd027982d7cce36d5c37c3a",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "object-string-stage36-typed-undefined-expression-parent-fallback",
+      "input": "tests/fixtures/m2/object-string-stage36-typed-undefined-expression-parent-fallback.pkl",
+      "input_sha256": "f84392873a95dc064c34692dddbdf029b1a44288510cb9a612806c42cb0d5670",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "object-string-stage36-dynamic-undefined-parent-fallback",
+      "input": "tests/fixtures/m2/object-string-stage36-dynamic-undefined-parent-fallback.pkl",
+      "input_sha256": "8dc5cfeca874152a83e1b344bc7065f006a4d7a4a0aaaaf2c5da5af3267a69f1",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "object-string-stage36-class-to-string-override",
+      "input": "tests/fixtures/m2/object-string-stage36-class-to-string-override.pkl",
+      "input_sha256": "978e5d86a662d049d7fb752c519210d6b18bacef6b528f5bc8f5ed24c359eea5",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "object-string-stage36-local-to-string-method",
+      "input": "tests/fixtures/m2/object-string-stage36-local-to-string-method.pkl",
+      "input_sha256": "6acb65bb658ed6d89a40d909bc9e03eec523e6b01afc3efcb57706d6c69dec71",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "object-string-stage36-const-module-to-string",
+      "input": "tests/fixtures/m2/object-string-stage36-const-module-to-string.pkl",
+      "input_sha256": "a92c386ae1f33f064324547f8f323d10447d24407a38699b575dc219ab1cf633",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "object-string-stage36-annotation-module-to-string",
+      "input": "tests/fixtures/m2/object-string-stage36-annotation-module-to-string.pkl",
+      "input_sha256": "ff202a5e0a1bea86676c1569d11e693a6e7e04c1e985fb181cc1ff7f8d116155",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "object-string-stage36-annotation-this-to-string",
+      "input": "tests/fixtures/m2/object-string-stage36-annotation-this-to-string.pkl",
+      "input_sha256": "e2e1be81a5e6e49ba78e1c99404cb68cb1eec77e0778ad1994c813a0c4ec28ff",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "object-string-stage36-utf16-rendered-value-identity",
+      "input": "tests/fixtures/m2/object-string-stage36-utf16-rendered-value-identity.pkl",
+      "input_sha256": "c958efe70a4547e1d9258c49909806baae679fdefda09865520f7a8a99e3229f",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "object-string-stage36-numeric-values",
+      "input": "tests/fixtures/m2/object-string-stage36-numeric-values.pkl",
+      "input_sha256": "0868ac2957f7e5f7d27df71a1f4e23baf30a5309d0a01bf7a4df45c62e08a5d1",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "object-string-stage36-owner-hidden-base-error",
+      "input": "tests/fixtures/m2/object-string-stage36-owner-hidden-base-error.pkl",
+      "input_sha256": "5e3c6692e70a6ac5719c105cdf5538b04a1e0408267c9515263ae6270d976ed6",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "object-string-stage36-owner-hidden-child-error-base-error",
+      "input": "tests/fixtures/m2/object-string-stage36-owner-hidden-child-error-base-error.pkl",
+      "input_sha256": "a2c59d66114af2a4a321501e0c478707c9c00a9105b66e9456a5e2bb2bf9272c",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "object-string-stage36-review-direct-to-string-explicit-int-return",
+      "input": "tests/fixtures/m2/object-string-stage36-review-direct-to-string-explicit-int-return.pkl",
+      "input_sha256": "d17aaab6f3c1afafd47ea01f0dd227c98113de515c16f18b05f4aad7220bec0f",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "object-string-stage36-review-direct-to-string-int-return",
+      "input": "tests/fixtures/m2/object-string-stage36-review-direct-to-string-int-return.pkl",
+      "input_sha256": "50774d99d93100d839c2c37eec4ba29a2c2577b6c8eca0085531e43c736f48d8",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "object-string-stage36-review-dynamic-hidden-default-control",
+      "input": "tests/fixtures/m2/object-string-stage36-review-dynamic-hidden-default-control.pkl",
+      "input_sha256": "c79c3ed683f255452fae1a560fde04a1551b29603133b18076b110f8000dfc94",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "object-string-stage36-review-inherited-equal-object-keys",
+      "input": "tests/fixtures/m2/object-string-stage36-review-inherited-equal-object-keys.pkl",
+      "input_sha256": "f0c34c46138da8961bb2c456a69998bd4c6a07d115e26a458b49564abcf06ef5",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "object-string-stage36-review-inherited-equal-object-keys-cached-control",
+      "input": "tests/fixtures/m2/object-string-stage36-review-inherited-equal-object-keys-cached-control.pkl",
+      "input_sha256": "22bccd51a9871bf9d4dd0195868b82fb4bda28a394e3c8b4a81bcd55a05820ca",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "object-string-stage36-review-inherited-unequal-colliding-object-keys",
+      "input": "tests/fixtures/m2/object-string-stage36-review-inherited-unequal-colliding-object-keys.pkl",
+      "input_sha256": "0ce0ad407c1804e44b7f6d31b71c0998c10a98138b115fe67abd3c13ab14b365",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "object-string-stage36-review-interpolation-user-to-string-override",
+      "input": "tests/fixtures/m2/object-string-stage36-review-interpolation-user-to-string-override.pkl",
+      "input_sha256": "28b52b8d1f4828b91fd5fc24022d33dac5fc0caaa4e24b62577a0b4d55cc0679",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "object-string-stage36-review-listing-hidden-default-control",
+      "input": "tests/fixtures/m2/object-string-stage36-review-listing-hidden-default-control.pkl",
+      "input_sha256": "3b36eda9218f36e52e7e1d77f26d8abf68c6a74081183b3ee5aeedf223e42d90",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "object-string-stage36-review-mapping-hidden-default",
+      "input": "tests/fixtures/m2/object-string-stage36-review-mapping-hidden-default.pkl",
+      "input_sha256": "2566c101e449c9484e5efd471ca9cdaaec3ae9380562fa6a5c4e945a03c06c38",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "object-string-stage36-review-string-entry-hash-collision",
+      "input": "tests/fixtures/m2/object-string-stage36-review-string-entry-hash-collision.pkl",
+      "input_sha256": "85674c14de777df824480a5225644758287e44d55853eed993e9099bcf327b7b",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "object-string-stage36-review-modifier-import-bit",
+      "input": "tests/fixtures/m2/object-string-stage36-review-modifier-import-bit.pkl",
+      "input_sha256": "d86913c8bb16538dbe2e4f18797b2918bf25dcd85bdbbf1271ee24db2f5e78fa",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "object-string-stage36-review-modifier-class-bit",
+      "input": "tests/fixtures/m2/object-string-stage36-review-modifier-class-bit.pkl",
+      "input_sha256": "cb23613abf4364c37f783ac42a7fb82a48cb2526b09930aa09e58b1202c3bfb2",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "adapter": "language-api-string",
+      "execution": {
+        "reason": null,
+        "state": "ready"
+      },
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "object-string-stage36-review-modifier-type-alias-bit",
+      "input": "tests/fixtures/m2/object-string-stage36-review-modifier-type-alias-bit.pkl",
+      "input_sha256": "1bd7ac153878a082d313a3f454cc17de6eb21246b6623ec73a02f03f3cc447ab",
+      "required": true,
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
       "adapter": null,
       "execution": {
         "reason": "Full upstream snippet/output contract adapter and Rust renderer are unimplemented.",
@@ -158821,9 +160398,9 @@
   "comparison_boundary": "evaluateExpressionString(ModuleSource.path(same absolute URI), expression) UTF-8 stdout; whole PklException.getMessage() UTF-8 stderr and exit 1; no trimming. Power assertions default to disabled; an explicit per-case power_assertions boolean enables the same option in both probes. Stringification alone is not typed value/API compatibility.",
   "completion": "Every required semantic/source requirement needs implementation/test mappings and complete passing execution. Pending/unmapped/unimplemented/mismatch remains a full-gate failure.",
   "counts": {
-    "cases": 4306,
+    "cases": 4389,
     "cases_by_execution": {
-      "ready": 3306,
+      "ready": 3389,
       "unimplemented": 960,
       "unmapped": 40
     },
@@ -161041,32 +162618,32 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "8e1107bb36e34f1e4897f9f61bfa613bee2561a8dc696100059c3f401f01e28e",
+            "sha256": "d2c01f389ab753c66d82bc396eca6afd77699aa090f7591d204fd6898819b537",
             "symbol": "initialize_member_types"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "8e1107bb36e34f1e4897f9f61bfa613bee2561a8dc696100059c3f401f01e28e",
+            "sha256": "d2c01f389ab753c66d82bc396eca6afd77699aa090f7591d204fd6898819b537",
             "symbol": "validate_class_override"
           },
           {
             "path": "crates/pkl-runtime/src/vm/reference.rs",
-            "sha256": "ae16044cf10fec1df6ab2a37db4a7ac0f11286c1e75e3b0d26010ab72639ddd2",
+            "sha256": "3c44a82b453b930c0eee7064e131da356f6d3fdda895c1b9166035a23042f960",
             "symbol": "reference_candidate"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "8e1107bb36e34f1e4897f9f61bfa613bee2561a8dc696100059c3f401f01e28e",
+            "sha256": "d2c01f389ab753c66d82bc396eca6afd77699aa090f7591d204fd6898819b537",
             "symbol": "force_key"
           },
           {
             "path": "crates/pkl-runtime/src/heap.rs",
-            "sha256": "e9aea292eb23848bc3738cec48a03c52c731fe61e110211435a8f6cf2529f605",
+            "sha256": "708a0bd29aec376916b1434edf8308c7ec84cbcfc69370a844068c1f6c056d39",
             "symbol": "ExecutableState"
           },
           {
             "path": "crates/pkl-runtime/src/vm/typecheck.rs",
-            "sha256": "c99a208a0f8265976d4ee390156cbe3e033d8a9f28ef65de11e6957f8ff2e617",
+            "sha256": "0f17a8ef1c171de5bc9fc7d8af611168eeacb15626514a517a9ad5c41889ac2d",
             "symbol": "begin_type_node"
           },
           {
@@ -161088,6 +162665,21 @@
             "path": "crates/pkl-runtime/src/vm/generics.rs",
             "sha256": "5449406e74efb5c11325c2e7a2bc1b9c64ae9fc9c1ef87fa9c9e76e660b67647",
             "symbol": "validate_reference_arguments"
+          },
+          {
+            "path": "crates/pkl-runtime/src/vm/forcing.rs",
+            "sha256": "49f0ddc1fb6be7205e288a0bdfc8897507677daddf96aae95b1cea3b230f868e",
+            "symbol": "ForceRun"
+          },
+          {
+            "path": "crates/pkl-runtime/src/vm/forcing.rs",
+            "sha256": "49f0ddc1fb6be7205e288a0bdfc8897507677daddf96aae95b1cea3b230f868e",
+            "symbol": "step_deep_force"
+          },
+          {
+            "path": "crates/pkl-runtime/src/diagnostic_values.rs",
+            "sha256": "390943c09715e6ff48aa416ad44653558afa26e610a9be6518e07fccbbbc12e5",
+            "symbol": "RenderRun"
           }
         ],
         "state": "partial"
@@ -161099,9 +162691,12 @@
         "remaining": [
           "Complete lazy error ordering, successful memoization, retry semantics, cycles and failure-path diagnostics require the original inventory and broader differential execution.",
           "Selected non-generic and finite generic const-read retries, shared generic let roots and let/for lexical barriers are covered; complete lexical-scope, general lazy generic resolution and runtime type-node identity still retain gaps.",
-          "Nullable collection defaults, some missing/literal/default-root diagnostics, general inferred generic new construction and complete Reference argument diagnostic frames retain exploratory gaps; these are not counted as passing selected cases."
+          "Nullable collection defaults, some missing/literal/default-root diagnostics, general inferred generic new construction and complete Reference argument diagnostic frames retain exploratory gaps; these are not counted as passing selected cases.",
+          "Full module, amendment, inheritance and object API semantics and the original upstream suite remain incomplete.",
+          "Cyclic rendering oracle failures, identity-dependent keys, complete diagnostic-time forcing/Host suspension and finite truncation side effects remain unresolved or unverified.",
+          "The new persistent originals use trace; complete trace logging and its original sequence contract remain required."
         ],
-        "scope": "Selected probes preserve unforced fixed initializers, class type-before-modifier errors, fixed override checks before body forcing, and fixed Reference metadata without evaluating referent bodies. Stage 16: Selected lazy member calls isolate receiver slots and alias const checks remain deferred until a lexical read executes. Stage 17: Evaluator-owned executable and type-use nodes preserve selected non-generic local const-property resolution across retries, distinct inline/lambda uses, shared let roots, recursive depth, inherited annotations, and lazy collection members; per-call receiver slots remain separate. Stage 18 adds finite recursive generic checks with lexical constraint-template substitutions, including changing actual arguments, parameter shadowing, root-parameter alias chains and inline/lambda argument captures. Generic local-writing let constraints retain their declaration call target and its unbound parameter interpretation; selected retry sharing is recorded separately from complete type-node identity. Stage 18 adds selected let-body and for-generator lexical const-depth boundaries while retaining enclosing const levels, plus their complete raw diagnostics and lambda controls. Selected generic collection-element amendments derive defaults after actual type substitution, retaining existing class objects, lazy bodies, nested collection shapes and first failure/retry behavior. Deferred Reference referent validation runs at the reached authored resolution site before the checked value; original diagnostic gaps remain separately recorded. Stage 19 adds bounded shared-metadata regressions for finite deep and branching actual arguments, observable class-argument swaps, inline/lambda/shared-let recursion, recursive Reference validation, and distinct wrapper actuals. Original Java stack errors, historical native abort evidence, full language semantics and performance remain separately accounted. Stage20 adds bounded nullable defaults, inferred collection amendments, null identity and repeated default failures; complete nullable and collection semantics remain unverified. Stage21 adds bounded direct symbolic constructors, actual-argument diagnostics, lazy class defaults, collection body controls and persistent retries; complete constructors, lexical roots and builtin coverage remain unverified. Stage22 adds bounded strict Map construction, boxed/hash-prefix key semantics, lazy nested generic values, insertion-order iteration and HAMT-ordered equality/hash forcing; complete Map APIs and language coverage remain unverified. Five late Stage22 scalar witnesses retain the observed Paguro HashCollisionNode find/assoc asymmetry after Listing cache warm-up, including distinct table entries and insertion-order length. Stage23 adds bounded strict Set construction, immediate element hashing and deduplication, boxed/cache-sensitive membership, Set defaults and generic aliases, eager nested element checks, structural equality/hash, insertion-order generation/spreading and raw null/default diagnostic controls; complete Set APIs and language coverage remain unverified. Stage 32 adds bounded forbidden non-local object property type-annotation diagnostic ownership, nested declaration paths, earlier-error controls and valid module/class/object-local annotations; complete frontend diagnostics remain separately unverified. Stage 33 adds bounded const-modifier ownership before property-scope entry, method inferred-new versus lambda first-error selection, explicit-parent and earlier-error controls, and successful Dynamic/untyped method and unused-body controls. Non-Dynamic typed method return inference remains outside this repair.",
+        "scope": "Selected probes preserve unforced fixed initializers, class type-before-modifier errors, fixed override checks before body forcing, and fixed Reference metadata without evaluating referent bodies. Stage 16: Selected lazy member calls isolate receiver slots and alias const checks remain deferred until a lexical read executes. Stage 17: Evaluator-owned executable and type-use nodes preserve selected non-generic local const-property resolution across retries, distinct inline/lambda uses, shared let roots, recursive depth, inherited annotations, and lazy collection members; per-call receiver slots remain separate. Stage 18 adds finite recursive generic checks with lexical constraint-template substitutions, including changing actual arguments, parameter shadowing, root-parameter alias chains and inline/lambda argument captures. Generic local-writing let constraints retain their declaration call target and its unbound parameter interpretation; selected retry sharing is recorded separately from complete type-node identity. Stage 18 adds selected let-body and for-generator lexical const-depth boundaries while retaining enclosing const levels, plus their complete raw diagnostics and lambda controls. Selected generic collection-element amendments derive defaults after actual type substitution, retaining existing class objects, lazy bodies, nested collection shapes and first failure/retry behavior. Deferred Reference referent validation runs at the reached authored resolution site before the checked value; original diagnostic gaps remain separately recorded. Stage 19 adds bounded shared-metadata regressions for finite deep and branching actual arguments, observable class-argument swaps, inline/lambda/shared-let recursion, recursive Reference validation, and distinct wrapper actuals. Original Java stack errors, historical native abort evidence, full language semantics and performance remain separately accounted. Stage20 adds bounded nullable defaults, inferred collection amendments, null identity and repeated default failures; complete nullable and collection semantics remain unverified. Stage21 adds bounded direct symbolic constructors, actual-argument diagnostics, lazy class defaults, collection body controls and persistent retries; complete constructors, lexical roots and builtin coverage remain unverified. Stage22 adds bounded strict Map construction, boxed/hash-prefix key semantics, lazy nested generic values, insertion-order iteration and HAMT-ordered equality/hash forcing; complete Map APIs and language coverage remain unverified. Five late Stage22 scalar witnesses retain the observed Paguro HashCollisionNode find/assoc asymmetry after Listing cache warm-up, including distinct table entries and insertion-order length. Stage23 adds bounded strict Set construction, immediate element hashing and deduplication, boxed/cache-sensitive membership, Set defaults and generic aliases, eager nested element checks, structural equality/hash, insertion-order generation/spreading and raw null/default diagnostic controls; complete Set APIs and language coverage remain unverified. Stage 32 adds bounded forbidden non-local object property type-annotation diagnostic ownership, nested declaration paths, earlier-error controls and valid module/class/object-local annotations; complete frontend diagnostics remain separately unverified. Stage 33 adds bounded const-modifier ownership before property-scope entry, method inferred-new versus lambda first-error selection, explicit-parent and earlier-error controls, and successful Dynamic/untyped method and unused-body controls. Non-Dynamic typed method return inference remains outside this repair. Stage 36 adds resumable object deep forcing and object.toString rendering with persistent force marks, owner-specific hidden declarations, inherited member order, undefined-member handling, and renderer key hashing/equality. Selected scalar comparisons and separate stateful/Host observations retain their own raw contracts. Additional source-derived controls cover user-defined toString interpolation, hidden builtin defaults and inherited equal/colliding object keys. Modifier-addition controls distinguish Java IMPORT, CLASS and TYPE_ALIAS bits when filtering rendered declarations.",
         "source": "compatibility/m2-mappings.json"
       },
       "tests": {
@@ -162452,6 +164047,89 @@
           "annotation-stage35-builtin-custom-annotation-hierarchy",
           "annotation-stage35-builtin-source-code-null-defaults",
           "annotation-stage35-builtin-source-code-union-direct",
+          "object-string-stage36-dynamic-amend-force-child-first",
+          "object-string-stage36-dynamic-amend-render-order",
+          "object-string-stage36-dynamic-elements",
+          "object-string-stage36-dynamic-empty",
+          "object-string-stage36-dynamic-entry",
+          "object-string-stage36-dynamic-mixed-order",
+          "object-string-stage36-dynamic-nested-property",
+          "object-string-stage36-dynamic-scalars",
+          "object-string-stage36-entry-key-object-nonforcing",
+          "object-string-stage36-function-and-class-values",
+          "object-string-stage36-identifier-escaping",
+          "object-string-stage36-inherited-force-child-first",
+          "object-string-stage36-inherited-hidden-override",
+          "object-string-stage36-inherited-override-no-parent-force",
+          "object-string-stage36-inherited-render-order",
+          "object-string-stage36-lazy-first-error",
+          "object-string-stage36-listing-empty",
+          "object-string-stage36-listing-nested",
+          "object-string-stage36-listing-values",
+          "object-string-stage36-mapping-empty",
+          "object-string-stage36-mapping-nested",
+          "object-string-stage36-mapping-values",
+          "object-string-stage36-module-empty",
+          "object-string-stage36-module-force-class-error",
+          "object-string-stage36-module-self-result",
+          "object-string-stage36-module-skip-definitions",
+          "object-string-stage36-module-values",
+          "object-string-stage36-nested-error-before-next",
+          "object-string-stage36-nested-strict-list-forced",
+          "object-string-stage36-nested-strict-map-keys-forced",
+          "object-string-stage36-nested-strict-map-values-forced",
+          "object-string-stage36-strict-list-control-unforced",
+          "object-string-stage36-strict-map-control-unforced",
+          "object-string-stage36-string-escaping",
+          "object-string-stage36-string-utf16",
+          "object-string-stage36-supplement-dynamic-local-method-corrected",
+          "object-string-stage36-supplement-mapping-key-object-snapshot",
+          "object-string-stage36-supplement-mixed-first-error-property-before-element",
+          "object-string-stage36-supplement-mixed-first-error-property-before-entry",
+          "object-string-stage36-supplement-nested-render-context-mixed",
+          "object-string-stage36-supplement-shared-child-finite",
+          "object-string-stage36-supplement-strict-set-forced-in-object",
+          "object-string-stage36-supplement-typed-nested-corrected",
+          "object-string-stage36-supplement-unlimited-single-line",
+          "object-string-stage36-supplement2-dynamic-undefined-required-property",
+          "object-string-stage36-supplement2-listing-undefined-required-property",
+          "object-string-stage36-supplement2-mapping-undefined-required-property",
+          "object-string-stage36-supplement2-nested-undefined-required-property",
+          "object-string-stage36-supplement2-typed-undefined-expression",
+          "object-string-stage36-supplement2-undefined-before-later-error",
+          "object-string-stage36-supplement2-undefined-nested-in-strict-list-corrected",
+          "object-string-stage36-supplement2-undefined-nested-in-strict-map-key-corrected",
+          "object-string-stage36-typed-empty",
+          "object-string-stage36-typed-skip-hidden-local-method",
+          "object-string-stage36-typed-undefined",
+          "object-string-stage36-typed-undefined-middle",
+          "object-string-stage36-typed-values",
+          "object-string-stage36-unknown-name-not-undefined",
+          "object-string-stage36-typed-undefined-parent-fallback",
+          "object-string-stage36-typed-undefined-expression-parent-fallback",
+          "object-string-stage36-dynamic-undefined-parent-fallback",
+          "object-string-stage36-class-to-string-override",
+          "object-string-stage36-local-to-string-method",
+          "object-string-stage36-const-module-to-string",
+          "object-string-stage36-annotation-module-to-string",
+          "object-string-stage36-annotation-this-to-string",
+          "object-string-stage36-utf16-rendered-value-identity",
+          "object-string-stage36-numeric-values",
+          "object-string-stage36-owner-hidden-base-error",
+          "object-string-stage36-owner-hidden-child-error-base-error",
+          "object-string-stage36-review-direct-to-string-explicit-int-return",
+          "object-string-stage36-review-direct-to-string-int-return",
+          "object-string-stage36-review-dynamic-hidden-default-control",
+          "object-string-stage36-review-inherited-equal-object-keys",
+          "object-string-stage36-review-inherited-equal-object-keys-cached-control",
+          "object-string-stage36-review-inherited-unequal-colliding-object-keys",
+          "object-string-stage36-review-interpolation-user-to-string-override",
+          "object-string-stage36-review-listing-hidden-default-control",
+          "object-string-stage36-review-mapping-hidden-default",
+          "object-string-stage36-review-string-entry-hash-collision",
+          "object-string-stage36-review-modifier-import-bit",
+          "object-string-stage36-review-modifier-class-bit",
+          "object-string-stage36-review-modifier-type-alias-bit",
           "types-stage17-inline-is-local",
           "types-stage17-inline-is-const",
           "types-stage17-inline-as-local",
@@ -162522,12 +164200,37 @@
       "description": "Object properties, entries, elements, member predicates, duplicate names and inferred new",
       "id": "semantic:objects",
       "implementation": {
-        "links": [],
+        "links": [
+          {
+            "path": "crates/pkl-runtime/src/vm/forcing.rs",
+            "sha256": "49f0ddc1fb6be7205e288a0bdfc8897507677daddf96aae95b1cea3b230f868e",
+            "symbol": "ForceRun"
+          },
+          {
+            "path": "crates/pkl-runtime/src/vm/forcing.rs",
+            "sha256": "49f0ddc1fb6be7205e288a0bdfc8897507677daddf96aae95b1cea3b230f868e",
+            "symbol": "step_deep_force"
+          },
+          {
+            "path": "crates/pkl-runtime/src/diagnostic_values.rs",
+            "sha256": "390943c09715e6ff48aa416ad44653558afa26e610a9be6518e07fccbbbc12e5",
+            "symbol": "RenderRun"
+          }
+        ],
         "state": "partial"
       },
       "kind": "semantic-family",
-      "reason": "A selected probe does not establish implementation or complete edge-case coverage.",
+      "reason": "Reviewed source/test links; completion still requires the full recorded scope and executions.",
       "required": true,
+      "reviewed_mapping": {
+        "remaining": [
+          "Full module, amendment, inheritance and object API semantics and the original upstream suite remain incomplete.",
+          "Cyclic rendering oracle failures, identity-dependent keys, complete diagnostic-time forcing/Host suspension and finite truncation side effects remain unresolved or unverified.",
+          "The new persistent originals use trace; complete trace logging and its original sequence contract remain required."
+        ],
+        "scope": "Stage 36 adds resumable object deep forcing and object.toString rendering with persistent force marks, owner-specific hidden declarations, inherited member order, undefined-member handling, and renderer key hashing/equality. Selected scalar comparisons and separate stateful/Host observations retain their own raw contracts. Additional source-derived controls cover user-defined toString interpolation, hidden builtin defaults and inherited equal/colliding object keys. Modifier-addition controls distinguish Java IMPORT, CLASS and TYPE_ALIAS bits when filtering rendered declarations.",
+        "source": "compatibility/m2-mappings.json"
+      },
       "tests": {
         "case_ids": [
           "object-member",
@@ -163384,7 +165087,90 @@
           "annotation-stage35-builtin-source-code-prefix-wrong-type",
           "annotation-stage35-builtin-custom-annotation-hierarchy",
           "annotation-stage35-builtin-source-code-null-defaults",
-          "annotation-stage35-builtin-source-code-union-direct"
+          "annotation-stage35-builtin-source-code-union-direct",
+          "object-string-stage36-dynamic-amend-force-child-first",
+          "object-string-stage36-dynamic-amend-render-order",
+          "object-string-stage36-dynamic-elements",
+          "object-string-stage36-dynamic-empty",
+          "object-string-stage36-dynamic-entry",
+          "object-string-stage36-dynamic-mixed-order",
+          "object-string-stage36-dynamic-nested-property",
+          "object-string-stage36-dynamic-scalars",
+          "object-string-stage36-entry-key-object-nonforcing",
+          "object-string-stage36-function-and-class-values",
+          "object-string-stage36-identifier-escaping",
+          "object-string-stage36-inherited-force-child-first",
+          "object-string-stage36-inherited-hidden-override",
+          "object-string-stage36-inherited-override-no-parent-force",
+          "object-string-stage36-inherited-render-order",
+          "object-string-stage36-lazy-first-error",
+          "object-string-stage36-listing-empty",
+          "object-string-stage36-listing-nested",
+          "object-string-stage36-listing-values",
+          "object-string-stage36-mapping-empty",
+          "object-string-stage36-mapping-nested",
+          "object-string-stage36-mapping-values",
+          "object-string-stage36-module-empty",
+          "object-string-stage36-module-force-class-error",
+          "object-string-stage36-module-self-result",
+          "object-string-stage36-module-skip-definitions",
+          "object-string-stage36-module-values",
+          "object-string-stage36-nested-error-before-next",
+          "object-string-stage36-nested-strict-list-forced",
+          "object-string-stage36-nested-strict-map-keys-forced",
+          "object-string-stage36-nested-strict-map-values-forced",
+          "object-string-stage36-strict-list-control-unforced",
+          "object-string-stage36-strict-map-control-unforced",
+          "object-string-stage36-string-escaping",
+          "object-string-stage36-string-utf16",
+          "object-string-stage36-supplement-dynamic-local-method-corrected",
+          "object-string-stage36-supplement-mapping-key-object-snapshot",
+          "object-string-stage36-supplement-mixed-first-error-property-before-element",
+          "object-string-stage36-supplement-mixed-first-error-property-before-entry",
+          "object-string-stage36-supplement-nested-render-context-mixed",
+          "object-string-stage36-supplement-shared-child-finite",
+          "object-string-stage36-supplement-strict-set-forced-in-object",
+          "object-string-stage36-supplement-typed-nested-corrected",
+          "object-string-stage36-supplement-unlimited-single-line",
+          "object-string-stage36-supplement2-dynamic-undefined-required-property",
+          "object-string-stage36-supplement2-listing-undefined-required-property",
+          "object-string-stage36-supplement2-mapping-undefined-required-property",
+          "object-string-stage36-supplement2-nested-undefined-required-property",
+          "object-string-stage36-supplement2-typed-undefined-expression",
+          "object-string-stage36-supplement2-undefined-before-later-error",
+          "object-string-stage36-supplement2-undefined-nested-in-strict-list-corrected",
+          "object-string-stage36-supplement2-undefined-nested-in-strict-map-key-corrected",
+          "object-string-stage36-typed-empty",
+          "object-string-stage36-typed-skip-hidden-local-method",
+          "object-string-stage36-typed-undefined",
+          "object-string-stage36-typed-undefined-middle",
+          "object-string-stage36-typed-values",
+          "object-string-stage36-unknown-name-not-undefined",
+          "object-string-stage36-typed-undefined-parent-fallback",
+          "object-string-stage36-typed-undefined-expression-parent-fallback",
+          "object-string-stage36-dynamic-undefined-parent-fallback",
+          "object-string-stage36-class-to-string-override",
+          "object-string-stage36-local-to-string-method",
+          "object-string-stage36-const-module-to-string",
+          "object-string-stage36-annotation-module-to-string",
+          "object-string-stage36-annotation-this-to-string",
+          "object-string-stage36-utf16-rendered-value-identity",
+          "object-string-stage36-numeric-values",
+          "object-string-stage36-owner-hidden-base-error",
+          "object-string-stage36-owner-hidden-child-error-base-error",
+          "object-string-stage36-review-direct-to-string-explicit-int-return",
+          "object-string-stage36-review-direct-to-string-int-return",
+          "object-string-stage36-review-dynamic-hidden-default-control",
+          "object-string-stage36-review-inherited-equal-object-keys",
+          "object-string-stage36-review-inherited-equal-object-keys-cached-control",
+          "object-string-stage36-review-inherited-unequal-colliding-object-keys",
+          "object-string-stage36-review-interpolation-user-to-string-override",
+          "object-string-stage36-review-listing-hidden-default-control",
+          "object-string-stage36-review-mapping-hidden-default",
+          "object-string-stage36-review-string-entry-hash-collision",
+          "object-string-stage36-review-modifier-import-bit",
+          "object-string-stage36-review-modifier-class-bit",
+          "object-string-stage36-review-modifier-type-alias-bit"
         ],
         "state": "partial"
       }
@@ -163396,12 +165182,12 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "8e1107bb36e34f1e4897f9f61bfa613bee2561a8dc696100059c3f401f01e28e",
+            "sha256": "d2c01f389ab753c66d82bc396eca6afd77699aa090f7591d204fd6898819b537",
             "symbol": "validate_object_override"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "8e1107bb36e34f1e4897f9f61bfa613bee2561a8dc696100059c3f401f01e28e",
+            "sha256": "d2c01f389ab753c66d82bc396eca6afd77699aa090f7591d204fd6898819b537",
             "symbol": "inherited_member"
           }
         ],
@@ -163604,22 +165390,22 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/heap.rs",
-            "sha256": "e9aea292eb23848bc3738cec48a03c52c731fe61e110211435a8f6cf2529f605",
+            "sha256": "708a0bd29aec376916b1434edf8308c7ec84cbcfc69370a844068c1f6c056d39",
             "symbol": "Member"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "8e1107bb36e34f1e4897f9f61bfa613bee2561a8dc696100059c3f401f01e28e",
+            "sha256": "d2c01f389ab753c66d82bc396eca6afd77699aa090f7591d204fd6898819b537",
             "symbol": "validate_class_override"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "8e1107bb36e34f1e4897f9f61bfa613bee2561a8dc696100059c3f401f01e28e",
+            "sha256": "d2c01f389ab753c66d82bc396eca6afd77699aa090f7591d204fd6898819b537",
             "symbol": "validate_object_override"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "8e1107bb36e34f1e4897f9f61bfa613bee2561a8dc696100059c3f401f01e28e",
+            "sha256": "d2c01f389ab753c66d82bc396eca6afd77699aa090f7591d204fd6898819b537",
             "symbol": "initialize_member_types"
           }
         ],
@@ -164008,37 +165794,37 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/heap.rs",
-            "sha256": "e9aea292eb23848bc3738cec48a03c52c731fe61e110211435a8f6cf2529f605",
+            "sha256": "708a0bd29aec376916b1434edf8308c7ec84cbcfc69370a844068c1f6c056d39",
             "symbol": "Member"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "8e1107bb36e34f1e4897f9f61bfa613bee2561a8dc696100059c3f401f01e28e",
+            "sha256": "d2c01f389ab753c66d82bc396eca6afd77699aa090f7591d204fd6898819b537",
             "symbol": "validate_class_override"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "8e1107bb36e34f1e4897f9f61bfa613bee2561a8dc696100059c3f401f01e28e",
+            "sha256": "d2c01f389ab753c66d82bc396eca6afd77699aa090f7591d204fd6898819b537",
             "symbol": "validate_object_override"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "8e1107bb36e34f1e4897f9f61bfa613bee2561a8dc696100059c3f401f01e28e",
+            "sha256": "d2c01f389ab753c66d82bc396eca6afd77699aa090f7591d204fd6898819b537",
             "symbol": "initialize_member_types"
           },
           {
             "path": "crates/pkl-runtime/src/resolver.rs",
-            "sha256": "fa17f80701f99609e4302017bbe0caec69991a1ef6ca2c8d29188ba4dcdc6cbe",
+            "sha256": "c8863f76439d30ae5c243257ea2780f31fc0fa09b2723b60d009bf987bf55243",
             "symbol": "validate_modifiers"
           },
           {
             "path": "crates/pkl-runtime/src/resolver.rs",
-            "sha256": "fa17f80701f99609e4302017bbe0caec69991a1ef6ca2c8d29188ba4dcdc6cbe",
+            "sha256": "c8863f76439d30ae5c243257ea2780f31fc0fa09b2723b60d009bf987bf55243",
             "symbol": "ConstLevel"
           },
           {
             "path": "crates/pkl-runtime/src/resolver.rs",
-            "sha256": "fa17f80701f99609e4302017bbe0caec69991a1ef6ca2c8d29188ba4dcdc6cbe",
+            "sha256": "c8863f76439d30ae5c243257ea2780f31fc0fa09b2723b60d009bf987bf55243",
             "symbol": "ConstScope"
           },
           {
@@ -164354,32 +166140,32 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "8e1107bb36e34f1e4897f9f61bfa613bee2561a8dc696100059c3f401f01e28e",
+            "sha256": "d2c01f389ab753c66d82bc396eca6afd77699aa090f7591d204fd6898819b537",
             "symbol": "TypeCheck"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "8e1107bb36e34f1e4897f9f61bfa613bee2561a8dc696100059c3f401f01e28e",
+            "sha256": "d2c01f389ab753c66d82bc396eca6afd77699aa090f7591d204fd6898819b537",
             "symbol": "compile_type_at"
           },
           {
             "path": "crates/pkl-runtime/src/vm/reference.rs",
-            "sha256": "ae16044cf10fec1df6ab2a37db4a7ac0f11286c1e75e3b0d26010ab72639ddd2",
+            "sha256": "3c44a82b453b930c0eee7064e131da356f6d3fdda895c1b9166035a23042f960",
             "symbol": "subtype"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "8e1107bb36e34f1e4897f9f61bfa613bee2561a8dc696100059c3f401f01e28e",
+            "sha256": "d2c01f389ab753c66d82bc396eca6afd77699aa090f7591d204fd6898819b537",
             "symbol": "invoke_function"
           },
           {
             "path": "crates/pkl-runtime/src/heap.rs",
-            "sha256": "e9aea292eb23848bc3738cec48a03c52c731fe61e110211435a8f6cf2529f605",
+            "sha256": "708a0bd29aec376916b1434edf8308c7ec84cbcfc69370a844068c1f6c056d39",
             "symbol": "Function"
           },
           {
             "path": "crates/pkl-runtime/src/resolver.rs",
-            "sha256": "fa17f80701f99609e4302017bbe0caec69991a1ef6ca2c8d29188ba4dcdc6cbe",
+            "sha256": "c8863f76439d30ae5c243257ea2780f31fc0fa09b2723b60d009bf987bf55243",
             "symbol": "ConstScope"
           },
           {
@@ -166803,42 +168589,42 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "8e1107bb36e34f1e4897f9f61bfa613bee2561a8dc696100059c3f401f01e28e",
+            "sha256": "d2c01f389ab753c66d82bc396eca6afd77699aa090f7591d204fd6898819b537",
             "symbol": "TypeCheck"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "8e1107bb36e34f1e4897f9f61bfa613bee2561a8dc696100059c3f401f01e28e",
+            "sha256": "d2c01f389ab753c66d82bc396eca6afd77699aa090f7591d204fd6898819b537",
             "symbol": "initialize_type_resolution"
           },
           {
             "path": "crates/pkl-runtime/src/vm/typecheck.rs",
-            "sha256": "c99a208a0f8265976d4ee390156cbe3e033d8a9f28ef65de11e6957f8ff2e617",
+            "sha256": "0f17a8ef1c171de5bc9fc7d8af611168eeacb15626514a517a9ad5c41889ac2d",
             "symbol": "step_type"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "8e1107bb36e34f1e4897f9f61bfa613bee2561a8dc696100059c3f401f01e28e",
+            "sha256": "d2c01f389ab753c66d82bc396eca6afd77699aa090f7591d204fd6898819b537",
             "symbol": "type_resolution_plan"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "8e1107bb36e34f1e4897f9f61bfa613bee2561a8dc696100059c3f401f01e28e",
+            "sha256": "d2c01f389ab753c66d82bc396eca6afd77699aa090f7591d204fd6898819b537",
             "symbol": "active_constraints"
           },
           {
             "path": "crates/pkl-runtime/src/heap.rs",
-            "sha256": "e9aea292eb23848bc3738cec48a03c52c731fe61e110211435a8f6cf2529f605",
+            "sha256": "708a0bd29aec376916b1434edf8308c7ec84cbcfc69370a844068c1f6c056d39",
             "symbol": "CustomThisSlot"
           },
           {
             "path": "crates/pkl-runtime/src/heap.rs",
-            "sha256": "e9aea292eb23848bc3738cec48a03c52c731fe61e110211435a8f6cf2529f605",
+            "sha256": "708a0bd29aec376916b1434edf8308c7ec84cbcfc69370a844068c1f6c056d39",
             "symbol": "ExecutableState"
           },
           {
             "path": "crates/pkl-runtime/src/vm/typecheck.rs",
-            "sha256": "c99a208a0f8265976d4ee390156cbe3e033d8a9f28ef65de11e6957f8ff2e617",
+            "sha256": "0f17a8ef1c171de5bc9fc7d8af611168eeacb15626514a517a9ad5c41889ac2d",
             "symbol": "begin_type_node"
           },
           {
@@ -168559,52 +170345,52 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "8e1107bb36e34f1e4897f9f61bfa613bee2561a8dc696100059c3f401f01e28e",
+            "sha256": "d2c01f389ab753c66d82bc396eca6afd77699aa090f7591d204fd6898819b537",
             "symbol": "BeginTypeAlias"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "8e1107bb36e34f1e4897f9f61bfa613bee2561a8dc696100059c3f401f01e28e",
+            "sha256": "d2c01f389ab753c66d82bc396eca6afd77699aa090f7591d204fd6898819b537",
             "symbol": "NamedAlias"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "8e1107bb36e34f1e4897f9f61bfa613bee2561a8dc696100059c3f401f01e28e",
+            "sha256": "d2c01f389ab753c66d82bc396eca6afd77699aa090f7591d204fd6898819b537",
             "symbol": "compile_type_at"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "8e1107bb36e34f1e4897f9f61bfa613bee2561a8dc696100059c3f401f01e28e",
+            "sha256": "d2c01f389ab753c66d82bc396eca6afd77699aa090f7591d204fd6898819b537",
             "symbol": "type_resolution_plan"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "8e1107bb36e34f1e4897f9f61bfa613bee2561a8dc696100059c3f401f01e28e",
+            "sha256": "d2c01f389ab753c66d82bc396eca6afd77699aa090f7591d204fd6898819b537",
             "symbol": "initialize_type_resolution"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "8e1107bb36e34f1e4897f9f61bfa613bee2561a8dc696100059c3f401f01e28e",
+            "sha256": "d2c01f389ab753c66d82bc396eca6afd77699aa090f7591d204fd6898819b537",
             "symbol": "active_constraints"
           },
           {
             "path": "crates/pkl-runtime/src/vm/typecheck.rs",
-            "sha256": "c99a208a0f8265976d4ee390156cbe3e033d8a9f28ef65de11e6957f8ff2e617",
+            "sha256": "0f17a8ef1c171de5bc9fc7d8af611168eeacb15626514a517a9ad5c41889ac2d",
             "symbol": "step_type"
           },
           {
             "path": "crates/pkl-runtime/src/heap.rs",
-            "sha256": "e9aea292eb23848bc3738cec48a03c52c731fe61e110211435a8f6cf2529f605",
+            "sha256": "708a0bd29aec376916b1434edf8308c7ec84cbcfc69370a844068c1f6c056d39",
             "symbol": "CustomThisSlot"
           },
           {
             "path": "crates/pkl-runtime/src/heap.rs",
-            "sha256": "e9aea292eb23848bc3738cec48a03c52c731fe61e110211435a8f6cf2529f605",
+            "sha256": "708a0bd29aec376916b1434edf8308c7ec84cbcfc69370a844068c1f6c056d39",
             "symbol": "ExecutableState"
           },
           {
             "path": "crates/pkl-runtime/src/vm/typecheck.rs",
-            "sha256": "c99a208a0f8265976d4ee390156cbe3e033d8a9f28ef65de11e6957f8ff2e617",
+            "sha256": "0f17a8ef1c171de5bc9fc7d8af611168eeacb15626514a517a9ad5c41889ac2d",
             "symbol": "begin_type_node"
           },
           {
@@ -169337,32 +171123,32 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/heap.rs",
-            "sha256": "e9aea292eb23848bc3738cec48a03c52c731fe61e110211435a8f6cf2529f605",
+            "sha256": "708a0bd29aec376916b1434edf8308c7ec84cbcfc69370a844068c1f6c056d39",
             "symbol": "CustomThisSlot"
           },
           {
             "path": "crates/pkl-runtime/src/vm/typecheck.rs",
-            "sha256": "c99a208a0f8265976d4ee390156cbe3e033d8a9f28ef65de11e6957f8ff2e617",
+            "sha256": "0f17a8ef1c171de5bc9fc7d8af611168eeacb15626514a517a9ad5c41889ac2d",
             "symbol": "step_type"
           },
           {
             "path": "crates/pkl-runtime/src/vm/typecheck.rs",
-            "sha256": "c99a208a0f8265976d4ee390156cbe3e033d8a9f28ef65de11e6957f8ff2e617",
+            "sha256": "0f17a8ef1c171de5bc9fc7d8af611168eeacb15626514a517a9ad5c41889ac2d",
             "symbol": "launch_constraint"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "8e1107bb36e34f1e4897f9f61bfa613bee2561a8dc696100059c3f401f01e28e",
+            "sha256": "d2c01f389ab753c66d82bc396eca6afd77699aa090f7591d204fd6898819b537",
             "symbol": "invoke_function"
           },
           {
             "path": "crates/pkl-runtime/src/heap.rs",
-            "sha256": "e9aea292eb23848bc3738cec48a03c52c731fe61e110211435a8f6cf2529f605",
+            "sha256": "708a0bd29aec376916b1434edf8308c7ec84cbcfc69370a844068c1f6c056d39",
             "symbol": "ExecutableState"
           },
           {
             "path": "crates/pkl-runtime/src/vm/typecheck.rs",
-            "sha256": "c99a208a0f8265976d4ee390156cbe3e033d8a9f28ef65de11e6957f8ff2e617",
+            "sha256": "0f17a8ef1c171de5bc9fc7d8af611168eeacb15626514a517a9ad5c41889ac2d",
             "symbol": "begin_type_node"
           },
           {
@@ -170072,27 +171858,27 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "8e1107bb36e34f1e4897f9f61bfa613bee2561a8dc696100059c3f401f01e28e",
+            "sha256": "d2c01f389ab753c66d82bc396eca6afd77699aa090f7591d204fd6898819b537",
             "symbol": "NamedAlias"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "8e1107bb36e34f1e4897f9f61bfa613bee2561a8dc696100059c3f401f01e28e",
+            "sha256": "d2c01f389ab753c66d82bc396eca6afd77699aa090f7591d204fd6898819b537",
             "symbol": "compile_type_at"
           },
           {
             "path": "crates/pkl-runtime/src/vm/typecheck.rs",
-            "sha256": "c99a208a0f8265976d4ee390156cbe3e033d8a9f28ef65de11e6957f8ff2e617",
+            "sha256": "0f17a8ef1c171de5bc9fc7d8af611168eeacb15626514a517a9ad5c41889ac2d",
             "symbol": "step_type"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "8e1107bb36e34f1e4897f9f61bfa613bee2561a8dc696100059c3f401f01e28e",
+            "sha256": "d2c01f389ab753c66d82bc396eca6afd77699aa090f7591d204fd6898819b537",
             "symbol": "type_resolution_plan"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "8e1107bb36e34f1e4897f9f61bfa613bee2561a8dc696100059c3f401f01e28e",
+            "sha256": "d2c01f389ab753c66d82bc396eca6afd77699aa090f7591d204fd6898819b537",
             "symbol": "initialize_type_resolution"
           },
           {
@@ -171186,22 +172972,22 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/vm/reference.rs",
-            "sha256": "ae16044cf10fec1df6ab2a37db4a7ac0f11286c1e75e3b0d26010ab72639ddd2",
+            "sha256": "3c44a82b453b930c0eee7064e131da356f6d3fdda895c1b9166035a23042f960",
             "symbol": "Reference"
           },
           {
             "path": "crates/pkl-runtime/src/vm/reference.rs",
-            "sha256": "ae16044cf10fec1df6ab2a37db4a7ac0f11286c1e75e3b0d26010ab72639ddd2",
+            "sha256": "3c44a82b453b930c0eee7064e131da356f6d3fdda895c1b9166035a23042f960",
             "symbol": "reference_access"
           },
           {
             "path": "crates/pkl-runtime/src/vm/reference.rs",
-            "sha256": "ae16044cf10fec1df6ab2a37db4a7ac0f11286c1e75e3b0d26010ab72639ddd2",
+            "sha256": "3c44a82b453b930c0eee7064e131da356f6d3fdda895c1b9166035a23042f960",
             "symbol": "invoke_reference_native"
           },
           {
             "path": "crates/pkl-runtime/src/vm/typecheck.rs",
-            "sha256": "c99a208a0f8265976d4ee390156cbe3e033d8a9f28ef65de11e6957f8ff2e617",
+            "sha256": "0f17a8ef1c171de5bc9fc7d8af611168eeacb15626514a517a9ad5c41889ac2d",
             "symbol": "step_type"
           },
           {
@@ -171451,22 +173237,22 @@
           },
           {
             "path": "crates/pkl-runtime/src/resolver.rs",
-            "sha256": "fa17f80701f99609e4302017bbe0caec69991a1ef6ca2c8d29188ba4dcdc6cbe",
+            "sha256": "c8863f76439d30ae5c243257ea2780f31fc0fa09b2723b60d009bf987bf55243",
             "symbol": "Annotations"
           },
           {
             "path": "crates/pkl-runtime/src/vm/annotations.rs",
-            "sha256": "05f9527ab2346e2ed23fd7ec190e131676f9e9dbaad8d63ad995ee4484d2d306",
+            "sha256": "50cdd8ea8a20d9649a156266555a5cfa7e3d0ac72be4e9fed5fa5f23e79e28a7",
             "symbol": "append_annotation"
           },
           {
             "path": "crates/pkl-runtime/src/vm/annotations.rs",
-            "sha256": "05f9527ab2346e2ed23fd7ec190e131676f9e9dbaad8d63ad995ee4484d2d306",
+            "sha256": "50cdd8ea8a20d9649a156266555a5cfa7e3d0ac72be4e9fed5fa5f23e79e28a7",
             "symbol": "member_annotations"
           },
           {
             "path": "crates/pkl-runtime/src/heap.rs",
-            "sha256": "e9aea292eb23848bc3738cec48a03c52c731fe61e110211435a8f6cf2529f605",
+            "sha256": "708a0bd29aec376916b1434edf8308c7ec84cbcfc69370a844068c1f6c056d39",
             "symbol": "Object"
           }
         ],
@@ -171602,27 +173388,27 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/heap.rs",
-            "sha256": "e9aea292eb23848bc3738cec48a03c52c731fe61e110211435a8f6cf2529f605",
+            "sha256": "708a0bd29aec376916b1434edf8308c7ec84cbcfc69370a844068c1f6c056d39",
             "symbol": "Member"
           },
           {
             "path": "crates/pkl-runtime/src/heap.rs",
-            "sha256": "e9aea292eb23848bc3738cec48a03c52c731fe61e110211435a8f6cf2529f605",
+            "sha256": "708a0bd29aec376916b1434edf8308c7ec84cbcfc69370a844068c1f6c056d39",
             "symbol": "Object"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "8e1107bb36e34f1e4897f9f61bfa613bee2561a8dc696100059c3f401f01e28e",
+            "sha256": "d2c01f389ab753c66d82bc396eca6afd77699aa090f7591d204fd6898819b537",
             "symbol": "initialize_member_types"
           },
           {
             "path": "crates/pkl-runtime/src/vm/reference.rs",
-            "sha256": "ae16044cf10fec1df6ab2a37db4a7ac0f11286c1e75e3b0d26010ab72639ddd2",
+            "sha256": "3c44a82b453b930c0eee7064e131da356f6d3fdda895c1b9166035a23042f960",
             "symbol": "reference_candidate"
           },
           {
             "path": "crates/pkl-runtime/src/vm/typecheck.rs",
-            "sha256": "c99a208a0f8265976d4ee390156cbe3e033d8a9f28ef65de11e6957f8ff2e617",
+            "sha256": "0f17a8ef1c171de5bc9fc7d8af611168eeacb15626514a517a9ad5c41889ac2d",
             "symbol": "step_type"
           },
           {
@@ -171811,12 +173597,12 @@
           },
           {
             "path": "crates/pkl-runtime/src/resolver.rs",
-            "sha256": "fa17f80701f99609e4302017bbe0caec69991a1ef6ca2c8d29188ba4dcdc6cbe",
+            "sha256": "c8863f76439d30ae5c243257ea2780f31fc0fa09b2723b60d009bf987bf55243",
             "symbol": "visit"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "8e1107bb36e34f1e4897f9f61bfa613bee2561a8dc696100059c3f401f01e28e",
+            "sha256": "d2c01f389ab753c66d82bc396eca6afd77699aa090f7591d204fd6898819b537",
             "symbol": "compile_type_at"
           }
         ],
@@ -171856,7 +173642,7 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/value.rs",
-            "sha256": "1989d618346dc3c3de36bd95490740efc379cd8cf51dd19c9e1e7eb159f06511",
+            "sha256": "49f8e3e0e0a7b25bf02ec0afca2c9d65ae8b2906de2f020d16b98710a1fe5da6",
             "symbol": "RuntimeSource"
           },
           {
@@ -171866,7 +173652,7 @@
           },
           {
             "path": "crates/pkl-runtime/src/diagnostic_values.rs",
-            "sha256": "faafd48a4114b776b7e2dadd7d0ff7366d3d2bdb1f6f824eec5dd55aaaef8a24",
+            "sha256": "390943c09715e6ff48aa416ad44653558afa26e610a9be6518e07fccbbbc12e5",
             "symbol": "Renderer"
           },
           {
@@ -171881,7 +173667,7 @@
           },
           {
             "path": "crates/pkl-runtime/src/resolver.rs",
-            "sha256": "fa17f80701f99609e4302017bbe0caec69991a1ef6ca2c8d29188ba4dcdc6cbe",
+            "sha256": "c8863f76439d30ae5c243257ea2780f31fc0fa09b2723b60d009bf987bf55243",
             "symbol": "ConstScope"
           },
           {
@@ -171896,18 +173682,33 @@
           },
           {
             "path": "crates/pkl-runtime/src/value.rs",
-            "sha256": "1989d618346dc3c3de36bd95490740efc379cd8cf51dd19c9e1e7eb159f06511",
+            "sha256": "49f8e3e0e0a7b25bf02ec0afca2c9d65ae8b2906de2f020d16b98710a1fe5da6",
             "symbol": "RuntimeFrame"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "8e1107bb36e34f1e4897f9f61bfa613bee2561a8dc696100059c3f401f01e28e",
+            "sha256": "d2c01f389ab753c66d82bc396eca6afd77699aa090f7591d204fd6898819b537",
             "symbol": "executable_value_span"
           },
           {
             "path": "crates/pkl-runtime/src/resolver/diagnostic_owner.rs",
             "sha256": "ba660e1df479e041d5b9f543577c7e91cac3f1eec38dc534a49758d037abb03d",
             "symbol": "OwnerScopes"
+          },
+          {
+            "path": "crates/pkl-runtime/src/vm/forcing.rs",
+            "sha256": "49f0ddc1fb6be7205e288a0bdfc8897507677daddf96aae95b1cea3b230f868e",
+            "symbol": "ForceRun"
+          },
+          {
+            "path": "crates/pkl-runtime/src/vm/forcing.rs",
+            "sha256": "49f0ddc1fb6be7205e288a0bdfc8897507677daddf96aae95b1cea3b230f868e",
+            "symbol": "step_deep_force"
+          },
+          {
+            "path": "crates/pkl-runtime/src/diagnostic_values.rs",
+            "sha256": "390943c09715e6ff48aa416ad44653558afa26e610a9be6518e07fccbbbc12e5",
+            "symbol": "RenderRun"
           }
         ],
         "state": "partial"
@@ -171919,9 +173720,12 @@
         "remaining": [
           "Colored output, general imported source stacks, first-error combinations and the complete parser/resolver/runtime diagnostic corpus remain open; selected uncolored recursive compression is covered.",
           "Original selected cycle and remainder-zero failures remain failed.",
-          "Exploratory double-negated minimum-integer overflow frames and invalid non-local object annotation frame names remain known differences outside the Stage 31 selected additions."
+          "Exploratory double-negated minimum-integer overflow frames and invalid non-local object annotation frame names remain known differences outside the Stage 31 selected additions.",
+          "Full module, amendment, inheritance and object API semantics and the original upstream suite remain incomplete.",
+          "Cyclic rendering oracle failures, identity-dependent keys, complete diagnostic-time forcing/Host suspension and finite truncation side effects remain unresolved or unverified.",
+          "The new persistent originals use trace; complete trace logging and its original sequence contract remain required."
         ],
-        "scope": "Reference constructor, access, constraint and rendering errors retain complete message, authored frame, foreign standard-library source and URI bytes in selected comparisons. Stage11 adds selected fixed declaration, inherited metadata and complete raw diagnostics through the shared VM. Stage 13 adds selected alias/function metadata, exported-type equality and complete raw diagnostic comparisons; original suite execution and remaining scope stay open. Stage 14 adds selected authored type-resolution order, generic parameter scope and nested substitution, class/alias arity ordering, and owner signature diagnostics; persistent failed-declaration state has a separate sequence contract. Stage 15 adds selected non-generic recursive constraint block graphs and declaration type scope, plus builtin Class argument erasure and arity ordering. At Stage 15 recursive generic constraints remained open; Stage 16 adds bounded shared receiver-slot support. Stage 16: Selected recursive frame compression, count-one loops, complete call spans and hint placement match Java uncolored diagnostics. Stage 17: Selected const-method barriers, lambda lookup depth, immediate outer lexical scope, and grouped-callee parser diagnostics follow the pinned Java behavior. Stage 18 adds selected let-body and for-generator lexical const-depth boundaries while retaining enclosing const levels, plus their complete raw diagnostics and lambda controls. Selected finite recursive generic and instantiated type-variable failures compare complete Java bytes with power assertions enabled and disabled. Stage 19 adds bounded shared-metadata regressions for finite deep and branching actual arguments, observable class-argument swaps, inline/lambda/shared-let recursion, recursive Reference validation, and distinct wrapper actuals. Original Java stack errors, historical native abort evidence, full language semantics and performance remain separately accounted. Stage20 adds bounded nullable defaults, inferred collection amendments, null identity and repeated default failures; complete nullable and collection semantics remain unverified. Stage21 adds bounded direct symbolic constructors, actual-argument diagnostics, lazy class defaults, collection body controls and persistent retries; complete constructors, lexical roots and builtin coverage remain unverified. Stage22 adds bounded strict Map construction, boxed/hash-prefix key semantics, lazy nested generic values, insertion-order iteration and HAMT-ordered equality/hash forcing; complete Map APIs and language coverage remain unverified. Stage23 adds bounded strict Set construction, immediate element hashing and deduplication, boxed/cache-sensitive membership, Set defaults and generic aliases, eager nested element checks, structural equality/hash, insertion-order generation/spreading and raw null/default diagnostic controls; complete Set APIs and language coverage remain unverified. Stage 24 additionally covers bounded Collection List/Set classification, eager versus lazy nested validation, aliases/defaults, nullable constructor timing, selected metadata and complete diagnostics. Stage 30 preserves UTF-16 diagnostic member paths through parser/resolver/compiler counters, block metadata, runtime frames and recursive compression. Selected sibling entry/function numbering and detached lifecycle names distinguish unmatched surrogates from literal question marks before Java UTF-8 output. Typed-property diagnostic controls distinguish inline checks for object-local declarations from module/class-local separate call frames; alias use does not change the declaration category. Stage 31 distinguishes folded numeric-token value frames for local properties from authored body sections retained by selected public class constant properties. Selected complete diagnostics cover signed integer/float literals, whitespace/comments/multiline syntax, radix and minimum-integer literals, grouping, direct constraints and aliases; operand, argument/return, cast, overflow-literal and first-error controls retain their separate source ownership. Success controls preserve minimum integers and negative-zero arithmetic. These selected observations do not establish the complete numeric or diagnostic surface. Additional scalar-constant controls distinguish grouping removal in computed local bodies from source reconstruction for selected non-local property, overridden property, Mapping entry and Listing element value frames. Grouped string, Boolean and null constants preserve the same wrapper distinction. Original failed baseline and first-candidate grouped Listing observations remain preserved alongside the selected reconstruction regression; later observations do not relabel those historical failures. Stage 32 adds bounded forbidden non-local object property type-annotation diagnostic ownership, nested declaration paths, earlier-error controls and valid module/class/object-local annotations; complete frontend diagnostics remain separately unverified. Stage 33 adds bounded const-modifier ownership before property-scope entry, method inferred-new versus lambda first-error selection, explicit-parent and earlier-error controls, and successful Dynamic/untyped method and unused-body controls. Non-Dynamic typed method return inference remains outside this repair.",
+        "scope": "Reference constructor, access, constraint and rendering errors retain complete message, authored frame, foreign standard-library source and URI bytes in selected comparisons. Stage11 adds selected fixed declaration, inherited metadata and complete raw diagnostics through the shared VM. Stage 13 adds selected alias/function metadata, exported-type equality and complete raw diagnostic comparisons; original suite execution and remaining scope stay open. Stage 14 adds selected authored type-resolution order, generic parameter scope and nested substitution, class/alias arity ordering, and owner signature diagnostics; persistent failed-declaration state has a separate sequence contract. Stage 15 adds selected non-generic recursive constraint block graphs and declaration type scope, plus builtin Class argument erasure and arity ordering. At Stage 15 recursive generic constraints remained open; Stage 16 adds bounded shared receiver-slot support. Stage 16: Selected recursive frame compression, count-one loops, complete call spans and hint placement match Java uncolored diagnostics. Stage 17: Selected const-method barriers, lambda lookup depth, immediate outer lexical scope, and grouped-callee parser diagnostics follow the pinned Java behavior. Stage 18 adds selected let-body and for-generator lexical const-depth boundaries while retaining enclosing const levels, plus their complete raw diagnostics and lambda controls. Selected finite recursive generic and instantiated type-variable failures compare complete Java bytes with power assertions enabled and disabled. Stage 19 adds bounded shared-metadata regressions for finite deep and branching actual arguments, observable class-argument swaps, inline/lambda/shared-let recursion, recursive Reference validation, and distinct wrapper actuals. Original Java stack errors, historical native abort evidence, full language semantics and performance remain separately accounted. Stage20 adds bounded nullable defaults, inferred collection amendments, null identity and repeated default failures; complete nullable and collection semantics remain unverified. Stage21 adds bounded direct symbolic constructors, actual-argument diagnostics, lazy class defaults, collection body controls and persistent retries; complete constructors, lexical roots and builtin coverage remain unverified. Stage22 adds bounded strict Map construction, boxed/hash-prefix key semantics, lazy nested generic values, insertion-order iteration and HAMT-ordered equality/hash forcing; complete Map APIs and language coverage remain unverified. Stage23 adds bounded strict Set construction, immediate element hashing and deduplication, boxed/cache-sensitive membership, Set defaults and generic aliases, eager nested element checks, structural equality/hash, insertion-order generation/spreading and raw null/default diagnostic controls; complete Set APIs and language coverage remain unverified. Stage 24 additionally covers bounded Collection List/Set classification, eager versus lazy nested validation, aliases/defaults, nullable constructor timing, selected metadata and complete diagnostics. Stage 30 preserves UTF-16 diagnostic member paths through parser/resolver/compiler counters, block metadata, runtime frames and recursive compression. Selected sibling entry/function numbering and detached lifecycle names distinguish unmatched surrogates from literal question marks before Java UTF-8 output. Typed-property diagnostic controls distinguish inline checks for object-local declarations from module/class-local separate call frames; alias use does not change the declaration category. Stage 31 distinguishes folded numeric-token value frames for local properties from authored body sections retained by selected public class constant properties. Selected complete diagnostics cover signed integer/float literals, whitespace/comments/multiline syntax, radix and minimum-integer literals, grouping, direct constraints and aliases; operand, argument/return, cast, overflow-literal and first-error controls retain their separate source ownership. Success controls preserve minimum integers and negative-zero arithmetic. These selected observations do not establish the complete numeric or diagnostic surface. Additional scalar-constant controls distinguish grouping removal in computed local bodies from source reconstruction for selected non-local property, overridden property, Mapping entry and Listing element value frames. Grouped string, Boolean and null constants preserve the same wrapper distinction. Original failed baseline and first-candidate grouped Listing observations remain preserved alongside the selected reconstruction regression; later observations do not relabel those historical failures. Stage 32 adds bounded forbidden non-local object property type-annotation diagnostic ownership, nested declaration paths, earlier-error controls and valid module/class/object-local annotations; complete frontend diagnostics remain separately unverified. Stage 33 adds bounded const-modifier ownership before property-scope entry, method inferred-new versus lambda first-error selection, explicit-parent and earlier-error controls, and successful Dynamic/untyped method and unused-body controls. Non-Dynamic typed method return inference remains outside this repair. Stage 36 adds resumable object deep forcing and object.toString rendering with persistent force marks, owner-specific hidden declarations, inherited member order, undefined-member handling, and renderer key hashing/equality. Selected scalar comparisons and separate stateful/Host observations retain their own raw contracts. Additional source-derived controls cover user-defined toString interpolation, hidden builtin defaults and inherited equal/colliding object keys. Modifier-addition controls distinguish Java IMPORT, CLASS and TYPE_ALIAS bits when filtering rendered declarations.",
         "source": "compatibility/m2-mappings.json"
       },
       "tests": {
@@ -173735,7 +175539,90 @@
           "annotation-stage35-builtin-source-code-prefix-wrong-type",
           "annotation-stage35-builtin-custom-annotation-hierarchy",
           "annotation-stage35-builtin-source-code-null-defaults",
-          "annotation-stage35-builtin-source-code-union-direct"
+          "annotation-stage35-builtin-source-code-union-direct",
+          "object-string-stage36-dynamic-amend-force-child-first",
+          "object-string-stage36-dynamic-amend-render-order",
+          "object-string-stage36-dynamic-elements",
+          "object-string-stage36-dynamic-empty",
+          "object-string-stage36-dynamic-entry",
+          "object-string-stage36-dynamic-mixed-order",
+          "object-string-stage36-dynamic-nested-property",
+          "object-string-stage36-dynamic-scalars",
+          "object-string-stage36-entry-key-object-nonforcing",
+          "object-string-stage36-function-and-class-values",
+          "object-string-stage36-identifier-escaping",
+          "object-string-stage36-inherited-force-child-first",
+          "object-string-stage36-inherited-hidden-override",
+          "object-string-stage36-inherited-override-no-parent-force",
+          "object-string-stage36-inherited-render-order",
+          "object-string-stage36-lazy-first-error",
+          "object-string-stage36-listing-empty",
+          "object-string-stage36-listing-nested",
+          "object-string-stage36-listing-values",
+          "object-string-stage36-mapping-empty",
+          "object-string-stage36-mapping-nested",
+          "object-string-stage36-mapping-values",
+          "object-string-stage36-module-empty",
+          "object-string-stage36-module-force-class-error",
+          "object-string-stage36-module-self-result",
+          "object-string-stage36-module-skip-definitions",
+          "object-string-stage36-module-values",
+          "object-string-stage36-nested-error-before-next",
+          "object-string-stage36-nested-strict-list-forced",
+          "object-string-stage36-nested-strict-map-keys-forced",
+          "object-string-stage36-nested-strict-map-values-forced",
+          "object-string-stage36-strict-list-control-unforced",
+          "object-string-stage36-strict-map-control-unforced",
+          "object-string-stage36-string-escaping",
+          "object-string-stage36-string-utf16",
+          "object-string-stage36-supplement-dynamic-local-method-corrected",
+          "object-string-stage36-supplement-mapping-key-object-snapshot",
+          "object-string-stage36-supplement-mixed-first-error-property-before-element",
+          "object-string-stage36-supplement-mixed-first-error-property-before-entry",
+          "object-string-stage36-supplement-nested-render-context-mixed",
+          "object-string-stage36-supplement-shared-child-finite",
+          "object-string-stage36-supplement-strict-set-forced-in-object",
+          "object-string-stage36-supplement-typed-nested-corrected",
+          "object-string-stage36-supplement-unlimited-single-line",
+          "object-string-stage36-supplement2-dynamic-undefined-required-property",
+          "object-string-stage36-supplement2-listing-undefined-required-property",
+          "object-string-stage36-supplement2-mapping-undefined-required-property",
+          "object-string-stage36-supplement2-nested-undefined-required-property",
+          "object-string-stage36-supplement2-typed-undefined-expression",
+          "object-string-stage36-supplement2-undefined-before-later-error",
+          "object-string-stage36-supplement2-undefined-nested-in-strict-list-corrected",
+          "object-string-stage36-supplement2-undefined-nested-in-strict-map-key-corrected",
+          "object-string-stage36-typed-empty",
+          "object-string-stage36-typed-skip-hidden-local-method",
+          "object-string-stage36-typed-undefined",
+          "object-string-stage36-typed-undefined-middle",
+          "object-string-stage36-typed-values",
+          "object-string-stage36-unknown-name-not-undefined",
+          "object-string-stage36-typed-undefined-parent-fallback",
+          "object-string-stage36-typed-undefined-expression-parent-fallback",
+          "object-string-stage36-dynamic-undefined-parent-fallback",
+          "object-string-stage36-class-to-string-override",
+          "object-string-stage36-local-to-string-method",
+          "object-string-stage36-const-module-to-string",
+          "object-string-stage36-annotation-module-to-string",
+          "object-string-stage36-annotation-this-to-string",
+          "object-string-stage36-utf16-rendered-value-identity",
+          "object-string-stage36-numeric-values",
+          "object-string-stage36-owner-hidden-base-error",
+          "object-string-stage36-owner-hidden-child-error-base-error",
+          "object-string-stage36-review-direct-to-string-explicit-int-return",
+          "object-string-stage36-review-direct-to-string-int-return",
+          "object-string-stage36-review-dynamic-hidden-default-control",
+          "object-string-stage36-review-inherited-equal-object-keys",
+          "object-string-stage36-review-inherited-equal-object-keys-cached-control",
+          "object-string-stage36-review-inherited-unequal-colliding-object-keys",
+          "object-string-stage36-review-interpolation-user-to-string-override",
+          "object-string-stage36-review-listing-hidden-default-control",
+          "object-string-stage36-review-mapping-hidden-default",
+          "object-string-stage36-review-string-entry-hash-collision",
+          "object-string-stage36-review-modifier-import-bit",
+          "object-string-stage36-review-modifier-class-bit",
+          "object-string-stage36-review-modifier-type-alias-bit"
         ],
         "state": "partial"
       }
@@ -174405,7 +176292,90 @@
           "annotation-stage35-builtin-source-code-prefix-wrong-type",
           "annotation-stage35-builtin-custom-annotation-hierarchy",
           "annotation-stage35-builtin-source-code-null-defaults",
-          "annotation-stage35-builtin-source-code-union-direct"
+          "annotation-stage35-builtin-source-code-union-direct",
+          "object-string-stage36-dynamic-amend-force-child-first",
+          "object-string-stage36-dynamic-amend-render-order",
+          "object-string-stage36-dynamic-elements",
+          "object-string-stage36-dynamic-empty",
+          "object-string-stage36-dynamic-entry",
+          "object-string-stage36-dynamic-mixed-order",
+          "object-string-stage36-dynamic-nested-property",
+          "object-string-stage36-dynamic-scalars",
+          "object-string-stage36-entry-key-object-nonforcing",
+          "object-string-stage36-function-and-class-values",
+          "object-string-stage36-identifier-escaping",
+          "object-string-stage36-inherited-force-child-first",
+          "object-string-stage36-inherited-hidden-override",
+          "object-string-stage36-inherited-override-no-parent-force",
+          "object-string-stage36-inherited-render-order",
+          "object-string-stage36-lazy-first-error",
+          "object-string-stage36-listing-empty",
+          "object-string-stage36-listing-nested",
+          "object-string-stage36-listing-values",
+          "object-string-stage36-mapping-empty",
+          "object-string-stage36-mapping-nested",
+          "object-string-stage36-mapping-values",
+          "object-string-stage36-module-empty",
+          "object-string-stage36-module-force-class-error",
+          "object-string-stage36-module-self-result",
+          "object-string-stage36-module-skip-definitions",
+          "object-string-stage36-module-values",
+          "object-string-stage36-nested-error-before-next",
+          "object-string-stage36-nested-strict-list-forced",
+          "object-string-stage36-nested-strict-map-keys-forced",
+          "object-string-stage36-nested-strict-map-values-forced",
+          "object-string-stage36-strict-list-control-unforced",
+          "object-string-stage36-strict-map-control-unforced",
+          "object-string-stage36-string-escaping",
+          "object-string-stage36-string-utf16",
+          "object-string-stage36-supplement-dynamic-local-method-corrected",
+          "object-string-stage36-supplement-mapping-key-object-snapshot",
+          "object-string-stage36-supplement-mixed-first-error-property-before-element",
+          "object-string-stage36-supplement-mixed-first-error-property-before-entry",
+          "object-string-stage36-supplement-nested-render-context-mixed",
+          "object-string-stage36-supplement-shared-child-finite",
+          "object-string-stage36-supplement-strict-set-forced-in-object",
+          "object-string-stage36-supplement-typed-nested-corrected",
+          "object-string-stage36-supplement-unlimited-single-line",
+          "object-string-stage36-supplement2-dynamic-undefined-required-property",
+          "object-string-stage36-supplement2-listing-undefined-required-property",
+          "object-string-stage36-supplement2-mapping-undefined-required-property",
+          "object-string-stage36-supplement2-nested-undefined-required-property",
+          "object-string-stage36-supplement2-typed-undefined-expression",
+          "object-string-stage36-supplement2-undefined-before-later-error",
+          "object-string-stage36-supplement2-undefined-nested-in-strict-list-corrected",
+          "object-string-stage36-supplement2-undefined-nested-in-strict-map-key-corrected",
+          "object-string-stage36-typed-empty",
+          "object-string-stage36-typed-skip-hidden-local-method",
+          "object-string-stage36-typed-undefined",
+          "object-string-stage36-typed-undefined-middle",
+          "object-string-stage36-typed-values",
+          "object-string-stage36-unknown-name-not-undefined",
+          "object-string-stage36-typed-undefined-parent-fallback",
+          "object-string-stage36-typed-undefined-expression-parent-fallback",
+          "object-string-stage36-dynamic-undefined-parent-fallback",
+          "object-string-stage36-class-to-string-override",
+          "object-string-stage36-local-to-string-method",
+          "object-string-stage36-const-module-to-string",
+          "object-string-stage36-annotation-module-to-string",
+          "object-string-stage36-annotation-this-to-string",
+          "object-string-stage36-utf16-rendered-value-identity",
+          "object-string-stage36-numeric-values",
+          "object-string-stage36-owner-hidden-base-error",
+          "object-string-stage36-owner-hidden-child-error-base-error",
+          "object-string-stage36-review-direct-to-string-explicit-int-return",
+          "object-string-stage36-review-direct-to-string-int-return",
+          "object-string-stage36-review-dynamic-hidden-default-control",
+          "object-string-stage36-review-inherited-equal-object-keys",
+          "object-string-stage36-review-inherited-equal-object-keys-cached-control",
+          "object-string-stage36-review-inherited-unequal-colliding-object-keys",
+          "object-string-stage36-review-interpolation-user-to-string-override",
+          "object-string-stage36-review-listing-hidden-default-control",
+          "object-string-stage36-review-mapping-hidden-default",
+          "object-string-stage36-review-string-entry-hash-collision",
+          "object-string-stage36-review-modifier-import-bit",
+          "object-string-stage36-review-modifier-class-bit",
+          "object-string-stage36-review-modifier-type-alias-bit"
         ],
         "state": "partial"
       }
@@ -174584,22 +176554,22 @@
           },
           {
             "path": "crates/pkl-runtime/src/resolver.rs",
-            "sha256": "fa17f80701f99609e4302017bbe0caec69991a1ef6ca2c8d29188ba4dcdc6cbe",
+            "sha256": "c8863f76439d30ae5c243257ea2780f31fc0fa09b2723b60d009bf987bf55243",
             "symbol": "Annotations"
           },
           {
             "path": "crates/pkl-runtime/src/vm/annotations.rs",
-            "sha256": "05f9527ab2346e2ed23fd7ec190e131676f9e9dbaad8d63ad995ee4484d2d306",
+            "sha256": "50cdd8ea8a20d9649a156266555a5cfa7e3d0ac72be4e9fed5fa5f23e79e28a7",
             "symbol": "append_annotation"
           },
           {
             "path": "crates/pkl-runtime/src/vm/annotations.rs",
-            "sha256": "05f9527ab2346e2ed23fd7ec190e131676f9e9dbaad8d63ad995ee4484d2d306",
+            "sha256": "50cdd8ea8a20d9649a156266555a5cfa7e3d0ac72be4e9fed5fa5f23e79e28a7",
             "symbol": "member_annotations"
           },
           {
             "path": "crates/pkl-runtime/src/heap.rs",
-            "sha256": "e9aea292eb23848bc3738cec48a03c52c731fe61e110211435a8f6cf2529f605",
+            "sha256": "708a0bd29aec376916b1434edf8308c7ec84cbcfc69370a844068c1f6c056d39",
             "symbol": "Object"
           }
         ],
@@ -176245,22 +178215,22 @@
           },
           {
             "path": "crates/pkl-runtime/src/resolver.rs",
-            "sha256": "fa17f80701f99609e4302017bbe0caec69991a1ef6ca2c8d29188ba4dcdc6cbe",
+            "sha256": "c8863f76439d30ae5c243257ea2780f31fc0fa09b2723b60d009bf987bf55243",
             "symbol": "Annotations"
           },
           {
             "path": "crates/pkl-runtime/src/vm/annotations.rs",
-            "sha256": "05f9527ab2346e2ed23fd7ec190e131676f9e9dbaad8d63ad995ee4484d2d306",
+            "sha256": "50cdd8ea8a20d9649a156266555a5cfa7e3d0ac72be4e9fed5fa5f23e79e28a7",
             "symbol": "append_annotation"
           },
           {
             "path": "crates/pkl-runtime/src/vm/annotations.rs",
-            "sha256": "05f9527ab2346e2ed23fd7ec190e131676f9e9dbaad8d63ad995ee4484d2d306",
+            "sha256": "50cdd8ea8a20d9649a156266555a5cfa7e3d0ac72be4e9fed5fa5f23e79e28a7",
             "symbol": "member_annotations"
           },
           {
             "path": "crates/pkl-runtime/src/heap.rs",
-            "sha256": "e9aea292eb23848bc3738cec48a03c52c731fe61e110211435a8f6cf2529f605",
+            "sha256": "708a0bd29aec376916b1434edf8308c7ec84cbcfc69370a844068c1f6c056d39",
             "symbol": "Object"
           }
         ],
@@ -179920,22 +181890,22 @@
           },
           {
             "path": "crates/pkl-runtime/src/resolver.rs",
-            "sha256": "fa17f80701f99609e4302017bbe0caec69991a1ef6ca2c8d29188ba4dcdc6cbe",
+            "sha256": "c8863f76439d30ae5c243257ea2780f31fc0fa09b2723b60d009bf987bf55243",
             "symbol": "Annotations"
           },
           {
             "path": "crates/pkl-runtime/src/vm/annotations.rs",
-            "sha256": "05f9527ab2346e2ed23fd7ec190e131676f9e9dbaad8d63ad995ee4484d2d306",
+            "sha256": "50cdd8ea8a20d9649a156266555a5cfa7e3d0ac72be4e9fed5fa5f23e79e28a7",
             "symbol": "append_annotation"
           },
           {
             "path": "crates/pkl-runtime/src/vm/annotations.rs",
-            "sha256": "05f9527ab2346e2ed23fd7ec190e131676f9e9dbaad8d63ad995ee4484d2d306",
+            "sha256": "50cdd8ea8a20d9649a156266555a5cfa7e3d0ac72be4e9fed5fa5f23e79e28a7",
             "symbol": "member_annotations"
           },
           {
             "path": "crates/pkl-runtime/src/heap.rs",
-            "sha256": "e9aea292eb23848bc3738cec48a03c52c731fe61e110211435a8f6cf2529f605",
+            "sha256": "708a0bd29aec376916b1434edf8308c7ec84cbcfc69370a844068c1f6c056d39",
             "symbol": "Object"
           }
         ],
@@ -180816,22 +182786,22 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/heap.rs",
-            "sha256": "e9aea292eb23848bc3738cec48a03c52c731fe61e110211435a8f6cf2529f605",
+            "sha256": "708a0bd29aec376916b1434edf8308c7ec84cbcfc69370a844068c1f6c056d39",
             "symbol": "Member"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "8e1107bb36e34f1e4897f9f61bfa613bee2561a8dc696100059c3f401f01e28e",
+            "sha256": "d2c01f389ab753c66d82bc396eca6afd77699aa090f7591d204fd6898819b537",
             "symbol": "validate_class_override"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "8e1107bb36e34f1e4897f9f61bfa613bee2561a8dc696100059c3f401f01e28e",
+            "sha256": "d2c01f389ab753c66d82bc396eca6afd77699aa090f7591d204fd6898819b537",
             "symbol": "validate_object_override"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "8e1107bb36e34f1e4897f9f61bfa613bee2561a8dc696100059c3f401f01e28e",
+            "sha256": "d2c01f389ab753c66d82bc396eca6afd77699aa090f7591d204fd6898819b537",
             "symbol": "initialize_member_types"
           }
         ],
@@ -181264,12 +183234,12 @@
           },
           {
             "path": "crates/pkl-runtime/src/resolver.rs",
-            "sha256": "fa17f80701f99609e4302017bbe0caec69991a1ef6ca2c8d29188ba4dcdc6cbe",
+            "sha256": "c8863f76439d30ae5c243257ea2780f31fc0fa09b2723b60d009bf987bf55243",
             "symbol": "visit"
           },
           {
             "path": "crates/pkl-runtime/src/vm.rs",
-            "sha256": "8e1107bb36e34f1e4897f9f61bfa613bee2561a8dc696100059c3f401f01e28e",
+            "sha256": "d2c01f389ab753c66d82bc396eca6afd77699aa090f7591d204fd6898819b537",
             "symbol": "compile_type_at"
           }
         ],
@@ -182486,22 +184456,22 @@
         "links": [
           {
             "path": "crates/pkl-runtime/src/vm/reference.rs",
-            "sha256": "ae16044cf10fec1df6ab2a37db4a7ac0f11286c1e75e3b0d26010ab72639ddd2",
+            "sha256": "3c44a82b453b930c0eee7064e131da356f6d3fdda895c1b9166035a23042f960",
             "symbol": "Reference"
           },
           {
             "path": "crates/pkl-runtime/src/vm/reference.rs",
-            "sha256": "ae16044cf10fec1df6ab2a37db4a7ac0f11286c1e75e3b0d26010ab72639ddd2",
+            "sha256": "3c44a82b453b930c0eee7064e131da356f6d3fdda895c1b9166035a23042f960",
             "symbol": "reference_access"
           },
           {
             "path": "crates/pkl-runtime/src/vm/reference.rs",
-            "sha256": "ae16044cf10fec1df6ab2a37db4a7ac0f11286c1e75e3b0d26010ab72639ddd2",
+            "sha256": "3c44a82b453b930c0eee7064e131da356f6d3fdda895c1b9166035a23042f960",
             "symbol": "invoke_reference_native"
           },
           {
             "path": "crates/pkl-runtime/src/vm/typecheck.rs",
-            "sha256": "c99a208a0f8265976d4ee390156cbe3e033d8a9f28ef65de11e6957f8ff2e617",
+            "sha256": "0f17a8ef1c171de5bc9fc7d8af611168eeacb15626514a517a9ad5c41889ac2d",
             "symbol": "step_type"
           }
         ],
@@ -183723,10 +185693,10 @@
   "sources": {
     "compatibility/corpus.json": "0e95da22f965dede398f1a1f136703ba913d588aa51c1fb871cd97a11c84a0dd",
     "compatibility/inventory.json": "a9b21752adad9a269a54854c0dd298256757be88ad95c1388e30d7c78e407070",
-    "compatibility/m2-mappings.json": "da89bae5cc000e5e0ee8722baf9de4461db9bffe1ea5ee81ce179fa3cce315d8",
+    "compatibility/m2-mappings.json": "bd1d9bf7feb45efe07e6239dec9ad99723e8872fb907385afb74a6eaedd48a8f",
     "compatibility/regressions.json": "09c064f65730d30f72bf87a45c88d47ecc0844e57966a999dc8e759f083af3da",
     "compatibility/rev1-inventory.json": "6061f202ba3f04565efed3617ac69d3c2fadc54eec1f562b67a4758b3d0a8ab5",
     "references.lock": "278f48fd7697459281aa78a706c9ca57222f36a8c0785d838a6449fbaf26d30b",
-    "tests/fixtures/m2/cases.json": "fedb91ebc8e5b9f93478fcd040a0475e154e5cb502f81b1390640772983f5a2c"
+    "tests/fixtures/m2/cases.json": "169b259f421d73275793d5a16207e1e7381bb1e5889292de0e728814d8c0abe8"
   }
 }

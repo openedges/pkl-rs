@@ -637,6 +637,43 @@ extend the scalar Node/Wasm adapters with Host I/O or establish complete module
 initialization, module-cache, logger, general object `toString`, or `List.map`
 compatibility.
 
+### Object forcing, strings, and callback diagnostics
+
+Object string conversion uses evaluator-owned continuations in `vm/forcing.rs`.
+A persistent force marker is published before visiting members. Unfinished
+ancestors clear their markers after failure or cancellation; completed children
+and successful lazy member caches survive. An undefined value is caught only
+inside the member-read boundary where Java permits it. Missing names and unrelated
+callback failures do not become undefined values. Equality and hashing use the
+same force engine with undefined values forbidden.
+
+Forcing visits child declarations before parents and consults each declaration
+owner's hidden metadata. Formatting visits inherited declarations in parent-first
+order. The iterative shared renderer requests key hashes and equality comparisons
+as keys are visited; runtime string conversion schedules those operations through
+the VM, retaining pending values as GC roots across Host suspension. Standalone
+strict collection strings retain their existing force behavior. Typed interpolation
+dispatches the receiver's `toString` method, including authored overrides. Exact
+class/type-alias modifier bits exclude definitions without confusing the import bit
+produced by Java's repeated-modifier arithmetic.
+
+Suspended callback contexts retain detached caller source frames, ordered from
+the nearest context outward. Each context omits the waiting reader's unavailable
+callsite. Reporting an inner failure does not unwind its suspended parent or reset
+the parent's caches or force markers. The development Host adapter supplies real
+REPL expression metadata and accepts additional expression files for deeper
+callbacks while preserving its original invocation form. Dynamic missing-member
+diagnostics reuse the shared suggestions helper and pinned inherited signatures;
+diagnostic signature availability does not imply implementation of every method.
+
+Synchronous diagnostic formatting still cannot suspend for incidental object-key
+hashing that reads a resource. Resource caching also remains incomplete: repeated
+method reads can deliver extra native callbacks. Successful nested Java reads can
+fail inside `ResourceManager.computeIfAbsent` with a concurrent-modification bug;
+those whole experiments remain oracle errors even when inner language-error frames
+match. Trace logging, cyclic-rendering oracle errors, full module behavior, and
+unknown JVM identity hashes remain separate compatibility obligations.
+
 ### Type aliases and function metadata
 
 User type aliases have a separate evaluator-owned declaration cache. Initialization

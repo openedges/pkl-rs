@@ -1,0 +1,2 @@
+obj = new Dynamic { f=(x)->x; klass=Dynamic; alias=Int8 }
+result=obj.toString()

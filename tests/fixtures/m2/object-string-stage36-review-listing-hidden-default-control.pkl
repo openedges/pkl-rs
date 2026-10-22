@@ -1,0 +1,2 @@
+obj=new Listing { default=throw("hidden"); 1 }
+result=obj.toString()

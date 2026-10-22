@@ -1,0 +1,3 @@
+class C { missing: Int }
+obj=new C { missing=(new C {}).missing }
+result=obj.toString()

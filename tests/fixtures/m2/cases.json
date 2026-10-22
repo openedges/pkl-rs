@@ -43419,6 +43419,1002 @@
         "semantic:diagnostics",
         "semantic:shared-engine"
       ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "object-string-stage36-dynamic-amend-force-child-first",
+      "input": "tests/fixtures/m2/object-string-stage36-dynamic-amend-force-child-first.pkl",
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "object-string-stage36-dynamic-amend-render-order",
+      "input": "tests/fixtures/m2/object-string-stage36-dynamic-amend-render-order.pkl",
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "object-string-stage36-dynamic-elements",
+      "input": "tests/fixtures/m2/object-string-stage36-dynamic-elements.pkl",
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "object-string-stage36-dynamic-empty",
+      "input": "tests/fixtures/m2/object-string-stage36-dynamic-empty.pkl",
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "object-string-stage36-dynamic-entry",
+      "input": "tests/fixtures/m2/object-string-stage36-dynamic-entry.pkl",
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "object-string-stage36-dynamic-mixed-order",
+      "input": "tests/fixtures/m2/object-string-stage36-dynamic-mixed-order.pkl",
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "object-string-stage36-dynamic-nested-property",
+      "input": "tests/fixtures/m2/object-string-stage36-dynamic-nested-property.pkl",
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "object-string-stage36-dynamic-scalars",
+      "input": "tests/fixtures/m2/object-string-stage36-dynamic-scalars.pkl",
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "object-string-stage36-entry-key-object-nonforcing",
+      "input": "tests/fixtures/m2/object-string-stage36-entry-key-object-nonforcing.pkl",
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "object-string-stage36-function-and-class-values",
+      "input": "tests/fixtures/m2/object-string-stage36-function-and-class-values.pkl",
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "object-string-stage36-identifier-escaping",
+      "input": "tests/fixtures/m2/object-string-stage36-identifier-escaping.pkl",
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "object-string-stage36-inherited-force-child-first",
+      "input": "tests/fixtures/m2/object-string-stage36-inherited-force-child-first.pkl",
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "object-string-stage36-inherited-hidden-override",
+      "input": "tests/fixtures/m2/object-string-stage36-inherited-hidden-override.pkl",
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "object-string-stage36-inherited-override-no-parent-force",
+      "input": "tests/fixtures/m2/object-string-stage36-inherited-override-no-parent-force.pkl",
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "object-string-stage36-inherited-render-order",
+      "input": "tests/fixtures/m2/object-string-stage36-inherited-render-order.pkl",
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "object-string-stage36-lazy-first-error",
+      "input": "tests/fixtures/m2/object-string-stage36-lazy-first-error.pkl",
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "object-string-stage36-listing-empty",
+      "input": "tests/fixtures/m2/object-string-stage36-listing-empty.pkl",
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "object-string-stage36-listing-nested",
+      "input": "tests/fixtures/m2/object-string-stage36-listing-nested.pkl",
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "object-string-stage36-listing-values",
+      "input": "tests/fixtures/m2/object-string-stage36-listing-values.pkl",
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "object-string-stage36-mapping-empty",
+      "input": "tests/fixtures/m2/object-string-stage36-mapping-empty.pkl",
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "object-string-stage36-mapping-nested",
+      "input": "tests/fixtures/m2/object-string-stage36-mapping-nested.pkl",
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "object-string-stage36-mapping-values",
+      "input": "tests/fixtures/m2/object-string-stage36-mapping-values.pkl",
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "object-string-stage36-module-empty",
+      "input": "tests/fixtures/m2/object-string-stage36-module-empty.pkl",
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "object-string-stage36-module-force-class-error",
+      "input": "tests/fixtures/m2/object-string-stage36-module-force-class-error.pkl",
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "object-string-stage36-module-self-result",
+      "input": "tests/fixtures/m2/object-string-stage36-module-self-result.pkl",
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "object-string-stage36-module-skip-definitions",
+      "input": "tests/fixtures/m2/object-string-stage36-module-skip-definitions.pkl",
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "object-string-stage36-module-values",
+      "input": "tests/fixtures/m2/object-string-stage36-module-values.pkl",
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "object-string-stage36-nested-error-before-next",
+      "input": "tests/fixtures/m2/object-string-stage36-nested-error-before-next.pkl",
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "object-string-stage36-nested-strict-list-forced",
+      "input": "tests/fixtures/m2/object-string-stage36-nested-strict-list-forced.pkl",
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "object-string-stage36-nested-strict-map-keys-forced",
+      "input": "tests/fixtures/m2/object-string-stage36-nested-strict-map-keys-forced.pkl",
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "object-string-stage36-nested-strict-map-values-forced",
+      "input": "tests/fixtures/m2/object-string-stage36-nested-strict-map-values-forced.pkl",
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "object-string-stage36-strict-list-control-unforced",
+      "input": "tests/fixtures/m2/object-string-stage36-strict-list-control-unforced.pkl",
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "object-string-stage36-strict-map-control-unforced",
+      "input": "tests/fixtures/m2/object-string-stage36-strict-map-control-unforced.pkl",
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "object-string-stage36-string-escaping",
+      "input": "tests/fixtures/m2/object-string-stage36-string-escaping.pkl",
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "object-string-stage36-string-utf16",
+      "input": "tests/fixtures/m2/object-string-stage36-string-utf16.pkl",
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "object-string-stage36-supplement-dynamic-local-method-corrected",
+      "input": "tests/fixtures/m2/object-string-stage36-supplement-dynamic-local-method-corrected.pkl",
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "object-string-stage36-supplement-mapping-key-object-snapshot",
+      "input": "tests/fixtures/m2/object-string-stage36-supplement-mapping-key-object-snapshot.pkl",
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "object-string-stage36-supplement-mixed-first-error-property-before-element",
+      "input": "tests/fixtures/m2/object-string-stage36-supplement-mixed-first-error-property-before-element.pkl",
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "object-string-stage36-supplement-mixed-first-error-property-before-entry",
+      "input": "tests/fixtures/m2/object-string-stage36-supplement-mixed-first-error-property-before-entry.pkl",
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "object-string-stage36-supplement-nested-render-context-mixed",
+      "input": "tests/fixtures/m2/object-string-stage36-supplement-nested-render-context-mixed.pkl",
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "object-string-stage36-supplement-shared-child-finite",
+      "input": "tests/fixtures/m2/object-string-stage36-supplement-shared-child-finite.pkl",
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "object-string-stage36-supplement-strict-set-forced-in-object",
+      "input": "tests/fixtures/m2/object-string-stage36-supplement-strict-set-forced-in-object.pkl",
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "object-string-stage36-supplement-typed-nested-corrected",
+      "input": "tests/fixtures/m2/object-string-stage36-supplement-typed-nested-corrected.pkl",
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "object-string-stage36-supplement-unlimited-single-line",
+      "input": "tests/fixtures/m2/object-string-stage36-supplement-unlimited-single-line.pkl",
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "object-string-stage36-supplement2-dynamic-undefined-required-property",
+      "input": "tests/fixtures/m2/object-string-stage36-supplement2-dynamic-undefined-required-property.pkl",
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "object-string-stage36-supplement2-listing-undefined-required-property",
+      "input": "tests/fixtures/m2/object-string-stage36-supplement2-listing-undefined-required-property.pkl",
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "object-string-stage36-supplement2-mapping-undefined-required-property",
+      "input": "tests/fixtures/m2/object-string-stage36-supplement2-mapping-undefined-required-property.pkl",
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "object-string-stage36-supplement2-nested-undefined-required-property",
+      "input": "tests/fixtures/m2/object-string-stage36-supplement2-nested-undefined-required-property.pkl",
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "object-string-stage36-supplement2-typed-undefined-expression",
+      "input": "tests/fixtures/m2/object-string-stage36-supplement2-typed-undefined-expression.pkl",
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "object-string-stage36-supplement2-undefined-before-later-error",
+      "input": "tests/fixtures/m2/object-string-stage36-supplement2-undefined-before-later-error.pkl",
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "object-string-stage36-supplement2-undefined-nested-in-strict-list-corrected",
+      "input": "tests/fixtures/m2/object-string-stage36-supplement2-undefined-nested-in-strict-list-corrected.pkl",
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "object-string-stage36-supplement2-undefined-nested-in-strict-map-key-corrected",
+      "input": "tests/fixtures/m2/object-string-stage36-supplement2-undefined-nested-in-strict-map-key-corrected.pkl",
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "object-string-stage36-typed-empty",
+      "input": "tests/fixtures/m2/object-string-stage36-typed-empty.pkl",
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "object-string-stage36-typed-skip-hidden-local-method",
+      "input": "tests/fixtures/m2/object-string-stage36-typed-skip-hidden-local-method.pkl",
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "object-string-stage36-typed-undefined",
+      "input": "tests/fixtures/m2/object-string-stage36-typed-undefined.pkl",
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "object-string-stage36-typed-undefined-middle",
+      "input": "tests/fixtures/m2/object-string-stage36-typed-undefined-middle.pkl",
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "object-string-stage36-typed-values",
+      "input": "tests/fixtures/m2/object-string-stage36-typed-values.pkl",
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "object-string-stage36-unknown-name-not-undefined",
+      "input": "tests/fixtures/m2/object-string-stage36-unknown-name-not-undefined.pkl",
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "object-string-stage36-typed-undefined-parent-fallback",
+      "input": "tests/fixtures/m2/object-string-stage36-typed-undefined-parent-fallback.pkl",
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "object-string-stage36-typed-undefined-expression-parent-fallback",
+      "input": "tests/fixtures/m2/object-string-stage36-typed-undefined-expression-parent-fallback.pkl",
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "object-string-stage36-dynamic-undefined-parent-fallback",
+      "input": "tests/fixtures/m2/object-string-stage36-dynamic-undefined-parent-fallback.pkl",
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "object-string-stage36-class-to-string-override",
+      "input": "tests/fixtures/m2/object-string-stage36-class-to-string-override.pkl",
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "object-string-stage36-local-to-string-method",
+      "input": "tests/fixtures/m2/object-string-stage36-local-to-string-method.pkl",
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "object-string-stage36-const-module-to-string",
+      "input": "tests/fixtures/m2/object-string-stage36-const-module-to-string.pkl",
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "object-string-stage36-annotation-module-to-string",
+      "input": "tests/fixtures/m2/object-string-stage36-annotation-module-to-string.pkl",
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "object-string-stage36-annotation-this-to-string",
+      "input": "tests/fixtures/m2/object-string-stage36-annotation-this-to-string.pkl",
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "object-string-stage36-utf16-rendered-value-identity",
+      "input": "tests/fixtures/m2/object-string-stage36-utf16-rendered-value-identity.pkl",
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "object-string-stage36-numeric-values",
+      "input": "tests/fixtures/m2/object-string-stage36-numeric-values.pkl",
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "object-string-stage36-owner-hidden-base-error",
+      "input": "tests/fixtures/m2/object-string-stage36-owner-hidden-base-error.pkl",
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "failure",
+      "expression": "result",
+      "id": "object-string-stage36-owner-hidden-child-error-base-error",
+      "input": "tests/fixtures/m2/object-string-stage36-owner-hidden-child-error-base-error.pkl",
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "object-string-stage36-review-direct-to-string-explicit-int-return",
+      "input": "tests/fixtures/m2/object-string-stage36-review-direct-to-string-explicit-int-return.pkl",
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "object-string-stage36-review-direct-to-string-int-return",
+      "input": "tests/fixtures/m2/object-string-stage36-review-direct-to-string-int-return.pkl",
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "object-string-stage36-review-dynamic-hidden-default-control",
+      "input": "tests/fixtures/m2/object-string-stage36-review-dynamic-hidden-default-control.pkl",
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "object-string-stage36-review-inherited-equal-object-keys",
+      "input": "tests/fixtures/m2/object-string-stage36-review-inherited-equal-object-keys.pkl",
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "object-string-stage36-review-inherited-equal-object-keys-cached-control",
+      "input": "tests/fixtures/m2/object-string-stage36-review-inherited-equal-object-keys-cached-control.pkl",
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "object-string-stage36-review-inherited-unequal-colliding-object-keys",
+      "input": "tests/fixtures/m2/object-string-stage36-review-inherited-unequal-colliding-object-keys.pkl",
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "object-string-stage36-review-interpolation-user-to-string-override",
+      "input": "tests/fixtures/m2/object-string-stage36-review-interpolation-user-to-string-override.pkl",
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "object-string-stage36-review-listing-hidden-default-control",
+      "input": "tests/fixtures/m2/object-string-stage36-review-listing-hidden-default-control.pkl",
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "object-string-stage36-review-mapping-hidden-default",
+      "input": "tests/fixtures/m2/object-string-stage36-review-mapping-hidden-default.pkl",
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "object-string-stage36-review-string-entry-hash-collision",
+      "input": "tests/fixtures/m2/object-string-stage36-review-string-entry-hash-collision.pkl",
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "object-string-stage36-review-modifier-import-bit",
+      "input": "tests/fixtures/m2/object-string-stage36-review-modifier-import-bit.pkl",
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "object-string-stage36-review-modifier-class-bit",
+      "input": "tests/fixtures/m2/object-string-stage36-review-modifier-class-bit.pkl",
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
+    },
+    {
+      "expected_outcome": "success",
+      "expression": "result",
+      "id": "object-string-stage36-review-modifier-type-alias-bit",
+      "input": "tests/fixtures/m2/object-string-stage36-review-modifier-type-alias-bit.pkl",
+      "requirements": [
+        "semantic:objects",
+        "semantic:lazy-evaluation",
+        "semantic:diagnostics",
+        "semantic:shared-engine"
+      ]
     }
   ],
   "schema_version": 1,

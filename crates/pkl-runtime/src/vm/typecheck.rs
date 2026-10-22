@@ -539,6 +539,7 @@ impl Vm {
             type_run: None,
             generic_default: None,
             equality_run: None,
+            deep_force: None,
             prepared_hashes: None,
             key_search: None,
             return_to_type: true,

@@ -1,0 +1,44 @@
+{
+  "scope": "Original Stage36 Java observations, intermediate failures, frozen worktree checks and audits. Main final acquisitions are separate.",
+  "archive": "reports/m2/stage36-origins-evidence.tar.gz",
+  "sha256": "65dfe032e1a4fde7497d4134ed38ac6b3489a7b7b9ccbf57c17cbe504e08c72b",
+  "bytes": 48875041,
+  "original_files": 11055,
+  "inventory_files": 11058,
+  "source_stability": true,
+  "worktree_inventory_sha256": "d705193fdea73e68164d1d3c2c3163d03031b86086beccff5987cc454fda56ae",
+  "worktree_originals": 9980,
+  "excluded_before_traversal": [
+    {
+      "path": "stage36-core-cargo",
+      "reason": "Entire Cargo target cache. Core supplied final frozen artifacts separately."
+    },
+    {
+      "path": "stage36-host-comparison-01/build",
+      "reason": "CARGO_TARGET_DIR=OUT/build in stage36-host-compare.py."
+    },
+    {
+      "path": "stage36-host-comparison-02/build",
+      "reason": "CARGO_TARGET_DIR=OUT/build in stage36-host-compare.py."
+    },
+    {
+      "path": "stage36-diagnostic-host-comparison-01/build",
+      "reason": "CARGO_TARGET_DIR=OUT/build in shared comparison helper."
+    },
+    {
+      "path": "stage36-diagnostic-host-comparison-02/build",
+      "reason": "CARGO_TARGET_DIR=OUT/build in shared comparison helper."
+    },
+    {
+      "path": "stage36-nested-host-comparison-01/build",
+      "reason": "CARGO_TARGET_DIR=OUT/build in shared comparison helper."
+    },
+    {
+      "path": "stage36-origins-inventory-01",
+      "reason": "This actively written inventory root; outside the original-origin aggregate."
+    }
+  ],
+  "tooling_duplication": "Concurrent acquisition/tool freeze/validation original roots are included unchanged, even when the earlier main tooling checkpoint archive contains their duplicate evidence. No deduplication.",
+  "stage37_excluded": true,
+  "compatibility_complete": false
+}

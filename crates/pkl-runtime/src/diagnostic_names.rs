@@ -89,3 +89,18 @@ pub(crate) const TYPED_METHODS: &[(&str, &str, usize)] = &[
     ("toDynamic", "toDynamic()", 0),
     ("toMap", "toMap()", 0),
 ];
+
+/// Pinned Any and Dynamic method signatures, in inherited declaration order.
+/// Diagnostic candidates do not imply that every method body is implemented.
+pub(crate) const DYNAMIC_METHODS: &[(&str, &str, usize)] = &[
+    ("getClass", "getClass()", 0),
+    ("toString", "toString()", 0),
+    ("ifNonNull", "ifNonNull(transform)", 1),
+    ("length", "length()", 0),
+    ("hasProperty", "hasProperty(name)", 1),
+    ("getProperty", "getProperty(name)", 1),
+    ("getPropertyOrNull", "getPropertyOrNull(name)", 1),
+    ("toMap", "toMap()", 0),
+    ("toList", "toList()", 0),
+    ("toTyped", "toTyped(clazz)", 1),
+];

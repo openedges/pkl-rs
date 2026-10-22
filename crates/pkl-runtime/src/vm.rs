@@ -13,6 +13,7 @@ pub(crate) mod annotations;
 pub mod collections;
 mod compiler_expressions;
 pub(crate) mod equality;
+mod forcing;
 mod generics;
 pub(crate) mod reference;
 mod typecheck;
@@ -671,6 +672,7 @@ pub struct Program {
     pub objects: Vec<Vec<Member>>,
     pub entry: usize,
     pub(crate) reference_render_block: usize,
+    pub(crate) typed_string_block: usize,
     pub(crate) access_members: Vec<Member>,
     pub(crate) annotation_members: BTreeMap<usize, Vec<Member>>,
     pub(crate) constraint_origins: BTreeMap<usize, (Vec<RuntimeFrame>, Vec<RuntimeFrame>)>,
@@ -688,6 +690,16 @@ impl Program {
                 method: true,
             },
             Instruction::CheckType(TypeCheck::String),
+            Instruction::Return,
+        ]);
+        let typed_string_block = blocks.len();
+        blocks.push(vec![
+            Instruction::LoadLocal(0),
+            Instruction::GetMethod("toString".into()),
+            Instruction::Call {
+                arity: 0,
+                method: true,
+            },
             Instruction::Return,
         ]);
         let mut metadata = vec![BlockMetadata::default(); blocks.len()];
@@ -726,6 +738,7 @@ impl Program {
             objects: Vec::new(),
             entry: 0,
             reference_render_block,
+            typed_string_block,
             access_members,
             annotation_members,
             constraint_origins: BTreeMap::new(),
@@ -769,6 +782,7 @@ struct Frame {
     type_run: Option<TypeRun>,
     generic_default: Option<generics::GenericDefaultRun>,
     equality_run: Option<equality::EqualityRun>,
+    deep_force: Option<forcing::ForceRun>,
     prepared_hashes: Option<Vec<Value>>,
     key_search: Option<equality::KeySearch>,
     return_to_type: bool,
@@ -786,6 +800,9 @@ enum State {
 }
 
 struct SuspendedContext {
+    /// Caller locations captured at the Host boundary, innermost first. The
+    /// pending reader has no language call node for a callback evaluation.
+    diagnostic_callers: Vec<RuntimeFrame>,
     frames: Vec<Frame>,
     stack: Vec<Value>,
     inputs: Vec<Value>,
@@ -884,6 +901,7 @@ impl Vm {
             type_run: None,
             generic_default: None,
             equality_run: None,
+            deep_force: None,
             prepared_hashes: None,
             key_search: None,
             return_to_type: false,
@@ -915,7 +933,29 @@ impl Vm {
                 "experiment context limit exceeded",
             ));
         }
+        let diagnostic_callers = self
+            .frames
+            .iter()
+            .rev()
+            .skip(1)
+            .filter_map(|frame| {
+                if frame.callsite_hidden {
+                    return None;
+                }
+                let metadata = self.program.metadata.get(frame.block)?;
+                let span = (*metadata.spans.get(frame.pc.saturating_sub(1))?)?;
+                Some(RuntimeFrame {
+                    source: metadata.source.clone(),
+                    span,
+                    member: frame
+                        .diagnostic_member
+                        .clone()
+                        .unwrap_or_else(|| metadata.member.clone()),
+                })
+            })
+            .collect();
         self.suspended.push(SuspendedContext {
+            diagnostic_callers,
             frames: std::mem::take(&mut self.frames),
             stack: std::mem::take(&mut self.stack),
             inputs: std::mem::take(&mut self.inputs),
@@ -1157,6 +1197,9 @@ impl Vm {
                 if let Some(run) = &frame.key_search {
                     run.roots(&mut roots);
                 }
+                if let Some(run) = &frame.deep_force {
+                    run.roots(&mut roots);
+                }
                 if let Some(run) = &frame.equality_run {
                     run.roots(&mut roots);
                 }
@@ -1190,6 +1233,10 @@ impl Vm {
     }
 
     fn fail(&mut self, mut error: RuntimeError) {
+        if error.undefined_value && self.catch_force_undefined() {
+            return;
+        }
+        self.reset_force_marks(0);
         // Inferred properties read their class prototype without type checks.
         // An undefined prototype value is caught by the inference node, whose
         // authored new expression becomes the error origin. Keep all frames for
@@ -1200,7 +1247,8 @@ impl Vm {
                 .get(frame.block)
                 .and_then(|code| code.get(frame.pc.saturating_sub(1)))
         };
-        let caught_undefined = error.kind == ErrorKind::MissingMember
+        let caught_undefined = error.undefined_value
+            && error.kind == ErrorKind::MissingMember
             && self.frames.last().is_some_and(|frame| {
                 matches!(
                     instruction(frame),
@@ -1382,6 +1430,13 @@ impl Vm {
                 });
             }
         }
+        // Callback failures expose callers in suspended contexts without
+        // unwinding those contexts or changing their force/cache ownership.
+        for context in self.suspended.iter().rev() {
+            error
+                .frames
+                .extend(context.diagnostic_callers.iter().cloned());
+        }
         if error.span.is_none() {
             error.span = error.frames.first().map(|frame| frame.span);
         }
@@ -1392,7 +1447,9 @@ impl Vm {
             {
                 // VmUtils.doReadMember and ReadLocalPropertyNode publish only successful
                 // return values. A failed attempt must be retryable in this evaluator.
-                object.cache.remove(key);
+                if matches!(object.cache.get(key), Some(LazyState::Evaluating)) {
+                    object.cache.remove(key);
+                }
             }
         }
         self.frames.clear();
@@ -1554,9 +1611,13 @@ impl Vm {
                 }
                 owner = match object.parent {
                     Some(parent) => parent,
-                    None => {
-                        return Err(self.missing_member(receiver, &name, method)?);
+                    None if method && name.as_ref() == "toString" => {
+                        let function =
+                            self.native_reference_method(Value::Object(receiver), "objectToString");
+                        self.stack.push(function);
+                        return Ok(());
                     }
+                    None => return Err(self.missing_member(receiver, &name, method)?),
                 };
             }
         };
@@ -1598,7 +1659,13 @@ impl Vm {
             self.stack.push(Value::TypeAlias(id));
             return Ok(());
         }
+        let direct_force_read = self
+            .frames
+            .last()
+            .and_then(|frame| frame.deep_force.as_ref())
+            .is_some_and(|run| run.reads(receiver, owner, &name, entry));
         if memoize
+            && !direct_force_read
             && matches!(
                 self.heap.get(receiver)?.cache.get(&key),
                 Some(LazyState::Evaluating)
@@ -1619,7 +1686,7 @@ impl Vm {
         {
             memoize = false;
         }
-        if active {
+        if active && !direct_force_read {
             return Err(RuntimeError::new(
                 ErrorKind::Cycle,
                 format!("cyclic forcing of {name}"),
@@ -1779,6 +1846,7 @@ impl Vm {
             type_run: None,
             generic_default: None,
             equality_run: None,
+            deep_force: None,
             prepared_hashes: None,
             key_search: None,
             return_to_type: false,
@@ -1839,6 +1907,14 @@ impl Vm {
             }
             owner = object.parent;
         }
+        if method && name == "toString" {
+            let mut error = RuntimeError::new(
+                ErrorKind::Type,
+                "Cannot call method `toString` from here because it is not `const`.",
+            );
+            error.hint = Some("To fix, do either of:\n1. Add modifier `const` to method `toString`\n2. Self-import this module, and reference this method from the import.".into());
+            return Err(error);
+        }
         Ok(())
     }
 
@@ -1889,12 +1965,18 @@ impl Vm {
             ));
             return Ok(error);
         }
-        let Some(class) = collections::typed_class(&self.heap, receiver)? else {
+        let class = collections::typed_class(&self.heap, receiver)?;
+        let object = self.heap.get(receiver)?;
+        let dynamic = class.is_none()
+            && object.collection_kind == crate::heap::CollectionKind::Dynamic
+            && object.reference.is_none()
+            && !object.ref_module;
+        if class.is_none() && !dynamic {
             return Ok(RuntimeError::new(
                 ErrorKind::MissingMember,
                 format!("missing member {name}"),
             ));
-        };
+        }
         let mut properties = Vec::new();
         let mut method_groups = Vec::new();
         let mut current = Some(receiver);
@@ -1936,6 +2018,19 @@ impl Vm {
             }
             current = object.parent;
         }
+        if dynamic {
+            // Dynamic's inherited hidden default is a real readable builtin
+            // property (base.pkl:2015), hence also an available-name candidate.
+            properties.push("default".into());
+            method_groups.push(
+                crate::diagnostic_names::DYNAMIC_METHODS
+                    .iter()
+                    .map(|(name, signature, arity)| {
+                        ((*name).to_owned(), (*signature).to_owned(), *arity)
+                    })
+                    .collect(),
+            );
+        }
         // VmClass.getAllMethods merges ancestors first; overriding a method
         // replaces its definition without moving its insertion position.
         let mut methods: Vec<(String, String, usize)> = Vec::new();
@@ -1959,12 +2054,17 @@ impl Vm {
         } else {
             -1
         };
-        let class_name = reference::type_name(
-            &TypeCheck::Class {
-                id: class.id,
-                name: class.name,
+        let class_name = class.map_or_else(
+            || "Dynamic".to_owned(),
+            |class| {
+                reference::type_name(
+                    &TypeCheck::Class {
+                        id: class.id,
+                        name: class.name,
+                    },
+                    &self.program.module_name,
+                )
             },
-            &self.program.module_name,
         );
         let mut error = RuntimeError::new(
             ErrorKind::MissingMember,
@@ -2379,6 +2479,7 @@ impl Vm {
             type_run: None,
             generic_default: None,
             equality_run: None,
+            deep_force: None,
             prepared_hashes: None,
             key_search: None,
             return_to_type: false,
@@ -2406,6 +2507,13 @@ impl Vm {
             .is_some_and(|frame| frame.type_run.is_some())
         {
             return self.step_type();
+        }
+        if self
+            .frames
+            .last()
+            .is_some_and(|frame| frame.deep_force.is_some())
+        {
+            return self.step_deep_force();
         }
         let frame = self
             .frames
@@ -2826,6 +2934,29 @@ impl Vm {
                         usize::MAX,
                     )?;
                     self.stack.push(Value::string(text));
+                } else if let Value::Object(id) = value {
+                    if collections::typed_class(&self.heap, id)?.is_some()
+                        || self.heap.get(id)?.is_module
+                    {
+                        // Pkl interpolation virtually invokes Typed.toString; user
+                        // overrides can avoid forcing the receiver altogether.
+                        let function = self.heap.allocate(Object {
+                            function: Some(Function {
+                                block: self.program.typed_string_block,
+                                arity: 0,
+                                method: true,
+                                captured_this: None,
+                            }),
+                            environment: Environment {
+                                locals: vec![Value::Object(id)],
+                                ..Environment::default()
+                            },
+                            ..Object::default()
+                        });
+                        self.invoke_function(function, Vec::new(), true)?;
+                    } else {
+                        self.begin_object_string(Value::Object(id))?;
+                    }
                 } else {
                     self.stack.push(Value::string(scalar_string(&value)?));
                 }
@@ -3137,7 +3268,8 @@ impl Vm {
                 return Err(RuntimeError::new(
                     ErrorKind::MissingMember,
                     format!("Tried to read property `{name}` but its value is undefined."),
-                ));
+                )
+                .undefined());
             }
             Instruction::AbstractMember { name, method } => {
                 let kind = if method { "method" } else { "property" };
@@ -4323,6 +4455,7 @@ impl Compiler<'_> {
                     let block = self.block(code, Some(member.name_span));
                     self.program.metadata[block].initialization_error = Some(error);
                     result.push(Member {
+                        flags: Member::declaration_flags(member),
                         entry: false,
                         name: Arc::from(member.name.as_str()),
                         code: block,
@@ -4455,6 +4588,7 @@ impl Compiler<'_> {
         self.member = previous_member;
         self.modifiers = previous_modifiers;
         Ok(Member {
+            flags: Member::declaration_flags(member),
             entry: false,
             name: Arc::from(member.name.as_str()),
             code,

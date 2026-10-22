@@ -1,0 +1,2 @@
+obj = new Listing { 1; "two"; true; null }
+result=obj.toString()

@@ -1,0 +1,2 @@
+obj=new Dynamic { default=throw("hidden"); x=1 }
+result=obj.toString()
