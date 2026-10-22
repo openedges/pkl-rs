@@ -41,7 +41,92 @@ Stage 29 preserves lossless UTF-16 string values through the shared engine.
 Stage 30 preserves diagnostic frame identity and selected declaration ownership.
 Stage 31 aligns executable value-frame locations and constant-member source fallbacks.
 Stage 32 preserves declaration owners for rejected non-local object property annotations.
+Stage 33 aligns non-local const owners and method/lambda inferred-parent boundaries.
 These checkpoints do not complete the language milestone.
+
+## Stage 33 local verification checkpoint
+
+Implementation `571d46a69d22a373e14022b582459f9bb50738d8` is committed and pushed. The
+[final summary](stage33-final-summary.json), [independent audit](stage33-post-seal-audit.json)
+and [completion captures](stage33-completion-captures.json) close this bounded
+frontend checkpoint. Core work used `gpt-6-astra / xhigh`; Java evidence and
+native/platform review each used `gpt-6.1-sol / high`. Root handled integration,
+final validation, commits and sealing on local macOS arm64.
+
+Non-local object `const` modifier errors now name the enclosing declaration
+before the rejected member scope is entered. Method bodies permit contextual
+`new {}` through the existing `if` and let-body paths; lambdas and parentheses
+retain the Java rejection boundaries. The existing diagnostic owner replay
+handles these two errors alongside forbidden non-local annotations. It adopts
+ownership only when every other diagnostic field matches, retaining the original
+owner on divergence. Valid resolution allocates no ownership stack. The checked
+untyped and `Dynamic` return methods use the existing compiler behavior; broader
+return-type parent inference remains incomplete.
+
+All **36 additions match Java: 27 expected errors and
+9 successful values**. The full selected corpus contains
+3,122 cases, with 3,120 raw matches and the existing cycle oracle
+error and remainder-by-zero mismatch. 88 metamorphic relations and
+2,622 sequence calls pass. The prior 3,086 selected
+inputs/definitions and 151 sequence definitions remain
+preserved. The inventory has 474 requirements and
+4,122 accounting rows: 3,122 ready, 960
+unimplemented and 40 unmapped. Inventory freshness, the development
+contract and the strict full gate are separate; the full gate retains
+1,950 failure reasons and 16 partial mappings.
+
+[Seven required local checks](validation-stage33-final.json) passed with
+467 distinct Rust tests and 200 Python tests. The Rust harness reports
+480 passes, including the existing 13 isolated child repetitions, with
+one ignored test. Four new ordinary native tests cover const owners,
+method/lambda first errors, earlier lexical errors and accepted lazy controls.
+The existing predicate-owner expectation was corrected from `#3` to `#5` after
+fresh Java confirmed the builder's prefix revisit when it switches to generator
+handling. These checks make no new Host/lifecycle, small-stack or memory claim.
+
+Node and Chromium each passed 92 development scenarios. The new
+scenario compares all 36 complete Java error/value payloads twice per
+target using fresh evaluators. Existing primitive results and the two known
+Java regex gaps remain. A fresh baseline matches 12 of the
+new selected cases; the exact final language artifact matches all 36.
+The broader 41-case comparison improves from
+15 to 39 raw matches. All five original
+Stage 32 failures are repaired in these observations; inferred parents from
+class and `Listing` method return types remain mismatched. Selected, broader and
+platform comparisons overlap and are not additive feature counts.
+
+Original failures and incomplete runs remain preserved. The first native run
+exited 101 because a new lexical assertion omitted the diagnostic's second
+paragraph; it had no complete source snapshot and is exploratory evidence.
+A fresh helper named `select.py` shadowed Python stdlib `select` during a
+subprocess import and exited 1 after duplicating selection rows. The helper was
+renamed `select_fixtures.py` with a single-use guard, and baseline input bytes
+and the corrected 36 additions were verified again. A completed
+native run for the earlier owner candidate remains separate from its rerun
+after the fallback-owner refinement. The first workspace validation exited 1
+when Cargo reported 101 for the stale predicate-owner expectation. The first
+language and class-sequence processes were interrupted with exit `-15`; their
+incomplete observations are not passes. Fresh final directories retain the
+corrected checks and comparisons. The first frontend invocation checked only its contract; subsequent actual
+frontend comparisons are separate. Completed initial platform/frontend runs
+retain their own source identities rather than being relabeled as final reruns.
+
+The [sealed archive](stage33-final-evidence.tar.gz) and
+[identity record](stage33-archive.json) preserve 85,390 original files under
+147 explicit roots. The independent audit binds 7,718 final
+source copies to 3,705 implementation files and checks raw outcomes,
+failed captures, fixed-URI Java payloads and immutable origins. The completed
+origin binding connects the final focused artifact to full language evidence.
+Seal/audit captures and current closeout source snapshots are preserved after
+sealing. Explicit Cargo cache roots are omitted before enumeration;
+7 direct historical dependency identities remain
+separate from the new evidence.
+
+M2 remains in progress. Typed method parent inference, overflow frame ownership,
+empty-collection unavailable source sections, existing frontend/runtime/lifecycle
+gaps, URI and public string transport, complete APIs and depth/work limits remain
+open. Local verification does not establish Linux, Windows, hosted CI, release
+platform coverage, execution-time parity or peak-RSS parity.
 
 ## Stage 32 local verification checkpoint
 

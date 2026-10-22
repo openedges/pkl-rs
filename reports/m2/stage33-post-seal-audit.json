@@ -1,0 +1,522 @@
+{
+  "archive": {
+    "bytes": 51797192,
+    "members": 85396,
+    "path": "reports/m2/stage33-final-evidence.tar.gz",
+    "sha256": "77ae6d8e585f3c14b6f7ec3e51baf779e4cd58474f6159bea9399f59ebfafda6"
+  },
+  "archived_helpers_executed": false,
+  "compatibility_complete": false,
+  "fixtures": {
+    "added": 36,
+    "original_inputs_byte_equal": 3086,
+    "preserved": 3086,
+    "sequence_files_byte_equal": 305
+  },
+  "focused_selection": {
+    "artifact_sha256": "7aaf4c99d2f7f0843247d956b71ac46110c119477acef23127aa6a9a2c717ae6",
+    "baseline_counts": {
+      "mismatch": 26,
+      "pass": 15
+    },
+    "baseline_selected_counts": {
+      "mismatch": 24,
+      "pass": 12
+    },
+    "cross_context_diagnostic_comparison_performed": false,
+    "exploration": 41,
+    "exploration_counts": {
+      "mismatch": 2,
+      "pass": 39
+    },
+    "focused_source_files": 119,
+    "focused_sources_subset_of_full": false,
+    "full_origin_now_complete": true,
+    "full_source_files": 3263,
+    "matches_final_language_artifact": true,
+    "retained_gaps": [
+      "function-return-class-unimplemented",
+      "function-return-listing-unimplemented"
+    ],
+    "selected": 36,
+    "selected_contexts": [
+      {
+        "focused_input_path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage33-oracle-01/cases/module-function/input.pkl",
+        "focused_raw_equal": true,
+        "full_input_path": "/Users/cody.ij.hwang/Projects/pkl-rs/tests/fixtures/m2/diagnostic-stage33-module-function.pkl",
+        "full_raw_equal": true,
+        "id": "diagnostic-stage33-module-function",
+        "input_sha256": "2db0c8191468ce9b491750039a6b0cb73c932002f13cd374b7d54da14499ec43"
+      },
+      {
+        "focused_input_path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage33-oracle-01/cases/lambda/input.pkl",
+        "focused_raw_equal": true,
+        "full_input_path": "/Users/cody.ij.hwang/Projects/pkl-rs/tests/fixtures/m2/diagnostic-stage33-lambda.pkl",
+        "full_raw_equal": true,
+        "id": "diagnostic-stage33-lambda",
+        "input_sha256": "7a24a6f3a4a2cbea0a9ee3bdd8abdbc58f480bae48741866557ce3b11ca1919d"
+      },
+      {
+        "focused_input_path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage33-oracle-01/cases/unused-invalid-function/input.pkl",
+        "focused_raw_equal": true,
+        "full_input_path": "/Users/cody.ij.hwang/Projects/pkl-rs/tests/fixtures/m2/diagnostic-stage33-unused-invalid-function.pkl",
+        "full_raw_equal": true,
+        "id": "diagnostic-stage33-unused-invalid-function",
+        "input_sha256": "66c8986a31bfebbf0cec9922f8063be1f16803b7ce9352373b2bd294491ee7f8"
+      },
+      {
+        "focused_input_path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage33-oracle-01/cases/const-annotation/input.pkl",
+        "focused_raw_equal": true,
+        "full_input_path": "/Users/cody.ij.hwang/Projects/pkl-rs/tests/fixtures/m2/diagnostic-stage33-const-annotation.pkl",
+        "full_raw_equal": true,
+        "id": "diagnostic-stage33-const-annotation",
+        "input_sha256": "d2d048e5eb9e0a7c9f354b0061215e8fa81a8ff2064403b3b9c19cf6d09edaa3"
+      },
+      {
+        "focused_input_path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage33-oracle-01/cases/object-local-function/input.pkl",
+        "focused_raw_equal": true,
+        "full_input_path": "/Users/cody.ij.hwang/Projects/pkl-rs/tests/fixtures/m2/diagnostic-stage33-object-local-function.pkl",
+        "full_raw_equal": true,
+        "id": "diagnostic-stage33-object-local-function",
+        "input_sha256": "820b1c16b78fd9dd1e3d15e526beba86bf9767d8d2aef64804642498b7a7b491"
+      },
+      {
+        "focused_input_path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage33-oracle-01/cases/const-negative/input.pkl",
+        "focused_raw_equal": true,
+        "full_input_path": "/Users/cody.ij.hwang/Projects/pkl-rs/tests/fixtures/m2/diagnostic-stage33-const-negative.pkl",
+        "full_raw_equal": true,
+        "id": "diagnostic-stage33-const-negative",
+        "input_sha256": "0742fdaa8273ee0f7e9c2aaf5480dbeffcaf5284d6b79316b8c14c7bd5bb5675"
+      },
+      {
+        "focused_input_path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage33-oracle-01/cases/const-nested/input.pkl",
+        "focused_raw_equal": true,
+        "full_input_path": "/Users/cody.ij.hwang/Projects/pkl-rs/tests/fixtures/m2/diagnostic-stage33-const-nested.pkl",
+        "full_raw_equal": true,
+        "id": "diagnostic-stage33-const-nested",
+        "input_sha256": "e13e6ca5f9997df7fcd9fc846c7a0433c0d5ede1b645fb37080d1b795aafccfd"
+      },
+      {
+        "focused_input_path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage33-oracle-01/cases/const-quoted/input.pkl",
+        "focused_raw_equal": true,
+        "full_input_path": "/Users/cody.ij.hwang/Projects/pkl-rs/tests/fixtures/m2/diagnostic-stage33-const-quoted.pkl",
+        "full_raw_equal": true,
+        "id": "diagnostic-stage33-const-quoted",
+        "input_sha256": "d2ab8e2a579f42f0bee9b7f5beab43c0baeb4c501ca2b63c7adf382629383749"
+      },
+      {
+        "focused_input_path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage33-oracle-01/cases/const-function/input.pkl",
+        "focused_raw_equal": true,
+        "full_input_path": "/Users/cody.ij.hwang/Projects/pkl-rs/tests/fixtures/m2/diagnostic-stage33-const-function.pkl",
+        "full_raw_equal": true,
+        "id": "diagnostic-stage33-const-function",
+        "input_sha256": "282c289900406ad1091d88cc330dd375af3f75d096ebfa8f3953d040386da39a"
+      },
+      {
+        "focused_input_path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage33-oracle-01/cases/const-lambda/input.pkl",
+        "focused_raw_equal": true,
+        "full_input_path": "/Users/cody.ij.hwang/Projects/pkl-rs/tests/fixtures/m2/diagnostic-stage33-const-lambda.pkl",
+        "full_raw_equal": true,
+        "id": "diagnostic-stage33-const-lambda",
+        "input_sha256": "afe14251c3d712f6f9da724c5e631220e25a74bd60e787ab5b06e6b24c955424"
+      },
+      {
+        "focused_input_path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage33-oracle-01/cases/const-let/input.pkl",
+        "focused_raw_equal": true,
+        "full_input_path": "/Users/cody.ij.hwang/Projects/pkl-rs/tests/fixtures/m2/diagnostic-stage33-const-let.pkl",
+        "full_raw_equal": true,
+        "id": "diagnostic-stage33-const-let",
+        "input_sha256": "f2192d16325a177c9ad2dd6af1536ef844e817e8f668835a830b844ec07f2452"
+      },
+      {
+        "focused_input_path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage33-oracle-01/cases/const-entry/input.pkl",
+        "focused_raw_equal": true,
+        "full_input_path": "/Users/cody.ij.hwang/Projects/pkl-rs/tests/fixtures/m2/diagnostic-stage33-const-entry.pkl",
+        "full_raw_equal": true,
+        "id": "diagnostic-stage33-const-entry",
+        "input_sha256": "a7902cd7f600098d9e0b534e87a8bec5007d4463b8a4a53d84cae39145a3d823"
+      },
+      {
+        "focused_input_path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage33-oracle-01/cases/const-earlier-error/input.pkl",
+        "focused_raw_equal": true,
+        "full_input_path": "/Users/cody.ij.hwang/Projects/pkl-rs/tests/fixtures/m2/diagnostic-stage33-const-earlier-error.pkl",
+        "full_raw_equal": true,
+        "id": "diagnostic-stage33-const-earlier-error",
+        "input_sha256": "de935ce973c3ecdf2f87b5cae3a1a9b5940b17e8a0b72a2470a553161372c15d"
+      },
+      {
+        "focused_input_path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage33-oracle-01/cases/const-untyped/input.pkl",
+        "focused_raw_equal": true,
+        "full_input_path": "/Users/cody.ij.hwang/Projects/pkl-rs/tests/fixtures/m2/diagnostic-stage33-const-untyped.pkl",
+        "full_raw_equal": true,
+        "id": "diagnostic-stage33-const-untyped",
+        "input_sha256": "23c8589384b48b1a984aa5226742556aaedac015806aa0c59ab0b7c00548a945"
+      },
+      {
+        "focused_input_path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage33-oracle-01/cases/local-const-control/input.pkl",
+        "focused_raw_equal": true,
+        "full_input_path": "/Users/cody.ij.hwang/Projects/pkl-rs/tests/fixtures/m2/diagnostic-stage33-local-const-control.pkl",
+        "full_raw_equal": true,
+        "id": "diagnostic-stage33-local-const-control",
+        "input_sha256": "3f56d70f2e461f2c7dd5dc1206721d2a55692b86a60b0e9dcec1c32cba43b4ec"
+      },
+      {
+        "focused_input_path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage33-oracle-01/cases/class-const-control/input.pkl",
+        "focused_raw_equal": true,
+        "full_input_path": "/Users/cody.ij.hwang/Projects/pkl-rs/tests/fixtures/m2/diagnostic-stage33-class-const-control.pkl",
+        "full_raw_equal": true,
+        "id": "diagnostic-stage33-class-const-control",
+        "input_sha256": "f673a3598776f2db46cbb29921d74c70672481ea2d8e45b950802ffb2bf3632a"
+      },
+      {
+        "focused_input_path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage33-oracle-01/cases/module-const-control/input.pkl",
+        "focused_raw_equal": true,
+        "full_input_path": "/Users/cody.ij.hwang/Projects/pkl-rs/tests/fixtures/m2/diagnostic-stage33-module-const-control.pkl",
+        "full_raw_equal": true,
+        "id": "diagnostic-stage33-module-const-control",
+        "input_sha256": "53faa747c1e7745b791139c77376bf33615493e43e4caee0a95551711e0b13ca"
+      },
+      {
+        "focused_input_path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage33-oracle-01/cases/lambda-dynamic/input.pkl",
+        "focused_raw_equal": true,
+        "full_input_path": "/Users/cody.ij.hwang/Projects/pkl-rs/tests/fixtures/m2/diagnostic-stage33-lambda-dynamic.pkl",
+        "full_raw_equal": true,
+        "id": "diagnostic-stage33-lambda-dynamic",
+        "input_sha256": "d06e8e897b1673ef34244e63a8b28239ea9f243db6de8cf1b8f9d61a861018d8"
+      },
+      {
+        "focused_input_path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage33-oracle-01/cases/object-local-function-dynamic/input.pkl",
+        "focused_raw_equal": true,
+        "full_input_path": "/Users/cody.ij.hwang/Projects/pkl-rs/tests/fixtures/m2/diagnostic-stage33-object-local-function-dynamic.pkl",
+        "full_raw_equal": true,
+        "id": "diagnostic-stage33-object-local-function-dynamic",
+        "input_sha256": "a07805c69cd055c3fd81407f96cedddddc7f69b0ce7ef28d064eb338b4165dc0"
+      },
+      {
+        "focused_input_path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage33-oracle-01/cases/function-return-type/input.pkl",
+        "focused_raw_equal": true,
+        "full_input_path": "/Users/cody.ij.hwang/Projects/pkl-rs/tests/fixtures/m2/diagnostic-stage33-function-return-type.pkl",
+        "full_raw_equal": true,
+        "id": "diagnostic-stage33-function-return-type",
+        "input_sha256": "313bc14c27b54ad7e68fd4e5ac06019e7f5988489df2e0b727e63256c1ae5961"
+      },
+      {
+        "focused_input_path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage33-oracle-01/cases/function-valid-inferred/input.pkl",
+        "focused_raw_equal": true,
+        "full_input_path": "/Users/cody.ij.hwang/Projects/pkl-rs/tests/fixtures/m2/diagnostic-stage33-function-valid-inferred.pkl",
+        "full_raw_equal": true,
+        "id": "diagnostic-stage33-function-valid-inferred",
+        "input_sha256": "29ee5f486552b93c437229382db6fbe2bbe7a319a9cb7bedff1d058a0d0793df"
+      },
+      {
+        "focused_input_path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage33-oracle-01/cases/lambda-valid-inferred/input.pkl",
+        "focused_raw_equal": true,
+        "full_input_path": "/Users/cody.ij.hwang/Projects/pkl-rs/tests/fixtures/m2/diagnostic-stage33-lambda-valid-inferred.pkl",
+        "full_raw_equal": true,
+        "id": "diagnostic-stage33-lambda-valid-inferred",
+        "input_sha256": "8fb38dd26de90c745c75decce414b765dc5c6f7d57a6df7fa5e5b0d77cec4dc3"
+      },
+      {
+        "focused_input_path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage33-oracle-01/cases/function-nested-inferred/input.pkl",
+        "focused_raw_equal": true,
+        "full_input_path": "/Users/cody.ij.hwang/Projects/pkl-rs/tests/fixtures/m2/diagnostic-stage33-function-nested-inferred.pkl",
+        "full_raw_equal": true,
+        "id": "diagnostic-stage33-function-nested-inferred",
+        "input_sha256": "fd5c575d8d8770a782590da194b4565e5e833be1f8f6123e8833c752b61ed84c"
+      },
+      {
+        "focused_input_path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage33-oracle-01/cases/lambda-quoted-inferred/input.pkl",
+        "focused_raw_equal": true,
+        "full_input_path": "/Users/cody.ij.hwang/Projects/pkl-rs/tests/fixtures/m2/diagnostic-stage33-lambda-quoted-inferred.pkl",
+        "full_raw_equal": true,
+        "id": "diagnostic-stage33-lambda-quoted-inferred",
+        "input_sha256": "58d1217c0dfb46d0a70047369c7b6a42825f68ac8ecb333b1adfc93a9d953af7"
+      },
+      {
+        "focused_input_path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage33-oracle-01/cases/function-let-inferred/input.pkl",
+        "focused_raw_equal": true,
+        "full_input_path": "/Users/cody.ij.hwang/Projects/pkl-rs/tests/fixtures/m2/diagnostic-stage33-function-let-inferred.pkl",
+        "full_raw_equal": true,
+        "id": "diagnostic-stage33-function-let-inferred",
+        "input_sha256": "e54a7372ac572890eb48295249146d273382056e24f9a9306bee324a2c9dbd87"
+      },
+      {
+        "focused_input_path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage33-oracle-01/cases/function-entry-inferred/input.pkl",
+        "focused_raw_equal": true,
+        "full_input_path": "/Users/cody.ij.hwang/Projects/pkl-rs/tests/fixtures/m2/diagnostic-stage33-function-entry-inferred.pkl",
+        "full_raw_equal": true,
+        "id": "diagnostic-stage33-function-entry-inferred",
+        "input_sha256": "8dfa338d20cc5069aa6760cb5e952be54654ed66cdeb3499f52eba1fe16f5c76"
+      },
+      {
+        "focused_input_path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage33-oracle-01/cases/function-body-earlier-error/input.pkl",
+        "focused_raw_equal": true,
+        "full_input_path": "/Users/cody.ij.hwang/Projects/pkl-rs/tests/fixtures/m2/diagnostic-stage33-function-body-earlier-error.pkl",
+        "full_raw_equal": true,
+        "id": "diagnostic-stage33-function-body-earlier-error",
+        "input_sha256": "900e268c14ef8d7ce0533356b201b818b3f3f84c811b45aa80d118b1fefa4160"
+      },
+      {
+        "focused_input_path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage33-oracle-01/cases/lambda-body-earlier-error/input.pkl",
+        "focused_raw_equal": true,
+        "full_input_path": "/Users/cody.ij.hwang/Projects/pkl-rs/tests/fixtures/m2/diagnostic-stage33-lambda-body-earlier-error.pkl",
+        "full_raw_equal": true,
+        "id": "diagnostic-stage33-lambda-body-earlier-error",
+        "input_sha256": "b586099cf8146de4ff3f0aa9372b41884afd0213f7b02b4cd2d8c25639376ba8"
+      },
+      {
+        "focused_input_path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage33-oracle-01/cases/function-const-before-parent/input.pkl",
+        "focused_raw_equal": true,
+        "full_input_path": "/Users/cody.ij.hwang/Projects/pkl-rs/tests/fixtures/m2/diagnostic-stage33-function-const-before-parent.pkl",
+        "full_raw_equal": true,
+        "id": "diagnostic-stage33-function-const-before-parent",
+        "input_sha256": "1459d98db811d6ac4807683fabf0a9586c517c29be3383ab0e7bfc1345a3b3ae"
+      },
+      {
+        "focused_input_path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage33-oracle-01/cases/let-valid-inferred/input.pkl",
+        "focused_raw_equal": true,
+        "full_input_path": "/Users/cody.ij.hwang/Projects/pkl-rs/tests/fixtures/m2/diagnostic-stage33-let-valid-inferred.pkl",
+        "full_raw_equal": true,
+        "id": "diagnostic-stage33-let-valid-inferred",
+        "input_sha256": "018426b2710f28b2b4ec81d725f2a1b250ae93015da96e00117092b28b544021"
+      },
+      {
+        "focused_input_path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage33-oracle-01/cases/lambda-argument-new/input.pkl",
+        "focused_raw_equal": true,
+        "full_input_path": "/Users/cody.ij.hwang/Projects/pkl-rs/tests/fixtures/m2/diagnostic-stage33-lambda-argument-new.pkl",
+        "full_raw_equal": true,
+        "id": "diagnostic-stage33-lambda-argument-new",
+        "input_sha256": "1270ba0c1f67469bfa76790623f07972f468b8fb7bf0a7f4629cabc2e6a1c647"
+      },
+      {
+        "focused_input_path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage33-oracle-02/cases/object-local-typed-valid/input.pkl",
+        "focused_raw_equal": true,
+        "full_input_path": "/Users/cody.ij.hwang/Projects/pkl-rs/tests/fixtures/m2/diagnostic-stage33-object-local-typed-valid.pkl",
+        "full_raw_equal": true,
+        "id": "diagnostic-stage33-object-local-typed-valid",
+        "input_sha256": "7301df4c09ccfbb17d4b9e84cab018e4a6445f4656f05470ed54eec6b72ca1a1"
+      },
+      {
+        "focused_input_path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage33-oracle-02/cases/function-if-let-paren-valid/input.pkl",
+        "focused_raw_equal": true,
+        "full_input_path": "/Users/cody.ij.hwang/Projects/pkl-rs/tests/fixtures/m2/diagnostic-stage33-function-if-let-paren-valid.pkl",
+        "full_raw_equal": true,
+        "id": "diagnostic-stage33-function-if-let-paren-valid",
+        "input_sha256": "61c0f9bed486fb33b9366d49b795ded9ee1e0f48cb0c25687d957e099e615980"
+      },
+      {
+        "focused_input_path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage33-oracle-03/cases/function-unused-lazy-control/input.pkl",
+        "focused_raw_equal": true,
+        "full_input_path": "/Users/cody.ij.hwang/Projects/pkl-rs/tests/fixtures/m2/diagnostic-stage33-function-unused-lazy-control.pkl",
+        "full_raw_equal": true,
+        "id": "diagnostic-stage33-function-unused-lazy-control",
+        "input_sha256": "1f03b7713603cf05e20212cee9a58c54b7e5b53985a061b32488e9acc23c219f"
+      },
+      {
+        "focused_input_path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage33-oracle-03/cases/local-const-unused-control/input.pkl",
+        "focused_raw_equal": true,
+        "full_input_path": "/Users/cody.ij.hwang/Projects/pkl-rs/tests/fixtures/m2/diagnostic-stage33-local-const-unused-control.pkl",
+        "full_raw_equal": true,
+        "id": "diagnostic-stage33-local-const-unused-control",
+        "input_sha256": "8cd2cfb7652be42b9f330fe99661641b9f4f984ae0f436ce34fc2bce9b2c7ee7"
+      },
+      {
+        "focused_input_path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage33-oracle-03/cases/function-typed-valid/input.pkl",
+        "focused_raw_equal": true,
+        "full_input_path": "/Users/cody.ij.hwang/Projects/pkl-rs/tests/fixtures/m2/diagnostic-stage33-function-typed-valid.pkl",
+        "full_raw_equal": true,
+        "id": "diagnostic-stage33-function-typed-valid",
+        "input_sha256": "9b080c2067e3835c59087f2abf7fa58d0862c0d813c5f38df6e125d41f0cc1cc"
+      }
+    ],
+    "selected_counts": {
+      "pass": 36
+    },
+    "shared_source_files": 117,
+    "supplemental_focused_source_files": 2
+  },
+  "frontend": {
+    "raw_passed": 15
+  },
+  "gates": {
+    "class-contract": 0,
+    "class-report": 0,
+    "development": 0,
+    "full": 1,
+    "report": 0,
+    "subset": 1
+  },
+  "implementation_commit": "571d46a69d22a373e14022b582459f9bb50738d8",
+  "language": {
+    "artifact_sha256": "7aaf4c99d2f7f0843247d956b71ac46110c119477acef23127aa6a9a2c717ae6",
+    "failures": {
+      "error-cycle": "oracle-error",
+      "error-remainder-zero": "mismatch"
+    },
+    "metamorphic": 88,
+    "raw_counts": {
+      "mismatch": 1,
+      "oracle-error": 1,
+      "pass": 3120
+    },
+    "selected": 3122
+  },
+  "lifecycle": {
+    "diagnostic_observations": [
+      {
+        "id": "attempt-1",
+        "mode": "retry",
+        "raw_equal": false
+      },
+      {
+        "id": "attempt-2",
+        "mode": "retry",
+        "raw_equal": false
+      },
+      {
+        "id": "after-close",
+        "mode": "retry",
+        "raw_equal": false
+      },
+      {
+        "id": "after-close",
+        "mode": "reentry",
+        "raw_equal": false
+      }
+    ],
+    "negative_java_compatibility_pass": false,
+    "protocol_pairs": 2
+  },
+  "performance_targets_established": false,
+  "pinned_gitlinks": {
+    "external/pkl": "e51fb2f91774265666f94980ec630db794a4db2d",
+    "external/pkl-pantry": "904a68184e54da378b0a0e8a911a3fab3956f693"
+  },
+  "platform_oracles": {
+    "cases": 36,
+    "complete_java_payloads_verified": true,
+    "errors": 27,
+    "fixed_uri": "file:///m2-platform.pkl",
+    "values": 9
+  },
+  "platforms": {
+    "mismatches": {
+      "browser": [
+        "regex-unicode-15-vs-16",
+        "regex-zero-width-supplementary"
+      ],
+      "node": [
+        "regex-unicode-15-vs-16",
+        "regex-zero-width-supplementary"
+      ],
+      "rust": [
+        "regex-unicode-15-vs-16",
+        "regex-zero-width-supplementary"
+      ]
+    },
+    "scenarios": 92,
+    "total": 6078
+  },
+  "predicate_owner_supplement": {
+    "artifact_sha256": "7aaf4c99d2f7f0843247d956b71ac46110c119477acef23127aa6a9a2c717ae6",
+    "cases": 1,
+    "counted_in_broad_comparison": false,
+    "counted_in_selected_additions": false,
+    "input_sha256": "41431f6e1d75705a53c8e03f24a0b5dd6da54cfe24c0f88b810efa04c6f0d557",
+    "raw_equal": true
+  },
+  "preserved_failed_processes": [
+    {
+      "exit_code": -15,
+      "label": "Preserved original Stage33 unsuccessful process; raw status and captures retained.",
+      "process": "target/m2/class-lifecycle-stage33-command-final-01/process.json",
+      "process_sha256": "c2edd9c0d8e3b9b93573f06f0ad068c869672bd05f868d908a0ae2ca365348e0"
+    },
+    {
+      "exit_code": -15,
+      "label": "Preserved original Stage33 unsuccessful process; raw status and captures retained.",
+      "process": "target/m2/language-stage33-command-final-01/process.json",
+      "process_sha256": "7615dfcf46443b18f48b5fe15de0f528140b137cc13316792a0046c1f7e485c3"
+    },
+    {
+      "exit_code": 1,
+      "label": "Preserved original Stage33 unsuccessful process; raw status and captures retained.",
+      "process": "target/m2/stage33-audit-independent-review-process-01/process.json",
+      "process_sha256": "33f4d91a9ed28b1e08971da6e79efb4146027419f69c53c4c9fc05ea727d1fe8"
+    },
+    {
+      "exit_code": 101,
+      "label": "Preserved original Stage33 unsuccessful process; raw status and captures retained.",
+      "process": "target/m2/stage33-core-native-01/process.json",
+      "process_sha256": "cbbd9676eb8b45c4e0dcbd31b2b7a4f42fbbb49d360deaa86d302c0aa5c5d938"
+    },
+    {
+      "exit_code": 1,
+      "label": "Preserved original Stage33 unsuccessful process; raw status and captures retained.",
+      "process": "target/m2/stage33-input-conservation-process-01/process.json",
+      "process_sha256": "d07bbeb9a3741d012f0618cf63adfdfd1f600daf088e6901494d68571996d44a"
+    },
+    {
+      "exit_code": 1,
+      "label": "Preserved original Stage33 unsuccessful process; raw status and captures retained.",
+      "process": "target/m2/validation-stage33-command-final-01/process.json",
+      "process_sha256": "24116a5961b5055a09c286144927c388923a3aa2f1f1830ef4d71cd370725758"
+    }
+  ],
+  "raw_original_files": 85390,
+  "runtime": {
+    "cases": 9,
+    "retained_diagnostic_mismatches": [
+      "forcing-cycle"
+    ]
+  },
+  "sequences": {
+    "calls": 2622,
+    "process_pairs": 302
+  },
+  "suites": [
+    {
+      "report": "target/m2/validation-stage33-final-02/report.json",
+      "report_sha256": "1ba6cbcd5e7dfce4f938373e567e98a65b602f0b0dcef41cfb0ff4a840345c51",
+      "sources": 3705
+    },
+    {
+      "report": "target/m2/language-stage33-final-02/report.json",
+      "report_sha256": "ec9af02e5914fd4a57be16aff67d61e7c954f953d3d65edb572a80d662bf988e",
+      "sources": 3263
+    },
+    {
+      "report": "target/m2/platforms-stage33-final-02/report.json",
+      "report_sha256": "255d852a0281c332a31259e017e54f13ec4a919126077b97dca9749606d93ef6",
+      "sources": 80
+    },
+    {
+      "report": "target/m2/frontend-stage33-final-03/report.json",
+      "report_sha256": "9f892aae7cafebd198b48d65eca53c03e4070fbed622292e3daa57ce8e4160c7",
+      "sources": 46
+    },
+    {
+      "report": "target/m2/runtime-stage33-final-02/report.json",
+      "report_sha256": "fb75b10b045d211fd5c549f2718a856c8164d80db91ec66bb22b05d0ca09c3ca",
+      "sources": 69
+    },
+    {
+      "report": "target/m2/lifecycle-stage33-final-02/report.json",
+      "report_sha256": "6e3dfd2a7514f2cea792ba071bd9c1b907fad265cdaf23297c108b7b8338355b",
+      "sources": 124
+    },
+    {
+      "report": "target/m2/class-lifecycle-stage33-final-02/report.json",
+      "report_sha256": "4f74ed061fc8fce97a4a47d3ab02786e22abd288b0c634ff65739a7b6236076c",
+      "sources": 431
+    }
+  ],
+  "unique_git_bound_files": 3705,
+  "validation": {
+    "ignored": 1,
+    "isolated_child_passes": 13,
+    "python_tests": 200,
+    "reported_rust_passes": 480,
+    "unique_rust_passes": 467
+  }
+}
