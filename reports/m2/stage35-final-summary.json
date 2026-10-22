@@ -1,0 +1,513 @@
+{
+  "schema": 1,
+  "scope": "Stage 35 declaration annotations and bounded initialization compatibility; M2 remains in progress.",
+  "baseline_commit": "dc5954c6f79ad9efd672ad6fa45f36c3e6f72631",
+  "allocation": {
+    "core": "gpt-6-astra / xhigh",
+    "oracle_and_independent_review": "gpt-6.1-sol / high",
+    "root": "Integration, local checks, evidence, documentation and Git mutations."
+  },
+  "changes": [
+    "Parse declaration annotations and initialize them through the shared VM with pinned ordering and const scope.",
+    "Trace retained class/alias annotation prefixes and publish member metadata only after successful initialization.",
+    "Provide seven builtin annotation classes with pinned defaults, lazy type checks and complete diagnostic source locations.",
+    "Exercise actual annotation-source Host reads, nested evaluation, GC and terminal cleanup.",
+    "Use one portable runner for all selected raw Java values and errors; preserve known failures."
+  ],
+  "validation": {
+    "required_checks_passed": true,
+    "required_checks": 7,
+    "metadata_commands": 1,
+    "source_stability": true,
+    "python_passes": 200,
+    "new_annotation_native_tests": 10,
+    "rust_harness_passes_including_child_replays": 495,
+    "rust_ignored": 1,
+    "rust_count_limit": "495 passed harness invocations include child repeats. Name-only dedup is not promoted to a distinct-test count because child output and harness output interleave."
+  },
+  "focused": {
+    "selected": 105,
+    "raw_matches": 103,
+    "baseline_raw_matches": 0,
+    "remaining": [
+      "annotation-stage35-deprecated-body-this",
+      "annotation-stage35-builtin-source-code-union-and-string"
+    ],
+    "candidate_sha256": "04780a951968c9d59e97c4815d585ba2c6a0a2c939846438315ba9e7ea812b26"
+  },
+  "portable": {
+    "status": "failed",
+    "targets": {
+      "node": {
+        "complete": true,
+        "executions": 210,
+        "passingExecutions": 206,
+        "mismatchingExecutions": 4,
+        "passingCases": 103,
+        "mismatchingCases": 2,
+        "mismatchIds": [
+          "annotation-stage35-deprecated-body-this",
+          "annotation-stage35-builtin-source-code-union-and-string"
+        ]
+      },
+      "browser": {
+        "complete": true,
+        "executions": 210,
+        "passingExecutions": 206,
+        "mismatchingExecutions": 4,
+        "passingCases": 103,
+        "mismatchingCases": 2,
+        "mismatchIds": [
+          "annotation-stage35-deprecated-body-this",
+          "annotation-stage35-builtin-source-code-union-and-string"
+        ]
+      }
+    },
+    "browser_errors": [],
+    "infrastructure_errors": [],
+    "source_or_artifact_changes": []
+  },
+  "persistent": {
+    "definitions": 160,
+    "executions": 320,
+    "raw_compared_calls": 2720,
+    "passing_calls": 2720,
+    "full_compatibility_claimed": false
+  },
+  "actual_source_host": {
+    "scenarios": 6,
+    "fresh_experiments": 12,
+    "raw_compared_calls": 68,
+    "all_protocols_and_calls_match": true,
+    "source_stability": true,
+    "scope": "Separate native development Host probe; resource I/O failure equivalence and product Host APIs remain open."
+  },
+  "standard_platforms": {
+    "total": 6078,
+    "oracle_passed": {
+      "rust": 6076,
+      "node": 6076,
+      "browser": 6076
+    },
+    "shared_engine_passed": 6078,
+    "compatibility_status": "fail",
+    "experiment_contract_status": "pass",
+    "known_gaps": [
+      "regex-unicode-15-vs-16",
+      "regex-zero-width-supplementary"
+    ]
+  },
+  "original_upstream": {
+    "inputs": 17,
+    "raw_api_matches": 7,
+    "full_snippet_contract_complete": false
+  },
+  "full_language": {
+    "selected": 3306,
+    "status_counts": {
+      "mismatch": 5,
+      "oracle-error": 1,
+      "pass": 3300
+    },
+    "failures": [
+      {
+        "id": "error-cycle",
+        "status": "oracle-error"
+      },
+      {
+        "id": "error-remainder-zero",
+        "status": "mismatch"
+      },
+      {
+        "id": "method-parent-stage34-generic-unknown-alias-element",
+        "status": "mismatch"
+      },
+      {
+        "id": "method-parent-stage34-listing-unknown-element",
+        "status": "mismatch"
+      },
+      {
+        "id": "annotation-stage35-deprecated-body-this",
+        "status": "mismatch"
+      },
+      {
+        "id": "annotation-stage35-builtin-source-code-union-and-string",
+        "status": "mismatch"
+      }
+    ],
+    "metamorphic_relations": 88,
+    "metamorphic_passes": 88,
+    "inventory": {
+      "cases": 4306,
+      "cases_by_execution": {
+        "ready": 3306,
+        "unimplemented": 960,
+        "unmapped": 40
+      },
+      "requirements": 474,
+      "requirements_by_kind": {
+        "language_parser": 137,
+        "language_token": 109,
+        "semantic-family": 30,
+        "specification": 198
+      }
+    },
+    "inventory_is_completion_percentage": false,
+    "full_gate_failure_reasons": 1954,
+    "source_stability": true,
+    "artifact_stability": true,
+    "candidate": {
+      "build": {
+        "command": [
+          "cargo",
+          "build",
+          "-p",
+          "pkl-runtime",
+          "--example",
+          "language_probe",
+          "--locked",
+          "--release",
+          "--target-dir",
+          "/Users/cody.ij.hwang/Projects/pkl-rs/target"
+        ],
+        "exit_code": 0,
+        "stderr_sha256": "93dedff702d0f360765cd1f13c171380fa49f7fedd85bf974f5c49cd03c7a6fb",
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "timed_out": false
+      },
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/release/examples/language_probe",
+      "sha256": "04780a951968c9d59e97c4815d585ba2c6a0a2c939846438315ba9e7ea812b26",
+      "source_binding": "recorded-build"
+    },
+    "path": "target/m2/language-stage35-final-01",
+    "state": "complete acquisition"
+  },
+  "known_unverified_scope": [
+    "General object.toString and List.map dependencies remain selected failures.",
+    "Untyped parameterized annotation generators trigger an upstream internal error and remain unsupported.",
+    "Full reflection, builtin member annotations, ModuleInfo, converters, deprecation logging and module initialization/cache behavior.",
+    "Remaining language/type/collection/diagnostic/upstream contracts; all nine M2 workstreams remain open.",
+    "Release operating-system/platform coverage, execution time and peak-RSS parity."
+  ],
+  "evidence": [
+    {
+      "path": "target/m2/validation-stage35-final-01/report.json",
+      "sha256": "07c6c54a8b356e9963b4ce5223d4734447785511a8eb9cce326ba82e9c713247"
+    },
+    {
+      "path": "target/m2/focused-stage35-final-01/report.json",
+      "sha256": "15e3c86280951eea68e80028985e347ebc03f057890c964be32029a3469b12e8"
+    },
+    {
+      "path": "target/m2/annotations-platform-stage35-final-01/execution.json",
+      "sha256": "6be3098fffe02f0c703f0a35f0ddf934e57702749417520c9cc8b58f50b1469d"
+    },
+    {
+      "path": "target/m2/class-lifecycle-stage35-final-01/report.json",
+      "sha256": "ce64242b3080b78d8c904e1efc331b22b777b5b6ec68600cb5a3d654e5a517bf"
+    },
+    {
+      "path": "target/m2/stage35-host-comparison-05/report.json",
+      "sha256": "e1b49a160d626b86f7444675aff32639e6e9637d285b78f51fca5d9d3be48b62"
+    },
+    {
+      "path": "target/m2/platforms-stage35-final-01/report.json",
+      "sha256": "b11184337c8b6964980d0d61b001975192213110b87a2ff30efdebfe0fd208f1"
+    },
+    {
+      "path": "target/m2/upstream-stage35-final-01/report.json",
+      "sha256": "c0ae29fc4f274faa9c59cf20eeb8305bf3fb4ca6e8202f53f39b3252a9f483e7"
+    },
+    {
+      "path": "target/m2/stage35-selection-independent-audit-01/report.json",
+      "sha256": "7354b16f66a993d5ff967d95f26c563265987c931f9d73e968c6d083db32a1b7"
+    },
+    {
+      "path": "target/m2/stage35-final-independent-audit-01/report.json",
+      "sha256": "1cc5e36f380ee096fe73fa16028a26bb5be4259b62b9e330ed3f5e82a27a108b"
+    },
+    {
+      "path": "target/m2/stage35-final-independent-audit-01/platform-extension-01/report.json",
+      "sha256": "0f040cabc295005a9467096d81d7cd257ae8ce66266ff295d824bcbe53f25027"
+    },
+    {
+      "path": "target/m2/language-stage35-final-01/report.json",
+      "sha256": "e34778f123492b1f0987a1076ad6628941abf49c8a6bf20506981a2a33d45c08"
+    },
+    {
+      "path": "target/m2/gates-stage35-final-01/report.json",
+      "sha256": "e46aa8d4e56bf3eb870363924921b1db3da1041b890b73d450f360e8cea00f3f"
+    },
+    {
+      "path": "target/m2/stage35-final-review-audit-01/report.json",
+      "sha256": "6d2a8b63541fab742c8446316973231556430c69617b0d9d9e393d92fed1e4d2"
+    },
+    {
+      "path": "target/m2/stage35-final-review-audit-01/full-language.json",
+      "sha256": "2b2ceab01447c0a84b8375d62543cfbd704a7f7fdf6edd5fabba65a5e5c1a129"
+    },
+    {
+      "path": "target/m2/frontend-stage35-final-01/report.json",
+      "sha256": "55b8bc2759c35f4d555ae6adbd2e11573389fa7e8d0f23de62947663ab2751e9"
+    },
+    {
+      "path": "target/m2/runtime-stage35-final-01/report.json",
+      "sha256": "45884121606979bf864f2a76e25628f993436a248eefc2f823882e09726abf39"
+    },
+    {
+      "path": "target/m2/lifecycle-stage35-final-01/report.json",
+      "sha256": "c23b50ecc51b06fa944e085fabb7849927442a6a3c3806694a1c4869b5ba5d87"
+    }
+  ],
+  "compatibility_complete": false,
+  "performance_targets_established": false,
+  "implementation_commit": "62919b7d233689dc5d4ff8210b23e998357d0ac2",
+  "gates": {
+    "report": 0,
+    "development": 1,
+    "subset": 1,
+    "full": 1
+  },
+  "gate_interpretation": "Integrity and compatibility gates remain distinct. Nonzero development, subset or full exits remain failures; no exceptions were added.",
+  "source_binding": {
+    "acquisition_helpers": [
+      {
+        "binding": "untracked acquisition helper; preserved by evidence hash, not falsely attributed to Git commit",
+        "path": "target/m2/stage35-tools/checks.py",
+        "sha256": "c1ac8168715bee2e94c064299290f0e173db1c1f118861d20d394d0033e249dc"
+      },
+      {
+        "binding": "untracked acquisition helper; preserved by evidence hash, not falsely attributed to Git commit",
+        "path": "target/m2/stage35-review-host-comparison.py",
+        "sha256": "76d64baf8cc9854476f4f5fdabaaf2fb9b8221766574f62631d8879b9b635123"
+      }
+    ],
+    "all_tracked_bytes_match_exact_commit_or_pinned_gitlink": true,
+    "details_sha256": "a268902c1c355713e755f90d63443c17c4ee9eeb848abf2065778b2dd6730049",
+    "groups": {
+      "annotation-host-final": 126,
+      "class-lifecycle": 453,
+      "focused-stage35-final-01": 105,
+      "frontend-stage35-final-01": 48,
+      "full-language-provisional-snapshots": 3451,
+      "lifecycle-stage35-final-01": 128,
+      "platforms-stage35-final-01": 86,
+      "portable-annotation-fixtures": 105,
+      "runtime-stage35-final-01": 72,
+      "upstream-stage35-final-01": 17,
+      "validation": 3917
+    },
+    "tracked_source_count": 3933,
+    "unique_sources": 3935
+  },
+  "original_selection_regression_audit": {
+    "count": 3201,
+    "input_changes": [],
+    "metadata_changes": [],
+    "order_preserved": true,
+    "raw_channel_changes": [
+      {
+        "after_status": "oracle-error",
+        "before_status": "oracle-error",
+        "channels": [
+          {
+            "after_sha256": "40c971e5b967080174fb036ffc97361f63986c4cbd74b6cfc03e4d4cdea3df50",
+            "before_sha256": "b064a5406d77bef7e70804ed526f903c48aa5465727292dd64c0850c0bda5bf9",
+            "channel": "stderr",
+            "runtime": "java"
+          }
+        ],
+        "classification": "Both runs remain oracle-error (unhandled NoClassDefFoundError for VmStackOverflowException); the differing guest frame count is preserved, with no normalization or pass claim.",
+        "id": "error-cycle",
+        "raw_difference_detail": [
+          {
+            "after": "\tSuppressed: Attached Guest Language Frames (1405)",
+            "before": "\tSuppressed: Attached Guest Language Frames (1442)",
+            "line": 1026
+          }
+        ]
+      }
+    ],
+    "status_changes": []
+  },
+  "environment": {
+    "platform": "macOS-27.0-arm64-arm-64bit-Mach-O",
+    "verification": "Local macOS execution; not hosted CI or release OS coverage."
+  },
+  "regressions": {
+    "frontend_cases": 15,
+    "frontend_matches": 15,
+    "runtime_cases": 9,
+    "runtime_matches": 8,
+    "lifecycle_protocol_cases": 2,
+    "lifecycle_diagnostic_mismatches": 4,
+    "performance_measurement_forks": 0
+  },
+  "archives": [
+    {
+      "schema": 1,
+      "group": "origins",
+      "scope": "Original Stage 35 captures, including failures, rejected candidates and incomplete observations.",
+      "implementation_commit": "62919b7d233689dc5d4ff8210b23e998357d0ac2",
+      "roots": [
+        "target/m2/stage35-annotation-sequences-01",
+        "target/m2/stage35-annotation-sequences-02",
+        "target/m2/stage35-builtin-direct-rows.json",
+        "target/m2/stage35-builtin-selected-oracle-01",
+        "target/m2/stage35-builtin-selected-rows.json",
+        "target/m2/stage35-core-matrix-01",
+        "target/m2/stage35-core-matrix-02",
+        "target/m2/stage35-core-matrix-03",
+        "target/m2/stage35-core-matrix-04",
+        "target/m2/stage35-core-matrix-05",
+        "target/m2/stage35-core-matrix-06",
+        "target/m2/stage35-core-review6-01",
+        "target/m2/stage35-core-sequences-01",
+        "target/m2/stage35-core-sequences-02",
+        "target/m2/stage35-core-tools",
+        "target/m2/stage35-host-comparison-01",
+        "target/m2/stage35-host-comparison-02",
+        "target/m2/stage35-host-comparison-03",
+        "target/m2/stage35-host-comparison-04",
+        "target/m2/stage35-host-observation-01",
+        "target/m2/stage35-host-observation-02",
+        "target/m2/stage35-oracle-matrix-01",
+        "target/m2/stage35-oracle-matrix-02",
+        "target/m2/stage35-parameter-order-oracle-01",
+        "target/m2/stage35-platform-payloads-01",
+        "target/m2/stage35-platform-payloads-02",
+        "target/m2/stage35-portable-harness-regression-01",
+        "target/m2/stage35-review-deprecation-frame-01",
+        "target/m2/stage35-review-host-comparison.py",
+        "target/m2/stage35-review-member-lexical-01",
+        "target/m2/stage35-review-selected-oracle-01",
+        "target/m2/stage35-review-selected-rows.json",
+        "target/m2/stage35-review-selected-rust-01",
+        "target/m2/stage35-review-selected-rust-02",
+        "target/m2/stage35-selected-oracle-01",
+        "target/m2/stage35-selected-rows.json",
+        "target/m2/stage35-selected-sequences-oracle-01",
+        "target/m2/stage35-selection-scope.json",
+        "target/m2/stage35-sequence-rows.json",
+        "target/m2/stage35-upstream-annotation-01"
+      ],
+      "exclusions": [
+        {
+          "path": "target/m2/class-lifecycle-stage35-final-01/build",
+          "reason": "Cargo build cache; pruned before traversal."
+        },
+        {
+          "path": "target/m2/lifecycle-stage35-final-01/build",
+          "reason": "Cargo build cache; pruned before traversal."
+        },
+        {
+          "path": "target/m2/stage35-core-cargo",
+          "reason": "Cargo build cache; pruned before traversal."
+        },
+        {
+          "path": "target/m2/stage35-host-comparison-01/build",
+          "reason": "Cargo build cache; pruned before traversal."
+        },
+        {
+          "path": "target/m2/stage35-host-comparison-02/build",
+          "reason": "Cargo build cache; pruned before traversal."
+        },
+        {
+          "path": "target/m2/stage35-host-comparison-03/build",
+          "reason": "Cargo build cache; pruned before traversal."
+        },
+        {
+          "path": "target/m2/stage35-host-comparison-04/build",
+          "reason": "Cargo build cache; pruned before traversal."
+        },
+        {
+          "path": "target/m2/stage35-host-comparison-05/build",
+          "reason": "Cargo build cache; pruned before traversal."
+        }
+      ],
+      "original_files": 10337,
+      "original_bytes": 82566303,
+      "archive": "reports/m2/stage35-origins-evidence.tar.gz",
+      "archive_bytes": 24017058,
+      "archive_sha256": "54cf6094b4f46dc5d91136357ae8b0dc4510b8df9d1bae44aacdb2bc545942cd",
+      "inventory_files": 10338,
+      "original_source_stability": true
+    },
+    {
+      "schema": 1,
+      "group": "final",
+      "scope": "Original Stage 35 captures, including failures, rejected candidates and incomplete observations.",
+      "implementation_commit": "62919b7d233689dc5d4ff8210b23e998357d0ac2",
+      "roots": [
+        "target/m2/annotations-platform-stage35-final-01",
+        "target/m2/class-lifecycle-stage35-final-01",
+        "target/m2/focused-stage35-final-01",
+        "target/m2/frontend-stage35-final-01",
+        "target/m2/gates-stage35-final-01",
+        "target/m2/language-stage35-final-01",
+        "target/m2/lifecycle-stage35-final-01",
+        "target/m2/platforms-stage35-final-01",
+        "target/m2/runtime-stage35-final-01",
+        "target/m2/stage35-executions",
+        "target/m2/stage35-final-independent-audit-01",
+        "target/m2/stage35-final-review-audit-01",
+        "target/m2/stage35-host-comparison-05",
+        "target/m2/stage35-review-final-identities.json",
+        "target/m2/stage35-review-selected-rust-03",
+        "target/m2/stage35-selection-independent-audit-01",
+        "target/m2/stage35-tools",
+        "target/m2/upstream-stage35-final-01",
+        "target/m2/validation-stage35-final-01"
+      ],
+      "exclusions": [
+        {
+          "path": "target/m2/class-lifecycle-stage35-final-01/build",
+          "reason": "Cargo build cache; pruned before traversal."
+        },
+        {
+          "path": "target/m2/lifecycle-stage35-final-01/build",
+          "reason": "Cargo build cache; pruned before traversal."
+        },
+        {
+          "path": "target/m2/stage35-core-cargo",
+          "reason": "Cargo build cache; pruned before traversal."
+        },
+        {
+          "path": "target/m2/stage35-host-comparison-01/build",
+          "reason": "Cargo build cache; pruned before traversal."
+        },
+        {
+          "path": "target/m2/stage35-host-comparison-02/build",
+          "reason": "Cargo build cache; pruned before traversal."
+        },
+        {
+          "path": "target/m2/stage35-host-comparison-03/build",
+          "reason": "Cargo build cache; pruned before traversal."
+        },
+        {
+          "path": "target/m2/stage35-host-comparison-04/build",
+          "reason": "Cargo build cache; pruned before traversal."
+        },
+        {
+          "path": "target/m2/stage35-host-comparison-05/build",
+          "reason": "Cargo build cache; pruned before traversal."
+        }
+      ],
+      "original_files": 61871,
+      "original_bytes": 154506318,
+      "archive": "reports/m2/stage35-final-evidence.tar.gz",
+      "archive_bytes": 25781698,
+      "archive_sha256": "970653da4af67682bba803020543666790712a666e3f941ebcc5e57ab1eb154b",
+      "inventory_files": 61872,
+      "original_source_stability": true
+    }
+  ],
+  "preserved_failures": [
+    "Initial annotation lexer, diagnostic qualification, spread/value frame and source-origin failures remain captured.",
+    "Intermediate nonforcing object.toString candidates were rejected even when the selected matrix passed; Java force semantics were not replaced.",
+    "The initial assumed SourceCode Go default was disproved by Java; the original failed acquisition and corrected undefined result remain separate.",
+    "Host comparison 01 had source changes and parse failures; later diagnostic mismatches and final full matches remain separate captures.",
+    "Untyped parameterized annotation generators trigger a pinned Java internal error; Rust Unsupported is not counted as compatible.",
+    "Original upstream renderer/warning/API mismatches, module-cache and resource I/O failure gaps remain open."
+  ]
+}

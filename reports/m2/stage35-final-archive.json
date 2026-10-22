@@ -1,0 +1,68 @@
+{
+  "schema": 1,
+  "group": "final",
+  "scope": "Original Stage 35 captures, including failures, rejected candidates and incomplete observations.",
+  "implementation_commit": "62919b7d233689dc5d4ff8210b23e998357d0ac2",
+  "roots": [
+    "target/m2/annotations-platform-stage35-final-01",
+    "target/m2/class-lifecycle-stage35-final-01",
+    "target/m2/focused-stage35-final-01",
+    "target/m2/frontend-stage35-final-01",
+    "target/m2/gates-stage35-final-01",
+    "target/m2/language-stage35-final-01",
+    "target/m2/lifecycle-stage35-final-01",
+    "target/m2/platforms-stage35-final-01",
+    "target/m2/runtime-stage35-final-01",
+    "target/m2/stage35-executions",
+    "target/m2/stage35-final-independent-audit-01",
+    "target/m2/stage35-final-review-audit-01",
+    "target/m2/stage35-host-comparison-05",
+    "target/m2/stage35-review-final-identities.json",
+    "target/m2/stage35-review-selected-rust-03",
+    "target/m2/stage35-selection-independent-audit-01",
+    "target/m2/stage35-tools",
+    "target/m2/upstream-stage35-final-01",
+    "target/m2/validation-stage35-final-01"
+  ],
+  "exclusions": [
+    {
+      "path": "target/m2/class-lifecycle-stage35-final-01/build",
+      "reason": "Cargo build cache; pruned before traversal."
+    },
+    {
+      "path": "target/m2/lifecycle-stage35-final-01/build",
+      "reason": "Cargo build cache; pruned before traversal."
+    },
+    {
+      "path": "target/m2/stage35-core-cargo",
+      "reason": "Cargo build cache; pruned before traversal."
+    },
+    {
+      "path": "target/m2/stage35-host-comparison-01/build",
+      "reason": "Cargo build cache; pruned before traversal."
+    },
+    {
+      "path": "target/m2/stage35-host-comparison-02/build",
+      "reason": "Cargo build cache; pruned before traversal."
+    },
+    {
+      "path": "target/m2/stage35-host-comparison-03/build",
+      "reason": "Cargo build cache; pruned before traversal."
+    },
+    {
+      "path": "target/m2/stage35-host-comparison-04/build",
+      "reason": "Cargo build cache; pruned before traversal."
+    },
+    {
+      "path": "target/m2/stage35-host-comparison-05/build",
+      "reason": "Cargo build cache; pruned before traversal."
+    }
+  ],
+  "original_files": 61871,
+  "original_bytes": 154506318,
+  "archive": "reports/m2/stage35-final-evidence.tar.gz",
+  "archive_bytes": 25781698,
+  "archive_sha256": "970653da4af67682bba803020543666790712a666e3f941ebcc5e57ab1eb154b",
+  "inventory_files": 61872,
+  "original_source_stability": true
+}

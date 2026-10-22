@@ -494,11 +494,13 @@ Node·Chromium은 각각 90개 개발 시나리오를 통과했습니다. 새 �
 
 구현은 `b63163d`에 커밋·푸시했습니다. [최종 로컬 검증](reports/m2/stage34-final-summary.json)에서 전체 선택 코퍼스 3,201개 중 3,197개가 일치했고, 나머지 연산과 Dynamic `toString()` 두 사례의 불일치 3개·순환 참조 oracle 오류 1개를 유지했습니다. 변형 관계 88개와 순차 계약 2,622개 호출은 일치합니다. 전체 gate의 실패 이유는 1,952개이며 새 예외를 추가하지 않아 개발 gate도 실패합니다. 필수 로컬 검사 통과를 호환성 완료로 바꾸지 않습니다. 원래 두 Dynamic 사례는 부모 추론 수정 이후 더 뒤의 `toString` 오류에 도달하므로 수정 전후 오류 바이트 자체가 같다는 뜻은 아닙니다. 원본 입력과 양쪽 오류 기록을 모두 보존합니다. M2 전체·릴리스 플랫폼·성능 목표는 미완료입니다.
 
-### Stage 35 — annotation과 선언 초기화 (최종 검증 중)
+### Stage 35 — annotation과 선언 초기화
 
 annotation 구문을 parser·resolver·공통 VM에 연결하고 모듈·클래스·별칭·속성·메서드의 초기화 순서를 구현했습니다. 클래스·별칭 singleton은 annotation 실행 전에 게시하고, 실패하면 성공한 annotation prefix와 부분 선언 상태를 보존합니다. 속성·메서드 annotation은 해당 선언의 타입·modifier 검사가 성공한 뒤 게시하며 실패한 임시 목록은 회수합니다. annotation의 일반 필드는 지연 평가하고 generator·spread와 메서드의 첫 Deprecated.message는 Java와 같은 시점에 실행합니다.
 
-구현은 `gpt-6-astra / xhigh`, Java oracle과 독립 검토는 각각 `gpt-6.1-sol / high`에 배정했습니다. 새 선택 사례 105개와 같은 evaluator의 순차 정의 9개를 추가했습니다. [구현 체크포인트](reports/m2/stage35-implementation-checkpoint.json)의 필수 로컬 검사 7개와 Python 200개가 통과했습니다. 최종 native·Node·Chromium에서 새 105개 중 각각 103개가 일치하며 플랫폼은 각 사례를 두 번씩 실행했습니다. 기존 151개와 새 9개를 합한 순차 정의 160개·호출 2,720개는 모두 일치했고 실제 소스 Host 비교 68개 호출과 프로토콜도 일치합니다. 원본 upstream annotation 17개는 현재 API 경계에서 7개가 일치하며 나머지 출력기 등의 의존성은 유지합니다. 기존 3,201개와 새 사례를 합한 3,306개의 전체 언어 수집과 최종 gate·증거 봉인은 아직 진행 중입니다. 이 체크포인트를 전체 M2 완료로 계산하지 않습니다.
+구현은 `gpt-6-astra / xhigh`, Java oracle과 독립 검토는 각각 `gpt-6.1-sol / high`에 배정하고 `62919b7`에 커밋·푸시했습니다. 새 선택 사례 105개와 같은 evaluator의 순차 정의 9개를 추가했습니다. [최종 요약](reports/m2/stage35-final-summary.json)의 필수 로컬 검사 7개와 Python 200개가 통과했습니다. Rust 로그의 성공 495회는 자식 process 재실행을 포함한 harness 집계이며 고유 테스트 수로 표시하지 않습니다. 최종 native·Node·Chromium에서 새 105개 중 각각 103개가 일치하며 플랫폼은 각 사례를 두 번씩 실행했습니다. 기존 151개와 새 9개를 합한 순차 정의 160개·호출 2,720개는 모두 일치했고 실제 소스 Host 비교 68개 호출과 프로토콜도 일치합니다. 원본 upstream annotation 17개는 현재 API 경계에서 7개가 일치하며 나머지 출력기 등의 의존성은 유지합니다.
+
+전체 선택 코퍼스 3,306개 중 3,300개와 변형 관계 88개가 일치했습니다. 불일치 5개·순환 참조 oracle 오류 1개를 유지하며 report 무결성 검사는 통과하지만 개발·엄격한 선택·전체 완료 gate는 실패합니다. 전체 gate의 실패 이유는 1,954개입니다. 독립 감사는 기존 3,201개의 정의·입력·순서·판정과 Rust 원시 출력이 모두 유지됨을 확인했습니다. 이미 실패한 Java cycle 오류의 guest frame 수 변화는 원본 그대로 보존합니다. [탐색 증거](reports/m2/stage35-origins-evidence.tar.gz)와 [최종 증거](reports/m2/stage35-final-evidence.tar.gz)에 실패 후보·전체 취득·검사·감사를 보존하고, 소스는 정확한 구현 커밋에 연결했습니다. [구현 체크포인트](reports/m2/stage35-implementation-checkpoint.json)는 전체 취득 완료 전의 역사적 기록으로 유지합니다. 이 단계의 마감을 전체 M2 완료로 계산하지 않습니다.
 
 Annotation·Deprecated·Since·Unlisted·AlsoKnownAs·DocExample·SourceCode의 상속·필드 타입·기본값을 연결했습니다. SourceCode.language는 값을 지정하지 않으면 undefined이며 Go를 기본값으로 선택하지 않습니다. 실제 Pkl 소스의 annotation에서 resource read·Host 재진입·실패 후 재시도를 검사하고, GC·취소·timeout·close는 별도 native 검사로 추적합니다. 전체 reflection·builtin annotation metadata·ModuleInfo 버전 검사·converter·deprecation logger·module cache는 후속 범위입니다.
 
@@ -513,7 +515,7 @@ Stage 34에서 class·Listing 반환 타입과 상속 속성의 선택된 inferr
 3. annotation과 남은 클래스 초기화·modifier·재귀 타입·reflection 규칙을 확장합니다. 실제 source의 초기화 중 Host 중단·재진입, 미게시 local 선언의 Java 내부 오류와 순환 계층의 비종료 관찰은 원래 실패·미실행 상태를 보존하며 별도로 검증합니다.
 4. 모듈 클래스 상속·선언 출처·ModuleOutput override를 M2 의미론에 연결하고 실제 모듈 로딩·URI/source cache identity·Host는 M4 경로와 통합합니다. primitive missing-method 진단도 실제 멤버 목록을 사용하도록 보완합니다.
 
-다음 기능도 한 evaluator의 상태·오류 순서·GC root·Host 재진입·terminal 해제를 함께 검증해야 합니다. 현재 선택된 3,201개 독립 식과 88개 변형 관계, 별도 클래스·별칭 순차 계약 2,622개 호출을 회귀 기준으로 유지하고 Java 원시 결과를 Rust 출력으로 대체하지 않습니다. 순차 계약의 성공은 전체 클래스·module API나 M2 완료, 메모리 목표 달성을 뜻하지 않습니다.
+다음 기능도 한 evaluator의 상태·오류 순서·GC root·Host 재진입·terminal 해제를 함께 검증해야 합니다. 현재 선택된 3,306개 독립 식과 88개 변형 관계, 별도 클래스·별칭 순차 계약 2,720개 호출을 회귀 기준으로 유지하고 Java 원시 결과를 Rust 출력으로 대체하지 않습니다. 순차 계약의 성공은 전체 클래스·module API나 M2 완료, 메모리 목표 달성을 뜻하지 않습니다.
 
 [원본 API 사례](external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/api/reference.pkl)는 `fixed` 이후에도 Map·`map`/`join`·`pkl:math`·renderer converter를 요구하며, [원본 basic 사례](external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/basic/reference.pkl)는 module amendment·`pkl:test`·PCF 출력에 의존합니다. 이 M3·M4 연결을 별도 작업으로 추적하며 원래 snippet/API 실행 조건을 유지합니다. Stage 13의 Reference 탐색 재비교에서는 이전 불일치 4개가 해결되어 191개 중 173개 일치·18개 불일치가 남았습니다. 남은 불일치를 삭제하거나 개발 예외로 바꾸지 않고 단계별로 재검증합니다. 이는 Stage 12에서 수정한 순차 클래스 진단 불일치 22개와 별도 집계입니다.
 

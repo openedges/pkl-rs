@@ -45,22 +45,44 @@ Stage 33 aligns non-local const owners and method/lambda inferred-parent boundar
 Stage 34 uses return-type defaults and inherited property contexts for inferred parents.
 These checkpoints do not complete the language milestone.
 
-## Stage 35 implementation checkpoint
+## Stage 35 local verification checkpoint
 
 Declaration annotations now run through the shared parser, resolver and VM,
 including ordered initialization, retained class/alias annotation prefixes,
 member publication, seven builtin classes and source-driven Host suspension.
-The [implementation checkpoint](stage35-implementation-checkpoint.json) records
-seven passing local checks, all 2,720 persistent calls, and 68 actual-source Host
-call comparisons. The 105 new cases match Java in 103 cases on native, Node and
-Chromium; the portable targets run every case twice. General object `toString`
-and `List.map` failures remain selected, without new exceptions.
+Implementation `62919b7d233689dc5d4ff8210b23e998357d0ac2` is committed and pushed.
+The [final summary](stage35-final-summary.json) records **3,300 raw matches out of
+3,306 selected cases**, with five mismatches and one cycle oracle error retained.
+All 88 metamorphic relations, 2,720 persistent calls and 68 actual-source Host
+call comparisons match. The 105 new cases improve from zero to 103 matches on
+native; Node and Chromium also match 103 cases, executing each case twice.
+General object `toString` and `List.map` failures remain selected, without new
+exceptions. Original upstream annotation inputs match 7/17 at the tested API
+boundary; their full snippet/output contracts remain open.
 
-The complete 3,306-case language acquisition is still running. Its final gate
-results and evidence archive will be recorded separately. This checkpoint does
-not close M2, full upstream snippet/output contracts, release platform coverage,
-or execution-time and memory targets. The completed Stage 34 acquisition below
-remains the last finalized full language report.
+Seven required local checks and 200 Python tests pass. The Rust test log records
+495 passing harness invocations, including child repeats, and one ignored test;
+this is not a distinct-test count. Source and artifact stability checks pass.
+Report integrity passes, while development, strict subset and full completion
+gates fail. The full gate retains 1,954 failure reasons. The overlapping inventory
+contains 474 requirements, 20 partial mappings and 4,306 accounting rows:
+3,306 ready, 960 unimplemented and 40 unmapped. These are not completion percentages.
+
+Independent audits bind the final sources to the exact implementation commit and
+verify raw evidence. All original 3,201 case definitions, inputs, ordering and
+statuses are preserved, with identical Rust output/error bytes. The already-failed
+Java cycle diagnostic changes its guest-frame count; both captures remain
+unaltered and classified as an oracle error. The [origins archive](stage35-origins-evidence.tar.gz)
+and [final archive](stage35-final-evidence.tar.gz) retain failed candidates,
+Java observations, completed checks and audits; their
+[origins identity](stage35-origins-archive.json) and
+[final identity](stage35-final-archive.json) record caches pruned before traversal.
+The earlier [implementation checkpoint](stage35-implementation-checkpoint.json)
+remains an unchanged historical record from before the full acquisition finished.
+
+**M2 remains in progress.** All nine workstreams retain completion conditions.
+Local macOS checks do not establish full upstream execution, release-platform
+coverage, public API completeness, execution-time parity or peak-RSS parity.
 
 ## Stage 34 local verification checkpoint
 

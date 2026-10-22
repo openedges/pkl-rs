@@ -1,0 +1,89 @@
+{
+  "schema": 1,
+  "group": "origins",
+  "scope": "Original Stage 35 captures, including failures, rejected candidates and incomplete observations.",
+  "implementation_commit": "62919b7d233689dc5d4ff8210b23e998357d0ac2",
+  "roots": [
+    "target/m2/stage35-annotation-sequences-01",
+    "target/m2/stage35-annotation-sequences-02",
+    "target/m2/stage35-builtin-direct-rows.json",
+    "target/m2/stage35-builtin-selected-oracle-01",
+    "target/m2/stage35-builtin-selected-rows.json",
+    "target/m2/stage35-core-matrix-01",
+    "target/m2/stage35-core-matrix-02",
+    "target/m2/stage35-core-matrix-03",
+    "target/m2/stage35-core-matrix-04",
+    "target/m2/stage35-core-matrix-05",
+    "target/m2/stage35-core-matrix-06",
+    "target/m2/stage35-core-review6-01",
+    "target/m2/stage35-core-sequences-01",
+    "target/m2/stage35-core-sequences-02",
+    "target/m2/stage35-core-tools",
+    "target/m2/stage35-host-comparison-01",
+    "target/m2/stage35-host-comparison-02",
+    "target/m2/stage35-host-comparison-03",
+    "target/m2/stage35-host-comparison-04",
+    "target/m2/stage35-host-observation-01",
+    "target/m2/stage35-host-observation-02",
+    "target/m2/stage35-oracle-matrix-01",
+    "target/m2/stage35-oracle-matrix-02",
+    "target/m2/stage35-parameter-order-oracle-01",
+    "target/m2/stage35-platform-payloads-01",
+    "target/m2/stage35-platform-payloads-02",
+    "target/m2/stage35-portable-harness-regression-01",
+    "target/m2/stage35-review-deprecation-frame-01",
+    "target/m2/stage35-review-host-comparison.py",
+    "target/m2/stage35-review-member-lexical-01",
+    "target/m2/stage35-review-selected-oracle-01",
+    "target/m2/stage35-review-selected-rows.json",
+    "target/m2/stage35-review-selected-rust-01",
+    "target/m2/stage35-review-selected-rust-02",
+    "target/m2/stage35-selected-oracle-01",
+    "target/m2/stage35-selected-rows.json",
+    "target/m2/stage35-selected-sequences-oracle-01",
+    "target/m2/stage35-selection-scope.json",
+    "target/m2/stage35-sequence-rows.json",
+    "target/m2/stage35-upstream-annotation-01"
+  ],
+  "exclusions": [
+    {
+      "path": "target/m2/class-lifecycle-stage35-final-01/build",
+      "reason": "Cargo build cache; pruned before traversal."
+    },
+    {
+      "path": "target/m2/lifecycle-stage35-final-01/build",
+      "reason": "Cargo build cache; pruned before traversal."
+    },
+    {
+      "path": "target/m2/stage35-core-cargo",
+      "reason": "Cargo build cache; pruned before traversal."
+    },
+    {
+      "path": "target/m2/stage35-host-comparison-01/build",
+      "reason": "Cargo build cache; pruned before traversal."
+    },
+    {
+      "path": "target/m2/stage35-host-comparison-02/build",
+      "reason": "Cargo build cache; pruned before traversal."
+    },
+    {
+      "path": "target/m2/stage35-host-comparison-03/build",
+      "reason": "Cargo build cache; pruned before traversal."
+    },
+    {
+      "path": "target/m2/stage35-host-comparison-04/build",
+      "reason": "Cargo build cache; pruned before traversal."
+    },
+    {
+      "path": "target/m2/stage35-host-comparison-05/build",
+      "reason": "Cargo build cache; pruned before traversal."
+    }
+  ],
+  "original_files": 10337,
+  "original_bytes": 82566303,
+  "archive": "reports/m2/stage35-origins-evidence.tar.gz",
+  "archive_bytes": 24017058,
+  "archive_sha256": "54cf6094b4f46dc5d91136357ae8b0dc4510b8df9d1bae44aacdb2bc545942cd",
+  "inventory_files": 10338,
+  "original_source_stability": true
+}
