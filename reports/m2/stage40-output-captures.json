@@ -1,0 +1,46 @@
+{
+  "archive_integrity_exit": 0,
+  "archives": [
+    {
+      "bytes": 21550437,
+      "path": "reports/m2/stage40-output-comparisons.tar.gz",
+      "payload_files": 21951,
+      "sha256": "a481980c02268bb1ee93f18bcd165951db496bbb17bab0c3c5d742d369769871",
+      "uncompressed_payload_bytes": 163791439
+    }
+  ],
+  "exact_cache_exclusions_before_traversal": [
+    "target/m2/stage40-trace-development-02/build"
+  ],
+  "full_m2_complete": false,
+  "implementation_commit": "7c60a2c43f3aa64306709c5dac4be3dce7ea4a6c",
+  "known_failures": "Original30 native/Node/Chromium each retain 30 unsupported runs, 2 read* mismatches and 2 oracle-contract mismatches among 60 calls. Full45 trace retains 32 Java oracle errors among 90 calls per target; standard comparison retains 2 regex gaps. Earlier native failures remain in the archive.",
+  "remaining": "Full native language acquisition/gates, final regression publication, remaining implementation/component evidence publication and final closeout remain pending. The independent persistent-evaluator regression has completed separately; it is not part of this archive.",
+  "schema": 1,
+  "scope": "Closed Stage40 original module, standard-platform, output trace and UTF-16 comparisons, including the original earlier native failures. Full language/persistent final acquisitions are excluded while in progress. Required Rust checks are already archived separately.",
+  "source_binding_qualification": "Checkpoint02 comparison files predate the final test-only corrections. The archived independent source-diff audit preserves all 18 changed file hashes and the new cfg(test) graph module; it does not claim whole-file equality with the committed tree. Fresh required checks ran the final source tree and are in stage40-required-checks.tar.gz.",
+  "source_changes_during_publication": [],
+  "source_roots": [
+    "target/m2/stage40-core-checkpoint-02",
+    "target/m2/stage40-b-checkpoint02-summary-01",
+    "target/m2/stage40-checkpoint02-platform-audit-01",
+    "target/m2/stage40-checkpoint02-source-diff-02",
+    "target/m2/stage40-original30-java-01",
+    "target/m2/stage40-original30-java-audit-01",
+    "target/m2/stage40-original30-native-01",
+    "target/m2/stage40-original30-native-audit-01",
+    "target/m2/stage40-original30-native-02",
+    "target/m2/stage40-original30-native-audit-02",
+    "target/m2/stage40-platforms-command-02",
+    "target/m2/stage40-platforms-development-02",
+    "target/m2/stage40-output-portable-command-02",
+    "target/m2/stage40-module-output-platform-development-02",
+    "target/m2/stage40-trace-development-02",
+    "target/m2/stage40-trace-platform-development-02",
+    "target/m2/stage40-trace-offline-gates-02",
+    "target/m2/stage40-pcf-string-output-oracle-01",
+    "target/m2/stage40-pcf-string-output-platform-development-02",
+    "target/m2/stage40-manifest-refresh-02",
+    "target/m2/stage40-manifest-refresh-03"
+  ]
+}

@@ -49,7 +49,38 @@ initialization and first-path evaluation within one admitted Host context.
 Stage 38 adds resource-read syntax, the shared scalar default policy,
 and generic method-lookup diagnostics.
 Stage 39 connects original module frontend commands and typed failure origins.
+Stage 40 connects actual module output, PCF continuations and lossless string
+output across the shared engine and bindings.
 These checkpoints do not complete the language milestone.
+
+## Stage 40 implementation and output comparisons
+
+The [implementation checkpoint](stage40-implementation-checkpoint.json) records
+commit `7c60a2c`, with all five required local Rust checks passing. The
+[check archive](stage40-required-checks.tar.gz) preserves 3,897 source files and
+raw command results. The 601 passing Rust harness invocations include child
+invocations and are not a distinct feature or test count.
+
+The [output comparison captures](stage40-output-captures.json) preserve 21,951
+files from original Java/native module runs, actual Node and Chromium execution,
+the full output trace selection and independent audits. The earlier native
+candidate's failures remain alongside the corrected candidate. Of 60 original
+module calls per target, 26 match, 30 are unsupported, two differ at `read*`
+syntax, and two retain unmet original Java execution prerequisites. Each portable
+target matches all 384 repeated UTF-16 output cases.
+
+The standard platform corpus retains 6,076 Java matches out of 6,078 results,
+including the two existing regex gaps, and 92 passing lifecycle scenarios per
+portable target. Each target's 90 full-trace executions contain 58 matches and
+32 Java oracle errors. Integrity success does not change these failures into
+compatibility passes.
+
+The comparison candidate predates the final test-only corrections. Archived
+audits retain the exact changed file hashes and identify the differences; they
+do not claim current whole-source equality. Required checks ran the final files.
+The complete native language acquisition, remaining evidence publication and
+Stage 40 closeout are still in progress. M2 and product/performance gates remain
+open.
 
 ## Stage 39 local verification checkpoint
 
