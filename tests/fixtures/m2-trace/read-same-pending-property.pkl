@@ -1,0 +1,4 @@
+shared=read("life:resource")
+pending=read("life:resource")+shared
+result=pending
+stable="ok"

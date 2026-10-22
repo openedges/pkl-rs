@@ -1,0 +1,4 @@
+obj=new Dynamic { x=read("life:text") }
+result=trace(obj).x
+callback=trace(obj).x
+stable="ok"

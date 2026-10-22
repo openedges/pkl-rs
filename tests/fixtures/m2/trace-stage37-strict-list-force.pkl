@@ -1,0 +1,2 @@
+obj=new Dynamic { x=read("life:text") }
+result=trace(List(obj)).length

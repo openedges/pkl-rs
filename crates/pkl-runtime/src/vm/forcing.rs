@@ -19,12 +19,17 @@ struct ReadBoundary {
     entry: bool,
     stack: usize,
 }
+pub(super) enum FinishAction {
+    ReturnValue,
+    ObjectString,
+    Trace(super::tracing::TraceRun),
+}
 pub(super) struct ForceRun {
     root: Value,
     pending_render_key: Option<Value>,
     pending_render_comparison: Option<(Value, Value)>,
     allow_undefined: bool,
-    stringify: bool,
+    finish: FinishAction,
     renderer: Option<crate::diagnostic_values::RenderRun>,
     tasks: Vec<Task>,
     /// Only unfinished calls own rollback of a published force marker.
@@ -32,6 +37,16 @@ pub(super) struct ForceRun {
     awaiting: Option<ReadBoundary>,
 }
 impl ForceRun {
+    pub(super) fn is_trace(&self) -> bool {
+        matches!(self.finish, FinishAction::Trace(_))
+    }
+    pub(super) fn acknowledge_log(&mut self) -> Result<(), RuntimeError> {
+        let FinishAction::Trace(trace) = &mut self.finish else {
+            return Err(invalid("log outside trace continuation"));
+        };
+        trace.acknowledge()
+    }
+
     pub(super) fn roots(&self, roots: &mut Vec<Value>) {
         roots.push(self.root.clone());
         roots.extend(self.pending_render_key.iter().cloned());
@@ -73,6 +88,13 @@ impl ForceRun {
 
 impl Vm {
     pub(super) fn begin_object_string(&mut self, root: Value) -> Result<(), RuntimeError> {
+        self.begin_forcing(root, FinishAction::ObjectString)
+    }
+    pub(super) fn begin_forcing(
+        &mut self,
+        root: Value,
+        finish: FinishAction,
+    ) -> Result<(), RuntimeError> {
         let frame = self
             .frames
             .last_mut()
@@ -84,7 +106,7 @@ impl Vm {
             pending_render_key: None,
             pending_render_comparison: None,
             allow_undefined: true,
-            stringify: true,
+            finish,
             renderer: None,
             tasks: vec![Task::Value(root.clone())],
             root,
@@ -122,7 +144,7 @@ impl Vm {
                 pending_render_comparison: None,
                 root: root.clone(),
                 allow_undefined: false,
-                stringify: false,
+                finish: FinishAction::ReturnValue,
                 renderer: None,
                 tasks: vec![Task::Value(root)],
                 active: Vec::new(),
@@ -157,12 +179,21 @@ impl Vm {
             run.tasks.push(Task::Value(value));
         }
         let Some(task) = run.tasks.pop() else {
-            if !run.stringify {
+            if matches!(run.finish, FinishAction::ReturnValue)
+                || matches!(&run.finish, FinishAction::Trace(trace) if trace.acknowledged())
+            {
                 self.stack.push(run.root.clone());
                 return Ok(true);
             }
+            let (limit, multiline) = match &run.finish {
+                FinishAction::Trace(_) => match self.context.trace_mode {
+                    crate::logging::TraceMode::Compact => (1_000_000, false),
+                    crate::logging::TraceMode::Pretty => (i32::MAX as usize, true),
+                },
+                _ => (i32::MAX as usize, false),
+            };
             let renderer = run.renderer.get_or_insert_with(|| {
-                crate::diagnostic_values::RenderRun::new(run.root.clone(), i32::MAX as usize, false)
+                crate::diagnostic_values::RenderRun::new(run.root.clone(), limit, multiline)
             });
             if let Some(key) = run.pending_render_key.take() {
                 renderer.record_key_hash(self.java_hash(&key)?);
@@ -195,6 +226,13 @@ impl Vm {
             }
             if renderer.step(&self.heap, &self.program.module_name)? {
                 let text = run.renderer.take().expect("completed renderer").finish();
+                if let FinishAction::Trace(trace) = &mut run.finish {
+                    if self.emit_trace(trace, text)? {
+                        self.stack.push(run.root.clone());
+                        return Ok(true);
+                    }
+                    return Ok(false);
+                }
                 self.stack.push(Value::string(text));
                 return Ok(true);
             }
@@ -290,7 +328,7 @@ impl Vm {
                                 pending_render_key: None,
                                 pending_render_comparison: None,
                                 allow_undefined: false,
-                                stringify: false,
+                                finish: FinishAction::ReturnValue,
                                 renderer: None,
                                 root: Value::Null,
                                 tasks: Vec::new(),

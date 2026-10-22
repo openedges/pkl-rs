@@ -942,6 +942,9 @@ impl<'a> Resolver<'a> {
                     }
                 }
                 Work::Expression(expression, contextual_new) => match &expression.kind {
+                    ExprKind::Trace(value) => {
+                        work.push(Work::Expression(value, contextual_new));
+                    }
                     ExprKind::Parenthesized(value)
                     | ExprKind::NonNull(value)
                     | ExprKind::Throw(value)

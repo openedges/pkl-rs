@@ -1,0 +1,3 @@
+class C { x=7 }
+foo: C=trace(new {})
+result=foo.x

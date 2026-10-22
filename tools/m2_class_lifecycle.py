@@ -52,9 +52,16 @@ def manifest_at(root):
 
 
 def inventory(directory):
-    return {p.relative_to(directory).as_posix(): oracle.sha256(p)
-            for p in sorted(directory.rglob('*')) if p.is_file()
-            and p != directory / 'report.json' and not p.is_relative_to(directory / 'build')}
+    files = {}
+    for folder, directories, names in os.walk(directory, topdown=True):
+        # Prune the Cargo cache before os.walk descends into it.
+        directories[:] = sorted(name for name in directories
+                                if Path(folder) / name != directory / 'build')
+        for name in sorted(names):
+            path = Path(folder) / name
+            if path.is_file() and path != directory / 'report.json':
+                files[path.relative_to(directory).as_posix()] = oracle.sha256(path)
+    return dict(sorted(files.items()))
 
 
 def channel(result, directory, name):

@@ -6780,6 +6780,75 @@
         "Cyclic rendering oracle failures, identity-dependent keys, complete diagnostic-time forcing/Host suspension and finite truncation side effects remain unresolved or unverified.",
         "The new persistent originals use trace; complete trace logging and its original sequence contract remain required."
       ]
+    },
+    {
+      "requirement": "semantic:tracing",
+      "implementation": {
+        "state": "partial",
+        "links": [
+          {
+            "path": "crates/pkl-runtime/src/vm/tracing.rs",
+            "symbol": "begin_trace"
+          },
+          {
+            "path": "crates/pkl-runtime/src/logging.rs",
+            "symbol": "EvaluationContext"
+          },
+          {
+            "path": "crates/pkl-runtime/src/evaluation/session.rs",
+            "symbol": "SourceSession"
+          }
+        ]
+      },
+      "tests": {
+        "state": "partial",
+        "case_ids": [
+          "trace-stage37-scalar-cache",
+          "trace-stage37-operand-let",
+          "trace-stage37-nested-trace-call",
+          "trace-stage37-source-utf16",
+          "trace-stage37-unpaired-utf16",
+          "trace-stage37-inferred-property",
+          "trace-stage37-inferred-method-let",
+          "trace-stage37-inferred-group-error",
+          "trace-stage37-operand-error",
+          "trace-stage37-noop-force-error",
+          "trace-stage37-noop-force-read",
+          "trace-stage37-undefined-direct",
+          "trace-stage37-undefined-object",
+          "trace-stage37-override-ignored",
+          "trace-stage37-strict-list-force",
+          "trace-stage37-pretty-multiline",
+          "trace-stage37-pretty-crlf",
+          "trace-stage37-compact-limit",
+          "trace-stage37-repeat-zero",
+          "trace-stage37-repeat-one",
+          "trace-stage37-repeat-normal",
+          "trace-stage37-repeat-negative",
+          "trace-stage37-repeat-float",
+          "trace-stage37-repeat-string",
+          "trace-stage37-repeat-arity-zero",
+          "trace-stage37-repeat-arity-two-throw",
+          "trace-stage37-repeat-argument-throw",
+          "trace-stage37-repeat-receiver-throw",
+          "trace-stage37-repeat-empty-zero",
+          "trace-stage37-repeat-empty-cast-negative",
+          "trace-stage37-repeat-empty-cast-zero",
+          "trace-stage37-repeat-empty-max-count",
+          "trace-stage37-repeat-overflow-int32",
+          "trace-stage37-repeat-overflow-int64",
+          "trace-stage37-repeat-supplementary-overflow",
+          "trace-stage37-repeat-lone-surrogate",
+          "trace-stage37-repeat-supplementary-normal",
+          "trace-stage37-repeat-arity-two-before-constraint"
+        ]
+      },
+      "scope": "Trace expressions now use shared resumable force/render, lossless UTF-16 messages and source frames, and typed logger acknowledgement. Scalar cases are distinct from actual-source logger/read callback protocols and lifecycle observations.",
+      "remaining": [
+        "The complete original upstream trace and logger contracts, frame transformers, warning delivery and full diagnostics remain required.",
+        "Original same-evaluator trace sequences and all selected native/Node/browser source-session contracts require final acquisitions from the exact implementation.",
+        "Java internal errors, unsupported dependencies, resource caching and other mismatches remain recorded; partial raw matches do not close this requirement."
+      ]
     }
   ]
 }

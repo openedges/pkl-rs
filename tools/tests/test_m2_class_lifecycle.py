@@ -7,6 +7,7 @@ from pathlib import Path
 import sys
 import tempfile
 import unittest
+from unittest.mock import patch
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 import m2_class_lifecycle as tool
@@ -35,6 +36,41 @@ class ClassLifecycleEvidenceTests(unittest.TestCase):
     def pair(self):
         row = {language: self.process(self.root / language) for language in ['java', 'rust']}
         return row
+
+    def test_inventory_prunes_root_build_before_traversal_and_hashing(self):
+        contents = {'build/deep/cargo-cache': b'excluded',
+                    'nested/build/ordinary-evidence': b'included',
+                    'raw.bin': b'raw bytes\r\n', 'report.json': b'excluded report'}
+        for name, data in contents.items():
+            path = self.root / name
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_bytes(data)
+        original_walk, original_sha = tool.os.walk, tool.oracle.sha256
+        visited, hashed = [], []
+
+        def guarded_walk(top, *args, **kwargs):
+            self.assertTrue(kwargs.get('topdown'))
+            for folder, directories, names in original_walk(top, *args, **kwargs):
+                folder = Path(folder)
+                visited.append(folder)
+                self.assertFalse(folder.is_relative_to(self.root / 'build'),
+                                 'Cargo cache traversed before inventory filtering')
+                yield str(folder), directories, names
+
+        def guarded_sha(path):
+            hashed.append(path)
+            self.assertFalse(path.is_relative_to(self.root / 'build'))
+            return original_sha(path)
+
+        with patch.object(tool.os, 'walk', guarded_walk), patch.object(tool.oracle, 'sha256', guarded_sha):
+            inventory = tool.inventory(self.root)
+        self.assertTrue(visited)
+        self.assertEqual(set(hashed), {self.root / 'raw.bin',
+                                      self.root / 'nested/build/ordinary-evidence'})
+        self.assertEqual(inventory, {
+            'nested/build/ordinary-evidence': hashlib.sha256(b'included').hexdigest(),
+            'raw.bin': hashlib.sha256(b'raw bytes\r\n').hexdigest()})
+        self.assertEqual(list(inventory), sorted(inventory))
 
     def test_raw_whitespace_difference_is_preserved(self):
         row = self.pair()

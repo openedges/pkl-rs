@@ -13,6 +13,7 @@ fn finish(vm: &mut Vm) -> Result<Value, RuntimeError> {
         match poll {
             VmPoll::Ready(result) => return result,
             VmPoll::Yielded => {}
+            VmPoll::Log(_) => panic!("unexpected logger request"),
             VmPoll::Pending(_) => panic!("unexpected Host request"),
         }
     }

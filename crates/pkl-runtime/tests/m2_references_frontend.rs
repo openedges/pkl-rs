@@ -20,6 +20,7 @@ fn initialize_error(source: &str) -> pkl_runtime::value::RuntimeError {
         match vm.poll(100) {
             VmPoll::Ready(result) => return result.unwrap_err(),
             VmPoll::Yielded => {}
+            VmPoll::Log(_) => panic!("unexpected logger request"),
             VmPoll::Pending(_) => panic!("unexpected Host request"),
         }
     }

@@ -178,3 +178,221 @@ impl HostProbe {
         self.inner.close();
     }
 }
+
+/// Lossless logger transport; all textual fields contain UTF-16 code units.
+#[napi(object, use_nullable = true)]
+pub struct SourceLog {
+    pub level: String,
+    pub message: napi::bindgen_prelude::Uint16Array,
+    pub module_uri: napi::bindgen_prelude::Uint16Array,
+    pub member_name: Option<napi::bindgen_prelude::Uint16Array>,
+    pub source_lines: Vec<napi::bindgen_prelude::Uint16Array>,
+    pub start_line: u32,
+    pub start_column: u32,
+    pub end_line: u32,
+    pub end_column: u32,
+}
+#[napi(object)]
+pub struct SourceEvent {
+    pub kind: String,
+    pub token: Option<String>,
+    pub uri: Option<String>,
+    pub value: Option<napi::bindgen_prelude::Uint16Array>,
+    pub error: Option<napi::bindgen_prelude::Uint16Array>,
+    pub log: Option<SourceLog>,
+}
+impl From<probe::SourceEvent> for SourceEvent {
+    fn from(event: probe::SourceEvent) -> Self {
+        use napi::bindgen_prelude::Uint16Array;
+        Self {
+            kind: event.kind.into(),
+            token: event.token,
+            uri: event.uri,
+            value: event.value.map(Uint16Array::new),
+            error: event.error.map(Uint16Array::new),
+            log: event.log.map(|log| SourceLog {
+                level: log.level.into(),
+                message: Uint16Array::new(log.message),
+                module_uri: Uint16Array::new(log.module_uri),
+                member_name: log.member_name.map(Uint16Array::new),
+                source_lines: log.source_lines.into_iter().map(Uint16Array::new).collect(),
+                start_line: log.start_line,
+                start_column: log.start_column,
+                end_line: log.end_line,
+                end_column: log.end_column,
+            }),
+        }
+    }
+}
+
+/// Development-only parsed-source session; JS callbacks execute after poll has
+/// released its Rust borrow and explicitly acknowledge the pending log token.
+#[napi]
+pub struct SourceSession {
+    inner: probe::SourceProbe,
+}
+#[napi]
+impl SourceSession {
+    #[napi(constructor)]
+    #[allow(clippy::too_many_arguments)]
+    pub fn new(
+        source: Utf16String,
+        uri: Utf16String,
+        module_name: Utf16String,
+        paths: Vec<Utf16String>,
+        trace_mode: Option<Utf16String>,
+        host_logger: Option<bool>,
+        host_frame_transformer: Option<bool>,
+        power_assertions: Option<bool>,
+    ) -> Result<Self> {
+        let paths = paths.iter().map(string).collect::<Result<Vec<_>>>()?;
+        let mode = trace_mode
+            .as_ref()
+            .map(string)
+            .transpose()?
+            .unwrap_or_else(|| "compact".into());
+        Ok(Self {
+            inner: probe::SourceProbe::new(
+                &string(&source)?,
+                &string(&uri)?,
+                &string(&module_name)?,
+                &paths,
+                &mode,
+                host_logger.unwrap_or(false),
+                host_frame_transformer.unwrap_or(false),
+                power_assertions.unwrap_or(false),
+            )
+            .map_err(error)?,
+        })
+    }
+    #[napi]
+    pub fn start_module(&mut self, now: f64, timeout: Option<f64>) -> Result<()> {
+        self.inner
+            .start_module(unsigned(now)?, timeout.map(unsigned).transpose()?)
+            .map_err(error)
+    }
+    #[napi]
+    pub fn start_path(&mut self, index: f64, now: f64, timeout: Option<f64>) -> Result<()> {
+        self.inner
+            .start_path(
+                unsigned(index)?,
+                unsigned(now)?,
+                timeout.map(unsigned).transpose()?,
+            )
+            .map_err(error)
+    }
+    #[napi]
+    pub fn setup_failed(&self) -> bool {
+        self.inner.setup_failed()
+    }
+    #[napi]
+    pub fn reenter_path(
+        &mut self,
+        token: Utf16String,
+        index: f64,
+        now: f64,
+        timeout: Option<f64>,
+    ) -> Result<()> {
+        self.inner
+            .reenter_path(
+                &string(&token)?,
+                unsigned(index)?,
+                unsigned(now)?,
+                timeout.map(unsigned).transpose()?,
+            )
+            .map_err(error)
+    }
+    #[napi]
+    pub fn poll(&mut self, now: f64, budget: f64) -> Result<SourceEvent> {
+        self.inner
+            .poll(unsigned(now)?, unsigned(budget)?)
+            .map(Into::into)
+            .map_err(error)
+    }
+    #[napi]
+    pub fn acknowledge_log(
+        &mut self,
+        token: Utf16String,
+        failure: Option<napi::bindgen_prelude::Uint16Array>,
+        now: f64,
+    ) -> Result<()> {
+        self.inner
+            .acknowledge_log(
+                &string(&token)?,
+                failure.map(|units| units.to_vec()),
+                unsigned(now)?,
+            )
+            .map_err(error)
+    }
+    #[napi]
+    pub fn respond_string(
+        &mut self,
+        token: Utf16String,
+        value: napi::bindgen_prelude::Uint16Array,
+        now: f64,
+    ) -> Result<()> {
+        self.inner
+            .respond(
+                &string(&token)?,
+                Value::String(pkl_runtime::value::PklString::from_utf16(value.to_vec())),
+                unsigned(now)?,
+            )
+            .map_err(error)
+    }
+    #[napi]
+    pub fn respond_integer(&mut self, token: Utf16String, value: BigInt, now: f64) -> Result<()> {
+        self.inner
+            .respond(
+                &string(&token)?,
+                Value::Int(integer(value)?),
+                unsigned(now)?,
+            )
+            .map_err(error)
+    }
+    #[napi]
+    pub fn respond_bytes(&mut self, token: Utf16String, value: Uint8Array, now: f64) -> Result<()> {
+        self.inner
+            .respond(
+                &string(&token)?,
+                Value::Bytes(value.to_vec().into()),
+                unsigned(now)?,
+            )
+            .map_err(error)
+    }
+    #[napi]
+    pub fn reject(&mut self, token: Utf16String, message: Utf16String, now: f64) -> Result<()> {
+        self.inner
+            .reject(&string(&token)?, &string(&message)?, unsigned(now)?)
+            .map_err(error)
+    }
+    #[napi]
+    pub fn close_from_callback(&mut self, token: Utf16String) -> Result<()> {
+        self.inner
+            .close_from_callback(&string(&token)?)
+            .map_err(error)
+    }
+    #[napi]
+    pub fn drain_cancelled_reads(&mut self) -> Vec<String> {
+        self.inner.drain_cancelled_reads()
+    }
+    #[napi]
+    pub fn collect(&mut self) -> Result<u32> {
+        u32::try_from(self.inner.collect().slots).map_err(error)
+    }
+    #[napi]
+    pub fn heap_slots(&self) -> Result<u32> {
+        u32::try_from(self.inner.heap_slots()).map_err(error)
+    }
+    #[napi]
+    pub fn context_depth(&self) -> u32 {
+        self.inner.context_depth() as u32
+    }
+    #[napi]
+    pub fn cancel(&mut self) {
+        self.inner.cancel();
+    }
+    #[napi]
+    pub fn close(&mut self) {
+        self.inner.close();
+    }
+}

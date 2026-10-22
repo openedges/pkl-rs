@@ -1,0 +1,2823 @@
+{
+  "schema": 1,
+  "scope": "Stage37 shared trace/logger and admitted module-initialization/first-path lifecycle. Full selected acquisitions are closed; M2 language, API, platform and performance completion remains unproven.",
+  "compatibility_complete": false,
+  "performance_target_claimed": false,
+  "base_commit": "8267bf2d5d7a1d544e0b0d4cf6f0b1d9ad5f5aa1",
+  "validation": {
+    "report": {
+      "path": "target/m2/stage37-checks-final-02/report.json",
+      "sha256": "55fc550969e57c4d41680e5cee6bf299dc98afb89ab96949ddbccd6b982211c4",
+      "bytes": 555502
+    },
+    "platform": "macOS-27.0-arm64-arm-64bit-Mach-O",
+    "checks": [
+      {
+        "name": "rust-version",
+        "command": [
+          "rustc",
+          "-Vv"
+        ],
+        "exit_code": 0,
+        "elapsed_seconds": 0.2611401081085205,
+        "stdout_sha256": "e2211d4c0760a2a3b03eab88e42f8848952b7aa2ed649277a8fdbf3ce1838fd4",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "name": "references",
+        "command": [
+          "cargo",
+          "xtask",
+          "verify"
+        ],
+        "exit_code": 0,
+        "elapsed_seconds": 1.0870001316070557,
+        "stdout_sha256": "900802c9cf4f23bd9dbc0e79f58d3e21493ec0c990782bc5b690a7432148e9eb",
+        "stderr_sha256": "fb407209e84b316c71c15ab09c21310d29b5cfd56b80733eaffe233f577722a9"
+      },
+      {
+        "name": "format",
+        "command": [
+          "cargo",
+          "fmt",
+          "--all",
+          "--",
+          "--check"
+        ],
+        "exit_code": 0,
+        "elapsed_seconds": 0.6638157367706299,
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "name": "clippy",
+        "command": [
+          "cargo",
+          "clippy",
+          "--workspace",
+          "--all-targets",
+          "--locked",
+          "--",
+          "-D",
+          "warnings"
+        ],
+        "exit_code": 0,
+        "elapsed_seconds": 0.5872061252593994,
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_sha256": "92bec25ad54c650450560360480d5f94d3d8ad203f81a2c724e0c641b330bbfb"
+      },
+      {
+        "name": "rust-tests",
+        "command": [
+          "cargo",
+          "test",
+          "--workspace",
+          "--locked"
+        ],
+        "exit_code": 0,
+        "elapsed_seconds": 187.40724730491638,
+        "stdout_sha256": "ddf240a52e0f041bf6404750d9d4826677cb6167a07029e2fa03ce282cfd6a2f",
+        "stderr_sha256": "f52a742eb770b99efadbe09fe3d5e6e8aff8e4f69b50d81ca37919f6bc1e948f"
+      },
+      {
+        "name": "wasm-check",
+        "command": [
+          "cargo",
+          "check",
+          "-p",
+          "pkl-runtime",
+          "--target",
+          "wasm32-unknown-unknown",
+          "--locked"
+        ],
+        "exit_code": 0,
+        "elapsed_seconds": 0.19873428344726562,
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_sha256": "a41051563a4cb5fc1b1bcdd9aa0ba28ca80f7736d629d90cc138218756e8e3a9"
+      },
+      {
+        "name": "python-tests",
+        "command": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "-m",
+          "unittest",
+          "discover",
+          "-s",
+          "tools/tests",
+          "-v"
+        ],
+        "exit_code": 0,
+        "elapsed_seconds": 98.75043606758118,
+        "stdout_sha256": "ecc97d662f4005e74149d8cf6ab50691366135f2f6f81ef6d77e06a739b2580f",
+        "stderr_sha256": "74ed37764fd57dec940ed5893c167b0ecc8881a1b7e782041a3ffe9a6250c60c"
+      },
+      {
+        "name": "manifest",
+        "command": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "tools/m2_manifest.py",
+          "--check"
+        ],
+        "exit_code": 0,
+        "elapsed_seconds": 2.04123592376709,
+        "stdout_sha256": "3ff23e121e0345dc6494f1982435b532a192f4a92ee26a276991918e825215eb",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    ],
+    "passed": true,
+    "source_stability": true,
+    "source_files": 4114,
+    "python_tests": 235,
+    "rust_harness_pass_invocations": 541,
+    "rust_ignored_invocations": 1,
+    "rust_count_is_distinct_test_count": false,
+    "previous_check_failure": "Final01 preserved one stale semantic-family expectation (30 instead of 31). The corrected module passed 33 tests; final02 passed the complete suite."
+  },
+  "full_language": {
+    "report": {
+      "path": "target/m2/stage37-language-final-01/report.json",
+      "sha256": "051146a8b0a1f12b459b5229af9c04f15e3b1e23eefea94a34d725d3c11ccfe5",
+      "bytes": 11929828
+    },
+    "selected": 3427,
+    "status_counts": {
+      "mismatch": 6,
+      "oracle-error": 1,
+      "pass": 3420
+    },
+    "failures": [
+      {
+        "id": "error-cycle",
+        "status": "oracle-error"
+      },
+      {
+        "id": "error-remainder-zero",
+        "status": "mismatch"
+      },
+      {
+        "id": "annotation-stage35-builtin-source-code-union-and-string",
+        "status": "mismatch"
+      },
+      {
+        "id": "trace-stage37-noop-force-read",
+        "status": "mismatch"
+      },
+      {
+        "id": "trace-stage37-strict-list-force",
+        "status": "mismatch"
+      },
+      {
+        "id": "trace-stage37-repeat-empty-cast-negative",
+        "status": "mismatch"
+      },
+      {
+        "id": "trace-stage37-repeat-empty-max-count",
+        "status": "mismatch"
+      }
+    ],
+    "metamorphic_relations": 88,
+    "full_gate_failure_reasons": 1957,
+    "source_stability": true,
+    "artifact_stability": true,
+    "inventory": {
+      "cases": 4427,
+      "cases_by_execution": {
+        "ready": 3427,
+        "unimplemented": 960,
+        "unmapped": 40
+      },
+      "requirements": 475,
+      "requirements_by_kind": {
+        "language_parser": 137,
+        "language_token": 109,
+        "semantic-family": 31,
+        "specification": 198
+      }
+    },
+    "regression_audit": {
+      "status": "closed",
+      "independent_report_sha256": "f59c69c600afbe9b454874da5e3039d1e868ecaab36afe16b73ef2a3678e9fa9",
+      "acquisition_report_sha256": "051146a8b0a1f12b459b5229af9c04f15e3b1e23eefea94a34d725d3c11ccfe5",
+      "selected_counts": {
+        "pass": 3420,
+        "oracle-error": 1,
+        "mismatch": 6
+      },
+      "original3389": {
+        "definitions_inputs_order_status_preserved": true,
+        "native_raw_unchanged": 3389,
+        "java_raw_unchanged": 3388,
+        "java_changed_case": "error-cycle",
+        "java_change_scope": "stderr only; sameexit1/notimeout/oracleerror; exactold/newbytes retained in changed-raw"
+      },
+      "new38_counts": {
+        "pass": 34,
+        "mismatch": 4
+      },
+      "new38_source_and_expected_outcome_origins_verified": true,
+      "metamorphic_relations": {
+        "count": 88,
+        "counts": {
+          "pass": 88
+        }
+      },
+      "source_hashes_current_and_retained": 3582,
+      "evidence_files": 31014,
+      "candidate_sha256": "83bf265f6e498bab0dcbcaa036429e5672f60fcc78ef582e8c5202f493055dd2",
+      "candidate_source_binding": "recorded-build",
+      "gates": {
+        "report": 0,
+        "development": 1,
+        "subset": 1,
+        "full": 1
+      },
+      "gate_failures_expected": true,
+      "full_gate_reasons": 1957,
+      "compatibility_complete": false,
+      "scope": "Selectedverification metrics cannot be converted into a defensible overallM2completion percentage. Unimplemented/unmappedrequirements and retainedfailures remaincompletionblockers.",
+      "live_handles": []
+    },
+    "gates": [
+      {
+        "expected_exit_code": 0,
+        "mode": "report",
+        "process": {
+          "command": [
+            "/opt/homebrew/opt/python@3.14/bin/python3.14",
+            "/Users/cody.ij.hwang/Projects/pkl-rs/tools/m2_language.py",
+            "--verify-report",
+            "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage37-language-final-01"
+          ],
+          "exit_code": 0,
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stdout_sha256": "d9ec364dcbf88f21ddc6d2b1ee58bb8faa23638c1e59b2ed75f01dc547818d23",
+          "timed_out": false
+        }
+      },
+      {
+        "expected_exit_code": 1,
+        "mode": "development",
+        "process": {
+          "command": [
+            "/opt/homebrew/opt/python@3.14/bin/python3.14",
+            "/Users/cody.ij.hwang/Projects/pkl-rs/tools/m2_language.py",
+            "--verify-development",
+            "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage37-language-final-01"
+          ],
+          "exit_code": 1,
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stdout_sha256": "d9ec364dcbf88f21ddc6d2b1ee58bb8faa23638c1e59b2ed75f01dc547818d23",
+          "timed_out": false
+        }
+      },
+      {
+        "expected_exit_code": 1,
+        "mode": "subset",
+        "process": {
+          "command": [
+            "/opt/homebrew/opt/python@3.14/bin/python3.14",
+            "/Users/cody.ij.hwang/Projects/pkl-rs/tools/m2_language.py",
+            "--verify-subset",
+            "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage37-language-final-01"
+          ],
+          "exit_code": 1,
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stdout_sha256": "d9ec364dcbf88f21ddc6d2b1ee58bb8faa23638c1e59b2ed75f01dc547818d23",
+          "timed_out": false
+        }
+      },
+      {
+        "expected_exit_code": 1,
+        "mode": "full",
+        "process": {
+          "command": [
+            "/opt/homebrew/opt/python@3.14/bin/python3.14",
+            "/Users/cody.ij.hwang/Projects/pkl-rs/tools/m2_language.py",
+            "--verify-full",
+            "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage37-language-final-01"
+          ],
+          "exit_code": 1,
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stdout_sha256": "d9ec364dcbf88f21ddc6d2b1ee58bb8faa23638c1e59b2ed75f01dc547818d23",
+          "timed_out": false
+        }
+      }
+    ]
+  },
+  "persistent": {
+    "status": "closed",
+    "acquisition_report_sha256": "9b2944a669792163ba408e7779a03cfb59231c9663c6d4bec53a6813a8b31eef",
+    "independent_report_sha256": "657c1bd866a25ec421f74c5dcb04aca2c799c9377d2f1d73d37f770a4f187356",
+    "offline_verification_sha256": "ab76690f28648f76c5d400e3476ade02dc2abea515db0aca9d23e2202a2acb15",
+    "sequences": 167,
+    "executions": 334,
+    "requested_calls": 2782,
+    "raw_passes": 2782,
+    "formerly_unexecuted_calls_now_passed": 54,
+    "old_native_compared_calls_unchanged": 2728,
+    "old_java_compared_calls_unchanged": 2782,
+    "cross_repeat_channel_differences": 0,
+    "source_snapshots_current_and_retained": 477,
+    "verified_artifacts": 2,
+    "verified_evidence_files": 24749,
+    "candidate_sha256": "2ecbbe6b3c0ce1804fa9ef81b49c99dd7c9bd60f4f0666fcdd79c5270eb00322",
+    "selected_contract_passes": true,
+    "compatibility_complete": false,
+    "unexecuted_groups_preserved": [
+      {
+        "group": "P09",
+        "reason": "Java-only module-cache probe stage12-java-module-identity-01 observes same URI/source identity retained, changed source at same URI ignored (marker remains1), distinct URI/evaluator identity separated. Rust multi-source module-cache parity is unimplemented; same-module identity is compared."
+      },
+      {
+        "group": "P10",
+        "reason": "Java observable sequence comparisons do not expose heap counts; Rust architectural GC coverage is separate."
+      },
+      {
+        "group": "P11",
+        "reason": "Actual annotation source now reaches Rust Host suspension, callback reentry and GC. Separate Stage 35 Java/Rust Host probes compare class, alias, property and method initialization, successful reads, eager failures and partial-state retries. This persistent scalar sequence adapter does not execute Host callbacks. Complete resource I/O failure, module-cache and product Host behavior remain unverified; native cancellation/timeout/close cleanup tests are separate from Java raw-byte equality."
+      },
+      {
+        "group": "P12",
+        "reason": "Terminal context/token/heap cleanup is covered by separate Rust lifecycle tests, not Java raw-byte equivalence."
+      },
+      {
+        "group": "P05",
+        "reason": "Indirect cyclic hierarchy property traversal new A {}.missing timed out after successful class identity calls in stage12-java-observations-03; traversal is observed oracle-timeout, not a compatibility pass."
+      }
+    ],
+    "comparison_channels": [
+      "status",
+      "stdout",
+      "stderr"
+    ],
+    "live_handles": []
+  },
+  "actual_source_trace": {
+    "report": {
+      "path": "target/m2/stage37-trace-final-01/report.json",
+      "sha256": "4d271632fa08f044386c5f752e926e945ee25ef2e8f6e7e02fc5cdd30f5b12a3",
+      "bytes": 1591620
+    },
+    "definitions": 42,
+    "repetitions": 2,
+    "status_counts": {
+      "pass": 54,
+      "oracle-error": 30
+    },
+    "source_stability": true,
+    "artifact_stability": true,
+    "compatibility_complete": false,
+    "audit": {
+      "scope": "Independent raw regression and bootstrap-first-call audit of final42. Whole oracle-error experiments remain failures; final checkpoint and scalar default-Host obligations are separate.",
+      "final_report": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage37-trace-final-01/report.json",
+        "sha256": "4d271632fa08f044386c5f752e926e945ee25ef2e8f6e7e02fc5cdd30f5b12a3",
+        "bytes": 1591620
+      },
+      "previous_report": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage37/target/m2/stage37-trace-comparison-02/report.json",
+        "sha256": "1823b8910e275bcbd292043d258d99890b84e70b7b7b4c83439e564956ed6997",
+        "bytes": 782672
+      },
+      "previous_source_stability": false,
+      "core_freeze": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage37/target/m2/stage37-core-freeze-02/report.json",
+        "sha256": "0d27e1bb914d6558315209de4d81909d3e45e2b7fb860b631b65c556b0036788",
+        "bytes": 8702
+      },
+      "final_status_counts": {
+        "pass": 54,
+        "oracle-error": 30
+      },
+      "recorded_native_build": true,
+      "source_stability": true,
+      "artifact_stability": true,
+      "complete_selection": true,
+      "compatibility_complete": false,
+      "original38_definitions_unchanged": true,
+      "original38_order_preserved": true,
+      "original38_statuses_preserved": true,
+      "original_ordinary_results_all_pass": true,
+      "original_regressions": [
+        {
+          "id": "design-scalar-source",
+          "repeat": 0,
+          "previous_status": "pass",
+          "current_status": "pass",
+          "java": {
+            "exact_coverage": true,
+            "files_compared": 22,
+            "different_files": [],
+            "raw_equal": true
+          },
+          "rust": {
+            "exact_coverage": true,
+            "files_compared": 22,
+            "different_files": [],
+            "raw_equal": true
+          }
+        },
+        {
+          "id": "design-scalar-source",
+          "repeat": 1,
+          "previous_status": "pass",
+          "current_status": "pass",
+          "java": {
+            "exact_coverage": true,
+            "files_compared": 22,
+            "different_files": [],
+            "raw_equal": true
+          },
+          "rust": {
+            "exact_coverage": true,
+            "files_compared": 22,
+            "different_files": [],
+            "raw_equal": true
+          }
+        },
+        {
+          "id": "design-source-utf16",
+          "repeat": 0,
+          "previous_status": "pass",
+          "current_status": "pass",
+          "java": {
+            "exact_coverage": true,
+            "files_compared": 18,
+            "different_files": [],
+            "raw_equal": true
+          },
+          "rust": {
+            "exact_coverage": true,
+            "files_compared": 18,
+            "different_files": [],
+            "raw_equal": true
+          }
+        },
+        {
+          "id": "design-source-utf16",
+          "repeat": 1,
+          "previous_status": "pass",
+          "current_status": "pass",
+          "java": {
+            "exact_coverage": true,
+            "files_compared": 18,
+            "different_files": [],
+            "raw_equal": true
+          },
+          "rust": {
+            "exact_coverage": true,
+            "files_compared": 18,
+            "different_files": [],
+            "raw_equal": true
+          }
+        },
+        {
+          "id": "design-pretty-scalar",
+          "repeat": 0,
+          "previous_status": "pass",
+          "current_status": "pass",
+          "java": {
+            "exact_coverage": true,
+            "files_compared": 18,
+            "different_files": [],
+            "raw_equal": true
+          },
+          "rust": {
+            "exact_coverage": true,
+            "files_compared": 18,
+            "different_files": [],
+            "raw_equal": true
+          }
+        },
+        {
+          "id": "design-pretty-scalar",
+          "repeat": 1,
+          "previous_status": "pass",
+          "current_status": "pass",
+          "java": {
+            "exact_coverage": true,
+            "files_compared": 18,
+            "different_files": [],
+            "raw_equal": true
+          },
+          "rust": {
+            "exact_coverage": true,
+            "files_compared": 18,
+            "different_files": [],
+            "raw_equal": true
+          }
+        },
+        {
+          "id": "design-pretty-multiline",
+          "repeat": 0,
+          "previous_status": "pass",
+          "current_status": "pass",
+          "java": {
+            "exact_coverage": true,
+            "files_compared": 24,
+            "different_files": [],
+            "raw_equal": true
+          },
+          "rust": {
+            "exact_coverage": true,
+            "files_compared": 24,
+            "different_files": [],
+            "raw_equal": true
+          }
+        },
+        {
+          "id": "design-pretty-multiline",
+          "repeat": 1,
+          "previous_status": "pass",
+          "current_status": "pass",
+          "java": {
+            "exact_coverage": true,
+            "files_compared": 24,
+            "different_files": [],
+            "raw_equal": true
+          },
+          "rust": {
+            "exact_coverage": true,
+            "files_compared": 24,
+            "different_files": [],
+            "raw_equal": true
+          }
+        },
+        {
+          "id": "design-pretty-crlf",
+          "repeat": 0,
+          "previous_status": "pass",
+          "current_status": "pass",
+          "java": {
+            "exact_coverage": true,
+            "files_compared": 22,
+            "different_files": [],
+            "raw_equal": true
+          },
+          "rust": {
+            "exact_coverage": true,
+            "files_compared": 22,
+            "different_files": [],
+            "raw_equal": true
+          }
+        },
+        {
+          "id": "design-pretty-crlf",
+          "repeat": 1,
+          "previous_status": "pass",
+          "current_status": "pass",
+          "java": {
+            "exact_coverage": true,
+            "files_compared": 22,
+            "different_files": [],
+            "raw_equal": true
+          },
+          "rust": {
+            "exact_coverage": true,
+            "files_compared": 22,
+            "different_files": [],
+            "raw_equal": true
+          }
+        },
+        {
+          "id": "design-noop-force-error",
+          "repeat": 0,
+          "previous_status": "pass",
+          "current_status": "pass",
+          "java": {
+            "exact_coverage": true,
+            "files_compared": 10,
+            "different_files": [],
+            "raw_equal": true
+          },
+          "rust": {
+            "exact_coverage": true,
+            "files_compared": 10,
+            "different_files": [],
+            "raw_equal": true
+          }
+        },
+        {
+          "id": "design-noop-force-error",
+          "repeat": 1,
+          "previous_status": "pass",
+          "current_status": "pass",
+          "java": {
+            "exact_coverage": true,
+            "files_compared": 10,
+            "different_files": [],
+            "raw_equal": true
+          },
+          "rust": {
+            "exact_coverage": true,
+            "files_compared": 10,
+            "different_files": [],
+            "raw_equal": true
+          }
+        },
+        {
+          "id": "design-noop-force-read",
+          "repeat": 0,
+          "previous_status": "pass",
+          "current_status": "pass",
+          "java": {
+            "exact_coverage": true,
+            "files_compared": 10,
+            "different_files": [],
+            "raw_equal": true
+          },
+          "rust": {
+            "exact_coverage": true,
+            "files_compared": 10,
+            "different_files": [],
+            "raw_equal": true
+          }
+        },
+        {
+          "id": "design-noop-force-read",
+          "repeat": 1,
+          "previous_status": "pass",
+          "current_status": "pass",
+          "java": {
+            "exact_coverage": true,
+            "files_compared": 10,
+            "different_files": [],
+            "raw_equal": true
+          },
+          "rust": {
+            "exact_coverage": true,
+            "files_compared": 10,
+            "different_files": [],
+            "raw_equal": true
+          }
+        },
+        {
+          "id": "design-operand-error",
+          "repeat": 0,
+          "previous_status": "pass",
+          "current_status": "pass",
+          "java": {
+            "exact_coverage": true,
+            "files_compared": 10,
+            "different_files": [],
+            "raw_equal": true
+          },
+          "rust": {
+            "exact_coverage": true,
+            "files_compared": 10,
+            "different_files": [],
+            "raw_equal": true
+          }
+        },
+        {
+          "id": "design-operand-error",
+          "repeat": 1,
+          "previous_status": "pass",
+          "current_status": "pass",
+          "java": {
+            "exact_coverage": true,
+            "files_compared": 10,
+            "different_files": [],
+            "raw_equal": true
+          },
+          "rust": {
+            "exact_coverage": true,
+            "files_compared": 10,
+            "different_files": [],
+            "raw_equal": true
+          }
+        },
+        {
+          "id": "design-undefined-direct",
+          "repeat": 0,
+          "previous_status": "pass",
+          "current_status": "pass",
+          "java": {
+            "exact_coverage": true,
+            "files_compared": 6,
+            "different_files": [],
+            "raw_equal": true
+          },
+          "rust": {
+            "exact_coverage": true,
+            "files_compared": 6,
+            "different_files": [],
+            "raw_equal": true
+          }
+        },
+        {
+          "id": "design-undefined-direct",
+          "repeat": 1,
+          "previous_status": "pass",
+          "current_status": "pass",
+          "java": {
+            "exact_coverage": true,
+            "files_compared": 6,
+            "different_files": [],
+            "raw_equal": true
+          },
+          "rust": {
+            "exact_coverage": true,
+            "files_compared": 6,
+            "different_files": [],
+            "raw_equal": true
+          }
+        },
+        {
+          "id": "design-undefined-object",
+          "repeat": 0,
+          "previous_status": "pass",
+          "current_status": "pass",
+          "java": {
+            "exact_coverage": true,
+            "files_compared": 38,
+            "different_files": [],
+            "raw_equal": true
+          },
+          "rust": {
+            "exact_coverage": true,
+            "files_compared": 38,
+            "different_files": [],
+            "raw_equal": true
+          }
+        },
+        {
+          "id": "design-undefined-object",
+          "repeat": 1,
+          "previous_status": "pass",
+          "current_status": "pass",
+          "java": {
+            "exact_coverage": true,
+            "files_compared": 38,
+            "different_files": [],
+            "raw_equal": true
+          },
+          "rust": {
+            "exact_coverage": true,
+            "files_compared": 38,
+            "different_files": [],
+            "raw_equal": true
+          }
+        },
+        {
+          "id": "design-override-ignored",
+          "repeat": 0,
+          "previous_status": "pass",
+          "current_status": "pass",
+          "java": {
+            "exact_coverage": true,
+            "files_compared": 18,
+            "different_files": [],
+            "raw_equal": true
+          },
+          "rust": {
+            "exact_coverage": true,
+            "files_compared": 18,
+            "different_files": [],
+            "raw_equal": true
+          }
+        },
+        {
+          "id": "design-override-ignored",
+          "repeat": 1,
+          "previous_status": "pass",
+          "current_status": "pass",
+          "java": {
+            "exact_coverage": true,
+            "files_compared": 18,
+            "different_files": [],
+            "raw_equal": true
+          },
+          "rust": {
+            "exact_coverage": true,
+            "files_compared": 18,
+            "different_files": [],
+            "raw_equal": true
+          }
+        },
+        {
+          "id": "design-strict-list-forced",
+          "repeat": 0,
+          "previous_status": "pass",
+          "current_status": "pass",
+          "java": {
+            "exact_coverage": true,
+            "files_compared": 18,
+            "different_files": [],
+            "raw_equal": true
+          },
+          "rust": {
+            "exact_coverage": true,
+            "files_compared": 18,
+            "different_files": [],
+            "raw_equal": true
+          }
+        },
+        {
+          "id": "design-strict-list-forced",
+          "repeat": 1,
+          "previous_status": "pass",
+          "current_status": "pass",
+          "java": {
+            "exact_coverage": true,
+            "files_compared": 18,
+            "different_files": [],
+            "raw_equal": true
+          },
+          "rust": {
+            "exact_coverage": true,
+            "files_compared": 18,
+            "different_files": [],
+            "raw_equal": true
+          }
+        },
+        {
+          "id": "design-nested-trace",
+          "repeat": 0,
+          "previous_status": "pass",
+          "current_status": "pass",
+          "java": {
+            "exact_coverage": true,
+            "files_compared": 42,
+            "different_files": [],
+            "raw_equal": true
+          },
+          "rust": {
+            "exact_coverage": true,
+            "files_compared": 42,
+            "different_files": [],
+            "raw_equal": true
+          }
+        },
+        {
+          "id": "design-nested-trace",
+          "repeat": 1,
+          "previous_status": "pass",
+          "current_status": "pass",
+          "java": {
+            "exact_coverage": true,
+            "files_compared": 42,
+            "different_files": [],
+            "raw_equal": true
+          },
+          "rust": {
+            "exact_coverage": true,
+            "files_compared": 42,
+            "different_files": [],
+            "raw_equal": true
+          }
+        },
+        {
+          "id": "design-logger-throw",
+          "repeat": 0,
+          "previous_status": "oracle-error",
+          "current_status": "oracle-error",
+          "java": {
+            "exact_coverage": true,
+            "files_compared": 38,
+            "different_files": [],
+            "raw_equal": true
+          },
+          "rust": {
+            "exact_coverage": true,
+            "files_compared": 38,
+            "different_files": [],
+            "raw_equal": true
+          }
+        },
+        {
+          "id": "design-logger-throw",
+          "repeat": 1,
+          "previous_status": "oracle-error",
+          "current_status": "oracle-error",
+          "java": {
+            "exact_coverage": true,
+            "files_compared": 38,
+            "different_files": [],
+            "raw_equal": true
+          },
+          "rust": {
+            "exact_coverage": true,
+            "files_compared": 38,
+            "different_files": [],
+            "raw_equal": true
+          }
+        },
+        {
+          "id": "design-logger-reentry",
+          "repeat": 0,
+          "previous_status": "pass",
+          "current_status": "pass",
+          "java": {
+            "exact_coverage": true,
+            "files_compared": 42,
+            "different_files": [],
+            "raw_equal": true
+          },
+          "rust": {
+            "exact_coverage": true,
+            "files_compared": 42,
+            "different_files": [],
+            "raw_equal": true
+          }
+        },
+        {
+          "id": "design-logger-reentry",
+          "repeat": 1,
+          "previous_status": "pass",
+          "current_status": "pass",
+          "java": {
+            "exact_coverage": true,
+            "files_compared": 42,
+            "different_files": [],
+            "raw_equal": true
+          },
+          "rust": {
+            "exact_coverage": true,
+            "files_compared": 42,
+            "different_files": [],
+            "raw_equal": true
+          }
+        },
+        {
+          "id": "design-logger-reentry-error",
+          "repeat": 0,
+          "previous_status": "pass",
+          "current_status": "pass",
+          "java": {
+            "exact_coverage": true,
+            "files_compared": 26,
+            "different_files": [],
+            "raw_equal": true
+          },
+          "rust": {
+            "exact_coverage": true,
+            "files_compared": 26,
+            "different_files": [],
+            "raw_equal": true
+          }
+        },
+        {
+          "id": "design-logger-reentry-error",
+          "repeat": 1,
+          "previous_status": "pass",
+          "current_status": "pass",
+          "java": {
+            "exact_coverage": true,
+            "files_compared": 26,
+            "different_files": [],
+            "raw_equal": true
+          },
+          "rust": {
+            "exact_coverage": true,
+            "files_compared": 26,
+            "different_files": [],
+            "raw_equal": true
+          }
+        },
+        {
+          "id": "design-logger-reentry-nested-read",
+          "repeat": 0,
+          "previous_status": "pass",
+          "current_status": "pass",
+          "java": {
+            "exact_coverage": true,
+            "files_compared": 50,
+            "different_files": [],
+            "raw_equal": true
+          },
+          "rust": {
+            "exact_coverage": true,
+            "files_compared": 50,
+            "different_files": [],
+            "raw_equal": true
+          }
+        },
+        {
+          "id": "design-logger-reentry-nested-read",
+          "repeat": 1,
+          "previous_status": "pass",
+          "current_status": "pass",
+          "java": {
+            "exact_coverage": true,
+            "files_compared": 50,
+            "different_files": [],
+            "raw_equal": true
+          },
+          "rust": {
+            "exact_coverage": true,
+            "files_compared": 50,
+            "different_files": [],
+            "raw_equal": true
+          }
+        },
+        {
+          "id": "design-read-reentry-log",
+          "repeat": 0,
+          "previous_status": "pass",
+          "current_status": "pass",
+          "java": {
+            "exact_coverage": true,
+            "files_compared": 34,
+            "different_files": [],
+            "raw_equal": true
+          },
+          "rust": {
+            "exact_coverage": true,
+            "files_compared": 34,
+            "different_files": [],
+            "raw_equal": true
+          }
+        },
+        {
+          "id": "design-read-reentry-log",
+          "repeat": 1,
+          "previous_status": "pass",
+          "current_status": "pass",
+          "java": {
+            "exact_coverage": true,
+            "files_compared": 34,
+            "different_files": [],
+            "raw_equal": true
+          },
+          "rust": {
+            "exact_coverage": true,
+            "files_compared": 34,
+            "different_files": [],
+            "raw_equal": true
+          }
+        },
+        {
+          "id": "design-logger-close",
+          "repeat": 0,
+          "previous_status": "oracle-error",
+          "current_status": "oracle-error",
+          "java": {
+            "exact_coverage": true,
+            "files_compared": 22,
+            "different_files": [],
+            "raw_equal": true
+          },
+          "rust": {
+            "exact_coverage": true,
+            "files_compared": 22,
+            "different_files": [],
+            "raw_equal": true
+          }
+        },
+        {
+          "id": "design-logger-close",
+          "repeat": 1,
+          "previous_status": "oracle-error",
+          "current_status": "oracle-error",
+          "java": {
+            "exact_coverage": true,
+            "files_compared": 22,
+            "different_files": [],
+            "raw_equal": true
+          },
+          "rust": {
+            "exact_coverage": true,
+            "files_compared": 22,
+            "different_files": [],
+            "raw_equal": true
+          }
+        },
+        {
+          "id": "design-scalar-surrogate",
+          "repeat": 0,
+          "previous_status": "pass",
+          "current_status": "pass",
+          "java": {
+            "exact_coverage": true,
+            "files_compared": 18,
+            "different_files": [],
+            "raw_equal": true
+          },
+          "rust": {
+            "exact_coverage": true,
+            "files_compared": 18,
+            "different_files": [],
+            "raw_equal": true
+          }
+        },
+        {
+          "id": "design-scalar-surrogate",
+          "repeat": 1,
+          "previous_status": "pass",
+          "current_status": "pass",
+          "java": {
+            "exact_coverage": true,
+            "files_compared": 18,
+            "different_files": [],
+            "raw_equal": true
+          },
+          "rust": {
+            "exact_coverage": true,
+            "files_compared": 18,
+            "different_files": [],
+            "raw_equal": true
+          }
+        },
+        {
+          "id": "edge-close-arithmetic",
+          "repeat": 0,
+          "previous_status": "oracle-error",
+          "current_status": "oracle-error",
+          "java": {
+            "exact_coverage": true,
+            "files_compared": 22,
+            "different_files": [],
+            "raw_equal": true
+          },
+          "rust": {
+            "exact_coverage": true,
+            "files_compared": 22,
+            "different_files": [],
+            "raw_equal": true
+          }
+        },
+        {
+          "id": "edge-close-arithmetic",
+          "repeat": 1,
+          "previous_status": "oracle-error",
+          "current_status": "oracle-error",
+          "java": {
+            "exact_coverage": true,
+            "files_compared": 22,
+            "different_files": [],
+            "raw_equal": true
+          },
+          "rust": {
+            "exact_coverage": true,
+            "files_compared": 22,
+            "different_files": [],
+            "raw_equal": true
+          }
+        },
+        {
+          "id": "edge-close-throw",
+          "repeat": 0,
+          "previous_status": "oracle-error",
+          "current_status": "oracle-error",
+          "java": {
+            "exact_coverage": true,
+            "files_compared": 22,
+            "different_files": [],
+            "raw_equal": true
+          },
+          "rust": {
+            "exact_coverage": true,
+            "files_compared": 22,
+            "different_files": [],
+            "raw_equal": true
+          }
+        },
+        {
+          "id": "edge-close-throw",
+          "repeat": 1,
+          "previous_status": "oracle-error",
+          "current_status": "oracle-error",
+          "java": {
+            "exact_coverage": true,
+            "files_compared": 22,
+            "different_files": [],
+            "raw_equal": true
+          },
+          "rust": {
+            "exact_coverage": true,
+            "files_compared": 22,
+            "different_files": [],
+            "raw_equal": true
+          }
+        },
+        {
+          "id": "edge-close-read",
+          "repeat": 0,
+          "previous_status": "oracle-error",
+          "current_status": "oracle-error",
+          "java": {
+            "exact_coverage": true,
+            "files_compared": 22,
+            "different_files": [],
+            "raw_equal": true
+          },
+          "rust": {
+            "exact_coverage": true,
+            "files_compared": 22,
+            "different_files": [],
+            "raw_equal": true
+          }
+        },
+        {
+          "id": "edge-close-read",
+          "repeat": 1,
+          "previous_status": "oracle-error",
+          "current_status": "oracle-error",
+          "java": {
+            "exact_coverage": true,
+            "files_compared": 22,
+            "different_files": [],
+            "raw_equal": true
+          },
+          "rust": {
+            "exact_coverage": true,
+            "files_compared": 22,
+            "different_files": [],
+            "raw_equal": true
+          }
+        },
+        {
+          "id": "edge-close-second-trace",
+          "repeat": 0,
+          "previous_status": "oracle-error",
+          "current_status": "oracle-error",
+          "java": {
+            "exact_coverage": true,
+            "files_compared": 22,
+            "different_files": [],
+            "raw_equal": true
+          },
+          "rust": {
+            "exact_coverage": true,
+            "files_compared": 22,
+            "different_files": [],
+            "raw_equal": true
+          }
+        },
+        {
+          "id": "edge-close-second-trace",
+          "repeat": 1,
+          "previous_status": "oracle-error",
+          "current_status": "oracle-error",
+          "java": {
+            "exact_coverage": true,
+            "files_compared": 22,
+            "different_files": [],
+            "raw_equal": true
+          },
+          "rust": {
+            "exact_coverage": true,
+            "files_compared": 22,
+            "different_files": [],
+            "raw_equal": true
+          }
+        },
+        {
+          "id": "edge-close-call-method",
+          "repeat": 0,
+          "previous_status": "oracle-error",
+          "current_status": "oracle-error",
+          "java": {
+            "exact_coverage": true,
+            "files_compared": 22,
+            "different_files": [],
+            "raw_equal": true
+          },
+          "rust": {
+            "exact_coverage": true,
+            "files_compared": 22,
+            "different_files": [],
+            "raw_equal": true
+          }
+        },
+        {
+          "id": "edge-close-call-method",
+          "repeat": 1,
+          "previous_status": "oracle-error",
+          "current_status": "oracle-error",
+          "java": {
+            "exact_coverage": true,
+            "files_compared": 22,
+            "different_files": [],
+            "raw_equal": true
+          },
+          "rust": {
+            "exact_coverage": true,
+            "files_compared": 22,
+            "different_files": [],
+            "raw_equal": true
+          }
+        },
+        {
+          "id": "edge-close-callback-after-close",
+          "repeat": 0,
+          "previous_status": "oracle-error",
+          "current_status": "oracle-error",
+          "java": {
+            "exact_coverage": true,
+            "files_compared": 26,
+            "different_files": [],
+            "raw_equal": true
+          },
+          "rust": {
+            "exact_coverage": true,
+            "files_compared": 26,
+            "different_files": [],
+            "raw_equal": true
+          }
+        },
+        {
+          "id": "edge-close-callback-after-close",
+          "repeat": 1,
+          "previous_status": "oracle-error",
+          "current_status": "oracle-error",
+          "java": {
+            "exact_coverage": true,
+            "files_compared": 26,
+            "different_files": [],
+            "raw_equal": true
+          },
+          "rust": {
+            "exact_coverage": true,
+            "files_compared": 26,
+            "different_files": [],
+            "raw_equal": true
+          }
+        },
+        {
+          "id": "edge-compact-limit",
+          "repeat": 0,
+          "previous_status": "pass",
+          "current_status": "pass",
+          "java": {
+            "exact_coverage": true,
+            "files_compared": 18,
+            "different_files": [],
+            "raw_equal": true
+          },
+          "rust": {
+            "exact_coverage": true,
+            "files_compared": 18,
+            "different_files": [],
+            "raw_equal": true
+          }
+        },
+        {
+          "id": "edge-compact-limit",
+          "repeat": 1,
+          "previous_status": "pass",
+          "current_status": "pass",
+          "java": {
+            "exact_coverage": true,
+            "files_compared": 18,
+            "different_files": [],
+            "raw_equal": true
+          },
+          "rust": {
+            "exact_coverage": true,
+            "files_compared": 18,
+            "different_files": [],
+            "raw_equal": true
+          }
+        },
+        {
+          "id": "edge-surrogate-code-units",
+          "repeat": 0,
+          "previous_status": "pass",
+          "current_status": "pass",
+          "java": {
+            "exact_coverage": true,
+            "files_compared": 18,
+            "different_files": [],
+            "raw_equal": true
+          },
+          "rust": {
+            "exact_coverage": true,
+            "files_compared": 18,
+            "different_files": [],
+            "raw_equal": true
+          }
+        },
+        {
+          "id": "edge-surrogate-code-units",
+          "repeat": 1,
+          "previous_status": "pass",
+          "current_status": "pass",
+          "java": {
+            "exact_coverage": true,
+            "files_compared": 18,
+            "different_files": [],
+            "raw_equal": true
+          },
+          "rust": {
+            "exact_coverage": true,
+            "files_compared": 18,
+            "different_files": [],
+            "raw_equal": true
+          }
+        },
+        {
+          "id": "edge-pretty-empty-lines",
+          "repeat": 0,
+          "previous_status": "pass",
+          "current_status": "pass",
+          "java": {
+            "exact_coverage": true,
+            "files_compared": 26,
+            "different_files": [],
+            "raw_equal": true
+          },
+          "rust": {
+            "exact_coverage": true,
+            "files_compared": 26,
+            "different_files": [],
+            "raw_equal": true
+          }
+        },
+        {
+          "id": "edge-pretty-empty-lines",
+          "repeat": 1,
+          "previous_status": "pass",
+          "current_status": "pass",
+          "java": {
+            "exact_coverage": true,
+            "files_compared": 26,
+            "different_files": [],
+            "raw_equal": true
+          },
+          "rust": {
+            "exact_coverage": true,
+            "files_compared": 26,
+            "different_files": [],
+            "raw_equal": true
+          }
+        },
+        {
+          "id": "setup-lazy-control",
+          "repeat": 0,
+          "previous_status": "pass",
+          "current_status": "pass",
+          "java": {
+            "exact_coverage": true,
+            "files_compared": 42,
+            "different_files": [],
+            "raw_equal": true
+          },
+          "rust": {
+            "exact_coverage": true,
+            "files_compared": 42,
+            "different_files": [],
+            "raw_equal": true
+          }
+        },
+        {
+          "id": "setup-lazy-control",
+          "repeat": 1,
+          "previous_status": "pass",
+          "current_status": "pass",
+          "java": {
+            "exact_coverage": true,
+            "files_compared": 42,
+            "different_files": [],
+            "raw_equal": true
+          },
+          "rust": {
+            "exact_coverage": true,
+            "files_compared": 42,
+            "different_files": [],
+            "raw_equal": true
+          }
+        },
+        {
+          "id": "setup-module-annotation-log",
+          "repeat": 0,
+          "previous_status": "pass",
+          "current_status": "pass",
+          "java": {
+            "exact_coverage": true,
+            "files_compared": 58,
+            "different_files": [],
+            "raw_equal": true
+          },
+          "rust": {
+            "exact_coverage": true,
+            "files_compared": 58,
+            "different_files": [],
+            "raw_equal": true
+          }
+        },
+        {
+          "id": "setup-module-annotation-log",
+          "repeat": 1,
+          "previous_status": "pass",
+          "current_status": "pass",
+          "java": {
+            "exact_coverage": true,
+            "files_compared": 58,
+            "different_files": [],
+            "raw_equal": true
+          },
+          "rust": {
+            "exact_coverage": true,
+            "files_compared": 58,
+            "different_files": [],
+            "raw_equal": true
+          }
+        },
+        {
+          "id": "setup-module-annotation-read",
+          "repeat": 0,
+          "previous_status": "pass",
+          "current_status": "pass",
+          "java": {
+            "exact_coverage": true,
+            "files_compared": 30,
+            "different_files": [],
+            "raw_equal": true
+          },
+          "rust": {
+            "exact_coverage": true,
+            "files_compared": 30,
+            "different_files": [],
+            "raw_equal": true
+          }
+        },
+        {
+          "id": "setup-module-annotation-read",
+          "repeat": 1,
+          "previous_status": "pass",
+          "current_status": "pass",
+          "java": {
+            "exact_coverage": true,
+            "files_compared": 30,
+            "different_files": [],
+            "raw_equal": true
+          },
+          "rust": {
+            "exact_coverage": true,
+            "files_compared": 30,
+            "different_files": [],
+            "raw_equal": true
+          }
+        },
+        {
+          "id": "setup-module-annotation-log-then-error",
+          "repeat": 0,
+          "previous_status": "pass",
+          "current_status": "pass",
+          "java": {
+            "exact_coverage": true,
+            "files_compared": 30,
+            "different_files": [],
+            "raw_equal": true
+          },
+          "rust": {
+            "exact_coverage": true,
+            "files_compared": 30,
+            "different_files": [],
+            "raw_equal": true
+          }
+        },
+        {
+          "id": "setup-module-annotation-log-then-error",
+          "repeat": 1,
+          "previous_status": "pass",
+          "current_status": "pass",
+          "java": {
+            "exact_coverage": true,
+            "files_compared": 30,
+            "different_files": [],
+            "raw_equal": true
+          },
+          "rust": {
+            "exact_coverage": true,
+            "files_compared": 30,
+            "different_files": [],
+            "raw_equal": true
+          }
+        },
+        {
+          "id": "compile-grouped-contextual-new",
+          "repeat": 0,
+          "previous_status": "pass",
+          "current_status": "pass",
+          "java": {
+            "exact_coverage": true,
+            "files_compared": 10,
+            "different_files": [],
+            "raw_equal": true
+          },
+          "rust": {
+            "exact_coverage": true,
+            "files_compared": 10,
+            "different_files": [],
+            "raw_equal": true
+          }
+        },
+        {
+          "id": "compile-grouped-contextual-new",
+          "repeat": 1,
+          "previous_status": "pass",
+          "current_status": "pass",
+          "java": {
+            "exact_coverage": true,
+            "files_compared": 10,
+            "different_files": [],
+            "raw_equal": true
+          },
+          "rust": {
+            "exact_coverage": true,
+            "files_compared": 10,
+            "different_files": [],
+            "raw_equal": true
+          }
+        },
+        {
+          "id": "compile-empty-trace-parse",
+          "repeat": 0,
+          "previous_status": "pass",
+          "current_status": "pass",
+          "java": {
+            "exact_coverage": true,
+            "files_compared": 10,
+            "different_files": [],
+            "raw_equal": true
+          },
+          "rust": {
+            "exact_coverage": true,
+            "files_compared": 10,
+            "different_files": [],
+            "raw_equal": true
+          }
+        },
+        {
+          "id": "compile-empty-trace-parse",
+          "repeat": 1,
+          "previous_status": "pass",
+          "current_status": "pass",
+          "java": {
+            "exact_coverage": true,
+            "files_compared": 10,
+            "different_files": [],
+            "raw_equal": true
+          },
+          "rust": {
+            "exact_coverage": true,
+            "files_compared": 10,
+            "different_files": [],
+            "raw_equal": true
+          }
+        },
+        {
+          "id": "read-same-pending-property",
+          "repeat": 0,
+          "previous_status": "oracle-error",
+          "current_status": "oracle-error",
+          "java": {
+            "exact_coverage": true,
+            "files_compared": 18,
+            "different_files": [],
+            "raw_equal": true
+          },
+          "rust": {
+            "exact_coverage": true,
+            "files_compared": 18,
+            "different_files": [],
+            "raw_equal": true
+          }
+        },
+        {
+          "id": "read-same-pending-property",
+          "repeat": 1,
+          "previous_status": "oracle-error",
+          "current_status": "oracle-error",
+          "java": {
+            "exact_coverage": true,
+            "files_compared": 18,
+            "different_files": [],
+            "raw_equal": true
+          },
+          "rust": {
+            "exact_coverage": true,
+            "files_compared": 18,
+            "different_files": [],
+            "raw_equal": true
+          }
+        },
+        {
+          "id": "read-pending-ancestor",
+          "repeat": 0,
+          "previous_status": "oracle-error",
+          "current_status": "oracle-error",
+          "java": {
+            "exact_coverage": true,
+            "files_compared": 18,
+            "different_files": [],
+            "raw_equal": true
+          },
+          "rust": {
+            "exact_coverage": true,
+            "files_compared": 18,
+            "different_files": [],
+            "raw_equal": true
+          }
+        },
+        {
+          "id": "read-pending-ancestor",
+          "repeat": 1,
+          "previous_status": "oracle-error",
+          "current_status": "oracle-error",
+          "java": {
+            "exact_coverage": true,
+            "files_compared": 18,
+            "different_files": [],
+            "raw_equal": true
+          },
+          "rust": {
+            "exact_coverage": true,
+            "files_compared": 18,
+            "different_files": [],
+            "raw_equal": true
+          }
+        },
+        {
+          "id": "read-different-resource-pending-property",
+          "repeat": 0,
+          "previous_status": "oracle-error",
+          "current_status": "oracle-error",
+          "java": {
+            "exact_coverage": true,
+            "files_compared": 18,
+            "different_files": [],
+            "raw_equal": true
+          },
+          "rust": {
+            "exact_coverage": true,
+            "files_compared": 18,
+            "different_files": [],
+            "raw_equal": true
+          }
+        },
+        {
+          "id": "read-different-resource-pending-property",
+          "repeat": 1,
+          "previous_status": "oracle-error",
+          "current_status": "oracle-error",
+          "java": {
+            "exact_coverage": true,
+            "files_compared": 18,
+            "different_files": [],
+            "raw_equal": true
+          },
+          "rust": {
+            "exact_coverage": true,
+            "files_compared": 18,
+            "different_files": [],
+            "raw_equal": true
+          }
+        }
+      ],
+      "bootstrap": [
+        {
+          "id": "bootstrap-module-annotation-close",
+          "repeat": 0,
+          "whole_experiment_status": "oracle-error",
+          "first_call_raw_equal": true,
+          "first_call_exact_success_8": true,
+          "first_call_channels": {
+            "java": {
+              "status": {
+                "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage37-trace-final-01/cases/bootstrap-module-annotation-close/0/java/outer-0.status.bin",
+                "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5",
+                "bytes": 8
+              },
+              "stdout": {
+                "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage37-trace-final-01/cases/bootstrap-module-annotation-close/0/java/outer-0.stdout.bin",
+                "sha256": "2c624232cdd221771294dfbb310aca000a0df6ac8b66b696d90ef06fdefb64a3",
+                "bytes": 1
+              },
+              "stderr": {
+                "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage37-trace-final-01/cases/bootstrap-module-annotation-close/0/java/outer-0.stderr.bin",
+                "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                "bytes": 0
+              }
+            },
+            "rust": {
+              "status": {
+                "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage37-trace-final-01/cases/bootstrap-module-annotation-close/0/rust/outer-0.status.bin",
+                "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5",
+                "bytes": 8
+              },
+              "stdout": {
+                "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage37-trace-final-01/cases/bootstrap-module-annotation-close/0/rust/outer-0.stdout.bin",
+                "sha256": "2c624232cdd221771294dfbb310aca000a0df6ac8b66b696d90ef06fdefb64a3",
+                "bytes": 1
+              },
+              "stderr": {
+                "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage37-trace-final-01/cases/bootstrap-module-annotation-close/0/rust/outer-0.stderr.bin",
+                "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                "bytes": 0
+              }
+            }
+          },
+          "oracle_errors": [
+            "outer-1.status.bin"
+          ]
+        },
+        {
+          "id": "bootstrap-module-annotation-close",
+          "repeat": 1,
+          "whole_experiment_status": "oracle-error",
+          "first_call_raw_equal": true,
+          "first_call_exact_success_8": true,
+          "first_call_channels": {
+            "java": {
+              "status": {
+                "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage37-trace-final-01/cases/bootstrap-module-annotation-close/1/java/outer-0.status.bin",
+                "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5",
+                "bytes": 8
+              },
+              "stdout": {
+                "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage37-trace-final-01/cases/bootstrap-module-annotation-close/1/java/outer-0.stdout.bin",
+                "sha256": "2c624232cdd221771294dfbb310aca000a0df6ac8b66b696d90ef06fdefb64a3",
+                "bytes": 1
+              },
+              "stderr": {
+                "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage37-trace-final-01/cases/bootstrap-module-annotation-close/1/java/outer-0.stderr.bin",
+                "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                "bytes": 0
+              }
+            },
+            "rust": {
+              "status": {
+                "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage37-trace-final-01/cases/bootstrap-module-annotation-close/1/rust/outer-0.status.bin",
+                "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5",
+                "bytes": 8
+              },
+              "stdout": {
+                "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage37-trace-final-01/cases/bootstrap-module-annotation-close/1/rust/outer-0.stdout.bin",
+                "sha256": "2c624232cdd221771294dfbb310aca000a0df6ac8b66b696d90ef06fdefb64a3",
+                "bytes": 1
+              },
+              "stderr": {
+                "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage37-trace-final-01/cases/bootstrap-module-annotation-close/1/rust/outer-0.stderr.bin",
+                "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                "bytes": 0
+              }
+            }
+          },
+          "oracle_errors": [
+            "outer-1.status.bin"
+          ]
+        },
+        {
+          "id": "bootstrap-module-annotation-close-reenter",
+          "repeat": 0,
+          "whole_experiment_status": "oracle-error",
+          "first_call_raw_equal": true,
+          "first_call_exact_success_8": true,
+          "first_call_channels": {
+            "java": {
+              "status": {
+                "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage37-trace-final-01/cases/bootstrap-module-annotation-close-reenter/0/java/outer-0.status.bin",
+                "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5",
+                "bytes": 8
+              },
+              "stdout": {
+                "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage37-trace-final-01/cases/bootstrap-module-annotation-close-reenter/0/java/outer-0.stdout.bin",
+                "sha256": "2c624232cdd221771294dfbb310aca000a0df6ac8b66b696d90ef06fdefb64a3",
+                "bytes": 1
+              },
+              "stderr": {
+                "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage37-trace-final-01/cases/bootstrap-module-annotation-close-reenter/0/java/outer-0.stderr.bin",
+                "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                "bytes": 0
+              }
+            },
+            "rust": {
+              "status": {
+                "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage37-trace-final-01/cases/bootstrap-module-annotation-close-reenter/0/rust/outer-0.status.bin",
+                "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5",
+                "bytes": 8
+              },
+              "stdout": {
+                "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage37-trace-final-01/cases/bootstrap-module-annotation-close-reenter/0/rust/outer-0.stdout.bin",
+                "sha256": "2c624232cdd221771294dfbb310aca000a0df6ac8b66b696d90ef06fdefb64a3",
+                "bytes": 1
+              },
+              "stderr": {
+                "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage37-trace-final-01/cases/bootstrap-module-annotation-close-reenter/0/rust/outer-0.stderr.bin",
+                "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                "bytes": 0
+              }
+            }
+          },
+          "oracle_errors": [
+            "outer-1.status.bin",
+            "post-close-callback-0.status.bin"
+          ]
+        },
+        {
+          "id": "bootstrap-module-annotation-close-reenter",
+          "repeat": 1,
+          "whole_experiment_status": "oracle-error",
+          "first_call_raw_equal": true,
+          "first_call_exact_success_8": true,
+          "first_call_channels": {
+            "java": {
+              "status": {
+                "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage37-trace-final-01/cases/bootstrap-module-annotation-close-reenter/1/java/outer-0.status.bin",
+                "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5",
+                "bytes": 8
+              },
+              "stdout": {
+                "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage37-trace-final-01/cases/bootstrap-module-annotation-close-reenter/1/java/outer-0.stdout.bin",
+                "sha256": "2c624232cdd221771294dfbb310aca000a0df6ac8b66b696d90ef06fdefb64a3",
+                "bytes": 1
+              },
+              "stderr": {
+                "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage37-trace-final-01/cases/bootstrap-module-annotation-close-reenter/1/java/outer-0.stderr.bin",
+                "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                "bytes": 0
+              }
+            },
+            "rust": {
+              "status": {
+                "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage37-trace-final-01/cases/bootstrap-module-annotation-close-reenter/1/rust/outer-0.status.bin",
+                "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5",
+                "bytes": 8
+              },
+              "stdout": {
+                "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage37-trace-final-01/cases/bootstrap-module-annotation-close-reenter/1/rust/outer-0.stdout.bin",
+                "sha256": "2c624232cdd221771294dfbb310aca000a0df6ac8b66b696d90ef06fdefb64a3",
+                "bytes": 1
+              },
+              "stderr": {
+                "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage37-trace-final-01/cases/bootstrap-module-annotation-close-reenter/1/rust/outer-0.stderr.bin",
+                "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                "bytes": 0
+              }
+            }
+          },
+          "oracle_errors": [
+            "outer-1.status.bin",
+            "post-close-callback-0.status.bin"
+          ]
+        },
+        {
+          "id": "bootstrap-member-annotation-close",
+          "repeat": 0,
+          "whole_experiment_status": "oracle-error",
+          "first_call_raw_equal": true,
+          "first_call_exact_success_8": true,
+          "first_call_channels": {
+            "java": {
+              "status": {
+                "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage37-trace-final-01/cases/bootstrap-member-annotation-close/0/java/outer-0.status.bin",
+                "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5",
+                "bytes": 8
+              },
+              "stdout": {
+                "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage37-trace-final-01/cases/bootstrap-member-annotation-close/0/java/outer-0.stdout.bin",
+                "sha256": "2c624232cdd221771294dfbb310aca000a0df6ac8b66b696d90ef06fdefb64a3",
+                "bytes": 1
+              },
+              "stderr": {
+                "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage37-trace-final-01/cases/bootstrap-member-annotation-close/0/java/outer-0.stderr.bin",
+                "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                "bytes": 0
+              }
+            },
+            "rust": {
+              "status": {
+                "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage37-trace-final-01/cases/bootstrap-member-annotation-close/0/rust/outer-0.status.bin",
+                "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5",
+                "bytes": 8
+              },
+              "stdout": {
+                "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage37-trace-final-01/cases/bootstrap-member-annotation-close/0/rust/outer-0.stdout.bin",
+                "sha256": "2c624232cdd221771294dfbb310aca000a0df6ac8b66b696d90ef06fdefb64a3",
+                "bytes": 1
+              },
+              "stderr": {
+                "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage37-trace-final-01/cases/bootstrap-member-annotation-close/0/rust/outer-0.stderr.bin",
+                "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                "bytes": 0
+              }
+            }
+          },
+          "oracle_errors": [
+            "outer-1.status.bin"
+          ]
+        },
+        {
+          "id": "bootstrap-member-annotation-close",
+          "repeat": 1,
+          "whole_experiment_status": "oracle-error",
+          "first_call_raw_equal": true,
+          "first_call_exact_success_8": true,
+          "first_call_channels": {
+            "java": {
+              "status": {
+                "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage37-trace-final-01/cases/bootstrap-member-annotation-close/1/java/outer-0.status.bin",
+                "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5",
+                "bytes": 8
+              },
+              "stdout": {
+                "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage37-trace-final-01/cases/bootstrap-member-annotation-close/1/java/outer-0.stdout.bin",
+                "sha256": "2c624232cdd221771294dfbb310aca000a0df6ac8b66b696d90ef06fdefb64a3",
+                "bytes": 1
+              },
+              "stderr": {
+                "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage37-trace-final-01/cases/bootstrap-member-annotation-close/1/java/outer-0.stderr.bin",
+                "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                "bytes": 0
+              }
+            },
+            "rust": {
+              "status": {
+                "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage37-trace-final-01/cases/bootstrap-member-annotation-close/1/rust/outer-0.status.bin",
+                "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5",
+                "bytes": 8
+              },
+              "stdout": {
+                "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage37-trace-final-01/cases/bootstrap-member-annotation-close/1/rust/outer-0.stdout.bin",
+                "sha256": "2c624232cdd221771294dfbb310aca000a0df6ac8b66b696d90ef06fdefb64a3",
+                "bytes": 1
+              },
+              "stderr": {
+                "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage37-trace-final-01/cases/bootstrap-member-annotation-close/1/rust/outer-0.stderr.bin",
+                "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                "bytes": 0
+              }
+            }
+          },
+          "oracle_errors": [
+            "outer-1.status.bin"
+          ]
+        },
+        {
+          "id": "bootstrap-member-annotation-close-reenter",
+          "repeat": 0,
+          "whole_experiment_status": "oracle-error",
+          "first_call_raw_equal": true,
+          "first_call_exact_success_8": true,
+          "first_call_channels": {
+            "java": {
+              "status": {
+                "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage37-trace-final-01/cases/bootstrap-member-annotation-close-reenter/0/java/outer-0.status.bin",
+                "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5",
+                "bytes": 8
+              },
+              "stdout": {
+                "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage37-trace-final-01/cases/bootstrap-member-annotation-close-reenter/0/java/outer-0.stdout.bin",
+                "sha256": "2c624232cdd221771294dfbb310aca000a0df6ac8b66b696d90ef06fdefb64a3",
+                "bytes": 1
+              },
+              "stderr": {
+                "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage37-trace-final-01/cases/bootstrap-member-annotation-close-reenter/0/java/outer-0.stderr.bin",
+                "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                "bytes": 0
+              }
+            },
+            "rust": {
+              "status": {
+                "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage37-trace-final-01/cases/bootstrap-member-annotation-close-reenter/0/rust/outer-0.status.bin",
+                "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5",
+                "bytes": 8
+              },
+              "stdout": {
+                "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage37-trace-final-01/cases/bootstrap-member-annotation-close-reenter/0/rust/outer-0.stdout.bin",
+                "sha256": "2c624232cdd221771294dfbb310aca000a0df6ac8b66b696d90ef06fdefb64a3",
+                "bytes": 1
+              },
+              "stderr": {
+                "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage37-trace-final-01/cases/bootstrap-member-annotation-close-reenter/0/rust/outer-0.stderr.bin",
+                "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                "bytes": 0
+              }
+            }
+          },
+          "oracle_errors": [
+            "outer-1.status.bin",
+            "post-close-callback-0.status.bin"
+          ]
+        },
+        {
+          "id": "bootstrap-member-annotation-close-reenter",
+          "repeat": 1,
+          "whole_experiment_status": "oracle-error",
+          "first_call_raw_equal": true,
+          "first_call_exact_success_8": true,
+          "first_call_channels": {
+            "java": {
+              "status": {
+                "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage37-trace-final-01/cases/bootstrap-member-annotation-close-reenter/1/java/outer-0.status.bin",
+                "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5",
+                "bytes": 8
+              },
+              "stdout": {
+                "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage37-trace-final-01/cases/bootstrap-member-annotation-close-reenter/1/java/outer-0.stdout.bin",
+                "sha256": "2c624232cdd221771294dfbb310aca000a0df6ac8b66b696d90ef06fdefb64a3",
+                "bytes": 1
+              },
+              "stderr": {
+                "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage37-trace-final-01/cases/bootstrap-member-annotation-close-reenter/1/java/outer-0.stderr.bin",
+                "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                "bytes": 0
+              }
+            },
+            "rust": {
+              "status": {
+                "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage37-trace-final-01/cases/bootstrap-member-annotation-close-reenter/1/rust/outer-0.status.bin",
+                "sha256": "81b2bd4ea98c8db66554fbc8d7637a1a69a130f331feb732b75caab4c4868fd5",
+                "bytes": 8
+              },
+              "stdout": {
+                "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage37-trace-final-01/cases/bootstrap-member-annotation-close-reenter/1/rust/outer-0.stdout.bin",
+                "sha256": "2c624232cdd221771294dfbb310aca000a0df6ac8b66b696d90ef06fdefb64a3",
+                "bytes": 1
+              },
+              "stderr": {
+                "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage37-trace-final-01/cases/bootstrap-member-annotation-close-reenter/1/rust/outer-0.stderr.bin",
+                "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                "bytes": 0
+              }
+            }
+          },
+          "oracle_errors": [
+            "outer-1.status.bin",
+            "post-close-callback-0.status.bin"
+          ]
+        }
+      ],
+      "bootstrap_all8_exact_success_8": true,
+      "captured_core_source_bindings": [
+        {
+          "path": "crates/pkl-runtime/src/lib.rs",
+          "frozen_sha256": "e6e7a89c5eb35089bb915b88a31ed5daa0afe610d04bcf6cc9cc564e2b2121c0",
+          "captured_sha256": "e6e7a89c5eb35089bb915b88a31ed5daa0afe610d04bcf6cc9cc564e2b2121c0",
+          "current_sha256": "e6e7a89c5eb35089bb915b88a31ed5daa0afe610d04bcf6cc9cc564e2b2121c0",
+          "match": true
+        },
+        {
+          "path": "crates/pkl-runtime/src/logging.rs",
+          "frozen_sha256": "c02cc7cee11291860eba3cb3d95e2838e9ca1aa361eade37668917c950fa6c49",
+          "captured_sha256": "c02cc7cee11291860eba3cb3d95e2838e9ca1aa361eade37668917c950fa6c49",
+          "current_sha256": "c02cc7cee11291860eba3cb3d95e2838e9ca1aa361eade37668917c950fa6c49",
+          "match": true
+        },
+        {
+          "path": "crates/pkl-runtime/src/host.rs",
+          "frozen_sha256": "f7f0b90442b8e4cb27c2fe308b21657bf5ed1736f627369356b26a532ffd7a48",
+          "captured_sha256": "f7f0b90442b8e4cb27c2fe308b21657bf5ed1736f627369356b26a532ffd7a48",
+          "current_sha256": "f7f0b90442b8e4cb27c2fe308b21657bf5ed1736f627369356b26a532ffd7a48",
+          "match": true
+        },
+        {
+          "path": "crates/pkl-runtime/src/vm.rs",
+          "frozen_sha256": "10bdc962b690c2eb54def22c90bda05421e2a83b0450cddfe4a4272f8967b9c8",
+          "captured_sha256": "10bdc962b690c2eb54def22c90bda05421e2a83b0450cddfe4a4272f8967b9c8",
+          "current_sha256": "10bdc962b690c2eb54def22c90bda05421e2a83b0450cddfe4a4272f8967b9c8",
+          "match": true
+        },
+        {
+          "path": "crates/pkl-runtime/src/vm/forcing.rs",
+          "frozen_sha256": "739cb1da198b1341a67247e5bc96fb96c95272f9a2e80f5585322077063d82e4",
+          "captured_sha256": "739cb1da198b1341a67247e5bc96fb96c95272f9a2e80f5585322077063d82e4",
+          "current_sha256": "739cb1da198b1341a67247e5bc96fb96c95272f9a2e80f5585322077063d82e4",
+          "match": true
+        },
+        {
+          "path": "crates/pkl-runtime/src/vm/tracing.rs",
+          "frozen_sha256": "0dc85b7970ffe67c3457ae9bfd071f2ca5b059d4e8ef7d33803ce40527466435",
+          "captured_sha256": "0dc85b7970ffe67c3457ae9bfd071f2ca5b059d4e8ef7d33803ce40527466435",
+          "current_sha256": "0dc85b7970ffe67c3457ae9bfd071f2ca5b059d4e8ef7d33803ce40527466435",
+          "match": true
+        },
+        {
+          "path": "crates/pkl-runtime/src/vm/tracing/tests.rs",
+          "frozen_sha256": "406b0dd652eb9e527d2c1343271df23aae6eeb0445e8c184d315018713165756",
+          "captured_sha256": "406b0dd652eb9e527d2c1343271df23aae6eeb0445e8c184d315018713165756",
+          "current_sha256": "406b0dd652eb9e527d2c1343271df23aae6eeb0445e8c184d315018713165756",
+          "match": true
+        },
+        {
+          "path": "crates/pkl-runtime/src/vm/strings.rs",
+          "frozen_sha256": "641ea58be243b4ac1c454948b46b287a6dc7f9fd0c3592412b9f733c4345e4da",
+          "captured_sha256": "641ea58be243b4ac1c454948b46b287a6dc7f9fd0c3592412b9f733c4345e4da",
+          "current_sha256": "641ea58be243b4ac1c454948b46b287a6dc7f9fd0c3592412b9f733c4345e4da",
+          "match": true
+        }
+      ],
+      "captured_core_source_bindings_all_match": true,
+      "candidate": {
+        "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage37-trace-final-01/artifacts/trace_host_probe",
+        "sha256": "cbeeac2a7571c3632e41f60a6cfcd03c3c249d7ecd5b52d7c574c9a5c0a3953d",
+        "bytes": 2672160
+      }
+    },
+    "gates": {
+      "checks": [
+        {
+          "command": [
+            "python3",
+            "tools/m2_trace.py",
+            "--verify-report",
+            "target/m2/stage37-trace-final-01"
+          ],
+          "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs",
+          "exit_code": 0,
+          "stdout": {
+            "path": "target/m2/stage37-trace-final-01.verify-report.stdout.log",
+            "sha256": "28aa3837dad8a63c134987c9688d377e435e963b1f845050c722523459328e2b",
+            "bytes": 111
+          },
+          "stderr": {
+            "path": "target/m2/stage37-trace-final-01.verify-report.stderr.log",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "bytes": 0
+          }
+        },
+        {
+          "command": [
+            "python3",
+            "tools/m2_trace.py",
+            "--verify-contract",
+            "target/m2/stage37-trace-final-01"
+          ],
+          "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs",
+          "exit_code": 1,
+          "stdout": {
+            "path": "target/m2/stage37-trace-final-01.verify-contract.stdout.log",
+            "sha256": "28aa3837dad8a63c134987c9688d377e435e963b1f845050c722523459328e2b",
+            "bytes": 111
+          },
+          "stderr": {
+            "path": "target/m2/stage37-trace-final-01.verify-contract.stderr.log",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "bytes": 0
+          }
+        }
+      ],
+      "strict_failure_preserved": true,
+      "interpretation": "Evidence integrity passes; strict complete compatibility fails because Java oracle-error experiments are not passes."
+    }
+  },
+  "standard_and_scalar_platforms": {
+    "scope": "Independent prescribed standard comparison plus complete scalar raw bytes/source/artifact/Java-origin audit; no runtime rerun. Known regex differences, legacy scalar no-Host differences and Java internal errors remain failures.",
+    "passed": true,
+    "standard_report_sha256": "14ed3b4582b7bb95a7bc95b921a0b4c3684a5ddff443df1cb8f9fdc4fd3a96c3",
+    "standard_sources_verified": 98,
+    "standard_shared_engine_passed": 6078,
+    "standard_java_matches_each": 6076,
+    "standard_known_gaps": [
+      "regex-unicode-15-vs-16",
+      "regex-zero-width-supplementary"
+    ],
+    "standard_js_scenarios_each": 92,
+    "artifacts": {
+      "pkl_napi.node": "9f161ea76fb45fbae9766e5c118daa6bf8f3004df939e6e6fb99ba0251f9e72f",
+      "semantics_probe": "26fd3c31537dbabbc028da9224e923fb161661f053d002f6ed6186a7d043fa61",
+      "wasm/pkl_wasm_bg.wasm.d.ts": "37270fe48a4be88e42ceaa539396911d3fc55bb68803c7fa0f82478067233deb",
+      "wasm/pkl_wasm_bg.wasm": "f303ad05e8a2703572df9d6bfc7585fb61ff3d0811667575f3f4f202d9388b63",
+      "wasm/pkl_wasm.js": "2644e84a966e52344accf3537a12245b3776a9705a3dec6eaadcef702a7c1d08",
+      "wasm/pkl_wasm.d.ts": "28f14c182db3b65f2e60b900a36cb0935d3671d4cfe974517850bdfd65c1033e"
+    },
+    "core_freeze_sha256": "0d27e1bb914d6558315209de4d81909d3e45e2b7fb860b631b65c556b0036788",
+    "core_sources_match_main": 27,
+    "C_sources_match_main": 9,
+    "scalar_suites": {
+      "stage37-trace-scalar-platform-final-01": {
+        "execution_sha256": "12659be383d21e9c6e1ab2f6db0da5c45cef0763b4246b461f38988ee89fa795",
+        "origin_report_sha256": "6eea359d2b4fb451e42faeec0fe7554a60c39e4f34b26bae472501f1509f896f",
+        "origin_payload_sha256": "c44840328def510805972c82f3bc8e49f172209616074b5d8476e97bfe05ba08",
+        "targets": {
+          "node": {
+            "executions": 36,
+            "passingExecutions": 32,
+            "mismatchingExecutions": 4,
+            "passingCases": 16,
+            "mismatchingCases": 2,
+            "mismatchIds": [
+              "trace-stage37-noop-force-read",
+              "trace-stage37-strict-list-force"
+            ]
+          },
+          "browser": {
+            "executions": 36,
+            "passingExecutions": 32,
+            "mismatchingExecutions": 4,
+            "passingCases": 16,
+            "mismatchingCases": 2,
+            "mismatchIds": [
+              "trace-stage37-noop-force-read",
+              "trace-stage37-strict-list-force"
+            ]
+          }
+        }
+      },
+      "stage37-repeat-platform-final-01": {
+        "execution_sha256": "abcaa1b4d91f2137b274e3b392763928d76dcce7391e6c93d475ed3db42722d9",
+        "origin_report_sha256": "b0153c626e6484f6b5470b0cbef7faaae3425324bb49aca28ea5a3364d4ad7d7",
+        "origin_payload_sha256": "0e1537fd880f8fbe77675d652b8cbb030b88132978eb19466b0b3201be0447ae",
+        "targets": {
+          "node": {
+            "executions": 40,
+            "passingExecutions": 36,
+            "mismatchingExecutions": 4,
+            "passingCases": 18,
+            "mismatchingCases": 2,
+            "mismatchIds": [
+              "trace-stage37-repeat-empty-cast-negative",
+              "trace-stage37-repeat-empty-max-count"
+            ]
+          },
+          "browser": {
+            "executions": 40,
+            "passingExecutions": 36,
+            "mismatchingExecutions": 4,
+            "passingCases": 18,
+            "mismatchingCases": 2,
+            "mismatchIds": [
+              "trace-stage37-repeat-empty-cast-negative",
+              "trace-stage37-repeat-empty-max-count"
+            ]
+          }
+        }
+      }
+    },
+    "full_node_browser_scalar_payload_parity_experiments": 76,
+    "compatibility_complete": false,
+    "script_sha256": "d0601855b196bddfea352cbc1fd7d6148c0e1e5044738fbad8fbae77516a4563"
+  },
+  "actual_source_trace_platforms": {
+    "scope": "Independent complete raw audit of actual source42 Node/Chromium acquisition; bootstrap first calls verified separately while complete Java close/CME/internal-error experiments remain oracle errors.",
+    "passed": true,
+    "execution_sha256": "40a408b50f47d6bf443bd769f3713eb2a39775e2c8956e7b801ad118deb5a5ba",
+    "java_report_sha256": "4d271632fa08f044386c5f752e926e945ee25ef2e8f6e7e02fc5cdd30f5b12a3",
+    "process_binding_sha256": "ec8a87de827df55cfef6a41480eed6001fd712877bd317bf9664a6d4ef6a6222",
+    "standard_artifacts": {
+      "pkl_napi.node": "9f161ea76fb45fbae9766e5c118daa6bf8f3004df939e6e6fb99ba0251f9e72f",
+      "semantics_probe": "26fd3c31537dbabbc028da9224e923fb161661f053d002f6ed6186a7d043fa61",
+      "wasm/pkl_wasm_bg.wasm.d.ts": "37270fe48a4be88e42ceaa539396911d3fc55bb68803c7fa0f82478067233deb",
+      "wasm/pkl_wasm_bg.wasm": "f303ad05e8a2703572df9d6bfc7585fb61ff3d0811667575f3f4f202d9388b63",
+      "wasm/pkl_wasm.js": "2644e84a966e52344accf3537a12245b3776a9705a3dec6eaadcef702a7c1d08",
+      "wasm/pkl_wasm.d.ts": "28f14c182db3b65f2e60b900a36cb0935d3671d4cfe974517850bdfd65c1033e"
+    },
+    "targets": {
+      "node": {
+        "status_counts": {
+          "pass": 54,
+          "oracle-error": 30
+        },
+        "raw_channels_verified": 1836,
+        "raw_channels_equal": 1716
+      },
+      "browser": {
+        "status_counts": {
+          "pass": 54,
+          "oracle-error": 30
+        },
+        "raw_channels_verified": 1836,
+        "raw_channels_equal": 1716
+      }
+    },
+    "java_raw_channels_verified": 2028,
+    "java_exception_class_provenance_sha256": {
+      "target/m2/stage37-trace-final-01/cases/design-scalar-source/0/java/outer-1.error-class.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "target/m2/stage37-trace-final-01/cases/design-scalar-source/0/java/outer-0.error-class.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "target/m2/stage37-trace-final-01/cases/design-scalar-source/1/java/outer-1.error-class.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "target/m2/stage37-trace-final-01/cases/design-scalar-source/1/java/outer-0.error-class.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "target/m2/stage37-trace-final-01/cases/design-source-utf16/0/java/outer-0.error-class.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "target/m2/stage37-trace-final-01/cases/design-source-utf16/1/java/outer-0.error-class.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "target/m2/stage37-trace-final-01/cases/design-pretty-scalar/0/java/outer-0.error-class.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "target/m2/stage37-trace-final-01/cases/design-pretty-scalar/1/java/outer-0.error-class.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "target/m2/stage37-trace-final-01/cases/design-pretty-multiline/0/java/outer-0.error-class.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "target/m2/stage37-trace-final-01/cases/design-pretty-multiline/1/java/outer-0.error-class.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "target/m2/stage37-trace-final-01/cases/design-pretty-crlf/0/java/outer-0.error-class.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "target/m2/stage37-trace-final-01/cases/design-pretty-crlf/1/java/outer-0.error-class.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "target/m2/stage37-trace-final-01/cases/design-noop-force-error/0/java/outer-1.error-class.bin": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591",
+      "target/m2/stage37-trace-final-01/cases/design-noop-force-error/0/java/outer-0.error-class.bin": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591",
+      "target/m2/stage37-trace-final-01/cases/design-noop-force-error/1/java/outer-1.error-class.bin": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591",
+      "target/m2/stage37-trace-final-01/cases/design-noop-force-error/1/java/outer-0.error-class.bin": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591",
+      "target/m2/stage37-trace-final-01/cases/design-noop-force-read/0/java/outer-1.error-class.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "target/m2/stage37-trace-final-01/cases/design-noop-force-read/0/java/outer-0.error-class.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "target/m2/stage37-trace-final-01/cases/design-noop-force-read/1/java/outer-1.error-class.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "target/m2/stage37-trace-final-01/cases/design-noop-force-read/1/java/outer-0.error-class.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "target/m2/stage37-trace-final-01/cases/design-operand-error/0/java/outer-1.error-class.bin": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591",
+      "target/m2/stage37-trace-final-01/cases/design-operand-error/0/java/outer-0.error-class.bin": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591",
+      "target/m2/stage37-trace-final-01/cases/design-operand-error/1/java/outer-1.error-class.bin": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591",
+      "target/m2/stage37-trace-final-01/cases/design-operand-error/1/java/outer-0.error-class.bin": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591",
+      "target/m2/stage37-trace-final-01/cases/design-undefined-direct/0/java/outer-0.error-class.bin": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591",
+      "target/m2/stage37-trace-final-01/cases/design-undefined-direct/1/java/outer-0.error-class.bin": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591",
+      "target/m2/stage37-trace-final-01/cases/design-undefined-object/0/java/outer-2.error-class.bin": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591",
+      "target/m2/stage37-trace-final-01/cases/design-undefined-object/0/java/outer-1.error-class.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "target/m2/stage37-trace-final-01/cases/design-undefined-object/0/java/outer-0.error-class.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "target/m2/stage37-trace-final-01/cases/design-undefined-object/1/java/outer-2.error-class.bin": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591",
+      "target/m2/stage37-trace-final-01/cases/design-undefined-object/1/java/outer-1.error-class.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "target/m2/stage37-trace-final-01/cases/design-undefined-object/1/java/outer-0.error-class.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "target/m2/stage37-trace-final-01/cases/design-override-ignored/0/java/outer-0.error-class.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "target/m2/stage37-trace-final-01/cases/design-override-ignored/1/java/outer-0.error-class.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "target/m2/stage37-trace-final-01/cases/design-strict-list-forced/0/java/outer-0.error-class.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "target/m2/stage37-trace-final-01/cases/design-strict-list-forced/1/java/outer-0.error-class.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "target/m2/stage37-trace-final-01/cases/design-nested-trace/0/java/outer-0.error-class.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "target/m2/stage37-trace-final-01/cases/design-nested-trace/1/java/outer-0.error-class.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "target/m2/stage37-trace-final-01/cases/design-logger-throw/0/java/outer-2.error-class.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "target/m2/stage37-trace-final-01/cases/design-logger-throw/0/java/outer-1.error-class.bin": "29d67798b7711928a2a39c578687f2ca163c801882665290a7490a7a1ca76407",
+      "target/m2/stage37-trace-final-01/cases/design-logger-throw/0/java/outer-0.error-class.bin": "29d67798b7711928a2a39c578687f2ca163c801882665290a7490a7a1ca76407",
+      "target/m2/stage37-trace-final-01/cases/design-logger-throw/1/java/outer-2.error-class.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "target/m2/stage37-trace-final-01/cases/design-logger-throw/1/java/outer-1.error-class.bin": "29d67798b7711928a2a39c578687f2ca163c801882665290a7490a7a1ca76407",
+      "target/m2/stage37-trace-final-01/cases/design-logger-throw/1/java/outer-0.error-class.bin": "29d67798b7711928a2a39c578687f2ca163c801882665290a7490a7a1ca76407",
+      "target/m2/stage37-trace-final-01/cases/design-logger-reentry/0/java/outer-2.error-class.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "target/m2/stage37-trace-final-01/cases/design-logger-reentry/0/java/log-callback-0.error-class.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "target/m2/stage37-trace-final-01/cases/design-logger-reentry/0/java/outer-1.error-class.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "target/m2/stage37-trace-final-01/cases/design-logger-reentry/0/java/outer-0.error-class.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "target/m2/stage37-trace-final-01/cases/design-logger-reentry/1/java/outer-2.error-class.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "target/m2/stage37-trace-final-01/cases/design-logger-reentry/1/java/log-callback-0.error-class.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "target/m2/stage37-trace-final-01/cases/design-logger-reentry/1/java/outer-1.error-class.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "target/m2/stage37-trace-final-01/cases/design-logger-reentry/1/java/outer-0.error-class.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "target/m2/stage37-trace-final-01/cases/design-logger-reentry-error/0/java/log-callback-0.error-class.bin": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591",
+      "target/m2/stage37-trace-final-01/cases/design-logger-reentry-error/0/java/outer-1.error-class.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "target/m2/stage37-trace-final-01/cases/design-logger-reentry-error/0/java/outer-0.error-class.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "target/m2/stage37-trace-final-01/cases/design-logger-reentry-error/1/java/log-callback-0.error-class.bin": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591",
+      "target/m2/stage37-trace-final-01/cases/design-logger-reentry-error/1/java/outer-1.error-class.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "target/m2/stage37-trace-final-01/cases/design-logger-reentry-error/1/java/outer-0.error-class.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "target/m2/stage37-trace-final-01/cases/design-logger-reentry-nested-read/0/java/log-callback-0.error-class.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "target/m2/stage37-trace-final-01/cases/design-logger-reentry-nested-read/0/java/outer-0.error-class.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "target/m2/stage37-trace-final-01/cases/design-logger-reentry-nested-read/0/java/read-callback-0.error-class.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "target/m2/stage37-trace-final-01/cases/design-logger-reentry-nested-read/1/java/log-callback-0.error-class.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "target/m2/stage37-trace-final-01/cases/design-logger-reentry-nested-read/1/java/outer-0.error-class.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "target/m2/stage37-trace-final-01/cases/design-logger-reentry-nested-read/1/java/read-callback-0.error-class.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "target/m2/stage37-trace-final-01/cases/design-read-reentry-log/0/java/outer-0.error-class.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "target/m2/stage37-trace-final-01/cases/design-read-reentry-log/0/java/read-callback-0.error-class.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "target/m2/stage37-trace-final-01/cases/design-read-reentry-log/1/java/outer-0.error-class.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "target/m2/stage37-trace-final-01/cases/design-read-reentry-log/1/java/read-callback-0.error-class.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "target/m2/stage37-trace-final-01/cases/design-logger-close/0/java/outer-1.error-class.bin": "6c1726ca460bdae5e71eb2303c6ee9ee261c5ab8088cc4067a9099488d911861",
+      "target/m2/stage37-trace-final-01/cases/design-logger-close/0/java/outer-0.error-class.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "target/m2/stage37-trace-final-01/cases/design-logger-close/1/java/outer-1.error-class.bin": "6c1726ca460bdae5e71eb2303c6ee9ee261c5ab8088cc4067a9099488d911861",
+      "target/m2/stage37-trace-final-01/cases/design-logger-close/1/java/outer-0.error-class.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "target/m2/stage37-trace-final-01/cases/design-scalar-surrogate/0/java/outer-0.error-class.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "target/m2/stage37-trace-final-01/cases/design-scalar-surrogate/1/java/outer-0.error-class.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "target/m2/stage37-trace-final-01/cases/edge-close-arithmetic/0/java/outer-1.error-class.bin": "6c1726ca460bdae5e71eb2303c6ee9ee261c5ab8088cc4067a9099488d911861",
+      "target/m2/stage37-trace-final-01/cases/edge-close-arithmetic/0/java/outer-0.error-class.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "target/m2/stage37-trace-final-01/cases/edge-close-arithmetic/1/java/outer-1.error-class.bin": "6c1726ca460bdae5e71eb2303c6ee9ee261c5ab8088cc4067a9099488d911861",
+      "target/m2/stage37-trace-final-01/cases/edge-close-arithmetic/1/java/outer-0.error-class.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "target/m2/stage37-trace-final-01/cases/edge-close-throw/0/java/outer-1.error-class.bin": "6c1726ca460bdae5e71eb2303c6ee9ee261c5ab8088cc4067a9099488d911861",
+      "target/m2/stage37-trace-final-01/cases/edge-close-throw/0/java/outer-0.error-class.bin": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591",
+      "target/m2/stage37-trace-final-01/cases/edge-close-throw/1/java/outer-1.error-class.bin": "6c1726ca460bdae5e71eb2303c6ee9ee261c5ab8088cc4067a9099488d911861",
+      "target/m2/stage37-trace-final-01/cases/edge-close-throw/1/java/outer-0.error-class.bin": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591",
+      "target/m2/stage37-trace-final-01/cases/edge-close-read/0/java/outer-1.error-class.bin": "6c1726ca460bdae5e71eb2303c6ee9ee261c5ab8088cc4067a9099488d911861",
+      "target/m2/stage37-trace-final-01/cases/edge-close-read/0/java/outer-0.error-class.bin": "29d67798b7711928a2a39c578687f2ca163c801882665290a7490a7a1ca76407",
+      "target/m2/stage37-trace-final-01/cases/edge-close-read/1/java/outer-1.error-class.bin": "6c1726ca460bdae5e71eb2303c6ee9ee261c5ab8088cc4067a9099488d911861",
+      "target/m2/stage37-trace-final-01/cases/edge-close-read/1/java/outer-0.error-class.bin": "29d67798b7711928a2a39c578687f2ca163c801882665290a7490a7a1ca76407",
+      "target/m2/stage37-trace-final-01/cases/edge-close-second-trace/0/java/outer-1.error-class.bin": "6c1726ca460bdae5e71eb2303c6ee9ee261c5ab8088cc4067a9099488d911861",
+      "target/m2/stage37-trace-final-01/cases/edge-close-second-trace/0/java/outer-0.error-class.bin": "29d67798b7711928a2a39c578687f2ca163c801882665290a7490a7a1ca76407",
+      "target/m2/stage37-trace-final-01/cases/edge-close-second-trace/1/java/outer-1.error-class.bin": "6c1726ca460bdae5e71eb2303c6ee9ee261c5ab8088cc4067a9099488d911861",
+      "target/m2/stage37-trace-final-01/cases/edge-close-second-trace/1/java/outer-0.error-class.bin": "29d67798b7711928a2a39c578687f2ca163c801882665290a7490a7a1ca76407",
+      "target/m2/stage37-trace-final-01/cases/edge-close-call-method/0/java/outer-1.error-class.bin": "6c1726ca460bdae5e71eb2303c6ee9ee261c5ab8088cc4067a9099488d911861",
+      "target/m2/stage37-trace-final-01/cases/edge-close-call-method/0/java/outer-0.error-class.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "target/m2/stage37-trace-final-01/cases/edge-close-call-method/1/java/outer-1.error-class.bin": "6c1726ca460bdae5e71eb2303c6ee9ee261c5ab8088cc4067a9099488d911861",
+      "target/m2/stage37-trace-final-01/cases/edge-close-call-method/1/java/outer-0.error-class.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "target/m2/stage37-trace-final-01/cases/edge-close-callback-after-close/0/java/outer-1.error-class.bin": "6c1726ca460bdae5e71eb2303c6ee9ee261c5ab8088cc4067a9099488d911861",
+      "target/m2/stage37-trace-final-01/cases/edge-close-callback-after-close/0/java/post-close-callback-0.error-class.bin": "6c1726ca460bdae5e71eb2303c6ee9ee261c5ab8088cc4067a9099488d911861",
+      "target/m2/stage37-trace-final-01/cases/edge-close-callback-after-close/0/java/outer-0.error-class.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "target/m2/stage37-trace-final-01/cases/edge-close-callback-after-close/1/java/outer-1.error-class.bin": "6c1726ca460bdae5e71eb2303c6ee9ee261c5ab8088cc4067a9099488d911861",
+      "target/m2/stage37-trace-final-01/cases/edge-close-callback-after-close/1/java/post-close-callback-0.error-class.bin": "6c1726ca460bdae5e71eb2303c6ee9ee261c5ab8088cc4067a9099488d911861",
+      "target/m2/stage37-trace-final-01/cases/edge-close-callback-after-close/1/java/outer-0.error-class.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "target/m2/stage37-trace-final-01/cases/edge-compact-limit/0/java/outer-0.error-class.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "target/m2/stage37-trace-final-01/cases/edge-compact-limit/1/java/outer-0.error-class.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "target/m2/stage37-trace-final-01/cases/edge-surrogate-code-units/0/java/outer-0.error-class.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "target/m2/stage37-trace-final-01/cases/edge-surrogate-code-units/1/java/outer-0.error-class.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "target/m2/stage37-trace-final-01/cases/edge-pretty-empty-lines/0/java/outer-0.error-class.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "target/m2/stage37-trace-final-01/cases/edge-pretty-empty-lines/1/java/outer-0.error-class.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "target/m2/stage37-trace-final-01/cases/setup-lazy-control/0/java/outer-2.error-class.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "target/m2/stage37-trace-final-01/cases/setup-lazy-control/0/java/log-callback-0.error-class.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "target/m2/stage37-trace-final-01/cases/setup-lazy-control/0/java/outer-1.error-class.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "target/m2/stage37-trace-final-01/cases/setup-lazy-control/0/java/outer-0.error-class.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "target/m2/stage37-trace-final-01/cases/setup-lazy-control/1/java/outer-2.error-class.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "target/m2/stage37-trace-final-01/cases/setup-lazy-control/1/java/log-callback-0.error-class.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "target/m2/stage37-trace-final-01/cases/setup-lazy-control/1/java/outer-1.error-class.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "target/m2/stage37-trace-final-01/cases/setup-lazy-control/1/java/outer-0.error-class.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "target/m2/stage37-trace-final-01/cases/setup-module-annotation-log/0/java/outer-2.error-class.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "target/m2/stage37-trace-final-01/cases/setup-module-annotation-log/0/java/log-callback-0.error-class.bin": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591",
+      "target/m2/stage37-trace-final-01/cases/setup-module-annotation-log/0/java/outer-1.error-class.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "target/m2/stage37-trace-final-01/cases/setup-module-annotation-log/0/java/log-callback-1.error-class.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "target/m2/stage37-trace-final-01/cases/setup-module-annotation-log/0/java/outer-0.error-class.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "target/m2/stage37-trace-final-01/cases/setup-module-annotation-log/1/java/outer-2.error-class.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "target/m2/stage37-trace-final-01/cases/setup-module-annotation-log/1/java/log-callback-0.error-class.bin": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591",
+      "target/m2/stage37-trace-final-01/cases/setup-module-annotation-log/1/java/outer-1.error-class.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "target/m2/stage37-trace-final-01/cases/setup-module-annotation-log/1/java/log-callback-1.error-class.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "target/m2/stage37-trace-final-01/cases/setup-module-annotation-log/1/java/outer-0.error-class.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "target/m2/stage37-trace-final-01/cases/setup-module-annotation-read/0/java/outer-2.error-class.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "target/m2/stage37-trace-final-01/cases/setup-module-annotation-read/0/java/outer-1.error-class.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "target/m2/stage37-trace-final-01/cases/setup-module-annotation-read/0/java/outer-0.error-class.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "target/m2/stage37-trace-final-01/cases/setup-module-annotation-read/0/java/read-callback-0.error-class.bin": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591",
+      "target/m2/stage37-trace-final-01/cases/setup-module-annotation-read/1/java/outer-2.error-class.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "target/m2/stage37-trace-final-01/cases/setup-module-annotation-read/1/java/outer-1.error-class.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "target/m2/stage37-trace-final-01/cases/setup-module-annotation-read/1/java/outer-0.error-class.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "target/m2/stage37-trace-final-01/cases/setup-module-annotation-read/1/java/read-callback-0.error-class.bin": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591",
+      "target/m2/stage37-trace-final-01/cases/setup-module-annotation-log-then-error/0/java/outer-2.error-class.bin": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591",
+      "target/m2/stage37-trace-final-01/cases/setup-module-annotation-log-then-error/0/java/log-callback-0.error-class.bin": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591",
+      "target/m2/stage37-trace-final-01/cases/setup-module-annotation-log-then-error/0/java/outer-1.error-class.bin": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591",
+      "target/m2/stage37-trace-final-01/cases/setup-module-annotation-log-then-error/0/java/outer-0.error-class.bin": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591",
+      "target/m2/stage37-trace-final-01/cases/setup-module-annotation-log-then-error/1/java/outer-2.error-class.bin": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591",
+      "target/m2/stage37-trace-final-01/cases/setup-module-annotation-log-then-error/1/java/log-callback-0.error-class.bin": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591",
+      "target/m2/stage37-trace-final-01/cases/setup-module-annotation-log-then-error/1/java/outer-1.error-class.bin": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591",
+      "target/m2/stage37-trace-final-01/cases/setup-module-annotation-log-then-error/1/java/outer-0.error-class.bin": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591",
+      "target/m2/stage37-trace-final-01/cases/compile-grouped-contextual-new/0/java/outer-1.error-class.bin": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591",
+      "target/m2/stage37-trace-final-01/cases/compile-grouped-contextual-new/0/java/outer-0.error-class.bin": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591",
+      "target/m2/stage37-trace-final-01/cases/compile-grouped-contextual-new/1/java/outer-1.error-class.bin": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591",
+      "target/m2/stage37-trace-final-01/cases/compile-grouped-contextual-new/1/java/outer-0.error-class.bin": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591",
+      "target/m2/stage37-trace-final-01/cases/compile-empty-trace-parse/0/java/outer-1.error-class.bin": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591",
+      "target/m2/stage37-trace-final-01/cases/compile-empty-trace-parse/0/java/outer-0.error-class.bin": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591",
+      "target/m2/stage37-trace-final-01/cases/compile-empty-trace-parse/1/java/outer-1.error-class.bin": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591",
+      "target/m2/stage37-trace-final-01/cases/compile-empty-trace-parse/1/java/outer-0.error-class.bin": "4beef7d9db837350f4c17ee9d1ae0a6958cc46ba4afbad087ef08f57bdeae591",
+      "target/m2/stage37-trace-final-01/cases/read-same-pending-property/0/java/outer-2.error-class.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "target/m2/stage37-trace-final-01/cases/read-same-pending-property/0/java/outer-1.error-class.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "target/m2/stage37-trace-final-01/cases/read-same-pending-property/0/java/outer-0.error-class.bin": "29d67798b7711928a2a39c578687f2ca163c801882665290a7490a7a1ca76407",
+      "target/m2/stage37-trace-final-01/cases/read-same-pending-property/0/java/read-callback-0.error-class.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "target/m2/stage37-trace-final-01/cases/read-same-pending-property/1/java/outer-2.error-class.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "target/m2/stage37-trace-final-01/cases/read-same-pending-property/1/java/outer-1.error-class.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "target/m2/stage37-trace-final-01/cases/read-same-pending-property/1/java/outer-0.error-class.bin": "29d67798b7711928a2a39c578687f2ca163c801882665290a7490a7a1ca76407",
+      "target/m2/stage37-trace-final-01/cases/read-same-pending-property/1/java/read-callback-0.error-class.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "target/m2/stage37-trace-final-01/cases/read-pending-ancestor/0/java/outer-2.error-class.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "target/m2/stage37-trace-final-01/cases/read-pending-ancestor/0/java/outer-1.error-class.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "target/m2/stage37-trace-final-01/cases/read-pending-ancestor/0/java/outer-0.error-class.bin": "29d67798b7711928a2a39c578687f2ca163c801882665290a7490a7a1ca76407",
+      "target/m2/stage37-trace-final-01/cases/read-pending-ancestor/0/java/read-callback-0.error-class.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "target/m2/stage37-trace-final-01/cases/read-pending-ancestor/1/java/outer-2.error-class.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "target/m2/stage37-trace-final-01/cases/read-pending-ancestor/1/java/outer-1.error-class.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "target/m2/stage37-trace-final-01/cases/read-pending-ancestor/1/java/outer-0.error-class.bin": "29d67798b7711928a2a39c578687f2ca163c801882665290a7490a7a1ca76407",
+      "target/m2/stage37-trace-final-01/cases/read-pending-ancestor/1/java/read-callback-0.error-class.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "target/m2/stage37-trace-final-01/cases/read-different-resource-pending-property/0/java/outer-2.error-class.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "target/m2/stage37-trace-final-01/cases/read-different-resource-pending-property/0/java/outer-1.error-class.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "target/m2/stage37-trace-final-01/cases/read-different-resource-pending-property/0/java/outer-0.error-class.bin": "29d67798b7711928a2a39c578687f2ca163c801882665290a7490a7a1ca76407",
+      "target/m2/stage37-trace-final-01/cases/read-different-resource-pending-property/0/java/read-callback-0.error-class.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "target/m2/stage37-trace-final-01/cases/read-different-resource-pending-property/1/java/outer-2.error-class.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "target/m2/stage37-trace-final-01/cases/read-different-resource-pending-property/1/java/outer-1.error-class.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "target/m2/stage37-trace-final-01/cases/read-different-resource-pending-property/1/java/outer-0.error-class.bin": "29d67798b7711928a2a39c578687f2ca163c801882665290a7490a7a1ca76407",
+      "target/m2/stage37-trace-final-01/cases/read-different-resource-pending-property/1/java/read-callback-0.error-class.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "target/m2/stage37-trace-final-01/cases/bootstrap-module-annotation-close/0/java/outer-1.error-class.bin": "6c1726ca460bdae5e71eb2303c6ee9ee261c5ab8088cc4067a9099488d911861",
+      "target/m2/stage37-trace-final-01/cases/bootstrap-module-annotation-close/0/java/outer-0.error-class.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "target/m2/stage37-trace-final-01/cases/bootstrap-module-annotation-close/1/java/outer-1.error-class.bin": "6c1726ca460bdae5e71eb2303c6ee9ee261c5ab8088cc4067a9099488d911861",
+      "target/m2/stage37-trace-final-01/cases/bootstrap-module-annotation-close/1/java/outer-0.error-class.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "target/m2/stage37-trace-final-01/cases/bootstrap-module-annotation-close-reenter/0/java/outer-1.error-class.bin": "6c1726ca460bdae5e71eb2303c6ee9ee261c5ab8088cc4067a9099488d911861",
+      "target/m2/stage37-trace-final-01/cases/bootstrap-module-annotation-close-reenter/0/java/post-close-callback-0.error-class.bin": "6c1726ca460bdae5e71eb2303c6ee9ee261c5ab8088cc4067a9099488d911861",
+      "target/m2/stage37-trace-final-01/cases/bootstrap-module-annotation-close-reenter/0/java/outer-0.error-class.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "target/m2/stage37-trace-final-01/cases/bootstrap-module-annotation-close-reenter/1/java/outer-1.error-class.bin": "6c1726ca460bdae5e71eb2303c6ee9ee261c5ab8088cc4067a9099488d911861",
+      "target/m2/stage37-trace-final-01/cases/bootstrap-module-annotation-close-reenter/1/java/post-close-callback-0.error-class.bin": "6c1726ca460bdae5e71eb2303c6ee9ee261c5ab8088cc4067a9099488d911861",
+      "target/m2/stage37-trace-final-01/cases/bootstrap-module-annotation-close-reenter/1/java/outer-0.error-class.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "target/m2/stage37-trace-final-01/cases/bootstrap-member-annotation-close/0/java/outer-1.error-class.bin": "6c1726ca460bdae5e71eb2303c6ee9ee261c5ab8088cc4067a9099488d911861",
+      "target/m2/stage37-trace-final-01/cases/bootstrap-member-annotation-close/0/java/outer-0.error-class.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "target/m2/stage37-trace-final-01/cases/bootstrap-member-annotation-close/1/java/outer-1.error-class.bin": "6c1726ca460bdae5e71eb2303c6ee9ee261c5ab8088cc4067a9099488d911861",
+      "target/m2/stage37-trace-final-01/cases/bootstrap-member-annotation-close/1/java/outer-0.error-class.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "target/m2/stage37-trace-final-01/cases/bootstrap-member-annotation-close-reenter/0/java/outer-1.error-class.bin": "6c1726ca460bdae5e71eb2303c6ee9ee261c5ab8088cc4067a9099488d911861",
+      "target/m2/stage37-trace-final-01/cases/bootstrap-member-annotation-close-reenter/0/java/post-close-callback-0.error-class.bin": "6c1726ca460bdae5e71eb2303c6ee9ee261c5ab8088cc4067a9099488d911861",
+      "target/m2/stage37-trace-final-01/cases/bootstrap-member-annotation-close-reenter/0/java/outer-0.error-class.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "target/m2/stage37-trace-final-01/cases/bootstrap-member-annotation-close-reenter/1/java/outer-1.error-class.bin": "6c1726ca460bdae5e71eb2303c6ee9ee261c5ab8088cc4067a9099488d911861",
+      "target/m2/stage37-trace-final-01/cases/bootstrap-member-annotation-close-reenter/1/java/post-close-callback-0.error-class.bin": "6c1726ca460bdae5e71eb2303c6ee9ee261c5ab8088cc4067a9099488d911861",
+      "target/m2/stage37-trace-final-01/cases/bootstrap-member-annotation-close-reenter/1/java/outer-0.error-class.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "java_sources_stable": true,
+    "native_and_java_artifacts_stable": true,
+    "node_browser_full_payload_parity_experiments": 84,
+    "real_session_terminal_heap_zero_experiments": 160,
+    "compile_failure_no_session_experiments": [
+      [
+        "node",
+        "compile-grouped-contextual-new",
+        0
+      ],
+      [
+        "node",
+        "compile-grouped-contextual-new",
+        1
+      ],
+      [
+        "node",
+        "compile-empty-trace-parse",
+        0
+      ],
+      [
+        "node",
+        "compile-empty-trace-parse",
+        1
+      ],
+      [
+        "browser",
+        "compile-grouped-contextual-new",
+        0
+      ],
+      [
+        "browser",
+        "compile-grouped-contextual-new",
+        1
+      ],
+      [
+        "browser",
+        "compile-empty-trace-parse",
+        0
+      ],
+      [
+        "browser",
+        "compile-empty-trace-parse",
+        1
+      ]
+    ],
+    "bootstrap_first_result8_raw_pass_experiments": [
+      [
+        "node",
+        "bootstrap-module-annotation-close",
+        0
+      ],
+      [
+        "node",
+        "bootstrap-module-annotation-close",
+        1
+      ],
+      [
+        "node",
+        "bootstrap-module-annotation-close-reenter",
+        0
+      ],
+      [
+        "node",
+        "bootstrap-module-annotation-close-reenter",
+        1
+      ],
+      [
+        "node",
+        "bootstrap-member-annotation-close",
+        0
+      ],
+      [
+        "node",
+        "bootstrap-member-annotation-close",
+        1
+      ],
+      [
+        "node",
+        "bootstrap-member-annotation-close-reenter",
+        0
+      ],
+      [
+        "node",
+        "bootstrap-member-annotation-close-reenter",
+        1
+      ],
+      [
+        "browser",
+        "bootstrap-module-annotation-close",
+        0
+      ],
+      [
+        "browser",
+        "bootstrap-module-annotation-close",
+        1
+      ],
+      [
+        "browser",
+        "bootstrap-module-annotation-close-reenter",
+        0
+      ],
+      [
+        "browser",
+        "bootstrap-module-annotation-close-reenter",
+        1
+      ],
+      [
+        "browser",
+        "bootstrap-member-annotation-close",
+        0
+      ],
+      [
+        "browser",
+        "bootstrap-member-annotation-close",
+        1
+      ],
+      [
+        "browser",
+        "bootstrap-member-annotation-close-reenter",
+        0
+      ],
+      [
+        "browser",
+        "bootstrap-member-annotation-close-reenter",
+        1
+      ]
+    ],
+    "retained_utf16_snapshots_stable_experiments": 168,
+    "total_log_callbacks": 176,
+    "total_read_callbacks": 60,
+    "total_gc_collections": 720,
+    "architecture_passed": true,
+    "compatibility_complete": false,
+    "runtimes": {
+      "node": "v26.10.0",
+      "nodeExecutable": "/opt/homebrew/Cellar/node/26.10.0_1/bin/node",
+      "nodeExecutableSha256": "d4cd917f05a5730ffda8a203e32fb8f9b70f79213fff1fafb045e438db8a6c06",
+      "browser": "156.0.8078.4",
+      "browserExecutable": "/Users/cody.ij.hwang/Library/Caches/ms-playwright/chromium-1248/chrome-mac-arm64/Google Chrome for Testing.app/Contents/MacOS/Google Chrome for Testing",
+      "browserExecutableSha256": "c8509aee32abd6977968e9999769980b7a420dea05402d90042d9e5b41db15ef",
+      "playwright": "1.64.1",
+      "playwrightCore": "1.64.1",
+      "playwrightPin": "1.64.1"
+    },
+    "script_sha256": "3473fe3a25f62268377b0d10e67db098b22598e35289f320d5eccc506b83c4f8"
+  },
+  "archive": {
+    "path": "reports/m2/stage37-final-evidence.tar.gz",
+    "sha256": "224fca08f6fca7e6edb4b3c7a14712c2612e6726a16e23c556abdbbefb841ae5",
+    "bytes": 26860767,
+    "original_files": 78867,
+    "inventory_files": 78868,
+    "source_stability": true,
+    "excluded_before_traversal": [
+      "target/m2/stage37-class-lifecycle-final-01/build",
+      "target/m2/stage37-trace-final-01/build"
+    ],
+    "inventory_sha256": "ec4493f19d9f2ad9f0f1fdce9baf537a793af99da89567a572a5ac1bf73aeae0"
+  },
+  "origins_archive": {
+    "schema": 1,
+    "scope": "Original Stage37 Java observations, source snapshots, intermediate failures, reviews and frozen worktree checks. MAIN final acquisitions are separate.",
+    "archive": "reports/m2/stage37-origins-evidence.tar.gz",
+    "sha256": "74f113cec433fa02aeef62a0b8abe90ca6db869974b8a27499313362190b4c2f",
+    "bytes": 54123496,
+    "original_files": 32278,
+    "inventory_files": 32280,
+    "source_stability": true,
+    "inventory_sha256": "73e207cd62e2fbb1289b1b988d9dff3766080a2fdfbe72f0c7b8c6be7e2bd8cd",
+    "excluded_before_traversal": {
+      "stage37": [
+        "stage37-bindings-cargo",
+        "stage37-core-cargo",
+        "stage37-frontend-cargo",
+        "stage37-platform-cargo",
+        "stage37-trace-comparison-02/build"
+      ],
+      "stage36": []
+    },
+    "selected_root_counts": {
+      "stage36": 6,
+      "stage37": 118
+    }
+  },
+  "independent_audits": [
+    {
+      "path": "target/m2/stage37-language-independent-audit-01/report.json",
+      "sha256": "f59c69c600afbe9b454874da5e3039d1e868ecaab36afe16b73ef2a3678e9fa9",
+      "bytes": 534925
+    },
+    {
+      "path": "target/m2/stage37-language-independent-audit-01/final-summary.json",
+      "sha256": "6e0a969d405a9d50af0adfbecc4f56116586725a197c4f2ffd0f30c3913fbdc2",
+      "bytes": 1436
+    },
+    {
+      "path": "target/m2/stage37-language-independent-audit-01/closure.json",
+      "sha256": "87d6257b6f8c4d53ce47153d325eae2f1e4fd527fdf1656c96b89073319447b2",
+      "bytes": 3453
+    },
+    {
+      "path": "target/m2/stage37-class-lifecycle-independent-audit-01/report.json",
+      "sha256": "657c1bd866a25ec421f74c5dcb04aca2c799c9377d2f1d73d37f770a4f187356",
+      "bytes": 239205
+    },
+    {
+      "path": "target/m2/stage37-class-lifecycle-independent-audit-01/final-summary.json",
+      "sha256": "7b994ff22b346253e77c1353a68d27512a6377e8844218fee6da35951d636e2b",
+      "bytes": 2477
+    },
+    {
+      "path": "target/m2/stage37-class-lifecycle-independent-audit-01/closure.json",
+      "sha256": "ef4885ae380b2924c9d49003218ab713d40cb6ffffe6224b207a51b8111056da",
+      "bytes": 2300
+    },
+    {
+      "path": "target/m2/stage37-trace-final-audit-01/report.json",
+      "sha256": "41a7662432a3a6d164f898c995328d76b0a28128520d1a5fb7884af0f79dda28",
+      "bytes": 55224
+    },
+    {
+      "path": "target/m2/stage37-trace-final-audit-01/closure.json",
+      "sha256": "ac5f8e8c07712371c7125d165e7506f873c96c7b2287455bbc5ce97efce009be",
+      "bytes": 1056
+    },
+    {
+      "path": "target/m2/stage37-platform-review-final-01/standard-and-scalars.json",
+      "sha256": "284666bb594fb4e13c9d302ed20c79beb25f028cdb316dda8d759f45f73a5839",
+      "bytes": 3624
+    },
+    {
+      "path": "target/m2/stage37-platform-review-final-01/trace42.json",
+      "sha256": "7a62a0b7c1a2cb4e20554c2d91244b9e4c91d894e565a28dcfc58499586619f3",
+      "bytes": 37990
+    },
+    {
+      "path": "target/m2/stage37-platform-review-final-01/closure.json",
+      "sha256": "36c7021e6a3b80f13f780a8fed0c0c045afe40c9872b32b818c86a900add33f9",
+      "bytes": 1450862
+    }
+  ],
+  "remaining": [
+    "All nine M2 workstreams retain unmet conditions. Selected pass rates are not whole-language completion percentages.",
+    "Original cycle oracle error, remainder-zero mismatch and SourceCode mapped-list mismatch remain failures.",
+    "Two new default-resource Host diagnostic mismatches and two pinned Java String.repeat internal-error cases remain failures. No new development exceptions.",
+    "Actual-source logger Java close/reentry/internal-error observations remain oracle errors, including successful first bootstrap calls followed by failing later calls.",
+    "Whole module/resource caching and loading, general REPL, warnings, all transformers and product Host APIs remain open.",
+    "Persistent unexecuted groups, upstream corpus mapping, remaining types/reflection/collection/diagnostic semantics, release platforms and speed/peak-RSS targets remain open.",
+    "Validation is local macOS plus actual Node/Chromium; it is not hosted CI, Linux or Windows evidence."
+  ]
+}

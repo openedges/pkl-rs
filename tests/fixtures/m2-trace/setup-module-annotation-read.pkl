@@ -1,0 +1,4 @@
+@Deprecated { when(read("life:setup") == "resource") { message="setup" } }
+module setup
+stable=trace(7)
+result=8

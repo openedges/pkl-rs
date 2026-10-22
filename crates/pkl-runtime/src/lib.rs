@@ -10,6 +10,7 @@ mod economic_map;
 pub mod evaluation;
 pub mod heap;
 pub mod host;
+pub mod logging;
 pub mod numeric;
 pub mod parser;
 mod pkl_string;

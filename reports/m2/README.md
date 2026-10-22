@@ -43,7 +43,59 @@ Stage 31 aligns executable value-frame locations and constant-member source fall
 Stage 32 preserves declaration owners for rejected non-local object property annotations.
 Stage 33 aligns non-local const owners and method/lambda inferred-parent boundaries.
 Stage 34 uses return-type defaults and inherited property contexts for inferred parents.
+Stage 35 adds annotations and declaration initialization. Stage 36 connects common
+object forcing and string conversion. Stage 37 adds trace/logger events and keeps
+initialization and first-path evaluation within one admitted Host context.
 These checkpoints do not complete the language milestone.
+
+## Stage 37 local verification checkpoint
+
+The shared runtime now connects trace evaluation, source-frame construction,
+UTF-16 logger transport, and callback completion. Fresh source-path evaluation
+keeps module initialization and the first path within one admitted Host context
+and deadline. Later starts still observe callback closure. See the
+[trace development contract](../../docs/m2-tracing.md) for interfaces, acquisition
+commands, and remaining scope.
+
+The [final summary](stage37-final-summary.json) records **3,420 raw matches out of
+3,427 selected cases** and all 88 metamorphic relations. The original 3,389 input
+definitions, ordering, statuses and native result bytes are unchanged. Java differs
+only in the existing cycle oracle-error stderr; both original captures are retained.
+The new 38 cases yield 34 matches. Two default-resource diagnostic differences and
+two Java String.repeat internal-error cases remain failures, alongside the existing
+cycle oracle error, remainder mismatch and SourceCode mapped-list mismatch.
+Integrity verification passes; development, strict selected and full language gates
+fail without new exceptions. The full gate retains 1,957 failure reasons, which are
+overlapping accounting obligations rather than independent feature counts.
+
+All **2,782 requested calls** across 167 persistent definitions and two fresh
+executions match Java status/value/error bytes. This includes the formerly
+unexecuted 54 trace-dependent calls. The prior 2,728 native and all 2,782 Java
+observations remain unchanged. The selected sequence contract passes; its five
+unexecuted groups still prevent whole persistent compatibility completion.
+
+The separate 42-contract actual-source logger suite runs twice per contract.
+Native, Node and Chromium each record **54 passes and 30 oracle errors**, with no
+ordinary-result mismatches. Bootstrap-close first calls return the exact value
+`8`; later Java internal errors still make their complete experiments fail.
+Real session cleanup and retained UTF-16 event snapshots are verified separately.
+No Java internal error is relabeled as a passing language result.
+
+All seven required local checks pass, including 235 Python tests. The first
+full-check failure from a stale semantic-family count and the corrected complete
+rerun are preserved. Actual Node and Chromium each pass 92 lifecycle scenarios;
+all 6,078 shared primitive results agree, while the same two Java regex differences
+remain. Each platform matches 16 of 18 scalar trace cases and 18 of 20 repeat cases,
+retaining the same four new differences as native.
+
+The [origin archive](stage37-origins-evidence.tar.gz) and
+[final archive](stage37-final-evidence.tar.gz) preserve original observations,
+intermediate failures, final acquisitions, sources, artifacts and independent
+audits. Named Cargo caches are excluded before traversal. This is local macOS
+and actual Node/Chromium evidence, not hosted CI or Linux/Windows validation.
+All nine M2 workstreams remain open; complete module loading, resource caching,
+REPL, warning delivery, frame transformers, public APIs and performance targets
+retain their original obligations.
 
 ## Stage 36 local verification checkpoint
 

@@ -48,6 +48,7 @@ FEATURES = {
     'reflection-metadata': 'Shared class/module/member/type metadata needed by reflection',
     'modules': 'Module declarations, extends/amends/import language semantics and module types; Host I/O remains M4',
     'diagnostics': 'Whole parser/resolver/runtime diagnostics, first errors, source underlines and logical call frames',
+    'tracing': 'Trace expression forcing, value identity, source frames, logger delivery, UTF-16 messages and callback lifecycle',
     'shared-engine': 'Shared semantics, values and diagnostics across native/Wasm/N-API; M6 full bindings remain open',
     'generated-verification': 'Seeded differential generation, semantic properties, metamorphic tests and fuzz minimization',
 }

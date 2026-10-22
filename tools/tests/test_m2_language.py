@@ -19,10 +19,11 @@ class ManifestTests(unittest.TestCase):
     def test_checked_in_manifest_is_fresh_and_full_gate_stays_open(self):
         manifest = m2_manifest.current_manifest()
         self.assertTrue(m2_manifest.full_gate_failures(manifest, []))
-        self.assertEqual(sum(row['kind'] == 'semantic-family' for row in manifest['requirements']), 30)
+        self.assertEqual(sum(row['kind'] == 'semantic-family' for row in manifest['requirements']), 31)
         self.assertEqual(sum(row.get('upstream_case', {}).get('suite') == 'language-snippet'
                              for row in manifest['cases']), 957)
         self.assertTrue(any(row['id'] == 'semantic:reference' for row in manifest['requirements']))
+        self.assertTrue(any(row['id'] == 'semantic:tracing' for row in manifest['requirements']))
 
     def test_mapped_passing_subset_cannot_hide_unimplemented_or_unexecuted_rows(self):
         manifest = dict(requirements=[dict(id='feature', required=True,

@@ -1,0 +1,4 @@
+obj=new Dynamic { x=1 }
+result=trace(obj).x
+callback=trace(read("life:nested"))
+readerChild=trace(7)

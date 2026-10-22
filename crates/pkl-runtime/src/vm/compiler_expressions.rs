@@ -30,6 +30,7 @@ fn register_inferred_parents(
                 bodies.push(condition);
             }
             ExprKind::Let { body, .. } => bodies.push(body),
+            ExprKind::Trace(value) => bodies.push(value),
             _ => {}
         }
     }
@@ -1005,6 +1006,15 @@ impl Compiler<'_> {
             }
             ExprKind::Throw(value) => {
                 work.push(Work::Emit(Instruction::Throw, None));
+                work.push(Work::Visit(value));
+            }
+            ExprKind::Trace(value) => {
+                work.push(Work::Emit(
+                    Instruction::Trace {
+                        operand_span: value.unparenthesized().span,
+                    },
+                    None,
+                ));
                 work.push(Work::Visit(value));
             }
             ExprKind::TypeCheck { value, ty } | ExprKind::TypeCast { value, ty } => {

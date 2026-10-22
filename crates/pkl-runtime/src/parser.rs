@@ -387,6 +387,7 @@ enum ObjectValue {
 enum ExpressionFrame {
     Group(usize),
     Throw(usize),
+    Trace(usize),
     Unary(usize, UnaryOp),
     Binary(Expr, BinaryOp),
     Subscript(Expr),
@@ -1323,6 +1324,17 @@ impl<'a> Parser<'a> {
                 machine.minimum = 0;
                 return Ok(ExpressionFlow::Continue);
             }
+            if self.is_name("trace") {
+                self.advance()?;
+                self.expect('(')?;
+                machine.frames.push((
+                    machine.minimum,
+                    self.expectation.replace(")".into()),
+                    ExpressionFrame::Trace(span.start),
+                ));
+                machine.minimum = 0;
+                return Ok(ExpressionFlow::Continue);
+            }
             if self.is_symbol('-') || self.is_symbol('!') {
                 let negate = self.is_symbol('-');
                 self.advance()?;
@@ -1559,6 +1571,13 @@ impl<'a> Parser<'a> {
                 let end = self.expect(')')?.span.end;
                 Expr {
                     kind: ExprKind::Throw(Box::new(left)),
+                    span: Span::new(start, end),
+                }
+            }
+            ExpressionFrame::Trace(start) => {
+                let end = self.expect(')')?.span.end;
+                Expr {
+                    kind: ExprKind::Trace(Box::new(left)),
                     span: Span::new(start, end),
                 }
             }

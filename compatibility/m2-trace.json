@@ -1,0 +1,719 @@
+{
+  "schema": 1,
+  "scope": "Actual-source trace/read/logger callback raw comparisons. Includes original Java internal errors and unsupported dependencies; no development exceptions. Complete module loader, REPL and custom transformer contracts remain separate.",
+  "uri": "file:///stage37-trace.pkl",
+  "module_name": "stage37-trace",
+  "repetitions": 2,
+  "cases": [
+    {
+      "id": "design-scalar-source",
+      "source": "tests/fixtures/m2-trace/design-scalar-source.pkl",
+      "expressions": [
+        "result",
+        "result"
+      ],
+      "mode": "COMPACT",
+      "action": "capture",
+      "logger_callback": "",
+      "reader_callback": "",
+      "origin": {
+        "acquisition": "stage37-trace-design-01",
+        "case": "scalar-source",
+        "input_sha256": "126f9fe3f63fa0aa43791cdf60882aeaaf5aff08af473d93e1b2ae34b1d184b4"
+      }
+    },
+    {
+      "id": "design-source-utf16",
+      "source": "tests/fixtures/m2-trace/design-source-utf16.pkl",
+      "expressions": [
+        "result"
+      ],
+      "mode": "COMPACT",
+      "action": "capture",
+      "logger_callback": "",
+      "reader_callback": "",
+      "origin": {
+        "acquisition": "stage37-trace-design-01",
+        "case": "source-utf16",
+        "input_sha256": "d0df6fc1cf541a956d4cd9cf6c5c62eafcb15edfdeb50c81e7b61e9d26197bfa"
+      }
+    },
+    {
+      "id": "design-pretty-scalar",
+      "source": "tests/fixtures/m2-trace/design-pretty-scalar.pkl",
+      "expressions": [
+        "result"
+      ],
+      "mode": "PRETTY",
+      "action": "capture",
+      "logger_callback": "",
+      "reader_callback": "",
+      "origin": {
+        "acquisition": "stage37-trace-design-01",
+        "case": "pretty-scalar",
+        "input_sha256": "5db0dc8d8a2dc03924d39210a9b0a24b189695800a11fd9b1b16afba26fd1ccc"
+      }
+    },
+    {
+      "id": "design-pretty-multiline",
+      "source": "tests/fixtures/m2-trace/design-pretty-multiline.pkl",
+      "expressions": [
+        "result"
+      ],
+      "mode": "PRETTY",
+      "action": "capture",
+      "logger_callback": "",
+      "reader_callback": "",
+      "origin": {
+        "acquisition": "stage37-trace-design-01",
+        "case": "pretty-multiline",
+        "input_sha256": "5a3fc0a4d06ffafe99d7ac9e12a4110480a25687aa488470fb1d0a9b8fc36366"
+      }
+    },
+    {
+      "id": "design-pretty-crlf",
+      "source": "tests/fixtures/m2-trace/design-pretty-crlf.pkl",
+      "expressions": [
+        "result"
+      ],
+      "mode": "PRETTY",
+      "action": "capture",
+      "logger_callback": "",
+      "reader_callback": "",
+      "origin": {
+        "acquisition": "stage37-trace-design-01",
+        "case": "pretty-crlf",
+        "input_sha256": "2c859f7c8957d7b6ac093c55ba2e7211a1cae4eae5a84be8465d58c847ca1b6f"
+      }
+    },
+    {
+      "id": "design-noop-force-error",
+      "source": "tests/fixtures/m2-trace/design-noop-force-error.pkl",
+      "expressions": [
+        "result",
+        "result"
+      ],
+      "mode": "COMPACT",
+      "action": "noop",
+      "logger_callback": "",
+      "reader_callback": "",
+      "origin": {
+        "acquisition": "stage37-trace-design-01",
+        "case": "noop-force-error",
+        "input_sha256": "e75fa940fa200c773dd818657372930a43c3c798b2f35cd9609a03ff054f6b29"
+      }
+    },
+    {
+      "id": "design-noop-force-read",
+      "source": "tests/fixtures/m2-trace/design-noop-force-read.pkl",
+      "expressions": [
+        "result",
+        "result"
+      ],
+      "mode": "COMPACT",
+      "action": "noop",
+      "logger_callback": "",
+      "reader_callback": "",
+      "origin": {
+        "acquisition": "stage37-trace-design-01",
+        "case": "noop-force-read",
+        "input_sha256": "1c85996c2436614f167d80bc6de9f8ec02f34b006116c574d9f7bcbdc65dc612"
+      }
+    },
+    {
+      "id": "design-operand-error",
+      "source": "tests/fixtures/m2-trace/design-operand-error.pkl",
+      "expressions": [
+        "result",
+        "result"
+      ],
+      "mode": "COMPACT",
+      "action": "capture",
+      "logger_callback": "",
+      "reader_callback": "",
+      "origin": {
+        "acquisition": "stage37-trace-design-01",
+        "case": "operand-error",
+        "input_sha256": "639aa880e5db514ce604aa2572aea69b88ac2208e5dae52e0b672443b779b587"
+      }
+    },
+    {
+      "id": "design-undefined-direct",
+      "source": "tests/fixtures/m2-trace/design-undefined-direct.pkl",
+      "expressions": [
+        "result"
+      ],
+      "mode": "COMPACT",
+      "action": "capture",
+      "logger_callback": "",
+      "reader_callback": "",
+      "origin": {
+        "acquisition": "stage37-trace-design-01",
+        "case": "undefined-direct",
+        "input_sha256": "89c3971b78d4ec8ddb5df0e1bb2b57b9fe3373b9a2fdb9b1aa4141d2bd851ea6"
+      }
+    },
+    {
+      "id": "design-undefined-object",
+      "source": "tests/fixtures/m2-trace/design-undefined-object.pkl",
+      "expressions": [
+        "first",
+        "second",
+        "missing"
+      ],
+      "mode": "COMPACT",
+      "action": "capture",
+      "logger_callback": "",
+      "reader_callback": "",
+      "origin": {
+        "acquisition": "stage37-trace-design-01",
+        "case": "undefined-object",
+        "input_sha256": "987a8117eef55926e1849b12649dfecf240d158411e0ae19b1ceb50d3b0f928a"
+      }
+    },
+    {
+      "id": "design-override-ignored",
+      "source": "tests/fixtures/m2-trace/design-override-ignored.pkl",
+      "expressions": [
+        "result"
+      ],
+      "mode": "COMPACT",
+      "action": "capture",
+      "logger_callback": "",
+      "reader_callback": "",
+      "origin": {
+        "acquisition": "stage37-trace-design-01",
+        "case": "override-ignored",
+        "input_sha256": "cb8cf5eafd66677c8c8c09b1abae1544d082e27d1eeed9689f02a89eacf1afa0"
+      }
+    },
+    {
+      "id": "design-strict-list-forced",
+      "source": "tests/fixtures/m2-trace/design-strict-list-forced.pkl",
+      "expressions": [
+        "result"
+      ],
+      "mode": "COMPACT",
+      "action": "capture",
+      "logger_callback": "",
+      "reader_callback": "",
+      "origin": {
+        "acquisition": "stage37-trace-design-01",
+        "case": "strict-list-forced",
+        "input_sha256": "3ff701661b34d8e5715c270226a7977fe5055baa4f6fc4f8cf9cabd03b5d48c9"
+      }
+    },
+    {
+      "id": "design-nested-trace",
+      "source": "tests/fixtures/m2-trace/design-nested-trace.pkl",
+      "expressions": [
+        "result"
+      ],
+      "mode": "COMPACT",
+      "action": "capture",
+      "logger_callback": "",
+      "reader_callback": "",
+      "origin": {
+        "acquisition": "stage37-trace-design-01",
+        "case": "nested-trace",
+        "input_sha256": "b3fa36e941a8e0a0e5160a801886e34fe21b5c4588c8ec46c644c881fbf52eb5"
+      }
+    },
+    {
+      "id": "design-logger-throw",
+      "source": "tests/fixtures/m2-trace/design-logger-throw.pkl",
+      "expressions": [
+        "result",
+        "result",
+        "stable"
+      ],
+      "mode": "COMPACT",
+      "action": "throw",
+      "logger_callback": "",
+      "reader_callback": "",
+      "origin": {
+        "acquisition": "stage37-trace-design-01",
+        "case": "logger-throw",
+        "input_sha256": "87f572c2b0a8eb41ab6c2fd27a27b937f8628de27d16742d7231b0028616bc26"
+      }
+    },
+    {
+      "id": "design-logger-reentry",
+      "source": "tests/fixtures/m2-trace/design-logger-reentry.pkl",
+      "expressions": [
+        "result",
+        "result",
+        "stable"
+      ],
+      "mode": "COMPACT",
+      "action": "capture",
+      "logger_callback": "callback",
+      "reader_callback": "",
+      "origin": {
+        "acquisition": "stage37-trace-design-01",
+        "case": "logger-reentry",
+        "input_sha256": "d989ce3c922b270c42b0dfdfb5b0749d64eb3129021bafad8223cff940428874"
+      }
+    },
+    {
+      "id": "design-logger-reentry-error",
+      "source": "tests/fixtures/m2-trace/design-logger-reentry-error.pkl",
+      "expressions": [
+        "result",
+        "stable"
+      ],
+      "mode": "COMPACT",
+      "action": "capture",
+      "logger_callback": "callback",
+      "reader_callback": "",
+      "origin": {
+        "acquisition": "stage37-trace-design-01",
+        "case": "logger-reentry-error",
+        "input_sha256": "bdb4b27c454833340c4f6685ec32e0aac78b7665092bd4d8cb36080658bcce2c"
+      }
+    },
+    {
+      "id": "design-logger-reentry-nested-read",
+      "source": "tests/fixtures/m2-trace/design-logger-reentry-nested-read.pkl",
+      "expressions": [
+        "result"
+      ],
+      "mode": "COMPACT",
+      "action": "capture",
+      "logger_callback": "callback",
+      "reader_callback": "readerChild",
+      "origin": {
+        "acquisition": "stage37-trace-design-01",
+        "case": "logger-reentry-nested-read",
+        "input_sha256": "753e06f630f44530956be93aaca262a9aa5e3c8b8c4340928831a5338a3b5122"
+      }
+    },
+    {
+      "id": "design-read-reentry-log",
+      "source": "tests/fixtures/m2-trace/design-read-reentry-log.pkl",
+      "expressions": [
+        "result"
+      ],
+      "mode": "COMPACT",
+      "action": "capture",
+      "logger_callback": "",
+      "reader_callback": "callback",
+      "origin": {
+        "acquisition": "stage37-trace-design-01",
+        "case": "read-reentry-log",
+        "input_sha256": "1be33560b1992ec867178070381539278801145d560687cc0fc79345f0320d40"
+      }
+    },
+    {
+      "id": "design-logger-close",
+      "source": "tests/fixtures/m2-trace/design-logger-close.pkl",
+      "expressions": [
+        "result",
+        "stable"
+      ],
+      "mode": "COMPACT",
+      "action": "close",
+      "logger_callback": "",
+      "reader_callback": "",
+      "origin": {
+        "acquisition": "stage37-trace-design-01",
+        "case": "logger-close",
+        "input_sha256": "19d4de77c17d1d02bb3eeaecafe463af1840a4ce96d39fca585a6a372518c39c"
+      }
+    },
+    {
+      "id": "design-scalar-surrogate",
+      "source": "tests/fixtures/m2-trace/design-scalar-surrogate.pkl",
+      "expressions": [
+        "result"
+      ],
+      "mode": "COMPACT",
+      "action": "capture",
+      "logger_callback": "",
+      "reader_callback": "",
+      "origin": {
+        "acquisition": "stage37-trace-design-01",
+        "case": "scalar-surrogate",
+        "input_sha256": "f546435a9f5848b16a29847b6038c60bc6696d030a4d3a36a53eede524cd64b8"
+      }
+    },
+    {
+      "id": "edge-close-arithmetic",
+      "source": "tests/fixtures/m2-trace/edge-close-arithmetic.pkl",
+      "expressions": [
+        "result",
+        "stable"
+      ],
+      "mode": "COMPACT",
+      "action": "close",
+      "logger_callback": "",
+      "reader_callback": "",
+      "origin": {
+        "acquisition": "stage37-trace-design-02",
+        "case": "close-arithmetic",
+        "input_sha256": "660373ad829ae41a00b635819fd08bed6b928634cad05bf0d8b00bd6802650ec"
+      }
+    },
+    {
+      "id": "edge-close-throw",
+      "source": "tests/fixtures/m2-trace/edge-close-throw.pkl",
+      "expressions": [
+        "result",
+        "stable"
+      ],
+      "mode": "COMPACT",
+      "action": "close",
+      "logger_callback": "",
+      "reader_callback": "",
+      "origin": {
+        "acquisition": "stage37-trace-design-02",
+        "case": "close-throw",
+        "input_sha256": "51507337d315ed8614cbf07e374bc0084a782561f1d4c83e9fb166fa3f047f52"
+      }
+    },
+    {
+      "id": "edge-close-read",
+      "source": "tests/fixtures/m2-trace/edge-close-read.pkl",
+      "expressions": [
+        "result",
+        "stable"
+      ],
+      "mode": "COMPACT",
+      "action": "close",
+      "logger_callback": "",
+      "reader_callback": "",
+      "origin": {
+        "acquisition": "stage37-trace-design-02",
+        "case": "close-read",
+        "input_sha256": "78102d2411aaf2a2e355a477a59d1879edafb1e12736e0f4264b825b577c3f99"
+      }
+    },
+    {
+      "id": "edge-close-second-trace",
+      "source": "tests/fixtures/m2-trace/edge-close-second-trace.pkl",
+      "expressions": [
+        "result",
+        "stable"
+      ],
+      "mode": "COMPACT",
+      "action": "close",
+      "logger_callback": "",
+      "reader_callback": "",
+      "origin": {
+        "acquisition": "stage37-trace-design-02",
+        "case": "close-second-trace",
+        "input_sha256": "554af678bf853a5559d5dcd3655c8adb7f5ff029b57c3ae756e3b06089095ec6"
+      }
+    },
+    {
+      "id": "edge-close-call-method",
+      "source": "tests/fixtures/m2-trace/edge-close-call-method.pkl",
+      "expressions": [
+        "result",
+        "stable"
+      ],
+      "mode": "COMPACT",
+      "action": "close",
+      "logger_callback": "",
+      "reader_callback": "",
+      "origin": {
+        "acquisition": "stage37-trace-design-02",
+        "case": "close-call-method",
+        "input_sha256": "5b778bb1e6a19fdb29993678d1f2f38bce591bf6335929ff9c0fe56d1555f11d"
+      }
+    },
+    {
+      "id": "edge-close-callback-after-close",
+      "source": "tests/fixtures/m2-trace/edge-close-callback-after-close.pkl",
+      "expressions": [
+        "result",
+        "stable"
+      ],
+      "mode": "COMPACT",
+      "action": "close-reenter",
+      "logger_callback": "",
+      "reader_callback": "",
+      "origin": {
+        "acquisition": "stage37-trace-design-02",
+        "case": "close-callback-after-close",
+        "input_sha256": "660373ad829ae41a00b635819fd08bed6b928634cad05bf0d8b00bd6802650ec"
+      }
+    },
+    {
+      "id": "edge-compact-limit",
+      "source": "tests/fixtures/m2-trace/edge-compact-limit.pkl",
+      "expressions": [
+        "result"
+      ],
+      "mode": "COMPACT",
+      "action": "capture",
+      "logger_callback": "",
+      "reader_callback": "",
+      "origin": {
+        "acquisition": "stage37-trace-design-02",
+        "case": "compact-limit",
+        "input_sha256": "2eda9d2dc2484254cb6ce9e27a6e087b3ce36e69edd930ee1c41c7295b631556"
+      }
+    },
+    {
+      "id": "edge-surrogate-code-units",
+      "source": "tests/fixtures/m2-trace/edge-surrogate-code-units.pkl",
+      "expressions": [
+        "result"
+      ],
+      "mode": "COMPACT",
+      "action": "capture",
+      "logger_callback": "",
+      "reader_callback": "",
+      "origin": {
+        "acquisition": "stage37-trace-design-02",
+        "case": "surrogate-code-units",
+        "input_sha256": "f546435a9f5848b16a29847b6038c60bc6696d030a4d3a36a53eede524cd64b8"
+      }
+    },
+    {
+      "id": "edge-pretty-empty-lines",
+      "source": "tests/fixtures/m2-trace/edge-pretty-empty-lines.pkl",
+      "expressions": [
+        "result"
+      ],
+      "mode": "PRETTY",
+      "action": "capture",
+      "logger_callback": "",
+      "reader_callback": "",
+      "origin": {
+        "acquisition": "stage37-trace-design-02",
+        "case": "pretty-empty-lines",
+        "input_sha256": "88f241d1e0239e579051c73ca1231dfca2ad9dc1aaf1fd42f5cfeb346af3ce2b"
+      }
+    },
+    {
+      "id": "setup-lazy-control",
+      "source": "tests/fixtures/m2-trace/setup-lazy-control.pkl",
+      "expressions": [
+        "result",
+        "stable",
+        "result"
+      ],
+      "mode": "COMPACT",
+      "action": "capture",
+      "logger_callback": "stable",
+      "reader_callback": "",
+      "origin": {
+        "acquisition": "stage37-bootstrap-logger-oracle-01",
+        "case": "lazy-control",
+        "input_sha256": "73bd9b095375fc1a65a3c4d37aac505f9fc719404ce9a4d8b9a78b3b8859f259"
+      }
+    },
+    {
+      "id": "setup-module-annotation-log",
+      "source": "tests/fixtures/m2-trace/setup-module-annotation-log.pkl",
+      "expressions": [
+        "result",
+        "stable",
+        "result"
+      ],
+      "mode": "COMPACT",
+      "action": "capture",
+      "logger_callback": "stable",
+      "reader_callback": "",
+      "origin": {
+        "acquisition": "stage37-bootstrap-logger-oracle-01",
+        "case": "module-annotation-log",
+        "input_sha256": "97994950466704c3248177834cea59cb7ffd4d54e55f5c3dbc02b6a2e4c00cec"
+      }
+    },
+    {
+      "id": "setup-module-annotation-read",
+      "source": "tests/fixtures/m2-trace/setup-module-annotation-read.pkl",
+      "expressions": [
+        "result",
+        "stable",
+        "result"
+      ],
+      "mode": "COMPACT",
+      "action": "capture",
+      "logger_callback": "",
+      "reader_callback": "stable",
+      "origin": {
+        "acquisition": "stage37-bootstrap-logger-oracle-01",
+        "case": "module-annotation-read",
+        "input_sha256": "d88b9e14e01d7f78c83207789b9bddd8de5c359acc233c8ab872a134f0341dad"
+      }
+    },
+    {
+      "id": "setup-module-annotation-log-then-error",
+      "source": "tests/fixtures/m2-trace/setup-module-annotation-log-then-error.pkl",
+      "expressions": [
+        "result",
+        "stable",
+        "result"
+      ],
+      "mode": "COMPACT",
+      "action": "capture",
+      "logger_callback": "stable",
+      "reader_callback": "",
+      "origin": {
+        "acquisition": "stage37-bootstrap-logger-oracle-01",
+        "case": "module-annotation-log-then-error",
+        "input_sha256": "8a09e09f89c569ff06c362c4ed780031c55c1c829fae3a6f59809524a573136d"
+      }
+    },
+    {
+      "id": "compile-grouped-contextual-new",
+      "source": "tests/fixtures/m2-trace/compile-grouped-contextual-new.pkl",
+      "expressions": [
+        "result",
+        "result"
+      ],
+      "mode": "COMPACT",
+      "action": "capture",
+      "logger_callback": "",
+      "reader_callback": "",
+      "origin": {
+        "acquisition": "stage37-trace-tool-review-01",
+        "case": "grouped-contextual-new",
+        "input_sha256": "267771ec305b0b735363324e870a92aca87dc2c8cc3a7c23c1b3a24340aa07a6"
+      }
+    },
+    {
+      "id": "compile-empty-trace-parse",
+      "source": "tests/fixtures/m2-trace/compile-empty-trace-parse.pkl",
+      "expressions": [
+        "result",
+        "result"
+      ],
+      "mode": "COMPACT",
+      "action": "capture",
+      "logger_callback": "",
+      "reader_callback": "",
+      "origin": {
+        "acquisition": "stage37-trace-tool-review-01",
+        "case": "empty-trace-parse",
+        "input_sha256": "559c73309165d18983fe5b6f015281107d6d3fd10a6ebc5a14f4e5e70563c59b"
+      }
+    },
+    {
+      "id": "read-same-pending-property",
+      "source": "tests/fixtures/m2-trace/read-same-pending-property.pkl",
+      "expressions": [
+        "result",
+        "result",
+        "stable"
+      ],
+      "mode": "COMPACT",
+      "action": "capture",
+      "logger_callback": "",
+      "reader_callback": "pending",
+      "origin": {
+        "acquisition": "stage37-read-reentry-oracle-02",
+        "case": "same-pending-property",
+        "input_sha256": "db25832ca31abcc00040053bc855b6b25f0d3ed955ee0e8750ab660099b98b64"
+      }
+    },
+    {
+      "id": "read-pending-ancestor",
+      "source": "tests/fixtures/m2-trace/read-pending-ancestor.pkl",
+      "expressions": [
+        "result",
+        "result",
+        "stable"
+      ],
+      "mode": "COMPACT",
+      "action": "capture",
+      "logger_callback": "",
+      "reader_callback": "result",
+      "origin": {
+        "acquisition": "stage37-read-reentry-oracle-02",
+        "case": "pending-ancestor",
+        "input_sha256": "30f4da8662c88de86fabc65f31deb185d1bd822a82ea643c989de8c74aaf9650"
+      }
+    },
+    {
+      "id": "read-different-resource-pending-property",
+      "source": "tests/fixtures/m2-trace/read-different-resource-pending-property.pkl",
+      "expressions": [
+        "result",
+        "result",
+        "stable"
+      ],
+      "mode": "COMPACT",
+      "action": "capture",
+      "logger_callback": "",
+      "reader_callback": "pending",
+      "origin": {
+        "acquisition": "stage37-read-reentry-oracle-02",
+        "case": "different-resource-pending-property",
+        "input_sha256": "dab9bd5683410c8ad35439e99f22f05455eff4dcc2c9113e49128a4e0775f40c"
+      }
+    },
+    {
+      "id": "bootstrap-module-annotation-close",
+      "source": "tests/fixtures/m2-trace/bootstrap-module-annotation-close.pkl",
+      "expressions": [
+        "result",
+        "stable"
+      ],
+      "mode": "COMPACT",
+      "action": "close",
+      "logger_callback": "",
+      "reader_callback": "",
+      "origin": {
+        "acquisition": "stage37-bootstrap-close-oracle-01",
+        "case": "bootstrap-module-annotation-close",
+        "input_sha256": "15fd5f2b77bb668b726b08a41aa110750ae4049bd5774b07d6de17e1fac2f604"
+      }
+    },
+    {
+      "id": "bootstrap-module-annotation-close-reenter",
+      "source": "tests/fixtures/m2-trace/bootstrap-module-annotation-close-reenter.pkl",
+      "expressions": [
+        "result",
+        "stable"
+      ],
+      "mode": "COMPACT",
+      "action": "close-reenter",
+      "logger_callback": "",
+      "reader_callback": "",
+      "origin": {
+        "acquisition": "stage37-bootstrap-close-oracle-01",
+        "case": "bootstrap-module-annotation-close-reenter",
+        "input_sha256": "15fd5f2b77bb668b726b08a41aa110750ae4049bd5774b07d6de17e1fac2f604"
+      }
+    },
+    {
+      "id": "bootstrap-member-annotation-close",
+      "source": "tests/fixtures/m2-trace/bootstrap-member-annotation-close.pkl",
+      "expressions": [
+        "result",
+        "stable"
+      ],
+      "mode": "COMPACT",
+      "action": "close",
+      "logger_callback": "",
+      "reader_callback": "",
+      "origin": {
+        "acquisition": "stage37-bootstrap-close-oracle-01",
+        "case": "bootstrap-member-annotation-close",
+        "input_sha256": "560ba75647331ef590640594e397eed6a74bdf76ae1e3e71341974ccfc7a589b"
+      }
+    },
+    {
+      "id": "bootstrap-member-annotation-close-reenter",
+      "source": "tests/fixtures/m2-trace/bootstrap-member-annotation-close-reenter.pkl",
+      "expressions": [
+        "result",
+        "stable"
+      ],
+      "mode": "COMPACT",
+      "action": "close-reenter",
+      "logger_callback": "",
+      "reader_callback": "",
+      "origin": {
+        "acquisition": "stage37-bootstrap-close-oracle-01",
+        "case": "bootstrap-member-annotation-close-reenter",
+        "input_sha256": "560ba75647331ef590640594e397eed6a74bdf76ae1e3e71341974ccfc7a589b"
+      }
+    }
+  ]
+}

@@ -1,12 +1,63 @@
 import sys
+import tempfile
 from pathlib import Path
 import unittest
+from unittest.mock import patch
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 import m1_platforms
 
 
 class PlatformEvidenceTests(unittest.TestCase):
+    def test_source_snapshot_prunes_caches_before_traversal_and_hashing(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            fixed = {'Cargo.toml', 'Cargo.lock', 'rust-toolchain.toml',
+                     'tools/m1_platforms.py', 'tools/m1_semantics.py',
+                     'tools/java/M1SemanticsProbe.java', 'tests/fixtures/m1/semantics/cases.json',
+                     'crates/pkl-runtime/Cargo.toml',
+                     'crates/pkl-runtime/examples/semantics_probe.rs'}
+            selected = fixed | {'crates/pkl-runtime/src/value.rs',
+                                'crates/pkl-wasm/src/lib.rs', 'crates/pkl-napi/src/lib.rs',
+                                'crates/pkl-napi/Cargo.toml', 'tools/platform/run.mjs',
+                                'tools/platform/package.json', 'tools/platform/example.pkl',
+                                'tools/platform/nested/build/ordinary.json',
+                                'tools/platform/targeting/ordinary.rs'}
+            excluded_names = {'node_modules', 'target', '.cache'}
+            ignored = {'tools/platform/ignored.txt', 'tools/platform/ignored.RS'}
+            for folder in ['crates/pkl-runtime/src', 'crates/pkl-wasm',
+                           'crates/pkl-napi', 'tools/platform']:
+                ignored.update(f'{folder}/{name}/nested/cache.json' for name in excluded_names)
+            for name in selected | ignored:
+                path = root / name
+                path.parent.mkdir(parents=True, exist_ok=True)
+                path.write_bytes(b'raw source\r\n')
+            original_walk, original_sha = m1_platforms.os.walk, m1_platforms.sha
+            visited, hashed = [], []
+
+            def guarded_walk(top, *args, **kwargs):
+                self.assertTrue(kwargs.get('topdown'))
+                for folder, directories, names in original_walk(top, *args, **kwargs):
+                    folder = Path(folder)
+                    visited.append(folder)
+                    self.assertFalse(excluded_names.intersection(folder.relative_to(root).parts),
+                                     'dependency/cache directory traversed before filtering')
+                    yield str(folder), directories, names
+
+            def guarded_sha(path):
+                hashed.append(path)
+                self.assertFalse(excluded_names.intersection(path.relative_to(root).parts))
+                return original_sha(path)
+
+            with patch.object(m1_platforms.os, 'walk', guarded_walk), patch.object(m1_platforms, 'sha', guarded_sha):
+                paths = m1_platforms.source_paths(root)
+                for path in paths:
+                    m1_platforms.sha(path)
+            self.assertTrue(visited)
+            self.assertEqual({path.relative_to(root).as_posix() for path in paths}, selected)
+            self.assertEqual(set(hashed), set(paths))
+            self.assertEqual(paths, sorted(paths))
+
     def test_platform_scenario_omission_duplication_and_errors_fail(self):
         names = sorted(m1_platforms.REQUIRED_SCENARIOS)
         pin = '1.64.1'

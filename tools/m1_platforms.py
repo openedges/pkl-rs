@@ -146,15 +146,27 @@ def contract_matches(rows):
                for target in ['rust', 'node', 'browser'])
 
 
-def run(output, bindgen, verify_contract):
-    output.mkdir(parents=True, exist_ok=False)
-    paths = {ROOT / name for name in ['Cargo.toml', 'Cargo.lock', 'rust-toolchain.toml',
+def source_paths(root=ROOT):
+    paths = {root / name for name in ['Cargo.toml', 'Cargo.lock', 'rust-toolchain.toml',
              'tools/m1_platforms.py', 'tools/m1_semantics.py', 'tools/java/M1SemanticsProbe.java',
              'tests/fixtures/m1/semantics/cases.json', 'crates/pkl-runtime/Cargo.toml',
              'crates/pkl-runtime/examples/semantics_probe.rs']}
+    suffixes = {'.rs', '.pkl', '.toml', '.mjs', '.json'}
+    excluded = {'node_modules', 'target', '.cache'}
     for folder in ['crates/pkl-runtime/src', 'crates/pkl-wasm', 'crates/pkl-napi', 'tools/platform']:
-        paths.update(path for path in (ROOT/folder).rglob('*') if path.is_file()
-                     and 'node_modules' not in path.parts and path.suffix in {'.rs', '.pkl', '.toml', '.mjs', '.json'})
+        for directory, directories, names in os.walk(root / folder, topdown=True):
+            # Exclude dependency/build caches before descending into them.
+            directories[:] = sorted(name for name in directories if name not in excluded)
+            for name in sorted(names):
+                path = Path(directory) / name
+                if path.suffix in suffixes and path.is_file():
+                    paths.add(path)
+    return sorted(paths)
+
+
+def run(output, bindgen, verify_contract):
+    output.mkdir(parents=True, exist_ok=False)
+    paths = source_paths()
     source_hashes = {}
     for path in sorted(paths):
         relative = path.relative_to(ROOT)

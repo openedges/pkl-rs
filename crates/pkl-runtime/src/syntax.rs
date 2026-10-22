@@ -261,6 +261,7 @@ impl Clone for Expr {
                         E::Parenthesized(_) => E::Parenthesized(Box::new(next())),
                         E::NonNull(_) => E::NonNull(Box::new(next())),
                         E::Throw(_) => E::Throw(Box::new(next())),
+                        E::Trace(_) => E::Trace(Box::new(next())),
                         E::Member(_, name) => E::Member(Box::new(next()), name.clone()),
                         E::NullableMember(_, name) => {
                             E::NullableMember(Box::new(next()), name.clone())
@@ -370,6 +371,7 @@ impl Expr {
             E::Parenthesized(value)
             | E::NonNull(value)
             | E::Throw(value)
+            | E::Trace(value)
             | E::Member(value, _)
             | E::NullableMember(value, _)
             | E::Unary { operand: value, .. }
@@ -546,6 +548,7 @@ impl Drop for Expr {
                 E::Parenthesized(value)
                 | E::NonNull(value)
                 | E::Throw(value)
+                | E::Trace(value)
                 | E::Member(value, _)
                 | E::NullableMember(value, _)
                 | E::Unary { operand: value, .. }
@@ -631,6 +634,7 @@ pub enum ExprKind {
     Parenthesized(Box<Expr>),
     NonNull(Box<Expr>),
     Throw(Box<Expr>),
+    Trace(Box<Expr>),
     TypeCheck {
         value: Box<Expr>,
         ty: Type,

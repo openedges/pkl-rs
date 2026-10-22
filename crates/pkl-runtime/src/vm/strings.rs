@@ -1,0 +1,150 @@
+//! Shared String builtins. Java-compatible values retain UTF-16 code units.
+use super::*;
+use crate::diagnostic::{PowerAssertionValue, TypeDiagnostic};
+
+pub(super) fn repeat_block(
+    blocks: &mut Vec<Vec<Instruction>>,
+    metadata: &mut Vec<BlockMetadata>,
+) -> usize {
+    let source = crate::stdlib_sources::base();
+    let declaration = "external function repeat(count: UInt): String";
+    let start = source
+        .text
+        .find(declaration)
+        .expect("pinned String.repeat declaration");
+    let block = blocks.len();
+    blocks.push(vec![
+        Instruction::LoadLocal(0),
+        Instruction::StringRepeat,
+        Instruction::Return,
+    ]);
+    metadata.push(BlockMetadata {
+        source: Some(source),
+        member: "#String.repeat".into(),
+        declaration: Some(Span::new(start, start + declaration.len())),
+        // External body errors have no guest callsite; parameter checks below
+        // supply the authored UInt alias location explicitly.
+        spans: vec![None; 3],
+        ..BlockMetadata::default()
+    });
+    block
+}
+
+impl Vm {
+    pub(super) fn string_repeat_method(&mut self, receiver: Value) {
+        let id = self.heap.allocate(Object {
+            function: Some(Function {
+                block: self.program.string_repeat_block,
+                arity: 1,
+                method: true,
+                captured_this: Some(receiver),
+            }),
+            ..Object::default()
+        });
+        self.stack.push(Value::Function(id));
+    }
+
+    pub(super) fn repeat_string(&mut self) -> Result<(), RuntimeError> {
+        let value = self.pop()?;
+        let count = match value {
+            Value::Int(count) if count >= 0 => count,
+            value => {
+                let source = crate::stdlib_sources::base();
+                let alias = source
+                    .text
+                    .find("typealias UInt = Int(isPositive)")
+                    .expect("pinned UInt alias");
+                let int_start = alias + "typealias UInt = ".len();
+                let (mut error, span) = if let Value::Int(count) = value {
+                    let span = Span::new(int_start + 4, int_start + 4 + "isPositive".len());
+                    let mut error = RuntimeError::new(ErrorKind::Type, "Type constraint violated.");
+                    // Stdlib constraints retain their instrumentation even when
+                    // user-module power assertions are disabled.
+                    error.type_diagnostic = Some(Box::new(TypeDiagnostic::Constraint {
+                        span,
+                        body_span: span,
+                        value: count.to_string(),
+                        observations: Some(vec![PowerAssertionValue {
+                            span,
+                            value: "false".into(),
+                            executions: 1,
+                            hidden: false,
+                        }]),
+                    }));
+                    (error, span)
+                } else {
+                    (
+                        type_error(
+                            &TypeCheck::Int,
+                            &value,
+                            &self.program.module_name,
+                            &self.heap,
+                        )?,
+                        Span::new(int_start, int_start + 3),
+                    )
+                };
+                error.span = Some(span);
+                error.frames.push(RuntimeFrame {
+                    source: Some(source),
+                    span,
+                    member: "#String.repeat".into(),
+                });
+                return Err(error);
+            }
+        };
+        let Some(Value::String(text)) = self
+            .frames
+            .last()
+            .and_then(|frame| frame.environment.this_value.as_ref())
+        else {
+            return Err(invalid("String.repeat receiver"));
+        };
+        let length = i64::try_from(text.encode_utf16().count())
+            .map_err(|_| invalid("String length exceeds Int"))?;
+        let total = length
+            .checked_mul(count)
+            .ok_or_else(|| numeric_error(crate::numeric::NumericError::IntegerOverflow))?;
+        if total > i32::MAX as i64 {
+            let digits = total.to_string();
+            let mut grouped = String::with_capacity(digits.len() + digits.len() / 3);
+            for (index, digit) in digits.chars().enumerate() {
+                if index != 0 && (digits.len() - index).is_multiple_of(3) {
+                    grouped.push(',');
+                }
+                grouped.push(digit);
+            }
+            return Err(RuntimeError::new(
+                ErrorKind::Arithmetic,
+                format!("Int value `{grouped}` is too large (only Int32 supported here)."),
+            ));
+        }
+        // The checked length precedes Java's long-to-int count narrowing. For an
+        // empty receiver this can expose a negative Java implementation count.
+        let narrowed = count as i32;
+        if narrowed < 0 {
+            return Err(RuntimeError::new(
+                ErrorKind::Unsupported,
+                "String.repeat encountered the pinned Java negative narrowed-count bug.",
+            ));
+        }
+        if total == 0 {
+            self.stack.push(Value::string(""));
+        } else if count == 1 {
+            self.stack.push(Value::String(text.clone()));
+        } else {
+            let mut units = Vec::new();
+            units.try_reserve_exact(total as usize).map_err(|_| {
+                RuntimeError::new(ErrorKind::Host, "String.repeat allocation failed.")
+            })?;
+            units.extend(text.encode_utf16());
+            let source_length = units.len();
+            while units.len() < total as usize {
+                let copy = units.len().min(total as usize - units.len());
+                debug_assert!(copy.is_multiple_of(source_length));
+                units.extend_from_within(..copy);
+            }
+            self.stack.push(Value::String(PklString::from_utf16(units)));
+        }
+        Ok(())
+    }
+}

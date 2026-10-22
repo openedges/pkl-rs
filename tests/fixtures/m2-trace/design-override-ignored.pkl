@@ -1,0 +1,3 @@
+class C { x=1; function toString():String=throw("override") }
+obj=new C {}
+result=trace(obj).x

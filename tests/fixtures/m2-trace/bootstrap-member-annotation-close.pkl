@@ -1,0 +1,3 @@
+stable=7
+@Deprecated { when(trace(true)) { message="setup" } }
+result=8

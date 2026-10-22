@@ -251,6 +251,7 @@ fn frontend_probe() {
                 match vm.poll(1000) {
                     VmPoll::Ready(result) => break result.unwrap().as_object().unwrap(),
                     VmPoll::Yielded => {}
+                    VmPoll::Log(_) => panic!("unexpected logger request"),
                     VmPoll::Pending(_) => panic!("unexpected Host request"),
                 }
             };
@@ -259,6 +260,7 @@ fn frontend_probe() {
                 match vm.poll(1000) {
                     VmPoll::Ready(result) => break result.unwrap(),
                     VmPoll::Yielded => {}
+                    VmPoll::Log(_) => panic!("unexpected logger request"),
                     VmPoll::Pending(_) => panic!("unexpected Host request"),
                 }
             };

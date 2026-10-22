@@ -1,0 +1,4 @@
+obj=new Dynamic { x=1 }
+result=trace(obj).x
+callback=throw("callback")
+stable="ok"

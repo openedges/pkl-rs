@@ -7,6 +7,7 @@ use crate::heap::{
     CacheKey, Class, Environment, ExecutableOwnerId, ExecutionSite, Function, Heap, HeapStats,
     LazyState, Member, Object, Scope, TypeNodeId,
 };
+use crate::logging::{EvaluationContext, LogRequest, LoggerFailure};
 use crate::source::Span;
 use crate::value::{ErrorKind, ObjectId, PklString, RuntimeError, RuntimeFrame, Value};
 pub(crate) mod annotations;
@@ -16,6 +17,8 @@ pub(crate) mod equality;
 mod forcing;
 mod generics;
 pub(crate) mod reference;
+mod strings;
+mod tracing;
 mod typecheck;
 use typecheck::{TypeDestination, TypeRun};
 
@@ -123,7 +126,11 @@ pub enum Instruction {
     LoadModule,
     NonNull,
     Throw,
+    Trace {
+        operand_span: Span,
+    },
     ToString,
+    StringRepeat,
     Observe(Span),
     TestType(TypeCheck),
     JumpIfNull(usize),
@@ -634,6 +641,8 @@ impl TypeCheck {
 /// Source metadata is parallel to bytecode, so diagnostics add no VM dispatches.
 #[derive(Clone, Debug, Default)]
 pub struct BlockMetadata {
+    /// Bind the actual module input as the lexical receiver of a source entry.
+    pub module_receiver_input: Option<usize>,
     pub source: Option<Arc<crate::value::RuntimeSource>>,
     pub hidden: bool,
     pub spans: Vec<Option<Span>>,
@@ -667,12 +676,15 @@ pub(crate) struct LetScope {
 pub struct Program {
     pub module_name: Arc<str>,
     pub module_template: Option<usize>,
+    /// Imports, classes and aliases exist before module annotation evaluation.
+    pub(crate) initial_module_members: Vec<Member>,
     pub blocks: Vec<Vec<Instruction>>,
     pub metadata: Vec<BlockMetadata>,
     pub objects: Vec<Vec<Member>>,
     pub entry: usize,
     pub(crate) reference_render_block: usize,
     pub(crate) typed_string_block: usize,
+    pub(crate) string_repeat_block: usize,
     pub(crate) access_members: Vec<Member>,
     pub(crate) annotation_members: BTreeMap<usize, Vec<Member>>,
     pub(crate) constraint_origins: BTreeMap<usize, (Vec<RuntimeFrame>, Vec<RuntimeFrame>)>,
@@ -730,15 +742,18 @@ impl Program {
         };
         let access_members = reference::access_members(&mut blocks, &mut metadata);
         let annotation_members = annotations::builtin_members(&mut blocks, &mut metadata);
+        let string_repeat_block = strings::repeat_block(&mut blocks, &mut metadata);
         Self {
             module_name: Arc::from(""),
             module_template: None,
+            initial_module_members: Vec::new(),
             metadata,
             blocks,
             objects: Vec::new(),
             entry: 0,
             reference_render_block,
             typed_string_block,
+            string_repeat_block,
             access_members,
             annotation_members,
             constraint_origins: BTreeMap::new(),
@@ -756,6 +771,7 @@ pub struct ReadRequest {
 pub enum VmPoll {
     Ready(Result<Value, RuntimeError>),
     Pending(ReadRequest),
+    Log(LogRequest),
     Yielded,
 }
 
@@ -791,10 +807,40 @@ struct Frame {
     builders: Vec<ObjectId>,
 }
 
+impl Frame {
+    fn hides_callsite(&self) -> bool {
+        self.callsite_hidden
+            || self
+                .deep_force
+                .as_ref()
+                .is_some_and(forcing::ForceRun::is_trace)
+    }
+}
+
+#[derive(Clone)]
+pub(crate) enum PendingRequest {
+    Read(ReadRequest),
+    Log(LogRequest),
+}
+impl PendingRequest {
+    fn id(&self) -> u64 {
+        match self {
+            Self::Read(request) => request.id,
+            Self::Log(request) => request.id,
+        }
+    }
+    fn poll(&self) -> VmPoll {
+        match self {
+            Self::Read(request) => VmPoll::Pending(request.clone()),
+            Self::Log(request) => VmPoll::Log(request.clone()),
+        }
+    }
+}
+
 enum State {
     Idle,
     Running,
-    Waiting(ReadRequest),
+    Waiting(PendingRequest),
     Finished(Result<Value, RuntimeError>),
     Closed,
 }
@@ -811,6 +857,9 @@ struct SuspendedContext {
 
 pub struct Vm {
     program: Arc<Program>,
+    context: EvaluationContext,
+    callback_closing: bool,
+    log_buffer: Vec<u16>,
     heap: Heap,
     frames: Vec<Frame>,
     stack: Vec<Value>,
@@ -832,6 +881,10 @@ pub struct Vm {
 
 impl Vm {
     pub fn new(program: Arc<Program>) -> Self {
+        Self::with_context(program, EvaluationContext::default())
+    }
+
+    pub fn with_context(program: Arc<Program>, context: EvaluationContext) -> Self {
         // Compiled caches cannot retain evaluator-owned handles. Validate once,
         // independently of repeated evaluation state creation.
         let code_validation = if program
@@ -848,6 +901,9 @@ impl Vm {
         };
         Self {
             program,
+            context,
+            callback_closing: false,
+            log_buffer: Vec::new(),
             heap: Heap::new(),
             frames: Vec::new(),
             stack: Vec::new(),
@@ -881,6 +937,32 @@ impl Vm {
     }
 
     pub fn start(&mut self, entry: usize, inputs: Vec<Value>) -> Result<(), RuntimeError> {
+        self.start_entry(entry, inputs, true)
+    }
+
+    /// Continue an already admitted evaluation after its preceding entry finished.
+    /// This is not a new evaluator invocation, so its buffered logs survive.
+    pub(crate) fn continue_entry(
+        &mut self,
+        entry: usize,
+        inputs: Vec<Value>,
+    ) -> Result<(), RuntimeError> {
+        if !matches!(self.state, State::Finished(_)) {
+            return Err(invalid("continuation requires a completed entry"));
+        }
+        let result = self.start_entry(entry, inputs, false);
+        if let Err(error) = &result {
+            self.state = State::Finished(Err(error.clone()));
+        }
+        result
+    }
+
+    fn start_entry(
+        &mut self,
+        entry: usize,
+        inputs: Vec<Value>,
+        clear_logs: bool,
+    ) -> Result<(), RuntimeError> {
         self.available()?;
         self.code_validation.clone()?;
         if entry >= self.program.blocks.len() {
@@ -889,13 +971,32 @@ impl Vm {
         for input in &inputs {
             self.heap.validate_value(input)?;
         }
+        let mut environment = Environment::default();
+        if let Some(index) = self
+            .program
+            .metadata
+            .get(entry)
+            .and_then(|m| m.module_receiver_input)
+        {
+            let receiver = inputs
+                .get(index)
+                .ok_or_else(|| invalid("missing module input"))?
+                .as_object()?;
+            environment.scopes.push(Scope {
+                receiver,
+                owner: receiver,
+            });
+        }
+        if clear_logs {
+            self.log_buffer.clear();
+        }
         self.stack.clear();
         self.inputs = inputs;
         self.frames.push(Frame {
             block: entry,
             pc: 0,
             base: 0,
-            environment: Environment::default(),
+            environment,
             force: None,
             lambda: false,
             type_run: None,
@@ -913,6 +1014,16 @@ impl Vm {
         Ok(())
     }
 
+    pub(crate) fn start_failed(&mut self, error: RuntimeError) -> Result<(), RuntimeError> {
+        self.available()?;
+        self.log_buffer.clear();
+        self.stack.clear();
+        self.inputs.clear();
+        self.frames.clear();
+        self.state = State::Finished(Err(error));
+        Ok(())
+    }
+
     /// Enter a callback evaluation while the current context waits for Host I/O.
     /// The program, heap and successful member cache belong to the evaluator.
     pub(crate) fn reenter(
@@ -921,7 +1032,7 @@ impl Vm {
         entry: usize,
         inputs: Vec<Value>,
     ) -> Result<(), RuntimeError> {
-        if !matches!(&self.state, State::Waiting(read) if read.id == request) {
+        if !matches!(&self.state, State::Waiting(pending) if pending.id() == request) {
             return Err(RuntimeError::new(
                 ErrorKind::Host,
                 "stale or unexpected Host completion",
@@ -939,7 +1050,7 @@ impl Vm {
             .rev()
             .skip(1)
             .filter_map(|frame| {
-                if frame.callsite_hidden {
+                if frame.hides_callsite() {
                     return None;
                 }
                 let metadata = self.program.metadata.get(frame.block)?;
@@ -984,13 +1095,13 @@ impl Vm {
         }
     }
 
-    pub(crate) fn pending_requests(&self) -> Vec<u64> {
+    pub(crate) fn pending_requests(&self) -> Vec<Option<PendingRequest>> {
         self.suspended
             .iter()
             .map(|context| &context.state)
             .chain(std::iter::once(&self.state))
-            .filter_map(|state| match state {
-                State::Waiting(request) => Some(request.id),
+            .map(|state| match state {
+                State::Waiting(request) => Some(request.clone()),
                 _ => None,
             })
             .collect()
@@ -999,6 +1110,7 @@ impl Vm {
     pub fn start_member(&mut self, receiver: ObjectId, name: &str) -> Result<(), RuntimeError> {
         self.available()?;
         self.heap.get(receiver)?;
+        self.log_buffer.clear();
         self.inputs.clear();
         self.stack.clear();
         self.state = State::Running;
@@ -1021,7 +1133,7 @@ impl Vm {
     pub fn poll(&mut self, budget: usize) -> VmPoll {
         for _ in 0..budget {
             match &self.state {
-                State::Waiting(request) => return VmPoll::Pending(request.clone()),
+                State::Waiting(request) => return request.poll(),
                 State::Finished(result) => return VmPoll::Ready(result.clone()),
                 State::Closed => {
                     return VmPoll::Ready(Err(RuntimeError::new(
@@ -1040,7 +1152,7 @@ impl Vm {
             }
         }
         match &self.state {
-            State::Waiting(request) => VmPoll::Pending(request.clone()),
+            State::Waiting(request) => request.poll(),
             State::Finished(result) => VmPoll::Ready(result.clone()),
             State::Closed => VmPoll::Ready(Err(RuntimeError::new(
                 ErrorKind::Closed,
@@ -1056,7 +1168,7 @@ impl Vm {
         result: Result<Value, RuntimeError>,
     ) -> Result<(), RuntimeError> {
         match &self.state {
-            State::Waiting(request) if request.id == id => {}
+            State::Waiting(PendingRequest::Read(request)) if request.id == id => {}
             State::Closed => {
                 return Err(RuntimeError::new(ErrorKind::Closed, "evaluator is closed"));
             }
@@ -1076,6 +1188,79 @@ impl Vm {
             Err(error) => self.fail(error),
         }
         Ok(())
+    }
+
+    pub fn acknowledge_log(
+        &mut self,
+        id: u64,
+        completion: Result<(), LoggerFailure>,
+    ) -> Result<(), RuntimeError> {
+        if !matches!(&self.state, State::Waiting(PendingRequest::Log(request)) if request.id == id)
+        {
+            return Err(RuntimeError::new(
+                ErrorKind::Host,
+                "stale or unexpected Host completion",
+            ));
+        }
+        match completion {
+            Ok(()) => {
+                self.frames
+                    .last_mut()
+                    .and_then(|frame| frame.deep_force.as_mut())
+                    .ok_or_else(|| invalid("log outside trace continuation"))?
+                    .acknowledge_log()?;
+                self.state = State::Running;
+            }
+            Err(error) => self.fail(RuntimeError::new(
+                ErrorKind::Host,
+                error.message.to_java_utf8(),
+            )),
+        }
+        Ok(())
+    }
+
+    pub(crate) fn close_from_callback(&mut self, id: u64) -> Result<(), RuntimeError> {
+        if !matches!(&self.state, State::Waiting(PendingRequest::Log(request)) if request.id == id)
+        {
+            return Err(RuntimeError::new(
+                ErrorKind::Host,
+                "stale or unexpected Host completion",
+            ));
+        }
+        self.callback_closing = true;
+        Ok(())
+    }
+
+    pub(crate) fn is_closing(&self) -> bool {
+        self.callback_closing
+    }
+
+    /// The actual module receiver, including one whose initialization is suspended.
+    pub fn primary_module(&self) -> Option<Value> {
+        self.suspended
+            .iter()
+            .flat_map(|context| &context.frames)
+            .chain(self.frames.iter())
+            .flat_map(|frame| &frame.environment.scopes)
+            .map(|scope| scope.receiver)
+            .find(|id| self.heap.get(*id).is_ok_and(|object| object.is_module))
+            .map(Value::Object)
+            .or_else(|| match &self.state {
+                State::Finished(Ok(Value::Object(id)))
+                    if self.heap.get(*id).is_ok_and(|object| object.is_module) =>
+                {
+                    Some(Value::Object(*id))
+                }
+                _ => None,
+            })
+    }
+
+    pub fn expression_string_needs_conversion(&self, value: &Value) -> bool {
+        self.is_reference(value)
+            || self.is_map(value)
+            || self.is_set(value)
+            || self.is_list(value)
+            || matches!(value, Value::TypeAlias(_))
     }
 
     /// Cancellation terminates the active computation; a later start has fresh stack state.
@@ -1100,6 +1285,8 @@ impl Vm {
         self.stack = Vec::new();
         self.inputs = Vec::new();
         self.state = State::Closed;
+        self.log_buffer = Vec::new();
+        self.context = EvaluationContext::default();
         self.class_singletons.clear();
         self.alias_singletons.clear();
         self.executable_roots.clear();
@@ -1373,7 +1560,7 @@ impl Vm {
             {
                 let reading_inferred_parent = frame_index + 1 < diagnostic_frames.len()
                     && matches!(instruction(frame), Some(Instruction::InferPropertyParent));
-                if !frame.callsite_hidden && !reading_inferred_parent {
+                if !frame.hides_callsite() && !reading_inferred_parent {
                     error.frames.push(RuntimeFrame {
                         source: metadata.source.clone(),
                         span: if error.frames.is_empty() {
@@ -1443,6 +1630,15 @@ impl Vm {
         for frame in &self.frames {
             if let Some(force) = &frame.force
                 && let Some(key) = &force.cache
+                && !self
+                    .suspended
+                    .iter()
+                    .flat_map(|context| &context.frames)
+                    .any(|frame| {
+                        frame.force.as_ref().is_some_and(|other| {
+                            other.receiver == force.receiver && other.cache.as_ref() == Some(key)
+                        })
+                    })
                 && let Ok(object) = self.heap.get_mut(force.receiver)
             {
                 // VmUtils.doReadMember and ReadLocalPropertyNode publish only successful
@@ -1624,19 +1820,26 @@ impl Vm {
         // Only direct class declaration call targets bypass ordinary lazy cycles.
         // Other reads execute BeginClass, whose early return still publishes the
         // successful ordinary member cache through the normal return machinery.
-        let active = self
-            .frames
+        let same_attempt = |frame: &Frame| {
+            frame.force.as_ref().is_some_and(|force| {
+                force.entry == entry
+                    && force.receiver == receiver
+                    && force.owner == owner
+                    && force.name == name
+                    && force.method == method
+            })
+        };
+        let active_here = self.frames.iter().any(same_attempt);
+        let suspended_attempt = self
+            .suspended
             .iter()
-            .chain(self.suspended.iter().flat_map(|context| &context.frames))
-            .any(|frame| {
-                frame.force.as_ref().is_some_and(|force| {
-                    force.entry == entry
-                        && force.receiver == receiver
-                        && force.owner == owner
-                        && force.name == name
-                        && force.method == method
-                })
-            });
+            .flat_map(|context| &context.frames)
+            .any(same_attempt);
+        let active = active_here || suspended_attempt;
+        // A Host callback owns a distinct evaluation attempt. It can publish a
+        // value before its suspended caller returns; ordinary cycles in this
+        // context still fail, and no cache snapshot is restored on callback exit.
+        let callback_attempt = !active_here && suspended_attempt;
         if active
             && let Some(Instruction::BeginClass { template, .. }) = self
                 .program
@@ -1666,6 +1869,7 @@ impl Vm {
             .is_some_and(|run| run.reads(receiver, owner, &name, entry));
         if memoize
             && !direct_force_read
+            && !callback_attempt
             && matches!(
                 self.heap.get(receiver)?.cache.get(&key),
                 Some(LazyState::Evaluating)
@@ -1686,7 +1890,7 @@ impl Vm {
         {
             memoize = false;
         }
-        if active && !direct_force_read {
+        if active && !direct_force_read && !callback_attempt {
             return Err(RuntimeError::new(
                 ErrorKind::Cycle,
                 format!("cyclic forcing of {name}"),
@@ -2447,7 +2651,7 @@ impl Vm {
                 && let Some(span) = metadata.declaration
             {
                 error.frames.push(RuntimeFrame {
-                    source: None,
+                    source: metadata.source.clone(),
                     span,
                     member: metadata.member.clone(),
                 });
@@ -2585,10 +2789,19 @@ impl Vm {
                     .last()
                     .ok_or_else(|| invalid("missing module"))?
                     .as_object()?;
-                self.heap
-                    .get_mut(owner)?
-                    .published_module_members
-                    .insert(code);
+                let template = self
+                    .program
+                    .module_template
+                    .ok_or_else(|| invalid("missing module template"))?;
+                let member = self.program.objects[template]
+                    .iter()
+                    .find(|m| m.code == code)
+                    .ok_or_else(|| invalid("missing module declaration"))?
+                    .clone();
+                let object = self.heap.get_mut(owner)?;
+                if object.published_module_members.insert(code) {
+                    object.members.push(member);
+                }
             }
             Instruction::FinishModule => {
                 let owner = self
@@ -2897,6 +3110,9 @@ impl Vm {
                 }
                 self.stack.push(value);
             }
+            Instruction::Trace { operand_span } => {
+                self.begin_trace(operand_span)?;
+            }
             Instruction::Throw => {
                 let value = self.pop()?;
                 let Value::String(message) = value else {
@@ -2909,6 +3125,7 @@ impl Vm {
                 };
                 return Err(RuntimeError::new(ErrorKind::Type, message.to_java_utf8()));
             }
+            Instruction::StringRepeat => self.repeat_string()?,
             Instruction::ToString => {
                 let value = self.pop()?;
                 if let Value::Object(id) = value
@@ -3023,7 +3240,9 @@ impl Vm {
                     Instruction::GetConstMember(_) | Instruction::GetConstMethod(_)
                 );
                 let receiver = self.pop()?;
-                if !method
+                if method && name.as_ref() == "repeat" && matches!(receiver, Value::String(_)) {
+                    self.string_repeat_method(receiver);
+                } else if !method
                     && let Value::String(text) = &receiver
                     && matches!(name.as_ref(), "length" | "isEmpty")
                 {
@@ -3492,12 +3711,15 @@ impl Vm {
                 {
                     return Err(collections::external_amendment_error("pkl.ref#Reference"));
                 }
-                let members = self
-                    .program
-                    .objects
-                    .get(template)
-                    .ok_or_else(|| invalid("invalid object template"))?
-                    .clone();
+                let members = if self.program.module_template == Some(template) {
+                    self.program.initial_module_members.clone()
+                } else {
+                    self.program
+                        .objects
+                        .get(template)
+                        .ok_or_else(|| invalid("invalid object template"))?
+                        .clone()
+                };
                 if let Some(parent) = parent {
                     self.validate_object_members(parent, &members)?;
                     if members.is_empty() {
@@ -3514,6 +3736,11 @@ impl Vm {
                 let object = self.heap.allocate(Object {
                     is_module: self.program.module_template == Some(template),
                     module_initializing: self.program.module_template == Some(template),
+                    published_module_members: if self.program.module_template == Some(template) {
+                        members.iter().map(|m| m.code).collect()
+                    } else {
+                        BTreeSet::new()
+                    },
                     parent,
                     members,
                     environment,
@@ -3759,6 +3986,9 @@ impl Vm {
                 }
             },
             Instruction::ReadResource => {
+                if self.callback_closing {
+                    return Err(RuntimeError::new(ErrorKind::Closed, "evaluator is closing"));
+                }
                 let Value::String(uri) = self.pop()? else {
                     return Err(RuntimeError::new(
                         ErrorKind::Type,
@@ -3776,7 +4006,7 @@ impl Vm {
                 self.next_request = id
                     .checked_add(1)
                     .ok_or_else(|| invalid("Host request IDs exhausted"))?;
-                self.state = State::Waiting(ReadRequest { id, uri });
+                self.state = State::Waiting(PendingRequest::Read(ReadRequest { id, uri }));
             }
             Instruction::Return => {
                 let base = self.frames.last().expect("active frame").base;
@@ -4166,6 +4396,24 @@ fn compile_module_configured(
     );
     let template = compiler.object_template(&resolved.module.members, false, false)?;
     compiler.program.module_template = Some(template);
+    // AstBuilder.doVisitModuleProperties installs declarations before ClassNode
+    // executes module annotations, then publishes ordinary properties and methods.
+    for kind in 0..3 {
+        for (index, member) in resolved.module.members.iter().enumerate() {
+            let declaration_kind = match member.expr.kind {
+                crate::syntax::ExprKind::Import { .. } => Some(0),
+                crate::syntax::ExprKind::Class { .. } => Some(1),
+                crate::syntax::ExprKind::TypeAlias { .. } => Some(2),
+                _ => None,
+            };
+            if declaration_kind == Some(kind) {
+                compiler
+                    .program
+                    .initial_module_members
+                    .push(compiler.program.objects[template][index].clone());
+            }
+        }
+    }
     let mut entry = Code::default();
     entry.push(Instruction::MakeObject {
         template,
@@ -4619,6 +4867,7 @@ impl Compiler<'_> {
         let index = self.program.blocks.len();
         self.program.blocks.push(code.instructions);
         self.program.metadata.push(BlockMetadata {
+            module_receiver_input: None,
             source: None,
             hidden: false,
             spans: code.spans,

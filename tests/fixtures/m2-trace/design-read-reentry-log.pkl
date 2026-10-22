@@ -1,0 +1,3 @@
+obj=new Dynamic { x=read("life:outer") }
+result=trace(obj).x
+callback=trace(7)

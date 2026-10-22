@@ -1,5 +1,6 @@
 //! Experimental expression-string boundary shared by development adapters.
-//! This does not implement the full evaluator API, general compound stringification, or Host I/O.
+//! This does not implement the full evaluator API or general REPL/module loading.
+pub mod session;
 use crate::diagnostic::{RenderFrame, render_error};
 use crate::source::{Source, SourceMap, Span};
 use crate::value::{ErrorKind, PklString, RuntimeError, Value};
@@ -57,55 +58,9 @@ pub fn scalar_expressions_with_options(
     let mut sources = SourceMap::default();
     let source_id = sources.add(uri, source_text);
     let source = sources.get(source_id).expect("source inserted");
-    let module = crate::parser::parse_module(source.text()).map_err(|error| {
-        let name = error.module_name.as_deref().unwrap_or(name);
-        let member = error.member.as_ref().map_or_else(
-            || name.into(),
-            |suffix| PklString::from(format!("{name}#")).concat(suffix),
-        );
-        render_error(
-            &error.message,
-            &[RenderFrame {
-                source,
-                uri,
-                member: &member,
-                span: error.span,
-                highlight_length_utf16: error.highlight_length_utf16,
-            }],
-            error.hint(),
-        )
-    })?;
-    let declared_name = module
-        .declaration
-        .as_ref()
-        .and_then(|header| header.name.as_ref())
-        .map(|parts| parts.join("."));
-    let name = declared_name.as_deref().unwrap_or(name);
-    let resolved = crate::resolver::resolve_module(&module).map_err(|error| {
-        let member = error.member.as_ref().map_or_else(
-            || name.into(),
-            |suffix| PklString::from(format!("{name}#")).concat(suffix),
-        );
-        render_error(
-            &error.message,
-            &[RenderFrame {
-                source,
-                uri,
-                member: &member,
-                span: error.span,
-                highlight_length_utf16: error.highlight_length_utf16,
-            }],
-            error.hint(),
-        )
-    })?;
-    let mut program = if options.power_assertions {
-        crate::vm::compile_module_with_power_assertions(&resolved)
-    } else {
-        crate::vm::compile_module(&resolved)
-    }
-    .map_err(|error| runtime_error(source, uri, name, expression, error, None))?;
+    let (mut program, name) = compile_program(source, uri, name, expression, options)?;
+    let name = name.as_str();
     let program_mut = std::sync::Arc::make_mut(&mut program);
-    program_mut.module_name = name.into();
     // The Java expression-string boundary converts a returned Reference through
     // its domain renderer and a strict Map/Set through its non-forcing value renderer.
     let stringify = program_mut.blocks.len();
@@ -116,7 +71,18 @@ pub fn scalar_expressions_with_options(
     ]);
     program_mut.metadata.push(BlockMetadata::default());
     let entry = program.entry;
-    let mut vm = Vm::new(program);
+    let mut vm = Vm::with_context(
+        program,
+        crate::logging::EvaluationContext {
+            primary_source: Some(std::sync::Arc::new(crate::value::RuntimeSource {
+                text: source_text.into(),
+                uri: uri.into(),
+                module_name: name.into(),
+                line_anchors: false,
+            })),
+            ..Default::default()
+        },
+    );
     vm.set_power_assertions(options.power_assertions);
     vm.start(entry, vec![])
         .map_err(|error| runtime_error(source, uri, name, expression, error, None))?;
@@ -183,11 +149,69 @@ pub fn scalar_expressions_with_options(
     Ok(results)
 }
 
+fn compile_program(
+    source: &Source,
+    uri: &str,
+    name: &str,
+    expression: &str,
+    options: EvaluationOptions,
+) -> Result<(std::sync::Arc<crate::vm::Program>, String), String> {
+    let module = crate::parser::parse_module(source.text()).map_err(|error| {
+        let name = error.module_name.as_deref().unwrap_or(name);
+        let member = error.member.as_ref().map_or_else(
+            || name.into(),
+            |suffix| PklString::from(format!("{name}#")).concat(suffix),
+        );
+        render_error(
+            &error.message,
+            &[RenderFrame {
+                source,
+                uri,
+                member: &member,
+                span: error.span,
+                highlight_length_utf16: error.highlight_length_utf16,
+            }],
+            error.hint(),
+        )
+    })?;
+    let declared_name = module
+        .declaration
+        .as_ref()
+        .and_then(|header| header.name.as_ref())
+        .map(|parts| parts.join("."));
+    let name = declared_name.as_deref().unwrap_or(name);
+    let resolved = crate::resolver::resolve_module(&module).map_err(|error| {
+        let member = error.member.as_ref().map_or_else(
+            || name.into(),
+            |suffix| PklString::from(format!("{name}#")).concat(suffix),
+        );
+        render_error(
+            &error.message,
+            &[RenderFrame {
+                source,
+                uri,
+                member: &member,
+                span: error.span,
+                highlight_length_utf16: error.highlight_length_utf16,
+            }],
+            error.hint(),
+        )
+    })?;
+    let mut program = if options.power_assertions {
+        crate::vm::compile_module_with_power_assertions(&resolved)
+    } else {
+        crate::vm::compile_module(&resolved)
+    }
+    .map_err(|error| runtime_error(source, uri, name, expression, error, None))?;
+    std::sync::Arc::make_mut(&mut program).module_name = name.into();
+    Ok((program, name.to_owned()))
+}
+
 fn poll(vm: &mut Vm) -> Result<Value, RuntimeError> {
     for _ in 0..1024 {
         match vm.poll(1024) {
             VmPoll::Ready(result) => return result,
-            VmPoll::Pending(_) => {
+            VmPoll::Pending(_) | VmPoll::Log(_) => {
                 vm.cancel();
                 return Err(RuntimeError::new(
                     ErrorKind::Unsupported,

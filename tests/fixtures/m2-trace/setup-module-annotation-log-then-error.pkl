@@ -1,0 +1,4 @@
+@Deprecated { when(trace(true)) { message="setup" }; when(throw("setup-after-log")) { message="after" } }
+module setup
+stable=trace(7)
+result=8

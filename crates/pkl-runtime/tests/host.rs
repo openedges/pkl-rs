@@ -314,16 +314,20 @@ fn nested_contexts_share_member_cache_preserve_parent_and_reject_out_of_order_co
 }
 
 #[test]
-fn nested_failure_retries_and_cyclic_child_does_not_clear_parent_lazy_marker() {
+fn nested_failure_retries_and_failed_callback_attempt_preserves_parent_lazy_marker() {
     let (mut session, object) = shared_session();
     session.start(1, vec![object.clone()], 0, None).unwrap();
     let outer = request(&mut session, 0);
-    // Reenter the very member whose force is suspended in the parent.
+    // Reader callbacks may reevaluate a suspended member. Failed callback
+    // attempts must not remove the older parent attempt's evaluating marker.
     for _ in 0..2 {
         session
             .reenter(&outer, 1, vec![object.clone()], 0, None)
             .unwrap();
-        assert_eq!(error_kind(session.poll(0, 100)), ErrorKind::Cycle);
+        let nested = request(&mut session, 0);
+        let error = RuntimeError::new(ErrorKind::Host, "callback attempt failed");
+        session.resume(&nested, Err(error.clone()), 0).unwrap();
+        assert_eq!(session.poll(0, 100), HostPoll::Ready(Err(error)));
         assert_eq!(request(&mut session, 0), outer);
     }
     session

@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "scope": "Original Stage37 Java observations, source snapshots, intermediate failures, reviews and frozen worktree checks. MAIN final acquisitions are separate.",
+  "archive": "reports/m2/stage37-origins-evidence.tar.gz",
+  "sha256": "74f113cec433fa02aeef62a0b8abe90ca6db869974b8a27499313362190b4c2f",
+  "bytes": 54123496,
+  "original_files": 32278,
+  "inventory_files": 32280,
+  "source_stability": true,
+  "inventory_sha256": "73e207cd62e2fbb1289b1b988d9dff3766080a2fdfbe72f0c7b8c6be7e2bd8cd",
+  "excluded_before_traversal": {
+    "stage37": [
+      "stage37-bindings-cargo",
+      "stage37-core-cargo",
+      "stage37-frontend-cargo",
+      "stage37-platform-cargo",
+      "stage37-trace-comparison-02/build"
+    ],
+    "stage36": []
+  },
+  "selected_root_counts": {
+    "stage36": 6,
+    "stage37": 118
+  }
+}

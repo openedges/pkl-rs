@@ -5,6 +5,10 @@ the language scope in [PLAN.md](../PLAN.md), including classes, generators,
 constraints, generics, `Reference`, and complete diagnostics. The first executable
 selection exercises only part of that scope.
 
+The [trace development contract](m2-tracing.md) separately records actual-source
+logger callbacks, source-session lifecycles, and lossless platform transport.
+Its focused comparisons do not replace the whole-language completion gate.
+
 `compatibility/m2-language.json` keeps semantic families, pinned source
 declarations, upstream language snippets, selected historical regressions, and
 unmapped historical candidates visible. Declaration and heading counts are

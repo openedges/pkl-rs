@@ -1,0 +1,3 @@
+class C { x=7 }
+function make(): C=trace(let (n=1) new { x=n })
+result=make().x

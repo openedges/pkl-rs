@@ -1,0 +1,2 @@
+obj=new Dynamic { x=throw("forced") }
+result=trace(obj).x

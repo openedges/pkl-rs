@@ -1,0 +1,2 @@
+obj=new Dynamic { x=trace(1); y=trace(2) }
+result=trace(obj).x

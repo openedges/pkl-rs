@@ -1,0 +1,3 @@
+class C { x:Int }
+obj=new C {}
+result=trace(obj.x)

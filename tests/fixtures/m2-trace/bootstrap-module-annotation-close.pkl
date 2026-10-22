@@ -1,0 +1,4 @@
+@Deprecated { when(trace(true)) { message="setup" } }
+module setup
+stable=7
+result=8

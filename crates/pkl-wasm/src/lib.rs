@@ -189,3 +189,258 @@ impl HostProbe {
         self.inner.close();
     }
 }
+
+fn source_event(event: probe::SourceEvent) -> Result<JsValue, JsValue> {
+    use js_sys::{Array, Object, Reflect, Uint16Array};
+    let object = Object::new();
+    let set = |object: &Object, key: &str, value: JsValue| {
+        Reflect::set(object, &JsValue::from_str(key), &value).map(|_| ())
+    };
+    set(&object, "kind", JsValue::from_str(event.kind))?;
+    if let Some(token) = event.token {
+        set(&object, "token", JsValue::from_str(&token))?;
+    }
+    if let Some(uri) = event.uri {
+        set(&object, "uri", JsValue::from_str(&uri))?;
+    }
+    if let Some(value) = event.value {
+        set(&object, "value", Uint16Array::from(value.as_slice()).into())?;
+    }
+    if let Some(value) = event.error {
+        set(&object, "error", Uint16Array::from(value.as_slice()).into())?;
+    }
+    if let Some(log) = event.log {
+        let record = Object::new();
+        set(&record, "level", JsValue::from_str(log.level))?;
+        set(
+            &record,
+            "message",
+            Uint16Array::from(log.message.as_slice()).into(),
+        )?;
+        set(
+            &record,
+            "moduleUri",
+            Uint16Array::from(log.module_uri.as_slice()).into(),
+        )?;
+        set(
+            &record,
+            "memberName",
+            log.member_name
+                .as_deref()
+                .map_or(JsValue::NULL, |units| Uint16Array::from(units).into()),
+        )?;
+        let lines = Array::new();
+        for line in log.source_lines {
+            lines.push(&Uint16Array::from(line.as_slice()));
+        }
+        set(&record, "sourceLines", lines.into())?;
+        for (key, value) in [
+            ("startLine", log.start_line),
+            ("startColumn", log.start_column),
+            ("endLine", log.end_line),
+            ("endColumn", log.end_column),
+        ] {
+            set(&record, key, JsValue::from_f64(value.into()))?;
+        }
+        set(&object, "log", record.into())?;
+    }
+    Ok(object.into())
+}
+
+/// Development-only parsed-source session. Logger callbacks run in the caller
+/// after poll returns; this object owns no JavaScript callback or I/O semantics.
+#[wasm_bindgen(js_name = SourceSession)]
+pub struct SourceSession {
+    inner: probe::SourceProbe,
+}
+#[wasm_bindgen]
+impl SourceSession {
+    #[wasm_bindgen(constructor)]
+    #[allow(clippy::too_many_arguments)]
+    pub fn new(
+        source: JsString,
+        uri: JsString,
+        module_name: JsString,
+        paths: js_sys::Array,
+        trace_mode: Option<JsString>,
+        host_logger: Option<bool>,
+        host_frame_transformer: Option<bool>,
+        power_assertions: Option<bool>,
+    ) -> Result<SourceSession, JsValue> {
+        let paths = paths
+            .iter()
+            .map(|value| string(&JsString::from(value)))
+            .collect::<Result<Vec<_>, _>>()?;
+        let mode = trace_mode
+            .as_ref()
+            .map(string)
+            .transpose()?
+            .unwrap_or_else(|| "compact".into());
+        Ok(Self {
+            inner: probe::SourceProbe::new(
+                &string(&source)?,
+                &string(&uri)?,
+                &string(&module_name)?,
+                &paths,
+                &mode,
+                host_logger.unwrap_or(false),
+                host_frame_transformer.unwrap_or(false),
+                power_assertions.unwrap_or(false),
+            )
+            .map_err(error)?,
+        })
+    }
+    #[wasm_bindgen(js_name = startModule)]
+    pub fn start_module(&mut self, now: f64, timeout: Option<f64>) -> Result<(), JsValue> {
+        self.inner
+            .start_module(unsigned(now)?, timeout.map(unsigned).transpose()?)
+            .map_err(error)
+    }
+    #[wasm_bindgen(js_name = startPath)]
+    pub fn start_path(
+        &mut self,
+        index: f64,
+        now: f64,
+        timeout: Option<f64>,
+    ) -> Result<(), JsValue> {
+        self.inner
+            .start_path(
+                unsigned(index)?,
+                unsigned(now)?,
+                timeout.map(unsigned).transpose()?,
+            )
+            .map_err(error)
+    }
+    #[wasm_bindgen(js_name = setupFailed)]
+    pub fn setup_failed(&self) -> bool {
+        self.inner.setup_failed()
+    }
+    #[wasm_bindgen(js_name = reenterPath)]
+    pub fn reenter_path(
+        &mut self,
+        token: JsString,
+        index: f64,
+        now: f64,
+        timeout: Option<f64>,
+    ) -> Result<(), JsValue> {
+        self.inner
+            .reenter_path(
+                &string(&token)?,
+                unsigned(index)?,
+                unsigned(now)?,
+                timeout.map(unsigned).transpose()?,
+            )
+            .map_err(error)
+    }
+    pub fn poll(&mut self, now: f64, budget: f64) -> Result<JsValue, JsValue> {
+        source_event(
+            self.inner
+                .poll(unsigned(now)?, unsigned(budget)?)
+                .map_err(error)?,
+        )
+    }
+    #[wasm_bindgen(js_name = acknowledgeLog)]
+    pub fn acknowledge_log(
+        &mut self,
+        token: JsString,
+        failure: Option<js_sys::Uint16Array>,
+        now: f64,
+    ) -> Result<(), JsValue> {
+        if failure
+            .as_ref()
+            .is_some_and(|value| !JsValue::is_instance_of::<js_sys::Uint16Array>(value.as_ref()))
+        {
+            return Err(error("expected Uint16Array"));
+        }
+        self.inner
+            .acknowledge_log(
+                &string(&token)?,
+                failure.map(|units| units.to_vec()),
+                unsigned(now)?,
+            )
+            .map_err(error)
+    }
+    #[wasm_bindgen(js_name = respondString)]
+    pub fn respond_string(
+        &mut self,
+        token: JsString,
+        value: js_sys::Uint16Array,
+        now: f64,
+    ) -> Result<(), JsValue> {
+        if !JsValue::is_instance_of::<js_sys::Uint16Array>(value.as_ref()) {
+            return Err(error("expected Uint16Array"));
+        }
+        self.inner
+            .respond(
+                &string(&token)?,
+                Value::String(pkl_runtime::value::PklString::from_utf16(value.to_vec())),
+                unsigned(now)?,
+            )
+            .map_err(error)
+    }
+    #[wasm_bindgen(js_name = respondInteger)]
+    pub fn respond_integer(
+        &mut self,
+        token: JsString,
+        value: JsValue,
+        now: f64,
+    ) -> Result<(), JsValue> {
+        self.inner
+            .respond(
+                &string(&token)?,
+                Value::Int(integer(value)?),
+                unsigned(now)?,
+            )
+            .map_err(error)
+    }
+    #[wasm_bindgen(js_name = respondBytes)]
+    pub fn respond_bytes(
+        &mut self,
+        token: JsString,
+        value: Uint8Array,
+        now: f64,
+    ) -> Result<(), JsValue> {
+        if !JsValue::is_instance_of::<Uint8Array>(value.as_ref()) {
+            return Err(error("expected Uint8Array"));
+        }
+        self.inner
+            .respond(
+                &string(&token)?,
+                Value::Bytes(value.to_vec().into()),
+                unsigned(now)?,
+            )
+            .map_err(error)
+    }
+    pub fn reject(&mut self, token: JsString, message: JsString, now: f64) -> Result<(), JsValue> {
+        self.inner
+            .reject(&string(&token)?, &string(&message)?, unsigned(now)?)
+            .map_err(error)
+    }
+    #[wasm_bindgen(js_name = closeFromCallback)]
+    pub fn close_from_callback(&mut self, token: JsString) -> Result<(), JsValue> {
+        self.inner
+            .close_from_callback(&string(&token)?)
+            .map_err(error)
+    }
+    #[wasm_bindgen(js_name = drainCancelledReads)]
+    pub fn drain_cancelled_reads(&mut self) -> Vec<String> {
+        self.inner.drain_cancelled_reads()
+    }
+    pub fn collect(&mut self) -> Result<u32, JsValue> {
+        u32::try_from(self.inner.collect().slots).map_err(error)
+    }
+    #[wasm_bindgen(js_name = heapSlots)]
+    pub fn heap_slots(&self) -> Result<u32, JsValue> {
+        u32::try_from(self.inner.heap_slots()).map_err(error)
+    }
+    #[wasm_bindgen(js_name = contextDepth)]
+    pub fn context_depth(&self) -> u32 {
+        self.inner.context_depth() as u32
+    }
+    pub fn cancel(&mut self) {
+        self.inner.cancel();
+    }
+    pub fn close(&mut self) {
+        self.inner.close();
+    }
+}

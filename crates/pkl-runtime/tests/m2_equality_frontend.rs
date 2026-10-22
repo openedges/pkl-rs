@@ -117,6 +117,7 @@ fn complete(vm: &mut Vm) -> Result<Value, RuntimeError> {
         match vm.poll(100) {
             VmPoll::Ready(value) => return value,
             VmPoll::Yielded => {}
+            VmPoll::Log(_) => panic!("unexpected logger request"),
             VmPoll::Pending(request) => panic!("unexpected Host read {request:?}"),
         }
     }

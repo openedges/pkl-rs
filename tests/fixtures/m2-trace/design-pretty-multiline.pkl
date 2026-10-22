@@ -1,0 +1,4 @@
+result=trace(new Dynamic {
+  x=1
+  nested { y=2 }
+}).x
