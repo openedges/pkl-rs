@@ -1,0 +1,98 @@
+{
+  "scope": "M2 Stage 30 required local checks; not full compatibility or performance evidence",
+  "checks": [
+    {
+      "command": [
+        "cargo",
+        "xtask",
+        "verify"
+      ],
+      "exit_code": 0,
+      "stdout_sha256": "900802c9cf4f23bd9dbc0e79f58d3e21493ec0c990782bc5b690a7432148e9eb",
+      "stderr_sha256": "e6c3a4cfad0664004934e2751b4dc165a7c383463db11b6a2a02a3020e7300ed"
+    },
+    {
+      "command": [
+        "cargo",
+        "fmt",
+        "--all",
+        "--",
+        "--check"
+      ],
+      "exit_code": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "cargo",
+        "clippy",
+        "--workspace",
+        "--all-targets",
+        "--locked",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "exit_code": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "55bef3bc61796c0bbdbea59a1da217836a7661b0b6400d54a1e696fe1c15be0e"
+    },
+    {
+      "command": [
+        "cargo",
+        "test",
+        "--workspace",
+        "--locked"
+      ],
+      "exit_code": 0,
+      "stdout_sha256": "5ccee398a05b4328e0204afa2aebabaa8e3c62dfa0bb936230f8ba79beaf9d01",
+      "stderr_sha256": "9d7fd27d0bb7505fc9358f5c072984d3e8bb942c0a3b0aec5e874df4a701e755"
+    },
+    {
+      "command": [
+        "cargo",
+        "check",
+        "-p",
+        "pkl-runtime",
+        "--target",
+        "wasm32-unknown-unknown",
+        "--locked"
+      ],
+      "exit_code": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "52b98734a893f138853a39b7899bb423811958c80ae42c1c3e8e2b7ca4c6e861"
+    },
+    {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools/tests",
+        "-v"
+      ],
+      "exit_code": 0,
+      "stdout_sha256": "298be3e36ff19e40c24c778867e28e3e3363b580cb5a6639d0f86eb64e814e43",
+      "stderr_sha256": "5813e556a6fb182addda4983d467eacc5347a43254ced482980f7c6d459cd2d9"
+    },
+    {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/m2_manifest.py",
+        "--check"
+      ],
+      "exit_code": 0,
+      "stdout_sha256": "7c098628b2f0c400a185f064263241de5aed12f6137a1a1d2a842a8d53f540fd",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "host_evidence": "target/m2/validation-stage30-final-02",
+  "source_stability": true,
+  "rust_harness_passes": 467,
+  "rust_isolated_child_duplicates": 13,
+  "rust_distinct_passes": 454,
+  "rust_ignored": 1,
+  "python_passes": 198
+}

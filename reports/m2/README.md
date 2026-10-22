@@ -38,7 +38,90 @@ Stage 26 extends those paths to bounded nested lexical strings and interpolation
 Stage 27 aligns selected lexical string diagnostics with Java.
 Stage 28 aligns selected Unicode escape diagnostics and validation order.
 Stage 29 preserves lossless UTF-16 string values through the shared engine.
+Stage 30 preserves diagnostic frame identity and selected declaration ownership.
 These checkpoints do not complete the language milestone.
+
+## Stage 30 local verification checkpoint
+
+Implementation `efd891f109466a08cc8e3c281a0aa814c5feb0dd` is committed and pushed. The
+[final summary](stage30-final-summary.json), [independent audit](stage30-post-seal-audit.json)
+and [completion captures](stage30-completion-captures.json) close this bounded
+diagnostic identity and declaration ownership checkpoint. Core work used
+`gpt-6-astra / xhigh`; Java evidence and native/platform review each used
+`gpt-6.1-sol / high`. Verification ran locally on macOS arm64.
+
+Diagnostic member names now retain UTF-16 units through parser/resolver/compiler
+scope counters, block metadata, runtime frames and recursive compression.
+Different unmatched surrogates and literal question marks have independent
+numbered children and distinct frame identities. Valid surrogate pairs and
+literal supplementary characters remain equal. Java UTF-8 replacement occurs
+when the frame is displayed. Delayed integer errors retain their authored
+entry/element scope, while key expressions retain their enclosing scope.
+Production evaluation has no Java fallback.
+
+Typed-property checks now record their declaration origin. Object-local checks
+run inline; module/class declarations retain a separate value-call frame,
+including local declarations. An initial implementation suppressed that frame
+too broadly. The existing platform function-metadata scenario detected the
+regression; fresh Java controls and independent source review established the
+correct distinction. The failed platform run and deliberately interrupted first
+validation/language/sequence acquisitions are preserved. Corrected sources ran
+through all final suites in fresh directories.
+
+The selected corpus has **3,002 cases: 3,000 raw matches**, the existing cycle
+oracle error and integer remainder-by-zero mismatch. All **23 additions are
+expected errors with complete matching diagnostics**; all **88 metamorphic
+relations** pass. The prior 2,979 definitions/input bytes, 151 sequence definitions
+and 88 platform scenarios remain preserved. Existing native assertions received
+constructor/accessor adaptations for the new name type. Persistent evaluation
+retains **2,622 matching calls** across 302 executions. The inventory has 474
+requirements and 4,002 accounting rows (3,002 ready, 960 unimplemented, 40 unmapped).
+All 16 reviewed mappings remain partial; the full gate retains 1,950 failure
+reasons. No development exception was added.
+
+[Seven required local checks](validation-stage30-final.json) passed with
+**454 distinct Rust tests and 198 Python tests**. The raw Rust harness
+reports 467 passes, including 13 existing isolated child repetitions, and
+one intentionally ignored test. Four new ordinary native tests inspect internal
+UTF-16 names, canonical pairs, numbered children, delayed diagnostics, declaration
+ownership and Host reentry/retry/GC/shared-program/close behavior. A new compression
+unit checks distinct names and repeated patterns before writer replacement.
+These additions do not establish new small-stack or memory-parity guarantees.
+
+Node and Chromium each passed **89 development scenarios**. The new scenario
+checks 23 complete Java-derived error payloads twice per target (46 calls).
+All 6,078 shared primitive results match across targets; each target matches
+Java on 6,076, retaining the two known regex gaps. Existing runtime cycle and
+full lifecycle diagnostic differences remain. Public JS string transport and
+release API behavior were not established by these development adapters.
+
+A fresh build of the baseline commit matches **12 of the 23 new cases**; the
+corrected focused build and exact final language artifact match **23 of 23**.
+The separate ownership matrix matches **15 of 16 calls**. Its remaining
+negative-literal value-frame underline difference also occurs in the fresh
+baseline, with identical baseline/candidate output; a nonnegative control passes.
+That preexisting gap remains explicit. Synthetic pinned-JAR probes separately
+check 36 frame-equality pairs and five compression/rendering sequences. These
+observations and platform cases overlap selected coverage and are not additive
+feature counts. Java class identity sidecars are clearly post-execution
+observations, not retroactive execution-time identity claims.
+
+The [sealed archive](stage30-final-evidence.tar.gz) and its
+[identity record](stage30-archive.json) preserve 83,858 original files under
+116 explicit roots. The independent audit checks the checksum inventory,
+original bytes, Git provenance, raw outcomes and the exact final artifact used
+for the focused comparison. It binds 7,453 final suite source copies
+to 3,578 distinct implementation files. Completed seal/audit captures
+are preserved separately because those processes finish after archive creation.
+Direct build caches and the unused baseline checkout are excluded before archive
+enumeration; their payload sizes/hashes are not claimed. Seven direct Stage 29
+dependency identities are retained without recursively packaging history.
+
+M2 remains in progress. The complete diagnostic corpus, imported/surrogate URI
+handling, out-of-range Unicode internal errors, signed-literal diagnostic spans,
+colored/stack-overflow output, full string APIs and existing depth/work limits
+remain. Local macOS verification does not establish Linux, Windows, hosted CI,
+release APIs, execution-time parity or peak-RSS parity.
 
 ## Stage 29 local verification checkpoint
 

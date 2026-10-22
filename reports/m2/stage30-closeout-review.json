@@ -1,0 +1,50 @@
+{
+  "archive_identity_verified": true,
+  "archive_wide_audit_repeated": false,
+  "companion_sha256": "dab41676484d0ecddcab89a094b5acd98525817cdce88ebcf38962d8d28b9501",
+  "compatibility_complete": false,
+  "completed_origin_binding_verified": true,
+  "documentation_changes": [
+    "PLAN.md",
+    "reports/m2/README.md"
+  ],
+  "embedded_process_files": 12,
+  "errors": [],
+  "final_selected_raw_counts": {
+    "baseline": 12,
+    "candidate": 23
+  },
+  "generator_source_verified": true,
+  "local_links_verified": [
+    "reports/m2/stage30-final-summary.json",
+    "reports/m2/stage30-post-seal-audit.json",
+    "reports/m2/stage30-completion-captures.json",
+    "reports/m2/stage30-final-summary.json",
+    "reports/m2/stage30-post-seal-audit.json",
+    "reports/m2/stage30-completion-captures.json",
+    "reports/m2/validation-stage30-final.json",
+    "reports/m2/stage30-final-evidence.tar.gz",
+    "reports/m2/stage30-archive.json"
+  ],
+  "no_whole_language_api_or_performance_claim": true,
+  "ownership_matrix_raw_calls": {
+    "matching": 15,
+    "remaining_signed_underline_gap_preexisting": true,
+    "total": 16
+  },
+  "performance_targets_established": false,
+  "prior_review_capture": "target/m2/stage30-public-closeout-review-command-final-01",
+  "prior_review_note": "The initial reviewer incorrectly required a relative generator path. The embedded absolute path resolves to the same source file; its raw bytes and hash were already identical. Original first capture remains preserved.",
+  "review_capture": "target/m2/stage30-public-closeout-review-command-final-02",
+  "review_passed": true,
+  "reviewed_document_sha256": {
+    "PLAN.md": "8f714262c596768705ab6460e1f81e39cbc1ff8f3632838e304d9ce1601a3efb",
+    "reports/m2/README.md": "2923a1de10fea8c42066083a6a0de85592206d0875f1eed478c48f2f95e045df"
+  },
+  "sealed_originals_integrity_source": "reports/m2/stage30-post-seal-audit.json; completed outer capture verified with embedded raw bytes",
+  "sealed_originals_unchanged": 83858,
+  "sealed_roots": 116,
+  "source_copies": 7453,
+  "summary_sha256": "5215a9c4687866c6661519256465c0bd0d08c6d86a0e201126917d00977d0ab4",
+  "unique_git_bound_sources": 3578
+}

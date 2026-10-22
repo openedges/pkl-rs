@@ -1,0 +1,183 @@
+{
+  "archive": {
+    "bytes": 63151108,
+    "members": 83864,
+    "path": "reports/m2/stage30-final-evidence.tar.gz",
+    "sha256": "3d9c2047e9d77d3747def54b4bca4cf8e53d660c8181d7077e471171598ccf5d"
+  },
+  "archived_helpers_executed": false,
+  "compatibility_complete": false,
+  "fixtures": {
+    "added": 23,
+    "original_inputs_byte_equal": 2979,
+    "preserved": 2979,
+    "sequence_files_byte_equal": 305
+  },
+  "focused_selection": {
+    "all_final_candidate_cases_pass": true,
+    "cases": 23,
+    "matches_final_language_artifact": true,
+    "raw_equal_counts": {
+      "baseline": 12,
+      "candidate": 23
+    }
+  },
+  "frame_oracle": {
+    "compression_trees": 5,
+    "equality_pairs": 36,
+    "frame_names": 6,
+    "raw_rendered_payloads": 5,
+    "scope": "Pinned Java synthetic-frame oracle only"
+  },
+  "frontend": {
+    "raw_passed": 15
+  },
+  "gates": {
+    "class-contract": 0,
+    "class-report": 0,
+    "development": 0,
+    "full": 1,
+    "report": 0,
+    "subset": 1
+  },
+  "implementation_commit": "efd891f109466a08cc8e3c281a0aa814c5feb0dd",
+  "language": {
+    "artifact_sha256": "5c1f5c14f8ef0cfbb07b7a63385c3d7b5a8197ad8055152e1fa3faaa7b82eff8",
+    "failures": {
+      "error-cycle": "oracle-error",
+      "error-remainder-zero": "mismatch"
+    },
+    "metamorphic": 88,
+    "raw_counts": {
+      "mismatch": 1,
+      "oracle-error": 1,
+      "pass": 3000
+    },
+    "selected": 3002
+  },
+  "lifecycle": {
+    "diagnostic_observations": [
+      {
+        "id": "attempt-1",
+        "mode": "retry",
+        "raw_equal": false
+      },
+      {
+        "id": "attempt-2",
+        "mode": "retry",
+        "raw_equal": false
+      },
+      {
+        "id": "after-close",
+        "mode": "retry",
+        "raw_equal": false
+      },
+      {
+        "id": "after-close",
+        "mode": "reentry",
+        "raw_equal": false
+      }
+    ],
+    "negative_java_compatibility_pass": false,
+    "protocol_pairs": 2
+  },
+  "observed_java_artifacts": {
+    "acquisition_roots": 10,
+    "classes": 11,
+    "execution_time_identity_claimed": false,
+    "observed_utc": "2026-10-22T10:02:44.671235+00:00"
+  },
+  "performance_targets_established": false,
+  "pinned_gitlinks": {
+    "external/pkl": "e51fb2f91774265666f94980ec630db794a4db2d",
+    "external/pkl-pantry": "904a68184e54da378b0a0e8a911a3fab3956f693"
+  },
+  "platform_oracles": {
+    "acquisitions": [
+      "target/m2/stage30-alias-frame-regression-oracle-01",
+      "target/m2/stage30-alias-frame-regression-oracle-02",
+      "target/m2/stage30-alias-frame-regression-oracle-03",
+      "target/m2/stage30-platform-oracle-01",
+      "target/m2/stage30-platform-oracle-controls-01",
+      "target/m2/stage30-platform-oracle-extra-01",
+      "target/m2/stage30-platform-oracle-extra-02",
+      "target/m2/stage30-platform-oracle-extra-03"
+    ],
+    "cases": 23,
+    "complete_stderr_payloads_match_java": true
+  },
+  "platforms": {
+    "mismatches": {
+      "browser": [
+        "regex-unicode-15-vs-16",
+        "regex-zero-width-supplementary"
+      ],
+      "node": [
+        "regex-unicode-15-vs-16",
+        "regex-zero-width-supplementary"
+      ],
+      "rust": [
+        "regex-unicode-15-vs-16",
+        "regex-zero-width-supplementary"
+      ]
+    },
+    "scenarios": 89,
+    "total": 6078
+  },
+  "raw_original_files": 83858,
+  "runtime": {
+    "cases": 9,
+    "retained_diagnostic_mismatches": [
+      "forcing-cycle"
+    ]
+  },
+  "sequences": {
+    "calls": 2622,
+    "process_pairs": 302
+  },
+  "suites": [
+    {
+      "report": "target/m2/validation-stage30-final-02/report.json",
+      "report_sha256": "66d721fea66004adaeb272eff00fbe5387832ab47f00f8a7154a0fed99978e0b",
+      "sources": 3578
+    },
+    {
+      "report": "target/m2/language-stage30-final-02/report.json",
+      "report_sha256": "e67308872a60ac8d562a103199ec1c45d272877fd4de696275c87d5ba0dfe1af",
+      "sources": 3139
+    },
+    {
+      "report": "target/m2/platforms-stage30-final-02/report.json",
+      "report_sha256": "f7fa43830a18794eceaa11b1e147e58bc2240ad5d9d3fc1b14b4b555d4baae75",
+      "sources": 76
+    },
+    {
+      "report": "target/m2/frontend-stage30-final-02/report.json",
+      "report_sha256": "486aa9480508b6047a98fc8c5dede4d9552eb084fe0abbf7ba4012dd619d0b0e",
+      "sources": 45
+    },
+    {
+      "report": "target/m2/runtime-stage30-final-02/report.json",
+      "report_sha256": "4a42e2679d8d031734378e31a7345a74648058b548acf56fbfea3eb59480de06",
+      "sources": 68
+    },
+    {
+      "report": "target/m2/lifecycle-stage30-final-02/report.json",
+      "report_sha256": "0dcd63f963037c5add28e23ac30ff1e43754cab72fa992e5545cc7cfc511e855",
+      "sources": 120
+    },
+    {
+      "report": "target/m2/class-lifecycle-stage30-final-02/report.json",
+      "report_sha256": "01573326c381c12f96049ee1a2b6cc8fb33eee9a487bc98acae97a1440ef02e1",
+      "sources": 427
+    }
+  ],
+  "unique_git_bound_files": 3578,
+  "validation": {
+    "ignored": 1,
+    "isolated_child_passes": 13,
+    "python_tests": 198,
+    "reported_rust_passes": 467,
+    "unique_rust_passes": 454
+  }
+}
