@@ -61,6 +61,10 @@ These checkpoints do not complete the language milestone.
 
 ## Native JVM-classpath checkpoint
 
+The [committed source binding](classpath-committed-source-binding.json) verifies
+all eleven implementation, profile, tooling and contract paths against commit
+`a3c45ba` and the unchanged reference gitlinks.
+
 The [checkpoint](classpath-implementation-summary.json) evaluates the unchanged
 original `basic/import1b.pkl` through the pinned JVM API and a Rust directory
 classpath Host using the shared engine. Both fresh-process repetitions match
