@@ -1,0 +1,270 @@
+{
+  "scope": "Final selected native and persistent regression of Stage43/44 at implementation c9b140a. Separate from later classpath and Stage45 changes; not full M2 completion.",
+  "implementation_commit": "c9b140a47ab7ddae76233c14ed5d003aa88dfc13",
+  "recorded_checkout": "a19619cad402674bfed2b084e3b638e6f69f9093",
+  "references": {
+    "external/pkl": "e51fb2f91774265666f94980ec630db794a4db2d",
+    "external/pkl-pantry": "904a68184e54da378b0a0e8a911a3fab3956f693"
+  },
+  "complete": true,
+  "raw": {
+    "language": {
+      "report_sha256": "edd95672029bff421b5797b2d7855660caf12e9dacd11916ce4a00bf34497a64",
+      "declared_payloads_verified": 33341
+    },
+    "lifecycle": {
+      "report_sha256": "812415466b9f64066a14442d8d79bd71dba857fc1d205388f9d050b41829ff70",
+      "declared_payloads_verified": 24799
+    }
+  },
+  "issues": [],
+  "source_binding": {
+    "captured_records": 4262,
+    "unique_paths": 4078,
+    "source_map_sha256": "20688e8c71a4946010d2dfda77945514a47eab01fd379c6684ea552c8eb3c6d7",
+    "all_match": true
+  },
+  "selected": 3664,
+  "status_counts": {
+    "candidate-unsupported": 13,
+    "mismatch": 9,
+    "oracle-contract-mismatch": 1,
+    "oracle-error": 1,
+    "pass": 3640
+  },
+  "full_gate_failure_reasons": 1837,
+  "all_case_definitions_unchanged": 4527,
+  "status_changes": [],
+  "source_stable": true,
+  "artifact_stable": true,
+  "persistent_sequence_executions": 334,
+  "persistent_calls_each_language": 2782,
+  "persistent_statuses": {
+    "java": {
+      "error": 928,
+      "success": 1854
+    },
+    "rust": {
+      "error": 928,
+      "success": 1854
+    }
+  },
+  "persistent_comparison_channels": [
+    "status",
+    "stdout",
+    "stderr"
+  ],
+  "metamorphic_relations": 88,
+  "raw_changes_sha256": "5f8a118352507c9b1d353e3cebf26308fa02926c22c67d414e3a84f1bd3043e7",
+  "gates": {
+    "language-verify-report": 0,
+    "language-verify-development": 1,
+    "language-verify-subset": 1,
+    "language-verify-full": 1,
+    "lifecycle-acquire": 0,
+    "lifecycle-verify-report": 0,
+    "lifecycle-verify-contract": 0
+  },
+  "orchestration_recovery": "Original wrapper has no captured terminal exit; its preserved process report records language child exit 0. Continuation verified the existing language evidence without reacquisition, then acquired and verified lifecycle. Initial records remain unchanged; see provenance_correction for the superseded child/wrapper interpretation.",
+  "full_m2_complete": false,
+  "stage44_selected_regression_closed": true,
+  "compatibility_complete": false,
+  "hosted_ci_claimed": false,
+  "performance_target_claimed": false,
+  "inventory_counts": {
+    "cases": 4527,
+    "cases_by_execution": {
+      "ready": 3663,
+      "unimplemented": 824,
+      "unmapped": 40
+    },
+    "requirements": 475,
+    "requirements_by_kind": {
+      "language_parser": 137,
+      "language_token": 109,
+      "semantic-family": 31,
+      "specification": 198
+    }
+  },
+  "metamorphic_matches": 88,
+  "selected_adapters": {
+    "language-api-string": {
+      "pass": 3518,
+      "oracle-error": 1,
+      "mismatch": 8
+    },
+    "language-module-eval": {
+      "candidate-unsupported": 13,
+      "pass": 122,
+      "oracle-contract-mismatch": 1,
+      "mismatch": 1
+    }
+  },
+  "failures": [
+    {
+      "id": "error-cycle",
+      "status": "oracle-error"
+    },
+    {
+      "id": "error-remainder-zero",
+      "status": "mismatch"
+    },
+    {
+      "id": "annotation-stage35-builtin-source-code-union-and-string",
+      "status": "mismatch"
+    },
+    {
+      "id": "trace-stage37-repeat-empty-cast-negative",
+      "status": "mismatch"
+    },
+    {
+      "id": "trace-stage37-repeat-empty-max-count",
+      "status": "mismatch"
+    },
+    {
+      "id": "read-stage38-uri-unpaired-surrogate",
+      "status": "mismatch"
+    },
+    {
+      "id": "read-stage38-edge-http-opaque",
+      "status": "mismatch"
+    },
+    {
+      "id": "read-stage38-edge-http-invalid-host",
+      "status": "mismatch"
+    },
+    {
+      "id": "read-stage38-edge-http-nonnumeric-port",
+      "status": "mismatch"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/moduleOutput.pkl",
+      "status": "candidate-unsupported"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/moduleOutput2.pkl",
+      "status": "candidate-unsupported"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/pcfRenderer9.pkl",
+      "status": "candidate-unsupported"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/boolean.pkl",
+      "status": "candidate-unsupported"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/import1b.pkl",
+      "status": "oracle-contract-mismatch"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/read.pkl",
+      "status": "candidate-unsupported"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/amendModule6.pkl",
+      "status": "candidate-unsupported"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/equality.pkl",
+      "status": "candidate-unsupported"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/invalidAmend6.pkl",
+      "status": "candidate-unsupported"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/supercalls3.pkl",
+      "status": "candidate-unsupported"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/typedModuleMethods1.pkl",
+      "status": "candidate-unsupported"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/\u65e5\u672c\u8a9e.pkl",
+      "status": "mismatch"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/lambdaTrailingCommas.pkl",
+      "status": "candidate-unsupported"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/lineCommentBetween.pkl",
+      "status": "candidate-unsupported"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/newline.pkl",
+      "status": "candidate-unsupported"
+    }
+  ],
+  "persistent_error_class": "Producer metadata retained but excluded from cross-runtime equality.",
+  "unexecuted_lifecycle_groups": [
+    {
+      "group": "P09",
+      "reason": "Java-only module-cache probe stage12-java-module-identity-01 observes same URI/source identity retained, changed source at same URI ignored (marker remains1), distinct URI/evaluator identity separated. Rust multi-source module-cache parity is unimplemented; same-module identity is compared."
+    },
+    {
+      "group": "P10",
+      "reason": "Java observable sequence comparisons do not expose heap counts; Rust architectural GC coverage is separate."
+    },
+    {
+      "group": "P11",
+      "reason": "Actual annotation source now reaches Rust Host suspension, callback reentry and GC. Separate Stage 35 Java/Rust Host probes compare class, alias, property and method initialization, successful reads, eager failures and partial-state retries. This persistent scalar sequence adapter does not execute Host callbacks. Complete resource I/O failure, module-cache and product Host behavior remain unverified; native cancellation/timeout/close cleanup tests are separate from Java raw-byte equality."
+    },
+    {
+      "group": "P12",
+      "reason": "Terminal context/token/heap cleanup is covered by separate Rust lifecycle tests, not Java raw-byte equivalence."
+    },
+    {
+      "group": "P05",
+      "reason": "Indirect cyclic hierarchy property traversal new A {}.missing timed out after successful class identity calls in stage12-java-observations-03; traversal is observed oracle-timeout, not a compatibility pass."
+    }
+  ],
+  "source_map": {
+    "path": "reports/m2/stage44-final-source-map.json",
+    "sha256": "20688e8c71a4946010d2dfda77945514a47eab01fd379c6684ea552c8eb3c6d7"
+  },
+  "audit": {
+    "path": "reports/m2/stage44-final-regression-audit.json",
+    "sha256": "f172966ccc9cbb8dfad0be74ebb72d261b74202717f4871ed956547a72a30cce"
+  },
+  "raw_changes": {
+    "path": "reports/m2/stage44-final-raw-changes.json",
+    "sha256": "5f8a118352507c9b1d353e3cebf26308fa02926c22c67d414e3a84f1bd3043e7"
+  },
+  "captures": {
+    "path": "reports/m2/stage44-final-regression-captures.json",
+    "sha256": "e92f7d8c313fbdd75ce23f33c22c33ab1908705bea5b13252194b450504312e1"
+  },
+  "required_checks_and_platforms": {
+    "path": "reports/m2/stage44-implementation-checkpoint.json",
+    "sha256": "3c34cf237667aa0f06f57576704b4359b1c4117fc8371c8f51de8d4b72e9c3b9",
+    "scope": "Previously published checks/platform evidence; no new platform or performance coverage in this native regression."
+  },
+  "remaining": [
+    "All strict language-gate failures and original unmapped/unimplemented requirements.",
+    "Remaining stdlib, Resource, triple-dot, glob, rendering and reflection dependencies required by original language cases.",
+    "Later classpath profile and Stage45 use separate checkpoints; full product/platform/time/memory obligations remain."
+  ],
+  "publication_closeout": {
+    "path": "reports/m2/stage44-final-closeout-captures.tar.gz",
+    "sha256": "da0ea58b15217ade840fe958fec1b1dd2343e44203d26af368db2dbea399b85c",
+    "scope": "Historical publisher script, exact selected file list, verified acquisition index and pre-closeout summary. Initial child/wrapper interpretation is superseded by provenance_correction; all archived bytes remain unchanged."
+  },
+  "original_wrapper_terminal_returncode": null,
+  "original_language_acquisition_recorded_returncode": 0,
+  "provenance_correction": {
+    "path": "reports/m2/stage44-final-provenance-correction.json",
+    "sha256": "be4eb1e56c2337852003797291a2504a8596014c24eea7bd3fbc0ec6c38fe7ab"
+  },
+  "independent_review": {
+    "path": "reports/m2/stage44-final-independent-review.json",
+    "sha256": "80cc9be324f6dcece75b7274eeb12b9733d063c42f48397d4c2632a7091d5e4f",
+    "qualification": "Reviewed pre-correction summary; its single finding is addressed by provenance_correction."
+  },
+  "correction_captures": {
+    "path": "reports/m2/stage44-final-correction-captures.tar.gz",
+    "sha256": "be168bbacebf2968daa4def62c1888b333f2774c6cc2c42ab7fac1737a560e78"
+  }
+}

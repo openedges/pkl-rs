@@ -748,6 +748,12 @@ Stage 43의 canonical 진단 위에 module resolve/source와 resource read의 �
 
 다음 Stage 45는 원본 여섯 사례를 막는 `pkl:base`·`pkl:test`의 실제 모듈 정체성과 VM 내부 `catch`·`catchOrNull`을 구현합니다. 공통 cache·heap·Host를 유지한 제한된 오류 unwind와 Java의 별도 catch 진단 profile을 연결합니다. 원본 전체 입력을 유지하며 Resource·triple-dot·glob 및 나머지 표준 모듈 의존성도 후속 의무로 추적합니다. 런타임은 `gpt-6-astra / xhigh`, 원본 Java 비교와 독립 설계 검토는 각각 `gpt-6.1-sol / high`에 배정합니다.
 
+### Stage 43·44 — 전체 선택 회귀 검증 마감
+
+구현 `c9b140a`의 [최종 선택 회귀](reports/m2/stage44-final-summary.json)는 3,664개 중 일치 3,640개·미지원 13개·불일치 9개·oracle 실행 계약 불충족 1개·oracle 오류 1개입니다. 원래 4,527개 정의와 선택 사례별 판정은 수정된 Stage 42와 같습니다. 변형 관계 88개, 동일 evaluator의 순차 호출 2,782개도 선언된 채널로 일치했습니다. 개발·엄격한 선택·전체 gate는 실패하며 전체 실패 이유 1,837개를 유지합니다.
+
+최초 wrapper 자체의 최종 종료 코드는 미확인입니다. 보존된 process report에는 언어 취득 자식 프로세스의 exit 0이 기록되어 있으며, 두 종료 상태를 혼동했던 초기 해석은 [정정 기록](reports/m2/stage44-final-provenance-correction.json)과 최종 요약에서 바로잡았습니다. 최초 audit·recovery·index·archive는 그대로 보존합니다. 별도 continuation에서 언어 취득을 반복하지 않고 기존 증거의 무결성을 검증한 뒤 수명주기 취득·보고서·계약 검사를 완료했습니다. [원시 자료](reports/m2/stage44-final-regression-captures.json)에는 최초 wrapper와 최종 continuation이 함께 있으며, [감사](reports/m2/stage44-final-regression-audit.json)는 payload 58,140개와 고유 소스 4,078개를 확인했습니다. [독립 검토](reports/m2/stage44-final-independent-review.json)는 archive·원시 판정·커밋 소스 대응을 확인했고 종료 코드 설명 한 건을 지적했습니다. 후속 classpath·Stage 45와 플랫폼·성능 검증 범위는 별도입니다. **Stage 43·44의 선택 회귀 마감이며 M2 전체 완료는 아닙니다.**
+
 ### 병행 구현 — 원본 JVM classpath snippet 실행
 
 원본 `basic/import1b.pkl`은 JVM API의 classpath loader를 요구하며 native upstream suite에서 제외됩니다. 기존 CLI 명령과 차단 기록은 그대로 두고, 고정 Java의 `EvaluatorBuilder.preconfigured()`·`evaluateOutputBytes`와 Rust 공통 VM의 directory classpath Host를 연결했습니다. 원본 파일·test resource directory·service descriptor를 유지하며, 배포 JAR에 없는 작은 Kotlin test provider 두 개는 출처와 hash를 연결한 Java 검증용 companion으로 제공합니다.

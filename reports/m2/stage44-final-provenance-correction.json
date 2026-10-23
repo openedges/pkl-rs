@@ -1,0 +1,32 @@
+{
+  "schema": 1,
+  "scope": "Metadata interpretation correction only; no acquisition, comparison outcome, source, artifact, or original evidence changes.",
+  "finding": "distinguish-child-returncode-from-wrapper-terminal",
+  "original_wrapper_terminal_returncode": null,
+  "original_language_acquisition_recorded_returncode": 0,
+  "original_process_report": {
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage44/target/m2/stage44-full-regression-01/process-report.json",
+    "sha256": "5fbb0cda2dfd9753a03d356f3d359597bd7c020dd218e66400dcbd4a5ebedbf1"
+  },
+  "language_child_finished_utc": "2026-10-23T06:26:39.746164+00:00",
+  "recovery_record": {
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage44/target/m2/stage44-full-regression-continuation-01/recovery.json",
+    "sha256": "77a7db3e3767dfef73a8602fc4648df9e2ff286a3eb2da45229d9b5c2d58bf2d"
+  },
+  "independent_review": {
+    "path": "reports/m2/stage44-final-independent-review.json",
+    "sha256": "80cc9be324f6dcece75b7274eeb12b9733d063c42f48397d4c2632a7091d5e4f"
+  },
+  "superseded_standalone_summary_sha256": "08b2c293564b7ba2f6d4bf6f697d835f0ee8de16e88497dbbe5faa0c920d9f21",
+  "retained_original_sha256": {
+    "/Users/cody.ij.hwang/Projects/pkl-rs/reports/m2/stage44-final-regression-audit.json": "f172966ccc9cbb8dfad0be74ebb72d261b74202717f4871ed956547a72a30cce",
+    "/Users/cody.ij.hwang/Projects/pkl-rs/reports/m2/stage44-final-regression-captures.json": "e92f7d8c313fbdd75ce23f33c22c33ab1908705bea5b13252194b450504312e1",
+    "/Users/cody.ij.hwang/Projects/pkl-rs/reports/m2/stage44-final-regression-captures.tar.gz": "4801e7f8d18e2ee22196f162757021f3613dfd7c2c1ee0310aa8ca2d26201d97",
+    "/Users/cody.ij.hwang/Projects/pkl-rs/reports/m2/stage44-final-closeout-captures.tar.gz": "da0ea58b15217ade840fe958fec1b1dd2343e44203d26af368db2dbea399b85c",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage44/target/m2/stage44-full-regression-01/process-report.json": "5fbb0cda2dfd9753a03d356f3d359597bd7c020dd218e66400dcbd4a5ebedbf1",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage44/target/m2/stage44-full-regression-continuation-01/recovery.json": "77a7db3e3767dfef73a8602fc4648df9e2ff286a3eb2da45229d9b5c2d58bf2d"
+  },
+  "qualification": "Null child-acquisition fields in the historical audit, recovery, publication index and pre-closeout summary conflate child and wrapper status. The preserved original process report already records child exit 0. Only the wrapper terminal result remains unknown. This correction supersedes that interpretation without modifying the historical records.",
+  "comparison_counts_unchanged": true,
+  "full_m2_complete": false
+}

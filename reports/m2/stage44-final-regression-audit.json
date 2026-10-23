@@ -1,0 +1,71 @@
+{
+  "scope": "Read-only raw/source audit of the completed Stage44 selected language and lifecycle captures; full M2 remains incomplete.",
+  "implementation_commit": "c9b140a47ab7ddae76233c14ed5d003aa88dfc13",
+  "recorded_checkout": "a19619cad402674bfed2b084e3b638e6f69f9093",
+  "references": {
+    "external/pkl": "e51fb2f91774265666f94980ec630db794a4db2d",
+    "external/pkl-pantry": "904a68184e54da378b0a0e8a911a3fab3956f693"
+  },
+  "complete": true,
+  "raw": {
+    "language": {
+      "report_sha256": "edd95672029bff421b5797b2d7855660caf12e9dacd11916ce4a00bf34497a64",
+      "declared_payloads_verified": 33341
+    },
+    "lifecycle": {
+      "report_sha256": "812415466b9f64066a14442d8d79bd71dba857fc1d205388f9d050b41829ff70",
+      "declared_payloads_verified": 24799
+    }
+  },
+  "issues": [],
+  "source_binding": {
+    "captured_records": 4262,
+    "unique_paths": 4078,
+    "source_map_sha256": "20688e8c71a4946010d2dfda77945514a47eab01fd379c6684ea552c8eb3c6d7",
+    "all_match": true
+  },
+  "selected": 3664,
+  "status_counts": {
+    "candidate-unsupported": 13,
+    "mismatch": 9,
+    "oracle-contract-mismatch": 1,
+    "oracle-error": 1,
+    "pass": 3640
+  },
+  "full_gate_failure_reasons": 1837,
+  "all_case_definitions_unchanged": 4527,
+  "status_changes": [],
+  "source_stable": true,
+  "artifact_stable": true,
+  "persistent_sequence_executions": 334,
+  "persistent_calls_each_language": 2782,
+  "persistent_statuses": {
+    "java": {
+      "error": 928,
+      "success": 1854
+    },
+    "rust": {
+      "error": 928,
+      "success": 1854
+    }
+  },
+  "persistent_comparison_channels": [
+    "status",
+    "stdout",
+    "stderr"
+  ],
+  "metamorphic_relations": 88,
+  "raw_changes_sha256": "5f8a118352507c9b1d353e3cebf26308fa02926c22c67d414e3a84f1bd3043e7",
+  "gates": {
+    "language-verify-report": 0,
+    "language-verify-development": 1,
+    "language-verify-subset": 1,
+    "language-verify-full": 1,
+    "lifecycle-acquire": 0,
+    "lifecycle-verify-report": 0,
+    "lifecycle-verify-contract": 0
+  },
+  "original_language_acquisition_returncode": null,
+  "orchestration_recovery": "Original wrapper stopped without terminal capture. Original reports/stdout preserved. Continuation verified completed language evidence without reacquisition, then acquired and verified lifecycle.",
+  "full_m2_complete": false
+}

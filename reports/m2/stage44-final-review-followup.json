@@ -1,0 +1,13 @@
+{
+  "schema": 1,
+  "scope": "Focused follow-up of the sole Stage44 provenance finding; prior payload/source/counter review not rerun.",
+  "summary_sha256": "5a45bcceea3d10b2c4f6f7aedc519715106ec5653170597bba80f43e6cf8027b",
+  "finding": "distinguish-child-returncode-from-wrapper-terminal",
+  "status": "addressed",
+  "wrapper_terminal": null,
+  "recorded_child_acquire_returncode": 0,
+  "correction_archive_payloads_verified": 7,
+  "old_audit_index_and_two_archives_unchanged": true,
+  "summary_pointer_hashes_match": true,
+  "no_acquisition_or_git_writes": true
+}

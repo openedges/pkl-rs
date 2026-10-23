@@ -87,6 +87,40 @@ capture includes the root Cargo configuration and stricter path/symlink checks.
 Historical verifier sources and later documentation changes are identified
 separately. See the [profile contract](../../docs/m2-jvm-classpath.md).
 
+## Stage 43/44 final selected regression
+
+The [final result](stage44-final-summary.json) covers the combined diagnostic and
+Host implementation at `c9b140a`, acquired from checkout `a19619c`. Of 3,664
+selected cases, 3,640 match, 13 remain unsupported, nine mismatch, one fails its
+oracle execution contract and one is an oracle error. All 88 metamorphic
+relations and 2,782 persistent calls across 334 sequence executions match.
+The 4,527 original case definitions and all selected statuses are unchanged
+from the corrected Stage 42 run. Development, strict selected and full-language
+gates still fail; the full gate retains 1,837 failure reasons.
+
+The original wrapper has no captured terminal status, so its exit code remains
+unknown. Its preserved process report does record the language acquisition child
+returning zero. A separate continuation verified those existing records without
+reacquisition, then acquired and verified the persistent sequences. The
+[provenance correction](stage44-final-provenance-correction.json) distinguishes
+the child result from the unknown wrapper result; the initial audit, recovery,
+index and archives retain their original interpretation. Evidence integrity and
+the persistent contract pass.
+
+The [raw/source audit](stage44-final-regression-audit.json) verified 58,140 declared
+payloads and bound 4,078 unique captured paths to the implementation/checkout and
+pinned references. [Exact source mappings](stage44-final-source-map.json),
+[raw differences](stage44-final-raw-changes.json) and
+[captures](stage44-final-regression-captures.json) retain the original wrapper,
+completed continuation and all failures. Error-class metadata is retained but
+excluded from cross-runtime lifecycle equality. This closeout adds no platform
+or performance coverage and does not complete M2.
+
+The [independent review](stage44-final-independent-review.json) checked both
+archives, raw outcomes and committed source bindings. The
+[focused follow-up](stage44-final-review-followup.json) confirms that its single
+child/wrapper finding is addressed in the final summary.
+
 ## Stage 44 implementation checkpoint
 
 The [committed source binding](stage44-implementation-source-binding.json) ties

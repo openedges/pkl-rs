@@ -1,0 +1,55 @@
+{
+  "schema": 1,
+  "scope": "Independent read-only Stage44 closeout review. No builds, Java/evaluator runs, acquisition reruns, Git writes or source/report mutations.",
+  "summary_sha256": "08b2c293564b7ba2f6d4bf6f697d835f0ee8de16e88497dbbe5faa0c920d9f21",
+  "checks": {
+    "summary_pointers": true,
+    "archive_selection_and_original_payloads": true,
+    "declared_payloads": 58140,
+    "all_4527_definitions_and_3664_statuses_unchanged": true,
+    "independent_raw_status_reconstruction": 3664,
+    "persistent_raw_calls": {
+      "sequence_executions": 334,
+      "calls": 2782,
+      "errors": 928,
+      "error_class_differences_retained_but_not_compared": 928
+    },
+    "git_tree_source_binding": {
+      "captured_records": 4262,
+      "unique_paths": 4078
+    },
+    "terminal_provenance": {
+      "original_wrapper_terminal": null,
+      "recorded_language_child_returncode": 0,
+      "continuation_complete": true,
+      "strict_gates": [
+        1,
+        1,
+        1
+      ]
+    }
+  },
+  "archives": {
+    "stage44-final-regression-captures.tar.gz": {
+      "files": 58175,
+      "bytes": 86889799,
+      "sha256": "4801e7f8d18e2ee22196f162757021f3613dfd7c2c1ee0310aa8ca2d26201d97",
+      "compressed_bytes": 12622081
+    },
+    "stage44-final-closeout-captures.tar.gz": {
+      "files": 7,
+      "bytes": 21507145,
+      "sha256": "da0ea58b15217ade840fe958fec1b1dd2343e44203d26af368db2dbea399b85c",
+      "compressed_bytes": 1363457
+    }
+  },
+  "findings": [
+    {
+      "id": "distinguish-child-returncode-from-wrapper-terminal",
+      "severity": "P2 evidence qualification",
+      "summary": "Original wrapper terminal is unknown, but its preserved process-report commands[0] records language-acquire returncode0. Preserve historical recovery null and qualify both facts explicitly in final standalone summary."
+    }
+  ],
+  "no_full_compatibility_claim": true,
+  "no_new_ci_or_performance_claim": true
+}
