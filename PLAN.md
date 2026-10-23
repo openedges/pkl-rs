@@ -760,7 +760,11 @@ Stage 43의 canonical 진단 위에 module resolve/source와 resource read의 �
 
 수정된 최종 후보의 필수 Rust 검사 다섯 개와 source 안정성 검사가 통과했습니다. 원본 여섯 사례의 두 반복 12회, 일반 ModuleInfo 156회, 실제 security 오류 API 10회가 native에서 일치합니다. 동일 artifact의 실제 Node·Chromium에서도 각 환경의 guest catch 전체 세션 24개·API 완료 166회, 일반 ModuleInfo 156회, security API 10회가 일치합니다. 생성자 전용·terminal 부분 비교와 Java 내부 오류 12개·독립 root 후속 호출 56개는 별도 범위로 유지합니다. 공통 플랫폼은 6,078개 모두 세 Rust 대상 간 같고 Java와는 6,076개 일치·기존 정규식 실패 두 개입니다.
 
-더 넓은 bootstrap 600회는 환경별 일치 194회·미지원 192회·불일치 214회입니다. 미지원은 reflection 144회와 JSON renderer 48회이고, 불일치에는 리소스 read 횟수와 JVM 전역 표준 모듈 캐시 재사용의 차이가 있습니다. 이 수치를 원래 선택 회귀 집계에 합산하지 않으며, 원본 언어 사례가 요구하는 표준 라이브러리·출력·로딩 의무를 제외하지 않습니다. 생산 소스 고정 뒤 portable 검증 도구 아홉 개와 목록의 source hash를 별도 반영했습니다. 구현을 `97b4da0`에 커밋·푸시했고, [원시 증거](reports/m2/stage45-implementation-captures.json) 26개 archive와 [실제 커밋 소스 대응](reports/m2/stage45-implementation-source-binding.json)을 게시했습니다. 입력 14,216개와 게시 파일 아홉 개를 실제 Git blob에 연결하며 초기 실패·미실행·원래 봉인 오류와 정정 addendum을 보존합니다. 전체 선택 코퍼스·순차 evaluator 회귀는 JVM 연결을 합친 `01971d0`에서 별도로 진행합니다. **Stage 45와 M2 전체는 진행 중입니다.**
+더 넓은 bootstrap 600회는 환경별 일치 194회·미지원 192회·불일치 214회입니다. 미지원은 reflection 144회와 JSON renderer 48회이고, 불일치에는 리소스 read 횟수와 JVM 전역 표준 모듈 캐시 재사용의 차이가 있습니다. 이 수치를 원래 선택 회귀 집계에 합산하지 않으며, 원본 언어 사례가 요구하는 표준 라이브러리·출력·로딩 의무를 제외하지 않습니다. 생산 소스 고정 뒤 portable 검증 도구 아홉 개와 목록의 source hash를 별도 반영했습니다. 구현을 `97b4da0`에 커밋·푸시했고, [원시 증거](reports/m2/stage45-implementation-captures.json) 26개 archive와 [실제 커밋 소스 대응](reports/m2/stage45-implementation-source-binding.json)을 게시했습니다. 입력 14,216개와 게시 파일 아홉 개를 실제 Git blob에 연결하며 초기 실패·미실행·원래 봉인 오류와 정정 addendum을 보존합니다. JVM 연결을 합친 `01971d0`의 전체 선택 코퍼스·순차 evaluator 회귀는 아래 최종 기록에서 확인합니다. **Stage 45와 M2 전체는 진행 중입니다.**
+
+`01971d0`의 [최종 선택 회귀](reports/m2/stage45-final-summary.json)는 3,664개 중 3,647개 일치·미지원 7개·불일치 9개·oracle 오류 1개입니다. 원본 모듈 여섯 개와 명시적 JVM profile 한 개가 개선됐고 이전 통과 사례의 회귀는 없습니다. 4,527개 ID·순서와 선택 3,664개를 보존하며 `import1b`의 실행 연결만 명시적으로 바꿨습니다. Metamorphic 88개와 순차 실행 334회의 호출 2,782개는 status·stdout·stderr가 일치합니다. 원래 error-class와 미실행 수명주기 범위는 따로 보존합니다. 무결성과 순차 계약은 통과했지만 개발·선택·전체 gate는 실패이며 전체 실패 이유 1,830개가 남습니다.
+
+[독립 감사](reports/m2/stage45-final-regression-audit.json)는 선언된 payload 62,088개와 고유 소스 4,166개를 실제 커밋·참조에 연결했습니다. 감사의 `nonpass_rows=24`는 이전·현재 실패 ID의 합집합이며 현재 실패 17개와 구분합니다. [원시 증거](reports/m2/stage45-final-regression-captures.json)에 wrapper 자체의 실제 종료 0과 각 호환성 gate의 실패를 함께 보존했습니다. 당시 lifecycle schema 1에서 직접 수집하지 않은 `.cargo/config.toml`은 선행 언어 snapshot·커밋 blob·후행 원본 바이트로 별도 확인했습니다. 이후 `7d20842`의 schema 2 수집기 보완은 향후 native 취득에서 이 파일을 필수로 기록하며 Python 검사 18개와 목록 freshness가 통과했습니다. 과거 schema 1은 당시 verifier로 검증합니다. 이번 기록은 선택 회귀 취득의 마감이며, 넓은 bootstrap 실패·Stage 46·전체 M2 및 성능 조건은 남아 있습니다.
 
 ### 병행 구현 — 원본 JVM classpath snippet 실행
 
@@ -774,7 +778,7 @@ Stage 43의 canonical 진단 위에 module resolve/source와 resource read의 �
 
 Stage 45 구현 `97b4da0`과 합친 [집중 연결 검증](reports/m2/classpath-m2-integration-checkpoint.json)에서 원본 `import1b` 한 사례의 Java·Rust 두 반복이 모두 일치했습니다. 원래 4,527개 ID·순서와 선택 3,664개를 유지하며 해당 행의 adapter·execution·profile만 바꿨습니다. Python 고유 검사 83개와 목록·profile·corpus freshness 검사가 통과했고, 집중 보고서의 무결성·엄격 선택은 통과, 전체 gate는 나머지 미실행·미구현 조건 5,476개로 실패합니다. 소스 수집기 두 곳에 compile-time `stdlib/modules.txt`를 명시적으로 추가했습니다. 최초 검증 도구의 test-only 입력 범위 오류와 corpus 검사 명령 오류는 원본 기록으로 보존했고, 수정 검사만 새 디렉터리에서 실행했습니다. 새 M1 플랫폼 실행 또는 나머지 선택 사례의 회귀 통과로 주장하지 않습니다.
 
-연결 구현을 `01971d0`에 커밋·푸시했습니다. [원시 증거](reports/m2/classpath-m2-integration-captures.json) 열 개 archive와 [소스 대응](reports/m2/classpath-m2-integration-source-binding.json)은 결합 취득 입력 3,823개를 실제 커밋·고정 참조 blob에 연결하고, 이전 실행의 소스 차이 스무 개를 별도로 보존합니다. 최초 검증 실패 두 건과 게시 metadata 오류·복구 기록도 유지합니다. 전체 선택·순차 평가 회귀는 이 커밋을 고정한 작업 공간에서 별도로 실행 중입니다.
+연결 구현을 `01971d0`에 커밋·푸시했습니다. [원시 증거](reports/m2/classpath-m2-integration-captures.json) 열 개 archive와 [소스 대응](reports/m2/classpath-m2-integration-source-binding.json)은 결합 취득 입력 3,823개를 실제 커밋·고정 참조 blob에 연결하고, 이전 실행의 소스 차이 스무 개를 별도로 보존합니다. 최초 검증 실패 두 건과 게시 metadata 오류·복구 기록도 유지합니다. 이 커밋을 고정한 전체 선택·순차 평가 회귀는 위 Stage 45 최종 기록에서 따로 확인합니다.
 
 ### Stage 46 — Resource·캐시·URI 준비
 

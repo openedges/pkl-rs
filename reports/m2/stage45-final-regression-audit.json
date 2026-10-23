@@ -1,0 +1,113 @@
+{
+  "schema": 1,
+  "scope": "Independent terminal data audit of Stage45/classpath full selected regression at01971d0; not M2 completion, CI, platform or performance evidence.",
+  "implementation_commit": "01971d0c0a231132bcb30a7dae6ac244b7fed953",
+  "pinned_references": {
+    "external/pkl": "e51fb2f91774265666f94980ec630db794a4db2d",
+    "external/pkl-pantry": "904a68184e54da378b0a0e8a911a3fab3956f693"
+  },
+  "wrapper_commands_complete": true,
+  "wrapper_own_terminal": {
+    "path": "target/m2/stage45-full-regression-01/outer-terminal.json",
+    "sha256": "c2d0985204d84d31558a28492e77795eb8e78e1d49da4033c4baa2370de24a5f",
+    "exit_code": 0
+  },
+  "wrapper_terminal_qualification": "Missing receipt means wrapper OS exit remains unknown; individual recorded child exits are kept separate.",
+  "gates": {
+    "language-acquire": 0,
+    "language-verify-report": 0,
+    "language-verify-development": 1,
+    "language-verify-subset": 1,
+    "language-verify-full": 1,
+    "lifecycle-acquire": 0,
+    "lifecycle-verify-report": 0,
+    "lifecycle-verify-contract": 0
+  },
+  "language": {
+    "report_sha256": "d439b35267419eba80c4316e420f031ad42fba1436c1ddc8d74f784e66f76354",
+    "case_definitions": 4527,
+    "requirements": 475,
+    "selected": 3664,
+    "case_order_and_selection_unchanged": true,
+    "status_counts": {
+      "candidate-unsupported": 7,
+      "mismatch": 9,
+      "oracle-error": 1,
+      "pass": 3647
+    },
+    "full_gate_failure_reasons": 1830,
+    "status_transition_count": 7,
+    "nonpass_rows": 24,
+    "declared_payloads_verified": 37277,
+    "classpath_child_report_sha256": "e231b814ebad9952048c93014da4b1c459121ce7d62e13da012dcbe1839c3b2d",
+    "classpath_repetitions": 2,
+    "classpath_same_case_counted_once": true
+  },
+  "lifecycle": {
+    "report_sha256": "6cd02dbedeedd3f2013366d5369bda10782205dbfea35ab2601dfad4f78caeff",
+    "sequences": 334,
+    "calls_each_language": 2782,
+    "status_counts": {
+      "java": {
+        "error": 928,
+        "success": 1854
+      },
+      "rust": {
+        "error": 928,
+        "success": 1854
+      }
+    },
+    "raw_mismatches": [],
+    "comparison_channels": [
+      "status",
+      "stdout",
+      "stderr"
+    ],
+    "error_class_differences_retained_excluded_from_equality": 928,
+    "declared_payloads_verified": 24811,
+    "unexecuted_groups_preserved": true
+  },
+  "source_binding": {
+    "captured_records": 4362,
+    "unique_paths": 4166,
+    "all_match_commit_blobs": true,
+    "lifecycle_config_directly_captured": false,
+    "config_qualification": "Root.cargo/config.toml is bound by language pre-lifecycle capture,01971d0Gitblob and current post-run bytes; do not relabel it a direct lifecycle capture when absent."
+  },
+  "exact_build_paths_pruned_before_walk": {
+    "language": [],
+    "lifecycle": [
+      "/Users/cody.ij.hwang/Projects/pkl-rs.stage45/target/m2/stage45-class-lifecycle-final-01/build"
+    ]
+  },
+  "output_pointers": {
+    "source-map.json": {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage45/target/m2/stage45-final-audit-01/source-map.json",
+      "sha256": "7829566329cf3982c0862c061863332e54447118db1c58036fcaa0a4e0bfd5d2"
+    },
+    "case-changes.json": {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage45/target/m2/stage45-final-audit-01/case-changes.json",
+      "sha256": "d5f9c8787d682a722c96fd3d0d17720d002adfec30123759fd6297bb2b9ec8f5"
+    },
+    "status-changes.json": {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage45/target/m2/stage45-final-audit-01/status-changes.json",
+      "sha256": "d7a38908b191e5cac885b96f41a0c93845f73794e937b0699ff5539a3176a835"
+    },
+    "raw-changes.json": {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage45/target/m2/stage45-final-audit-01/raw-changes.json",
+      "sha256": "9a49e066b46ef7e6ea9d7b3a8aca328dccd9ebb332f8335444976e80d2f478aa"
+    },
+    "payload-manifest.json": {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs.stage45/target/m2/stage45-final-audit-01/payload-manifest.json",
+      "sha256": "67dc9553723e11977944afb2750f3a3714f79b73215e3798337b2fb83d8b11a1"
+    }
+  },
+  "remaining": [
+    "Root review and publication archive/summary/source pointers",
+    "All remaining strict failures and unmapped/unimplemented requirements",
+    "Stage46 is a separate unmerged source/evidence scope"
+  ],
+  "full_m2_complete": false,
+  "hosted_ci_claimed": false,
+  "performance_target_claimed": false
+}

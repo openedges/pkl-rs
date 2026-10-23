@@ -59,6 +59,38 @@ Stage 43 preserves canonical diagnostic strings through the shared engine and
 native/Node/Wasm boundaries, and corrects literal-union type-check equivalence.
 These checkpoints do not complete the language milestone.
 
+## Stage 45 final selected regression
+
+The [combined native result](stage45-final-summary.json) is bound to `01971d0`:
+3,647 of 3,664 selected cases match Java, with seven unsupported cases, nine
+mismatches and one oracle error retained. Six original modules and the explicit
+JVM/classpath case improve from the Stage 44 result; no previously passing case
+regresses. All 4,527 case IDs and their order remain unchanged. Only the recorded
+`import1b` adapter/profile mapping changes, with its two successful raw repetitions
+counted as one original case.
+
+All 88 metamorphic relations and 2,782 ordered calls across 334 persistent
+sequence executions match. Status, stdout and stderr are compared; producer
+error-class metadata remains recorded separately. Evidence integrity and the
+persistent contract pass. Development, strict selected and full-language gates
+still fail; the full gate retains 1,830 failure reasons.
+
+The [audit](stage45-final-regression-audit.json) checks 62,088 declared payloads
+and binds 4,166 unique captured source paths to the implementation and pinned
+references. Its historical `nonpass_rows` field is the union of 24 previously or
+currently failing IDs; the current result has 17 nonpassing cases. The summary
+makes that distinction explicit. The [archives](stage45-final-regression-captures.json)
+preserve raw results, source maps, the original wrapper and its actual exit-zero
+receipt. Wrapper success does not change the failed compatibility gates.
+
+The schema 1 lifecycle capture did not directly include `.cargo/config.toml`.
+Its bytes are bound separately by the preceding language capture, the commit
+blob and a post-run check. The later [schema 2 tooling change](lifecycle-source-contract.json)
+requires that file in future native captures; its 18 Python tests and inventory
+check passed. Historical captures retain their original verifier and scope.
+This native regression adds no platform or performance coverage and does not
+close the broader standard-library bootstrap failures or M2.
+
 ## Stage 45 implementation checkpoint
 
 The [implementation checkpoint](stage45-implementation-checkpoint.json) records
@@ -93,9 +125,9 @@ historical inventory defect with its prior correction addendum. The
 [committed-source binding](stage45-implementation-source-binding.json) and
 [source map](stage45-implementation-source-map.json) connect 14,216 captured
 project inputs and nine publication files to actual Git blobs. Repeated snapshots
-are provenance, not distinct semantic cases. Full selected/lifecycle regression
-is running separately at combined commit `01971d0`; no result from that run is
-claimed here. Hosted CI, full compatibility, and performance remain unverified.
+are provenance, not distinct semantic cases. The combined `01971d0` native
+regression is recorded separately above. Hosted CI, full compatibility, and
+performance remain unverified.
 
 ## JVM profile in the M2 inventory
 

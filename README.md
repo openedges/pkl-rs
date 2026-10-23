@@ -37,12 +37,12 @@ engine. [Canonical diagnostics](docs/m2-diagnostics.md) preserve UTF-16 strings
 through native, Node, and Wasm APIs, including typed Host IOException messages
 with distinct absent and empty causes. Java UTF-8 serialization is checked
 separately. The exact `output.text` expression request shares the ModuleOutput
-operation. The [Stage 43/44 selected regression](reports/m2/stage44-final-summary.json)
-records 3,640 matching native cases out of 3,664 attempts at implementation
-`c9b140a`, retaining unsupported cases, mismatches and oracle failures. All 2,782
-persistent evaluator calls match their declared channels. The original runner's
-missing terminal record and the completed verification continuation are preserved
-separately. Later classpath and Stage 45 changes have separate verification scopes.
+operation. The [Stage 45 selected regression](reports/m2/stage45-final-summary.json)
+records 3,647 matching native cases out of 3,664 attempts at implementation
+`01971d0`, retaining seven unsupported cases, nine mismatches and one oracle error.
+All 2,782 persistent evaluator calls across 334 sequence executions match their
+declared channels. The strict full-language gate still fails. The earlier
+[Stage 43/44 records](reports/m2/stage44-final-summary.json) remain unchanged.
 The [standard-module checkpoint](docs/m2-stdlib-bootstrap.md) adds supported
 source-backed `pkl:base`/`pkl:test` imports, guest exception handlers, ModuleInfo
 validation, and typed security-denial completions. Broader bootstrap comparisons

@@ -1,0 +1,161 @@
+{
+  "transitions": [
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/moduleOutput.pkl",
+      "before": "candidate-unsupported",
+      "after": "pass"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/boolean.pkl",
+      "before": "candidate-unsupported",
+      "after": "pass"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/import1b.pkl",
+      "before": "oracle-contract-mismatch",
+      "after": "pass"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/equality.pkl",
+      "before": "candidate-unsupported",
+      "after": "pass"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/supercalls3.pkl",
+      "before": "candidate-unsupported",
+      "after": "pass"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/typedModuleMethods1.pkl",
+      "before": "candidate-unsupported",
+      "after": "pass"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/newline.pkl",
+      "before": "candidate-unsupported",
+      "after": "pass"
+    }
+  ],
+  "all_old_or_new_nonpass": [
+    {
+      "id": "error-cycle",
+      "before": "oracle-error",
+      "after": "oracle-error"
+    },
+    {
+      "id": "error-remainder-zero",
+      "before": "mismatch",
+      "after": "mismatch"
+    },
+    {
+      "id": "annotation-stage35-builtin-source-code-union-and-string",
+      "before": "mismatch",
+      "after": "mismatch"
+    },
+    {
+      "id": "trace-stage37-repeat-empty-cast-negative",
+      "before": "mismatch",
+      "after": "mismatch"
+    },
+    {
+      "id": "trace-stage37-repeat-empty-max-count",
+      "before": "mismatch",
+      "after": "mismatch"
+    },
+    {
+      "id": "read-stage38-uri-unpaired-surrogate",
+      "before": "mismatch",
+      "after": "mismatch"
+    },
+    {
+      "id": "read-stage38-edge-http-opaque",
+      "before": "mismatch",
+      "after": "mismatch"
+    },
+    {
+      "id": "read-stage38-edge-http-invalid-host",
+      "before": "mismatch",
+      "after": "mismatch"
+    },
+    {
+      "id": "read-stage38-edge-http-nonnumeric-port",
+      "before": "mismatch",
+      "after": "mismatch"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/moduleOutput.pkl",
+      "before": "candidate-unsupported",
+      "after": "pass"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/moduleOutput2.pkl",
+      "before": "candidate-unsupported",
+      "after": "candidate-unsupported"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/pcfRenderer9.pkl",
+      "before": "candidate-unsupported",
+      "after": "candidate-unsupported"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/boolean.pkl",
+      "before": "candidate-unsupported",
+      "after": "pass"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/import1b.pkl",
+      "before": "oracle-contract-mismatch",
+      "after": "pass"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/read.pkl",
+      "before": "candidate-unsupported",
+      "after": "candidate-unsupported"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/amendModule6.pkl",
+      "before": "candidate-unsupported",
+      "after": "candidate-unsupported"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/equality.pkl",
+      "before": "candidate-unsupported",
+      "after": "pass"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/invalidAmend6.pkl",
+      "before": "candidate-unsupported",
+      "after": "candidate-unsupported"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/supercalls3.pkl",
+      "before": "candidate-unsupported",
+      "after": "pass"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/typedModuleMethods1.pkl",
+      "before": "candidate-unsupported",
+      "after": "pass"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/\u65e5\u672c\u8a9e.pkl",
+      "before": "mismatch",
+      "after": "mismatch"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/lambdaTrailingCommas.pkl",
+      "before": "candidate-unsupported",
+      "after": "candidate-unsupported"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/lineCommentBetween.pkl",
+      "before": "candidate-unsupported",
+      "after": "candidate-unsupported"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/newline.pkl",
+      "before": "candidate-unsupported",
+      "after": "pass"
+    }
+  ]
+}

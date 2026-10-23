@@ -1,0 +1,95 @@
+{
+  "schema": 1,
+  "scope": "Independent read-only archive/index/summary/source/document review of completed Stage45 regression at01971d0; no build, Java/native acquisition, source/report/Git mutation.",
+  "summary": {
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs/reports/m2/stage45-final-summary.json",
+    "sha256": "91c855ed5225e4139b754be6f849d560d57b93ae476a4857c6982ec503869b42"
+  },
+  "captures": {
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs/reports/m2/stage45-final-regression-captures.json",
+    "sha256": "856bee136ede4ecb38571dcbb85605d19cae14cc1ce4af998a692eb229afc118"
+  },
+  "selection": {
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/stage45-final-publication-01/selection.json",
+    "sha256": "57415b49418dc81f788cbf32eb0f708d33e1a86a47ed117cf6c799abe08d29b4"
+  },
+  "archives": [
+    {
+      "path": "reports/m2/stage45-final-regression-01.tar.gz",
+      "sha256": "35e015053406a77668522fea93a731cb52c541e8f29babe001614d2e23976a32",
+      "payloadFiles": 12121,
+      "rawBytes": 41902680,
+      "compressedBytes": 7802964
+    },
+    {
+      "path": "reports/m2/stage45-final-regression-02.tar.gz",
+      "sha256": "62c59bc084be5231a97da345daf4c3f7bff80904903e1a99bb4c88e855d4b620",
+      "payloadFiles": 17521,
+      "rawBytes": 37341351,
+      "compressedBytes": 27065703
+    },
+    {
+      "path": "reports/m2/stage45-final-regression-03.tar.gz",
+      "sha256": "ace673f049f1ec45c18a9cf3d9d7cd28aab106361632512b26a10aa86831c72a",
+      "payloadFiles": 3825,
+      "rawBytes": 35508826,
+      "compressedBytes": 3731859
+    },
+    {
+      "path": "reports/m2/stage45-final-regression-04.tar.gz",
+      "sha256": "4d698c6dc58cfa77ba424e4e8c4bcb433284fbb2b4075d2257b829ec55a6ec7f",
+      "payloadFiles": 3828,
+      "rawBytes": 41491889,
+      "compressedBytes": 4160626
+    },
+    {
+      "path": "reports/m2/stage45-final-regression-05.tar.gz",
+      "sha256": "9bab270f6a15292c750fa6e7a8931a2982f466ac82badbfe4d3a6a4cd5adf27c",
+      "payloadFiles": 24834,
+      "rawBytes": 19418362,
+      "compressedBytes": 3062294
+    },
+    {
+      "path": "reports/m2/stage45-final-regression-06.tar.gz",
+      "sha256": "0ff8a9f99c5ec978cc10efd6ee93932771c28f50bedf44946d7b26ba3c85141d",
+      "payloadFiles": 1,
+      "rawBytes": 23082797,
+      "compressedBytes": 1564551
+    }
+  ],
+  "payloadFiles": 62130,
+  "payloadBytes": 198745905,
+  "archiveInventoryFilesAdditional": 6,
+  "originalPayloadsAfterUnchanged": true,
+  "uniqueSourceGitBlobsVerified": 4166,
+  "capturedSourceRecords": 4362,
+  "sourceCommit": "01971d0c0a231132bcb30a7dae6ac244b7fed953",
+  "currentNonpass": 17,
+  "historicalNonpassUnion": 24,
+  "metamorphicRawMatches": 88,
+  "persistentCallsEachLanguage": 2782,
+  "persistentSequences": 334,
+  "fullGateFailureReasons": 1830,
+  "documents": {
+    "README.md": {
+      "sha256": "d10f1ac33fd3e0a65ac7d0ba7c14714c66145e8521a3247ebcaa61b74a7c78ea",
+      "bytes": 9565
+    },
+    "PLAN.md": {
+      "sha256": "f5982dcdb03991ea3f1e0a055743cc1c6b479d5c993bf0f837be7518a78e29c0",
+      "bytes": 252752
+    },
+    "reports/m2/README.md": {
+      "sha256": "3047c7a1532291a02e13debbe50f524a05ac442815032e91cc6dd273dd9ff33e",
+      "bytes": 246165
+    }
+  },
+  "findings": [],
+  "qualifications": [
+    "Original audit language.nonpass_rows=24 is explicitly the old/new comparison union; current nonpass=17. Original audit was preserved.",
+    "Lifecycle schema1 did not directly capture root.cargo/config.toml. Published source qualification correctly binds it separately and does not relabel later schema2 as the regression source.",
+    "Current MAIN7d20842 tooling and Stage46 work do not change the regression implementation commit01971d0.",
+    "Successful acquisition wrapper and archive integrity do not close failed strict gates, broader bootstrap/platform or performance obligations."
+  ],
+  "seconds": 33.717747926712036
+}

@@ -1,0 +1,491 @@
+{
+  "schema": 1,
+  "scope": "Complete selected native/lifecycle acquisition of Stage45 plus JVM execution profile at01971d0. Full M2, broader bootstrap/platform and performance obligations remain open.",
+  "implementation_commit": "01971d0c0a231132bcb30a7dae6ac244b7fed953",
+  "references": {
+    "external/pkl": "e51fb2f91774265666f94980ec630db794a4db2d",
+    "external/pkl-pantry": "904a68184e54da378b0a0e8a911a3fab3956f693"
+  },
+  "selected_regression_acquisition_complete": true,
+  "wrapper_exit_code": 0,
+  "gates": {
+    "language-acquire": 0,
+    "language-verify-report": 0,
+    "language-verify-development": 1,
+    "language-verify-subset": 1,
+    "language-verify-full": 1,
+    "lifecycle-acquire": 0,
+    "lifecycle-verify-report": 0,
+    "lifecycle-verify-contract": 0
+  },
+  "selected": 3664,
+  "status_counts": {
+    "candidate-unsupported": 7,
+    "mismatch": 9,
+    "oracle-error": 1,
+    "pass": 3647
+  },
+  "inventory_counts": {
+    "cases": 4527,
+    "cases_by_execution": {
+      "ready": 3664,
+      "unimplemented": 823,
+      "unmapped": 40
+    },
+    "requirements": 475,
+    "requirements_by_kind": {
+      "language_parser": 137,
+      "language_token": 109,
+      "semantic-family": 31,
+      "specification": 198
+    }
+  },
+  "selected_adapters": {
+    "language-api-string": {
+      "pass": 3518,
+      "oracle-error": 1,
+      "mismatch": 8
+    },
+    "language-module-eval": {
+      "pass": 128,
+      "candidate-unsupported": 7,
+      "mismatch": 1
+    },
+    "language-jvm-classpath-output": {
+      "pass": 1
+    }
+  },
+  "case_ids_and_order_preserved": 4527,
+  "case_mapping_changes": [
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/import1b.pkl",
+      "fields": [
+        "adapter",
+        "execution",
+        "execution_profile"
+      ],
+      "before": {
+        "adapter": "language-module-eval",
+        "execution": {
+          "reason": "Requires upstream JVM test classpath/modulepath fixture adapter.",
+          "state": "unimplemented"
+        },
+        "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/import1b.pkl",
+        "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/basic/import1b.pkl",
+        "input_sha256": "7aaf723e09544493f6981867d05209f712e31a27652a86c2af2b6e214226b98c",
+        "required": true,
+        "requirements": [
+          "semantic:modules",
+          "semantic:diagnostics"
+        ],
+        "upstream_case": {
+          "assertion_count": null,
+          "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
+          "channels": [
+            "stdout",
+            "stderr",
+            "exit_code",
+            "files"
+          ],
+          "command": [
+            "eval",
+            "--no-cache",
+            "--no-project",
+            "--settings",
+            "pkl:settings",
+            "--property",
+            "name1=value1",
+            "--property",
+            "name2=value2",
+            "--property",
+            "/foo/bar=foobar",
+            "--env-var",
+            "NAME1=value1",
+            "--env-var",
+            "NAME2=value2",
+            "--env-var",
+            "/foo/bar=foobar",
+            "--env-var",
+            "foo bar=foo bar",
+            "--env-var",
+            "file:///foo/bar=file:///foo/bar",
+            "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/basic/import1b.pkl"
+          ],
+          "cwd": ".",
+          "environment": {
+            "LANG": "C.UTF-8",
+            "LC_ALL": "C.UTF-8",
+            "NO_COLOR": "1",
+            "TERM": "dumb",
+            "TZ": "UTC"
+          },
+          "execution": {
+            "reason": "Requires upstream JVM test classpath/modulepath fixture adapter.",
+            "status": "blocked"
+          },
+          "expected_exit": [
+            0
+          ],
+          "expected_outcome": "success",
+          "host_requirements": [
+            "filesystem",
+            "source-tree-resource-set"
+          ],
+          "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/import1b.pkl",
+          "resource_set": "pkl",
+          "resources": [
+            {
+              "path": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/output/basic/import1b.pcf",
+              "sha256": "aff07973a41b28e1823576165aa6aef807a974fd8634758c2d35dcdd94410d54"
+            }
+          ],
+          "source": {
+            "path": "pkl-core/src/test/files/LanguageSnippetTests/input/basic/import1b.pkl",
+            "repository": "pkl",
+            "revision": "e51fb2f91774265666f94980ec630db794a4db2d",
+            "sha256": "7aaf723e09544493f6981867d05209f712e31a27652a86c2af2b6e214226b98c"
+          },
+          "suite": "language-snippet",
+          "target": [
+            "native",
+            "wasm",
+            "napi"
+          ],
+          "upstream_goldens": [
+            {
+              "path": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/output/basic/import1b.pcf",
+              "sha256": "aff07973a41b28e1823576165aa6aef807a974fd8634758c2d35dcdd94410d54",
+              "use": "provenance-only-normalized-by-upstream"
+            }
+          ],
+          "upstream_outcome": "success"
+        }
+      },
+      "after": {
+        "adapter": "language-jvm-classpath-output",
+        "execution": {
+          "reason": null,
+          "state": "ready"
+        },
+        "execution_profile": {
+          "adapter": "language-jvm-classpath-output",
+          "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/import1b.pkl",
+          "input_sha256": "7aaf723e09544493f6981867d05209f712e31a27652a86c2af2b6e214226b98c",
+          "profile": "compatibility/m2-jvm-classpath.json",
+          "profile_sha256": "93a97f62fa55742f4ddaee342c6cf3e1509e76700bfffa9ce478352f9bab9af7",
+          "scope": "Reviewed JVM API/classpath setup for the unchanged original success input; the historical corpus CLI command/blocked record remains provenance, not the execution boundary.",
+          "upstream_case_sha256": "f6425afaa980f2e5c39835b018335e16a3c7ebf81ba73a5dffa72d75c2eafd73"
+        },
+        "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/import1b.pkl",
+        "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/basic/import1b.pkl",
+        "input_sha256": "7aaf723e09544493f6981867d05209f712e31a27652a86c2af2b6e214226b98c",
+        "required": true,
+        "requirements": [
+          "semantic:modules",
+          "semantic:diagnostics"
+        ],
+        "upstream_case": {
+          "assertion_count": null,
+          "assertion_count_reason": "Requires executing the suite; source files are not assertions.",
+          "channels": [
+            "stdout",
+            "stderr",
+            "exit_code",
+            "files"
+          ],
+          "command": [
+            "eval",
+            "--no-cache",
+            "--no-project",
+            "--settings",
+            "pkl:settings",
+            "--property",
+            "name1=value1",
+            "--property",
+            "name2=value2",
+            "--property",
+            "/foo/bar=foobar",
+            "--env-var",
+            "NAME1=value1",
+            "--env-var",
+            "NAME2=value2",
+            "--env-var",
+            "/foo/bar=foobar",
+            "--env-var",
+            "foo bar=foo bar",
+            "--env-var",
+            "file:///foo/bar=file:///foo/bar",
+            "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/basic/import1b.pkl"
+          ],
+          "cwd": ".",
+          "environment": {
+            "LANG": "C.UTF-8",
+            "LC_ALL": "C.UTF-8",
+            "NO_COLOR": "1",
+            "TERM": "dumb",
+            "TZ": "UTC"
+          },
+          "execution": {
+            "reason": "Requires upstream JVM test classpath/modulepath fixture adapter.",
+            "status": "blocked"
+          },
+          "expected_exit": [
+            0
+          ],
+          "expected_outcome": "success",
+          "host_requirements": [
+            "filesystem",
+            "source-tree-resource-set"
+          ],
+          "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/import1b.pkl",
+          "resource_set": "pkl",
+          "resources": [
+            {
+              "path": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/output/basic/import1b.pcf",
+              "sha256": "aff07973a41b28e1823576165aa6aef807a974fd8634758c2d35dcdd94410d54"
+            }
+          ],
+          "source": {
+            "path": "pkl-core/src/test/files/LanguageSnippetTests/input/basic/import1b.pkl",
+            "repository": "pkl",
+            "revision": "e51fb2f91774265666f94980ec630db794a4db2d",
+            "sha256": "7aaf723e09544493f6981867d05209f712e31a27652a86c2af2b6e214226b98c"
+          },
+          "suite": "language-snippet",
+          "target": [
+            "native",
+            "wasm",
+            "napi"
+          ],
+          "upstream_goldens": [
+            {
+              "path": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/output/basic/import1b.pcf",
+              "sha256": "aff07973a41b28e1823576165aa6aef807a974fd8634758c2d35dcdd94410d54",
+              "use": "provenance-only-normalized-by-upstream"
+            }
+          ],
+          "upstream_outcome": "success"
+        }
+      }
+    }
+  ],
+  "status_changes": [
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/moduleOutput.pkl",
+      "before": "candidate-unsupported",
+      "after": "pass"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/boolean.pkl",
+      "before": "candidate-unsupported",
+      "after": "pass"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/import1b.pkl",
+      "before": "oracle-contract-mismatch",
+      "after": "pass"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/equality.pkl",
+      "before": "candidate-unsupported",
+      "after": "pass"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/supercalls3.pkl",
+      "before": "candidate-unsupported",
+      "after": "pass"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/typedModuleMethods1.pkl",
+      "before": "candidate-unsupported",
+      "after": "pass"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/newline.pkl",
+      "before": "candidate-unsupported",
+      "after": "pass"
+    }
+  ],
+  "failures": [
+    {
+      "id": "error-cycle",
+      "status": "oracle-error"
+    },
+    {
+      "id": "error-remainder-zero",
+      "status": "mismatch"
+    },
+    {
+      "id": "annotation-stage35-builtin-source-code-union-and-string",
+      "status": "mismatch"
+    },
+    {
+      "id": "trace-stage37-repeat-empty-cast-negative",
+      "status": "mismatch"
+    },
+    {
+      "id": "trace-stage37-repeat-empty-max-count",
+      "status": "mismatch"
+    },
+    {
+      "id": "read-stage38-uri-unpaired-surrogate",
+      "status": "mismatch"
+    },
+    {
+      "id": "read-stage38-edge-http-opaque",
+      "status": "mismatch"
+    },
+    {
+      "id": "read-stage38-edge-http-invalid-host",
+      "status": "mismatch"
+    },
+    {
+      "id": "read-stage38-edge-http-nonnumeric-port",
+      "status": "mismatch"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/moduleOutput2.pkl",
+      "status": "candidate-unsupported"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/api/pcfRenderer9.pkl",
+      "status": "candidate-unsupported"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/read.pkl",
+      "status": "candidate-unsupported"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/amendModule6.pkl",
+      "status": "candidate-unsupported"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/invalidAmend6.pkl",
+      "status": "candidate-unsupported"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/modules/\u65e5\u672c\u8a9e.pkl",
+      "status": "mismatch"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/lambdaTrailingCommas.pkl",
+      "status": "candidate-unsupported"
+    },
+    {
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/parser/lineCommentBetween.pkl",
+      "status": "candidate-unsupported"
+    }
+  ],
+  "current_nonpass_cases": 17,
+  "historical_nonpass_comparison_union": 24,
+  "audit_field_qualification": "The preserved audit language.nonpass_rows counts the union of Stage44 and Stage45 nonpassing case IDs (24), not current Stage45 failures (17).",
+  "full_gate_failure_reasons": 1830,
+  "metamorphic_relations": 88,
+  "metamorphic_matches": 88,
+  "persistent": {
+    "report_sha256": "6cd02dbedeedd3f2013366d5369bda10782205dbfea35ab2601dfad4f78caeff",
+    "sequences": 334,
+    "calls_each_language": 2782,
+    "status_counts": {
+      "java": {
+        "error": 928,
+        "success": 1854
+      },
+      "rust": {
+        "error": 928,
+        "success": 1854
+      }
+    },
+    "raw_mismatches": [],
+    "comparison_channels": [
+      "status",
+      "stdout",
+      "stderr"
+    ],
+    "error_class_differences_retained_excluded_from_equality": 928,
+    "declared_payloads_verified": 24811,
+    "unexecuted_groups_preserved": true
+  },
+  "unexecuted_lifecycle_groups": [
+    {
+      "group": "P09",
+      "reason": "Java-only module-cache probe stage12-java-module-identity-01 observes same URI/source identity retained, changed source at same URI ignored (marker remains1), distinct URI/evaluator identity separated. Rust multi-source module-cache parity is unimplemented; same-module identity is compared."
+    },
+    {
+      "group": "P10",
+      "reason": "Java observable sequence comparisons do not expose heap counts; Rust architectural GC coverage is separate."
+    },
+    {
+      "group": "P11",
+      "reason": "Actual annotation source now reaches Rust Host suspension, callback reentry and GC. Separate Stage 35 Java/Rust Host probes compare class, alias, property and method initialization, successful reads, eager failures and partial-state retries. This persistent scalar sequence adapter does not execute Host callbacks. Complete resource I/O failure, module-cache and product Host behavior remain unverified; native cancellation/timeout/close cleanup tests are separate from Java raw-byte equality."
+    },
+    {
+      "group": "P12",
+      "reason": "Terminal context/token/heap cleanup is covered by separate Rust lifecycle tests, not Java raw-byte equivalence."
+    },
+    {
+      "group": "P05",
+      "reason": "Indirect cyclic hierarchy property traversal new A {}.missing timed out after successful class identity calls in stage12-java-observations-03; traversal is observed oracle-timeout, not a compatibility pass."
+    }
+  ],
+  "source_binding": {
+    "captured_records": 4362,
+    "unique_paths": 4166,
+    "all_match_commit_blobs": true,
+    "lifecycle_config_directly_captured": false,
+    "config_qualification": "Root.cargo/config.toml is bound by language pre-lifecycle capture,01971d0Gitblob and current post-run bytes; do not relabel it a direct lifecycle capture when absent."
+  },
+  "source_stable": true,
+  "artifact_stable": true,
+  "raw_reports": {
+    "language": "d439b35267419eba80c4316e420f031ad42fba1436c1ddc8d74f784e66f76354",
+    "lifecycle": "6cd02dbedeedd3f2013366d5369bda10782205dbfea35ab2601dfad4f78caeff"
+  },
+  "audit": {
+    "path": "reports/m2/stage45-final-regression-audit.json",
+    "sha256": "362238c609a505991555b9fd6e97d2f1d863312a3f255f7863c5fbac509d7ad7"
+  },
+  "source_map": {
+    "path": "reports/m2/stage45-final-source-map.json",
+    "sha256": "7829566329cf3982c0862c061863332e54447118db1c58036fcaa0a4e0bfd5d2"
+  },
+  "case_changes": {
+    "path": "reports/m2/stage45-final-case-changes.json",
+    "sha256": "d5f9c8787d682a722c96fd3d0d17720d002adfec30123759fd6297bb2b9ec8f5"
+  },
+  "status_changes_record": {
+    "path": "reports/m2/stage45-final-status-changes.json",
+    "sha256": "d7a38908b191e5cac885b96f41a0c93845f73794e937b0699ff5539a3176a835"
+  },
+  "raw_changes": {
+    "path": "reports/m2/stage45-final-raw-changes.json",
+    "sha256": "9a49e066b46ef7e6ea9d7b3a8aca328dccd9ebb332f8335444976e80d2f478aa"
+  },
+  "captures": {
+    "path": "reports/m2/stage45-final-regression-captures.json",
+    "sha256": "856bee136ede4ecb38571dcbb85605d19cae14cc1ce4af998a692eb229afc118"
+  },
+  "implementation_checks_and_platforms": {
+    "path": "reports/m2/stage45-implementation-checkpoint.json",
+    "sha256": "4ba837bc754d4502aca73ad26c98fb0a584fbae7831c44340061758d5c7298de"
+  },
+  "full_m2_complete": false,
+  "compatibility_complete": false,
+  "hosted_ci_claimed": false,
+  "performance_target_claimed": false,
+  "remaining": [
+    "All failed, unimplemented, unmapped and unexecuted required language cases.",
+    "Broader standard-library bootstrap failures and required original resource/glob/rendering/loading dependencies.",
+    "Stage46 implementation is a separate unmerged source and evidence scope.",
+    "Whole product, platform and execution-time/peak-memory targets remain open."
+  ],
+  "independent_review": {
+    "path": "reports/m2/stage45-final-independent-review.json",
+    "sha256": "c16e73d1e17edd449ad70406c27160bb511a9f171b183b76a98c7f3483326fe0"
+  },
+  "publication_closeout": {
+    "path": "reports/m2/stage45-final-closeout-captures.tar.gz",
+    "sha256": "ae64be72a809b92f63069a165aee1afaed8128d48d26b9e1deed97085b73961d",
+    "scope": "Preserves the reviewed summary before these two final pointers, publisher and independent-review receipts. All prior summary fields remain unchanged."
+  }
+}
