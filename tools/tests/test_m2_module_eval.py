@@ -14,6 +14,7 @@ import compat
 import m2_manifest
 import m2_language
 import m2_module_eval as module
+import m2_jvm_classpath as jvm
 
 
 class RegistryTests(unittest.TestCase):
@@ -49,23 +50,25 @@ class RegistryTests(unittest.TestCase):
             with self.subTest(change=change), self.assertRaises(ValueError):
                 module.registry_cases(root, changed, entries)
 
-    def test_registered_blocked_fixture_is_attempted_but_never_promoted_to_ready(self):
+    def test_historical_blocked_cli_is_preserved_under_explicit_jvm_execution_profile(self):
         manifest = m2_manifest.build_manifest()
         identifier = 'pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/import1b.pkl'
         case = next(row for row in manifest['cases'] if row['id'] == identifier)
         self.assertEqual(case['upstream_case']['execution']['status'], 'blocked')
-        self.assertEqual(case['execution'], dict(state='unimplemented', reason=case['upstream_case']['execution']['reason']))
-        self.assertIn(case, m2_language.selected_cases(manifest, [module.ADAPTER]))
-        self.assertEqual(manifest['counts']['cases_by_execution'], dict(ready=3663, unimplemented=824, unmapped=40))
+        self.assertEqual(case['execution'], dict(state='ready', reason=None))
+        self.assertNotIn(case, m2_language.selected_cases(manifest, [module.ADAPTER]))
+        self.assertIn(case, m2_language.selected_cases(manifest, [jvm.ADAPTER]))
+        self.assertEqual(manifest['counts']['cases_by_execution'], dict(ready=3664, unimplemented=823, unmapped=40))
         selected = m2_language.selected_cases(manifest)
         self.assertEqual(len(selected), 3664)
-        # Even a forged complete set of passing statuses cannot close this
-        # original success obligation while the modulepath fixture is blocked.
+        # The explicit profile still requires actual successful execution.
         self.assertIn('required case incomplete: ' + identifier,
-                      m2_manifest.full_gate_failures(manifest, [dict(id=row['id'], status='pass') for row in selected]))
+                      m2_manifest.full_gate_failures(manifest, []))
+        self.assertNotIn('required case incomplete: ' + identifier,
+                         m2_manifest.full_gate_failures(manifest, [dict(id=identifier, status='pass')]))
         forged = copy.deepcopy(manifest)
-        next(row for row in forged['cases'] if row['id'] == identifier)['execution'] = dict(state='ready', reason=None)
-        with self.assertRaisesRegex(ValueError, 'original execution contract differs'):
+        next(row for row in forged['cases'] if row['id'] == identifier)['adapter'] = module.ADAPTER
+        with self.assertRaisesRegex(ValueError, 'original JVM execution profile contract differs'):
             m2_manifest.validate_manifest(forged)
 
 

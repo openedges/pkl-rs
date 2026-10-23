@@ -150,7 +150,8 @@ def source_paths(root=ROOT):
     paths = {root / name for name in ['Cargo.toml', 'Cargo.lock', 'rust-toolchain.toml',
              'tools/m1_platforms.py', 'tools/m1_semantics.py', 'tools/java/M1SemanticsProbe.java',
              'tests/fixtures/m1/semantics/cases.json', 'crates/pkl-runtime/Cargo.toml',
-             'crates/pkl-runtime/examples/semantics_probe.rs']}
+             'crates/pkl-runtime/examples/semantics_probe.rs',
+             'crates/pkl-runtime/src/stdlib/modules.txt']}
     suffixes = {'.rs', '.pkl', '.toml', '.mjs', '.json'}
     excluded = {'node_modules', 'target', '.cache'}
     for folder in ['crates/pkl-runtime/src', 'crates/pkl-wasm', 'crates/pkl-napi', 'tools/platform']:

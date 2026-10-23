@@ -1,0 +1,15 @@
+{
+  "baseline": "0.32.0",
+  "cases": [
+    {
+      "adapter": "language-jvm-classpath-output",
+      "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/import1b.pkl",
+      "input_sha256": "7aaf723e09544493f6981867d05209f712e31a27652a86c2af2b6e214226b98c",
+      "profile": "compatibility/m2-jvm-classpath.json",
+      "profile_sha256": "93a97f62fa55742f4ddaee342c6cf3e1509e76700bfffa9ce478352f9bab9af7",
+      "scope": "Reviewed JVM API/classpath setup for the unchanged original success input; the historical corpus CLI command/blocked record remains provenance, not the execution boundary.",
+      "upstream_case_sha256": "f6425afaa980f2e5c39835b018335e16a3c7ebf81ba73a5dffa72d75c2eafd73"
+    }
+  ],
+  "schema": 1
+}

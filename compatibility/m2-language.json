@@ -90715,10 +90715,19 @@
       }
     },
     {
-      "adapter": "language-module-eval",
+      "adapter": "language-jvm-classpath-output",
       "execution": {
-        "reason": "Requires upstream JVM test classpath/modulepath fixture adapter.",
-        "state": "unimplemented"
+        "reason": null,
+        "state": "ready"
+      },
+      "execution_profile": {
+        "adapter": "language-jvm-classpath-output",
+        "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/import1b.pkl",
+        "input_sha256": "7aaf723e09544493f6981867d05209f712e31a27652a86c2af2b6e214226b98c",
+        "profile": "compatibility/m2-jvm-classpath.json",
+        "profile_sha256": "93a97f62fa55742f4ddaee342c6cf3e1509e76700bfffa9ce478352f9bab9af7",
+        "scope": "Reviewed JVM API/classpath setup for the unchanged original success input; the historical corpus CLI command/blocked record remains provenance, not the execution boundary.",
+        "upstream_case_sha256": "f6425afaa980f2e5c39835b018335e16a3c7ebf81ba73a5dffa72d75c2eafd73"
       },
       "id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/import1b.pkl",
       "input": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input/basic/import1b.pkl",
@@ -163534,8 +163543,8 @@
   "counts": {
     "cases": 4527,
     "cases_by_execution": {
-      "ready": 3663,
-      "unimplemented": 824,
+      "ready": 3664,
+      "unimplemented": 823,
       "unmapped": 40
     },
     "requirements": 475,
@@ -163546,7 +163555,7 @@
       "specification": 198
     }
   },
-  "module_comparison_boundary": "Original module eval argv/cwd/env/resources in one physical staged workspace; actual output.bytes completion and complete stdout/stderr/exit/files, with unexpected workspace writes retained. Frontend-only preparation is separate. Registered blocked fixture contracts are attempted but remain unimplemented and cannot pass the full gate. No golden replay, toString substitute or diagnostic normalization.",
+  "module_comparison_boundary": "Original module eval argv/cwd/env/resources in one physical staged workspace; actual output.bytes completion and complete stdout/stderr/exit/files, with unexpected workspace writes retained. Frontend-only preparation is separate. Blocked CLI-only contracts remain unimplemented; reviewed JVM profiles have distinct explicit execution boundaries. No golden replay, toString substitute or diagnostic normalization.",
   "requirements": [
     {
       "description": "All tokens, whitespace, nested comments, quoted and blank identifiers, Unicode and source positions",
@@ -176931,6 +176940,16 @@
             "path": "crates/pkl-runtime/src/vm/modules/inheritance.rs",
             "sha256": "e1274b1bc4c91dad1cb763388b1e8a02414eecd47440f1646fb2a6c5dcd65ded",
             "symbol": "initialize_module_parent"
+          },
+          {
+            "path": "crates/pkl-runtime/examples/support/classpath_host.rs",
+            "sha256": "def6ccdf027a3578b724800c6b574d96314838a3aa5fb2b5c52d2cd905a6f81c",
+            "symbol": "DirectoryClassPath"
+          },
+          {
+            "path": "crates/pkl-runtime/examples/jvm_snippet_probe.rs",
+            "sha256": "8df70f2432a63fd89a334b1def6cdae5ee5b3997d99ff3d44069b9675775002f",
+            "symbol": "run"
           }
         ],
         "state": "partial"
@@ -176946,7 +176965,7 @@
           "Output.files/multiple outputs and complete renderer/converter/transformer/reflection dependencies remain partial or unsupported; every original selected failure stays in the full gate.",
           "The selected output kernel does not establish whole-language, public evaluator API or performance compatibility."
         ],
-        "scope": "Local const import members, explicit and inferred pkl:ref aliases, qualified type lookup and namespace diagnostics have selected raw comparisons. Stage40 adds an actual single-module output.bytes operation with typed preparation, real ModuleOutput checking and shared Host lifecycle. All reviewed original30 output/module contracts are executable without source/expression wrappers; readiness is not a pass claim. Stage41 connects shared-VM source loading, module caches and synthetic expression entries. Stage42 adds evaluator-owned imported class/alias resolution and module extends/amends initialization. All41 original input/modules contracts are registered, retaining every prior entry and all original command/input expectations. New registration and partial implementation are not passing compatibility evidence.",
+        "scope": "Local const import members, explicit and inferred pkl:ref aliases, qualified type lookup and namespace diagnostics have selected raw comparisons. Stage40 adds an actual single-module output.bytes operation with typed preparation, real ModuleOutput checking and shared Host lifecycle. All reviewed original30 output/module contracts are executable without source/expression wrappers; readiness is not a pass claim. Stage41 connects shared-VM source loading, module caches and synthetic expression entries. Stage42 adds evaluator-owned imported class/alias resolution and module extends/amends initialization. All41 original input/modules contracts are registered, retaining every prior entry and all original command/input expectations. New registration and partial implementation are not passing compatibility evidence. A reviewed JVM-classpath execution profile now connects the unchanged original import1b case through actual evaluateOutputBytes and the native directory Host, preserving its historical blocked CLI contract and requiring two raw successful repetitions. This closes only that original execution obligation after passing acquisition; general loader/security and full language scope remain partial.",
         "source": "compatibility/m2-mappings.json"
       },
       "tests": {
@@ -189952,7 +189971,9 @@
   "sources": {
     "compatibility/corpus.json": "0e95da22f965dede398f1a1f136703ba913d588aa51c1fb871cd97a11c84a0dd",
     "compatibility/inventory.json": "a9b21752adad9a269a54854c0dd298256757be88ad95c1388e30d7c78e407070",
-    "compatibility/m2-mappings.json": "bc548f855e319263af08d937c2d7b64ee5bb0351d550c5b631ce8c2bcbc63b7d",
+    "compatibility/m2-execution-profiles.json": "198850daa534a33f0d1b87f8bc8d38d7717f1e9b792ec70a13053c0affc6f477",
+    "compatibility/m2-jvm-classpath.json": "93a97f62fa55742f4ddaee342c6cf3e1509e76700bfffa9ce478352f9bab9af7",
+    "compatibility/m2-mappings.json": "162daa4d063242b64156a4d0a3e1503102b3b2e5ce79748dae9e94df334ab2ab",
     "compatibility/m2-module-eval.json": "1c6a086fe16d8db4e1fede1d4ed0d28885fb7d52379de0dc8da4d757b38ac523",
     "compatibility/regressions.json": "09c064f65730d30f72bf87a45c88d47ecc0844e57966a999dc8e759f083af3da",
     "compatibility/rev1-inventory.json": "6061f202ba3f04565efed3617ac69d3c2fadc54eec1f562b67a4758b3d0a8ab5",

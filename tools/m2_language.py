@@ -13,6 +13,8 @@ import sys
 
 import m2_manifest as contract
 import m2_module_eval
+import m2_jvm_classpath
+import m2_source_inputs
 import compat
 import oracle
 
@@ -98,15 +100,54 @@ def capture_java(metadata, binary, identifier, source, expression, directory, po
 
 
 def source_paths(root=ROOT):
-    paths = set(contract.INPUTS) | {'tools/m2_manifest.py', 'tools/m2_language.py',
-            'tools/m2_module_eval.py', 'tools/compat.py', 'tools/m2_generate.py', 'tools/m2_identifier_tables.py', 'tools/java/M2IdentifierProbe.java',
-            'tools/m2_unicode_escape_tables.py', 'tools/java/M2UnicodeEscapeProbe.java',
-            'tools/java/M2LanguageProbe.java', str(contract.MANIFEST), 'tools/oracle.py', 'oracle.lock.json',
-            'Cargo.toml', 'Cargo.lock', 'rust-toolchain.toml'}
-    for directory, pattern in [('crates', '*.rs'), ('crates', '*.pkl'), ('crates', 'Cargo.toml'),
-                               ('tests/fixtures/m2', '*')]:
-        paths.update(str(p.relative_to(root)) for p in (root / directory).rglob(pattern) if p.is_file())
-    return sorted(paths)
+    return m2_source_inputs.source_paths(root)
+
+
+def evidence_paths(directory):
+    """Enumerate actual evidence only; a child Cargo cache is never traversed."""
+    for current, directories, names in os.walk(directory, followlinks=False):
+        for name in directories:
+            path = Path(current) / name
+            if path in (directory / 'build', directory / 'jvm-classpath/build'):
+                raise ValueError('Cargo build cache must stay outside the full language evidence')
+            if path.is_symlink():
+                raise ValueError('evidence directory symlink is not permitted')
+        for name in names:
+            path = Path(current) / name
+            if path.is_symlink() or not path.is_file():
+                raise ValueError('evidence must contain regular files')
+            if path != directory / 'report.json':
+                yield path
+
+
+def classpath_result(case, directory, child):
+    failures = m2_jvm_classpath.contract_failures(directory, child)
+    outcome = next((row['status'] for row in child['results'] if row['status'] != 'pass'), 'mismatch') if failures else 'pass'
+    return dict(id=case['id'], adapter=m2_jvm_classpath.ADAPTER, directory='jvm-classpath',
+                execution_profile=case['execution_profile'], status=outcome,
+                child_report_sha256=oracle.sha256(directory / 'report.json'))
+
+
+def verify_classpath_child(directory, report):
+    context = report['classpath_eval']
+    recorded_parent = Path(context['parent_output'])
+    if (set(context) != {'directory', 'workspace', 'parent_output', 'child_report_sha256'}
+            or context['directory'] != 'jvm-classpath' or not recorded_parent.is_absolute()
+            or compat.overlap(Path(context['workspace']), recorded_parent)):
+        raise ValueError('JVM-classpath child/workspace boundary differs')
+    child_directory = directory / context['directory']
+    if oracle.sha256(child_directory / 'report.json') != context['child_report_sha256']:
+        raise ValueError('JVM-classpath child report changed')
+    child = m2_jvm_classpath.verify_report(child_directory)
+    candidate = report['classpath_candidate']
+    if (child['workspace'] != context['workspace'] or child['oracle'] != report['oracle']
+            or child['output'] != str(recorded_parent / 'jvm-classpath')
+            or child['candidate']['source_binding'] != 'unbound-caller-supplied'
+            or child['candidate']['original_path'] != str(recorded_parent / 'artifacts/jvm_snippet_probe')
+            or child['candidate']['sha256'] != candidate['sha256']
+            or child['sources'] != report['source_sha256']):
+        raise ValueError('JVM-classpath child lacks exact parent artifact/source/oracle binding')
+    return child
 
 
 def acquire_case(case, output, metadata, frozen):
@@ -150,7 +191,7 @@ def acquire_cases(selected, output, metadata, frozen, workers=1):
 
 
 def selected_cases(manifest, adapters=None):
-    known = ('language-api-string', m2_module_eval.ADAPTER)
+    known = ('language-api-string', m2_module_eval.ADAPTER, m2_jvm_classpath.ADAPTER)
     if adapters is not None and (not adapters or len(set(adapters)) != len(adapters)
                                  or not set(adapters) <= set(known)):
         raise ValueError('invalid or duplicate selected adapters')
@@ -158,7 +199,7 @@ def selected_cases(manifest, adapters=None):
 
 
 def execute(output: Path, candidate: Path | None, workers=1, *, adapters=None,
-            module_candidate=None, module_workspace=None):
+            module_candidate=None, module_workspace=None, classpath_candidate=None, classpath_workspace=None):
     validate_workers(workers)
     manifest = contract.current_manifest()
     selected = selected_cases(manifest, adapters)
@@ -166,11 +207,14 @@ def execute(output: Path, candidate: Path | None, workers=1, *, adapters=None,
         raise ValueError('empty executable adapter selection')
     scalars = [row for row in selected if row['adapter'] == 'language-api-string']
     modules = [row for row in selected if row['adapter'] == m2_module_eval.ADAPTER]
+    classpath = [row for row in selected if row['adapter'] == m2_jvm_classpath.ADAPTER]
     if (candidate is not None and not scalars) or ((module_candidate is not None or module_workspace is not None) and not modules):
         raise ValueError('candidate/workspace supplied for an unselected adapter')
+    if (classpath_candidate is not None or classpath_workspace is not None) and not classpath:
+        raise ValueError('classpath candidate/workspace supplied for an unselected adapter')
     metadata = oracle.ensure_oracle(ROOT, fetch=False)
     output.mkdir(parents=True, exist_ok=False)
-    selection = dict(adapters=list(adapters) if adapters else ['language-api-string', m2_module_eval.ADAPTER],
+    selection = dict(adapters=list(adapters) if adapters else ['language-api-string', m2_module_eval.ADAPTER, m2_jvm_classpath.ADAPTER],
                      case_ids=[row['id'] for row in selected])
     (output / 'selection.json').write_bytes(contract.encoded(selection))
     initial = {path: oracle.sha256(ROOT / path) for path in source_paths()}
@@ -187,6 +231,8 @@ def execute(output: Path, candidate: Path | None, workers=1, *, adapters=None,
     requested = [('language_probe', candidate)] if scalars else []
     if modules:
         requested.append(('module_eval_probe', module_candidate))
+    if classpath:
+        requested.append(('jvm_snippet_probe', classpath_candidate))
     need_build = [name for name, supplied in requested if supplied is None]
     build = None
     if need_build:
@@ -245,16 +291,34 @@ def execute(output: Path, candidate: Path | None, workers=1, *, adapters=None,
             row = m2_module_eval.acquire_case(ROOT, workspace, case, metadata, artifacts / 'module_eval_probe', output)
             results.append(row)
             print(f"{row['id']}: {row['status']}", flush=True)
+    classpath_context = None
+    if classpath:
+        if len(classpath) != 1 or classpath[0]['id'] != m2_jvm_classpath.CASE_ID:
+            raise ValueError('unexpected JVM-classpath case selection')
+        workspace = classpath_workspace or output.with_name(output.name + '-jvm-classpath-workspace')
+        compat.validate_paths(ROOT, workspace, output)
+        child_directory = output / 'jvm-classpath'
+        child = m2_jvm_classpath.execute(child_directory, artifacts / 'jvm_snippet_probe', workspace)
+        # The child records a supplied artifact; only this parent can link its
+        # exact frozen bytes and source snapshot to the recorded native build.
+        if (child['candidate']['source_binding'] != 'unbound-caller-supplied'
+                or child['candidate']['sha256'] != bindings['jvm_snippet_probe']['sha256']
+                or child['oracle'] != metadata):
+            raise ValueError('JVM-classpath child artifact/oracle differs from its parent')
+        classpath_context = dict(directory='jvm-classpath', workspace=str(workspace), parent_output=str(output),
+                                 child_report_sha256=oracle.sha256(child_directory / 'report.json'))
+        results.append(classpath_result(classpath[0], child_directory, child))
     by_id = {row['id']: row for row in results}
     results = [by_id[row['id']] for row in selected]
     relation_manifest = dict(manifest, cases=scalars)
     relations = check_relations(relation_manifest, output)
-    report = dict(schema_version=3, scope=manifest['comparison_boundary'],
+    report = dict(schema_version=4 if classpath else 3, scope=manifest['comparison_boundary'],
                   module_scope=manifest.get('module_comparison_boundary'),
                   inventory_counts=manifest['counts'], selected_count=len(selected),
                   selection=selection,
                   execution=dict(workers=workers), oracle=metadata,
                   candidate=bindings.get('language_probe'), module_candidate=bindings.get('module_eval_probe'),
+                  classpath_candidate=bindings.get('jvm_snippet_probe'), classpath_eval=classpath_context,
                   module_eval=module_context,
                   javac=dict(path=str(Path(metadata['java']).with_name('javac')),
                              sha256=oracle.sha256(Path(metadata['java']).with_name('javac'))) if scalars else None,
@@ -267,7 +331,7 @@ def execute(output: Path, candidate: Path | None, workers=1, *, adapters=None,
                   status_counts=dict(Counter(row['status'] for row in results)),
                   full_gate_failures=contract.full_gate_failures(manifest, results))
     report['evidence_sha256'] = {str(path.relative_to(output)): oracle.sha256(path)
-                                 for path in sorted(output.rglob('*')) if path.is_file()}
+                                 for path in sorted(evidence_paths(output))}
     (output / 'report.json').write_bytes(contract.encoded(report))
     check_report(output)
     return report
@@ -342,8 +406,7 @@ def check_report(directory: Path):
     if not report['source_stability'] or not report['artifact_stability']:
         raise ValueError('sources or artifact changed during evidence acquisition')
     inventory = report['evidence_sha256']
-    observed = {str(p.relative_to(directory)) for p in directory.rglob('*')
-                if p.is_file() and p != directory / 'report.json'}
+    observed = {str(path.relative_to(directory)) for path in evidence_paths(directory)}
     if not inventory or set(inventory) != observed:
         raise ValueError('evidence file coverage incomplete')
     for relative, expected in inventory.items():
@@ -361,8 +424,11 @@ def check_report(directory: Path):
     if not selected:
         raise ValueError('empty executable adapter selection')
     has_modules = any(row['adapter'] == m2_module_eval.ADAPTER for row in selected.values())
-    if has_modules and (type(report.get('schema_version')) is not int or report['schema_version'] != 3):
+    has_classpath = any(row['adapter'] == m2_jvm_classpath.ADAPTER for row in selected.values())
+    if has_modules and (type(report.get('schema_version')) is not int or report['schema_version'] not in (3, 4)):
         raise ValueError('module-eval requires the current report schema')
+    if has_classpath and report.get('schema_version') != 4:
+        raise ValueError('JVM-classpath requires the bound child report schema')
     if report.get('schema_version', 2) >= 3:
         selection = report.get('selection')
         if (not isinstance(selection, dict) or set(selection) != {'adapters', 'case_ids'}
@@ -370,7 +436,8 @@ def check_report(directory: Path):
                 or selection['case_ids'] != list(selected)):
             raise ValueError('captured adapter selection differs')
     for name, key, adapter in [('language_probe', 'candidate', 'language-api-string'),
-                                ('module_eval_probe', 'module_candidate', m2_module_eval.ADAPTER)]:
+                                ('module_eval_probe', 'module_candidate', m2_module_eval.ADAPTER),
+                                ('jvm_snippet_probe', 'classpath_candidate', m2_jvm_classpath.ADAPTER)]:
         needed = any(row['adapter'] == adapter for row in selected.values())
         candidate = report.get(key)
         if not needed:
@@ -385,7 +452,8 @@ def check_report(directory: Path):
             if build != candidate['build'] or build['exit_code'] != 0 or build['timed_out']:
                 raise ValueError('candidate recorded build differs or failed')
             if report.get('schema_version', 2) >= 3:
-                built = [('language_probe', report.get('candidate')), ('module_eval_probe', report.get('module_candidate'))]
+                built = [('language_probe', report.get('candidate')), ('module_eval_probe', report.get('module_candidate')),
+                         ('jvm_snippet_probe', report.get('classpath_candidate'))]
                 command = ['cargo', 'build', '-p', 'pkl-runtime', '--locked', '--release']
                 for example, claim in built:
                     if claim is not None and claim['source_binding'] == 'recorded-build':
@@ -393,6 +461,8 @@ def check_report(directory: Path):
                 command += ['--target-dir', str(ROOT / 'target')]
                 if build['command'] != command:
                     raise ValueError('candidate build command differs from selected artifacts')
+                if candidate['path'] != str(ROOT / 'target/release/examples' / name):
+                    raise ValueError('candidate recorded build artifact path differs')
         elif binding != 'unbound-caller-supplied' or candidate.get('build') is not None:
             raise ValueError('invalid source/artifact binding claim')
     if any(case['adapter'] == m2_module_eval.ADAPTER for case in selected.values()):
@@ -413,6 +483,11 @@ def check_report(directory: Path):
                     declared[resource['path']] = resource['sha256']
         if json.loads((directory / 'module-inputs.json').read_bytes()) != dict(files=len(declared), sha256=compat.digest(compat.encoded(declared))):
             raise ValueError('module-eval input validation record differs')
+    child = None
+    if has_classpath:
+        child = verify_classpath_child(directory, report)
+    elif report.get('classpath_eval') is not None:
+        raise ValueError('unselected JVM-classpath child context')
     ids = [row['id'] for row in report['results']]
     if set(ids) != set(selected) or len(ids) != len(selected) or report['selected_count'] != len(selected):
         raise ValueError('selected execution coverage incomplete or duplicate')
@@ -420,6 +495,10 @@ def check_report(directory: Path):
         raise ValueError('selected execution order differs from manifest')
     for row in report['results']:
         case = selected[row['id']]
+        if case['adapter'] == m2_jvm_classpath.ADAPTER:
+            if row != classpath_result(case, directory / 'jvm-classpath', child):
+                raise ValueError('JVM-classpath original result/profile binding changed')
+            continue
         if case['adapter'] == m2_module_eval.ADAPTER:
             context = report['module_eval']
             if context['workers'] != 1 or oracle.sha256(directory / 'module-workspace.json') != context['baseline_sha256']:
@@ -562,10 +641,12 @@ def main():
     action.add_argument('--verify-development', type=Path, help='development-only gate allowing explicitly recorded cycle/remainder failures; does not establish compatibility')
     parser.add_argument('--record-only', action='store_true', help='with --output, acquire and validate evidence without requiring compatibility success')
     parser.add_argument('--candidate', type=Path, help='override the default recorded release build; caller-supplied artifact has no verified source binding')
-    parser.add_argument('--adapter', action='append', choices=['language-api-string', m2_module_eval.ADAPTER],
+    parser.add_argument('--adapter', action='append', choices=['language-api-string', m2_module_eval.ADAPTER, m2_jvm_classpath.ADAPTER],
                         help='explicit focused acquisition; omitted adapters remain required in the full gate')
     parser.add_argument('--module-candidate', type=Path, help='override module-eval build; source binding remains unverified')
     parser.add_argument('--module-workspace', type=Path, help='exclusive managed physical workspace shared by Java and module candidate')
+    parser.add_argument('--classpath-candidate', type=Path, help='override the JVM-profile native artifact; parent binding remains unverified')
+    parser.add_argument('--classpath-workspace', type=Path, help='fresh JVM-profile workspace outside the parent evidence directory')
     parser.add_argument('--workers', type=worker_argument, default=1,
                         help=f'scalar acquisition concurrency (1-{MAX_WORKERS}, default 1); module eval remains sequential; throughput only')
     args = parser.parse_args()
@@ -573,7 +654,7 @@ def main():
         parser.error('--record-only requires --output')
     if args.workers != 1 and not args.output:
         parser.error('--workers requires --output')
-    if (args.adapter or args.module_candidate or args.module_workspace) and not args.output:
+    if (args.adapter or args.module_candidate or args.module_workspace or args.classpath_candidate or args.classpath_workspace) and not args.output:
         parser.error('adapter/module acquisition settings require --output')
     extra = {}
     if args.adapter is not None:
@@ -582,6 +663,10 @@ def main():
         extra['module_candidate'] = args.module_candidate.resolve()
     if args.module_workspace is not None:
         extra['module_workspace'] = args.module_workspace.absolute()
+    if args.classpath_candidate is not None:
+        extra['classpath_candidate'] = args.classpath_candidate.resolve()
+    if args.classpath_workspace is not None:
+        extra['classpath_workspace'] = args.classpath_workspace.absolute()
     report = execute(args.output.resolve(), args.candidate.resolve() if args.candidate else None, args.workers,
                      **extra) if args.output else check_report(
         (args.verify_report or args.verify_subset or args.verify_full or args.verify_development).resolve())
@@ -591,7 +676,7 @@ def main():
     if args.verify_development:
         return int(not development_passes(report, args.verify_development.resolve()))
     return int(not subset_passes(report) or bool(args.verify_full and (report['full_gate_failures']
-                     or any(row['source_binding'] != 'recorded-build' for row in [report.get('candidate'), report.get('module_candidate')] if row))))
+                     or any(row['source_binding'] != 'recorded-build' for row in [report.get('candidate'), report.get('module_candidate'), report.get('classpath_candidate')] if row))))
 
 
 if __name__ == '__main__':

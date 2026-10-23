@@ -143,7 +143,7 @@ M1의 공통 VM을 확장합니다. VM·heap·호출 의미론은 `gpt-6-astra /
 
 핵심 언어 기능을 폭넓게 구현했지만, 전체 호환성 마감에는 상당한 작업이 남아 있습니다. 아래 9개 작업 영역은 모두 일부 종료 조건이 남은 `진행 중` 상태입니다. Stage 번호는 완료한 전체 작업의 비율이 아니라 누적 구현·검증 단계를 나타냅니다. 선택 코퍼스의 높은 성공률도 M2 전체 완료율이 아닙니다.
 
-전체 목록의 요구사항 475개와 부분 mapping 42개에는 서로 겹치는 의미론·선언·후보 기록이 있습니다. Stage 42의 실행 연결 기준 ready 3,663개·미구현 824개·미연결 40개 accounting row 역시 독립적인 기능 수나 남은 작업량을 뜻하지 않습니다. ready는 어댑터로 실행 가능하다는 뜻이며 통과 판정은 별도입니다. 현재 목록에는 검토된 기능별 작업량 가중치가 없으므로 신뢰할 수 있는 전체 완료 백분율은 산정하지 않습니다. 진행 보고는 구현한 범위, 실제 실행·일치 수, 미구현·미실행 범위와 엄격한 완료 gate를 함께 제시합니다.
+전체 목록의 요구사항 475개와 부분 mapping 42개에는 서로 겹치는 의미론·선언·후보 기록이 있습니다. JVM classpath 연결 후 ready 3,664개·미구현 823개·미연결 40개 accounting row 역시 독립적인 기능 수나 남은 작업량을 뜻하지 않습니다. ready는 어댑터로 실행 가능하다는 뜻이며 통과 판정은 별도입니다. 현재 목록에는 검토된 기능별 작업량 가중치가 없으므로 신뢰할 수 있는 전체 완료 백분율은 산정하지 않습니다. 진행 보고는 구현한 범위, 실제 실행·일치 수, 미구현·미실행 범위와 엄격한 완료 gate를 함께 제시합니다.
 
 남은 큰 범위는 annotation·module 초기화와 상속 규칙, 지연·재귀 타입 및 제약, collection·Reference 메타데이터의 나머지 의미론, 전체 오류 메시지·논리적 스택과 원본 upstream 코퍼스 연결입니다. 원본 언어 사례가 요구하는 표준 라이브러리·출력·로딩 기능은 M3·M4와의 의존성으로 유지합니다. 이 조건을 충족하기 전에는 검증만 남은 마감 단계로 보고하지 않습니다.
 
@@ -769,6 +769,10 @@ Stage 43의 canonical 진단 위에 module resolve/source와 resource read의 �
 [최종 기록](reports/m2/classpath-implementation-summary.json)에서 원본 전체 입력은 새 Java·Rust 프로세스 두 쌍 모두 출력·오류·종료 코드·파일 바이트가 같습니다. 추가 control 여섯 개는 일치 세 개·불일치 두 개·미지원 한 개입니다. 오류의 표준 라이브러리 frame URI와 import trust 정책은 남은 구현 의무로 유지합니다. 필수 Rust 검사 다섯 개, workspace harness 692회(ignored 1회), example 검사 여섯 개와 Python 검사 26개가 통과했습니다. 이 수치는 고유 기능 커버리지가 아닙니다.
 
 독립 도구 검토에서 찾은 directory symlink 누락·Cargo 설정 source 누락·build 원본 경로 검증 누락을 수정하고 별도 `original02`로 다시 취득했습니다. [원시 증거](reports/m2/classpath-captures.json)는 이전 취득·알려진 실패·정확한 cache 제외와 소스 차이를 보존합니다. 기존 blocked row의 자동 승격, 전체 classpath·Wasm·N-API 호환성, 성능 달성은 주장하지 않습니다. 다음에는 전체 목록에 JVM 실행 계약을 명시적으로 연결하고 공통 진단 transformer·신뢰 정책을 구현해야 합니다. **M2 전체는 진행 중입니다.**
+
+후속 연결은 `compatibility/m2-execution-profiles.json`에서 원본 case·입력·JVM profile hash를 검증하며 같은 `import1b` ID 하나에만 적용합니다. corpus의 원래 CLI 명령·blocked 기록과 기대 종료 상태 0은 보존합니다. M2 목록은 원래 4,527개 행·선택 순서를 유지하고 해당 행의 실행 adapter를 JVM profile로 연결합니다. 실행 가능 3,664개·미구현 823개·미연결 40개는 실행 연결 accounting이며 완료율이 아닙니다. 부모 runner가 example을 함께 기록 build하고 frozen artifact와 source·oracle을 child의 두 번 원시 비교에 연결합니다. child workspace는 부모 증거 밖에 두고 child build는 실행하지 않습니다. 집중 통합 결과를 별도로 취득하며 다른 미구현·미실행·알려진 실패와 공통 진단·신뢰 정책 의무는 유지합니다.
+
+Stage 45 구현 `97b4da0`과 합친 [집중 연결 검증](reports/m2/classpath-m2-integration-checkpoint.json)에서 원본 `import1b` 한 사례의 Java·Rust 두 반복이 모두 일치했습니다. 원래 4,527개 ID·순서와 선택 3,664개를 유지하며 해당 행의 adapter·execution·profile만 바꿨습니다. Python 고유 검사 83개와 목록·profile·corpus freshness 검사가 통과했고, 집중 보고서의 무결성·엄격 선택은 통과, 전체 gate는 나머지 미실행·미구현 조건 5,476개로 실패합니다. 소스 수집기 두 곳에 compile-time `stdlib/modules.txt`를 명시적으로 추가했습니다. 최초 검증 도구의 test-only 입력 범위 오류와 corpus 검사 명령 오류는 원본 기록으로 보존했고, 수정 검사만 새 디렉터리에서 실행했습니다. 새 M1 플랫폼 실행 또는 나머지 선택 사례의 회귀 통과로 주장하지 않습니다.
 
 ## M3 — 표준 라이브러리와 출력
 

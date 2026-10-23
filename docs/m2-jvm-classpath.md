@@ -5,8 +5,9 @@
 [`compatibility/m2-jvm-classpath.json`](../compatibility/m2-jvm-classpath.json).
 It evaluates the unchanged original `basic/import1b.pkl` and its actual
 `org/pkl/core/snippets/imported.pkl` resource. The profile does not replace the
-historical CLI command or its blocked inventory row. Successful acquisition does
-not automatically promote that row or close M2's whole-language gate.
+historical CLI command or its blocked corpus row. The reviewed execution mapping
+described below connects this original case to M2 without claiming CLI equivalence
+or closing M2's whole-language gate.
 
 The pinned JVM `LanguageSnippetTestsEngine` uses
 `EvaluatorBuilder.preconfigured()` and `evaluateOutputBytes(ModuleSource.path(...))`.
@@ -106,6 +107,41 @@ historical tooling from the final acquisition and records exact proposed-file
 Git blob identities without writing Git objects. The
 [publication audit](../reports/m2/classpath-publication-audit.json) checks archive
 payloads and unchanged source evidence. Final implementation-commit publication
-is a separate step. The original CLI inventory row remains blocked pending
-explicit reviewed profile integration. General classpaths, full diagnostics and
+is a separate step. That checkpoint left the original CLI corpus row blocked and
+the M2 profile disconnected. General classpaths, full diagnostics and
 module security, Wasm/N-API execution, and the full M2 completion gate remain open.
+
+## Reviewed M2 execution mapping
+
+[`m2-execution-profiles.json`](../compatibility/m2-execution-profiles.json) binds
+the original input, complete historical corpus case, profile path and profile
+bytes by hash. The M2 manifest keeps the same original `import1b` ID and existing
+partial `semantic:modules` requirement link. It gives that row the explicit
+`language-jvm-classpath-output` adapter instead of attempting the blocked CLI
+setup. The historical corpus and its CLI registry entry remain unchanged.
+
+The default selected runner includes 3,527 expression cases, 136 original CLI
+cases and this one JVM-profile case, preserving the 3,664-case selection order
+and 4,527-row inventory. Readiness accounting changes to 3,664 ready, 823
+unimplemented and 40 unmapped rows; readiness is not passing behavior or feature
+coverage. Missing or failing JVM-profile execution keeps the original case's
+full-gate obligation open. Other requirements and known failures remain required.
+
+```sh
+python3 tools/m2_manifest.py --check
+python3 -m unittest discover -s tools/tests -p 'test_m2_execution_profiles.py' -v
+python3 tools/m2_language.py --adapter language-jvm-classpath-output --output target/m2/classpath-m2-new --record-only
+python3 tools/m2_language.py --verify-report target/m2/classpath-m2-new
+python3 tools/m2_language.py --verify-subset target/m2/classpath-m2-new
+```
+
+The parent records the selected native examples in one build, freezes
+`jvm_snippet_probe`, and supplies its exact artifact to the child profile. The
+child's caller-supplied binding is checked against the parent's recorded build,
+source snapshot and pinned oracle. Two fresh Java/Rust repetitions must match
+raw channels and the original successful exit expectation before the single M2
+case passes. The child workspace is outside the parent evidence directory; its
+build is never invoked. Parent evidence enumeration rejects a child Cargo-cache
+directory before traversal. Source catalog generation is shared by a separate
+module and cannot recursively import either runner. A focused passing subset
+still leaves the rest of the full M2 gate incomplete.

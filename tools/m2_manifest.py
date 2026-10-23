@@ -12,15 +12,16 @@ import sys
 
 import m2_generate
 import m2_module_eval
+import m2_execution_profiles
+import m2_jvm_classpath
+import m2_source_inputs
 
 ROOT = Path(__file__).resolve().parents[1]
 MANIFEST = Path('compatibility/m2-language.json')
 SELECTION = Path('tests/fixtures/m2/cases.json')
 MAPPINGS = Path('compatibility/m2-mappings.json')
 MODULE_ADAPTERS = Path('compatibility/m2-module-eval.json')
-INPUTS = ('references.lock', 'compatibility/inventory.json', 'compatibility/corpus.json',
-          'compatibility/rev1-inventory.json', 'compatibility/regressions.json', str(SELECTION),
-          str(MAPPINGS), str(MODULE_ADAPTERS))
+INPUTS = m2_source_inputs.INPUTS
 FEATURES = {
     'lexing': 'All tokens, whitespace, nested comments, quoted and blank identifiers, Unicode and source positions',
     'numeric-literals': 'Integer bases, separators, signed boundaries, floating syntax and numerical values',
@@ -155,6 +156,7 @@ def build_manifest(root: Path = ROOT) -> dict:
     rev1 = load(Path('compatibility/rev1-inventory.json'), root)
     selected = load(SELECTION, root)['cases']
     module_cases = m2_module_eval.registry_cases(root, corpus, load(MODULE_ADAPTERS, root))
+    profiles = m2_execution_profiles.registry_cases(root, corpus)
     m2_generate.check_generated(selected, root)
     requirements = []
     for name, description in FEATURES.items():
@@ -181,10 +183,14 @@ def build_manifest(root: Path = ROOT) -> dict:
         if row['suite'] != 'language-snippet':
             continue
         executable = row['id'] in module_cases
-        cases.append(dict(id=row['id'], required=True, adapter=m2_module_eval.ADAPTER if executable else None, input='external/pkl/' + row['source']['path'],
+        profile = profiles.get(row['id'])
+        case = dict(id=row['id'], required=True, adapter=profile['adapter'] if profile else m2_module_eval.ADAPTER if executable else None, input='external/pkl/' + row['source']['path'],
                           input_sha256=row['source']['sha256'], requirements=[],
-                          execution=m2_module_eval.execution_state(row, executable),
-                          upstream_case=row))
+                          execution=m2_execution_profiles.execution_state() if profile else m2_module_eval.execution_state(row, executable),
+                          upstream_case=row)
+        if profile:
+            case['execution_profile'] = profile
+        cases.append(case)
     for row in rev1['files']:
         if row['kind'] != 'regression-candidate':
             continue
@@ -199,7 +205,7 @@ def build_manifest(root: Path = ROOT) -> dict:
     apply_mappings(requirements, cases, load(MAPPINGS, root), inventory['baseline'], root)
     result = dict(schema_version=1, baseline=inventory['baseline'],
                   scope='Complete M2 language requirement accounting with a conservative superset of all pinned language snippets; initial executable probes are a separate selection.',
-                  module_comparison_boundary='Original module eval argv/cwd/env/resources in one physical staged workspace; actual output.bytes completion and complete stdout/stderr/exit/files, with unexpected workspace writes retained. Frontend-only preparation is separate. Registered blocked fixture contracts are attempted but remain unimplemented and cannot pass the full gate. No golden replay, toString substitute or diagnostic normalization.',
+                  module_comparison_boundary='Original module eval argv/cwd/env/resources in one physical staged workspace; actual output.bytes completion and complete stdout/stderr/exit/files, with unexpected workspace writes retained. Frontend-only preparation is separate. Blocked CLI-only contracts remain unimplemented; reviewed JVM profiles have distinct explicit execution boundaries. No golden replay, toString substitute or diagnostic normalization.',
                   comparison_boundary='evaluateExpressionString(ModuleSource.path(same absolute URI), expression) UTF-8 stdout; whole PklException.getMessage() UTF-8 stderr and exit 1; no trimming. Power assertions default to disabled; an explicit per-case power_assertions boolean enables the same option in both probes. Stringification alone is not typed value/API compatibility.',
                   sources={path: digest((root / path).read_bytes()) for path in INPUTS},
                   requirements=requirements, cases=cases,
@@ -217,6 +223,7 @@ def validate_manifest(manifest: dict, root: Path = ROOT):
             raise ValueError('empty or duplicate ' + collection)
     corpus = load(Path('compatibility/corpus.json'), root)
     registered = m2_module_eval.registry_cases(root, corpus, load(MODULE_ADAPTERS, root))
+    profiles = m2_execution_profiles.registry_cases(root, corpus)
     originals = {row['id']: row for row in corpus['cases']}
     requirement_ids = {row['id'] for row in manifest['requirements']}
     case_ids = {row['id'] for row in manifest['cases']}
@@ -226,12 +233,21 @@ def validate_manifest(manifest: dict, root: Path = ROOT):
         if not set(row['tests']['case_ids']) <= case_ids:
             raise ValueError('requirement maps missing case: ' + row['id'])
     for row in manifest['cases']:
+        if row['id'] in profiles:
+            if (row.get('adapter') != profiles[row['id']]['adapter']
+                    or row.get('execution_profile') != profiles[row['id']]
+                    or row.get('upstream_case') != originals[row['id']]
+                    or row['input_sha256'] != profiles[row['id']]['input_sha256']
+                    or row['execution'] != m2_execution_profiles.execution_state()):
+                raise ValueError('original JVM execution profile contract differs')
+        elif row.get('adapter') == m2_jvm_classpath.ADAPTER or 'execution_profile' in row:
+            raise ValueError('unregistered original JVM execution profile')
         if row.get('adapter') == m2_module_eval.ADAPTER:
             if (row['id'] not in registered or row.get('upstream_case') != originals[row['id']]
                     or row['execution'] != m2_module_eval.execution_state(originals[row['id']], True)
                     or row['input_sha256'] != registered[row['id']]['input_sha256']):
                 raise ValueError('module-eval original execution contract differs')
-        if row['id'] in registered and row.get('adapter') != m2_module_eval.ADAPTER:
+        if row['id'] in registered and row['id'] not in profiles and row.get('adapter') != m2_module_eval.ADAPTER:
             raise ValueError('registered original module-eval case is missing its adapter')
         if not set(row['requirements']) <= requirement_ids:
             raise ValueError('case maps unknown requirement: ' + row['id'])

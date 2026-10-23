@@ -473,6 +473,14 @@
           {
             "path": "crates/pkl-runtime/src/vm/modules/inheritance.rs",
             "symbol": "initialize_module_parent"
+          },
+          {
+            "path": "crates/pkl-runtime/examples/support/classpath_host.rs",
+            "symbol": "DirectoryClassPath"
+          },
+          {
+            "path": "crates/pkl-runtime/examples/jvm_snippet_probe.rs",
+            "symbol": "run"
           }
         ],
         "state": "partial"
@@ -485,7 +493,7 @@
         "The selected output kernel does not establish whole-language, public evaluator API or performance compatibility."
       ],
       "requirement": "semantic:modules",
-      "scope": "Local const import members, explicit and inferred pkl:ref aliases, qualified type lookup and namespace diagnostics have selected raw comparisons. Stage40 adds an actual single-module output.bytes operation with typed preparation, real ModuleOutput checking and shared Host lifecycle. All reviewed original30 output/module contracts are executable without source/expression wrappers; readiness is not a pass claim. Stage41 connects shared-VM source loading, module caches and synthetic expression entries. Stage42 adds evaluator-owned imported class/alias resolution and module extends/amends initialization. All41 original input/modules contracts are registered, retaining every prior entry and all original command/input expectations. New registration and partial implementation are not passing compatibility evidence.",
+      "scope": "Local const import members, explicit and inferred pkl:ref aliases, qualified type lookup and namespace diagnostics have selected raw comparisons. Stage40 adds an actual single-module output.bytes operation with typed preparation, real ModuleOutput checking and shared Host lifecycle. All reviewed original30 output/module contracts are executable without source/expression wrappers; readiness is not a pass claim. Stage41 connects shared-VM source loading, module caches and synthetic expression entries. Stage42 adds evaluator-owned imported class/alias resolution and module extends/amends initialization. All41 original input/modules contracts are registered, retaining every prior entry and all original command/input expectations. New registration and partial implementation are not passing compatibility evidence. A reviewed JVM-classpath execution profile now connects the unchanged original import1b case through actual evaluateOutputBytes and the native directory Host, preserving its historical blocked CLI contract and requiring two raw successful repetitions. This closes only that original execution obligation after passing acquisition; general loader/security and full language scope remain partial.",
       "tests": {
         "case_ids": [
           "reference-stage10-namespace-local-duplicate",

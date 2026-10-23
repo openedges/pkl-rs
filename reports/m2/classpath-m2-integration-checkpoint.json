@@ -1,0 +1,101 @@
+{
+  "schema": 1,
+  "scope": "Explicit JVM execution-profile integration for the unchanged original import1b case on Stage45 runtime97b4da0. Focused acquisition, not the remaining 3663 selected cases or full M2 completion.",
+  "runtime_commit": "97b4da0526ea0a96e4efb71eb5616bc15d80c116",
+  "selected_count": 1,
+  "status_counts": {
+    "pass": 1
+  },
+  "original_repetitions": 2,
+  "original_case_id": "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/import1b.pkl",
+  "historical_corpus_and_cli_registry_unchanged": true,
+  "all_4527_case_ids_and_order_preserved": true,
+  "default_selected_count": 3664,
+  "inventory_counts": {
+    "cases": 4527,
+    "cases_by_execution": {
+      "ready": 3664,
+      "unimplemented": 823,
+      "unmapped": 40
+    },
+    "requirements": 475,
+    "requirements_by_kind": {
+      "language_parser": 137,
+      "language_token": 109,
+      "semantic-family": 31,
+      "specification": 198
+    }
+  },
+  "full_gate_failure_reasons_in_focused_report": 5476,
+  "parent_recorded_build": {
+    "build": {
+      "command": [
+        "cargo",
+        "build",
+        "-p",
+        "pkl-runtime",
+        "--locked",
+        "--release",
+        "--example",
+        "jvm_snippet_probe",
+        "--target-dir",
+        "/Users/cody.ij.hwang/Projects/pkl-rs/target"
+      ],
+      "exit_code": 0,
+      "stderr_sha256": "c384f7eee12b932b09c5d70c4477b1f2652fbc513b87c569c30910aefddbd440",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "timed_out": false
+    },
+    "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/release/examples/jvm_snippet_probe",
+    "sha256": "d82424c43fdf0ec494dd8bdd83499c50f3545f0a2465cd2dd6c54cc4d96e9c6e",
+    "source_binding": "recorded-build"
+  },
+  "source_stable": true,
+  "artifact_stable": true,
+  "embedded_module_inventory_captured": "fd672bc13ca686b55f367ce2c4538a8ce6e96016a13280e7b23552e19698bf01",
+  "gates": {
+    "integrity": 0,
+    "strict_selected": 0,
+    "full": 1
+  },
+  "unique_python_tests_passed_after_correction": 83,
+  "source_collector_changes": "Both M1 and shared M2 catalogs explicitly include stdlib/modules.txt. Literal evaluator embeds are checked against both catalogs; externally declared cfg(test) modules are excluded from the production artifact contract. No new M1 platform run is claimed.",
+  "retained_validation_failures": [
+    "Initial embedded-input test included Rust test-only fixtures; fixed the test boundary and reran that test in validation02.",
+    "The validation02 wrapper used an invalid corpus-check CLI flag; retained exit2 and used tools/discover.py --check in validation03."
+  ],
+  "evidence": {
+    "parent": {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/classpath-combined-focused-01/report.json",
+      "sha256": "f60a7ecdfb4ddda6c6dea2b584d7a64d6c88190bf9332d56f8e6f36415620286"
+    },
+    "child": {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/classpath-combined-focused-01/jvm-classpath/report.json",
+      "sha256": "7b9db3472e7c088586cea5b0bd93813c7dc3853b7d5381795ec4da161133fea9"
+    },
+    "validation01": {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/classpath-combined-validation-01/report.json",
+      "sha256": "a0e75764a20bc0f00243c93fa07f9015973fc88ad8f2abc1ea6f6a0536851f68"
+    },
+    "validation02": {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/classpath-combined-validation-02/report.json",
+      "sha256": "3a693943bfcf5c405832226e7ce9af7cc63a506e22c8b243cd941fc366613dcd"
+    },
+    "validation03": {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/classpath-combined-validation-03/report.json",
+      "sha256": "9dd2451b01915d7865bda1d49d9892ab58f92c52967bcfb9d1c0829e81756c06"
+    },
+    "promotion": {
+      "path": "/Users/cody.ij.hwang/Projects/pkl-rs/target/m2/classpath-combined-promotion-01/report.json",
+      "sha256": "789aac793b062abc6a37496fef2b113e3939ccada44477f354861b5c38ec1ae8"
+    }
+  },
+  "raw_archive_publication": "Pending; immutable local evidence roots are identified above.",
+  "full_m2_complete": false,
+  "hosted_ci_claimed": false,
+  "performance_target_claimed": false,
+  "independent_review": {
+    "path": "reports/m2/classpath-m2-integration-review.json",
+    "sha256": "87923d4e54557a78c514f5a41cc4209c87b4cc8aaa730faa7347b125b27e9b8d"
+  }
+}

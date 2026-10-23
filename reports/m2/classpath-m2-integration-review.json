@@ -1,0 +1,149 @@
+{
+  "schema": 1,
+  "status": "No new blocker in the four-file integration delta and recorded combined focused binding.",
+  "scope": "Read-only review only; no test, Java, build, Git or source mutations. Focused one-case success does not verify the remaining3663selected cases.",
+  "reviewed_source_sha256": {
+    "tools/m1_platforms.py": "38a16b7475d87e5ee1af98cb9f89aeeaa3c791087c22062cbdb587ea8d8234af",
+    "tools/m2_source_inputs.py": "5e56353c6334fa53b633a6f0bd7803436fa6b43c3371a375ac41bd4130bd059c",
+    "tools/tests/test_m1_platforms.py": "c8e54fa57ac49efdb4f86cbb8a7c4eef24b193e346ad42dc3aad0fe51fb82b18",
+    "tools/tests/test_runtime_source_inputs.py": "9102bf9fdf7c3aa389ef9cdb4848c52491974790adde8d60ddd5543fdf5c717a"
+  },
+  "proposal_drift_exactly_expected": [
+    "PLAN.md",
+    "compatibility/m2-language.json",
+    "tools/m2_source_inputs.py"
+  ],
+  "captured_parent_child_current_frozen_sources": 3823,
+  "modules_txt_in_both_frozen_source_maps": true,
+  "recorded_parent_build_child_supplied_artifact_join": true,
+  "artifact_sha256": "d82424c43fdf0ec494dd8bdd83499c50f3545f0a2465cd2dd6c54cc4d96e9c6e",
+  "no_child_build": true,
+  "external_child_workspace": true,
+  "same_oracle_and_two_complete_raw_successes": true,
+  "case_inventory": {
+    "cases": 4527,
+    "requirements": 475,
+    "default_selected": 3664,
+    "case_order_unchanged": true,
+    "changes": [
+      [
+        "pkl:language-snippet:pkl-core/src/test/files/LanguageSnippetTests/input/basic/import1b.pkl",
+        [
+          "adapter",
+          "execution",
+          "execution_profile"
+        ]
+      ]
+    ]
+  },
+  "historical_corpus_and_cli_registry_unchanged": true,
+  "literal_runtime_embeds_reviewed": [
+    "crates/pkl-runtime/src/stdlib/base.pkl",
+    "crates/pkl-runtime/src/stdlib/modules.txt",
+    "crates/pkl-runtime/src/stdlib/ref.pkl",
+    "crates/pkl-runtime/src/stdlib/test.pkl"
+  ],
+  "test_scope": "Current simple literal include_str/include_bytes sites; externally declared cfg(test) module fixtures are correctly excluded. This is not a general Rust parser or compile-graph proof.",
+  "validation_history": {
+    "01": {
+      "complete": false,
+      "commands": [
+        {
+          "label": "m2_execution_profiles",
+          "exit_code": 0,
+          "expected_exit_code": 0
+        },
+        {
+          "label": "m2_language",
+          "exit_code": 0,
+          "expected_exit_code": 0
+        },
+        {
+          "label": "m2_jvm_classpath",
+          "exit_code": 0,
+          "expected_exit_code": 0
+        },
+        {
+          "label": "m2_module_eval",
+          "exit_code": 0,
+          "expected_exit_code": 0
+        },
+        {
+          "label": "m2_mappings",
+          "exit_code": 0,
+          "expected_exit_code": 0
+        },
+        {
+          "label": "m1_platforms",
+          "exit_code": 0,
+          "expected_exit_code": 0
+        },
+        {
+          "label": "runtime_source_inputs",
+          "exit_code": 1,
+          "expected_exit_code": 0
+        }
+      ]
+    },
+    "02": {
+      "complete": false,
+      "commands": [
+        {
+          "label": "runtime_source_inputs",
+          "exit_code": 0,
+          "expected_exit_code": 0
+        },
+        {
+          "label": "manifest-freshness",
+          "exit_code": 0,
+          "expected_exit_code": 0
+        },
+        {
+          "label": "jvm-profile-freshness",
+          "exit_code": 0,
+          "expected_exit_code": 0
+        },
+        {
+          "label": "corpus-freshness",
+          "exit_code": 2,
+          "expected_exit_code": 0
+        }
+      ]
+    },
+    "03": {
+      "complete": true,
+      "commands": [
+        {
+          "label": "corpus-freshness",
+          "exit_code": 0,
+          "expected_exit_code": 0
+        },
+        {
+          "label": "focused-acquire",
+          "exit_code": 0,
+          "expected_exit_code": 0
+        },
+        {
+          "label": "focused-verify-report",
+          "exit_code": 0,
+          "expected_exit_code": 0
+        },
+        {
+          "label": "focused-verify-subset",
+          "exit_code": 0,
+          "expected_exit_code": 0
+        },
+        {
+          "label": "focused-verify-full",
+          "exit_code": 1,
+          "expected_exit_code": 1
+        }
+      ]
+    }
+  },
+  "full_gate_failure_count": 5476,
+  "parent_report_sha256": "f60a7ecdfb4ddda6c6dea2b584d7a64d6c88190bf9332d56f8e6f36415620286",
+  "child_report_sha256": "7b9db3472e7c088586cea5b0bd93813c7dc3853b7d5381795ec4da161133fea9",
+  "additional_findings": [],
+  "full_m2_complete": false
+}

@@ -25,8 +25,9 @@ does not satisfy the original expected exit status, even if raw channels agree.
 
 The [original JVM-classpath profile](m2-jvm-classpath.md) separately compares the
 unchanged `basic/import1b.pkl` input through the upstream JVM API/classloader
-boundary. Its explicit source-bound setup preserves the historical blocked CLI
-contract and does not automatically promote the whole-language inventory row.
+boundary. Its explicit reviewed execution mapping keeps the historical blocked
+CLI corpus contract while requiring two successful raw JVM-profile repetitions
+for that same original case ID in the selected/full M2 runner.
 
 `compatibility/m2-language.json` keeps semantic families, pinned source
 declarations, upstream language snippets, selected historical regressions, and

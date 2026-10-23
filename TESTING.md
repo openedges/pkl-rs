@@ -135,6 +135,15 @@ continues to report successful preparation as unsupported output evaluation.
 An original case's unmet execution prerequisites or expected exit status cannot
 be satisfied by raw agreement with a setup-dependent Java failure.
 
+The [JVM execution-profile integration](docs/m2-jvm-classpath.md) explicitly maps
+the original `import1b` ID to its JVM/classpath contract while preserving the
+historical blocked CLI record. The parent records the native build and binds its
+frozen bytes, sources, and oracle to two child repetitions. Those repetitions
+count as one original case. Focused adapter success leaves every omitted case
+required by the full gate. Both platform and M2 source collectors explicitly
+capture the compile-time standard-module inventory; historical captures that
+omitted it retain their separate provenance qualification.
+
 The [shared module-loading contract](docs/m2-module-loading.md) adds Java-origin
 module graph fixtures and typed Host continuation checks. Verify fixture
 provenance separately from actual evaluator execution:

@@ -7,10 +7,11 @@ import json
 import os
 from pathlib import Path
 import shutil
+import subprocess
 import sys
 
 import compat
-import m2_language
+import m2_source_inputs
 import oracle
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -55,7 +56,8 @@ def build_profile(root=ROOT):
         raise ValueError('original whole JVM snippet changed')
     return dict(schema=1, adapter=ADAPTER, baseline=corpus['baseline'], repetitions=2,
         scope='Original import1b whole-file JVM API output with its directory classpath. '
-              'Additive evidence; the historical CLI command and blocked full-gate obligation remain unchanged.',
+              'The historical CLI command and blocked corpus record remain unchanged; '
+              'reviewed M2 execution mappings are separate from this profile.',
         original_case_id=CASE_ID, original_case_sha256=compat.digest(compat.encoded(original)),
         input=dict(path=INPUT, sha256=original['source']['sha256']),
         expected_exit=[0], expected_outcome='success', classpath_root=CLASSPATH_ROOT,
@@ -87,17 +89,38 @@ def build_profile(root=ROOT):
 
 def load_profile(root=ROOT):
     profile = compat.read_json(root / PROFILE)
-    if profile != build_profile(root):
+    if compat.encoded(profile) != compat.encoded(build_profile(root)):
         raise ValueError('JVM classpath profile/source binding is stale')
     return profile
 
 
 def source_paths(root=ROOT):
-    profile = load_profile(root)
-    return sorted(set(m2_language.source_paths(root)) | set(JAVA_SOURCES)
-        | set(profile['reference']['sources']) | set(profile['classpath_resources'])
-        | {INPUT, PROFILE, '.cargo/config.toml', 'xtask/Cargo.toml', 'tools/m2_jvm_classpath.py',
-           'tools/tests/test_m2_jvm_classpath.py', 'docs/m2-jvm-classpath.md'})
+    load_profile(root)
+    return m2_source_inputs.source_paths(root)
+
+
+def capture(command, directory, name, environment=None, timeout=120):
+    """A build/compiler process, independent of the full language runner."""
+    try:
+        process = subprocess.run(command, cwd=ROOT, env=environment, capture_output=True, timeout=timeout)
+        row = dict(command=[str(item) for item in command], exit_code=process.returncode, timed_out=False)
+        stdout, stderr = process.stdout, process.stderr
+    except subprocess.TimeoutExpired as error:
+        stdout, stderr = error.stdout or b'', error.stderr or b''
+        row = dict(command=[str(item) for item in command], exit_code=None, timed_out=True)
+    for channel, data in [('stdout', stdout), ('stderr', stderr)]:
+        (directory / f'{name}.{channel}.bin').write_bytes(data)
+        row[channel + '_sha256'] = compat.digest(data)
+    compat.write_json(directory / f'{name}.process.json', row)
+    return row
+
+
+def valid_exception_outcome(outcome):
+    prefix = b'pkl-exception\torg.pkl.core.'
+    if not outcome.startswith(prefix) or not outcome.endswith(b'\n'):
+        return False
+    name = outcome[len(prefix):-1]
+    return bool(name) and all(unit in b'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_$' for unit in name)
 
 
 def classpath_files(root):
@@ -218,7 +241,7 @@ def comparison(output, repeat):
     differences = compat.differences(java, rust)
     oracle_error = (java['timed_out'] or java['exit_code'] not in (0, 1)
                     or java['workspace_changes'] or outcome.startswith(b'oracle-error\t')
-                    or (outcome != b'success\n' and not m2_language.valid_exception_outcome(outcome)))
+                    or (outcome != b'success\n' and not valid_exception_outcome(outcome)))
     if oracle_error:
         status = 'oracle-error'
     elif not oracle_success:
@@ -253,7 +276,7 @@ def execute(output, candidate=None, workspace=None):
     commands = []
     if candidate is None:
         command = build_command(output)
-        build = m2_language.capture(command, output, 'build-native', timeout=600)
+        build = capture(command, output, 'build-native', timeout=600)
         commands.append(dict(name='build-native', **build))
         if build['exit_code'] != 0 or build['timed_out']:
             raise ValueError('native build failed; raw evidence retained')
@@ -266,7 +289,7 @@ def execute(output, candidate=None, workspace=None):
     (artifacts / 'jvm_snippet_probe').chmod(0o755)
     (artifacts / 'java').mkdir()
     shutil.copyfile(Path(metadata['java']).with_name('javac'), artifacts / 'javac-launcher')
-    compiled = m2_language.capture(compiler_command(metadata, output), output, 'javac', metadata['environment'])
+    compiled = capture(compiler_command(metadata, output), output, 'javac', metadata['environment'])
     commands.append(dict(name='javac', **compiled))
     if compiled['exit_code'] != 0 or compiled['timed_out']:
         raise ValueError('JVM snippet compilation failed; raw evidence retained')
