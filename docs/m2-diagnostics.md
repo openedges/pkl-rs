@@ -55,9 +55,41 @@ surrogate substitutions even when the serialized bytes agree.
 
 ## Remaining scope
 
-Source text, URI, and identifier inputs still use UTF-8. Probe Host-rejection
-message inputs explicitly reject unmatched units. Invalid converter-path and
-unknown output-format producers still need canonical composition. Java internal
-errors from logger experiments remain oracle errors, not compatibility passes.
+Source text, URI, and identifier inputs still use UTF-8. Java internal errors
+from logger experiments remain oracle errors, not compatibility passes.
 Full diagnostic coverage, original-corpus regression, complete Host callbacks,
 and product/release performance gates remain required.
+
+## Host failures and output text
+
+Stage 44 extends canonical text to module and resource Host failures, invalid
+converter paths, unknown output formats, and abstract member names. `IoFailure`
+stores an `Option<PklString>`: an absent IOException message omits its cause line,
+while an empty message retains `IOException: `. Module resolve/source failures
+and typed resource failures use the same shared error composition. The original
+Java records also distinguish source-failure caching from resolve/read retries.
+
+`HostSession::reject_read` checks the current request token and obtains the URI
+from the pending read. `SourceProbe::reject_read_io` and the JS `rejectReadIo`
+method expose that typed resource completion. Generic rejection injects an
+already constructed runtime error; it does not represent a Java IOException.
+Probe text rejection methods and Node/Wasm messages retain the original units.
+Other Java exception classes and security/URI failure variants remain separate
+implementation obligations.
+
+The exact expression API request `output.text` enters the actual ModuleOutput
+operation, matching the pinned Java dispatch. It uses the existing module
+receiver, Host lifecycle, and VM continuation without adding a REPL frame or
+converting an arbitrary expression result to text.
+
+```sh
+cargo test -p pkl-runtime --locked --test m2_lossless_host
+```
+
+`tests/fixtures/m2-lossless-host` preserves eleven actual Java scenarios and two
+fresh JVM repetitions, with 80 ordered calls, complete UTF-16/UTF-8 payloads and
+resolve/source/read counters. The native test and actual Node/Chromium runs
+compare those original calls, including null/empty messages, retries, and
+subsequent successful evaluations. `tools/lossless_host_fixtures.py` exports the
+same pinned inputs for the portable driver; its property-format events are
+retained separately from the Java custom-reader counters.

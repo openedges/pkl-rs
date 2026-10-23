@@ -1,0 +1,231 @@
+{
+  "claims": {
+    "allExactReportCopiesAndHashesMatch": true,
+    "hostBoundary": "exact UTF16 and separately Java UTF8; optional producer-phase class metadata is not cross-runtime identity",
+    "hostCallsEachTarget": {
+      "browser": {
+        "calls": 80,
+        "graphs": 22,
+        "pass": 80
+      },
+      "node": {
+        "calls": 80,
+        "graphs": 22,
+        "pass": 80
+      }
+    },
+    "independentSavedRawPayloadChecks": 640,
+    "knownNonPassesPreserved": {
+      "primitiveRegex": 2,
+      "traceEachTarget": {
+        "oracle-error": 32,
+        "pass": 58
+      }
+    },
+    "noWholeM2OrFullCorpusCompletionClaim": true,
+    "stagedCloseoutDocumentBindings": {
+      "PLAN.md": "da284a35df9cb8224066424d543e2ad2dc0d331d6edf111ffcac5229eb59ff78",
+      "README.md": "d2f4b2408fe5e71aef6821ef9881a862fef299930046a3e4d8b86b8688c4da60",
+      "docs/architecture.md": "7a6b496c38feed25a6639cad464f62c65afdaf246ec000fa6ad802d25c70a823",
+      "reports/m2/README.md": "b8853dc37488f5843257325b30aae2897bd8be03afd9943b2c64a8f42f77a44c",
+      "reports/m2/stage44-code-review.json": "31741e01cb4cdb595247af14ac734e266c90865a8d7bae6d74dcd1d3ea1049bc",
+      "reports/m2/stage44-implementation-checkpoint.json": "a9219d415ccd0bda46db110e7442abef890c1ecccb015b7c5c805848e657947a",
+      "reports/m2/stage44-platform-summary.json": "ab69ebbc1c1fbe8c8f0128a8de1a21d91dc4bf6d2dfd6792e61224e44cfbced2",
+      "reports/m2/stage44-required-checks.json": "d467d36a3a59542150e64767e18e58a4d36851101d222420bcdb56a78ef6cf35"
+    },
+    "stagedProductionChangesCovered": [
+      "crates/pkl-napi/src/lib.rs",
+      "crates/pkl-runtime/src/diagnostic.rs",
+      "crates/pkl-runtime/src/evaluation.rs",
+      "crates/pkl-runtime/src/evaluation/session.rs",
+      "crates/pkl-runtime/src/host.rs",
+      "crates/pkl-runtime/src/host/errors.rs",
+      "crates/pkl-runtime/src/host/resources.rs",
+      "crates/pkl-runtime/src/modules.rs",
+      "crates/pkl-runtime/src/probe.rs",
+      "crates/pkl-runtime/src/value.rs",
+      "crates/pkl-runtime/src/vm.rs",
+      "crates/pkl-runtime/src/vm/converters.rs",
+      "crates/pkl-runtime/src/vm/output.rs",
+      "crates/pkl-runtime/tests/m2_lossless_host.rs",
+      "crates/pkl-wasm/src/lib.rs"
+    ]
+  },
+  "fullM2Complete": false,
+  "knownReviewFailure": "Initial audit_sources.py empty pantry cat-file batch assertion; preserved; audit_sources_02.py passed without input edits.",
+  "noGitMutations": true,
+  "noRuntimeReplay": true,
+  "priorCodeReviewSha256": "31741e01cb4cdb595247af14ac734e266c90865a8d7bae6d74dcd1d3ea1049bc",
+  "publication": {
+    "archives": [
+      {
+        "bytes": 14215209,
+        "independentlyVerified": true,
+        "path": "reports/m2/stage44-implementation-captures-01.tar.gz",
+        "payloadBytes": 74916535,
+        "payloadFiles": 21126,
+        "sha256": "f53663237a863c2ff57373823019b1987cfce6abe842725f2ee3f7665e6e7949",
+        "verification": {
+          "command": [
+            "/opt/homebrew/opt/python@3.14/bin/python3.14",
+            "tools/evidence.py",
+            "verify",
+            "reports/m2/stage44-implementation-captures-01.tar.gz"
+          ],
+          "exitCode": 0
+        }
+      },
+      {
+        "bytes": 6815670,
+        "independentlyVerified": true,
+        "path": "reports/m2/stage44-implementation-captures-02.tar.gz",
+        "payloadBytes": 74058341,
+        "payloadFiles": 13264,
+        "sha256": "48e69f5bf84985624f802a5caa043c237cf84c979f4c3ea87c1c3e280279cbe1",
+        "verification": {
+          "command": [
+            "/opt/homebrew/opt/python@3.14/bin/python3.14",
+            "tools/evidence.py",
+            "verify",
+            "reports/m2/stage44-implementation-captures-02.tar.gz"
+          ],
+          "exitCode": 0
+        }
+      },
+      {
+        "bytes": 5477055,
+        "independentlyVerified": true,
+        "path": "reports/m2/stage44-implementation-captures-03.tar.gz",
+        "payloadBytes": 49082481,
+        "payloadFiles": 9548,
+        "sha256": "2c42404f24b38e0d0a65b34ea334f9332572146d9ef25b0d99b64f4d15e03aef",
+        "verification": {
+          "command": [
+            "/opt/homebrew/opt/python@3.14/bin/python3.14",
+            "tools/evidence.py",
+            "verify",
+            "reports/m2/stage44-implementation-captures-03.tar.gz"
+          ],
+          "exitCode": 0
+        }
+      }
+    ],
+    "compressedBytes": 26507934,
+    "currentOriginalsAndBeforeAfterAndUnionAndInnerInventoryMatch": true,
+    "directFiles": 6,
+    "duplicatePaths": [],
+    "exactBeforeWalkExclusions": 16,
+    "linkRepresentations": [
+      {
+        "meaning": "Original symlink retained as explicit target metadata; original link excluded before traversal; referent files captured through their own paths.",
+        "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-implementation-01/workspace/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input-helper/globtest/childlinked",
+        "referencePath": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input-helper/globtest/childlinked",
+        "targetHex": "6368696c642f",
+        "targetSha256": "2affd42fb4ab5d3937747d31d118219afff6ac4116f0382d4a6bf8a6654ce273"
+      },
+      {
+        "meaning": "Original symlink retained as explicit target metadata; original link excluded before traversal; referent files captured through their own paths.",
+        "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-core-checkpoint-01/sources/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input-helper/globtest/childlinked",
+        "referencePath": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input-helper/globtest/childlinked",
+        "targetHex": "6368696c642f",
+        "targetSha256": "2affd42fb4ab5d3937747d31d118219afff6ac4116f0382d4a6bf8a6654ce273"
+      }
+    ],
+    "missingPaths": [],
+    "noRuntimeOrJavaOrEvidenceToolReplay": true,
+    "payloadBytes": 198057357,
+    "payloadFiles": 43938,
+    "payloadMode": "0644 representation; executable modes not claimed",
+    "priorFailuresPreservedByCompleteSelectedPathUnion": true,
+    "roots": 10
+  },
+  "reviewSha256": "032de36c1fa02c9bd850845375d4fec83949abca8e8ac52e2b6572d3539d9e0a",
+  "schema": 1,
+  "scope": "independent offline promotion, exact source/Git blob, archive union and bounded closeout claims review",
+  "source": {
+    "allActualStagedAndPinnedBlobsMatch": true,
+    "allCurrentHashesMatch": true,
+    "commands": [
+      {
+        "command": [
+          "cargo",
+          "xtask",
+          "verify"
+        ],
+        "exitCode": 0,
+        "seconds": 2.647128750104457
+      },
+      {
+        "command": [
+          "cargo",
+          "fmt",
+          "--all",
+          "--",
+          "--check"
+        ],
+        "exitCode": 0,
+        "seconds": 0.7743067499250174
+      },
+      {
+        "command": [
+          "cargo",
+          "clippy",
+          "--workspace",
+          "--all-targets",
+          "--locked",
+          "--",
+          "-D",
+          "warnings"
+        ],
+        "exitCode": 0,
+        "seconds": 6.880932583939284
+      },
+      {
+        "command": [
+          "cargo",
+          "test",
+          "--workspace",
+          "--locked",
+          "--no-fail-fast"
+        ],
+        "exitCode": 0,
+        "seconds": 115.17895383294672
+      },
+      {
+        "command": [
+          "cargo",
+          "check",
+          "-p",
+          "pkl-runtime",
+          "--target",
+          "wasm32-unknown-unknown",
+          "--locked"
+        ],
+        "exitCode": 0,
+        "seconds": 2.925449250265956
+      }
+    ],
+    "coreInputs": 9854,
+    "harnessInvocations": {
+      "failed": 0,
+      "filteredOut": 36,
+      "ignored": 1,
+      "passed": 692
+    },
+    "noEvaluatorOrBuildRuns": true,
+    "platformInputs": 148,
+    "projectPaths": 7917,
+    "promotedInputs": 7852,
+    "readOnlyGitCommands": [
+      "ls-files --stage -z",
+      "ls-tree -rz PIN",
+      "cat-file --batch"
+    ],
+    "referencePaths": 2008,
+    "repositoryBlobs": 6675,
+    "requiredInputs": 9862,
+    "toolInputs": 6,
+    "uniquePaths": 9925
+  },
+  "status": "pass-no-blocking-finding"
+}

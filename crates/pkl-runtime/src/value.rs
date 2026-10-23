@@ -182,7 +182,7 @@ impl RuntimeError {
 
 impl fmt::Display for RuntimeError {
     fn fmt(&self, formatter: &mut fmt::Formatter<'_>) -> fmt::Result {
-        fmt::Display::fmt(&self.message, formatter)
+        formatter.write_str(&self.message.to_java_utf8())
     }
 }
 

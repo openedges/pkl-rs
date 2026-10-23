@@ -1,0 +1,167 @@
+{
+  "archives": [
+    {
+      "bytes": 14215209,
+      "path": "reports/m2/stage44-implementation-captures-01.tar.gz",
+      "payloadBytes": 74916535,
+      "payloadFiles": 21126,
+      "sha256": "f53663237a863c2ff57373823019b1987cfce6abe842725f2ee3f7665e6e7949",
+      "verification": {
+        "command": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "tools/evidence.py",
+          "verify",
+          "reports/m2/stage44-implementation-captures-01.tar.gz"
+        ],
+        "exitCode": 0
+      }
+    },
+    {
+      "bytes": 6815670,
+      "path": "reports/m2/stage44-implementation-captures-02.tar.gz",
+      "payloadBytes": 74058341,
+      "payloadFiles": 13264,
+      "sha256": "48e69f5bf84985624f802a5caa043c237cf84c979f4c3ea87c1c3e280279cbe1",
+      "verification": {
+        "command": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "tools/evidence.py",
+          "verify",
+          "reports/m2/stage44-implementation-captures-02.tar.gz"
+        ],
+        "exitCode": 0
+      }
+    },
+    {
+      "bytes": 5477055,
+      "path": "reports/m2/stage44-implementation-captures-03.tar.gz",
+      "payloadBytes": 49082481,
+      "payloadFiles": 9548,
+      "sha256": "2c42404f24b38e0d0a65b34ea334f9332572146d9ef25b0d99b64f4d15e03aef",
+      "verification": {
+        "command": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "tools/evidence.py",
+          "verify",
+          "reports/m2/stage44-implementation-captures-03.tar.gz"
+        ],
+        "exitCode": 0
+      }
+    }
+  ],
+  "excludedBeforeTraversal": [
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-core-checkpoint-01/sources/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input-helper/globtest/childlinked",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-implementation-01/cargo-target",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-implementation-01/workspace/.cache",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-implementation-01/workspace/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input-helper/globtest/childlinked",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-implementation-01/workspace/target",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-implementation-01/workspace/tools/__pycache__",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-implementation-01/workspace/tools/tests/__pycache__",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-platform-candidate-01/cargo-target",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-platform-candidate-01/workspace/.cache",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-platform-candidate-01/workspace/.git",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-platform-candidate-01/workspace/external/pkl",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-platform-candidate-01/workspace/external/pkl-pantry",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-platform-candidate-01/workspace/target",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-platform-candidate-01/workspace/tools/__pycache__",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-platform-candidate-01/workspace/tools/platform/node_modules",
+    "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-platform-candidate-01/workspace/tools/tests/__pycache__"
+  ],
+  "files": [
+    {
+      "archivePath": "publication/source-link-01.json",
+      "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage44/target/m2/stage44-implementation-publication-01/source-link-01.json"
+    },
+    {
+      "archivePath": "publication/source-link-02.json",
+      "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage44/target/m2/stage44-implementation-publication-01/source-link-02.json"
+    },
+    {
+      "archivePath": "stage42-worktree/target/m2/stage44-lossless-host-oracle-01.stdout.bin",
+      "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01.stdout.bin"
+    },
+    {
+      "archivePath": "stage42-worktree/target/m2/stage44-lossless-host-oracle-01.stderr.bin",
+      "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01.stderr.bin"
+    },
+    {
+      "archivePath": "stage42-worktree/target/m2/stage44-lossless-producer-baseline-01.stdout.bin",
+      "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-producer-baseline-01.stdout.bin"
+    },
+    {
+      "archivePath": "stage42-worktree/target/m2/stage44-lossless-producer-baseline-01.stderr.bin",
+      "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-producer-baseline-01.stderr.bin"
+    }
+  ],
+  "fullM2Complete": false,
+  "historicalInventoryScope": "Some original fixture/source-copy inventories describe their original full acquisition. Copies and initial failed inventories remain unchanged; outer publication verifies every selected payload byte.",
+  "omissions": [
+    "Exact Cargo caches, infrastructure aliases and generated Python caches excluded before traversal.",
+    "Original directory symlinks represented explicitly by their target bytes and hash; not followed.",
+    "Stage42 live full regression and Stage45 ongoing work are outside this checkpoint."
+  ],
+  "payloadBytes": 198057357,
+  "payloadFiles": 43938,
+  "preservation": "Each unique selected path is stored once. Raw failed and successful outcomes retained. Archive payload modes are 0644; no executable-mode equivalence claim.",
+  "roots": [
+    {
+      "archivePrefix": "stage42-worktree/target/m2/stage44-lossless-host-implementation-01",
+      "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-implementation-01"
+    },
+    {
+      "archivePrefix": "stage42-worktree/target/m2/stage44-core-checkpoint-01",
+      "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-core-checkpoint-01"
+    },
+    {
+      "archivePrefix": "stage42-worktree/target/m2/stage44-lossless-host-oracle-01",
+      "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01"
+    },
+    {
+      "archivePrefix": "stage42-worktree/target/m2/stage44-lossless-producer-baseline-01",
+      "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-producer-baseline-01"
+    },
+    {
+      "archivePrefix": "stage42-worktree/target/m2/stage44-lossless-platform-candidate-01",
+      "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-platform-candidate-01"
+    },
+    {
+      "archivePrefix": "stage42-worktree/target/m2/stage44-independent-review-01",
+      "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-independent-review-01"
+    },
+    {
+      "archivePrefix": "stage44-worktree/target/m2/stage44-promotion-01",
+      "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage44/target/m2/stage44-promotion-01"
+    },
+    {
+      "archivePrefix": "stage44-worktree/target/m2/stage44-required-checks-01",
+      "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage44/target/m2/stage44-required-checks-01"
+    },
+    {
+      "archivePrefix": "stage44-worktree/target/m2/stage44-manifest-validation-01",
+      "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage44/target/m2/stage44-manifest-validation-01"
+    },
+    {
+      "archivePrefix": "stage44-worktree/target/m2/stage44-index-validation-01",
+      "source": "/Users/cody.ij.hwang/Projects/pkl-rs.stage44/target/m2/stage44-index-validation-01"
+    }
+  ],
+  "schema": 1,
+  "scope": "Stage44 Host errors and output.text implementation, original Java records, initial failures, actual native/Node/Chromium results, independent code review, exact promotion and required Git-worktree checks. Full M2 and full selected regression remain open.",
+  "sourceChanges": [],
+  "symlinkRepresentations": [
+    {
+      "meaning": "Original symlink retained as explicit target metadata; original link excluded before traversal; referent files captured through their own paths.",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-implementation-01/workspace/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input-helper/globtest/childlinked",
+      "referencePath": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input-helper/globtest/childlinked",
+      "targetHex": "6368696c642f",
+      "targetSha256": "2affd42fb4ab5d3937747d31d118219afff6ac4116f0382d4a6bf8a6654ce273"
+    },
+    {
+      "meaning": "Original symlink retained as explicit target metadata; original link excluded before traversal; referent files captured through their own paths.",
+      "originalPath": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-core-checkpoint-01/sources/external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input-helper/globtest/childlinked",
+      "referencePath": "external/pkl/pkl-core/src/test/files/LanguageSnippetTests/input-helper/globtest/childlinked",
+      "targetHex": "6368696c642f",
+      "targetSha256": "2affd42fb4ab5d3937747d31d118219afff6ac4116f0382d4a6bf8a6654ce273"
+    }
+  ]
+}

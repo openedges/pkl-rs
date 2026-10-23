@@ -1,0 +1,2 @@
+payload = "\u{d83d}|\u{dc00}|\u{1f600}|?|\u{fffd}|\u{0}."
+result = (new PcfRenderer { converters { [payload] = (x) -> x } }).renderValue(new Dynamic { x = 1 })

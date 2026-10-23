@@ -1,0 +1,3 @@
+import "lossless:/child" as child
+value = child.value
+stable = 7

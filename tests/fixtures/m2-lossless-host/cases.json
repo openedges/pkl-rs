@@ -1,0 +1,163 @@
+[
+  {
+    "id": "invalid-converter",
+    "mode": "converter",
+    "cause": "units",
+    "source": "payload = \"\\u{d83d}|\\u{dc00}|\\u{1f600}|?|\\u{fffd}|\\u{0}.\"\nresult = (new PcfRenderer { converters { [payload] = (x) -> x } }).renderValue(new Dynamic { x = 1 })\n",
+    "expressions": [
+      "result",
+      "result"
+    ],
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/workspaces/invalid-converter",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/workspaces/invalid-converter/main.pkl",
+    "sourceSha256": "4ccdc1c7c21da82adb79a95fd31b60747797e42ad4b57b65532549a75df2b58c"
+  },
+  {
+    "id": "unknown-output-format",
+    "mode": "unknown-format",
+    "cause": "units",
+    "source": "result = 1\n",
+    "expressions": [
+      "output.text",
+      "output.text"
+    ],
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/workspaces/unknown-output-format",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/workspaces/unknown-output-format/main.pkl",
+    "sourceSha256": "68833fe50c22a93765392cd3e53b25e8a0c7b74e4730e85425e21da46bd69d5c"
+  },
+  {
+    "id": "module-resolve-units",
+    "mode": "module-resolve",
+    "cause": "units",
+    "source": "import \"lossless:/child\" as child\nvalue = child.value\nstable = 7\n",
+    "expressions": [
+      "stable",
+      "value",
+      "value",
+      "stable"
+    ],
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/workspaces/module-resolve-units",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/workspaces/module-resolve-units/main.pkl",
+    "sourceSha256": "5dd0f1be321bcfdf3ae8f84ea85149731b308545bf89786f6578554bddac5aa6"
+  },
+  {
+    "id": "module-resolve-null",
+    "mode": "module-resolve",
+    "cause": "null",
+    "source": "import \"lossless:/child\" as child\nvalue = child.value\nstable = 7\n",
+    "expressions": [
+      "stable",
+      "value",
+      "value",
+      "stable"
+    ],
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/workspaces/module-resolve-null",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/workspaces/module-resolve-null/main.pkl",
+    "sourceSha256": "5dd0f1be321bcfdf3ae8f84ea85149731b308545bf89786f6578554bddac5aa6"
+  },
+  {
+    "id": "module-resolve-empty",
+    "mode": "module-resolve",
+    "cause": "empty",
+    "source": "import \"lossless:/child\" as child\nvalue = child.value\nstable = 7\n",
+    "expressions": [
+      "stable",
+      "value",
+      "value",
+      "stable"
+    ],
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/workspaces/module-resolve-empty",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/workspaces/module-resolve-empty/main.pkl",
+    "sourceSha256": "5dd0f1be321bcfdf3ae8f84ea85149731b308545bf89786f6578554bddac5aa6"
+  },
+  {
+    "id": "module-source-units",
+    "mode": "module-source",
+    "cause": "units",
+    "source": "import \"lossless:/child\" as child\nvalue = child.value\nstable = 7\n",
+    "expressions": [
+      "stable",
+      "value",
+      "value",
+      "stable"
+    ],
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/workspaces/module-source-units",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/workspaces/module-source-units/main.pkl",
+    "sourceSha256": "5dd0f1be321bcfdf3ae8f84ea85149731b308545bf89786f6578554bddac5aa6"
+  },
+  {
+    "id": "module-source-null",
+    "mode": "module-source",
+    "cause": "null",
+    "source": "import \"lossless:/child\" as child\nvalue = child.value\nstable = 7\n",
+    "expressions": [
+      "stable",
+      "value",
+      "value",
+      "stable"
+    ],
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/workspaces/module-source-null",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/workspaces/module-source-null/main.pkl",
+    "sourceSha256": "5dd0f1be321bcfdf3ae8f84ea85149731b308545bf89786f6578554bddac5aa6"
+  },
+  {
+    "id": "module-source-empty",
+    "mode": "module-source",
+    "cause": "empty",
+    "source": "import \"lossless:/child\" as child\nvalue = child.value\nstable = 7\n",
+    "expressions": [
+      "stable",
+      "value",
+      "value",
+      "stable"
+    ],
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/workspaces/module-source-empty",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/workspaces/module-source-empty/main.pkl",
+    "sourceSha256": "5dd0f1be321bcfdf3ae8f84ea85149731b308545bf89786f6578554bddac5aa6"
+  },
+  {
+    "id": "resource-units",
+    "mode": "resource",
+    "cause": "units",
+    "source": "value = read(\"lossless:/resource\")\nstable = 7\n",
+    "expressions": [
+      "stable",
+      "value",
+      "value",
+      "stable"
+    ],
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/workspaces/resource-units",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/workspaces/resource-units/main.pkl",
+    "sourceSha256": "967301b2d553684c0432ae54edba3bd4341537276d5f7f23bad8a6c0fe82fd79"
+  },
+  {
+    "id": "resource-null",
+    "mode": "resource",
+    "cause": "null",
+    "source": "value = read(\"lossless:/resource\")\nstable = 7\n",
+    "expressions": [
+      "stable",
+      "value",
+      "value",
+      "stable"
+    ],
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/workspaces/resource-null",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/workspaces/resource-null/main.pkl",
+    "sourceSha256": "967301b2d553684c0432ae54edba3bd4341537276d5f7f23bad8a6c0fe82fd79"
+  },
+  {
+    "id": "resource-empty",
+    "mode": "resource",
+    "cause": "empty",
+    "source": "value = read(\"lossless:/resource\")\nstable = 7\n",
+    "expressions": [
+      "stable",
+      "value",
+      "value",
+      "stable"
+    ],
+    "workspace": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/workspaces/resource-empty",
+    "moduleUri": "file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/workspaces/resource-empty/main.pkl",
+    "sourceSha256": "967301b2d553684c0432ae54edba3bd4341537276d5f7f23bad8a6c0fe82fd79"
+  }
+]

@@ -640,6 +640,7 @@ impl SourceProbe {
             now,
         )
     }
+    /// Legacy text convenience wrapper; the typed path below accepts all UTF-16.
     pub fn reject_module(
         &mut self,
         token: &str,
@@ -648,12 +649,30 @@ impl SourceProbe {
         message: &str,
         now: u32,
     ) -> Result<(), RuntimeError> {
+        self.reject_module_text(token, loading_source, kind, Some(message.into()), now)
+    }
+    pub fn reject_module_text(
+        &mut self,
+        token: &str,
+        loading_source: bool,
+        kind: &str,
+        message: Option<crate::value::PklString>,
+        now: u32,
+    ) -> Result<(), RuntimeError> {
         use crate::modules::{ModuleCompletion, ModuleHostError};
         let failure = match kind {
             "not-found" => ModuleHostError::NotFound,
-            "io" => ModuleHostError::Io(message.into()),
-            "denied" => ModuleHostError::Denied(message.into()),
-            "unsupported" => ModuleHostError::Unsupported(message.into()),
+            "io" => ModuleHostError::Io(crate::host::IoFailure::new(message)),
+            "denied" | "unsupported" => {
+                let message = message.ok_or_else(|| {
+                    RuntimeError::new(ErrorKind::Host, "this module Host error requires a message")
+                })?;
+                if kind == "denied" {
+                    ModuleHostError::Denied(message)
+                } else {
+                    ModuleHostError::Unsupported(message)
+                }
+            }
             _ => {
                 return Err(RuntimeError::new(
                     ErrorKind::Host,
@@ -671,10 +690,32 @@ impl SourceProbe {
             now,
         )
     }
+    /// A resource-reader IOException, distinct from raw diagnostic injection.
+    pub fn reject_read_io(
+        &mut self,
+        token: &str,
+        message: Option<crate::value::PklString>,
+        now: u32,
+    ) -> Result<(), RuntimeError> {
+        self.session.reject_read(
+            token,
+            crate::host::ReadFailure::Io(crate::host::IoFailure::new(message)),
+            now.into(),
+        )
+    }
     pub fn drain_cancelled_modules(&mut self) -> Vec<String> {
         self.session.drain_cancelled_modules()
     }
     pub fn reject(&mut self, token: &str, message: &str, now: u32) -> Result<(), RuntimeError> {
+        self.reject_text(token, message.into(), now)
+    }
+    /// Inject an already constructed Host diagnostic; this is not an IOException.
+    pub fn reject_text(
+        &mut self,
+        token: &str,
+        message: crate::value::PklString,
+        now: u32,
+    ) -> Result<(), RuntimeError> {
         self.session.resume(
             token,
             Err(RuntimeError::new(ErrorKind::Host, message)),

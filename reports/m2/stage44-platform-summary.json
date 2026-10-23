@@ -1,0 +1,296 @@
+{
+  "scope": "Isolated frozen Stage44 candidate portable checkpoint. Actual Java-backed Host error/output.text calls and affected prior API/output regression scopes only; not full M2 compatibility or original checkout promotion confirmation.",
+  "authority": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-implementation-01/workspace",
+  "coreCheckpointReportSha256": "44e32e3ddee706a2d6e0a64a2ec614a991c7090b0959df7ad57bd92cc77980f0",
+  "copiedSourceSha256": "bbee41c8ebc28161ac040035db93853eb834ded93d1a803fbc2683769d5aebcb",
+  "productionSourceFilesExactlyEqualToCoreCheckpoint": 70,
+  "standard": {
+    "reportSha256": "92e7e137a6812825c8e34e32bb7e3247c08680b86792c3448f9e7616c46be387",
+    "exitCode": 0,
+    "shared": 6078,
+    "java": {
+      "rust": 6076,
+      "node": 6076,
+      "browser": 6076
+    },
+    "architectureChecks": {
+      "node": 92,
+      "browser": 92
+    },
+    "sourceStable": true,
+    "strictCompatibility": "fail",
+    "knownGaps": [
+      "regex-unicode-15-vs-16",
+      "regex-zero-width-supplementary"
+    ]
+  },
+  "newHost11": {
+    "reportSha256": "755b76375133e454d38342691cff354de1b4991a59deeba3864532e23d432558",
+    "targets": {
+      "node": {
+        "graphs": 22,
+        "calls": 80,
+        "pass": 80
+      },
+      "browser": {
+        "graphs": 22,
+        "calls": 80,
+        "pass": 80
+      }
+    },
+    "oracleCaseCount": 11,
+    "freshOriginalJavaProcesses": 22,
+    "actualOriginalJavaCalls": 80,
+    "comparisonBoundary": "Full actual Java UTF16 units and separately Java UTF8 bytes; all original ordered calls/retries/counters retained. Null/empty IO distinct. Property-format reads remain visible and excluded from only Java custom SPI counters. Module identities helper-source-backed, not independent observed key table."
+  },
+  "regressions": {
+    "producer-tools/execution": {
+      "reportPath": "producer-tools/execution/execution.json",
+      "reportSha256": "6b671b768b3252868f7e391b1cb04c43e47140855ba060be5d0436da15500136",
+      "targets": {
+        "node": {
+          "statusCounts": {
+            "pass": 4
+          },
+          "executions": 4,
+          "calls": {
+            "pass": 20
+          }
+        },
+        "browser": {
+          "statusCounts": {
+            "pass": 4
+          },
+          "executions": 4,
+          "calls": {
+            "pass": 20
+          }
+        }
+      }
+    },
+    "constructors": {
+      "reportPath": "constructors/execution.json",
+      "reportSha256": "019810fb9e180b00ebf7922e6d76e7e67d98610c803e8c7f60d7932037aa00bb",
+      "targets": {
+        "node": {
+          "statusCounts": {
+            "pass": 24
+          },
+          "executions": 24,
+          "calls": {}
+        },
+        "browser": {
+          "statusCounts": {
+            "pass": 24
+          },
+          "executions": 24,
+          "calls": {}
+        }
+      }
+    },
+    "scalars": {
+      "reportPath": "scalars/execution.json",
+      "reportSha256": "dcda01b695409a90cd7b40fab217518d1d661e7088deebe0004a07a9072912a8",
+      "targets": {
+        "node": {
+          "statusCounts": {
+            "pass": 2
+          },
+          "executions": 2,
+          "calls": {}
+        },
+        "browser": {
+          "statusCounts": {
+            "pass": 2
+          },
+          "executions": 2,
+          "calls": {}
+        }
+      }
+    },
+    "napi-architecture": {
+      "reportPath": "napi-architecture/report.json",
+      "reportSha256": "2b6d27224eb68c26be1b88b1f9a98e6b0560658aedec2e6e7002886217f9659a"
+    },
+    "module22": {
+      "reportPath": "module22/execution.json",
+      "reportSha256": "4160146a22c5d1a298a868bfcf0eb9162d62fef1ff63af882a349668c04233e4",
+      "targets": {
+        "node": {
+          "statusCounts": {
+            "pass": 44
+          },
+          "executions": 44,
+          "calls": {
+            "pass": 116
+          }
+        },
+        "browser": {
+          "statusCounts": {
+            "pass": 44
+          },
+          "executions": 44,
+          "calls": {
+            "pass": 116
+          }
+        }
+      }
+    },
+    "inheritance3": {
+      "reportPath": "inheritance3/execution.json",
+      "reportSha256": "7bae94df1fe7399f6f1eb33165826838308234213f677617f7036d037a1675a2",
+      "targets": {
+        "node": {
+          "statusCounts": {
+            "pass": 6
+          },
+          "executions": 6,
+          "calls": {
+            "pass": 20
+          }
+        },
+        "browser": {
+          "statusCounts": {
+            "pass": 6
+          },
+          "executions": 6,
+          "calls": {
+            "pass": 20
+          }
+        }
+      }
+    },
+    "string-error2": {
+      "reportPath": "string-error2/execution.json",
+      "reportSha256": "0a78784d0a1bd8aaf5f42bd43bab5fb9daaf7854c1ffe96bb53be6fce4f5fdf5",
+      "targets": {
+        "node": {
+          "statusCounts": {
+            "pass": 2
+          },
+          "executions": 2,
+          "calls": {
+            "pass": 4
+          }
+        },
+        "browser": {
+          "statusCounts": {
+            "pass": 2
+          },
+          "executions": 2,
+          "calls": {
+            "pass": 4
+          }
+        }
+      }
+    },
+    "pcf192": {
+      "reportPath": "pcf192/execution.json",
+      "reportSha256": "303a5aa669ac6976b2a6e1b54a3c394fe52b6fa08dbcc80754c894035c334980",
+      "targets": {
+        "node": {
+          "statusCounts": {
+            "pass": 384
+          },
+          "executions": 384,
+          "calls": {}
+        },
+        "browser": {
+          "statusCounts": {
+            "pass": 384
+          },
+          "executions": 384,
+          "calls": {}
+        }
+      }
+    },
+    "trace45": {
+      "reportPath": "trace45/execution.json",
+      "reportSha256": "4073795b6a8c905c3eb6890cf3976b7d5d0d4843e84472ab96078cc0058c1906",
+      "targets": {
+        "node": {
+          "statusCounts": {
+            "pass": 58,
+            "oracle-error": 32
+          },
+          "executions": 90,
+          "calls": {}
+        },
+        "browser": {
+          "statusCounts": {
+            "pass": 58,
+            "oracle-error": 32
+          },
+          "executions": 90,
+          "calls": {}
+        }
+      }
+    }
+  },
+  "artifacts": {
+    "pkl_napi.node": "2358c993e8375b09734c538a66140029ada0d396b7020f901b7ad12b621045b7",
+    "semantics_probe": "d4a87b03aaa34799b46d34a8dc688805e725f2c297423747c3d087b47ae50c75",
+    "wasm/pkl_wasm_bg.wasm.d.ts": "cf618d391ab920b06cf8d2e3654d28ea7d77b3fd46454260e4b6a5078e43d6c2",
+    "wasm/pkl_wasm_bg.wasm": "1f7c125c5010b3931c5dde5cb7cdba8c60a9c8a5c7866ac8e686c6cd200b601d",
+    "wasm/pkl_wasm.js": "296ca2b784c41e58891fbbe573a809e01eeceb19b85881c0f4d3ca669037e359",
+    "wasm/pkl_wasm.d.ts": "c28285b4264d00e4e1b6100e19a2c11f51ccfd11b73adf171a283603b5c61da0"
+  },
+  "comparisonsWrapperExit": 1,
+  "sourceStable": true,
+  "knownNonPasses": [
+    "Original two regex comparisons pertarget remain failed strict compatibility.",
+    "Trace45 pertarget58pass32oracle-error; strictexit1 retained.",
+    "Historical UTF8-only standard groups remain explicitly byte-only; no new unit-compatibility claim."
+  ],
+  "commands": [
+    {
+      "name": "lossless-host11",
+      "exitCode": 0
+    },
+    {
+      "name": "producer8-hint2",
+      "exitCode": 0
+    },
+    {
+      "name": "constructors",
+      "exitCode": 0
+    },
+    {
+      "name": "scalars",
+      "exitCode": 0
+    },
+    {
+      "name": "napi-architecture",
+      "exitCode": 0
+    },
+    {
+      "name": "module22",
+      "exitCode": 0
+    },
+    {
+      "name": "inheritance3",
+      "exitCode": 0
+    },
+    {
+      "name": "string-error2",
+      "exitCode": 0
+    },
+    {
+      "name": "pcf192",
+      "exitCode": 0
+    },
+    {
+      "name": "trace45",
+      "exitCode": 1
+    }
+  ],
+  "toolingMapSha256": "eec7fd2c2af7f20a0b293c4823e419a2218cfbb2a306fbcea0c759c9a989dcc3",
+  "originalFixtureChanged": false,
+  "newJavaAcquisition": false,
+  "liveHandles": [],
+  "historicalFailurePreserved": "tool-validation/portable-preflight-01 failedprocesscomparison source/raw preserved; fixed preflight02 succeeded without changing original fixture.",
+  "externalDependencies": [
+    "Closed corrected Stage43 candidate02 source baseline closure668ea52fdc1a73e2591643f2ce845a6511a4a0d639739936880f231b28a6d7c8",
+    "Exact original Stage43/Stage40 raw inputs referenced by affected regression acquisition maps; separately committed historical evidence, not rewritten."
+  ]
+}

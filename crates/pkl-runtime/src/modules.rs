@@ -2,7 +2,10 @@
 //! cache boundaries; neither is a resource read or an evaluation in another VM.
 use std::sync::Arc;
 
-use crate::value::{ErrorKind, RuntimeError};
+use crate::{
+    host::IoFailure,
+    value::{ErrorKind, PklString, RuntimeError},
+};
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq, PartialOrd, Ord)]
 pub struct UnitId(pub u32);
@@ -65,9 +68,9 @@ pub enum ModuleRequestKind {
 pub enum ModuleHostError {
     NotFound,
     /// Raw I/O exception message; shared diagnostics add the IOException type.
-    Io(Arc<str>),
-    Denied(Arc<str>),
-    Unsupported(Arc<str>),
+    Io(IoFailure),
+    Denied(PklString),
+    Unsupported(PklString),
 }
 
 impl ModuleHostError {
@@ -76,14 +79,9 @@ impl ModuleHostError {
             Self::NotFound => {
                 RuntimeError::new(ErrorKind::Host, format!("Cannot find module `{uri}`."))
             }
-            Self::Io(cause) => RuntimeError::new(
-                ErrorKind::Host,
-                format!("I/O error loading module `{uri}`.\nIOException: {cause}"),
-            ),
-            Self::Denied(message) => RuntimeError::new(ErrorKind::Host, message.as_ref()),
-            Self::Unsupported(message) => {
-                RuntimeError::new(ErrorKind::Unsupported, message.as_ref())
-            }
+            Self::Io(cause) => cause.into_runtime("loading module", uri),
+            Self::Denied(message) => RuntimeError::new(ErrorKind::Host, message),
+            Self::Unsupported(message) => RuntimeError::new(ErrorKind::Unsupported, message),
         }
     }
 }

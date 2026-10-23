@@ -3,13 +3,20 @@
 class TransportError extends Error {}
 const failureKinds = new Set(['not-found', 'io', 'denied', 'unsupported']);
 function failure(entry) {
-  if (!entry || !failureKinds.has(entry.kind) || typeof entry.message !== 'string')
+  if (!entry || !failureKinds.has(entry.kind) || !Object.hasOwn(entry, 'message')
+      || (typeof entry.message !== 'string' && !(entry.kind === 'io' && entry.message === null)))
     throw Error('invalid module Host failure');
   return entry;
 }
 function resolution(entry) {
   if (!entry || typeof entry.importUri !== 'string') throw Error('invalid module resolution');
-  if (entry.failure) failure(entry.failure);
+  if (entry.resolves != null) {
+    if (!Array.isArray(entry.resolves) || !entry.resolves.length) throw Error('empty module resolve plan');
+    for (const leaf of entry.resolves) {
+      if (leaf.resolves != null) throw Error('nested module resolve plans are invalid');
+      resolution({...leaf, importUri: entry.importUri});
+    }
+  } else if (entry.failure) failure(entry.failure);
   else if (typeof entry.resolvedUri !== 'string' || typeof entry.sourceUri !== 'string')
     throw Error('invalid resolved/source identity');
   return entry;
@@ -33,6 +40,28 @@ function source(entry) {
     throw Error('invalid source callback count');
   return entry;
 }
+function resource(entry) {
+  if (!entry || typeof entry.uri !== 'string') throw Error('invalid resource URI');
+  if (entry.reads != null) {
+    if (!Array.isArray(entry.reads) || !entry.reads.length) throw Error('empty resource read plan');
+    for (const leaf of entry.reads) {
+      if (leaf.reads != null) throw Error('nested resource read plans are invalid');
+      resource({...leaf, uri: entry.uri});
+    }
+  } else {
+    if (Object.hasOwn(entry, 'failure') === Object.hasOwn(entry, 'valueUnits'))
+      throw Error('resource must provide one completion');
+    if (entry.failure) {
+      const f = entry.failure;
+      if (!Object.hasOwn(f, 'message') || !['io','diagnostic'].includes(f.kind)
+          || (typeof f.message !== 'string' && !(f.kind === 'io' && f.message === null)))
+        throw Error('invalid resource failure');
+    } else if (!Array.isArray(entry.valueUnits)
+        || entry.valueUnits.some(unit => !Number.isInteger(unit) || unit < 0 || unit > 65535))
+      throw Error('invalid resource UTF16 code unit');
+  }
+  return entry;
+}
 function table(entries, validate, key) {
   const result = new Map();
   for (const entry of entries ?? []) {
@@ -54,7 +83,7 @@ function thrown(error) { return { message: String(error?.message ?? error), stac
 
 export function runModuleLoaderCase(api, fixture, budget = 7) {
   let session;
-  const results = [], requests = [], callbacks = [], logs = [], retained = [];
+  const results = [], requests = [], reads = [], callbacks = [], logs = [], retained = [];
   const architecture = { collections: 0, terminalSlots: null, ownedResultsStable: true,
     cancelledModules: [], cancelledReads: [] };
   let acquisitionError = null, polls = 0;
@@ -62,7 +91,8 @@ export function runModuleLoaderCase(api, fixture, budget = 7) {
     if (!Number.isSafeInteger(budget) || budget <= 0) throw Error('invalid polling budget');
     const resolutions = table(fixture.resolutions, resolution, 'importUri');
     const sources = table(fixture.sources, source, 'resolvedUri');
-    const callbackCounts = new Map(), loadCounts = new Map();
+    const resources = table(fixture.resources, resource, 'uri');
+    const callbackCounts = new Map(), loadCounts = new Map(), resolveCounts = new Map(), readCounts = new Map();
     const paths = fixture.paths ?? [];
     if (fixture.logger && (!Array.isArray(fixture.logger.callbackPaths ?? [])
         || (fixture.logger.callbackPaths ?? []).some(index => !Number.isSafeInteger(index) || index < 0)))
@@ -110,7 +140,13 @@ export function runModuleLoaderCase(api, fixture, budget = 7) {
           if (request.kind === 'resolve') {
             if (typeof request.importUri !== 'string' || typeof request.importerOriginalUri !== 'string'
                 || typeof request.importerResolvedUri !== 'string') throw new TransportError('incomplete resolver context');
-            const entry = resolutions.get(request.importUri);
+            let entry = resolutions.get(request.importUri);
+            if (entry?.resolves) {
+              const index = resolveCounts.get(request.importUri) ?? 0;
+              if (index >= entry.resolves.length) throw new TransportError('module resolve plan exhausted');
+              resolveCounts.set(request.importUri, index + 1);
+              entry = {...entry, ...entry.resolves[index], resolves: undefined};
+            }
             if (!entry) session.rejectModuleResolution(event.token, 'not-found', '', 0);
             else if (entry.originalUri != null && entry.originalUri !== request.originalUri)
               throw new TransportError('module original identity differs from fixture');
@@ -175,14 +211,22 @@ export function runModuleLoaderCase(api, fixture, budget = 7) {
           continue;
         }
         if (event.kind === 'read') {
-          if (event.uri.startsWith('prop:') || event.uri.startsWith('env:')) session.respondConfigured(event.token, 0);
-          else {
-            const resource = fixture.resources?.find(row => row.uri === event.uri);
-            if (!resource || !Array.isArray(resource.valueUnits)) throw new TransportError('unconfigured resource: ' + event.uri);
-            if (resource.valueUnits.some(unit => !Number.isInteger(unit) || unit < 0 || unit > 65535))
-              throw new TransportError('invalid resource UTF16 code unit');
-            session.respondString(event.token, Uint16Array.from(resource.valueUnits), 0);
+          if (typeof event.uri !== 'string' || typeof event.token !== 'string')
+            throw new TransportError('invalid resource request');
+          reads.push({uri: event.uri, token: event.token});
+          let entry = resources.get(event.uri);
+          if (entry?.reads) {
+            const index = readCounts.get(event.uri) ?? 0;
+            if (index >= entry.reads.length) throw new TransportError('resource read plan exhausted');
+            readCounts.set(event.uri, index + 1);
+            entry = {...entry, ...entry.reads[index], reads: undefined};
           }
+          if (entry?.failure) {
+            if (entry.failure.kind === 'io') session.rejectReadIo(event.token, entry.failure.message, 0);
+            else session.reject(event.token, entry.failure.message, 0);
+          } else if (entry) session.respondString(event.token, Uint16Array.from(entry.valueUnits), 0);
+          else if (event.uri.startsWith('prop:') || event.uri.startsWith('env:')) session.respondConfigured(event.token, 0);
+          else throw new TransportError('unconfigured resource: ' + event.uri);
           continue;
         }
         if (event.kind === 'value') return { kind: 'value', valueUnits: remember(event.value, units(event.value, 'value')) };
@@ -198,7 +242,7 @@ export function runModuleLoaderCase(api, fixture, budget = 7) {
     for (let index = 0; index < fixture.actions.length; index++) {
       const action = fixture.actions[index];
       if (action.kind === 'set-source') { const entry = source(action.source); sources.set(entry.resolvedUri, entry); loadCounts.delete(entry.resolvedUri); continue; }
-      if (action.kind === 'set-resolution') { const entry = resolution(action.resolution); resolutions.set(entry.importUri, entry); continue; }
+      if (action.kind === 'set-resolution') { const entry = resolution(action.resolution); resolutions.set(entry.importUri, entry); resolveCounts.delete(entry.importUri); continue; }
       if (action.kind === 'close') { session.close(); continue; }
       if (action.kind !== 'path' && action.kind !== 'output-bytes') throw Error('unknown module action');
       try {
@@ -224,5 +268,5 @@ export function runModuleLoaderCase(api, fixture, budget = 7) {
       } catch (error) { acquisitionError = acquisitionError ? { ...acquisitionError, cleanup: thrown(error) } : thrown(error); }
     }
   }
-  return { id: fixture.id, results, requests, callbacks, logs, architecture, acquisitionError };
+  return { id: fixture.id, results, requests, reads, callbacks, logs, architecture, acquisitionError };
 }

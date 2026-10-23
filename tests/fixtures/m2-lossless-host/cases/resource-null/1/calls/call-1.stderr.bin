@@ -1,0 +1,10 @@
+–– Pkl Error ––
+I/O error reading resource `lossless:/resource`.
+
+1 | value = read("lossless:/resource")
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+at main#value (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/workspaces/resource-null/main.pkl)
+
+1 | value
+    ^^^^^
+at  (repl:text)

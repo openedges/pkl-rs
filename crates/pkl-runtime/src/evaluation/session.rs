@@ -32,6 +32,8 @@ enum Call {
     InitialPath(usize),
     OutputBytes,
     InitialOutputBytes,
+    OutputText,
+    InitialOutputText,
 }
 
 impl Call {
@@ -52,6 +54,7 @@ pub struct SourceSession {
     name: String,
     paths: Vec<String>,
     entries: Vec<usize>,
+    output_text_entries: Vec<bool>,
     output_entry: Option<usize>,
     output_profile: DiagnosticProfile,
     module_entry: usize,
@@ -191,7 +194,16 @@ impl SourceSession {
             None
         };
         let mut entries = Vec::with_capacity(property_paths.len());
+        let mut output_text_entries = Vec::with_capacity(property_paths.len());
         for expression in property_paths {
+            // EvaluatorImpl.evaluateExpressionString routes this exact API
+            // expression to evaluateOutputText before creating a REPL root.
+            let output_text = expression == "output.text";
+            output_text_entries.push(output_text);
+            if output_text {
+                entries.push(append_output_entry(program_mut, "text"));
+                continue;
+            }
             if parsed_expressions {
                 let entry = match crate::vm::compile_session_expression(
                     program_mut,
@@ -289,21 +301,7 @@ impl SourceSession {
             };
             program_mut.metadata.push(metadata);
         }
-        let output_entry = output_profile.map(|_| {
-            let entry = program_mut.blocks.len();
-            program_mut.blocks.push(vec![
-                Instruction::Input(0),
-                Instruction::GetMember("output".into()),
-                Instruction::CheckModuleOutput,
-                Instruction::GetMember("bytes".into()),
-                Instruction::Return,
-            ]);
-            program_mut.metadata.push(BlockMetadata {
-                module_receiver_input: Some(0),
-                ..Default::default()
-            });
-            entry
-        });
+        let output_entry = output_profile.map(|_| append_output_entry(program_mut, "bytes"));
         let text = source.text();
         let context = EvaluationContext {
             primary_source: Some(Arc::new(RuntimeSource {
@@ -338,6 +336,7 @@ impl SourceSession {
             name,
             paths: property_paths.to_vec(),
             entries,
+            output_text_entries,
             output_entry,
             output_profile: output_profile.unwrap_or(DiagnosticProfile::ApiIdentity),
             module_entry,
@@ -375,13 +374,12 @@ impl SourceSession {
     ) -> Result<(), RuntimeError> {
         self.open()?;
         let entry = self.entry(index)?;
-        self.start_operation(
-            entry,
-            Call::Path(index),
-            Call::InitialPath(index),
-            now_ms,
-            timeout_ms,
-        )
+        let (call, initial) = if self.output_text_entries[index] {
+            (Call::OutputText, Call::InitialOutputText)
+        } else {
+            (Call::Path(index), Call::InitialPath(index))
+        };
+        self.start_operation(entry, call, initial, now_ms, timeout_ms)
     }
 
     /// Run module initialization and the output continuation in one admitted
@@ -444,7 +442,12 @@ impl SourceSession {
     ) -> Result<(), RuntimeError> {
         self.open()?;
         let entry = self.entry(index)?;
-        self.reenter_operation(parent_token, entry, Call::Path(index), now_ms, timeout_ms)
+        let call = if self.output_text_entries[index] {
+            Call::OutputText
+        } else {
+            Call::Path(index)
+        };
+        self.reenter_operation(parent_token, entry, call, now_ms, timeout_ms)
     }
 
     pub fn reenter_output_bytes(
@@ -525,7 +528,10 @@ impl SourceSession {
                         }
                     }
                     Call::Path(index) => self.last_expression = Some(index),
-                    Call::OutputBytes | Call::InitialOutputBytes => self.last_expression = None,
+                    Call::OutputBytes
+                    | Call::InitialOutputBytes
+                    | Call::OutputText
+                    | Call::InitialOutputText => self.last_expression = None,
                     Call::InitialPath(index) => {
                         self.last_expression =
                             (self.module.is_some() && !self.initialization_failed).then_some(index);
@@ -560,6 +566,14 @@ impl SourceSession {
     ) -> Result<(), RuntimeError> {
         self.host
             .resume_default_read(token, properties, environment, now_ms)
+    }
+    pub fn reject_read(
+        &mut self,
+        token: &str,
+        failure: crate::host::ReadFailure,
+        now_ms: u64,
+    ) -> Result<(), RuntimeError> {
+        self.host.reject_read(token, failure, now_ms)
     }
     pub fn acknowledge_log(
         &mut self,
@@ -704,4 +718,21 @@ impl SourceSession {
 
 fn error(message: &str) -> RuntimeError {
     RuntimeError::new(ErrorKind::Host, message)
+}
+
+/// Real ModuleOutput operation, with no synthetic expression or ToString root.
+pub(super) fn append_output_entry(program: &mut Program, member: &str) -> usize {
+    let entry = program.blocks.len();
+    program.blocks.push(vec![
+        Instruction::Input(0),
+        Instruction::GetMember("output".into()),
+        Instruction::CheckModuleOutput,
+        Instruction::GetMember(member.into()),
+        Instruction::Return,
+    ]);
+    program.metadata.push(BlockMetadata {
+        module_receiver_input: Some(0),
+        ..Default::default()
+    });
+    entry
 }

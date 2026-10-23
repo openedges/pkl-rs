@@ -107,6 +107,10 @@ pub fn scalar_expressions_text_with_options(
         Instruction::Return,
     ]);
     program_mut.metadata.push(BlockMetadata::default());
+    let output_text = expressions
+        .iter()
+        .any(|expression| expression == "output.text")
+        .then(|| session::append_output_entry(program_mut, "text"));
     let entry = program.entry;
     let mut vm = Vm::with_context(
         program,
@@ -127,6 +131,21 @@ pub fn scalar_expressions_text_with_options(
         .map_err(|error| runtime_error_text(source, uri, name, expression, error, None))?;
     let mut results = Vec::with_capacity(expressions.len());
     for expression in expressions {
+        if expression == "output.text" {
+            // Same real output operation as the session API, without ToString
+            // or a synthetic REPL frame (EvaluatorImpl.evaluateExpressionString).
+            let result = vm
+                .start(
+                    output_text.expect("output entry"),
+                    vec![module_value.clone()],
+                )
+                .and_then(|()| poll(&mut vm))
+                .and_then(session::SourceSession::result_string)
+                .map_err(|error| runtime_error_text(source, uri, name, "", error, None));
+            results.push(result);
+            vm.collect(std::slice::from_ref(&module_value));
+            continue;
+        }
         let mut expression_end = 0;
         let mut evaluate = || -> Result<Value, RuntimeError> {
             let mut value = module_value.clone();

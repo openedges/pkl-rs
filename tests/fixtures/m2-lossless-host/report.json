@@ -1,0 +1,2307 @@
+{
+  "scope": "Actual Java UTF-16/UTF-8 producer and base IOException observations; not Rust compatibility.",
+  "caseCount": 11,
+  "freshJvmCount": 22,
+  "callCount": 80,
+  "powerAssertions": true,
+  "host": "macOS-27.0-arm64-arm-64bit-Mach-O",
+  "records": [
+    {
+      "command": [
+        "/usr/bin/java",
+        "-Xms64m",
+        "-Xmx512m",
+        "-Dfile.encoding=UTF-8",
+        "-Dstdout.encoding=UTF-8",
+        "-Dstderr.encoding=UTF-8",
+        "-Duser.language=en",
+        "-Duser.country=US",
+        "-Duser.timezone=UTC",
+        "-Djava.awt.headless=true",
+        "-Duser.name=oracle",
+        "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/identity/home",
+        "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/identity/tmp",
+        "-cp",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/classes:/Users/cody.ij.hwang/Projects/pkl-rs.stage42/.cache/oracle/pkl-tools-0.32.0.jar",
+        "LosslessHostProbe",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/workspaces/invalid-converter",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/cases/invalid-converter/0/calls",
+        "converter",
+        "units"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/workspaces/invalid-converter",
+      "environment": {
+        "PATH": "/bin:/usr/bin",
+        "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/identity/home",
+        "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/identity/tmp",
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "TERM": "dumb",
+        "NO_COLOR": "1",
+        "TZ": "UTC"
+      },
+      "result": {
+        "exit_code": 0,
+        "elapsed_ns": 1226985167,
+        "sha256": {
+          "stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "timed_out": false,
+        "workspace_changes": {},
+        "files": {}
+      },
+      "case": "invalid-converter",
+      "repeat": 0,
+      "workspaceBefore": {
+        "expressions.txt": {
+          "kind": "file",
+          "sha256": "d77185908f8fa6022ba822521da8c8f585fa1f1d2b0baec5b77bc345e0369b31"
+        },
+        "main.pkl": {
+          "kind": "file",
+          "sha256": "4ccdc1c7c21da82adb79a95fd31b60747797e42ad4b57b65532549a75df2b58c"
+        }
+      },
+      "workspaceAfter": {
+        "expressions.txt": {
+          "kind": "file",
+          "sha256": "d77185908f8fa6022ba822521da8c8f585fa1f1d2b0baec5b77bc345e0369b31"
+        },
+        "main.pkl": {
+          "kind": "file",
+          "sha256": "4ccdc1c7c21da82adb79a95fd31b60747797e42ad4b57b65532549a75df2b58c"
+        }
+      }
+    },
+    {
+      "command": [
+        "/usr/bin/java",
+        "-Xms64m",
+        "-Xmx512m",
+        "-Dfile.encoding=UTF-8",
+        "-Dstdout.encoding=UTF-8",
+        "-Dstderr.encoding=UTF-8",
+        "-Duser.language=en",
+        "-Duser.country=US",
+        "-Duser.timezone=UTC",
+        "-Djava.awt.headless=true",
+        "-Duser.name=oracle",
+        "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/identity/home",
+        "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/identity/tmp",
+        "-cp",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/classes:/Users/cody.ij.hwang/Projects/pkl-rs.stage42/.cache/oracle/pkl-tools-0.32.0.jar",
+        "LosslessHostProbe",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/workspaces/invalid-converter",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/cases/invalid-converter/1/calls",
+        "converter",
+        "units"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/workspaces/invalid-converter",
+      "environment": {
+        "PATH": "/bin:/usr/bin",
+        "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/identity/home",
+        "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/identity/tmp",
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "TERM": "dumb",
+        "NO_COLOR": "1",
+        "TZ": "UTC"
+      },
+      "result": {
+        "exit_code": 0,
+        "elapsed_ns": 856266958,
+        "sha256": {
+          "stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "timed_out": false,
+        "workspace_changes": {},
+        "files": {}
+      },
+      "case": "invalid-converter",
+      "repeat": 1,
+      "workspaceBefore": {
+        "expressions.txt": {
+          "kind": "file",
+          "sha256": "d77185908f8fa6022ba822521da8c8f585fa1f1d2b0baec5b77bc345e0369b31"
+        },
+        "main.pkl": {
+          "kind": "file",
+          "sha256": "4ccdc1c7c21da82adb79a95fd31b60747797e42ad4b57b65532549a75df2b58c"
+        }
+      },
+      "workspaceAfter": {
+        "expressions.txt": {
+          "kind": "file",
+          "sha256": "d77185908f8fa6022ba822521da8c8f585fa1f1d2b0baec5b77bc345e0369b31"
+        },
+        "main.pkl": {
+          "kind": "file",
+          "sha256": "4ccdc1c7c21da82adb79a95fd31b60747797e42ad4b57b65532549a75df2b58c"
+        }
+      }
+    },
+    {
+      "command": [
+        "/usr/bin/java",
+        "-Xms64m",
+        "-Xmx512m",
+        "-Dfile.encoding=UTF-8",
+        "-Dstdout.encoding=UTF-8",
+        "-Dstderr.encoding=UTF-8",
+        "-Duser.language=en",
+        "-Duser.country=US",
+        "-Duser.timezone=UTC",
+        "-Djava.awt.headless=true",
+        "-Duser.name=oracle",
+        "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/identity/home",
+        "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/identity/tmp",
+        "-cp",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/classes:/Users/cody.ij.hwang/Projects/pkl-rs.stage42/.cache/oracle/pkl-tools-0.32.0.jar",
+        "LosslessHostProbe",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/workspaces/unknown-output-format",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/cases/unknown-output-format/0/calls",
+        "unknown-format",
+        "units"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/workspaces/unknown-output-format",
+      "environment": {
+        "PATH": "/bin:/usr/bin",
+        "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/identity/home",
+        "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/identity/tmp",
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "TERM": "dumb",
+        "NO_COLOR": "1",
+        "TZ": "UTC"
+      },
+      "result": {
+        "exit_code": 0,
+        "elapsed_ns": 848609875,
+        "sha256": {
+          "stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "timed_out": false,
+        "workspace_changes": {},
+        "files": {}
+      },
+      "case": "unknown-output-format",
+      "repeat": 0,
+      "workspaceBefore": {
+        "expressions.txt": {
+          "kind": "file",
+          "sha256": "19e7b87a1d6306aa9ea52d96a9564df168ab9c5f5d746160ac3a305ec33b694e"
+        },
+        "main.pkl": {
+          "kind": "file",
+          "sha256": "68833fe50c22a93765392cd3e53b25e8a0c7b74e4730e85425e21da46bd69d5c"
+        }
+      },
+      "workspaceAfter": {
+        "expressions.txt": {
+          "kind": "file",
+          "sha256": "19e7b87a1d6306aa9ea52d96a9564df168ab9c5f5d746160ac3a305ec33b694e"
+        },
+        "main.pkl": {
+          "kind": "file",
+          "sha256": "68833fe50c22a93765392cd3e53b25e8a0c7b74e4730e85425e21da46bd69d5c"
+        }
+      }
+    },
+    {
+      "command": [
+        "/usr/bin/java",
+        "-Xms64m",
+        "-Xmx512m",
+        "-Dfile.encoding=UTF-8",
+        "-Dstdout.encoding=UTF-8",
+        "-Dstderr.encoding=UTF-8",
+        "-Duser.language=en",
+        "-Duser.country=US",
+        "-Duser.timezone=UTC",
+        "-Djava.awt.headless=true",
+        "-Duser.name=oracle",
+        "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/identity/home",
+        "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/identity/tmp",
+        "-cp",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/classes:/Users/cody.ij.hwang/Projects/pkl-rs.stage42/.cache/oracle/pkl-tools-0.32.0.jar",
+        "LosslessHostProbe",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/workspaces/unknown-output-format",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/cases/unknown-output-format/1/calls",
+        "unknown-format",
+        "units"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/workspaces/unknown-output-format",
+      "environment": {
+        "PATH": "/bin:/usr/bin",
+        "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/identity/home",
+        "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/identity/tmp",
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "TERM": "dumb",
+        "NO_COLOR": "1",
+        "TZ": "UTC"
+      },
+      "result": {
+        "exit_code": 0,
+        "elapsed_ns": 811220000,
+        "sha256": {
+          "stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "timed_out": false,
+        "workspace_changes": {},
+        "files": {}
+      },
+      "case": "unknown-output-format",
+      "repeat": 1,
+      "workspaceBefore": {
+        "expressions.txt": {
+          "kind": "file",
+          "sha256": "19e7b87a1d6306aa9ea52d96a9564df168ab9c5f5d746160ac3a305ec33b694e"
+        },
+        "main.pkl": {
+          "kind": "file",
+          "sha256": "68833fe50c22a93765392cd3e53b25e8a0c7b74e4730e85425e21da46bd69d5c"
+        }
+      },
+      "workspaceAfter": {
+        "expressions.txt": {
+          "kind": "file",
+          "sha256": "19e7b87a1d6306aa9ea52d96a9564df168ab9c5f5d746160ac3a305ec33b694e"
+        },
+        "main.pkl": {
+          "kind": "file",
+          "sha256": "68833fe50c22a93765392cd3e53b25e8a0c7b74e4730e85425e21da46bd69d5c"
+        }
+      }
+    },
+    {
+      "command": [
+        "/usr/bin/java",
+        "-Xms64m",
+        "-Xmx512m",
+        "-Dfile.encoding=UTF-8",
+        "-Dstdout.encoding=UTF-8",
+        "-Dstderr.encoding=UTF-8",
+        "-Duser.language=en",
+        "-Duser.country=US",
+        "-Duser.timezone=UTC",
+        "-Djava.awt.headless=true",
+        "-Duser.name=oracle",
+        "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/identity/home",
+        "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/identity/tmp",
+        "-cp",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/classes:/Users/cody.ij.hwang/Projects/pkl-rs.stage42/.cache/oracle/pkl-tools-0.32.0.jar",
+        "LosslessHostProbe",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/workspaces/module-resolve-units",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/cases/module-resolve-units/0/calls",
+        "module-resolve",
+        "units"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/workspaces/module-resolve-units",
+      "environment": {
+        "PATH": "/bin:/usr/bin",
+        "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/identity/home",
+        "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/identity/tmp",
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "TERM": "dumb",
+        "NO_COLOR": "1",
+        "TZ": "UTC"
+      },
+      "result": {
+        "exit_code": 0,
+        "elapsed_ns": 862773458,
+        "sha256": {
+          "stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "timed_out": false,
+        "workspace_changes": {},
+        "files": {}
+      },
+      "case": "module-resolve-units",
+      "repeat": 0,
+      "workspaceBefore": {
+        "expressions.txt": {
+          "kind": "file",
+          "sha256": "501897c3bba3fccdf59e1bb636b507346bec41b481ff4859b31b79b88b1fb920"
+        },
+        "main.pkl": {
+          "kind": "file",
+          "sha256": "5dd0f1be321bcfdf3ae8f84ea85149731b308545bf89786f6578554bddac5aa6"
+        }
+      },
+      "workspaceAfter": {
+        "expressions.txt": {
+          "kind": "file",
+          "sha256": "501897c3bba3fccdf59e1bb636b507346bec41b481ff4859b31b79b88b1fb920"
+        },
+        "main.pkl": {
+          "kind": "file",
+          "sha256": "5dd0f1be321bcfdf3ae8f84ea85149731b308545bf89786f6578554bddac5aa6"
+        }
+      }
+    },
+    {
+      "command": [
+        "/usr/bin/java",
+        "-Xms64m",
+        "-Xmx512m",
+        "-Dfile.encoding=UTF-8",
+        "-Dstdout.encoding=UTF-8",
+        "-Dstderr.encoding=UTF-8",
+        "-Duser.language=en",
+        "-Duser.country=US",
+        "-Duser.timezone=UTC",
+        "-Djava.awt.headless=true",
+        "-Duser.name=oracle",
+        "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/identity/home",
+        "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/identity/tmp",
+        "-cp",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/classes:/Users/cody.ij.hwang/Projects/pkl-rs.stage42/.cache/oracle/pkl-tools-0.32.0.jar",
+        "LosslessHostProbe",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/workspaces/module-resolve-units",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/cases/module-resolve-units/1/calls",
+        "module-resolve",
+        "units"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/workspaces/module-resolve-units",
+      "environment": {
+        "PATH": "/bin:/usr/bin",
+        "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/identity/home",
+        "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/identity/tmp",
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "TERM": "dumb",
+        "NO_COLOR": "1",
+        "TZ": "UTC"
+      },
+      "result": {
+        "exit_code": 0,
+        "elapsed_ns": 809685542,
+        "sha256": {
+          "stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "timed_out": false,
+        "workspace_changes": {},
+        "files": {}
+      },
+      "case": "module-resolve-units",
+      "repeat": 1,
+      "workspaceBefore": {
+        "expressions.txt": {
+          "kind": "file",
+          "sha256": "501897c3bba3fccdf59e1bb636b507346bec41b481ff4859b31b79b88b1fb920"
+        },
+        "main.pkl": {
+          "kind": "file",
+          "sha256": "5dd0f1be321bcfdf3ae8f84ea85149731b308545bf89786f6578554bddac5aa6"
+        }
+      },
+      "workspaceAfter": {
+        "expressions.txt": {
+          "kind": "file",
+          "sha256": "501897c3bba3fccdf59e1bb636b507346bec41b481ff4859b31b79b88b1fb920"
+        },
+        "main.pkl": {
+          "kind": "file",
+          "sha256": "5dd0f1be321bcfdf3ae8f84ea85149731b308545bf89786f6578554bddac5aa6"
+        }
+      }
+    },
+    {
+      "command": [
+        "/usr/bin/java",
+        "-Xms64m",
+        "-Xmx512m",
+        "-Dfile.encoding=UTF-8",
+        "-Dstdout.encoding=UTF-8",
+        "-Dstderr.encoding=UTF-8",
+        "-Duser.language=en",
+        "-Duser.country=US",
+        "-Duser.timezone=UTC",
+        "-Djava.awt.headless=true",
+        "-Duser.name=oracle",
+        "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/identity/home",
+        "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/identity/tmp",
+        "-cp",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/classes:/Users/cody.ij.hwang/Projects/pkl-rs.stage42/.cache/oracle/pkl-tools-0.32.0.jar",
+        "LosslessHostProbe",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/workspaces/module-resolve-null",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/cases/module-resolve-null/0/calls",
+        "module-resolve",
+        "null"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/workspaces/module-resolve-null",
+      "environment": {
+        "PATH": "/bin:/usr/bin",
+        "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/identity/home",
+        "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/identity/tmp",
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "TERM": "dumb",
+        "NO_COLOR": "1",
+        "TZ": "UTC"
+      },
+      "result": {
+        "exit_code": 0,
+        "elapsed_ns": 806231667,
+        "sha256": {
+          "stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "timed_out": false,
+        "workspace_changes": {},
+        "files": {}
+      },
+      "case": "module-resolve-null",
+      "repeat": 0,
+      "workspaceBefore": {
+        "expressions.txt": {
+          "kind": "file",
+          "sha256": "501897c3bba3fccdf59e1bb636b507346bec41b481ff4859b31b79b88b1fb920"
+        },
+        "main.pkl": {
+          "kind": "file",
+          "sha256": "5dd0f1be321bcfdf3ae8f84ea85149731b308545bf89786f6578554bddac5aa6"
+        }
+      },
+      "workspaceAfter": {
+        "expressions.txt": {
+          "kind": "file",
+          "sha256": "501897c3bba3fccdf59e1bb636b507346bec41b481ff4859b31b79b88b1fb920"
+        },
+        "main.pkl": {
+          "kind": "file",
+          "sha256": "5dd0f1be321bcfdf3ae8f84ea85149731b308545bf89786f6578554bddac5aa6"
+        }
+      }
+    },
+    {
+      "command": [
+        "/usr/bin/java",
+        "-Xms64m",
+        "-Xmx512m",
+        "-Dfile.encoding=UTF-8",
+        "-Dstdout.encoding=UTF-8",
+        "-Dstderr.encoding=UTF-8",
+        "-Duser.language=en",
+        "-Duser.country=US",
+        "-Duser.timezone=UTC",
+        "-Djava.awt.headless=true",
+        "-Duser.name=oracle",
+        "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/identity/home",
+        "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/identity/tmp",
+        "-cp",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/classes:/Users/cody.ij.hwang/Projects/pkl-rs.stage42/.cache/oracle/pkl-tools-0.32.0.jar",
+        "LosslessHostProbe",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/workspaces/module-resolve-null",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/cases/module-resolve-null/1/calls",
+        "module-resolve",
+        "null"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/workspaces/module-resolve-null",
+      "environment": {
+        "PATH": "/bin:/usr/bin",
+        "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/identity/home",
+        "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/identity/tmp",
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "TERM": "dumb",
+        "NO_COLOR": "1",
+        "TZ": "UTC"
+      },
+      "result": {
+        "exit_code": 0,
+        "elapsed_ns": 856406333,
+        "sha256": {
+          "stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "timed_out": false,
+        "workspace_changes": {},
+        "files": {}
+      },
+      "case": "module-resolve-null",
+      "repeat": 1,
+      "workspaceBefore": {
+        "expressions.txt": {
+          "kind": "file",
+          "sha256": "501897c3bba3fccdf59e1bb636b507346bec41b481ff4859b31b79b88b1fb920"
+        },
+        "main.pkl": {
+          "kind": "file",
+          "sha256": "5dd0f1be321bcfdf3ae8f84ea85149731b308545bf89786f6578554bddac5aa6"
+        }
+      },
+      "workspaceAfter": {
+        "expressions.txt": {
+          "kind": "file",
+          "sha256": "501897c3bba3fccdf59e1bb636b507346bec41b481ff4859b31b79b88b1fb920"
+        },
+        "main.pkl": {
+          "kind": "file",
+          "sha256": "5dd0f1be321bcfdf3ae8f84ea85149731b308545bf89786f6578554bddac5aa6"
+        }
+      }
+    },
+    {
+      "command": [
+        "/usr/bin/java",
+        "-Xms64m",
+        "-Xmx512m",
+        "-Dfile.encoding=UTF-8",
+        "-Dstdout.encoding=UTF-8",
+        "-Dstderr.encoding=UTF-8",
+        "-Duser.language=en",
+        "-Duser.country=US",
+        "-Duser.timezone=UTC",
+        "-Djava.awt.headless=true",
+        "-Duser.name=oracle",
+        "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/identity/home",
+        "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/identity/tmp",
+        "-cp",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/classes:/Users/cody.ij.hwang/Projects/pkl-rs.stage42/.cache/oracle/pkl-tools-0.32.0.jar",
+        "LosslessHostProbe",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/workspaces/module-resolve-empty",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/cases/module-resolve-empty/0/calls",
+        "module-resolve",
+        "empty"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/workspaces/module-resolve-empty",
+      "environment": {
+        "PATH": "/bin:/usr/bin",
+        "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/identity/home",
+        "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/identity/tmp",
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "TERM": "dumb",
+        "NO_COLOR": "1",
+        "TZ": "UTC"
+      },
+      "result": {
+        "exit_code": 0,
+        "elapsed_ns": 826787125,
+        "sha256": {
+          "stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "timed_out": false,
+        "workspace_changes": {},
+        "files": {}
+      },
+      "case": "module-resolve-empty",
+      "repeat": 0,
+      "workspaceBefore": {
+        "expressions.txt": {
+          "kind": "file",
+          "sha256": "501897c3bba3fccdf59e1bb636b507346bec41b481ff4859b31b79b88b1fb920"
+        },
+        "main.pkl": {
+          "kind": "file",
+          "sha256": "5dd0f1be321bcfdf3ae8f84ea85149731b308545bf89786f6578554bddac5aa6"
+        }
+      },
+      "workspaceAfter": {
+        "expressions.txt": {
+          "kind": "file",
+          "sha256": "501897c3bba3fccdf59e1bb636b507346bec41b481ff4859b31b79b88b1fb920"
+        },
+        "main.pkl": {
+          "kind": "file",
+          "sha256": "5dd0f1be321bcfdf3ae8f84ea85149731b308545bf89786f6578554bddac5aa6"
+        }
+      }
+    },
+    {
+      "command": [
+        "/usr/bin/java",
+        "-Xms64m",
+        "-Xmx512m",
+        "-Dfile.encoding=UTF-8",
+        "-Dstdout.encoding=UTF-8",
+        "-Dstderr.encoding=UTF-8",
+        "-Duser.language=en",
+        "-Duser.country=US",
+        "-Duser.timezone=UTC",
+        "-Djava.awt.headless=true",
+        "-Duser.name=oracle",
+        "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/identity/home",
+        "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/identity/tmp",
+        "-cp",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/classes:/Users/cody.ij.hwang/Projects/pkl-rs.stage42/.cache/oracle/pkl-tools-0.32.0.jar",
+        "LosslessHostProbe",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/workspaces/module-resolve-empty",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/cases/module-resolve-empty/1/calls",
+        "module-resolve",
+        "empty"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/workspaces/module-resolve-empty",
+      "environment": {
+        "PATH": "/bin:/usr/bin",
+        "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/identity/home",
+        "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/identity/tmp",
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "TERM": "dumb",
+        "NO_COLOR": "1",
+        "TZ": "UTC"
+      },
+      "result": {
+        "exit_code": 0,
+        "elapsed_ns": 810342667,
+        "sha256": {
+          "stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "timed_out": false,
+        "workspace_changes": {},
+        "files": {}
+      },
+      "case": "module-resolve-empty",
+      "repeat": 1,
+      "workspaceBefore": {
+        "expressions.txt": {
+          "kind": "file",
+          "sha256": "501897c3bba3fccdf59e1bb636b507346bec41b481ff4859b31b79b88b1fb920"
+        },
+        "main.pkl": {
+          "kind": "file",
+          "sha256": "5dd0f1be321bcfdf3ae8f84ea85149731b308545bf89786f6578554bddac5aa6"
+        }
+      },
+      "workspaceAfter": {
+        "expressions.txt": {
+          "kind": "file",
+          "sha256": "501897c3bba3fccdf59e1bb636b507346bec41b481ff4859b31b79b88b1fb920"
+        },
+        "main.pkl": {
+          "kind": "file",
+          "sha256": "5dd0f1be321bcfdf3ae8f84ea85149731b308545bf89786f6578554bddac5aa6"
+        }
+      }
+    },
+    {
+      "command": [
+        "/usr/bin/java",
+        "-Xms64m",
+        "-Xmx512m",
+        "-Dfile.encoding=UTF-8",
+        "-Dstdout.encoding=UTF-8",
+        "-Dstderr.encoding=UTF-8",
+        "-Duser.language=en",
+        "-Duser.country=US",
+        "-Duser.timezone=UTC",
+        "-Djava.awt.headless=true",
+        "-Duser.name=oracle",
+        "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/identity/home",
+        "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/identity/tmp",
+        "-cp",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/classes:/Users/cody.ij.hwang/Projects/pkl-rs.stage42/.cache/oracle/pkl-tools-0.32.0.jar",
+        "LosslessHostProbe",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/workspaces/module-source-units",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/cases/module-source-units/0/calls",
+        "module-source",
+        "units"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/workspaces/module-source-units",
+      "environment": {
+        "PATH": "/bin:/usr/bin",
+        "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/identity/home",
+        "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/identity/tmp",
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "TERM": "dumb",
+        "NO_COLOR": "1",
+        "TZ": "UTC"
+      },
+      "result": {
+        "exit_code": 0,
+        "elapsed_ns": 827904584,
+        "sha256": {
+          "stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "timed_out": false,
+        "workspace_changes": {},
+        "files": {}
+      },
+      "case": "module-source-units",
+      "repeat": 0,
+      "workspaceBefore": {
+        "expressions.txt": {
+          "kind": "file",
+          "sha256": "501897c3bba3fccdf59e1bb636b507346bec41b481ff4859b31b79b88b1fb920"
+        },
+        "main.pkl": {
+          "kind": "file",
+          "sha256": "5dd0f1be321bcfdf3ae8f84ea85149731b308545bf89786f6578554bddac5aa6"
+        }
+      },
+      "workspaceAfter": {
+        "expressions.txt": {
+          "kind": "file",
+          "sha256": "501897c3bba3fccdf59e1bb636b507346bec41b481ff4859b31b79b88b1fb920"
+        },
+        "main.pkl": {
+          "kind": "file",
+          "sha256": "5dd0f1be321bcfdf3ae8f84ea85149731b308545bf89786f6578554bddac5aa6"
+        }
+      }
+    },
+    {
+      "command": [
+        "/usr/bin/java",
+        "-Xms64m",
+        "-Xmx512m",
+        "-Dfile.encoding=UTF-8",
+        "-Dstdout.encoding=UTF-8",
+        "-Dstderr.encoding=UTF-8",
+        "-Duser.language=en",
+        "-Duser.country=US",
+        "-Duser.timezone=UTC",
+        "-Djava.awt.headless=true",
+        "-Duser.name=oracle",
+        "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/identity/home",
+        "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/identity/tmp",
+        "-cp",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/classes:/Users/cody.ij.hwang/Projects/pkl-rs.stage42/.cache/oracle/pkl-tools-0.32.0.jar",
+        "LosslessHostProbe",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/workspaces/module-source-units",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/cases/module-source-units/1/calls",
+        "module-source",
+        "units"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/workspaces/module-source-units",
+      "environment": {
+        "PATH": "/bin:/usr/bin",
+        "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/identity/home",
+        "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/identity/tmp",
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "TERM": "dumb",
+        "NO_COLOR": "1",
+        "TZ": "UTC"
+      },
+      "result": {
+        "exit_code": 0,
+        "elapsed_ns": 835582458,
+        "sha256": {
+          "stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "timed_out": false,
+        "workspace_changes": {},
+        "files": {}
+      },
+      "case": "module-source-units",
+      "repeat": 1,
+      "workspaceBefore": {
+        "expressions.txt": {
+          "kind": "file",
+          "sha256": "501897c3bba3fccdf59e1bb636b507346bec41b481ff4859b31b79b88b1fb920"
+        },
+        "main.pkl": {
+          "kind": "file",
+          "sha256": "5dd0f1be321bcfdf3ae8f84ea85149731b308545bf89786f6578554bddac5aa6"
+        }
+      },
+      "workspaceAfter": {
+        "expressions.txt": {
+          "kind": "file",
+          "sha256": "501897c3bba3fccdf59e1bb636b507346bec41b481ff4859b31b79b88b1fb920"
+        },
+        "main.pkl": {
+          "kind": "file",
+          "sha256": "5dd0f1be321bcfdf3ae8f84ea85149731b308545bf89786f6578554bddac5aa6"
+        }
+      }
+    },
+    {
+      "command": [
+        "/usr/bin/java",
+        "-Xms64m",
+        "-Xmx512m",
+        "-Dfile.encoding=UTF-8",
+        "-Dstdout.encoding=UTF-8",
+        "-Dstderr.encoding=UTF-8",
+        "-Duser.language=en",
+        "-Duser.country=US",
+        "-Duser.timezone=UTC",
+        "-Djava.awt.headless=true",
+        "-Duser.name=oracle",
+        "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/identity/home",
+        "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/identity/tmp",
+        "-cp",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/classes:/Users/cody.ij.hwang/Projects/pkl-rs.stage42/.cache/oracle/pkl-tools-0.32.0.jar",
+        "LosslessHostProbe",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/workspaces/module-source-null",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/cases/module-source-null/0/calls",
+        "module-source",
+        "null"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/workspaces/module-source-null",
+      "environment": {
+        "PATH": "/bin:/usr/bin",
+        "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/identity/home",
+        "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/identity/tmp",
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "TERM": "dumb",
+        "NO_COLOR": "1",
+        "TZ": "UTC"
+      },
+      "result": {
+        "exit_code": 0,
+        "elapsed_ns": 819064625,
+        "sha256": {
+          "stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "timed_out": false,
+        "workspace_changes": {},
+        "files": {}
+      },
+      "case": "module-source-null",
+      "repeat": 0,
+      "workspaceBefore": {
+        "expressions.txt": {
+          "kind": "file",
+          "sha256": "501897c3bba3fccdf59e1bb636b507346bec41b481ff4859b31b79b88b1fb920"
+        },
+        "main.pkl": {
+          "kind": "file",
+          "sha256": "5dd0f1be321bcfdf3ae8f84ea85149731b308545bf89786f6578554bddac5aa6"
+        }
+      },
+      "workspaceAfter": {
+        "expressions.txt": {
+          "kind": "file",
+          "sha256": "501897c3bba3fccdf59e1bb636b507346bec41b481ff4859b31b79b88b1fb920"
+        },
+        "main.pkl": {
+          "kind": "file",
+          "sha256": "5dd0f1be321bcfdf3ae8f84ea85149731b308545bf89786f6578554bddac5aa6"
+        }
+      }
+    },
+    {
+      "command": [
+        "/usr/bin/java",
+        "-Xms64m",
+        "-Xmx512m",
+        "-Dfile.encoding=UTF-8",
+        "-Dstdout.encoding=UTF-8",
+        "-Dstderr.encoding=UTF-8",
+        "-Duser.language=en",
+        "-Duser.country=US",
+        "-Duser.timezone=UTC",
+        "-Djava.awt.headless=true",
+        "-Duser.name=oracle",
+        "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/identity/home",
+        "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/identity/tmp",
+        "-cp",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/classes:/Users/cody.ij.hwang/Projects/pkl-rs.stage42/.cache/oracle/pkl-tools-0.32.0.jar",
+        "LosslessHostProbe",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/workspaces/module-source-null",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/cases/module-source-null/1/calls",
+        "module-source",
+        "null"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/workspaces/module-source-null",
+      "environment": {
+        "PATH": "/bin:/usr/bin",
+        "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/identity/home",
+        "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/identity/tmp",
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "TERM": "dumb",
+        "NO_COLOR": "1",
+        "TZ": "UTC"
+      },
+      "result": {
+        "exit_code": 0,
+        "elapsed_ns": 825640792,
+        "sha256": {
+          "stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "timed_out": false,
+        "workspace_changes": {},
+        "files": {}
+      },
+      "case": "module-source-null",
+      "repeat": 1,
+      "workspaceBefore": {
+        "expressions.txt": {
+          "kind": "file",
+          "sha256": "501897c3bba3fccdf59e1bb636b507346bec41b481ff4859b31b79b88b1fb920"
+        },
+        "main.pkl": {
+          "kind": "file",
+          "sha256": "5dd0f1be321bcfdf3ae8f84ea85149731b308545bf89786f6578554bddac5aa6"
+        }
+      },
+      "workspaceAfter": {
+        "expressions.txt": {
+          "kind": "file",
+          "sha256": "501897c3bba3fccdf59e1bb636b507346bec41b481ff4859b31b79b88b1fb920"
+        },
+        "main.pkl": {
+          "kind": "file",
+          "sha256": "5dd0f1be321bcfdf3ae8f84ea85149731b308545bf89786f6578554bddac5aa6"
+        }
+      }
+    },
+    {
+      "command": [
+        "/usr/bin/java",
+        "-Xms64m",
+        "-Xmx512m",
+        "-Dfile.encoding=UTF-8",
+        "-Dstdout.encoding=UTF-8",
+        "-Dstderr.encoding=UTF-8",
+        "-Duser.language=en",
+        "-Duser.country=US",
+        "-Duser.timezone=UTC",
+        "-Djava.awt.headless=true",
+        "-Duser.name=oracle",
+        "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/identity/home",
+        "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/identity/tmp",
+        "-cp",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/classes:/Users/cody.ij.hwang/Projects/pkl-rs.stage42/.cache/oracle/pkl-tools-0.32.0.jar",
+        "LosslessHostProbe",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/workspaces/module-source-empty",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/cases/module-source-empty/0/calls",
+        "module-source",
+        "empty"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/workspaces/module-source-empty",
+      "environment": {
+        "PATH": "/bin:/usr/bin",
+        "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/identity/home",
+        "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/identity/tmp",
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "TERM": "dumb",
+        "NO_COLOR": "1",
+        "TZ": "UTC"
+      },
+      "result": {
+        "exit_code": 0,
+        "elapsed_ns": 796088625,
+        "sha256": {
+          "stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "timed_out": false,
+        "workspace_changes": {},
+        "files": {}
+      },
+      "case": "module-source-empty",
+      "repeat": 0,
+      "workspaceBefore": {
+        "expressions.txt": {
+          "kind": "file",
+          "sha256": "501897c3bba3fccdf59e1bb636b507346bec41b481ff4859b31b79b88b1fb920"
+        },
+        "main.pkl": {
+          "kind": "file",
+          "sha256": "5dd0f1be321bcfdf3ae8f84ea85149731b308545bf89786f6578554bddac5aa6"
+        }
+      },
+      "workspaceAfter": {
+        "expressions.txt": {
+          "kind": "file",
+          "sha256": "501897c3bba3fccdf59e1bb636b507346bec41b481ff4859b31b79b88b1fb920"
+        },
+        "main.pkl": {
+          "kind": "file",
+          "sha256": "5dd0f1be321bcfdf3ae8f84ea85149731b308545bf89786f6578554bddac5aa6"
+        }
+      }
+    },
+    {
+      "command": [
+        "/usr/bin/java",
+        "-Xms64m",
+        "-Xmx512m",
+        "-Dfile.encoding=UTF-8",
+        "-Dstdout.encoding=UTF-8",
+        "-Dstderr.encoding=UTF-8",
+        "-Duser.language=en",
+        "-Duser.country=US",
+        "-Duser.timezone=UTC",
+        "-Djava.awt.headless=true",
+        "-Duser.name=oracle",
+        "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/identity/home",
+        "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/identity/tmp",
+        "-cp",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/classes:/Users/cody.ij.hwang/Projects/pkl-rs.stage42/.cache/oracle/pkl-tools-0.32.0.jar",
+        "LosslessHostProbe",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/workspaces/module-source-empty",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/cases/module-source-empty/1/calls",
+        "module-source",
+        "empty"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/workspaces/module-source-empty",
+      "environment": {
+        "PATH": "/bin:/usr/bin",
+        "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/identity/home",
+        "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/identity/tmp",
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "TERM": "dumb",
+        "NO_COLOR": "1",
+        "TZ": "UTC"
+      },
+      "result": {
+        "exit_code": 0,
+        "elapsed_ns": 810735834,
+        "sha256": {
+          "stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "timed_out": false,
+        "workspace_changes": {},
+        "files": {}
+      },
+      "case": "module-source-empty",
+      "repeat": 1,
+      "workspaceBefore": {
+        "expressions.txt": {
+          "kind": "file",
+          "sha256": "501897c3bba3fccdf59e1bb636b507346bec41b481ff4859b31b79b88b1fb920"
+        },
+        "main.pkl": {
+          "kind": "file",
+          "sha256": "5dd0f1be321bcfdf3ae8f84ea85149731b308545bf89786f6578554bddac5aa6"
+        }
+      },
+      "workspaceAfter": {
+        "expressions.txt": {
+          "kind": "file",
+          "sha256": "501897c3bba3fccdf59e1bb636b507346bec41b481ff4859b31b79b88b1fb920"
+        },
+        "main.pkl": {
+          "kind": "file",
+          "sha256": "5dd0f1be321bcfdf3ae8f84ea85149731b308545bf89786f6578554bddac5aa6"
+        }
+      }
+    },
+    {
+      "command": [
+        "/usr/bin/java",
+        "-Xms64m",
+        "-Xmx512m",
+        "-Dfile.encoding=UTF-8",
+        "-Dstdout.encoding=UTF-8",
+        "-Dstderr.encoding=UTF-8",
+        "-Duser.language=en",
+        "-Duser.country=US",
+        "-Duser.timezone=UTC",
+        "-Djava.awt.headless=true",
+        "-Duser.name=oracle",
+        "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/identity/home",
+        "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/identity/tmp",
+        "-cp",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/classes:/Users/cody.ij.hwang/Projects/pkl-rs.stage42/.cache/oracle/pkl-tools-0.32.0.jar",
+        "LosslessHostProbe",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/workspaces/resource-units",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/cases/resource-units/0/calls",
+        "resource",
+        "units"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/workspaces/resource-units",
+      "environment": {
+        "PATH": "/bin:/usr/bin",
+        "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/identity/home",
+        "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/identity/tmp",
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "TERM": "dumb",
+        "NO_COLOR": "1",
+        "TZ": "UTC"
+      },
+      "result": {
+        "exit_code": 0,
+        "elapsed_ns": 889913375,
+        "sha256": {
+          "stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "timed_out": false,
+        "workspace_changes": {},
+        "files": {}
+      },
+      "case": "resource-units",
+      "repeat": 0,
+      "workspaceBefore": {
+        "expressions.txt": {
+          "kind": "file",
+          "sha256": "501897c3bba3fccdf59e1bb636b507346bec41b481ff4859b31b79b88b1fb920"
+        },
+        "main.pkl": {
+          "kind": "file",
+          "sha256": "967301b2d553684c0432ae54edba3bd4341537276d5f7f23bad8a6c0fe82fd79"
+        }
+      },
+      "workspaceAfter": {
+        "expressions.txt": {
+          "kind": "file",
+          "sha256": "501897c3bba3fccdf59e1bb636b507346bec41b481ff4859b31b79b88b1fb920"
+        },
+        "main.pkl": {
+          "kind": "file",
+          "sha256": "967301b2d553684c0432ae54edba3bd4341537276d5f7f23bad8a6c0fe82fd79"
+        }
+      }
+    },
+    {
+      "command": [
+        "/usr/bin/java",
+        "-Xms64m",
+        "-Xmx512m",
+        "-Dfile.encoding=UTF-8",
+        "-Dstdout.encoding=UTF-8",
+        "-Dstderr.encoding=UTF-8",
+        "-Duser.language=en",
+        "-Duser.country=US",
+        "-Duser.timezone=UTC",
+        "-Djava.awt.headless=true",
+        "-Duser.name=oracle",
+        "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/identity/home",
+        "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/identity/tmp",
+        "-cp",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/classes:/Users/cody.ij.hwang/Projects/pkl-rs.stage42/.cache/oracle/pkl-tools-0.32.0.jar",
+        "LosslessHostProbe",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/workspaces/resource-units",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/cases/resource-units/1/calls",
+        "resource",
+        "units"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/workspaces/resource-units",
+      "environment": {
+        "PATH": "/bin:/usr/bin",
+        "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/identity/home",
+        "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/identity/tmp",
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "TERM": "dumb",
+        "NO_COLOR": "1",
+        "TZ": "UTC"
+      },
+      "result": {
+        "exit_code": 0,
+        "elapsed_ns": 783153667,
+        "sha256": {
+          "stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "timed_out": false,
+        "workspace_changes": {},
+        "files": {}
+      },
+      "case": "resource-units",
+      "repeat": 1,
+      "workspaceBefore": {
+        "expressions.txt": {
+          "kind": "file",
+          "sha256": "501897c3bba3fccdf59e1bb636b507346bec41b481ff4859b31b79b88b1fb920"
+        },
+        "main.pkl": {
+          "kind": "file",
+          "sha256": "967301b2d553684c0432ae54edba3bd4341537276d5f7f23bad8a6c0fe82fd79"
+        }
+      },
+      "workspaceAfter": {
+        "expressions.txt": {
+          "kind": "file",
+          "sha256": "501897c3bba3fccdf59e1bb636b507346bec41b481ff4859b31b79b88b1fb920"
+        },
+        "main.pkl": {
+          "kind": "file",
+          "sha256": "967301b2d553684c0432ae54edba3bd4341537276d5f7f23bad8a6c0fe82fd79"
+        }
+      }
+    },
+    {
+      "command": [
+        "/usr/bin/java",
+        "-Xms64m",
+        "-Xmx512m",
+        "-Dfile.encoding=UTF-8",
+        "-Dstdout.encoding=UTF-8",
+        "-Dstderr.encoding=UTF-8",
+        "-Duser.language=en",
+        "-Duser.country=US",
+        "-Duser.timezone=UTC",
+        "-Djava.awt.headless=true",
+        "-Duser.name=oracle",
+        "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/identity/home",
+        "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/identity/tmp",
+        "-cp",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/classes:/Users/cody.ij.hwang/Projects/pkl-rs.stage42/.cache/oracle/pkl-tools-0.32.0.jar",
+        "LosslessHostProbe",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/workspaces/resource-null",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/cases/resource-null/0/calls",
+        "resource",
+        "null"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/workspaces/resource-null",
+      "environment": {
+        "PATH": "/bin:/usr/bin",
+        "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/identity/home",
+        "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/identity/tmp",
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "TERM": "dumb",
+        "NO_COLOR": "1",
+        "TZ": "UTC"
+      },
+      "result": {
+        "exit_code": 0,
+        "elapsed_ns": 819568833,
+        "sha256": {
+          "stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "timed_out": false,
+        "workspace_changes": {},
+        "files": {}
+      },
+      "case": "resource-null",
+      "repeat": 0,
+      "workspaceBefore": {
+        "expressions.txt": {
+          "kind": "file",
+          "sha256": "501897c3bba3fccdf59e1bb636b507346bec41b481ff4859b31b79b88b1fb920"
+        },
+        "main.pkl": {
+          "kind": "file",
+          "sha256": "967301b2d553684c0432ae54edba3bd4341537276d5f7f23bad8a6c0fe82fd79"
+        }
+      },
+      "workspaceAfter": {
+        "expressions.txt": {
+          "kind": "file",
+          "sha256": "501897c3bba3fccdf59e1bb636b507346bec41b481ff4859b31b79b88b1fb920"
+        },
+        "main.pkl": {
+          "kind": "file",
+          "sha256": "967301b2d553684c0432ae54edba3bd4341537276d5f7f23bad8a6c0fe82fd79"
+        }
+      }
+    },
+    {
+      "command": [
+        "/usr/bin/java",
+        "-Xms64m",
+        "-Xmx512m",
+        "-Dfile.encoding=UTF-8",
+        "-Dstdout.encoding=UTF-8",
+        "-Dstderr.encoding=UTF-8",
+        "-Duser.language=en",
+        "-Duser.country=US",
+        "-Duser.timezone=UTC",
+        "-Djava.awt.headless=true",
+        "-Duser.name=oracle",
+        "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/identity/home",
+        "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/identity/tmp",
+        "-cp",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/classes:/Users/cody.ij.hwang/Projects/pkl-rs.stage42/.cache/oracle/pkl-tools-0.32.0.jar",
+        "LosslessHostProbe",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/workspaces/resource-null",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/cases/resource-null/1/calls",
+        "resource",
+        "null"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/workspaces/resource-null",
+      "environment": {
+        "PATH": "/bin:/usr/bin",
+        "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/identity/home",
+        "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/identity/tmp",
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "TERM": "dumb",
+        "NO_COLOR": "1",
+        "TZ": "UTC"
+      },
+      "result": {
+        "exit_code": 0,
+        "elapsed_ns": 720445291,
+        "sha256": {
+          "stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "timed_out": false,
+        "workspace_changes": {},
+        "files": {}
+      },
+      "case": "resource-null",
+      "repeat": 1,
+      "workspaceBefore": {
+        "expressions.txt": {
+          "kind": "file",
+          "sha256": "501897c3bba3fccdf59e1bb636b507346bec41b481ff4859b31b79b88b1fb920"
+        },
+        "main.pkl": {
+          "kind": "file",
+          "sha256": "967301b2d553684c0432ae54edba3bd4341537276d5f7f23bad8a6c0fe82fd79"
+        }
+      },
+      "workspaceAfter": {
+        "expressions.txt": {
+          "kind": "file",
+          "sha256": "501897c3bba3fccdf59e1bb636b507346bec41b481ff4859b31b79b88b1fb920"
+        },
+        "main.pkl": {
+          "kind": "file",
+          "sha256": "967301b2d553684c0432ae54edba3bd4341537276d5f7f23bad8a6c0fe82fd79"
+        }
+      }
+    },
+    {
+      "command": [
+        "/usr/bin/java",
+        "-Xms64m",
+        "-Xmx512m",
+        "-Dfile.encoding=UTF-8",
+        "-Dstdout.encoding=UTF-8",
+        "-Dstderr.encoding=UTF-8",
+        "-Duser.language=en",
+        "-Duser.country=US",
+        "-Duser.timezone=UTC",
+        "-Djava.awt.headless=true",
+        "-Duser.name=oracle",
+        "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/identity/home",
+        "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/identity/tmp",
+        "-cp",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/classes:/Users/cody.ij.hwang/Projects/pkl-rs.stage42/.cache/oracle/pkl-tools-0.32.0.jar",
+        "LosslessHostProbe",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/workspaces/resource-empty",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/cases/resource-empty/0/calls",
+        "resource",
+        "empty"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/workspaces/resource-empty",
+      "environment": {
+        "PATH": "/bin:/usr/bin",
+        "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/identity/home",
+        "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/identity/tmp",
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "TERM": "dumb",
+        "NO_COLOR": "1",
+        "TZ": "UTC"
+      },
+      "result": {
+        "exit_code": 0,
+        "elapsed_ns": 704651833,
+        "sha256": {
+          "stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "timed_out": false,
+        "workspace_changes": {},
+        "files": {}
+      },
+      "case": "resource-empty",
+      "repeat": 0,
+      "workspaceBefore": {
+        "expressions.txt": {
+          "kind": "file",
+          "sha256": "501897c3bba3fccdf59e1bb636b507346bec41b481ff4859b31b79b88b1fb920"
+        },
+        "main.pkl": {
+          "kind": "file",
+          "sha256": "967301b2d553684c0432ae54edba3bd4341537276d5f7f23bad8a6c0fe82fd79"
+        }
+      },
+      "workspaceAfter": {
+        "expressions.txt": {
+          "kind": "file",
+          "sha256": "501897c3bba3fccdf59e1bb636b507346bec41b481ff4859b31b79b88b1fb920"
+        },
+        "main.pkl": {
+          "kind": "file",
+          "sha256": "967301b2d553684c0432ae54edba3bd4341537276d5f7f23bad8a6c0fe82fd79"
+        }
+      }
+    },
+    {
+      "command": [
+        "/usr/bin/java",
+        "-Xms64m",
+        "-Xmx512m",
+        "-Dfile.encoding=UTF-8",
+        "-Dstdout.encoding=UTF-8",
+        "-Dstderr.encoding=UTF-8",
+        "-Duser.language=en",
+        "-Duser.country=US",
+        "-Duser.timezone=UTC",
+        "-Djava.awt.headless=true",
+        "-Duser.name=oracle",
+        "-Duser.home=/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/identity/home",
+        "-Djava.io.tmpdir=/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/identity/tmp",
+        "-cp",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/classes:/Users/cody.ij.hwang/Projects/pkl-rs.stage42/.cache/oracle/pkl-tools-0.32.0.jar",
+        "LosslessHostProbe",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/workspaces/resource-empty",
+        "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/cases/resource-empty/1/calls",
+        "resource",
+        "empty"
+      ],
+      "cwd": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/workspaces/resource-empty",
+      "environment": {
+        "PATH": "/bin:/usr/bin",
+        "HOME": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/identity/home",
+        "TMPDIR": "/Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/identity/tmp",
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "TERM": "dumb",
+        "NO_COLOR": "1",
+        "TZ": "UTC"
+      },
+      "result": {
+        "exit_code": 0,
+        "elapsed_ns": 761292917,
+        "sha256": {
+          "stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "timed_out": false,
+        "workspace_changes": {},
+        "files": {}
+      },
+      "case": "resource-empty",
+      "repeat": 1,
+      "workspaceBefore": {
+        "expressions.txt": {
+          "kind": "file",
+          "sha256": "501897c3bba3fccdf59e1bb636b507346bec41b481ff4859b31b79b88b1fb920"
+        },
+        "main.pkl": {
+          "kind": "file",
+          "sha256": "967301b2d553684c0432ae54edba3bd4341537276d5f7f23bad8a6c0fe82fd79"
+        }
+      },
+      "workspaceAfter": {
+        "expressions.txt": {
+          "kind": "file",
+          "sha256": "501897c3bba3fccdf59e1bb636b507346bec41b481ff4859b31b79b88b1fb920"
+        },
+        "main.pkl": {
+          "kind": "file",
+          "sha256": "967301b2d553684c0432ae54edba3bd4341537276d5f7f23bad8a6c0fe82fd79"
+        }
+      }
+    }
+  ],
+  "observations": [
+    {
+      "case": "invalid-converter",
+      "repeat": 0,
+      "calls": [
+        {
+          "index": 0,
+          "expression": "result",
+          "status": "error\n",
+          "errorClass": "org.pkl.core.PklException",
+          "oracleError": false,
+          "rawPrefix": "cases/invalid-converter/0/calls/call-0"
+        },
+        {
+          "index": 1,
+          "expression": "result",
+          "status": "error\n",
+          "errorClass": "org.pkl.core.PklException",
+          "oracleError": false,
+          "rawPrefix": "cases/invalid-converter/0/calls/call-1"
+        }
+      ],
+      "counters": "resolve=0\nsource=0\nread=0\n"
+    },
+    {
+      "case": "invalid-converter",
+      "repeat": 1,
+      "calls": [
+        {
+          "index": 0,
+          "expression": "result",
+          "status": "error\n",
+          "errorClass": "org.pkl.core.PklException",
+          "oracleError": false,
+          "rawPrefix": "cases/invalid-converter/1/calls/call-0"
+        },
+        {
+          "index": 1,
+          "expression": "result",
+          "status": "error\n",
+          "errorClass": "org.pkl.core.PklException",
+          "oracleError": false,
+          "rawPrefix": "cases/invalid-converter/1/calls/call-1"
+        }
+      ],
+      "counters": "resolve=0\nsource=0\nread=0\n"
+    },
+    {
+      "case": "unknown-output-format",
+      "repeat": 0,
+      "calls": [
+        {
+          "index": 0,
+          "expression": "output.text",
+          "status": "error\n",
+          "errorClass": "org.pkl.core.PklException",
+          "oracleError": false,
+          "rawPrefix": "cases/unknown-output-format/0/calls/call-0"
+        },
+        {
+          "index": 1,
+          "expression": "output.text",
+          "status": "error\n",
+          "errorClass": "org.pkl.core.PklException",
+          "oracleError": false,
+          "rawPrefix": "cases/unknown-output-format/0/calls/call-1"
+        }
+      ],
+      "counters": "resolve=0\nsource=0\nread=0\n"
+    },
+    {
+      "case": "unknown-output-format",
+      "repeat": 1,
+      "calls": [
+        {
+          "index": 0,
+          "expression": "output.text",
+          "status": "error\n",
+          "errorClass": "org.pkl.core.PklException",
+          "oracleError": false,
+          "rawPrefix": "cases/unknown-output-format/1/calls/call-0"
+        },
+        {
+          "index": 1,
+          "expression": "output.text",
+          "status": "error\n",
+          "errorClass": "org.pkl.core.PklException",
+          "oracleError": false,
+          "rawPrefix": "cases/unknown-output-format/1/calls/call-1"
+        }
+      ],
+      "counters": "resolve=0\nsource=0\nread=0\n"
+    },
+    {
+      "case": "module-resolve-units",
+      "repeat": 0,
+      "calls": [
+        {
+          "index": 0,
+          "expression": "stable",
+          "status": "success\n",
+          "errorClass": "",
+          "oracleError": false,
+          "rawPrefix": "cases/module-resolve-units/0/calls/call-0"
+        },
+        {
+          "index": 1,
+          "expression": "value",
+          "status": "error\n",
+          "errorClass": "org.pkl.core.PklException",
+          "oracleError": false,
+          "rawPrefix": "cases/module-resolve-units/0/calls/call-1"
+        },
+        {
+          "index": 2,
+          "expression": "value",
+          "status": "success\n",
+          "errorClass": "",
+          "oracleError": false,
+          "rawPrefix": "cases/module-resolve-units/0/calls/call-2"
+        },
+        {
+          "index": 3,
+          "expression": "stable",
+          "status": "success\n",
+          "errorClass": "",
+          "oracleError": false,
+          "rawPrefix": "cases/module-resolve-units/0/calls/call-3"
+        }
+      ],
+      "counters": "resolve=2\nsource=1\nread=0\n"
+    },
+    {
+      "case": "module-resolve-units",
+      "repeat": 1,
+      "calls": [
+        {
+          "index": 0,
+          "expression": "stable",
+          "status": "success\n",
+          "errorClass": "",
+          "oracleError": false,
+          "rawPrefix": "cases/module-resolve-units/1/calls/call-0"
+        },
+        {
+          "index": 1,
+          "expression": "value",
+          "status": "error\n",
+          "errorClass": "org.pkl.core.PklException",
+          "oracleError": false,
+          "rawPrefix": "cases/module-resolve-units/1/calls/call-1"
+        },
+        {
+          "index": 2,
+          "expression": "value",
+          "status": "success\n",
+          "errorClass": "",
+          "oracleError": false,
+          "rawPrefix": "cases/module-resolve-units/1/calls/call-2"
+        },
+        {
+          "index": 3,
+          "expression": "stable",
+          "status": "success\n",
+          "errorClass": "",
+          "oracleError": false,
+          "rawPrefix": "cases/module-resolve-units/1/calls/call-3"
+        }
+      ],
+      "counters": "resolve=2\nsource=1\nread=0\n"
+    },
+    {
+      "case": "module-resolve-null",
+      "repeat": 0,
+      "calls": [
+        {
+          "index": 0,
+          "expression": "stable",
+          "status": "success\n",
+          "errorClass": "",
+          "oracleError": false,
+          "rawPrefix": "cases/module-resolve-null/0/calls/call-0"
+        },
+        {
+          "index": 1,
+          "expression": "value",
+          "status": "error\n",
+          "errorClass": "org.pkl.core.PklException",
+          "oracleError": false,
+          "rawPrefix": "cases/module-resolve-null/0/calls/call-1"
+        },
+        {
+          "index": 2,
+          "expression": "value",
+          "status": "success\n",
+          "errorClass": "",
+          "oracleError": false,
+          "rawPrefix": "cases/module-resolve-null/0/calls/call-2"
+        },
+        {
+          "index": 3,
+          "expression": "stable",
+          "status": "success\n",
+          "errorClass": "",
+          "oracleError": false,
+          "rawPrefix": "cases/module-resolve-null/0/calls/call-3"
+        }
+      ],
+      "counters": "resolve=2\nsource=1\nread=0\n"
+    },
+    {
+      "case": "module-resolve-null",
+      "repeat": 1,
+      "calls": [
+        {
+          "index": 0,
+          "expression": "stable",
+          "status": "success\n",
+          "errorClass": "",
+          "oracleError": false,
+          "rawPrefix": "cases/module-resolve-null/1/calls/call-0"
+        },
+        {
+          "index": 1,
+          "expression": "value",
+          "status": "error\n",
+          "errorClass": "org.pkl.core.PklException",
+          "oracleError": false,
+          "rawPrefix": "cases/module-resolve-null/1/calls/call-1"
+        },
+        {
+          "index": 2,
+          "expression": "value",
+          "status": "success\n",
+          "errorClass": "",
+          "oracleError": false,
+          "rawPrefix": "cases/module-resolve-null/1/calls/call-2"
+        },
+        {
+          "index": 3,
+          "expression": "stable",
+          "status": "success\n",
+          "errorClass": "",
+          "oracleError": false,
+          "rawPrefix": "cases/module-resolve-null/1/calls/call-3"
+        }
+      ],
+      "counters": "resolve=2\nsource=1\nread=0\n"
+    },
+    {
+      "case": "module-resolve-empty",
+      "repeat": 0,
+      "calls": [
+        {
+          "index": 0,
+          "expression": "stable",
+          "status": "success\n",
+          "errorClass": "",
+          "oracleError": false,
+          "rawPrefix": "cases/module-resolve-empty/0/calls/call-0"
+        },
+        {
+          "index": 1,
+          "expression": "value",
+          "status": "error\n",
+          "errorClass": "org.pkl.core.PklException",
+          "oracleError": false,
+          "rawPrefix": "cases/module-resolve-empty/0/calls/call-1"
+        },
+        {
+          "index": 2,
+          "expression": "value",
+          "status": "success\n",
+          "errorClass": "",
+          "oracleError": false,
+          "rawPrefix": "cases/module-resolve-empty/0/calls/call-2"
+        },
+        {
+          "index": 3,
+          "expression": "stable",
+          "status": "success\n",
+          "errorClass": "",
+          "oracleError": false,
+          "rawPrefix": "cases/module-resolve-empty/0/calls/call-3"
+        }
+      ],
+      "counters": "resolve=2\nsource=1\nread=0\n"
+    },
+    {
+      "case": "module-resolve-empty",
+      "repeat": 1,
+      "calls": [
+        {
+          "index": 0,
+          "expression": "stable",
+          "status": "success\n",
+          "errorClass": "",
+          "oracleError": false,
+          "rawPrefix": "cases/module-resolve-empty/1/calls/call-0"
+        },
+        {
+          "index": 1,
+          "expression": "value",
+          "status": "error\n",
+          "errorClass": "org.pkl.core.PklException",
+          "oracleError": false,
+          "rawPrefix": "cases/module-resolve-empty/1/calls/call-1"
+        },
+        {
+          "index": 2,
+          "expression": "value",
+          "status": "success\n",
+          "errorClass": "",
+          "oracleError": false,
+          "rawPrefix": "cases/module-resolve-empty/1/calls/call-2"
+        },
+        {
+          "index": 3,
+          "expression": "stable",
+          "status": "success\n",
+          "errorClass": "",
+          "oracleError": false,
+          "rawPrefix": "cases/module-resolve-empty/1/calls/call-3"
+        }
+      ],
+      "counters": "resolve=2\nsource=1\nread=0\n"
+    },
+    {
+      "case": "module-source-units",
+      "repeat": 0,
+      "calls": [
+        {
+          "index": 0,
+          "expression": "stable",
+          "status": "success\n",
+          "errorClass": "",
+          "oracleError": false,
+          "rawPrefix": "cases/module-source-units/0/calls/call-0"
+        },
+        {
+          "index": 1,
+          "expression": "value",
+          "status": "error\n",
+          "errorClass": "org.pkl.core.PklException",
+          "oracleError": false,
+          "rawPrefix": "cases/module-source-units/0/calls/call-1"
+        },
+        {
+          "index": 2,
+          "expression": "value",
+          "status": "error\n",
+          "errorClass": "org.pkl.core.PklException",
+          "oracleError": false,
+          "rawPrefix": "cases/module-source-units/0/calls/call-2"
+        },
+        {
+          "index": 3,
+          "expression": "stable",
+          "status": "success\n",
+          "errorClass": "",
+          "oracleError": false,
+          "rawPrefix": "cases/module-source-units/0/calls/call-3"
+        }
+      ],
+      "counters": "resolve=1\nsource=1\nread=0\n"
+    },
+    {
+      "case": "module-source-units",
+      "repeat": 1,
+      "calls": [
+        {
+          "index": 0,
+          "expression": "stable",
+          "status": "success\n",
+          "errorClass": "",
+          "oracleError": false,
+          "rawPrefix": "cases/module-source-units/1/calls/call-0"
+        },
+        {
+          "index": 1,
+          "expression": "value",
+          "status": "error\n",
+          "errorClass": "org.pkl.core.PklException",
+          "oracleError": false,
+          "rawPrefix": "cases/module-source-units/1/calls/call-1"
+        },
+        {
+          "index": 2,
+          "expression": "value",
+          "status": "error\n",
+          "errorClass": "org.pkl.core.PklException",
+          "oracleError": false,
+          "rawPrefix": "cases/module-source-units/1/calls/call-2"
+        },
+        {
+          "index": 3,
+          "expression": "stable",
+          "status": "success\n",
+          "errorClass": "",
+          "oracleError": false,
+          "rawPrefix": "cases/module-source-units/1/calls/call-3"
+        }
+      ],
+      "counters": "resolve=1\nsource=1\nread=0\n"
+    },
+    {
+      "case": "module-source-null",
+      "repeat": 0,
+      "calls": [
+        {
+          "index": 0,
+          "expression": "stable",
+          "status": "success\n",
+          "errorClass": "",
+          "oracleError": false,
+          "rawPrefix": "cases/module-source-null/0/calls/call-0"
+        },
+        {
+          "index": 1,
+          "expression": "value",
+          "status": "error\n",
+          "errorClass": "org.pkl.core.PklException",
+          "oracleError": false,
+          "rawPrefix": "cases/module-source-null/0/calls/call-1"
+        },
+        {
+          "index": 2,
+          "expression": "value",
+          "status": "error\n",
+          "errorClass": "org.pkl.core.PklException",
+          "oracleError": false,
+          "rawPrefix": "cases/module-source-null/0/calls/call-2"
+        },
+        {
+          "index": 3,
+          "expression": "stable",
+          "status": "success\n",
+          "errorClass": "",
+          "oracleError": false,
+          "rawPrefix": "cases/module-source-null/0/calls/call-3"
+        }
+      ],
+      "counters": "resolve=1\nsource=1\nread=0\n"
+    },
+    {
+      "case": "module-source-null",
+      "repeat": 1,
+      "calls": [
+        {
+          "index": 0,
+          "expression": "stable",
+          "status": "success\n",
+          "errorClass": "",
+          "oracleError": false,
+          "rawPrefix": "cases/module-source-null/1/calls/call-0"
+        },
+        {
+          "index": 1,
+          "expression": "value",
+          "status": "error\n",
+          "errorClass": "org.pkl.core.PklException",
+          "oracleError": false,
+          "rawPrefix": "cases/module-source-null/1/calls/call-1"
+        },
+        {
+          "index": 2,
+          "expression": "value",
+          "status": "error\n",
+          "errorClass": "org.pkl.core.PklException",
+          "oracleError": false,
+          "rawPrefix": "cases/module-source-null/1/calls/call-2"
+        },
+        {
+          "index": 3,
+          "expression": "stable",
+          "status": "success\n",
+          "errorClass": "",
+          "oracleError": false,
+          "rawPrefix": "cases/module-source-null/1/calls/call-3"
+        }
+      ],
+      "counters": "resolve=1\nsource=1\nread=0\n"
+    },
+    {
+      "case": "module-source-empty",
+      "repeat": 0,
+      "calls": [
+        {
+          "index": 0,
+          "expression": "stable",
+          "status": "success\n",
+          "errorClass": "",
+          "oracleError": false,
+          "rawPrefix": "cases/module-source-empty/0/calls/call-0"
+        },
+        {
+          "index": 1,
+          "expression": "value",
+          "status": "error\n",
+          "errorClass": "org.pkl.core.PklException",
+          "oracleError": false,
+          "rawPrefix": "cases/module-source-empty/0/calls/call-1"
+        },
+        {
+          "index": 2,
+          "expression": "value",
+          "status": "error\n",
+          "errorClass": "org.pkl.core.PklException",
+          "oracleError": false,
+          "rawPrefix": "cases/module-source-empty/0/calls/call-2"
+        },
+        {
+          "index": 3,
+          "expression": "stable",
+          "status": "success\n",
+          "errorClass": "",
+          "oracleError": false,
+          "rawPrefix": "cases/module-source-empty/0/calls/call-3"
+        }
+      ],
+      "counters": "resolve=1\nsource=1\nread=0\n"
+    },
+    {
+      "case": "module-source-empty",
+      "repeat": 1,
+      "calls": [
+        {
+          "index": 0,
+          "expression": "stable",
+          "status": "success\n",
+          "errorClass": "",
+          "oracleError": false,
+          "rawPrefix": "cases/module-source-empty/1/calls/call-0"
+        },
+        {
+          "index": 1,
+          "expression": "value",
+          "status": "error\n",
+          "errorClass": "org.pkl.core.PklException",
+          "oracleError": false,
+          "rawPrefix": "cases/module-source-empty/1/calls/call-1"
+        },
+        {
+          "index": 2,
+          "expression": "value",
+          "status": "error\n",
+          "errorClass": "org.pkl.core.PklException",
+          "oracleError": false,
+          "rawPrefix": "cases/module-source-empty/1/calls/call-2"
+        },
+        {
+          "index": 3,
+          "expression": "stable",
+          "status": "success\n",
+          "errorClass": "",
+          "oracleError": false,
+          "rawPrefix": "cases/module-source-empty/1/calls/call-3"
+        }
+      ],
+      "counters": "resolve=1\nsource=1\nread=0\n"
+    },
+    {
+      "case": "resource-units",
+      "repeat": 0,
+      "calls": [
+        {
+          "index": 0,
+          "expression": "stable",
+          "status": "success\n",
+          "errorClass": "",
+          "oracleError": false,
+          "rawPrefix": "cases/resource-units/0/calls/call-0"
+        },
+        {
+          "index": 1,
+          "expression": "value",
+          "status": "error\n",
+          "errorClass": "org.pkl.core.PklException",
+          "oracleError": false,
+          "rawPrefix": "cases/resource-units/0/calls/call-1"
+        },
+        {
+          "index": 2,
+          "expression": "value",
+          "status": "success\n",
+          "errorClass": "",
+          "oracleError": false,
+          "rawPrefix": "cases/resource-units/0/calls/call-2"
+        },
+        {
+          "index": 3,
+          "expression": "stable",
+          "status": "success\n",
+          "errorClass": "",
+          "oracleError": false,
+          "rawPrefix": "cases/resource-units/0/calls/call-3"
+        }
+      ],
+      "counters": "resolve=0\nsource=0\nread=2\n"
+    },
+    {
+      "case": "resource-units",
+      "repeat": 1,
+      "calls": [
+        {
+          "index": 0,
+          "expression": "stable",
+          "status": "success\n",
+          "errorClass": "",
+          "oracleError": false,
+          "rawPrefix": "cases/resource-units/1/calls/call-0"
+        },
+        {
+          "index": 1,
+          "expression": "value",
+          "status": "error\n",
+          "errorClass": "org.pkl.core.PklException",
+          "oracleError": false,
+          "rawPrefix": "cases/resource-units/1/calls/call-1"
+        },
+        {
+          "index": 2,
+          "expression": "value",
+          "status": "success\n",
+          "errorClass": "",
+          "oracleError": false,
+          "rawPrefix": "cases/resource-units/1/calls/call-2"
+        },
+        {
+          "index": 3,
+          "expression": "stable",
+          "status": "success\n",
+          "errorClass": "",
+          "oracleError": false,
+          "rawPrefix": "cases/resource-units/1/calls/call-3"
+        }
+      ],
+      "counters": "resolve=0\nsource=0\nread=2\n"
+    },
+    {
+      "case": "resource-null",
+      "repeat": 0,
+      "calls": [
+        {
+          "index": 0,
+          "expression": "stable",
+          "status": "success\n",
+          "errorClass": "",
+          "oracleError": false,
+          "rawPrefix": "cases/resource-null/0/calls/call-0"
+        },
+        {
+          "index": 1,
+          "expression": "value",
+          "status": "error\n",
+          "errorClass": "org.pkl.core.PklException",
+          "oracleError": false,
+          "rawPrefix": "cases/resource-null/0/calls/call-1"
+        },
+        {
+          "index": 2,
+          "expression": "value",
+          "status": "success\n",
+          "errorClass": "",
+          "oracleError": false,
+          "rawPrefix": "cases/resource-null/0/calls/call-2"
+        },
+        {
+          "index": 3,
+          "expression": "stable",
+          "status": "success\n",
+          "errorClass": "",
+          "oracleError": false,
+          "rawPrefix": "cases/resource-null/0/calls/call-3"
+        }
+      ],
+      "counters": "resolve=0\nsource=0\nread=2\n"
+    },
+    {
+      "case": "resource-null",
+      "repeat": 1,
+      "calls": [
+        {
+          "index": 0,
+          "expression": "stable",
+          "status": "success\n",
+          "errorClass": "",
+          "oracleError": false,
+          "rawPrefix": "cases/resource-null/1/calls/call-0"
+        },
+        {
+          "index": 1,
+          "expression": "value",
+          "status": "error\n",
+          "errorClass": "org.pkl.core.PklException",
+          "oracleError": false,
+          "rawPrefix": "cases/resource-null/1/calls/call-1"
+        },
+        {
+          "index": 2,
+          "expression": "value",
+          "status": "success\n",
+          "errorClass": "",
+          "oracleError": false,
+          "rawPrefix": "cases/resource-null/1/calls/call-2"
+        },
+        {
+          "index": 3,
+          "expression": "stable",
+          "status": "success\n",
+          "errorClass": "",
+          "oracleError": false,
+          "rawPrefix": "cases/resource-null/1/calls/call-3"
+        }
+      ],
+      "counters": "resolve=0\nsource=0\nread=2\n"
+    },
+    {
+      "case": "resource-empty",
+      "repeat": 0,
+      "calls": [
+        {
+          "index": 0,
+          "expression": "stable",
+          "status": "success\n",
+          "errorClass": "",
+          "oracleError": false,
+          "rawPrefix": "cases/resource-empty/0/calls/call-0"
+        },
+        {
+          "index": 1,
+          "expression": "value",
+          "status": "error\n",
+          "errorClass": "org.pkl.core.PklException",
+          "oracleError": false,
+          "rawPrefix": "cases/resource-empty/0/calls/call-1"
+        },
+        {
+          "index": 2,
+          "expression": "value",
+          "status": "success\n",
+          "errorClass": "",
+          "oracleError": false,
+          "rawPrefix": "cases/resource-empty/0/calls/call-2"
+        },
+        {
+          "index": 3,
+          "expression": "stable",
+          "status": "success\n",
+          "errorClass": "",
+          "oracleError": false,
+          "rawPrefix": "cases/resource-empty/0/calls/call-3"
+        }
+      ],
+      "counters": "resolve=0\nsource=0\nread=2\n"
+    },
+    {
+      "case": "resource-empty",
+      "repeat": 1,
+      "calls": [
+        {
+          "index": 0,
+          "expression": "stable",
+          "status": "success\n",
+          "errorClass": "",
+          "oracleError": false,
+          "rawPrefix": "cases/resource-empty/1/calls/call-0"
+        },
+        {
+          "index": 1,
+          "expression": "value",
+          "status": "error\n",
+          "errorClass": "org.pkl.core.PklException",
+          "oracleError": false,
+          "rawPrefix": "cases/resource-empty/1/calls/call-1"
+        },
+        {
+          "index": 2,
+          "expression": "value",
+          "status": "success\n",
+          "errorClass": "",
+          "oracleError": false,
+          "rawPrefix": "cases/resource-empty/1/calls/call-2"
+        },
+        {
+          "index": 3,
+          "expression": "stable",
+          "status": "success\n",
+          "errorClass": "",
+          "oracleError": false,
+          "rawPrefix": "cases/resource-empty/1/calls/call-3"
+        }
+      ],
+      "counters": "resolve=0\nsource=0\nread=2\n"
+    }
+  ],
+  "inputChanges": [],
+  "repeatDifferences": [],
+  "jarSha256": "c3b6f6215a08b31453b0fb0edd8c9da0aee31233f65abb8ab07f9c945151e059",
+  "jdkReleaseSha256": "ab66b8afeea98b25f1869fbe7c0dde368d448e7cc0f7bab0359b322ade134fe1",
+  "jdkModulesSha256": "40fcf7a32bada7e299e3513939a4472d27f8f61eb81cdd1675ea00648de7e7cf"
+}

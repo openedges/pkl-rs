@@ -23,7 +23,7 @@ function setup(events, options = {}) {
     drainCancelledReads() { return []; }
   }
   for (const method of ['startPath','startOutputBytes','completeModuleResolution','completeModuleSource',
-    'rejectModuleResolution','rejectModuleSource','reenterPath','closeFromCallback','respondString','respondConfigured','acknowledgeLog'])
+    'rejectReadIo','reject','rejectModuleResolution','rejectModuleSource','reenterPath','closeFromCallback','respondString','respondConfigured','acknowledgeLog'])
     SourceSession.prototype[method] = (...args) => calls.push([method, ...args]);
   return { api: { SourceSession }, calls };
 }
@@ -197,4 +197,53 @@ test('module expressions use the explicit parser-backed session factory without 
   assert.equal(row.acquisitionError,null);
   const call=calls.find(call=>call[0]==='forExpressions');
   assert.deepEqual(call.slice(1,5),[f.source,f.uri,f.moduleName,['a == b']]);
+});
+
+test('resolve retry plan preserves null IO, empty message and prepared identities', () => {
+  for (const message of [null, '', '\ud83d|\udc00\0']) {
+    const {api,calls} = setup([resolver(),{kind:'error',error:Uint16Array.of(65)},resolver(),loader(),{kind:'value',value:Uint16Array.of(57)}]);
+    const f = fixture({actions:[{kind:'path',index:0},{kind:'path',index:0}]});
+    f.resolutions=[{importUri:'file:///child%2520.pkl',resolves:[{failure:{kind:'io',message}},
+      {resolvedUri:'file:///canonical.pkl',sourceUri:'file:///alias.pkl'}]}];
+    const row=runModuleLoaderCase(api,f);
+    assert.equal(row.acquisitionError,null);
+    assert.deepEqual(calls.filter(c=>c[0]==='rejectModuleResolution'),[['rejectModuleResolution','r','io',message,0]]);
+    assert.deepEqual(calls.find(c=>c[0]==='completeModuleResolution'),
+      ['completeModuleResolution','r','file:///child%2520.pkl','file:///canonical.pkl','file:///alias.pkl',0]);
+    assert.deepEqual(row.results.map(r=>r.kind),['error','value']);
+  }
+});
+
+test('read plans preserve IO-vs-raw distinction and explicit property completions', () => {
+  const message='\ud83d|\udc00\0';
+  const events=[{kind:'read',token:'p',uri:'prop:pkl.outputFormat'},
+    {kind:'read',token:'r1',uri:'lossless:/resource'},{kind:'error',error:Uint16Array.of(0xd83d)},
+    {kind:'read',token:'r2',uri:'lossless:/resource'},{kind:'value',value:Uint16Array.of(57)}];
+  const {api,calls}=setup(events);
+  const f=fixture({actions:[{kind:'path',index:0},{kind:'path',index:0}],resources:[
+    {uri:'prop:pkl.outputFormat',valueUnits:[0xd83d,0xdc00]},
+    {uri:'lossless:/resource',reads:[{failure:{kind:'io',message:null}},{valueUnits:[57]}]},
+  ]});
+  const row=runModuleLoaderCase(api,f);
+  assert.equal(row.acquisitionError,null);
+  assert.deepEqual(calls.find(c=>c[0]==='respondString'),['respondString','p',Uint16Array.of(0xd83d,0xdc00),0]);
+  assert.deepEqual(calls.find(c=>c[0]==='rejectReadIo'),['rejectReadIo','r1',null,0]);
+  assert.equal(calls.some(c=>c[0]==='respondConfigured'),false);
+  assert.deepEqual(row.reads.map(r=>r.uri),['prop:pkl.outputFormat','lossless:/resource','lossless:/resource']);
+  const raw=setup([{kind:'read',token:'raw',uri:'lossless:/resource'},{kind:'error',error:Uint16Array.of(0xdc00)}]);
+  assert.equal(runModuleLoaderCase(raw.api,fixture({resources:[{uri:'lossless:/resource',failure:{kind:'diagnostic',message}}]})).acquisitionError,null);
+  assert.deepEqual(raw.calls.find(c=>c[0]==='reject'),['reject','raw',message,0]);
+});
+
+test('omitted nullable IO input and exhausted plans are acquisition failures', () => {
+  const first=setup([]);
+  const invalid=fixture({resolutions:[{importUri:'file:///child%2520.pkl',failure:{kind:'io'}}]});
+  assert.match(runModuleLoaderCase(first.api,invalid).acquisitionError.message,/invalid module Host failure/);
+  assert.equal(first.calls.length,0);
+  const {api}=setup([resolver(),{kind:'error',error:Uint16Array.of(65)},resolver()]);
+  const f=fixture({resolutions:[{importUri:'file:///child%2520.pkl',resolves:[{failure:{kind:'io',message:''}}]}],
+    actions:[{kind:'path',index:0},{kind:'path',index:0}]});
+  const row=runModuleLoaderCase(api,f);
+  assert.match(row.acquisitionError.message,/plan exhausted/);
+  assert.equal(row.results.length,1);
 });

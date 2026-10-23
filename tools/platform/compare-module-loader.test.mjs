@@ -2,7 +2,7 @@ import { fileURLToPath } from 'node:url';
 import { runModuleLoaderCase } from './module-loader-session.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { compareLoaderResult, javaUtf8, selectModuleFixtureVerifier } from './compare-module-loader.mjs';
+import { compareLoaderResult, javaUtf8, selectModuleFixtureVerifier, compareScopedResourceReads } from './compare-module-loader.mjs';
 
 test('identical diagnostic bytes cannot make Unsupported expression completion pass',()=>{
   const expected={kind:'error',javaStatus:'error',javaUtf8Hex:'626164'};
@@ -71,4 +71,19 @@ test('registered ordered string API fixture verifier retains exact UTF16 errors'
   assert.equal(replaced.status,'mismatch');
   const exact=compareLoaderResult(expected,{kind:'error',errorUnits:[0xd83d],disposition:'language-error'});
   assert.equal(exact.status,'pass');
+});
+
+test('lossless Host export is registered without widening arbitrary verifier execution', () => {
+  const verifier=fileURLToPath(new URL('../lossless_host_fixtures.py',import.meta.url));
+  assert.equal(selectModuleFixtureVerifier(['out','wasm','addon','fixtures',verifier]),verifier);
+  assert.throws(()=>selectModuleFixtureVerifier(['out','wasm','addon','fixtures','/tmp/lossless_host_fixtures.py']),/unregistered/);
+});
+test('custom Java reader counters exclude configured property effects but detect lost reads', () => {
+  const expected={resourceReadScopePrefix:'lossless:',resourceReadCounts:{'lossless:/resource':2}};
+  const reads=[{uri:'prop:pkl.outputFormat'},{uri:'lossless:/resource'},{uri:'lossless:/resource'}];
+  assert.equal(compareScopedResourceReads(expected,reads),true);
+  assert.equal(compareScopedResourceReads(expected,reads.slice(0,2)),false);
+  assert.equal(compareScopedResourceReads(expected,[...reads,{uri:'lossless:/unexpected'}]),false);
+  assert.equal(compareScopedResourceReads(expected,undefined),false);
+  assert.equal(compareScopedResourceReads({},reads),null);
 });

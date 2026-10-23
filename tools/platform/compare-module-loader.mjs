@@ -45,10 +45,21 @@ export function compareLoaderResult(expected,actual){
   return {status,rawMatch,channels,expectedBytes,actualBytes,actualUnits:actualUnits??null,
     stringBoundary:expected.kind==='bytes'?'exact-output-bytes':expectedUnits==null?'java-utf8-serialization-only':'exact-java-utf16-and-java-utf8'};
 }
+export function compareScopedResourceReads(expected, reads) {
+  if (expected.resourceReadCounts == null) return null;
+  const prefix = expected.resourceReadScopePrefix;
+  if (typeof prefix !== 'string' || !prefix.length || !Array.isArray(reads)
+      || reads.some(row => typeof row?.uri !== 'string')) return false;
+  const counts = {};
+  for (const {uri} of reads) if (uri.startsWith(prefix)) counts[uri] = (counts[uri] ?? 0) + 1;
+  return Object.entries(expected.resourceReadCounts).every(([uri,count]) =>
+    Number.isSafeInteger(count) && count >= 0 && (counts[uri] ?? 0) === count)
+    && Object.entries(counts).every(([uri,count]) => expected.resourceReadCounts[uri] === count);
+}
 const unitBytes=units=>{const bytes=Buffer.alloc(units.length*2);units.forEach((unit,index)=>bytes.writeUInt16BE(unit,index*2));return bytes;};
 export function selectModuleFixtureVerifier(args){
   if(args.length!==4&&args.length!==5)throw Error('usage: compare-module-loader.mjs OUTPUT WASM_DIR NAPI_BINARY FIXTURE_DIR [VERIFIER]');
-  const allowed=['module_loading_fixtures.py','module_inheritance_fixtures.py','string_subscript_fixtures.py'].map(name=>resolve(root,'tools',name));
+  const allowed=['module_loading_fixtures.py','module_inheritance_fixtures.py','string_subscript_fixtures.py','lossless_host_fixtures.py'].map(name=>resolve(root,'tools',name));
   if(args.length===4)return allowed[0];
   if(typeof args[4]!=='string'||args[4].length===0||!allowed.includes(resolve(args[4])))throw Error('unregistered module fixture verifier');
   return resolve(args[4]);
@@ -68,7 +79,9 @@ export async function compareModuleLoader(args){
   // ordered API calls. Other graph fixture contracts keep their existing shape.
   const stringSelection=verifier===resolve(root,'tools/string_subscript_fixtures.py')
     ?JSON.parse(checked.stdout.toString('utf8')):null;
-  const fixtures=stringSelection?.graphFixtures??data.cases;
+  const hostSelection=verifier===resolve(root,'tools/lossless_host_fixtures.py')
+    ?JSON.parse(checked.stdout.toString('utf8')):null;
+  const fixtures=hostSelection?.graphFixtures??stringSelection?.graphFixtures??data.cases;
   if(!Array.isArray(fixtures)||!fixtures.length||fixtures.some(f=>! /^[a-z0-9-]+$/.test(f.id))||new Set(fixtures.map(f=>f.id)).size!==fixtures.length)throw Error('invalid fixture order/identities');
   const require=createRequire(resolve(root,'tools/platform/package.json'));
   const {chromium}=require('playwright');
@@ -90,6 +103,8 @@ export async function compareModuleLoader(args){
     ...(stringSelection?{orderedApiCallsPerSession:stringSelection.caseCount,
       oracleApiEvaluations:stringSelection.actualJavaEvaluations,
       selectionBoundary:stringSelection.scope}:{}),
+    ...(hostSelection?{orderedCallsPerRepetition:hostSelection.orderedCallsPerRepetition,
+      oracleApiEvaluations:hostSelection.actualJavaEvaluations,selectionBoundary:hostSelection.scope}:{}),
     excludedProducerMetadata:{javaErrorClass:'JVM class names are retained in expected/origin records; raw diagnostic strings and API status kinds are compared. Shared phase/disposition are implementation metadata, not Java producer-phase equality.'},
     node:process.version,nodeExecutable:process.execPath,nodeExecutableSha256:hash(await readFile(process.execPath)),
     playwright,playwrightCore,playwrightPin:pin,artifactAndInputHashes:hashes,targets:{},infrastructureErrors:[],browserErrors:[]};
@@ -130,12 +145,13 @@ export async function compareModuleLoader(args){
       const counts=row.requests.reduce((counts,request)=>({...counts,[request.kind]:(counts[request.kind]??0)+1}),{});
       const requestCountsMatch=f.expected.requestCounts==null?null:Object.entries(f.expected.requestCounts).every(([kind,count])=>(counts[kind]??0)===count)
         &&Object.entries(counts).every(([kind,count])=>count===(f.expected.requestCounts?.[kind]??0));
+      const resourceReadCountsMatch=compareScopedResourceReads(f.expected,row.reads);
       const architectureMatch=row.architecture.terminalSlots===0&&row.architecture.ownedResultsStable;
       const oracleError=f.oracleError||comparisons.some(c=>c.status==='oracle-error');
-      const rawMatch=comparisons.every(c=>c.rawMatch&&c.indexMatches)&&logsMatch!==false&&requestCountsMatch!==false;
+      const rawMatch=comparisons.every(c=>c.rawMatch&&c.indexMatches)&&logsMatch!==false&&requestCountsMatch!==false&&resourceReadCountsMatch!==false;
       const candidateFailure=comparisons.find(c=>c.status.startsWith('candidate-'));
       const status=oracleError?'oracle-error':row.acquisitionError?'acquisition-failed':candidateFailure?candidateFailure.status:!rawMatch?'mismatch':!architectureMatch?'architecture-failed':'pass';
-      const result={id:row.id,repeat:row.repeat,status,rawMatch,logsMatch,requestCountsMatch,requestCounts:counts,architectureMatch,
+      const result={id:row.id,repeat:row.repeat,status,rawMatch,logsMatch,requestCountsMatch,resourceReadCountsMatch,resourceReads:row.reads??null,requestCounts:counts,architectureMatch,
         architecture:row.architecture,acquisitionError:row.acquisitionError,comparisons};
       await writeFile(resolve(directory,'result.json'),json(result));results.push(result);
     }

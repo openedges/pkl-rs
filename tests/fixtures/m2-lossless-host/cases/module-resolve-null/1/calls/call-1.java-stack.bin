@@ -1,0 +1,21 @@
+org.pkl.core.PklException: –– Pkl Error ––
+I/O error loading module `lossless:/child`.
+
+1 | import "lossless:/child" as child
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+at main#child (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/workspaces/module-resolve-null/main.pkl)
+
+2 | value = child.value
+            ^^^^^
+at main#value (file:///Users/cody.ij.hwang/Projects/pkl-rs.stage42/target/m2/stage44-lossless-host-oracle-01/workspaces/module-resolve-null/main.pkl)
+
+1 | value
+    ^^^^^
+at  (repl:text)
+
+	at org.pkl.core.runtime.VmException.toPklException(VmException.java:136)
+	at org.pkl.core.EvaluatorImpl.doEvaluate(EvaluatorImpl.java:401)
+	at org.pkl.core.EvaluatorImpl.doEvaluate(EvaluatorImpl.java:466)
+	at org.pkl.core.EvaluatorImpl.evaluateExpressionString(EvaluatorImpl.java:263)
+	at LosslessHostProbe.capture(LosslessHostProbe.java:30)
+	at LosslessHostProbe.main(LosslessHostProbe.java:85)

@@ -59,6 +59,29 @@ Stage 43 preserves canonical diagnostic strings through the shared engine and
 native/Node/Wasm boundaries, and corrects literal-union type-check equivalence.
 These checkpoints do not complete the language milestone.
 
+## Stage 44 implementation checkpoint
+
+The [publication audit](stage44-publication-review.json) independently verifies
+all 43,938 captured payloads, 9,925 staged/pinned source paths and the actual
+portable Host calls. Its raw review and publisher records are preserved in the
+[closeout captures](stage44-closeout-captures.tar.gz).
+
+The [checkpoint](stage44-implementation-checkpoint.json) and
+[raw captures](stage44-implementation-captures.json) retain canonical Host
+IOException causes, the direct `output.text` API operation, and remaining
+converter/output-format diagnostic fixes. Eleven original Java scenarios have
+80 ordered calls across two fresh JVM repetitions; native, Node and Chromium
+match complete UTF-16/UTF-8 results and the original reader/module counters.
+
+The [required checks](stage44-required-checks.json) pass all five commands on the
+real Git worktree, including 692 passing workspace harness invocations, no
+failures and one ignored invocation. The
+[platform summary](stage44-platform-summary.json) retains affected regressions,
+two known primitive regex differences, and 32 trace oracle errors per target.
+The [independent code review](stage44-code-review.json) found no blocking issue
+within this scope. Initial failures remain in the raw captures. These results do
+not close the full selected corpus or the remaining M2 language requirements.
+
 ## Stage 43 implementation checkpoint
 
 The [committed source binding](stage43-implementation-source-binding.json) verifies

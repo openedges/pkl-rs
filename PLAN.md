@@ -726,6 +726,18 @@ N-API 오류 전환에서 JavaScript의 `toString`·`cause` getter를 호출하�
 
 구현을 `f201028`에 커밋하고 [소스 대응](reports/m2/stage43-implementation-source-binding.json)에서 검증 입력 7,093개를 실제 커밋의 Git blob 4,581개와 대조했습니다. [독립 게시 검토](reports/m2/stage43-publication-review.json)는 구현 증거 일곱 묶음과 모든 입력의 동일성을 확인했습니다. 이 체크포인트의 마감과 별도로 수정 후 전체 코퍼스 회귀와 M2 종료 조건은 계속 열려 있습니다.
 
+### Stage 44 — Host 오류와 출력 진입점의 문자열 보존
+
+Stage 43의 canonical 진단 위에 module resolve/source와 resource read의 실제 IOException 계약을 연결했습니다. 오류 메시지의 없음·빈 문자열·단독 surrogate를 구분하고, 공통 Host가 현재 요청 token과 실제 URI를 확인해 오류를 구성합니다. source 실패의 캐시와 resolve/read 실패의 재시도는 별도로 유지합니다. converter path·output format·abstract member 이름도 UTF-16을 보존합니다.
+
+고정 Java의 `evaluateExpressionString("output.text")`는 일반 REPL 식 대신 실제 ModuleOutput에 직접 진입합니다. 같은 모듈 receiver와 VM·Host 수명주기로 이 경로를 구현해 기존 오류의 추가 REPL 프레임을 없앴습니다. 기대 오류 문자열을 편집하거나 프레임을 사후 제거하지 않았습니다. 기존 Stage 43의 실패 비교와 초기 fixture 복사·테스트 Host 입력 오류도 원본으로 보존합니다.
+
+실제 Java 11개 시나리오를 두 JVM씩 실행한 순서 있는 호출 80회를 native에서 비교했습니다. 같은 원본을 실제 Node·Chromium에서도 환경별 80회 모두 전체 UTF-16·Java UTF-8·resolve/source/read counter로 비교해 일치했습니다. 기존 producer·hint·생성자·scalar·모듈·상속·문자열·PCF 검증도 통과했고, 정규식 차이 두 건과 trace의 환경별 Java 내부 오류 32회는 계속 실패 범위로 남습니다. 독립 검토는 nullable 오류 원인, 요청 소유권, 직접 output.text 진입과 원본 fixture 연결을 확인했습니다.
+
+일반 오류 주입과 typed IOException 완료는 별개입니다. 다른 Java 예외 종류, 전체 URI·security 오류, UTF-8 source·URI 입력 제한과 원래 M2 코퍼스의 미구현·미연결 의무는 남습니다. 실제 Git worktree에서 필수 검사 다섯 개가 모두 통과했고, workspace 테스트는 harness 호출 692회 통과·실패 0회·ignored 1회입니다. 검증 입력 9,925개(프로젝트 7,917개·고정 참조 2,008개)가 커밋 예정 Git blob과 같습니다. [구현 검증 기록](reports/m2/stage44-implementation-checkpoint.json)은 초기 실패와 실제 portable 결과를 보존합니다. 이는 전체 코퍼스 또는 M2 완료 선언이 아닙니다.
+
+다음 Stage 45는 원본 여섯 사례를 막는 `pkl:base`·`pkl:test`의 실제 모듈 정체성과 VM 내부 `catch`·`catchOrNull`을 구현합니다. 공통 cache·heap·Host를 유지한 제한된 오류 unwind와 Java의 별도 catch 진단 profile을 연결합니다. 원본 전체 입력을 유지하며 Resource·triple-dot·glob 및 나머지 표준 모듈 의존성도 후속 의무로 추적합니다. 런타임은 `gpt-6-astra / xhigh`, 원본 Java 비교와 독립 설계 검토는 각각 `gpt-6.1-sol / high`에 배정합니다.
+
 ## M3 — 표준 라이브러리와 출력
 
 - 고정된 Pkl 표준 라이브러리 소스를 활용하고 모든 external builtin과 공개 멤버를 구현합니다. 등록 목록과 공개 API 목록을 기계적으로 대조합니다.

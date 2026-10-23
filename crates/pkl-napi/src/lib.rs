@@ -578,15 +578,15 @@ impl SourceSession {
         env: Env,
         token: Utf16String,
         kind: Utf16String,
-        message: Utf16String,
+        message: Option<Utf16String>,
         now: f64,
     ) -> Result<()> {
         self.inner
-            .reject_module(
+            .reject_module_text(
                 &string(&token)?,
                 false,
                 &string(&kind)?,
-                &string(&message)?,
+                message.map(|message| PklString::from_utf16(message.to_vec())),
                 unsigned(now)?,
             )
             .map_err(|failure| text_error(&env, failure.message))
@@ -597,15 +597,15 @@ impl SourceSession {
         env: Env,
         token: Utf16String,
         kind: Utf16String,
-        message: Utf16String,
+        message: Option<Utf16String>,
         now: f64,
     ) -> Result<()> {
         self.inner
-            .reject_module(
+            .reject_module_text(
                 &string(&token)?,
                 true,
                 &string(&kind)?,
-                &string(&message)?,
+                message.map(|message| PklString::from_utf16(message.to_vec())),
                 unsigned(now)?,
             )
             .map_err(|failure| text_error(&env, failure.message))
@@ -734,7 +734,27 @@ impl SourceSession {
         now: f64,
     ) -> Result<()> {
         self.inner
-            .reject(&string(&token)?, &string(&message)?, unsigned(now)?)
+            .reject_text(
+                &string(&token)?,
+                PklString::from_utf16(message.to_vec()),
+                unsigned(now)?,
+            )
+            .map_err(|failure| text_error(&env, failure.message))
+    }
+    #[napi]
+    pub fn reject_read_io(
+        &mut self,
+        env: Env,
+        token: Utf16String,
+        message: Option<Utf16String>,
+        now: f64,
+    ) -> Result<()> {
+        self.inner
+            .reject_read_io(
+                &string(&token)?,
+                message.map(|message| PklString::from_utf16(message.to_vec())),
+                unsigned(now)?,
+            )
             .map_err(|failure| text_error(&env, failure.message))
     }
     #[napi]

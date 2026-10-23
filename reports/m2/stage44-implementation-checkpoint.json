@@ -1,0 +1,100 @@
+{
+  "schema": 1,
+  "status": "Implementation checkpoint; final full-corpus closeout pending.",
+  "fullM2Complete": false,
+  "baseline": "Pkl 0.32.0",
+  "baseCommit": "29aa65f5157ecb2b17f5c2c05ffc3593e6004ece",
+  "changes": [
+    "Canonical module and resource Host error messages preserve absent, empty and unmatched UTF16 IOException causes.",
+    "Typed resource completion validates request ownership and uses the actual pending URI.",
+    "Converter path, output format and abstract member diagnostic composition retains canonical text.",
+    "Exact output.text expression API uses the shared ModuleOutput operation and module receiver."
+  ],
+  "requiredRustChecks": {
+    "report": "reports/m2/stage44-required-checks.json",
+    "sha256": "d467d36a3a59542150e64767e18e58a4d36851101d222420bcdb56a78ef6cf35",
+    "allFivePassed": true,
+    "sourceCount": 9862,
+    "sourceStable": true,
+    "workspaceHarnessInvocations": {
+      "passed": 692,
+      "failed": 0,
+      "ignored": 1,
+      "filteredOut": 36
+    },
+    "countsAreDistinctFeatures": false
+  },
+  "actualJava": {
+    "originalScenarios": 11,
+    "freshJvms": 22,
+    "orderedCalls": 80,
+    "nativeMatches": 80,
+    "portableMatchesEach": 80,
+    "comparison": "Exact status, UTF16 units, Java UTF8 bytes and original resolve/source/read counters; original source/URI/call order retained."
+  },
+  "portable": {
+    "summary": "reports/m2/stage44-platform-summary.json",
+    "sha256": "ab69ebbc1c1fbe8c8f0128a8de1a21d91dc4bf6d2dfd6792e61224e44cfbced2",
+    "targets": [
+      "Node NAPI",
+      "Chromium Wasm"
+    ],
+    "recordedBuildInputs": 148,
+    "architectureChecksEach": 92,
+    "sharedPrimitiveResults": 6078,
+    "javaPrimitiveMatchesEach": 6076,
+    "traceMatchedCallsEach": 58,
+    "traceOracleErrorsEach": 32,
+    "scope": "Affected producer, constructor, scalar, NAPI callback, original module/inheritance, string and PCF regressions; no whole-language compatibility claim."
+  },
+  "independentCodeReview": {
+    "report": "reports/m2/stage44-code-review.json",
+    "sha256": "31741e01cb4cdb595247af14ac734e266c90865a8d7bae6d74dcd1d3ea1049bc",
+    "result": "no-actionable-blocker-found"
+  },
+  "sourceProof": {
+    "scope": "Actual staged project blobs and pinned submodule blobs match all final Stage44 required-check, recorded platform-build, and canonical-tool inputs.",
+    "requiredInputCount": 9862,
+    "platformInputCount": 148,
+    "toolingInputCount": 6,
+    "uniqueInputPaths": 9925,
+    "projectInputPaths": 7917,
+    "referenceInputPaths": 2008,
+    "uniqueRepositoryBlobs": 6675,
+    "referencePins": {
+      "external/pkl": "e51fb2f91774265666f94980ec630db794a4db2d",
+      "external/pkl-pantry": "904a68184e54da378b0a0e8a911a3fab3956f693"
+    },
+    "missing": [],
+    "mismatches": []
+  },
+  "evidenceIndex": "reports/m2/stage44-implementation-captures.json",
+  "evidenceIndexSha256": "65350d3d9cf1be8578aa14106ea51921982c74ed9b9ba49c828697f3d516ffbb",
+  "publication": {
+    "archives": 3,
+    "uniquePayloadFiles": 43938,
+    "payloadBytes": 198057357,
+    "compressedBytes": 26507934,
+    "sourceChanges": []
+  },
+  "retainedLimitations": [
+    "Only base java.io.IOException typed resource failures are implemented; other exception/security/URI variants remain separate.",
+    "Generic RuntimeError injection is not a typed IOException.",
+    "Source/URI/identifier inputs still use UTF8; legacy M1 APIs retain their own declared boundaries.",
+    "Two primitive regex mismatches and actual trace Java oracle errors remain strict nonpasses.",
+    "Full selected-corpus regression, original M2 unmapped/unimplemented language obligations and product/platform/performance completion remain pending."
+  ],
+  "historicalFailures": [
+    "Frozen Stage43 producer comparison failures retained.",
+    "Initial fixture copy failure and wrong native resource-success test input retained; original Java expected data unchanged.",
+    "Deliberate Display-removal audit compiler failures retained; original Display implementation restored.",
+    "Initial portable exporter process-schema mismatch retained before evaluation."
+  ],
+  "publicationReview": {
+    "path": "reports/m2/stage44-publication-review.json",
+    "sha256": "635eda70ddfa455fc03a5a87c8c33288378e56eda660bc1da99daca50bd563ec",
+    "archivePath": "reports/m2/stage44-closeout-captures.tar.gz",
+    "archiveSha256": "afac59fd53f8ccd1cca2d91effea0468e301a607557e1d0b97098e690112498b",
+    "archiveIntegrityExit": 0
+  }
+}

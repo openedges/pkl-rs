@@ -4068,10 +4068,12 @@ impl Vm {
                 let kind = if method { "method" } else { "property" };
                 return Err(RuntimeError::new(
                     ErrorKind::Type,
-                    format!(
-                        "Cannot invoke abstract {kind} `{}{name}`.",
+                    PklString::from(format!(
+                        "Cannot invoke abstract {kind} `{}",
                         self.current_module_name()
-                    ),
+                    ))
+                    .concat(&name)
+                    .concat(&"`.".into()),
                 ));
             }
             Instruction::Unsupported(message) => {

@@ -8,6 +8,13 @@ pub(crate) fn default_result(request: &ReadRequest) -> Result<Value, RuntimeErro
     configured_result(request, &[], &[])
 }
 
+pub(crate) fn resolved_uri(request: &ReadRequest) -> Result<String, RuntimeError> {
+    Ok(ResourceUri::from_authored(&request.uri)?
+        .resolve(request.module_uri.as_deref())?
+        .normalize()
+        .text)
+}
+
 pub(crate) fn configured_result(
     request: &ReadRequest,
     properties: &[(String, String)],

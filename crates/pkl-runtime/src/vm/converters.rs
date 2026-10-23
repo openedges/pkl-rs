@@ -142,7 +142,9 @@ fn parse(spec: &PklString) -> Result<Vec<SpecPart>, RuntimeError> {
     let invalid = || {
         RuntimeError::new(
             ErrorKind::Type,
-            format!("Converter path `{spec}` has invalid syntax."),
+            PklString::from("Converter path `")
+                .concat(spec)
+                .concat(&"` has invalid syntax.".into()),
         )
     };
     for (i, &u) in units.iter().enumerate() {

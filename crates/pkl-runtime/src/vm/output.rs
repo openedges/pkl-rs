@@ -672,14 +672,16 @@ impl Vm {
         ) {
             return Err(RuntimeError::new(
                 ErrorKind::Unsupported,
-                format!("The `{format}` output renderer is not implemented."),
+                PklString::from("The `")
+                    .concat(&format)
+                    .concat(&"` output renderer is not implemented.".into()),
             ));
         }
         Err(RuntimeError::new(
             ErrorKind::Type,
-            format!(
-                "Unknown output format: `{format}`. Supported formats are `json`, `jsonnet`, `pcf`, `plist`, `properties`, `textproto`, `xml`, `yaml`, `pkl-binary`."
-            ),
+            PklString::from("Unknown output format: `")
+                .concat(&format)
+                .concat(&"`. Supported formats are `json`, `jsonnet`, `pcf`, `plist`, `properties`, `textproto`, `xml`, `yaml`, `pkl-binary`.".into()),
         ))
     }
 }

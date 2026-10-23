@@ -1,0 +1,14 @@
+{
+  "caseCount": 11,
+  "freshJvmCount": 22,
+  "orderedCalls": 80,
+  "allOrdinaryOrSuccess": true,
+  "fullUtf16ToJavaUtf8Validated": true,
+  "sourceAndRepeatsStable": true,
+  "moduleResolve": "First failure is retried; 2 resolves/1 source.",
+  "moduleSource": "Failure is cached; 1 resolve/1 source, second failing call retains first diagnostic.",
+  "resourceRead": "First failure is retried; 2 reads.",
+  "nullVersusEmpty": "Null message omits cause line; empty message retains IOException: followed by a space and LF.",
+  "producerPayload": "Converter invalid path and unknown output format retain original unmatched units in complete Java error strings.",
+  "compatibilityClaim": false
+}

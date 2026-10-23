@@ -41,6 +41,16 @@ fn string(value: &JsString) -> Result<String, JsValue> {
         .collect();
     String::from_utf16(&units).map_err(|_| error("unpaired UTF-16 surrogate is unsupported"))
 }
+fn pkl_text(value: &JsString) -> Result<PklString, JsValue> {
+    if !JsValue::is_string(value.as_ref()) {
+        return Err(error("expected string"));
+    }
+    Ok(PklString::from_utf16(
+        (0..value.length())
+            .map(|i| value.char_code_at(i) as u16)
+            .collect::<Vec<_>>(),
+    ))
+}
 fn integer(value: JsValue) -> Result<i64, JsValue> {
     if !value.is_bigint() {
         return Err(error("expected BigInt"));
@@ -615,15 +625,15 @@ impl SourceSession {
         &mut self,
         token: JsString,
         kind: JsString,
-        message: JsString,
+        message: Option<JsString>,
         now: f64,
     ) -> Result<(), JsValue> {
         self.inner
-            .reject_module(
+            .reject_module_text(
                 &string(&token)?,
                 false,
                 &string(&kind)?,
-                &string(&message)?,
+                message.as_ref().map(pkl_text).transpose()?,
                 unsigned(now)?,
             )
             .map_err(|failure| text_error(failure.message))
@@ -633,15 +643,15 @@ impl SourceSession {
         &mut self,
         token: JsString,
         kind: JsString,
-        message: JsString,
+        message: Option<JsString>,
         now: f64,
     ) -> Result<(), JsValue> {
         self.inner
-            .reject_module(
+            .reject_module_text(
                 &string(&token)?,
                 true,
                 &string(&kind)?,
-                &string(&message)?,
+                message.as_ref().map(pkl_text).transpose()?,
                 unsigned(now)?,
             )
             .map_err(|failure| text_error(failure.message))
@@ -769,7 +779,22 @@ impl SourceSession {
     }
     pub fn reject(&mut self, token: JsString, message: JsString, now: f64) -> Result<(), JsValue> {
         self.inner
-            .reject(&string(&token)?, &string(&message)?, unsigned(now)?)
+            .reject_text(&string(&token)?, pkl_text(&message)?, unsigned(now)?)
+            .map_err(|failure| text_error(failure.message))
+    }
+    #[wasm_bindgen(js_name = rejectReadIo)]
+    pub fn reject_read_io(
+        &mut self,
+        token: JsString,
+        message: Option<JsString>,
+        now: f64,
+    ) -> Result<(), JsValue> {
+        self.inner
+            .reject_read_io(
+                &string(&token)?,
+                message.as_ref().map(pkl_text).transpose()?,
+                unsigned(now)?,
+            )
             .map_err(|failure| text_error(failure.message))
     }
     #[wasm_bindgen(js_name = closeFromCallback)]

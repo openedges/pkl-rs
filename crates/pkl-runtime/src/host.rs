@@ -1,10 +1,12 @@
 //! Cooperative Host boundary. Platform adapters supply a monotonic clock and I/O.
+mod errors;
 pub(crate) mod resources;
 use crate::{
     logging::{EvaluationContext, LogEvent, LoggerFailure},
     value::{ErrorKind, RuntimeError, Value},
     vm::{PendingRequest, Program, Vm, VmPoll},
 };
+pub use errors::{IoFailure, ReadFailure};
 use std::sync::{
     Arc,
     atomic::{AtomicU64, Ordering},
@@ -262,6 +264,33 @@ impl HostSession {
         }
         let result = resources::configured_result(&request, properties, environment);
         self.vm.resume(id, result)
+    }
+
+    /// Complete a resource SPI failure using the actual pending request URI.
+    /// This is distinct from injecting an already constructed RuntimeError.
+    pub fn reject_read(
+        &mut self,
+        token: &str,
+        failure: ReadFailure,
+        now_ms: u64,
+    ) -> Result<(), RuntimeError> {
+        self.open()?;
+        self.clock(now_ms)?;
+        if self.expire(now_ms) {
+            return Err(self.terminal.clone().unwrap());
+        }
+        let id = self.request_id(token)?;
+        let Some(Some(PendingRequest::Read(request))) = self.vm.pending_requests().pop() else {
+            return Err(stale());
+        };
+        if request.id != id {
+            return Err(stale());
+        }
+        let error = match resources::resolved_uri(&request) {
+            Ok(uri) => failure.into_runtime(&uri),
+            Err(error) => error,
+        };
+        self.vm.resume(id, Err(error))
     }
 
     /// Complete exactly one typed module request owned by the current context.

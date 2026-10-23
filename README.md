@@ -34,8 +34,10 @@ and share the evaluator's VM, heap, module cache and declaration identities.
 Expression sessions use the common parser and compiler with the actual module
 receiver. Module-owned class/alias types, `extends`, and `amends` share that
 engine. [Canonical diagnostics](docs/m2-diagnostics.md) preserve UTF-16 strings
-through native, Node, and Wasm APIs, with Java UTF-8 serialization checked
-separately. The [Stage 41 result](reports/m2/stage41-final-summary.json)
+through native, Node, and Wasm APIs, including typed Host IOException messages
+with distinct absent and empty causes. Java UTF-8 serialization is checked
+separately. The exact `output.text` expression request shares the ModuleOutput
+operation. The [Stage 41 result](reports/m2/stage41-final-summary.json)
 records 3,606 matching native cases out of 3,629 attempts, with all remaining
 unsupported cases, mismatches and oracle failures retained.
 Complete modifier and type semantics, remaining collection and Reference rules,

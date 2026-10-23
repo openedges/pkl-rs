@@ -158,11 +158,18 @@ directly. Converting that object through `napi::Error::from` would read user-vis
 avoid JavaScript's variadic argument limit, including when a surrogate pair spans
 two chunks.
 
-This migration does not establish complete diagnostic compatibility. Source text,
-URIs, and identifiers still use the UTF-8 input boundary. The probe convenience
-methods for Host rejection messages also retain their explicit UTF-8-only input
-policy. Remaining producers, including invalid converter-path messages, still
-need canonical composition. Actual Java UTF-16 captures establish string equality;
+Module and typed resource Host failures retain `Option<PklString>` messages,
+preserving absent and empty IOException causes. Completion validates the current
+request token and uses its actual URI. The probe text methods and JS adapters
+preserve rejection-message units; generic error injection remains a separate
+operation. Converter-path, output-format, and abstract-member diagnostics also
+compose canonical text. The exact expression request `output.text` uses the
+shared ModuleOutput operation and module receiver, matching Java's direct API
+dispatch without adding an expression REPL frame.
+
+Source text, URIs, and identifiers still use the UTF-8 input boundary. Other Java
+exception classes and the complete Host failure surface remain unfinished.
+Actual Java UTF-16 captures establish string equality;
 older UTF-8-only fixtures establish only their declared serialization boundary.
 
 ### Resource reads and implicit method diagnostics
